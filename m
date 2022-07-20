@@ -2,68 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F4C857BD48
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 19:57:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 14DFD57BD60
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 20:06:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229508AbiGTR5F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jul 2022 13:57:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51904 "EHLO
+        id S235474AbiGTSG1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jul 2022 14:06:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbiGTR5D (ORCPT
+        with ESMTP id S233387AbiGTSG0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jul 2022 13:57:03 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF0CB24951;
-        Wed, 20 Jul 2022 10:57:01 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id p26-20020a1c545a000000b003a2fb7c1274so1857780wmi.1;
-        Wed, 20 Jul 2022 10:57:01 -0700 (PDT)
+        Wed, 20 Jul 2022 14:06:26 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 143CE3AB12;
+        Wed, 20 Jul 2022 11:06:25 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id h8so4515209wrw.1;
+        Wed, 20 Jul 2022 11:06:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=yHRPEwie+kv37rjFQaOMTG39vvbswHQIAL5qJKmAXZY=;
-        b=jHHP9ovMBvjF1Tz2XGF2O9uZIGYUh8uL3ccc1JcN0v8LL9vnt/CinMBSagcmUsB0Ha
-         xOMPdfqLVfRR8KBTjUW3q4gJAiq9/Bj+xwq8vM5i2NJGbuUau3prMQFvEfK187IPw3sP
-         ldn0KN2bm3rURRez4YtZRMTE9BhOk8rkB5kG+pW/VAI5cr1aqPSKS04ccEoqIYJR6tVy
-         Zuw3v3nP+Hb8a3vYv7VyQIgdXWHzjqNVBfIr4tnV16bQGFafAwIaR6YmH3qdWmpIj3MM
-         3fM2UpyV4zp2x+GfoPfTe10AJahSclTCRwIrWIwAQ6N64nxC0rG4BGVOnfxlHcdrCw9m
-         qR4Q==
+        bh=0XGKnzbMlHj8GUec+IENgeIL+e8Iozm5CYX6A25Jtb4=;
+        b=PrnMQ8vHhngi5J7j1BVnxFKb/74czR3F267cpgzjf2pGO01ccscPJKZpsuemgRg4hU
+         pwDFIuAaoXfu1Tdzl2yHqgVe3j6kt329wRISAkepEa/JFWEUmtURCyLULIB/tej25wR0
+         Eho9ym6aP5W8rc4DluksS5/iy0SnNdXMWxRXGOR3/7e7vd+cOWgMo4uAYetQqGAN90Wz
+         ICdZ9YqX7fH2AapH+RQpbffvOWJMQxkjknb0Aa9pNUoVuxrznuiQX1iaW9yd8rMUgxsy
+         v1NSzr85Ua55QoNfQaFS/FEpMTx7vPZtxyeAveL37xKUP/+25dMgcuuYoIJAEeDLNJfI
+         raqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=yHRPEwie+kv37rjFQaOMTG39vvbswHQIAL5qJKmAXZY=;
-        b=EMrO5uBrQB3xChamH6PnF9txpk3mUXEH8WZqoIZT19muEMEGx1ZoZq3QQaW5wr1h30
-         e+mZGNU5v6QuJ8cMwSZ05k5+Ou4rqNu+NRzLQ9T25y7u8kTglp9UTQKOFCmtlQ9Tx+1T
-         npDMPOAhdjscfk1PqrcLyirSsa+CvyqjtbbDWLlI4lLT6pYVOr9aYqUogHToaBOL+1gM
-         d7jldZ+/C+GFfr34gIYaCF2kyls1VJCcK7H7NSL122VPbvwSKfTEMdm3HceGE/Q1PjVb
-         42raYm4IgY8aSMMo0dloWih4L5kK9n4gxI5+z+y9olNh7ZO0nwWlclx2WvRPRP/n+/0u
-         FiFw==
-X-Gm-Message-State: AJIora+0P0BdKZHTew0ijJ2G3uDOvM1BWXp1933KOxHqVg5+GRyWSI+z
-        p7tjgelnPI8DLbN0pFmkFdiKXbqsemLI01GLLdw=
-X-Google-Smtp-Source: AGRyM1um84Qx2d3VuA14HmTjZeEjFriFAeIWZ5gQkmqsDi89xqJ0we4+Qh4P4848RYr0tzuTinlTksVyONKTxWesIwg=
-X-Received: by 2002:a05:600c:3ac3:b0:3a0:45b6:7efb with SMTP id
- d3-20020a05600c3ac300b003a045b67efbmr4906657wms.183.1658339820479; Wed, 20
- Jul 2022 10:57:00 -0700 (PDT)
+        bh=0XGKnzbMlHj8GUec+IENgeIL+e8Iozm5CYX6A25Jtb4=;
+        b=3W8aVWa6DjMSODWj2IqM4ITF68pBjWlJ2/27rzFAKjDCNxjnBlc6wklMqK2kPua8gI
+         r0JwxfkFNO9/uz91lbpA1RRGvvX9svwKnTYOGMn32xl1WrnLilKhJHWAQxv+t9urzIZB
+         5fcyIcX+c8SPAXaAcDuf9TBaVVr29N/oV9HCM5DgoNJyiM88HSUMZkOUhz+UC8Z50HHV
+         hkNuwbeh3ZxSgCwIuYZN3GmN9S1qoT00hXWGdFdGsOn0h3k7Oj3p9lMU4sfXgbIMUolC
+         VooG7X8mGTiROxMXYN3FxliBB1fF3MCwjso/o6pKGEX+3IIiS/QSYSo4rljjGWZxXKCh
+         slvA==
+X-Gm-Message-State: AJIora+CI55ooYRHhkVeNzxeg1apazwpSUhroeYCARqDv1RickPa/Ki6
+        XOdo+GiVQuKw/OhLPK2RfQyzy+PSCe8KfXrNDC0=
+X-Google-Smtp-Source: AGRyM1uV3du6LMb0MF9Xsx7pwJt117rZWWe6Qxgvs8U23ehNnT/6d9KIkiaDDj5Pq81JRm5DrR/zwX1CLQj32uOhIVo=
+X-Received: by 2002:adf:e187:0:b0:21d:64c6:74f0 with SMTP id
+ az7-20020adfe187000000b0021d64c674f0mr30710994wrb.221.1658340383459; Wed, 20
+ Jul 2022 11:06:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220719171900.289265-1-robdclark@gmail.com> <20220719171900.289265-10-robdclark@gmail.com>
- <c5beb186-96d3-59d7-fad8-987bb8125de1@collabora.com>
-In-Reply-To: <c5beb186-96d3-59d7-fad8-987bb8125de1@collabora.com>
+References: <1657346375-1461-1-git-send-email-quic_akhilpo@quicinc.com>
+ <20220709112837.v2.3.I4ac27a0b34ea796ce0f938bb509e257516bc6f57@changeid>
+ <CAD=FV=U=J+yf6Qu0VgJ8A5Lhs_s8Fszw=Oa0XUny5XT-5z56xQ@mail.gmail.com>
+ <1299312f-e614-e4e2-72cb-fd7fb99922ce@quicinc.com> <CAF6AEGvjD3LRm40mPr4n+jzx71WmwYpVWizUDLct9cgafjFRyw@mail.gmail.com>
+ <3c150bc9-68a0-7a35-6511-f80a42e8945b@quicinc.com>
+In-Reply-To: <3c150bc9-68a0-7a35-6511-f80a42e8945b@quicinc.com>
 From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 20 Jul 2022 10:57:21 -0700
-Message-ID: <CAF6AEGusbnsY8fyFetkov5bRPd0vidTyBm8QL7a56TwYZ+NdRQ@mail.gmail.com>
-Subject: Re: [PATCH v2 09/13] drm/gem: Add LRU/shrinker helper
-To:     Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
+Date:   Wed, 20 Jul 2022 11:06:45 -0700
+Message-ID: <CAF6AEGsQqE+5iE-=ja96wS6EMN1K1PzCa2fRA6DvQWwyqBq3NA@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH v2 3/7] drm/msm: Fix cx collapse issue during recovery
+To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc:     Doug Anderson <dianders@chromium.org>, Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>,
         David Airlie <airlied@linux.ie>,
-        open list <linux-kernel@vger.kernel.org>
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Chia-I Wu <olvaffe@gmail.com>,
+        LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
@@ -75,27 +83,102 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 19, 2022 at 11:56 AM Dmitry Osipenko
-<dmitry.osipenko@collabora.com> wrote:
+On Tue, Jul 12, 2022 at 12:15 PM Akhil P Oommen
+<quic_akhilpo@quicinc.com> wrote:
 >
-> On 7/19/22 20:18, Rob Clark wrote:
-> > +void
-> > +drm_gem_lru_move_tail_locked(struct drm_gem_lru *lru, struct drm_gem_object *obj)
-> > +{
-> > +     WARN_ON(!mutex_is_locked(lru->lock));
+> On 7/12/2022 10:14 PM, Rob Clark wrote:
+> > On Mon, Jul 11, 2022 at 10:05 PM Akhil P Oommen
+> > <quic_akhilpo@quicinc.com> wrote:
+> >> On 7/12/2022 4:52 AM, Doug Anderson wrote:
+> >>> Hi,
+> >>>
+> >>> On Fri, Jul 8, 2022 at 11:00 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+> >>>> There are some hardware logic under CX domain. For a successful
+> >>>> recovery, we should ensure cx headswitch collapses to ensure all the
+> >>>> stale states are cleard out. This is especially true to for a6xx family
+> >>>> where we can GMU co-processor.
+> >>>>
+> >>>> Currently, cx doesn't collapse due to a devlink between gpu and its
+> >>>> smmu. So the *struct gpu device* needs to be runtime suspended to ensure
+> >>>> that the iommu driver removes its vote on cx gdsc.
+> >>>>
+> >>>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> >>>> ---
+> >>>>
+> >>>> (no changes since v1)
+> >>>>
+> >>>>    drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 16 ++++++++++++++--
+> >>>>    drivers/gpu/drm/msm/msm_gpu.c         |  2 --
+> >>>>    2 files changed, 14 insertions(+), 4 deletions(-)
+> >>>>
+> >>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >>>> index 4d50110..7ed347c 100644
+> >>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >>>> @@ -1278,8 +1278,20 @@ static void a6xx_recover(struct msm_gpu *gpu)
+> >>>>            */
+> >>>>           gmu_write(&a6xx_gpu->gmu, REG_A6XX_GMU_GMU_PWR_COL_KEEPALIVE, 0);
+> >>>>
+> >>>> -       gpu->funcs->pm_suspend(gpu);
+> >>>> -       gpu->funcs->pm_resume(gpu);
+> >>>> +       /*
+> >>>> +        * Now drop all the pm_runtime usage count to allow cx gdsc to collapse.
+> >>>> +        * First drop the usage count from all active submits
+> >>>> +        */
+> >>>> +       for (i = gpu->active_submits; i > 0; i--)
+> >>>> +               pm_runtime_put(&gpu->pdev->dev);
+> >>>> +
+> >>>> +       /* And the final one from recover worker */
+> >>>> +       pm_runtime_put_sync(&gpu->pdev->dev);
+> >>>> +
+> >>>> +       for (i = gpu->active_submits; i > 0; i--)
+> >>>> +               pm_runtime_get(&gpu->pdev->dev);
+> >>>> +
+> >>>> +       pm_runtime_get_sync(&gpu->pdev->dev);
+> >>> In response to v1, Rob suggested pm_runtime_force_suspend/resume().
+> >>> Those seem like they would work to me, too. Why not use them?
+> >> Quoting my previous response which I seem to have sent only to Freedreno
+> >> list:
+> >>
+> >> "I believe it is supposed to be used only during system sleep state
+> >> transitions. Btw, we don't want pm_runtime_get() calls from elsewhere to
+> >> fail by disabling RPM here."
+> > The comment about not wanting other runpm calls to fail is valid.. but
+> > that is also solveable, ie. by holding a lock around runpm calls.
+> > Which I think we need to do anyways, otherwise looping over
+> > gpu->active_submits is racey..
+> >
+> > I think pm_runtime_force_suspend/resume() is the least-bad option.. or
+> > at least I'm not seeing any obvious alternative that is better
+> >
+> > BR,
+> > -R
+> We are holding gpu->lock here which will block further submissions from
+> scheduler. Will active_submits still race?
 >
-> Nit: What about lockdep_assert_held_once(&lru->lock->base)) ?
+> It is possible that there is another thread which successfully completed
+> pm_runtime_get() and while it access the hardware, we pulled the plug on
+> regulator/clock here. That will result in obvious device crash. So I can
+> think of 2 solutions:
+>
+> 1. wrap *every* pm_runtime_get/put with a mutex. Something like:
+>              mutex_lock();
+>              pm_runtime_get();
+>              < ... access hardware here >>
+>              pm_runtime_put();
+>              mutex_unlock();
+>
+> 2. Drop runtime votes from every submit in recover worker and wait/poll
+> for regulator to collapse in case there are transient votes on
+> regulator  from other threads/subsystems.
+>
+> Option (2) seems simpler to me.  What do you think?
+>
 
-ahh, good point.. I've switched it locally
+But I think without #1 you could still be racing w/ some other path
+that touches the hw, like devfreq, right.  They could be holding a
+runpm ref, so even if you loop over active_submits decrementing the
+runpm ref, it still doesn't drop to zero
 
 BR,
 -R
-
-> Otherwise, looks good! I'll use it for the DRM-SHMEM shrinker after
-> completing the work on the dma-buf locks.
->
-> Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->
-> --
-> Best regards,
-> Dmitry
