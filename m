@@ -2,54 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9101A57BEBD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 21:42:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B29857BF30
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 22:26:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231944AbiGTTm0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jul 2022 15:42:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47036 "EHLO
+        id S229505AbiGTU0r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jul 2022 16:26:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229570AbiGTTm0 (ORCPT
+        with ESMTP id S229452AbiGTU0r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jul 2022 15:42:26 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4321651A13;
-        Wed, 20 Jul 2022 12:42:25 -0700 (PDT)
-Received: from [192.168.1.101] (abxj77.neoplus.adsl.tpnet.pl [83.9.3.77])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id F3ECD200CD;
-        Wed, 20 Jul 2022 21:42:22 +0200 (CEST)
-Message-ID: <e34e7932-b64a-59d8-dfa2-2de23a52425c@somainline.org>
-Date:   Wed, 20 Jul 2022 21:42:22 +0200
+        Wed, 20 Jul 2022 16:26:47 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87DC948C9F;
+        Wed, 20 Jul 2022 13:26:45 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id h8so4990444wrw.1;
+        Wed, 20 Jul 2022 13:26:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=jHuW9J2qFnOFuq2DHP+vSS0Cz7nU1OQDb7da5IMfnOY=;
+        b=OP3ijZgr3m1YypUunAaAZvBcPYM6PoPO9/BwOeXOGygzE/XFCsO+3jD7VFmpwQqf1p
+         4tT0C9QFpdHDV5Z9MaRHDV1PG6dwz4Mg5jBYHUCw+VunO41ZIxSToPnTWLuah3MPWawC
+         laZkQBRYyknDMnrk4jtqwi2U6VeZY8MLMT1JGqw8n3CF+MqnGCj8F74FRT12j0fHd8FK
+         7gU8nXRrYgCmi51iAhjKKH3sDsYtPMcwhQbCYDgLnfe0KWoxglq37Adersj+faDel+oK
+         JRhvBRCV5wh+HfCqkCpWV8lh7HoipzqpfuYZB2up65DK5f/NcaEm9FaJqvsMDwE4mjAR
+         AQRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=jHuW9J2qFnOFuq2DHP+vSS0Cz7nU1OQDb7da5IMfnOY=;
+        b=CvlTKuaLmo1P3rE0Nu3ZQLqHfz01rzWHCC1MNEnyNYPXrh9Pe6kY8abbMtUJIpiH0h
+         y+VM/jBlG9r91qtgyrKcBkuBQ9IpClPx/aGOGyPNDKclJ9ypmNnqooHqY6omUUT5Bx/W
+         UfPseD10s636rRhhDJiSsZxgFUTBW7u5LQBlLLFqueyYJ0p4sRBjZNLeLIIr7K9ZyE3O
+         li0QpTWL7pGZDMBH0T+b4DGRksDo8Jujc1LKuxfrwyRctWKMGvSGc9Fxz/+a/YZi6wjG
+         3u7jAsQi1Z/7puqBmS74s8lhaW3vpoBrnx0wkgOMrhkWWEoPk5vmRqTG6j8O0IgpJImI
+         RiUw==
+X-Gm-Message-State: AJIora84lVMl8M07Uvx8+FDJR6FIlc2ZefgPZu9gMxgM7r27sn1LA0fT
+        VC+FmrwO9+npsORb4gv5o1WJs7jfkeqk5SII9XNmBldq
+X-Google-Smtp-Source: AGRyM1sdLUJP82vh50JIHwPklZ9I0/mLdHrsUJSla84fT90654SJWPhZraE+OgsdUrXsMwy/r0IjyfAE96rS9TC4SJ0=
+X-Received: by 2002:adf:e187:0:b0:21d:64c6:74f0 with SMTP id
+ az7-20020adfe187000000b0021d64c674f0mr31084766wrb.221.1658348803961; Wed, 20
+ Jul 2022 13:26:43 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 2/3] dt-bindings: clock: add SM6375 QCOM global clock
- bindings
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220719115756.32231-1-konrad.dybcio@somainline.org>
- <20220719115756.32231-2-konrad.dybcio@somainline.org>
- <11cc46d8-ae01-f3d2-b9c6-c366c6e4afc9@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <11cc46d8-ae01-f3d2-b9c6-c366c6e4afc9@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+References: <1655802387-15275-1-git-send-email-quic_kalyant@quicinc.com>
+ <1655802387-15275-2-git-send-email-quic_kalyant@quicinc.com>
+ <CAA8EJponMDAXDAZ9zpkYEZvONDAztuXhjwZ6y7rgo1HtQOMtfQ@mail.gmail.com> <BN0PR02MB81426CB90870085223C308A496B99@BN0PR02MB8142.namprd02.prod.outlook.com>
+In-Reply-To: <BN0PR02MB81426CB90870085223C308A496B99@BN0PR02MB8142.namprd02.prod.outlook.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 20 Jul 2022 13:26:31 -0700
+Message-ID: <CAF6AEGssKD-ZnAb05isb+h9t29AQp5fOHD4johbyMWHRQq530g@mail.gmail.com>
+Subject: Re: [v1 2/2] drm/msm/disp/dpu1: enable crtc color management based on
+ encoder topology
+To:     Kalyan Thota <kalyant@qti.qualcomm.com>
+Cc:     "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
+        "Kalyan Thota (QUIC)" <quic_kalyant@quicinc.com>,
+        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "dianders@chromium.org" <dianders@chromium.org>,
+        "swboyd@chromium.org" <swboyd@chromium.org>,
+        "Vinod Polimera (QUIC)" <quic_vpolimer@quicinc.com>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -58,46 +78,284 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Jun 27, 2022 at 4:56 AM Kalyan Thota <kalyant@qti.qualcomm.com> wrote:
+>
+> Thanks for the comments, Dmitry. I haven't noticed mode->hdisplay being used. My idea was to run thru the topology and tie up the encoders with dspp to the CRTCs.
+> Since mode is available only in the commit, we cannot use the dpu_encoder_get_topology during initialization sequence.
+>
+> The requirement here is that when we initialize the crtc, we need to enable drm_crtc_enable_color_mgmt only for the crtcs that support it. As I understand from Rob, chrome framework will check for the enablement in order to exercise the feature.
+>
+> Do you have any ideas on how to handle this requirement ? Since we will reserve the dspp's only when a commit is issued, I guess it will be too late to enable color management by then.
+>
+> @robdclark@gmail.com
+> Is it okay, if we disable color management for all the crtcs during initialization and enable it when we have dspps available during modeset. Can we framework code query for the property before issuing a commit for the frame after modeset ?
+>
 
+So, I suppose it would work out, because the splashscreen/frecon is
+doing the first modeset before chrome even starts.  But that seems a
+bit... delicate.
 
-On 20.07.2022 08:27, Krzysztof Kozlowski wrote:
-> On 19/07/2022 13:57, Konrad Dybcio wrote:
->> Add device tree bindings for global clock controller for SM6375 SoCs.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
->> ---
+BR,
+-R
 
-[...]
-
->> +++ b/include/dt-bindings/clock/qcom,sm6375-gcc.h
->> @@ -0,0 +1,234 @@
->> +/* SPDX-License-Identifier: GPL-2.0-only */
-> 
-> Hm, Qualcomm gave permission to relicense bindings to dual-license,
-> although I am not sure how this works with files where copyrights were
-> transferred to Linux Foundation...
-Right, I overlooked this.
-
-Considering all of the headers for the clock controllers are an exact or
-almost exact copy of the downstream ones ever since qcom switched to using
-the common clock framework in 2017 or so, plus I am not sure how
-copyrightable this is, given copying names from the .c driver, making them
-uppercase and assigning them consecutive numbers is not exactly much of a
-creative work.. so I don't think anybody would oppose it?
-
-Obviously I'm not a lawyer and this is not legal advice..
-
-Konrad
-> 
->> +/*
->> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
->> + * Copyright (c) 2022, Konrad Dybcio <konrad.dybcio@somainline.org>
->> + */
->> +
->> +#ifndef _DT_BINDINGS_CLK_QCOM_GCC_SM6375_H
->> +#define _DT_BINDINGS_CLK_QCOM_GCC_SM6375_H
->> +
-> 
-> 
-> Best regards,
-> Krzysztof
+> Thanks,
+> Kalyan
+>
+> > -----Original Message-----
+> > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Sent: Tuesday, June 21, 2022 4:43 PM
+> > To: Kalyan Thota (QUIC) <quic_kalyant@quicinc.com>
+> > Cc: y@qualcomm.com; dri-devel@lists.freedesktop.org; linux-arm-
+> > msm@vger.kernel.org; freedreno@lists.freedesktop.org;
+> > devicetree@vger.kernel.org; linux-kernel@vger.kernel.org;
+> > robdclark@gmail.com; dianders@chromium.org; swboyd@chromium.org;
+> > Vinod Polimera (QUIC) <quic_vpolimer@quicinc.com>; Abhinav Kumar (QUIC)
+> > <quic_abhinavk@quicinc.com>
+> > Subject: Re: [v1 2/2] drm/msm/disp/dpu1: enable crtc color management based
+> > on encoder topology
+> >
+> > WARNING: This email originated from outside of Qualcomm. Please be wary of
+> > any links or attachments, and do not enable macros.
+> >
+> > Generic comment: y@qualcomm.com address bounces. Please remove it from
+> > the cc list. If you need to send a patch for the internal reasons, please use Bcc.
+> >
+> > On Tue, 21 Jun 2022 at 12:06, Kalyan Thota <quic_kalyant@quicinc.com> wrote:
+> > >
+> > > Crtc color management needs to be registered only for the crtc which
+> > > has the capability to handle it. Since topology decides which encoder
+> > > will get the dspp hw block, tie up the crtc and the encoder together
+> > > (encoder->possible_crtcs)
+> > >
+> > > Change-Id: If5a0f33547b6f527ca4b8fbb78424b141dbbd711
+> >
+> > No change-id's please. This is not the gerrit.
+> >
+> > > Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
+> > > ---
+> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  8 ++++++--
+> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    |  2 +-
+> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 20 ++++++++++++++++----
+> > > drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  5 +++++
+> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 22 ++++++++++++++++++----
+> > >  5 files changed, 46 insertions(+), 11 deletions(-)
+> > >
+> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > > b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > > index 7763558..2913acb 100644
+> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > > @@ -1511,7 +1511,7 @@ static const struct drm_crtc_helper_funcs
+> > > dpu_crtc_helper_funcs = {
+> > >
+> > >  /* initialize crtc */
+> > >  struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane
+> > *plane,
+> > > -                               struct drm_plane *cursor)
+> > > +                               struct drm_plane *cursor, unsigned int
+> > > + enc_mask)
+> > >  {
+> > >         struct drm_crtc *crtc = NULL;
+> > >         struct dpu_crtc *dpu_crtc = NULL; @@ -1544,7 +1544,11 @@
+> > > struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct
+> > > drm_plane *plane,
+> > >
+> > >         drm_crtc_helper_add(crtc, &dpu_crtc_helper_funcs);
+> > >
+> > > -       drm_crtc_enable_color_mgmt(crtc, 0, true, 0);
+> > > +       /* Register crtc color management if the encoder has dspp, use the
+> > > +        * crtc to mark it as possible_crtcs for that encoder.
+> > > +        */
+> > > +       if(BIT(crtc->index) & enc_mask)
+> >
+> > So, we are checking CRTC's index against the encoder's mask? This is
+> > counterintuitive.
+> >
+> > > +               drm_crtc_enable_color_mgmt(crtc, 0, true, 0);
+> > >
+> > >         /* save user friendly CRTC name for later */
+> > >         snprintf(dpu_crtc->name, DPU_CRTC_NAME_SIZE, "crtc%u",
+> > > crtc->base.id); diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> > > b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> > > index b8785c3..0a6458e 100644
+> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> > > @@ -269,7 +269,7 @@ void dpu_crtc_complete_commit(struct drm_crtc
+> > *crtc);
+> > >   * @Return: new crtc object or error
+> > >   */
+> > >  struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane
+> > *plane,
+> > > -                              struct drm_plane *cursor);
+> > > +                              struct drm_plane *cursor, unsigned int
+> > > + enc_mask);
+> > >
+> > >  /**
+> > >   * dpu_crtc_register_custom_event - api for enabling/disabling crtc
+> > > event diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > > b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > > index f2cb497..893ce68 100644
+> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > > @@ -13,6 +13,8 @@
+> > >  #include <drm/drm_crtc.h>
+> > >  #include <drm/drm_file.h>
+> > >  #include <drm/drm_probe_helper.h>
+> > > +#include <drm/drm_bridge.h>
+> > > +#include <drm/drm_bridge_connector.h>
+> > >
+> > >  #include "msm_drv.h"
+> > >  #include "dpu_kms.h"
+> > > @@ -511,13 +513,18 @@ void dpu_encoder_helper_split_config(
+> > >         }
+> > >  }
+> > >
+> > > -static struct msm_display_topology dpu_encoder_get_topology(
+> > > -                       struct dpu_encoder_virt *dpu_enc,
+> > > +struct msm_display_topology dpu_encoder_get_topology(
+> > > +                       struct drm_encoder *drm_enc,
+> > >                         struct dpu_kms *dpu_kms,
+> > >                         struct drm_display_mode *mode)  {
+> > >         struct msm_display_topology topology = {0};
+> > > +       struct dpu_encoder_virt *dpu_enc;
+> > > +       struct drm_bridge *bridge;
+> > >         int i, intf_count = 0;
+> > > +       bool primary_display = false;
+> > > +
+> > > +       dpu_enc = to_dpu_encoder_virt(drm_enc);
+> > >
+> > >         for (i = 0; i < MAX_PHYS_ENCODERS_PER_VIRTUAL; i++)
+> > >                 if (dpu_enc->phys_encs[i]) @@ -542,7 +549,12 @@ static
+> > > struct msm_display_topology dpu_encoder_get_topology(
+> > >         else
+> > >                 topology.num_lm = (mode->hdisplay >
+> > > MAX_HDISPLAY_SPLIT) ? 2 : 1;
+> > >
+> > > -       if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI) {
+> > > +       drm_for_each_bridge_in_chain(drm_enc, bridge) {
+> > > +               if (bridge->type != DRM_MODE_CONNECTOR_DisplayPort)
+> > > +                       primary_display = true;
+> > > +       }
+> >
+> > I must admit, I never actually liked the original (intf_type == DSI) check. However
+> > the new one is even worse. We are checking the whole bridge chain in an
+> > attempt to rule out the DP ports for whatever reason. What about the HDMI
+> > ports? Should they be also frowned upon?
+> > The ugly part is that we are making the decision for the user, which displays are
+> > "primary" for him. Can we let the user make this setting?
+> >
+> > > +
+> > > +       if (primary_display) {
+> > >                 if (dpu_kms->catalog->dspp &&
+> > >                         (dpu_kms->catalog->dspp_count >= topology.num_lm))
+> > >                         topology.num_dspp = topology.num_lm; @@ -601,7
+> > > +613,7 @@ static int dpu_encoder_virt_atomic_check(
+> > >                 }
+> > >         }
+> > >
+> > > -       topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode);
+> > > +       topology = dpu_encoder_get_topology(drm_enc, dpu_kms,
+> > > + adj_mode);
+> >
+> > extra whitespace change. Please drop.
+> >
+> > >
+> > >         /* Reserve dynamic resources now. */
+> > >         if (!ret) {
+> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> > > b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> > > index 1f39327..c4daf7c 100644
+> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> > > @@ -172,4 +172,9 @@ int dpu_encoder_get_vsync_count(struct
+> > drm_encoder
+> > > *drm_enc);
+> > >
+> > >  bool dpu_encoder_is_widebus_enabled(const struct drm_encoder
+> > > *drm_enc);
+> > >
+> > > +struct msm_display_topology dpu_encoder_get_topology(
+> > > +                       struct drm_encoder *drm_enc,
+> > > +                       struct dpu_kms *dpu_kms,
+> > > +                       struct drm_display_mode *mode);
+> > > +
+> > >  #endif /* __DPU_ENCODER_H__ */
+> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > > b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > > index 3a4da0d..486ff9d 100644
+> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > > @@ -687,9 +687,12 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms
+> > *dpu_kms)
+> > >         unsigned cursor_idx = 0;
+> > >         unsigned primary_idx = 0;
+> > >         bool pin_overlays;
+> > > +       unsigned int max_dspp_count = 0;
+> > > +       unsigned int enc_mask = 0;
+> > >
+> > >         struct msm_drm_private *priv;
+> > >         struct dpu_mdss_cfg *catalog;
+> > > +       struct msm_display_topology topology = {0};
+> > >
+> > >         int primary_planes_idx = 0, cursor_planes_idx = 0, i, ret;
+> > >         int max_crtc_count;
+> > > @@ -754,10 +757,19 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms
+> > *dpu_kms)
+> > >         }
+> > >
+> > >         max_crtc_count = min(max_crtc_count, primary_planes_idx);
+> > > +       max_dspp_count = catalog->dspp_count;
+> > > +
+> > > +       drm_for_each_encoder(encoder, dev) {
+> > > +               topology = dpu_encoder_get_topology(encoder, dpu_kms,
+> > > + NULL);
+> >
+> > This can crash dpu_encoder_get_topology() because it checks mode->hdisplay.
+> > And the check anyway is futile here. We do not know if the encoder is going to
+> > use 1 or 2 LMs (since we do not know the resolution), so we do not know
+> > whether it will use 1 or 2 DSPP blocks.
+> >
+> > > +               if (topology.num_dspp > 0 && (topology.num_dspp <=
+> > max_dspp_count)) {
+> > > +                       enc_mask |= BIT(encoder->index);
+> > > +                       max_dspp_count -= topology.num_dspp;
+> > > +               }
+> > > +       }
+> > >
+> > >         /* Create one CRTC per encoder */
+> > >         for (i = 0; i < max_crtc_count; i++) {
+> > > -               crtc = dpu_crtc_init(dev, primary_planes[i], cursor_planes[i]);
+> > > +               crtc = dpu_crtc_init(dev, primary_planes[i],
+> > > + cursor_planes[i], enc_mask);
+> > >                 if (IS_ERR(crtc)) {
+> > >                         ret = PTR_ERR(crtc);
+> > >                         return ret;
+> > > @@ -765,9 +777,11 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms
+> > *dpu_kms)
+> > >                 priv->crtcs[priv->num_crtcs++] = crtc;
+> > >         }
+> > >
+> > > -       /* All CRTCs are compatible with all encoders */
+> > > -       drm_for_each_encoder(encoder, dev)
+> > > -               encoder->possible_crtcs = (1 << priv->num_crtcs) - 1;
+> > > +       /* Attach CRTC's to compatiable encoders */
+> >
+> > compatible
+> >
+> >
+> > > +       drm_for_each_encoder(encoder, dev) {
+> > > +               encoder->possible_crtcs = (enc_mask & BIT(encoder->index)) ?
+> > > +                               BIT(encoder->index) : (((1 << priv->num_crtcs) - 1) &
+> > ~enc_mask);
+> > > +       }
+> > >
+> > >         return 0;
+> > >  }
+> > > --
+> > > 2.7.4
+> > >
+> >
+> >
+> > --
+> > With best wishes
+> > Dmitry
