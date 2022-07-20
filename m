@@ -2,128 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C86CA57B846
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 16:15:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C78EA57B90B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 16:59:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229927AbiGTOPk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jul 2022 10:15:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34370 "EHLO
+        id S241090AbiGTO7l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jul 2022 10:59:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229712AbiGTOPj (ORCPT
+        with ESMTP id S241088AbiGTO7k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jul 2022 10:15:39 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 697ED4504E;
-        Wed, 20 Jul 2022 07:15:38 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 26KDgirm018209;
-        Wed, 20 Jul 2022 14:15:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=vrlyZOKTCMRIMtatTcSfwYllArIo6cJDJKYV+GStnBQ=;
- b=ERNNMbWKi3fEHNNSriMhKnk3jO4qxYE09FTBPvUD/yjC/yuH6g2wBLaPRZXMWwygL835
- UfPyuCGBmnQ1Y0ZTHG4LCXBgMxD1WTd/O8wZyELM/JM/MTNQ0kFzvsXFhKlIjHa4w6cX
- YCBNIXTtnsZUnghNtXHt/0mQ2jmilsxtEv8Ivy/zpRyacAFHsGsRmg7TQD7UmpmpTFk6
- L6lcz6vXan/P496MWJPV+UMLy5IjGWuuhWMjiDj4HiupDsUSeP1F25oVeorgjW4h1+Z5
- adbkC3pzwQobml8rl1AfwTj2LG6rswwUcSzQiZRc5ug+PO1z1h0EYUf97gXhPrUZC/pA 7g== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3hebfv17sv-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 20 Jul 2022 14:15:33 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.47.97.222])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 26KEFXBH027730
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 20 Jul 2022 14:15:33 GMT
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 20 Jul 2022 07:15:32 -0700
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 20 Jul
- 2022 07:15:31 -0700
-Message-ID: <b56c0dfb-2858-c1f4-9cff-9e1d786e672a@quicinc.com>
-Date:   Wed, 20 Jul 2022 08:15:30 -0600
+        Wed, 20 Jul 2022 10:59:40 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0998052DD5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 07:59:39 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id bb16so11141026oib.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 07:59:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=TvmCMcvB/AQLSDyyk2y4pjMIoqRBDrfZeqPEyK/hmJ0=;
+        b=QVxsFy3kJlbhszY4TNk1sZzCHzD034fBJdifXc7DLEiok9mVC1Nmavyc6BHrVmP+wp
+         hLHbXgcspKEeSAkOg9sD6CO4cCENplrMyWUXu5yPQJELztbO4n6XNolW6B/oga68oC1x
+         8PONDs6/GYEzhzSE+926BVcLIY2G1CK7lYd4jWjEmzwhSgqCeRo5vf0uqUf/RfiqJegS
+         dFULnr+5PFtrmoSRcUjQ3XcqmTltq217hY1QxLFgNRvF1L8llivVEeHGshfhs0sqHt6y
+         S6qDBfi76RBSkIXnyfGdIs/QphPTWfa0lu/gEoe1zQkj1ADIV/pYqFx38jXW//W/TkRd
+         oa0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=TvmCMcvB/AQLSDyyk2y4pjMIoqRBDrfZeqPEyK/hmJ0=;
+        b=PzPwQ0ZoHo0ajyOUgvj4csNZxiW5PlcoNAwPzxytghMTtZLTyXXK56MYE3eSLFUDB6
+         rjIzwKjS+ww313SMEk9FWrKgB1eQ51LdcYPeeny/ms9vswbwX2doSR2EL631jFYRtS7l
+         eCvPqpv8+3wfFrHt/qHNc3gVDCQvKI8KBtWSLVFwikK6zhCnwG2saAHWSndeu6tvQTdn
+         Lfvb6dn7qzVMOBJvs1R0RhZwoRNHGmNubJR7pUrPNSh0rcrTaZUs/IgP1HJsDttQfOEH
+         dbSW3lyLSDakdCsxCYOtv20XSPOo0lqGynpTjd4e9j1mX11JqmFk1xkOkmVo1VsqSwAk
+         UDuA==
+X-Gm-Message-State: AJIora+gXTrE274h53mL3Z22fKLPuTEvo+3XdjG3jMFgpWDKjTFCDbaK
+        xMHR/pInMvE8qEotHnll6fi/L+94MnGgHg==
+X-Google-Smtp-Source: AGRyM1uTA6q9Pb8g7Ft79aTK48JPXo1IE67FiP/bUIX4qNug68HwmPUpe1AGHDfMv+ZFlzqqTuBROg==
+X-Received: by 2002:a05:6808:1313:b0:335:cad6:715c with SMTP id y19-20020a056808131300b00335cad6715cmr2593756oiv.130.1658329178091;
+        Wed, 20 Jul 2022 07:59:38 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id x18-20020a056870331200b0010c7487aa73sm9262100oae.50.2022.07.20.07.59.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Jul 2022 07:59:37 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, bhupesh.sharma@linaro.org
+Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        pavel@ucw.cz, bhupesh.linux@gmail.com, robh@kernel.org,
+        linux-leds@vger.kernel.org
+Subject: Re: (subset) [PATCH 1/3] arm64: dts: qcom: Fix 'dtbs_check' errors for pm8350c & sc8280xp pwm nodes
+Date:   Wed, 20 Jul 2022 09:59:36 -0500
+Message-Id: <165832916913.2078047.694864679825238718.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.37.1
+In-Reply-To: <20220719205058.1004942-1-bhupesh.sharma@linaro.org>
+References: <20220719205058.1004942-1-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v1 1/1] bus: mhi: host: Fix up null pointer access in
- mhi_irq_handler
-Content-Language: en-US
-To:     Qiang Yu <quic_qianyu@quicinc.com>, <mani@kernel.org>,
-        <quic_hemantk@quicinc.com>, <loic.poulain@linaro.org>
-CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>
-References: <1658311454-4707-1-git-send-email-quic_qianyu@quicinc.com>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <1658311454-4707-1-git-send-email-quic_qianyu@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: EVlz8ryf-a3ejSGIOq4-mmIhyHwA-xbh
-X-Proofpoint-ORIG-GUID: EVlz8ryf-a3ejSGIOq4-mmIhyHwA-xbh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-07-20_08,2022-07-20_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
- impostorscore=0 malwarescore=0 clxscore=1011 phishscore=0
- priorityscore=1501 spamscore=0 adultscore=0 suspectscore=0 mlxscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2206140000 definitions=main-2207200059
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/20/2022 4:04 AM, Qiang Yu wrote:
-> The irq handler for a shared IRQ ought to be prepared for running
-> even now it's being freed. So let's check the pointer used by
-> mhi_irq_handler to avoid null pointer access since it is probably
-> released before freeing IRQ.
+On Wed, 20 Jul 2022 02:20:56 +0530, Bhupesh Sharma wrote:
+> make dtbs_check currently reports the following errors
+> with pm8350c & sc8280xp pwm nodes:
 > 
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-> ---
->   drivers/bus/mhi/host/main.c | 14 +++++++++++---
->   1 file changed, 11 insertions(+), 3 deletions(-)
+> arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb:
+>  pwm@e800: 'reg' does not match any of the regexes:
+>  '^led@[0-9a-f]$', 'pinctrl-[0-9]+'
 > 
-> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> index f3aef77a..7959457 100644
-> --- a/drivers/bus/mhi/host/main.c
-> +++ b/drivers/bus/mhi/host/main.c
-> @@ -430,12 +430,20 @@ irqreturn_t mhi_irq_handler(int irq_number, void *dev)
->   {
->   	struct mhi_event *mhi_event = dev;
->   	struct mhi_controller *mhi_cntrl = mhi_event->mhi_cntrl;
-> -	struct mhi_event_ctxt *er_ctxt =
-> -		&mhi_cntrl->mhi_ctxt->er_ctxt[mhi_event->er_index];
-> +	struct mhi_event_ctxt *er_ctxt;
->   	struct mhi_ring *ev_ring = &mhi_event->ring;
-> -	dma_addr_t ptr = le64_to_cpu(er_ctxt->rp);
-> +	dma_addr_t ptr;
->   	void *dev_rp;
->   
-> +	if (!mhi_cntrl->mhi_ctxt) {
-> +		dev_err(&mhi_cntrl->mhi_dev->dev,
-> +			"mhi_ctxt has been freed\n");
+> [...]
 
-dev_dbg since you identified a scenario where this is expected?
+Applied, thanks!
 
-> +		return IRQ_HANDLED;
-> +	}
-> +
-> +	er_ctxt = &mhi_cntrl->mhi_ctxt->er_ctxt[mhi_event->er_index];
-> +	ptr = le64_to_cpu(er_ctxt->rp);
-> +
->   	if (!is_valid_ring_ptr(ev_ring, ptr)) {
->   		dev_err(&mhi_cntrl->mhi_dev->dev,
->   			"Event ring rp points outside of the event ring\n");
+[2/3] arm64: dts: qcom: qrb5165-rb5: Fix 'dtbs_check' error for lpg nodes
+      commit: 1282fa32d71633bce5330a592db6e53cf73d2c28
+[3/3] arm64: dts: qcom: qrb5165-rb5: Fix 'dtbs_check' error for led nodes
+      commit: 360d9526761270f2497893946bb48de468a229cc
 
+Best regards,
+-- 
+Bjorn Andersson <bjorn.andersson@linaro.org>
