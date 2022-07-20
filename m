@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E788957BEAF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 21:36:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9101A57BEBD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 21:42:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235766AbiGTTgh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jul 2022 15:36:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43388 "EHLO
+        id S231944AbiGTTm0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jul 2022 15:42:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229577AbiGTTgg (ORCPT
+        with ESMTP id S229570AbiGTTm0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jul 2022 15:36:36 -0400
+        Wed, 20 Jul 2022 15:42:26 -0400
 Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F8866110E;
-        Wed, 20 Jul 2022 12:36:35 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4321651A13;
+        Wed, 20 Jul 2022 12:42:25 -0700 (PDT)
 Received: from [192.168.1.101] (abxj77.neoplus.adsl.tpnet.pl [83.9.3.77])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id E1CC22004C;
-        Wed, 20 Jul 2022 21:36:30 +0200 (CEST)
-Message-ID: <887b005d-750d-39f2-73b7-851aa0e461f4@somainline.org>
-Date:   Wed, 20 Jul 2022 21:36:30 +0200
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id F3ECD200CD;
+        Wed, 20 Jul 2022 21:42:22 +0200 (CEST)
+Message-ID: <e34e7932-b64a-59d8-dfa2-2de23a52425c@somainline.org>
+Date:   Wed, 20 Jul 2022 21:42:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
@@ -66,99 +66,9 @@ On 20.07.2022 08:27, Krzysztof Kozlowski wrote:
 >>
 >> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 >> ---
->> Changes since v1:
->> - dropped clock-names (switched to .index)
->>
->>  .../bindings/clock/qcom,sm6375-gcc.yaml       |  65 +++++
->>  include/dt-bindings/clock/qcom,sm6375-gcc.h   | 234 ++++++++++++++++++
->>  2 files changed, 299 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm6375-gcc.yaml
->>  create mode 100644 include/dt-bindings/clock/qcom,sm6375-gcc.h
->>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm6375-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm6375-gcc.yaml
->> new file mode 100644
->> index 000000000000..2e43cd75d3d4
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/clock/qcom,sm6375-gcc.yaml
->> @@ -0,0 +1,65 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/clock/qcom,sm6375-gcc.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm Global Clock & Reset Controller Binding for SM6375
->> +
->> +maintainers:
->> +  - Konrad Dybcio <konrad.dybcio@somainline.org>
->> +
->> +description: |
->> +  Qualcomm global clock control module which supports the clocks, resets and
->> +  power domains on SM6375
->> +
->> +  See also:
->> +  - dt-bindings/clock/qcom,sm6375-gcc.h
->> +
-> 
-> Why you are not referencing qcom,gcc.yaml?
-Hm.. Out of all the SoCs we support, only apq8084 and apq/ipq8064 reference it..
-Should I add that?
 
-Konrad
+[...]
 
-
-> 
->> +properties:
->> +  compatible:
->> +    const: qcom,sm6375-gcc
->> +
->> +  clocks:
->> +    items:
->> +      - description: Board XO source
->> +      - description: Board XO Active-Only source
->> +      - description: Sleep clock source
->> +
->> +  '#clock-cells':
->> +    const: 1
->> +
->> +  '#reset-cells':
->> +    const: 1
->> +
->> +  '#power-domain-cells':
->> +    const: 1
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - clocks
->> +  - '#clock-cells'
->> +  - '#reset-cells'
->> +  - '#power-domain-cells'
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/clock/qcom,rpmcc.h>
->> +    clock-controller@1400000 {
->> +      compatible = "qcom,sm6375-gcc";
->> +      reg = <0x01400000 0x1f0000>;
->> +      clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
->> +               <&rpmcc RPM_SMD_XO_A_CLK_SRC>,
->> +               <&sleep_clk>;
->> +      #clock-cells = <1>;
->> +      #reset-cells = <1>;
->> +      #power-domain-cells = <1>;
->> +    };
->> +
->> +...
->> diff --git a/include/dt-bindings/clock/qcom,sm6375-gcc.h b/include/dt-bindings/clock/qcom,sm6375-gcc.h
->> new file mode 100644
->> index 000000000000..1e9801e1cedf
->> --- /dev/null
 >> +++ b/include/dt-bindings/clock/qcom,sm6375-gcc.h
 >> @@ -0,0 +1,234 @@
 >> +/* SPDX-License-Identifier: GPL-2.0-only */
@@ -166,6 +76,18 @@ Konrad
 > Hm, Qualcomm gave permission to relicense bindings to dual-license,
 > although I am not sure how this works with files where copyrights were
 > transferred to Linux Foundation...
+Right, I overlooked this.
+
+Considering all of the headers for the clock controllers are an exact or
+almost exact copy of the downstream ones ever since qcom switched to using
+the common clock framework in 2017 or so, plus I am not sure how
+copyrightable this is, given copying names from the .c driver, making them
+uppercase and assigning them consecutive numbers is not exactly much of a
+creative work.. so I don't think anybody would oppose it?
+
+Obviously I'm not a lawyer and this is not legal advice..
+
+Konrad
 > 
 >> +/*
 >> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
