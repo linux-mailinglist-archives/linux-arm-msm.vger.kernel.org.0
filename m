@@ -2,237 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4350757B47C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 12:28:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 441E057B4FE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 13:04:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229618AbiGTK2I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jul 2022 06:28:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43630 "EHLO
+        id S239876AbiGTLER (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jul 2022 07:04:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235182AbiGTK2F (ORCPT
+        with ESMTP id S231272AbiGTLEQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jul 2022 06:28:05 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A083C2CDD4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 03:28:02 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id a5so25450105wrx.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 03:28:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=HDPGW+0VbU3HlGqsVgCK1SSNUaqROvFzsq51vzca6Qw=;
-        b=KrPJmTtMuvZR7p6XRqQ/OrPLQA7Zzg3FcZINYhW2sciW/ZPl/VlBV5i6Wg1VVk1KMb
-         6lFWLqiLIcmuXtIwXaDp8Cy7prJnf303iyzNVbmvvLCl0RHLIalMJxeycb7UhFk4PTsL
-         PbWa+gwT+nfPXG+BHHgGrBgE859UslhzNc0d4nVszRb7+ClQRwS/ycBKtbkmw1hB8vNf
-         +ONm+9s1+1m5MpwvOs5sphs8g83uJc4c6hlKENogyJ5Do+rDBAHjV4JtoZ6njYaO7m7a
-         zjq04NqUOr/uL1gmTlnszNwIoGYruLGFM3ti+dsKGC9EhWtkt+/gnbrDcRaEeez3gGSd
-         HHow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=HDPGW+0VbU3HlGqsVgCK1SSNUaqROvFzsq51vzca6Qw=;
-        b=LyCdyO1uKCTfYCkJsPq0yqceI4tBeUJ2vnX978oBzREG3KlPEl01xT7CHzCS6//GN6
-         NLnQF1pWmSOWPNVMZ/hsrs1ifV81Qk4e/2fW26z1Oy6fvnGMcwH2oQ67t7mfFiJQkSDc
-         HLLpc5qEBrTfC5HQfhgg4AGMWqsghT9NCailo06jCkENhrs0H6Gn8oHvnY8r1m4ksfdU
-         h08ZDLaHr7mqpiSInGlHGKKMiwEKlXOcvz3RCayS35B0w25GkEF2m2f9+r3RTvpB47Ch
-         +NBfaIMkReqZkfZzgvXRCC+E6CZyYqoGpyFH+Reyav7stuvZThwkFo67A8Gg94/9RRIK
-         ZSWQ==
-X-Gm-Message-State: AJIora8tzj51WdrdiUj69jK87cGj2AfCJLiymuKFd5uUrXVQ6sj6islh
-        yVJIqjfEKIV4ivCcJ5LQUDOAog==
-X-Google-Smtp-Source: AGRyM1vh2LF8NITrJVM5B8R6LREdsrVgV6SJqBUhJgCSK1MiAprdXWFnFxJAT4Imf0CwVtLf+pQQsQ==
-X-Received: by 2002:a5d:56d1:0:b0:21d:78ad:c8bf with SMTP id m17-20020a5d56d1000000b0021d78adc8bfmr30739964wrw.175.1658312880843;
-        Wed, 20 Jul 2022 03:28:00 -0700 (PDT)
-Received: from ?IPV6:2a05:6e02:1041:c10:b579:e7b5:219d:267c? ([2a05:6e02:1041:c10:b579:e7b5:219d:267c])
-        by smtp.googlemail.com with ESMTPSA id v130-20020a1cac88000000b003a03be171b1sm1980057wme.43.2022.07.20.03.27.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Jul 2022 03:28:00 -0700 (PDT)
-Message-ID: <0861a79e-f2b0-143e-b09e-9b088a4568a7@linaro.org>
-Date:   Wed, 20 Jul 2022 12:27:58 +0200
+        Wed, 20 Jul 2022 07:04:16 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 040F26D9E1;
+        Wed, 20 Jul 2022 04:04:16 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 26KAnWmJ008172;
+        Wed, 20 Jul 2022 11:04:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=GXcvdO9ayLwyvlEbvOhdva96oagixi27ayh7cUAUuUU=;
+ b=hWi53BVjgyz15VX0/PO3932NoEIJ8HYcYbcN6g5tORGbQ/pVnA2dABbSZRjO1Lw3KWGj
+ teSA1XDqUtZEAvbB2GObuuyAPty3x5gOmggrUrIFO0mRwl9aI1k0zjwmNiKNnaciM5Ao
+ tjc7bsnF2MiofsMYIDjh5vwzQhEC9kJLskJmZRBoloCrGf6zaUu79V1wwlqrl6CpJzh+
+ uMP0yHO2gvbK+56sjLqGmKI33RT3s+8cumBSICoc4C2AXGlxzmr+yUjO+jPcWmU26LP8
+ qRB8DETNuRQLkjfZdHSlHT7xGx3DBR6EfUgHAmg9b18OksCsO/uvumeGEYV0z9WkVLln FQ== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3hebfv0tf9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 20 Jul 2022 11:04:12 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.47.97.222])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 26KB4Bop015372
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 20 Jul 2022 11:04:12 GMT
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 20 Jul 2022 04:04:11 -0700
+Received: from c-skakit-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 20 Jul 2022 04:04:07 -0700
+From:   Satya Priya <quic_c_skakit@quicinc.com>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-soc@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <robh@kernel.org>,
+        <robh+dt@kernel.org>, <quic_tdas@quicinc.com>,
+        <quic_c_skakit@quicinc.com>
+Subject: [PATCH V6 0/5] Add support for audio clock gating resets for SC7280
+Date:   Wed, 20 Jul 2022 16:33:38 +0530
+Message-ID: <1658315023-3336-1-git-send-email-quic_c_skakit@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v6 2/5] drivers: thermal: tsens: Add support for combined
- interrupt
-Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
-        amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
-        rui.zhang@intel.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220714101451.198211-1-robimarko@gmail.com>
- <20220714101451.198211-2-robimarko@gmail.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <20220714101451.198211-2-robimarko@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 23N64elEEZQwiDmShC013v9JqZSsieqE
+X-Proofpoint-ORIG-GUID: 23N64elEEZQwiDmShC013v9JqZSsieqE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-07-20_05,2022-07-20_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=726
+ impostorscore=0 malwarescore=0 clxscore=1011 phishscore=0
+ priorityscore=1501 spamscore=0 adultscore=0 suspectscore=0 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2206140000 definitions=main-2207200046
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Patches [3], [4] and [5] depend on [1], [2] to be merged first. So, adding
+the cleanup patches also to this series.
 
-Hi,
+[v6]
+  * Add [1], [2] to handle the regmap overlap of lpasscc and lpass_aon 
 
-On 14/07/2022 12:14, Robert Marko wrote:
-> Despite using tsens v2.3 IP, IPQ8074 and IPQ6018 only have one IRQ for
-> signaling both up/low and critical trips.
-> 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
+[v5]
+  * Fix the fail path and add pm_runtime_disable().
 
-Bjorn, are these changes ok for you ?
+[v4]
+  * Fix the "fixes" tag.
 
-> ---
-> Changes in v6:
-> * Check critical IRQ handler return, simplify up/low return
-> ---
->   drivers/thermal/qcom/tsens-8960.c |  1 +
->   drivers/thermal/qcom/tsens-v0_1.c |  1 +
->   drivers/thermal/qcom/tsens-v1.c   |  1 +
->   drivers/thermal/qcom/tsens-v2.c   |  1 +
->   drivers/thermal/qcom/tsens.c      | 38 ++++++++++++++++++++++++++-----
->   drivers/thermal/qcom/tsens.h      |  2 ++
->   6 files changed, 38 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/thermal/qcom/tsens-8960.c b/drivers/thermal/qcom/tsens-8960.c
-> index 67c1748cdf73..ee584e5b07e5 100644
-> --- a/drivers/thermal/qcom/tsens-8960.c
-> +++ b/drivers/thermal/qcom/tsens-8960.c
-> @@ -269,6 +269,7 @@ static const struct tsens_ops ops_8960 = {
->   static struct tsens_features tsens_8960_feat = {
->   	.ver_major	= VER_0,
->   	.crit_int	= 0,
-> +	.combo_int	= 0,
->   	.adc		= 1,
->   	.srot_split	= 0,
->   	.max_sensors	= 11,
-> diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
-> index f136cb350238..6effb822bf3c 100644
-> --- a/drivers/thermal/qcom/tsens-v0_1.c
-> +++ b/drivers/thermal/qcom/tsens-v0_1.c
-> @@ -539,6 +539,7 @@ static int calibrate_9607(struct tsens_priv *priv)
->   static struct tsens_features tsens_v0_1_feat = {
->   	.ver_major	= VER_0_1,
->   	.crit_int	= 0,
-> +	.combo_int	= 0,
->   	.adc		= 1,
->   	.srot_split	= 1,
->   	.max_sensors	= 11,
-> diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
-> index 573e261ccca7..a4f561a6e582 100644
-> --- a/drivers/thermal/qcom/tsens-v1.c
-> +++ b/drivers/thermal/qcom/tsens-v1.c
-> @@ -302,6 +302,7 @@ static int calibrate_8976(struct tsens_priv *priv)
->   static struct tsens_features tsens_v1_feat = {
->   	.ver_major	= VER_1_X,
->   	.crit_int	= 0,
-> +	.combo_int	= 0,
->   	.adc		= 1,
->   	.srot_split	= 1,
->   	.max_sensors	= 11,
-> diff --git a/drivers/thermal/qcom/tsens-v2.c b/drivers/thermal/qcom/tsens-v2.c
-> index b293ed32174b..129cdb247381 100644
-> --- a/drivers/thermal/qcom/tsens-v2.c
-> +++ b/drivers/thermal/qcom/tsens-v2.c
-> @@ -31,6 +31,7 @@
->   static struct tsens_features tsens_v2_feat = {
->   	.ver_major	= VER_2_X,
->   	.crit_int	= 1,
-> +	.combo_int	= 0,
->   	.adc		= 0,
->   	.srot_split	= 1,
->   	.max_sensors	= 16,
-> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> index 7963ee33bf75..5c7f9ec6ab1c 100644
-> --- a/drivers/thermal/qcom/tsens.c
-> +++ b/drivers/thermal/qcom/tsens.c
-> @@ -532,6 +532,27 @@ static irqreturn_t tsens_irq_thread(int irq, void *data)
->   	return IRQ_HANDLED;
->   }
->   
-> +/**
-> + * tsens_combined_irq_thread - Threaded interrupt handler for combined interrupts
-> + * @irq: irq number
-> + * @data: tsens controller private data
-> + *
-> + * Handle the combined interrupt as if it were 2 separate interrupts, so call the
-> + * critical handler first and then the up/low one.
-> + *
-> + * Return: IRQ_HANDLED
-> + */
-> +static irqreturn_t tsens_combined_irq_thread(int irq, void *data)
-> +{
-> +	irqreturn_t ret;
-> +
-> +	ret = tsens_critical_irq_thread(irq, data);
-> +	if (ret != IRQ_HANDLED)
-> +		return ret;
-> +
-> +	return tsens_irq_thread(irq, data);
-> +}
-> +
->   static int tsens_set_trips(void *_sensor, int low, int high)
->   {
->   	struct tsens_sensor *s = _sensor;
-> @@ -1083,13 +1104,18 @@ static int tsens_register(struct tsens_priv *priv)
->   				   tsens_mC_to_hw(priv->sensor, 0));
->   	}
->   
-> -	ret = tsens_register_irq(priv, "uplow", tsens_irq_thread);
-> -	if (ret < 0)
-> -		return ret;
-> +	if (priv->feat->combo_int) {
-> +		ret = tsens_register_irq(priv, "combined",
-> +					 tsens_combined_irq_thread);
-> +	} else {
-> +		ret = tsens_register_irq(priv, "uplow", tsens_irq_thread);
-> +		if (ret < 0)
-> +			return ret;
->   
-> -	if (priv->feat->crit_int)
-> -		ret = tsens_register_irq(priv, "critical",
-> -					 tsens_critical_irq_thread);
-> +		if (priv->feat->crit_int)
-> +			ret = tsens_register_irq(priv, "critical",
-> +						 tsens_critical_irq_thread);
-> +	}
->   
->   	return ret;
->   }
-> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
-> index 1471a2c00f15..4614177944d6 100644
-> --- a/drivers/thermal/qcom/tsens.h
-> +++ b/drivers/thermal/qcom/tsens.h
-> @@ -495,6 +495,7 @@ enum regfield_ids {
->    * struct tsens_features - Features supported by the IP
->    * @ver_major: Major number of IP version
->    * @crit_int: does the IP support critical interrupts?
-> + * @combo_int: does the IP use one IRQ for up, low and critical thresholds?
->    * @adc:      do the sensors only output adc code (instead of temperature)?
->    * @srot_split: does the IP neatly splits the register space into SROT and TM,
->    *              with SROT only being available to secure boot firmware?
-> @@ -504,6 +505,7 @@ enum regfield_ids {
->   struct tsens_features {
->   	unsigned int ver_major;
->   	unsigned int crit_int:1;
-> +	unsigned int combo_int:1;
->   	unsigned int adc:1;
->   	unsigned int srot_split:1;
->   	unsigned int has_watchdog:1;
+[v3]
+  * Remove the maxItems from reg property.
 
+[v2]
+  * Update/fix the YAML for reg property against each compatible.
+
+[v1]
+  * Add support for clock gating resets for lpass audio clock
+    controller & MCLKs.
+
+Satya Priya (2):
+  dt-bindings: clock: Add "qcom,adsp-pil-mode" property
+  clk: qcom: lpass: Handle the regmap overlap of lpasscc and lpass_aon
+
+Taniya Das (3):
+  dt-bindings: clock: Add resets for LPASS audio clock controller for
+    SC7280
+  dt-bindings: clock: Add support for external MCLKs for LPASS on SC7280
+  clk: qcom: lpass: Add support for resets & external mclk for SC7280
+
+ .../bindings/clock/qcom,sc7280-lpasscc.yaml        |  6 +-
+ .../bindings/clock/qcom,sc7280-lpasscorecc.yaml    | 26 ++++++++-
+ drivers/clk/qcom/lpassaudiocc-sc7280.c             | 66 +++++++++++++++++++++-
+ drivers/clk/qcom/lpasscc-sc7280.c                  | 44 ---------------
+ drivers/clk/qcom/lpasscorecc-sc7280.c              | 33 +++++++++++
+ .../dt-bindings/clock/qcom,lpassaudiocc-sc7280.h   |  5 ++
+ .../dt-bindings/clock/qcom,lpasscorecc-sc7280.h    |  2 +
+ 7 files changed, 130 insertions(+), 52 deletions(-)
 
 -- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+2.7.4
 
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
