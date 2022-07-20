@@ -2,142 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 12C0457BE7D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 21:29:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E788957BEAF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Jul 2022 21:36:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235111AbiGTT2i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jul 2022 15:28:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34002 "EHLO
+        id S235766AbiGTTgh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Jul 2022 15:36:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234135AbiGTT22 (ORCPT
+        with ESMTP id S229577AbiGTTgg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jul 2022 15:28:28 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ECBC5006A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 12:28:25 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id o7so31931405lfq.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 12:28:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=VypNKwMbA62CLeNoVmJCaXcGhkuttVEBZr0IDp/c4J8=;
-        b=ovGBk2Bv7cBQcvFYuuTj9LgZpGqS4tlwaBkTlX7OT9RdWQeahEXYHP/qnBY7jfELVV
-         hYJgZqSB9pjIJWg4ds3FI0Mc/RQkb9oADdavQ0IWckydUC80yrtuo3ArQ8X3dLpi1G/D
-         CU2NGSIzA2gG21ihfwu8SbkweW8Cv4cOBOz6Zq09QWN/lIx8TvKwh0oQCz5SgnsKJtat
-         CiI+7fgsyjYeRogCnF3n+IAiJyP4A8kCFScfP9CzO50enRue3dAqs+eSHd2lIXdDE6lq
-         s+j2hm2Bs9YCgl2zlZQ8o0oXIVVU28SHwcZUDYcqwh+ECr8aTz6l0JYnM5CXpxN7Y2gL
-         7rxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=VypNKwMbA62CLeNoVmJCaXcGhkuttVEBZr0IDp/c4J8=;
-        b=F9bIq09QHlCDT0djazW+9wzjPqC43lVmcN+EhciHh+aPGs1dlVVyKBPyLfbIgNAswa
-         dDyaokOx9om3B5Mvid2L7U+8sas3nqHX8kQk5SYS6ZmsEW6+LcK1zTNVIoyMGy6dQvmj
-         VTwZ+Y5w+DEfLcnfsBg0JvvnX/uj630cQ2fP1ZPcDBOEzojzOljSlkT7v2Cm+VGdLzxs
-         UK7G94kmXsYuj3JNTN6xGRgdUNhirtWtzs2qC76/FTMP1nPM244fukXkUXk9gT9gqoeq
-         omZyegRK93eGCl3j2RpDcJ7jm3aAyu5NMYJJ/kuKNTrKpfIeuK/lTZwlB08ee09PGDnZ
-         ulLg==
-X-Gm-Message-State: AJIora/igAC4KMzz38TxnzNfjy86HFnlLQwOVxnpRuh7cO4rECsJLmm8
-        zryu6m10HmgrQw60Wx/hHbziCUSvnoJRGMwo
-X-Google-Smtp-Source: AGRyM1tYmwR8LBsY9/SmQxiA79aZNoXVeIp0JWO7GsoAzhc3Ar5yV4bftKxyxXibB4bCD4e/EunHgA==
-X-Received: by 2002:a05:6512:2304:b0:48a:48e6:619f with SMTP id o4-20020a056512230400b0048a48e6619fmr7511108lfu.434.1658345304944;
-        Wed, 20 Jul 2022 12:28:24 -0700 (PDT)
-Received: from krzk-bin.. (89-162-31-138.fiber.signal.no. [89.162.31.138])
-        by smtp.gmail.com with ESMTPSA id h32-20020a0565123ca000b0047fac0f34absm3985771lfv.196.2022.07.20.12.28.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jul 2022 12:28:24 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        Wed, 20 Jul 2022 15:36:36 -0400
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F8866110E;
+        Wed, 20 Jul 2022 12:36:35 -0700 (PDT)
+Received: from [192.168.1.101] (abxj77.neoplus.adsl.tpnet.pl [83.9.3.77])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id E1CC22004C;
+        Wed, 20 Jul 2022 21:36:30 +0200 (CEST)
+Message-ID: <887b005d-750d-39f2-73b7-851aa0e461f4@somainline.org>
+Date:   Wed, 20 Jul 2022 21:36:30 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2 2/3] dt-bindings: clock: add SM6375 QCOM global clock
+ bindings
+Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Georgi Djakov <djakov@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>
-Subject: [PATCH 10/10] arm64: dts: qcom: sdm845: add LLCC BWMON
-Date:   Wed, 20 Jul 2022 21:28:07 +0200
-Message-Id: <20220720192807.130098-11-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220720192807.130098-1-krzysztof.kozlowski@linaro.org>
-References: <20220720192807.130098-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+References: <20220719115756.32231-1-konrad.dybcio@somainline.org>
+ <20220719115756.32231-2-konrad.dybcio@somainline.org>
+ <11cc46d8-ae01-f3d2-b9c6-c366c6e4afc9@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <11cc46d8-ae01-f3d2-b9c6-c366c6e4afc9@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SDM845 comes with few instances of Bandwidth Monitor.  The already
-supported one monitors traffic between CPU and Last Level Cache
-Controller (LLCC) and in downstream sources is called BWMON v4 (or v4 of
-register layout).
 
-SDM845 also has also BWMON instance measuring traffic between LLCC and
-memory with different register layout: called v5.
 
-Cc: Rajendra Nayak <quic_rjendra@quicinc.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 37 ++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+On 20.07.2022 08:27, Krzysztof Kozlowski wrote:
+> On 19/07/2022 13:57, Konrad Dybcio wrote:
+>> Add device tree bindings for global clock controller for SM6375 SoCs.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+>> ---
+>> Changes since v1:
+>> - dropped clock-names (switched to .index)
+>>
+>>  .../bindings/clock/qcom,sm6375-gcc.yaml       |  65 +++++
+>>  include/dt-bindings/clock/qcom,sm6375-gcc.h   | 234 ++++++++++++++++++
+>>  2 files changed, 299 insertions(+)
+>>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm6375-gcc.yaml
+>>  create mode 100644 include/dt-bindings/clock/qcom,sm6375-gcc.h
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm6375-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm6375-gcc.yaml
+>> new file mode 100644
+>> index 000000000000..2e43cd75d3d4
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,sm6375-gcc.yaml
+>> @@ -0,0 +1,65 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/clock/qcom,sm6375-gcc.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Global Clock & Reset Controller Binding for SM6375
+>> +
+>> +maintainers:
+>> +  - Konrad Dybcio <konrad.dybcio@somainline.org>
+>> +
+>> +description: |
+>> +  Qualcomm global clock control module which supports the clocks, resets and
+>> +  power domains on SM6375
+>> +
+>> +  See also:
+>> +  - dt-bindings/clock/qcom,sm6375-gcc.h
+>> +
+> 
+> Why you are not referencing qcom,gcc.yaml?
+Hm.. Out of all the SoCs we support, only apq8084 and apq/ipq8064 reference it..
+Should I add that?
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index fe14f7e7523b..4aab464e2bd6 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -2053,6 +2053,43 @@ llcc: system-cache-controller@1100000 {
- 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-+		pmu@114a000 {
-+			compatible = "qcom,sdm845-llcc-bwmon";
-+			reg = <0 0x0114a000 0 0x1000>;
-+			interrupts = <GIC_SPI 580 IRQ_TYPE_LEVEL_HIGH>;
-+			interconnects = <&mem_noc MASTER_LLCC 3 &mem_noc SLAVE_EBI1 3>;
-+
-+			operating-points-v2 = <&llcc_bwmon_opp_table>;
-+
-+			llcc_bwmon_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				/*
-+				 * The interconnect path bandwidth taken from
-+				 * cpu4_opp_table bandwidth for gladiator_noc-mem_noc
-+				 * interconnect.  This also matches the
-+				 * bandwidth table of qcom,llccbw (qcom,bw-tbl,
-+				 * bus width: 4 bytes) from msm-4.9 downstream
-+				 * kernel.
-+				 */
-+				opp-0 {
-+					opp-peak-kBps = <800000>;
-+				};
-+				opp-1 {
-+					opp-peak-kBps = <1804000>;
-+				};
-+				opp-2 {
-+					opp-peak-kBps = <3072000>;
-+				};
-+				opp-3 {
-+					opp-peak-kBps = <5412000>;
-+				};
-+				opp-4 {
-+					opp-peak-kBps = <7216000>;
-+				};
-+			};
-+		};
-+
- 		pmu@1436400 {
- 			compatible = "qcom,sdm845-bwmon", "qcom,msm8998-bwmon";
- 			reg = <0 0x01436400 0 0x600>;
--- 
-2.34.1
+Konrad
 
+
+> 
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,sm6375-gcc
+>> +
+>> +  clocks:
+>> +    items:
+>> +      - description: Board XO source
+>> +      - description: Board XO Active-Only source
+>> +      - description: Sleep clock source
+>> +
+>> +  '#clock-cells':
+>> +    const: 1
+>> +
+>> +  '#reset-cells':
+>> +    const: 1
+>> +
+>> +  '#power-domain-cells':
+>> +    const: 1
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - clocks
+>> +  - '#clock-cells'
+>> +  - '#reset-cells'
+>> +  - '#power-domain-cells'
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/clock/qcom,rpmcc.h>
+>> +    clock-controller@1400000 {
+>> +      compatible = "qcom,sm6375-gcc";
+>> +      reg = <0x01400000 0x1f0000>;
+>> +      clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
+>> +               <&rpmcc RPM_SMD_XO_A_CLK_SRC>,
+>> +               <&sleep_clk>;
+>> +      #clock-cells = <1>;
+>> +      #reset-cells = <1>;
+>> +      #power-domain-cells = <1>;
+>> +    };
+>> +
+>> +...
+>> diff --git a/include/dt-bindings/clock/qcom,sm6375-gcc.h b/include/dt-bindings/clock/qcom,sm6375-gcc.h
+>> new file mode 100644
+>> index 000000000000..1e9801e1cedf
+>> --- /dev/null
+>> +++ b/include/dt-bindings/clock/qcom,sm6375-gcc.h
+>> @@ -0,0 +1,234 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only */
+> 
+> Hm, Qualcomm gave permission to relicense bindings to dual-license,
+> although I am not sure how this works with files where copyrights were
+> transferred to Linux Foundation...
+> 
+>> +/*
+>> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+>> + * Copyright (c) 2022, Konrad Dybcio <konrad.dybcio@somainline.org>
+>> + */
+>> +
+>> +#ifndef _DT_BINDINGS_CLK_QCOM_GCC_SM6375_H
+>> +#define _DT_BINDINGS_CLK_QCOM_GCC_SM6375_H
+>> +
+> 
+> 
+> Best regards,
+> Krzysztof
