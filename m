@@ -2,45 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 432CF57C86A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 12:00:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EB5557C885
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 12:04:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232876AbiGUKAU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jul 2022 06:00:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58328 "EHLO
+        id S233056AbiGUKEJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jul 2022 06:04:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232974AbiGUKAA (ORCPT
+        with ESMTP id S233044AbiGUKED (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jul 2022 06:00:00 -0400
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [5.144.164.164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9A0D8210C;
-        Thu, 21 Jul 2022 02:59:57 -0700 (PDT)
-Received: from SoMainline.org (D57D4C6E.static.ziggozakelijk.nl [213.125.76.110])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 08E341F661;
-        Thu, 21 Jul 2022 11:59:53 +0200 (CEST)
-Date:   Thu, 21 Jul 2022 11:59:46 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        jamipkettunen@somainline.org, Andy Gross <agross@kernel.org>,
+        Thu, 21 Jul 2022 06:04:03 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64F6F2A72D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 03:04:02 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id y15so1333388plp.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 03:04:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=k2cfPwM4F8MRG16OVbwN5qbYqMkFUntciq+TeBCrGDw=;
+        b=xn1hFsp+rwVt8rSkdOTGbbWXiQRceoZzibnj/20NRMiIyicNBeZuHqd5BMXWw4Amwg
+         qGeaB0+qOl8xhuPq+JGxDj16XbYYMeovfEMAtfN180AMBXOqTE6djezZ5mA7b6ZcgmVM
+         jUlojxG84UW7A7dmaLA3Jr/LwZnZ8Vzc1sDr4ngmKdCHjXHM7qlbmfOGe1ev4k9sHDDj
+         DSdlk7nxjZXiq5TLIxAZCo1jbWSaFmQltpYyfqnTLXYhdfR1jr7GHTLZWe66UMX0dkSX
+         CoagdFmUK+J9WM/vg+Jc7rvFtK6PQ6MJrqrSAq0BJCK8PKof8NRK+ZXKJToB3BtqcA2+
+         nQ5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=k2cfPwM4F8MRG16OVbwN5qbYqMkFUntciq+TeBCrGDw=;
+        b=D166OAxHKDYr99+WeZ8iiz4MPtZJ86OS3jyFl4m9SDi4xvNBOgbb8lgw/2DsB9oWi6
+         Wantv+4pALDYpvux0o8h+irtcs4kmlBarLdrWSnbzfJ0bh3xCpSdvSoCBRnc+v5gRlVW
+         BhRSbSkFKLZ1+dIhPJz4Uks5CL+W7V6nxM3SzJj6UL+4/IyZOGLDCpTt3wOx9x8LNGY0
+         zYadmFToINH8YxGpWiUhWq7fVtp6oeGJ0A8eqPNH0dCB6YP0xvppBSfCirykIn+QWUoX
+         WqUDPMd+WlT3tyi4gMdJ0MUVat1jiuU28PxUzJ+UDAf7Lu0+ismHYz1DP3CP+MPvLAlt
+         Xxvg==
+X-Gm-Message-State: AJIora9cp/fSPEdMqmPm38PP+m1Hoyd5O10P5BWGLc3d0x8j4AHupdAM
+        z8/YrYIMkyJEQxfMTICpNDAK
+X-Google-Smtp-Source: AGRyM1sWdnzwXT+3f8ffMpQ35lw1gPgPdgjyWLnWiaWwz/hbcnb7Zjs075w009E5GTau5fJJAnrLpA==
+X-Received: by 2002:a17:90a:7c05:b0:1ee:e40c:589b with SMTP id v5-20020a17090a7c0500b001eee40c589bmr10549539pjf.78.1658397841781;
+        Thu, 21 Jul 2022 03:04:01 -0700 (PDT)
+Received: from thinkpad ([117.217.186.184])
+        by smtp.gmail.com with ESMTPSA id u124-20020a627982000000b0052b4f4c6a8fsm1295424pfc.209.2022.07.21.03.03.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Jul 2022 03:04:01 -0700 (PDT)
+Date:   Thu, 21 Jul 2022 15:33:53 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: power: rpmpd: Add SM6375 power domains
-Message-ID: <20220721095946.wy3wbeib4ycwghzl@SoMainline.org>
-References: <20220716193201.455728-1-konrad.dybcio@somainline.org>
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [RFC PATCH 2/4] phy: qcom-qmp-pcie: suppor separate tables for
+ EP mode
+Message-ID: <20220721100353.GB39125@thinkpad>
+References: <20220719200626.976084-1-dmitry.baryshkov@linaro.org>
+ <20220719200626.976084-3-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220716193201.455728-1-konrad.dybcio@somainline.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220719200626.976084-3-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -48,56 +85,164 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-07-16 21:32:00, Konrad Dybcio wrote:
-> Add the bindings for SM6375 RPMPDs.
+s/suppor/support
+
+On Tue, Jul 19, 2022 at 11:06:24PM +0300, Dmitry Baryshkov wrote:
+> The PCIe QMP PHY requires different programming sequences when being
+> used for the RC (Root Complex) or for the EP (End Point) modes. Allow
+> selecting the submode and thus selecting a set of PHY programming
+> tables.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  .../devicetree/bindings/power/qcom,rpmpd.yaml        |  1 +
->  include/dt-bindings/power/qcom-rpmpd.h               | 12 ++++++++++++
->  2 files changed, 13 insertions(+)
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 33 ++++++++++++++++--------
+>  1 file changed, 22 insertions(+), 11 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-> index ad77a6380f38..8b58cbc298a1 100644
-> --- a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-> +++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-> @@ -39,6 +39,7 @@ properties:
->        - qcom,sm6115-rpmpd
->        - qcom,sm6125-rpmpd
->        - qcom,sm6350-rpmhpd
-> +      - qcom,sm6375-rpmpd
->        - qcom,sm8150-rpmhpd
->        - qcom,sm8250-rpmhpd
->        - qcom,sm8350-rpmhpd
-> diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
-> index 6cce5b7aa940..8b770bfcf46b 100644
-> --- a/include/dt-bindings/power/qcom-rpmpd.h
-> +++ b/include/dt-bindings/power/qcom-rpmpd.h
-> @@ -36,6 +36,18 @@
->  #define SM6350_MSS	4
->  #define SM6350_MX	5
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> index 23ca5848c4a8..898288c1cd7d 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> @@ -1368,7 +1368,8 @@ struct qmp_phy_cfg {
 >  
-> +/* SM6350 Power Domain Indexes */
-> +#define SM6375_VDDCX		0
-> +#define SM6375_VDDCX_AO	1
-> +#define SM6375_VDDCX_VFL	2
-> +#define SM6375_VDDMX		3
-> +#define SM6375_VDDMX_AO	4
-> +#define SM6375_VDDMX_VFL	5
-> +#define SM6375_VDDGX		6
-> +#define SM6375_VDDGX_AO	7
-> +#define SM6375_VDD_LPI_CX	8
-> +#define SM6375_VDD_LPI_MX	9
+>  	/* Init sequence for PHY blocks - serdes, tx, rx, pcs */
+>  	struct qmp_phy_cfg_tables pri;
+> -	struct qmp_phy_cfg_tables sec;
+> +	struct qmp_phy_cfg_tables sec_rc; /* for the RC only */
+> +	struct qmp_phy_cfg_tables sec_ep; /* for the EP only */
 
-Looking at the naming/pattern of these constants I think they should
-reside near the bottom of this file with SM6125 and friends, rather than
-here with SM8150 and friends' MX/CX (and no _VFL).
+Again, a comment is needed for these members.
 
-- Marijn
+>  
+>  	/* clock ids to be requested */
+>  	const char * const *clk_list;
+> @@ -1418,6 +1419,7 @@ struct qmp_phy_cfg {
+>   * @index: lane index
+>   * @qmp: QMP phy to which this lane belongs
+>   * @mode: current PHY mode
+> + * @sec: currently selected PHY init table set
+>   */
+>  struct qmp_phy {
+>  	struct phy *phy;
+> @@ -1433,6 +1435,7 @@ struct qmp_phy {
+>  	unsigned int index;
+>  	struct qcom_qmp *qmp;
+>  	enum phy_mode mode;
+> +	const struct qmp_phy_cfg_tables *sec;
 
->  /* SM8150 Power Domain Indexes */
->  #define SM8150_MSS	0
->  #define SM8150_EBI	1
+Please move the pointer to the top to avoid holes. If possible organize the
+members in a pattern:
+
+ptr
+struct
+enum
+u64
+u32
+u8
+
+>  };
+>  
+>  /**
+> @@ -1683,7 +1686,7 @@ static const struct qmp_phy_cfg sm8250_qmp_gen3x1_pciephy_cfg = {
+>  	.pcs_misc_tbl		= sm8250_qmp_pcie_pcs_misc_tbl,
+>  	.pcs_misc_tbl_num	= ARRAY_SIZE(sm8250_qmp_pcie_pcs_misc_tbl),
+>  	},
+> -	.sec = {
+> +	.sec_rc = {
+>  	.serdes_tbl		= sm8250_qmp_gen3x1_pcie_serdes_tbl,
+>  	.serdes_tbl_num		= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_serdes_tbl),
+>  	.rx_tbl			= sm8250_qmp_gen3x1_pcie_rx_tbl,
+> @@ -1726,7 +1729,7 @@ static const struct qmp_phy_cfg sm8250_qmp_gen3x2_pciephy_cfg = {
+>  	.pcs_misc_tbl		= sm8250_qmp_pcie_pcs_misc_tbl,
+>  	.pcs_misc_tbl_num	= ARRAY_SIZE(sm8250_qmp_pcie_pcs_misc_tbl),
+>  	},
+> -	.sec = {
+> +	.sec_rc = {
+>  	.tx_tbl			= sm8250_qmp_gen3x2_pcie_tx_tbl,
+>  	.tx_tbl_num		= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_tx_tbl),
+>  	.rx_tbl			= sm8250_qmp_gen3x2_pcie_rx_tbl,
+> @@ -1951,7 +1954,7 @@ static int qcom_qmp_phy_pcie_serdes_init(struct qmp_phy *qphy)
+>  	void __iomem *serdes = qphy->serdes;
+>  
+>  	qcom_qmp_phy_pcie_configure(serdes, cfg->regs, cfg->pri.serdes_tbl, cfg->pri.serdes_tbl_num);
+> -	qcom_qmp_phy_pcie_configure(serdes, cfg->regs, cfg->sec.serdes_tbl, cfg->sec.serdes_tbl_num);
+> +	qcom_qmp_phy_pcie_configure(serdes, cfg->regs, qphy->sec->serdes_tbl, qphy->sec->serdes_tbl_num);
+>  
+>  	return 0;
+>  }
+> @@ -2045,6 +2048,9 @@ static int qcom_qmp_phy_pcie_power_on(struct phy *phy)
+>  	unsigned int mask, val, ready;
+>  	int ret;
+>  
+
+Here also, a comment would add a value.
+
+Thanks,
+Mani
+
+> +	if (!qphy->sec)
+> +		qphy->sec = &cfg->sec_rc;
+> +
+>  	qcom_qmp_phy_pcie_serdes_init(qphy);
+>  
+>  	ret = clk_prepare_enable(qphy->pipe_clk);
+> @@ -2057,35 +2063,35 @@ static int qcom_qmp_phy_pcie_power_on(struct phy *phy)
+>  	qcom_qmp_phy_pcie_configure_lane(tx, cfg->regs,
+>  					 cfg->pri.tx_tbl, cfg->pri.tx_tbl_num, 1);
+>  	qcom_qmp_phy_pcie_configure_lane(tx, cfg->regs,
+> -					 cfg->sec.tx_tbl, cfg->sec.tx_tbl_num, 1);
+> +					 qphy->sec->tx_tbl, qphy->sec->tx_tbl_num, 1);
+>  
+>  	/* Configuration for other LANE for USB-DP combo PHY */
+>  	if (cfg->is_dual_lane_phy) {
+>  		qcom_qmp_phy_pcie_configure_lane(qphy->tx2, cfg->regs,
+>  						 cfg->pri.tx_tbl, cfg->pri.tx_tbl_num, 2);
+>  		qcom_qmp_phy_pcie_configure_lane(qphy->tx2, cfg->regs,
+> -						 cfg->sec.tx_tbl, cfg->sec.tx_tbl_num, 2);
+> +						 qphy->sec->tx_tbl, qphy->sec->tx_tbl_num, 2);
+>  	}
+>  
+>  	qcom_qmp_phy_pcie_configure_lane(rx, cfg->regs,
+>  					 cfg->pri.rx_tbl, cfg->pri.rx_tbl_num, 1);
+>  	qcom_qmp_phy_pcie_configure_lane(rx, cfg->regs,
+> -					 cfg->sec.rx_tbl, cfg->sec.rx_tbl_num, 1);
+> +					 qphy->sec->rx_tbl, qphy->sec->rx_tbl_num, 1);
+>  
+>  	if (cfg->is_dual_lane_phy) {
+>  		qcom_qmp_phy_pcie_configure_lane(qphy->rx2, cfg->regs,
+>  						 cfg->pri.rx_tbl, cfg->pri.rx_tbl_num, 2);
+>  		qcom_qmp_phy_pcie_configure_lane(qphy->rx2, cfg->regs,
+> -						 cfg->sec.rx_tbl, cfg->sec.rx_tbl_num, 2);
+> +						 qphy->sec->rx_tbl, qphy->sec->rx_tbl_num, 2);
+>  	}
+>  
+>  	qcom_qmp_phy_pcie_configure(pcs, cfg->regs, cfg->pri.pcs_tbl, cfg->pri.pcs_tbl_num);
+> -	qcom_qmp_phy_pcie_configure(pcs, cfg->regs, cfg->sec.pcs_tbl, cfg->sec.pcs_tbl_num);
+> +	qcom_qmp_phy_pcie_configure(pcs, cfg->regs, qphy->sec->pcs_tbl, qphy->sec->pcs_tbl_num);
+>  
+>  	qcom_qmp_phy_pcie_configure(pcs_misc, cfg->regs, cfg->pri.pcs_misc_tbl,
+>  			       cfg->pri.pcs_misc_tbl_num);
+> -	qcom_qmp_phy_pcie_configure(pcs_misc, cfg->regs, cfg->sec.pcs_misc_tbl,
+> -			       cfg->sec.pcs_misc_tbl_num);
+> +	qcom_qmp_phy_pcie_configure(pcs_misc, cfg->regs, qphy->sec->pcs_misc_tbl,
+> +			       qphy->sec->pcs_misc_tbl_num);
+>  
+>  	/*
+>  	 * Pull out PHY from POWER DOWN state.
+> @@ -2187,6 +2193,11 @@ static int qcom_qmp_phy_pcie_set_mode(struct phy *phy,
+>  
+>  	qphy->mode = mode;
+>  
+> +	if (submode)
+> +		qphy->sec = &qphy->cfg->sec_ep;
+> +	else
+> +		qphy->sec = &qphy->cfg->sec_rc;
+> +
+>  	return 0;
+>  }
+>  
 > -- 
-> 2.37.0
+> 2.35.1
 > 
+
+-- 
+மணிவண்ணன் சதாசிவம்
