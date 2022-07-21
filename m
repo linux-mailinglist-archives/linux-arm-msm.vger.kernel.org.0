@@ -2,110 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 33F1257C311
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 05:59:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD03957C33B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 06:10:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231557AbiGUD70 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Jul 2022 23:59:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41002 "EHLO
+        id S231279AbiGUEKX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jul 2022 00:10:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231472AbiGUD7U (ORCPT
+        with ESMTP id S230243AbiGUEKW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Jul 2022 23:59:20 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8D6C785B6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 20:59:19 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id t3-20020a17090a3b4300b001f21eb7e8b0so3409973pjf.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Jul 2022 20:59:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ecs-corp-partner-google-com.20210112.gappssmtp.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=6/RJ44c6WPJhfmO9ma5Gldiq3CilNd56Qp91tJ0wDiE=;
-        b=m6CLRDADXWr8qmRx38QTrVaf4Hcahnf7dFT+Gf0x5qWCdivOgqvUfCk5aAXn7bTDG0
-         sZeoZi5pFp3VbMIj/xqlb5cxPwB3PUpBid9KXy7G7zroMs2n2RmCZ09V0fpJCYIgu83q
-         iZGZj7fz+/wieYaMRV0p8cP1CHnN/mDts+KPfhqyNdnzWeBiyApByuCKj+WiWlzP57NN
-         TqSSB6n7o+zdNaU1b+VjUAhP7QOqHKBGXAlU1RXfp1OSkZZMcTfOeIHZzT7T+Gszm24r
-         B0zW9bwk6bSprKZVKXME1R92IyWCKdiCWO5k1tdH9722kbNvaYkkn0QYNL+cAy1UmZK9
-         lSMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=6/RJ44c6WPJhfmO9ma5Gldiq3CilNd56Qp91tJ0wDiE=;
-        b=j3ngxZEsKJL2iAuB8DbvBiMSRF6kjbMjYKeo3m0wUcF+uF9HqqPPhKsheuR5S6SeFc
-         CUgJvI+I07bUq/Har8Yn5TKfCK78SGIotCmWUjtOI0wYnR5vlhf2NA8msc/XpzxgsdMv
-         sn+bipYFXw0ckhlYQjMQKQQEUDIX4ieowou/vB2MlOR3BveHV2EuzX99R8fZCHA/dnG8
-         /U9ysJMPmUfeUAwuupCd1J4dsJpJIW7HZtxTGwp8ykqJ8Ub/prWb7nQZFisYMJjbhGTE
-         TEKT1mXQLJd2MVNoY+f1LlUa2LDLB/VLZVfVFX/YLLz7pMHDvgtJPgugVIdSt6MP7TkK
-         lctg==
-X-Gm-Message-State: AJIora/1fpiaMEXiSTG8ilTiRrGsL3SBYWnFJ2Uo96lokvECeGCLARmk
-        5Lc/8+tLM5ORwX6BrvDSIivIYs1ESb08mXAM
-X-Google-Smtp-Source: AGRyM1vldKoZ9UAp5CvzfWmc31vlDWTZ5J/Arh6lXNh72F3Xynhjd21RyLXFt6K0AJtfxdEx626hHg==
-X-Received: by 2002:a17:903:32c3:b0:16d:328f:8988 with SMTP id i3-20020a17090332c300b0016d328f8988mr647850plr.108.1658375959153;
-        Wed, 20 Jul 2022 20:59:19 -0700 (PDT)
-Received: from localhost.localdomain ([103.150.184.130])
-        by smtp.gmail.com with ESMTPSA id z15-20020a17090abd8f00b001f21f7821e0sm299956pjr.2.2022.07.20.20.59.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jul 2022 20:59:18 -0700 (PDT)
-From:   Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     Henry Sun <henrysun@google.com>,
-        Bob Moragues <moragues@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v3 2/2] dt-bindings: arm: qcom: Document additional sku6 for sc7180 pazquel
-Date:   Thu, 21 Jul 2022 03:58:43 +0000
-Message-Id: <20220721033918.v3.2.I7ecbb7eeb58c5e6a33e32a3abf4d6874e6cb725c@changeid>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20220721033918.v3.1.I10519ca1bf88233702a90e296088808d18cdc7b1@changeid>
-References: <20220721033918.v3.1.I10519ca1bf88233702a90e296088808d18cdc7b1@changeid>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Thu, 21 Jul 2022 00:10:22 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F720DEE4;
+        Wed, 20 Jul 2022 21:10:19 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3C374619A9;
+        Thu, 21 Jul 2022 04:10:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 82B01C341CB;
+        Thu, 21 Jul 2022 04:10:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1658376617;
+        bh=5ea/JMJLPuN1XzRzMsOTLW90JIiXD8BBSVxFB7V9ALY=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=OiKWUFnIR9IbWxZGyIYopVVfX5oOuo+8I8wFK9dqsuYm1jOaMaDqU5ILQgmEdSIMD
+         9dGmtdfISBQ1M4P7P/9rihCsFPobEjezXq9/sSgAqVldyY/Mv0uUHkbQer4Jwr3wwM
+         ws0AWIzKcReDeGll4qNOqY5+NySFCxT2hGi27Nk0ykbPxEPhvHHM2i+rEdjpXctT30
+         KPwDBZW6hJw3iy4SdCBgEwSFapRrHv69ak4SNO5ts2Rgn0jzrNtIpWal6HMEQw2TKR
+         CaMFCJAtP2oUr1U04w4s2FgNRKhZfc2naS8tSMQHyxkauq9tcApvb5trOmTw9uUglT
+         qs827jpRAIgEw==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 679F1E451BB;
+        Thu, 21 Jul 2022 04:10:17 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net-next v2 0/5] net: ipa: small transaction updates
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <165837661742.25559.4645505157556019794.git-patchwork-notify@kernel.org>
+Date:   Thu, 21 Jul 2022 04:10:17 +0000
+References: <20220719181020.372697-1-elder@linaro.org>
+In-Reply-To: <20220719181020.372697-1-elder@linaro.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, mka@chromium.org, evgreen@chromium.org,
+        bjorn.andersson@linaro.org, quic_cpratapa@quicinc.com,
+        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
+        quic_subashab@quicinc.com, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The difference between sku6 and sku4 is that there is no esim
+Hello:
 
- The different SKUs are:
+This series was applied to netdev/net-next.git (master)
+by Jakub Kicinski <kuba@kernel.org>:
 
-   LTE with physical SIM _and_ eSIM
-   LTE with only a physical SIM
-   WiFi only
- Both sku4 and sku6 are LTE SKUs.
- One has the eSIM stuffed and one doesn't.
- There is a single shared device tree for the two.
+On Tue, 19 Jul 2022 13:10:15 -0500 you wrote:
+> Version 2 of this series corrects a misspelling of "outstanding"
+> pointed out by the netdev test bots.  (For some reason I don't see
+> that when I run "checkpatch".)  I found and fixed a second instance
+> of that word being misspelled as well.
+> 
+> This series includes three changes to the transaction code.  The
+> first adds a new transaction list that represents a distinct state
+> that has not been maintained.  The second moves a field in the
+> transaction information structure, and reorders its initialization
+> a bit.  The third skips a function call when it is known not to be
+> necessary.
+> 
+> [...]
 
-Signed-off-by: Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>
----
+Here is the summary with links:
+  - [net-next,v2,1/5] net: ipa: add a transaction committed list
+    https://git.kernel.org/netdev/net-next/c/b63f507c06e6
+  - [net-next,v2,2/5] net: ipa: rearrange transaction initialization
+    (no matching commit)
+  - [net-next,v2,3/5] net: ipa: skip some cleanup for unused transactions
+    https://git.kernel.org/netdev/net-next/c/4d8996cbeeab
+  - [net-next,v2,4/5] net: ipa: report when the driver has been removed
+    https://git.kernel.org/netdev/net-next/c/3c91c86d1bb6
+  - [net-next,v2,5/5] net: ipa: fix an outdated comment
+    https://git.kernel.org/netdev/net-next/c/616c4a83b6ea
 
-Changes in v3:
-- Bindings and dts in the same series.
-
- Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index fb1d00bcc847..ff0ed8d4d232 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -450,6 +450,7 @@ properties:
- 
-       - description: Google Pazquel with LTE and Parade (newest rev)
-         items:
-+          - const: google,pazquel-sku6
-           - const: google,pazquel-sku4
-           - const: qcom,sc7180
- 
+You are awesome, thank you!
 -- 
-2.17.1
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
