@@ -2,210 +2,484 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 064F857C783
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 11:25:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE62857C820
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 11:51:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232708AbiGUJZe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jul 2022 05:25:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57216 "EHLO
+        id S231262AbiGUJvt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jul 2022 05:51:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229723AbiGUJZd (ORCPT
+        with ESMTP id S230391AbiGUJvs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jul 2022 05:25:33 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 335C218340
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 02:25:32 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id m12so748415lfj.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 02:25:32 -0700 (PDT)
+        Thu, 21 Jul 2022 05:51:48 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C54981B0E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 02:51:47 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id bk6-20020a17090b080600b001f2138a2a7bso4052436pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 02:51:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=n96RspemHv4TX65Onfw5EgIeU668Xeh3IJ491ButWDA=;
-        b=aGUJ8Wwql3nBndT7r92NSLtZoQUn0/fNuBuA222WSsO2c8VIx5qTqRivY9R6SoTnHY
-         fwJ5Rh9ppUze5NxxfJ1rElwXXc2nSbzr3Mj7jcpBgfDCMFlZF5YkrREmzZzs9IzWSFzA
-         1UZ0tfryvJwlBgwY5O0Nw+O+HwlNlsmAhw9PWZ44SP6Zkvqe4wihFgJIuvp3Nph1e7Ix
-         AcMbF9PHYxzq75P89IlZT5UMaGq8rNjQ/guySEc2s4cmEoFe0aydwOnJrqJj8pZnMoL5
-         wODjhAxsNJBmqzlIIHvKCWwF5dmM6zLNrJADeGU08F8ntkUmVHz36ZfzN+UGhF1HnQYj
-         SzlQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=pYsFxEwlYxynVfVxm5SBHihSt1BpFABNIazF2FM2xIs=;
+        b=YMPOHee40dc8Hl4yCgMwTKkXjz/59/tafF7A6+tgkIrPM7ACbrnKbahKY7PtUrgprH
+         eU0hZvRCT812tpVASUTVdFWqIfFPSU0vQ8xZygngKcnCkAu20XBHlvPZVA9IfcUAbdfr
+         fhw0E7Ld3koNhjxGdZclGpzNX50rq4VO4RHcP3iZDo1WLhphU7KqsFaHvrmiVvtuz5jW
+         q51v4AVVvsn+tqu4Cs/2BShiVj4GwLig5/MjM10CbfXFEKinvCg5Jvq1GBw8dbaVeOmm
+         ieieOeFu9dpXH9Zf1GDkKY9KPuD0Y23Fz4wBdW0foS97ZyjbveNZcuZCCoZ1UZ7u7XoU
+         RxLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=n96RspemHv4TX65Onfw5EgIeU668Xeh3IJ491ButWDA=;
-        b=wYaxH/pSmCuGIwP3296DMDKjza7Gem9VjtBvHyRHs+TzSn8iPfYbPsCykA9l/jlmYT
-         GRmu8rGZVGnnrZum42MYitUzfOFsbzyHaN0k7eV4MQwogF28QRmu0ODQ/yrgsiaYgZFF
-         Ioh4/MZIHF7yccE5y6dAQ+i5nCsR6MoSOf5bsj11sVDFOFSqpx2hlb9B3Yqx3nBpeadj
-         IIdgEDXWYgXZ/WnbwA8f9zfJ7eovHGlsYblFw7kb5X9H1WpH7uHeTks5M6rr8DR3hS9C
-         jf+JziAhceyBvvmEtxUhq36XU2l4q9cZl5/j8LMSL1QrxwH6jVFSH0yhGJTLkezjDBTi
-         O3bA==
-X-Gm-Message-State: AJIora+ftEao9Xr0YPxaiBa3V7naUigIA1Gidt6XS2mgcqjKkLh2F83i
-        f3U9NOnH87KKbkIejHKiGhol3g==
-X-Google-Smtp-Source: AGRyM1sQnHRfTHcPmZmra8mx6Bo0N5OMSaNYFB8TJDTyOp/6lIJ4d9p50U6fT4RliWE31XApjfyHYA==
-X-Received: by 2002:a05:6512:10c4:b0:489:de26:cef7 with SMTP id k4-20020a05651210c400b00489de26cef7mr23654431lfg.216.1658395530472;
-        Thu, 21 Jul 2022 02:25:30 -0700 (PDT)
-Received: from [192.168.115.193] (89-162-31-138.fiber.signal.no. [89.162.31.138])
-        by smtp.gmail.com with ESMTPSA id q8-20020a056512210800b00488e50527e0sm323037lfr.112.2022.07.21.02.25.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Jul 2022 02:25:29 -0700 (PDT)
-Message-ID: <995c7d48-68d1-6c61-4f86-cdd2968b5156@linaro.org>
-Date:   Thu, 21 Jul 2022 11:25:27 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 3/3] ARM: dts: qcom: Add support for Samsung Galaxy Tab 4
- 10.1 (SM-T530)
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     =?UTF-8?Q?Matti_Lehtim=c3=a4ki?= <matti.lehtimaki@gmail.com>,
-        linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        soc@kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=pYsFxEwlYxynVfVxm5SBHihSt1BpFABNIazF2FM2xIs=;
+        b=g4SeA8Yi/eEgXcRiLQhQjKam6njOsMJbbEzR2Q9fuYsA6M98t8egENaGdM/0HNCM62
+         EKqKs9bhOTTuBp0ZxwwNk+gydqvsZFYkbjM7aQ0rcvrWyQwfeRo93DmNRNxMxggFMbFg
+         7zpy7cgaE5BMwDMqTGe2D788WhUTbUZhgqaIKD84SkoiZxC+7QCaR5D6TzcTsY/lfTt3
+         /EuJXmgHnEw8cxITCu+sLPqODAh2g9FaV3kvayDYeKCDMdrTS96TjndViSa1PmkrPr7v
+         C3pJWB/PrEwYuZ87p/vNLN17R7vxufsETwfN2sVH3L7noc1sZnIA32fxJY2EQYxgscGM
+         ny6A==
+X-Gm-Message-State: AJIora8l5OXAEetTuf9GF0JSDo3IJmNzfzcclPFHFLrA2ywZqvMNSf3F
+        hdbd5DHU/IVep7Rz11i89v9M
+X-Google-Smtp-Source: AGRyM1vViNABPBg5mX7xAFZnzBQOkN1zCORJe+nEeGcE7OsHUgo1rzzH0pqbYyHZ9b+y+bRkSUJ6Xg==
+X-Received: by 2002:a17:902:f68c:b0:16c:4eb6:913c with SMTP id l12-20020a170902f68c00b0016c4eb6913cmr42386524plg.2.1658397106639;
+        Thu, 21 Jul 2022 02:51:46 -0700 (PDT)
+Received: from thinkpad ([117.217.186.184])
+        by smtp.gmail.com with ESMTPSA id t18-20020a170902d15200b0016c304612a0sm1161876plt.292.2022.07.21.02.51.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Jul 2022 02:51:46 -0700 (PDT)
+Date:   Thu, 21 Jul 2022 15:21:40 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220717213432.134486-1-matti.lehtimaki@gmail.com>
- <20220717213432.134486-4-matti.lehtimaki@gmail.com>
- <dc19c084-633d-9777-6dfd-b9633ac9c4ae@linaro.org>
- <YtWiMP2O9BymNG7/@gerhold.net>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <YtWiMP2O9BymNG7/@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
+        Rob Herring <robh+dt@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [RFC PATCH 1/4] phy: qcom-qmp-pcie: split register tables into
+ primary and secondary part
+Message-ID: <20220721095140.GA39125@thinkpad>
+References: <20220719200626.976084-1-dmitry.baryshkov@linaro.org>
+ <20220719200626.976084-2-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220719200626.976084-2-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/07/2022 20:10, Stephan Gerhold wrote:
-> On Mon, Jul 18, 2022 at 03:51:54PM +0200, Krzysztof Kozlowski wrote:
->> On 17/07/2022 23:34, Matti Lehtimäki wrote:
->>> Add a device tree for the Samsung Galaxy Tab 4 10.1 (SM-T530) wifi tablet
->>> based on the apq8026 platform.
->>>
->>> Currently supported are accelerometer sensor, hall sensor, internal storage, physical
->>> buttons (power & volume), screen (based on simple-framebuffer set up by
->>> the bootloader) sdcard, touchscreen and USB.
->>>
->>> Signed-off-by: Matti LehtimÃ¤ki <matti.lehtimaki@gmail.com>
->>
->> Thank you for your patch. There is something to discuss/improve.
->>
->>> ---
->>>  arch/arm/boot/dts/Makefile                    |   1 +
->>>  .../dts/qcom-apq8026-samsung-matissewifi.dts  | 475 ++++++++++++++++++
->>>  2 files changed, 476 insertions(+)
->>>  create mode 100644 arch/arm/boot/dts/qcom-apq8026-samsung-matissewifi.dts
->>>
->>> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
->>> index 5112f493f494..4d02a1740079 100644
->>> --- a/arch/arm/boot/dts/Makefile
->>> +++ b/arch/arm/boot/dts/Makefile
->>> @@ -1010,6 +1010,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
->>>  	qcom-apq8016-sbc.dtb \
->>>  	qcom-apq8026-asus-sparrow.dtb \
->>>  	qcom-apq8026-lg-lenok.dtb \
->>> +	qcom-apq8026-samsung-matissewifi.dtb \
->>>  	qcom-apq8060-dragonboard.dtb \
->>>  	qcom-apq8064-cm-qs600.dtb \
->>>  	qcom-apq8064-ifc6410.dtb \
->>> diff --git a/arch/arm/boot/dts/qcom-apq8026-samsung-matissewifi.dts b/arch/arm/boot/dts/qcom-apq8026-samsung-matissewifi.dts
->>> new file mode 100644
->>> index 000000000000..f4c5eb9db11c
->>> --- /dev/null
->>> +++ b/arch/arm/boot/dts/qcom-apq8026-samsung-matissewifi.dts
->>> @@ -0,0 +1,475 @@
->>> +// SPDX-License-Identifier: BSD-3-Clause
->>> +/*
->>> + * Copyright (c) 2022, Matti LehtimÃ¤ki <matti.lehtimaki@gmail.com>
->>> + */
->>> +
->>> +/dts-v1/;
->>> +
->>> +#include "qcom-msm8226.dtsi"
->>> +#include "qcom-pm8226.dtsi"
->>> +#include <dt-bindings/input/input.h>
->>> +
->>> +/delete-node/ &smem_region;
->>> +
->>> +/ {
->>> +	model = "Samsung Galaxy Tab 4 10.1";
->>> +	compatible = "samsung,matissewifi", "qcom,apq8026";
->>> +	chassis-type = "tablet";
->>> +
->>> +	qcom,msm-id = <0xC708FF01 0 0x20000>,
->>> +		      <0xC708FF01 1 0x20000>,
->>> +		      <0xC708FF01 2 0x20000>,
->>> +		      <0xC708FF01 3 0x20000>;
->>
->> Lower case hex and does not match bindings.
->> https://lore.kernel.org/all/20220705130300.100882-2-krzysztof.kozlowski@linaro.org/
->>
->> This would need detailed explanation because it really does not look
->> correct.
->>
+On Tue, Jul 19, 2022 at 11:06:23PM +0300, Dmitry Baryshkov wrote:
+> Split register tables list into primary and secondary parts. While we
+> are at it, drop unused if (table) conditions, since the function
+> qcom_qmp_phy_pcie_configure_lane() has this check anyway.
 > 
-> Just to give the explanation for reference: In general, qcom,msm-id with
-> three elements is something Qualcomm used for some old platforms before
-> introducing qcom,board-id.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 144 ++++++++++++-----------
+>  1 file changed, 77 insertions(+), 67 deletions(-)
 > 
-> qcom,msm-id = <X Y Z> should be equivalent to:
->   qcom,msm-id = <X Z>;
->   qcom,board-id = <Y 0>;
-> 
-> e.g. for apq8026-v2-mtp.dts Qualcomm used:
->    qcom,msm-id = <199 8 0x20000>;
->  = qcom,msm-id = <QCOM_ID_MSM8026 QCOM_BOARD_ID_MTP 0x20000>;
->  = qcom,msm-id = <QCOM_ID_MSM8026 0x20000>;
->    qcom,board-id = <QCOM_BOARD_ID_MTP 0>;
-> 
-> I guess old bootloaders may or may not accept the new form, depending on
-> the age of their code base.
-> 
-> Then Samsung took this and made it a lot worse, by replacing the SoC ID
-> with some random magic number (the 0xC708FF01). And what's even worse is
-> that all devices with the same SoC from Samsung use the same magic number
-> there. It is completely useless for dynamically matching the device.
-> 
-> In this case, I suggest just dropping the property because the device is
-> supported by lk2nd [1] which can be loaded as intermediary bootloader to
-> have a more standard boot process for mainline Linux. When booting
-> through lk2nd no qcom,msm-id/qcom,board-id is required, and it also adds
-> MAC addresses for WiFi/Bluetooth etc etc. :-)
-> 
-> [1]: https://github.com/msm8916-mainline/lk2nd
-> 
->> [...]
->>> +	reserved-memory {
->>> +		#address-cells = <1>;
->>> +		#size-cells = <1>;
->>> +		ranges;
->>> +
->>> +		framebuffer@3200000 {
->>
->> Generic node names, so memory@
->>
-> 
-> Rob specifically mentioned at some point that memory@ should not be used
-> in reserved-memory [1]. The device tree specification actually recommends
-> doing it like it is done here (at least for "framebuffer"):
-> 
->> 3.5.2 /reserved-memory/ child nodes
->> Following the generic-names recommended practice, node names should
->> reflect the purpose of the node (ie. “framebuffer” or “dma-pool”).
-> 
-> [1]: https://lore.kernel.org/linux-arm-msm/CAL_Jsq+66j8Y5y+PQ+mezkaxN1pfHFKz524YUF4Lz_OU5E-mZQ@mail.gmail.com/
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> index 2d65e1f56bfc..23ca5848c4a8 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> @@ -1346,34 +1346,29 @@ static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_pcs_misc_tbl[] = {
+>  
+>  struct qmp_phy;
+>  
+> -/* struct qmp_phy_cfg - per-PHY initialization config */
+> -struct qmp_phy_cfg {
+> -	/* phy-type - PCIE/UFS/USB */
+> -	unsigned int type;
+> -	/* number of lanes provided by phy */
+> -	int nlanes;
+> -
+> -	/* Init sequence for PHY blocks - serdes, tx, rx, pcs */
+> +struct qmp_phy_cfg_tables {
+>  	const struct qmp_phy_init_tbl *serdes_tbl;
+>  	int serdes_tbl_num;
+> -	const struct qmp_phy_init_tbl *serdes_tbl_sec;
+> -	int serdes_tbl_num_sec;
+>  	const struct qmp_phy_init_tbl *tx_tbl;
+>  	int tx_tbl_num;
+> -	const struct qmp_phy_init_tbl *tx_tbl_sec;
+> -	int tx_tbl_num_sec;
+>  	const struct qmp_phy_init_tbl *rx_tbl;
+>  	int rx_tbl_num;
+> -	const struct qmp_phy_init_tbl *rx_tbl_sec;
+> -	int rx_tbl_num_sec;
+>  	const struct qmp_phy_init_tbl *pcs_tbl;
+>  	int pcs_tbl_num;
+> -	const struct qmp_phy_init_tbl *pcs_tbl_sec;
+> -	int pcs_tbl_num_sec;
+>  	const struct qmp_phy_init_tbl *pcs_misc_tbl;
+>  	int pcs_misc_tbl_num;
+> -	const struct qmp_phy_init_tbl *pcs_misc_tbl_sec;
+> -	int pcs_misc_tbl_num_sec;
+> +};
+> +
+> +/* struct qmp_phy_cfg - per-PHY initialization config */
+> +struct qmp_phy_cfg {
+> +	/* phy-type - PCIE/UFS/USB */
+> +	unsigned int type;
+> +	/* number of lanes provided by phy */
+> +	int nlanes;
+> +
+> +	/* Init sequence for PHY blocks - serdes, tx, rx, pcs */
+> +	struct qmp_phy_cfg_tables pri;
 
-Thanks, makes sense a lot!
+s/pri/primary/g
 
-Best regards,
-Krzysztof
+> +	struct qmp_phy_cfg_tables sec;
+
+s/sec/secondary/g
+
+I think it'd be good to add a comment on what the secondary table represents.
+This will help folks trying to port the downstream drivers.
+
+Rest LGTM!
+
+Thanks,
+Mani
+
+>  
+>  	/* clock ids to be requested */
+>  	const char * const *clk_list;
+> @@ -1517,6 +1512,7 @@ static const struct qmp_phy_cfg ipq8074_pciephy_cfg = {
+>  	.type			= PHY_TYPE_PCIE,
+>  	.nlanes			= 1,
+>  
+> +	.pri = {
+>  	.serdes_tbl		= ipq8074_pcie_serdes_tbl,
+>  	.serdes_tbl_num		= ARRAY_SIZE(ipq8074_pcie_serdes_tbl),
+>  	.tx_tbl			= ipq8074_pcie_tx_tbl,
+> @@ -1525,6 +1521,7 @@ static const struct qmp_phy_cfg ipq8074_pciephy_cfg = {
+>  	.rx_tbl_num		= ARRAY_SIZE(ipq8074_pcie_rx_tbl),
+>  	.pcs_tbl		= ipq8074_pcie_pcs_tbl,
+>  	.pcs_tbl_num		= ARRAY_SIZE(ipq8074_pcie_pcs_tbl),
+> +	},
+>  	.clk_list		= ipq8074_pciephy_clk_l,
+>  	.num_clks		= ARRAY_SIZE(ipq8074_pciephy_clk_l),
+>  	.reset_list		= ipq8074_pciephy_reset_l,
+> @@ -1546,6 +1543,7 @@ static const struct qmp_phy_cfg ipq8074_pciephy_gen3_cfg = {
+>  	.type			= PHY_TYPE_PCIE,
+>  	.nlanes			= 1,
+>  
+> +	.pri = {
+>  	.serdes_tbl		= ipq8074_pcie_gen3_serdes_tbl,
+>  	.serdes_tbl_num		= ARRAY_SIZE(ipq8074_pcie_gen3_serdes_tbl),
+>  	.tx_tbl			= ipq8074_pcie_gen3_tx_tbl,
+> @@ -1554,6 +1552,7 @@ static const struct qmp_phy_cfg ipq8074_pciephy_gen3_cfg = {
+>  	.rx_tbl_num		= ARRAY_SIZE(ipq8074_pcie_gen3_rx_tbl),
+>  	.pcs_tbl		= ipq8074_pcie_gen3_pcs_tbl,
+>  	.pcs_tbl_num		= ARRAY_SIZE(ipq8074_pcie_gen3_pcs_tbl),
+> +	},
+>  	.clk_list		= ipq8074_pciephy_clk_l,
+>  	.num_clks		= ARRAY_SIZE(ipq8074_pciephy_clk_l),
+>  	.reset_list		= ipq8074_pciephy_reset_l,
+> @@ -1576,6 +1575,7 @@ static const struct qmp_phy_cfg ipq6018_pciephy_cfg = {
+>  	.type			= PHY_TYPE_PCIE,
+>  	.nlanes			= 1,
+>  
+> +	.pri = {
+>  	.serdes_tbl		= ipq6018_pcie_serdes_tbl,
+>  	.serdes_tbl_num		= ARRAY_SIZE(ipq6018_pcie_serdes_tbl),
+>  	.tx_tbl			= ipq6018_pcie_tx_tbl,
+> @@ -1586,6 +1586,7 @@ static const struct qmp_phy_cfg ipq6018_pciephy_cfg = {
+>  	.pcs_tbl_num		= ARRAY_SIZE(ipq6018_pcie_pcs_tbl),
+>  	.pcs_misc_tbl		= ipq6018_pcie_pcs_misc_tbl,
+>  	.pcs_misc_tbl_num	= ARRAY_SIZE(ipq6018_pcie_pcs_misc_tbl),
+> +	},
+>  	.clk_list		= ipq8074_pciephy_clk_l,
+>  	.num_clks		= ARRAY_SIZE(ipq8074_pciephy_clk_l),
+>  	.reset_list		= ipq8074_pciephy_reset_l,
+> @@ -1606,6 +1607,7 @@ static const struct qmp_phy_cfg sdm845_qmp_pciephy_cfg = {
+>  	.type = PHY_TYPE_PCIE,
+>  	.nlanes = 1,
+>  
+> +	.pri = {
+>  	.serdes_tbl		= sdm845_qmp_pcie_serdes_tbl,
+>  	.serdes_tbl_num		= ARRAY_SIZE(sdm845_qmp_pcie_serdes_tbl),
+>  	.tx_tbl			= sdm845_qmp_pcie_tx_tbl,
+> @@ -1616,6 +1618,7 @@ static const struct qmp_phy_cfg sdm845_qmp_pciephy_cfg = {
+>  	.pcs_tbl_num		= ARRAY_SIZE(sdm845_qmp_pcie_pcs_tbl),
+>  	.pcs_misc_tbl		= sdm845_qmp_pcie_pcs_misc_tbl,
+>  	.pcs_misc_tbl_num	= ARRAY_SIZE(sdm845_qmp_pcie_pcs_misc_tbl),
+> +	},
+>  	.clk_list		= sdm845_pciephy_clk_l,
+>  	.num_clks		= ARRAY_SIZE(sdm845_pciephy_clk_l),
+>  	.reset_list		= sdm845_pciephy_reset_l,
+> @@ -1637,6 +1640,7 @@ static const struct qmp_phy_cfg sdm845_qhp_pciephy_cfg = {
+>  	.type = PHY_TYPE_PCIE,
+>  	.nlanes = 1,
+>  
+> +	.pri = {
+>  	.serdes_tbl		= sdm845_qhp_pcie_serdes_tbl,
+>  	.serdes_tbl_num		= ARRAY_SIZE(sdm845_qhp_pcie_serdes_tbl),
+>  	.tx_tbl			= sdm845_qhp_pcie_tx_tbl,
+> @@ -1645,6 +1649,7 @@ static const struct qmp_phy_cfg sdm845_qhp_pciephy_cfg = {
+>  	.rx_tbl_num		= ARRAY_SIZE(sdm845_qhp_pcie_rx_tbl),
+>  	.pcs_tbl		= sdm845_qhp_pcie_pcs_tbl,
+>  	.pcs_tbl_num		= ARRAY_SIZE(sdm845_qhp_pcie_pcs_tbl),
+> +	},
+>  	.clk_list		= sdm845_pciephy_clk_l,
+>  	.num_clks		= ARRAY_SIZE(sdm845_pciephy_clk_l),
+>  	.reset_list		= sdm845_pciephy_reset_l,
+> @@ -1666,24 +1671,28 @@ static const struct qmp_phy_cfg sm8250_qmp_gen3x1_pciephy_cfg = {
+>  	.type = PHY_TYPE_PCIE,
+>  	.nlanes = 1,
+>  
+> +	.pri = {
+>  	.serdes_tbl		= sm8250_qmp_pcie_serdes_tbl,
+>  	.serdes_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_serdes_tbl),
+> -	.serdes_tbl_sec		= sm8250_qmp_gen3x1_pcie_serdes_tbl,
+> -	.serdes_tbl_num_sec	= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_serdes_tbl),
+>  	.tx_tbl			= sm8250_qmp_pcie_tx_tbl,
+>  	.tx_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_tx_tbl),
+>  	.rx_tbl			= sm8250_qmp_pcie_rx_tbl,
+>  	.rx_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_rx_tbl),
+> -	.rx_tbl_sec		= sm8250_qmp_gen3x1_pcie_rx_tbl,
+> -	.rx_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_rx_tbl),
+>  	.pcs_tbl		= sm8250_qmp_pcie_pcs_tbl,
+>  	.pcs_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_pcs_tbl),
+> -	.pcs_tbl_sec		= sm8250_qmp_gen3x1_pcie_pcs_tbl,
+> -	.pcs_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_pcs_tbl),
+>  	.pcs_misc_tbl		= sm8250_qmp_pcie_pcs_misc_tbl,
+>  	.pcs_misc_tbl_num	= ARRAY_SIZE(sm8250_qmp_pcie_pcs_misc_tbl),
+> -	.pcs_misc_tbl_sec		= sm8250_qmp_gen3x1_pcie_pcs_misc_tbl,
+> -	.pcs_misc_tbl_num_sec	= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_pcs_misc_tbl),
+> +	},
+> +	.sec = {
+> +	.serdes_tbl		= sm8250_qmp_gen3x1_pcie_serdes_tbl,
+> +	.serdes_tbl_num		= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_serdes_tbl),
+> +	.rx_tbl			= sm8250_qmp_gen3x1_pcie_rx_tbl,
+> +	.rx_tbl_num		= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_rx_tbl),
+> +	.pcs_tbl		= sm8250_qmp_gen3x1_pcie_pcs_tbl,
+> +	.pcs_tbl_num		= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_pcs_tbl),
+> +	.pcs_misc_tbl		= sm8250_qmp_gen3x1_pcie_pcs_misc_tbl,
+> +	.pcs_misc_tbl_num	= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_pcs_misc_tbl),
+> +	},
+>  	.clk_list		= sdm845_pciephy_clk_l,
+>  	.num_clks		= ARRAY_SIZE(sdm845_pciephy_clk_l),
+>  	.reset_list		= sdm845_pciephy_reset_l,
+> @@ -1705,24 +1714,28 @@ static const struct qmp_phy_cfg sm8250_qmp_gen3x2_pciephy_cfg = {
+>  	.type = PHY_TYPE_PCIE,
+>  	.nlanes = 2,
+>  
+> +	.pri = {
+>  	.serdes_tbl		= sm8250_qmp_pcie_serdes_tbl,
+>  	.serdes_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_serdes_tbl),
+>  	.tx_tbl			= sm8250_qmp_pcie_tx_tbl,
+>  	.tx_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_tx_tbl),
+> -	.tx_tbl_sec		= sm8250_qmp_gen3x2_pcie_tx_tbl,
+> -	.tx_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_tx_tbl),
+>  	.rx_tbl			= sm8250_qmp_pcie_rx_tbl,
+>  	.rx_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_rx_tbl),
+> -	.rx_tbl_sec		= sm8250_qmp_gen3x2_pcie_rx_tbl,
+> -	.rx_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_rx_tbl),
+>  	.pcs_tbl		= sm8250_qmp_pcie_pcs_tbl,
+>  	.pcs_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_pcs_tbl),
+> -	.pcs_tbl_sec		= sm8250_qmp_gen3x2_pcie_pcs_tbl,
+> -	.pcs_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_pcs_tbl),
+>  	.pcs_misc_tbl		= sm8250_qmp_pcie_pcs_misc_tbl,
+>  	.pcs_misc_tbl_num	= ARRAY_SIZE(sm8250_qmp_pcie_pcs_misc_tbl),
+> -	.pcs_misc_tbl_sec		= sm8250_qmp_gen3x2_pcie_pcs_misc_tbl,
+> -	.pcs_misc_tbl_num_sec	= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_pcs_misc_tbl),
+> +	},
+> +	.sec = {
+> +	.tx_tbl			= sm8250_qmp_gen3x2_pcie_tx_tbl,
+> +	.tx_tbl_num		= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_tx_tbl),
+> +	.rx_tbl			= sm8250_qmp_gen3x2_pcie_rx_tbl,
+> +	.rx_tbl_num		= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_rx_tbl),
+> +	.pcs_tbl		= sm8250_qmp_gen3x2_pcie_pcs_tbl,
+> +	.pcs_tbl_num		= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_pcs_tbl),
+> +	.pcs_misc_tbl		= sm8250_qmp_gen3x2_pcie_pcs_misc_tbl,
+> +	.pcs_misc_tbl_num	= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_pcs_misc_tbl),
+> +	},
+>  	.clk_list		= sdm845_pciephy_clk_l,
+>  	.num_clks		= ARRAY_SIZE(sdm845_pciephy_clk_l),
+>  	.reset_list		= sdm845_pciephy_reset_l,
+> @@ -1745,6 +1758,7 @@ static const struct qmp_phy_cfg msm8998_pciephy_cfg = {
+>  	.type			= PHY_TYPE_PCIE,
+>  	.nlanes			= 1,
+>  
+> +	.pri = {
+>  	.serdes_tbl		= msm8998_pcie_serdes_tbl,
+>  	.serdes_tbl_num		= ARRAY_SIZE(msm8998_pcie_serdes_tbl),
+>  	.tx_tbl			= msm8998_pcie_tx_tbl,
+> @@ -1753,6 +1767,7 @@ static const struct qmp_phy_cfg msm8998_pciephy_cfg = {
+>  	.rx_tbl_num		= ARRAY_SIZE(msm8998_pcie_rx_tbl),
+>  	.pcs_tbl		= msm8998_pcie_pcs_tbl,
+>  	.pcs_tbl_num		= ARRAY_SIZE(msm8998_pcie_pcs_tbl),
+> +	},
+>  	.clk_list		= msm8996_phy_clk_l,
+>  	.num_clks		= ARRAY_SIZE(msm8996_phy_clk_l),
+>  	.reset_list		= ipq8074_pciephy_reset_l,
+> @@ -1770,6 +1785,7 @@ static const struct qmp_phy_cfg sc8180x_pciephy_cfg = {
+>  	.type = PHY_TYPE_PCIE,
+>  	.nlanes = 1,
+>  
+> +	.pri = {
+>  	.serdes_tbl		= sc8180x_qmp_pcie_serdes_tbl,
+>  	.serdes_tbl_num		= ARRAY_SIZE(sc8180x_qmp_pcie_serdes_tbl),
+>  	.tx_tbl			= sc8180x_qmp_pcie_tx_tbl,
+> @@ -1780,6 +1796,7 @@ static const struct qmp_phy_cfg sc8180x_pciephy_cfg = {
+>  	.pcs_tbl_num		= ARRAY_SIZE(sc8180x_qmp_pcie_pcs_tbl),
+>  	.pcs_misc_tbl		= sc8180x_qmp_pcie_pcs_misc_tbl,
+>  	.pcs_misc_tbl_num	= ARRAY_SIZE(sc8180x_qmp_pcie_pcs_misc_tbl),
+> +	},
+>  	.clk_list		= sdm845_pciephy_clk_l,
+>  	.num_clks		= ARRAY_SIZE(sdm845_pciephy_clk_l),
+>  	.reset_list		= sdm845_pciephy_reset_l,
+> @@ -1800,6 +1817,7 @@ static const struct qmp_phy_cfg sdx55_qmp_pciephy_cfg = {
+>  	.type = PHY_TYPE_PCIE,
+>  	.nlanes = 2,
+>  
+> +	.pri = {
+>  	.serdes_tbl		= sdx55_qmp_pcie_serdes_tbl,
+>  	.serdes_tbl_num		= ARRAY_SIZE(sdx55_qmp_pcie_serdes_tbl),
+>  	.tx_tbl			= sdx55_qmp_pcie_tx_tbl,
+> @@ -1810,6 +1828,7 @@ static const struct qmp_phy_cfg sdx55_qmp_pciephy_cfg = {
+>  	.pcs_tbl_num		= ARRAY_SIZE(sdx55_qmp_pcie_pcs_tbl),
+>  	.pcs_misc_tbl		= sdx55_qmp_pcie_pcs_misc_tbl,
+>  	.pcs_misc_tbl_num	= ARRAY_SIZE(sdx55_qmp_pcie_pcs_misc_tbl),
+> +	},
+>  	.clk_list		= sdm845_pciephy_clk_l,
+>  	.num_clks		= ARRAY_SIZE(sdm845_pciephy_clk_l),
+>  	.reset_list		= sdm845_pciephy_reset_l,
+> @@ -1832,6 +1851,7 @@ static const struct qmp_phy_cfg sm8450_qmp_gen3x1_pciephy_cfg = {
+>  	.type = PHY_TYPE_PCIE,
+>  	.nlanes = 1,
+>  
+> +	.pri = {
+>  	.serdes_tbl		= sm8450_qmp_gen3x1_pcie_serdes_tbl,
+>  	.serdes_tbl_num		= ARRAY_SIZE(sm8450_qmp_gen3x1_pcie_serdes_tbl),
+>  	.tx_tbl			= sm8450_qmp_gen3x1_pcie_tx_tbl,
+> @@ -1842,6 +1862,7 @@ static const struct qmp_phy_cfg sm8450_qmp_gen3x1_pciephy_cfg = {
+>  	.pcs_tbl_num		= ARRAY_SIZE(sm8450_qmp_gen3x1_pcie_pcs_tbl),
+>  	.pcs_misc_tbl		= sm8450_qmp_gen3x1_pcie_pcs_misc_tbl,
+>  	.pcs_misc_tbl_num	= ARRAY_SIZE(sm8450_qmp_gen3x1_pcie_pcs_misc_tbl),
+> +	},
+>  	.clk_list		= sdm845_pciephy_clk_l,
+>  	.num_clks		= ARRAY_SIZE(sdm845_pciephy_clk_l),
+>  	.reset_list		= sdm845_pciephy_reset_l,
+> @@ -1863,6 +1884,7 @@ static const struct qmp_phy_cfg sm8450_qmp_gen4x2_pciephy_cfg = {
+>  	.type = PHY_TYPE_PCIE,
+>  	.nlanes = 2,
+>  
+> +	.pri = {
+>  	.serdes_tbl		= sm8450_qmp_gen4x2_pcie_serdes_tbl,
+>  	.serdes_tbl_num		= ARRAY_SIZE(sm8450_qmp_gen4x2_pcie_serdes_tbl),
+>  	.tx_tbl			= sm8450_qmp_gen4x2_pcie_tx_tbl,
+> @@ -1873,6 +1895,7 @@ static const struct qmp_phy_cfg sm8450_qmp_gen4x2_pciephy_cfg = {
+>  	.pcs_tbl_num		= ARRAY_SIZE(sm8450_qmp_gen4x2_pcie_pcs_tbl),
+>  	.pcs_misc_tbl		= sm8450_qmp_gen4x2_pcie_pcs_misc_tbl,
+>  	.pcs_misc_tbl_num	= ARRAY_SIZE(sm8450_qmp_gen4x2_pcie_pcs_misc_tbl),
+> +	},
+>  	.clk_list		= sdm845_pciephy_clk_l,
+>  	.num_clks		= ARRAY_SIZE(sdm845_pciephy_clk_l),
+>  	.reset_list		= sdm845_pciephy_reset_l,
+> @@ -1926,13 +1949,9 @@ static int qcom_qmp_phy_pcie_serdes_init(struct qmp_phy *qphy)
+>  {
+>  	const struct qmp_phy_cfg *cfg = qphy->cfg;
+>  	void __iomem *serdes = qphy->serdes;
+> -	const struct qmp_phy_init_tbl *serdes_tbl = cfg->serdes_tbl;
+> -	int serdes_tbl_num = cfg->serdes_tbl_num;
+>  
+> -	qcom_qmp_phy_pcie_configure(serdes, cfg->regs, serdes_tbl, serdes_tbl_num);
+> -	if (cfg->serdes_tbl_sec)
+> -		qcom_qmp_phy_pcie_configure(serdes, cfg->regs, cfg->serdes_tbl_sec,
+> -				       cfg->serdes_tbl_num_sec);
+> +	qcom_qmp_phy_pcie_configure(serdes, cfg->regs, cfg->pri.serdes_tbl, cfg->pri.serdes_tbl_num);
+> +	qcom_qmp_phy_pcie_configure(serdes, cfg->regs, cfg->sec.serdes_tbl, cfg->sec.serdes_tbl_num);
+>  
+>  	return 0;
+>  }
+> @@ -2036,46 +2055,37 @@ static int qcom_qmp_phy_pcie_power_on(struct phy *phy)
+>  
+>  	/* Tx, Rx, and PCS configurations */
+>  	qcom_qmp_phy_pcie_configure_lane(tx, cfg->regs,
+> -				    cfg->tx_tbl, cfg->tx_tbl_num, 1);
+> -	if (cfg->tx_tbl_sec)
+> -		qcom_qmp_phy_pcie_configure_lane(tx, cfg->regs, cfg->tx_tbl_sec,
+> -					    cfg->tx_tbl_num_sec, 1);
+> +					 cfg->pri.tx_tbl, cfg->pri.tx_tbl_num, 1);
+> +	qcom_qmp_phy_pcie_configure_lane(tx, cfg->regs,
+> +					 cfg->sec.tx_tbl, cfg->sec.tx_tbl_num, 1);
+>  
+>  	/* Configuration for other LANE for USB-DP combo PHY */
+>  	if (cfg->is_dual_lane_phy) {
+>  		qcom_qmp_phy_pcie_configure_lane(qphy->tx2, cfg->regs,
+> -					    cfg->tx_tbl, cfg->tx_tbl_num, 2);
+> -		if (cfg->tx_tbl_sec)
+> -			qcom_qmp_phy_pcie_configure_lane(qphy->tx2, cfg->regs,
+> -						    cfg->tx_tbl_sec,
+> -						    cfg->tx_tbl_num_sec, 2);
+> +						 cfg->pri.tx_tbl, cfg->pri.tx_tbl_num, 2);
+> +		qcom_qmp_phy_pcie_configure_lane(qphy->tx2, cfg->regs,
+> +						 cfg->sec.tx_tbl, cfg->sec.tx_tbl_num, 2);
+>  	}
+>  
+>  	qcom_qmp_phy_pcie_configure_lane(rx, cfg->regs,
+> -				    cfg->rx_tbl, cfg->rx_tbl_num, 1);
+> -	if (cfg->rx_tbl_sec)
+> -		qcom_qmp_phy_pcie_configure_lane(rx, cfg->regs,
+> -					    cfg->rx_tbl_sec, cfg->rx_tbl_num_sec, 1);
+> +					 cfg->pri.rx_tbl, cfg->pri.rx_tbl_num, 1);
+> +	qcom_qmp_phy_pcie_configure_lane(rx, cfg->regs,
+> +					 cfg->sec.rx_tbl, cfg->sec.rx_tbl_num, 1);
+>  
+>  	if (cfg->is_dual_lane_phy) {
+>  		qcom_qmp_phy_pcie_configure_lane(qphy->rx2, cfg->regs,
+> -					    cfg->rx_tbl, cfg->rx_tbl_num, 2);
+> -		if (cfg->rx_tbl_sec)
+> -			qcom_qmp_phy_pcie_configure_lane(qphy->rx2, cfg->regs,
+> -						    cfg->rx_tbl_sec,
+> -						    cfg->rx_tbl_num_sec, 2);
+> +						 cfg->pri.rx_tbl, cfg->pri.rx_tbl_num, 2);
+> +		qcom_qmp_phy_pcie_configure_lane(qphy->rx2, cfg->regs,
+> +						 cfg->sec.rx_tbl, cfg->sec.rx_tbl_num, 2);
+>  	}
+>  
+> -	qcom_qmp_phy_pcie_configure(pcs, cfg->regs, cfg->pcs_tbl, cfg->pcs_tbl_num);
+> -	if (cfg->pcs_tbl_sec)
+> -		qcom_qmp_phy_pcie_configure(pcs, cfg->regs, cfg->pcs_tbl_sec,
+> -				       cfg->pcs_tbl_num_sec);
+> +	qcom_qmp_phy_pcie_configure(pcs, cfg->regs, cfg->pri.pcs_tbl, cfg->pri.pcs_tbl_num);
+> +	qcom_qmp_phy_pcie_configure(pcs, cfg->regs, cfg->sec.pcs_tbl, cfg->sec.pcs_tbl_num);
+>  
+> -	qcom_qmp_phy_pcie_configure(pcs_misc, cfg->regs, cfg->pcs_misc_tbl,
+> -			       cfg->pcs_misc_tbl_num);
+> -	if (cfg->pcs_misc_tbl_sec)
+> -		qcom_qmp_phy_pcie_configure(pcs_misc, cfg->regs, cfg->pcs_misc_tbl_sec,
+> -				       cfg->pcs_misc_tbl_num_sec);
+> +	qcom_qmp_phy_pcie_configure(pcs_misc, cfg->regs, cfg->pri.pcs_misc_tbl,
+> +			       cfg->pri.pcs_misc_tbl_num);
+> +	qcom_qmp_phy_pcie_configure(pcs_misc, cfg->regs, cfg->sec.pcs_misc_tbl,
+> +			       cfg->sec.pcs_misc_tbl_num);
+>  
+>  	/*
+>  	 * Pull out PHY from POWER DOWN state.
+> -- 
+> 2.35.1
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
