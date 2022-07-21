@@ -2,115 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA01457CC13
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 15:37:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA68B57CCB9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 15:53:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229716AbiGUNhn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jul 2022 09:37:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45628 "EHLO
+        id S229985AbiGUNxB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jul 2022 09:53:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229508AbiGUNhm (ORCPT
+        with ESMTP id S229571AbiGUNxA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jul 2022 09:37:42 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 367A07E33B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 06:37:41 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id t3so2243756edd.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 06:37:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=8/cqmxcIHyGuuAd34yH5EGseYF2qIVCLxif3aKApjO8=;
-        b=jQFRTYzVKfF7XyCxEjMIsHJZa8HQ0iHL21yIQj1Gy5IrYzGHlCXHfSFcxJI/9zfPHT
-         zrlQ5VDaVZr9dhrwrr88VgBc/CzeknSxs3+qAQLyANBZAwoUZp3X4O3J+Zc5mvXCQ2yz
-         U7eTH2JhxhZDOYg8zidV39R6zFx+zpmW4Of24=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8/cqmxcIHyGuuAd34yH5EGseYF2qIVCLxif3aKApjO8=;
-        b=x6EfORa8wWTzBAbqz2/lkk5E/q/3k8ARZNFIy8Ec1ajhAo9CZFrhuDzk22FiadzATA
-         G8CDv8515UAaikGaB1rvzrP+6R+F3DSVZoJs5Mm88xqNjU6Bbm5rNGyPO1SEcWv5tWio
-         NI2hqShGxwywbbsfwCwtwnK8Mb5mMWO2+aHpAOpv+BnFWmx+j5FM+tWXQkXhHjaAPdPZ
-         eRBT6A/EPgpOvfSl+JD7qAGXwp7KBBZVjb43NtLTj7k1yAa99AOH5TEKNm0FxUvZyyEd
-         +gZKtR3lzezXgH0cZgUmXxtCy14SBz+idiBcqDwcXrj4Fh7nnLqHxhO8rjWEqjDvxhfk
-         LRpA==
-X-Gm-Message-State: AJIora/J8XoUyys8CgZftEneWt21ZH4lEf+yr9hLBnKC1ljRd2jrEiGF
-        hs4oiGzPPuPMvB696zjHpc6GWR0jFmPgna7H
-X-Google-Smtp-Source: AGRyM1sLN7wtf60aix0Lj1ZZDAcDgjuhndAyy5p+noTOOoco8d8dUl0ah5c7eo7WeOQH7KalWSZiUg==
-X-Received: by 2002:a05:6402:4c3:b0:43a:f612:179d with SMTP id n3-20020a05640204c300b0043af612179dmr57292252edw.422.1658410659151;
-        Thu, 21 Jul 2022 06:37:39 -0700 (PDT)
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com. [209.85.128.42])
-        by smtp.gmail.com with ESMTPSA id g1-20020a17090604c100b006fe9f9d0938sm865810eja.175.2022.07.21.06.37.37
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Jul 2022 06:37:37 -0700 (PDT)
-Received: by mail-wm1-f42.google.com with SMTP id c187-20020a1c35c4000000b003a30d88fe8eso3342497wma.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 06:37:37 -0700 (PDT)
-X-Received: by 2002:a05:600c:2e48:b0:3a3:1ce3:3036 with SMTP id
- q8-20020a05600c2e4800b003a31ce33036mr7949226wmf.188.1658410656948; Thu, 21
- Jul 2022 06:37:36 -0700 (PDT)
+        Thu, 21 Jul 2022 09:53:00 -0400
+Received: from m15114.mail.126.com (m15114.mail.126.com [220.181.15.114])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 651D5237E6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 06:52:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=tP+XB
+        jVkj8uEQyRJn93Emo1dR7W9IpUCjt+ZQDRHLw8=; b=jN9BRVkPuZoQ98EMveFii
+        HdDOt1D7yB3fHdKbt3mzF2gfyNgZb3ETPNZWlACt7bf205OHFoMnKxWPaeyJs907
+        C5o00DQgfGaT9Uc3jgXKEeCN8CIbJO/ZY8dZFM+Hern+IFrGP0j0SGGAtkOtNGF2
+        RFX2cl6SvaPIUOvdVMU8uE=
+Received: from localhost.localdomain (unknown [124.16.139.61])
+        by smtp7 (Coremail) with SMTP id DsmowADX1P0RWtliQtXcFQ--.28629S2;
+        Thu, 21 Jul 2022 21:52:18 +0800 (CST)
+From:   Liang He <windhl@126.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        konrad.dybcio@somainline.org, linux-arm-msm@vger.kernel.org,
+        windhl@126.com
+Subject: [PATCH 1/2] soc: qcom: smsm: Fix refcount leak bugs in qcom_smsm_probe()
+Date:   Thu, 21 Jul 2022 21:52:16 +0800
+Message-Id: <20220721135217.1301039-1-windhl@126.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20220721033918.v3.1.I10519ca1bf88233702a90e296088808d18cdc7b1@changeid>
- <20220721033918.v3.2.I7ecbb7eeb58c5e6a33e32a3abf4d6874e6cb725c@changeid>
-In-Reply-To: <20220721033918.v3.2.I7ecbb7eeb58c5e6a33e32a3abf4d6874e6cb725c@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 21 Jul 2022 06:37:23 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WSBgupLFMCZgianck6uTkAyqrG0WK2ChSbNbJdhOPdLA@mail.gmail.com>
-Message-ID: <CAD=FV=WSBgupLFMCZgianck6uTkAyqrG0WK2ChSbNbJdhOPdLA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] dt-bindings: arm: qcom: Document additional sku6
- for sc7180 pazquel
-To:     Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Henry Sun <henrysun@google.com>,
-        Bob Moragues <moragues@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: DsmowADX1P0RWtliQtXcFQ--.28629S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxXr1DKrWUXF1kXr4DCrW3KFg_yoW5Cry8pa
+        yDAFZ0grW8GF4fCry2g3WkuasY9ryxtayUA3yv93s7Aasxtryqqr4vgFWYvFZ3GFy8Ww45
+        JF4YvFWUua15Xr7anT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0z__MakUUUUU=
+X-Originating-IP: [124.16.139.61]
+X-CM-SenderInfo: hzlqvxbo6rjloofrz/1tbi2hNFF1uwMcZLWAAAsU
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+There are two refcount leak bugs in qcom_smsm_probe():
 
-On Wed, Jul 20, 2022 at 8:59 PM Yunlong Jia
-<yunlong.jia@ecs.corp-partner.google.com> wrote:
->
-> The difference between sku6 and sku4 is that there is no esim
->
->  The different SKUs are:
->
->    LTE with physical SIM _and_ eSIM
->    LTE with only a physical SIM
->    WiFi only
->  Both sku4 and sku6 are LTE SKUs.
->  One has the eSIM stuffed and one doesn't.
->  There is a single shared device tree for the two.
->
-> Signed-off-by: Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>
-> ---
->
-> Changes in v3:
-> - Bindings and dts in the same series.
->
->  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->  1 file changed, 1 insertion(+)
+(1) The 'local_node' is escaped out from for_each_child_of_node() as
+the break of iteration, we should call of_node_put() for it in error
+path or when it is not used anymore.
+(2) The 'node' is escaped out from for_each_available_child_of_node()
+as the 'goto', we should call of_node_put() for it in goto target.
 
-Not worth sending a new version for, but normally I expect the
-bindings to be patch #1 and the dts change to be patch #2. In any
-case:
+Fixes: c97c4090ff72 ("soc: qcom: smsm: Add driver for Qualcomm SMSM")
+Signed-off-by: Liang He <windhl@126.com>
+---
+ drivers/soc/qcom/smsm.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+diff --git a/drivers/soc/qcom/smsm.c b/drivers/soc/qcom/smsm.c
+index 9df9bba242f3..3e8994d6110e 100644
+--- a/drivers/soc/qcom/smsm.c
++++ b/drivers/soc/qcom/smsm.c
+@@ -526,7 +526,7 @@ static int qcom_smsm_probe(struct platform_device *pdev)
+ 	for (id = 0; id < smsm->num_hosts; id++) {
+ 		ret = smsm_parse_ipc(smsm, id);
+ 		if (ret < 0)
+-			return ret;
++			goto out_put;
+ 	}
+ 
+ 	/* Acquire the main SMSM state vector */
+@@ -534,13 +534,14 @@ static int qcom_smsm_probe(struct platform_device *pdev)
+ 			      smsm->num_entries * sizeof(u32));
+ 	if (ret < 0 && ret != -EEXIST) {
+ 		dev_err(&pdev->dev, "unable to allocate shared state entry\n");
+-		return ret;
++		goto out_put;
+ 	}
+ 
+ 	states = qcom_smem_get(QCOM_SMEM_HOST_ANY, SMEM_SMSM_SHARED_STATE, NULL);
+ 	if (IS_ERR(states)) {
+ 		dev_err(&pdev->dev, "Unable to acquire shared state entry\n");
+-		return PTR_ERR(states);
++		ret = PTR_ERR(states);
++		goto out_put;
+ 	}
+ 
+ 	/* Acquire the list of interrupt mask vectors */
+@@ -548,13 +549,14 @@ static int qcom_smsm_probe(struct platform_device *pdev)
+ 	ret = qcom_smem_alloc(QCOM_SMEM_HOST_ANY, SMEM_SMSM_CPU_INTR_MASK, size);
+ 	if (ret < 0 && ret != -EEXIST) {
+ 		dev_err(&pdev->dev, "unable to allocate smsm interrupt mask\n");
+-		return ret;
++		goto out_put;
+ 	}
+ 
+ 	intr_mask = qcom_smem_get(QCOM_SMEM_HOST_ANY, SMEM_SMSM_CPU_INTR_MASK, NULL);
+ 	if (IS_ERR(intr_mask)) {
+ 		dev_err(&pdev->dev, "unable to acquire shared memory interrupt mask\n");
+-		return PTR_ERR(intr_mask);
++		ret = PTR_ERR(intr_mask);
++		goto out_put;
+ 	}
+ 
+ 	/* Setup the reference to the local state bits */
+@@ -565,7 +567,8 @@ static int qcom_smsm_probe(struct platform_device *pdev)
+ 	smsm->state = qcom_smem_state_register(local_node, &smsm_state_ops, smsm);
+ 	if (IS_ERR(smsm->state)) {
+ 		dev_err(smsm->dev, "failed to register qcom_smem_state\n");
+-		return PTR_ERR(smsm->state);
++		ret = PTR_ERR(smsm->state);
++		goto out_put;
+ 	}
+ 
+ 	/* Register handlers for remote processor entries of interest. */
+@@ -595,16 +598,19 @@ static int qcom_smsm_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	platform_set_drvdata(pdev, smsm);
++	of_node_put(local_node);
+ 
+ 	return 0;
+ 
+ unwind_interfaces:
++	of_node_put(node);
+ 	for (id = 0; id < smsm->num_entries; id++)
+ 		if (smsm->entries[id].domain)
+ 			irq_domain_remove(smsm->entries[id].domain);
+ 
+ 	qcom_smem_state_unregister(smsm->state);
+-
++out_put:
++	of_node_put(local_node);
+ 	return ret;
+ }
+ 
+-- 
+2.25.1
+
