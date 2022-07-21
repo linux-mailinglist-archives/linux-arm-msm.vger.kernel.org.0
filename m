@@ -2,39 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3760B57CA1A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 13:56:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E7DE57CA64
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 14:12:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230399AbiGUL4t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jul 2022 07:56:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39028 "EHLO
+        id S233559AbiGUMMa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jul 2022 08:12:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229967AbiGUL4s (ORCPT
+        with ESMTP id S233544AbiGUMM0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jul 2022 07:56:48 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC58D10B1;
-        Thu, 21 Jul 2022 04:56:47 -0700 (PDT)
+        Thu, 21 Jul 2022 08:12:26 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AE3085D7C;
+        Thu, 21 Jul 2022 05:12:25 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 8C385B8243D;
-        Thu, 21 Jul 2022 11:56:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C87C3411E;
-        Thu, 21 Jul 2022 11:56:40 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2A96161D91;
+        Thu, 21 Jul 2022 12:12:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA86C3411E;
+        Thu, 21 Jul 2022 12:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1658404605;
-        bh=bQi+xZq9b9DToWtN6MtK9Eyx2oVXPsN/YNsJApzwPXk=;
+        s=k20201202; t=1658405544;
+        bh=bjLxvlVXamAjASEle08xmCl8qBx04BWEVs5DHeMu8Mw=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=r9NvCZHAHtXI5zVzVvnKkmsqZVsKfhdPIPnASOgzTo7PexDO/+J6R0Cytrc4sHc1F
-         lOiUzAoTX5qkasHi55O3pWUVejl39Zg+ZHpkU4rDhA9ITfR0cIRWtYRyEMyAF+JBrS
-         0OQlVDCeR6Lii1osz8YYTMQUtV9IzocfTMk0t/4XcLkJvmbq6HDshTtaoP5SbeW7jC
-         R4hm+Ne4pCCTkQspJ7avyF2QtKCiLCLhZI5C2nTCjcGoEPQs9HxbK79b8R159hnyuH
-         O5x4+tyGI4U6RyzRFUydhUdDuJ2B+6oH76X6ospfT/MdnY4Giwv3PpN8t9RAIU0kTT
-         e3hgDYESt60PQ==
-Date:   Thu, 21 Jul 2022 12:56:37 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Johan Hovold <johan@kernel.org>
+        b=ns1cEqWMytm09KDRjusjlPxfR1qr267qTII21k/oxK5j4XXiA6BfiZpii70rEUBj1
+         +mCEtt83eiFLaUG9g0rpuUn4GhB82MYLJ1WPpWns10eHBLSiEUrhykQuWQTR11ICGi
+         4IDZUWNrPIDgRj/Kp2gl4bmvVRzqUpaS2LTw2oZ2ze7xEpSoN59CDBixYSbfBhILJE
+         q7amUFr5BW8PvrA6ixfVgHAjUgKEFt8NpCaXeBxfQHadz/DvzIGYxrvV474QB43l9E
+         HjtcRtdYD78hXIbO/1lpe37h+fKRUGMGsXB9qmb2RoR2smqtcTSuu9WiSHdF0e7IMF
+         Tpf64xF/JT0RQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oEV2W-0003Na-9F; Thu, 21 Jul 2022 14:12:24 +0200
+Date:   Thu, 21 Jul 2022 14:12:24 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Mark Brown <broonie@kernel.org>
 Cc:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
         Douglas Anderson <dianders@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -49,16 +52,16 @@ Cc:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
         Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Subject: Re: [PATCH v16 0/3] eDP/DP Phy vdda realted function
-Message-ID: <Ytk+9W0Ur1ibqtw8@sirena.org.uk>
+Message-ID: <YtlCqPWUCmw01Jon@hovoldconsulting.com>
 References: <1657038556-2231-1-git-send-email-quic_khsieh@quicinc.com>
  <YtkrDcjTGhpaU1e0@hovoldconsulting.com>
  <Ytk2dxEC2n/ffNpD@sirena.org.uk>
+ <Ytk+9W0Ur1ibqtw8@sirena.org.uk>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="9EvVpXRtaCTHvahb"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="CFA1nl4l5O882w62"
 Content-Disposition: inline
-In-Reply-To: <Ytk2dxEC2n/ffNpD@sirena.org.uk>
-X-Cookie: Killing turkeys causes winter.
+In-Reply-To: <Ytk+9W0Ur1ibqtw8@sirena.org.uk>
 X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -69,31 +72,38 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---9EvVpXRtaCTHvahb
+--CFA1nl4l5O882w62
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 21, 2022 at 12:20:31PM +0100, Mark Brown wrote:
+On Thu, Jul 21, 2022 at 12:56:37PM +0100, Mark Brown wrote:
+> On Thu, Jul 21, 2022 at 12:20:31PM +0100, Mark Brown wrote:
+>=20
+> > You could add a way to specify constant base loads in DT on either a per
+> > regulator or per consumer basis.
+>=20
+> ...and also note that this is only an issue if the system gives
+> permission to change the mode in the constraints which is pretty rare.
 
-> You could add a way to specify constant base loads in DT on either a per
-> regulator or per consumer basis.
+Yeah, apparently only Qualcomm is using regulator-allow-set-load at the
+moment, but it seems pretty common there.
 
-...and also note that this is only an issue if the system gives
-permission to change the mode in the constraints which is pretty rare.
+We should probably just drop that from the platforms affected by this
+particular regression and perhaps later add it back where it makes
+sense (e.g. after making sure all consumers specify a load in some way).
 
---9EvVpXRtaCTHvahb
+Johan
+
+--CFA1nl4l5O882w62
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmLZPvQACgkQJNaLcl1U
-h9C4Swf9EuzQYYxQIE3HdaloWAtNQHqp+O9hc6A5uGIlqvQ0+1hCyKTNm/0LdZTB
-a2quGYwotizns28XjF1CPNAa80hvUgC2z4eyze8DKnSBm8LVAOcSkhI25xY+rwyn
-V43nJzwu8lvtoSb/imoh28i22Zw26qMB4equfXXQtysXS3jyGy8uVEyqBbuNTx/f
-WFnEh2yYmdz6HlIFGfXLtV6eWFi6rf8pLpzg1h3JV1nKvW3SKmJ4U4G/FnfqvNZ4
-h8DE4YK2Vzy3VadPRNwuSAZYwl+RXXlVSoQbQZbdD4itSVcdt62rm/hdZ6727nMn
-wAihahnCrAecenK9FFwbCTZO+0LMYQ==
-=i7fU
+iHUEABYIAB0WIQQHbPq+cpGvN/peuzMLxc3C7H1lCAUCYtlCpAAKCRALxc3C7H1l
+CH3VAP0UC9lDdd/fIlxYLQa+xUSFqHJHrap+vbhZ0Co4s/SlkgD+JXqNWLFDmtEF
+29yeuk3k7WUrvkX9OIjphqSsYKFRzwo=
+=+ChT
 -----END PGP SIGNATURE-----
 
---9EvVpXRtaCTHvahb--
+--CFA1nl4l5O882w62--
