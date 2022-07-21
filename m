@@ -2,130 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B90D357D473
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 21:58:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DFD757D47D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 22:02:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231853AbiGUT6i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jul 2022 15:58:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36572 "EHLO
+        id S233114AbiGUUCy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jul 2022 16:02:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230518AbiGUT6h (ORCPT
+        with ESMTP id S233075AbiGUUCy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jul 2022 15:58:37 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9C5E6383
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 12:58:36 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id t3so3545984edd.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 12:58:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mHKWUmFgUfuZc36J9hbJA8Kke1gZwOYkNn4MmRRQ64Q=;
-        b=beAHVgvfeXkhJLLqR7EMnPg46bA2u+iFLwngja2Te+ki3gsPMJlt+qGKCn63WN9SLp
-         1XWqRoiVTca7Vy9/skOyyqzKasfEB7HFvZsfS6SAcEzZf6jVN4Yu1IcuE4qWWnMHFjBC
-         fPVcDvyptwdijAuWxXrvk1ONHaad+BKsTmbTo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mHKWUmFgUfuZc36J9hbJA8Kke1gZwOYkNn4MmRRQ64Q=;
-        b=zB6v3xylBqTX7Rj6DRu9g99gwSPMq9WZXJ0BSY37fUm7AR781uIsa2WgJ1318wUseu
-         pZg3CWIKcMak3AI/Ut3K3D2DXlcfCqchVeI6M0+VXFXXV+YMPxs8O1SjerOw2HJ7qnYi
-         JPX6P1ui9YtZ54QJWVjCmVALuiMul+o0qW9FNf6uctXcY+lpxdahihRI8OkH4KJtsD/W
-         64JGPhfKZtZGxhZdIyOalAVRPFj1FMHYdQXW4EG0ozMG6mDVqWVFjxjcQZdr+ofChf4x
-         Pxr0oJGEcFk/700ohv6+1A88YvyOv0XHsxuIWrXv/iYsdSvZPyiIFJjFcD3oFDVt1Xtq
-         MvtA==
-X-Gm-Message-State: AJIora+V6EM5/WmY3aDb5cCuKZGnN9kb+QomlhyLGCbS2VE5BMLNBGdv
-        n9+qqQodpmadsz5QMXwzr9bWIxYVKkexcTd6Hxw=
-X-Google-Smtp-Source: AGRyM1tK8ScLUmpcz9V/PYYyOSo9O+Js8+IqBce3Ua7lG9BPwR+PZYtm8Txiybq1iyNJfvjywlwmvA==
-X-Received: by 2002:a05:6402:2786:b0:43a:dc4e:ea63 with SMTP id b6-20020a056402278600b0043adc4eea63mr60597389ede.175.1658433514934;
-        Thu, 21 Jul 2022 12:58:34 -0700 (PDT)
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com. [209.85.221.46])
-        by smtp.gmail.com with ESMTPSA id w23-20020a17090649d700b0072b33e91f96sm1166834ejv.190.2022.07.21.12.58.33
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Jul 2022 12:58:34 -0700 (PDT)
-Received: by mail-wr1-f46.google.com with SMTP id bu1so3743809wrb.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 12:58:33 -0700 (PDT)
-X-Received: by 2002:a05:6000:2c9:b0:21d:bd7d:3af6 with SMTP id
- o9-20020a05600002c900b0021dbd7d3af6mr34835wry.405.1658433513568; Thu, 21 Jul
- 2022 12:58:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220718073104.146985-1-jinghung.chen3@hotmail.com> <SG2PR03MB5006A2ADC6ED22199D8C88D9CC8C9@SG2PR03MB5006.apcprd03.prod.outlook.com>
-In-Reply-To: <SG2PR03MB5006A2ADC6ED22199D8C88D9CC8C9@SG2PR03MB5006.apcprd03.prod.outlook.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 21 Jul 2022 12:58:21 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WTe0ArnF2U43Nmy8Ri-CnqMCssVGcWiPUiLaHzS8zVUQ@mail.gmail.com>
-Message-ID: <CAD=FV=WTe0ArnF2U43Nmy8Ri-CnqMCssVGcWiPUiLaHzS8zVUQ@mail.gmail.com>
-Subject: Re: [PATCH v6 3/3] arm64: dts: qcom: Add LTE SKUs for sc7280-villager family
-To:     Jimmy Chen <jinghung.chen3@hotmail.com>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 21 Jul 2022 16:02:54 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E5736D9DF;
+        Thu, 21 Jul 2022 13:02:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1658433770;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=Owkp8ktceAI2U5/duGJt4dKf9HIoey0z8t5W7UFe7eo=;
+    b=BLxrN2S+YWx0HdNI2q7oAFlQ2WmDx7BXapbRJITFzGr3CVzlPle8bxQ0WUuLMyvT7/
+    42ttEv5fnyJmOexK3Q1qd9utSb9Ik4gWvxMbFinqn4eKvmijNONIBxtuRQul4bn7rKcj
+    mKipm1pCV8RQUST7UndcS8AT6kWNrUEMLuYZhrFKITC4clMc7cOf/t8hRmyXSJF4khn6
+    R1kKfay+dTgQyMFgA5DEvFy/TkrqgJbJnzsb+SmmgeUh3DY0TYYMc0bhg/+Vpd4/sf4d
+    o3iJ6+AoR/0s063znjaukuKqOkqX0GE2N6y1HVntt03adNa82HOl8EKO2LUT0lsIErfl
+    Z88g==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLUrK86+6Y="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.47.0 AUTH)
+    with ESMTPSA id efdacay6LK2n61F
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Thu, 21 Jul 2022 22:02:49 +0200 (CEST)
+Date:   Thu, 21 Jul 2022 22:02:43 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Alan Huang <alan-huang@quanta.corp-partner.google.com>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Sireesh Kodali <sireeshkodali1@gmail.com>,
+        Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 2/5] dt-bindings: remoteproc: qcom,q6v5: Move MSM8916
+ to schema
+Message-ID: <Ytmw41giZ/4S+Pp0@gerhold.net>
+References: <20220718140344.1831731-1-stephan.gerhold@kernkonzept.com>
+ <20220718140344.1831731-3-stephan.gerhold@kernkonzept.com>
+ <20220720224608.GA4107504-robh@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220720224608.GA4107504-robh@kernel.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Wed, Jul 20, 2022 at 04:46:08PM -0600, Rob Herring wrote:
+> On Mon, Jul 18, 2022 at 04:03:41PM +0200, Stephan Gerhold wrote:
+> > qcom,q6v5.txt covers multiple SoCs with quite different binding
+> > requirements. Converting this into one DT schema would require
+> > several if statements, making the DT schema overall harder to
+> > read and understand.
+> > 
+> > To avoid this, follow the example of SC7180/SC7280 and split
+> > "qcom,msm8916-mss-pil" (and the equivalent deprecated "qcom,q6v5-pil"
+> > compatible) into a separate DT schema. The schema is somewhat based
+> > on the one for SC7180/SC7280 but adjusted for the old platforms.
+> > 
+> > Compared to the old plain text bindings, add missing documentation for
+> > the "bam-dmux" subnode and recommend one particular approach to specify
+> > the MBA/MPSS "memory-region" (the other one is marked as deprecated).
+> > 
+> > Cc: Sireesh Kodali <sireeshkodali1@gmail.com>
+> > Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+> > ---
+> > Changes in v2:
+> >   - Add blank lines between top-level properties
+> >   - Drop "deprecated" in "oneOf" list, it is not clear if this is valid
+> >     and it should be redundant since the properties itself are already
+> >     marked as "deprecated"
+> > ---
+> > Like Sibi's patch series for SC7180/SC7820 [1] this is somewhat related
+> > to Sireesh's series that converts all of qcom,q6v5.txt [2] (with a lot
+> > of if statements). However, this series focuses on MSM8916/MSM8974 (or
+> > actually MSM8909) only.
+> > 
+> > [1]: https://lore.kernel.org/linux-arm-msm/1657020721-24939-1-git-send-email-quic_sibis@quicinc.com/
+> > [2]: https://lore.kernel.org/linux-arm-msm/20220511161602.117772-7-sireeshkodali1@gmail.com/
+> 
+> Is that one abandoned or do we just get to review both approaches 
+> without coordination?
+> 
 
-On Mon, Jul 18, 2022 at 12:31 AM Jimmy Chen <jinghung.chen3@hotmail.com> wrote:
->
-> This adds LTE skus for villager device tree files.
->
-> Signed-off-by: Jimmy Chen <jinghung.chen3@hotmail.com>
-> ---
->
-> Changes in v6:
-> - Remove v5 accidentally added sc7280-herobrine-herobrine-r1-lte.dts
->
-> Changes in v5:
-> - Reorder '.dtb' in Makefile
-> - Put the "interconnects" line back
->
-> Changes in v4:
-> - Reorder 'status' last
->
->  arch/arm64/boot/dts/qcom/Makefile               |  2 ++
->  .../boot/dts/qcom/sc7280-chrome-common.dtsi     | 11 -----------
->  .../boot/dts/qcom/sc7280-herobrine-crd.dts      |  1 +
->  .../dts/qcom/sc7280-herobrine-herobrine-r1.dts  |  1 +
->  .../boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi | 17 +++++++++++++++++
->  .../qcom/sc7280-herobrine-villager-r0-lte.dts   | 14 ++++++++++++++
->  .../qcom/sc7280-herobrine-villager-r1-lte.dts   | 14 ++++++++++++++
->  arch/arm64/boot/dts/qcom/sc7280-idp.dts         |  1 +
->  8 files changed, 50 insertions(+), 11 deletions(-)
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
->
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 7e6a4d7ef3266..bd43d984f69fc 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -103,7 +103,9 @@ dtb-$(CONFIG_ARCH_QCOM)     += sc7180-trogdor-r1-lte.dtb
->  dtb-$(CONFIG_ARCH_QCOM)        += sc7280-herobrine-crd.dtb
->  dtb-$(CONFIG_ARCH_QCOM)        += sc7280-herobrine-herobrine-r1.dtb
->  dtb-$(CONFIG_ARCH_QCOM)        += sc7280-herobrine-villager-r0.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)        += sc7280-herobrine-villager-r0-lte.dtb
->  dtb-$(CONFIG_ARCG_QCOM)        += sc7280-herobrine-villager-r1.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)        += sc7280-herobrine-villager-r1-lte.dtb
+I assumed the decision to make separate schemas rather than a big one
+was already made, since Sibi's series was applied and has already moved
+parts of qcom,q6v5.txt into separate schemas.
 
-Whoops! Looks like you'll need a v7. There's a subtle typo above.
-"ARCH" doesn't end with a "G".
+Still, I did coordinate with Sireesh before submitting this patch and
+suggested that he can likely just add the new "qcom,msm8953-mss-pil"
+compatible from his series to the DT schema in this patch (the setup is
+also very similar).
 
--Doug
+> I think you need a common q6v5 schema here with all the common 
+> properties. Having the same property name with the type defined multiple 
+> times is not great. In fact, I'm working on a check for finding those.
+
+Which properties would you move to a common schema? Most of the schema
+is just listing items for generic properties (interrupts, clocks, power
+domains, supplies, resets, memory-region, ...) and having them separated
+is intended to avoid lots of if statements in a common schema.
+
+What remains is maybe:
+
+  - "qcom,smem-states", which is already used in several other schemas
+    and could be possibly defined together with #qcom,smem-state-cells
+    in some generic schema(?)
+
+  - "qcom,halt-regs", "firmware-name", "smd-edge" are used by different
+    Qualcomm remoteproc drivers, so they could possibly be defined in
+    some common "qcom-remoteproc.yaml" schema(?)
+
+Thanks,
+Stephan
