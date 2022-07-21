@@ -2,178 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F290E57D42F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 21:35:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1C7F57D464
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 21:52:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229547AbiGUTfV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jul 2022 15:35:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48352 "EHLO
+        id S230309AbiGUTwX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jul 2022 15:52:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229640AbiGUTfU (ORCPT
+        with ESMTP id S229844AbiGUTwT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jul 2022 15:35:20 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC09EDB2;
-        Thu, 21 Jul 2022 12:35:18 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 9F5EEB82667;
-        Thu, 21 Jul 2022 19:35:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15A8C3411E;
-        Thu, 21 Jul 2022 19:35:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1658432116;
-        bh=99GSMARTvvpcVHB+F2vLGFZvNFZm6VTTEHgXgt1JecM=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=egF4NZ0BnpjcQWcrIGOK3DqoIpbW3DTVbGAyR8tg4tDE92CUIGf/EDp10rBqZ3ckv
-         tyuz2gpbaLxPs+/WzHoSF5TuXmt1CSrDCU15jIbbEQG6xEuh1dPpF4rc5WUbZMtkXd
-         Vr97+yk9zG/fd3/swBYsx1oFek8z1jmW1Zg+EB/+Sk/RPk8mBlNsSi29DYK64kyxnA
-         81sadNVCWJ8LNHg7HmUE8x+duuGsyoHR+B2Um86mFQWj8/eYrSSPV1E3f+xhIlNMDi
-         U2mPQqQRzC31dMyusBaSB5LIjAtHiO7JhTSFwBoQZI3jePmf33G7qLYqxkUjJB2lhR
-         Tc2brjHeRMZBw==
-Date:   Thu, 21 Jul 2022 14:35:13 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH v2] PCI: qcom: Add support for modular builds
-Message-ID: <20220721193513.GA1747404@bhelgaas>
+        Thu, 21 Jul 2022 15:52:19 -0400
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96BB02183F;
+        Thu, 21 Jul 2022 12:52:18 -0700 (PDT)
+Received: by mail-io1-f51.google.com with SMTP id e69so2184014iof.5;
+        Thu, 21 Jul 2022 12:52:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=9qU3lShC423RO9jUaFHy+GEk0cB+opAvk6TkHNpI+xU=;
+        b=KZKB2m3WSJUG9LKZ3sR/Ie2L87r6w4ZcHTj8yX5RmEiL/4vaK/GAgwut5NWyA7+u3h
+         r1RTluXKFrge5WeeCZ1TWN4RTzcgZXCDum4A3Td8g6W4YQL/DvxFFGxX0NTJgAAopJ09
+         2yqBmXipH4d+ZExhZOiN9DI4dL46XG1w5yS+2WZsfQuAQYfRr3tlf1tS8KkggaLZ/xu8
+         hkIpLUEjutp5j8tIrbm9JY/MHAZmQTCM5YbdSZHlI0hxU6CK97NluYiWW0dBkY7KV1Dy
+         /7I3vYJMbyNpvwQf6L9WaloxgBAUDHg684rafOoMCVkiB5Itp+/sBbo+dRt6+Jd2GQRZ
+         Wmbg==
+X-Gm-Message-State: AJIora96+mn46UR7GdPCgzXzO0sE5rkYQAYd774kcUe+01Mlp4uqpwP0
+        aPzpWfQJ1/qBlGDqhCB/+g==
+X-Google-Smtp-Source: AGRyM1vtb/Pgq6vsjHn+wt+hYE2q0Nb6Yn4IDlr2B93dVsctunQcYCRjbeahSAuZpzfSUQBA5UXtzQ==
+X-Received: by 2002:a05:6638:3881:b0:33c:c785:37d1 with SMTP id b1-20020a056638388100b0033cc78537d1mr98828jav.40.1658433137724;
+        Thu, 21 Jul 2022 12:52:17 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id y6-20020a92d206000000b002dc10fd4b88sm1026857ily.29.2022.07.21.12.52.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Jul 2022 12:52:17 -0700 (PDT)
+Received: (nullmailer pid 1821727 invoked by uid 1000);
+        Thu, 21 Jul 2022 19:52:15 -0000
+Date:   Thu, 21 Jul 2022 13:52:15 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Kuldeep Singh <singh.kuldeep87k@gmail.com>
+Cc:     Vinod Koul <vkoul@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH v3 6/6] dt-bindings: dma: Convert Qualcomm BAM DMA
+ binding to json format
+Message-ID: <20220721195215.GA1817266-robh@kernel.org>
+References: <20220417210436.6203-1-singh.kuldeep87k@gmail.com>
+ <20220417210436.6203-7-singh.kuldeep87k@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220721064720.10762-1-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20220417210436.6203-7-singh.kuldeep87k@gmail.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 21, 2022 at 08:47:20AM +0200, Johan Hovold wrote:
-> Allow the Qualcomm PCIe controller driver to be built as a module, which
-> is useful for multi-platform kernels as well as during development.
+On Mon, 18 Apr 2022 02:34:36 +0530, Kuldeep Singh wrote:
+> Convert Qualcomm BAM DMA controller binding to DT schema format using
+> json schema.
 > 
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-
-Applied to pci/ctrl/qcom for v5.20, thanks!
-
+> Signed-off-by: Kuldeep Singh <singh.kuldeep87k@gmail.com>
 > ---
+> v3:
+> - Address Krzysztof Comments
+> - qcom,ee as required property
+> - Use boolean type instead of flag
+> - Add min/max to qcom,ee
+> - skip clocks, as it's users are not fixed
+> ---
+> v2:
+> - Use dma-cells
+> - Set additionalProperties to false
+> ---
+>  .../devicetree/bindings/dma/qcom,bam-dma.yaml | 97 +++++++++++++++++++
+>  .../devicetree/bindings/dma/qcom_bam_dma.txt  | 52 ----------
+>  2 files changed, 97 insertions(+), 52 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
 > 
-> Changes in v2
->  - rebase on next-20220720 (adjust context)
->  - add Rob and Mani's reviewed-by tags
-> 
-> 
->  drivers/pci/controller/dwc/Kconfig     |  2 +-
->  drivers/pci/controller/dwc/pcie-qcom.c | 36 +++++++++++++++++++++++---
->  2 files changed, 34 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
-> index 62ce3abf0f19..230f56d1a268 100644
-> --- a/drivers/pci/controller/dwc/Kconfig
-> +++ b/drivers/pci/controller/dwc/Kconfig
-> @@ -168,7 +168,7 @@ config PCI_HISI
->  	  Hip05 and Hip06 SoCs
->  
->  config PCIE_QCOM
-> -	bool "Qualcomm PCIe controller"
-> +	tristate "Qualcomm PCIe controller"
->  	depends on OF && (ARCH_QCOM || COMPILE_TEST)
->  	depends on PCI_MSI_IRQ_DOMAIN
->  	select PCIE_DW_HOST
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 5ed164c2afa3..d176c635016b 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -16,7 +16,7 @@
->  #include <linux/io.h>
->  #include <linux/iopoll.h>
->  #include <linux/kernel.h>
-> -#include <linux/init.h>
-> +#include <linux/module.h>
->  #include <linux/of_device.h>
->  #include <linux/of_gpio.h>
->  #include <linux/pci.h>
-> @@ -1518,6 +1518,15 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
->  	return ret;
->  }
->  
-> +static void qcom_pcie_host_deinit(struct qcom_pcie *pcie)
-> +{
-> +	qcom_ep_reset_assert(pcie);
-> +	if (pcie->cfg->ops->post_deinit)
-> +		pcie->cfg->ops->post_deinit(pcie);
-> +	phy_power_off(pcie->phy);
-> +	pcie->cfg->ops->deinit(pcie);
-> +}
-> +
->  static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
->  	.host_init = qcom_pcie_host_init,
->  };
-> @@ -1752,6 +1761,22 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  	return ret;
->  }
->  
-> +static int qcom_pcie_remove(struct platform_device *pdev)
-> +{
-> +	struct qcom_pcie *pcie = platform_get_drvdata(pdev);
-> +	struct device *dev = &pdev->dev;
-> +
-> +	dw_pcie_host_deinit(&pcie->pci->pp);
-> +	qcom_pcie_host_deinit(pcie);
-> +
-> +	phy_exit(pcie->phy);
-> +
-> +	pm_runtime_put_sync(dev);
-> +	pm_runtime_disable(dev);
-> +
-> +	return 0;
-> +}
-> +
->  static const struct of_device_id qcom_pcie_match[] = {
->  	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
->  	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
-> @@ -1771,6 +1796,7 @@ static const struct of_device_id qcom_pcie_match[] = {
->  	{ .compatible = "qcom,pcie-ipq6018", .data = &ipq6018_cfg },
->  	{ }
->  };
-> +MODULE_DEVICE_TABLE(of, qcom_pcie_match);
->  
->  static void qcom_fixup_class(struct pci_dev *dev)
->  {
-> @@ -1786,10 +1812,14 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
->  
->  static struct platform_driver qcom_pcie_driver = {
->  	.probe = qcom_pcie_probe,
-> +	.remove = qcom_pcie_remove,
->  	.driver = {
->  		.name = "qcom-pcie",
-> -		.suppress_bind_attrs = true,
->  		.of_match_table = qcom_pcie_match,
->  	},
->  };
-> -builtin_platform_driver(qcom_pcie_driver);
-> +module_platform_driver(qcom_pcie_driver);
-> +
-> +MODULE_AUTHOR("Stanimir Varbanov <svarbanov@mm-sol.com>");
-> +MODULE_DESCRIPTION("Qualcomm PCIe root complex driver");
-> +MODULE_LICENSE("GPL");
-> -- 
-> 2.35.1
-> 
+
+This is the 11th most warned on (168 warnings) for missing a schema, so 
+I've implemented my only comment and applied. It seems neither this one 
+or the other attempt at converting are getting respun.
+
+Rob
