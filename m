@@ -2,222 +2,918 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8297257CEF5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 17:31:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BF9C57D01D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 17:46:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229507AbiGUPbO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jul 2022 11:31:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44538 "EHLO
+        id S233115AbiGUPqL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jul 2022 11:46:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229681AbiGUPbL (ORCPT
+        with ESMTP id S233097AbiGUPqB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jul 2022 11:31:11 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6906A78597;
-        Thu, 21 Jul 2022 08:31:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1658417468; x=1689953468;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=I1t5fOErKc+S9ryw9hWukhTz7LniY6w8G1tUsc1Dbs0=;
-  b=h/963ZjryOp5SSKZgNNnITp/n6Sb7YddlyzeDJkj09nPvXvEUng4WXrN
-   v8OehTRqez207erwLHmBvI7a3/f1PzJoD7PoyozX8wHxKXL5454OxjOmy
-   D5+RvboS62xNk/+uV4lYJnSnSSrD/scUB+fTJDBL5zeQbPaE8przYD+0Y
-   c=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 21 Jul 2022 08:31:08 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2022 08:31:07 -0700
+        Thu, 21 Jul 2022 11:46:01 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 390A98E1D8;
+        Thu, 21 Jul 2022 08:41:52 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 26LEWBZD018932;
+        Thu, 21 Jul 2022 15:41:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=FOsGJUyKE6iXXV2mk28X3How/ZzkoLRlTvGSa8YomFw=;
+ b=A1T8DMyUIBqUGrq/1TIvgLtcEZ/U+j+IIiozyoHb8p2xZ2k+dRl+LmdWFndiKwtWkbsf
+ 31uw+/qIwEBZY/YKyo9Qlr7dALjMZ4gqXl2pq1u56s92BEdDnaFm1pcGEuTJ6mlMIC+n
+ M5zLvvGfwAH1UOp9VCTKFAHSZOKz0/LRwFFYoDM1pYrwaDiVArsVXrMqj2lmBh6bGli/
+ wftDCDiR6EVorYYq3hsVuew594e8ZZnUse5YOdFk/yFPwRyeik2goE/P6hfSilWQspFL
+ Wr0JMlk9gDsgyG68+2Kmz1BKQdFlc3pm0CPHz5i7I7PYLZd3UGqYJ5WLq8zqvg694Wjo 8A== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3heucv9yp9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 21 Jul 2022 15:41:38 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.47.97.222])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 26LFfbFe008094
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 21 Jul 2022 15:41:37 GMT
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 21 Jul 2022 08:31:07 -0700
-Received: from [10.253.77.242] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 21 Jul
- 2022 08:31:02 -0700
-Message-ID: <3f714c34-277d-ef71-b527-f758172160f9@quicinc.com>
-Date:   Thu, 21 Jul 2022 23:30:59 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v12 0/9] Coresight: Add support for TPDM and TPDA
-Content-Language: en-US
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+ 15.2.986.22; Thu, 21 Jul 2022 08:41:36 -0700
+Received: from hu-ppareek-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 21 Jul 2022 08:41:33 -0700
+From:   Parikshit Pareek <quic_ppareek@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20220710021032.27455-1-quic_jinlmao@quicinc.com>
-From:   Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <20220710021032.27455-1-quic_jinlmao@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Parikshit Pareek <quic_ppareek@quicinc.com>
+Subject: [PATCH 1/2] arm64: dts: qcom: introduce sa8540p-ride dts
+Date:   Thu, 21 Jul 2022 21:10:57 +0530
+Message-ID: <20220721154057.15276-1-quic_ppareek@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+MIME-Version: 1.0
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: NhZMfgDnQNYIQw3sVH8Vb2uLJPGDycf8
+X-Proofpoint-GUID: NhZMfgDnQNYIQw3sVH8Vb2uLJPGDycf8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-07-21_18,2022-07-20_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ lowpriorityscore=0 suspectscore=0 spamscore=0 malwarescore=0
+ impostorscore=0 clxscore=1011 adultscore=0 phishscore=0 mlxscore=0
+ priorityscore=1501 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2206140000 definitions=main-2207210062
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi all,
+Create new dts file specific for Qdrive board based on sa8540p chipset.
+Introduce common dtsi file sa8295p-adp.dtsi, to be included for adp and
+Qdrive board.
 
-Please help to review V12 patches.
+Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/sa8295p-adp.dts      | 378 +----------------
+ arch/arm64/boot/dts/qcom/sa8295p-adp.dtsi     | 385 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts |  15 +
+ 4 files changed, 403 insertions(+), 376 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sa8295p-adp.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts
 
-Thanks
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index 9e2a13d75f9d..fa0abcf7660b 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -51,6 +51,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sa8295p-adp.dtb
++dtb-$(CONFIG_ARCH_QCOM) += sa8540p-adp-ride.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1-lte.dtb
+diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+index 9398f0349944..adb6637117bc 100644
+--- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
++++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+@@ -2,388 +2,14 @@
+ /*
+  * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+  * Copyright (c) 2022, Linaro Limited
++ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ 
+ /dts-v1/;
+ 
+-#include <dt-bindings/gpio/gpio.h>
+-#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+-#include <dt-bindings/spmi/spmi.h>
+-
+-#include "sa8540p.dtsi"
++#include "sa8295p-adp.dtsi"
+ 
+ / {
+ 	model = "Qualcomm SA8295P ADP";
+ 	compatible = "qcom,sa8295p-adp", "qcom,sa8540p";
+-
+-	aliases {
+-		serial0 = &qup2_uart17;
+-	};
+-
+-	chosen {
+-		stdout-path = "serial0:115200n8";
+-	};
+-};
+-
+-&apps_rsc {
+-	pmm8540-a-regulators {
+-		compatible = "qcom,pm8150-rpmh-regulators";
+-		qcom,pmic-id = "a";
+-
+-		vreg_l3a: ldo3 {
+-			regulator-name = "vreg_l3a";
+-			regulator-min-microvolt = <1200000>;
+-			regulator-max-microvolt = <1208000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-			regulator-allow-set-load;
+-		};
+-
+-		vreg_l5a: ldo5 {
+-			regulator-name = "vreg_l5a";
+-			regulator-min-microvolt = <912000>;
+-			regulator-max-microvolt = <912000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-			regulator-allow-set-load;
+-		};
+-
+-		vreg_l7a: ldo7 {
+-			regulator-name = "vreg_l7a";
+-			regulator-min-microvolt = <1800000>;
+-			regulator-max-microvolt = <1800000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-			regulator-allow-set-load;
+-		};
+-
+-		vreg_l13a: ldo13 {
+-			regulator-name = "vreg_l13a";
+-			regulator-min-microvolt = <3072000>;
+-			regulator-max-microvolt = <3072000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-			regulator-allow-set-load;
+-		};
+-	};
+-
+-	pmm8540-c-regulators {
+-		compatible = "qcom,pm8150-rpmh-regulators";
+-		qcom,pmic-id = "c";
+-
+-		vreg_l1c: ldo1 {
+-			regulator-name = "vreg_l1c";
+-			regulator-min-microvolt = <912000>;
+-			regulator-max-microvolt = <912000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-			regulator-allow-set-load;
+-		};
+-
+-		vreg_l2c: ldo2 {
+-			regulator-name = "vreg_l2c";
+-			regulator-min-microvolt = <3072000>;
+-			regulator-max-microvolt = <3072000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-			regulator-allow-set-load;
+-		};
+-
+-		vreg_l3c: ldo3 {
+-			regulator-name = "vreg_l3c";
+-			regulator-min-microvolt = <1200000>;
+-			regulator-max-microvolt = <1200000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-			regulator-allow-set-load;
+-		};
+-
+-		vreg_l4c: ldo4 {
+-			regulator-name = "vreg_l4c";
+-			regulator-min-microvolt = <1200000>;
+-			regulator-max-microvolt = <1208000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-			regulator-allow-set-load;
+-		};
+-
+-		vreg_l6c: ldo6 {
+-			regulator-name = "vreg_l6c";
+-			regulator-min-microvolt = <1200000>;
+-			regulator-max-microvolt = <1200000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-			regulator-allow-set-load;
+-		};
+-
+-		vreg_l7c: ldo7 {
+-			regulator-name = "vreg_l7c";
+-			regulator-min-microvolt = <1800000>;
+-			regulator-max-microvolt = <1800000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-			regulator-allow-set-load;
+-		};
+-
+-		vreg_l10c: ldo10 {
+-			regulator-name = "vreg_l10c";
+-			regulator-min-microvolt = <2504000>;
+-			regulator-max-microvolt = <2504000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-			regulator-allow-set-load;
+-		};
+-
+-		vreg_l17c: ldo17 {
+-			regulator-name = "vreg_l17c";
+-			regulator-min-microvolt = <2504000>;
+-			regulator-max-microvolt = <2504000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-			regulator-allow-set-load;
+-		};
+-	};
+-
+-	pmm8540-g-regulators {
+-		compatible = "qcom,pm8150-rpmh-regulators";
+-		qcom,pmic-id = "g";
+-
+-		vreg_l3g: ldo3 {
+-			regulator-name = "vreg_l3g";
+-			regulator-min-microvolt = <1200000>;
+-			regulator-max-microvolt = <1200000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-			regulator-allow-set-load;
+-		};
+-
+-		vreg_l7g: ldo7 {
+-			regulator-name = "vreg_l7g";
+-			regulator-min-microvolt = <1800000>;
+-			regulator-max-microvolt = <1800000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-			regulator-allow-set-load;
+-		};
+-
+-		vreg_l8g: ldo8 {
+-			regulator-name = "vreg_l8g";
+-			regulator-min-microvolt = <880000>;
+-			regulator-max-microvolt = <880000>;
+-			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+-			regulator-allow-set-load;
+-		};
+-	};
+-};
+-
+-&qup2 {
+-	status = "okay";
+-};
+-
+-&qup2_uart17 {
+-	compatible = "qcom,geni-debug-uart";
+-	status = "okay";
+-};
+-
+-&remoteproc_adsp {
+-	firmware-name = "qcom/sa8540p/adsp.mbn";
+-	status = "okay";
+-};
+-
+-&remoteproc_nsp0 {
+-	firmware-name = "qcom/sa8540p/cdsp.mbn";
+-	status = "okay";
+-};
+-
+-&remoteproc_nsp1 {
+-	firmware-name = "qcom/sa8540p/cdsp1.mbn";
+-	status = "okay";
+-};
+-
+-&spmi_bus {
+-	pm8450a: pmic@0 {
+-		compatible = "qcom,pm8150", "qcom,spmi-pmic";
+-		reg = <0x0 SPMI_USID>;
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-
+-		pm8450a_gpios: gpio@c000 {
+-			compatible = "qcom,pm8150-gpio";
+-			reg = <0xc000>;
+-			gpio-controller;
+-			#gpio-cells = <2>;
+-			interrupt-controller;
+-			#interrupt-cells = <2>;
+-		};
+-	};
+-
+-	pm8450c: pmic@4 {
+-		compatible = "qcom,pm8150", "qcom,spmi-pmic";
+-		reg = <0x4 SPMI_USID>;
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-
+-		pm8450c_gpios: gpio@c000 {
+-			compatible = "qcom,pm8150-gpio";
+-			reg = <0xc000>;
+-			gpio-controller;
+-			#gpio-cells = <2>;
+-			interrupt-controller;
+-			#interrupt-cells = <2>;
+-		};
+-	};
+-
+-	pm8450e: pmic@8 {
+-		compatible = "qcom,pm8150", "qcom,spmi-pmic";
+-		reg = <0x8 SPMI_USID>;
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-
+-		pm8450e_gpios: gpio@c000 {
+-			compatible = "qcom,pm8150-gpio";
+-			reg = <0xc000>;
+-			gpio-controller;
+-			#gpio-cells = <2>;
+-			interrupt-controller;
+-			#interrupt-cells = <2>;
+-		};
+-	};
+-
+-	pm8450g: pmic@c {
+-		compatible = "qcom,pm8150", "qcom,spmi-pmic";
+-		reg = <0xc SPMI_USID>;
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-
+-		pm8450g_gpios: gpio@c000 {
+-			compatible = "qcom,pm8150-gpio";
+-			reg = <0xc000>;
+-			gpio-controller;
+-			#gpio-cells = <2>;
+-			interrupt-controller;
+-			#interrupt-cells = <2>;
+-		};
+-	};
+-};
+-
+-&ufs_mem_hc {
+-	reset-gpios = <&tlmm 228 GPIO_ACTIVE_LOW>;
+-
+-	vcc-supply = <&vreg_l17c>;
+-	vcc-max-microamp = <800000>;
+-	vccq-supply = <&vreg_l6c>;
+-	vccq-max-microamp = <900000>;
+-
+-	status = "okay";
+-};
+-
+-&ufs_mem_phy {
+-	vdda-phy-supply = <&vreg_l8g>;
+-	vdda-pll-supply = <&vreg_l3g>;
+-
+-	status = "okay";
+ };
+-
+-&ufs_card_hc {
+-	reset-gpios = <&tlmm 229 GPIO_ACTIVE_LOW>;
+-
+-	vcc-supply = <&vreg_l10c>;
+-	vcc-max-microamp = <800000>;
+-	vccq-supply = <&vreg_l3c>;
+-	vccq-max-microamp = <900000>;
+-
+-	status = "okay";
+-};
+-
+-&ufs_card_phy {
+-	vdda-phy-supply = <&vreg_l8g>;
+-	vdda-pll-supply = <&vreg_l3g>;
+-
+-	status = "okay";
+-};
+-
+-&usb_0 {
+-	status = "okay";
+-};
+-
+-&usb_0_dwc3 {
+-	/* TODO: Define USB-C connector properly */
+-	dr_mode = "peripheral";
+-};
+-
+-&usb_0_hsphy {
+-	vdda-pll-supply = <&vreg_l5a>;
+-	vdda18-supply = <&vreg_l7a>;
+-	vdda33-supply = <&vreg_l13a>;
+-
+-	status = "okay";
+-};
+-
+-&usb_0_qmpphy {
+-	vdda-phy-supply = <&vreg_l3a>;
+-	vdda-pll-supply = <&vreg_l5a>;
+-
+-	status = "okay";
+-};
+-
+-&usb_1 {
+-	status = "okay";
+-};
+-
+-&usb_1_dwc3 {
+-	/* TODO: Define USB-C connector properly */
+-	dr_mode = "host";
+-};
+-
+-&usb_1_hsphy {
+-	vdda-pll-supply = <&vreg_l1c>;
+-	vdda18-supply = <&vreg_l7c>;
+-	vdda33-supply = <&vreg_l2c>;
+-
+-	status = "okay";
+-};
+-
+-&usb_1_qmpphy {
+-	vdda-phy-supply = <&vreg_l4c>;
+-	vdda-pll-supply = <&vreg_l1c>;
+-
+-	status = "okay";
+-};
+-
+-&usb_2_hsphy0 {
+-	vdda-pll-supply = <&vreg_l5a>;
+-	vdda18-supply = <&vreg_l7g>;
+-	vdda33-supply = <&vreg_l13a>;
+-
+-	status = "okay";
+-};
+-
+-&usb_2_hsphy1 {
+-	vdda-pll-supply = <&vreg_l5a>;
+-	vdda18-supply = <&vreg_l7g>;
+-	vdda33-supply = <&vreg_l13a>;
+-
+-	status = "okay";
+-};
+-
+-&usb_2_hsphy2 {
+-	vdda-pll-supply = <&vreg_l5a>;
+-	vdda18-supply = <&vreg_l7g>;
+-	vdda33-supply = <&vreg_l13a>;
+-
+-	status = "okay";
+-};
+-
+-&usb_2_hsphy3 {
+-	vdda-pll-supply = <&vreg_l5a>;
+-	vdda18-supply = <&vreg_l7g>;
+-	vdda33-supply = <&vreg_l13a>;
+-
+-	status = "okay";
+-};
+-
+-&usb_2_qmpphy0 {
+-	vdda-phy-supply = <&vreg_l3a>;
+-	vdda-pll-supply = <&vreg_l5a>;
+-
+-	status = "okay";
+-};
+-
+-&usb_2_qmpphy1 {
+-	vdda-phy-supply = <&vreg_l3a>;
+-	vdda-pll-supply = <&vreg_l5a>;
+-
+-	status = "okay";
+-};
+-
+-&xo_board_clk {
+-	clock-frequency = <38400000>;
+-};
+-
+-/* PINCTRL */
+diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dtsi b/arch/arm64/boot/dts/qcom/sa8295p-adp.dtsi
+new file mode 100644
+index 000000000000..75ef77b7cac1
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dtsi
+@@ -0,0 +1,385 @@
++// SPDX-License-Identifier: BSD-3-Clause
++/*
++ * Copyright (c) 2021, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2022, Linaro Limited
++ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
++ */
++
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
++#include <dt-bindings/spmi/spmi.h>
++
++#include "sa8540p.dtsi"
++
++/ {
++	aliases {
++		serial0 = &qup2_uart17;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
++};
++
++&apps_rsc {
++	pmm8540-a-regulators {
++		compatible = "qcom,pm8150-rpmh-regulators";
++		qcom,pmic-id = "a";
++
++		vreg_l3a: ldo3 {
++			regulator-name = "vreg_l3a";
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1208000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++		};
++
++		vreg_l5a: ldo5 {
++			regulator-name = "vreg_l5a";
++			regulator-min-microvolt = <912000>;
++			regulator-max-microvolt = <912000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++		};
++
++		vreg_l7a: ldo7 {
++			regulator-name = "vreg_l7a";
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++		};
++
++		vreg_l13a: ldo13 {
++			regulator-name = "vreg_l13a";
++			regulator-min-microvolt = <3072000>;
++			regulator-max-microvolt = <3072000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++		};
++	};
++
++	pmm8540-c-regulators {
++		compatible = "qcom,pm8150-rpmh-regulators";
++		qcom,pmic-id = "c";
++
++		vreg_l1c: ldo1 {
++			regulator-name = "vreg_l1c";
++			regulator-min-microvolt = <912000>;
++			regulator-max-microvolt = <912000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++		};
++
++		vreg_l2c: ldo2 {
++			regulator-name = "vreg_l2c";
++			regulator-min-microvolt = <3072000>;
++			regulator-max-microvolt = <3072000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++		};
++
++		vreg_l3c: ldo3 {
++			regulator-name = "vreg_l3c";
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++		};
++
++		vreg_l4c: ldo4 {
++			regulator-name = "vreg_l4c";
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1208000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++		};
++
++		vreg_l6c: ldo6 {
++			regulator-name = "vreg_l6c";
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++		};
++
++		vreg_l7c: ldo7 {
++			regulator-name = "vreg_l7c";
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++		};
++
++		vreg_l10c: ldo10 {
++			regulator-name = "vreg_l10c";
++			regulator-min-microvolt = <2504000>;
++			regulator-max-microvolt = <2504000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++		};
++
++		vreg_l17c: ldo17 {
++			regulator-name = "vreg_l17c";
++			regulator-min-microvolt = <2504000>;
++			regulator-max-microvolt = <2504000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++		};
++	};
++
++	pmm8540-g-regulators {
++		compatible = "qcom,pm8150-rpmh-regulators";
++		qcom,pmic-id = "g";
++
++		vreg_l3g: ldo3 {
++			regulator-name = "vreg_l3g";
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++		};
++
++		vreg_l7g: ldo7 {
++			regulator-name = "vreg_l7g";
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++		};
++
++		vreg_l8g: ldo8 {
++			regulator-name = "vreg_l8g";
++			regulator-min-microvolt = <880000>;
++			regulator-max-microvolt = <880000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++		};
++	};
++};
++
++&qup2 {
++	status = "okay";
++};
++
++&qup2_uart17 {
++	compatible = "qcom,geni-debug-uart";
++	status = "okay";
++};
++
++&remoteproc_adsp {
++	firmware-name = "qcom/sa8540p/adsp.mbn";
++	status = "okay";
++};
++
++&remoteproc_nsp0 {
++	firmware-name = "qcom/sa8540p/cdsp.mbn";
++	status = "okay";
++};
++
++&remoteproc_nsp1 {
++	firmware-name = "qcom/sa8540p/cdsp1.mbn";
++	status = "okay";
++};
++
++&spmi_bus {
++	pm8450a: pmic@0 {
++		compatible = "qcom,pm8150", "qcom,spmi-pmic";
++		reg = <0x0 SPMI_USID>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		pm8450a_gpios: gpio@c000 {
++			compatible = "qcom,pm8150-gpio";
++			reg = <0xc000>;
++			gpio-controller;
++			#gpio-cells = <2>;
++			interrupt-controller;
++			#interrupt-cells = <2>;
++		};
++	};
++
++	pm8450c: pmic@4 {
++		compatible = "qcom,pm8150", "qcom,spmi-pmic";
++		reg = <0x4 SPMI_USID>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		pm8450c_gpios: gpio@c000 {
++			compatible = "qcom,pm8150-gpio";
++			reg = <0xc000>;
++			gpio-controller;
++			#gpio-cells = <2>;
++			interrupt-controller;
++			#interrupt-cells = <2>;
++		};
++	};
++
++	pm8450e: pmic@8 {
++		compatible = "qcom,pm8150", "qcom,spmi-pmic";
++		reg = <0x8 SPMI_USID>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		pm8450e_gpios: gpio@c000 {
++			compatible = "qcom,pm8150-gpio";
++			reg = <0xc000>;
++			gpio-controller;
++			#gpio-cells = <2>;
++			interrupt-controller;
++			#interrupt-cells = <2>;
++		};
++	};
++
++	pm8450g: pmic@c {
++		compatible = "qcom,pm8150", "qcom,spmi-pmic";
++		reg = <0xc SPMI_USID>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		pm8450g_gpios: gpio@c000 {
++			compatible = "qcom,pm8150-gpio";
++			reg = <0xc000>;
++			gpio-controller;
++			#gpio-cells = <2>;
++			interrupt-controller;
++			#interrupt-cells = <2>;
++		};
++	};
++};
++
++&ufs_mem_hc {
++	reset-gpios = <&tlmm 228 GPIO_ACTIVE_LOW>;
++
++	vcc-supply = <&vreg_l17c>;
++	vcc-max-microamp = <800000>;
++	vccq-supply = <&vreg_l6c>;
++	vccq-max-microamp = <900000>;
++
++	status = "okay";
++};
++
++&ufs_mem_phy {
++	vdda-phy-supply = <&vreg_l8g>;
++	vdda-pll-supply = <&vreg_l3g>;
++
++	status = "okay";
++};
++
++&ufs_card_hc {
++	reset-gpios = <&tlmm 229 GPIO_ACTIVE_LOW>;
++
++	vcc-supply = <&vreg_l10c>;
++	vcc-max-microamp = <800000>;
++	vccq-supply = <&vreg_l3c>;
++	vccq-max-microamp = <900000>;
++
++	status = "okay";
++};
++
++&ufs_card_phy {
++	vdda-phy-supply = <&vreg_l8g>;
++	vdda-pll-supply = <&vreg_l3g>;
++
++	status = "okay";
++};
++
++&usb_0 {
++	status = "okay";
++};
++
++&usb_0_dwc3 {
++	/* TODO: Define USB-C connector properly */
++	dr_mode = "peripheral";
++};
++
++&usb_0_hsphy {
++	vdda-pll-supply = <&vreg_l5a>;
++	vdda18-supply = <&vreg_l7a>;
++	vdda33-supply = <&vreg_l13a>;
++
++	status = "okay";
++};
++
++&usb_0_qmpphy {
++	vdda-phy-supply = <&vreg_l3a>;
++	vdda-pll-supply = <&vreg_l5a>;
++
++	status = "okay";
++};
++
++&usb_1 {
++	status = "okay";
++};
++
++&usb_1_dwc3 {
++	/* TODO: Define USB-C connector properly */
++	dr_mode = "host";
++};
++
++&usb_1_hsphy {
++	vdda-pll-supply = <&vreg_l1c>;
++	vdda18-supply = <&vreg_l7c>;
++	vdda33-supply = <&vreg_l2c>;
++
++	status = "okay";
++};
++
++&usb_1_qmpphy {
++	vdda-phy-supply = <&vreg_l4c>;
++	vdda-pll-supply = <&vreg_l1c>;
++
++	status = "okay";
++};
++
++&usb_2_hsphy0 {
++	vdda-pll-supply = <&vreg_l5a>;
++	vdda18-supply = <&vreg_l7g>;
++	vdda33-supply = <&vreg_l13a>;
++
++	status = "okay";
++};
++
++&usb_2_hsphy1 {
++	vdda-pll-supply = <&vreg_l5a>;
++	vdda18-supply = <&vreg_l7g>;
++	vdda33-supply = <&vreg_l13a>;
++
++	status = "okay";
++};
++
++&usb_2_hsphy2 {
++	vdda-pll-supply = <&vreg_l5a>;
++	vdda18-supply = <&vreg_l7g>;
++	vdda33-supply = <&vreg_l13a>;
++
++	status = "okay";
++};
++
++&usb_2_hsphy3 {
++	vdda-pll-supply = <&vreg_l5a>;
++	vdda18-supply = <&vreg_l7g>;
++	vdda33-supply = <&vreg_l13a>;
++
++	status = "okay";
++};
++
++&usb_2_qmpphy0 {
++	vdda-phy-supply = <&vreg_l3a>;
++	vdda-pll-supply = <&vreg_l5a>;
++
++	status = "okay";
++};
++
++&usb_2_qmpphy1 {
++	vdda-phy-supply = <&vreg_l3a>;
++	vdda-pll-supply = <&vreg_l5a>;
++
++	status = "okay";
++};
++
++&xo_board_clk {
++	clock-frequency = <38400000>;
++};
++
++/* PINCTRL */
+diff --git a/arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts
+new file mode 100644
+index 000000000000..87077f7a321c
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts
+@@ -0,0 +1,15 @@
++// SPDX-License-Identifier: BSD-3-Clause
++/*
++ * Copyright (c) 2021, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2022, Linaro Limited
++ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
++ */
++
++/dts-v1/;
++
++#include "sa8295p-adp.dtsi"
++
++/ {
++	model = "Qualcomm SA8540 ADP";
++	compatible = "qcom,sa8540p-adp-ride", "qcom,sa8540p";
++};
+-- 
+2.17.1
 
-Jinlong Mao
-
-On 7/10/2022 10:10 AM, Mao Jinlong wrote:
-> This series adds support for the trace performance monitoring and
-> diagnostics hardware (TPDM and TPDA). It is composed of two major
-> elements.
-> a) Changes for original coresight framework to support for TPDM and TPDA.
-> b) Add driver code for TPDM and TPDA.
->
-> Introduction of changes for original coresight framework
-> Support TPDM as new coresight source.
-> Since only STM and ETM are supported as coresight source originally.
-> TPDM is a newly added coresight source. We need to change
-> the original way of saving coresight path to support more types source
-> for coresight driver.
-> The following patch is to add support more coresight sources.
->      coresight: core: Use IDR for non-cpu bound sources' paths.
->
-> Introduction of TPDM and TPDA
-> TPDM - The trace performance monitoring and diagnostics monitor or TPDM in
-> short serves as data collection component for various dataset types
-> specified in the QPMDA(Qualcomm performance monitoring and diagnostics
-> architecture) spec. The primary use case of the TPDM is to collect data
-> from different data sources and send it to a TPDA for packetization,
-> timestamping and funneling.
->       Coresight: Add coresight TPDM source driver
->       dt-bindings: arm: Adds CoreSight TPDM hardware definitions
->       coresight-tpdm: Add DSB dataset support
->       coresight-tpdm: Add integration test support
->       docs: sysfs: coresight: Add sysfs ABI documentation for TPDM
->
-> TPDA - The trace performance monitoring and diagnostics aggregator or
-> TPDA in short serves as an arbitration and packetization engine for the
-> performance monitoring and diagnostics network as specified in the QPMDA
-> (Qualcomm performance monitoring and diagnostics architecture)
-> specification. The primary use case of the TPDA is to provide
-> packetization, funneling and timestamping of Monitor data as specified
-> in the QPMDA specification.
-> The following patch is to add driver for TPDA.
->       Coresight: Add TPDA link driver
->       dt-bindings: arm: Adds CoreSight TPDA hardware definitions
->
-> The last patch of this series is a device tree modification, which add
-> the TPDM and TPDA configuration to device tree for validating.
->      ARM: dts: msm: Add coresight components for SM8250
->      ARM: dts: msm: Add tpdm mm/prng for sm8250
->
-> Once this series patches are applied properly, the tpdm and tpda nodes
-> should be observed at the coresight path /sys/bus/coresight/devices
-> e.g.
-> /sys/bus/coresight/devices # ls -l | grep tpd
-> tpda0 -> ../../../devices/platform/soc@0/6004000.tpda/tpda0
-> tpdm0 -> ../../../devices/platform/soc@0/6c08000.mm.tpdm/tpdm0
->
-> We can use the commands are similar to the below to validate TPDMs.
-> Enable coresight sink first.
->
-> echo 1 > /sys/bus/coresight/devices/tmc_etf0/enable_sink
-> echo 1 > /sys/bus/coresight/devices/tpdm0/enable_source
-> echo 1 > /sys/bus/coresight/devices/tpdm0/integration_test
-> echo 2 > /sys/bus/coresight/devices/tpdm0/integration_test
-> The test data will be collected in the coresight sink which is enabled.
-> If rwp register of the sink is keeping updating when do
-> integration_test (by cat tmc_etf0/mgmt/rwp), it means there is data
-> generated from TPDM to sink.
->
-> There must be a tpda between tpdm and the sink. When there are some
-> other trace event hw components in the same HW block with tpdm, tpdm
-> and these hw components will connect to the coresight funnel. When
-> there is only tpdm trace hw in the HW block, tpdm will connect to
-> tpda directly.
->    
->      +---------------+                +-------------+
->      |  tpdm@6c08000 |                |tpdm@684C000 |
->      +-------|-------+                +------|------+
->              |                               |
->      +-------|-------+                       |
->      | funnel@6c0b000|                       |
->      +-------|-------+                       |
->              |                               |
->      +-------|-------+                       |
->      |funnel@6c2d000 |                       |
->      +-------|-------+                       |
->              |                               |
->              |    +---------------+          |
->              +----- tpda@6004000  -----------+
->                   +-------|-------+
->                           |
->                   +-------|-------+
->                   |funnel@6005000 |
->                   +---------------+
->
-> This patch series depends on patch series:
-> "[v2,00/13] coresight: Add new API to allocate trace source ID values"
-> https://patchwork.kernel.org/project/linux-arm-kernel/cover/20220704081149.16797-1-mike.leach@linaro.org/
->
-> Changes from V11:
-> 1. Clear bits for atid before setting them and relese atid when tpda
-> remove. -- Suzuki K Poulose <suzuki.poulose@arm.com>
->
-> Mao Jinlong (9):
->    coresight: core: Use IDR for non-cpu bound sources' paths.
->    Coresight: Add coresight TPDM source driver
->    dt-bindings: arm: Adds CoreSight TPDM hardware definitions
->    coresight-tpdm: Add DSB dataset support
->    coresight-tpdm: Add integration test support
->    Coresight: Add TPDA link driver
->    dt-bindings: arm: Adds CoreSight TPDA hardware definitions
->    arm64: dts: qcom: sm8250: Add coresight components
->    arm64: dts: qcom: sm8250: Add tpdm mm/prng
->
->   .../testing/sysfs-bus-coresight-devices-tpdm  |  13 +
->   .../bindings/arm/qcom,coresight-tpda.yaml     | 111 +++
->   .../bindings/arm/qcom,coresight-tpdm.yaml     |  93 +++
->   MAINTAINERS                                   |   2 +
->   arch/arm64/boot/dts/qcom/sm8250.dtsi          | 671 ++++++++++++++++++
->   drivers/hwtracing/coresight/Kconfig           |  23 +
->   drivers/hwtracing/coresight/Makefile          |   2 +
->   drivers/hwtracing/coresight/coresight-core.c  |  42 +-
->   drivers/hwtracing/coresight/coresight-tpda.c  | 208 ++++++
->   drivers/hwtracing/coresight/coresight-tpda.h  |  35 +
->   drivers/hwtracing/coresight/coresight-tpdm.c  | 259 +++++++
->   drivers/hwtracing/coresight/coresight-tpdm.h  |  62 ++
->   include/linux/coresight.h                     |   1 +
->   13 files changed, 1510 insertions(+), 12 deletions(-)
->   create mode 100644 Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->   create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
->   create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
->   create mode 100644 drivers/hwtracing/coresight/coresight-tpda.c
->   create mode 100644 drivers/hwtracing/coresight/coresight-tpda.h
->   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.c
->   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.h
->
