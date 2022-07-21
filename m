@@ -2,63 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98EB557CC0B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 15:36:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA01457CC13
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 15:37:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229513AbiGUNgW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jul 2022 09:36:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44596 "EHLO
+        id S229716AbiGUNhn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jul 2022 09:37:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229492AbiGUNgV (ORCPT
+        with ESMTP id S229508AbiGUNhm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jul 2022 09:36:21 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC59C27CC6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 06:36:20 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id t3so2238936edd.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 06:36:20 -0700 (PDT)
+        Thu, 21 Jul 2022 09:37:42 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 367A07E33B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 06:37:41 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id t3so2243756edd.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 06:37:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=kZ+EaaTNcvyNclKTamsWDViD0TCzODM1RnJ73E0WdAY=;
-        b=M5Lm6hdN0IaCIgqk+NnU2YYFc7XuxPONmUSZ259X+eoeZaBm2Nq3a2rHfQ7zMkWNj3
-         zPEVdUeryYmsbaLGwuKw3VS4qZZuufbCeuSmSCmmT/Px6JFLyfOSGPdQ8QKujwXsalgY
-         QjQDkue1sfu0li+R3yg1x6xPSir5QDi6/I7V8=
+        bh=8/cqmxcIHyGuuAd34yH5EGseYF2qIVCLxif3aKApjO8=;
+        b=jQFRTYzVKfF7XyCxEjMIsHJZa8HQ0iHL21yIQj1Gy5IrYzGHlCXHfSFcxJI/9zfPHT
+         zrlQ5VDaVZr9dhrwrr88VgBc/CzeknSxs3+qAQLyANBZAwoUZp3X4O3J+Zc5mvXCQ2yz
+         U7eTH2JhxhZDOYg8zidV39R6zFx+zpmW4Of24=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=kZ+EaaTNcvyNclKTamsWDViD0TCzODM1RnJ73E0WdAY=;
-        b=SabX2wwKShPsT+M1pL7DnlrW6nO/hXCnV1eQe/4EuJH7NtmHNXCMVK9pvpjIqF97N4
-         r3a4HC2KhSEFAjhupDJdKEuZ3a2q6GAwiKEz95s+M6WE7d8TKoYibhrqEnlCfGXMAZPy
-         MZ1U5tTOIrdceuVmq7II+slcSTU42xR2rpMU+EEmoNdZm/rmaJ5htpOABK+PinBjgyJz
-         AiBuzt4BuIMn9xWrOfpE29jjDUKvKJcVZQ06UxiSWS8zZQ8WjZqg8HzzJXPGfl9ECMia
-         sWWIXePEkRJQnMEzZSsIdzNiFddHVNA4xz46kMvHcd9LYRaWu/9zMXOb8+JcTTpxIH1H
-         +o4Q==
-X-Gm-Message-State: AJIora+8Lf1G1ZQDC4pE0ADPVbN89dYVxkA235lMrD/E8juta5Yu0feZ
-        QaHbLbgocHU83KPSYCV1ocrf8mslX7CGw8Z1
-X-Google-Smtp-Source: AGRyM1v8Eeiowmb246q8le9A6KauOZMec6btAa6WokRJh5XhgykXRITXlrDvv7Lwa4KZeImaC6gHIw==
-X-Received: by 2002:a05:6402:350a:b0:43a:a486:102e with SMTP id b10-20020a056402350a00b0043aa486102emr57217442edd.372.1658410579173;
-        Thu, 21 Jul 2022 06:36:19 -0700 (PDT)
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com. [209.85.221.53])
-        by smtp.gmail.com with ESMTPSA id ez20-20020a056402451400b0043bc61348casm926344edb.65.2022.07.21.06.36.16
+        bh=8/cqmxcIHyGuuAd34yH5EGseYF2qIVCLxif3aKApjO8=;
+        b=x6EfORa8wWTzBAbqz2/lkk5E/q/3k8ARZNFIy8Ec1ajhAo9CZFrhuDzk22FiadzATA
+         G8CDv8515UAaikGaB1rvzrP+6R+F3DSVZoJs5Mm88xqNjU6Bbm5rNGyPO1SEcWv5tWio
+         NI2hqShGxwywbbsfwCwtwnK8Mb5mMWO2+aHpAOpv+BnFWmx+j5FM+tWXQkXhHjaAPdPZ
+         eRBT6A/EPgpOvfSl+JD7qAGXwp7KBBZVjb43NtLTj7k1yAa99AOH5TEKNm0FxUvZyyEd
+         +gZKtR3lzezXgH0cZgUmXxtCy14SBz+idiBcqDwcXrj4Fh7nnLqHxhO8rjWEqjDvxhfk
+         LRpA==
+X-Gm-Message-State: AJIora/J8XoUyys8CgZftEneWt21ZH4lEf+yr9hLBnKC1ljRd2jrEiGF
+        hs4oiGzPPuPMvB696zjHpc6GWR0jFmPgna7H
+X-Google-Smtp-Source: AGRyM1sLN7wtf60aix0Lj1ZZDAcDgjuhndAyy5p+noTOOoco8d8dUl0ah5c7eo7WeOQH7KalWSZiUg==
+X-Received: by 2002:a05:6402:4c3:b0:43a:f612:179d with SMTP id n3-20020a05640204c300b0043af612179dmr57292252edw.422.1658410659151;
+        Thu, 21 Jul 2022 06:37:39 -0700 (PDT)
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com. [209.85.128.42])
+        by smtp.gmail.com with ESMTPSA id g1-20020a17090604c100b006fe9f9d0938sm865810eja.175.2022.07.21.06.37.37
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Jul 2022 06:36:17 -0700 (PDT)
-Received: by mail-wr1-f53.google.com with SMTP id k11so1859190wrx.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 06:36:16 -0700 (PDT)
-X-Received: by 2002:adf:fb12:0:b0:20c:79b2:a200 with SMTP id
- c18-20020adffb12000000b0020c79b2a200mr35138943wrr.617.1658410575960; Thu, 21
- Jul 2022 06:36:15 -0700 (PDT)
+        Thu, 21 Jul 2022 06:37:37 -0700 (PDT)
+Received: by mail-wm1-f42.google.com with SMTP id c187-20020a1c35c4000000b003a30d88fe8eso3342497wma.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 06:37:37 -0700 (PDT)
+X-Received: by 2002:a05:600c:2e48:b0:3a3:1ce3:3036 with SMTP id
+ q8-20020a05600c2e4800b003a31ce33036mr7949226wmf.188.1658410656948; Thu, 21
+ Jul 2022 06:37:36 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220721033918.v3.1.I10519ca1bf88233702a90e296088808d18cdc7b1@changeid>
-In-Reply-To: <20220721033918.v3.1.I10519ca1bf88233702a90e296088808d18cdc7b1@changeid>
+ <20220721033918.v3.2.I7ecbb7eeb58c5e6a33e32a3abf4d6874e6cb725c@changeid>
+In-Reply-To: <20220721033918.v3.2.I7ecbb7eeb58c5e6a33e32a3abf4d6874e6cb725c@changeid>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 21 Jul 2022 06:36:03 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Uuv0rGg1+8_b=R7SM-g87U_4TipwbNgVTXDd6T=X3qEQ@mail.gmail.com>
-Message-ID: <CAD=FV=Uuv0rGg1+8_b=R7SM-g87U_4TipwbNgVTXDd6T=X3qEQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] arm64: dts: qcom: Add SKU6 for sc7180-trogdor-pazquel-lte-parade
+Date:   Thu, 21 Jul 2022 06:37:23 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WSBgupLFMCZgianck6uTkAyqrG0WK2ChSbNbJdhOPdLA@mail.gmail.com>
+Message-ID: <CAD=FV=WSBgupLFMCZgianck6uTkAyqrG0WK2ChSbNbJdhOPdLA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] dt-bindings: arm: qcom: Document additional sku6
+ for sc7180 pazquel
 To:     Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>
 Cc:     LKML <linux-kernel@vger.kernel.org>,
         Henry Sun <henrysun@google.com>,
@@ -74,7 +76,8 @@ Cc:     LKML <linux-kernel@vger.kernel.org>,
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -86,7 +89,16 @@ Hi,
 On Wed, Jul 20, 2022 at 8:59 PM Yunlong Jia
 <yunlong.jia@ecs.corp-partner.google.com> wrote:
 >
-> SKU6 is LTE(w/o eSIM)+WIFI+Parade
+> The difference between sku6 and sku4 is that there is no esim
+>
+>  The different SKUs are:
+>
+>    LTE with physical SIM _and_ eSIM
+>    LTE with only a physical SIM
+>    WiFi only
+>  Both sku4 and sku6 are LTE SKUs.
+>  One has the eSIM stuffed and one doesn't.
+>  There is a single shared device tree for the two.
 >
 > Signed-off-by: Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>
 > ---
@@ -94,10 +106,11 @@ On Wed, Jul 20, 2022 at 8:59 PM Yunlong Jia
 > Changes in v3:
 > - Bindings and dts in the same series.
 >
-> Changes in v2:
-> - Put sku6 before sku4.
->
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-parade.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+
+Not worth sending a new version for, but normally I expect the
+bindings to be patch #1 and the dts change to be patch #2. In any
+case:
 
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
