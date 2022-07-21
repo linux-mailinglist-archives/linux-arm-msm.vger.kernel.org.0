@@ -2,124 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A568557D204
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 18:52:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D21557D23E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 19:12:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229786AbiGUQwQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jul 2022 12:52:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56766 "EHLO
+        id S230043AbiGURMi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jul 2022 13:12:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232630AbiGUQwQ (ORCPT
+        with ESMTP id S229436AbiGURMi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jul 2022 12:52:16 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAC2F8BABC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 09:52:14 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id q7so2487519lji.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 09:52:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=eZWePtkmW38ghd0Ghj4mqIdKzqnUwv6l+PWxC4PR9Fo=;
-        b=xIqk2NDONVGSt9CFDj74RXp3+ZhVTqdS38QUbdoe4QPu+U55MQTbtXruHio+rZkGeR
-         JhJkHIMD4STN9fefcql3MRiZERzo0EJvviBKQbafQmj8+wu7B+0xyCKVVgRP2LVsWODz
-         ObofyXcSbFP6eeQAaqC7rU7QT0xCdwL+y7cyZG/rDVKZAXb0iKJJEgXCZBunpx2XcUJz
-         uOtd/d9kysS88KAO6okDLe/0WWPcSLI6tyNrXmGvlV0u92LrkY9LVFjwB0OGrWDbavt7
-         L6g0Xoz9ffMmXBYezMDBjIYfl6iZgLumW4RRNIASfYRBr8rLWMK78A0zGzYF37n8260t
-         gyWw==
+        Thu, 21 Jul 2022 13:12:38 -0400
+Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7708886C0F;
+        Thu, 21 Jul 2022 10:12:37 -0700 (PDT)
+Received: by mail-io1-f53.google.com with SMTP id 125so1829744iou.6;
+        Thu, 21 Jul 2022 10:12:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=eZWePtkmW38ghd0Ghj4mqIdKzqnUwv6l+PWxC4PR9Fo=;
-        b=CMaapLN2KYugo9tom8tQyluyvN9Su8RGXHZB2aBQct3TUB3k2Ms56NuXYR+uhXw4fw
-         SwP2ykM7+qruIHRySPmGPFjk6V8wxpl4qUfvcBjs+oB+IVOHlh9WGkWg8RZvvGruUrlq
-         V/fs+5xHfK5NNPZS0ZSSEHPZ2xECVuRbvFPrV6mAogXvn0s0MS6/kSlihtGKHY93fwSu
-         DJeCce6TGuKN/dmKp3uuhU6O/0owtbsOTuHJHCiPeYpYimXe+q7WPZlNy+lZPpk2dwhm
-         ldfslvBawLuJg2FyXotZJ2DYbnoR+bzQ6sRQb0iOEerPrL0CQIrBO1AH9/asfDJ4Z3SW
-         gZkQ==
-X-Gm-Message-State: AJIora9jApl3odgw8qzZKht+eUUOa54vCj+eK/qV0id0Ml0PDENWBVY5
-        SQl6vENp2x7r6jvMqUTv1JxF9g==
-X-Google-Smtp-Source: AGRyM1sLupBygsiOlOL5jneEivZDUqHn/Fu625JHyf7f6wLB6zZW09v4ma4/XP/dJfkD+HSowAvxNg==
-X-Received: by 2002:a05:651c:12c6:b0:25b:cab8:cc2a with SMTP id 6-20020a05651c12c600b0025bcab8cc2amr21022982lje.110.1658422332971;
-        Thu, 21 Jul 2022 09:52:12 -0700 (PDT)
-Received: from [192.168.115.193] (89-162-31-138.fiber.signal.no. [89.162.31.138])
-        by smtp.gmail.com with ESMTPSA id b9-20020ac24109000000b004870f517c89sm543394lfi.33.2022.07.21.09.52.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Jul 2022 09:52:12 -0700 (PDT)
-Message-ID: <c2b03863-2249-13e6-98e0-731c1b40d0a9@linaro.org>
-Date:   Thu, 21 Jul 2022 18:52:11 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v3 2/2] dt-bindings: arm: qcom: Document additional sku6
- for sc7180 pazquel
-Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Henry Sun <henrysun@google.com>,
-        Bob Moragues <moragues@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=NXW5mr/tm3w88vzFpDdrwOq+yoOKyhp6WYF1llgfXiU=;
+        b=KM6UaB71/wUu3x4jl6qBtKxCH6u4tcivFfWWvEwupBoqwVIskOeQlAkslIOhsvNp/c
+         xfVPH8mdaRK0IlEW5Z5uhEXWBaB47M17FXU4S/jEG3UbgET39rfEkwBmbI+KT5LXRcek
+         UOKcbYAKt9dHtn8YdHsK3v7FtLLkoLaFOY4DTnlBLyiVish6mlBZ6Wen7SolnCHAE7hr
+         cQ/EkrV55QdW408pfgiA+yXNexy0ddHH3cK2tcLglTp6xwSHPnCDLekr0bkRCW+nWKLY
+         0Bt6mjW73oXJ82nJMQLIV0i2piPwkyl2AYbQNJ2SZZZoz0z9X1KYAQSprfTYHOtYoPgr
+         Rzsw==
+X-Gm-Message-State: AJIora9fVzCU8WhvQYIouympsSrhFCIc9tcsbabLJXdfOmPZmARWL62a
+        /c151MaZEtkV7BRvWxlUUw==
+X-Google-Smtp-Source: AGRyM1sKkq06wlrz9tYdzXzFQIDky9vf1ktv1R/s38hzIfF70Bb2Bf0HPO3kjqNaeCGXMgXdZiRTgA==
+X-Received: by 2002:a05:6638:250c:b0:341:3fc3:a830 with SMTP id v12-20020a056638250c00b003413fc3a830mr20413533jat.195.1658423556742;
+        Thu, 21 Jul 2022 10:12:36 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id y27-20020a056638229b00b003416ac35529sm1012628jas.26.2022.07.21.10.12.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Jul 2022 10:12:36 -0700 (PDT)
+Received: (nullmailer pid 1580571 invoked by uid 1000);
+        Thu, 21 Jul 2022 17:12:33 -0000
+Date:   Thu, 21 Jul 2022 11:12:33 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        phone-devel@vger.kernel.org,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        devicetree@vger.kernel.org,
+        Martin Botka <martin.botka@somainline.org>,
+        Pavel Machek <pavel@ucw.cz>, linux-kernel@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <20220721033918.v3.1.I10519ca1bf88233702a90e296088808d18cdc7b1@changeid>
- <20220721033918.v3.2.I7ecbb7eeb58c5e6a33e32a3abf4d6874e6cb725c@changeid>
- <CAD=FV=WSBgupLFMCZgianck6uTkAyqrG0WK2ChSbNbJdhOPdLA@mail.gmail.com>
- <4b2fe9d0-f590-0fac-79fa-bb05da1d61df@linaro.org>
- <CAD=FV=XmaNdc9k98vAwbcN-sm0w_WeqhRsK_AUm3h4LZ5-egmQ@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAD=FV=XmaNdc9k98vAwbcN-sm0w_WeqhRsK_AUm3h4LZ5-egmQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        linux-leds@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH v4 1/2] dt-bindings: leds: qcom-lpg: Add compatible for
+ PM660L LPG block
+Message-ID: <20220721171233.GA1580186-robh@kernel.org>
+References: <20220719211848.1653920-1-marijn.suijten@somainline.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220719211848.1653920-1-marijn.suijten@somainline.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/07/2022 18:43, Doug Anderson wrote:
-> Hi,
+On Tue, 19 Jul 2022 23:18:47 +0200, Marijn Suijten wrote:
+> Document the availability of an LPG configuration for the PM660L PMIC in
+> the Qualcomm Light Pulse Generator driver.
 > 
-> On Thu, Jul 21, 2022 at 9:33 AM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 21/07/2022 15:37, Doug Anderson wrote:
->>>
->>> Not worth sending a new version for, but normally I expect the
->>> bindings to be patch #1 and the dts change to be patch #2. In any
->>> case:
->>>
->>> Reviewed-by: Douglas Anderson <dianders@chromium.org>
->>
->> I would say worth v4, because otherwise patches is not bisectable.
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Acked-by: Rob Herring <robh@kernel.org>
+> Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> You're saying because `dtbs_check` will fail between the two?
 
-Yes
-
-> How does
-> flipping the order help? If `dtbs_check` needs to be bisectable then
-> these two need to be one patch, but I was always under the impression
-> that we wanted bindings patches separate from dts patches.
-
-I don't think anyone said that bindings patches must be separate from
-DTS. The only restriction is DTS cannot go with drivers.
-
-Bindings for boards go pretty often with DTS (subarch). This is exactly
-what maintainers do, e.g.:
-https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/log/?h=arm64-for-5.20
-Bindings for hardware should go via subsystem maintainer (drivers).
-
-Best regards,
-Krzysztof
+Applied, thanks!
