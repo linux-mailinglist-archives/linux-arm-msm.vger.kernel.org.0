@@ -2,484 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE62857C820
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 11:51:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 432CF57C86A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 12:00:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231262AbiGUJvt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jul 2022 05:51:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51042 "EHLO
+        id S232876AbiGUKAU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jul 2022 06:00:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230391AbiGUJvs (ORCPT
+        with ESMTP id S232974AbiGUKAA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jul 2022 05:51:48 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C54981B0E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 02:51:47 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id bk6-20020a17090b080600b001f2138a2a7bso4052436pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 02:51:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=pYsFxEwlYxynVfVxm5SBHihSt1BpFABNIazF2FM2xIs=;
-        b=YMPOHee40dc8Hl4yCgMwTKkXjz/59/tafF7A6+tgkIrPM7ACbrnKbahKY7PtUrgprH
-         eU0hZvRCT812tpVASUTVdFWqIfFPSU0vQ8xZygngKcnCkAu20XBHlvPZVA9IfcUAbdfr
-         fhw0E7Ld3koNhjxGdZclGpzNX50rq4VO4RHcP3iZDo1WLhphU7KqsFaHvrmiVvtuz5jW
-         q51v4AVVvsn+tqu4Cs/2BShiVj4GwLig5/MjM10CbfXFEKinvCg5Jvq1GBw8dbaVeOmm
-         ieieOeFu9dpXH9Zf1GDkKY9KPuD0Y23Fz4wBdW0foS97ZyjbveNZcuZCCoZ1UZ7u7XoU
-         RxLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=pYsFxEwlYxynVfVxm5SBHihSt1BpFABNIazF2FM2xIs=;
-        b=g4SeA8Yi/eEgXcRiLQhQjKam6njOsMJbbEzR2Q9fuYsA6M98t8egENaGdM/0HNCM62
-         EKqKs9bhOTTuBp0ZxwwNk+gydqvsZFYkbjM7aQ0rcvrWyQwfeRo93DmNRNxMxggFMbFg
-         7zpy7cgaE5BMwDMqTGe2D788WhUTbUZhgqaIKD84SkoiZxC+7QCaR5D6TzcTsY/lfTt3
-         /EuJXmgHnEw8cxITCu+sLPqODAh2g9FaV3kvayDYeKCDMdrTS96TjndViSa1PmkrPr7v
-         C3pJWB/PrEwYuZ87p/vNLN17R7vxufsETwfN2sVH3L7noc1sZnIA32fxJY2EQYxgscGM
-         ny6A==
-X-Gm-Message-State: AJIora8l5OXAEetTuf9GF0JSDo3IJmNzfzcclPFHFLrA2ywZqvMNSf3F
-        hdbd5DHU/IVep7Rz11i89v9M
-X-Google-Smtp-Source: AGRyM1vViNABPBg5mX7xAFZnzBQOkN1zCORJe+nEeGcE7OsHUgo1rzzH0pqbYyHZ9b+y+bRkSUJ6Xg==
-X-Received: by 2002:a17:902:f68c:b0:16c:4eb6:913c with SMTP id l12-20020a170902f68c00b0016c4eb6913cmr42386524plg.2.1658397106639;
-        Thu, 21 Jul 2022 02:51:46 -0700 (PDT)
-Received: from thinkpad ([117.217.186.184])
-        by smtp.gmail.com with ESMTPSA id t18-20020a170902d15200b0016c304612a0sm1161876plt.292.2022.07.21.02.51.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jul 2022 02:51:46 -0700 (PDT)
-Date:   Thu, 21 Jul 2022 15:21:40 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Thu, 21 Jul 2022 06:00:00 -0400
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [5.144.164.164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9A0D8210C;
+        Thu, 21 Jul 2022 02:59:57 -0700 (PDT)
+Received: from SoMainline.org (D57D4C6E.static.ziggozakelijk.nl [213.125.76.110])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 08E341F661;
+        Thu, 21 Jul 2022 11:59:53 +0200 (CEST)
+Date:   Thu, 21 Jul 2022 11:59:46 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        jamipkettunen@somainline.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: Re: [RFC PATCH 1/4] phy: qcom-qmp-pcie: split register tables into
- primary and secondary part
-Message-ID: <20220721095140.GA39125@thinkpad>
-References: <20220719200626.976084-1-dmitry.baryshkov@linaro.org>
- <20220719200626.976084-2-dmitry.baryshkov@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: power: rpmpd: Add SM6375 power domains
+Message-ID: <20220721095946.wy3wbeib4ycwghzl@SoMainline.org>
+References: <20220716193201.455728-1-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220719200626.976084-2-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <20220716193201.455728-1-konrad.dybcio@somainline.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 19, 2022 at 11:06:23PM +0300, Dmitry Baryshkov wrote:
-> Split register tables list into primary and secondary parts. While we
-> are at it, drop unused if (table) conditions, since the function
-> qcom_qmp_phy_pcie_configure_lane() has this check anyway.
+On 2022-07-16 21:32:00, Konrad Dybcio wrote:
+> Add the bindings for SM6375 RPMPDs.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 > ---
->  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 144 ++++++++++++-----------
->  1 file changed, 77 insertions(+), 67 deletions(-)
+>  .../devicetree/bindings/power/qcom,rpmpd.yaml        |  1 +
+>  include/dt-bindings/power/qcom-rpmpd.h               | 12 ++++++++++++
+>  2 files changed, 13 insertions(+)
 > 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> index 2d65e1f56bfc..23ca5848c4a8 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> @@ -1346,34 +1346,29 @@ static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_pcs_misc_tbl[] = {
+> diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+> index ad77a6380f38..8b58cbc298a1 100644
+> --- a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+> +++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+> @@ -39,6 +39,7 @@ properties:
+>        - qcom,sm6115-rpmpd
+>        - qcom,sm6125-rpmpd
+>        - qcom,sm6350-rpmhpd
+> +      - qcom,sm6375-rpmpd
+>        - qcom,sm8150-rpmhpd
+>        - qcom,sm8250-rpmhpd
+>        - qcom,sm8350-rpmhpd
+> diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
+> index 6cce5b7aa940..8b770bfcf46b 100644
+> --- a/include/dt-bindings/power/qcom-rpmpd.h
+> +++ b/include/dt-bindings/power/qcom-rpmpd.h
+> @@ -36,6 +36,18 @@
+>  #define SM6350_MSS	4
+>  #define SM6350_MX	5
 >  
->  struct qmp_phy;
->  
-> -/* struct qmp_phy_cfg - per-PHY initialization config */
-> -struct qmp_phy_cfg {
-> -	/* phy-type - PCIE/UFS/USB */
-> -	unsigned int type;
-> -	/* number of lanes provided by phy */
-> -	int nlanes;
-> -
-> -	/* Init sequence for PHY blocks - serdes, tx, rx, pcs */
-> +struct qmp_phy_cfg_tables {
->  	const struct qmp_phy_init_tbl *serdes_tbl;
->  	int serdes_tbl_num;
-> -	const struct qmp_phy_init_tbl *serdes_tbl_sec;
-> -	int serdes_tbl_num_sec;
->  	const struct qmp_phy_init_tbl *tx_tbl;
->  	int tx_tbl_num;
-> -	const struct qmp_phy_init_tbl *tx_tbl_sec;
-> -	int tx_tbl_num_sec;
->  	const struct qmp_phy_init_tbl *rx_tbl;
->  	int rx_tbl_num;
-> -	const struct qmp_phy_init_tbl *rx_tbl_sec;
-> -	int rx_tbl_num_sec;
->  	const struct qmp_phy_init_tbl *pcs_tbl;
->  	int pcs_tbl_num;
-> -	const struct qmp_phy_init_tbl *pcs_tbl_sec;
-> -	int pcs_tbl_num_sec;
->  	const struct qmp_phy_init_tbl *pcs_misc_tbl;
->  	int pcs_misc_tbl_num;
-> -	const struct qmp_phy_init_tbl *pcs_misc_tbl_sec;
-> -	int pcs_misc_tbl_num_sec;
-> +};
-> +
-> +/* struct qmp_phy_cfg - per-PHY initialization config */
-> +struct qmp_phy_cfg {
-> +	/* phy-type - PCIE/UFS/USB */
-> +	unsigned int type;
-> +	/* number of lanes provided by phy */
-> +	int nlanes;
-> +
-> +	/* Init sequence for PHY blocks - serdes, tx, rx, pcs */
-> +	struct qmp_phy_cfg_tables pri;
+> +/* SM6350 Power Domain Indexes */
+> +#define SM6375_VDDCX		0
+> +#define SM6375_VDDCX_AO	1
+> +#define SM6375_VDDCX_VFL	2
+> +#define SM6375_VDDMX		3
+> +#define SM6375_VDDMX_AO	4
+> +#define SM6375_VDDMX_VFL	5
+> +#define SM6375_VDDGX		6
+> +#define SM6375_VDDGX_AO	7
+> +#define SM6375_VDD_LPI_CX	8
+> +#define SM6375_VDD_LPI_MX	9
 
-s/pri/primary/g
+Looking at the naming/pattern of these constants I think they should
+reside near the bottom of this file with SM6125 and friends, rather than
+here with SM8150 and friends' MX/CX (and no _VFL).
 
-> +	struct qmp_phy_cfg_tables sec;
+- Marijn
 
-s/sec/secondary/g
-
-I think it'd be good to add a comment on what the secondary table represents.
-This will help folks trying to port the downstream drivers.
-
-Rest LGTM!
-
-Thanks,
-Mani
-
->  
->  	/* clock ids to be requested */
->  	const char * const *clk_list;
-> @@ -1517,6 +1512,7 @@ static const struct qmp_phy_cfg ipq8074_pciephy_cfg = {
->  	.type			= PHY_TYPE_PCIE,
->  	.nlanes			= 1,
->  
-> +	.pri = {
->  	.serdes_tbl		= ipq8074_pcie_serdes_tbl,
->  	.serdes_tbl_num		= ARRAY_SIZE(ipq8074_pcie_serdes_tbl),
->  	.tx_tbl			= ipq8074_pcie_tx_tbl,
-> @@ -1525,6 +1521,7 @@ static const struct qmp_phy_cfg ipq8074_pciephy_cfg = {
->  	.rx_tbl_num		= ARRAY_SIZE(ipq8074_pcie_rx_tbl),
->  	.pcs_tbl		= ipq8074_pcie_pcs_tbl,
->  	.pcs_tbl_num		= ARRAY_SIZE(ipq8074_pcie_pcs_tbl),
-> +	},
->  	.clk_list		= ipq8074_pciephy_clk_l,
->  	.num_clks		= ARRAY_SIZE(ipq8074_pciephy_clk_l),
->  	.reset_list		= ipq8074_pciephy_reset_l,
-> @@ -1546,6 +1543,7 @@ static const struct qmp_phy_cfg ipq8074_pciephy_gen3_cfg = {
->  	.type			= PHY_TYPE_PCIE,
->  	.nlanes			= 1,
->  
-> +	.pri = {
->  	.serdes_tbl		= ipq8074_pcie_gen3_serdes_tbl,
->  	.serdes_tbl_num		= ARRAY_SIZE(ipq8074_pcie_gen3_serdes_tbl),
->  	.tx_tbl			= ipq8074_pcie_gen3_tx_tbl,
-> @@ -1554,6 +1552,7 @@ static const struct qmp_phy_cfg ipq8074_pciephy_gen3_cfg = {
->  	.rx_tbl_num		= ARRAY_SIZE(ipq8074_pcie_gen3_rx_tbl),
->  	.pcs_tbl		= ipq8074_pcie_gen3_pcs_tbl,
->  	.pcs_tbl_num		= ARRAY_SIZE(ipq8074_pcie_gen3_pcs_tbl),
-> +	},
->  	.clk_list		= ipq8074_pciephy_clk_l,
->  	.num_clks		= ARRAY_SIZE(ipq8074_pciephy_clk_l),
->  	.reset_list		= ipq8074_pciephy_reset_l,
-> @@ -1576,6 +1575,7 @@ static const struct qmp_phy_cfg ipq6018_pciephy_cfg = {
->  	.type			= PHY_TYPE_PCIE,
->  	.nlanes			= 1,
->  
-> +	.pri = {
->  	.serdes_tbl		= ipq6018_pcie_serdes_tbl,
->  	.serdes_tbl_num		= ARRAY_SIZE(ipq6018_pcie_serdes_tbl),
->  	.tx_tbl			= ipq6018_pcie_tx_tbl,
-> @@ -1586,6 +1586,7 @@ static const struct qmp_phy_cfg ipq6018_pciephy_cfg = {
->  	.pcs_tbl_num		= ARRAY_SIZE(ipq6018_pcie_pcs_tbl),
->  	.pcs_misc_tbl		= ipq6018_pcie_pcs_misc_tbl,
->  	.pcs_misc_tbl_num	= ARRAY_SIZE(ipq6018_pcie_pcs_misc_tbl),
-> +	},
->  	.clk_list		= ipq8074_pciephy_clk_l,
->  	.num_clks		= ARRAY_SIZE(ipq8074_pciephy_clk_l),
->  	.reset_list		= ipq8074_pciephy_reset_l,
-> @@ -1606,6 +1607,7 @@ static const struct qmp_phy_cfg sdm845_qmp_pciephy_cfg = {
->  	.type = PHY_TYPE_PCIE,
->  	.nlanes = 1,
->  
-> +	.pri = {
->  	.serdes_tbl		= sdm845_qmp_pcie_serdes_tbl,
->  	.serdes_tbl_num		= ARRAY_SIZE(sdm845_qmp_pcie_serdes_tbl),
->  	.tx_tbl			= sdm845_qmp_pcie_tx_tbl,
-> @@ -1616,6 +1618,7 @@ static const struct qmp_phy_cfg sdm845_qmp_pciephy_cfg = {
->  	.pcs_tbl_num		= ARRAY_SIZE(sdm845_qmp_pcie_pcs_tbl),
->  	.pcs_misc_tbl		= sdm845_qmp_pcie_pcs_misc_tbl,
->  	.pcs_misc_tbl_num	= ARRAY_SIZE(sdm845_qmp_pcie_pcs_misc_tbl),
-> +	},
->  	.clk_list		= sdm845_pciephy_clk_l,
->  	.num_clks		= ARRAY_SIZE(sdm845_pciephy_clk_l),
->  	.reset_list		= sdm845_pciephy_reset_l,
-> @@ -1637,6 +1640,7 @@ static const struct qmp_phy_cfg sdm845_qhp_pciephy_cfg = {
->  	.type = PHY_TYPE_PCIE,
->  	.nlanes = 1,
->  
-> +	.pri = {
->  	.serdes_tbl		= sdm845_qhp_pcie_serdes_tbl,
->  	.serdes_tbl_num		= ARRAY_SIZE(sdm845_qhp_pcie_serdes_tbl),
->  	.tx_tbl			= sdm845_qhp_pcie_tx_tbl,
-> @@ -1645,6 +1649,7 @@ static const struct qmp_phy_cfg sdm845_qhp_pciephy_cfg = {
->  	.rx_tbl_num		= ARRAY_SIZE(sdm845_qhp_pcie_rx_tbl),
->  	.pcs_tbl		= sdm845_qhp_pcie_pcs_tbl,
->  	.pcs_tbl_num		= ARRAY_SIZE(sdm845_qhp_pcie_pcs_tbl),
-> +	},
->  	.clk_list		= sdm845_pciephy_clk_l,
->  	.num_clks		= ARRAY_SIZE(sdm845_pciephy_clk_l),
->  	.reset_list		= sdm845_pciephy_reset_l,
-> @@ -1666,24 +1671,28 @@ static const struct qmp_phy_cfg sm8250_qmp_gen3x1_pciephy_cfg = {
->  	.type = PHY_TYPE_PCIE,
->  	.nlanes = 1,
->  
-> +	.pri = {
->  	.serdes_tbl		= sm8250_qmp_pcie_serdes_tbl,
->  	.serdes_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_serdes_tbl),
-> -	.serdes_tbl_sec		= sm8250_qmp_gen3x1_pcie_serdes_tbl,
-> -	.serdes_tbl_num_sec	= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_serdes_tbl),
->  	.tx_tbl			= sm8250_qmp_pcie_tx_tbl,
->  	.tx_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_tx_tbl),
->  	.rx_tbl			= sm8250_qmp_pcie_rx_tbl,
->  	.rx_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_rx_tbl),
-> -	.rx_tbl_sec		= sm8250_qmp_gen3x1_pcie_rx_tbl,
-> -	.rx_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_rx_tbl),
->  	.pcs_tbl		= sm8250_qmp_pcie_pcs_tbl,
->  	.pcs_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_pcs_tbl),
-> -	.pcs_tbl_sec		= sm8250_qmp_gen3x1_pcie_pcs_tbl,
-> -	.pcs_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_pcs_tbl),
->  	.pcs_misc_tbl		= sm8250_qmp_pcie_pcs_misc_tbl,
->  	.pcs_misc_tbl_num	= ARRAY_SIZE(sm8250_qmp_pcie_pcs_misc_tbl),
-> -	.pcs_misc_tbl_sec		= sm8250_qmp_gen3x1_pcie_pcs_misc_tbl,
-> -	.pcs_misc_tbl_num_sec	= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_pcs_misc_tbl),
-> +	},
-> +	.sec = {
-> +	.serdes_tbl		= sm8250_qmp_gen3x1_pcie_serdes_tbl,
-> +	.serdes_tbl_num		= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_serdes_tbl),
-> +	.rx_tbl			= sm8250_qmp_gen3x1_pcie_rx_tbl,
-> +	.rx_tbl_num		= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_rx_tbl),
-> +	.pcs_tbl		= sm8250_qmp_gen3x1_pcie_pcs_tbl,
-> +	.pcs_tbl_num		= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_pcs_tbl),
-> +	.pcs_misc_tbl		= sm8250_qmp_gen3x1_pcie_pcs_misc_tbl,
-> +	.pcs_misc_tbl_num	= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_pcs_misc_tbl),
-> +	},
->  	.clk_list		= sdm845_pciephy_clk_l,
->  	.num_clks		= ARRAY_SIZE(sdm845_pciephy_clk_l),
->  	.reset_list		= sdm845_pciephy_reset_l,
-> @@ -1705,24 +1714,28 @@ static const struct qmp_phy_cfg sm8250_qmp_gen3x2_pciephy_cfg = {
->  	.type = PHY_TYPE_PCIE,
->  	.nlanes = 2,
->  
-> +	.pri = {
->  	.serdes_tbl		= sm8250_qmp_pcie_serdes_tbl,
->  	.serdes_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_serdes_tbl),
->  	.tx_tbl			= sm8250_qmp_pcie_tx_tbl,
->  	.tx_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_tx_tbl),
-> -	.tx_tbl_sec		= sm8250_qmp_gen3x2_pcie_tx_tbl,
-> -	.tx_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_tx_tbl),
->  	.rx_tbl			= sm8250_qmp_pcie_rx_tbl,
->  	.rx_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_rx_tbl),
-> -	.rx_tbl_sec		= sm8250_qmp_gen3x2_pcie_rx_tbl,
-> -	.rx_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_rx_tbl),
->  	.pcs_tbl		= sm8250_qmp_pcie_pcs_tbl,
->  	.pcs_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_pcs_tbl),
-> -	.pcs_tbl_sec		= sm8250_qmp_gen3x2_pcie_pcs_tbl,
-> -	.pcs_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_pcs_tbl),
->  	.pcs_misc_tbl		= sm8250_qmp_pcie_pcs_misc_tbl,
->  	.pcs_misc_tbl_num	= ARRAY_SIZE(sm8250_qmp_pcie_pcs_misc_tbl),
-> -	.pcs_misc_tbl_sec		= sm8250_qmp_gen3x2_pcie_pcs_misc_tbl,
-> -	.pcs_misc_tbl_num_sec	= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_pcs_misc_tbl),
-> +	},
-> +	.sec = {
-> +	.tx_tbl			= sm8250_qmp_gen3x2_pcie_tx_tbl,
-> +	.tx_tbl_num		= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_tx_tbl),
-> +	.rx_tbl			= sm8250_qmp_gen3x2_pcie_rx_tbl,
-> +	.rx_tbl_num		= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_rx_tbl),
-> +	.pcs_tbl		= sm8250_qmp_gen3x2_pcie_pcs_tbl,
-> +	.pcs_tbl_num		= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_pcs_tbl),
-> +	.pcs_misc_tbl		= sm8250_qmp_gen3x2_pcie_pcs_misc_tbl,
-> +	.pcs_misc_tbl_num	= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_pcs_misc_tbl),
-> +	},
->  	.clk_list		= sdm845_pciephy_clk_l,
->  	.num_clks		= ARRAY_SIZE(sdm845_pciephy_clk_l),
->  	.reset_list		= sdm845_pciephy_reset_l,
-> @@ -1745,6 +1758,7 @@ static const struct qmp_phy_cfg msm8998_pciephy_cfg = {
->  	.type			= PHY_TYPE_PCIE,
->  	.nlanes			= 1,
->  
-> +	.pri = {
->  	.serdes_tbl		= msm8998_pcie_serdes_tbl,
->  	.serdes_tbl_num		= ARRAY_SIZE(msm8998_pcie_serdes_tbl),
->  	.tx_tbl			= msm8998_pcie_tx_tbl,
-> @@ -1753,6 +1767,7 @@ static const struct qmp_phy_cfg msm8998_pciephy_cfg = {
->  	.rx_tbl_num		= ARRAY_SIZE(msm8998_pcie_rx_tbl),
->  	.pcs_tbl		= msm8998_pcie_pcs_tbl,
->  	.pcs_tbl_num		= ARRAY_SIZE(msm8998_pcie_pcs_tbl),
-> +	},
->  	.clk_list		= msm8996_phy_clk_l,
->  	.num_clks		= ARRAY_SIZE(msm8996_phy_clk_l),
->  	.reset_list		= ipq8074_pciephy_reset_l,
-> @@ -1770,6 +1785,7 @@ static const struct qmp_phy_cfg sc8180x_pciephy_cfg = {
->  	.type = PHY_TYPE_PCIE,
->  	.nlanes = 1,
->  
-> +	.pri = {
->  	.serdes_tbl		= sc8180x_qmp_pcie_serdes_tbl,
->  	.serdes_tbl_num		= ARRAY_SIZE(sc8180x_qmp_pcie_serdes_tbl),
->  	.tx_tbl			= sc8180x_qmp_pcie_tx_tbl,
-> @@ -1780,6 +1796,7 @@ static const struct qmp_phy_cfg sc8180x_pciephy_cfg = {
->  	.pcs_tbl_num		= ARRAY_SIZE(sc8180x_qmp_pcie_pcs_tbl),
->  	.pcs_misc_tbl		= sc8180x_qmp_pcie_pcs_misc_tbl,
->  	.pcs_misc_tbl_num	= ARRAY_SIZE(sc8180x_qmp_pcie_pcs_misc_tbl),
-> +	},
->  	.clk_list		= sdm845_pciephy_clk_l,
->  	.num_clks		= ARRAY_SIZE(sdm845_pciephy_clk_l),
->  	.reset_list		= sdm845_pciephy_reset_l,
-> @@ -1800,6 +1817,7 @@ static const struct qmp_phy_cfg sdx55_qmp_pciephy_cfg = {
->  	.type = PHY_TYPE_PCIE,
->  	.nlanes = 2,
->  
-> +	.pri = {
->  	.serdes_tbl		= sdx55_qmp_pcie_serdes_tbl,
->  	.serdes_tbl_num		= ARRAY_SIZE(sdx55_qmp_pcie_serdes_tbl),
->  	.tx_tbl			= sdx55_qmp_pcie_tx_tbl,
-> @@ -1810,6 +1828,7 @@ static const struct qmp_phy_cfg sdx55_qmp_pciephy_cfg = {
->  	.pcs_tbl_num		= ARRAY_SIZE(sdx55_qmp_pcie_pcs_tbl),
->  	.pcs_misc_tbl		= sdx55_qmp_pcie_pcs_misc_tbl,
->  	.pcs_misc_tbl_num	= ARRAY_SIZE(sdx55_qmp_pcie_pcs_misc_tbl),
-> +	},
->  	.clk_list		= sdm845_pciephy_clk_l,
->  	.num_clks		= ARRAY_SIZE(sdm845_pciephy_clk_l),
->  	.reset_list		= sdm845_pciephy_reset_l,
-> @@ -1832,6 +1851,7 @@ static const struct qmp_phy_cfg sm8450_qmp_gen3x1_pciephy_cfg = {
->  	.type = PHY_TYPE_PCIE,
->  	.nlanes = 1,
->  
-> +	.pri = {
->  	.serdes_tbl		= sm8450_qmp_gen3x1_pcie_serdes_tbl,
->  	.serdes_tbl_num		= ARRAY_SIZE(sm8450_qmp_gen3x1_pcie_serdes_tbl),
->  	.tx_tbl			= sm8450_qmp_gen3x1_pcie_tx_tbl,
-> @@ -1842,6 +1862,7 @@ static const struct qmp_phy_cfg sm8450_qmp_gen3x1_pciephy_cfg = {
->  	.pcs_tbl_num		= ARRAY_SIZE(sm8450_qmp_gen3x1_pcie_pcs_tbl),
->  	.pcs_misc_tbl		= sm8450_qmp_gen3x1_pcie_pcs_misc_tbl,
->  	.pcs_misc_tbl_num	= ARRAY_SIZE(sm8450_qmp_gen3x1_pcie_pcs_misc_tbl),
-> +	},
->  	.clk_list		= sdm845_pciephy_clk_l,
->  	.num_clks		= ARRAY_SIZE(sdm845_pciephy_clk_l),
->  	.reset_list		= sdm845_pciephy_reset_l,
-> @@ -1863,6 +1884,7 @@ static const struct qmp_phy_cfg sm8450_qmp_gen4x2_pciephy_cfg = {
->  	.type = PHY_TYPE_PCIE,
->  	.nlanes = 2,
->  
-> +	.pri = {
->  	.serdes_tbl		= sm8450_qmp_gen4x2_pcie_serdes_tbl,
->  	.serdes_tbl_num		= ARRAY_SIZE(sm8450_qmp_gen4x2_pcie_serdes_tbl),
->  	.tx_tbl			= sm8450_qmp_gen4x2_pcie_tx_tbl,
-> @@ -1873,6 +1895,7 @@ static const struct qmp_phy_cfg sm8450_qmp_gen4x2_pciephy_cfg = {
->  	.pcs_tbl_num		= ARRAY_SIZE(sm8450_qmp_gen4x2_pcie_pcs_tbl),
->  	.pcs_misc_tbl		= sm8450_qmp_gen4x2_pcie_pcs_misc_tbl,
->  	.pcs_misc_tbl_num	= ARRAY_SIZE(sm8450_qmp_gen4x2_pcie_pcs_misc_tbl),
-> +	},
->  	.clk_list		= sdm845_pciephy_clk_l,
->  	.num_clks		= ARRAY_SIZE(sdm845_pciephy_clk_l),
->  	.reset_list		= sdm845_pciephy_reset_l,
-> @@ -1926,13 +1949,9 @@ static int qcom_qmp_phy_pcie_serdes_init(struct qmp_phy *qphy)
->  {
->  	const struct qmp_phy_cfg *cfg = qphy->cfg;
->  	void __iomem *serdes = qphy->serdes;
-> -	const struct qmp_phy_init_tbl *serdes_tbl = cfg->serdes_tbl;
-> -	int serdes_tbl_num = cfg->serdes_tbl_num;
->  
-> -	qcom_qmp_phy_pcie_configure(serdes, cfg->regs, serdes_tbl, serdes_tbl_num);
-> -	if (cfg->serdes_tbl_sec)
-> -		qcom_qmp_phy_pcie_configure(serdes, cfg->regs, cfg->serdes_tbl_sec,
-> -				       cfg->serdes_tbl_num_sec);
-> +	qcom_qmp_phy_pcie_configure(serdes, cfg->regs, cfg->pri.serdes_tbl, cfg->pri.serdes_tbl_num);
-> +	qcom_qmp_phy_pcie_configure(serdes, cfg->regs, cfg->sec.serdes_tbl, cfg->sec.serdes_tbl_num);
->  
->  	return 0;
->  }
-> @@ -2036,46 +2055,37 @@ static int qcom_qmp_phy_pcie_power_on(struct phy *phy)
->  
->  	/* Tx, Rx, and PCS configurations */
->  	qcom_qmp_phy_pcie_configure_lane(tx, cfg->regs,
-> -				    cfg->tx_tbl, cfg->tx_tbl_num, 1);
-> -	if (cfg->tx_tbl_sec)
-> -		qcom_qmp_phy_pcie_configure_lane(tx, cfg->regs, cfg->tx_tbl_sec,
-> -					    cfg->tx_tbl_num_sec, 1);
-> +					 cfg->pri.tx_tbl, cfg->pri.tx_tbl_num, 1);
-> +	qcom_qmp_phy_pcie_configure_lane(tx, cfg->regs,
-> +					 cfg->sec.tx_tbl, cfg->sec.tx_tbl_num, 1);
->  
->  	/* Configuration for other LANE for USB-DP combo PHY */
->  	if (cfg->is_dual_lane_phy) {
->  		qcom_qmp_phy_pcie_configure_lane(qphy->tx2, cfg->regs,
-> -					    cfg->tx_tbl, cfg->tx_tbl_num, 2);
-> -		if (cfg->tx_tbl_sec)
-> -			qcom_qmp_phy_pcie_configure_lane(qphy->tx2, cfg->regs,
-> -						    cfg->tx_tbl_sec,
-> -						    cfg->tx_tbl_num_sec, 2);
-> +						 cfg->pri.tx_tbl, cfg->pri.tx_tbl_num, 2);
-> +		qcom_qmp_phy_pcie_configure_lane(qphy->tx2, cfg->regs,
-> +						 cfg->sec.tx_tbl, cfg->sec.tx_tbl_num, 2);
->  	}
->  
->  	qcom_qmp_phy_pcie_configure_lane(rx, cfg->regs,
-> -				    cfg->rx_tbl, cfg->rx_tbl_num, 1);
-> -	if (cfg->rx_tbl_sec)
-> -		qcom_qmp_phy_pcie_configure_lane(rx, cfg->regs,
-> -					    cfg->rx_tbl_sec, cfg->rx_tbl_num_sec, 1);
-> +					 cfg->pri.rx_tbl, cfg->pri.rx_tbl_num, 1);
-> +	qcom_qmp_phy_pcie_configure_lane(rx, cfg->regs,
-> +					 cfg->sec.rx_tbl, cfg->sec.rx_tbl_num, 1);
->  
->  	if (cfg->is_dual_lane_phy) {
->  		qcom_qmp_phy_pcie_configure_lane(qphy->rx2, cfg->regs,
-> -					    cfg->rx_tbl, cfg->rx_tbl_num, 2);
-> -		if (cfg->rx_tbl_sec)
-> -			qcom_qmp_phy_pcie_configure_lane(qphy->rx2, cfg->regs,
-> -						    cfg->rx_tbl_sec,
-> -						    cfg->rx_tbl_num_sec, 2);
-> +						 cfg->pri.rx_tbl, cfg->pri.rx_tbl_num, 2);
-> +		qcom_qmp_phy_pcie_configure_lane(qphy->rx2, cfg->regs,
-> +						 cfg->sec.rx_tbl, cfg->sec.rx_tbl_num, 2);
->  	}
->  
-> -	qcom_qmp_phy_pcie_configure(pcs, cfg->regs, cfg->pcs_tbl, cfg->pcs_tbl_num);
-> -	if (cfg->pcs_tbl_sec)
-> -		qcom_qmp_phy_pcie_configure(pcs, cfg->regs, cfg->pcs_tbl_sec,
-> -				       cfg->pcs_tbl_num_sec);
-> +	qcom_qmp_phy_pcie_configure(pcs, cfg->regs, cfg->pri.pcs_tbl, cfg->pri.pcs_tbl_num);
-> +	qcom_qmp_phy_pcie_configure(pcs, cfg->regs, cfg->sec.pcs_tbl, cfg->sec.pcs_tbl_num);
->  
-> -	qcom_qmp_phy_pcie_configure(pcs_misc, cfg->regs, cfg->pcs_misc_tbl,
-> -			       cfg->pcs_misc_tbl_num);
-> -	if (cfg->pcs_misc_tbl_sec)
-> -		qcom_qmp_phy_pcie_configure(pcs_misc, cfg->regs, cfg->pcs_misc_tbl_sec,
-> -				       cfg->pcs_misc_tbl_num_sec);
-> +	qcom_qmp_phy_pcie_configure(pcs_misc, cfg->regs, cfg->pri.pcs_misc_tbl,
-> +			       cfg->pri.pcs_misc_tbl_num);
-> +	qcom_qmp_phy_pcie_configure(pcs_misc, cfg->regs, cfg->sec.pcs_misc_tbl,
-> +			       cfg->sec.pcs_misc_tbl_num);
->  
->  	/*
->  	 * Pull out PHY from POWER DOWN state.
+>  /* SM8150 Power Domain Indexes */
+>  #define SM8150_MSS	0
+>  #define SM8150_EBI	1
 > -- 
-> 2.35.1
+> 2.37.0
 > 
-
--- 
-மணிவண்ணன் சதாசிவம்
