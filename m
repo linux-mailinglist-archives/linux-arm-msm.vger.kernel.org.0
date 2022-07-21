@@ -2,141 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FEBD57D1B0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 18:40:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0205B57D1D0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 18:43:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229554AbiGUQky (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jul 2022 12:40:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45434 "EHLO
+        id S232346AbiGUQnu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jul 2022 12:43:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229498AbiGUQkx (ORCPT
+        with ESMTP id S231524AbiGUQns (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jul 2022 12:40:53 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEBD320F5A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 09:40:51 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id o7so3641004lfq.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 09:40:51 -0700 (PDT)
+        Thu, 21 Jul 2022 12:43:48 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E190388F2B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 09:43:47 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id t3so2919196edd.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 09:43:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=VQ7eOrI6FIZwDaocmq454OANKIbrFQPFfq7eOf2JtIw=;
-        b=BDQmRTlsWdzM7ha06GNX77q/tKZ0XTEo9fJIbCJldo2c1MlEd4Cj96Aq8ofFupXvmm
-         LwwtzSyQK9F6cWGK2OgkIaLHxqqluHEz/5IKQolhL1fshzKoipro7gf4RymDLM/hiLWH
-         l6tXUE3LWZHLMhZDYFxrPe4Q86mEtzivN6uqZVCGeya38tQ4GPAxzX4RAGsznEWHpRyI
-         xV89H4gFPiR1rOdt436tpogKCt2nAzQBp2xdvWUzr68uyNXtqwQGJJQG65Kh5zvErPjW
-         ZcowdcjTLZ/rwBC7wBoQPHOv46iBBnJtMv1fTYchDJpTEuts61DOfDMI+BkO9KqR/7w3
-         4jwg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=byBzIaJw6jMxBBYGES2u6HDi7WAW37rE0mMWKttg2Zc=;
+        b=it5xCPZKQCQl6c1jVCxkdaH+yG26YTSb/lpXqb6q6fgSl0x7YMEpMf14eXRi6ao7os
+         /zsUcI2CE7jlzahxkBdxxHKph9OyqFHjPfyqNsbe4FbgeCqrSoVqihsd2pqryuysX5VH
+         RU/qEZN6Ox0sjaPT5kFUq/HRVAXq4F3bmfZjE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=VQ7eOrI6FIZwDaocmq454OANKIbrFQPFfq7eOf2JtIw=;
-        b=4DRNQN/hhFs4DtIrG8w4IRU6nSDidv8NEVK9sKXo8luoB11voLY71mml06DewKSbE0
-         jffM4JySME5XcoxHv+E1qrBVWn/onSkjrA4IO7XOBTQOnE2zzTf3FJptRkTAbr43rECl
-         Tlvl8uh8p5vKUn8NrVonNd9zcFthNLz0EmX1ZiR+Ug3D/Sx93CECMbjvwTmkA7YRqxXY
-         s+9el5XVIw7NolRSv8Cd2z/6emeBh7wxLNpto0ZpT6MqUCQQtdfhFqHSLjDRTRq7FMJn
-         kY/NbiW+OGjguyMR7NMKXMgTp91gApiLDocfPLNMCYi7NXigimXCeOdw2/nrR+XqJRID
-         +rcQ==
-X-Gm-Message-State: AJIora/FkxO/+3k8YObOmXjIJQ9tR3RoEiauPabsFYm6hNNQdVJpE2mB
-        O8+5YKd3EG6NvaC2vCzGxi3Htg==
-X-Google-Smtp-Source: AGRyM1vfHkvSll1Vf5naVbcFaiTWlBdlvn27d6kKY+yCpav3hSTxEtd3L6HpE0apL2mqZLBUxlockw==
-X-Received: by 2002:a05:6512:3192:b0:48a:50a0:e0f1 with SMTP id i18-20020a056512319200b0048a50a0e0f1mr6672900lfe.301.1658421650132;
-        Thu, 21 Jul 2022 09:40:50 -0700 (PDT)
-Received: from [192.168.115.193] (89-162-31-138.fiber.signal.no. [89.162.31.138])
-        by smtp.gmail.com with ESMTPSA id p20-20020ac24ed4000000b00489c54859a5sm530202lfr.287.2022.07.21.09.40.48
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=byBzIaJw6jMxBBYGES2u6HDi7WAW37rE0mMWKttg2Zc=;
+        b=qY9CObDEgrCR0Dlo9rk8ZGMXdXRpKlNwLn+w5thltuc6Lnp6kikRMlqmzoGtlShmoF
+         jJPs6Z3Fv+9U7UOSyTgq+BYBSeholNZGfnB9zwL1f3FrlYUumbfW7gKTvRScBsGf7gPg
+         HA+Uqj3AXu28IPtSUEs0VRs7hOXM8KIK5wZeZoscAWquLC7Z+vHo/G4nJvnmSdZj/gDj
+         7TcNb+1dYXaWZcXgrhFEzPuKSUaNVuSN9gE3mT5Lx+luFkUz4pM20HUTPvOv/KPqnqiB
+         X9BWWh/jHCRJ1OPRIa1pMz/QKlViyLhnE548fJvMxg6tvoeAjNP8em+vSpSR3Ju1h6T0
+         WHlA==
+X-Gm-Message-State: AJIora/egOD6puNkWcOnzaa94ZEISVfn6zWQwjIC2Q9mSAA3pmti1BJP
+        fUpdbwoDGS1h+5yBQmzoZFIHSvRWO2x1By71tSE=
+X-Google-Smtp-Source: AGRyM1vnxC419OKgEXsTIKQEJoXa5CwRZkVuaz2mk2IUT/DbW80bwu5pSXhFpeoC2SP3oROLxYsrxw==
+X-Received: by 2002:a05:6402:4442:b0:43b:c866:21be with SMTP id o2-20020a056402444200b0043bc86621bemr3408723edb.28.1658421826367;
+        Thu, 21 Jul 2022 09:43:46 -0700 (PDT)
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com. [209.85.221.47])
+        by smtp.gmail.com with ESMTPSA id k16-20020a17090632d000b0072b1cc543fasm1035647ejk.130.2022.07.21.09.43.42
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Jul 2022 09:40:49 -0700 (PDT)
-Message-ID: <1e0df4bd-0184-d373-b290-128714b2dc53@linaro.org>
-Date:   Thu, 21 Jul 2022 18:40:48 +0200
+        Thu, 21 Jul 2022 09:43:43 -0700 (PDT)
+Received: by mail-wr1-f47.google.com with SMTP id d8so3080397wrp.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 09:43:42 -0700 (PDT)
+X-Received: by 2002:adf:f90d:0:b0:20c:de32:4d35 with SMTP id
+ b13-20020adff90d000000b0020cde324d35mr35363081wrr.583.1658421821756; Thu, 21
+ Jul 2022 09:43:41 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 2/3] dt-bindings: clock: add SM6375 QCOM global clock
- bindings
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+References: <20220721033918.v3.1.I10519ca1bf88233702a90e296088808d18cdc7b1@changeid>
+ <20220721033918.v3.2.I7ecbb7eeb58c5e6a33e32a3abf4d6874e6cb725c@changeid>
+ <CAD=FV=WSBgupLFMCZgianck6uTkAyqrG0WK2ChSbNbJdhOPdLA@mail.gmail.com> <4b2fe9d0-f590-0fac-79fa-bb05da1d61df@linaro.org>
+In-Reply-To: <4b2fe9d0-f590-0fac-79fa-bb05da1d61df@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 21 Jul 2022 09:43:27 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XmaNdc9k98vAwbcN-sm0w_WeqhRsK_AUm3h4LZ5-egmQ@mail.gmail.com>
+Message-ID: <CAD=FV=XmaNdc9k98vAwbcN-sm0w_WeqhRsK_AUm3h4LZ5-egmQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] dt-bindings: arm: qcom: Document additional sku6
+ for sc7180 pazquel
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Henry Sun <henrysun@google.com>,
+        Bob Moragues <moragues@chromium.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220719115756.32231-1-konrad.dybcio@somainline.org>
- <20220719115756.32231-2-konrad.dybcio@somainline.org>
- <11cc46d8-ae01-f3d2-b9c6-c366c6e4afc9@linaro.org>
- <887b005d-750d-39f2-73b7-851aa0e461f4@somainline.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <887b005d-750d-39f2-73b7-851aa0e461f4@somainline.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/07/2022 21:36, Konrad Dybcio wrote:
-> 
-> 
-> On 20.07.2022 08:27, Krzysztof Kozlowski wrote:
->> On 19/07/2022 13:57, Konrad Dybcio wrote:
->>> Add device tree bindings for global clock controller for SM6375 SoCs.
->>>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
->>> ---
->>> Changes since v1:
->>> - dropped clock-names (switched to .index)
->>>
->>>  .../bindings/clock/qcom,sm6375-gcc.yaml       |  65 +++++
->>>  include/dt-bindings/clock/qcom,sm6375-gcc.h   | 234 ++++++++++++++++++
->>>  2 files changed, 299 insertions(+)
->>>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm6375-gcc.yaml
->>>  create mode 100644 include/dt-bindings/clock/qcom,sm6375-gcc.h
->>>
->>> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm6375-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm6375-gcc.yaml
->>> new file mode 100644
->>> index 000000000000..2e43cd75d3d4
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/clock/qcom,sm6375-gcc.yaml
->>> @@ -0,0 +1,65 @@
->>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/clock/qcom,sm6375-gcc.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Qualcomm Global Clock & Reset Controller Binding for SM6375
->>> +
->>> +maintainers:
->>> +  - Konrad Dybcio <konrad.dybcio@somainline.org>
->>> +
->>> +description: |
->>> +  Qualcomm global clock control module which supports the clocks, resets and
->>> +  power domains on SM6375
->>> +
->>> +  See also:
->>> +  - dt-bindings/clock/qcom,sm6375-gcc.h
->>> +
->>
->> Why you are not referencing qcom,gcc.yaml?
-> Hm.. Out of all the SoCs we support, only apq8084 and apq/ipq8064 reference it..
-> Should I add that?
+Hi,
 
-Yes. There was a patchset adding references everywhere, so new code for
-sure must have it.
+On Thu, Jul 21, 2022 at 9:33 AM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 21/07/2022 15:37, Doug Anderson wrote:
+> >
+> > Not worth sending a new version for, but normally I expect the
+> > bindings to be patch #1 and the dts change to be patch #2. In any
+> > case:
+> >
+> > Reviewed-by: Douglas Anderson <dianders@chromium.org>
+>
+> I would say worth v4, because otherwise patches is not bisectable.
 
+You're saying because `dtbs_check` will fail between the two? How does
+flipping the order help? If `dtbs_check` needs to be bisectable then
+these two need to be one patch, but I was always under the impression
+that we wanted bindings patches separate from dts patches.
 
-Best regards,
-Krzysztof
+-Doug
