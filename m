@@ -2,88 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D21557D23E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 19:12:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6D0A57D346
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 20:29:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230043AbiGURMi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jul 2022 13:12:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43002 "EHLO
+        id S230060AbiGUS3h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jul 2022 14:29:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbiGURMi (ORCPT
+        with ESMTP id S229701AbiGUS3g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jul 2022 13:12:38 -0400
-Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7708886C0F;
-        Thu, 21 Jul 2022 10:12:37 -0700 (PDT)
-Received: by mail-io1-f53.google.com with SMTP id 125so1829744iou.6;
-        Thu, 21 Jul 2022 10:12:37 -0700 (PDT)
+        Thu, 21 Jul 2022 14:29:36 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C43868C77E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 11:29:33 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id j22so4632718ejs.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 11:29:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HwUsGLRpMv31IoKhe6aFZhAJeU1EkSbKNMjO7y+3gIo=;
+        b=aLmdooI7aEU3//m4BQ6o/XXcpWaZ5+5a6zyCBNi3zi0O0NiHxICF6FpCTsdkxf2h+1
+         dfUoYQT30805peQUM3uo5AZCSrMFbQjucVADyl4eDrvayM07weIpS36apUqMeqC2mSEW
+         KM8R1cyxxOqmhN7DpLwKFicbiErjwJfyQYBbs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=NXW5mr/tm3w88vzFpDdrwOq+yoOKyhp6WYF1llgfXiU=;
-        b=KM6UaB71/wUu3x4jl6qBtKxCH6u4tcivFfWWvEwupBoqwVIskOeQlAkslIOhsvNp/c
-         xfVPH8mdaRK0IlEW5Z5uhEXWBaB47M17FXU4S/jEG3UbgET39rfEkwBmbI+KT5LXRcek
-         UOKcbYAKt9dHtn8YdHsK3v7FtLLkoLaFOY4DTnlBLyiVish6mlBZ6Wen7SolnCHAE7hr
-         cQ/EkrV55QdW408pfgiA+yXNexy0ddHH3cK2tcLglTp6xwSHPnCDLekr0bkRCW+nWKLY
-         0Bt6mjW73oXJ82nJMQLIV0i2piPwkyl2AYbQNJ2SZZZoz0z9X1KYAQSprfTYHOtYoPgr
-         Rzsw==
-X-Gm-Message-State: AJIora9fVzCU8WhvQYIouympsSrhFCIc9tcsbabLJXdfOmPZmARWL62a
-        /c151MaZEtkV7BRvWxlUUw==
-X-Google-Smtp-Source: AGRyM1sKkq06wlrz9tYdzXzFQIDky9vf1ktv1R/s38hzIfF70Bb2Bf0HPO3kjqNaeCGXMgXdZiRTgA==
-X-Received: by 2002:a05:6638:250c:b0:341:3fc3:a830 with SMTP id v12-20020a056638250c00b003413fc3a830mr20413533jat.195.1658423556742;
-        Thu, 21 Jul 2022 10:12:36 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id y27-20020a056638229b00b003416ac35529sm1012628jas.26.2022.07.21.10.12.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jul 2022 10:12:36 -0700 (PDT)
-Received: (nullmailer pid 1580571 invoked by uid 1000);
-        Thu, 21 Jul 2022 17:12:33 -0000
-Date:   Thu, 21 Jul 2022 11:12:33 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        phone-devel@vger.kernel.org,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        devicetree@vger.kernel.org,
-        Martin Botka <martin.botka@somainline.org>,
-        Pavel Machek <pavel@ucw.cz>, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-leds@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH v4 1/2] dt-bindings: leds: qcom-lpg: Add compatible for
- PM660L LPG block
-Message-ID: <20220721171233.GA1580186-robh@kernel.org>
-References: <20220719211848.1653920-1-marijn.suijten@somainline.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HwUsGLRpMv31IoKhe6aFZhAJeU1EkSbKNMjO7y+3gIo=;
+        b=Isx+f0ZR55bzLBqMqXY0K7kUUy+afCeKGVhjI8Ec3rlvYQGbFJ4rPPspH3Np/lC/wP
+         8aspe+N8Om1kaa7pYXu4PYr43FDgTkAMxR8oATzbuMSBFbV2RIKHjLr/WWkcMGeZoByO
+         RN50MJPw1IFA+t8sZewUifl4Ey0peUGMSuvJkZH+B8syu5zFHRSWLfMNrdrEBPrMNbej
+         0OCF+LFB9l0QJfceuxljj7io37PYWw7BoXyfAcjsLE7D+3hDMOb4ynNHOsUzm9w8Cno+
+         5hHW5stlUPJmaq+GeFd907uXImmsQnbUwBhkZkgCrjYKP79218OG+zgqgryH3Xi7peOh
+         zi6g==
+X-Gm-Message-State: AJIora+YxiPSx+wsWBUgP5m8MQayjm0nGOtXMRyU5mGxcryUXd2qk5H8
+        AS2WP/Wdd+vHXd29qqWbQBJvuizxp+IS/CmfgQc=
+X-Google-Smtp-Source: AGRyM1vWqvWs6QJjy5YhxJbJskUT/5dYRI+6T1OO9Y5d+RomVo7o2J/DQe4t3NvSY+66ZP1kwyqYjw==
+X-Received: by 2002:a17:907:2bf4:b0:72b:3336:ca9e with SMTP id gv52-20020a1709072bf400b0072b3336ca9emr41401358ejc.341.1658428172109;
+        Thu, 21 Jul 2022 11:29:32 -0700 (PDT)
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com. [209.85.128.46])
+        by smtp.gmail.com with ESMTPSA id i8-20020aa7c9c8000000b0043bbf79b3ebsm1376056edt.54.2022.07.21.11.29.28
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Jul 2022 11:29:29 -0700 (PDT)
+Received: by mail-wm1-f46.google.com with SMTP id j29-20020a05600c1c1d00b003a2fdafdefbso1276241wms.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 11:29:28 -0700 (PDT)
+X-Received: by 2002:a05:600c:2e48:b0:3a3:1ce3:3036 with SMTP id
+ q8-20020a05600c2e4800b003a31ce33036mr8955194wmf.188.1658428168451; Thu, 21
+ Jul 2022 11:29:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220719211848.1653920-1-marijn.suijten@somainline.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+References: <20220721033918.v3.1.I10519ca1bf88233702a90e296088808d18cdc7b1@changeid>
+ <20220721033918.v3.2.I7ecbb7eeb58c5e6a33e32a3abf4d6874e6cb725c@changeid>
+ <CAD=FV=WSBgupLFMCZgianck6uTkAyqrG0WK2ChSbNbJdhOPdLA@mail.gmail.com>
+ <4b2fe9d0-f590-0fac-79fa-bb05da1d61df@linaro.org> <CAD=FV=XmaNdc9k98vAwbcN-sm0w_WeqhRsK_AUm3h4LZ5-egmQ@mail.gmail.com>
+ <c2b03863-2249-13e6-98e0-731c1b40d0a9@linaro.org>
+In-Reply-To: <c2b03863-2249-13e6-98e0-731c1b40d0a9@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 21 Jul 2022 11:29:13 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XKC_fbBzna8TgiPRmPH_=AQ3ckv2EEjoNvayKQ83Uciw@mail.gmail.com>
+Message-ID: <CAD=FV=XKC_fbBzna8TgiPRmPH_=AQ3ckv2EEjoNvayKQ83Uciw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] dt-bindings: arm: qcom: Document additional sku6
+ for sc7180 pazquel
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Henry Sun <henrysun@google.com>,
+        Bob Moragues <moragues@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 19 Jul 2022 23:18:47 +0200, Marijn Suijten wrote:
-> Document the availability of an LPG configuration for the PM660L PMIC in
-> the Qualcomm Light Pulse Generator driver.
-> 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Acked-by: Rob Herring <robh@kernel.org>
-> Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
+Hi,
 
-Applied, thanks!
+On Thu, Jul 21, 2022 at 9:52 AM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 21/07/2022 18:43, Doug Anderson wrote:
+> > Hi,
+> >
+> > On Thu, Jul 21, 2022 at 9:33 AM Krzysztof Kozlowski
+> > <krzysztof.kozlowski@linaro.org> wrote:
+> >>
+> >> On 21/07/2022 15:37, Doug Anderson wrote:
+> >>>
+> >>> Not worth sending a new version for, but normally I expect the
+> >>> bindings to be patch #1 and the dts change to be patch #2. In any
+> >>> case:
+> >>>
+> >>> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> >>
+> >> I would say worth v4, because otherwise patches is not bisectable.
+> >
+> > You're saying because `dtbs_check` will fail between the two?
+>
+> Yes
+
+OK. Then I assume you agree that reversing the order of the patches
+won't help, only combining the two patches into one.
+
+
+> > How does
+> > flipping the order help? If `dtbs_check` needs to be bisectable then
+> > these two need to be one patch, but I was always under the impression
+> > that we wanted bindings patches separate from dts patches.
+>
+> I don't think anyone said that bindings patches must be separate from
+> DTS. The only restriction is DTS cannot go with drivers.
+
+I have always heard that best practice is to have bindings in a patch
+by themselves. If I've misunderstood and/or folks have changed their
+minds, that's fine, but historically I've been told to keep them
+separate.
+
+
+> Bindings for boards go pretty often with DTS (subarch). This is exactly
+> what maintainers do, e.g.:
+> https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/log/?h=arm64-for-5.20
+> Bindings for hardware should go via subsystem maintainer (drivers).
+
+OK, fair that in this case both the bindings and the yaml will land
+through the Qualcomm tree. I guess it's really up to Bjorn and whether
+he'd prefer "make dtbs_check" to be bisectable or whether he'd prefer
+the bindings and dts change to be in separate patches from each other.
+
+-Doug
