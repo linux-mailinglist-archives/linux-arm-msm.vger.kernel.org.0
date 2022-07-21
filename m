@@ -2,97 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7153057D1F8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 18:50:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A568557D204
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 18:52:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229775AbiGUQuo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jul 2022 12:50:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55656 "EHLO
+        id S229786AbiGUQwQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jul 2022 12:52:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229750AbiGUQuo (ORCPT
+        with ESMTP id S232630AbiGUQwQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jul 2022 12:50:44 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D34968AEE8;
-        Thu, 21 Jul 2022 09:50:41 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 26LCob61012583;
-        Thu, 21 Jul 2022 16:50:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=uSOngsMlx/P519OlD2T4SviaTBg41aXPtvK39CIWeI8=;
- b=DlTpbIhpAMpVTcTtQ7w/O/vNios1k2/2a6j4lW8X/M7iHzVBQV+PYyRImm22EWk0sggQ
- 98qQGZWi3x+qeRjIBOtyBK9tSFK7xiLcwcjDdA+SQRq/mhdWiRsQ030Cqta15ACupgOD
- 5kwcUTjyr1V80alJWhWCY4U0Ivzj7SAlOTDw5FKYfv9hVP3pCzcnaGvL1eyIT58BkAO0
- Xuj5M1si5gFo3UQbj+d0sWXXiAWSzUzNe7FjIJVIlPQo2EeGLjMSlZLbTFnR+JlLcP7y
- N8rLZmutX/xjC67iedVdPM58llkodvgKOCIU8Iv1RV/p9+B4uinqUHxKNC1BihY9K/yl GQ== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3hf12qsfvg-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 21 Jul 2022 16:50:27 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 26LGoQKK015553
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 21 Jul 2022 16:50:26 GMT
-Received: from quicinc.com (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 21 Jul
- 2022 09:50:26 -0700
-Date:   Thu, 21 Jul 2022 09:50:25 -0700
-From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
-To:     Rajendra Nayak <quic_rjendra@quicinc.com>
-CC:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "David Heidelberg" <david@ixit.cz>,
-        Robert Marko <robimarko@gmail.com>,
-        Elliot Berman <quic_eberman@quicinc.com>
-Subject: Re: [PATCH 5/5] firmware: qcom: scm: Add wait-queue handling logic
-Message-ID: <20220721165024.GB14440@quicinc.com>
-References: <1656359076-13018-1-git-send-email-quic_gurus@quicinc.com>
- <1656359076-13018-6-git-send-email-quic_gurus@quicinc.com>
- <ec04538b-93e2-fa93-4043-c489a0f228e8@quicinc.com>
- <ad5e875d-e5d7-3b6f-4915-98ba08df8c5d@quicinc.com>
- <20220714005735.GA22183@quicinc.com>
- <7d1106b0-178c-7167-34d5-330bb2763c3e@quicinc.com>
+        Thu, 21 Jul 2022 12:52:16 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAC2F8BABC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 09:52:14 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id q7so2487519lji.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 09:52:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=eZWePtkmW38ghd0Ghj4mqIdKzqnUwv6l+PWxC4PR9Fo=;
+        b=xIqk2NDONVGSt9CFDj74RXp3+ZhVTqdS38QUbdoe4QPu+U55MQTbtXruHio+rZkGeR
+         JhJkHIMD4STN9fefcql3MRiZERzo0EJvviBKQbafQmj8+wu7B+0xyCKVVgRP2LVsWODz
+         ObofyXcSbFP6eeQAaqC7rU7QT0xCdwL+y7cyZG/rDVKZAXb0iKJJEgXCZBunpx2XcUJz
+         uOtd/d9kysS88KAO6okDLe/0WWPcSLI6tyNrXmGvlV0u92LrkY9LVFjwB0OGrWDbavt7
+         L6g0Xoz9ffMmXBYezMDBjIYfl6iZgLumW4RRNIASfYRBr8rLWMK78A0zGzYF37n8260t
+         gyWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=eZWePtkmW38ghd0Ghj4mqIdKzqnUwv6l+PWxC4PR9Fo=;
+        b=CMaapLN2KYugo9tom8tQyluyvN9Su8RGXHZB2aBQct3TUB3k2Ms56NuXYR+uhXw4fw
+         SwP2ykM7+qruIHRySPmGPFjk6V8wxpl4qUfvcBjs+oB+IVOHlh9WGkWg8RZvvGruUrlq
+         V/fs+5xHfK5NNPZS0ZSSEHPZ2xECVuRbvFPrV6mAogXvn0s0MS6/kSlihtGKHY93fwSu
+         DJeCce6TGuKN/dmKp3uuhU6O/0owtbsOTuHJHCiPeYpYimXe+q7WPZlNy+lZPpk2dwhm
+         ldfslvBawLuJg2FyXotZJ2DYbnoR+bzQ6sRQb0iOEerPrL0CQIrBO1AH9/asfDJ4Z3SW
+         gZkQ==
+X-Gm-Message-State: AJIora9jApl3odgw8qzZKht+eUUOa54vCj+eK/qV0id0Ml0PDENWBVY5
+        SQl6vENp2x7r6jvMqUTv1JxF9g==
+X-Google-Smtp-Source: AGRyM1sLupBygsiOlOL5jneEivZDUqHn/Fu625JHyf7f6wLB6zZW09v4ma4/XP/dJfkD+HSowAvxNg==
+X-Received: by 2002:a05:651c:12c6:b0:25b:cab8:cc2a with SMTP id 6-20020a05651c12c600b0025bcab8cc2amr21022982lje.110.1658422332971;
+        Thu, 21 Jul 2022 09:52:12 -0700 (PDT)
+Received: from [192.168.115.193] (89-162-31-138.fiber.signal.no. [89.162.31.138])
+        by smtp.gmail.com with ESMTPSA id b9-20020ac24109000000b004870f517c89sm543394lfi.33.2022.07.21.09.52.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Jul 2022 09:52:12 -0700 (PDT)
+Message-ID: <c2b03863-2249-13e6-98e0-731c1b40d0a9@linaro.org>
+Date:   Thu, 21 Jul 2022 18:52:11 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <7d1106b0-178c-7167-34d5-330bb2763c3e@quicinc.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: GzupB7l2S9FqQCcju0WLu8gqF6z4i4P_
-X-Proofpoint-ORIG-GUID: GzupB7l2S9FqQCcju0WLu8gqF6z4i4P_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-07-21_23,2022-07-20_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- priorityscore=1501 mlxscore=0 spamscore=0 adultscore=0 phishscore=0
- bulkscore=0 clxscore=1015 malwarescore=0 lowpriorityscore=0
- mlxlogscore=924 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2206140000 definitions=main-2207210067
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v3 2/2] dt-bindings: arm: qcom: Document additional sku6
+ for sc7180 pazquel
+Content-Language: en-US
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Henry Sun <henrysun@google.com>,
+        Bob Moragues <moragues@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <20220721033918.v3.1.I10519ca1bf88233702a90e296088808d18cdc7b1@changeid>
+ <20220721033918.v3.2.I7ecbb7eeb58c5e6a33e32a3abf4d6874e6cb725c@changeid>
+ <CAD=FV=WSBgupLFMCZgianck6uTkAyqrG0WK2ChSbNbJdhOPdLA@mail.gmail.com>
+ <4b2fe9d0-f590-0fac-79fa-bb05da1d61df@linaro.org>
+ <CAD=FV=XmaNdc9k98vAwbcN-sm0w_WeqhRsK_AUm3h4LZ5-egmQ@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAD=FV=XmaNdc9k98vAwbcN-sm0w_WeqhRsK_AUm3h4LZ5-egmQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Jul 19 2022 16:03, Rajendra Nayak wrote:
-> Ok thanks for the explanation, I actually had a few more comments down in that
-> patch which you did not answer, can you clarify them too?
+On 21/07/2022 18:43, Doug Anderson wrote:
+> Hi,
+> 
+> On Thu, Jul 21, 2022 at 9:33 AM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>> On 21/07/2022 15:37, Doug Anderson wrote:
+>>>
+>>> Not worth sending a new version for, but normally I expect the
+>>> bindings to be patch #1 and the dts change to be patch #2. In any
+>>> case:
+>>>
+>>> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+>>
+>> I would say worth v4, because otherwise patches is not bisectable.
+> 
+> You're saying because `dtbs_check` will fail between the two?
 
-Just replied. Sorry, missed them amidst the wall of lines of context. Could you
-please remove all lines of context that are not relevant while replying? That
-will help draw attention to the comments that are being made.
+Yes
 
-Thank you.
+> How does
+> flipping the order help? If `dtbs_check` needs to be bisectable then
+> these two need to be one patch, but I was always under the impression
+> that we wanted bindings patches separate from dts patches.
 
-Guru Das.
+I don't think anyone said that bindings patches must be separate from
+DTS. The only restriction is DTS cannot go with drivers.
+
+Bindings for boards go pretty often with DTS (subarch). This is exactly
+what maintainers do, e.g.:
+https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/log/?h=arm64-for-5.20
+Bindings for hardware should go via subsystem maintainer (drivers).
+
+Best regards,
+Krzysztof
