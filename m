@@ -2,246 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 979C857C614
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 10:19:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF99457C685
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 10:39:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230373AbiGUITu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jul 2022 04:19:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51156 "EHLO
+        id S230238AbiGUIjV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jul 2022 04:39:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229678AbiGUITu (ORCPT
+        with ESMTP id S231407AbiGUIi6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jul 2022 04:19:50 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FE157D798
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 01:19:49 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id w8-20020a05600c014800b003a32e89bc4eso387964wmm.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 01:19:49 -0700 (PDT)
+        Thu, 21 Jul 2022 04:38:58 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 440A87E81E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 01:38:57 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id z3so1190539plb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 01:38:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=2iiwv/b22GKcZWA9ILgCtp/mDegR2D13JchN5YTAd08=;
-        b=tsTvXWj44c1iQi7dvFDCqV9Qkm89YlRvfRvlP5U7T3n7TkGlkppzFWJZMsvAqigEkh
-         g/pLsjZ5VBYJEXFRcyOfNCLYHe4FRB3pz1yGc53XFmdL9AvVPrh2I67NGRoU9u60qOv2
-         8HfO4zgKhDFlt2SjnrIMozPoCYbLmKPjqnsJgslPlNH+E3aXiP89c43U0N61h5YzoxIh
-         hm/SoKWLL+a5eqVro6Fzk8cz7tdbC6do5i5uXpNd5kl7blK0JRIiMziPcCyA65znILz2
-         eMGYVipLziY4EvqqmxzhxDi+MSys/748Tiqlbay4T5vmOwLFqpDq7VPtsGKnCxRu1u1F
-         wENg==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uQ+LBdb+GHOOng7AbAKgC43uGktRTVsg0Aqo77lR5hg=;
+        b=CL0ZYu9cfOtfOaMn+I4WO+4q4Em4+WKP9OuAjSJX7hBDU/t+bctzGB/yVf2F23Uj9C
+         elpb2kuW4/pcN8I+SAxOrlSqoUiz/RHuhkzVMDi6pgUgtzTvLLj4yvSBLWYoOpWfA9lJ
+         r6RinoOIVXfTVOgAq0AwMtiad1Z2OF3Tuz6eE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=2iiwv/b22GKcZWA9ILgCtp/mDegR2D13JchN5YTAd08=;
-        b=lCbpbqFWPLrAWnkXz/NWzTY4Z7FiW+TA2o0ET/hdUEzAYF5iyxpmEuTH/HTx4uPdg7
-         YSdaO9NG+eGnrNw/T/NFpChumpJt3doXjTnp7W5XncvA0c3A6eOUx9gBwEBtsTZpZ+cG
-         iccUCgax9Z/99ab0VQ15FNqiSzVi83yxrkHyBDTA6yp3/rAYw9s4suVB6WENoShD5eCl
-         rw7dtFC0onRgSxm4MGnoQgaCQyxll524iR1TfoTpT7euuTD38UpkmOE93xg/O/YIXlDt
-         qsDN6euw8GqFi96u0/ZjKdX4cAzUkXFwxVtYma1iEYHxjYTz5jyOmdu+mNxOaiDmkVj+
-         Vpaw==
-X-Gm-Message-State: AJIora9r0YfEvOuESrtuCpFqAuM50PDshrZo4dMNpzti1iDJ80zRBhE/
-        zcVyBit5X/AAlBvhtBRXGWvhYg==
-X-Google-Smtp-Source: AGRyM1ubszfaMcPim8J7vKXQANeWwpkUGpGQCuswd+pG2rr43eZe0VtT64SU1NzwtChzeDLwWLUhEg==
-X-Received: by 2002:a05:600c:4f83:b0:3a1:9c7c:9ea3 with SMTP id n3-20020a05600c4f8300b003a19c7c9ea3mr7354494wmq.39.1658391587569;
-        Thu, 21 Jul 2022 01:19:47 -0700 (PDT)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id x3-20020a05600c420300b003a3200bc788sm4640720wmh.33.2022.07.21.01.19.46
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uQ+LBdb+GHOOng7AbAKgC43uGktRTVsg0Aqo77lR5hg=;
+        b=SqVQjQbEnqQkRhVqzSaP5kH17T9EIw2I9v0vhfhK+08JfOUDfDhr2qCpK4P4RlF1kv
+         a0qmsvz+l620qGT2NXPIhxUuFl/v5gXw3kFMDkCmU6zJmtgiwpvRFbmAHOpVriqF21Kt
+         YX4yNjEOMiNBM3dW6jUOUKkdK61pC4cOXmQLulZRi7VzB7Afv6SlfqvaXyPWTh12cVml
+         zyf9pdXIX38DO94HxLKhrD8tEVWkcPKtYnITyaWRafdXeqXCFCO6ZpaXePMBWtVVj7nt
+         HxRkLgNp0IE9Y8XkougePFz8Kfz04h4tmABFM3DbqC+G91xd9f30rYg5gdGpWr5jJO2l
+         aMew==
+X-Gm-Message-State: AJIora8ExgGFYxAeffvaFLwQDtT4Ij21+AiifX0+os9OP2tpiwd0/ETr
+        W4C4tzquoR/8iX1WvFDd0MM0Aw==
+X-Google-Smtp-Source: AGRyM1s/7yHJrqwCFc9w1jBe/X7hPlhYezunAOeIrEkLFZVuCvTIgoQMfvoaYKgfCXBhjMcuZvU5tg==
+X-Received: by 2002:a17:902:ec8a:b0:16c:4d84:4bf0 with SMTP id x10-20020a170902ec8a00b0016c4d844bf0mr41615129plg.48.1658392736760;
+        Thu, 21 Jul 2022 01:38:56 -0700 (PDT)
+Received: from judyhsiao0523.c.googlers.com.com (21.160.199.104.bc.googleusercontent.com. [104.199.160.21])
+        by smtp.gmail.com with ESMTPSA id l18-20020a170903121200b0016cd74e5f87sm1025943plh.240.2022.07.21.01.38.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jul 2022 01:19:46 -0700 (PDT)
-Date:   Thu, 21 Jul 2022 11:19:45 +0300
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     linux-clk@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [RFC 1/2] clk: Add generic sync_state callback for disabling
- unused clocks
-Message-ID: <YtkMIYHmShBVfxh6@linaro.org>
-References: <20220706150411.708213-1-abel.vesa@linaro.org>
+        Thu, 21 Jul 2022 01:38:56 -0700 (PDT)
+From:   Judy Hsiao <judyhsiao@chromium.org>
+To:     Andy Gross <agross@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        dianders@chromium.org, mka@chromium.org, cychiang@google.com,
+        judyhsiao@google.com, swboyd@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Judy Hsiao <judyhsiao@chromium.org>
+Subject: [PATCH v4 0/3] Add dtsi for sc7280 herobrine boards that using
+Date:   Thu, 21 Jul 2022 08:38:46 +0000
+Message-Id: <20220721083849.1571744-1-judyhsiao@chromium.org>
+X-Mailer: git-send-email 2.37.0.170.g444d1eabd0-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220706150411.708213-1-abel.vesa@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22-07-06 18:04:10, Abel Vesa wrote:
-> There are unused clocks that need to stay enabled on clk_disable_unused,
-> but rather should be disabled later on on sync_state. Provide a generic
-> sync_state callback for the clock providers that register such clocks.
-> Then, use the same mechanism as clk_disable_unused from that generic
-> callback, but pass the device to make sure only the clocks belonging to
-> the current clock provider get disabled, if unused. Also, during the
-> default clk_disable_unused, if the driver that registered the clock has
-> the generic clk_sync_state_disable_unused callback set for sync_state,
-> leave its clocks enabled.
->
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Put sound node and lpass_cpu node settings for boards that use rt5682
+codec in the sc7280-herobrine-audio-rt5682.dtsi as there are different
+choices of headset codec for herobrine projects. Common audio setting
+for the internal speaker is in sc7280-herobrine.dtsi.
 
-Gentle ping.
+This series depends on:
+Add soundcard support for sc7280 based platforms. [1]
 
-> ---
->  drivers/clk/clk.c            | 67 +++++++++++++++++++++++++++---------
->  include/linux/clk-provider.h |  1 +
->  2 files changed, 52 insertions(+), 16 deletions(-)
->
-> diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-> index 7fc191c15507..ea55806505c0 100644
-> --- a/drivers/clk/clk.c
-> +++ b/drivers/clk/clk.c
-> @@ -1218,19 +1218,31 @@ static void clk_core_disable_unprepare(struct clk_core *core)
->  	clk_core_unprepare_lock(core);
->  }
->
-> -static void __init clk_unprepare_unused_subtree(struct clk_core *core)
-> +static void clk_unprepare_unused_subtree(struct clk_core *core,
-> +						struct device *dev)
->  {
->  	struct clk_core *child;
->
->  	lockdep_assert_held(&prepare_lock);
->
->  	hlist_for_each_entry(child, &core->children, child_node)
-> -		clk_unprepare_unused_subtree(child);
-> +		clk_unprepare_unused_subtree(child, dev);
-> +
-> +	if (dev && core->dev != dev)
-> +		return;
-> +
-> +	/*
-> +	 * clock will be unprepared on sync_state,
-> +	 * so leave as is on clk_disable_unused
-> +	 */
-> +	if (!dev && dev_has_sync_state(core->dev) &&
-> +		core->dev->driver->sync_state == clk_sync_state_disable_unused)
-> +		return;
->
->  	if (core->prepare_count)
->  		return;
->
-> -	if (core->flags & CLK_IGNORE_UNUSED)
-> +	if (!dev && core->flags & CLK_IGNORE_UNUSED)
->  		return;
->
->  	if (clk_pm_runtime_get(core))
-> @@ -1248,7 +1260,8 @@ static void __init clk_unprepare_unused_subtree(struct clk_core *core)
->  	clk_pm_runtime_put(core);
->  }
->
-> -static void __init clk_disable_unused_subtree(struct clk_core *core)
-> +static void clk_disable_unused_subtree(struct clk_core *core,
-> +					struct device *dev)
->  {
->  	struct clk_core *child;
->  	unsigned long flags;
-> @@ -1256,7 +1269,18 @@ static void __init clk_disable_unused_subtree(struct clk_core *core)
->  	lockdep_assert_held(&prepare_lock);
->
->  	hlist_for_each_entry(child, &core->children, child_node)
-> -		clk_disable_unused_subtree(child);
-> +		clk_disable_unused_subtree(child, dev);
-> +
-> +	if (dev && core->dev != dev)
-> +		return;
-> +
-> +	/*
-> +	 * clock will be disabled on sync_state,
-> +	 * so leave as is on clk_disable_unused
-> +	 */
-> +	if (!dev && dev_has_sync_state(core->dev) &&
-> +		core->dev->driver->sync_state == clk_sync_state_disable_unused)
-> +		return;
->
->  	if (core->flags & CLK_OPS_PARENT_ENABLE)
->  		clk_core_prepare_enable(core->parent);
-> @@ -1269,7 +1293,7 @@ static void __init clk_disable_unused_subtree(struct clk_core *core)
->  	if (core->enable_count)
->  		goto unlock_out;
->
-> -	if (core->flags & CLK_IGNORE_UNUSED)
-> +	if (!dev && core->flags & CLK_IGNORE_UNUSED)
->  		goto unlock_out;
->
->  	/*
-> @@ -1302,35 +1326,46 @@ static int __init clk_ignore_unused_setup(char *__unused)
->  }
->  __setup("clk_ignore_unused", clk_ignore_unused_setup);
->
-> -static int __init clk_disable_unused(void)
-> +static void __clk_disable_unused(struct device *dev)
->  {
->  	struct clk_core *core;
->
-> -	if (clk_ignore_unused) {
-> -		pr_warn("clk: Not disabling unused clocks\n");
-> -		return 0;
-> -	}
-> -
->  	clk_prepare_lock();
->
->  	hlist_for_each_entry(core, &clk_root_list, child_node)
-> -		clk_disable_unused_subtree(core);
-> +		clk_disable_unused_subtree(core, dev);
->
->  	hlist_for_each_entry(core, &clk_orphan_list, child_node)
-> -		clk_disable_unused_subtree(core);
-> +		clk_disable_unused_subtree(core, dev);
->
->  	hlist_for_each_entry(core, &clk_root_list, child_node)
-> -		clk_unprepare_unused_subtree(core);
-> +		clk_unprepare_unused_subtree(core, dev);
->
->  	hlist_for_each_entry(core, &clk_orphan_list, child_node)
-> -		clk_unprepare_unused_subtree(core);
-> +		clk_unprepare_unused_subtree(core, dev);
->
->  	clk_prepare_unlock();
-> +}
-> +
-> +static int __init clk_disable_unused(void)
-> +{
-> +	if (clk_ignore_unused) {
-> +		pr_warn("clk: Not disabling unused clocks\n");
-> +		return 0;
-> +	}
-> +
-> +	__clk_disable_unused(NULL);
->
->  	return 0;
->  }
->  late_initcall_sync(clk_disable_unused);
->
-> +void clk_sync_state_disable_unused(struct device *dev)
-> +{
-> +	__clk_disable_unused(dev);
-> +}
-> +EXPORT_SYMBOL_GPL(clk_sync_state_disable_unused);
-> +
->  static int clk_core_determine_round_nolock(struct clk_core *core,
->  					   struct clk_rate_request *req)
->  {
-> diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
-> index 72d937c03a3e..5d3ed2b14f2c 100644
-> --- a/include/linux/clk-provider.h
-> +++ b/include/linux/clk-provider.h
-> @@ -679,6 +679,7 @@ struct clk *clk_register_divider_table(struct device *dev, const char *name,
->  		void __iomem *reg, u8 shift, u8 width,
->  		u8 clk_divider_flags, const struct clk_div_table *table,
->  		spinlock_t *lock);
-> +void clk_sync_state_disable_unused(struct device *dev);
->  /**
->   * clk_register_divider - register a divider clock with the clock framework
->   * @dev: device registering this clock
-> --
-> 2.34.3
->
+[1] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=657417
+
+Changes Since V3:
+- Remove Change-Id in the commit message.
+- Add dependency in cover letter.
+
+Changes Since V2:
+- Fix sc7280-herobrine-audio-rt5682.dtsi syntax.
+
+Changes Since V1:
+- Not to include the herobrine-villager-r0.dts changes in this patch
+  series to avoid conflict.
+
+Judy Hsiao (3):
+  arm64: dts: qcom: sc7280: herobrine: Add pinconf settings for mi2s1
+  arm64: dts: qcom: sc7280: Add sc7280-herobrine-audio-rt5682.dtsi
+  arm64: dts: qcom: sc7280: Include sc7280-herobrine-audio-rt5682.dtsi
+    in herobrine-r1
+
+ .../qcom/sc7280-herobrine-audio-rt5682.dtsi   | 122 ++++++++++++++++++
+ .../qcom/sc7280-herobrine-herobrine-r1.dts    |   1 +
+ .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  15 +++
+ 3 files changed, 138 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
+
+-- 
+2.37.0.170.g444d1eabd0-goog
+
