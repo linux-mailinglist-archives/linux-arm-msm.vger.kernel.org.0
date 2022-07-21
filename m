@@ -2,120 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65D7157D4B9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 22:19:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B44C57D578
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 23:03:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232630AbiGUUTZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jul 2022 16:19:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51454 "EHLO
+        id S229613AbiGUVDu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jul 2022 17:03:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229533AbiGUUTX (ORCPT
+        with ESMTP id S229565AbiGUVDu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jul 2022 16:19:23 -0400
-Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46ECD8EEE6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 13:19:22 -0700 (PDT)
-Received: by mail-qv1-xf2f.google.com with SMTP id q3so1244657qvp.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 13:19:22 -0700 (PDT)
+        Thu, 21 Jul 2022 17:03:50 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08FDE904F8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 14:03:49 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-31e55e88567so24091477b3.15
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 14:03:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nHZhsJvZuU8x8cSV7hJ3bwYV3pDJsGuu8QgGpzsHbKI=;
-        b=i3M7DR7R/92yls/0qJasv9Mdrw0PUg60oMhsu7k2wXs0clqJcf4XZSIidylzk7XvNm
-         Kj/G/ydgomlXntOBztn/Xdn11KSc5WdAoY0Y98B9SjtG7qXeu8Ai66pmjl5aLDea1jH6
-         0pqUs7UHObk7IUP2TZ+CUM0aGIEq8wMAd5Kpw9F57ezZuApAFUyLG7o+As22AxiOcu8/
-         RRZp2gGNATKlUqyJ8xiQ20dmkbLmWUg5jXtCtg9l7Tw6Pq6TnQL6nB3X0+sBh+J8xaSE
-         4X08lxqqGKlXulgEKo7uuexd/DISTQ7DXsnKkWnk3TmdZ0FjvxAqL8V0io6NMRXUEc96
-         sFTw==
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=MypyzVZSccI/RyC46qp75Pb6XbMOH7vgHkqe/QUNPpo=;
+        b=KGtiU3I1Yc2pPQ93b0InIC/VuuUUJbgRueIy0lePqllWiicPtHn7WKGz0btmVyk0nL
+         aiESAnSPgMdxVpNrNxbm8kN8yCAVFNVcjTpucSpHAYSE/4g3cr+7PvvOcDS1S/WmdJX8
+         1bAqIFb2pMUyuw6gH0P1UUR/bm+CYAqThTW+X12OC8EDQmew8lKXHz7R0gD25EtoIkQ4
+         VUvy5J9eTKnl+OkrVTcPVKnTp4mJQs4yS7PHVCUCOqpffTDGby2D0gsUmTEr2m/Xa5Po
+         7vSYyhpqZm4I52h3zF/v83BM8hHyPkWdvLqXeTCg1iWszKpT9akPaMxriel8j+qa6vNa
+         3/DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nHZhsJvZuU8x8cSV7hJ3bwYV3pDJsGuu8QgGpzsHbKI=;
-        b=VK9vPCDLOtxRsTO5ExtwZZPLQTTslkXJsARTSuLxQwVVrhYJCQMa7UiX/nFolStEHK
-         fEaWLlqasweDU4o9uqIJPqC51SpmPaSGiPmewAIPUT0u/8+un3nldXIluUVqYTI+Pqbw
-         dk/RdU/FVheBpUI8X3sN+NldRTwjff5UnBIA12ZPQOPD/uU5pHeF/xjVbUGoS++7JTym
-         pf3bic0CtwsCrl35KWppTdMvty3tQDehDfVCmASX3HCaGXRpPNeahU7WGd/lnrBNYR2G
-         XBGxbSVJ5FWyZssDuzV445LxsDg5C/RMdAP4CNLhOd0QNHX+n6BGoZdrbyWFm1m762qq
-         BqnA==
-X-Gm-Message-State: AJIora/SgzQdnKjbeqdiXvQlILEPJpXP9kJzM3CqPNCB40WplXH+LJST
-        wKrUVJ+QTjjh2VhJrb9JkS7veUq5WxI7gSKPBGXHKg==
-X-Google-Smtp-Source: AGRyM1tmIb9QZW3GuI3H9geW6F1Yo2ZDUH8ndpTeEDQeOHPdXB96hnQnvYJMducw/HqOnVQWQTotOyM59G4sVGFAdbY=
-X-Received: by 2002:a05:6214:d03:b0:473:7764:2ab with SMTP id
- 3-20020a0562140d0300b00473776402abmr247073qvh.119.1658434761411; Thu, 21 Jul
- 2022 13:19:21 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220721195502.1525214-1-bhupesh.sharma@linaro.org>
-In-Reply-To: <20220721195502.1525214-1-bhupesh.sharma@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 21 Jul 2022 23:19:10 +0300
-Message-ID: <CAA8EJppGS38aP7gyd1c3kNgraAVJDoqUef2cDfZpu2aL_iwW0g@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: leds: Describe optional 'reg' property used
- for Qualcomm LPG nodes
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        bjorn.andersson@linaro.org, robh@kernel.org, pavel@ucw.cz
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=MypyzVZSccI/RyC46qp75Pb6XbMOH7vgHkqe/QUNPpo=;
+        b=1O4RCfDLuY76CJi0PpCORx6kKDUkaT/v1DRntN3UH+7oj3GYp6S7f73yyLQukrqFjp
+         CedEof4O5kz59KLd83ts1EI7Oy9nUsAzl2sRRrL/pFdTcZjgraSTP8xBqkLmyMt4RJBw
+         g78bUBvw8V2tdwVRZGl2Hg8BU3T38E/nbC47ksPHcCeRutrqvfc/7dDxgXV3rbJaxcvL
+         fX52Ny/J6acG3CILsFlIQR0zBhEKcA+FLZhICY/Wf8e4u7P/M3OnMBEDd9iIFcDyzTtF
+         V0/bn8VxULCm+XFQW0mmihAVSJHJIaSlsKDSOZmeEqg45o/vNfUGzYsba5bjPVc96Laj
+         q84g==
+X-Gm-Message-State: AJIora/ED4bTTwEhilLD2DA8a2LcyO4m7Rme0bVz7QBMrdoICTKuqEmQ
+        1tIFfolVNevF4j6jwgSOQIU9fgQG4NDuKLlkGw==
+X-Google-Smtp-Source: AGRyM1sxwUS7zWxfuhFmDg/oyvsoaf1Wwexumse7I9VvtS1d218Qh2nHKoK4HZcdCT8xWr/B9mnpWLyMLY0auVLITw==
+X-Received: from justinstitt.mtv.corp.google.com ([2620:15c:211:202:21e:d672:5a6a:420e])
+ (user=justinstitt job=sendgmr) by 2002:a25:bd42:0:b0:670:be21:78a5 with SMTP
+ id p2-20020a25bd42000000b00670be2178a5mr460245ybm.478.1658437428335; Thu, 21
+ Jul 2022 14:03:48 -0700 (PDT)
+Date:   Thu, 21 Jul 2022 14:03:31 -0700
+Message-Id: <20220721210331.4012015-1-justinstitt@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.37.1.359.gd136c6c3e2-goog
+Subject: [PATCH] drivers: iommu: fix clang -wformat warning
+From:   Justin Stitt <justinstitt@google.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Tom Rix <trix@redhat.com>, linux-arm-msm@vger.kernel.org,
+        iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
+        llvm@lists.linux.dev, Justin Stitt <justinstitt@google.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-9.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 21 Jul 2022 at 22:55, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
->
-> As Bjorn noted in [1], it is useful to describe the optional
-> 'reg' property for Qualcomm LPG nodes as it is used in
-> some Qualcomm dts files.
+When building with Clang we encounter the following warning:
+| drivers/iommu/msm_iommu.c:603:6: error: format specifies type 'unsigned
+| short' but the argument has type 'int' [-Werror,-Wformat] sid);
 
-I don't think this is correct. LPG block maps to several regions, so
-using just one of them in reg doesn't look correct.
+`sid` is an int, use the proper format specifier `%x`.
 
-> This fixes the following 'make dtbs_check' error reported for
-> pm8350c & sc8280xp pwm nodes:
->
-> arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb:
->  pwm@e800: 'reg' does not match any of the regexes:
->  '^led@[0-9a-f]$', 'pinctrl-[0-9]+'
+Link: https://github.com/ClangBuiltLinux/linux/issues/378
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Suggested-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Justin Stitt <justinstitt@google.com>
+---
+Reported by Nathan here:
+https://lore.kernel.org/all/YtmrCJjQrSbv8Aj1@dev-arch.thelio-3990X/
 
-I'd prefer to follow the existing schema and to drop the region from
-those files.
+ drivers/iommu/msm_iommu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->
-> [1]. https://lore.kernel.org/linux-arm-msm/Ytg3tIaL5h5b9ewH@builder.lan/
->
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: robh@kernel.org
-> Cc: pavel@ucw.cz
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
-> index fe336fa16518..f394ab7a757b 100644
-> --- a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
-> +++ b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
-> @@ -27,6 +27,9 @@ properties:
->        - qcom,pmi8994-lpg
->        - qcom,pmi8998-lpg
->
-> +  reg:
-> +    maxItems: 1
-> +
->    "#pwm-cells":
->      const: 2
->
-> --
-> 2.35.3
->
-
-
+diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
+index 428919a474c1..6a24aa804ea3 100644
+--- a/drivers/iommu/msm_iommu.c
++++ b/drivers/iommu/msm_iommu.c
+@@ -599,7 +599,7 @@ static int insert_iommu_master(struct device *dev,
+ 
+ 	for (sid = 0; sid < master->num_mids; sid++)
+ 		if (master->mids[sid] == spec->args[0]) {
+-			dev_warn(dev, "Stream ID 0x%hx repeated; ignoring\n",
++			dev_warn(dev, "Stream ID 0x%x repeated; ignoring\n",
+ 				 sid);
+ 			return 0;
+ 		}
 -- 
-With best wishes
-Dmitry
+2.37.1.359.gd136c6c3e2-goog
+
