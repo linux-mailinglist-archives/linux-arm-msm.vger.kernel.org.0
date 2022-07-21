@@ -2,132 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2359757D37E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 20:42:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DCC657D384
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Jul 2022 20:42:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233070AbiGUSmD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jul 2022 14:42:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60162 "EHLO
+        id S233141AbiGUSmn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jul 2022 14:42:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232948AbiGUSmC (ORCPT
+        with ESMTP id S232086AbiGUSml (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jul 2022 14:42:02 -0400
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4D3D89A74
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 11:42:01 -0700 (PDT)
-Received: by mail-qk1-x72e.google.com with SMTP id o21so1967723qkm.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 11:42:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+RQnuRQVAxAGI0N6/NnLGG+FggFTKyFm89xEXb36pkw=;
-        b=iyniFeKPwDu5YPSQmW8iQt+xqhxFQoPdxQjdUIgapHfOqPMwIDAiMIsP8KHWWmUUqc
-         VBlBRg7crLnY3rJMYSRDh2ATS1OW2p4cK1dEkdliPUAbxZa3mfkqy2FAjNp/eouhe0QV
-         BvDeWRn33axasZAOviZ1Vau68l6ZKppGw+WAPxwCd6aEe3VaM3Zz3Q63Gz7OCFFaSflj
-         eFsgsWbn2OLOQPDP72jbZ5ZQY168A2emerxJYUpXrhBAJuQBSaQf1ib0yGUzE3yVMJKO
-         0fzeU7s5SEoi8OAk5sb9a1b+uvGGEuddx7cfMtcL6lsZetlLUhFLOCseY/xQJFvFLSU9
-         RCKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+RQnuRQVAxAGI0N6/NnLGG+FggFTKyFm89xEXb36pkw=;
-        b=R+S5d7Ba2zYhPsTHeqn0H7DCQctNh1n15o1IyevrPRpc1AsqxolRmtO6RdSIoyTLQu
-         wKAhqI1ChQP6F3+zDbP1GKFvJlGNTdPR7Lns76gLspolQZ2kTgpy17q9qz+a3y10pc2v
-         +1wEEpAfXuc21CtZdNi32feCACwJtgORmgTuhIZiQoDs0tInATTVa1GzqtFB/uWSbAVP
-         91Ze/Zr7351yB/X+i1uKtGOXaXp8Pf09sE9ykpW0UY1U1rJok7L9gouY9GKSH3ap+p5L
-         1wHeu6AlICFhMozEDWG4Sy3jm2PAijAlhDrTIdwvsdJPtjMAQBT1C2ipPEJk08OIYbGR
-         uTaQ==
-X-Gm-Message-State: AJIora8uHKS50v4ir+A203sRw7p6YKV5FRz+StOCC1R9vsRGxFAuJ7zi
-        8vtY3wLRqGSs5RsKM92VbJSbIPkfxLNpOaBi2DxaAA==
-X-Google-Smtp-Source: AGRyM1v29kSP8xawWrXzI8sSr5FM+BvUWfSZ3Fu+pP7hxXeMYCoPETKED42dCZUElsVZdMDlopzzF1/ML7pLO8dDpb0=
-X-Received: by 2002:a05:620a:2408:b0:6b6:2df3:d18b with SMTP id
- d8-20020a05620a240800b006b62df3d18bmr55176qkn.203.1658428920842; Thu, 21 Jul
- 2022 11:42:00 -0700 (PDT)
+        Thu, 21 Jul 2022 14:42:41 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAB8B89EA5;
+        Thu, 21 Jul 2022 11:42:40 -0700 (PDT)
+Received: from [192.168.1.101] (abxj77.neoplus.adsl.tpnet.pl [83.9.3.77])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id DD8E53F72A;
+        Thu, 21 Jul 2022 20:42:36 +0200 (CEST)
+Message-ID: <78e8cec6-996a-70ef-cd4c-d64f7ff3c833@somainline.org>
+Date:   Thu, 21 Jul 2022 20:42:34 +0200
 MIME-Version: 1.0
-References: <1657038556-2231-1-git-send-email-quic_khsieh@quicinc.com>
- <YtkrDcjTGhpaU1e0@hovoldconsulting.com> <CAA8EJprQnnWjDZJy9+zUBsVQCi3jtc0Ngtzzk9MXpwOvuAS68g@mail.gmail.com>
- <CAD=FV=W0m-x9JC=5hQ3urSNmUp8sY-u8YkNd66yrKfRNAH4rcg@mail.gmail.com>
-In-Reply-To: <CAD=FV=W0m-x9JC=5hQ3urSNmUp8sY-u8YkNd66yrKfRNAH4rcg@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 21 Jul 2022 21:41:49 +0300
-Message-ID: <CAA8EJppWeDXAMqYmw6iOs_tr2mpnxmdbSKT79SH9f8=TYaBLnQ@mail.gmail.com>
-Subject: Re: [PATCH v16 0/3] eDP/DP Phy vdda realted function
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Johan Hovold <johan@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Mark Brown <broonie@kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 2/2] dt-bindings: arm: qcom: Document additional sa8540p
+ device
+Content-Language: en-US
+To:     Parikshit Pareek <quic_ppareek@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
-        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220721154413.15578-1-quic_ppareek@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20220721154413.15578-1-quic_ppareek@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 21 Jul 2022 at 17:50, Doug Anderson <dianders@chromium.org> wrote:
->
-> Hi,
->
-> On Thu, Jul 21, 2022 at 6:25 AM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > > This series breaks USB and PCIe for some SC8280XP and SA540P machines
-> > > where the DP PHY regulators are shared with other PHYs whose drivers do
-> > > not request a load.
-> >
-> > I'm trying to understand, why does this series cause the regression.
-> > Previously it would be the DP controller voting on the regulators
-> > load, now it has been moved to the DP/eDP PHYs.
->
-> I think in the past not many device trees actually hooked up the
-> regulators to the DP/eDP but did hook up the regulators to the PHYs?
-> That means they didn't used to get a regulator_set_load() on them and
-> now they do?
->
-> It should also be noted that we're now setting the load for a bunch of
-> USB PHYs that we didn't used to set a load on...
 
-Might be the case, yes.
 
-> > > It seems quite likely that changes like this one affects other systems
-> > > too, and the effects may be hard to debug. So a more general solution
-> > > than playing whack-a-mole using DT would be good to have.
-> >
-> > I think enabling a regulator which supports set_load() and without
-> > load being set should cause a warning, at least with
-> > CONFIG_REGULATOR_DEBUG. WDYT?
->
-> I'm not a total fan. I'd love to see evidence to the contrary, but I'm
-> a believer that the amount of extra cruft involved with all these
-> regulator_set_load() calls is overkill for most cases. All the extra
-> code / per-SoC tables added to drivers isn't ideal.
+On 21.07.2022 17:44, Parikshit Pareek wrote:
+> Add the ADP ride device to the valid device compatibles found on the
+> sa8540p platform.
+> 
+> Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
+> ---
+The bindings patch should come before the one that introduces code
+that's being documented.
 
-I'm fine with the load being specified in the DT (and that sounds like
-a good idea for me too).
-What I'd like to achieve is catching load-enabled regulators for which
-we did not set the load (via an API call or via the DT).
-
--- 
-With best wishes
-Dmitry
+Konrad
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index c566276856ad..5729ce19eb16 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -650,6 +650,7 @@ properties:
+>        - items:
+>            - enum:
+>                - qcom,sa8295p-adp
+> +              - qcom,sa8540p-adp-ride
+>            - const: qcom,sa8540p
+>  
+>        - items:
