@@ -2,142 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1D6D57DD11
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jul 2022 11:04:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D42157DDAD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jul 2022 11:34:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233608AbiGVJE1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Jul 2022 05:04:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33406 "EHLO
+        id S236655AbiGVJdt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Jul 2022 05:33:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231701AbiGVJE0 (ORCPT
+        with ESMTP id S236383AbiGVJdg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Jul 2022 05:04:26 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 797827D1F1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jul 2022 02:04:24 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id a9so6639616lfk.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jul 2022 02:04:24 -0700 (PDT)
+        Fri, 22 Jul 2022 05:33:36 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 826B2DA5FD;
+        Fri, 22 Jul 2022 02:22:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=l3h9J6UBwtKZvJITANmcz+24NubjgVssRtaWr316TZs=;
-        b=mirn+CGqVXafmKCSE26H4UOWDduWcnDa1FtZoLehw1N8nxaLCn+AZTl0tCocMNRkMl
-         9jHl8872M72LJOGhgi+2bxsYa7R/Ow5nJPcX85G4FteaQlUCyyp/ScmU05UVqinn6Q0T
-         DPCz6N/vqp2UqZKa1QcZceEQ9y+craPhLT4VabCGwNU3V6NhR56mkCL9Ub0PXOmgR6yr
-         vVdx0n3HyGk+mBUXEBoA1zVALL0WUVm7pl7V0EafzwLIGdcJMe/hIGFmmcfTejYU+FKH
-         pxJeMWG6nk1izMokmiYi6SAcWpOweO02it7CmwLhtJUXVl5dtlm49OajBLWycLIyFmER
-         fUAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
-         :content-transfer-encoding;
-        bh=l3h9J6UBwtKZvJITANmcz+24NubjgVssRtaWr316TZs=;
-        b=ZbqZJqbj1ZZaWS31nDF+IudVlxKykqR+jYTGc67jY7hWVjR1BqKwYQs2U9cRFJjdX5
-         room1XyFFtPqp8hTzb+nYblrV6keJAfOo0MONijpL8NfLeM8oT95MGDQ1AAtcxXKdIu5
-         DnEYtnif2kaG94tjGDcRk+z4IweL4Ti86aFDeygEcwRFIkTCZvVgbb+znh3dcf/QzSO3
-         88WbFS7fRNSbcZ4uSeG+ykOE5ga+NRecXF9TXfxCxIQgtBVbWoCmhcDf8Jo3fL2eOeRx
-         5BnpxF4TFELx5327+lNmAq2A13urpGXPzGjpmGTKxUs4ybT/XpZ6MicjuMyQRupWqGl5
-         /dCg==
-X-Gm-Message-State: AJIora9EV4rzrM/Sm4Y7FgxT/ofs68oF3PbzlXkQQRRdQ24MWbod31Ts
-        ETaI7IQYxd/KAXO4OZot2lYyUw==
-X-Google-Smtp-Source: AGRyM1uKGad0HYgW1xNRavLGPomXqqpMS6YPuafQWGsFlmZ49umoCJNqxnl9rMo/IIJozjp4rrkX5w==
-X-Received: by 2002:ac2:5084:0:b0:48a:6e29:bf8 with SMTP id f4-20020ac25084000000b0048a6e290bf8mr971373lfm.572.1658480662753;
-        Fri, 22 Jul 2022 02:04:22 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id o18-20020ac24c52000000b0047f933622c8sm942056lfk.163.2022.07.22.02.04.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Jul 2022 02:04:22 -0700 (PDT)
-Message-ID: <53dfe37d-c976-0ffe-dd46-48b681144c6c@linaro.org>
-Date:   Fri, 22 Jul 2022 12:04:20 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v17 0/6] PCI: dwc: Fix higher MSI vectors handling
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1658481732; x=1690017732;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=cXYoAQfzHqIkqRatI1Z+3s2u1CFs8OJ8WmJ6anWvBso=;
+  b=FwvXV76oZC/d+pKvfkBGx/MMlgV/PWeBDxJ/dtR5eMoNYdqQh0EC4GSX
+   e2rLee9u1Jge3Duog3L2HNuJLfValMlwIwBLhGNwQPdrOb22vzDgB2Z3J
+   3ASJPl2C21CSB9PA04tcymqPYTX6Kh+zTegovZGA+11oprF1kxMQF7An2
+   w=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 22 Jul 2022 02:22:11 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2022 02:22:10 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 22 Jul 2022 02:22:10 -0700
+Received: from hu-ppareek-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 22 Jul 2022 02:22:07 -0700
+Date:   Fri, 22 Jul 2022 14:52:03 +0530
+From:   Parikshit Pareek <quic_ppareek@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+CC:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        Johan Hovold <johan@kernel.org>
-References: <20220707134733.2436629-1-dmitry.baryshkov@linaro.org>
- <84004850-026a-980d-6c9c-3668182fc458@linaro.org>
-In-Reply-To: <84004850-026a-980d-6c9c-3668182fc458@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: introduce sa8540p-ride dts
+Message-ID: <20220722092203.GA12635@hu-ppareek-blr.qualcomm.com>
+References: <20220721154057.15276-1-quic_ppareek@quicinc.com>
+ <d960d442-4b0a-ef33-04da-8fe3a3c8fb90@somainline.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <d960d442-4b0a-ef33-04da-8fe3a3c8fb90@somainline.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/07/2022 14:58, Dmitry Baryshkov wrote:
-> On 07/07/2022 16:47, Dmitry Baryshkov wrote:
->> I have replied with my Tested-by to the patch at [2], which has landed
->> in the linux-next as the commit 20f1bfb8dd62 ("PCI: qcom:
->> Add support for handling MSIs from 8 endpoints"). However lately I
->> noticed that during the tests I still had 'pcie_pme=nomsi', so the
->> device was not forced to use higher MSI vectors.
->>
->> After removing this option I noticed that hight MSI vectors are not
->> delivered on tested platforms. After additional research I stumbled upon
->> a patch in msm-4.14 ([1]), which describes that each group of MSI
->> vectors is mapped to the separate interrupt. Implement corresponding
->> mapping.
+On Thu, Jul 21, 2022 at 08:41:34PM +0200, Konrad Dybcio wrote:
 > 
-> [skipped]
+> Hello!
 > 
-> Gracious ping. Does this series stand a chance of getting into 5.20?
-
-Bjorn, please excuse my insistence. Given that it's not merged (yet), 
-probably it will not make it into 5.20. Is there anything preventing it 
-from being accepted for 5.21?
-
-dwc patches were reviewed by Rob, Mani and Johan. Stanimir has acked the 
-bindings patch.
-
-The dts patch should probably go via the arm-soc tree (together with 
-additional patches adding multiple MSI IRQs to other Qualcomm SoCs).
-
-> 
->> Dmitry Baryshkov (6):
->>    PCI: dwc: Correct msi_irq condition in dw_pcie_free_msi()
->>    PCI: dwc: Convert msi_irq to the array
->>    PCI: dwc: split MSI IRQ parsing/allocation to a separate function
->>    PCI: dwc: Handle MSIs routed to multiple GIC interrupts
->>    dt-bindings: PCI: qcom: Support additional MSI interrupts
->>    arm64: dts: qcom: sm8250: provide additional MSI interrupts
->>
->>   .../devicetree/bindings/pci/qcom,pcie.yaml    |  51 +++++-
->>   arch/arm64/boot/dts/qcom/sm8250.dtsi          |  12 +-
->>   drivers/pci/controller/dwc/pci-dra7xx.c       |   2 +-
->>   drivers/pci/controller/dwc/pci-exynos.c       |   2 +-
->>   .../pci/controller/dwc/pcie-designware-host.c | 164 +++++++++++++-----
->>   drivers/pci/controller/dwc/pcie-designware.h  |   2 +-
->>   drivers/pci/controller/dwc/pcie-keembay.c     |   2 +-
->>   drivers/pci/controller/dwc/pcie-spear13xx.c   |   2 +-
->>   drivers/pci/controller/dwc/pcie-tegra194.c    |   2 +-
->>   9 files changed, 185 insertions(+), 54 deletions(-)
->>
+> On 21.07.2022 17:40, Parikshit Pareek wrote:
+> > Create new dts file specific for Qdrive board based on sa8540p chipset.
+> Is the SA8540P any different than SA8295P? My wild guess is that they're
+> binned versions of each other with different DVFS levels.. That could
+> use a separate SoC DTSI to hold these differences should that be true..
 > 
 > 
+> > Introduce common dtsi file sa8295p-adp.dtsi, to be included for adp and
+> > Qdrive board.
+> > 
+> > Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+> >  arch/arm64/boot/dts/qcom/sa8295p-adp.dts      | 378 +----------------
+> >  arch/arm64/boot/dts/qcom/sa8295p-adp.dtsi     | 385 ++++++++++++++++++
+> >  arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts |  15 +
+> >  4 files changed, 403 insertions(+), 376 deletions(-)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/sa8295p-adp.dtsi
+> >  create mode 100644 arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> > index 9e2a13d75f9d..fa0abcf7660b 100644
+> > --- a/arch/arm64/boot/dts/qcom/Makefile
+> > +++ b/arch/arm64/boot/dts/qcom/Makefile
+> > @@ -51,6 +51,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= sa8295p-adp.dtb
+> > +dtb-$(CONFIG_ARCH_QCOM) += sa8540p-adp-ride.dtb
+> This needs to be a tab.
+> 
+> 
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1-lte.dtb
+> > diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> > index 9398f0349944..adb6637117bc 100644
+> > --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> > @@ -2,388 +2,14 @@
+> >  /*
+> >   * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> >   * Copyright (c) 2022, Linaro Limited
+> > + * Copyright (c) 2022 Qualcomm Innovaion Center, Inc. All rights reserved.
+> Please add a comma after the year to keep it consistent.
+> 
+> 
+> >   */
+> >  
+> >  /dts-v1/;
+> 
+> [...]
+> 
+> > diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dtsi b/arch/arm64/boot/dts/qcom/sa8295p-adp.dtsi
+> > new file mode 100644
+> > index 000000000000..75ef77b7cac1
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dtsi
+> Are the boards based on each other? Or on a similar base platform?
+> Maybe sa8295p/sa8540p/sasomethingelse-automotive.dtsi could be a 
+> better name in the latter case?
+Thanks, agreed.
+> 
+> 
+> [...]
+> 
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts
+> > @@ -0,0 +1,15 @@
+> > +// SPDX-License-Identifier: BSD-3-Clause
+> > +/*
+> > + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> > + * Copyright (c) 2022, Linaro Limited
+> > + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> > + */
+> > +
+> > +/dts-v1/;
+> > +
+> > +#include "sa8295p-adp.dtsi"
+> > +
+> > +/ {
+> > +	model = "Qualcomm SA8540 ADP";
+> So "Qdrive board" == SA8540 ADP == SA8540 ADP Ride? Or is there
+> a base platform for all of them? Maybe the Qdrive is simply based
+> on the ADPs? Is there a clear distinction between ADP and ADP Ride?
+Yes, Qdrive board" == SA8540 ADP == SA8540 ADP Ride. ADP is common to
+many boards, one being Qdrive or ADP ride.
+> 
+> Konrad
+> 
+> > +	compatible = "qcom,sa8540p-adp-ride", "qcom,sa8540p";
+> > +};
 
-
--- 
-With best wishes
-Dmitry
+Regards,
+Parikshit Pareek
