@@ -2,107 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AAD3E57D8F1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jul 2022 05:17:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6245A57DA49
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jul 2022 08:31:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234162AbiGVDRk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jul 2022 23:17:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42090 "EHLO
+        id S231193AbiGVGb3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Jul 2022 02:31:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233967AbiGVDRf (ORCPT
+        with ESMTP id S229519AbiGVGb2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jul 2022 23:17:35 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D5A987F70;
-        Thu, 21 Jul 2022 20:17:34 -0700 (PDT)
+        Fri, 22 Jul 2022 02:31:28 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BC3C3DBF2;
+        Thu, 21 Jul 2022 23:31:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1658459854; x=1689995854;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=gEDWsiz11GhB4pUHw7t4kAgF8/TF7yajo/DSLMNkb3Y=;
-  b=Kh1wqlnBescfCivTjqIgDmSRvPi7HDS2XotxTmAfpMzRYwGEqRR2V3JY
-   BnagGAOjPF7AWubTNOMQbxPxh/TcbO1ThJX6bjJDlxmx+UWYUJsLF3Ybk
-   Ffk7u9Epd2qFXDrZiP+UEPwhDalGkBjvBkaOWhpjvyws4C3IIxqVl4yyg
-   o=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 21 Jul 2022 20:17:33 -0700
+  t=1658471485; x=1690007485;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=y9U9hgHsliqp7Qq1Blddtrmz1F+idNaVLFX9hxiQUgw=;
+  b=xmIvK/cfsaue7bZfIz30zRUJ5WNiBTXNc3xB0Q79NVfdX3QGmhnRKXLM
+   ZYNblSUxifAZ+pHuekZdnlXGwGW95alp3nwqE7hS0rcVYicH5Ncp4JCHG
+   9f8jCbjii0NNyDFy17cfnu0xkz7Y4qHT3luL9iPH9pPanw5IDQHLfipCa
+   c=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 21 Jul 2022 23:31:25 -0700
 X-QCInternal: smtphost
-Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2022 20:17:33 -0700
-Received: from cbsp-sh-gv.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2022 23:31:24 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 21 Jul 2022 20:17:31 -0700
-From:   Qiang Yu <quic_qianyu@quicinc.com>
-To:     <mani@kernel.org>, <quic_hemantk@quicinc.com>,
-        <loic.poulain@linaro.org>, <quic_jhugo@quicinc.com>
-CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
-        Qiang Yu <quic_qianyu@quicinc.com>
-Subject: [PATCH v3 1/1] bus: mhi: host: Fix up null pointer access in mhi_irq_handler
-Date:   Fri, 22 Jul 2022 11:17:18 +0800
-Message-ID: <1658459838-30802-1-git-send-email-quic_qianyu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+ 15.2.986.22; Thu, 21 Jul 2022 23:31:24 -0700
+Received: from [10.50.44.100] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 21 Jul
+ 2022 23:31:19 -0700
+Message-ID: <dc737abb-041b-491a-14f1-a584f9e64a3d@quicinc.com>
+Date:   Fri, 22 Jul 2022 12:01:16 +0530
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH V15 6/9] mfd: pm8008: Use i2c_new_dummy_device() API
+Content-Language: en-US
+To:     Lee Jones <lee.jones@linaro.org>, Mark Brown <broonie@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>
+CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_collinsd@quicinc.com>,
+        <quic_subbaram@quicinc.com>, <quic_jprakash@quicinc.com>
+References: <YrxtXdOsIZ5LKhdV@google.com>
+ <f8e70198-d0d8-5500-2869-be9e3a34f3c1@quicinc.com>
+ <Yr18M9dzTOWL0m2c@google.com>
+ <de1f3f33-0a8c-eb87-694c-16ebf2835720@quicinc.com>
+ <Yr6oLlmfWRkiAZG7@google.com>
+ <52c6ab15-1cd8-324e-4bcc-c449d8bceb19@quicinc.com>
+ <Yr66ZZqEnBApHYMA@google.com>
+ <0481d3cc-4bb9-4969-0232-76ba57ff260d@quicinc.com>
+ <YsLhxx+L3+GJDRyO@google.com>
+ <bcc5f059-b991-296a-bba6-9cb1236097f2@quicinc.com>
+ <Ys1tYAO39LKzEAOE@google.com>
+From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
+In-Reply-To: <Ys1tYAO39LKzEAOE@google.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The irq handler for a shared IRQ ought to be prepared for running
-even now it's being freed. So let's check the pointer used by
-mhi_irq_handler to avoid null pointer access since it is probably
-released before freeing IRQ.
+Hi Lee,
 
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
----
-v2->v3: add comments
-v1->v2: change dev_err to dev_dbg
+> Okay, so I've taken some time to read through your previous
+> submissions to see how we ended up down this rabbit hole.
+>
+> Essentially, it looks to me like the 2 I2C devices should be kept
+> separate and the Regulator driver should be registered/probed without
+> requiring this I2C dummy device hoop jumping exercise.
+>
+> As Stephen asked in v9 [0], why can't the regulator driver be I2C?
+>
+> Then it can manage its own resources and all of this craziness can be
+> avoided.
+>
+> That's not to say that the v9 submission was the right way to go
+> either.  Everything in relation to:
+>
+>    i2c_add_driver(&pm8008_regulators_driver);
+>
+> ... should be moved into the Regulator driver itself.
 
- drivers/bus/mhi/host/main.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-index f3aef77a..df0fbfe 100644
---- a/drivers/bus/mhi/host/main.c
-+++ b/drivers/bus/mhi/host/main.c
-@@ -430,12 +430,25 @@ irqreturn_t mhi_irq_handler(int irq_number, void *dev)
- {
- 	struct mhi_event *mhi_event = dev;
- 	struct mhi_controller *mhi_cntrl = mhi_event->mhi_cntrl;
--	struct mhi_event_ctxt *er_ctxt =
--		&mhi_cntrl->mhi_ctxt->er_ctxt[mhi_event->er_index];
-+	struct mhi_event_ctxt *er_ctxt;
- 	struct mhi_ring *ev_ring = &mhi_event->ring;
--	dma_addr_t ptr = le64_to_cpu(er_ctxt->rp);
-+	dma_addr_t ptr;
- 	void *dev_rp;
- 
-+	/*
-+	 * If CONFIG_DEBUG_SHIRQ is set, the IRQ handler will get invoked during __free_irq()
-+	 * and by that time mhi_ctxt() would've freed. So check for the existence of mhi_ctxt
-+	 * before handling the IRQs.
-+	 */
-+	if (!mhi_cntrl->mhi_ctxt) {
-+		dev_dbg(&mhi_cntrl->mhi_dev->dev,
-+			"mhi_ctxt has been freed\n");
-+		return IRQ_HANDLED;
-+	}
-+
-+	er_ctxt = &mhi_cntrl->mhi_ctxt->er_ctxt[mhi_event->er_index];
-+	ptr = le64_to_cpu(er_ctxt->rp);
-+
- 	if (!is_valid_ring_ptr(ev_ring, ptr)) {
- 		dev_err(&mhi_cntrl->mhi_dev->dev,
- 			"Event ring rp points outside of the event ring\n");
--- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+So, IIUC, we need to register the regulator driver as an i2c_driver and 
+do all the regmap init stuff in its probe, and not touch the mfd 
+driver(apart from adding reset-gpios).
+
+Then the DT would be simply:
+
+&pm8008_bus {
+     pm8008: pm8008@8 {
+         compatible = "qcom,pm8008";
+         reg = <0x8>;
+         #address-cells = <1>;
+         #size-cells = <0>;
+         #interrupt-cells = <2>;
+     };
+
+     pm8008_regulators: pm8008@9 {
+         compatible = "qcom,pm8008-regulators";
+         reg = <0x9>;
+         #address-cells = <0>;
+         #size-cells = <0>;
+
+         pm8008_l1: ldo1@4000 {
+             reg = <0x4000>;
+             regulator-name = "pm8008_l1";
+         };
+
+         pm8008_l2: ldo2@4100 {
+             reg = <0x4100>;
+             regulator-name = "pm8008_l2";
+         };
+
+         pm8008_l3: ldo3@4200 {
+             reg = <0x4200>;
+             regulator-name = "pm8008_l3";
+         };
+
+         pm8008_l4: ldo4@4300 {
+             reg = <0x4300>;
+             regulator-name = "pm8008_l4";
+         };
+
+         pm8008_l5: ldo5@4400 {
+             reg = <0x4400>;
+             regulator-name = "pm8008_l5";
+         };
+
+         pm8008_l6: ldo6@4500 {
+             reg = <0x4500>;
+             regulator-name = "pm8008_l6";
+         };
+
+         pm8008_l7: ldo7@4600 {
+             reg = <0x4600>;
+             regulator-name = "pm8008_l7";
+         };
+     };
+};
+
+
+Stephen/Mark, Please do let me know if you are OK with this design.
 
