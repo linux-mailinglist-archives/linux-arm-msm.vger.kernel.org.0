@@ -2,79 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8087157E607
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jul 2022 19:54:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D990D57E60D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jul 2022 19:55:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233965AbiGVRyS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Jul 2022 13:54:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46038 "EHLO
+        id S236032AbiGVRzi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Jul 2022 13:55:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232383AbiGVRyR (ORCPT
+        with ESMTP id S235975AbiGVRzg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Jul 2022 13:54:17 -0400
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D00B217
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jul 2022 10:54:17 -0700 (PDT)
-Received: by mail-io1-xd2b.google.com with SMTP id y197so3340553iof.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jul 2022 10:54:17 -0700 (PDT)
+        Fri, 22 Jul 2022 13:55:36 -0400
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A68B4186EF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jul 2022 10:55:35 -0700 (PDT)
+Received: by mail-il1-x132.google.com with SMTP id h16so2648083ilc.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jul 2022 10:55:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Ue0tc0adu1W83NSgyETf8DUiCKAIIriUdz0pGaeFGiM=;
-        b=h7n2Ohg6jboD5Oevy+0g87C911HBazqSA8cA404DtpQJKvNaWodxAOKcF5pr4LZRwC
-         HV1Qu5FqHBz4aiUjc+OzYlURLq6KwN0tLVuixL9qccP9jz46c3uJVI2z0DqcmWIFBuYN
-         RA2dnwvZMKZe+2dWiMZVvidUgX9zZuPTVKoyE=
+        bh=gULf0JdF4EwTcvIBHd+ZJRIXMVlWI/0SvCta4rj+NzQ=;
+        b=Kcmz/jeQZjMgKau9sFwMRtbG91c/92RNy+LYNH5xGvTw+a2mKAFvlIslfDbB3wn9M0
+         ohSl8G1tSVgsE3lEon90WfIpK917we7YqMgM/oonhaRI6LS6hER0K2VXRSIx9Se/4Rfz
+         Ms/mdHLDhcNPzLHCTzZx14PDIzPz13q8+UJ8M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Ue0tc0adu1W83NSgyETf8DUiCKAIIriUdz0pGaeFGiM=;
-        b=ucKxuzvAoeXiKie2bXHjppOqKLd6Hv/vGknYb9AGAeuj8CTGMf8UnbO4aWlGqqo6Ye
-         Z0kY5OizFwwndgFJEyntvuCCdMhKszXXbRjrZ/ouJllueUJK73x4aWhu13DwWGfqjPwf
-         cpOtyXxJzHnub1WX890f4d04jUfp3ugDp3O6Ifguc8NOzJb+LRCk/oCaxrHti78CiIop
-         XPREdkd2QMs7AUlTnfSK0bz8bIP27qSp2WMDTteRey0D89yzGGXlJzxw1ofSFTHL2iLw
-         uRlx+XG4cxqBhfh4THXfl5sOcwR+faB+mc2O6i964D/QtIuVD/RremJbz0kughsarBCt
-         ++Fg==
-X-Gm-Message-State: AJIora/U8LNAUT+XoELtFS3hRmiMLLO4+k3QPW8MVFjQW7oj8U6qjDki
-        1DPvyHMqsfaeZf6fOqe4XTFW54FRtwQrdJvX
-X-Google-Smtp-Source: AGRyM1v2yo+gjd7LnGG8WJaJvbwulGKatSurgOFxtaLIEGzs4XisRvAcdQ300OV1GgodPk4FtQGqUA==
-X-Received: by 2002:a05:6638:2596:b0:33f:8e0c:6af4 with SMTP id s22-20020a056638259600b0033f8e0c6af4mr547520jat.128.1658512455992;
-        Fri, 22 Jul 2022 10:54:15 -0700 (PDT)
-Received: from mail-io1-f54.google.com (mail-io1-f54.google.com. [209.85.166.54])
-        by smtp.gmail.com with ESMTPSA id a64-20020a029446000000b003315c00e885sm2236430jai.0.2022.07.22.10.54.15
+        bh=gULf0JdF4EwTcvIBHd+ZJRIXMVlWI/0SvCta4rj+NzQ=;
+        b=cvmYxeY3+w/gG+pXSM2g+fUgZ5lUnxsrKELeFkp8Q8I50k3QkG5TvffwYN28bgjHcw
+         5m3YWVImEVmJZDTVVj1sODepI8izckZr4Bm22sv0NipMlDmLPumE1KsuRGLgMUNQjfi3
+         Wz6+YCHlcjHVVJmozmjrWWWvICkJXg9wUyAXMmTfy5rKsboKrjh4s7wDlg4fGOi2CWId
+         7VtsDsPMdzIdcuLePyhWynZNifS8tUagDSCQkQkEmBUrN5SoaVLC3x0Tk/SM9AckPV6N
+         wQXlIRv9NRgNkh0zIO03rnBM5VD7uyiZOASAIUURpNQb3pJKsO7+2iOqGZsLdVY9O+Yz
+         +pBQ==
+X-Gm-Message-State: AJIora+mm6QF12WvApdikg8AzzlA+2dZ8VkOzXZLSVn1HXsheK2/ynv5
+        /tWLZYV6y7yBQL86LoX2f/KiNSMmf1a4uwMB
+X-Google-Smtp-Source: AGRyM1sx8vp7Ai7Bx2Nio+K7k2psWfoBTdH0sgVChVGf8j/z5aT3w2TUJUqV0fAl0EUTzL4rtMe86A==
+X-Received: by 2002:a05:6e02:1563:b0:2dd:2649:13ba with SMTP id k3-20020a056e02156300b002dd264913bamr478468ilu.122.1658512534760;
+        Fri, 22 Jul 2022 10:55:34 -0700 (PDT)
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com. [209.85.166.51])
+        by smtp.gmail.com with ESMTPSA id z12-20020a05663822ac00b0032b3a781754sm2235428jas.24.2022.07.22.10.55.32
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Jul 2022 10:54:15 -0700 (PDT)
-Received: by mail-io1-f54.google.com with SMTP id q14so4189330iod.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jul 2022 10:54:15 -0700 (PDT)
-X-Received: by 2002:a05:6638:388e:b0:33c:b603:516 with SMTP id
- b14-20020a056638388e00b0033cb6030516mr534277jav.133.1658512454563; Fri, 22
- Jul 2022 10:54:14 -0700 (PDT)
+        Fri, 22 Jul 2022 10:55:32 -0700 (PDT)
+Received: by mail-io1-f51.google.com with SMTP id q14so4191819iod.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jul 2022 10:55:32 -0700 (PDT)
+X-Received: by 2002:a05:6638:1a1a:b0:33f:405d:b1ed with SMTP id
+ cd26-20020a0566381a1a00b0033f405db1edmr559102jab.164.1658512531715; Fri, 22
+ Jul 2022 10:55:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <SG2PR03MB50065D57C3D89C39FA90AC08CC909@SG2PR03MB5006.apcprd03.prod.outlook.com>
-In-Reply-To: <SG2PR03MB50065D57C3D89C39FA90AC08CC909@SG2PR03MB5006.apcprd03.prod.outlook.com>
+References: <20220721033918.v3.1.I10519ca1bf88233702a90e296088808d18cdc7b1@changeid>
+ <CAD=FV=Uuv0rGg1+8_b=R7SM-g87U_4TipwbNgVTXDd6T=X3qEQ@mail.gmail.com>
+In-Reply-To: <CAD=FV=Uuv0rGg1+8_b=R7SM-g87U_4TipwbNgVTXDd6T=X3qEQ@mail.gmail.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 22 Jul 2022 10:54:01 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=V861t9d0Q1DdYOD1xBcds79WrG=t36Fn2sw9rV=ukQyQ@mail.gmail.com>
-Message-ID: <CAD=FV=V861t9d0Q1DdYOD1xBcds79WrG=t36Fn2sw9rV=ukQyQ@mail.gmail.com>
-Subject: Re: [PATCH v7 0/3] Add new board revision and LTE SKUs for
- sc7280-villager family
-To:     Jimmy Chen <jinghung.chen3@hotmail.com>
+Date:   Fri, 22 Jul 2022 10:55:19 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VmKBjvDqxhrJfh72wZpBMVA1nA=JLVwnx-i92ijZt_bA@mail.gmail.com>
+Message-ID: <CAD=FV=VmKBjvDqxhrJfh72wZpBMVA1nA=JLVwnx-i92ijZt_bA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] arm64: dts: qcom: Add SKU6 for sc7180-trogdor-pazquel-lte-parade
+To:     Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>
 Cc:     LKML <linux-kernel@vger.kernel.org>,
+        Henry Sun <henrysun@google.com>,
+        Bob Moragues <moragues@chromium.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alan Huang <alan-huang@quanta.corp-partner.google.com>,
-        Rob Herring <robh+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
         <devicetree@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -83,65 +85,38 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Fri, Jul 22, 2022 at 1:11 AM Jimmy Chen <jinghung.chen3@hotmail.com> wrote:
+On Thu, Jul 21, 2022 at 6:36 AM Doug Anderson <dianders@chromium.org> wrote:
 >
-> These patches add a new board revision for device Villager, and add
-> new LTE sku for both board revisions.
+> Hi,
 >
-> yaml issue has been clarified in [1] and [2], and 'status' has been
-> reordeded last since v4.
+> On Wed, Jul 20, 2022 at 8:59 PM Yunlong Jia
+> <yunlong.jia@ecs.corp-partner.google.com> wrote:
+> >
+> > SKU6 is LTE(w/o eSIM)+WIFI+Parade
+> >
+> > Signed-off-by: Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>
+> > ---
+> >
+> > Changes in v3:
+> > - Bindings and dts in the same series.
+> >
+> > Changes in v2:
+> > - Put sku6 before sku4.
+> >
+> >  arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-parade.dts | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> [1] https://lore.kernel.org/all/CAD=FV=WtKRFQr5jSQvsr08x9dgHrvenUWWtX_SKuCLuSvSH7WQ@mail.gmail.com/
-> [2] https://lore.kernel.org/all/d3d4d90b-85b5-5ad9-78e6-5a074c21af4f@linaro.org/
->
-> Changes in v7:
-> -Revise typo in Makefile in ptch 2/3
->
-> Changes in v6:
-> -remove v5 accidentally added sc7280-herobrine-herobrine-r1-lte.dts in patch3/3
->
-> Changes in v5:
-> -Update subject and revise Makefile
->
-> Changes in v4:
-> - Add patch 1/3 and update patch 3/3
->
-> Changes in v3:
-> - Update patch format
->
-> Changes in v2:
-> - Add patch 1/2
->
-> Jimmy Chen (3):
->   dt-bindings: arm: qcom: document sc7280 and villager board
->   arm64: dts: qcom: sc7280: Add herobrine-villager-r1
->   arm64: dts: qcom: Add LTE SKUs for sc7280-villager family
->
->  Documentation/devicetree/bindings/arm/qcom.yaml | 15 +++++++++++++++
->  arch/arm64/boot/dts/qcom/Makefile               |  3 +++
->  .../boot/dts/qcom/sc7280-chrome-common.dtsi     | 11 -----------
->  .../boot/dts/qcom/sc7280-herobrine-crd.dts      |  1 +
->  .../dts/qcom/sc7280-herobrine-herobrine-r1.dts  |  1 +
->  .../boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi | 17 +++++++++++++++++
->  .../qcom/sc7280-herobrine-villager-r0-lte.dts   | 14 ++++++++++++++
->  .../dts/qcom/sc7280-herobrine-villager-r0.dts   |  4 ++--
->  .../qcom/sc7280-herobrine-villager-r1-lte.dts   | 14 ++++++++++++++
->  .../dts/qcom/sc7280-herobrine-villager-r1.dts   | 14 ++++++++++++++
->  arch/arm64/boot/dts/qcom/sc7280-idp.dts         |  1 +
->  11 files changed, 82 insertions(+), 13 deletions(-)
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
 We're at a point now where this won't be able to land for at least 2.5
-weeks. Given other changes happening (especially the audio changes), I
-suspect all the in-flight stuff will get confusing. As an experiment,
-I created a staging tree atop the current arm64 dts tree and put this
-there. I'll try to put only things that I believe are truly ready to
-land there, but git hashes won't be stable since it's just a staging
-tree:
+weeks. As an experiment, I created a staging tree atop the current
+arm64 dts tree and put this there. I'll try to put only things that I
+believe are truly ready to land there, but git hashes won't be stable
+since it's just a staging tree:
 
 https://github.com/dianders/kernel-staging/commits/qcom/arm64-staging
+
+I reversed the order of patch #1 and patch #2 when applying as per
+discussion in patch #2.
 
 -Doug
