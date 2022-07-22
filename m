@@ -2,168 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D42157DDAD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jul 2022 11:34:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97F6057E2E4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jul 2022 16:16:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236655AbiGVJdt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Jul 2022 05:33:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59954 "EHLO
+        id S229936AbiGVOQb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Jul 2022 10:16:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236383AbiGVJdg (ORCPT
+        with ESMTP id S230486AbiGVOQa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Jul 2022 05:33:36 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 826B2DA5FD;
-        Fri, 22 Jul 2022 02:22:12 -0700 (PDT)
+        Fri, 22 Jul 2022 10:16:30 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86F1DA024C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jul 2022 07:16:29 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id t3so6073787edd.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jul 2022 07:16:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1658481732; x=1690017732;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=cXYoAQfzHqIkqRatI1Z+3s2u1CFs8OJ8WmJ6anWvBso=;
-  b=FwvXV76oZC/d+pKvfkBGx/MMlgV/PWeBDxJ/dtR5eMoNYdqQh0EC4GSX
-   e2rLee9u1Jge3Duog3L2HNuJLfValMlwIwBLhGNwQPdrOb22vzDgB2Z3J
-   3ASJPl2C21CSB9PA04tcymqPYTX6Kh+zTegovZGA+11oprF1kxMQF7An2
-   w=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 22 Jul 2022 02:22:11 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2022 02:22:10 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 22 Jul 2022 02:22:10 -0700
-Received: from hu-ppareek-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 22 Jul 2022 02:22:07 -0700
-Date:   Fri, 22 Jul 2022 14:52:03 +0530
-From:   Parikshit Pareek <quic_ppareek@quicinc.com>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-CC:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: introduce sa8540p-ride dts
-Message-ID: <20220722092203.GA12635@hu-ppareek-blr.qualcomm.com>
-References: <20220721154057.15276-1-quic_ppareek@quicinc.com>
- <d960d442-4b0a-ef33-04da-8fe3a3c8fb90@somainline.org>
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=nxeR7Lo5PYoDSgSUtAiC935tL0yHF6pLSDAauA9BG7w=;
+        b=MR4DklGeYf0D/wYM8Tyks/4W15tt7jHZxpOHeWkrP8SiiLYJgMMJZeb9xKy35RcKBs
+         K02sZymDAJh71V2xCJ/MwdvDF50YToUQ5aK/Gclm4R1CHh8YMaSpCriWuruPQwmdVmmO
+         nAg3zgaWjMnm7XHZdvJjYWVs694bvxq+EB2rg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=nxeR7Lo5PYoDSgSUtAiC935tL0yHF6pLSDAauA9BG7w=;
+        b=VewnDGpxMAJiNfwHmZQT+JUfofpkSU91gS+OCqGC7rGe52ugASKLZ1dKfn+Vsml03U
+         R3F+W7UAjqcMbt3TpXY6bm6vXywyIpaOqKzM8WOummveu7YwusQPPv446onu9YNxnvRV
+         FC2M70BAgtSghmm1UinYJGiRxneHPv8qDmzX1AhjSO+SMirGb9tKpcnbwwe1y4cXxgvu
+         +XVDGocRLf7phf9Z1iQlm556etuQqTZFk8PpI7Wo1K7TLOxhkE6aHEaqGyvT6IjF2yjj
+         cLZMY7hR2v0ssdEo7Tcz5TqG+oWqJRVf8WyBuYxYNekcTDvRPtyRoGg+YK3wb1jcC3Vu
+         MCUw==
+X-Gm-Message-State: AJIora94BIKBxNV/jyLJVb74IwFxWSkxjyalDZqihLS0917QbV5T2fw+
+        Cd8i1dYvyn+GyqU3m2RwnfB7ZUF2BG9iDIdKQLI=
+X-Google-Smtp-Source: AGRyM1uVYCGLktxhI/ECP++GGT7Fszz5fYo6asbP1hU1Pwa4wPy2DJb2Pp8vY+oSVcLmUNPKKpBCrA==
+X-Received: by 2002:a05:6402:388b:b0:42b:5f20:c616 with SMTP id fd11-20020a056402388b00b0042b5f20c616mr108088edb.50.1658499387946;
+        Fri, 22 Jul 2022 07:16:27 -0700 (PDT)
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com. [209.85.221.53])
+        by smtp.gmail.com with ESMTPSA id dm21-20020a05640222d500b0043ab81e4230sm2604200edb.50.2022.07.22.07.16.26
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 Jul 2022 07:16:26 -0700 (PDT)
+Received: by mail-wr1-f53.google.com with SMTP id bv24so6690450wrb.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jul 2022 07:16:26 -0700 (PDT)
+X-Received: by 2002:adf:f90d:0:b0:20c:de32:4d35 with SMTP id
+ b13-20020adff90d000000b0020cde324d35mr76737wrr.583.1658499386136; Fri, 22 Jul
+ 2022 07:16:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <d960d442-4b0a-ef33-04da-8fe3a3c8fb90@somainline.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20220722081127.228971-1-jinghung.chen3@hotmail.com> <SG2PR03MB500658668FBB9BE1DC2B3F24CC909@SG2PR03MB5006.apcprd03.prod.outlook.com>
+In-Reply-To: <SG2PR03MB500658668FBB9BE1DC2B3F24CC909@SG2PR03MB5006.apcprd03.prod.outlook.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 22 Jul 2022 07:16:14 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WgzOn7EsGgWd-qkEMccBQQn1id1u_0Ph1V6qExfCEioA@mail.gmail.com>
+Message-ID: <CAD=FV=WgzOn7EsGgWd-qkEMccBQQn1id1u_0Ph1V6qExfCEioA@mail.gmail.com>
+Subject: Re: [PATCH v7 1/3] dt-bindings: arm: qcom: document sc7280 and
+ villager board
+To:     Jimmy Chen <jinghung.chen3@hotmail.com>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Alan Huang <alan-huang@quanta.corp-partner.google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 21, 2022 at 08:41:34PM +0200, Konrad Dybcio wrote:
-> 
-> Hello!
-> 
-> On 21.07.2022 17:40, Parikshit Pareek wrote:
-> > Create new dts file specific for Qdrive board based on sa8540p chipset.
-> Is the SA8540P any different than SA8295P? My wild guess is that they're
-> binned versions of each other with different DVFS levels.. That could
-> use a separate SoC DTSI to hold these differences should that be true..
-> 
-> 
-> > Introduce common dtsi file sa8295p-adp.dtsi, to be included for adp and
-> > Qdrive board.
-> > 
-> > Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/Makefile             |   1 +
-> >  arch/arm64/boot/dts/qcom/sa8295p-adp.dts      | 378 +----------------
-> >  arch/arm64/boot/dts/qcom/sa8295p-adp.dtsi     | 385 ++++++++++++++++++
-> >  arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts |  15 +
-> >  4 files changed, 403 insertions(+), 376 deletions(-)
-> >  create mode 100644 arch/arm64/boot/dts/qcom/sa8295p-adp.dtsi
-> >  create mode 100644 arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> > index 9e2a13d75f9d..fa0abcf7660b 100644
-> > --- a/arch/arm64/boot/dts/qcom/Makefile
-> > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > @@ -51,6 +51,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= sa8295p-adp.dtb
-> > +dtb-$(CONFIG_ARCH_QCOM) += sa8540p-adp-ride.dtb
-> This needs to be a tab.
-> 
-> 
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1-lte.dtb
-> > diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> > index 9398f0349944..adb6637117bc 100644
-> > --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> > @@ -2,388 +2,14 @@
-> >  /*
-> >   * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-> >   * Copyright (c) 2022, Linaro Limited
-> > + * Copyright (c) 2022 Qualcomm Innovaion Center, Inc. All rights reserved.
-> Please add a comma after the year to keep it consistent.
-> 
-> 
-> >   */
-> >  
-> >  /dts-v1/;
-> 
-> [...]
-> 
-> > diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dtsi b/arch/arm64/boot/dts/qcom/sa8295p-adp.dtsi
-> > new file mode 100644
-> > index 000000000000..75ef77b7cac1
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dtsi
-> Are the boards based on each other? Or on a similar base platform?
-> Maybe sa8295p/sa8540p/sasomethingelse-automotive.dtsi could be a 
-> better name in the latter case?
-Thanks, agreed.
-> 
-> 
-> [...]
-> 
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts
-> > @@ -0,0 +1,15 @@
-> > +// SPDX-License-Identifier: BSD-3-Clause
-> > +/*
-> > + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-> > + * Copyright (c) 2022, Linaro Limited
-> > + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> > + */
-> > +
-> > +/dts-v1/;
-> > +
-> > +#include "sa8295p-adp.dtsi"
-> > +
-> > +/ {
-> > +	model = "Qualcomm SA8540 ADP";
-> So "Qdrive board" == SA8540 ADP == SA8540 ADP Ride? Or is there
-> a base platform for all of them? Maybe the Qdrive is simply based
-> on the ADPs? Is there a clear distinction between ADP and ADP Ride?
-Yes, Qdrive board" == SA8540 ADP == SA8540 ADP Ride. ADP is common to
-many boards, one being Qdrive or ADP ride.
-> 
-> Konrad
-> 
-> > +	compatible = "qcom,sa8540p-adp-ride", "qcom,sa8540p";
-> > +};
+Hi,
 
-Regards,
-Parikshit Pareek
+On Fri, Jul 22, 2022 at 1:11 AM Jimmy Chen <jinghung.chen3@hotmail.com> wrote:
+>
+> This adds a LTE skus for Chromebook Villager to the yaml.
+>
+> Signed-off-by: Jimmy Chen <jinghung.chen3@hotmail.com>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> ---
+>
+> (no changes since v2)
+>
+> Changes in v2:
+> -Add this patch
+>
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
+
+Please carry forward tags from previous versions unless you've done
+something to justify removing them. From v6:
+
+Acked-by: Rob Herring <robh@kernel.org>
