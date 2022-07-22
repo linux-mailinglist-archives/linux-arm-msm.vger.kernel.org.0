@@ -2,134 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F21C057D784
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jul 2022 01:57:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6092C57D7AB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jul 2022 02:22:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229645AbiGUX5o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jul 2022 19:57:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34838 "EHLO
+        id S232840AbiGVAWQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jul 2022 20:22:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbiGUX5n (ORCPT
+        with ESMTP id S233628AbiGVAWP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jul 2022 19:57:43 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E960189A87;
-        Thu, 21 Jul 2022 16:57:40 -0700 (PDT)
-Received: from [192.168.1.101] (abxj77.neoplus.adsl.tpnet.pl [83.9.3.77])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 7DF453F67F;
-        Fri, 22 Jul 2022 01:57:38 +0200 (CEST)
-Message-ID: <0feb9493-155e-0b0d-0d33-e4d0ebf45977@somainline.org>
-Date:   Fri, 22 Jul 2022 01:57:37 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 3/3] ARM: dts: qcom: Add support for Samsung Galaxy Tab
- 4 10.1 (SM-T530)
-Content-Language: en-US
-To:     =?UTF-8?Q?Matti_Lehtim=c3=a4ki?= <matti.lehtimaki@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        soc@kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Thu, 21 Jul 2022 20:22:15 -0400
+Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F24974E3F;
+        Thu, 21 Jul 2022 17:22:14 -0700 (PDT)
+Received: by mail-il1-f178.google.com with SMTP id 1so1639404ill.11;
+        Thu, 21 Jul 2022 17:22:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=37TNQXkegxnNHaxlV6oBSEt0TAcZ2231cTAxeerzb9A=;
+        b=pGC9smnRAob4qn8jwEh6UskjyWnFyBzj4HlbQBKvStLq4Kd0nAw8H1QfX3tjJ91ZeI
+         uhZj4xqpqt5MZto0ys3O9dfFlBMkM57cBqXl0TqdwBzpttEQrE5xte6p8UVxfCXnWFpt
+         pujX1YYyLznd5HPDjPQ/MQqCHV+ft1C9CBw/aNPMUSbBEpYQ0uZskAmNOR0LuOiCeBs+
+         XaxJaR8LsC+b6Ehi5LhPjzFqkJc2LHsclmbiISerjnrt3fc9sz7aJV3JVwYuyF8Otf7u
+         UPRU6UfyvySIJ3+h0/6uE0Q0cwAKsl47pp4MJ14ebn7nh/bPPXgdcDmeYXP7p5w6yXW7
+         pOFA==
+X-Gm-Message-State: AJIora8aJJzpSS8O9Mn2joMjmfYE+MTYTGF/Qzk5xs6verwHNd5NxK7Z
+        AhZf1sMG097E6zNOS3p6Vg==
+X-Google-Smtp-Source: AGRyM1t3xSUTPj8NUaYheUjJGn/Wyn134h6vs453EwhUvdH1zTFkN1/JYZprUAj7UKTKrKlLTtP4HQ==
+X-Received: by 2002:a05:6e02:1c43:b0:2dc:7428:cdef with SMTP id d3-20020a056e021c4300b002dc7428cdefmr413494ilg.4.1658449333103;
+        Thu, 21 Jul 2022 17:22:13 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id j10-20020a0566022cca00b00674c8448c3csm1442019iow.6.2022.07.21.17.22.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Jul 2022 17:22:12 -0700 (PDT)
+Received: (nullmailer pid 2233392 invoked by uid 1000);
+        Fri, 22 Jul 2022 00:22:10 -0000
+Date:   Thu, 21 Jul 2022 18:22:10 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Henry Sun <henrysun@google.com>,
+        Bob Moragues <moragues@chromium.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220721230231.98886-1-matti.lehtimaki@gmail.com>
- <20220721230231.98886-4-matti.lehtimaki@gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220721230231.98886-4-matti.lehtimaki@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v3 2/2] dt-bindings: arm: qcom: Document additional sku6
+ for sc7180 pazquel
+Message-ID: <20220722002210.GA2223409-robh@kernel.org>
+References: <20220721033918.v3.1.I10519ca1bf88233702a90e296088808d18cdc7b1@changeid>
+ <20220721033918.v3.2.I7ecbb7eeb58c5e6a33e32a3abf4d6874e6cb725c@changeid>
+ <CAD=FV=WSBgupLFMCZgianck6uTkAyqrG0WK2ChSbNbJdhOPdLA@mail.gmail.com>
+ <4b2fe9d0-f590-0fac-79fa-bb05da1d61df@linaro.org>
+ <CAD=FV=XmaNdc9k98vAwbcN-sm0w_WeqhRsK_AUm3h4LZ5-egmQ@mail.gmail.com>
+ <c2b03863-2249-13e6-98e0-731c1b40d0a9@linaro.org>
+ <CAD=FV=XKC_fbBzna8TgiPRmPH_=AQ3ckv2EEjoNvayKQ83Uciw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=XKC_fbBzna8TgiPRmPH_=AQ3ckv2EEjoNvayKQ83Uciw@mail.gmail.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 22.07.2022 01:02, Matti Lehtimäki wrote:
-> Add a device tree for the Samsung Galaxy Tab 4 10.1 (SM-T530) wifi tablet
-> based on the apq8026 platform.
+On Thu, Jul 21, 2022 at 11:29:13AM -0700, Doug Anderson wrote:
+> Hi,
 > 
-> Currently supported are accelerometer sensor, hall sensor,
-> internal storage, physical buttons (power & volume), screen
-> (based on simple-framebuffer set up by the bootloader) sdcard,
-> touchscreen and USB.
+> On Thu, Jul 21, 2022 at 9:52 AM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+> >
+> > On 21/07/2022 18:43, Doug Anderson wrote:
+> > > Hi,
+> > >
+> > > On Thu, Jul 21, 2022 at 9:33 AM Krzysztof Kozlowski
+> > > <krzysztof.kozlowski@linaro.org> wrote:
+> > >>
+> > >> On 21/07/2022 15:37, Doug Anderson wrote:
+> > >>>
+> > >>> Not worth sending a new version for, but normally I expect the
+> > >>> bindings to be patch #1 and the dts change to be patch #2. In any
+> > >>> case:
+> > >>>
+> > >>> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> > >>
+> > >> I would say worth v4, because otherwise patches is not bisectable.
+> > >
+> > > You're saying because `dtbs_check` will fail between the two?
+> >
+> > Yes
 > 
-> Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-> ---
-> Changes in v2:
->   - Change codename to matisse-wifi
->   - Remove msm-id, not needed when lk2nd is used
->   - Remove unused labels from reserved memory regions
->   - Rename muic node
-> ---
->  arch/arm/boot/dts/Makefile                    |   1 +
->  .../dts/qcom-apq8026-samsung-matisse-wifi.dts | 469 ++++++++++++++++++
->  2 files changed, 470 insertions(+)
->  create mode 100644 arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
+> OK. Then I assume you agree that reversing the order of the patches
+> won't help, only combining the two patches into one.
 > 
-> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> index 5112f493f494..8bac4f4f8656 100644
-> --- a/arch/arm/boot/dts/Makefile
-> +++ b/arch/arm/boot/dts/Makefile
-> @@ -1010,6 +1010,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
->  	qcom-apq8016-sbc.dtb \
->  	qcom-apq8026-asus-sparrow.dtb \
->  	qcom-apq8026-lg-lenok.dtb \
-> +	qcom-apq8026-samsung-matisse-wifi.dtb \
->  	qcom-apq8060-dragonboard.dtb \
->  	qcom-apq8064-cm-qs600.dtb \
->  	qcom-apq8064-ifc6410.dtb \
-> diff --git a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-> new file mode 100644
-> index 000000000000..621e0a337724
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-> @@ -0,0 +1,469 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2022, Matti Lehtimäki <matti.lehtimaki@gmail.com>
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "qcom-msm8226.dtsi"
-> +#include "qcom-pm8226.dtsi"
-> +#include <dt-bindings/input/input.h>
-Hello!
+> 
+> > > How does
+> > > flipping the order help? If `dtbs_check` needs to be bisectable then
+> > > these two need to be one patch, but I was always under the impression
+> > > that we wanted bindings patches separate from dts patches.
+> >
+> > I don't think anyone said that bindings patches must be separate from
+> > DTS. The only restriction is DTS cannot go with drivers.
+> 
+> I have always heard that best practice is to have bindings in a patch
+> by themselves. If I've misunderstood and/or folks have changed their
+> minds, that's fine, but historically I've been told to keep them
+> separate.
 
-I think generally dt-bindings includes go before the DTS ones.
-> +
-> +/delete-node/ &smem_region;
-> +
-> +/ {
-> +	model = "Samsung Galaxy Tab 4 10.1";
-> +	compatible = "samsung,matisse-wifi", "qcom,apq8026";
+Correct.
 
-[...]
 
-> +
-> +&sdhc_2 {
-> +	status = "okay";
-> +
-> +	vmmc-supply = <&pm8226_l18>;
-> +	vqmmc-supply = <&pm8226_l21>;
-> +
-> +	bus-width = <8>;
-I doubt this.. do you have downstream backing this up?
+> > Bindings for boards go pretty often with DTS (subarch). This is exactly
+> > what maintainers do, e.g.:
+> > https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/log/?h=arm64-for-5.20
+> > Bindings for hardware should go via subsystem maintainer (drivers).
+> 
+> OK, fair that in this case both the bindings and the yaml will land
+> through the Qualcomm tree. I guess it's really up to Bjorn and whether
+> he'd prefer "make dtbs_check" to be bisectable or whether he'd prefer
+> the bindings and dts change to be in separate patches from each other.
 
-> +	cd-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
-> +};
+Bindings go first if applied together because you have to define the 
+binding before you use it. But sometimes things go via multiple trees 
+and that's fine because it's just easier. In that case, the subsystem 
+tree is preferred for bindings (i.e. with the driver). But in this case, 
+Bjorn is the subsystem tree.
 
-Other than that, this looks good to me.
-
-Konrad
+Rob
