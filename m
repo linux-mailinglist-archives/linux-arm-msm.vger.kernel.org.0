@@ -2,71 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F128457E479
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jul 2022 18:33:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D3A457E514
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jul 2022 19:09:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235296AbiGVQdA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Jul 2022 12:33:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32926 "EHLO
+        id S232220AbiGVRJ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Jul 2022 13:09:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235750AbiGVQc5 (ORCPT
+        with ESMTP id S231409AbiGVRJz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Jul 2022 12:32:57 -0400
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D6F893697
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jul 2022 09:32:56 -0700 (PDT)
-Received: by mail-pg1-x531.google.com with SMTP id f65so4816297pgc.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jul 2022 09:32:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=IusqkAi12UkDRpxOqe5d+steBgvYPF1P177Hc5F7MjQ=;
-        b=DpCEW4VfqPFdfl/zi4G3wiRIJC5E6AT1Fp15VyxrdjVkV7k/smBEKKfZPOBrN5xL2y
-         R0kWUB7XgPKpG1gklBR1k/B12m3qGBj4vQljirixvhrVKxbmUj9gniiCQcdaMHa9PBSi
-         6YZPQjh76JQ6pzsHyTGOUsznK2sx9R/6IZ+zE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=IusqkAi12UkDRpxOqe5d+steBgvYPF1P177Hc5F7MjQ=;
-        b=KIcWeXGCc9rBKhwCDwWJ6/K/dZt020SO2yVFP6HUghIcefwgsjwUxCemxWlIfye3sG
-         f2yfZXZiENc1LP274ogq9qaLoiv+5elTXNGrKGYxDh6Y40f453/op+WM9+5KjfUG022a
-         hNHRn011dw+Di28LlkVZIvg5+W1r31RUzlHdKxFhnNdnAhNURsetVQZRKEr/Ejp2djWh
-         B10t/8FLiDxm59TxxlqHS/KEnOXy7p14nGRf73HyDbTSgikBuoT9qUdKDpCoFqMWEz+5
-         sWZa4oSy7jTES5jdM/nP2HHabfAaGvlVgd7VytR3Bg6Ick+JDec3XQ87FKNlKfX91R4Z
-         7dkQ==
-X-Gm-Message-State: AJIora+uOnjibKsED2Ss3SsgKZony66lb0fbB7cYcaBBIk3eOKQSdl3R
-        geWJ8yPJiJfU1uwn9UHsiSLoFA==
-X-Google-Smtp-Source: AGRyM1tQGj7yROA244zt5l+vYLlHTkva9Qxq523ok9iT1yZ78hqApGuetIH3LfAEimjd/KI2mMzayQ==
-X-Received: by 2002:a63:164d:0:b0:416:4bc:1c28 with SMTP id 13-20020a63164d000000b0041604bc1c28mr532460pgw.302.1658507571832;
-        Fri, 22 Jul 2022 09:32:51 -0700 (PDT)
-Received: from localhost ([2620:15c:11a:202:42b0:2897:3725:985a])
-        by smtp.gmail.com with UTF8SMTPSA id u12-20020a170902e80c00b0016a11b7472csm3987832plg.166.2022.07.22.09.32.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Jul 2022 09:32:50 -0700 (PDT)
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
+        Fri, 22 Jul 2022 13:09:55 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F4952ED7F;
+        Fri, 22 Jul 2022 10:09:54 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id EE3E862248;
+        Fri, 22 Jul 2022 17:09:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14512C341C6;
+        Fri, 22 Jul 2022 17:09:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1658509793;
+        bh=UUbRBKWVeGHZHwMFqZyWvsxxy4PW3iiMORZIF9kp2cI=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=p8thjEVXTZwEzGsVr63Ac2fnmfQlC34kxdpSQA372tE05zA/99ujdjQQtTTVoYtbs
+         F0o2JrZPKFL78JiPNCoN319cKCXVV0sbDYBKpVeZu0LvlPWBezLIX8Ymn+PgohP3at
+         tSsrFZ+OHJXCdWh5f1dW18IDAt2EVvQ3h70VNbKP20Vhgh51n8gqTm3mGmvnsTC7qx
+         35oF3jigP2sL8nbNYrqBg7fJhspuHzIxZVuVNqsba44wiovCPaPUJ0JDWpPRsjZgEr
+         NZk6aDgGR8vzwPFO9MEXebUVwGrCLRUKoKXJ4a30BK6sERvdA5lsVavJzxMAgcmd98
+         xNihxoauENJeg==
+Date:   Fri, 22 Jul 2022 12:09:51 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Cc:     Matthias Kaehlcke <mka@chromium.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Subject: [PATCH v24 2/2] arm64: dts: qcom: sc7280-herobrine: Add nodes for onboard USB hub
-Date:   Fri, 22 Jul 2022 09:32:45 -0700
-Message-Id: <20220722093238.v24.2.I18481b296484eec47bdc292a31fa46fa8c655ca9@changeid>
-X-Mailer: git-send-email 2.37.1.359.gd136c6c3e2-goog
-In-Reply-To: <20220722093238.v24.1.I7a1a6448d50bdd38e6082204a9818c59cc7a9bfd@changeid>
-References: <20220722093238.v24.1.I7a1a6448d50bdd38e6082204a9818c59cc7a9bfd@changeid>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        Johan Hovold <johan@kernel.org>
+Subject: Re: [PATCH v17 0/6] PCI: dwc: Fix higher MSI vectors handling
+Message-ID: <20220722170951.GA1907863@bhelgaas>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220707134733.2436629-1-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,71 +64,139 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add nodes for the onboard USB hub on herobrine devices. Remove the
-'always-on' property from the hub regulator, since the regulator
-is now managed by the onboard_usb_hub driver.
+On Thu, Jul 07, 2022 at 04:47:27PM +0300, Dmitry Baryshkov wrote:
+> I have replied with my Tested-by to the patch at [2], which has landed
+> in the linux-next as the commit 20f1bfb8dd62 ("PCI: qcom:
+> Add support for handling MSIs from 8 endpoints"). However lately I
+> noticed that during the tests I still had 'pcie_pme=nomsi', so the
+> device was not forced to use higher MSI vectors.
+> 
+> After removing this option I noticed that hight MSI vectors are not
+> delivered on tested platforms. After additional research I stumbled upon
+> a patch in msm-4.14 ([1]), which describes that each group of MSI
+> vectors is mapped to the separate interrupt. Implement corresponding
+> mapping.
+> 
+> Changes since v16:
+>  - Fix a typo in the dt schema (noticed and fixed by Johan).
+> 
+> Changes since v15:
+>  - Rebased on top of linux-next to take care of the conflict with the
+>    comit 27235cd867cf ("PCI: dwc: Fix MSI msi_msg DMA mapping").
+> 
+> Changes since v14:
+>  - Fixed the dtschema warnings in qcom,pcie.yaml (reported by Rob
+>    Herring)
+> 
+> Changes since v13:
+>  - Changed msiX from pointer to the char array (reported by Johan).
+> 
+> Changes since v12:
+>  - Dropped split_msi_names array in favour of generating the msi_name on
+>    the fly (Rob),
+>  - Dropped separate split MSI ISR as requested by Rob,
+>  - Many small syntax & spelling changes as suggested by Johan and Rob,
+>  - Moved a revert to be a last patch, as it is now a reminder to
+>    Lorenzo,
+>  - Renamed series to name dwc rather than qcom, as the are no more
+>    actual changes to the qcom PCIe driver (Johan thanks for all
+>    suggestions for making the code to work as is).
+> 
+> Changes since v11 (suggested by Johan):
+>  - Added back reporting errors for the "msi0" interrupt,
+>  - Stopped overriding num_vectors field if it is less than the amount of
+>    MSI vectors deduced from interrupt list,
+>  - Added a warning (and an override) if the host specifies more MSI
+>    vectors than available,
+>  - Moved has_split_msi_irq variable to the patch where it is used.
+> 
+> Changes since v10:
+>  - Remove has_split_msi_irqs flag. Trust DT and use split MSI IRQs if
+>    they are described in the DT. This removes the need for the
+>    pcie-qcom.c changes (everything is handled by the core (suggested by
+>    Johan).
+>  - Rebased on top of Lorenzo's DWC branch
+> 
+> Changes since v9:
+>  - Relax requirements and stop validating the DT. If the has_split_msi
+>    was specified, parse as many msiN irqs as specified in DT. If there
+>    are none, fallback to the single "msi" IRQ.
+> 
+> Changes since v8:
+>  - Fix typos noted by Bjorn Helgaas
+>  - Add missing links to the patch 1 (revert)
+>  - Fix sm8250 interrupt-names (Johan)
+>  - Specify num_vectors in qcom configuration data (Johan)
+>  - Rework parsing of MSI IRQs (Johan)
+> 
+> Changes since v7:
+>  - Move code back to the dwc core driver (as required by Rob),
+>  - Change dt schema to require either a single "msi" interrupt or an
+>    array of "msi0", "msi1", ... "msi7" IRQs. Disallow specifying a
+>    part of the array (the DT should specify the exact amount of MSI IRQs
+>    allowing fallback to a single "msi" IRQ),
+>  - Fix in the DWC init code for the dma_mapping_error() return value.
+> 
+> Changes since v6:
+>  - Fix indentation of the arguments as requested by Stanimir
+> 
+> Changes since v5:
+>  - Fixed commit subject and in-comment code according to Bjorn's
+>    suggestion,
+>  - Changed variable idx to i to follow dw_handle_msi_irq() style.
+> 
+> Changes since v4:
+>  - Fix the minItems/maxItems properties in the YAML schema.
+> 
+> Changes since v3:
+>  - Reimplement MSI handling scheme in the Qualcomm host controller
+>    driver.
+> 
+> Changes since v2:
+>  - Fix and rephrase commit message for patch 2.
+> 
+> Changes since v1:
+>  - Split a huge patch into three patches as suggested by Bjorn Helgaas
+>  - snps,dw-pcie removal is now part of [3]
+> 
+> [1] https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/commit/671a3d5f129f4bfe477152292ada2194c8440d22
+> [2] https://lore.kernel.org/linux-arm-msm/20211214101319.25258-1-manivannan.sadhasivam@linaro.org/
+> 
+> 
+> Dmitry Baryshkov (6):
+>   PCI: dwc: Correct msi_irq condition in dw_pcie_free_msi()
+>   PCI: dwc: Convert msi_irq to the array
+>   PCI: dwc: split MSI IRQ parsing/allocation to a separate function
+>   PCI: dwc: Handle MSIs routed to multiple GIC interrupts
+>   dt-bindings: PCI: qcom: Support additional MSI interrupts
 
-This requires "CONFIG_USB_ONBOARD_HUB=y".
+I applied the above to pci/ctrl/dwc for v5.20, thanks!
 
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
----
+I reordered "split MSI stuff to separate function" before "convert to
+array" to reduce the complexity first before adding more.
 
-Changes in v24:
-- renamed 'companion-hub' to 'peer-hub' according to the change
-  in the binding
+I also dropped the "irq" temporary in "Convert msi_irq to the array",
+not because I necessary object to it, but because it's not strictly
+related to converting to an array.  Previously we might have left
+pp->msi_irq containing an error code (< 0), but the same situation
+after the patch would leave pp->msi_irq[0] == 0.
 
-Changes in v23:
-- added note about CONFIG_USB_ONBOARD_HUB to the commit message
-- added 'Reviewed-by' tags from Stephen and Doug
+I left the arch/arm64/boot/dts/qcom/sm8250.dtsi change below out
+on the assumption it will go via arm-soc.
 
-Changes in v22:
-- patch added to the series
-
- .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 21 ++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-index 3f8996c00b05..1fd381a903de 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-@@ -144,8 +144,8 @@ pp3300_hub: pp3300-hub-regulator {
- 		regulator-min-microvolt = <3300000>;
- 		regulator-max-microvolt = <3300000>;
- 
-+		/* The BIOS leaves this regulator on */
- 		regulator-boot-on;
--		regulator-always-on;
- 
- 		gpio = <&tlmm 157 GPIO_ACTIVE_HIGH>;
- 		enable-active-high;
-@@ -596,6 +596,25 @@ &usb_1 {
- 
- &usb_1_dwc3 {
- 	dr_mode = "host";
-+
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	/* 2.x hub on port 1 */
-+	usb_hub_2_x: hub@1 {
-+		compatible = "usbbda,5411";
-+		reg = <1>;
-+		vdd-supply = <&pp3300_hub>;
-+		peer-hub = <&usb_hub_3_x>;
-+	};
-+
-+	/* 3.x hub on port 2 */
-+	usb_hub_3_x: hub@2 {
-+		compatible = "usbbda,411";
-+		reg = <2>;
-+		vdd-supply = <&pp3300_hub>;
-+		peer-hub = <&usb_hub_2_x>;
-+	};
- };
- 
- &usb_1_hsphy {
--- 
-2.37.1.359.gd136c6c3e2-goog
-
+>   arm64: dts: qcom: sm8250: provide additional MSI interrupts
+> 
+>  .../devicetree/bindings/pci/qcom,pcie.yaml    |  51 +++++-
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi          |  12 +-
+>  drivers/pci/controller/dwc/pci-dra7xx.c       |   2 +-
+>  drivers/pci/controller/dwc/pci-exynos.c       |   2 +-
+>  .../pci/controller/dwc/pcie-designware-host.c | 164 +++++++++++++-----
+>  drivers/pci/controller/dwc/pcie-designware.h  |   2 +-
+>  drivers/pci/controller/dwc/pcie-keembay.c     |   2 +-
+>  drivers/pci/controller/dwc/pcie-spear13xx.c   |   2 +-
+>  drivers/pci/controller/dwc/pcie-tegra194.c    |   2 +-
+>  9 files changed, 185 insertions(+), 54 deletions(-)
+> 
+> -- 
+> 2.35.1
+> 
