@@ -2,113 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D3B4A57E8EB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jul 2022 23:34:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 126B257E9DE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Jul 2022 00:40:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233326AbiGVVeo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Jul 2022 17:34:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38292 "EHLO
+        id S236971AbiGVWkR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Jul 2022 18:40:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229522AbiGVVen (ORCPT
+        with ESMTP id S236966AbiGVWkB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Jul 2022 17:34:43 -0400
-Received: from ixit.cz (ip-94-112-206-30.bb.vodafone.cz [94.112.206.30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D9F8AF843;
-        Fri, 22 Jul 2022 14:34:40 -0700 (PDT)
-Received: from [10.0.0.163] (_gateway [10.0.0.1])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 3F0D12007F;
-        Fri, 22 Jul 2022 23:34:37 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1658525677;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=IGvDGHRGx9ntEIidHJIFw9uv8+buMKH8bvNvMLSCf3w=;
-        b=JLDpM72YTJgPfeMefMM/Npbs8Lz5xh8x96C9nbsVInesHuNWAYVJlE2xZci7XT/G6977iB
-        QryG4NMu0iCW1oC39FBrAjqxAsEjSKXKWfY9KHCoibx8LPrFZrHVodqTwr1V7L8sxhnVY0
-        RWDKL7bZJJShW1kY3WrUu6L9P4PMbSA=
-Message-ID: <b228bc62-c307-0662-3a6e-e3408c328178@ixit.cz>
-Date:   Fri, 22 Jul 2022 23:34:36 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:103.0) Gecko/20100101
- Thunderbird/103.0
-Subject: Re: [PATCH v5] dt-bindings: firmware: convert Qualcomm SCM binding to
- the yaml
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Fri, 22 Jul 2022 18:40:01 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31D9B20F47;
+        Fri, 22 Jul 2022 15:38:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1658529498; x=1690065498;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=GKC8VfcyGF4rHCVnV7RvZpNWBnM1QHRzWAdSlQXvS9I=;
+  b=SXXqrNYw4fxD8U99utCIfrl/T4mAmwfrD/sbG5fAZAvzMaRwF8PRRtIh
+   CvSa9ozqhYrWFiPng7NWgpGJ267YElNVb/nMiG0qSiV+eNZlIpkamLCqV
+   JeJZiTHf05VXHAyVMx5k/pc+dMG/P4qTlEIyaIcaVs8iQlB/E9WJDOkBI
+   U=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 22 Jul 2022 15:37:25 -0700
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2022 15:37:25 -0700
+Received: from hu-gurus-sd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 22 Jul 2022 15:37:25 -0700
+From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC:     David Heidelberg <david@ixit.cz>,
         Robert Marko <robimarko@gmail.com>,
-        Das Srinagesh <quic_gurus@quicinc.com>,
-        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220708090431.30437-1-david@ixit.cz>
- <20220711225705.GA422079-robh@kernel.org>
-Content-Language: en-US
-From:   David Heidelberg <david@ixit.cz>
-In-Reply-To: <20220711225705.GA422079-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RDNS_DYNAMIC,
-        SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>
+Subject: [PATCH v2 0/5] SCM: Add support for wait-queue aware firmware
+Date:   Fri, 22 Jul 2022 15:37:13 -0700
+Message-ID: <1658529438-9234-1-git-send-email-quic_gurus@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/07/2022 00:57, Rob Herring wrote:
-> On Fri, Jul 08, 2022 at 11:04:31AM +0200, David Heidelberg wrote:
->> Convert Qualcomm SCM firmware binding to the yaml format.
->>
->> This commit also:
->>   - adds qcom,scm-mdm9607 into list which has only core clock
->>   - adds qcom,scm-sm6125, qcom,scm-ipq6018
->>   - #reset-cells, because the property is already used
->>
->> Signed-off-by: David Heidelberg <david@ixit.cz>
->> --
-> Should be '---' in order to be removed automatically when applying.
-typo, sorry.
->
->> v5:
->>   - add qcom,scm-sdx65 from new commit to txt binding
->>   - add freshly merged qcom,scm-sc8280xp
->>   - add interconnects
->>   - add accidentally removed # from #include directive
->>   - move mdm9607 to 3 clocks (thx @Guru)
->>   - fix compatible string in example
->> v4:
->>   - added clocks minItems and maxItems
->>   - removed quotes from $id and $schema
->>   - adjusted description of TCSR HW block
->> v3:
->>   - add preceding patches for ARM and arm64 adding missing compatible strings
->>   - extended with missing compatible strings
->>   - added two additional maintainers, see https://lkml.org/lkml/2022/6/23/1969
->> v2:
->>   - changed maintainer to Bjorn
->>   - document #reset-cells
->>
->>   .../devicetree/bindings/firmware/qcom,scm.txt |  61 --------
->>   .../bindings/firmware/qcom,scm.yaml           | 147 ++++++++++++++++++
->>   2 files changed, 147 insertions(+), 61 deletions(-)
->>   delete mode 100644 Documentation/devicetree/bindings/firmware/qcom,scm.txt
->>   create mode 100644 Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> Doesn't apply for me, so I'm assuming this will go via QCom tree.
-if you want to merge it, I can rebase it against your tree?
->
-> Reviewed-by: Rob Herring <robh@kernel.org>
+This patch series enables the QCOM SCM driver to support firmware (FW) versions
+that expect the high-level OS (HLOS) to be tolerant of SCM call requests not
+being processed right away and, instead, being placed on a wait-queue in FW and
+processed accordingly.
+
+The problem this feature is fixing is as follows. In a scenario where there is
+a VM in addition to HLOS (and an underlying hypervisor):
+
+1. HLOS makes an SMC call on core 5
+2. The hypervisor scheduling interrupt interrupts this SMC call.
+3. The hypervisor schedules the VM on core 5.
+4. The VM makes an SMC call on core 5.
+5. The SMC call is non-interruptibly stuck on FW spinlock on core 5.
+6. HLOS cannot reschedule since core 5 is not responding to Reschedule IPIs.
+7. Watchdog timer expires waiting for core 5.
+
+This problem is solved by FW returning a new return code SCM_WAITQ_SLEEP to
+HLOS right away when it is overwhelmed by the VM's SMC call. HLOS then places
+the call on a wait-queue and wakes it up when it receives an interrupt that
+signifies "all-clear".
+
+This new design also supports scenarios involving only HLOS (and no other VMs).
+Such scenarios make use of a second new return code SCM_WAITQ_WAKE.
+
+There are three new SMC calls also being defined in this design that, together
+with the two new return codes, form the handshake protocol between Linux and
+FW.
+
+This design is also backwards-compatible with existing firmware versions that
+do not support this feature.
+
+---
+v2:
+- Changes made to patches 4 and 5 are listed therein.
+- Rebased dt-bindings on top of the YAML conversion patch [1].
+
+[1] https://lore.kernel.org/lkml/20220708090431.30437-1-david@ixit.cz/
+---
+
+Guru Das Srinagesh (5):
+  dt-bindings: firmware: qcom-scm: Add "allow-multi-call" property
+  firmware: qcom: scm: Optionally remove SCM call serialization
+  dt-bindings: firmware: qcom-scm: Add optional interrupt
+  firmware: qcom: scm: Add wait-queue helper functions
+  firmware: qcom: scm: Add wait-queue handling logic
+
+ .../devicetree/bindings/firmware/qcom,scm.yaml     |  10 ++
+ drivers/firmware/qcom_scm-smc.c                    | 140 +++++++++++++++++++--
+ drivers/firmware/qcom_scm.c                        | 125 +++++++++++++++++-
+ drivers/firmware/qcom_scm.h                        |  14 +++
+ 4 files changed, 279 insertions(+), 10 deletions(-)
 
 -- 
-David Heidelberg
-Consultant Software Engineer
-
-Matrix: @okias:matrix.org
+2.7.4
 
