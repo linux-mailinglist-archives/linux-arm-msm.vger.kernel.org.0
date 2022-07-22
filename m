@@ -2,907 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 586BA57E367
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jul 2022 17:08:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CAB9057E3BF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jul 2022 17:27:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235462AbiGVPIT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Jul 2022 11:08:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55258 "EHLO
+        id S233073AbiGVP1p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Jul 2022 11:27:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232972AbiGVPIS (ORCPT
+        with ESMTP id S231178AbiGVP1o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Jul 2022 11:08:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C5B7184EE1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jul 2022 08:08:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1658502495;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=hn9DDx5bldU3b2vlPA02wFcM698KkfJ81FBbCb27Mmo=;
-        b=TiCnSIuI4D4gwuxIN0O0t5leQkXTn1y6bWbt4P+AcW3Bzx5P3wzt1vI5TbFg5MqiXvDrIG
-        f+Une0s6HQ3Vz5RhVS9TWhiS32H9IOkoQIRaKl43rzKvkDnan8aK+GiSmrfcFc4By5HMoF
-        8iDyqObgMQqS7NH0IIykcDmk5jGW3Xo=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-524-qik14GSnPRyFFA0jR_qKyQ-1; Fri, 22 Jul 2022 11:08:14 -0400
-X-MC-Unique: qik14GSnPRyFFA0jR_qKyQ-1
-Received: by mail-qk1-f197.google.com with SMTP id ay35-20020a05620a17a300b006b5d9646d31so3903902qkb.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jul 2022 08:08:14 -0700 (PDT)
+        Fri, 22 Jul 2022 11:27:44 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01F459F050;
+        Fri, 22 Jul 2022 08:27:43 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id d16so6966102wrv.10;
+        Fri, 22 Jul 2022 08:27:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=91TgSgSA/YJ92ess13xjquT9UadVbNK7ich3jTvC5qI=;
+        b=k/TFir2d6KAVi3xNxGUZuwCh/ybufbrNaeiH3SeOXE+3Cj6IUDA0NhAjhrSsJOPn8V
+         WFM1U/tGr+K90lpQ+BiLn9ciICmiGj+8hT2H9d67MEfZgGHXvfxKJlwP4xW/EVhHjfJ+
+         UaxibEcgJ/3Yj5dxKkcD+oTXGzWRJMKJPyEXQc88EIJGJc2V366zNJ6XXxKxId/snIUQ
+         j8gXQi9CCaTu1exkGoZRw5cpQxmhjHBdG82ie8fthDyijBDdSM8HBTVoud6O23HMLJm8
+         hEN53vuJ0zAIxgkyq2d0UDgH2RqtMHaUIR8LNTLACioSRku209F4g4t9PNX8fFF/9RpU
+         x8SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=hn9DDx5bldU3b2vlPA02wFcM698KkfJ81FBbCb27Mmo=;
-        b=sjvp1YwEOH+wFva2pUHLQv0alQgSKYD5ibxviFpUf4ohB6mPa/MFyA/UZxwK5cn3i3
-         98VaEtLwdCi+H1NsUxTCAiAHMdFRsPELPVzlGHpYtxMxb2qfRL+5Y4idjrj7XuPSbLUU
-         OoWyaD6tuPrCOg0SJ1BGnsWOW+jCG8SWbvchbEUnftFyet/FDxjiTdLb5UkFFQl1lnVd
-         BWPmCBd7HX02bH+NGCDogYc9vV7EjHOfvEVRVhQXn8FHOHoCja9A7xffFjZIhaOnoLl/
-         WEcoNqaAFxiBUVl9Yo8xL/Kv2d0imLnu8E1nNF6MvjzhH8H9knbUciL8y64vS7Rhyx9v
-         Rfwg==
-X-Gm-Message-State: AJIora/goc4JmFJf7YPhZvaQv3wj2hROa4qInzKeg9ZelXqcuRS8eDIJ
-        vms1KtusY6uvAsMXa/Coo+CFylQ/ZILZDyoLojoE9FVnNRNgATsm4JDbYwNO9JBE3FCKml3Px0J
-        tA8p7mADEN/faLJScQbCAo3DEdg==
-X-Received: by 2002:ac8:5f4d:0:b0:31f:c32:1b35 with SMTP id y13-20020ac85f4d000000b0031f0c321b35mr441053qta.623.1658502493837;
-        Fri, 22 Jul 2022 08:08:13 -0700 (PDT)
-X-Google-Smtp-Source: AGRyM1v6WtGwt9huL/Z+2o1W0sFcBKn3yCm1rh2oNJEtThon/VqWEE8LrqQc9EelDwL/uGHhmE7dCA==
-X-Received: by 2002:ac8:5f4d:0:b0:31f:c32:1b35 with SMTP id y13-20020ac85f4d000000b0031f0c321b35mr441005qta.623.1658502493339;
-        Fri, 22 Jul 2022 08:08:13 -0700 (PDT)
-Received: from halaneylaptop ([2600:1700:1ff0:d0e0::2e])
-        by smtp.gmail.com with ESMTPSA id k21-20020a05620a415500b006b5ed1eccc5sm3943347qko.44.2022.07.22.08.08.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Jul 2022 08:08:13 -0700 (PDT)
-Date:   Fri, 22 Jul 2022 10:08:11 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Parikshit Pareek <quic_ppareek@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sa8295p: move common nodes to
- dtsi
-Message-ID: <20220722150811.d4wc7cf4e4qrpjn4@halaneylaptop>
-References: <20220722143232.7903-1-quic_ppareek@quicinc.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=91TgSgSA/YJ92ess13xjquT9UadVbNK7ich3jTvC5qI=;
+        b=O1gubIcM7ZNRk+LS5+nzamVaGo5+Pmx0jIbSy4GPDDiyqt0zsKpy9AZHVFZi8ltK/K
+         knKgpeC8U/4rDfixsyissR5TeKex12KrKQprFt+zgpgryw+2cR+vKciGEN+i7Sncz2TW
+         CR1huiboXZYo0BpJYewji/e41n/xN45/XhmWxYeSMfElnLE8WJoAVNyQU+Vf/rbLHqdL
+         pEk0iSzLmLnHQxIavbvV8hgw4qdi8E+UzjWqIT0guw449NGym8ifl+1jehAVd2woEmPW
+         nvBm1DnSK5dT4flSZThk/We/foOPaS9cWtSC9NfNRNv7HfQcqoE/f7ODVsesv7JlgNK4
+         nQyg==
+X-Gm-Message-State: AJIora86MTsPiD64sHmNKasln8y+uW7qkh54aA0cjKl3xKXoMwnyA7Qd
+        eZqPi625lfmVxVMHIyFIMEJrlKrbcn6m+WGmz5jwmcOz
+X-Google-Smtp-Source: AGRyM1t/dc5V3tlwl/q7T8kwCuJ7BkOWFAp3DDWr7S604HLVvUwtxwwAR54eidgUx5YB6yIo4YaTjmqjVK/7CXLbmNU=
+X-Received: by 2002:a05:6000:18a3:b0:21d:c651:4de7 with SMTP id
+ b3-20020a05600018a300b0021dc6514de7mr288256wri.679.1658503661395; Fri, 22 Jul
+ 2022 08:27:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220722143232.7903-1-quic_ppareek@quicinc.com>
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+References: <1657346375-1461-1-git-send-email-quic_akhilpo@quicinc.com>
+ <20220709112837.v2.5.I7291c830ace04fce07e6bd95a11de4ba91410f7b@changeid>
+ <CAD=FV=XzvcjS51q78BZ=FPCEVUDMD+VKJ70ksCm5V4qwHN_wRg@mail.gmail.com>
+ <c022538d-c616-8f1a-e1c2-c11b5f0de670@quicinc.com> <e4dcdd8d-18a9-8da3-7ac3-6cc792139f70@quicinc.com>
+ <CAE-0n52TG3hsytN5nRU7W=S6PffSj8yQDmuicN0-qxoW-jxiZQ@mail.gmail.com>
+ <0c050434-27ca-1099-d93d-8ad6ace3396e@quicinc.com> <CAE-0n53J=dADDTrydVuNZzw38dW_-+Baf8cfn0Q6DSVX_6cLNg@mail.gmail.com>
+ <b6ab023b-601d-1df2-b04b-af5961b73bea@quicinc.com> <698d3279-6a02-9b1e-a3bd-627b6afbc57e@quicinc.com>
+ <1e39d008-f8e5-eea5-90f4-78293bf2c580@quicinc.com>
+In-Reply-To: <1e39d008-f8e5-eea5-90f4-78293bf2c580@quicinc.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 22 Jul 2022 08:28:03 -0700
+Message-ID: <CAF6AEGsSfB6wY6mxhxO6H0h0OxiSn8yw5WuKJ-v-U9i9mn8AEw@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH v2 5/7] arm64: dts: qcom: sc7280: Update gpu
+ register list
+To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Jonathan Marek <jonathan@marek.ca>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 22, 2022 at 08:02:32PM +0530, Parikshit Pareek wrote:
-> There are many ADP boards with lot of common features. Move common
-> nodes to sa8xxxp-auto.dtsi files. This will be base for many ADP boards
-> to be introduced in near future.
-> 
-> Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
-> ---
-> 
-> Changes since v1:
-> - Add , after year 2022, in the license header
-> - Rename the dtsi which is suitable for common to many ADP boards
-> - Split the patch in introducing common dtsi file, and adding new board
->   file
-> 
->  arch/arm64/boot/dts/qcom/sa8295p-adp.dts      | 378 +----------------
->  .../arm64/boot/dts/qcom/sa8xxxp-auto-adp.dtsi | 385 ++++++++++++++++++
+On Thu, Jul 21, 2022 at 9:04 AM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+>
+> On 7/20/2022 11:34 AM, Akhil P Oommen wrote:
+> > On 7/19/2022 3:26 PM, Rajendra Nayak wrote:
+> >>
+> >>
+> >> On 7/19/2022 12:49 PM, Stephen Boyd wrote:
+> >>> Quoting Akhil P Oommen (2022-07-18 23:37:16)
+> >>>> On 7/19/2022 11:19 AM, Stephen Boyd wrote:
+> >>>>> Quoting Akhil P Oommen (2022-07-18 21:07:05)
+> >>>>>> On 7/14/2022 11:10 AM, Akhil P Oommen wrote:
+> >>>>>>> IIUC, qcom gdsc driver doesn't ensure hardware is collapsed
+> >>>>>>> since they
+> >>>>>>> are vote-able switches. Ideally, we should ensure that the hw has
+> >>>>>>> collapsed for gpu recovery because there could be transient
+> >>>>>>> votes from
+> >>>>>>> other subsystems like hypervisor using their vote register.
+> >>>>>>>
+> >>>>>>> I am not sure how complex the plumbing to gpucc driver would be
+> >>>>>>> to allow
+> >>>>>>> gpu driver to check hw status. OTOH, with this patch, gpu driver
+> >>>>>>> does a
+> >>>>>>> read operation on a gpucc register which is in always-on domain.
+> >>>>>>> That
+> >>>>>>> means we don't need to vote any resource to access this register.
+> >>>
+> >>> Reading between the lines here, you're saying that you have to read the
+> >>> gdsc register to make sure that the gdsc is in some state? Can you
+> >>> clarify exactly what you're doing? And how do you know that something
+> >>> else in the kernel can't cause the register to change after it is read?
+> >>> It certainly seems like we can't be certain because there is voting
+> >>> involved.
+> > From gpu driver, cx_gdscr.bit[31] (power off status) register can be
+> > polled to ensure that it *collapsed at least once*. We don't need to
+> > care if something turns ON gdsc after that.
+> >
+> >>
+> >> yes, this looks like the best case effort to get the gpu to recover, but
+> >> the kernel driver really has no control to make sure this condition can
+> >> always be met (because it depends on other entities like hyp,
+> >> trustzone etc right?)
+> >> Why not just put a worst case polling delay?
+> >
+> > I didn't get you entirely. Where do you mean to keep the polling delay?
+> >>
+> >>>
+> >>>>>>>
+> >>>>>>> Stephen/Rajendra/Taniya, any suggestion?
+> >>>>> Why can't you assert a gpu reset signal with the reset APIs? This
+> >>>>> series
+> >>>>> seems to jump through a bunch of hoops to get the gdsc and power
+> >>>>> domain
+> >>>>> to "reset" when I don't know why any of that is necessary. Can't we
+> >>>>> simply assert a reset to the hardware after recovery completes so the
+> >>>>> device is back into a good known POR (power on reset) state?
+> >>>> That is because there is no register interface to reset GPU CX domain.
+> >>>> The recommended sequence from HW design folks is to collapse both
+> >>>> cx and
+> >>>> gx gdsc to properly reset gpu/gmu.
+> >>>>
+> >>>
+> >>> Ok. One knee jerk reaction is to treat the gdsc as a reset then and
+> >>> possibly mux that request along with any power domain on/off so that if
+> >>> the reset is requested and the power domain is off nothing happens.
+> >>> Otherwise if the power domain is on then it manually sequences and
+> >>> controls the two gdscs so that the GPU is reset and then restores the
+> >>> enable state of the power domain.
+> > It would be fatal to asynchronously pull the plug on CX gdsc
+> > forcefully because there might be another gpu/smmu driver thread
+> > accessing registers in cx domain.
+> >
+> > -Akhil.
+> >
+> But, we can move the cx collapse polling to gpucc and expose it to gpu
+> driver using 'reset' framework. I am not very familiar with clk driver,
+> but I did a rough prototype here (untested):
+> https://zerobin.net/?d34b5f958be3b9b8#NKGzdPy9fgcuOqXZ/XqjI7b8JWcivqe+oSTf4yWHSOU=
+>
+> If this approach is acceptable, I will send it out as a separate series.
+>
 
-Is this maybe too broad of a name? Outside of sa8295p/sa8540p inheriting
-from sc8280xp, you've got sa8155p inheriting from sm8150 and sa8195p
-inheriting from sc8180xp (may have butchered some of the suffixes there
-but you get the point). I know for sure that sa8155p/sa8195p are
-"auto-adp" boards so the sa8xxxp-auto-adp.dtsi might cause confusion.
-If I was looking I'd expect that dtsi to be relevant to them as well
-based on the name, but it isn't as far as I can tell.
+I'm not super familiar w/ reset framework, but this approach seems
+like it would avoid needing to play games with working around runpm as
+well.  So that seems like a cleaner approach.
 
-By the way, I plan on taking these for a spin on the qdrive3 board I
-have when I get access to it again (today/monday), so feel free to cc
-me on new versions!
-
-Thanks,
-Andrew
-
->  2 files changed, 387 insertions(+), 376 deletions(-)
->  create mode 100644 arch/arm64/boot/dts/qcom/sa8xxxp-auto-adp.dtsi
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> index 9398f0349944..3cc92162ba02 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> @@ -2,388 +2,14 @@
->  /*
->   * Copyright (c) 2021, The Linux Foundation. All rights reserved.
->   * Copyright (c) 2022, Linaro Limited
-> + * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
->   */
->  
->  /dts-v1/;
->  
-> -#include <dt-bindings/gpio/gpio.h>
-> -#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> -#include <dt-bindings/spmi/spmi.h>
-> -
-> -#include "sa8540p.dtsi"
-> +#include "sa8xxxp-auto-adp.dtsi"
->  
->  / {
->  	model = "Qualcomm SA8295P ADP";
->  	compatible = "qcom,sa8295p-adp", "qcom,sa8540p";
-> -
-> -	aliases {
-> -		serial0 = &qup2_uart17;
-> -	};
-> -
-> -	chosen {
-> -		stdout-path = "serial0:115200n8";
-> -	};
-> -};
-> -
-> -&apps_rsc {
-> -	pmm8540-a-regulators {
-> -		compatible = "qcom,pm8150-rpmh-regulators";
-> -		qcom,pmic-id = "a";
-> -
-> -		vreg_l3a: ldo3 {
-> -			regulator-name = "vreg_l3a";
-> -			regulator-min-microvolt = <1200000>;
-> -			regulator-max-microvolt = <1208000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-allow-set-load;
-> -		};
-> -
-> -		vreg_l5a: ldo5 {
-> -			regulator-name = "vreg_l5a";
-> -			regulator-min-microvolt = <912000>;
-> -			regulator-max-microvolt = <912000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-allow-set-load;
-> -		};
-> -
-> -		vreg_l7a: ldo7 {
-> -			regulator-name = "vreg_l7a";
-> -			regulator-min-microvolt = <1800000>;
-> -			regulator-max-microvolt = <1800000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-allow-set-load;
-> -		};
-> -
-> -		vreg_l13a: ldo13 {
-> -			regulator-name = "vreg_l13a";
-> -			regulator-min-microvolt = <3072000>;
-> -			regulator-max-microvolt = <3072000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-allow-set-load;
-> -		};
-> -	};
-> -
-> -	pmm8540-c-regulators {
-> -		compatible = "qcom,pm8150-rpmh-regulators";
-> -		qcom,pmic-id = "c";
-> -
-> -		vreg_l1c: ldo1 {
-> -			regulator-name = "vreg_l1c";
-> -			regulator-min-microvolt = <912000>;
-> -			regulator-max-microvolt = <912000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-allow-set-load;
-> -		};
-> -
-> -		vreg_l2c: ldo2 {
-> -			regulator-name = "vreg_l2c";
-> -			regulator-min-microvolt = <3072000>;
-> -			regulator-max-microvolt = <3072000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-allow-set-load;
-> -		};
-> -
-> -		vreg_l3c: ldo3 {
-> -			regulator-name = "vreg_l3c";
-> -			regulator-min-microvolt = <1200000>;
-> -			regulator-max-microvolt = <1200000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-allow-set-load;
-> -		};
-> -
-> -		vreg_l4c: ldo4 {
-> -			regulator-name = "vreg_l4c";
-> -			regulator-min-microvolt = <1200000>;
-> -			regulator-max-microvolt = <1208000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-allow-set-load;
-> -		};
-> -
-> -		vreg_l6c: ldo6 {
-> -			regulator-name = "vreg_l6c";
-> -			regulator-min-microvolt = <1200000>;
-> -			regulator-max-microvolt = <1200000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-allow-set-load;
-> -		};
-> -
-> -		vreg_l7c: ldo7 {
-> -			regulator-name = "vreg_l7c";
-> -			regulator-min-microvolt = <1800000>;
-> -			regulator-max-microvolt = <1800000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-allow-set-load;
-> -		};
-> -
-> -		vreg_l10c: ldo10 {
-> -			regulator-name = "vreg_l10c";
-> -			regulator-min-microvolt = <2504000>;
-> -			regulator-max-microvolt = <2504000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-allow-set-load;
-> -		};
-> -
-> -		vreg_l17c: ldo17 {
-> -			regulator-name = "vreg_l17c";
-> -			regulator-min-microvolt = <2504000>;
-> -			regulator-max-microvolt = <2504000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-allow-set-load;
-> -		};
-> -	};
-> -
-> -	pmm8540-g-regulators {
-> -		compatible = "qcom,pm8150-rpmh-regulators";
-> -		qcom,pmic-id = "g";
-> -
-> -		vreg_l3g: ldo3 {
-> -			regulator-name = "vreg_l3g";
-> -			regulator-min-microvolt = <1200000>;
-> -			regulator-max-microvolt = <1200000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-allow-set-load;
-> -		};
-> -
-> -		vreg_l7g: ldo7 {
-> -			regulator-name = "vreg_l7g";
-> -			regulator-min-microvolt = <1800000>;
-> -			regulator-max-microvolt = <1800000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-allow-set-load;
-> -		};
-> -
-> -		vreg_l8g: ldo8 {
-> -			regulator-name = "vreg_l8g";
-> -			regulator-min-microvolt = <880000>;
-> -			regulator-max-microvolt = <880000>;
-> -			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-allow-set-load;
-> -		};
-> -	};
-> -};
-> -
-> -&qup2 {
-> -	status = "okay";
-> -};
-> -
-> -&qup2_uart17 {
-> -	compatible = "qcom,geni-debug-uart";
-> -	status = "okay";
-> -};
-> -
-> -&remoteproc_adsp {
-> -	firmware-name = "qcom/sa8540p/adsp.mbn";
-> -	status = "okay";
-> -};
-> -
-> -&remoteproc_nsp0 {
-> -	firmware-name = "qcom/sa8540p/cdsp.mbn";
-> -	status = "okay";
-> -};
-> -
-> -&remoteproc_nsp1 {
-> -	firmware-name = "qcom/sa8540p/cdsp1.mbn";
-> -	status = "okay";
-> -};
-> -
-> -&spmi_bus {
-> -	pm8450a: pmic@0 {
-> -		compatible = "qcom,pm8150", "qcom,spmi-pmic";
-> -		reg = <0x0 SPMI_USID>;
-> -		#address-cells = <1>;
-> -		#size-cells = <0>;
-> -
-> -		pm8450a_gpios: gpio@c000 {
-> -			compatible = "qcom,pm8150-gpio";
-> -			reg = <0xc000>;
-> -			gpio-controller;
-> -			#gpio-cells = <2>;
-> -			interrupt-controller;
-> -			#interrupt-cells = <2>;
-> -		};
-> -	};
-> -
-> -	pm8450c: pmic@4 {
-> -		compatible = "qcom,pm8150", "qcom,spmi-pmic";
-> -		reg = <0x4 SPMI_USID>;
-> -		#address-cells = <1>;
-> -		#size-cells = <0>;
-> -
-> -		pm8450c_gpios: gpio@c000 {
-> -			compatible = "qcom,pm8150-gpio";
-> -			reg = <0xc000>;
-> -			gpio-controller;
-> -			#gpio-cells = <2>;
-> -			interrupt-controller;
-> -			#interrupt-cells = <2>;
-> -		};
-> -	};
-> -
-> -	pm8450e: pmic@8 {
-> -		compatible = "qcom,pm8150", "qcom,spmi-pmic";
-> -		reg = <0x8 SPMI_USID>;
-> -		#address-cells = <1>;
-> -		#size-cells = <0>;
-> -
-> -		pm8450e_gpios: gpio@c000 {
-> -			compatible = "qcom,pm8150-gpio";
-> -			reg = <0xc000>;
-> -			gpio-controller;
-> -			#gpio-cells = <2>;
-> -			interrupt-controller;
-> -			#interrupt-cells = <2>;
-> -		};
-> -	};
-> -
-> -	pm8450g: pmic@c {
-> -		compatible = "qcom,pm8150", "qcom,spmi-pmic";
-> -		reg = <0xc SPMI_USID>;
-> -		#address-cells = <1>;
-> -		#size-cells = <0>;
-> -
-> -		pm8450g_gpios: gpio@c000 {
-> -			compatible = "qcom,pm8150-gpio";
-> -			reg = <0xc000>;
-> -			gpio-controller;
-> -			#gpio-cells = <2>;
-> -			interrupt-controller;
-> -			#interrupt-cells = <2>;
-> -		};
-> -	};
-> -};
-> -
-> -&ufs_mem_hc {
-> -	reset-gpios = <&tlmm 228 GPIO_ACTIVE_LOW>;
-> -
-> -	vcc-supply = <&vreg_l17c>;
-> -	vcc-max-microamp = <800000>;
-> -	vccq-supply = <&vreg_l6c>;
-> -	vccq-max-microamp = <900000>;
-> -
-> -	status = "okay";
-> -};
-> -
-> -&ufs_mem_phy {
-> -	vdda-phy-supply = <&vreg_l8g>;
-> -	vdda-pll-supply = <&vreg_l3g>;
-> -
-> -	status = "okay";
->  };
-> -
-> -&ufs_card_hc {
-> -	reset-gpios = <&tlmm 229 GPIO_ACTIVE_LOW>;
-> -
-> -	vcc-supply = <&vreg_l10c>;
-> -	vcc-max-microamp = <800000>;
-> -	vccq-supply = <&vreg_l3c>;
-> -	vccq-max-microamp = <900000>;
-> -
-> -	status = "okay";
-> -};
-> -
-> -&ufs_card_phy {
-> -	vdda-phy-supply = <&vreg_l8g>;
-> -	vdda-pll-supply = <&vreg_l3g>;
-> -
-> -	status = "okay";
-> -};
-> -
-> -&usb_0 {
-> -	status = "okay";
-> -};
-> -
-> -&usb_0_dwc3 {
-> -	/* TODO: Define USB-C connector properly */
-> -	dr_mode = "peripheral";
-> -};
-> -
-> -&usb_0_hsphy {
-> -	vdda-pll-supply = <&vreg_l5a>;
-> -	vdda18-supply = <&vreg_l7a>;
-> -	vdda33-supply = <&vreg_l13a>;
-> -
-> -	status = "okay";
-> -};
-> -
-> -&usb_0_qmpphy {
-> -	vdda-phy-supply = <&vreg_l3a>;
-> -	vdda-pll-supply = <&vreg_l5a>;
-> -
-> -	status = "okay";
-> -};
-> -
-> -&usb_1 {
-> -	status = "okay";
-> -};
-> -
-> -&usb_1_dwc3 {
-> -	/* TODO: Define USB-C connector properly */
-> -	dr_mode = "host";
-> -};
-> -
-> -&usb_1_hsphy {
-> -	vdda-pll-supply = <&vreg_l1c>;
-> -	vdda18-supply = <&vreg_l7c>;
-> -	vdda33-supply = <&vreg_l2c>;
-> -
-> -	status = "okay";
-> -};
-> -
-> -&usb_1_qmpphy {
-> -	vdda-phy-supply = <&vreg_l4c>;
-> -	vdda-pll-supply = <&vreg_l1c>;
-> -
-> -	status = "okay";
-> -};
-> -
-> -&usb_2_hsphy0 {
-> -	vdda-pll-supply = <&vreg_l5a>;
-> -	vdda18-supply = <&vreg_l7g>;
-> -	vdda33-supply = <&vreg_l13a>;
-> -
-> -	status = "okay";
-> -};
-> -
-> -&usb_2_hsphy1 {
-> -	vdda-pll-supply = <&vreg_l5a>;
-> -	vdda18-supply = <&vreg_l7g>;
-> -	vdda33-supply = <&vreg_l13a>;
-> -
-> -	status = "okay";
-> -};
-> -
-> -&usb_2_hsphy2 {
-> -	vdda-pll-supply = <&vreg_l5a>;
-> -	vdda18-supply = <&vreg_l7g>;
-> -	vdda33-supply = <&vreg_l13a>;
-> -
-> -	status = "okay";
-> -};
-> -
-> -&usb_2_hsphy3 {
-> -	vdda-pll-supply = <&vreg_l5a>;
-> -	vdda18-supply = <&vreg_l7g>;
-> -	vdda33-supply = <&vreg_l13a>;
-> -
-> -	status = "okay";
-> -};
-> -
-> -&usb_2_qmpphy0 {
-> -	vdda-phy-supply = <&vreg_l3a>;
-> -	vdda-pll-supply = <&vreg_l5a>;
-> -
-> -	status = "okay";
-> -};
-> -
-> -&usb_2_qmpphy1 {
-> -	vdda-phy-supply = <&vreg_l3a>;
-> -	vdda-pll-supply = <&vreg_l5a>;
-> -
-> -	status = "okay";
-> -};
-> -
-> -&xo_board_clk {
-> -	clock-frequency = <38400000>;
-> -};
-> -
-> -/* PINCTRL */
-> diff --git a/arch/arm64/boot/dts/qcom/sa8xxxp-auto-adp.dtsi b/arch/arm64/boot/dts/qcom/sa8xxxp-auto-adp.dtsi
-> new file mode 100644
-> index 000000000000..428e10f48481
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sa8xxxp-auto-adp.dtsi
-> @@ -0,0 +1,385 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2022, Linaro Limited
-> + * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +#include <dt-bindings/spmi/spmi.h>
-> +
-> +#include "sa8540p.dtsi"
-> +
-> +/ {
-> +	aliases {
-> +		serial0 = &qup2_uart17;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +	};
-> +};
-> +
-> +&apps_rsc {
-> +	pmm8540-a-regulators {
-> +		compatible = "qcom,pm8150-rpmh-regulators";
-> +		qcom,pmic-id = "a";
-> +
-> +		vreg_l3a: ldo3 {
-> +			regulator-name = "vreg_l3a";
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1208000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		vreg_l5a: ldo5 {
-> +			regulator-name = "vreg_l5a";
-> +			regulator-min-microvolt = <912000>;
-> +			regulator-max-microvolt = <912000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		vreg_l7a: ldo7 {
-> +			regulator-name = "vreg_l7a";
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		vreg_l13a: ldo13 {
-> +			regulator-name = "vreg_l13a";
-> +			regulator-min-microvolt = <3072000>;
-> +			regulator-max-microvolt = <3072000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +		};
-> +	};
-> +
-> +	pmm8540-c-regulators {
-> +		compatible = "qcom,pm8150-rpmh-regulators";
-> +		qcom,pmic-id = "c";
-> +
-> +		vreg_l1c: ldo1 {
-> +			regulator-name = "vreg_l1c";
-> +			regulator-min-microvolt = <912000>;
-> +			regulator-max-microvolt = <912000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		vreg_l2c: ldo2 {
-> +			regulator-name = "vreg_l2c";
-> +			regulator-min-microvolt = <3072000>;
-> +			regulator-max-microvolt = <3072000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		vreg_l3c: ldo3 {
-> +			regulator-name = "vreg_l3c";
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		vreg_l4c: ldo4 {
-> +			regulator-name = "vreg_l4c";
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1208000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		vreg_l6c: ldo6 {
-> +			regulator-name = "vreg_l6c";
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		vreg_l7c: ldo7 {
-> +			regulator-name = "vreg_l7c";
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		vreg_l10c: ldo10 {
-> +			regulator-name = "vreg_l10c";
-> +			regulator-min-microvolt = <2504000>;
-> +			regulator-max-microvolt = <2504000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		vreg_l17c: ldo17 {
-> +			regulator-name = "vreg_l17c";
-> +			regulator-min-microvolt = <2504000>;
-> +			regulator-max-microvolt = <2504000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +		};
-> +	};
-> +
-> +	pmm8540-g-regulators {
-> +		compatible = "qcom,pm8150-rpmh-regulators";
-> +		qcom,pmic-id = "g";
-> +
-> +		vreg_l3g: ldo3 {
-> +			regulator-name = "vreg_l3g";
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		vreg_l7g: ldo7 {
-> +			regulator-name = "vreg_l7g";
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +		};
-> +
-> +		vreg_l8g: ldo8 {
-> +			regulator-name = "vreg_l8g";
-> +			regulator-min-microvolt = <880000>;
-> +			regulator-max-microvolt = <880000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +		};
-> +	};
-> +};
-> +
-> +&qup2 {
-> +	status = "okay";
-> +};
-> +
-> +&qup2_uart17 {
-> +	compatible = "qcom,geni-debug-uart";
-> +	status = "okay";
-> +};
-> +
-> +&remoteproc_adsp {
-> +	firmware-name = "qcom/sa8540p/adsp.mbn";
-> +	status = "okay";
-> +};
-> +
-> +&remoteproc_nsp0 {
-> +	firmware-name = "qcom/sa8540p/cdsp.mbn";
-> +	status = "okay";
-> +};
-> +
-> +&remoteproc_nsp1 {
-> +	firmware-name = "qcom/sa8540p/cdsp1.mbn";
-> +	status = "okay";
-> +};
-> +
-> +&spmi_bus {
-> +	pm8450a: pmic@0 {
-> +		compatible = "qcom,pm8150", "qcom,spmi-pmic";
-> +		reg = <0x0 SPMI_USID>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		pm8450a_gpios: gpio@c000 {
-> +			compatible = "qcom,pm8150-gpio";
-> +			reg = <0xc000>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
-> +	};
-> +
-> +	pm8450c: pmic@4 {
-> +		compatible = "qcom,pm8150", "qcom,spmi-pmic";
-> +		reg = <0x4 SPMI_USID>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		pm8450c_gpios: gpio@c000 {
-> +			compatible = "qcom,pm8150-gpio";
-> +			reg = <0xc000>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
-> +	};
-> +
-> +	pm8450e: pmic@8 {
-> +		compatible = "qcom,pm8150", "qcom,spmi-pmic";
-> +		reg = <0x8 SPMI_USID>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		pm8450e_gpios: gpio@c000 {
-> +			compatible = "qcom,pm8150-gpio";
-> +			reg = <0xc000>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
-> +	};
-> +
-> +	pm8450g: pmic@c {
-> +		compatible = "qcom,pm8150", "qcom,spmi-pmic";
-> +		reg = <0xc SPMI_USID>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		pm8450g_gpios: gpio@c000 {
-> +			compatible = "qcom,pm8150-gpio";
-> +			reg = <0xc000>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
-> +	};
-> +};
-> +
-> +&ufs_mem_hc {
-> +	reset-gpios = <&tlmm 228 GPIO_ACTIVE_LOW>;
-> +
-> +	vcc-supply = <&vreg_l17c>;
-> +	vcc-max-microamp = <800000>;
-> +	vccq-supply = <&vreg_l6c>;
-> +	vccq-max-microamp = <900000>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&ufs_mem_phy {
-> +	vdda-phy-supply = <&vreg_l8g>;
-> +	vdda-pll-supply = <&vreg_l3g>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&ufs_card_hc {
-> +	reset-gpios = <&tlmm 229 GPIO_ACTIVE_LOW>;
-> +
-> +	vcc-supply = <&vreg_l10c>;
-> +	vcc-max-microamp = <800000>;
-> +	vccq-supply = <&vreg_l3c>;
-> +	vccq-max-microamp = <900000>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&ufs_card_phy {
-> +	vdda-phy-supply = <&vreg_l8g>;
-> +	vdda-pll-supply = <&vreg_l3g>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_0 {
-> +	status = "okay";
-> +};
-> +
-> +&usb_0_dwc3 {
-> +	/* TODO: Define USB-C connector properly */
-> +	dr_mode = "peripheral";
-> +};
-> +
-> +&usb_0_hsphy {
-> +	vdda-pll-supply = <&vreg_l5a>;
-> +	vdda18-supply = <&vreg_l7a>;
-> +	vdda33-supply = <&vreg_l13a>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_0_qmpphy {
-> +	vdda-phy-supply = <&vreg_l3a>;
-> +	vdda-pll-supply = <&vreg_l5a>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_1 {
-> +	status = "okay";
-> +};
-> +
-> +&usb_1_dwc3 {
-> +	/* TODO: Define USB-C connector properly */
-> +	dr_mode = "host";
-> +};
-> +
-> +&usb_1_hsphy {
-> +	vdda-pll-supply = <&vreg_l1c>;
-> +	vdda18-supply = <&vreg_l7c>;
-> +	vdda33-supply = <&vreg_l2c>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_1_qmpphy {
-> +	vdda-phy-supply = <&vreg_l4c>;
-> +	vdda-pll-supply = <&vreg_l1c>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_2_hsphy0 {
-> +	vdda-pll-supply = <&vreg_l5a>;
-> +	vdda18-supply = <&vreg_l7g>;
-> +	vdda33-supply = <&vreg_l13a>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_2_hsphy1 {
-> +	vdda-pll-supply = <&vreg_l5a>;
-> +	vdda18-supply = <&vreg_l7g>;
-> +	vdda33-supply = <&vreg_l13a>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_2_hsphy2 {
-> +	vdda-pll-supply = <&vreg_l5a>;
-> +	vdda18-supply = <&vreg_l7g>;
-> +	vdda33-supply = <&vreg_l13a>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_2_hsphy3 {
-> +	vdda-pll-supply = <&vreg_l5a>;
-> +	vdda18-supply = <&vreg_l7g>;
-> +	vdda33-supply = <&vreg_l13a>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_2_qmpphy0 {
-> +	vdda-phy-supply = <&vreg_l3a>;
-> +	vdda-pll-supply = <&vreg_l5a>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_2_qmpphy1 {
-> +	vdda-phy-supply = <&vreg_l3a>;
-> +	vdda-pll-supply = <&vreg_l5a>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&xo_board_clk {
-> +	clock-frequency = <38400000>;
-> +};
-> +
-> +/* PINCTRL */
-> -- 
-> 2.17.1
-> 
-
+BR,
+-R
