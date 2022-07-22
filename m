@@ -2,142 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6092C57D7AB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jul 2022 02:22:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 728F857D7F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jul 2022 03:22:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232840AbiGVAWQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Jul 2022 20:22:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49530 "EHLO
+        id S231274AbiGVBWn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Jul 2022 21:22:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233628AbiGVAWP (ORCPT
+        with ESMTP id S230349AbiGVBWm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Jul 2022 20:22:15 -0400
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F24974E3F;
-        Thu, 21 Jul 2022 17:22:14 -0700 (PDT)
-Received: by mail-il1-f178.google.com with SMTP id 1so1639404ill.11;
-        Thu, 21 Jul 2022 17:22:14 -0700 (PDT)
+        Thu, 21 Jul 2022 21:22:42 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A886868B8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 18:22:40 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id s188so4281105oie.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Jul 2022 18:22:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=5RE2+m/uZkqrJBifkutN7/zroirdmE7/BSH0qm4Ap2Q=;
+        b=Ksnwp5FmZXmJCdXwHA1M9xmzCwhnu2pMFizwZWvTJHYDGyGZTcj9yN1r8sUGLJEaUN
+         S/6tYZtTC8mcGK1S809kTHVJsi2WsmSObWoZZCnC37nhoIJczGkMx2gml0lsae8oyZJz
+         cS+UPRKFGLf7UE/eyol2dD2BxCsUZF6H5QFuYFxfaet1BQLd8SjT7S+NzLZuij1YU7Lr
+         GQmAh401dL9cm5JSf93Z+rS9ADGvRBtlOlWdvrIlq4oJ+nVd1xFhhgPcs01bOUL6PYUS
+         F6FotGkpnVhlHOkC4yd/Ds6GAGUIOOnlXSW3nOXg2hkRTG5OGffsvfKB6p0u/S7++MyH
+         5//w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=37TNQXkegxnNHaxlV6oBSEt0TAcZ2231cTAxeerzb9A=;
-        b=pGC9smnRAob4qn8jwEh6UskjyWnFyBzj4HlbQBKvStLq4Kd0nAw8H1QfX3tjJ91ZeI
-         uhZj4xqpqt5MZto0ys3O9dfFlBMkM57cBqXl0TqdwBzpttEQrE5xte6p8UVxfCXnWFpt
-         pujX1YYyLznd5HPDjPQ/MQqCHV+ft1C9CBw/aNPMUSbBEpYQ0uZskAmNOR0LuOiCeBs+
-         XaxJaR8LsC+b6Ehi5LhPjzFqkJc2LHsclmbiISerjnrt3fc9sz7aJV3JVwYuyF8Otf7u
-         UPRU6UfyvySIJ3+h0/6uE0Q0cwAKsl47pp4MJ14ebn7nh/bPPXgdcDmeYXP7p5w6yXW7
-         pOFA==
-X-Gm-Message-State: AJIora8aJJzpSS8O9Mn2joMjmfYE+MTYTGF/Qzk5xs6verwHNd5NxK7Z
-        AhZf1sMG097E6zNOS3p6Vg==
-X-Google-Smtp-Source: AGRyM1t3xSUTPj8NUaYheUjJGn/Wyn134h6vs453EwhUvdH1zTFkN1/JYZprUAj7UKTKrKlLTtP4HQ==
-X-Received: by 2002:a05:6e02:1c43:b0:2dc:7428:cdef with SMTP id d3-20020a056e021c4300b002dc7428cdefmr413494ilg.4.1658449333103;
-        Thu, 21 Jul 2022 17:22:13 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id j10-20020a0566022cca00b00674c8448c3csm1442019iow.6.2022.07.21.17.22.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jul 2022 17:22:12 -0700 (PDT)
-Received: (nullmailer pid 2233392 invoked by uid 1000);
-        Fri, 22 Jul 2022 00:22:10 -0000
-Date:   Thu, 21 Jul 2022 18:22:10 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Henry Sun <henrysun@google.com>,
-        Bob Moragues <moragues@chromium.org>,
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=5RE2+m/uZkqrJBifkutN7/zroirdmE7/BSH0qm4Ap2Q=;
+        b=rut/uo/W8BmHZFVcStQ5DLnV2BsJiEM6qXXn6hEfuf9lNLvgPTZzh7onb2akgXsYa3
+         cx3btds6S89vS4wDosznWE+jras94i5oVtiFEsDUffLU0X2t8Fo2wFu7TAojmchNH3y5
+         mv60bu4Yr5vl69UQXcfus1E3+azYWAU0NfIgqa+kB6h/rORfz4RP9d7yDBFUalDRGMer
+         q1WDdSg17t/3EYjBYYPO1czEwbaTDf3ZuLf85kqZj4G/qF6idnV2evuz+V8JQ9d0WPGu
+         zRhZp/f8ji6NNkcaZ5fMSQZZUcxSwILCAPtWkYHvlywSBNKQWTiYgXaT+enRBeeVmFDu
+         AWIg==
+X-Gm-Message-State: AJIora9/igzO9dIER30DWQRrXuedh3oaC0Pyoujn/ZmFb99eTetM+cZ1
+        etqyF3V7sCaQ3VPjydJ2HSFFci8ZmrqMlmyGc1M=
+X-Google-Smtp-Source: AGRyM1ui+OWeE7ysrFkdh10FOzl4oJRSODXnbaqDF19nVJuKJZ7alAGS6QfedPBRTaSyaFyypQKYaA==
+X-Received: by 2002:a05:6808:1484:b0:33a:782a:a626 with SMTP id e4-20020a056808148400b0033a782aa626mr418748oiw.145.1658452959592;
+        Thu, 21 Jul 2022 18:22:39 -0700 (PDT)
+Received: from [192.168.11.16] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
+        by smtp.gmail.com with ESMTPSA id s26-20020a05683004da00b0061cd208fadesm507394otd.71.2022.07.21.18.22.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Jul 2022 18:22:38 -0700 (PDT)
+Message-ID: <25673493-4171-62b0-f696-1316d115f388@kali.org>
+Date:   Thu, 21 Jul 2022 20:22:34 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.11.0
+Subject: Re: [PATCH 10/10] arm64: dts: qcom: sdm845: add LLCC BWMON
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v3 2/2] dt-bindings: arm: qcom: Document additional sku6
- for sc7180 pazquel
-Message-ID: <20220722002210.GA2223409-robh@kernel.org>
-References: <20220721033918.v3.1.I10519ca1bf88233702a90e296088808d18cdc7b1@changeid>
- <20220721033918.v3.2.I7ecbb7eeb58c5e6a33e32a3abf4d6874e6cb725c@changeid>
- <CAD=FV=WSBgupLFMCZgianck6uTkAyqrG0WK2ChSbNbJdhOPdLA@mail.gmail.com>
- <4b2fe9d0-f590-0fac-79fa-bb05da1d61df@linaro.org>
- <CAD=FV=XmaNdc9k98vAwbcN-sm0w_WeqhRsK_AUm3h4LZ5-egmQ@mail.gmail.com>
- <c2b03863-2249-13e6-98e0-731c1b40d0a9@linaro.org>
- <CAD=FV=XKC_fbBzna8TgiPRmPH_=AQ3ckv2EEjoNvayKQ83Uciw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=XKC_fbBzna8TgiPRmPH_=AQ3ckv2EEjoNvayKQ83Uciw@mail.gmail.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>
+References: <20220720192807.130098-1-krzysztof.kozlowski@linaro.org>
+ <20220720192807.130098-11-krzysztof.kozlowski@linaro.org>
+From:   Steev Klimaszewski <steev@kali.org>
+In-Reply-To: <20220720192807.130098-11-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 21, 2022 at 11:29:13AM -0700, Doug Anderson wrote:
-> Hi,
-> 
-> On Thu, Jul 21, 2022 at 9:52 AM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
-> >
-> > On 21/07/2022 18:43, Doug Anderson wrote:
-> > > Hi,
-> > >
-> > > On Thu, Jul 21, 2022 at 9:33 AM Krzysztof Kozlowski
-> > > <krzysztof.kozlowski@linaro.org> wrote:
-> > >>
-> > >> On 21/07/2022 15:37, Doug Anderson wrote:
-> > >>>
-> > >>> Not worth sending a new version for, but normally I expect the
-> > >>> bindings to be patch #1 and the dts change to be patch #2. In any
-> > >>> case:
-> > >>>
-> > >>> Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> > >>
-> > >> I would say worth v4, because otherwise patches is not bisectable.
-> > >
-> > > You're saying because `dtbs_check` will fail between the two?
-> >
-> > Yes
-> 
-> OK. Then I assume you agree that reversing the order of the patches
-> won't help, only combining the two patches into one.
-> 
-> 
-> > > How does
-> > > flipping the order help? If `dtbs_check` needs to be bisectable then
-> > > these two need to be one patch, but I was always under the impression
-> > > that we wanted bindings patches separate from dts patches.
-> >
-> > I don't think anyone said that bindings patches must be separate from
-> > DTS. The only restriction is DTS cannot go with drivers.
-> 
-> I have always heard that best practice is to have bindings in a patch
-> by themselves. If I've misunderstood and/or folks have changed their
-> minds, that's fine, but historically I've been told to keep them
-> separate.
+Hi Krzysztof,
 
-Correct.
+On 7/20/22 2:28 PM, Krzysztof Kozlowski wrote:
+> The SDM845 comes with few instances of Bandwidth Monitor.  The already
+> supported one monitors traffic between CPU and Last Level Cache
+> Controller (LLCC) and in downstream sources is called BWMON v4 (or v4 of
+> register layout).
+>
+> SDM845 also has also BWMON instance measuring traffic between LLCC and
+> memory with different register layout: called v5.
+>
+> Cc: Rajendra Nayak <quic_rjendra@quicinc.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/sdm845.dtsi | 37 ++++++++++++++++++++++++++++
+>   1 file changed, 37 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index fe14f7e7523b..4aab464e2bd6 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -2053,6 +2053,43 @@ llcc: system-cache-controller@1100000 {
+>   			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+>   		};
+>   
+> +		pmu@114a000 {
+> +			compatible = "qcom,sdm845-llcc-bwmon";
+> +			reg = <0 0x0114a000 0 0x1000>;
+> +			interrupts = <GIC_SPI 580 IRQ_TYPE_LEVEL_HIGH>;
+> +			interconnects = <&mem_noc MASTER_LLCC 3 &mem_noc SLAVE_EBI1 3>;
+> +
+> +			operating-points-v2 = <&llcc_bwmon_opp_table>;
+> +
+> +			llcc_bwmon_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
+> +
+> +				/*
+> +				 * The interconnect path bandwidth taken from
+> +				 * cpu4_opp_table bandwidth for gladiator_noc-mem_noc
+> +				 * interconnect.  This also matches the
+> +				 * bandwidth table of qcom,llccbw (qcom,bw-tbl,
+> +				 * bus width: 4 bytes) from msm-4.9 downstream
+> +				 * kernel.
+> +				 */
+> +				opp-0 {
+> +					opp-peak-kBps = <800000>;
+> +				};
+> +				opp-1 {
+> +					opp-peak-kBps = <1804000>;
+> +				};
+> +				opp-2 {
+> +					opp-peak-kBps = <3072000>;
+> +				};
+> +				opp-3 {
+> +					opp-peak-kBps = <5412000>;
+> +				};
+> +				opp-4 {
+> +					opp-peak-kBps = <7216000>;
+> +				};
+> +			};
+> +		};
+> +
+>   		pmu@1436400 {
+>   			compatible = "qcom,sdm845-bwmon", "qcom,msm8998-bwmon";
+>   			reg = <0 0x01436400 0 0x600>;
 
 
-> > Bindings for boards go pretty often with DTS (subarch). This is exactly
-> > what maintainers do, e.g.:
-> > https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/log/?h=arm64-for-5.20
-> > Bindings for hardware should go via subsystem maintainer (drivers).
-> 
-> OK, fair that in this case both the bindings and the yaml will land
-> through the Qualcomm tree. I guess it's really up to Bjorn and whether
-> he'd prefer "make dtbs_check" to be bisectable or whether he'd prefer
-> the bindings and dts change to be in separate patches from each other.
+With this series applied, testing on a Lenovo Yoga C630, which has an 
+SDM850, I see the following:
 
-Bindings go first if applied together because you have to define the 
-binding before you use it. But sometimes things go via multiple trees 
-and that's fine because it's just easier. In that case, the subsystem 
-tree is preferred for bindings (i.e. with the driver). But in this case, 
-Bjorn is the subsystem tree.
+[    3.673660] qcom-bwmon 114a000.pmu: can't request region for resource 
+[mem 0x0114a000-0x0114afff]
+[    3.673673] qcom-bwmon 114a000.pmu: error -EBUSY: failed to map bwmon 
+registers
+[    3.673678] qcom-bwmon: probe of 114a000.pmu failed with error -16
 
-Rob
