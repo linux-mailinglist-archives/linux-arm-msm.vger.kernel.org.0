@@ -2,61 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC23957E3F2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jul 2022 17:49:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF16257E476
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Jul 2022 18:32:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235473AbiGVPtj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Jul 2022 11:49:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58374 "EHLO
+        id S235645AbiGVQcv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Jul 2022 12:32:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235478AbiGVPtf (ORCPT
+        with ESMTP id S235624AbiGVQcv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Jul 2022 11:49:35 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9CAC3B94C;
-        Fri, 22 Jul 2022 08:49:31 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 2F41CB82916;
-        Fri, 22 Jul 2022 15:49:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F2DC341C6;
-        Fri, 22 Jul 2022 15:49:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1658504968;
-        bh=nX16+awWZS6ia17Fvu7daGAS+SSgvULs9xsWrxnls+c=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ko2dwALHEglyOmE082e8bKAnnb5v6Rqt5Y6wADNnL8OO8m/NTzNIBQTewXgQd1emK
-         Itl9pS68cQwkJMEC5Ju0JnCPErRY+KUrZz5/qgbm2spSyIuA1IQfhzIHHm3vzbUm72
-         EzrFndXJ2373HXx0kkC4fL86gNXHBa04xX1L52GjLFb0FGAGhkT1skF6mCnFm4EAjY
-         BDobFzNYZf2t+bt1C03Lm87U0Z1uF7xgQUZlCkHT7eqq416Ol9CegTV12wyIMzuQUn
-         y7WVzJZ5G7ODLVgI6Z8YklS2Z8hXJZoz0A4AZct1/mpclmWPHmwOqfy79sdP71hVqy
-         7o8g/9jc0ZSag==
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Selvam Sathappan Periakaruppan <quic_speriaka@quicinc.com>,
-        Baruch Siach <baruch.siach@siklu.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 2/2] PCI: qcom: Sort variants by Qcom IP rev
-Date:   Fri, 22 Jul 2022 10:49:19 -0500
-Message-Id: <20220722154919.1826027-3-helgaas@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220722154919.1826027-1-helgaas@kernel.org>
-References: <20220722154919.1826027-1-helgaas@kernel.org>
+        Fri, 22 Jul 2022 12:32:51 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA03C92854
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jul 2022 09:32:49 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id t3-20020a17090a3b4300b001f21eb7e8b0so8033473pjf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Jul 2022 09:32:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pHkzVngUg8JraIw7WAXXxeWawYCL64dfVzj3JndI8ec=;
+        b=DE2j5M49eA0g6LUo3qmfRgAkAVCAZ25hPgegh6+UVPoOmTzpn8rAXFkIP0oOfwXvha
+         UztqAnN2YyS9d8hnn7uqvYA3yyl1F1VywFKiMoYWa+giIVfo/vo1+HQzt+DEkym5RUDO
+         WhiCT49Jgu0Rreh3e8zCKN1zUEw+zKQUtTHgk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pHkzVngUg8JraIw7WAXXxeWawYCL64dfVzj3JndI8ec=;
+        b=mDD6gIr8baKfvChyN8MDz8c3mHqNfvEjmkrpEa3lU3aoc/GC4Ist5Gm2U1UuL+OcMt
+         RnHjSy0iG5XdahG8+AQ7WItUYUi+bcCSYuRu9NXrZuqIAreQHtE8uo1XWzYlQ6On3PVN
+         ktsU5R0163h0HbstmCD5Y21TL5a4RxS3TDKbU7hpHeULLuV9MaKnRmNcxep0vnrHpvID
+         6clChvfJHU+tj50CHZaLkiSN80xuZFvx+XqA1M88TpBdiTqtWNgVjOzoUlTTNoU+BzmL
+         mTUTvvYzMBudjg/AEdfdhKgm5gjgysdrGO77/PKC9b/6ky1gZm2Ek/MOCI0zP0dsknSu
+         qfcQ==
+X-Gm-Message-State: AJIora+EyBevXKe5uxymN7CG+VaUtAX/zbOJjHe3bGTsLqJ1FckgMN6F
+        2bcW1SiBlkJoIgJVkW6loE6sZw==
+X-Google-Smtp-Source: AGRyM1uRxtJn7DjJ7STDDPVY6rF/tZpRTUckHUDOghrPwyx+1x6dBFGv2TK/4Y/5TjP2KcWVjgY+gg==
+X-Received: by 2002:a17:902:bb91:b0:16c:3f7f:6df0 with SMTP id m17-20020a170902bb9100b0016c3f7f6df0mr672035pls.99.1658507569276;
+        Fri, 22 Jul 2022 09:32:49 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:42b0:2897:3725:985a])
+        by smtp.gmail.com with UTF8SMTPSA id u8-20020a1709026e0800b001640aad2f71sm3943818plk.180.2022.07.22.09.32.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 Jul 2022 09:32:48 -0700 (PDT)
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Subject: [PATCH v24 1/2] arm64: dts: qcom: sc7180-trogdor: Add nodes for onboard USB hub
+Date:   Fri, 22 Jul 2022 09:32:44 -0700
+Message-Id: <20220722093238.v24.1.I7a1a6448d50bdd38e6082204a9818c59cc7a9bfd@changeid>
+X-Mailer: git-send-email 2.37.1.359.gd136c6c3e2-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,861 +72,249 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+Add nodes for the onboard USB hub on trogdor devices. Remove the
+'always-on' property from the hub regulator, since the regulator
+is now managed by the onboard_usb_hub driver.
 
-Previously the variant resource structs, ops, etc., were in no obvious
-order (mostly but not consistently in *Synopsys* IP rev order, which is not
-reflected in the naming).
+For anyone using trogdor-based devices on Linux, it should be
+noted that this requires "CONFIG_USB_ONBOARD_HUB=y".
 
-Reorder them in order of the struct and function names.  No functional
-change intended.
-
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 732 ++++++++++++-------------
- 1 file changed, 366 insertions(+), 366 deletions(-)
+This series depends on 3a6bf4a08142 ("usb: core: hub: Create platform
+devices for onboard hubs in hub_probe()") which landed in -next [1].
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index c27e3494179f..d0237d821323 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -118,17 +118,6 @@
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git/commit/?h=usb-next&id=3a6bf4a08142826698121bef16b244dcf50a6431
+
+Changes in v24:
+- renamed 'companion-hub' to 'peer-hub' according to the change
+  in the binding
+
+Changes in v23:
+- added note about enabling CONFIG_USB_ONBOARD_HUB to the commit
+  message
+
+Changes in v22:
+- none
+
+Changes in v21:
+- patch dropped from onboard_usb_hub series
+
+Changes in v20:
+- renamed hub labels to 'usb_hub_2/3_x'
+- added comment for 'regulator-boot-on' of 'pp3300_hub'
+- added 'Reviewed-by' tags from Stephen and Doug
+
+Changes in v19:
+- none
+
+Changes in v18:
+- also adjust config for pompom rev1
+
+Changes in v17:
+- none
+
+Changes in v16:
+- none
+
+Changes in v15:
+- none
+
+Changes in v14:
+- none
+
+Changes in v13:
+- none
+
+Changes in v12:
+- none
+
+Changes in v11:
+- rebased on qcom/arm64-for-5.14 (with the rest of the series)
+
+Changes in v10:
+- keep 'regulator-boot-on' property
+- updated commit message
+
+Changes in v9:
+- none
+
+Changes in v8:
+- none
+
+Changes in v7:
+- rebased on qcom/arm64-for-5.13 (with the rest of the series)
+
+Changes in v6:
+- added 'companion-hub' entry to both USB devices
+- added 'vdd-supply' also to hub@2
+
+Changes in v5:
+- patch added to the series
+
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts | 19 ++++++++----------
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts | 12 +++++------
+ .../dts/qcom/sc7180-trogdor-pompom-r1.dts     | 11 ++++------
+ .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts | 19 ++++++++----------
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 20 ++++++++++++++++++-
+ 5 files changed, 44 insertions(+), 37 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+index bfbf26fd2cd4..d49de65aa960 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+@@ -16,17 +16,6 @@ / {
+ 	compatible = "google,lazor-rev0", "qcom,sc7180";
+ };
  
- #define QCOM_PCIE_CRC8_POLYNOMIAL (BIT(2) | BIT(1) | BIT(0))
- 
--struct qcom_pcie_resources_2_1_0 {
--	struct clk_bulk_data clks[QCOM_PCIE_2_1_0_MAX_CLOCKS];
--	struct reset_control *pci_reset;
--	struct reset_control *axi_reset;
--	struct reset_control *ahb_reset;
--	struct reset_control *por_reset;
--	struct reset_control *phy_reset;
--	struct reset_control *ext_reset;
--	struct regulator_bulk_data supplies[QCOM_PCIE_2_1_0_MAX_SUPPLY];
+-&pp3300_hub {
+-	/* pp3300_l7c is used to power the USB hub */
+-	/delete-property/regulator-always-on;
+-	/delete-property/regulator-boot-on;
 -};
 -
- struct qcom_pcie_resources_1_0_0 {
- 	struct clk *iface;
- 	struct clk *aux;
-@@ -138,6 +127,17 @@ struct qcom_pcie_resources_1_0_0 {
- 	struct regulator *vdda;
- };
- 
-+struct qcom_pcie_resources_2_1_0 {
-+	struct clk_bulk_data clks[QCOM_PCIE_2_1_0_MAX_CLOCKS];
-+	struct reset_control *pci_reset;
-+	struct reset_control *axi_reset;
-+	struct reset_control *ahb_reset;
-+	struct reset_control *por_reset;
-+	struct reset_control *phy_reset;
-+	struct reset_control *ext_reset;
-+	struct regulator_bulk_data supplies[QCOM_PCIE_2_1_0_MAX_SUPPLY];
-+};
-+
- #define QCOM_PCIE_2_3_2_MAX_SUPPLY	2
- struct qcom_pcie_resources_2_3_2 {
- 	struct clk *aux_clk;
-@@ -147,6 +147,15 @@ struct qcom_pcie_resources_2_3_2 {
- 	struct regulator_bulk_data supplies[QCOM_PCIE_2_3_2_MAX_SUPPLY];
- };
- 
-+struct qcom_pcie_resources_2_3_3 {
-+	struct clk *iface;
-+	struct clk *axi_m_clk;
-+	struct clk *axi_s_clk;
-+	struct clk *ahb_clk;
-+	struct clk *aux_clk;
-+	struct reset_control *rst[7];
-+};
-+
- #define QCOM_PCIE_2_4_0_MAX_CLOCKS	4
- struct qcom_pcie_resources_2_4_0 {
- 	struct clk_bulk_data clks[QCOM_PCIE_2_4_0_MAX_CLOCKS];
-@@ -165,15 +174,6 @@ struct qcom_pcie_resources_2_4_0 {
- 	struct reset_control *phy_ahb_reset;
- };
- 
--struct qcom_pcie_resources_2_3_3 {
--	struct clk *iface;
--	struct clk *axi_m_clk;
--	struct clk *axi_s_clk;
--	struct clk *ahb_clk;
--	struct clk *aux_clk;
--	struct reset_control *rst[7];
+-&pp3300_l7c {
+-	regulator-always-on;
+-	regulator-boot-on;
 -};
 -
- /* 6 clocks typically, 7 for sm8250 */
- struct qcom_pcie_resources_2_7_0 {
- 	struct clk_bulk_data clks[9];
-@@ -254,6 +254,121 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
- 	return 0;
- }
- 
-+static int qcom_pcie_get_resources_1_0_0(struct qcom_pcie *pcie)
-+{
-+	struct qcom_pcie_resources_1_0_0 *res = &pcie->res.v1_0_0;
-+	struct dw_pcie *pci = pcie->pci;
-+	struct device *dev = pci->dev;
-+
-+	res->vdda = devm_regulator_get(dev, "vdda");
-+	if (IS_ERR(res->vdda))
-+		return PTR_ERR(res->vdda);
-+
-+	res->iface = devm_clk_get(dev, "iface");
-+	if (IS_ERR(res->iface))
-+		return PTR_ERR(res->iface);
-+
-+	res->aux = devm_clk_get(dev, "aux");
-+	if (IS_ERR(res->aux))
-+		return PTR_ERR(res->aux);
-+
-+	res->master_bus = devm_clk_get(dev, "master_bus");
-+	if (IS_ERR(res->master_bus))
-+		return PTR_ERR(res->master_bus);
-+
-+	res->slave_bus = devm_clk_get(dev, "slave_bus");
-+	if (IS_ERR(res->slave_bus))
-+		return PTR_ERR(res->slave_bus);
-+
-+	res->core = devm_reset_control_get_exclusive(dev, "core");
-+	return PTR_ERR_OR_ZERO(res->core);
-+}
-+
-+static void qcom_pcie_deinit_1_0_0(struct qcom_pcie *pcie)
-+{
-+	struct qcom_pcie_resources_1_0_0 *res = &pcie->res.v1_0_0;
-+
-+	reset_control_assert(res->core);
-+	clk_disable_unprepare(res->slave_bus);
-+	clk_disable_unprepare(res->master_bus);
-+	clk_disable_unprepare(res->iface);
-+	clk_disable_unprepare(res->aux);
-+	regulator_disable(res->vdda);
-+}
-+
-+static int qcom_pcie_init_1_0_0(struct qcom_pcie *pcie)
-+{
-+	struct qcom_pcie_resources_1_0_0 *res = &pcie->res.v1_0_0;
-+	struct dw_pcie *pci = pcie->pci;
-+	struct device *dev = pci->dev;
-+	int ret;
-+
-+	ret = reset_control_deassert(res->core);
-+	if (ret) {
-+		dev_err(dev, "cannot deassert core reset\n");
-+		return ret;
-+	}
-+
-+	ret = clk_prepare_enable(res->aux);
-+	if (ret) {
-+		dev_err(dev, "cannot prepare/enable aux clock\n");
-+		goto err_res;
-+	}
-+
-+	ret = clk_prepare_enable(res->iface);
-+	if (ret) {
-+		dev_err(dev, "cannot prepare/enable iface clock\n");
-+		goto err_aux;
-+	}
-+
-+	ret = clk_prepare_enable(res->master_bus);
-+	if (ret) {
-+		dev_err(dev, "cannot prepare/enable master_bus clock\n");
-+		goto err_iface;
-+	}
-+
-+	ret = clk_prepare_enable(res->slave_bus);
-+	if (ret) {
-+		dev_err(dev, "cannot prepare/enable slave_bus clock\n");
-+		goto err_master;
-+	}
-+
-+	ret = regulator_enable(res->vdda);
-+	if (ret) {
-+		dev_err(dev, "cannot enable vdda regulator\n");
-+		goto err_slave;
-+	}
-+
-+	return 0;
-+err_slave:
-+	clk_disable_unprepare(res->slave_bus);
-+err_master:
-+	clk_disable_unprepare(res->master_bus);
-+err_iface:
-+	clk_disable_unprepare(res->iface);
-+err_aux:
-+	clk_disable_unprepare(res->aux);
-+err_res:
-+	reset_control_assert(res->core);
-+
-+	return ret;
-+}
-+
-+static int qcom_pcie_post_init_1_0_0(struct qcom_pcie *pcie)
-+{
-+	/* change DBI base address */
-+	writel(0, pcie->parf + PCIE20_PARF_DBI_BASE_ADDR);
-+
-+	if (IS_ENABLED(CONFIG_PCI_MSI)) {
-+		u32 val = readl(pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
-+
-+		val |= BIT(31);
-+		writel(val, pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
-+	}
-+
-+	return 0;
-+}
-+
- static void qcom_pcie_2_1_0_ltssm_enable(struct qcom_pcie *pcie)
- {
- 	u32 val;
-@@ -469,121 +584,6 @@ static int qcom_pcie_post_init_2_1_0(struct qcom_pcie *pcie)
- 	return 0;
- }
- 
--static int qcom_pcie_get_resources_1_0_0(struct qcom_pcie *pcie)
--{
--	struct qcom_pcie_resources_1_0_0 *res = &pcie->res.v1_0_0;
--	struct dw_pcie *pci = pcie->pci;
--	struct device *dev = pci->dev;
--
--	res->vdda = devm_regulator_get(dev, "vdda");
--	if (IS_ERR(res->vdda))
--		return PTR_ERR(res->vdda);
--
--	res->iface = devm_clk_get(dev, "iface");
--	if (IS_ERR(res->iface))
--		return PTR_ERR(res->iface);
--
--	res->aux = devm_clk_get(dev, "aux");
--	if (IS_ERR(res->aux))
--		return PTR_ERR(res->aux);
--
--	res->master_bus = devm_clk_get(dev, "master_bus");
--	if (IS_ERR(res->master_bus))
--		return PTR_ERR(res->master_bus);
--
--	res->slave_bus = devm_clk_get(dev, "slave_bus");
--	if (IS_ERR(res->slave_bus))
--		return PTR_ERR(res->slave_bus);
--
--	res->core = devm_reset_control_get_exclusive(dev, "core");
--	return PTR_ERR_OR_ZERO(res->core);
--}
--
--static void qcom_pcie_deinit_1_0_0(struct qcom_pcie *pcie)
--{
--	struct qcom_pcie_resources_1_0_0 *res = &pcie->res.v1_0_0;
--
--	reset_control_assert(res->core);
--	clk_disable_unprepare(res->slave_bus);
--	clk_disable_unprepare(res->master_bus);
--	clk_disable_unprepare(res->iface);
--	clk_disable_unprepare(res->aux);
--	regulator_disable(res->vdda);
--}
--
--static int qcom_pcie_init_1_0_0(struct qcom_pcie *pcie)
--{
--	struct qcom_pcie_resources_1_0_0 *res = &pcie->res.v1_0_0;
--	struct dw_pcie *pci = pcie->pci;
--	struct device *dev = pci->dev;
--	int ret;
--
--	ret = reset_control_deassert(res->core);
--	if (ret) {
--		dev_err(dev, "cannot deassert core reset\n");
--		return ret;
--	}
--
--	ret = clk_prepare_enable(res->aux);
--	if (ret) {
--		dev_err(dev, "cannot prepare/enable aux clock\n");
--		goto err_res;
--	}
--
--	ret = clk_prepare_enable(res->iface);
--	if (ret) {
--		dev_err(dev, "cannot prepare/enable iface clock\n");
--		goto err_aux;
--	}
--
--	ret = clk_prepare_enable(res->master_bus);
--	if (ret) {
--		dev_err(dev, "cannot prepare/enable master_bus clock\n");
--		goto err_iface;
--	}
--
--	ret = clk_prepare_enable(res->slave_bus);
--	if (ret) {
--		dev_err(dev, "cannot prepare/enable slave_bus clock\n");
--		goto err_master;
--	}
--
--	ret = regulator_enable(res->vdda);
--	if (ret) {
--		dev_err(dev, "cannot enable vdda regulator\n");
--		goto err_slave;
--	}
--
--	return 0;
--err_slave:
--	clk_disable_unprepare(res->slave_bus);
--err_master:
--	clk_disable_unprepare(res->master_bus);
--err_iface:
--	clk_disable_unprepare(res->iface);
--err_aux:
--	clk_disable_unprepare(res->aux);
--err_res:
--	reset_control_assert(res->core);
--
--	return ret;
--}
--
--static int qcom_pcie_post_init_1_0_0(struct qcom_pcie *pcie)
--{
--	/* change DBI base address */
--	writel(0, pcie->parf + PCIE20_PARF_DBI_BASE_ADDR);
--
--	if (IS_ENABLED(CONFIG_PCI_MSI)) {
--		u32 val = readl(pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
--
--		val |= BIT(31);
--		writel(val, pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
--	}
--
--	return 0;
--}
--
- static void qcom_pcie_2_3_2_ltssm_enable(struct qcom_pcie *pcie)
- {
- 	u32 val;
-@@ -719,6 +719,174 @@ static int qcom_pcie_post_init_2_3_2(struct qcom_pcie *pcie)
- 	return 0;
- }
- 
-+static int qcom_pcie_get_resources_2_3_3(struct qcom_pcie *pcie)
-+{
-+	struct qcom_pcie_resources_2_3_3 *res = &pcie->res.v2_3_3;
-+	struct dw_pcie *pci = pcie->pci;
-+	struct device *dev = pci->dev;
-+	int i;
-+	const char *rst_names[] = { "axi_m", "axi_s", "pipe",
-+				    "axi_m_sticky", "sticky",
-+				    "ahb", "sleep", };
-+
-+	res->iface = devm_clk_get(dev, "iface");
-+	if (IS_ERR(res->iface))
-+		return PTR_ERR(res->iface);
-+
-+	res->axi_m_clk = devm_clk_get(dev, "axi_m");
-+	if (IS_ERR(res->axi_m_clk))
-+		return PTR_ERR(res->axi_m_clk);
-+
-+	res->axi_s_clk = devm_clk_get(dev, "axi_s");
-+	if (IS_ERR(res->axi_s_clk))
-+		return PTR_ERR(res->axi_s_clk);
-+
-+	res->ahb_clk = devm_clk_get(dev, "ahb");
-+	if (IS_ERR(res->ahb_clk))
-+		return PTR_ERR(res->ahb_clk);
-+
-+	res->aux_clk = devm_clk_get(dev, "aux");
-+	if (IS_ERR(res->aux_clk))
-+		return PTR_ERR(res->aux_clk);
-+
-+	for (i = 0; i < ARRAY_SIZE(rst_names); i++) {
-+		res->rst[i] = devm_reset_control_get(dev, rst_names[i]);
-+		if (IS_ERR(res->rst[i]))
-+			return PTR_ERR(res->rst[i]);
-+	}
-+
-+	return 0;
-+}
-+
-+static void qcom_pcie_deinit_2_3_3(struct qcom_pcie *pcie)
-+{
-+	struct qcom_pcie_resources_2_3_3 *res = &pcie->res.v2_3_3;
-+
-+	clk_disable_unprepare(res->iface);
-+	clk_disable_unprepare(res->axi_m_clk);
-+	clk_disable_unprepare(res->axi_s_clk);
-+	clk_disable_unprepare(res->ahb_clk);
-+	clk_disable_unprepare(res->aux_clk);
-+}
-+
-+static int qcom_pcie_init_2_3_3(struct qcom_pcie *pcie)
-+{
-+	struct qcom_pcie_resources_2_3_3 *res = &pcie->res.v2_3_3;
-+	struct dw_pcie *pci = pcie->pci;
-+	struct device *dev = pci->dev;
-+	int i, ret;
-+
-+	for (i = 0; i < ARRAY_SIZE(res->rst); i++) {
-+		ret = reset_control_assert(res->rst[i]);
-+		if (ret) {
-+			dev_err(dev, "reset #%d assert failed (%d)\n", i, ret);
-+			return ret;
-+		}
-+	}
-+
-+	usleep_range(2000, 2500);
-+
-+	for (i = 0; i < ARRAY_SIZE(res->rst); i++) {
-+		ret = reset_control_deassert(res->rst[i]);
-+		if (ret) {
-+			dev_err(dev, "reset #%d deassert failed (%d)\n", i,
-+				ret);
-+			return ret;
-+		}
-+	}
-+
-+	/*
-+	 * Don't have a way to see if the reset has completed.
-+	 * Wait for some time.
-+	 */
-+	usleep_range(2000, 2500);
-+
-+	ret = clk_prepare_enable(res->iface);
-+	if (ret) {
-+		dev_err(dev, "cannot prepare/enable core clock\n");
-+		goto err_clk_iface;
-+	}
-+
-+	ret = clk_prepare_enable(res->axi_m_clk);
-+	if (ret) {
-+		dev_err(dev, "cannot prepare/enable core clock\n");
-+		goto err_clk_axi_m;
-+	}
-+
-+	ret = clk_prepare_enable(res->axi_s_clk);
-+	if (ret) {
-+		dev_err(dev, "cannot prepare/enable axi slave clock\n");
-+		goto err_clk_axi_s;
-+	}
-+
-+	ret = clk_prepare_enable(res->ahb_clk);
-+	if (ret) {
-+		dev_err(dev, "cannot prepare/enable ahb clock\n");
-+		goto err_clk_ahb;
-+	}
-+
-+	ret = clk_prepare_enable(res->aux_clk);
-+	if (ret) {
-+		dev_err(dev, "cannot prepare/enable aux clock\n");
-+		goto err_clk_aux;
-+	}
-+
-+	return 0;
-+
-+err_clk_aux:
-+	clk_disable_unprepare(res->ahb_clk);
-+err_clk_ahb:
-+	clk_disable_unprepare(res->axi_s_clk);
-+err_clk_axi_s:
-+	clk_disable_unprepare(res->axi_m_clk);
-+err_clk_axi_m:
-+	clk_disable_unprepare(res->iface);
-+err_clk_iface:
-+	/*
-+	 * Not checking for failure, will anyway return
-+	 * the original failure in 'ret'.
-+	 */
-+	for (i = 0; i < ARRAY_SIZE(res->rst); i++)
-+		reset_control_assert(res->rst[i]);
-+
-+	return ret;
-+}
-+
-+static int qcom_pcie_post_init_2_3_3(struct qcom_pcie *pcie)
-+{
-+	struct dw_pcie *pci = pcie->pci;
-+	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-+	u32 val;
-+
-+	writel(SLV_ADDR_SPACE_SZ,
-+		pcie->parf + PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE);
-+
-+	val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
-+	val &= ~BIT(0);
-+	writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
-+
-+	writel(0, pcie->parf + PCIE20_PARF_DBI_BASE_ADDR);
-+
-+	writel(MST_WAKEUP_EN | SLV_WAKEUP_EN | MSTR_ACLK_CGC_DIS
-+		| SLV_ACLK_CGC_DIS | CORE_CLK_CGC_DIS |
-+		AUX_PWR_DET | L23_CLK_RMV_DIS | L1_CLK_RMV_DIS,
-+		pcie->parf + PCIE20_PARF_SYS_CTRL);
-+	writel(0, pcie->parf + PCIE20_PARF_Q2A_FLUSH);
-+
-+	writel(PCI_COMMAND_MASTER, pci->dbi_base + PCI_COMMAND);
-+	writel(DBI_RO_WR_EN, pci->dbi_base + PCIE20_MISC_CONTROL_1_REG);
-+	writel(PCIE_CAP_SLOT_VAL, pci->dbi_base + offset + PCI_EXP_SLTCAP);
-+
-+	val = readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
-+	val &= ~PCI_EXP_LNKCAP_ASPMS;
-+	writel(val, pci->dbi_base + offset + PCI_EXP_LNKCAP);
-+
-+	writel(PCI_EXP_DEVCTL2_COMP_TMOUT_DIS, pci->dbi_base + offset +
-+		PCI_EXP_DEVCTL2);
-+
-+	return 0;
-+}
-+
- static int qcom_pcie_get_resources_2_4_0(struct qcom_pcie *pcie)
- {
- 	struct qcom_pcie_resources_2_4_0 *res = &pcie->res.v2_4_0;
-@@ -998,174 +1166,6 @@ static int qcom_pcie_post_init_2_4_0(struct qcom_pcie *pcie)
- 	return 0;
- }
- 
--static int qcom_pcie_get_resources_2_3_3(struct qcom_pcie *pcie)
--{
--	struct qcom_pcie_resources_2_3_3 *res = &pcie->res.v2_3_3;
--	struct dw_pcie *pci = pcie->pci;
--	struct device *dev = pci->dev;
--	int i;
--	const char *rst_names[] = { "axi_m", "axi_s", "pipe",
--				    "axi_m_sticky", "sticky",
--				    "ahb", "sleep", };
--
--	res->iface = devm_clk_get(dev, "iface");
--	if (IS_ERR(res->iface))
--		return PTR_ERR(res->iface);
--
--	res->axi_m_clk = devm_clk_get(dev, "axi_m");
--	if (IS_ERR(res->axi_m_clk))
--		return PTR_ERR(res->axi_m_clk);
--
--	res->axi_s_clk = devm_clk_get(dev, "axi_s");
--	if (IS_ERR(res->axi_s_clk))
--		return PTR_ERR(res->axi_s_clk);
--
--	res->ahb_clk = devm_clk_get(dev, "ahb");
--	if (IS_ERR(res->ahb_clk))
--		return PTR_ERR(res->ahb_clk);
--
--	res->aux_clk = devm_clk_get(dev, "aux");
--	if (IS_ERR(res->aux_clk))
--		return PTR_ERR(res->aux_clk);
--
--	for (i = 0; i < ARRAY_SIZE(rst_names); i++) {
--		res->rst[i] = devm_reset_control_get(dev, rst_names[i]);
--		if (IS_ERR(res->rst[i]))
--			return PTR_ERR(res->rst[i]);
--	}
--
--	return 0;
--}
--
--static void qcom_pcie_deinit_2_3_3(struct qcom_pcie *pcie)
--{
--	struct qcom_pcie_resources_2_3_3 *res = &pcie->res.v2_3_3;
--
--	clk_disable_unprepare(res->iface);
--	clk_disable_unprepare(res->axi_m_clk);
--	clk_disable_unprepare(res->axi_s_clk);
--	clk_disable_unprepare(res->ahb_clk);
--	clk_disable_unprepare(res->aux_clk);
--}
--
--static int qcom_pcie_init_2_3_3(struct qcom_pcie *pcie)
--{
--	struct qcom_pcie_resources_2_3_3 *res = &pcie->res.v2_3_3;
--	struct dw_pcie *pci = pcie->pci;
--	struct device *dev = pci->dev;
--	int i, ret;
--
--	for (i = 0; i < ARRAY_SIZE(res->rst); i++) {
--		ret = reset_control_assert(res->rst[i]);
--		if (ret) {
--			dev_err(dev, "reset #%d assert failed (%d)\n", i, ret);
--			return ret;
--		}
--	}
--
--	usleep_range(2000, 2500);
--
--	for (i = 0; i < ARRAY_SIZE(res->rst); i++) {
--		ret = reset_control_deassert(res->rst[i]);
--		if (ret) {
--			dev_err(dev, "reset #%d deassert failed (%d)\n", i,
--				ret);
--			return ret;
--		}
--	}
--
--	/*
--	 * Don't have a way to see if the reset has completed.
--	 * Wait for some time.
--	 */
--	usleep_range(2000, 2500);
--
--	ret = clk_prepare_enable(res->iface);
--	if (ret) {
--		dev_err(dev, "cannot prepare/enable core clock\n");
--		goto err_clk_iface;
--	}
--
--	ret = clk_prepare_enable(res->axi_m_clk);
--	if (ret) {
--		dev_err(dev, "cannot prepare/enable core clock\n");
--		goto err_clk_axi_m;
--	}
--
--	ret = clk_prepare_enable(res->axi_s_clk);
--	if (ret) {
--		dev_err(dev, "cannot prepare/enable axi slave clock\n");
--		goto err_clk_axi_s;
--	}
--
--	ret = clk_prepare_enable(res->ahb_clk);
--	if (ret) {
--		dev_err(dev, "cannot prepare/enable ahb clock\n");
--		goto err_clk_ahb;
--	}
--
--	ret = clk_prepare_enable(res->aux_clk);
--	if (ret) {
--		dev_err(dev, "cannot prepare/enable aux clock\n");
--		goto err_clk_aux;
--	}
--
--	return 0;
--
--err_clk_aux:
--	clk_disable_unprepare(res->ahb_clk);
--err_clk_ahb:
--	clk_disable_unprepare(res->axi_s_clk);
--err_clk_axi_s:
--	clk_disable_unprepare(res->axi_m_clk);
--err_clk_axi_m:
--	clk_disable_unprepare(res->iface);
--err_clk_iface:
--	/*
--	 * Not checking for failure, will anyway return
--	 * the original failure in 'ret'.
--	 */
--	for (i = 0; i < ARRAY_SIZE(res->rst); i++)
--		reset_control_assert(res->rst[i]);
--
--	return ret;
--}
--
--static int qcom_pcie_post_init_2_3_3(struct qcom_pcie *pcie)
--{
--	struct dw_pcie *pci = pcie->pci;
--	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
--	u32 val;
--
--	writel(SLV_ADDR_SPACE_SZ,
--		pcie->parf + PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE);
--
--	val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
--	val &= ~BIT(0);
--	writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
--
--	writel(0, pcie->parf + PCIE20_PARF_DBI_BASE_ADDR);
--
--	writel(MST_WAKEUP_EN | SLV_WAKEUP_EN | MSTR_ACLK_CGC_DIS
--		| SLV_ACLK_CGC_DIS | CORE_CLK_CGC_DIS |
--		AUX_PWR_DET | L23_CLK_RMV_DIS | L1_CLK_RMV_DIS,
--		pcie->parf + PCIE20_PARF_SYS_CTRL);
--	writel(0, pcie->parf + PCIE20_PARF_Q2A_FLUSH);
--
--	writel(PCI_COMMAND_MASTER, pci->dbi_base + PCI_COMMAND);
--	writel(DBI_RO_WR_EN, pci->dbi_base + PCIE20_MISC_CONTROL_1_REG);
--	writel(PCIE_CAP_SLOT_VAL, pci->dbi_base + offset + PCI_EXP_SLTCAP);
--
--	val = readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
--	val &= ~PCI_EXP_LNKCAP_ASPMS;
--	writel(val, pci->dbi_base + offset + PCI_EXP_LNKCAP);
--
--	writel(PCI_EXP_DEVCTL2_COMP_TMOUT_DIS, pci->dbi_base + offset +
--		PCI_EXP_DEVCTL2);
--
--	return 0;
--}
--
- static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
- {
- 	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-@@ -1530,15 +1530,6 @@ static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
- 	.host_init = qcom_pcie_host_init,
+ &sn65dsi86_out {
+ 	/*
+ 	 * Lane 0 was incorrectly mapped on the cable, but we've now decided
+@@ -35,3 +24,11 @@ &sn65dsi86_out {
+ 	 */
+ 	lane-polarities = <1 0>;
  };
- 
--/* Qcom IP rev.: 2.1.0	Synopsys IP rev.: 4.01a */
--static const struct qcom_pcie_ops ops_2_1_0 = {
--	.get_resources = qcom_pcie_get_resources_2_1_0,
--	.init = qcom_pcie_init_2_1_0,
--	.post_init = qcom_pcie_post_init_2_1_0,
--	.deinit = qcom_pcie_deinit_2_1_0,
--	.ltssm_enable = qcom_pcie_2_1_0_ltssm_enable,
--};
--
- /* Qcom IP rev.: 1.0.0	Synopsys IP rev.: 4.11a */
- static const struct qcom_pcie_ops ops_1_0_0 = {
- 	.get_resources = qcom_pcie_get_resources_1_0_0,
-@@ -1548,6 +1539,24 @@ static const struct qcom_pcie_ops ops_1_0_0 = {
- 	.ltssm_enable = qcom_pcie_2_1_0_ltssm_enable,
- };
- 
-+/* Qcom IP rev.: 1.9.0 */
-+static const struct qcom_pcie_ops ops_1_9_0 = {
-+	.get_resources = qcom_pcie_get_resources_2_7_0,
-+	.init = qcom_pcie_init_2_7_0,
-+	.deinit = qcom_pcie_deinit_2_7_0,
-+	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
-+	.config_sid = qcom_pcie_config_sid_sm8250,
++
++&usb_hub_2_x {
++	 vdd-supply = <&pp3300_l7c>;
 +};
 +
-+/* Qcom IP rev.: 2.1.0	Synopsys IP rev.: 4.01a */
-+static const struct qcom_pcie_ops ops_2_1_0 = {
-+	.get_resources = qcom_pcie_get_resources_2_1_0,
-+	.init = qcom_pcie_init_2_1_0,
-+	.post_init = qcom_pcie_post_init_2_1_0,
-+	.deinit = qcom_pcie_deinit_2_1_0,
-+	.ltssm_enable = qcom_pcie_2_1_0_ltssm_enable,
++&usb_hub_3_x {
++	 vdd-supply = <&pp3300_l7c>;
 +};
-+
- /* Qcom IP rev.: 2.3.2	Synopsys IP rev.: 4.21a */
- static const struct qcom_pcie_ops ops_2_3_2 = {
- 	.get_resources = qcom_pcie_get_resources_2_3_2,
-@@ -1557,15 +1566,6 @@ static const struct qcom_pcie_ops ops_2_3_2 = {
- 	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
+index d45a59afd7fc..80c7108bc51b 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
+@@ -16,13 +16,11 @@ / {
+ 	compatible = "google,lazor-rev1", "google,lazor-rev2", "qcom,sc7180";
  };
  
--/* Qcom IP rev.: 2.4.0	Synopsys IP rev.: 4.20a */
--static const struct qcom_pcie_ops ops_2_4_0 = {
--	.get_resources = qcom_pcie_get_resources_2_4_0,
--	.init = qcom_pcie_init_2_4_0,
--	.post_init = qcom_pcie_post_init_2_4_0,
--	.deinit = qcom_pcie_deinit_2_4_0,
--	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
--};
--
- /* Qcom IP rev.: 2.3.3	Synopsys IP rev.: 4.30a */
- static const struct qcom_pcie_ops ops_2_3_3 = {
- 	.get_resources = qcom_pcie_get_resources_2_3_3,
-@@ -1575,6 +1575,15 @@ static const struct qcom_pcie_ops ops_2_3_3 = {
- 	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
+-&pp3300_hub {
+-	/* pp3300_l7c is used to power the USB hub */
+-	/delete-property/regulator-always-on;
+-	/delete-property/regulator-boot-on;
++
++&usb_hub_2_x {
++	 vdd-supply = <&pp3300_l7c>;
  };
  
-+/* Qcom IP rev.: 2.4.0	Synopsys IP rev.: 4.20a */
-+static const struct qcom_pcie_ops ops_2_4_0 = {
-+	.get_resources = qcom_pcie_get_resources_2_4_0,
-+	.init = qcom_pcie_init_2_4_0,
-+	.post_init = qcom_pcie_post_init_2_4_0,
-+	.deinit = qcom_pcie_deinit_2_4_0,
-+	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
-+};
-+
- /* Qcom IP rev.: 2.7.0	Synopsys IP rev.: 4.30a */
- static const struct qcom_pcie_ops ops_2_7_0 = {
- 	.get_resources = qcom_pcie_get_resources_2_7_0,
-@@ -1583,15 +1592,6 @@ static const struct qcom_pcie_ops ops_2_7_0 = {
- 	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
+-&pp3300_l7c {
+-	regulator-always-on;
+-	regulator-boot-on;
++&usb_hub_3_x {
++	 vdd-supply = <&pp3300_l7c>;
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts
+index 76a130bad60a..8467ff41e6d5 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts
+@@ -34,13 +34,10 @@ &pm6150_adc_tm {
+ 	/delete-node/ charger-thermistor@0;
  };
  
--/* Qcom IP rev.: 1.9.0 */
--static const struct qcom_pcie_ops ops_1_9_0 = {
--	.get_resources = qcom_pcie_get_resources_2_7_0,
--	.init = qcom_pcie_init_2_7_0,
--	.deinit = qcom_pcie_deinit_2_7_0,
--	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
--	.config_sid = qcom_pcie_config_sid_sm8250,
--};
--
- /* Qcom IP rev.: 2.9.0  Synopsys IP rev.: 5.00a */
- static const struct qcom_pcie_ops ops_2_9_0 = {
- 	.get_resources = qcom_pcie_get_resources_2_9_0,
-@@ -1605,6 +1605,42 @@ static const struct qcom_pcie_cfg apq8084_cfg = {
- 	.ops = &ops_1_0_0,
+-&pp3300_hub {
+-	/* pp3300_l7c is used to power the USB hub */
+-	/delete-property/regulator-always-on;
+-	/delete-property/regulator-boot-on;
++&usb_hub_2_x {
++	 vdd-supply = <&pp3300_l7c>;
  };
  
-+static const struct qcom_pcie_cfg sm8150_cfg = {
-+	/* sm8150 has qcom IP rev 1.5.0. However 1.5.0 ops are same as
-+	 * 1.9.0, so reuse the same.
-+	 */
-+	.ops = &ops_1_9_0,
-+};
-+
-+static const struct qcom_pcie_cfg sm8250_cfg = {
-+	.ops = &ops_1_9_0,
-+	.has_tbu_clk = true,
-+	.has_ddrss_sf_tbu_clk = true,
-+};
-+
-+static const struct qcom_pcie_cfg sm8450_pcie0_cfg = {
-+	.ops = &ops_1_9_0,
-+	.has_ddrss_sf_tbu_clk = true,
-+	.has_aggre0_clk = true,
-+	.has_aggre1_clk = true,
-+};
-+
-+static const struct qcom_pcie_cfg sm8450_pcie1_cfg = {
-+	.ops = &ops_1_9_0,
-+	.has_ddrss_sf_tbu_clk = true,
-+	.has_aggre1_clk = true,
-+};
-+
-+static const struct qcom_pcie_cfg sc7280_cfg = {
-+	.ops = &ops_1_9_0,
-+	.has_tbu_clk = true,
-+};
-+
-+static const struct qcom_pcie_cfg sc8180x_cfg = {
-+	.ops = &ops_1_9_0,
-+	.has_tbu_clk = true,
-+};
-+
- static const struct qcom_pcie_cfg ipq8064_cfg = {
- 	.ops = &ops_2_1_0,
+-&pp3300_l7c {
+-	regulator-always-on;
+-	regulator-boot-on;
++&usb_hub_3_x {
++	 vdd-supply = <&pp3300_l7c>;
  };
-@@ -1626,42 +1662,6 @@ static const struct qcom_pcie_cfg sdm845_cfg = {
- 	.has_tbu_clk = true,
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
+index 59a23d0e9651..bc097d1b1b23 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
+@@ -44,17 +44,6 @@ &panel {
+ 	compatible = "auo,b116xa01";
  };
  
--static const struct qcom_pcie_cfg sm8150_cfg = {
--	/* sm8150 has qcom IP rev 1.5.0. However 1.5.0 ops are same as
--	 * 1.9.0, so reuse the same.
--	 */
--	.ops = &ops_1_9_0,
+-&pp3300_hub {
+-	/* pp3300_l7c is used to power the USB hub */
+-	/delete-property/regulator-always-on;
+-	/delete-property/regulator-boot-on;
 -};
 -
--static const struct qcom_pcie_cfg sm8250_cfg = {
--	.ops = &ops_1_9_0,
--	.has_tbu_clk = true,
--	.has_ddrss_sf_tbu_clk = true,
+-&pp3300_l7c {
+-	regulator-always-on;
+-	regulator-boot-on;
 -};
 -
--static const struct qcom_pcie_cfg sm8450_pcie0_cfg = {
--	.ops = &ops_1_9_0,
--	.has_ddrss_sf_tbu_clk = true,
--	.has_aggre0_clk = true,
--	.has_aggre1_clk = true,
--};
--
--static const struct qcom_pcie_cfg sm8450_pcie1_cfg = {
--	.ops = &ops_1_9_0,
--	.has_ddrss_sf_tbu_clk = true,
--	.has_aggre1_clk = true,
--};
--
--static const struct qcom_pcie_cfg sc7280_cfg = {
--	.ops = &ops_1_9_0,
--	.has_tbu_clk = true,
--};
--
--static const struct qcom_pcie_cfg sc8180x_cfg = {
--	.ops = &ops_1_9_0,
--	.has_tbu_clk = true,
--};
--
- static const struct qcom_pcie_cfg ipq6018_cfg = {
- 	.ops = &ops_2_9_0,
+ &sdhc_2 {
+ 	status = "okay";
  };
+@@ -63,6 +52,14 @@ &trackpad {
+ 	interrupts = <58 IRQ_TYPE_EDGE_FALLING>;
+ };
+ 
++&usb_hub_2_x {
++	 vdd-supply = <&pp3300_l7c>;
++};
++
++&usb_hub_3_x {
++	 vdd-supply = <&pp3300_l7c>;
++};
++
+ /* PINCTRL - modifications to sc7180-trogdor.dtsi */
+ 
+ &trackpad_int_1v8_odl {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index b5f534db135a..eae22e6e97c1 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -299,7 +299,7 @@ pp3300_hub: pp3300-hub-regulator {
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&en_pp3300_hub>;
+ 
+-		regulator-always-on;
++		/* The BIOS leaves this regulator on */
+ 		regulator-boot-on;
+ 
+ 		vin-supply = <&pp3300_a>;
+@@ -936,6 +936,24 @@ &usb_1 {
+ 
+ &usb_1_dwc3 {
+ 	dr_mode = "host";
++	#address-cells = <1>;
++	#size-cells = <0>;
++
++	/* 2.x hub on port 1 */
++	usb_hub_2_x: hub@1 {
++		compatible = "usbbda,5411";
++		reg = <1>;
++		vdd-supply = <&pp3300_hub>;
++		peer-hub = <&usb_hub_3_x>;
++	};
++
++	/* 3.x hub on port 2 */
++	usb_hub_3_x: hub@2 {
++		compatible = "usbbda,411";
++		reg = <2>;
++		vdd-supply = <&pp3300_hub>;
++		peer-hub = <&usb_hub_2_x>;
++	};
+ };
+ 
+ &usb_1_hsphy {
 -- 
-2.25.1
+2.37.1.359.gd136c6c3e2-goog
 
