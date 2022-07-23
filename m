@@ -2,103 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA7DC57F15B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Jul 2022 22:42:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AB6457F189
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Jul 2022 22:56:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236775AbiGWUl7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Jul 2022 16:41:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45994 "EHLO
+        id S231454AbiGWU4w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Jul 2022 16:56:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231768AbiGWUl6 (ORCPT
+        with ESMTP id S230005AbiGWU4w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Jul 2022 16:41:58 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 341FF1B79C
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Jul 2022 13:41:57 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id k19so8998722lji.10
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Jul 2022 13:41:57 -0700 (PDT)
+        Sat, 23 Jul 2022 16:56:52 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3E4618355
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Jul 2022 13:56:50 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id t22so6243070lfg.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Jul 2022 13:56:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=e+52KOSnNLi1FnR7UcmyU23RLE7OF4gwD0vDM9TqnXE=;
-        b=lt838N1vQInPt6XzODyLpcijt1IMK7TP5auI3pOUummc98aV/T69Tev/nxr7yQGXI7
-         ZvZnaiilpHn3xoS27QFeFVAWt2yY225tsP5xo9CAeuHVqE5dwa8Rx0zQOrsegjj2RMcA
-         W9nBPMITGALRMK4gyB1xUQqF0QZZJZU29p8mCXFpQlVfRpDEf1FGivFoiXsi3sqS+xNm
-         i4sRl9/0Dlhp+gM83g3Sk9KPGo1TTN8cIDhJcw6xEDaqKM3EKWh6GG08UBTMsR14oCY+
-         ELhd/Ueb4vzk19C9fg16/tVW6g0MZvAU+ROmM5MeWJ0KurC0gDtXImP6D5SJgN/FPtjB
-         806g==
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=BSddQZU4tvxR23/v1w3cQiBY/TQtEQeiurrpTf9SqqA=;
+        b=D4+v3raDZoCrf761Th36KUpA2Zw5VnhnOBMwfmqlwEtRrFOOSEMl1es0SpIxuzqNoB
+         lSgZgfDrN5s4durJatNnpOq/wQfgJn/Djes1LhP28s5IMFF6ETIIYGgvDwtKvaDTTaBI
+         WxBVR+lALaO2OdhyQMMbQkH6s4t3u/F7AtjUQyw60UjIc53HKoP8TSHhjD00EIeFVbL8
+         T+YWsRRkPnXNza6dgVyh5rDn8//nYYU0sgHEX0naBMQuPkco3q0HSomtGuF414rhJOPe
+         3EXgbTkZNmRBLe01fyaIoToKelJ7IdcLJ2UuWnT5/yFwNlrxJ3KOFdjzxZBCkT3qXuZD
+         obHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+         :content-language:to:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=e+52KOSnNLi1FnR7UcmyU23RLE7OF4gwD0vDM9TqnXE=;
-        b=U+aMTe3GDstxkqhWyuTAb1TM9ImatEROhViUVCg+L/19sRmKgl1PXymuyiJpCi9UwW
-         5Rgl9/Sjt9hoerv6kgpKVSR3V90wFvK6LI0/gAkUucas1QDvyzfSEHNRZkfCUaZH6/fE
-         Jv8c1QXb3UemvIRydWetasgDqvIM5tdoA6Eb+J1G5kNCN3myEmwRry/KonEY9VfUFFNy
-         sUDWUZ3aBfELDvdNFSwWCu7V47v/NYzuaxMZeZpZtnb1p3JNEuJVsKmz7xQByNJYxgwY
-         WhuP3qE1Y0Nhv4wv9RlIZ9ipWGOD2W+bOUZxRRAYrPzchL/1fOTyDnDuhnhe3O8YfCDM
-         EAoA==
-X-Gm-Message-State: AJIora8LZyAcUwJoAMh7GqDz/4OhqFuoZbW7XHseM9IvMQso0yTlTN6U
-        V+LLAcYAJlRoij/FoesVYDl8Fg==
-X-Google-Smtp-Source: AGRyM1vvcEOP9CXilnAMzwZwb7YML7xsZQfVNpAqOzCtDCbNdi5tZQInlhj6NLu2AYDSVN0VZUx6xw==
-X-Received: by 2002:a05:651c:981:b0:253:b87e:ba6c with SMTP id b1-20020a05651c098100b00253b87eba6cmr1927223ljq.530.1658608915336;
-        Sat, 23 Jul 2022 13:41:55 -0700 (PDT)
+        bh=BSddQZU4tvxR23/v1w3cQiBY/TQtEQeiurrpTf9SqqA=;
+        b=feJ/geNRtwywKhzdstFKp8S/MlseeVkv6n6RwnILKnJeeSWSf48AIjdZE14RylfJxD
+         H+us/jA2zxWbB6WFVKcZsZQv7Df1d+DzEX2Y7/CvK6X4yiY75h3fwve4zo1nkUhr+v5z
+         zg4ggTQ0KnYbRMS1du6IQeOXvUilApyjLfUmarqwztyGwuftX8r+UXr0fYLmlEwc8Szr
+         b4k4sXTsKuKsvKJQqB++ltKQpmAiuYWZJNBEahHh03WzCgnxopz2RGxcPKjWhcPcVgFU
+         kksQxjwQdqkCu/twDGj2TkuNYbacfbwN5Kt0ygFKeFE2YqAzGyYRovESfvhIfReL0xHO
+         x0dQ==
+X-Gm-Message-State: AJIora/vy/IxCK2i3HSh+zWRKBIxTUuD58Dl42UFvZ5dV7eO1KALrech
+        SzSDdMlFTO3O4MZwiFU1A0tSZr6fE1nreOUj
+X-Google-Smtp-Source: AGRyM1vu3x5Eguf+cpjJ//lggceGbEIs3f64Bw0DXVLRSc/hW1Uplx6a+UOVP8Sr6mEbZzQzjD1KOw==
+X-Received: by 2002:a05:6512:33c3:b0:48a:83a9:52e1 with SMTP id d3-20020a05651233c300b0048a83a952e1mr937646lfg.344.1658609808654;
+        Sat, 23 Jul 2022 13:56:48 -0700 (PDT)
 Received: from [192.168.10.173] (93.81-167-86.customer.lyse.net. [81.167.86.93])
-        by smtp.gmail.com with ESMTPSA id t9-20020a19ad09000000b0048905c6103csm1819433lfc.9.2022.07.23.13.41.53
+        by smtp.gmail.com with ESMTPSA id j10-20020a056512028a00b0048a86146831sm174867lfp.186.2022.07.23.13.56.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 23 Jul 2022 13:41:54 -0700 (PDT)
-Message-ID: <27b0d451-4cef-cfc3-c6ae-3bb6cb448083@linaro.org>
-Date:   Sat, 23 Jul 2022 22:41:53 +0200
+        Sat, 23 Jul 2022 13:56:48 -0700 (PDT)
+Message-ID: <7d6595c2-1200-9c27-dac9-8f76ea743447@linaro.org>
+Date:   Sat, 23 Jul 2022 22:56:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH v2 2/5] dt-bindings: remoteproc: qcom,q6v5: Move MSM8916
- to schema
+Subject: Re: [PATCH v2 3/3] ARM: qcom_defconfig: order items with
+ savedefconfig
 Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Rob Herring <robh@kernel.org>
-Cc:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+To:     Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sireesh Kodali <sireeshkodali1@gmail.com>,
-        Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220718140344.1831731-1-stephan.gerhold@kernkonzept.com>
- <20220718140344.1831731-3-stephan.gerhold@kernkonzept.com>
- <20220720224608.GA4107504-robh@kernel.org> <Ytmw41giZ/4S+Pp0@gerhold.net>
+        Russell King <linux@armlinux.org.uk>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20220721155356.248319-1-krzysztof.kozlowski@linaro.org>
+ <2246145.ElGaqSPkdT@g550jk> <c5150e83-0e50-3be6-b6bd-bf30fe5e94d1@linaro.org>
+ <2109260.irdbgypaU6@g550jk>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <Ytmw41giZ/4S+Pp0@gerhold.net>
+In-Reply-To: <2109260.irdbgypaU6@g550jk>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/07/2022 22:02, Stephan Gerhold wrote:
-> What remains is maybe:
+On 23/07/2022 20:52, Luca Weiss wrote:
+> On Samstag, 23. Juli 2022 20:44:08 CEST Krzysztof Kozlowski wrote:
+>> On 23/07/2022 20:17, Luca Weiss wrote:
+>>> On Samstag, 23. Juli 2022 19:36:17 CEST Krzysztof Kozlowski wrote:
+>>>> On 23/07/2022 11:58, Luca Weiss wrote:
+>>>>> See also
+>>>>> https://lore.kernel.org/linux-arm-msm/20191104210943.101393-1-luca@z3ntu
+>>>>> .x
+>>>>> yz/ (never applied for some reason)
+>>>>
+>>>> Mentioned patch is incorrect so should not be applied - it removes at
+>>>> least TMPFS which is not desired. I did not check other removed symbols.
+>>>
+>>> For this example: TMPFS is still enabled after this, it's selected by
+>>> other
+>>> options, like DRM or COMMON_CLK.
+>>
+>> I know, it does not matter. We had this case (with DEBUGFS and probably
+>> others) and the decision was - user visible symbols must no be removed
+>> by savedefconfig.
 > 
->   - "qcom,smem-states", which is already used in several other schemas
->     and could be possibly defined together with #qcom,smem-state-cells
->     in some generic schema(?)
-> 
->   - "qcom,halt-regs", "firmware-name", "smd-edge" are used by different
->     Qualcomm remoteproc drivers, so they could possibly be defined in
->     some common "qcom-remoteproc.yaml" schema(?)
+> So savedefconfig is "broken" (not doing the correct thing) then or what? Sounds 
+> like a topic for kconfig maintainers?
 
-smd-edge and glink is already in remoteproc/qcom,smd-edge.yaml
-qcom,glink-edge.yaml
-
+I agree.
 
 Best regards,
 Krzysztof
