@@ -2,55 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 368C557EF14
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Jul 2022 13:44:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 703B757EF91
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Jul 2022 16:24:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235971AbiGWLoh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Jul 2022 07:44:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60640 "EHLO
+        id S237865AbiGWOW0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Jul 2022 10:22:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234335AbiGWLog (ORCPT
+        with ESMTP id S237862AbiGWOWO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Jul 2022 07:44:36 -0400
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AEB41BE8E
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Jul 2022 04:44:35 -0700 (PDT)
-Received: from [192.168.1.101] (abxj77.neoplus.adsl.tpnet.pl [83.9.3.77])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 8EE661FFC6;
-        Sat, 23 Jul 2022 13:44:33 +0200 (CEST)
-Message-ID: <833fa178-22fc-c47c-a7b8-2444de3bf9cc@somainline.org>
-Date:   Sat, 23 Jul 2022 13:44:32 +0200
+        Sat, 23 Jul 2022 10:22:14 -0400
+Received: from mail-4319.protonmail.ch (mail-4319.protonmail.ch [185.70.43.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A334C22B24
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Jul 2022 07:21:15 -0700 (PDT)
+Date:   Sat, 23 Jul 2022 14:21:05 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail3; t=1658586072; x=1658845272;
+        bh=SihTKt45aRpcxX9AMLARdfazz57gHKVVDZNki8wzPh8=;
+        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:Feedback-ID:From:To:
+         Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID;
+        b=ppGnTOJRS6a09VAzeykPPsGl8ZqncmNFguz2ICyPauWV6Sxclwg2AXV10w350MPkm
+         Qmty8HkCK2Ro0sCCVcfOeVO+uFiyMuboHZWx/4eCzo+TklBmkjfejHItGbUJuDnwMY
+         VJQ6TDItV5K1j2R2zsRIt0ucW94DZHkcEPXv1NynL8DsoAoUDgLpp35UCAR5q0VifF
+         69m6aW2VW01rDP+GPbXtZQ0IGDUon0jQ/D6hLGEMG5fJXZAqouvnucUoBqfdrYDTrC
+         S/LFAFgQJp0QBIhn/B9VmdT/4u2+7oNkGHL0IbYQYLVtuU44Z0kz5TNyJ9wu8pitLz
+         9SB0DyQiv+A8g==
+To:     devicetree@vger.kernel.org
+From:   "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Reply-To: "Lin, Meng-Bo" <linmengbo0689@protonmail.com>
+Subject: [PATCH v5 0/4] Add Samsung Galaxy E5/E7/Grand Max device trees
+Message-ID: <20220723141835.136196-1-linmengbo0689@protonmail.com>
+Feedback-ID: 40467236:user:proton
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Content-Language: en-US
-To:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Increasing the maximum message size
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO_END_DIGIT,SPF_HELO_PASS,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+v5: Fix Error:
+arch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi:36.2-22 Properti=
+es
+must precede subnodes
+Restore Acked-by tag in the dt-bindings patch
+v4: Disable i2c2 until lis2hh12 accelerometer is fixed.
+Add GPIO LEDs for Grand Max.
+v3: Add a cover letter and changelog
+v2: Add dt-bindings documentation
 
-when sending new clock drivers for Qualcomm SoCs I've been repeatedly
-getting a bounce with a reason of "too long (>100000 characters)". The
-drivers are pretty big for one email, for example gcc-sc8280xp.c has
-201071 chars, but it only makes sense to add them big-as-they-are,
-because there are simply so many clocks, each of which needs to be
-defined as a struct with its properties set correctly.
+Samsung Galaxy E5, E7 and Grand Max are smartphones using the MSM8916 SoC
+released in 2015.
 
-Would it be possible to increase the limit for linux-arm-msm and
-linux-clk to something like 250000 so that they get to appear on
-there?
+e2015 and a2015 are similar, with some differences in accelerometer,
+MUIC and Vibrator. The common parts are shared in
+msm8916-samsung-a2015-common.dtsi to reduce duplication.
 
-Konrad
+The three devices (and all other variants of E5/E7/Grand Max released in
+2015) are very similar, with some differences in display, touchscreen,
+sensors and NFC. The common parts are shared in
+msm8916-samsung-e2015-common.dtsi to reduce duplication.
+
+Unfortunately, some E5/E7/Grand Max were released with outdated 32-bit
+only firmware and never received any update from Samsung. Since the 32-bit
+TrustZone firmware is signed there seems to be no way currently to
+actually boot this device tree on arm64 Linux on those variants at the
+moment.
+
+However, it is possible to use this device tree by compiling an ARM32
+kernel instead. The device tree can be easily built on ARM32 with
+an #include and it works really well there. To avoid confusion for others
+it is still better to add this device tree on arm64. Otherwise it's easy
+to forget to update this one when making some changes that affect all
+MSM8916 devices.
+
+Maybe someone finds a way to boot ARM64 Linux on those device at some
+point. In this case I expect that this device tree can be simply used
+as-is.
+
