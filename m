@@ -2,174 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B23157F1B4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Jul 2022 23:09:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95B3057F1E6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Jul 2022 00:50:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238900AbiGWVJE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Jul 2022 17:09:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59516 "EHLO
+        id S230234AbiGWWuT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Jul 2022 18:50:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231194AbiGWVJD (ORCPT
+        with ESMTP id S229875AbiGWWuS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Jul 2022 17:09:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id B402E15FF9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Jul 2022 14:09:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1658610540;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=9KeV3b2L++kC1oJ9l6Py5QcKGf/q+aaG3Cox8NYOjJ4=;
-        b=ep6DluFhaV3S8YNLP+R5V2jw2QbYFhAFvGfbgk1oFu6Axkn/ZSDXaNzDGRtvYvWn7FjGHY
-        LW0FfbCyiC+BaCtZ7XPQa4fgkxbnevnRwA1aByZ08tXzXtID18z4w3i4nngUv58yW823BR
-        f0vH6mzadThokhD3elPVkhpWxA2tFNo=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-445-wsnVruRzNfO9CnTSHb_FyQ-1; Sat, 23 Jul 2022 17:08:59 -0400
-X-MC-Unique: wsnVruRzNfO9CnTSHb_FyQ-1
-Received: by mail-wm1-f71.google.com with SMTP id k27-20020a05600c1c9b00b003a2fee19a80so6297764wms.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Jul 2022 14:08:58 -0700 (PDT)
+        Sat, 23 Jul 2022 18:50:18 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34D605FF7;
+        Sat, 23 Jul 2022 15:50:16 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id v67-20020a1cac46000000b003a1888b9d36so7195278wme.0;
+        Sat, 23 Jul 2022 15:50:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9+SGmh+zQFQNeqS1nDQMpNKAHLBf8ILAcQLa/iYZ68w=;
+        b=I6zZngK3VVgtj67O2D5LjmT+jF8X+BMMukA7BCYamHgUJ8AvTIMrz53CKg0wpvK/3a
+         sNl6U/bDUcqN6z8l+3d4MK/ARRO8iM/DYSLuss7o7T0hfx3aYB6zR18ZbrCd/83KntJA
+         0donLFzZHADhxPKFgsdpejxV1A5M1efs/UHpMy78nmCP3oHPh9BqeWwkomtjxkWLG0/U
+         XV4o2NsxozeZDe7t+E5Z0cMhvVtgN67lxFfLrzHO3KPM/wbVUeWseGEnMSxPU16psKVZ
+         2VvpPX/nVJ8CZ5MlwjdAbRm2/FsY5cU+7y+46XS5pSFSckGNIIp42bmZsISm6xBdXkJN
+         svyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=9KeV3b2L++kC1oJ9l6Py5QcKGf/q+aaG3Cox8NYOjJ4=;
-        b=s4gcp8fc1IGAfkhcrxLWdwR+PTQgHe6oL4ya+K73ITFc89vo1eDxY/O62/I5f2g34I
-         3qBJ12ro4N/UfkTr3pZG6NgFhJ4sugadjfBiWQ0jJdxaR4Aip6aLUbJCK1KbE7jz9e+9
-         h6NrpDx0PygrvzhDz3X9Ic4pSRijGchCNR/UKnT4uUl+KyGsuaibO6PptWwoi6E/zbK0
-         +RKfNaV8+59A+Rddt1A64WNrScKlTHiDWtruyrdvjJqCgoIdTTu5Bfj2p7P7jEwUNTVb
-         GQDH0oVjRyAnAFsFJkeEPgozbywJDz++QeOqrFxlWuee03N1m6Te0UYbYpkOzwcg0U+0
-         eZHw==
-X-Gm-Message-State: AJIora9a4kNe3KlrcitQdfx9j3BdkIQQ8b9zwtby/MjnhJMQ/9ST03U1
-        8D0sev2tgy2h/cPQCNA1tfcXe6xoPwlr6mBBD09j3WU0ZgJxb7scWIXx329UkRxLZNWsj1wfFUX
-        u1JQJPgpnOGuigF/1ieyIXFC2Dw==
-X-Received: by 2002:adf:f90f:0:b0:21e:7e3d:6af6 with SMTP id b15-20020adff90f000000b0021e7e3d6af6mr1780655wrr.183.1658610537957;
-        Sat, 23 Jul 2022 14:08:57 -0700 (PDT)
-X-Google-Smtp-Source: AGRyM1tScx1EViU35wGKRbd11AAdwaQ2ZMMsBGJoIAt1Cxrb2NeGSD2oe3BbzTHgx6jv08s5IYWO2Q==
-X-Received: by 2002:adf:f90f:0:b0:21e:7e3d:6af6 with SMTP id b15-20020adff90f000000b0021e7e3d6af6mr1780646wrr.183.1658610537607;
-        Sat, 23 Jul 2022 14:08:57 -0700 (PDT)
-Received: from minerva.home (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
-        by smtp.gmail.com with ESMTPSA id j14-20020adfd20e000000b0021e40019ae7sm7643643wrh.48.2022.07.23.14.08.55
+        bh=9+SGmh+zQFQNeqS1nDQMpNKAHLBf8ILAcQLa/iYZ68w=;
+        b=tiCKd21Or54cCFq6bE6EvU7y4CzukRmCLgSViNqOkSsa8U0qNKCLsXiYgvXNywwXlf
+         r98agPfOd9N2kVn8tJKYx/d3piyLHg9s1aH/7n70G7MDTKyACdtZJoGaIzC7DP+msunl
+         vo9qLvJ5hN58vatBoJ0P3K/xCND+7r/UCL9k6mXGQv0aKrdinYWuOkWHPp/ja6IHi8zA
+         ZlBqetx6ea5XjcfZPtfOBS/zX4xcQI3NsPIWS198V3ZJ1cB6UZOqsnufCvy4qEoH77IK
+         2NCUxS4sPb4rs1WY8/bXX65VT0h9A+Ao5/oDlxb9oW1RIqm8GhRrGGYryVOvS7RPOiub
+         56JA==
+X-Gm-Message-State: AJIora8GvR5Flnhfb2bdPNswVvjNxtEXqrfKnGxXk+tcFTdcCvv5ngiG
+        1fl0xNXWKi0EYSyv7bJUf2kBs2tHIdQ=
+X-Google-Smtp-Source: AGRyM1tb6ICS759gCOl045iJoxWtM+A1P/mUHsqx0egO5+irjQhLPHn2BqpnifLH1FH0OmR9U2Wbng==
+X-Received: by 2002:a7b:cd15:0:b0:3a3:1d69:5201 with SMTP id f21-20020a7bcd15000000b003a31d695201mr3909731wmj.10.1658616614468;
+        Sat, 23 Jul 2022 15:50:14 -0700 (PDT)
+Received: from xws.localdomain (pd9ea3743.dip0.t-ipconnect.de. [217.234.55.67])
+        by smtp.gmail.com with ESMTPSA id x3-20020adff0c3000000b0021deba99142sm7799284wro.40.2022.07.23.15.50.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Jul 2022 14:08:57 -0700 (PDT)
-From:   Javier Martinez Canillas <javierm@redhat.com>
-To:     linux-kernel@vger.kernel.org
-Cc:     Javier Martinez Canillas <javierm@redhat.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH] drm/msm: Make .remove and .shutdown HW shutdown consistent
-Date:   Sat, 23 Jul 2022 23:08:25 +0200
-Message-Id: <20220723210825.564922-1-javierm@redhat.com>
+        Sat, 23 Jul 2022 15:50:14 -0700 (PDT)
+From:   Maximilian Luz <luzmaximilian@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ard Biesheuvel <ardb@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Maximilian Luz <luzmaximilian@gmail.com>
+Subject: [PATCH 0/4] firmware: Add support for Qualcomm UEFI Secure Application
+Date:   Sun, 24 Jul 2022 00:49:45 +0200
+Message-Id: <20220723224949.1089973-1-luzmaximilian@gmail.com>
 X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Drivers' .remove and .shutdown callbacks are executed on different code
-paths. The former is called when a device is removed from the bus, while
-the latter is called at system shutdown time to quiesce the device.
+On modern Qualcomm platforms, access to EFI variables is restricted to
+the secure world / TrustZone, i.e. the Trusted Execution Environment
+(TrEE or TEE) as Qualcomm seems to call it. To access EFI variables, we
+therefore need to talk to the UEFI Secure Application (uefisecapp),
+residing in the TrEE.
 
-This means that some overlap exists between the two, because both have to
-take care of properly shutting down the hardware. But currently the logic
-used in these two callbacks isn't consistent in msm drivers, which could
-lead to kernel oops.
+This series adds support for accessing EFI variables on those platforms.
 
-For example, on .remove the component is deleted and its .unbind callback
-leads to the hardware being shutdown but only if the DRM device has been
-marked as registered.
+To do this, we first need to add some SCM call functions used to manage
+and talk to Secure Applications. A very small subset of this interface
+is added in the second patch (whereas the first one exports the required
+functions for that). Interface specifications are extracted from [1].
+While this does not (yet) support re-entrant SCM calls (including
+callbacks and listeners), this is enough to talk to the aforementioned
+uefisecapp on a couple of platforms (I've tested this on a Surface Pro X
+and heard reports from Lenovo Flex 5G, Lenovo Thinkpad x13s, and Lenovo
+Yoga C630 devices).
 
-That check doesn't exist in the .shutdown logic and this can lead to the
-driver calling drm_atomic_helper_shutdown() for a DRM device that hasn't
-been properly initialized.
+The third patch adds a client driver for uefisecapp, installing the
+respective efivar operations. The application interface has been reverse
+engineered from the Windows QcTrEE8180.sys driver.
 
-A situation when this can happen is when a driver for an expected device
-fails to probe, since the .bind callback will never be executed.
+Apart from uefisecapp, there are more Secure Applications running that
+we might want to support in the future. For example, on the Surface Pro
+X (sc8180x-based), the TPM is also managed via one.
 
-This bug was attempted to be fixed in commit 623f279c7781 ("drm/msm: fix
-shutdown hook in case GPU components failed to bind"), but unfortunately
-it still happens in some cases.
+I'm not sure whether this should go to drivers/firmware or to
+drivers/soc/qcom. I've put this into firmware as all of this is
+essentially an interface to the secure firmware running in the TrustZone
+(and SCM stuff is handled here already), but please let me know if I
+should move this.
 
-Rather than trying to keep fixing in both places, let's unify in a single
-helper function that could be used for the two callbacks.
+Regards,
+Max
 
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
----
+[1]: https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/blob/auto-kernel.lnx.4.14.c34/drivers/misc/qseecom.c
 
- drivers/gpu/drm/msm/msm_drv.c | 31 +++++++++++++++++--------------
- 1 file changed, 17 insertions(+), 14 deletions(-)
+Maximilian Luz (4):
+  firmware: qcom_scm: Export SCM call functions
+  firmware: Add support for Qualcomm Trusted Execution Environment SCM
+    calls
+  firmware: Add support for Qualcomm UEFI Secure Application
+  dt-bindings: firmware: Add Qualcomm UEFI Secure Application client
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 1ed4cd09dbf8..669891bd6f09 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -190,14 +190,8 @@ static int vblank_ctrl_queue_work(struct msm_drm_private *priv,
- 	return 0;
- }
- 
--static int msm_drm_uninit(struct device *dev)
-+static void msm_shutdown_hw(struct drm_device *dev)
- {
--	struct platform_device *pdev = to_platform_device(dev);
--	struct msm_drm_private *priv = platform_get_drvdata(pdev);
--	struct drm_device *ddev = priv->dev;
--	struct msm_kms *kms = priv->kms;
--	int i;
--
- 	/*
- 	 * Shutdown the hw if we're far enough along where things might be on.
- 	 * If we run this too early, we'll end up panicking in any variety of
-@@ -205,10 +199,21 @@ static int msm_drm_uninit(struct device *dev)
- 	 * msm_drm_init, drm_dev->registered is used as an indicator that the
- 	 * shutdown will be successful.
- 	 */
--	if (ddev->registered) {
-+	if (dev->registered)
-+		drm_atomic_helper_shutdown(dev);
-+}
-+
-+static int msm_drm_uninit(struct device *dev)
-+{
-+	struct platform_device *pdev = to_platform_device(dev);
-+	struct msm_drm_private *priv = platform_get_drvdata(pdev);
-+	struct drm_device *ddev = priv->dev;
-+	struct msm_kms *kms = priv->kms;
-+	int i;
-+
-+	if (ddev->registered)
- 		drm_dev_unregister(ddev);
--		drm_atomic_helper_shutdown(ddev);
--	}
-+	msm_shutdown_hw(ddev);
- 
- 	/* We must cancel and cleanup any pending vblank enable/disable
- 	 * work before msm_irq_uninstall() to avoid work re-enabling an
-@@ -1242,10 +1247,8 @@ void msm_drv_shutdown(struct platform_device *pdev)
- 	struct msm_drm_private *priv = platform_get_drvdata(pdev);
- 	struct drm_device *drm = priv ? priv->dev : NULL;
- 
--	if (!priv || !priv->kms)
--		return;
--
--	drm_atomic_helper_shutdown(drm);
-+	if (drm)
-+		msm_shutdown_hw(drm);
- }
- 
- static struct platform_driver msm_platform_driver = {
+ .../firmware/qcom,tee-uefisecapp.yaml         |  38 +
+ MAINTAINERS                                   |  14 +
+ drivers/firmware/Kconfig                      |  20 +
+ drivers/firmware/Makefile                     |   2 +
+ drivers/firmware/qcom_scm.c                   | 118 ++-
+ drivers/firmware/qcom_scm.h                   |  47 --
+ drivers/firmware/qcom_tee.c                   | 213 +++++
+ drivers/firmware/qcom_tee_uefisecapp.c        | 761 ++++++++++++++++++
+ include/linux/qcom_scm.h                      |  49 ++
+ include/linux/qcom_tee.h                      | 179 ++++
+ 10 files changed, 1355 insertions(+), 86 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/firmware/qcom,tee-uefisecapp.yaml
+ create mode 100644 drivers/firmware/qcom_tee.c
+ create mode 100644 drivers/firmware/qcom_tee_uefisecapp.c
+ create mode 100644 include/linux/qcom_tee.h
+
 -- 
 2.37.1
 
