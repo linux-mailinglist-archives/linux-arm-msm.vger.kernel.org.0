@@ -2,110 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C498C57EBD8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Jul 2022 06:16:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 565A957ECB1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Jul 2022 10:24:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232788AbiGWEQJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Jul 2022 00:16:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36532 "EHLO
+        id S232087AbiGWIYG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Jul 2022 04:24:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbiGWEQJ (ORCPT
+        with ESMTP id S231307AbiGWIYG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Jul 2022 00:16:09 -0400
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 221BA74DE0;
-        Fri, 22 Jul 2022 21:16:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1658549766; x=1690085766;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=qi4Vo2BGFenUFFuQzdEqAlJ8D1th20Bp3/R/v6klphc=;
-  b=JVEGsjNhCwmTCc7XdbJXrkNQj3y1vTbU1ZWr/nmB4G8NSOGcafMdDsfP
-   Vqg2sLbZQ252+LwBrLOwN1s/7YaHe0tl8Z15qkupI7K5VRMQufP1pEj5k
-   3o4ErH8bLBGVhYX7neiviEdgpn/QLvISm1qlxwDBW6pitJ+UM8hBdPWvB
-   mmc45HOqqV1CSKdkJXmnDunRUoqGTkOXCM6oPGK0ChFmnHsCekpI03DJc
-   n4IQug0QKCahWB/Sl3dH+PuLx74NjwscR2eTkWO1g/jZkjWfOB5FSSL+u
-   paGV6nYWJe+j1IUM6QWEds4c2sX0Pz+odPm9rB6A8bW4jaP36mSspZM/3
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10416"; a="351438807"
-X-IronPort-AV: E=Sophos;i="5.93,187,1654585200"; 
-   d="scan'208";a="351438807"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2022 21:16:05 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.93,187,1654585200"; 
-   d="scan'208";a="775424893"
-Received: from lkp-server01.sh.intel.com (HELO e0eace57cfef) ([10.239.97.150])
-  by orsmga005.jf.intel.com with ESMTP; 22 Jul 2022 21:16:02 -0700
-Received: from kbuild by e0eace57cfef with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1oF6Yb-0002Ff-33;
-        Sat, 23 Jul 2022 04:16:01 +0000
-Date:   Sat, 23 Jul 2022 12:15:43 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     "Lin, Meng-Bo" <linmengbo0689@protonmail.com>,
-        devicetree@vger.kernel.org
-Cc:     kbuild-all@lists.01.org, Andy Gross <agross@kernel.org>,
+        Sat, 23 Jul 2022 04:24:06 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D12712D35
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Jul 2022 01:24:04 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id o12so7786809ljc.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Jul 2022 01:24:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Xmn9d8wzhnb5rJgQvodKI4xlV+AmvezLKvvvO2g+5Xw=;
+        b=q3rCjGjHxIsteFA+mGheCmcGphALCC5qQyvL1IWmxpnh/N/PFGUT5COeKVE2CyVQhk
+         u1ccqAadoN5RaUzUFxGnVlmNRpR4Bmug1TiVJtmttUclLGh4iV1ApGMhNXZLrmf7usKT
+         /2AWyFOtZwIOGMz3CBRAWrWxDtd7HE3/hQAFfvaKyDX+VupLFyXWF1Ys4d34FZdzkkiM
+         neZRjmR6j3q+ji+arzdGcyrx3JYPOF6wWkhJOyG8RKTbWWIf9Wo5PD7D66zztAEMVfz5
+         XCppdaNqOcPxkGnnoE4sdIkB/ecyiaek6jJot9RHHZiAGIEQJ2x/8uU+KsRDTUCUsFTq
+         9Zmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Xmn9d8wzhnb5rJgQvodKI4xlV+AmvezLKvvvO2g+5Xw=;
+        b=kKjwfuXPBqIyTS18rYfASm9zH4VtFiTwrTVtY8q9FbbZs/yqwbhXCE/2dZ+0RlEqHF
+         KTpN6BssrkBOeRCG774ISHO6wl+kmun+LbFzH4o/5FTaTsPioURik7iM+Jt7jO77Hvso
+         aFpV9RLH48E5btTc2b6sHUf1HmHqbMps8pUOBxUEIyWvO6LQxj6LyJQFbNdFvBrI6QUW
+         07F/Y0nK0iyg2GEOdw0pfRSd8pIGAmhJvUcaj2Na4L8XDB0A2QF9Nj4FNP0a8TkCXtpY
+         ZKwexj4phrE2X9WWMTyoQd8lUEzCZLhIxeMtMrc8YE+cwk2uEsyry/tcIB8YubctyecL
+         YE+w==
+X-Gm-Message-State: AJIora8VmpvRSlRO7Ha83rotyeMecK9rBC8/YiZPQJ6AVOUoTSOtzsLZ
+        EgsP6DGz6D/unCs6Gdo/yBfv+w==
+X-Google-Smtp-Source: AGRyM1sSYW8ZLNTSp/sYr7jGuU90PzmK4d+zJ/DDks0XWBPtFsmcrMWTuXSmSg0Z1dCOKCZ/lekjgQ==
+X-Received: by 2002:a2e:92c8:0:b0:25d:6ddf:e71d with SMTP id k8-20020a2e92c8000000b0025d6ddfe71dmr1166082ljh.170.1658564642591;
+        Sat, 23 Jul 2022 01:24:02 -0700 (PDT)
+Received: from krzk-bin.home (93.81-167-86.customer.lyse.net. [81.167.86.93])
+        by smtp.gmail.com with ESMTPSA id n22-20020a05651203f600b004886508ca5csm1545801lfq.68.2022.07.23.01.24.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 23 Jul 2022 01:24:01 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Nikita Travkin <nikita@trvn.ru>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH v4 2/4] arm64: dts: qcom: msm8916-samsung-e2015: Add
- initial common dtsi
-Message-ID: <202207231229.wqK1Zic2-lkp@intel.com>
-References: <20220721235333.75282-1-linmengbo0689@protonmail.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] dt-bindings: soc: qcom: smd: reference SMD edge schema
+Date:   Sat, 23 Jul 2022 10:23:57 +0200
+Message-Id: <20220723082358.39544-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220721235333.75282-1-linmengbo0689@protonmail.com>
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Meng-Bo",
+The child node of smd is an SMD edge representing remote subsystem.
+Bring back missing reference from previously sent patch (disappeared
+when applying).
 
-Thank you for the patch! Yet something to improve:
+Link: https://lore.kernel.org/r/20220517070113.18023-9-krzysztof.kozlowski@linaro.org
+Fixes: 385fad1303af ("dt-bindings: remoteproc: qcom,smd-edge: define re-usable schema for smd-edge")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ Documentation/devicetree/bindings/soc/qcom/qcom,smd.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on linus/master v5.19-rc7]
-[cannot apply to soc/for-next next-20220722]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Lin-Meng-Bo/Add-Samsung-Galaxy-E5-E7-Grand-Max-device-trees/20220722-075631
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-config: arm64-allyesconfig (https://download.01.org/0day-ci/archive/20220723/202207231229.wqK1Zic2-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/00d1983861bc6f4389e307fe7758e3b0329b6222
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Lin-Meng-Bo/Add-Samsung-Galaxy-E5-E7-Grand-Max-device-trees/20220722-075631
-        git checkout 00d1983861bc6f4389e307fe7758e3b0329b6222
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash
-
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
->> Error: arch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi:36.2-22 Properties must precede subnodes
-   FATAL ERROR: Unable to parse input tree
-
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smd.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smd.yaml
+index 62bebb5f83bc..9b3efe97f47c 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,smd.yaml
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smd.yaml
+@@ -21,7 +21,7 @@ properties:
+ 
+ patternProperties:
+   "^.*-edge|rpm$":
+-    type: object
++    $ref: /schemas/remoteproc/qcom,smd-edge.yaml#
+     description:
+       Each subnode of the SMD node represents a remote subsystem or a remote
+       processor of some sort - or in SMD language an "edge". The name of the
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.34.1
+
