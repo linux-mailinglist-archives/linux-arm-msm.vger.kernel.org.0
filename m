@@ -2,90 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C3E057F692
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Jul 2022 20:44:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3952257F697
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Jul 2022 20:47:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230240AbiGXSoZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Jul 2022 14:44:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33072 "EHLO
+        id S231217AbiGXSrr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Jul 2022 14:47:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233079AbiGXSoY (ORCPT
+        with ESMTP id S229492AbiGXSrq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 Jul 2022 14:44:24 -0400
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B98D6DF98
-        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Jul 2022 11:44:22 -0700 (PDT)
-Received: by mail-qk1-x729.google.com with SMTP id m7so7182289qkk.6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Jul 2022 11:44:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=uqLCtj81FzXR1rhJvIs1w4M+P+JCKpBnNBBvGjMwhkY=;
-        b=b5RRwEQx9QQiM2iteB1J9tDEhxTHRFV9M2mhDG+mWfrbuIpuUzbCT2yguT0ZX8Xz74
-         mzowjZAAnR0twZciOuTIMIvaNedFOYbmnb30yydFpDsPFXbjV9NoRvRxHUjH4H7ufAkw
-         VU1J3nWeFiEyLm6Y1zX4hCfKzvL4s9/jfcDUo3a0ICeZ90PT7jkQEEaU51rbQG99OvMm
-         gwCkH9wCz1aOJ05n9BcIBdtm4LvX4Vv7kUOpevhUY/S5E7dpPLoQU+eQpMuFzKq3//RS
-         q9DRJNxOt/y2Fq9NCbCERrFQCZCr9z78GLNkJSZM97gY11rCIwaipfRmJUemucK6AgH3
-         pzrA==
+        Sun, 24 Jul 2022 14:47:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C2AC6E009
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Jul 2022 11:47:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1658688464;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=xHhcfGRCAjt5E9OSivN130xjZgYbsf/HAXgqsJ2fhnE=;
+        b=c+eFMsCNXftjo+73cgj9J7U4Sgb9Dn9BMuO0388Sxh82d9gSuYMcIQw/29t5/iGlYISpgo
+        8ypZEvKXsCQHO6T8cb1JzPFF9EmuP/wktwyM/QlckciEKd4xOahyNQmFc9fcOyeMjlqQIW
+        tXwOKDgPjBwhkBhu9XWImUM6CYtOZC4=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-527-_7QDLBEeOcutAWq_Cra3og-1; Sun, 24 Jul 2022 14:47:43 -0400
+X-MC-Unique: _7QDLBEeOcutAWq_Cra3og-1
+Received: by mail-wm1-f70.google.com with SMTP id r82-20020a1c4455000000b003a300020352so5044757wma.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Jul 2022 11:47:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=uqLCtj81FzXR1rhJvIs1w4M+P+JCKpBnNBBvGjMwhkY=;
-        b=NqLXDcdquNP/A4hIb3nbNaxe5zfEkCP/EZgz8Q6A/34ZqPNgSPUhyI4ARwksjB+oYR
-         wqzI80nGETRK1pbakThIwlMYHMLUJX3UhIB9vGx1e2lVXwmvqWxG8fK+bKWXVnKsV12R
-         txxprgl0YUn+ElXNwDYrMZqrMkIgk7T7rFk/6rPokZNTbpuQW4sIJFVZwwzzY617NZd7
-         2rC+SHORpLVEfJy2Zyt7f7CiOyKr4UPwM/xQVF1V9GOC/s7x+tWxSNHycUUsQtgyXx1v
-         WoEY0RHFNr8Sb5CiLJxnyH1SzMJ2eshU4eKo9Y6/5eR1bHavHoUlfPzgJyM/rO4Cl4AC
-         bDWg==
-X-Gm-Message-State: AJIora/2idkMn0w6LXxEGjOh7XN3iTnhK5mDsU01QXsMHzJmjjbWqkvZ
-        oT9XCiNErdkA3WrgJ9eMr5NS6KActM7sCP3/vCCmaQ==
-X-Google-Smtp-Source: AGRyM1vUDgkdDdsy8580QybhfJAvFu+1i9OFoHQ5vdHGHRp/oVSD1FiSHUQDYvIBh9xS6RcwZBGF9eySc2sErRzDKvM=
-X-Received: by 2002:ae9:f311:0:b0:6b6:30a9:1bb1 with SMTP id
- p17-20020ae9f311000000b006b630a91bb1mr6795622qkg.30.1658688261879; Sun, 24
- Jul 2022 11:44:21 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=xHhcfGRCAjt5E9OSivN130xjZgYbsf/HAXgqsJ2fhnE=;
+        b=Dd4MEOgBmSV6whikMYi4kWmU8wE6RH3nbebThDUCyl85hsRUtxr2Vsxsdj2wb8U7C2
+         frOduwqF3pHzsZztN04712OVvT8lC5Wy7DT4rrSOu80aqD74uVAlQPM9XcP4ojFHmuOv
+         WDtXq0NnfN6pwI3YD4lQHgRQ4FkhJ3txq1VJa/JE7xcO2XH0lTQDk/hyu0LuysdL5RbX
+         7CUZQxIzBhlE9qh5bScdNCUWljy23pi8+tvciXjjBewduuDmTfXGyVeespprALJSL01U
+         Zr87SvtJlFLJKlpHISKNX/Q+5HR7uD6lEJXVdodv+86LGcI/LlmVLSE/3UYoBUdFQJa/
+         0MPQ==
+X-Gm-Message-State: AJIora9asJbmVi5W1R+tTtaXYxZUVU8f673q+ICJ5tceX9FH4FnqoUzy
+        O1aM/nfeqEyBjhQL/cDC9FNCDg7rbrmCvhxYlsnRaQYoCGKhs/py4Qev2hN5hUXZOF/YXqeSaIY
+        9AGSWLkWejoON3cFLi+OJ25xyeg==
+X-Received: by 2002:a05:600c:284a:b0:3a2:ffb7:b56f with SMTP id r10-20020a05600c284a00b003a2ffb7b56fmr18986256wmb.134.1658688461905;
+        Sun, 24 Jul 2022 11:47:41 -0700 (PDT)
+X-Google-Smtp-Source: AGRyM1v//byKmdQgT5WvEWcDFD958f9+TODdjybZDGMctnTVoovPF22h8szxUHlYNCu+EncFlDUATg==
+X-Received: by 2002:a05:600c:284a:b0:3a2:ffb7:b56f with SMTP id r10-20020a05600c284a00b003a2ffb7b56fmr18986246wmb.134.1658688461720;
+        Sun, 24 Jul 2022 11:47:41 -0700 (PDT)
+Received: from [192.168.1.130] (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
+        by smtp.gmail.com with ESMTPSA id o8-20020a05600c378800b003a2e7c13a3asm11441121wmr.42.2022.07.24.11.47.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 24 Jul 2022 11:47:41 -0700 (PDT)
+Message-ID: <6b3f98db-83bf-41cd-b23d-79b455a06ebd@redhat.com>
+Date:   Sun, 24 Jul 2022 20:47:40 +0200
 MIME-Version: 1.0
-References: <20220724172442.87830-1-matti.lehtimaki@gmail.com> <20220724172442.87830-2-matti.lehtimaki@gmail.com>
-In-Reply-To: <20220724172442.87830-2-matti.lehtimaki@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sun, 24 Jul 2022 21:44:11 +0300
-Message-ID: <CAA8EJpqwpO3gu4XD8cHju=9avGb-1YGN8r1cHwgLOFVKpOFBrQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] ARM: dts: qcom: pm8226: Add node for the GPIOs
-To:     =?UTF-8?Q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2] drm/msm: Make .remove and .shutdown HW shutdown
+ consistent
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-kernel@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Fabio Estevam <festevam@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org
+References: <20220724111327.1195693-1-javierm@redhat.com>
+ <CAA8EJppEpPe4nfZ_kvNen6shSvgyUoL3adSQfhhCGCS2VmVZhQ@mail.gmail.com>
+From:   Javier Martinez Canillas <javierm@redhat.com>
+In-Reply-To: <CAA8EJppEpPe4nfZ_kvNen6shSvgyUoL3adSQfhhCGCS2VmVZhQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 24 Jul 2022 at 20:25, Matti Lehtim=C3=A4ki <matti.lehtimaki@gmail.c=
-om> wrote:
+Hello Dmitry,
+
+Thanks for your feedback.
+
+On 7/24/22 20:36, Dmitry Baryshkov wrote:
+> On Sun, 24 Jul 2022 at 14:13, Javier Martinez Canillas
+> <javierm@redhat.com> wrote:
+
+[...]
+
+>>
+>> +/*
+>> + * Shutdown the hw if we're far enough along where things might be on.
+>> + * If we run this too early, we'll end up panicking in any variety of
+>> + * places. Since we don't register the drm device until late in
+>> + * msm_drm_init, drm_dev->registered is used as an indicator that the
+>> + * shutdown will be successful.
+>> + *
+>> + * This function must only be called if drm_dev->registered is true.
+>> + */
+>> +static inline void msm_shutdown_hw(struct drm_device *dev)
+>> +{
+>> +       drm_atomic_helper_shutdown(dev);
+>> +}
+> 
+> Now there is no point in having this as a separate function. Could you
+
+The only reason why I kept this was to avoid duplicating the same comment
+in two places. I thought that an inline function would be better than that.
+
+> please inline it?
 >
-> The PM8226 provides 8 GPIOs. Add a node to support them.
+
+That's already the case. Sorry but I have to ask, do you read my patches
+before commenting? I have the feeling that is the second time that you ask
+for something that was already done in the patch.
+ 
+[...]
+
+>>
+>> -       if (!priv || !priv->kms)
+>> -               return;
+>> -
+>> -       drm_atomic_helper_shutdown(drm);
+> 
+> It might be worth repeating the comment here.
 >
-> Signed-off-by: Matti Lehtim=C3=A4ki <matti.lehtimaki@gmail.com>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+As mentioned I thought about it. But then decided that an inline function would
+be better to have the comment just in one place. I don't have a strong opinion
+though so I could change if others agree that duplicating the comment is better.
 
-> ---
-> (no changes since v2)
+-- 
+Best regards,
 
+Javier Martinez Canillas
+Linux Engineering
+Red Hat
 
---=20
-With best wishes
-Dmitry
