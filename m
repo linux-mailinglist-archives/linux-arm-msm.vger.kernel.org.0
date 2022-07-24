@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9439C57F564
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Jul 2022 16:04:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1D7557F562
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Jul 2022 16:04:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231493AbiGXOEe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Jul 2022 10:04:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57134 "EHLO
+        id S230501AbiGXOEd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Jul 2022 10:04:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231475AbiGXOEb (ORCPT
+        with ESMTP id S231493AbiGXOEb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 24 Jul 2022 10:04:31 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8916C1275E
-        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Jul 2022 07:04:29 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id b16so2015998lfb.7
-        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Jul 2022 07:04:29 -0700 (PDT)
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CB6712631
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Jul 2022 07:04:30 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id b21so3319503ljk.8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Jul 2022 07:04:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=iZwENJOY308zKHdj1yZi8s1aGOxQ3vIhb2O8oIzLRcA=;
-        b=Hsk8QI9Kpk+4M7Nsh/UHUxWh+wUk/ffgiUPssy2Xetj8i4eCQ/QC1DL9SFHItGDBha
-         JcwirREK8p/lYCuCFwCgZulBWR25RmGidXGrH22VYTbt+AnJDrB8iKj0MsVlYlw6ndfI
-         41Bm/6fAMRqbVtV+MBjLHnxhOHZPe9crBGFyOeNwHC1YcCOd+CFZkzobG6pdt7OhIrGA
-         7C/NmfLrhx97KZ94Q1ZTbqM5gcxZ8Kd1XEpTCEjIXgqxhAjWCyb15b5RR/epqwmocuq4
-         k2Saq157KjsMcz0oxl7pyCZ1OkXJB9lJEdqb/ZwkJErKal1fdkrw3LgrYKpcha/9wpcU
-         mkoQ==
+        bh=oKmnR8pcWpFGv+QMlFKOsQCj6vs8uoDIFMT8NXu4mE4=;
+        b=BbUEJ5yryTOknJOga7tAdzzxQAAl/+zE4ertI1WlpIJkzy2AAI+FNvWicbtP1Xf+7Z
+         85DzniV+WEi/m4UwekFaNZpydoyuSLv1lSCAbcSnGOAgWS4rxFmD4wbj7OlxeGvUEjEk
+         Ll4rPPJJt/OtQ+4Lld8GbRxjwFSENPtJVgX63VE7T/T4ER+9Aw+p0kKLUW0nY99lkKTc
+         VMPq4vOpuJBzmBNMVJ6WpdvCs4b3d562VxpxdwiyphDfC0vJEPBV6720B48iX6+G9ri8
+         5817niPo/IP2ouyE7QTh0fx1Fa3/suRXrLh91w2SPF/iyOCtw8vm3yudlCUgO+cQGCc2
+         FvRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=iZwENJOY308zKHdj1yZi8s1aGOxQ3vIhb2O8oIzLRcA=;
-        b=hxl1/IrcsXTDmO8pAHWf2sFcU8NwfzV7cpfnTtvCwJjb/HdqCgcpyfSW5m90mWnopf
-         vgAsj/CvLZrZjAh458gjNp18Ws+vEg3J7IsRjRBogeNqEpFkbZTHvZsQRm0KPWv+XdnO
-         kNcUD20cT3sTVLLf9tE/f+VI3adevZLP2+dHkHCMsyCLY4H3OJGZh1jAfsSp3cyPUPE0
-         11dvdrUmIE9HtDw3E05j/EBR9arX3l3w/wOUSgTuUBZhJ7hiatGPulr616ufTCbK+qbk
-         xzAWwj1x1zl/bEFnIiMBSj6Ep60AD+dDty9ONVRjwZPeEaHyfI/LDfQHWmn6foXcMVmd
-         smcQ==
-X-Gm-Message-State: AJIora/oKhaCRQxvfhFWiHwttpJd/I1PdDHCcvh1DQhRXXxKKjDbzqwC
-        vgOQHw6ohYM96p/wRPztPuN69g==
-X-Google-Smtp-Source: AGRyM1t/WTZ82UCkld5KvE+nZICTMfab6hQhfcZy/gO1J1Lr8/lBYSER1F5Q3G0BnJLIcpb0CnRokw==
-X-Received: by 2002:ac2:4e12:0:b0:489:ddbe:83c5 with SMTP id e18-20020ac24e12000000b00489ddbe83c5mr3472848lfr.371.1658671467725;
-        Sun, 24 Jul 2022 07:04:27 -0700 (PDT)
+        bh=oKmnR8pcWpFGv+QMlFKOsQCj6vs8uoDIFMT8NXu4mE4=;
+        b=UcH7z7c0bVsuAEvmKKXWhYqpxMvKp1pOWaLF1VCZJcHuAjmcLCDDOIgIzshgnHzKra
+         +4sl3HTaHMqne31w1JrAsgnJRs8oeRTcqjjqMs+U36U77Ie6igBB6xL7vu00MZsHGLUO
+         iBZSK7SxnwyxJU2H8W/QgPpXkObGtOlkBo/cgmLUC6gcH/6XSnUvHchr1fMesWVLyk3n
+         utkUWwWqTEZWLY1KunpgmyIHfqt70v26id1qGpCye44Oxljza2vg9PHJa9eaJvXQ63oS
+         AnzHYuAOXZaOwQEYXZ+Hie8iU/8lgSUc4AUoaMqcKuXHmLxJqFTSD043IN+M3CYdSR9e
+         E5NA==
+X-Gm-Message-State: AJIora+PcBeap5hhzjWfAQEN8VryqS6JB3ABHzXkZFtVR2a5Dd7q6x/F
+        ju/DDH2HaYtMf48Vrggv9/bNJA==
+X-Google-Smtp-Source: AGRyM1vNwBgh5Q8CltLCA8YuXXXU4qliUHu5dJy1ZJA9o0NqxOXhMwALe8Ik5TCoLIZDppIAMa+NQg==
+X-Received: by 2002:a2e:a884:0:b0:25d:d8a2:d18c with SMTP id m4-20020a2ea884000000b0025dd8a2d18cmr2613583ljq.305.1658671468673;
+        Sun, 24 Jul 2022 07:04:28 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s13-20020a056512202d00b00489dedf1dcfsm2192622lfs.289.2022.07.24.07.04.26
+        by smtp.gmail.com with ESMTPSA id s13-20020a056512202d00b00489dedf1dcfsm2192622lfs.289.2022.07.24.07.04.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 Jul 2022 07:04:27 -0700 (PDT)
+        Sun, 24 Jul 2022 07:04:28 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -56,9 +56,9 @@ To:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Yassine Oudjana <yassine.oudjana@gmail.com>
-Subject: [PATCH 5/7] arm64: dts: qcom: msm8996: add support for speed bin 3
-Date:   Sun, 24 Jul 2022 17:04:19 +0300
-Message-Id: <20220724140421.1933004-6-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 6/7] arm64: dts: qcom: msm8996: fix GPU OPP table
+Date:   Sun, 24 Jul 2022 17:04:20 +0300
+Message-Id: <20220724140421.1933004-7-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220724140421.1933004-1-dmitry.baryshkov@linaro.org>
 References: <20220724140421.1933004-1-dmitry.baryshkov@linaro.org>
@@ -66,261 +66,49 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for msm8996, speed bin 3. It supports full range of
-frequencies on the power cluster, but is limited to 1.8 GHz on
-performance cluster.
+Fix Adreno OPP table according to the msm-3.18. Enable 624 MHz for the
+speed bin 3 and 560 MHz for bins 2 and 3.
 
+Fixes: 69cc3114ab0f ("arm64: dts: Add Adreno GPU definitions")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 74 +++++++++++++--------------
- 1 file changed, 37 insertions(+), 37 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 24791ed436c5..3ce572f3765f 100644
+index 3ce572f3765f..6dfd30a91af7 100644
 --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
 +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -143,67 +143,67 @@ cluster0_opp: opp-table-cluster0 {
- 		/* Nominal fmax for now */
- 		opp-307200000 {
- 			opp-hz = /bits/ 64 <307200000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-422400000 {
- 			opp-hz = /bits/ 64 <422400000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-480000000 {
- 			opp-hz = /bits/ 64 <480000000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-556800000 {
- 			opp-hz = /bits/ 64 <556800000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-652800000 {
- 			opp-hz = /bits/ 64 <652800000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-729600000 {
- 			opp-hz = /bits/ 64 <729600000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-844800000 {
- 			opp-hz = /bits/ 64 <844800000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-960000000 {
- 			opp-hz = /bits/ 64 <960000000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1036800000 {
- 			opp-hz = /bits/ 64 <1036800000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1113600000 {
- 			opp-hz = /bits/ 64 <1113600000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1190400000 {
- 			opp-hz = /bits/ 64 <1190400000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1228800000 {
- 			opp-hz = /bits/ 64 <1228800000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1324800000 {
- 			opp-hz = /bits/ 64 <1324800000>;
--			opp-supported-hw = <0x5>;
-+			opp-supported-hw = <0xd>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1363200000 {
-@@ -213,12 +213,12 @@ opp-1363200000 {
- 		};
- 		opp-1401600000 {
- 			opp-hz = /bits/ 64 <1401600000>;
--			opp-supported-hw = <0x5>;
-+			opp-supported-hw = <0xd>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1478400000 {
- 			opp-hz = /bits/ 64 <1478400000>;
--			opp-supported-hw = <0x1>;
-+			opp-supported-hw = <0x9>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1497600000 {
-@@ -228,7 +228,7 @@ opp-1497600000 {
- 		};
- 		opp-1593600000 {
- 			opp-hz = /bits/ 64 <1593600000>;
--			opp-supported-hw = <0x1>;
-+			opp-supported-hw = <0x9>;
- 			clock-latency-ns = <200000>;
- 		};
- 	};
-@@ -241,107 +241,107 @@ cluster1_opp: opp-table-cluster1 {
- 		/* Nominal fmax for now */
- 		opp-307200000 {
- 			opp-hz = /bits/ 64 <307200000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-403200000 {
- 			opp-hz = /bits/ 64 <403200000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-480000000 {
- 			opp-hz = /bits/ 64 <480000000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-556800000 {
- 			opp-hz = /bits/ 64 <556800000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-652800000 {
- 			opp-hz = /bits/ 64 <652800000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-729600000 {
- 			opp-hz = /bits/ 64 <729600000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-806400000 {
- 			opp-hz = /bits/ 64 <806400000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-883200000 {
- 			opp-hz = /bits/ 64 <883200000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-940800000 {
- 			opp-hz = /bits/ 64 <940800000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1036800000 {
- 			opp-hz = /bits/ 64 <1036800000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1113600000 {
- 			opp-hz = /bits/ 64 <1113600000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1190400000 {
- 			opp-hz = /bits/ 64 <1190400000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1248000000 {
- 			opp-hz = /bits/ 64 <1248000000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1324800000 {
- 			opp-hz = /bits/ 64 <1324800000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1401600000 {
- 			opp-hz = /bits/ 64 <1401600000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1478400000 {
- 			opp-hz = /bits/ 64 <1478400000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1555200000 {
- 			opp-hz = /bits/ 64 <1555200000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1632000000 {
- 			opp-hz = /bits/ 64 <1632000000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1708800000 {
- 			opp-hz = /bits/ 64 <1708800000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1785600000 {
- 			opp-hz = /bits/ 64 <1785600000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1804800000 {
- 			opp-hz = /bits/ 64 <1804800000>;
--			opp-supported-hw = <0x6>;
-+			opp-supported-hw = <0xe>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1824000000 {
+@@ -1228,17 +1228,17 @@ gpu_opp_table: opp-table {
+ 				compatible = "operating-points-v2";
+ 
+ 				/*
+-				 * 624Mhz and 560Mhz are only available on speed
+-				 * bin (1 << 0). All the rest are available on
+-				 * all bins of the hardware
++				 * 624Mhz is only available on speed bins 0 and 3.
++				 * 560Mhz is only available on speed bins 0, 2 and 3.
++				 * All the rest are available on all bins of the hardware.
+ 				 */
+ 				opp-624000000 {
+ 					opp-hz = /bits/ 64 <624000000>;
+-					opp-supported-hw = <0x01>;
++					opp-supported-hw = <0x09>;
+ 				};
+ 				opp-560000000 {
+ 					opp-hz = /bits/ 64 <560000000>;
+-					opp-supported-hw = <0x01>;
++					opp-supported-hw = <0x0d>;
+ 				};
+ 				opp-510000000 {
+ 					opp-hz = /bits/ 64 <510000000>;
 -- 
 2.35.1
 
