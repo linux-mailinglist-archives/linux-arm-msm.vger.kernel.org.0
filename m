@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E0F2D57F560
+	by mail.lfdr.de (Postfix) with ESMTP id 264EA57F55E
 	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Jul 2022 16:04:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231194AbiGXOEd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Jul 2022 10:04:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57104 "EHLO
+        id S231987AbiGXOEc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Jul 2022 10:04:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230501AbiGXOEa (ORCPT
+        with ESMTP id S230055AbiGXOEa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 24 Jul 2022 10:04:30 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B97191274A
-        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Jul 2022 07:04:27 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id d17so12309949lfa.12
-        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Jul 2022 07:04:27 -0700 (PDT)
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7BC71274D
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Jul 2022 07:04:28 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id t22so8019666lfg.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Jul 2022 07:04:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=59sAl4bh1sT2A60i18qgY9VCGua4H6B8ILlg/stA2Ho=;
-        b=v0x+9Hjpvrtf0kdC0YTOspjHKq2yrjMSHshAHc9/4bXvCXSX1D3A4jH6njI+VLTtb8
-         EKLXIgUdF6oHEadIKI1nwOjo4XylfwAHfTLUKdV6GO6kHcTXdVUJbWNGki3i9lUPt8ja
-         uT380kjUKEslqX1i/XP0Xx1gNGcrnrx70tzt1YcfLoSHlZYW4sCej/pK+1u8ovVXNKXN
-         ++C9WIX4KYLCAj0e16p1qPYiVdqVPOlmDzdaY0AmmDE56b96WqL6qsQsni8FCQgM2vif
-         yAmyjrvWohaOrjyOXN3s7kO0CNSGyk2C+Cz/XXfoIPAAcwwr5LTe0cfwv7iSTLyjJUP1
-         Gxnw==
+        bh=kstyrt0XJSckYmgk033hhfAcj8eyuSwLu1LDNFgz1o8=;
+        b=eeVwxImNS4ubJ29h1XNHDAG0DzYVWUXzBK2jPhBgvcSRYxTvRR4rPADU36LdxAtkmk
+         /q1y1xcUzA3J5gV+2SPQwqHNQCyjxonrzaXP36sSpvzwWywRnV7kDtreVuSjFpKxpTy7
+         0DQ/2hh7cdKWYmEB8eJDssXOL+bm5OCAngiWmkhRaXJRjXSNXVhGwcnqn+icUbkUs4sO
+         WMopIr3WrRUMOCxXLL1UKTjSvLgWGe4sVB//sKfdOVi/DsysaN44d8GPD/gEHJTW1za8
+         eluWD1yTYbLLrQUgle5NW+g5sPX/3tcgmB0ZUHSCg1YA/JixDE6WcWW3VCpZyY9dFnLe
+         FHyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=59sAl4bh1sT2A60i18qgY9VCGua4H6B8ILlg/stA2Ho=;
-        b=EsoTbZ3zLhLypDjERIZRqDSDOqI/T5hGn700C7tRYYVSfzEwUfuvu+ozGSVtVIea+/
-         usUL1TI6SICFlRN3n5MPi40FjxfdZFNI0HED5QdOPNV//YBIqylZnzxDME08P09b2yAU
-         m0UO8xNnHlkwYzLDoV2kV0L3zw7e1DVPRSYzYfsnx/FuRffHRljk4mZDIjQgGTqN945Y
-         2TmohVFbJxVHw8jKMPijfiXJK9N5VAh9AeY4K/s02P16ZdhZLeDa+WtfGZsL8eB1JIFl
-         EycXkLGadAQRlVEwquqigm5zu/sUOsYEikEr4/PTQk9gJzcmG1PT340vK7LaVxXkAw4l
-         +HvQ==
-X-Gm-Message-State: AJIora/+nPAAJm4PY8UOgOe6BifTo2xYZSe+OUv+4GaeMsAks2IltBu+
-        v0UzccnGxV7hU5QZIDlbNqcvUw==
-X-Google-Smtp-Source: AGRyM1uYv4TiL7wX2ixKN5o4TFbD80CO2U2Dge85gfade3KlbALCsJqDjPY6zc1YkviAt6/+bYYh9Q==
-X-Received: by 2002:ac2:5084:0:b0:48a:6e29:bf8 with SMTP id f4-20020ac25084000000b0048a6e290bf8mr3188345lfm.572.1658671465975;
-        Sun, 24 Jul 2022 07:04:25 -0700 (PDT)
+        bh=kstyrt0XJSckYmgk033hhfAcj8eyuSwLu1LDNFgz1o8=;
+        b=Rx+75iw4RSRlm7ChAxTQT1NLtuZm0+YzrYlm3Eh7cQVxHEhBXOTYCmtuHHyWKlYp6D
+         jtTKOos2gNn9iGi9N0VlhhHjsIKZJDKTmZB74LAzd5uvZmXAoH/Mv2iNZ/PygKdrAf5Y
+         B5J0+cncOWn42FbEquiwmSkS6z6c9aCiXLd5yMd9Cohz71utMIronGP6xR6H1iPiDEZd
+         J7ni52hEQe+QUt7lzImR2a5QrUWLTQYCvIsqlklkj2W2xXl0KHKNtLJEXbip55+eemAk
+         BRmt598wetc08QP5musyKkp5qPKJPGY9WB5VkNjFVmGv+BMCiZSisEOURNQkD4FtPJ4N
+         NQfQ==
+X-Gm-Message-State: AJIora9p2DeGpExyMUm6gfW6mCHplf2Avx+GDk6DcA3PcUR0+XYgXx1V
+        /pcdW9XLf7GA6VuDBvOVXZKk4A==
+X-Google-Smtp-Source: AGRyM1sl6nqUDQCpKQmfBJccBkddpkh40nbW0ylG1/Y7zzA4YtQ9dJBe0YBnjWKmCSeQIgVMukd1/w==
+X-Received: by 2002:a05:6512:a8e:b0:48a:7513:6d83 with SMTP id m14-20020a0565120a8e00b0048a75136d83mr3271916lfu.56.1658671466896;
+        Sun, 24 Jul 2022 07:04:26 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s13-20020a056512202d00b00489dedf1dcfsm2192622lfs.289.2022.07.24.07.04.25
+        by smtp.gmail.com with ESMTPSA id s13-20020a056512202d00b00489dedf1dcfsm2192622lfs.289.2022.07.24.07.04.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 Jul 2022 07:04:25 -0700 (PDT)
+        Sun, 24 Jul 2022 07:04:26 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -55,11 +55,10 @@ To:     Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Yassine Oudjana <yassine.oudjana@gmail.com>,
-        Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: [PATCH 3/7] arm64: dts: qcom: msm8996-xiaomi-scorpio, natrium: Use MSM8996 Pro
-Date:   Sun, 24 Jul 2022 17:04:17 +0300
-Message-Id: <20220724140421.1933004-4-dmitry.baryshkov@linaro.org>
+        Yassine Oudjana <yassine.oudjana@gmail.com>
+Subject: [PATCH 4/7] arm64: dts: qcom: msm8996: fix supported-hw in cpufreq OPP tables
+Date:   Sun, 24 Jul 2022 17:04:18 +0300
+Message-Id: <20220724140421.1933004-5-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220724140421.1933004-1-dmitry.baryshkov@linaro.org>
 References: <20220724140421.1933004-1-dmitry.baryshkov@linaro.org>
@@ -75,122 +74,103 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Yassine Oudjana <yassine.oudjana@gmail.com>
+Adjust MSM8996 cpufreq tables according to tables in msm-3.18. Some of
+the frequencies are not supported on speed bins other than 0. Also other
+speed bins support intermediate topmost frequencies, not supported on
+speed bin 0. Implement all these differencies.
 
-The Xiaomi Mi Note 2 has the MSM8996 Pro SoC. Rename the dts
-to match, include msm8996pro.dtsi, and add the qcom,msm8996pro
-compatible. To do that, the msm8996.dtsi include in msm8996-xiaomi-common
-has to be moved to msm8996-xiaomi-gemini, the only device that needs it
-included after this change.
-
-Since MSM8996Pro is largely compatible with MSM8996, keep old compatible
-too rather than insiting on qcom,msm8996pro only. This allows the code
-that doesn't yet know about msm8996pro to continue supporting these
-devices.
-
-Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
-[DB: Applied the same change to Xiaomi Mi 5s Plus (natrium).]
-[DB: Dropped msm-id changes.]
+Fixes: 90173a954a22 ("arm64: dts: qcom: msm8996: Add CPU opps")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/Makefile                             | 4 ++--
- arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi           | 3 ---
- arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts            | 1 +
- ...m8996-xiaomi-natrium.dts => msm8996pro-xiaomi-natrium.dts} | 3 ++-
- ...m8996-xiaomi-scorpio.dts => msm8996pro-xiaomi-scorpio.dts} | 3 ++-
- 5 files changed, 7 insertions(+), 7 deletions(-)
- rename arch/arm64/boot/dts/qcom/{msm8996-xiaomi-natrium.dts => msm8996pro-xiaomi-natrium.dts} (99%)
- rename arch/arm64/boot/dts/qcom/{msm8996-xiaomi-scorpio.dts => msm8996pro-xiaomi-scorpio.dts} (99%)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 38 ++++++++++++++++++++-------
+ 1 file changed, 29 insertions(+), 9 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 1d86a33de528..78534c33a61e 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -34,8 +34,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-sony-xperia-tone-dora.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-sony-xperia-tone-kagura.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-sony-xperia-tone-keyaki.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-xiaomi-gemini.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-xiaomi-natrium.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-xiaomi-scorpio.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8996pro-xiaomi-natrium.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8996pro-xiaomi-scorpio.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-asus-novago-tp370ql.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-fxtec-pro1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-hp-envy-x2.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
-index 627649979891..90e40fd57f4c 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
-@@ -3,9 +3,6 @@
-  * Copyright (c) 2020, Yassine Oudjana <y.oudjana@protonmail.com>
-  */
- 
--/dts-v1/;
--
--#include "msm8996.dtsi"
- #include "pm8994.dtsi"
- #include "pmi8994.dtsi"
- #include <dt-bindings/input/input.h>
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-index 25f30ec277c1..cc76b2210466 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-@@ -5,6 +5,7 @@
- 
- /dts-v1/;
- 
-+#include "msm8996.dtsi"
- #include "msm8996-xiaomi-common.dtsi"
- #include <dt-bindings/sound/qcom,q6afe.h>
- #include <dt-bindings/sound/qcom,q6asm.h>
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-natrium.dts b/arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dts
-similarity index 99%
-rename from arch/arm64/boot/dts/qcom/msm8996-xiaomi-natrium.dts
-rename to arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dts
-index ff4673ee9e81..368e9d837dfa 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-natrium.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dts
-@@ -5,6 +5,7 @@
- 
- /dts-v1/;
- 
-+#include "msm8996pro.dtsi"
- #include "msm8996-xiaomi-common.dtsi"
- #include "pmi8996.dtsi"
- #include <dt-bindings/sound/qcom,q6afe.h>
-@@ -12,7 +13,7 @@
- 
- / {
- 	model = "Xiaomi Mi 5s Plus";
--	compatible = "xiaomi,natrium", "qcom,msm8996";
-+	compatible = "xiaomi,natrium", "qcom,msm8996pro", "qcom,msm8996";
- 	chassis-type = "handset";
- 	qcom,msm-id = <305 0x10000>;
- 	qcom,board-id = <47 0>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dts b/arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dts
-similarity index 99%
-rename from arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dts
-rename to arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dts
-index 30a9e4bed4af..54a0854faf5b 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dts
-@@ -5,6 +5,7 @@
- 
- /dts-v1/;
- 
-+#include "msm8996pro.dtsi"
- #include "msm8996-xiaomi-common.dtsi"
- #include "pmi8996.dtsi"
- #include <dt-bindings/sound/qcom,q6afe.h>
-@@ -12,7 +13,7 @@
- 
- / {
- 	model = "Xiaomi Mi Note 2";
--	compatible = "xiaomi,scorpio", "qcom,msm8996";
-+	compatible = "xiaomi,scorpio", "qcom,msm8996pro", "qcom,msm8996";
- 	chassis-type = "handset";
- 	qcom,msm-id = <305 0x10000>;
- 	qcom,board-id = <34 0>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 41c09895268e..24791ed436c5 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -203,22 +203,32 @@ opp-1228800000 {
+ 		};
+ 		opp-1324800000 {
+ 			opp-hz = /bits/ 64 <1324800000>;
+-			opp-supported-hw = <0x7>;
++			opp-supported-hw = <0x5>;
++			clock-latency-ns = <200000>;
++		};
++		opp-1363200000 {
++			opp-hz = /bits/ 64 <1363200000>;
++			opp-supported-hw = <0x2>;
+ 			clock-latency-ns = <200000>;
+ 		};
+ 		opp-1401600000 {
+ 			opp-hz = /bits/ 64 <1401600000>;
+-			opp-supported-hw = <0x7>;
++			opp-supported-hw = <0x5>;
+ 			clock-latency-ns = <200000>;
+ 		};
+ 		opp-1478400000 {
+ 			opp-hz = /bits/ 64 <1478400000>;
+-			opp-supported-hw = <0x7>;
++			opp-supported-hw = <0x1>;
++			clock-latency-ns = <200000>;
++		};
++		opp-1497600000 {
++			opp-hz = /bits/ 64 <1497600000>;
++			opp-supported-hw = <0x04>;
+ 			clock-latency-ns = <200000>;
+ 		};
+ 		opp-1593600000 {
+ 			opp-hz = /bits/ 64 <1593600000>;
+-			opp-supported-hw = <0x7>;
++			opp-supported-hw = <0x1>;
+ 			clock-latency-ns = <200000>;
+ 		};
+ 	};
+@@ -329,29 +339,39 @@ opp-1785600000 {
+ 			opp-supported-hw = <0x7>;
+ 			clock-latency-ns = <200000>;
+ 		};
++		opp-1804800000 {
++			opp-hz = /bits/ 64 <1804800000>;
++			opp-supported-hw = <0x6>;
++			clock-latency-ns = <200000>;
++		};
+ 		opp-1824000000 {
+ 			opp-hz = /bits/ 64 <1824000000>;
+-			opp-supported-hw = <0x7>;
++			opp-supported-hw = <0x1>;
++			clock-latency-ns = <200000>;
++		};
++		opp-1900800000 {
++			opp-hz = /bits/ 64 <1900800000>;
++			opp-supported-hw = <0x4>;
+ 			clock-latency-ns = <200000>;
+ 		};
+ 		opp-1920000000 {
+ 			opp-hz = /bits/ 64 <1920000000>;
+-			opp-supported-hw = <0x7>;
++			opp-supported-hw = <0x1>;
+ 			clock-latency-ns = <200000>;
+ 		};
+ 		opp-1996800000 {
+ 			opp-hz = /bits/ 64 <1996800000>;
+-			opp-supported-hw = <0x7>;
++			opp-supported-hw = <0x1>;
+ 			clock-latency-ns = <200000>;
+ 		};
+ 		opp-2073600000 {
+ 			opp-hz = /bits/ 64 <2073600000>;
+-			opp-supported-hw = <0x7>;
++			opp-supported-hw = <0x1>;
+ 			clock-latency-ns = <200000>;
+ 		};
+ 		opp-2150400000 {
+ 			opp-hz = /bits/ 64 <2150400000>;
+-			opp-supported-hw = <0x7>;
++			opp-supported-hw = <0x1>;
+ 			clock-latency-ns = <200000>;
+ 		};
+ 	};
 -- 
 2.35.1
 
