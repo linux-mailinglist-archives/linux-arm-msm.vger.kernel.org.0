@@ -2,54 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DEBE57F37E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Jul 2022 08:50:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A740557F3B9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Jul 2022 09:30:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230297AbiGXGuz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Jul 2022 02:50:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53696 "EHLO
+        id S239574AbiGXHau (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Jul 2022 03:30:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229483AbiGXGuz (ORCPT
+        with ESMTP id S234930AbiGXHas (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 Jul 2022 02:50:55 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3E14FD13;
-        Sat, 23 Jul 2022 23:50:53 -0700 (PDT)
+        Sun, 24 Jul 2022 03:30:48 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18CD15FCF;
+        Sun, 24 Jul 2022 00:30:48 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9392160ECC;
-        Sun, 24 Jul 2022 06:50:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDBC6C3411E;
-        Sun, 24 Jul 2022 06:50:52 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id D28B4B80D2D;
+        Sun, 24 Jul 2022 07:30:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD39C341C0;
+        Sun, 24 Jul 2022 07:30:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1658645452;
-        bh=0oH/IV9wwJUFggYjwrDW4GxkAkDjKLJ27FwZpyJ+mXM=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=OK6vSCmwuW7PovDpvp1QjiXr1nEEU9iZ4aDBfc4ggYah1ksmm1kx4eKurwui2/qsd
-         B4HbMnPCOJHDPCApO5HJTYIYdeKzNxTU6tYaMClTLL90R0pfVohPL+Kt1j3P3GDK4j
-         Hnw5COFPX0wCWSO0qt0jw/23cVvuZdIPsfOVe8h5lH3/WC48OGDBRuNWVG00AlL/yd
-         ZJcalHsKTBvaNJAcaiyTmxzY3HDy4xbltFXvfAKgZ+F1gxidVajLUrX6SDu78YUxMJ
-         Zt4bNRYGGD6e+o8NamRhRNwPTpwzqM7i5hBzEsJ3QMdxvqQ89S7MMejASh3a1AGCzC
-         LTHScYI/hZE9w==
-Content-Type: text/plain; charset="utf-8"
+        s=k20201202; t=1658647845;
+        bh=9KrIL4JIVhAeYY7DitjagINlLfWWPK4HLr+UJatCfpU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=L0yuhuv10mSuOIefwVKEmhL0LhbibMr1zRwQYfYDTBpxWpxvU+Dbi3T89amolmWAg
+         hG0jCdfEAe5ZkBMl3OCoXpI71ZSy8QtdbJ1wMvWpmkql62H4/js99mk2hV1J4t3b+7
+         EihECu/WWmZ5WGZ6J1KoIEdHRw08+Eg3A6JUG/TWXOJmopPPCFxKOoip1rCIVThQ+A
+         etbY6IYV7/s99afC31nGzrx6U2h+K7/S+ss46fLEIpSNqoX2hi7fUGP+8/V+2t99wg
+         neFs5ojQ+numug9uGGaBIxqWLDG/3NyTvdnE9V75qDAHtCyuLDejVIBEcIivgMLTZF
+         BpHhpXBJPhLKg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oFW4j-0007LX-B8; Sun, 24 Jul 2022 09:30:53 +0200
+Date:   Sun, 24 Jul 2022 09:30:53 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Wolfram Sang <wsa@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] i2c: qcom-geni: Use the correct return value
+Message-ID: <Ytz1LUSwyZ/8LiN6@hovoldconsulting.com>
+References: <20220717035027.2135106-1-bjorn.andersson@linaro.org>
+ <20220717035027.2135106-2-bjorn.andersson@linaro.org>
+ <YtzSzKmakEWe1usg@shikoro>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20220627235512.2272783-1-quic_collinsd@quicinc.com>
-References: <20220627235512.2272783-1-quic_collinsd@quicinc.com>
-Subject: Re: [PATCH] spmi: trace: fix stack-out-of-bound access in SPMI tracing functions
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     David Collins <quic_collinsd@quicinc.com>,
-        linux-arm-msm@vger.kernel.org,
-        Ankit Gupta <ankgupta@codeaurora.org>,
-        Gilad Avidov <gavidov@codeaurora.org>, stable@vger.kernel.org,
-        Ingo Molnar <mingo@redhat.com>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        linux-kernel@vger.kernel.org
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Date:   Sat, 23 Jul 2022 23:50:50 -0700
-User-Agent: alot/0.10
-Message-Id: <20220724065052.DDBC6C3411E@smtp.kernel.org>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="SCcni7T232IeqbHy"
+Content-Disposition: inline
+In-Reply-To: <YtzSzKmakEWe1usg@shikoro>
 X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -59,65 +61,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting David Collins (2022-06-27 16:55:12)
-> trace_spmi_write_begin() and trace_spmi_read_end() both call
-> memcpy() with a length of "len + 1".  This leads to one extra
-> byte being read beyond the end of the specified buffer.  Fix
-> this out-of-bound memory access by using a length of "len"
-> instead.
->=20
-> Here is a KASAN log showing the issue:
->=20
-> BUG: KASAN: stack-out-of-bounds in trace_event_raw_event_spmi_read_end+0x=
-1d0/0x234
-> Read of size 2 at addr ffffffc0265b7540 by task thermal@2.0-ser/1314
-> ...
-> Call trace:
->  dump_backtrace+0x0/0x3e8
->  show_stack+0x2c/0x3c
->  dump_stack_lvl+0xdc/0x11c
->  print_address_description+0x74/0x384
->  kasan_report+0x188/0x268
->  kasan_check_range+0x270/0x2b0
->  memcpy+0x90/0xe8
->  trace_event_raw_event_spmi_read_end+0x1d0/0x234
->  spmi_read_cmd+0x294/0x3ac
->  spmi_ext_register_readl+0x84/0x9c
->  regmap_spmi_ext_read+0x144/0x1b0 [regmap_spmi]
->  _regmap_raw_read+0x40c/0x754
->  regmap_raw_read+0x3a0/0x514
->  regmap_bulk_read+0x418/0x494
->  adc5_gen3_poll_wait_hs+0xe8/0x1e0 [qcom_spmi_adc5_gen3]
->  ...
->  __arm64_sys_read+0x4c/0x60
->  invoke_syscall+0x80/0x218
->  el0_svc_common+0xec/0x1c8
->  ...
->=20
-> addr ffffffc0265b7540 is located in stack of task thermal@2.0-ser/1314 at=
- offset 32 in frame:
->  adc5_gen3_poll_wait_hs+0x0/0x1e0 [qcom_spmi_adc5_gen3]
->=20
-> this frame has 1 object:
->  [32, 33) 'status'
->=20
-> Memory state around the buggy address:
->  ffffffc0265b7400: 00 00 00 00 00 00 00 00 00 00 00 00 f1 f1 f1 f1
->  ffffffc0265b7480: 04 f3 f3 f3 00 00 00 00 00 00 00 00 00 00 00 00
-> >ffffffc0265b7500: 00 00 00 00 f1 f1 f1 f1 01 f3 f3 f3 00 00 00 00
->                                            ^
->  ffffffc0265b7580: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
->  ffffffc0265b7600: f1 f1 f1 f1 01 f2 07 f2 f2 f2 01 f3 00 00 00 00
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->=20
-> Fixes: a9fce374815d ("spmi: add command tracepoints for SPMI")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: David Collins <quic_collinsd@quicinc.com>
-> ---
 
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+--SCcni7T232IeqbHy
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Greg, can you pick this up directly? I don't have anything else for this
-cycle.
+On Sun, Jul 24, 2022 at 07:04:12AM +0200, Wolfram Sang wrote:
+>=20
+> > -	return num;
+> > +	return ret;
+>=20
+> Not quite. Kdoc describes the retval in i2c_transfer.
+>=20
+> 2136  * i2c_transfer - execute a single or combined I2C message
+> 2137  * @adap: Handle to I2C bus
+> 2138  * @msgs: One or more messages to execute before STOP is issued to
+> 2139  *      terminate the operation; each message begins with a START.
+> 2140  * @num: Number of messages to be executed.
+> 2141  *
+> 2142  * Returns negative errno, else the number of messages executed.
+
+And this is exactly what the driver is returning after this fix.
+
+Note that ret above is assigned based on the return value from two
+helper functions that return either a negative errno or the number
+messages executed.
+
+So I believe this patch is still needed to fix the error handling.
+
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+
+Johan
+
+--SCcni7T232IeqbHy
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQQHbPq+cpGvN/peuzMLxc3C7H1lCAUCYtz1KAAKCRALxc3C7H1l
+CBHVAP0UEiURyG3ZhQ8PSe/GPPDFlqH+xvSr8mdxxD4xF88HgAEA8ZIUri/6FFa+
+4us9bAiitlXLdlyS7lHfWeAQhBmemQc=
+=wjOq
+-----END PGP SIGNATURE-----
+
+--SCcni7T232IeqbHy--
