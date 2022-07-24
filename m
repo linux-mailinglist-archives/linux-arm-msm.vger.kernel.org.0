@@ -2,149 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3952257F697
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Jul 2022 20:47:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC7CA57F69D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Jul 2022 20:55:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231217AbiGXSrr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Jul 2022 14:47:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34696 "EHLO
+        id S231591AbiGXSzd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Jul 2022 14:55:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229492AbiGXSrq (ORCPT
+        with ESMTP id S229782AbiGXSzc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 Jul 2022 14:47:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C2AC6E009
-        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Jul 2022 11:47:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1658688464;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=xHhcfGRCAjt5E9OSivN130xjZgYbsf/HAXgqsJ2fhnE=;
-        b=c+eFMsCNXftjo+73cgj9J7U4Sgb9Dn9BMuO0388Sxh82d9gSuYMcIQw/29t5/iGlYISpgo
-        8ypZEvKXsCQHO6T8cb1JzPFF9EmuP/wktwyM/QlckciEKd4xOahyNQmFc9fcOyeMjlqQIW
-        tXwOKDgPjBwhkBhu9XWImUM6CYtOZC4=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-527-_7QDLBEeOcutAWq_Cra3og-1; Sun, 24 Jul 2022 14:47:43 -0400
-X-MC-Unique: _7QDLBEeOcutAWq_Cra3og-1
-Received: by mail-wm1-f70.google.com with SMTP id r82-20020a1c4455000000b003a300020352so5044757wma.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Jul 2022 11:47:42 -0700 (PDT)
+        Sun, 24 Jul 2022 14:55:32 -0400
+Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87A0F10B2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Jul 2022 11:55:31 -0700 (PDT)
+Received: by mail-qv1-xf32.google.com with SMTP id q3so6175543qvp.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Jul 2022 11:55:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=BZIDWbd+e5/Q1G0dFyLVjy7eyY4n93CGPNpfz9ufq8k=;
+        b=Y/x3X31uJTRvN69iA8JzEhHsItKIPMJZshfa+bd/jj0BgkTh5+YrF4nH/331x6eMQ8
+         ZimP5N8WljYAKCHUHQXUPtfODti54bLmHHssHC3psGmOQ1x2wL3vQWNzdKDe5wdqY3Sa
+         tEReokYrGMZF6VWR0PXKEKEnxrWKpGqOKOII6pOM7iD6OEh9wHH6gbtJlxOa0w+HDBvK
+         9WfCPqQgstBgL0M8Y8v4nLRaNoDtXdvFpPH7qjMoFZtUSAk55b9biOIBVAKndTmQ/5YB
+         3f1zBf5/kDr20EFdT3GvoeW7mw+Zi37ltG/fe8mnf4SIy6WKBXP/Shnia+sPWYXMFBKw
+         SlMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=xHhcfGRCAjt5E9OSivN130xjZgYbsf/HAXgqsJ2fhnE=;
-        b=Dd4MEOgBmSV6whikMYi4kWmU8wE6RH3nbebThDUCyl85hsRUtxr2Vsxsdj2wb8U7C2
-         frOduwqF3pHzsZztN04712OVvT8lC5Wy7DT4rrSOu80aqD74uVAlQPM9XcP4ojFHmuOv
-         WDtXq0NnfN6pwI3YD4lQHgRQ4FkhJ3txq1VJa/JE7xcO2XH0lTQDk/hyu0LuysdL5RbX
-         7CUZQxIzBhlE9qh5bScdNCUWljy23pi8+tvciXjjBewduuDmTfXGyVeespprALJSL01U
-         Zr87SvtJlFLJKlpHISKNX/Q+5HR7uD6lEJXVdodv+86LGcI/LlmVLSE/3UYoBUdFQJa/
-         0MPQ==
-X-Gm-Message-State: AJIora9asJbmVi5W1R+tTtaXYxZUVU8f673q+ICJ5tceX9FH4FnqoUzy
-        O1aM/nfeqEyBjhQL/cDC9FNCDg7rbrmCvhxYlsnRaQYoCGKhs/py4Qev2hN5hUXZOF/YXqeSaIY
-        9AGSWLkWejoON3cFLi+OJ25xyeg==
-X-Received: by 2002:a05:600c:284a:b0:3a2:ffb7:b56f with SMTP id r10-20020a05600c284a00b003a2ffb7b56fmr18986256wmb.134.1658688461905;
-        Sun, 24 Jul 2022 11:47:41 -0700 (PDT)
-X-Google-Smtp-Source: AGRyM1v//byKmdQgT5WvEWcDFD958f9+TODdjybZDGMctnTVoovPF22h8szxUHlYNCu+EncFlDUATg==
-X-Received: by 2002:a05:600c:284a:b0:3a2:ffb7:b56f with SMTP id r10-20020a05600c284a00b003a2ffb7b56fmr18986246wmb.134.1658688461720;
-        Sun, 24 Jul 2022 11:47:41 -0700 (PDT)
-Received: from [192.168.1.130] (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
-        by smtp.gmail.com with ESMTPSA id o8-20020a05600c378800b003a2e7c13a3asm11441121wmr.42.2022.07.24.11.47.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 24 Jul 2022 11:47:41 -0700 (PDT)
-Message-ID: <6b3f98db-83bf-41cd-b23d-79b455a06ebd@redhat.com>
-Date:   Sun, 24 Jul 2022 20:47:40 +0200
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=BZIDWbd+e5/Q1G0dFyLVjy7eyY4n93CGPNpfz9ufq8k=;
+        b=5IHcbahPqEbmMNIojaexRbu5Rfs1eoTOS4MSTgO9TiiT8cP+rbpbmE+WYly/8OCb6G
+         J9TTZbJeFb4oN5c9ydTOrSAj5SAXorcy1qfW9i+DvsJCeopOWC2kL+FcVnpftNGts6UN
+         mzqrN5siP5olJkFE12yO7Csks7cX7O7vBRBMM2MfTXTnhxdJcoYkLADr+7fi3wkgnGTf
+         zg//k59pLsOYRq+UhaCH9XgMmrFvVfWTQe4LdW3xzmbW/gCvh0ke4/h8j76dHbDtsLAv
+         Z1xZsC9ZWYrpOhC/0xLlKkUjcZ7R9PvkNVZeBkKGJIYdTnNthij/d1g2E76S2oGIclJC
+         3yTg==
+X-Gm-Message-State: AJIora/zr7jyaoyOGGzhDAFl9clyy+l44NF9z+0WqeXShYiHFzauPR2H
+        L0bmjbiYu0maLZKLD9KMl2/Ih5AoI2Vo/9rR4a1kPA==
+X-Google-Smtp-Source: AGRyM1uhtAz31vRN2vTHNL4YCaPo/HzrRPqWvsF7BYkwB/9AbIB+WVtU7Zfj39rHx4IiBz8rcO0fuw5kZtT4pTTl5BA=
+X-Received: by 2002:ad4:5761:0:b0:473:7861:69d1 with SMTP id
+ r1-20020ad45761000000b00473786169d1mr8093947qvx.73.1658688930682; Sun, 24 Jul
+ 2022 11:55:30 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2] drm/msm: Make .remove and .shutdown HW shutdown
- consistent
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-kernel@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Fabio Estevam <festevam@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org
-References: <20220724111327.1195693-1-javierm@redhat.com>
- <CAA8EJppEpPe4nfZ_kvNen6shSvgyUoL3adSQfhhCGCS2VmVZhQ@mail.gmail.com>
-From:   Javier Martinez Canillas <javierm@redhat.com>
-In-Reply-To: <CAA8EJppEpPe4nfZ_kvNen6shSvgyUoL3adSQfhhCGCS2VmVZhQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20220724172442.87830-1-matti.lehtimaki@gmail.com> <20220724172442.87830-4-matti.lehtimaki@gmail.com>
+In-Reply-To: <20220724172442.87830-4-matti.lehtimaki@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sun, 24 Jul 2022 21:55:19 +0300
+Message-ID: <CAA8EJpqUH_v1GXEYF62Z3DBtFu_305_h4D36aCnBr38bo5HoJw@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] ARM: dts: qcom: Add support for Samsung Galaxy Tab
+ 4 10.1 (SM-T530)
+To:     =?UTF-8?Q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+        soc@kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Dmitry,
-
-Thanks for your feedback.
-
-On 7/24/22 20:36, Dmitry Baryshkov wrote:
-> On Sun, 24 Jul 2022 at 14:13, Javier Martinez Canillas
-> <javierm@redhat.com> wrote:
-
-[...]
-
->>
->> +/*
->> + * Shutdown the hw if we're far enough along where things might be on.
->> + * If we run this too early, we'll end up panicking in any variety of
->> + * places. Since we don't register the drm device until late in
->> + * msm_drm_init, drm_dev->registered is used as an indicator that the
->> + * shutdown will be successful.
->> + *
->> + * This function must only be called if drm_dev->registered is true.
->> + */
->> +static inline void msm_shutdown_hw(struct drm_device *dev)
->> +{
->> +       drm_atomic_helper_shutdown(dev);
->> +}
-> 
-> Now there is no point in having this as a separate function. Could you
-
-The only reason why I kept this was to avoid duplicating the same comment
-in two places. I thought that an inline function would be better than that.
-
-> please inline it?
+On Sun, 24 Jul 2022 at 20:25, Matti Lehtim=C3=A4ki <matti.lehtimaki@gmail.c=
+om> wrote:
 >
-
-That's already the case. Sorry but I have to ask, do you read my patches
-before commenting? I have the feeling that is the second time that you ask
-for something that was already done in the patch.
- 
-[...]
-
->>
->> -       if (!priv || !priv->kms)
->> -               return;
->> -
->> -       drm_atomic_helper_shutdown(drm);
-> 
-> It might be worth repeating the comment here.
+> Add a device tree for the Samsung Galaxy Tab 4 10.1 (SM-T530) wifi tablet
+> based on the apq8026 platform.
 >
+> Currently supported are accelerometer sensor, hall sensor,
+> internal storage, physical buttons (power & volume), screen
+> (based on simple-framebuffer set up by the bootloader), sdcard,
+> touchscreen and USB.
+>
+> Signed-off-by: Matti Lehtim=C3=A4ki <matti.lehtimaki@gmail.com>
+> ---
+> Changes in v3:
+>   - Fix sdhc_2 bus width
+>   - Reorder includes
+>
+> Changes in v2:
+>   - Change codename to matisse-wifi
+>   - Remove msm-id, not needed when lk2nd is used
+>   - Remove unused labels from reserved memory regions
+>   - Rename muic node
+> ---
+>  arch/arm/boot/dts/Makefile                    |   1 +
+>  .../dts/qcom-apq8026-samsung-matisse-wifi.dts | 469 ++++++++++++++++++
+>  2 files changed, 470 insertions(+)
+>  create mode 100644 arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.d=
+ts
+>
+> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+> index 5112f493f494..8bac4f4f8656 100644
+> --- a/arch/arm/boot/dts/Makefile
+> +++ b/arch/arm/boot/dts/Makefile
+> @@ -1010,6 +1010,7 @@ dtb-$(CONFIG_ARCH_QCOM) +=3D \
+>         qcom-apq8016-sbc.dtb \
+>         qcom-apq8026-asus-sparrow.dtb \
+>         qcom-apq8026-lg-lenok.dtb \
+> +       qcom-apq8026-samsung-matisse-wifi.dtb \
+>         qcom-apq8060-dragonboard.dtb \
+>         qcom-apq8064-cm-qs600.dtb \
+>         qcom-apq8064-ifc6410.dtb \
+> diff --git a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts b/ar=
+ch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
+> new file mode 100644
+> index 000000000000..78a119107069
+> --- /dev/null
+> +++ b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
+> @@ -0,0 +1,469 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2022, Matti Lehtim=C3=A4ki <matti.lehtimaki@gmail.com>
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/input/input.h>
+> +#include "qcom-msm8226.dtsi"
+> +#include "qcom-pm8226.dtsi"
+> +
+> +/delete-node/ &smem_region;
 
-As mentioned I thought about it. But then decided that an inline function would
-be better to have the comment just in one place. I don't have a strong opinion
-though so I could change if others agree that duplicating the comment is better.
+Please move this to the /reserved-memory node. having it there would
+help understanding that we are just changing the address.
 
--- 
-Best regards,
+> +
+> +/ {
+> +       model =3D "Samsung Galaxy Tab 4 10.1";
+> +       compatible =3D "samsung,matisse-wifi", "qcom,apq8026";
+> +       chassis-type =3D "tablet";
+> +
 
-Javier Martinez Canillas
-Linux Engineering
-Red Hat
+[skipped]
 
+> +       i2c-muic {
+> +               compatible =3D "i2c-gpio";
+
+Is there any reason for using i2c-gpio rather than blsp_i2c4?
+According to the pinctrl-msm8226, gpio14/15 can be mapped to the blsp.
+
+> +               sda-gpios =3D <&tlmm 14 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN=
+)>;
+> +               scl-gpios =3D <&tlmm 15 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN=
+)>;
+> +
+> +               pinctrl-names =3D "default";
+> +               pinctrl-0 =3D <&muic_i2c_default_state>;
+> +
+> +               #address-cells =3D <1>;
+> +               #size-cells =3D <0>;
+> +
+> +               muic: usb-switch@25 {
+> +                       compatible =3D "siliconmitus,sm5502-muic";
+> +                       reg =3D <0x25>;
+> +
+> +                       interrupt-parent =3D <&tlmm>;
+> +                       interrupts =3D <67 IRQ_TYPE_EDGE_FALLING>;
+> +
+> +                       pinctrl-names =3D "default";
+> +                       pinctrl-0 =3D <&muic_int_default_state>;
+> +               };
+> +       };
+
+[skipped]
+
+
+--=20
+With best wishes
+Dmitry
