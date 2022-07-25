@@ -2,107 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BE7058045C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jul 2022 21:15:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 71908580464
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jul 2022 21:17:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236458AbiGYTPo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Jul 2022 15:15:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40524 "EHLO
+        id S236229AbiGYTRr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Jul 2022 15:17:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236407AbiGYTPl (ORCPT
+        with ESMTP id S232072AbiGYTRq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jul 2022 15:15:41 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 531A2BF42;
-        Mon, 25 Jul 2022 12:15:40 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 26PHfwZS013891;
-        Mon, 25 Jul 2022 19:15:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=h02mNx2EPfukJ8KeZkU7qKUi1nlfwjxtfdCaxPTiFIY=;
- b=bOj65xAtvIMU4zBbv8wMLWODJbGfCY4Al5wQh7jFO6kpTSZWT5svELn29Gfe1aQfi1KH
- HWc+NcG6z5WRChU+kwjJ8NCuJZwWOngLsKOZHiaC4QF56XKuyitjZ7NDIMf/08Ey7IeI
- ilMzFaY0EmC6Tl1kKkQ7Dx3eEbXSh8YSAdk4wgrylwA1S3Jfetc4ljBlO84eyJ4O25IE
- T1foe0v/KRiEicnb4+LRRu45E2ExXM5ZZCEUUHgCjnbXLnqAPMRg2i5j85xQtP3pbZzi
- caHBlzz8W+ZBfjgoFVWH3UBajXd0Ro+wLf0m5mIF1tbV0AJLws7tFUnrVBFi/Osc9pX/ XA== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3hhs84hkuc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 25 Jul 2022 19:15:35 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.47.97.222])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 26PJFY58025021
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 25 Jul 2022 19:15:34 GMT
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 25 Jul 2022 12:15:34 -0700
-Received: from hu-amelende-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 25 Jul 2022 12:15:33 -0700
-From:   Anjelique Melendez <quic_amelende@quicinc.com>
-To:     <corbet@lwn.net>, <sre@kernel.org>, <robh+dt@kernel.org>,
-        <agross@kernel.org>, <bjorn.andersson@linaro.org>
-CC:     <krzysztof.kozlowski+dt@linaro.org>, <vkoul@kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Anjelique Melendez <quic_amelende@quicinc.com>
-Subject: [PATCH v4 2/2] power: reset: qcom-pon: add support for qcom,pmk8350-pon compatible string
-Date:   Mon, 25 Jul 2022 12:13:17 -0700
-Message-ID: <20220725191314.19456-3-quic_amelende@quicinc.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220725191314.19456-1-quic_amelende@quicinc.com>
-References: <20220725191314.19456-1-quic_amelende@quicinc.com>
+        Mon, 25 Jul 2022 15:17:46 -0400
+Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F248B1C938;
+        Mon, 25 Jul 2022 12:17:45 -0700 (PDT)
+Received: by mail-ot1-f47.google.com with SMTP id by10-20020a056830608a00b0061c1ac80e1dso9373121otb.13;
+        Mon, 25 Jul 2022 12:17:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=N2qVqcaI+/T60Q3nyO05hwi9i9zsck7gS8YRee5a38k=;
+        b=C0qLgiLbvEvwqLRBKk4ZVv97OWqm6SDx2jlAPHHJiBJZ/kDvPFuLywKjtamwi5ft9k
+         0AnU2dEa3+S8UN/Y1yCU/V0FLY+dZK3+YfnGMgD/4DqHf14PM0Jk9ZCw+SiFz3b54bbq
+         wmgRGXZ6cqZC+O1RRdm0AoENG3MqGWHUXomu7m7fDSyYIvk9tUqVJDaIRdMsMqKTj/Vy
+         e7q3Sy4gJA9kCk+KcbQvlo3sdX16ZsKMVW8AfgIL7lviLmBugdFBOOeOlLR7b1RlXCI1
+         78dLyIK0zDTqIo/T3XJu5y3h1oAshryF0w4+8JL8qUxlNctHATm601yVbhIcXM8g9uAo
+         oLHw==
+X-Gm-Message-State: AJIora8Nzn8Pef5R/jxPlkYtHoMGht/B5tGYXlAMA4k3wm4O6uZpwSYx
+        sgJEBiVA8+ap4FquiTqiKg==
+X-Google-Smtp-Source: AGRyM1vI8+pv1JL6HWRu4b3H+fzvsD79ZmP78qQQQL6ie11qzh8N45ebXaX03WfLNQ2qQbK1mDkkQg==
+X-Received: by 2002:a9d:4f17:0:b0:61c:d99d:9ad1 with SMTP id d23-20020a9d4f17000000b0061cd99d9ad1mr5409259otl.80.1658776665241;
+        Mon, 25 Jul 2022 12:17:45 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id i11-20020a056830010b00b0061cb445a5fesm5283846otp.55.2022.07.25.12.17.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Jul 2022 12:17:44 -0700 (PDT)
+Received: (nullmailer pid 2535584 invoked by uid 1000);
+        Mon, 25 Jul 2022 19:17:42 -0000
+Date:   Mon, 25 Jul 2022 13:17:42 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: soc: qcom: smd: reference SMD edge
+ schema
+Message-ID: <20220725191742.GA2535526-robh@kernel.org>
+References: <20220723082358.39544-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: EiJhH14w0cmPmt5JsHZJffy4bbJ7qYF7
-X-Proofpoint-GUID: EiJhH14w0cmPmt5JsHZJffy4bbJ7qYF7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-07-25_12,2022-07-25_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 mlxlogscore=999 lowpriorityscore=0 bulkscore=0
- clxscore=1015 suspectscore=0 phishscore=0 mlxscore=0 spamscore=0
- adultscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2206140000 definitions=main-2207250079
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220723082358.39544-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for the new "qcom,pmk8350-pon" comptaible string.
+On Sat, 23 Jul 2022 10:23:57 +0200, Krzysztof Kozlowski wrote:
+> The child node of smd is an SMD edge representing remote subsystem.
+> Bring back missing reference from previously sent patch (disappeared
+> when applying).
+> 
+> Link: https://lore.kernel.org/r/20220517070113.18023-9-krzysztof.kozlowski@linaro.org
+> Fixes: 385fad1303af ("dt-bindings: remoteproc: qcom,smd-edge: define re-usable schema for smd-edge")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/soc/qcom/qcom,smd.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
 
-Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
----
- drivers/power/reset/qcom-pon.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/power/reset/qcom-pon.c b/drivers/power/reset/qcom-pon.c
-index 4a688741a88a..16bc01738be9 100644
---- a/drivers/power/reset/qcom-pon.c
-+++ b/drivers/power/reset/qcom-pon.c
-@@ -82,6 +82,7 @@ static const struct of_device_id pm8916_pon_id_table[] = {
- 	{ .compatible = "qcom,pm8916-pon", .data = (void *)GEN1_REASON_SHIFT },
- 	{ .compatible = "qcom,pms405-pon", .data = (void *)GEN1_REASON_SHIFT },
- 	{ .compatible = "qcom,pm8998-pon", .data = (void *)GEN2_REASON_SHIFT },
-+	{ .compatible = "qcom,pmk8350-pon", .data = (void *)GEN2_REASON_SHIFT },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, pm8916_pon_id_table);
--- 
-2.35.1
-
+Acked-by: Rob Herring <robh@kernel.org>
