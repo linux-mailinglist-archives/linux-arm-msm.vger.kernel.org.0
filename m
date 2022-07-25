@@ -2,64 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E952B5803CB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jul 2022 20:09:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 489AF580451
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jul 2022 21:15:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236414AbiGYSJf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Jul 2022 14:09:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59918 "EHLO
+        id S232253AbiGYTPE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Jul 2022 15:15:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232916AbiGYSJe (ORCPT
+        with ESMTP id S229525AbiGYTPE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jul 2022 14:09:34 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D744DF1E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 11:09:33 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id r8so2771009plh.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 11:09:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=lXHUeursV/DnjA3vkdaJ9YQ6tDdJ4lD2AcKBqo+/DmM=;
-        b=pU+PspT7bMrdPFrmwH5v7iD+m9BosZvMDVMaMlBSdp2Yh8KrPvuVldL1USRhBCv8Pk
-         KpnX5yU3diW7ZhoNYURhrbXdGGR9Z3yYQ9vdsGklAn8txZyAgWOWyxNtAWG6y9iwBnTw
-         yRUUT0PJrxHczV/PWHAEnb1PVQbzOtYOWKtgYShEzF8kCBPuPcCCOWyW+mw8Bx5gQ8F+
-         hN/uqE01TP2o6xChI3TUQZb3U0Adl1iwExG5Ycti+ayXcMEaepTJ2Oz56TqKuc51FUP4
-         +suUot1DegNzhmDIJuXLuViLToZzEKtZ4ZjL4RHwdcNG6UCHqnQ+mMWF92/9LHhaXook
-         vK1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=lXHUeursV/DnjA3vkdaJ9YQ6tDdJ4lD2AcKBqo+/DmM=;
-        b=ikzACiRaIxO4S1XuoZCDpc8DBFbtm5vS5gqQtn4dQoPZjvqDqjMEJpfGg0721gZ267
-         xvcXV7taobVvjAG81ydfCvgsHG0RpB/E75Omkpg37LVQkraiF2rdCoqcV3UK/MN+iPWD
-         hQ6qEHf/QiI9aGaBUx3f8KLSf7OxEGvgMuDj60bqBkBQVs82fWGs5yteWdAa0GjaQ7iJ
-         HvME6t6XukAcMKQ/UO+IZeEv6gL9lBJTIJ0YBJ66pNCBQN1cJdy1aUixuI+aVvPXDMfj
-         /GxlKjy0+nYE4C4s39Bp+lYGI0P2bhiSf5J2mH3bHAuIaWSnnTTtcYvAlcqylqIIU0sq
-         0n9g==
-X-Gm-Message-State: AJIora9hc8NpHH6wLoxsJQBBfJVVZGPtBLQbko2ia451EFSdv252lEE6
-        92dByKySBVGWcGNLp0aUt2m27g==
-X-Google-Smtp-Source: AGRyM1sJFjjTAQKKaSs8M50XszsAs8p2m3lvgVY9YJiOr1lX5bLoCrA+vhgLYYf4q/AvaxN8bKPlqw==
-X-Received: by 2002:a17:90b:38c3:b0:1f2:e229:41fd with SMTP id nn3-20020a17090b38c300b001f2e22941fdmr1481399pjb.201.1658772572680;
-        Mon, 25 Jul 2022 11:09:32 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:1f3a:5a45:a9cd:d7dd:fd01:73c0])
-        by smtp.gmail.com with ESMTPSA id i8-20020a17090a64c800b001ec92575e83sm9219735pjm.4.2022.07.25.11.09.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Jul 2022 11:09:32 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-mmc@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, ulf.hansson@linaro.org,
-        robh@kernel.org, bhupesh.sharma@linaro.org,
-        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        bjorn.andersson@linaro.org
-Subject: [PATCH] dt-bindings: mmc: Set maximum documented operating frequency as 384MHz
-Date:   Mon, 25 Jul 2022 23:39:16 +0530
-Message-Id: <20220725180916.2850228-1-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.35.3
+        Mon, 25 Jul 2022 15:15:04 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CFC1BCAA;
+        Mon, 25 Jul 2022 12:15:02 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 26PET4Yi008169;
+        Mon, 25 Jul 2022 19:14:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=4h+8hEAjbD14D26rOJM7NwZ8Wa7MWwunf6lkCqVhy6Q=;
+ b=jlkZDPpZ9BnPy37pR2U5vLoVYVnfe67LBejfTDZR+zmnI6ObYG6PYpYQ6Ih6mavVyFjU
+ hWuHQr8OlVRux2+raLw6vf+pwtD9iiP55wJqiWZEtvaCz071rrsXbvrDAl+HixkuXM7l
+ HSecRtobkj2Cxz8XL5OG3Dwzo+1tKL6C96FLtEc7rh17NVMYwXnA/h5DQPCRF0VW2bFi
+ y0n+iARpF1xfs9gIkFAwLQQ5zp6yjMIu2HItqSoAgJ2e8TT9unB0BIXyVLVDa/0J2S1H
+ YlLHQhOt7QuRwZTDTSh3MXKw/2ri32UsDA3W/Y/q17r13DWK/GOpwIxrvWjdzMvu+Rov OA== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3hg80engds-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 25 Jul 2022 19:14:57 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.47.97.222])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 26PJEuZ8010547
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 25 Jul 2022 19:14:56 GMT
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 25 Jul 2022 12:14:56 -0700
+Received: from hu-amelende-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 25 Jul 2022 12:14:55 -0700
+From:   Anjelique Melendez <quic_amelende@quicinc.com>
+To:     <corbet@lwn.net>, <sre@kernel.org>, <robh+dt@kernel.org>,
+        <agross@kernel.org>, <bjorn.andersson@linaro.org>
+CC:     <krzysztof.kozlowski+dt@linaro.org>, <vkoul@kernel.org>,
+        <linux-doc@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Anjelique Melendez <quic_amelende@quicinc.com>
+Subject: [PATCH v4 0/2] add support for PON GEN3 device
+Date:   Mon, 25 Jul 2022 12:13:13 -0700
+Message-ID: <20220725191314.19456-1-quic_amelende@quicinc.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 50okRts9h7QeDLK_nAsJ0H1J4RE9SdHz
+X-Proofpoint-ORIG-GUID: 50okRts9h7QeDLK_nAsJ0H1J4RE9SdHz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-07-25_12,2022-07-25_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ malwarescore=0 spamscore=0 priorityscore=1501 mlxlogscore=999
+ suspectscore=0 mlxscore=0 bulkscore=0 impostorscore=0 clxscore=1011
+ adultscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2206140000 definitions=main-2207250079
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -69,54 +82,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As Ulf noted in [1], the maximum operating frequency
-documented in the mmc-controller device-tree bindings
-should be updated to the maximum frequency supported
-by the mmc controller(s).
+Changes from v3:
+  - Addressed Krysztof's comments on patch 1/2
+    - Added missing minItems/maxItems
+    - Merged if statments with same constraints together
+    - Removed description from "reg-names"
+    
+Changes from v2:
+  - Added new "qcom,pmk8350-pon" compatible string as per Krysztof's
+    advice
+  - Updated dt logic to use comptaible strings to decide constraints
+    as per Krysztof's comment
+  - Added new patch (v3 2/2) to support new compatible string
 
-Without this fix in place, the 'make dtbs_check' reports
-issues with 'max-frequency' value for ipq8074 sdhci node:
+Changes from v1:
+  - Updated path which was missing Documentation/devicetree prefix
+  - Updated CC list
 
-  arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: mmc@7824900:
-   max-frequency:0:0: 384000000 is greater than the maximum of 200000000
+New patch series to seperate this patch from applied patches.
+Comments from original patch can be found
+https://lore.kernel.org/linux-arm-msm/27515993-18f3-8891-4835-9b6a8d7f86b0@quicinc.com/
 
-[1]. https://www.spinics.net/lists/kernel/msg4442049.html
+David Collins (1):
+  dt-bindings: power: reset: qcom-pon: update "reg" property details
 
-Cc: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Rob Herring <robh@kernel.org>
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
-- Rebased on linux-next/master
+Anjelique Melendez (1):
+  power: reset: qcom-pon: add support for qcom,pmk8350-pon compatible string
 
- .../devicetree/bindings/mmc/mmc-controller.yaml          | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/power/reset/qcom,pon.yaml | 50 +++++++++++++++++++++++++++---
+ drivers/power/reset/qcom-pon.c | 1 +
+ 2 file changed, 47 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/mmc/mmc-controller.yaml b/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
-index ff5ce89e5111..c49f3060c24a 100644
---- a/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
-+++ b/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
-@@ -87,12 +87,19 @@ properties:
-     enum: [1, 4, 8]
-     default: 1
- 
-+  # Maximum operating frequency:
-+  # - for eMMC, the maximum supported frequency is 200MHz,
-+  # - for SD/SDIO cards the SDR104 mode has a max supported
-+  #   frequency of 208MHz,
-+  # - some mmc host controllers do support a max frequency
-+  #   upto 384MHz,
-+  # so lets keep the maximum supported value here.
-   max-frequency:
-     description:
-       Maximum operating frequency of the bus.
-     $ref: /schemas/types.yaml#/definitions/uint32
-     minimum: 400000
--    maximum: 200000000
-+    maximum: 384000000
- 
-   disable-wp:
-     $ref: /schemas/types.yaml#/definitions/flag
 -- 
-2.35.3
+2.35.1
 
