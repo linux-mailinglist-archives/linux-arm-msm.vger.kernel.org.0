@@ -2,80 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CE91580359
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jul 2022 19:09:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAB23580364
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jul 2022 19:13:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235991AbiGYRJh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Jul 2022 13:09:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60186 "EHLO
+        id S236695AbiGYRNu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Jul 2022 13:13:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236106AbiGYRJg (ORCPT
+        with ESMTP id S236694AbiGYRNq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jul 2022 13:09:36 -0400
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54BC41EAC4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 10:09:35 -0700 (PDT)
-Received: by mail-il1-x131.google.com with SMTP id i1so4583791ilk.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 10:09:35 -0700 (PDT)
+        Mon, 25 Jul 2022 13:13:46 -0400
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDC2613F5F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 10:13:44 -0700 (PDT)
+Received: by mail-qv1-xf2b.google.com with SMTP id h18so8861673qvr.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 10:13:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=vOq4nxsOSWnsH+W3WKZ+m9zJ9eDyLu5786zKUGMBrbw=;
-        b=KjFuUx3+7qWEq5w3d4XANd4Vg43zUtAcjzW/yDLfVbEGs/X498yKp49ehS1W6dBh3B
-         Fn9wfaYRdasEZHVNidjVSdoS9aZ0XqDiVziSpCa1Ozv3IFlg/guQmSbD4+owHwchiGLz
-         g6DdM/uFXafprtyBHgs3b8oAx3uHnbxQbKuog=
+        bh=dWxbhPJv323dBOga7BLAIkxAvIwV15TMuJATxPHW6U4=;
+        b=to8PhtTUfLB4328jUwkeYdjB42CHE8bURrZJhYDcxRBA860CPbGaSlZKWENtz/ZJKQ
+         kSYMjZqSetNwnyB1ffDPDjj76FOjLJvGZ+zv/hPkoUSAEel8UZEeps3wSYZ7p3Ncl68E
+         x/N7NkiieXWOmxkp9oEsBY31wMkv7/hTNBhdz3bVjyVVwq9KPrleOO2zn83fWG6OH+yp
+         jeFRNGTvXxNbQ1l0GpLhwHUyYeD6YEiewBIuJMqYxEn0PNcIApwwHSZBkBwcL+d787If
+         7NlhkHaTwQjlbZ04K8lh1/93k23aPamO6qw4QCSRYh9JWFWDE2Gcvc10udKvX+IZKsDx
+         gKaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=vOq4nxsOSWnsH+W3WKZ+m9zJ9eDyLu5786zKUGMBrbw=;
-        b=Y1gK5ZhETBgU+Sc281tlUWwH+xM7PkBaZbB5yJZ/zXwF+OdKl2pr03XpOdYGPh+5U5
-         AYptFzmUWixH/UKHHgAKx5JAlCucwV8DzeuGgTplglFZWlZD6iOzrsOKf8qOgwEraXuQ
-         usOwUN1GkPWAI83DBNZWgTGe2ZD20V5jJkHMV+MgGbKrAJCXpl/koAB7twGVAlKQTFFK
-         rx7VuF0i3BJt8l+ENKW3U2eSQbrgKGnNTjhSG7Jbyw7uwGmuHVrTv6kfSuKkVf++w6K1
-         Zc/aVZgz8ps9DPRnme7U8tLaKzV7u8QTz3hs37XmB24ZpvZwor0VUxHmh4GuY51g0N3L
-         0/Mg==
-X-Gm-Message-State: AJIora+xJ1qaJunBFFjpsd+jvfr3NLMxInY2qhO2yAAYpfDyOEC1lSnU
-        tRgt9+KSiRXh4KvI0CcbMBROfJE+f00jwC9l
-X-Google-Smtp-Source: AGRyM1uH9js/KWxD1DP+HrI/DzISJZaEKUCBq1MBJzve7n9hq7r4Z1aXSgn1mmRSke2ubjSnQl0DPg==
-X-Received: by 2002:a05:6e02:17c7:b0:2dc:2950:3385 with SMTP id z7-20020a056e0217c700b002dc29503385mr5031632ilu.88.1658768974394;
-        Mon, 25 Jul 2022 10:09:34 -0700 (PDT)
-Received: from mail-io1-f45.google.com (mail-io1-f45.google.com. [209.85.166.45])
-        by smtp.gmail.com with ESMTPSA id z11-20020a05660217cb00b0067bd1f314b1sm6221320iox.51.2022.07.25.10.09.32
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Jul 2022 10:09:33 -0700 (PDT)
-Received: by mail-io1-f45.google.com with SMTP id o2so1338670iof.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 10:09:32 -0700 (PDT)
-X-Received: by 2002:a05:6638:388e:b0:33c:b603:516 with SMTP id
- b14-20020a056638388e00b0033cb6030516mr5400337jav.133.1658768971903; Mon, 25
- Jul 2022 10:09:31 -0700 (PDT)
+        bh=dWxbhPJv323dBOga7BLAIkxAvIwV15TMuJATxPHW6U4=;
+        b=gS89WRmdCWpws/nWfbwi5Bb8UqtaJM1SqVJTYMFucOUQKh4IfO7s3hS5YAAPWFYT0O
+         ZYZjRGzglfOzhIgczlH4Zdnky79heRJ7Bu2jgvXBcHrSESp1GaFJL05Mxvaei8E/UcX7
+         JQKWb09a/rrmGuaTGxQDKPRpcDPsINJC0nmawmEiig9L6k8CCFRtQ5jJg/7OLMhMcLu5
+         NWFuCsqzzhQRYKQ9KWDVwliovh6d6edjzP8rO4WsSH4SBln3awPBhGAk1gjYMvfZkkzW
+         Gd9FBEy4QHDO8a6cXgK2PpfM85fIGVIIBdWSvc+/6HJMiqITl+pofV4zoa2xCXnLjm8g
+         o/Sw==
+X-Gm-Message-State: AJIora9A40t+MDBy0my61FjMbN6ClKuLBGIxNWz2kc6iiLfxWhoiBAJj
+        OdA2uadnuWbwakz/K5ruvfyWL0Ex3CaJDzhSRhzHpW5YAp8=
+X-Google-Smtp-Source: AGRyM1vO7Fl6/wDwTJry1SfkMTvTNOn/8c6Wr2hZjoljiQ2oA9iu027EWeGY5nMo36S65J1Ft7Z43HRePAZna0tGQLk=
+X-Received: by 2002:a05:6214:2a84:b0:473:2958:2b02 with SMTP id
+ jr4-20020a0562142a8400b0047329582b02mr11571436qvb.122.1658769223886; Mon, 25
+ Jul 2022 10:13:43 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220723090942.1637676-1-dmitry.baryshkov@linaro.org>
  <b1aafb00-f00a-2621-ad51-fb2f7491dace@linaro.org> <CAA8EJpp_tSCR3CLGSD_qq62MzjVQOYGspY345aNfNSu1tMM=Vw@mail.gmail.com>
- <CAD=FV=WGtDMmB08py8D6jc0cv3xGsn5Rfc0MObQbEV=CiisBYg@mail.gmail.com>
- <76defcb3-8566-286a-d953-54c4a2b04782@linaro.org> <CAD=FV=XhYD0U=FAaGV0aLJhZ4LrULXrLptDV7=D8A91Kx=Qkgg@mail.gmail.com>
- <e3eb02f4-daf7-ed69-001f-72a275819af5@linaro.org>
-In-Reply-To: <e3eb02f4-daf7-ed69-001f-72a275819af5@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 25 Jul 2022 10:09:18 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WYshw8tcDb7dRS-CRdH1q2BOp0g74_qKtvKa1Lzo+mcg@mail.gmail.com>
-Message-ID: <CAD=FV=WYshw8tcDb7dRS-CRdH1q2BOp0g74_qKtvKa1Lzo+mcg@mail.gmail.com>
+ <62982c58-2a06-0005-cb2f-ec78913da8e1@linaro.org>
+In-Reply-To: <62982c58-2a06-0005-cb2f-ec78913da8e1@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 25 Jul 2022 20:13:32 +0300
+Message-ID: <CAA8EJpratkeg3wpHZxsXavDzO-Gq9wnumVw6dwy7Qa6+YRdhUg@mail.gmail.com>
 Subject: Re: [PATCH 0/3] dt-bindings: arm: qcom: define schema, not devices
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Stephen Boyd <swboyd@chromium.org>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Doug Anderson <dianders@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,70 +72,135 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Mon, Jul 25, 2022 at 10:08 AM Krzysztof Kozlowski
+On Mon, 25 Jul 2022 at 19:18, Krzysztof Kozlowski
 <krzysztof.kozlowski@linaro.org> wrote:
 >
-> On 25/07/2022 18:54, Doug Anderson wrote:
-> > Hi,
-> >
-> > On Mon, Jul 25, 2022 at 9:41 AM Krzysztof Kozlowski
+> On 24/07/2022 00:50, Dmitry Baryshkov wrote:
+> > On Sat, 23 Jul 2022 at 20:48, Krzysztof Kozlowski
 > > <krzysztof.kozlowski@linaro.org> wrote:
 > >>
-> >> On 25/07/2022 18:25, Doug Anderson wrote:
-> >>> Let's look specifically at the device tree file for the LTE board. One
-> >>> way to look at it is that the dts for the LTE board should have
-> >>> compatibles:
-> >>>   compatible = "lte", "wifi-only"
-> >>>
-> >>> The above matches the normal device tree mentality. It says: "hey, if
-> >>> you've got a lte driver for this board then use it; otherwise use the
-> >>> wifi-only driver".
-> >>>
-> >>> However, the above is actually broken for the bootloader use case. The
-> >>> bootloader is trying to pick a device tree and, to the bootloader, the
-> >>> above says "you can use this dts for either an lte board or a
-> >>> wifi-only board". That's bad. If the bootloader picks this device tree
-> >>> for a wifi-only board then the OS will try to initialize lte and
-> >>> things will crash. To go further, if you think about it things
-> >>> actually work fine if the wifi-only device tree says it's compatible
-> >>> with the LTE board. This is why I say it's opposite... ;-)
+> >> On 23/07/2022 11:09, Dmitry Baryshkov wrote:
+> >>> Describing each compatible board in DT schema seems wrong to me. It
+> >>> means that each new board is incompatible by default, until added to the DT
+> >>> schema.
+> >
+> > s/incompatible/non-valid/
+> >
 > >>
-> >> This is not specific to "bootloaders" but your specific implementation
-> >> of entire chain. How you described it, you have dependent pieces -
-> >> user-space must use the same DTB as bootloader chosen, but bootloader
-> >> makes different choices than user-space. It's perfectly fine to make
-> >> these choices different, but then user-space should not depend on
-> >> something which was/was not initialized in bootloader.
+> >> The bindings do not document something because it is or it is no
+> >> compatible. They document the compatible. Your patch essentially removes
+> >> the documentation, so there is no point in having compatibles in board
+> >> at all...
 > >
-> > I think there's a misunderstanding here.
-> >
-> > Currently the ChromeOS bootloader doesn't use the device tree to
-> > control its flow at all. ...but the ChromeOS bootloader is in charge
-> > of picking the device tree to give to the kernel.
-> >
-> > Specifically I'm not aware of any mechanism in the kernel where you
-> > can give it a pile of device tree files and have it pick the right
-> > one. I believe that the official ABI says that it's up to the
-> > bootloader to provide the device tree to the kernel. This is right out
-> > of `Documentation/arm64/booting.rst`
-> >
-> > A FIT image is, as far as I'm aware, a standard way to bundle a kernel
-> > together with many device trees. The idea here is that the bootloader
-> > should grab the kernel out and whichever device tree it decides is the
-> > right one. It should then boot the kernel and give it the correct
-> > device tree.
+> > I do not quite agree here. Please correct me if I'm wrong.
+> > Schema defines which DT files are correct and which are not. Which
+> > properties are required, which values are valid, etc. So far so good.
 >
-> So that's the same case if you had a device called "Foo" (google,foo)
-> with a Qualcomm sdm845 processor (qcom,sdm845) and have a DTS like:
-> "other-company,bar", "qcom,sdm845"
+> Schema is a tool, we create here bindings. The bindings document what
+> you wrote above, plus compatibles and any other pieces mentioned in DT spec.
 >
-> Bootloader on Foo sees "bar", ignores it. Then it sees "qcom,sdm845"
-> compatible and is all happy! It loads the DTS and passes to the kernel...
+> > For the device nodes it declares (or is willing to declare) all
+> > possible compatibility strings. There is a sensible number of on-chip
+> > IP blocks, external chips, etc. Each and every new chip (or new IP
+> > block) we are going to have a yaml file describing its usage. Perfect.
+> > For the machine compatibility lists the arm,qcom schema declares which
+> > machine compat strings are valid. And this looks like a problem. Now
+> > for the DT to be fully valid against DT schema, we have to define its
+> > machine compat string.
 >
-> You cannot do that...
+> Although one of goals is to have schema compliance, that is not the
+> reason why we document compatibles. Compatibles were documented long
+> time ago before DT schema came, because the bindings require it.
+>
+> Bindings define the interface between the DTS and software which uses
+> it. SW is kernel, bootloaders, user-space and some more.
 
-The bootloader never falls back to just the SoC name.
+I completely agree here.
 
--Doug
+From the point of HW/SW interfaces maybe the following compat lists
+would make more sense:
+- "xiaomi,msm8996-phone", "qcom,msm8996"
+- "qcom,qrb5165-iot-platform", "qcom,sm8250"
+- "qcom,sda845-iot-platform", "qcom,sdm845"
+- "inforce,sda660-sbc", "qcom,sda660"
+
+etc. IOW, describing the kind of the device, not the exact name/model of it.
+
+>
+> > For each and every phone/sbc/evb we have to name it in schema. I think
+> > this is an overkill.
+>
+> Qualcomm is rather moderate, nothing big here so definitely it is not an
+> overkill. We almost do not have there SoMs. Just take a pick at
+> Freescale - this is much more complex than Qualcomm, so any changes
+> should start with that. Qualcomm's "complexity" is not a reason to do
+> anything...
+
+Yeah, been there. As I wrote earlier, this looks like a postfixItems use case.
+
+>
+> > It feels like we are putting DT information
+> > (mapping form machine compat to SoC) into the DT schema.
+>
+> No, we are documenting the compatible in bindings. Just like we always
+> did and we always had to.
+>
+> > For qcs404 we already have a schema which uses three items: {},
+> > qcom,qcs404-evb, qcom,qcs404. This sounds like a perfect idea to me.
+> > We allow any board, created by Qualcomm, Google or any other random
+> > vendor, named Foo, Bar or Baz, as long as it declares that it is
+> > compatible with qcom,qcs404-evb.
+> >
+> > To go even further. We now have the qrb5165-rb5.dts, declaring
+> > compatible = "qcom,qrb5165-rb5", "qcom,sm8250".
+> > If at some point I add a navigation/communication/whatever mezz on top
+> > of it. It would make sense to use compatible =
+> > "qcom,qrb5165-rb5-navi-comm", "qcom,qrb5165-rb5", "qcom,sm8250".
+> > Adding this to the growing list inside arm,qcom.yaml sounds like a
+> > nightmare. I can only hope that at some point JSON schema gains
+> > postfixItems support (as proposed) to be able to change e.g.
+> > arm,qcom.yaml to list just our qcom,something platforms as possible
+> > postfixItems for the schema.
+>
+> Again, Qualcomm complexity is nothing compared to Freescale. :)
+
+Fortunately :-)
+I was trying to propose a way to have a useful schema, while keeping
+it small enough.
+
+> > Regarding having compatibles in board files at all. I think that they
+> > are somehow misused nowadays. Instead of declaring that the
+> > Dragonboard 845c is compatible with "thundercomm,db845c",
+> > "qcom,sdm845-sbc", "96boards,ce-board", "96boards,iot-board",
+> > "qcom,sdm845", the DT file declares nearly useless
+> > "thundercomm,db845c", "qcom,sdm845".
+> >
+> > Thus, if we (mostly) use machine compatible array to just define
+> > Vendor+device name and the underlying Qualcomm SoC, I propose to leave
+> > just a sensible part (SoC) in DT schema, while allowing any string in
+> > the first part.
+>
+>
+> No, because you miss then the purpose of bindings - to document the
+> compatible which is the important piece of interface between
+> DTS/bootloader/kernel/other OS/user-space.
+>
+> To summarize, you propose to not document board compatibles. This is not
+> what we want, because then the next step is - let's don't document SoCs.
+> If you do not document it, means anyone can uniliteraly change it, e.g.
+> in kernel DTS, which will break all other users (e.g. user-space or
+> bootloaders) parsing the compatibles. And before you say - no one parses
+> the board compatibles - let me just say that several user-space
+> (embedded/closed) parse them, bootloaders parse them (U-Boot, Google's
+> Chromebooks and others)
+
+Yes, I know. And in the case of e.g. Google ChromeOS bootloader it
+might make sense to declare compatibles using patterns rather than
+enumeration.
+
+Anyway, thank you for your comments, let's continue with documenting
+all the devices until something changes.
+
+-- 
+With best wishes
+Dmitry
