@@ -2,177 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 319B758055E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jul 2022 22:17:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 86DE258056F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jul 2022 22:22:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236861AbiGYURW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Jul 2022 16:17:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45854 "EHLO
+        id S236943AbiGYUWM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Jul 2022 16:22:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237101AbiGYUQ7 (ORCPT
+        with ESMTP id S236939AbiGYUWL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jul 2022 16:16:59 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CADCF21AA;
-        Mon, 25 Jul 2022 13:16:57 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id tk8so22565369ejc.7;
-        Mon, 25 Jul 2022 13:16:57 -0700 (PDT)
+        Mon, 25 Jul 2022 16:22:11 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CF0021820
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 13:22:09 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id t22so13363853lfg.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 13:22:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=1LB4h7RUeI5nyKeiuIHX5PjhDQREhdZ4FNcrFfCB7U4=;
-        b=U4OLlypiRRhseDmkFOYxXhlv21DUsTfdZT0gzQa9a/CypKhfO8CjtutobNBEoBSdgN
-         x4O5bFDoV1U/gNu5n5uUwd7iMUruJfmHUogB5CT7Y1aquQpSUQqUC2ZErI3YnueL3zOA
-         NAjAQv1hXQrMQtE6C2LxkBXxTrfdiIrzQUs2ql53rwRNZMwMriKB9IZZmKtA0/l9CshK
-         fYVg37d+2b8BHQOkADVRCdR2jxcQBo17gHWzHt79m+yeubPofJlL6+InWI6v9jZVOPXR
-         ZOeViLq4yLBQ31qGf8uL5XdItG1/G8Zg7T4ZgSc57FAsQacSOkoreo1yP18bfG4BOWp3
-         /FPw==
+        bh=6olDaq/uvfvlpPsjXbwiD0KGbFCbw/GgwCU0Otoyu9o=;
+        b=cf14DlLTiGj5aFxICV0ITuDWZLKAzORtJfL76XQFibFta09hkTS/VA7G2ru2FHZ7XY
+         0kqakW/bTZpWyTvpU4Go2JkGrHVA7hfUprfxJv4XhVaiTYBXYZgDwReNqsm0Q4mJrdG2
+         4sxqgFTaKJaIPaI7XkYl7gGEfhxdIEjE8sjVuPeQAAVJh0BHmnAKGwEpl3SWhhmDFyF+
+         wmNkoxVFGhOOJ94Ui+OUxGPg75+rB9sd29OxeteYKad6L6a7OjcbPYoi6+IjDXuZbag5
+         ozPvVXrMsRp1I4aEQz9ipWK7+KMvhX11RaKBnEGChwTVdHSnttZy8gycLkUk4/ESuXzd
+         avGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=1LB4h7RUeI5nyKeiuIHX5PjhDQREhdZ4FNcrFfCB7U4=;
-        b=KSymtLHCyt9gX2kGPca2E1uNErYMJa233x+Ra/zzviO2br+4gCRvVHSk7p5T8pAXJz
-         PMyQTTEQyYi85hGwpoCnV6fz3o8UqYU5+k+ZhY/MY/PlfoLndF6K0tdmpwo/L1dCpGL8
-         JgfOwyCcdRE/vFyr+1U9U7EOB4/dIjXA1eAJMMP7oyHZMsov6VFJQc1BSn3BNk8qMul1
-         rfr/AOYV3HQpxUuG1KNWjN4VahaDOhT4cyJtVlYKgJFF6iG+RSN8kVshPWTRHtOku1TT
-         Nbv02jBLpCzYLYxP7nkMrHQ7HCCx6SKyYJJFz51Rl8G+pSxY0WI02PbyMuZAb5NDk2Bp
-         8/HQ==
-X-Gm-Message-State: AJIora+NR0Ewtvo6e/gpkd/w3hkPLSHd8uvfrmQDj8ocoKHm5ix/kHjI
-        1FxSMB+k0mc1/Qea4Pzk8Xc=
-X-Google-Smtp-Source: AGRyM1vN7nmZYHuc+Fid++W6GdFXS/blopSWsF3pVAWf8XCAMdv0NgolnVD3P5v9dqDv3gq5n7OvbA==
-X-Received: by 2002:a17:907:d1f:b0:72f:5d89:d08 with SMTP id gn31-20020a1709070d1f00b0072f5d890d08mr11510881ejc.231.1658780216121;
-        Mon, 25 Jul 2022 13:16:56 -0700 (PDT)
-Received: from [10.31.0.14] ([37.120.217.162])
-        by smtp.gmail.com with ESMTPSA id d3-20020a170906370300b006fed062c68esm5603651ejc.182.2022.07.25.13.16.54
+        bh=6olDaq/uvfvlpPsjXbwiD0KGbFCbw/GgwCU0Otoyu9o=;
+        b=n848NcjEa6D1w94aI9g6uOQN14dMhkTT0uQ0JRmUnshE6PHnZIBv/LPKJVIXvfV+b0
+         dRxrmOwQ2fOyePRNuun9CJ9N3zm3b1GWY486uBdzh+AQl0K7GoEk4wMDSsvhj9FkFQ/5
+         TDjnW90nyViueWv7mCk0lWTYmWM/sKGZFxm6fPV6XKNwFff8p59S7nwWW1pHsCX0VlkZ
+         Cb1O0AiZANYawDgMYP9PORcERNtJ5Fgb7V3LypQYVblygTk2PSK2cBEaGzg1MAIKFuyo
+         VTyuz6uXd9WC4nKgUFC+pFvrTHjorIZiBgnxbxql4s6UCCB8/Sk9m8yrCFcIoXO11MVf
+         5vZA==
+X-Gm-Message-State: AJIora99LQfmi14Xl9JHFBc9hPalpUaWmTOpNdIMzZFIFhZpTxSKV6hD
+        T7BYrLozdU+JapnTZq9rqECFfQ==
+X-Google-Smtp-Source: AGRyM1tiIV7vdS2ost7/f/zFELVJA8SPxee2aUrt7GUtNNgBp0VRvmv5veQZvMzPDKzi96SxqWMlnQ==
+X-Received: by 2002:ac2:465d:0:b0:48a:8122:45f3 with SMTP id s29-20020ac2465d000000b0048a812245f3mr4217480lfo.573.1658780527708;
+        Mon, 25 Jul 2022 13:22:07 -0700 (PDT)
+Received: from [192.168.3.197] (78-26-46-173.network.trollfjord.no. [78.26.46.173])
+        by smtp.gmail.com with ESMTPSA id u4-20020a2e9b04000000b0025de8d95352sm2714473lji.1.2022.07.25.13.22.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Jul 2022 13:16:55 -0700 (PDT)
-Message-ID: <468b6e00-5d77-da64-164d-149bb640e902@gmail.com>
-Date:   Mon, 25 Jul 2022 22:16:53 +0200
+        Mon, 25 Jul 2022 13:22:07 -0700 (PDT)
+Message-ID: <3faffe39-061f-0e94-a59f-ab25a25820b5@linaro.org>
+Date:   Mon, 25 Jul 2022 22:22:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 0/4] firmware: Add support for Qualcomm UEFI Secure
- Application
+ Thunderbird/91.12.0
+Subject: Re: [PATCH 1/2] dt-bindings: soc: qcom: smd: reference SMD edge
+ schema
 Content-Language: en-US
 To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
- <20220725192705.GA2536409-robh@kernel.org>
-From:   Maximilian Luz <luzmaximilian@gmail.com>
-In-Reply-To: <20220725192705.GA2536409-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        linux-arm-msm@vger.kernel.org
+References: <20220723082358.39544-1-krzysztof.kozlowski@linaro.org>
+ <20220725191742.GA2535526-robh@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220725191742.GA2535526-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/25/22 21:27, Rob Herring wrote:
-> On Sun, Jul 24, 2022 at 12:49:45AM +0200, Maximilian Luz wrote:
->> On modern Qualcomm platforms, access to EFI variables is restricted to
->> the secure world / TrustZone, i.e. the Trusted Execution Environment
->> (TrEE or TEE) as Qualcomm seems to call it. To access EFI variables, we
->> therefore need to talk to the UEFI Secure Application (uefisecapp),
->> residing in the TrEE.
-> 
-> The whole point of UEFI is providing a standard interface. Why can't the
-> UEFI implementation call the TEE itself?
-> 
-> I'm not sure custom interfaces is something we want.
-
-Unfortunately, I'm not a Qualcomm engineer and in no way affiliated with
-them. So I probably can't convince them otherwise. Believe me, I'd like
-to :/
-
-First: The uefisecapp-driver is based on reverse-engineering. So please
-take things below with a grain of salt, I may be wrong. I've tried to
-lay this out in a bit more detail in patch 3, but I'll try to be more
-precise here:
-
-For some reason unknown to me, Qualcomm decided to lock away UEFI
-variable access via their TrEE framework for applications running in the
-TrustZone (or whatever that is exactly). To call to TrEE applications
-(like uefisecapp), they use SCM calls. Those SCM calls unfortunately can
-be a bit more complex. As far as I can tell, you essentially call to
-some hypervisor in the TrustZone which redistributes them (if necessary)
-to the respective application. Their downstream driver for that is at
-[1] and supports callbacks and re-entrant calls. As far as I can tell,
-the latter means that you can't run multiple SCM calls in parallel (at
-least not to that TzOS/TrEE interface) and can only ever have one
-"client" performing them.
-
-And as you can only ever have one entity performing those SCM calls, you
-cannot have both UEFI and the kernel doing them. To me, it seems to be a
-deliberate decision by Qualcomm to return EFI_UNSUPPORTED from the
-GetVariable etc. calls after exiting boot services. They do work just
-fine before that. Essentially exiting boot services transfers ownership
-of that SCM interface from UEFI to the kernel.
-
-Note: uefisecapp is also not the only TrEE application in use by those
-kinds of devices. For example, on the SC8180X based Surface Pro X that
-I'm using, there are at least an app for the TPM, a bunch of apps for
-HDCP, some winsecapp, and as far as I can tell also other cryptographic
-interfaces. I've tried to collect my findings about those in [2].
-
->> This series adds support for accessing EFI variables on those platforms.
+On 25/07/2022 21:17, Rob Herring wrote:
+> On Sat, 23 Jul 2022 10:23:57 +0200, Krzysztof Kozlowski wrote:
+>> The child node of smd is an SMD edge representing remote subsystem.
+>> Bring back missing reference from previously sent patch (disappeared
+>> when applying).
 >>
->> To do this, we first need to add some SCM call functions used to manage
->> and talk to Secure Applications. A very small subset of this interface
->> is added in the second patch (whereas the first one exports the required
->> functions for that). Interface specifications are extracted from [1].
->> While this does not (yet) support re-entrant SCM calls (including
->> callbacks and listeners), this is enough to talk to the aforementioned
->> uefisecapp on a couple of platforms (I've tested this on a Surface Pro X
->> and heard reports from Lenovo Flex 5G, Lenovo Thinkpad x13s, and Lenovo
->> Yoga C630 devices).
+>> Link: https://lore.kernel.org/r/20220517070113.18023-9-krzysztof.kozlowski@linaro.org
+>> Fixes: 385fad1303af ("dt-bindings: remoteproc: qcom,smd-edge: define re-usable schema for smd-edge")
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  Documentation/devicetree/bindings/soc/qcom/qcom,smd.yaml | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
 > 
-> What does Windows do on these devices? I'm surprised something like this
-> would fly with Microsoft.
+> Acked-by: Rob Herring <robh@kernel.org>
 
-It looks like Microsoft accepts this. They even seem to have some sort
-of interface for EFI variables via trusted execution environments: [3].
-This is essentially what the QcTrEE8180.sys driver I've reverse
-engineered this from seems to provide.
 
-So unless there's some way to make EFI variables work via the standard
-functions that I've missed, I don't see any alternatives. I think it's
-fairly unlikely that we can convince Qualcomm to make their UEFI
-implementation behave properly (variables are not the only issue, it
-seems that other functions are either partially or completely broken in
-some way or another...) and then also push updates for a bunch of
-devices (e.g. the Lenovo C630 also using this stuff is discontinued, as
-far as I can tell).
+Bjorn,
 
-I am open to suggestions though...
+Can you take it for v5.20 via remote-proc?
 
-Note that this series also doesn't really introduce a new interface for
-EFI variables themselves to the kernel. It relies on the existing
-efivars_register() / efivars_unregister() functions and the interface
-provided by them to enable access to EFI variables. So we already do
-have a "workaround" for broken UEFI variable access in the kernel.
-
-Regards,
-Max
-
-[1]: https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/blob/auto-kernel.lnx.4.14.c34/drivers/misc/qseecom.c
-[2]: https://github.com/linux-surface/surface-pro-x/issues/37
-[3]: https://github.com/tpn/winsdk-10/blob/9b69fd26ac0c7d0b83d378dba01080e93349c2ed/Include/10.0.16299.0/km/treevariableservice.h#L11-L12
+Best regards,
+Krzysztof
