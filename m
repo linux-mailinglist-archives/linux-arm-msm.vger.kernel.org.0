@@ -2,128 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FD68580597
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jul 2022 22:29:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42E5D5805AA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jul 2022 22:32:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234791AbiGYU3a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Jul 2022 16:29:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34240 "EHLO
+        id S237157AbiGYUcP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Jul 2022 16:32:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232013AbiGYU33 (ORCPT
+        with ESMTP id S237037AbiGYUcO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jul 2022 16:29:29 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04519BC9B;
-        Mon, 25 Jul 2022 13:29:27 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id A9C57B810FE;
-        Mon, 25 Jul 2022 20:29:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63D78C341CD;
-        Mon, 25 Jul 2022 20:29:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1658780965;
-        bh=iX8wr1hPKTneg9a+eBJXq4+wGlRNsgbD59/7wwnN1xA=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=BDA+ZjuwJ6YdcVR2XPmFe4pShoa4H+Zcpn7U6V/Ix1dgzNGEloHb5vdd8/wO70L+x
-         dmoAklJ3de20NXW8/c1SvEqWtNPSZmTxNVok6Vx0s/+Zw0jpYkx3XGenQLgosEryb4
-         b7FmR+giTmLriHFGB32w/DJlloD/yVi4+PyBNpwXGpojoEs1OjFhNa7zGiDazeLjNb
-         KwXm8hORhBKdXbnAl9JjndzW06JMOGMwYmhrjmfeisJa/LVYJKDlPavdh4T9PJ9091
-         KinrbzXh2VjhmJ96M1uUsh94oYzYhhN9MbQ6mwQEnoB03ZiDfkNYdOW6Tf/1ztj7jC
-         kmc/MV6KkW/8A==
-Received: by mail-vs1-f44.google.com with SMTP id 129so4221098vsq.8;
-        Mon, 25 Jul 2022 13:29:25 -0700 (PDT)
-X-Gm-Message-State: AJIora82RbxpP4yubCHsY22wS6mr092cAojQ03S1COJT0oMYZAsWk5hD
-        NGYvwCz/j+mOJRuVHb7/b/MoWrDka30UFiU/Cw==
-X-Google-Smtp-Source: AGRyM1vzsYMyTaGYF4X1r/77zbG7V68gqLcEpGiz0JYOkMPOFCFcjdJ4Vx5gxnBVP+8Ji/5BOwHBtGdQcDtcAk0fGGI=
-X-Received: by 2002:a05:6102:162b:b0:358:418a:4e57 with SMTP id
- cu43-20020a056102162b00b00358418a4e57mr4344243vsb.26.1658780964277; Mon, 25
- Jul 2022 13:29:24 -0700 (PDT)
+        Mon, 25 Jul 2022 16:32:14 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 411A0A19E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 13:32:13 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id 17so11498949pfy.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 13:32:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=cidzZoSWZYoDXDF9IC7uoFIPruoJyTZNnPCtO/DHQEU=;
+        b=HGBsFyxe5D+LXHZiE3jtAlGE64QTjqrCRhyW06Fn3gqVHuZJ4m16bgXylHuVu7QXi9
+         ZR9X5qzUUjIWu/K1XlaXTBAqLoaIQ2As/uGs70DbYlaX989nYloYWxECX+eW51395dzu
+         J4LF3gj7fcyyHk7H7/pdCfG1piCJjsfC1fHADZO+1bmGo3+aVntahp7UCl0zIJ5yNKA8
+         zKG2MbADvPPDtLulzAc7x3neOf0MRDTXWuEAExaFQWseqdOgONA9t778l1g3pB85aBdu
+         pGyD4O/9fv4jwFsTso49Rvy4TDxjt67Nwre6VHi9MloGy5WjqxAq2a+lSWrHNuaY25co
+         VOeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=cidzZoSWZYoDXDF9IC7uoFIPruoJyTZNnPCtO/DHQEU=;
+        b=oILNEs6MfH2GS9nJ7MyimOCpo6N3dCI2b/vI+73C30NiIorDC/K+yG0NvqrZV8NYdd
+         kl3YLl23jAJoRmngWBcc8TlFUnhqgmInWFEhYG4iP6t4JNmDYQyfd+hmc4N/7BscYzRt
+         0hME9DWZKcaVKKUPBFcr6exolSOcEXUatdQ52qhqUYB96s7TscMU/onP3c6v3UxGKUCw
+         NVMX1pGPKANQ5L7v3IM2u2O18rprRVUhhs86SvaYMsbac6MQCCJH0J8+Eas1WMaczGVB
+         hIoyRKJ16xQ4LlauiayleiQBPhNctGzmQd50rL3DIptoF4SGMaRs7ZOW/YhJz92vhkqP
+         CkTg==
+X-Gm-Message-State: AJIora+3rOK92tRfqxDpOeYqZpkhvC3WE9PJEkeCanXAnVjQf5yBiXQV
+        0/lWFOw1EApC150MRJDQ5ouZRw==
+X-Google-Smtp-Source: AGRyM1vrZIWgkVOEzElyLDDlXKV9IqGjL4yfkx+JwhmB2iyqwGkIeWwv0hSiwg/0CnS4xbWT2/FSRg==
+X-Received: by 2002:a05:6a00:21c2:b0:52b:ff44:666a with SMTP id t2-20020a056a0021c200b0052bff44666amr4529213pfj.83.1658781132627;
+        Mon, 25 Jul 2022 13:32:12 -0700 (PDT)
+Received: from ?IPV6:2401:4900:1f3a:5a45:a9cd:d7dd:fd01:73c0? ([2401:4900:1f3a:5a45:a9cd:d7dd:fd01:73c0])
+        by smtp.gmail.com with ESMTPSA id p2-20020a170902780200b00168dadc7354sm9697518pll.78.2022.07.25.13.32.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Jul 2022 13:32:12 -0700 (PDT)
+Message-ID: <7fa26bdc-e07e-4978-03a3-2241373f4dbc@linaro.org>
+Date:   Tue, 26 Jul 2022 02:02:07 +0530
 MIME-Version: 1.0
-References: <20220725180916.2850228-1-bhupesh.sharma@linaro.org>
-In-Reply-To: <20220725180916.2850228-1-bhupesh.sharma@linaro.org>
-From:   Rob Herring <robh@kernel.org>
-Date:   Mon, 25 Jul 2022 14:29:13 -0600
-X-Gmail-Original-Message-ID: <CAL_Jsq+UaXgCFH5azZoHDSSqagEcRf9f6-ZucWAHuYZi0HaHgA@mail.gmail.com>
-Message-ID: <CAL_Jsq+UaXgCFH5azZoHDSSqagEcRf9f6-ZucWAHuYZi0HaHgA@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: mmc: Set maximum documented operating
- frequency as 384MHz
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 1/1] dt-bindings: mmc: sdhci-msm: Fix issues in yaml
+ bindings
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>
 Cc:     linux-mmc <linux-mmc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
         Bhupesh Sharma <bhupesh.linux@gmail.com>,
+        "Gross, Andy" <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+References: <20220514220116.1008254-1-bhupesh.sharma@linaro.org>
+ <CAL_JsqLxXLFjre9h2dyoUJ=f0+pueUhSYezx_5bZ2SdpDt29xw@mail.gmail.com>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+In-Reply-To: <CAL_JsqLxXLFjre9h2dyoUJ=f0+pueUhSYezx_5bZ2SdpDt29xw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 25, 2022 at 12:09 PM Bhupesh Sharma
-<bhupesh.sharma@linaro.org> wrote:
->
-> As Ulf noted in [1], the maximum operating frequency
-> documented in the mmc-controller device-tree bindings
-> should be updated to the maximum frequency supported
-> by the mmc controller(s).
+Hi Rob,
 
-Please send DT patches to the DT list so checks run and they are in
-the review queue.
+On 7/2/22 3:36 AM, Rob Herring wrote:
+> On Sat, May 14, 2022 at 4:01 PM Bhupesh Sharma
+> <bhupesh.sharma@linaro.org> wrote:
+>>
+>> Rob pointed some remaining issues in the sdhci-msm yaml
+>> bindings (via [1]).
+>>
+>> Fix the same by first using the 'mmc-controller.yaml' as
+>> 'ref' and thereafter also fix the issues reported by
+>> 'make dtbs_check' check.
+>>
+>> [1]. https://lore.kernel.org/linux-arm-msm/YnLmNCwNfoqZln12@robh.at.kernel.org/
+>>
+>> Fixes: a45537723f4b ("dt-bindings: mmc: sdhci-msm: Convert bindings to yaml")
+>> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> Cc: Rob Herring <robh@kernel.org>
+>> Cc: Ulf Hansson <ulf.hansson@linaro.org>
+>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>> ---
+>> -> This patch uses the dts changes sent (here: https://lore.kernel.org/linux-arm-msm/20220514215424.1007718-1-bhupesh.sharma@linaro.org/), for fixing the dtbs_check errors.
+>> -> This patch is rebased on 'linux-next/master'
+>>
+>>   .../devicetree/bindings/mmc/sdhci-msm.yaml    | 52 ++++++++++++++++---
+>>   1 file changed, 44 insertions(+), 8 deletions(-)
+> 
+> There's another issue with this applied:
+> 
+> Documentation/devicetree/bindings/mmc/sdhci-msm.example.dtb:
+> mmc@8804000: Unevaluated properties are not allowed
+> ('operating-points-v2' was unexpected)
+> 
+> Should just need a 'operating-points-v2: true' line.
+> 
+> This won't show up until a fix for 'unevaluatedProperties' handling is
+> applied. But first I need all the issues fixed.
 
-> Without this fix in place, the 'make dtbs_check' reports
-> issues with 'max-frequency' value for ipq8074 sdhci node:
->
->   arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: mmc@7824900:
->    max-frequency:0:0: 384000000 is greater than the maximum of 200000000
->
-> [1]. https://www.spinics.net/lists/kernel/msg4442049.html
->
-> Cc: Ulf Hansson <ulf.hansson@linaro.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Rob Herring <robh@kernel.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
-> - Rebased on linux-next/master
->
->  .../devicetree/bindings/mmc/mmc-controller.yaml          | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/devicetree/bindings/mmc/mmc-controller.yaml b/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
-> index ff5ce89e5111..c49f3060c24a 100644
-> --- a/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
-> +++ b/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
-> @@ -87,12 +87,19 @@ properties:
->      enum: [1, 4, 8]
->      default: 1
->
-> +  # Maximum operating frequency:
-> +  # - for eMMC, the maximum supported frequency is 200MHz,
-> +  # - for SD/SDIO cards the SDR104 mode has a max supported
-> +  #   frequency of 208MHz,
-> +  # - some mmc host controllers do support a max frequency
-> +  #   upto 384MHz,
-> +  # so lets keep the maximum supported value here.
+Sorry, I totally missed this comment. I have sent a fix for the same via 
+[1]. Please help review the same.
 
-Add to the description instead of a comment.
+Thanks
 
+[1]. 
+https://lore.kernel.org/linux-arm-msm/20220725202709.2861789-1-bhupesh.sharma@linaro.org/
 
->    max-frequency:
->      description:
->        Maximum operating frequency of the bus.
->      $ref: /schemas/types.yaml#/definitions/uint32
->      minimum: 400000
-> -    maximum: 200000000
-> +    maximum: 384000000
->
->    disable-wp:
->      $ref: /schemas/types.yaml#/definitions/flag
-> --
-> 2.35.3
->
