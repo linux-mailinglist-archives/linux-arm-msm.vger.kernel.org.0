@@ -2,103 +2,260 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC4B25805C1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jul 2022 22:35:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1A29580697
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jul 2022 23:28:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237209AbiGYUfZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Jul 2022 16:35:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41642 "EHLO
+        id S236893AbiGYV2W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Jul 2022 17:28:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237198AbiGYUfY (ORCPT
+        with ESMTP id S237306AbiGYV1o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jul 2022 16:35:24 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D32DE17
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 13:35:21 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id a23so17436825lfm.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 13:35:21 -0700 (PDT)
+        Mon, 25 Jul 2022 17:27:44 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8092E24F12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 14:27:26 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id q18so7285442wrx.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 14:27:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=kF+g+F7mYcIUaJYAQWrmzn8M6Wb/+yPNGEuaPjJTuM4=;
-        b=c1E4ypsrj4lfQjVDS1PjLkofXsBCBIYDZ1iSIrtIkmc6jnYy+Q+NdEG9xEhHz7sCTb
-         7S8gZR6Kr0566YVA6fqyBfHCGzMq0XTU6LjPzw+gKr9GarCxMwFKil9NrN5y5MNqZi25
-         23ZJNUw8tky4+kkjcWOway9aElUecKZBb9L80dv2B1iSCGvkn3+n5Evi0EkUBb6kQcoa
-         k4Dg9URTwEyonbgRpBNIgMlnNq9XkMWZVoHVhPinK1jsRrVO6eO9XgfrAGw2XsL+bgcn
-         jgo9TAy/07Pet6Ww4BN6yscaYs/KCpunHCdXKQKkwd3FEsFvJjZHS9XJFEyAOogPD16E
-         rUgw==
+        d=linexp-org.20210112.gappssmtp.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=JzvszfNQi5ejtAVUKzxFeqJKoKFcM2OL5I7wo6yOLUs=;
+        b=30tz9RSnRYSbuuM1oeVf1s2lZN9N4F0FgqdOWOrdR7cPhuD2MR9UEt9RaXKjTPVUf1
+         2vS1HYTW7ESNwsM2aNSSqfFY65Ag93xVnanV7lmxzO1S7FMsTQzLA0v7FNd3HxY0b/Kp
+         5wP1ptbmzdCwSgp6o4NaD4wmCJApqE+98DHMks8hCMxcZa0vGv9O9sNQk5/9NSAXuhhw
+         3hYlDetbp4FKQogSBPdEcnGcJ7FhRH7dEkZaWYLgqe8l/rQWSsfm6AvcGlhZrts4wdzr
+         COm5WvwxBPxGwXscqkQS9v3/AmlrDG7NO8o7i2xKLeaWNsuXUSU24dvlXzUDE4y7hiO/
+         mjXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=kF+g+F7mYcIUaJYAQWrmzn8M6Wb/+yPNGEuaPjJTuM4=;
-        b=tsbvrRZ9uF3XdGZTQqUy6E5aa/ukEtyxOiZfTCZhCWsVXd+z88civS7d6ek0JdmssA
-         t2cuaTaQAoXKkfvCHIx0yHvvG7PaSx44NAu8mV7NMmgqB+wHSA6OvAZZuLP2w6pMiczj
-         U/nDvaq38Y5k34xqBLLtU91sB6ChZaKNuqtRkS4jbqk5ZlicklW8t6osJBoEJVvqNgyS
-         aCaTXjwQ+C1Qa0Rldn7kN7Bj2XCbc6jkfCuO9HBSmQEOB/bkWtiw+/AtntHF1rQ2Wut6
-         AVoTKcOzRWKX73Gw9UeiLX1qHaddvcE26qfRrGySrQWbOJpb8I9p6yppic7UvC1aqY8U
-         L99Q==
-X-Gm-Message-State: AJIora99KWsII0ePUmirccgk6qp+ENnU9wbiFOQr0U+8He/nTIm38jWO
-        Eci+I9xLlKiwCKVrkk3xq29qkA==
-X-Google-Smtp-Source: AGRyM1ttV6py/cPAH9tBoi/teqtLFo+O1OebISYGtEbEAaJj118/1dMgrgbrEF7axMWM/vp84mGJqg==
-X-Received: by 2002:a05:6512:2302:b0:489:da47:6a90 with SMTP id o2-20020a056512230200b00489da476a90mr4974106lfu.12.1658781319674;
-        Mon, 25 Jul 2022 13:35:19 -0700 (PDT)
-Received: from [192.168.3.197] (78-26-46-173.network.trollfjord.no. [78.26.46.173])
-        by smtp.gmail.com with ESMTPSA id s7-20020a05651c200700b0025deb36756dsm2339404ljo.103.2022.07.25.13.35.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Jul 2022 13:35:19 -0700 (PDT)
-Message-ID: <ea2cc75c-611f-f612-e692-325fb7e98d6b@linaro.org>
-Date:   Mon, 25 Jul 2022 22:35:17 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH] dt-bindings: ufs: qcom,ufs: add SC8280XP binding
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>, Rob Herring <robh@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=JzvszfNQi5ejtAVUKzxFeqJKoKFcM2OL5I7wo6yOLUs=;
+        b=zZuAp3QGqHIsA6T03VXLURWA1ypQF4NjJMI08ng13kulfw04rT3ljP8SSj+vzhsmF3
+         zemCi5BwkUEvshRfaX3PZmwY3/eDwvtlWLANOtL5btZivNaRoOJiYIlKZIIBa9RFj1B0
+         SRd2/FnAXMqVttxMlq4NN5ZCPAbIeuxcGzJRnSDIgtqULnP5NjwPCiNfA/H8G4GIO+4L
+         FliAVU7q7IHNC88jEqQ8uxNQi8+i29fDLWBNw+ZwJIo+/pIU7HGpYnNQVipi4qFBt22g
+         fFzl/Pb3gKHv04FBKg+g26pDNRpESanXWt/pW0/lF/y62gP/Vy2rWtLNRZKudxvKM448
+         5W4g==
+X-Gm-Message-State: AJIora8xV6rP1oUFLwVj1T/88IIvGymMN24jyVrnrimlcGNXPoagpUY0
+        cUu6G1nL6pqQLf8poqdP8JyVGg==
+X-Google-Smtp-Source: AGRyM1s9U02hra/VlDZWxvjRyNZFd/1Tk6FvV9bK+K+imuW0mbzylMH7L/c1GkdsuTGl4xbLLXpS1A==
+X-Received: by 2002:a5d:514e:0:b0:21e:4fe8:cbb2 with SMTP id u14-20020a5d514e000000b0021e4fe8cbb2mr8558182wrt.162.1658784444102;
+        Mon, 25 Jul 2022 14:27:24 -0700 (PDT)
+Received: from mai.box.freepro.com ([2a05:6e02:1041:c10:1780:8e54:dd38:6668])
+        by smtp.gmail.com with ESMTPSA id r17-20020a5d52d1000000b0021d68a504cbsm12668772wrv.94.2022.07.25.14.27.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Jul 2022 14:27:23 -0700 (PDT)
+From:   Daniel Lezcano <daniel.lezcano@linexp.org>
+To:     daniel.lezcano@linaro.org, rafael@kernel.org
+Cc:     rui.zhang@intel.com, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, khilman@baylibre.com,
+        abailon@baylibre.com, lukasz.luba@arm.com, broonie@kernel.org,
+        damien.lemoal@opensource.wdc.com, heiko@sntech.de,
+        hayashi.kunihiko@socionext.com, mhiramat@kernel.org,
+        talel@amazon.com, thierry.reding@gmail.com, digetx@gmail.com,
+        jonathanh@nvidia.com, anarsoul@gmail.com, tiny.windzz@gmail.com,
+        baolin.wang7@gmail.com, f.fainelli@gmail.com,
+        bjorn.andersson@linaro.org, mcoquelin.stm32@gmail.com,
+        glaroque@baylibre.com, miquel.raynal@bootlin.com,
+        shawnguo@kernel.org, niklas.soderlund@ragnatech.se,
+        matthias.bgg@gmail.com, j-keerthy@ti.com,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220711101441.4896-1-johan+linaro@kernel.org>
- <Yt5+EU529KriiAvE@hovoldconsulting.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <Yt5+EU529KriiAvE@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT)
+Subject: [PATCH v2 11/32] thermal/drivers/qcom: Switch to new of API
+Date:   Mon, 25 Jul 2022 23:26:16 +0200
+Message-Id: <20220725212637.2818207-12-daniel.lezcano@linexp.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20220725212637.2818207-1-daniel.lezcano@linexp.org>
+References: <20220725212637.2818207-1-daniel.lezcano@linexp.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/07/2022 13:27, Johan Hovold wrote:
-> On Mon, Jul 11, 2022 at 12:14:41PM +0200, Johan Hovold wrote:
->> Add SC8280XP to the DT schema.
->>
->> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
->> ---
-> 
-> Rob,
-> 
-> Will you be picking this one up?
-> 
-> There doesn't seem to be any other maintainers listed for this file in
-> case it's expected to go through some other tree.
-> 
+The thermal OF code has a new API allowing to migrate the OF
+initialization to a simpler approach. The ops are no longer device
+tree specific and are the generic ones provided by the core code.
 
-The preference is that it should go via subsystem and get_maintainers.pl
-points Alimi, Avri and Bart. However in the past it seems indeed Rob was
-picking it up...
+Convert the ops to the thermal_zone_device_ops format and use the new
+API to register the thermal zone with these generic ops.
 
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linexp.org>
+---
+ drivers/thermal/qcom/qcom-spmi-adc-tm5.c    | 19 +++++++++----------
+ drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 12 ++++++------
+ drivers/thermal/qcom/tsens.c                | 20 ++++++++++----------
+ 3 files changed, 25 insertions(+), 26 deletions(-)
 
-Best regards,
-Krzysztof
+diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+index d9c9c975f931..8e23013a21cc 100644
+--- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
++++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+@@ -355,9 +355,9 @@ static irqreturn_t adc_tm5_gen2_isr(int irq, void *data)
+ 	return IRQ_HANDLED;
+ }
+ 
+-static int adc_tm5_get_temp(void *data, int *temp)
++static int adc_tm5_get_temp(struct thermal_zone_device *tz, int *temp)
+ {
+-	struct adc_tm5_channel *channel = data;
++	struct adc_tm5_channel *channel = tz->devdata;
+ 	int ret;
+ 
+ 	if (!channel || !channel->iio)
+@@ -637,9 +637,9 @@ static int adc_tm5_gen2_configure(struct adc_tm5_channel *channel, int low, int
+ 	return ret;
+ }
+ 
+-static int adc_tm5_set_trips(void *data, int low, int high)
++static int adc_tm5_set_trips(struct thermal_zone_device *tz, int low, int high)
+ {
+-	struct adc_tm5_channel *channel = data;
++	struct adc_tm5_channel *channel = tz->devdata;
+ 	struct adc_tm5_chip *chip;
+ 	int ret;
+ 
+@@ -658,7 +658,7 @@ static int adc_tm5_set_trips(void *data, int low, int high)
+ 	return ret;
+ }
+ 
+-static struct thermal_zone_of_device_ops adc_tm5_thermal_ops = {
++static const struct thermal_zone_device_ops adc_tm5_thermal_ops = {
+ 	.get_temp = adc_tm5_get_temp,
+ 	.set_trips = adc_tm5_set_trips,
+ };
+@@ -670,11 +670,10 @@ static int adc_tm5_register_tzd(struct adc_tm5_chip *adc_tm)
+ 
+ 	for (i = 0; i < adc_tm->nchannels; i++) {
+ 		adc_tm->channels[i].chip = adc_tm;
+-
+-		tzd = devm_thermal_zone_of_sensor_register(adc_tm->dev,
+-							   adc_tm->channels[i].channel,
+-							   &adc_tm->channels[i],
+-							   &adc_tm5_thermal_ops);
++		tzd = devm_thermal_of_zone_register(adc_tm->dev,
++						    adc_tm->channels[i].channel,
++						    &adc_tm->channels[i],
++						    &adc_tm5_thermal_ops);
+ 		if (IS_ERR(tzd)) {
+ 			if (PTR_ERR(tzd) == -ENODEV) {
+ 				dev_warn(adc_tm->dev, "thermal sensor on channel %d is not used\n",
+diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+index 7419e196dbb0..3d3ad0a27482 100644
+--- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
++++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+@@ -185,9 +185,9 @@ static int qpnp_tm_update_temp_no_adc(struct qpnp_tm_chip *chip)
+ 	return 0;
+ }
+ 
+-static int qpnp_tm_get_temp(void *data, int *temp)
++static int qpnp_tm_get_temp(struct thermal_zone_device *tz, int *temp)
+ {
+-	struct qpnp_tm_chip *chip = data;
++	struct qpnp_tm_chip *chip = tz->devdata;
+ 	int ret, mili_celsius;
+ 
+ 	if (!temp)
+@@ -262,9 +262,9 @@ static int qpnp_tm_update_critical_trip_temp(struct qpnp_tm_chip *chip,
+ 	return qpnp_tm_write(chip, QPNP_TM_REG_SHUTDOWN_CTRL1, reg);
+ }
+ 
+-static int qpnp_tm_set_trip_temp(void *data, int trip, int temp)
++static int qpnp_tm_set_trip_temp(struct thermal_zone_device *tz, int trip, int temp)
+ {
+-	struct qpnp_tm_chip *chip = data;
++	struct qpnp_tm_chip *chip = tz->devdata;
+ 	const struct thermal_trip *trip_points;
+ 	int ret;
+ 
+@@ -282,7 +282,7 @@ static int qpnp_tm_set_trip_temp(void *data, int trip, int temp)
+ 	return ret;
+ }
+ 
+-static const struct thermal_zone_of_device_ops qpnp_tm_sensor_ops = {
++static const struct thermal_zone_device_ops qpnp_tm_sensor_ops = {
+ 	.get_temp = qpnp_tm_get_temp,
+ 	.set_trip_temp = qpnp_tm_set_trip_temp,
+ };
+@@ -445,7 +445,7 @@ static int qpnp_tm_probe(struct platform_device *pdev)
+ 	 * read the trip points. get_temp() returns the default temperature
+ 	 * before the hardware initialization is completed.
+ 	 */
+-	chip->tz_dev = devm_thermal_zone_of_sensor_register(
++	chip->tz_dev = devm_thermal_of_zone_register(
+ 		&pdev->dev, 0, chip, &qpnp_tm_sensor_ops);
+ 	if (IS_ERR(chip->tz_dev)) {
+ 		dev_err(&pdev->dev, "failed to register sensor\n");
+diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+index 7963ee33bf75..7238d6d50f4e 100644
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -532,9 +532,9 @@ static irqreturn_t tsens_irq_thread(int irq, void *data)
+ 	return IRQ_HANDLED;
+ }
+ 
+-static int tsens_set_trips(void *_sensor, int low, int high)
++static int tsens_set_trips(struct thermal_zone_device *tz, int low, int high)
+ {
+-	struct tsens_sensor *s = _sensor;
++	struct tsens_sensor *s = tz->devdata;
+ 	struct tsens_priv *priv = s->priv;
+ 	struct device *dev = priv->dev;
+ 	struct tsens_irq_data d;
+@@ -925,17 +925,17 @@ int __init init_common(struct tsens_priv *priv)
+ 	return ret;
+ }
+ 
+-static int tsens_get_temp(void *data, int *temp)
++static int tsens_get_temp(struct thermal_zone_device *tz, int *temp)
+ {
+-	struct tsens_sensor *s = data;
++	struct tsens_sensor *s = tz->devdata;
+ 	struct tsens_priv *priv = s->priv;
+ 
+ 	return priv->ops->get_temp(s, temp);
+ }
+ 
+-static int tsens_get_trend(void *data, int trip, enum thermal_trend *trend)
++static int tsens_get_trend(struct thermal_zone_device *tz, int trip, enum thermal_trend *trend)
+ {
+-	struct tsens_sensor *s = data;
++	struct tsens_sensor *s = tz->devdata;
+ 	struct tsens_priv *priv = s->priv;
+ 
+ 	if (priv->ops->get_trend)
+@@ -1002,7 +1002,7 @@ static const struct of_device_id tsens_table[] = {
+ };
+ MODULE_DEVICE_TABLE(of, tsens_table);
+ 
+-static const struct thermal_zone_of_device_ops tsens_of_ops = {
++static const struct thermal_zone_device_ops tsens_of_ops = {
+ 	.get_temp = tsens_get_temp,
+ 	.get_trend = tsens_get_trend,
+ 	.set_trips = tsens_set_trips,
+@@ -1056,9 +1056,9 @@ static int tsens_register(struct tsens_priv *priv)
+ 
+ 	for (i = 0;  i < priv->num_sensors; i++) {
+ 		priv->sensor[i].priv = priv;
+-		tzd = devm_thermal_zone_of_sensor_register(priv->dev, priv->sensor[i].hw_id,
+-							   &priv->sensor[i],
+-							   &tsens_of_ops);
++		tzd = devm_thermal_of_zone_register(priv->dev, priv->sensor[i].hw_id,
++						    &priv->sensor[i],
++						    &tsens_of_ops);
+ 		if (IS_ERR(tzd))
+ 			continue;
+ 		priv->sensor[i].tzd = tzd;
+-- 
+2.25.1
+
