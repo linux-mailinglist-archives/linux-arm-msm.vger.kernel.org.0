@@ -2,86 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B320158074D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 00:24:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4080D580764
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 00:32:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230242AbiGYWYd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Jul 2022 18:24:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34194 "EHLO
+        id S230329AbiGYWcn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Jul 2022 18:32:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229943AbiGYWYc (ORCPT
+        with ESMTP id S230242AbiGYWcn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jul 2022 18:24:32 -0400
-Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C76B125580;
-        Mon, 25 Jul 2022 15:24:31 -0700 (PDT)
-Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-10d8880d055so16571134fac.8;
-        Mon, 25 Jul 2022 15:24:31 -0700 (PDT)
+        Mon, 25 Jul 2022 18:32:43 -0400
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 523C72558C;
+        Mon, 25 Jul 2022 15:32:40 -0700 (PDT)
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-f2a4c51c45so16593095fac.9;
+        Mon, 25 Jul 2022 15:32:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=0Z0QbmRm1zN3pSx/ZSaoNbtj/O5S0CbGlF0Em9pGX2k=;
-        b=o/kH5R7yriQp3iibIpxEeMfZjys0axU3E4uFqBSjQsmkj+s3Pm0UfyhczPRKrebWeu
-         KLNaTM13tn6U97CWZhPa3L4ePKa+VQJCZao6XoY/6i/Y8GlsJi45CGhyxL4uqGnWOa0a
-         J2E17wzLAKaYG991BkFC61AJIDoBugZv2fICu8oz13DFlXQU5VgC11WnkwyGGI3kvRHS
-         71k6g4phYu/VTSgVQDWnGneeHI7R32jaRpRe4W7fYjDNdyLqUq87XEwc456m3JuC91zz
-         7X361TdoTkq+8lCesZh5KOLHsuXWrc4NaCEH0c+curbKRcexeMYj3+RT2dhaImPVpXRf
-         vNOw==
-X-Gm-Message-State: AJIora+fMSIhdi8bRr/6W4bSVGM57u9WeKR7rreEMCYfAeTVHkPKCpfi
-        8SW5kPJuONHCLdXE+WFhSQ==
-X-Google-Smtp-Source: AGRyM1sQ5rHAplbjf4BXSSxsvWxxvk51Ywc5oLR5A7N+3QkLG6dkpB354z62rWvjblH7M3Jlh/B4Mg==
-X-Received: by 2002:a05:6870:4186:b0:101:17ef:d966 with SMTP id y6-20020a056870418600b0010117efd966mr7479446oac.97.1658787871116;
-        Mon, 25 Jul 2022 15:24:31 -0700 (PDT)
+        bh=vrFg/Wdr2fpmDmlkrGgKtDYpcQh0adoN9huZZNeAVOQ=;
+        b=Tpsi4QB3GFKWUzPpssMRziiEEhUzcbZhFg7umD+Xyb4bCLgcB4v7C9dasSYUplLBr2
+         CL6AB7dEfXGgi/cvEWwNaZyqJV4xDh6URdG74FYgh4xk36zu09LVk0em2N9g+0Ox23Vl
+         q7DJyHohgGn6YemyqlfcGR7yb2/nkBzWCBOtkr04IOZosAP27gNxYZ8EZjswNa5oLkci
+         jwWlDmJ8J/E/ofFqZcGxzIAqmgAxSkXDb4dLJ3q0LgKmzMN5mAIO3W/rVJe2RLDlouVn
+         ie9AG5/rUA3KjtptVIhFzVSHTixMHMS+EeZd44KRJJvahntLvSc8fRTg0seB4arGsduz
+         TE+g==
+X-Gm-Message-State: AJIora/j1aed4SC1g01Rbp8C443SfvAGCrvbkPU1yw0ejoK2yN/IXXWa
+        cEj5msUJjQUX1C2D17LNxg==
+X-Google-Smtp-Source: AGRyM1t1bEV8DgQsWGAL0ndG+noYPz6WBjacLVXvISBkY4yCzv8I+OD2St3QKdRdkQDGzUvNBLwXNw==
+X-Received: by 2002:a05:6870:15c9:b0:101:cdac:3887 with SMTP id k9-20020a05687015c900b00101cdac3887mr7255938oad.35.1658788359595;
+        Mon, 25 Jul 2022 15:32:39 -0700 (PDT)
 Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id e1-20020a0568301e4100b0061c3753c30dsm5542756otj.17.2022.07.25.15.24.29
+        by smtp.gmail.com with ESMTPSA id f24-20020a9d6c18000000b0061c731fc92bsm5415876otq.64.2022.07.25.15.32.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Jul 2022 15:24:30 -0700 (PDT)
-Received: (nullmailer pid 2852673 invoked by uid 1000);
-        Mon, 25 Jul 2022 22:24:28 -0000
-Date:   Mon, 25 Jul 2022 16:24:28 -0600
+        Mon, 25 Jul 2022 15:32:38 -0700 (PDT)
+Received: (nullmailer pid 2865933 invoked by uid 1000);
+        Mon, 25 Jul 2022 22:32:37 -0000
+Date:   Mon, 25 Jul 2022 16:32:37 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Satya Priya <quic_c_skakit@quicinc.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, quic_tdas@quicinc.com,
-        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-soc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V6 1/5] dt-bindings: clock: Add "qcom,adsp-pil-mode"
- property
-Message-ID: <20220725222428.GA2852621-robh@kernel.org>
-References: <1658315023-3336-1-git-send-email-quic_c_skakit@quicinc.com>
- <1658315023-3336-2-git-send-email-quic_c_skakit@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+Subject: Re: [PATCH 01/10] dt-bindings: interconnect: qcom,msm8998-bwmon: add
+ support for SDM845 LLCC BWMON
+Message-ID: <20220725223237.GA2865899-robh@kernel.org>
+References: <20220720192807.130098-1-krzysztof.kozlowski@linaro.org>
+ <20220720192807.130098-2-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1658315023-3336-2-git-send-email-quic_c_skakit@quicinc.com>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+In-Reply-To: <20220720192807.130098-2-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 20 Jul 2022 16:33:39 +0530, Satya Priya wrote:
-> The LPASS Peripheral loader clocks would be used to bring
-> LPASS out of reset, when this property is present.
+On Wed, 20 Jul 2022 21:27:58 +0200, Krzysztof Kozlowski wrote:
+> Add compatible for SDM845 Bandwidth Monitor instance measuring traffic
+> between LLCC and memory.  It comes with different register layout:
+> called v5.
 > 
-> This is a cleanup done to handle overlap of regmap of
-> lpasscc and lpass_aon blocks. As a part of this, remove
-> the "cc" regmap from lpasscc node.
-> 
-> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> Cc: Rajendra Nayak <quic_rjendra@quicinc.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml   | 6 ++----
->  .../devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml         | 7 +++++++
->  2 files changed, 9 insertions(+), 4 deletions(-)
+>  .../devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml     | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Acked-by: Rob Herring <robh@kernel.org>
