@@ -2,82 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 76DE257F713
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Jul 2022 22:43:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CA7757F7DB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jul 2022 03:06:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229774AbiGXUnG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Jul 2022 16:43:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46000 "EHLO
+        id S229451AbiGYBGi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Jul 2022 21:06:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbiGXUnF (ORCPT
+        with ESMTP id S229437AbiGYBGh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 Jul 2022 16:43:05 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52816D129;
-        Sun, 24 Jul 2022 13:43:04 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id t22so8944729lfg.1;
-        Sun, 24 Jul 2022 13:43:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=pA5BfuMOUHYHwO3N3zLiAEa59H7++ZYtYbgRtUC4lS4=;
-        b=lJXN7Mz3DhZbhXRMSD1q7ouCf+C/Tq2lVQRBhzyr81PRVogA1pF7cWdnJk2GGE6BEi
-         cNWiQECTbjrN8BXsDsfKAIwp3/FqrEmEw4lAMXKd5uMn1ONVR4h7jdD/Lp5J7wO1CZvu
-         IKEu1Ui9mjZiVngVLJfsnRUtgh6zg/HCDXZqWE5iqtOfEL8hlVgOg+xoEwOru6aMsUVv
-         8ny32y+fgPncX00nKUoKhAlDs3uGaQ0rRNhrLOL7qd85rYwLhQEtynAeUbqHOGb9aCS0
-         BS0yooKkzjmULCG2M7VjKIAX1+5qKJLvlpvdaPzMgiQ/GhjOhTNDl76RVLJuE07pNQoc
-         wZgQ==
+        Sun, 24 Jul 2022 21:06:37 -0400
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0CB89FD6;
+        Sun, 24 Jul 2022 18:06:36 -0700 (PDT)
+Received: by mail-ot1-f42.google.com with SMTP id g20-20020a9d6a14000000b0061c84e679f5so7670254otn.2;
+        Sun, 24 Jul 2022 18:06:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=pA5BfuMOUHYHwO3N3zLiAEa59H7++ZYtYbgRtUC4lS4=;
-        b=RpxXjU0v4v6L5N3l2bk21hYVo1VjCyaDNJax6VYxLJtm+x6BmJqlMBUkkN5lsfuM+h
-         U/eyBOYohemPeLfIXAQGEnTf4hM4+SAXOwZpC4mgkTdzUMt0EKebLVfTTm5lQbnobAXN
-         jAmOJc4Rzj6FQmoSXzOxqKPjOZRjJIMyTLC8eOsedTLihKnOdYlIJUn/kahTECYqRQ2T
-         0q+fhQsCO/TM4ikbl0sRBKPY6xQcYjSFj3IN7h4SrIlLtxTR4DJ6L4U7qGYdyXgEveSF
-         pR0vL1bkXwjQxIxpavb7/KIKWTOhasRsz4vCvZg3UDeD1cb8ZKKNTgBrwFmsiwRgQoQN
-         kdqg==
-X-Gm-Message-State: AJIora/5abX/sE9qorgUV/BekBXiSZR49rfFR0pM44Sba3v8Gct880TZ
-        rC8KaNFIboCv76I4EsuBlM8hivMjfNqHF2vo11I=
-X-Google-Smtp-Source: AGRyM1vz4PlnN9YFCrpKpPzMIUBnbgCXz3iqng6JaKTnN1dOdYoY0ESf4MOXCwwUG0M3IxQAjIOkvQ==
-X-Received: by 2002:a05:6512:2284:b0:48a:7c35:2729 with SMTP id f4-20020a056512228400b0048a7c352729mr3654822lfu.397.1658695382591;
-        Sun, 24 Jul 2022 13:43:02 -0700 (PDT)
-Received: from [192.168.0.108] (dsl-hkibng42-5673c7-93.dhcp.inet.fi. [86.115.199.93])
-        by smtp.googlemail.com with ESMTPSA id r12-20020ac252ac000000b0048a833a14edsm908766lfm.201.2022.07.24.13.43.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 24 Jul 2022 13:43:02 -0700 (PDT)
-Message-ID: <5d500d42-3926-20f1-a677-3b77c4b2e8ca@gmail.com>
-Date:   Sun, 24 Jul 2022 23:43:01 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v3 3/3] ARM: dts: qcom: Add support for Samsung Galaxy Tab
- 4 10.1 (SM-T530)
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        soc@kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=QNCEP/Jd9p9U+kHeTNbZg9vzuQ68V1YM3OnqLNp9aiY=;
+        b=ESlvsy5UyFcNEZ/mdB/h29qdxZNvN5FPQ08G0mOwYmlycN6b9ZFFd97Ewud5LdNYzy
+         Y8hiFpKTj5/KzojzmLCh2RtTIdXXt5pZaflVFt0cgsxu2sskoCBwaXXO9IlQlNC1qv4i
+         z2hi5cvpBNm4DnqZaxqXDiOWMoL0QfQdWQ6Urjhe9CiVqSt+Kw2q3tySPbGDdssROL10
+         kW10MdgaoY35liZUB8rvG1PqV886d5XzusIIhmU9F9cKgNhnsRejUatsXkfu7JP4arSH
+         QB2QSnX3KI15//FX1MNxzs4UninsTqUTQhnjDP2O0NdHoQG8sPEfU9o1mjfud45G5HvW
+         /a4w==
+X-Gm-Message-State: AJIora/RLb+3SsUJPkXxDfiTcvi/v7rdmLqMj/HNqPct/MBkfMXElJ9B
+        uRqwcDujQbvIyOcCVw5Xog==
+X-Google-Smtp-Source: AGRyM1s5XKEnlQ5my1VSNVGytH3TBZejI+JtkvAk9JTSOphfdgVAoaZgqQddJRx6BCAc/nkzgm5u6g==
+X-Received: by 2002:a05:6830:d0b:b0:61c:1bc2:fbc0 with SMTP id bu11-20020a0568300d0b00b0061c1bc2fbc0mr3760368otb.348.1658711195791;
+        Sun, 24 Jul 2022 18:06:35 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id t21-20020a056870f21500b0010dc461410bsm3389440oao.38.2022.07.24.18.06.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 24 Jul 2022 18:06:35 -0700 (PDT)
+Received: (nullmailer pid 678621 invoked by uid 1000);
+        Mon, 25 Jul 2022 01:06:32 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Maximilian Luz <luzmaximilian@gmail.com>
+Cc:     Steev Klimaszewski <steev@kali.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220724172442.87830-1-matti.lehtimaki@gmail.com>
- <20220724172442.87830-4-matti.lehtimaki@gmail.com>
- <CAA8EJpqUH_v1GXEYF62Z3DBtFu_305_h4D36aCnBr38bo5HoJw@mail.gmail.com>
-From:   =?UTF-8?Q?Matti_Lehtim=c3=a4ki?= <matti.lehtimaki@gmail.com>
-In-Reply-To: <CAA8EJpqUH_v1GXEYF62Z3DBtFu_305_h4D36aCnBr38bo5HoJw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        linux-arm-msm@vger.kernel.org, Ard Biesheuvel <ardb@kernel.org>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Shawn Guo <shawn.guo@linaro.org>, linux-efi@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+In-Reply-To: <20220723224949.1089973-5-luzmaximilian@gmail.com>
+References: <20220723224949.1089973-1-luzmaximilian@gmail.com> <20220723224949.1089973-5-luzmaximilian@gmail.com>
+Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure Application client
+Date:   Sun, 24 Jul 2022 19:06:32 -0600
+Message-Id: <1658711192.682597.678620.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,24 +69,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24.7.2022 21.55, Dmitry Baryshkov wrote:
-> On Sun, 24 Jul 2022 at 20:25, Matti Lehtimäki <matti.lehtimaki@gmail.com> wrote:
->> +/delete-node/ &smem_region;
+On Sun, 24 Jul 2022 00:49:49 +0200, Maximilian Luz wrote:
+> Add bindings for the Qualcomm Trusted Execution Environment (TrEE) UEFI
+> Secure application (uefisecapp) client.
 > 
-> Please move this to the /reserved-memory node. having it there would
-> help understanding that we are just changing the address.
-
-I can move this to /reserved-memory node in next version. Other option
-would be to have a comment here, it seems both ways are used.
-
->> +       i2c-muic {
->> +               compatible = "i2c-gpio";
+> Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
+> ---
+>  .../firmware/qcom,tee-uefisecapp.yaml         | 38 +++++++++++++++++++
+>  MAINTAINERS                                   |  1 +
+>  2 files changed, 39 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/firmware/qcom,tee-uefisecapp.yaml
 > 
-> Is there any reason for using i2c-gpio rather than blsp_i2c4?
-> According to the pinctrl-msm8226, gpio14/15 can be mapped to the blsp.
 
-The reason to use i2c-gpio for this was using the other devices with
-similar node as an example. I tested and having the muic node in
-blsp_i2c4 worked the same.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
--Matti
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+./Documentation/devicetree/bindings/firmware/qcom,tee-uefisecapp.yaml: $id: relative path/filename doesn't match actual path or filename
+	expected: http://devicetree.org/schemas/firmware/qcom,tee-uefisecapp.yaml#
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml: duplicate '$id' value 'http://devicetree.org/schemas/soc/qcom/qcom,rpmh-rsc.yaml#'
+Documentation/devicetree/bindings/firmware/qcom,tee-uefisecapp.example.dtb:0:0: /example-0/firmware/scm: failed to match any schema with compatible: ['qcom,scm-sc8180x', 'qcom,scm']
+Documentation/devicetree/bindings/firmware/qcom,tee-uefisecapp.example.dtb:0:0: /example-0/firmware/scm: failed to match any schema with compatible: ['qcom,scm-sc8180x', 'qcom,scm']
+Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.example.dtb:0:0: /example-0/rsc@179c0000: failed to match any schema with compatible: ['qcom,rpmh-rsc']
+Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.example.dtb:0:0: /example-1/rsc@af20000: failed to match any schema with compatible: ['qcom,rpmh-rsc']
+Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.example.dtb:0:0: /example-2/rsc@18200000: failed to match any schema with compatible: ['qcom,rpmh-rsc']
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
