@@ -2,73 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E4AD5805B9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jul 2022 22:33:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC4B25805C1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jul 2022 22:35:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237184AbiGYUdd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Jul 2022 16:33:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39130 "EHLO
+        id S237209AbiGYUfZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Jul 2022 16:35:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237185AbiGYUd3 (ORCPT
+        with ESMTP id S237198AbiGYUfY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jul 2022 16:33:29 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D29A922B26
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 13:33:28 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id w7so11430744ply.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 13:33:28 -0700 (PDT)
+        Mon, 25 Jul 2022 16:35:24 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D32DE17
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 13:35:21 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id a23so17436825lfm.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 13:35:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=G5jYWH3hxREIRAZ8xNdidgICrjJheqmXGjb2G8FN6b8=;
-        b=pHMpJ5bbRdXkUSMdQf34U5FJaTcIT5vq2m9zsL+qYLFi/LoMKXvQeXC/Pmg47dqiO2
-         ZaUz76atfDMJ10DJ0+zUGJGyVQwd0kawSE13uhQYTko3cfNm/YQ75TdG01H9gykWRnTF
-         cwncz3qMOR3ZPjPYnE0iYlvHN1xNTSTY5E53fqVUDa5SqdX5KJMZ7mEXtGW+KaL1mNPq
-         8A6d1dB2vKV2NUcMurvhX9mPnK2R2StmKbirRFN5MLyqrCFGv6IelD4rFNTvHopj8kNL
-         lDbmGUdjfBPL8AhkyZsmAF99ioOcQzEeh6Ew5ouUosX5QBfjLo89jYiRXZFoaChdCH8p
-         D+5Q==
+        bh=kF+g+F7mYcIUaJYAQWrmzn8M6Wb/+yPNGEuaPjJTuM4=;
+        b=c1E4ypsrj4lfQjVDS1PjLkofXsBCBIYDZ1iSIrtIkmc6jnYy+Q+NdEG9xEhHz7sCTb
+         7S8gZR6Kr0566YVA6fqyBfHCGzMq0XTU6LjPzw+gKr9GarCxMwFKil9NrN5y5MNqZi25
+         23ZJNUw8tky4+kkjcWOway9aElUecKZBb9L80dv2B1iSCGvkn3+n5Evi0EkUBb6kQcoa
+         k4Dg9URTwEyonbgRpBNIgMlnNq9XkMWZVoHVhPinK1jsRrVO6eO9XgfrAGw2XsL+bgcn
+         jgo9TAy/07Pet6Ww4BN6yscaYs/KCpunHCdXKQKkwd3FEsFvJjZHS9XJFEyAOogPD16E
+         rUgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=G5jYWH3hxREIRAZ8xNdidgICrjJheqmXGjb2G8FN6b8=;
-        b=ov5UPC4003KAYd6LGeoyGbk7lQJ5eWPsR/zqrnFcl886BVjSgFhyeqoLnfhyMw4RFC
-         hm/wnQOElrFgo6lebF+6FdnJLt0dOU8ZCqvQdzWfnbijWZQLepwvFutyrvPcTUwbIUNr
-         UEG/t9YyeKuTzNU6PHS9JneiyUEaKms1OlP8JszTR96wNnpj2sv94HJhJwrm+AQvzcpl
-         xpSYADV0HA2Iavo6vU/5hGWtrnxcgorED3vjtNbgtZrAbM0f1GszjI63CO6Q3rBT4Q6p
-         qkF2mUY67i17FxinTCP/I/jTG4Qi16oOrxFwK5TNEZOcJYzL4vct552pdDQuoCvGbCkM
-         EKSA==
-X-Gm-Message-State: AJIora89oh+ge8gz3aLGcezfpDlLf3HkYMCdrx3cqcnynQx6X2RIgnfy
-        ua32z4lXcPjrFj6lys9WglQIPA==
-X-Google-Smtp-Source: AGRyM1uB8HPgkDJUFByliUB9fkkCz5dnUGW9tgJHiF+d1vbneXSJ66bbTruO1FX9I+boh7B6qELv9A==
-X-Received: by 2002:a17:90b:3c86:b0:1f2:1fb9:ebd with SMTP id pv6-20020a17090b3c8600b001f21fb90ebdmr31488423pjb.151.1658781208299;
-        Mon, 25 Jul 2022 13:33:28 -0700 (PDT)
-Received: from ?IPV6:2401:4900:1f3a:5a45:a9cd:d7dd:fd01:73c0? ([2401:4900:1f3a:5a45:a9cd:d7dd:fd01:73c0])
-        by smtp.gmail.com with ESMTPSA id s36-20020a17090a69a700b001f03287f704sm11501106pjj.57.2022.07.25.13.33.25
+        bh=kF+g+F7mYcIUaJYAQWrmzn8M6Wb/+yPNGEuaPjJTuM4=;
+        b=tsbvrRZ9uF3XdGZTQqUy6E5aa/ukEtyxOiZfTCZhCWsVXd+z88civS7d6ek0JdmssA
+         t2cuaTaQAoXKkfvCHIx0yHvvG7PaSx44NAu8mV7NMmgqB+wHSA6OvAZZuLP2w6pMiczj
+         U/nDvaq38Y5k34xqBLLtU91sB6ChZaKNuqtRkS4jbqk5ZlicklW8t6osJBoEJVvqNgyS
+         aCaTXjwQ+C1Qa0Rldn7kN7Bj2XCbc6jkfCuO9HBSmQEOB/bkWtiw+/AtntHF1rQ2Wut6
+         AVoTKcOzRWKX73Gw9UeiLX1qHaddvcE26qfRrGySrQWbOJpb8I9p6yppic7UvC1aqY8U
+         L99Q==
+X-Gm-Message-State: AJIora99KWsII0ePUmirccgk6qp+ENnU9wbiFOQr0U+8He/nTIm38jWO
+        Eci+I9xLlKiwCKVrkk3xq29qkA==
+X-Google-Smtp-Source: AGRyM1ttV6py/cPAH9tBoi/teqtLFo+O1OebISYGtEbEAaJj118/1dMgrgbrEF7axMWM/vp84mGJqg==
+X-Received: by 2002:a05:6512:2302:b0:489:da47:6a90 with SMTP id o2-20020a056512230200b00489da476a90mr4974106lfu.12.1658781319674;
+        Mon, 25 Jul 2022 13:35:19 -0700 (PDT)
+Received: from [192.168.3.197] (78-26-46-173.network.trollfjord.no. [78.26.46.173])
+        by smtp.gmail.com with ESMTPSA id s7-20020a05651c200700b0025deb36756dsm2339404ljo.103.2022.07.25.13.35.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Jul 2022 13:33:27 -0700 (PDT)
-Message-ID: <863c3c60-fade-44d5-892a-c002883a044f@linaro.org>
-Date:   Tue, 26 Jul 2022 02:03:23 +0530
+        Mon, 25 Jul 2022 13:35:19 -0700 (PDT)
+Message-ID: <ea2cc75c-611f-f612-e692-325fb7e98d6b@linaro.org>
+Date:   Mon, 25 Jul 2022 22:35:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH] dt-bindings: mmc: Set maximum documented operating
- frequency as 384MHz
+ Thunderbird/91.12.0
+Subject: Re: [PATCH] dt-bindings: ufs: qcom,ufs: add SC8280XP binding
 Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     linux-mmc <linux-mmc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Bhupesh Sharma <bhupesh.linux@gmail.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <20220725180916.2850228-1-bhupesh.sharma@linaro.org>
- <CAL_Jsq+UaXgCFH5azZoHDSSqagEcRf9f6-ZucWAHuYZi0HaHgA@mail.gmail.com>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-In-Reply-To: <CAL_Jsq+UaXgCFH5azZoHDSSqagEcRf9f6-ZucWAHuYZi0HaHgA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Johan Hovold <johan@kernel.org>, Rob Herring <robh@kernel.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220711101441.4896-1-johan+linaro@kernel.org>
+ <Yt5+EU529KriiAvE@hovoldconsulting.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <Yt5+EU529KriiAvE@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -79,59 +80,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
-
-On 7/26/22 1:59 AM, Rob Herring wrote:
-> On Mon, Jul 25, 2022 at 12:09 PM Bhupesh Sharma
-> <bhupesh.sharma@linaro.org> wrote:
+On 25/07/2022 13:27, Johan Hovold wrote:
+> On Mon, Jul 11, 2022 at 12:14:41PM +0200, Johan Hovold wrote:
+>> Add SC8280XP to the DT schema.
 >>
->> As Ulf noted in [1], the maximum operating frequency
->> documented in the mmc-controller device-tree bindings
->> should be updated to the maximum frequency supported
->> by the mmc controller(s).
-> 
-> Please send DT patches to the DT list so checks run and they are in
-> the review queue.
-
-Oops, will do.
-
->> Without this fix in place, the 'make dtbs_check' reports
->> issues with 'max-frequency' value for ipq8074 sdhci node:
->>
->>    arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: mmc@7824900:
->>     max-frequency:0:0: 384000000 is greater than the maximum of 200000000
->>
->> [1]. https://www.spinics.net/lists/kernel/msg4442049.html
->>
->> Cc: Ulf Hansson <ulf.hansson@linaro.org>
->> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
->> Cc: Rob Herring <robh@kernel.org>
->> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 >> ---
->> - Rebased on linux-next/master
->>
->>   .../devicetree/bindings/mmc/mmc-controller.yaml          | 9 ++++++++-
->>   1 file changed, 8 insertions(+), 1 deletion(-)
->>
->> diff --git a/Documentation/devicetree/bindings/mmc/mmc-controller.yaml b/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
->> index ff5ce89e5111..c49f3060c24a 100644
->> --- a/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
->> +++ b/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
->> @@ -87,12 +87,19 @@ properties:
->>       enum: [1, 4, 8]
->>       default: 1
->>
->> +  # Maximum operating frequency:
->> +  # - for eMMC, the maximum supported frequency is 200MHz,
->> +  # - for SD/SDIO cards the SDR104 mode has a max supported
->> +  #   frequency of 208MHz,
->> +  # - some mmc host controllers do support a max frequency
->> +  #   upto 384MHz,
->> +  # so lets keep the maximum supported value here.
 > 
-> Add to the description instead of a comment.
+> Rob,
+> 
+> Will you be picking this one up?
+> 
+> There doesn't seem to be any other maintainers listed for this file in
+> case it's expected to go through some other tree.
+> 
 
-Ok, will fix in v2.
+The preference is that it should go via subsystem and get_maintainers.pl
+points Alimi, Avri and Bart. However in the past it seems indeed Rob was
+picking it up...
 
-Thanks,
-Bhupesh
+
+Best regards,
+Krzysztof
