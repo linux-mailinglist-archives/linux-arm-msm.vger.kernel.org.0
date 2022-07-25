@@ -2,73 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 475DF57FBE7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jul 2022 11:01:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A696257FBF9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Jul 2022 11:07:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232749AbiGYJB0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Jul 2022 05:01:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44332 "EHLO
+        id S233274AbiGYJHI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Jul 2022 05:07:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230212AbiGYJBZ (ORCPT
+        with ESMTP id S231825AbiGYJHH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jul 2022 05:01:25 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E857C15703
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 02:01:23 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id q18so4563444wrx.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 02:01:23 -0700 (PDT)
+        Mon, 25 Jul 2022 05:07:07 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C851715707
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 02:07:05 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id g2so6955420wru.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 02:07:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :references:from:in-reply-to:content-transfer-encoding;
-        bh=oDGw3WVCUqpb1y41tcLQhQZCB3Jkdv/9EGqZqsBM1SQ=;
-        b=I1fhCkNu27OGN7Su+f7uyyZcISxU2+WbQ5HmPddk7CtE2cPl1TtpAMV82mYQHu2JTq
-         Cs48CbMOZhMEjZfbfPKY1RUMRDD1dCgcoSqocJXsMGCPX39SjriIlwDhSrcyLVmdyu63
-         D5nTvdq4RRIHJtTTXKeKMWX39fAA4lpGLHbzHbrjWiwQxP2NeGqdk8Fg+EX+hZPlYi6r
-         XGomyUA1ZbGC/xcFG+kZOY+bTaPA7b/DirD5fOyweA6VixBaYfZZsQkAOtnBE3M0s5kv
-         zYTMlhlggE6TiFSSd0vVn3qmwOE/ogDnG5n+w93rMeq848bAE/U0o8wbB1umx8D5q5PA
-         lB4g==
+        bh=BnGSyzyWLf1EvGDsf7ZW1hIPxlS1YAeaIslxDKFW9Lc=;
+        b=rSwioOobGa8baDPiKckdEwxdEMzV6HwL/ZTW68cVzN7aPUZvN+JQDHzKVWPkeB5pbx
+         Loc5/MxovHqCg0lYRJoTPTxqCTksooUzW1ys3HF2pMups1DMXsaGbzFEgCIr4hr9z0uE
+         7+EE41fmrLzRGXHvvAmjxPU++u5q4IPR33bBIWTQsvqhli/F9XGNyOdEgjrWpj1qpYRS
+         aoTJfiafM77H2r8mJbv3GxRa4ZQLU+BRN4hpe1eODx09VCRUb6aQwucdnx/K9Uwg+EYa
+         0vyp/Ie6l+Sw9UaoISEd3F2zPBRXs9nsf1bnEgHrtuIo/2a8I2hTWYshsY1KjjEaAruF
+         xNrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=oDGw3WVCUqpb1y41tcLQhQZCB3Jkdv/9EGqZqsBM1SQ=;
-        b=0q5l9M7zuc3VLDuMGznyrbNld0+2iNF5aJYnczwTjzX+GCAENlb+/UpnPddj2gMbZq
-         BUHn10MpnW0cWGqL6YDo9SgqKTB9CEfZ/IRaqd6ntvT8eJHGkpMdNCnZlhF33WIWEtbK
-         rwGz1KONrobMrzhyRtdi+svgdTop3cZsywaTfbsjXMtWiPpX0B1SW52kTw8u3qP3QIxA
-         fS0TFDbigerJzG+ND43wp6MULoVMSxxfk9nhJztETkw1hSBLsbtlhF5sfq3u89wx7RSd
-         1rEaEcuuPyfo/bPSuCOAUyJjvyFzeLVKjAMEfY/0VzBoqq71QcJeyC6RSxViJTmSUuIP
-         lAtQ==
-X-Gm-Message-State: AJIora8Yi+0nbS/cr66gVKfVrmn/VYl634dVL6XG+0rRXUcnQLDLv5W3
-        u4UyfVYBb8qyPKhHPTP2UbwcjA==
-X-Google-Smtp-Source: AGRyM1vmszB0XdSa2HBsMAR85kUABI5hCHOPFiTJ0YewyS3HdWyPG2vzZJymYlF3mE08s/9WMTEJrQ==
-X-Received: by 2002:a5d:4523:0:b0:21e:5796:3622 with SMTP id j3-20020a5d4523000000b0021e57963622mr7273694wra.456.1658739682454;
-        Mon, 25 Jul 2022 02:01:22 -0700 (PDT)
+        bh=BnGSyzyWLf1EvGDsf7ZW1hIPxlS1YAeaIslxDKFW9Lc=;
+        b=iY8GZbkZqp7JQcdIOqmC2vJ6VaBz1h6O6WOBmIEjXJvLjmEqJeto3kaIok+PYzR91t
+         2epCruZmTEmA+IcZ5/wQWiqmAhZUDPdXk1iRTtagQQNwpTeMygu00pfx6+JdW/ECBAqQ
+         VXpwXGEuY3CWISFCHbhwLtPucr2dgkS1sug7psogIOhP20Lmj7cDZ15E8BWdTgQp/jTz
+         74pAaEMdJk9thCHW79cM7rS0TgkukEwH8VrET6ZANQQoKsC2BORrVqjhYDwFGoDtBf9O
+         KyEluF9rmGAvgOX7CqrCF6a2nacyDuxV1O55Ko3+kAEBKgUIkSqPp+VAuyXEoQ/IZmth
+         7gMQ==
+X-Gm-Message-State: AJIora+e6UqNheCX2eAgDAnka7JtJRYOrrkm+dlwLJDcs6gZhP84cZlB
+        lWMzxRGvTwMearMDd2SNCE2fJA==
+X-Google-Smtp-Source: AGRyM1vpxwE7a/s/dbjPrBmI8wA6AnAUpG3gZp73Uo3GzTfCzIfKPZeJfGcxbtW3YFgrLtc+z7MERg==
+X-Received: by 2002:a5d:6110:0:b0:21e:4fe4:f7ba with SMTP id v16-20020a5d6110000000b0021e4fe4f7bamr7063984wrt.69.1658740024364;
+        Mon, 25 Jul 2022 02:07:04 -0700 (PDT)
 Received: from [192.168.1.9] ([195.24.90.54])
-        by smtp.googlemail.com with ESMTPSA id j10-20020a05600c190a00b003a342933727sm11246988wmq.3.2022.07.25.02.01.20
+        by smtp.googlemail.com with ESMTPSA id e29-20020a5d595d000000b0021e501519d3sm11325242wri.67.2022.07.25.02.07.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Jul 2022 02:01:21 -0700 (PDT)
-Message-ID: <f7df92d8-5faf-b643-cb3d-57115ca6cebd@linaro.org>
-Date:   Mon, 25 Jul 2022 12:01:19 +0300
+        Mon, 25 Jul 2022 02:07:03 -0700 (PDT)
+Message-ID: <8a03351b-2072-d8db-3de9-73a144de0ca1@linaro.org>
+Date:   Mon, 25 Jul 2022 12:07:01 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
 Subject: Re: [PATCH 1/7] venus : Add default values for the control
  V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY
 Content-Language: en-US
-To:     Nicolas Dufresne <nicolas@ndufresne.ca>,
-        Viswanath Boma <quic_vboma@quicinc.com>,
+To:     Viswanath Boma <quic_vboma@quicinc.com>,
+        video.upstream.external@qti.qualcomm.com,
         Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Mauro Carvalho Chehab <mchehab@kernel.org>,
         linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Hans Verkuil <hverkuil@xs4all.nl>
+        linux-kernel@vger.kernel.org
 References: <20220712122347.6781-1-quic_vboma@quicinc.com>
- <b06c71d090ae7eaa3cd047bb0067f566371bac3a.camel@ndufresne.ca>
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-In-Reply-To: <b06c71d090ae7eaa3cd047bb0067f566371bac3a.camel@ndufresne.ca>
+In-Reply-To: <20220712122347.6781-1-quic_vboma@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -79,61 +80,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Viswanath,
 
+On 7/12/22 15:23, Viswanath Boma wrote:
+> From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 
-On 7/12/22 16:34, Nicolas Dufresne wrote:
-> Le mardi 12 juillet 2022 à 17:53 +0530, Viswanath Boma a écrit :
->> From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->>
->>  V4l2 encoder compliance expecting default values of colormetry for the control.
-> 
-> nit: colormetry -> colorimetry
-> 
->>
->> Change-Id: I1db0d4940b54e033d646ce39d60dc488afba8d58
->> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
->> ---
->>  drivers/media/platform/qcom/venus/venc_ctrls.c | 4 +++-
->>  1 file changed, 3 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
->> index ea5805e71c143..37ba7d97f99b2 100644
->> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
->> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
->> @@ -352,6 +352,8 @@ static const struct v4l2_ctrl_ops venc_ctrl_ops = {
->>  int venc_ctrl_init(struct venus_inst *inst)
->>  {
->>  	int ret;
->> +	struct v4l2_ctrl_hdr10_mastering_display p_hdr10_mastering = { {34000, 13250, 7500 },
->> +	{ 16000, 34500, 3000 }, 15635,	16450, 10000000, 500 };
-> 
-> What is the origin of these values ? Should this be done in the control
-> framework instead ?
-
-We needed some safe default values to satisfy v4l2 control. I took the
-values from here [1].
-
-I'm not sure do we need them in v4l2 control core (most probably it is a
-good to have it), Hans ?
+In fact this comes from you, please drop 'From'.
 
 > 
->>  
->>  	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 58);
->>  	if (ret)
->> @@ -580,7 +582,7 @@ int venc_ctrl_init(struct venus_inst *inst)
->>  
->>  	v4l2_ctrl_new_std_compound(&inst->ctrl_handler, &venc_ctrl_ops,
->>  				   V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY,
->> -				   v4l2_ctrl_ptr_create(NULL));
->> +				   v4l2_ctrl_ptr_create((void *)&p_hdr10_mastering));
->>  
->>  	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
->>  			  V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD, 0,
+>  V4l2 encoder compliance expecting default values of colormetry for the control.
 > 
+> Change-Id: I1db0d4940b54e033d646ce39d60dc488afba8d58
+
+Drop this.
+
+> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
+> ---
+>  drivers/media/platform/qcom/venus/venc_ctrls.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
+> index ea5805e71c143..37ba7d97f99b2 100644
+> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
+> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+> @@ -352,6 +352,8 @@ static const struct v4l2_ctrl_ops venc_ctrl_ops = {
+>  int venc_ctrl_init(struct venus_inst *inst)
+>  {
+>  	int ret;
+> +	struct v4l2_ctrl_hdr10_mastering_display p_hdr10_mastering = { {34000, 13250, 7500 },
+> +	{ 16000, 34500, 3000 }, 15635,	16450, 10000000, 500 };
+
+Please do this with proper indentation.
+
+>  
+>  	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 58);
+>  	if (ret)
+> @@ -580,7 +582,7 @@ int venc_ctrl_init(struct venus_inst *inst)
+>  
+>  	v4l2_ctrl_new_std_compound(&inst->ctrl_handler, &venc_ctrl_ops,
+>  				   V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY,
+> -				   v4l2_ctrl_ptr_create(NULL));
+> +				   v4l2_ctrl_ptr_create((void *)&p_hdr10_mastering));
+
+I think you do not need to cast to (void *).
+
+>  
+>  	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+>  			  V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD, 0,
 
 -- 
 regards,
 Stan
-
-[1] https://www.elecard.com/page/article_hdr
-
