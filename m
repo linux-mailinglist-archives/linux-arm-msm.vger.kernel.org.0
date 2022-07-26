@@ -2,153 +2,253 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 60FA85819C7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 20:33:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 858845819D7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 20:38:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239312AbiGZScy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jul 2022 14:32:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49532 "EHLO
+        id S239556AbiGZSiW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jul 2022 14:38:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239280AbiGZScx (ORCPT
+        with ESMTP id S239539AbiGZSiV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jul 2022 14:32:53 -0400
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2047.outbound.protection.outlook.com [40.107.93.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C3611FCD1;
-        Tue, 26 Jul 2022 11:32:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=etaGq+J0Wt7zpxgo0mJhOrbg6WZ0e6KCP+441YhU6Qx9jY4q8jIoP9HxUBKchs7yl1i48vAHezFJXOZ/6Lh/49LO+iune+zxyiYnpTX4K3Z3XP+immwHGa+HhPzaAu8S8likVdH1tl8xDoBSOK3O7NIGN2q6z2gJrMntVqAFoVpOBml460h4U99STQk4f8+RHy8Dq7bK17ee+cOK/QFSgmgfjIF3c49rKdiTiOqpVCI+sFCh37982oSir4jQckx6rFycneXLeMY3ixjOHGNEApckkCR1T4s0khK4ulRJzd5ufcQ8Kdpjflbz2PQG18taH2awR4TOVZ+RFKIeqeVljA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=o7KmWCJJiLmmCXvHEW/edwGywv0Y5xwCzERUc9HlzQo=;
- b=h1QPYA+Jym3gWMU3JcuVYHrxfJOG+8jWqZ5f4bDopZx82Xt6svvi6iHyAeA6tN6VVHJRqOiW00l6b2sojwPAUE4o1bqFKhHt7TrBDbi9iZlRxjDXTee7qxet30FDe0qM7Z4zM+qrFKI9zXnXO1KHVCKhSqq2BTCd2eN7kY8p9geMzu2mi0uPN3ldwJ5fdp4dyeoK8XFquT4ukKdBaJjczdvRJtBem2/yTdqOmwEpNJB21r5WLlT68B3irnxmxZ01IIAAYWGFw/Oc4dBnfOAz5DcAJ5l7eZm1sK/v/qPJdy8xT9xIzZzan3d6XP/uVslTuOqKJBzFbaCoeleDy9aFIg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 12.22.5.238) smtp.rcpttodomain=gmail.com smtp.mailfrom=nvidia.com; dmarc=pass
- (p=reject sp=reject pct=100) action=none header.from=nvidia.com; dkim=none
- (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=o7KmWCJJiLmmCXvHEW/edwGywv0Y5xwCzERUc9HlzQo=;
- b=R23PdKIehSe/v8/Egr4s14t9166kDSkME/KRemw1pKDZBLTVbaidBpffCU8IvuIZkUu5ZmMhmWcNluuxQA6MbFUkZpCybUFlZkzeTsTtWb1OboXXxLfSkUjkIscTl+xoyCMAmIffGzUPPtu2AX5tRk3kvREU8bo/JJYEp7EsDaAEdQZHEOMK/PVOUiFRb1EJgJNxxTIv8tEdJdCho8fw8GEgTFrVqaLVFZrqnCvpnJ1OQsxaKN/AgENt49oE/+BZjEBGsSjansfG4VjK1lOs8SqzDxuaOg0O0xmYcoBUspFGVZulBOv1lV6Uz4v1ppV0Ane2nEGPtDRuWZtl05UfVg==
-Received: from BN9PR03CA0783.namprd03.prod.outlook.com (2603:10b6:408:13f::8)
- by PH7PR12MB6717.namprd12.prod.outlook.com (2603:10b6:510:1b0::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5458.19; Tue, 26 Jul
- 2022 18:32:49 +0000
-Received: from BN8NAM11FT047.eop-nam11.prod.protection.outlook.com
- (2603:10b6:408:13f:cafe::90) by BN9PR03CA0783.outlook.office365.com
- (2603:10b6:408:13f::8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5438.23 via Frontend
- Transport; Tue, 26 Jul 2022 18:32:49 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 12.22.5.238)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 12.22.5.238 as permitted sender) receiver=protection.outlook.com;
- client-ip=12.22.5.238; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (12.22.5.238) by
- BN8NAM11FT047.mail.protection.outlook.com (10.13.177.220) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.20.5458.17 via Frontend Transport; Tue, 26 Jul 2022 18:32:49 +0000
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by DRHQMAIL105.nvidia.com
- (10.27.9.14) with Microsoft SMTP Server (TLS) id 15.0.1497.32; Tue, 26 Jul
- 2022 18:32:48 +0000
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail202.nvidia.com
- (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Tue, 26 Jul
- 2022 11:32:47 -0700
-Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com (10.129.68.10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26 via Frontend
- Transport; Tue, 26 Jul 2022 11:32:45 -0700
-Date:   Tue, 26 Jul 2022 11:32:43 -0700
-From:   Nicolin Chen <nicolinc@nvidia.com>
-To:     <joro@8bytes.org>, Alex Williamson <alex.williamson@redhat.com>
-CC:     <will@kernel.org>, <marcan@marcan.st>, <sven@svenpeter.dev>,
-        <robin.murphy@arm.com>, <robdclark@gmail.com>,
-        <baolu.lu@linux.intel.com>, <orsonzhai@gmail.com>,
-        <baolin.wang7@gmail.com>, <zhang.lyra@gmail.com>,
-        <jean-philippe@linaro.org>, <jgg@nvidia.com>,
-        <kevin.tian@intel.com>, <suravee.suthikulpanit@amd.com>,
-        <alyssa@rosenzweig.io>, <dwmw2@infradead.org>,
-        <mjrosato@linux.ibm.com>, <gerald.schaefer@linux.ibm.com>,
-        <thierry.reding@gmail.com>, <vdumpa@nvidia.com>,
-        <jonathanh@nvidia.com>, <cohuck@redhat.com>,
-        <thunder.leizhen@huawei.com>, <christophe.jaillet@wanadoo.fr>,
-        <chenxiang66@hisilicon.com>, <john.garry@huawei.com>,
-        <yangyingliang@huawei.com>, <iommu@lists.linux.dev>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-s390@vger.kernel.org>,
-        <linux-tegra@vger.kernel.org>,
-        <virtualization@lists.linux-foundation.org>, <kvm@vger.kernel.org>
-Subject: Re: [PATCH v5 0/5] cover-letter: Simplify vfio_iommu_type1
- attach/detach routine
-Message-ID: <YuAzS1LatwGEvk7S@Asurada-Nvidia>
-References: <20220701214455.14992-1-nicolinc@nvidia.com>
- <20220706114217.105f4f61.alex.williamson@redhat.com>
- <YsXMMCX5LY/3IOtf@Asurada-Nvidia>
- <20220706120325.4741ff34.alex.williamson@redhat.com>
- <Ys9b7GSImp/sHair@Asurada-Nvidia>
+        Tue, 26 Jul 2022 14:38:21 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 530B832D99
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 11:38:18 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id h8so21304636wrw.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 11:38:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=j6N0pmFjTqcYOHHvMWdXLEZrWTcV8zp2h7HHkht5ViE=;
+        b=ywaywuIvS7cTnJS09uyXPae4Azt6+q5qheewgaxEG63GjCPCWxiOSFaVxxgQqqEYfu
+         urv9iD3hLCtsJJFh0pVSLrBYkxq7fNYwyld086b2Nix6h0ovq9TPiW9p3JXjJYwinUZe
+         lknDuVNOG27+uwOIqgrsDK4QQjv+E+2in2w4/W2g7BRYd/UugqIuINSjLIH3KCHvJwsR
+         VqPbuyECorN43RDFaYM48Zyqy6uNMKKunutOgPdTHVMhpgAQAt6NB6zGCsVINiOZpX0z
+         gPMPKzlMcFFiugwWs2sm7ao5q20kY0Vp23vBgOoGAhEELTDU3HCrcrYtqgDVC2r2pqNB
+         gYWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=j6N0pmFjTqcYOHHvMWdXLEZrWTcV8zp2h7HHkht5ViE=;
+        b=hAmnGsgBiu1yr6a7JFhiamgMm3tyZi+F3VabUR2xoXpJBOKvRHrKyJaND8wQf5aLZ5
+         qz6qR/WvuHzLbrG2UWLva3KQYUBc/WG4IzL4DZ51eT0hT7AmHhdxcOWiK+UQE4FQAuEf
+         vNe9gbEJK5q7xE+AEQ5NfdHgBlqQZB5oUIni825Qd1oSkKurbZZufQOz3YJJb33Q4OzZ
+         HLoi7HrqIanCKcPo7NQW4DfvNnuVInOb9apfR0UMw+YuoC7e7Y2srXAre2NSsIkaqY1k
+         yh3y87nYh3cyJeZJhrX/k6jA4DELYl1PNrHLgYOAFSsH11ETQke1dX8dMPGj7DcneqaR
+         Ie2A==
+X-Gm-Message-State: AJIora9it4rXzlETADG2ckIYH2z57tKoZCif1E56/MKMabjE6VevCC9o
+        jCqkYiJWIJNMMb+Q4sMTovX9ow==
+X-Google-Smtp-Source: AGRyM1vZ4aIjBeDsIxo7OnqgPf9xQ+rIuz4ELfoYfGifICmrCLqwNOCq5LZ24NUUVvCdIv0/R1aM5A==
+X-Received: by 2002:adf:f0ce:0:b0:21e:5eeb:f33e with SMTP id x14-20020adff0ce000000b0021e5eebf33emr11456384wro.362.1658860696589;
+        Tue, 26 Jul 2022 11:38:16 -0700 (PDT)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id k19-20020a05600c1c9300b003a31fd05e0fsm4520683wms.2.2022.07.26.11.38.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Jul 2022 11:38:15 -0700 (PDT)
+Date:   Tue, 26 Jul 2022 21:38:14 +0300
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Kevin Hilman <khilman@kernel.org>,
+        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-pm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [RFC] PM: domains: Reverse the order of performance and enabling
+ ops
+Message-ID: <YuA0luCtQ1J+ExBi@linaro.org>
+References: <20220720110246.762939-1-abel.vesa@linaro.org>
+ <CAPDyKFoh8UV=QC6RhOkc=FSvoeqF_UiWp97h0Qp8dniB=sS+8A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Ys9b7GSImp/sHair@Asurada-Nvidia>
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 5ef99da6-838d-494f-5c78-08da6f353e2b
-X-MS-TrafficTypeDiagnostic: PH7PR12MB6717:EE_
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: JKTq9ja6++9To/TifTnBWKAR8eQJHhLvv7kCXdeCIX9uRppKFnhrrlM9RVqnUrWiAggW822U6t5OKC6diMxvG5upIKa16PSg1NcS/N2ipsXeFxr0pZmh5PNP/5LV6mEo0Em9vx9VD0uG09voESZNunmG595b/fM+IY7vG5i8NngW5BRQJr5LHzdv9OrAxV9nm5bH/R//APCKTs1zakP2lYFjIh8CToTVHB0mge4t2IqNhMTMItqgNtPIvZzS44bzLWY3rnyNW9l9Rzj70VepiSQZJP93U/h64M4rl47SozVH2IEbi/jaeGnTiJYE1B1Ex/DRs3LAnDP8CbMIM0DN8TFk9ir3C22hz1ACftiurKKcPJFer4YIL1MILUQEqRqbQ6HxuXZyH7AT8OztE+w1mPf0zsIPtDiQj6m8uhIZCFGMVeMoy+fPON67IJpoxx4jx3wfoooR4f6vgNTZrkKEj3XGi2/0qestSqxHrIYrizGpoDarxu3bQ5ddiJlVF+dq7PF+Txo/Oy8GGpRw9gyjixOX6jacIViPD5MvsZQDqjahQ4nFAY2IPFVrIZHSRXFySgbMYAGqWGk/0HdVHOJ+XgnzP79mqmUn5bny8wpCvHIQxAdEwivN7RioxS1WTsuj/lF01PJc93akbW5ehO25wysr6YBL+wQFuM39UX0iqYA8WiHjY+MEAmh9Y9Ma/atuGrMGauP146wO6JawMj08vc/CmOXjhmeKSKMBbe7GpxnAPuoOUbtfrfW2+DwHZg/8jmHRwriIuAQVp/EG9DKxqCBVt0Vh8+ZwgB1SikdqdIDY+NTVuJNdRA0wR1FqSWcriE9T9e71XZJ4HVQGEfaN+KTeRYYuzIZpsdNRa5B4pPg6MklFQNjFxa855sjMLwbgT4O18Q2MsrV8hkJ8Cc+noKu42/fmUxnkR7own9gzRLM=
-X-Forefront-Antispam-Report: CIP:12.22.5.238;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:InfoNoRecords;CAT:NONE;SFS:(13230016)(4636009)(396003)(346002)(376002)(39860400002)(136003)(46966006)(36840700001)(40470700004)(8676002)(186003)(966005)(81166007)(41300700001)(426003)(336012)(47076005)(9686003)(83380400001)(478600001)(40460700003)(110136005)(54906003)(26005)(86362001)(5660300002)(36860700001)(40480700001)(316002)(7416002)(8936002)(55016003)(7406005)(70586007)(356005)(70206006)(82740400003)(33716001)(2906002)(82310400005)(4326008)(36900700001);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jul 2022 18:32:49.0825
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5ef99da6-838d-494f-5c78-08da6f353e2b
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[12.22.5.238];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN8NAM11FT047.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6717
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE
-        autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <CAPDyKFoh8UV=QC6RhOkc=FSvoeqF_UiWp97h0Qp8dniB=sS+8A@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 13, 2022 at 04:57:36PM -0700, Nicolin Chen wrote:
+On 22-07-21 18:48:10, Ulf Hansson wrote:
+> On Wed, 20 Jul 2022 at 13:03, Abel Vesa <abel.vesa@linaro.org> wrote:
+> >
+> > Rather than enabling and then setting the performance state, which usually
+> > translates into two different levels (voltages) in order to get to the
+> > one required by the consumer, we could give a chance to the providers to
+> > cache the performance state needed by the consumer and then, when powering
+> > on the power domain, the provider could use the cached level instead.
+>
+> I don't think it's really clear what you want to do here. Let's see
+> what the discussion below brings us to, but for the next version
+> please elaborate a bit more in the commit message.
 
-> > > > > This is on github:
-> > > > > https://github.com/nicolinc/iommufd/commits/vfio_iommu_attach
-> > > >
-> > > > How do you foresee this going in, I'm imagining Joerg would merge the
-> > > > first patch via the IOMMU tree and provide a topic branch that I'd
-> > > > merge into the vfio tree along with the remaining patches.  Sound
-> > > > right?  Thanks,
-> > >
-> > > We don't have any build dependency between the IOMMU change and
-> > > VFIO changes, yet, without the IOMMU one, any iommu_attach_group()
-> > > failure now would be a hard failure without a chance falling back
-> > > to a new_domain, which is slightly different from the current flow.
-> > >
-> > > For a potential existing use case that relies on reusing existing
-> > > domain, I think it'd be safer to have Joerg acking the first change
-> > > so you merge them all? Thank!
-> > 
-> > Works for me, I'll look for buy-in + ack from Joerg.  Thanks,
-> > 
-> > Alex
-> 
-> Joerg, would it be possible for you to ack at the IOMMU patch?
+Sorry about that. Will give more details in the next version.
 
-Joerg, sorry for pinning again. Would it be possible for you
-to give an ack at the IOMMU patch so that this series might
-catch the last train of this cycle? Thanks!
+>
+> Although, if I understand correctly (also from our offlist
+> discussions), you want to make it possible to move from two calls,
+> into one call into the FW from the genpd provider. So it's basically
+> an optimization, which to me, certainly sounds worth doing.
+>
+> Furthermore, to get the complete picture, in the Qcom case, we set a
+> "default" low performance level from the genpd's ->power_on()
+> callback, which is needed to enable basic functionality for some
+> consumers.
+>
+> The second call that I refer to is made when genpd calls the
+> ->set_performance() callback (from genpd_runtime_suspend()), which is
+> done by genpd to potentially set a new value for an aggregated
+> performance state of the PM domain. In case when there actually is a
+> new performance state set in this path, we end up calling the FW twice
+> for the Qcom case, where this first one is unnecessary.
+>
+> Did I get that right?
+
+Actually, for every ->power_on, there is a ->set_performance right after.
+
+For example, on genpd_runtime_suspend, this is done:
+
+	genpd_lock(genpd);
+	ret = genpd_power_on(genpd, 0);
+	if (!ret)
+        	genpd_restore_performance_state(dev, gpd_data->rpm_pstate);
+	genpd_unlock(genpd);
+
+And same thing on __genpd_dev_pm_attach.
+
+Now, TBH, I can't think of any scenario where a consumer would want its PD powered,
+(which implies a non-zero voltage level) and then changed to a higher performance
+level (higher voltage).
+
+In most scenarios, though, the consumer needs the PD powered on to a specific voltage
+level.
+
+Based on the two statements above, we need ->set_performance to actually act as
+a way to tell the provider to which voltage level to power on the power domain
+when the ->power_on will be called.
+
+So my suggestion with this patch is to reverse the order, do ->set_performance first
+and then ->power_on, this way the provider receives the voltage level required by
+a consumer before the request to power on the PD. Then a provider might use that
+info when powering on/off that PD.
+
+>
+> > Also the drop_performance and power_off have to be reversed so that
+> > when the last active consumer suspends, the level doesn't actually drop
+> > until the pd is disabled.
+>
+> I don't quite get what this part helps with, is it really needed to
+> improve the behaviour?
+
+Again, why would a consumer need its PD voltage dropped before being powered off?
+
+I think it makes more sense for the ->set_performance in this case to act as a
+way to tell the provider that a specific device has yeilded its voltage level
+request. That way the provider can drop the voltage to the minimum requested by
+the active consumers of that PD.
+
+>
+> >
+> > For the power domains that do not provide the set_performance, things
+> > remain unchanged, as does for the power domains that only provide the
+> > set_performance but do not provide the power_on/off.
+>
+> Right, good points!
+>
+> I get back to review the code soon, just wanted to make sure I have
+> the complete picture first.
+>
+> Kind regards
+> Uffe
+>
+> >
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >  drivers/base/power/domain.c | 30 +++++++++++++++---------------
+> >  1 file changed, 15 insertions(+), 15 deletions(-)
+> >
+> > diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+> > index 5a2e0232862e..38647c304b73 100644
+> > --- a/drivers/base/power/domain.c
+> > +++ b/drivers/base/power/domain.c
+> > @@ -939,8 +939,8 @@ static int genpd_runtime_suspend(struct device *dev)
+> >                 return 0;
+> >
+> >         genpd_lock(genpd);
+> > -       gpd_data->rpm_pstate = genpd_drop_performance_state(dev);
+> >         genpd_power_off(genpd, true, 0);
+> > +       gpd_data->rpm_pstate = genpd_drop_performance_state(dev);
+> >         genpd_unlock(genpd);
+> >
+> >         return 0;
+> > @@ -978,9 +978,8 @@ static int genpd_runtime_resume(struct device *dev)
+> >                 goto out;
+> >
+> >         genpd_lock(genpd);
+> > +       genpd_restore_performance_state(dev, gpd_data->rpm_pstate);
+> >         ret = genpd_power_on(genpd, 0);
+> > -       if (!ret)
+> > -               genpd_restore_performance_state(dev, gpd_data->rpm_pstate);
+> >         genpd_unlock(genpd);
+> >
+> >         if (ret)
+> > @@ -1018,8 +1017,8 @@ static int genpd_runtime_resume(struct device *dev)
+> >  err_poweroff:
+> >         if (!pm_runtime_is_irq_safe(dev) || genpd_is_irq_safe(genpd)) {
+> >                 genpd_lock(genpd);
+> > -               gpd_data->rpm_pstate = genpd_drop_performance_state(dev);
+> >                 genpd_power_off(genpd, true, 0);
+> > +               gpd_data->rpm_pstate = genpd_drop_performance_state(dev);
+> >                 genpd_unlock(genpd);
+> >         }
+> >
+> > @@ -2747,17 +2746,6 @@ static int __genpd_dev_pm_attach(struct device *dev, struct device *base_dev,
+> >         dev->pm_domain->detach = genpd_dev_pm_detach;
+> >         dev->pm_domain->sync = genpd_dev_pm_sync;
+> >
+> > -       if (power_on) {
+> > -               genpd_lock(pd);
+> > -               ret = genpd_power_on(pd, 0);
+> > -               genpd_unlock(pd);
+> > -       }
+> > -
+> > -       if (ret) {
+> > -               genpd_remove_device(pd, dev);
+> > -               return -EPROBE_DEFER;
+> > -       }
+> > -
+> >         /* Set the default performance state */
+> >         pstate = of_get_required_opp_performance_state(dev->of_node, index);
+> >         if (pstate < 0 && pstate != -ENODEV && pstate != -EOPNOTSUPP) {
+> > @@ -2769,6 +2757,18 @@ static int __genpd_dev_pm_attach(struct device *dev, struct device *base_dev,
+> >                         goto err;
+> >                 dev_gpd_data(dev)->default_pstate = pstate;
+> >         }
+> > +
+> > +       if (power_on) {
+> > +               genpd_lock(pd);
+> > +               ret = genpd_power_on(pd, 0);
+> > +               genpd_unlock(pd);
+> > +       }
+> > +
+> > +       if (ret) {
+> > +               genpd_remove_device(pd, dev);
+> > +               return -EPROBE_DEFER;
+> > +       }
+> > +
+> >         return 1;
+> >
+> >  err:
+> > --
+> > 2.34.3
+> >
+>
