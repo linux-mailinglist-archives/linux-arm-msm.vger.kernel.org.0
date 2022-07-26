@@ -2,74 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DFDC5810BE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 12:06:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 903CE5810F3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 12:17:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237858AbiGZKF6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jul 2022 06:05:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38810 "EHLO
+        id S237617AbiGZKRG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jul 2022 06:17:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232819AbiGZKF6 (ORCPT
+        with ESMTP id S232241AbiGZKRF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jul 2022 06:05:58 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70A99BBC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 03:05:56 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id v5so8425311wmj.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 03:05:56 -0700 (PDT)
+        Tue, 26 Jul 2022 06:17:05 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36C2321251
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 03:17:04 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id r14so15975213ljp.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 03:17:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=N4WNsjcyfHcAvLPigBZdGUVfOpccpwIBfs6yQsD7gX8=;
-        b=ESZrvxX2WvzdGnsXMu2F+n2o0nF7FohKJLdTCNpgoR7+ROvnDDAn09DaAtBTYqwmT1
-         1SFsj8Ikas4/K6prY75Y/I0rYhILQLxshnC8Zb4v84hLsS9fUwfNGxXPoWUOJ/juPbKp
-         BeY2cE2CF3VmmopES08E6SGTH6wlF58FwnkoSecddp0qyiPqqF0+IF9bxM1TQzZlQNYm
-         5yNUml05RiN0dlX9ggFJpMA+wmKBalq7o+Nd56CQzdm9zffV1aRjMIUClv5b2KunPd9C
-         DYSjabnwvqkYJEDAUCSiz/fWZhf9nJc6QPj7ibnYhtR+4643fbZhPVYwO8Q4gNKtzDyD
-         jwcQ==
+        bh=k5O4EHVtxr88sGikNEClrHBrRMv6Wt5HYjbVbFJmD00=;
+        b=vJpAIwYZMErEj5rbGqQ350mc3DCwuGHIizHIV5HmshxNf4Nft1JqUJibbEaQ4UGP3g
+         vw39nBSZJfIqI/XG3vZZaz2dTrpo6uIZi9xYNSTeRGR/DQif/KbWGwtkq388iwShp0gv
+         mP9rVynS6uo9w6P5Jl9Rb1x2SwhDE32s8qhojzZvMBIhdENmCL9rroS/hIDTgtD+zf6z
+         r2ASk5SDwigvx5mC2rkitjtqoKrBzHLSxEzgpL4MnvXE6QduyDQwm115Paei4jBS1Sw0
+         pP/XZdNcsEpxhoxulbvaCJVg7WbhwAwRscys4wzpeIRejNy2KTiv0BM4aZLWBqUsLC5v
+         0ijQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=N4WNsjcyfHcAvLPigBZdGUVfOpccpwIBfs6yQsD7gX8=;
-        b=RHQYJ4GETNgMb1FsDZPUgRMGXwzjb0vhS3nN0X1WB9rLG7qa1IxZjDDCEcfOOLRkUZ
-         bz8kWT0DQZ26GngaiBXy8fnY3TX8wUaLgt/gsoBQtiRW6SYU69KdMXoPK9KwUjZJQQ7n
-         ERezThrx9UThetGRSwq09QQnHxuBZJG2j3ue6RInMRrxPzhsPA/T5YU7Zz3BIcHFgzkQ
-         WmNDBZmMMG5N5Si3bZkVw3lIbFba+2XmV8o+3j00J+Rwvf75y+PD9Wc8gNmittrBuzO/
-         bf6HZAdsOOS5rrsxRRsblf0x1IWco3N+ehyct35TeFZFCStPuMcBVXFxI5PJ7XOEG4we
-         wXTw==
-X-Gm-Message-State: AJIora/NRmxEOGmq5Yf8ctcQrdoYAq8nLpykXn/HQJUFCjcNfGgvGLjP
-        Ls9j5Oc8qQDx9JHFJjtdgDZWvg==
-X-Google-Smtp-Source: AGRyM1tEVHzIYfFNtMUjUlEvW8Z8DmLV8atur8oUsSnmFFWYJNwuh2Drzt/T5nRAvSURuT2ygdHA/A==
-X-Received: by 2002:a05:600c:4f0e:b0:3a3:3077:e5b3 with SMTP id l14-20020a05600c4f0e00b003a33077e5b3mr11328958wmq.94.1658829954941;
-        Tue, 26 Jul 2022 03:05:54 -0700 (PDT)
-Received: from [192.168.1.5] ([195.24.90.54])
-        by smtp.googlemail.com with ESMTPSA id f8-20020a05600c4e8800b003a31673515bsm23278974wmq.7.2022.07.26.03.05.51
+        bh=k5O4EHVtxr88sGikNEClrHBrRMv6Wt5HYjbVbFJmD00=;
+        b=W26fPx4ICJShfcYnuAb3DiWkfYmGtoMerIQhjVsQwFiy5W9l4w2YuQ0CXzqk3o0MJQ
+         vjQWfwxkRDXU30AMMAaIPPTsBVEk7m1DpGyAW1Bb1xpugnQwj7B5p4CML7sI98yvvQSK
+         NZ9MFGgkBayzH10HF3A7ZTXBbleZs7wfv1sG8U8LsSta/ui64H9vUJDkcCOW0sRpz0CG
+         63aEUAf/gjYENPzrr6o2/zG+3ginLK8qcP29g4Is09rOrFyaRh7/sgKvLojd07qKWM9b
+         /eFgWHtx9eoQwbKg8Lu9ymItpshUVporFT4U5rDgfA5g7JqoGQPsMhs61IbEE48j+i/8
+         +piw==
+X-Gm-Message-State: AJIora+FQUFuBSFXxALbKBfFT/aw238F4mz7pLHQFZV1l1SHDKGnwqpj
+        9/NWrtoZIoFyqIqheli2LP+8Lg==
+X-Google-Smtp-Source: AGRyM1uViFn/KmVHqLUDrlNUpPnN4K9sCA2Pesn1Ztt99me1kjgo9CTQ9ebdIYigb0qTu1yG/I46ZQ==
+X-Received: by 2002:a2e:9d02:0:b0:25d:d6b9:b753 with SMTP id t2-20020a2e9d02000000b0025dd6b9b753mr5387184lji.344.1658830622608;
+        Tue, 26 Jul 2022 03:17:02 -0700 (PDT)
+Received: from [192.168.3.197] (78-26-46-173.network.trollfjord.no. [78.26.46.173])
+        by smtp.gmail.com with ESMTPSA id q21-20020ac24a75000000b00484e9e254c4sm3142760lfp.100.2022.07.26.03.17.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Jul 2022 03:05:53 -0700 (PDT)
-Message-ID: <51eb6fd9-928f-bd97-d603-e9096402c799@linaro.org>
-Date:   Tue, 26 Jul 2022 13:05:50 +0300
+        Tue, 26 Jul 2022 03:17:02 -0700 (PDT)
+Message-ID: <e88d1036-dc58-3fc8-c388-edba9b2d62a7@linaro.org>
+Date:   Tue, 26 Jul 2022 12:17:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 5/7] venus : Addition of support for
- VIDIOC_TRY_ENCODER_CMD
+ Thunderbird/91.12.0
+Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure
+ Application client
 Content-Language: en-US
-To:     Viswanath Boma <quic_vboma@quicinc.com>,
-        video.upstream.external@qti.qualcomm.com,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+To:     Maximilian Luz <luzmaximilian@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Dikshita Agarwal <dikshita@codeaurora.org>
-References: <20220712122347.6781-1-quic_vboma@quicinc.com>
- <20220712122347.6781-5-quic_vboma@quicinc.com>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-In-Reply-To: <20220712122347.6781-5-quic_vboma@quicinc.com>
+        Ard Biesheuvel <ardb@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
+ <20220723224949.1089973-5-luzmaximilian@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220723224949.1089973-5-luzmaximilian@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,41 +87,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 7/12/22 15:23, Viswanath Boma wrote:
-> From: Dikshita Agarwal <dikshita@codeaurora.org>
+On 24/07/2022 00:49, Maximilian Luz wrote:
+> Add bindings for the Qualcomm Trusted Execution Environment (TrEE) UEFI
+> Secure application (uefisecapp) client.
 > 
->   v4l2 compliance expecting support for vidioc_try_encoder_cmd
->   error details : test VIDIOC_(TRY_)ENCODER_CMD: FAIL
-> 
-> Change-Id: I87a655dc506f3e713e2c86ab5203ca9c45cc5e1b
-
-Drop Change-Id and add Dikshita's Signed-off tag.
-
-> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
+> Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
 > ---
->  drivers/media/platform/qcom/venus/venc.c | 1 +
->  1 file changed, 1 insertion(+)
-
-With above comments fixed you can add my:
-
-Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-
+>  .../firmware/qcom,tee-uefisecapp.yaml         | 38 +++++++++++++++++++
+>  MAINTAINERS                                   |  1 +
+>  2 files changed, 39 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/firmware/qcom,tee-uefisecapp.yaml
 > 
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index 30ddb84c24997..4f10f5de7e3e6 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -589,6 +589,7 @@ static const struct v4l2_ioctl_ops venc_ioctl_ops = {
->  	.vidioc_subscribe_event = venc_subscribe_event,
->  	.vidioc_unsubscribe_event = v4l2_event_unsubscribe,
->  	.vidioc_encoder_cmd = venc_encoder_cmd,
-> +	.vidioc_try_encoder_cmd = v4l2_m2m_ioctl_try_encoder_cmd,
->  };
->  
->  static int venc_pm_get(struct venus_inst *inst)
+> diff --git a/Documentation/devicetree/bindings/firmware/qcom,tee-uefisecapp.yaml b/Documentation/devicetree/bindings/firmware/qcom,tee-uefisecapp.yaml
+> new file mode 100644
+> index 000000000000..9e5de1005d5c
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/firmware/qcom,tee-uefisecapp.yaml
+> @@ -0,0 +1,38 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/soc/qcom/qcom,rpmh-rsc.yaml#
 
--- 
-regards,
-Stan
+Does not look like you tested the bindings. Please run `make
+dt_binding_check` (see
+Documentation/devicetree/bindings/writing-schema.rst for instructions).
+
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Trusted Execution Environment UEFI Secure Application
+> +
+> +maintainers:
+> +  - Maximilian Luz <luzmaximilian@gmail.com>
+> +
+> +description: |
+> +  Various Qualcomm SoCs do not allow direct access to UEFI variables. Instead,
+> +  these need to be accessed via the UEFI Secure Application (uefisecapp),
+> +  residing in the Trusted Execution Environment (TrEE). These bindings mark the
+> +  presence of uefisecapp and allow the respective client driver to load and
+> +  install efivar operations, providing the kernel with access to UEFI
+> +  variables.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,tee-uefisecapp
+
+Isn't this SoC-specific device? Generic compatibles are usually not
+expected.
+
+> +
+> +required:
+> +  - compatible
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    firmware {
+> +        scm {
+> +            compatible = "qcom,scm-sc8180x", "qcom,scm";
+> +        };
+> +        tee-uefisecapp {
+> +            compatible = "qcom,tee-uefisecapp";
+
+You did not model here any dependency on SCM. This is not full
+description of the firmware/hardware.
+
+
+
+Best regards,
+Krzysztof
