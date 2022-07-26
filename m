@@ -2,62 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B3B7580EAC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 10:09:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FB0F580F58
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 10:45:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238283AbiGZIJi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jul 2022 04:09:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58298 "EHLO
+        id S231477AbiGZIpp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jul 2022 04:45:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238650AbiGZIJY (ORCPT
+        with ESMTP id S231760AbiGZIpm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jul 2022 04:09:24 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59AC62F666;
-        Tue, 26 Jul 2022 01:09:23 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 17E4AB80EBA;
-        Tue, 26 Jul 2022 08:09:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 617B6C341C0;
-        Tue, 26 Jul 2022 08:09:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1658822960;
-        bh=pG72duAPiTGl4achXEhxrKZ8ePu73MmI2EBcMCasz0Y=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=MP7YZkJNqzVBTuMJ789kv7my8rdAKEdZoFSR92Y+jTdj8W/yANme/XWGa2h1d4sUC
-         X0A197Rl2ijLZdlBJer8X2ikG1nMLIrjBenK7aFNz2Y6dgjt+qY5eBKd40H9VSbe03
-         Dlj7Z7lwSQ0Nqlqe3eNWFpP6RtlEk4EvTkmw85cCKFJA0y+dJ8atHlEnmf1V1iHBUU
-         +J1hbe4Pmh6Jp1AvyMQ00gm5DnhgxqYIjSz+nReeGOI3rk9RunnwoJxKFTwKyl8Fq7
-         /HprzjgZPSS3mqfeGpj8X+kNXF31rx22jd9qL3KLNANMX3X0sO3Cc1hibPpZsLY2qs
-         eareb8vgUAd+g==
-Date:   Tue, 26 Jul 2022 13:39:13 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Kalle Valo <kvalo@kernel.org>
-Cc:     Qiang Yu <quic_qianyu@quicinc.com>, quic_hemantk@quicinc.com,
-        loic.poulain@linaro.org, quic_jhugo@quicinc.com,
-        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
-        ath11k@lists.infradead.org
-Subject: Re: [PATCH v4 1/1] bus: mhi: host: Move IRQ allocation to controller
- registration phase
-Message-ID: <20220726080913.GF5522@workstation>
-References: <1655952183-66792-1-git-send-email-quic_qianyu@quicinc.com>
- <20220624072740.GA12171@thinkpad>
- <87k08an038.fsf@kernel.org>
- <20220720093909.GA5747@thinkpad>
- <063fe6bf-11b1-1724-058f-0fed7247906e@quicinc.com>
- <20220721101914.GC36189@thinkpad>
- <87wnc1qdhz.fsf@kernel.org>
+        Tue, 26 Jul 2022 04:45:42 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDDA428710
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 01:45:41 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id t3-20020a17090a3b4300b001f21eb7e8b0so16082074pjf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 01:45:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NyOOkD+eRbzSyetXYFfpw0k4gfFU2yiJ20e/GWk7olk=;
+        b=X7vIiDhSLybQdcdrocjp2PDtEI9FAfSfkt/GXXlm4Zq/NT2ao/naZ1esoCW9iPs4LK
+         SGlmzljGdXxTJjAxwE8hTZYvO3lcpxl/vz51eedoNV3wF7QLgpuk8AxL/mG/0al1EiAf
+         YIACUX/TNOOLxiePT/3J4xQU/fas/m/5SN0cpELonIwUzewB4HMd2AoS5+2URULeUeaP
+         r/4XThUPpUjIqQCm6/vYuLVspxYEWMyU3EvsaDYydWOkEIEhFGwT/RHKrtOFdQZBaGZc
+         9AqERj1aHC/cECI4jGRdcZxd/Q5VCLkxJ81p20pIjVuIOf9SqqVjbeoZO/Ldo7OIWx/e
+         8RAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NyOOkD+eRbzSyetXYFfpw0k4gfFU2yiJ20e/GWk7olk=;
+        b=BU5x+P9IDctQARgrJw8jaoy1y0z0XE4PMO9dE8P9Fzt6Q5dlLKMYXqBzbMDz76/Dfh
+         tfz/S0W7hKiaBrlk0rjJXuCiUb1M6qV84toGl3bzpWcttL+9wMadFiSFOn3gKbBvLxLW
+         RwW4NgmXX3pHC4Y1J/+BnNWUol2bjIfVuBn3GZdRYl7Q/4T/Ub+fPC50lpVCl7KGehiC
+         g17PaYH/qC91s0S9k34YFxTgmhRhBWtzjG/YanfcltvqsPRjUolZYb3T3qo4OJ8LZRiO
+         32r3AuE6vrAz+YmebjYxZRprUwvVmPeaYlCgopDU8VKs/3Tftkc7n69gt1esAbAypbon
+         axmg==
+X-Gm-Message-State: AJIora/lgQh5roG1/X/hoZgHVRW0pt26urNSevsEbVfvBE603FarfSOS
+        ib9KgfZ4Kh5rcfuLUEcpw8qKpg==
+X-Google-Smtp-Source: AGRyM1tImQ0our/59COnOeI0PSnlKWT0efVS/MN9w29JmZjyd9OsYz0Z2+TKak57pzx+1Gq4ZXhjew==
+X-Received: by 2002:a17:90a:4216:b0:1f2:70ed:1116 with SMTP id o22-20020a17090a421600b001f270ed1116mr16168424pjg.89.1658825141232;
+        Tue, 26 Jul 2022 01:45:41 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1f3a:5a45:a9cd:d7dd:fd01:73c0])
+        by smtp.gmail.com with ESMTPSA id d4-20020aa797a4000000b00528c16966casm11450560pfq.174.2022.07.26.01.45.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Jul 2022 01:45:40 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-mmc@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, ulf.hansson@linaro.org,
+        robh@kernel.org, bhupesh.sharma@linaro.org,
+        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
+        bjorn.andersson@linaro.org, agross@kernel.org
+Subject: [PATCH v2] dt-bindings: mmc: Set maximum documented operating frequency as 384MHz
+Date:   Tue, 26 Jul 2022 14:15:20 +0530
+Message-Id: <20220726084520.2895454-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87wnc1qdhz.fsf@kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -65,69 +69,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 25, 2022 at 09:00:08PM +0300, Kalle Valo wrote:
-> Manivannan Sadhasivam <mani@kernel.org> writes:
-> 
-> > On Wed, Jul 20, 2022 at 05:47:37PM +0800, Qiang Yu wrote:
-> >
-> >> 
-> >> On 7/20/2022 5:39 PM, Manivannan Sadhasivam wrote:
-> >> > On Mon, Jul 18, 2022 at 02:15:23PM +0300, Kalle Valo wrote:
-> >> > > + ath11k list
-> >> > > 
-> >> > > Manivannan Sadhasivam <mani@kernel.org> writes:
-> >> > > 
-> >> > > > On Thu, Jun 23, 2022 at 10:43:03AM +0800, Qiang Yu wrote:
-> >> > > > > During runtime, the MHI endpoint may be powered up/down several times.
-> >> > > > > So instead of allocating and destroying the IRQs all the time, let's just
-> >> > > > > enable/disable IRQs during power up/down.
-> >> > > > > 
-> >> > > > > The IRQs will be allocated during mhi_register_controller() and freed
-> >> > > > > during mhi_unregister_controller(). This works well for things like PCI
-> >> > > > > hotplug also as once the PCI device gets removed, the controller will
-> >> > > > > get unregistered. And once it comes back, it will get registered back
-> >> > > > > and even if the IRQ configuration changes (MSI), that will get accounted.
-> >> > > > > 
-> >> > > > > Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-> >> > > > Applied to mhi-next!
-> >> > > I did a bisect and this patch breaks ath11k during rmmod. I'm on
-> >> > > vacation right now so I can't investigate in detail but more info below.
-> >> > > 
-> >> > I just tested linux-next/master next-20220718 on my NUC with QCA6390, but I'm
-> >> > not able to reproduce the issue during rmmod! Instead I couldn't connect to AP.
-> >> 
-> >> I suspect that in __free_irq(), if CONFIG_DEBUG_SHIRQ is enabled, irq
-> >> handler for a shared IRQ will be invoked and null pointer access happen.
-> >> 
-> >> #ifdef CONFIG_DEBUG_SHIRQ
-> >>     /*
-> >>      * It's a shared IRQ -- the driver ought to be prepared for an IRQ
-> >>      * event to happen even now it's being freed, so let's make sure that
-> >>      * is so by doing an extra call to the handler ....
-> >>      *
-> >>      * ( We do this after actually deregistering it, to make sure that a
-> >>      *   'real' IRQ doesn't run in parallel with our fake. )
-> >>      */
-> >>     if (action->flags & IRQF_SHARED) {
-> >>         local_irq_save(flags);
-> >>         action->handler(irq, dev_id);
-> >>         local_irq_restore(flags);
-> >>     }
-> >> #endif
-> >> 
-> >
-> > Ah yes, after enabling CONFIG_DEBUG_SHIRQ I could reproduce the issue.
-> 
-> So how to fix this regression? (If there's already a fix I might have
-> missed it as I came back only today)
-> 
+As Ulf noted in [1], the maximum operating frequency
+documented in the mmc-controller device-tree bindings
+should be updated to the maximum frequency supported
+by the mmc controller(s).
 
-Copied you on the fix patch. Please test and let us know!
+Without this fix in place, the 'make dtbs_check' reports
+issues with 'max-frequency' value for ipq8074 sdhci node:
 
-Thanks,
-Mani
+  arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: mmc@7824900:
+   max-frequency:0:0: 384000000 is greater than the maximum of 200000000
 
-> -- 
-> https://patchwork.kernel.org/project/linux-wireless/list/
-> 
-> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+[1]. https://www.spinics.net/lists/kernel/msg4442049.html
+
+Cc: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Rob Herring <robh@kernel.org>
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+ - v1 can be viewed here: https://lore.kernel.org/linux-arm-msm/20220725180916.2850228-1-bhupesh.sharma@linaro.org/
+ - Rebased on linux-next/master
+
+ .../devicetree/bindings/mmc/mmc-controller.yaml     | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/mmc/mmc-controller.yaml b/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
+index ff5ce89e5111..802e3ca8be4d 100644
+--- a/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
++++ b/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
+@@ -88,11 +88,18 @@ properties:
+     default: 1
+ 
+   max-frequency:
+-    description:
+-      Maximum operating frequency of the bus.
++    description: |
++      Maximum operating frequency of the bus:
++        - for eMMC, the maximum supported frequency is 200MHz,
++        - for SD/SDIO cards the SDR104 mode has a max supported
++          frequency of 208MHz,
++        - some mmc host controllers do support a max frequency upto
++          384MHz.
++      So, lets keep the maximum supported value here.
++
+     $ref: /schemas/types.yaml#/definitions/uint32
+     minimum: 400000
+-    maximum: 200000000
++    maximum: 384000000
+ 
+   disable-wp:
+     $ref: /schemas/types.yaml#/definitions/flag
+-- 
+2.35.3
+
