@@ -2,58 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72C715814D0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 16:10:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C79958150B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 16:23:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238900AbiGZOKm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jul 2022 10:10:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49920 "EHLO
+        id S238863AbiGZOXt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jul 2022 10:23:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229651AbiGZOKl (ORCPT
+        with ESMTP id S230341AbiGZOXs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jul 2022 10:10:41 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 106C310A3;
-        Tue, 26 Jul 2022 07:10:41 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id B9785B81670;
-        Tue, 26 Jul 2022 14:10:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A90C433C1;
-        Tue, 26 Jul 2022 14:10:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1658844638;
-        bh=1d7qbWDQuZYAD2sGVg+HmWM5hj2n/J9MkNAK0ie+JsI=;
-        h=From:To:In-Reply-To:References:Subject:Date:From;
-        b=ZY+ik8K7+ds9Bc6ALidqN6eBYk4ekWWqvNqhozyoYPuMyoMEw5aThMTn/aA/xZpAv
-         uVhIyD62nyt65WHeftNaR3WoTk4FCLwjeFoqA0uTx/CqccQLxRZW8zpEea1mXYEmBG
-         CTgwY16GLXM3RUZuAuMfZczsVfS4RzmglBTo5eDzZJBeDptdBicXJlVZdkaSMtGrP/
-         swTng4fUny+UtoTtdudmc6AQQO1SuUqdhFdL1IGix3KnJUCm+r9jm5moT3gf1//Tgl
-         JiPHzPrj9lnr8GYoH5AGfb4okgkpzraeWjJU3AoqN9KX8PZYPE88eSpo3FSqKKy5Lx
-         QtpZaVVa9ly+w==
-From:   Mark Brown <broonie@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
+        Tue, 26 Jul 2022 10:23:48 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F34AD27B15
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 07:23:43 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id q18so9963758wrx.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 07:23:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=q+PzyWMPTLvynanWzQTq1j5aVlFoOcJhkH6UNz+5was=;
+        b=sAUEvL4ZqSBjOOG3xhBYBiol0Z5DVO4bVp8amgsGz8AFj5OLXQDV7FfRJ3XRNJbe8E
+         YyBcAbKRCpBfq762XkE2vnRKvYJ5jMLLuS90JFlhiNlp7/fPPzC8DkCixlAhOxAbe6Rd
+         j24QTk0izVw/TJoW3g/34rDQ3Rm1SPfSmsNunDrZVaCrJ+oTOsWpMklWYN0tnvtzAwOh
+         fSKne/Y4xMNerND8pmrwUTO9hfUVdzsYAYfCtRi2qaklTOo6cUHw3bJ6m8VdKWvK3k/W
+         I8X0VNA+UGi9zty2aocrgY/mt+v68xFbOPEYkrX6acuB6vqmp4lk64HmQl3N2893LAR7
+         B3bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=q+PzyWMPTLvynanWzQTq1j5aVlFoOcJhkH6UNz+5was=;
+        b=aSaPS9tTcYaKV0Qnf+JyoBEochuww/UG7O4ETJdJeNOe69NWXAOyCuEKyuIXhDMuZ5
+         J7qUI6v5huhUuK494fHaiP09NxgQq5DaOL1HACMFzc/QZQPblLA4rsf0FpwRV9CVapUA
+         qUPWXDqC2Vw/saDIs/TBVXv6XSN0GgyHWwYXy3+ib7rK5FLxgekVNuPjq9a4am8Sr//B
+         1+1JAGnsBw2/u0m3N8Dtfz9hY8OCbU2rMD/JcSb3qhbH9RxezTaDXX2ImpWFirv5WPwa
+         bSfHZc+9YPPOjjoNJUfxzsWzG/5fJI4v3RfVRHv7o5hwSYnroXdVPxSFxKOzZaWOgxbZ
+         tC5g==
+X-Gm-Message-State: AJIora/58zf4rPwV+iEpmcIyikc91KlLNdbrvKt2nAtvrDgolc8lkrUx
+        nXZz94TkKFtLQNOjA5QTUP9R2g==
+X-Google-Smtp-Source: AGRyM1u7Dlvfu2onZmEN77PJZSPL+WwsrvGUqfsXOz1+2Aqs7GpaqP5AS4una0qyV3CVLKyu5LmRGQ==
+X-Received: by 2002:a5d:64c7:0:b0:21d:a743:394 with SMTP id f7-20020a5d64c7000000b0021da7430394mr10721238wri.628.1658845422392;
+        Tue, 26 Jul 2022 07:23:42 -0700 (PDT)
+Received: from localhost.localdomain ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id t21-20020a1c7715000000b003a331c6bffdsm17017119wmi.47.2022.07.26.07.23.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Jul 2022 07:23:41 -0700 (PDT)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        alsa-devel@alsa-project.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-In-Reply-To: <20220726115917.101371-1-krzysztof.kozlowski@linaro.org>
-References: <20220726115917.101371-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH] ASoC: dt-bindings: qcom,wcd934x: use absolute path to other schema
-Message-Id: <165884463590.37334.6138510290775984808.b4-ty@kernel.org>
-Date:   Tue, 26 Jul 2022 15:10:35 +0100
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Abel Vesa <abel.vesa@linaro.org>
+Subject: [RFC 0/9] clk: qcom: gcc-sdm845: Swicth from expanded definitions to compact macros
+Date:   Tue, 26 Jul 2022 17:22:54 +0300
+Message-Id: <20220726142303.4126434-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.10.0-dev-c7731
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,35 +72,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 26 Jul 2022 13:59:17 +0200, Krzysztof Kozlowski wrote:
-> Absolute path to other DT schema is preferred over relative one.
-> 
-> 
+Lets see where this goes.
 
-Applied to
+This RFC is basically a proof-of-concept of how we could use more
+compact macros rather than expanded definitions for clocks on QCOM
+platforms. As the subject says, this is only for SDM845 GCC, for now.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+Also, there are a couple of hacky solutions here that need to be
+reworked before it could be merged (if ever). One that comes to mind is
+the way the branch clock macros differentiate between having no parent,
+a parent name, or a parent HW. I'm still looking into that, so ...
 
-Thanks!
+I tried to make them as compact and readable from the user's POV, but
+there is some complexity needed in order to allow passing different
+types (or number) of parents. Maybe that complexity is too crazy and
+doesn't bring that much benefit.
 
-[1/1] ASoC: dt-bindings: qcom,wcd934x: use absolute path to other schema
-      commit: ffe71829574a4848e9a376010a2ea74ae6d2d211
+I managed to put together some semi-automated way to do this for every
+CC, on every platform, if it's decided so. The only testing I managed to
+do so far was comparing the preprocessed output before and after. Oh,
+and the MTP does boot. I still need time to make sure that nothing gets
+broken.
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+Also, this series is still WIP, so everything can be reworked fast, if
+needed.
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+Abel Vesa (9):
+  clk: qcom: qcc-sdm845: Collapse gdsc structs into macros
+  clk: qcom: gcc-sdm845: Switch from parent_hws to parent_data
+  clk: qcom: rcg: Add macros to collapse definition
+  clk: qcom: alpha-pll: Add macros to collapse definition
+  clk: qcom: branch: Add macros to collapse definition
+  clk: qcom: common: Add macro wrapper for all clock types
+  clk: qcom: gcc-sdm845: Switch to macros to collapse branch clocks
+    definitions
+  clk: qcom: gcc-sdm845: Switch to macros to collapse rcg2 clocks
+    definitions
+  clk: qcom: gcc-sdm845: Switch to macros to collapse alpha-pll clocks
+    definitions
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+ drivers/clk/qcom/clk-alpha-pll.h |   61 +
+ drivers/clk/qcom/clk-branch.h    |   82 +
+ drivers/clk/qcom/clk-rcg.h       |   40 +
+ drivers/clk/qcom/common.h        |    3 +
+ drivers/clk/qcom/gcc-sdm845.c    | 3222 ++----------------------------
+ drivers/clk/qcom/gdsc.h          |   10 +
+ 6 files changed, 406 insertions(+), 3012 deletions(-)
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+--
+2.34.3
 
-Thanks,
-Mark
