@@ -2,99 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E707558183F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 19:19:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00C7E581842
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 19:21:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238968AbiGZRTl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jul 2022 13:19:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48176 "EHLO
+        id S231678AbiGZRU5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jul 2022 13:20:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230170AbiGZRTk (ORCPT
+        with ESMTP id S232363AbiGZRU4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jul 2022 13:19:40 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26D0C1A051;
-        Tue, 26 Jul 2022 10:19:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1658855976;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=uaTIlHXasK14UazWIZQ5J2yjUjFXPsbpUf42M8f9VKM=;
-    b=gvrPlAyjpM6IenLkD2ogLNmZZyAieUbVVItaRfJxnKVysjU4PbhAQfHb/Q5Z2PAsHZ
-    pQFp8iQY117uBgRq8A03kUpD+T064ZIwLYiR/x4/MeUtHDeA5xFo5uW6ENFVwHNT0iO5
-    epUbQBHtUsgK48cOE20W3Jb7xyh34cc31EiVqV9CCqamqlMOEMon1/O9c5Q92lcbcVjm
-    F9vvSeH4FlJgmf8wRjlsr3ywhEYVfBWVn9bzddKYBl8re6MoQdlQl4QwTZhaYMvCAYTF
-    xLz+l73Bxab+IIFuGArHzb0g/C4dwuWbv+Iv0Kc+aMYygv4bRNVRoPwwCd3L38nwa+LM
-    RTmA==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLVrKw7/aY="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.47.0 AUTH)
-    with ESMTPSA id u1045ey6QHJZ3UF
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Tue, 26 Jul 2022 19:19:35 +0200 (CEST)
-Date:   Tue, 26 Jul 2022 19:19:18 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Herring <robh@kernel.org>,
-        Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Tue, 26 Jul 2022 13:20:56 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE38C641F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 10:20:55 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id z3so13947919plb.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 10:20:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=7BJ3b6cOn0n3id/+vSQ4pIfWPao0SNwrocTVPEfGssA=;
+        b=QYrs6ggWH/sHV5p0lD+PucMiuKTDxzKntHYgX6WcK2tU5X68whvk/hazYXSE//Nlre
+         Okd71pYw1AIM8RjYonVd4L4cIjiR+FeX9MtIl0hvd0phmzObdr9W9iWKD8KPEK9O/gh1
+         xxf962YmfERF7b+f/0Lk/IE1qh9b1ZfAWGGxM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=7BJ3b6cOn0n3id/+vSQ4pIfWPao0SNwrocTVPEfGssA=;
+        b=TSKrv2XQ6au/OxwBw+mg/HLzSHp7NVgGlplktQaoreoP3jIt6B7nlriszM/265wTJG
+         zyob7zx9QszinkPYrmMVpRXSyJrSqJmH7mpyigvDv2kR/7zVfo9DvBca0/2yaHUmz2vx
+         ga60bsoLJ5ifO8N9tfUIaEQ9I/C6cpT635vZvkjstIDodoYP2RptkOFWiPBFQQ5fAU7A
+         SuFAZtbEK+mMTK1iCPY1M4b7bXX63jI0gUiyCel2/r92F4suR6dAVln80MxesqeopPRy
+         naXLMx0gY+xqFEGH54/4S7Bwz1SGxp4QplxfZxaJhj4dLQptIUI/tCGqxmzTtbRZiphj
+         fr6Q==
+X-Gm-Message-State: AJIora9vUcgoi1lBG68hw1moel069DtGxuumrYZssLWpcxTMkNgKrTpX
+        tj9hghsMD28Na4welxtRA9tQfg==
+X-Google-Smtp-Source: AGRyM1sEoGebriD6xMbegueSGf/Gv3ZsETIB94zeQ1E8SLcf8cb9sIWS0P++FgTME4uVCO4ARbPIzw==
+X-Received: by 2002:a17:903:2c7:b0:16c:ebf6:db22 with SMTP id s7-20020a17090302c700b0016cebf6db22mr17979298plk.16.1658856054891;
+        Tue, 26 Jul 2022 10:20:54 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:8693:e9aa:75c0:5134])
+        by smtp.gmail.com with ESMTPSA id a8-20020a17090a6d8800b001f24c08c3fesm9276019pjk.1.2022.07.26.10.20.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Jul 2022 10:20:53 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sireesh Kodali <sireeshkodali1@gmail.com>,
-        Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 2/5] dt-bindings: remoteproc: qcom,q6v5: Move MSM8916
- to schema
-Message-ID: <YuAh/ahbNiiQL5Ge@gerhold.net>
-References: <20220718140344.1831731-1-stephan.gerhold@kernkonzept.com>
- <20220718140344.1831731-3-stephan.gerhold@kernkonzept.com>
- <20220720224608.GA4107504-robh@kernel.org>
- <Ytmw41giZ/4S+Pp0@gerhold.net>
- <27b0d451-4cef-cfc3-c6ae-3bb6cb448083@linaro.org>
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] regulator: qcom-rpmh: Implement get_optimum_mode(), not set_load()
+Date:   Tue, 26 Jul 2022 10:20:29 -0700
+Message-Id: <20220726102024.1.Icc838fe7bf0ef54a014ab2fee8af311654f5342a@changeid>
+X-Mailer: git-send-email 2.37.1.359.gd136c6c3e2-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <27b0d451-4cef-cfc3-c6ae-3bb6cb448083@linaro.org>
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jul 23, 2022 at 10:41:53PM +0200, Krzysztof Kozlowski wrote:
-> On 21/07/2022 22:02, Stephan Gerhold wrote:
-> > What remains is maybe:
-> > 
-> >   - "qcom,smem-states", which is already used in several other schemas
-> >     and could be possibly defined together with #qcom,smem-state-cells
-> >     in some generic schema(?)
-> > 
-> >   - "qcom,halt-regs", "firmware-name", "smd-edge" are used by different
-> >     Qualcomm remoteproc drivers, so they could possibly be defined in
-> >     some common "qcom-remoteproc.yaml" schema(?)
-> 
-> smd-edge and glink is already in remoteproc/qcom,smd-edge.yaml
-> qcom,glink-edge.yaml
-> 
+Since we don't actually pass the load to the firmware, switch to using
+get_optimum_mode() instead of open-coding it.
 
-Yep, I'm actually using it already in this patch. I think what I meant
-is that the smd-edge property $ref could be already defined in a common
-"qcom-remoteproc.yaml" schema and inherited via allOf, since all the
-qcom remoteprocs should have either a smd-edge or glink-edge.
+This is intended to have no effect other than cleanup.
 
-But all in all I'm still unsure which "common properties" Rob is
-referring to here, in which file to place them, and if this is worth it
-at all for the few I have listed above... :-)
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
-Thanks,
-Stephan
+ drivers/regulator/qcom-rpmh-regulator.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+index 561de6b2e6e3..b2debde79361 100644
+--- a/drivers/regulator/qcom-rpmh-regulator.c
++++ b/drivers/regulator/qcom-rpmh-regulator.c
+@@ -306,9 +306,10 @@ static unsigned int rpmh_regulator_vrm_get_mode(struct regulator_dev *rdev)
+ }
+ 
+ /**
+- * rpmh_regulator_vrm_set_load() - set the regulator mode based upon the load
+- *		current requested
++ * rpmh_regulator_vrm_get_optimum_mode() - get the mode based on the  load
+  * @rdev:		Regulator device pointer for the rpmh-regulator
++ * @input_uV:		Input voltage
++ * @output_uV:		Output voltage
+  * @load_uA:		Aggregated load current in microamps
+  *
+  * This function is used in the regulator_ops for VRM type RPMh regulator
+@@ -316,17 +317,15 @@ static unsigned int rpmh_regulator_vrm_get_mode(struct regulator_dev *rdev)
+  *
+  * Return: 0 on success, errno on failure
+  */
+-static int rpmh_regulator_vrm_set_load(struct regulator_dev *rdev, int load_uA)
++static unsigned int rpmh_regulator_vrm_get_optimum_mode(
++	struct regulator_dev *rdev, int input_uV, int output_uV, int load_uA)
+ {
+ 	struct rpmh_vreg *vreg = rdev_get_drvdata(rdev);
+-	unsigned int mode;
+ 
+ 	if (load_uA >= vreg->hw_data->hpm_min_load_uA)
+-		mode = REGULATOR_MODE_NORMAL;
++		return REGULATOR_MODE_NORMAL;
+ 	else
+-		mode = REGULATOR_MODE_IDLE;
+-
+-	return rpmh_regulator_vrm_set_mode(rdev, mode);
++		return REGULATOR_MODE_IDLE;
+ }
+ 
+ static int rpmh_regulator_vrm_set_bypass(struct regulator_dev *rdev,
+@@ -375,7 +374,7 @@ static const struct regulator_ops rpmh_regulator_vrm_drms_ops = {
+ 	.list_voltage		= regulator_list_voltage_linear_range,
+ 	.set_mode		= rpmh_regulator_vrm_set_mode,
+ 	.get_mode		= rpmh_regulator_vrm_get_mode,
+-	.set_load		= rpmh_regulator_vrm_set_load,
++	.get_optimum_mode	= rpmh_regulator_vrm_get_optimum_mode,
+ };
+ 
+ static const struct regulator_ops rpmh_regulator_vrm_bypass_ops = {
+-- 
+2.37.1.359.gd136c6c3e2-goog
+
