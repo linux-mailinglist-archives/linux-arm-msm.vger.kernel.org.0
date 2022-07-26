@@ -2,132 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 00C7E581842
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 19:21:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DCDE581861
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 19:30:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231678AbiGZRU5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jul 2022 13:20:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49294 "EHLO
+        id S234044AbiGZRaT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jul 2022 13:30:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232363AbiGZRU4 (ORCPT
+        with ESMTP id S233382AbiGZRaS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jul 2022 13:20:56 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE38C641F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 10:20:55 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id z3so13947919plb.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 10:20:55 -0700 (PDT)
+        Tue, 26 Jul 2022 13:30:18 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6186FB7C3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 10:30:16 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id r14so17258564ljp.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 10:30:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc;
-        bh=7BJ3b6cOn0n3id/+vSQ4pIfWPao0SNwrocTVPEfGssA=;
-        b=QYrs6ggWH/sHV5p0lD+PucMiuKTDxzKntHYgX6WcK2tU5X68whvk/hazYXSE//Nlre
-         Okd71pYw1AIM8RjYonVd4L4cIjiR+FeX9MtIl0hvd0phmzObdr9W9iWKD8KPEK9O/gh1
-         xxf962YmfERF7b+f/0Lk/IE1qh9b1ZfAWGGxM=
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=i5XyBug1h7Oxv4CKlaalFltAR+iBWMVRtKUvuxm3XZw=;
+        b=QODiih/k4aANBRXKxjGqTQnWG3XiMdmVLBda9fbRVehQfCsP/ztSCv1ihizFygFfEC
+         8Jmo2SIxldx4vcJe6pO/7JURkfqa1weVg6uLxHCISPaIH+jmAM1ZpmaNTVpogtGKUw2c
+         FkoynCDiUl+Zk0obDARAAnrwEfyOrkh7i/9NV7sUHyRhge6qcyxF1//npWHDq200PfBA
+         Nlg0AxEMLIv79fyUBAedfyZEop33zrpvwOk2xIT3ovbTcGRFSuQYy9IlVaBqgqsWf8qJ
+         npCCyhYgC13Otb450STiDY2fOZYaeOP0Xkl7KuhnfSOnDK0KhbZHjXzoVjcDYhcCiPOy
+         0n+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc;
-        bh=7BJ3b6cOn0n3id/+vSQ4pIfWPao0SNwrocTVPEfGssA=;
-        b=TSKrv2XQ6au/OxwBw+mg/HLzSHp7NVgGlplktQaoreoP3jIt6B7nlriszM/265wTJG
-         zyob7zx9QszinkPYrmMVpRXSyJrSqJmH7mpyigvDv2kR/7zVfo9DvBca0/2yaHUmz2vx
-         ga60bsoLJ5ifO8N9tfUIaEQ9I/C6cpT635vZvkjstIDodoYP2RptkOFWiPBFQQ5fAU7A
-         SuFAZtbEK+mMTK1iCPY1M4b7bXX63jI0gUiyCel2/r92F4suR6dAVln80MxesqeopPRy
-         naXLMx0gY+xqFEGH54/4S7Bwz1SGxp4QplxfZxaJhj4dLQptIUI/tCGqxmzTtbRZiphj
-         fr6Q==
-X-Gm-Message-State: AJIora9vUcgoi1lBG68hw1moel069DtGxuumrYZssLWpcxTMkNgKrTpX
-        tj9hghsMD28Na4welxtRA9tQfg==
-X-Google-Smtp-Source: AGRyM1sEoGebriD6xMbegueSGf/Gv3ZsETIB94zeQ1E8SLcf8cb9sIWS0P++FgTME4uVCO4ARbPIzw==
-X-Received: by 2002:a17:903:2c7:b0:16c:ebf6:db22 with SMTP id s7-20020a17090302c700b0016cebf6db22mr17979298plk.16.1658856054891;
-        Tue, 26 Jul 2022 10:20:54 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:8693:e9aa:75c0:5134])
-        by smtp.gmail.com with ESMTPSA id a8-20020a17090a6d8800b001f24c08c3fesm9276019pjk.1.2022.07.26.10.20.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jul 2022 10:20:53 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=i5XyBug1h7Oxv4CKlaalFltAR+iBWMVRtKUvuxm3XZw=;
+        b=gB5PxY93E5ucCV62OefrQwb+sa9rnmUiWvxJrIMSEMh2fF2Ffh6wn8qNGP+Cuv1Jx4
+         utn9fkKke/YMuu0VcXatsCXyn/sFF5prWAvya9fdBLLkElJx6SWWvHe1Zb3HRJz7Z9t7
+         e4oQ+JtYi9yHhC9AouqIIPByBrN0LzjJYkB56HHkeI0lvvhGQEdbOEmGtbsrMZwV2Cvl
+         cPVrOlpsYuIOU3mjOqu8y/EPkRVOkoGS188CkFy++894RX0ZQogqxy8Me88SdBVzlvRw
+         EPpLRPPzlEbWD2X70I6NC2W8jBX7i4phO8avsIUVYFUceek3/fvqEW5KITeD4EISsrI9
+         iMxQ==
+X-Gm-Message-State: AJIora+GSxoMFwupJqjZKumFlE/J9A/4JryejcU0IHnKjueOIOlsz9Xg
+        259hSBxr6rw3Qk67rNc3fhcGMg==
+X-Google-Smtp-Source: AGRyM1spkPPzWZpgibFcexA+GSxXSnYVEEpyJxs/YstHTsPt7j4hR0szRYGMpCKiAiehG4A6oQzVYQ==
+X-Received: by 2002:a05:651c:b28:b0:25d:6a99:e978 with SMTP id b40-20020a05651c0b2800b0025d6a99e978mr6828855ljr.82.1658856614643;
+        Tue, 26 Jul 2022 10:30:14 -0700 (PDT)
+Received: from [192.168.3.197] (78-26-46-173.network.trollfjord.no. [78.26.46.173])
+        by smtp.gmail.com with ESMTPSA id f10-20020a19dc4a000000b0048a973870a0sm854423lfj.132.2022.07.26.10.30.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Jul 2022 10:30:14 -0700 (PDT)
+Message-ID: <a9356472-0fef-d500-837c-ad6d9ed27b94@linaro.org>
+Date:   Tue, 26 Jul 2022 19:30:12 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v3 1/5] ARM: qcom_defconfig: enable more Qualcomm drivers
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Russell King <linux@armlinux.org.uk>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] regulator: qcom-rpmh: Implement get_optimum_mode(), not set_load()
-Date:   Tue, 26 Jul 2022 10:20:29 -0700
-Message-Id: <20220726102024.1.Icc838fe7bf0ef54a014ab2fee8af311654f5342a@changeid>
-X-Mailer: git-send-email 2.37.1.359.gd136c6c3e2-goog
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+References: <20220726150609.140472-1-krzysztof.kozlowski@linaro.org>
+ <20220726150609.140472-2-krzysztof.kozlowski@linaro.org>
+ <CAA8EJppMNUV0eEF7BV6=7RgQK_XUEsqcLpmf_zu0XjSRLTLQ6w@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAA8EJppMNUV0eEF7BV6=7RgQK_XUEsqcLpmf_zu0XjSRLTLQ6w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since we don't actually pass the load to the firmware, switch to using
-get_optimum_mode() instead of open-coding it.
+On 26/07/2022 18:49, Dmitry Baryshkov wrote:
+> On Tue, 26 Jul 2022 at 18:06, Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>> Enable Qualcomm drivers:
+>> 1. socinfo driver to provide some basic information about the
+>>    SoC being used.
+>> 2. Remote filesystem memory driver (used in MSM8974).
+>> 3. RPM Power domain (used in MSM8226).
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  arch/arm/configs/qcom_defconfig | 3 +++
+>>  1 file changed, 3 insertions(+)
+>>
+>> diff --git a/arch/arm/configs/qcom_defconfig b/arch/arm/configs/qcom_defconfig
+>> index 5cd935ee148a..f02448187eac 100644
+>> --- a/arch/arm/configs/qcom_defconfig
+>> +++ b/arch/arm/configs/qcom_defconfig
+>> @@ -247,12 +247,15 @@ CONFIG_QCOM_COMMAND_DB=y
+>>  CONFIG_QCOM_GSBI=y
+>>  CONFIG_QCOM_OCMEM=y
+>>  CONFIG_QCOM_PM=y
+>> +CONFIG_QCOM_RMTFS_MEM=y
+>> +CONFIG_QCOM_RPMPD=y
+>>  CONFIG_QCOM_SMEM=y
+>>  CONFIG_QCOM_SMD_RPM=y
+>>  CONFIG_QCOM_SMP2P=y
+>>  CONFIG_QCOM_SMSM=y
+>>  CONFIG_QCOM_RPMH=y
+>>  CONFIG_QCOM_RPMHPD=y
+>> +CONFIG_QCOM_SOCINFO=y
+> 
+> please add:
+> CONFIG_QCOM_STATS=y
 
-This is intended to have no effect other than cleanup.
+I was considering it, but it seems none of ARMv7 DTS use it.
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-
- drivers/regulator/qcom-rpmh-regulator.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
-
-diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-index 561de6b2e6e3..b2debde79361 100644
---- a/drivers/regulator/qcom-rpmh-regulator.c
-+++ b/drivers/regulator/qcom-rpmh-regulator.c
-@@ -306,9 +306,10 @@ static unsigned int rpmh_regulator_vrm_get_mode(struct regulator_dev *rdev)
- }
- 
- /**
-- * rpmh_regulator_vrm_set_load() - set the regulator mode based upon the load
-- *		current requested
-+ * rpmh_regulator_vrm_get_optimum_mode() - get the mode based on the  load
-  * @rdev:		Regulator device pointer for the rpmh-regulator
-+ * @input_uV:		Input voltage
-+ * @output_uV:		Output voltage
-  * @load_uA:		Aggregated load current in microamps
-  *
-  * This function is used in the regulator_ops for VRM type RPMh regulator
-@@ -316,17 +317,15 @@ static unsigned int rpmh_regulator_vrm_get_mode(struct regulator_dev *rdev)
-  *
-  * Return: 0 on success, errno on failure
-  */
--static int rpmh_regulator_vrm_set_load(struct regulator_dev *rdev, int load_uA)
-+static unsigned int rpmh_regulator_vrm_get_optimum_mode(
-+	struct regulator_dev *rdev, int input_uV, int output_uV, int load_uA)
- {
- 	struct rpmh_vreg *vreg = rdev_get_drvdata(rdev);
--	unsigned int mode;
- 
- 	if (load_uA >= vreg->hw_data->hpm_min_load_uA)
--		mode = REGULATOR_MODE_NORMAL;
-+		return REGULATOR_MODE_NORMAL;
- 	else
--		mode = REGULATOR_MODE_IDLE;
--
--	return rpmh_regulator_vrm_set_mode(rdev, mode);
-+		return REGULATOR_MODE_IDLE;
- }
- 
- static int rpmh_regulator_vrm_set_bypass(struct regulator_dev *rdev,
-@@ -375,7 +374,7 @@ static const struct regulator_ops rpmh_regulator_vrm_drms_ops = {
- 	.list_voltage		= regulator_list_voltage_linear_range,
- 	.set_mode		= rpmh_regulator_vrm_set_mode,
- 	.get_mode		= rpmh_regulator_vrm_get_mode,
--	.set_load		= rpmh_regulator_vrm_set_load,
-+	.get_optimum_mode	= rpmh_regulator_vrm_get_optimum_mode,
- };
- 
- static const struct regulator_ops rpmh_regulator_vrm_bypass_ops = {
--- 
-2.37.1.359.gd136c6c3e2-goog
-
+Best regards,
+Krzysztof
