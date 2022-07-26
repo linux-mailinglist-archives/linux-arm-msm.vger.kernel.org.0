@@ -2,201 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B8B05812AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 14:02:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CE645812DC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 14:11:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238974AbiGZMC1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jul 2022 08:02:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42080 "EHLO
+        id S238691AbiGZMLS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jul 2022 08:11:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238985AbiGZMCZ (ORCPT
+        with ESMTP id S238657AbiGZMLS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jul 2022 08:02:25 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 991C426AE4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 05:02:23 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id z13so15850336ljj.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 05:02:23 -0700 (PDT)
+        Tue, 26 Jul 2022 08:11:18 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBA0F2B184
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 05:11:16 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id m17so19580084wrw.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 05:11:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=cDTwEdu24/gUiDYI5ikSRUFSCHm0lJ9NOTljGODPF9I=;
-        b=YhCuGXoaxj6XopgqvDBVaPEXJAZgT2pVfEwWuuT05I9axW8GWcr8XWrM8TdJxlGLQt
-         Vv7QhcxfBokRnGtmJUzFBCEZdEIrFci7P3GknpnIZkQgLmaQBpvfXyyfPR7eA9J+ydd2
-         EEdVqvBURz1qpSOvBj5tOyO/PPW3CQ7EPWazot/PWCmSath+M6LM7l3CV0YKOT7zfdZt
-         ejUCCRm+zu7ZCbAn1C5zXYpf9ZFJ2yMGTNFB1g8V6sDNxBExm9wAosexUKvuS4AAsd/h
-         +kjeSdlwOXK8KLWUdf4WogFdY81ldE6MgA3QqoN3EKdh2KwhvDjANKuVzGHpCKAmDC/5
-         ThBw==
+        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Ho5DlxVbtPE4xqHB8U7OSblTYt6T62dXAInLoexUb7c=;
+        b=td+ZMO9vaTOjHcShANKmdrEG3ohGjJWhz0ubUGOiKseIwRAYBB9Tufnfw6slyPxKRd
+         va5OA6gOsUAb6hCUCjDV+U2VkbDY1XXOTNFZML78VVBXgkEOMQD+C0NyrDi+Wg+nrK+O
+         W+z0n3LJ9Wfp4CgVPK43lsaG2JtddaDnlK6kL+SYNHsR1f7bBANFuUn7OhMw2gdDjEvs
+         Yg3lXVqv/H92roLKk3kM7zVQesgpPX9anwHenhgvLqpPETj7iT6g1rWcIz+xpVqzT8dU
+         u3KimG7VmsrfvlJQjGlhbcMXy06rY2hZfqoMk846LS5r2fqHGLBitGKTpWDZgNt6eyzb
+         oFGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=cDTwEdu24/gUiDYI5ikSRUFSCHm0lJ9NOTljGODPF9I=;
-        b=bxUq3aGJtay4QFEkvON3FvYrekz7J8E7i3tEBId042ZGl2eTyjlyM2pY7y/2PAoY0S
-         6SHmhhDduCfx7uKdI9I28TD7qREyVJNpduXhaFtrjQ5lIqPJchNcFTYR9+oErg+RGs7z
-         i+AznNRWtysTRMWBhom2k91YPXSSVxqtdcF30iKv9ZgHZJ9rHXWD187F9CNy1wI6GpV1
-         BAINSLUz5TtvDg9LfebuHokg+nF42mT7wmeH8e+rCROhZ38pjkZB3UFXmLCk8wSv5IC+
-         7BySF3X1AZIE1p1sTffZHzTcyd0JR6j9js0ushTARseUSK2q2r5HyKZLy/XpvwG7X1TE
-         ZnUw==
-X-Gm-Message-State: AJIora9xtJH6WKo95t5OyU9vgeoXVu6y1OJJKtpopUQcrMGL2PgCNWVn
-        b2+RMW1KdItox2FNZGDft4YU8g==
-X-Google-Smtp-Source: AGRyM1sJQepMPWvxdDDt7L0oKFQmlKY9LIoZbWgDeEG3eq4A6JiV3VK/8WNv8nzs/PQEyWYrNMsLVg==
-X-Received: by 2002:a2e:bc06:0:b0:25e:19b8:637b with SMTP id b6-20020a2ebc06000000b0025e19b8637bmr687944ljf.356.1658836941744;
-        Tue, 26 Jul 2022 05:02:21 -0700 (PDT)
-Received: from krzk-bin.lan (78-26-46-173.network.trollfjord.no. [78.26.46.173])
-        by smtp.gmail.com with ESMTPSA id p15-20020a2e804f000000b0025ddf9a5b9csm3221865ljg.72.2022.07.26.05.02.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jul 2022 05:02:21 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Sebastian Reichel <sre@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Vinod Koul <vkoul@kernel.org>, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] dt-bindings: watchdog: qcom,pm8916-wdt: convert to dtschema
-Date:   Tue, 26 Jul 2022 14:02:15 +0200
-Message-Id: <20220726120215.101868-3-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220726120215.101868-1-krzysztof.kozlowski@linaro.org>
-References: <20220726120215.101868-1-krzysztof.kozlowski@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Ho5DlxVbtPE4xqHB8U7OSblTYt6T62dXAInLoexUb7c=;
+        b=j9gqSrn4xWDvvd5/pzOe+8R5D2XSgrvqpFoQML+CMIPOyC7ZpgG2g1r+10RmTG1Zsp
+         wkvKXWOWGFKEFd3uxj3jol5XmvBqjt05kKdavFjFrbT5+QlTnw3bBnFXQbczk1daFL14
+         JF5jxJ1fSZRydP5pzr0L0NP1zJNlziRmaPYmulmYCqKlejEIfdzhJ/gkTamXtAsHeYJ+
+         Mh5pn3iCo5tJcGgi+88jkOahukXs3PDJSLEe0xPNWuKw812i3vFachsjqrDT131uxCnu
+         /XVFf9FsZR0msH39qCphyRnmuQIWCDkzcDyrcauWQI11ggWGsuOJzCFZysnLV1hrjsm1
+         ZVvQ==
+X-Gm-Message-State: AJIora8niANzBwTgmexVFMt9rT39TBFqsQFJbNcJTbAKMKpjwRgK/+QI
+        XxTmBAxfAp8pxImFOO4uJDslSg==
+X-Google-Smtp-Source: AGRyM1vydTkqV6+v+KByHbdetz5QCnlkt2zBBZAI+fERpOrH+XCPyzLyz5qb5qa1djSNITMh6ToUtw==
+X-Received: by 2002:adf:e70e:0:b0:21d:7f90:7501 with SMTP id c14-20020adfe70e000000b0021d7f907501mr10100395wrm.447.1658837475428;
+        Tue, 26 Jul 2022 05:11:15 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id m15-20020a7bcb8f000000b003a2e27fc275sm16953875wmi.12.2022.07.26.05.11.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Jul 2022 05:11:14 -0700 (PDT)
+Message-ID: <faeaab3a-503c-ed14-bed0-e897b1f94662@nexus-software.ie>
+Date:   Tue, 26 Jul 2022 13:11:13 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH 0/2] media: venus: Fix up buffer handling for
+ HFI_VERSION_1XX
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        stanimir.varbanov@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
+        mchehab@kernel.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20220726021455.1814096-1-bryan.odonoghue@linaro.org>
+From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
+In-Reply-To: <20220726021455.1814096-1-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the Qualcomm PM8916 watchdog timer controller bindings to DT
-schema and include them in parent device schema.
+On 26/07/2022 03:14, Bryan O'Donoghue wrote:
+> This series fixes two buffer handling bugs. The first bug is trivial and
+> ~impossible to hit without the second bug but with fixing anyway. Its a
+> simple NULL pointer handling issue.
+> 
+> The second bug relates to HFI_VERSION_1XX output buffers. Unfortunately
+> these have been broken since
+> 
+> Commit: 9593126dae3e ("media: venus: Add a handling of QC08C compressed format")
+> 
+> A bit of bisecting the commits in venus found it handily enough. Once the
+> fix is applied we have I have decode working again on db410c.
+> 
+> Bryan O'Donoghue (2):
+>    media: venus: dec: Handle the case where find_format fails
+>    media: venus: Fix NV12 decoder buffer discovery on HFI_VERSION_1XX
+> 
+>   drivers/media/platform/qcom/venus/helpers.c | 13 +++++++------
+>   drivers/media/platform/qcom/venus/vdec.c    |  2 ++
+>   2 files changed, 9 insertions(+), 6 deletions(-)
+> 
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Not withstanding my 3am misspelled text above, I've also just validated 
+this changes on RB5/HFI_VERSION_6xx.
+
 ---
- .../bindings/power/reset/qcom,pon.yaml        |  4 ++
- .../bindings/watchdog/qcom,pm8916-wdt.txt     | 28 ----------
- .../bindings/watchdog/qcom,pm8916-wdt.yaml    | 51 +++++++++++++++++++
- 3 files changed, 55 insertions(+), 28 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/watchdog/qcom,pm8916-wdt.txt
- create mode 100644 Documentation/devicetree/bindings/watchdog/qcom,pm8916-wdt.yaml
-
-diff --git a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
-index e8ecb75155db..e7b436d2e757 100644
---- a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
-+++ b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
-@@ -36,6 +36,10 @@ properties:
-     type: object
-     $ref: /schemas/input/qcom,pm8941-pwrkey.yaml#
- 
-+  watchdog:
-+    type: object
-+    $ref: /schemas/watchdog/qcom,pm8916-wdt.yaml
-+
- required:
-   - compatible
-   - reg
-diff --git a/Documentation/devicetree/bindings/watchdog/qcom,pm8916-wdt.txt b/Documentation/devicetree/bindings/watchdog/qcom,pm8916-wdt.txt
-deleted file mode 100644
-index 6fb984f31982..000000000000
---- a/Documentation/devicetree/bindings/watchdog/qcom,pm8916-wdt.txt
-+++ /dev/null
-@@ -1,28 +0,0 @@
--QCOM PM8916 watchdog timer controller
--
--This pm8916 watchdog timer controller must be under pm8916-pon node.
--
--Required properties:
--- compatible: should be "qcom,pm8916-wdt"
--
--Optional properties :
--- interrupts : Watchdog pre-timeout (bark) interrupt.
--- timeout-sec : Watchdog timeout value in seconds.
--
--Example:
--
--	pm8916_0: pm8916@0 {
--		compatible = "qcom,pm8916", "qcom,spmi-pmic";
--		reg = <0x0 SPMI_USID>;
--
--		pon@800 {
--			compatible = "qcom,pm8916-pon";
--			reg = <0x800>;
--
--			watchdog {
--				compatible = "qcom,pm8916-wdt";
--				interrupts = <0x0 0x8 6 IRQ_TYPE_EDGE_RISING>;
--				timeout-sec = <10>;
--			};
--		};
--	};
-diff --git a/Documentation/devicetree/bindings/watchdog/qcom,pm8916-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom,pm8916-wdt.yaml
-new file mode 100644
-index 000000000000..568eb8480fc3
---- /dev/null
-+++ b/Documentation/devicetree/bindings/watchdog/qcom,pm8916-wdt.yaml
-@@ -0,0 +1,51 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/watchdog/qcom,pm8916-wdt.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm PM8916 watchdog timer controller
-+
-+maintainers:
-+  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-+
-+allOf:
-+  - $ref: watchdog.yaml#
-+
-+properties:
-+  compatible:
-+    const: qcom,pm8916-wdt
-+
-+  interrupts:
-+    maxItems: 1
-+
-+required:
-+  - compatible
-+  - interrupts
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    #include <dt-bindings/spmi/spmi.h>
-+
-+    pmic@0 {
-+        compatible = "qcom,pm8916", "qcom,spmi-pmic";
-+        reg = <0x0 SPMI_USID>;
-+        #address-cells = <1>;
-+        #size-cells = <0>;
-+
-+        pon@800 {
-+            compatible = "qcom,pm8916-pon";
-+            reg = <0x800>;
-+            mode-bootloader = <0x2>;
-+            mode-recovery = <0x1>;
-+
-+            watchdog {
-+                compatible = "qcom,pm8916-wdt";
-+                interrupts = <0x0 0x8 6 IRQ_TYPE_EDGE_RISING>;
-+                timeout-sec = <60>;
-+            };
-+        };
-+    };
--- 
-2.34.1
-
+bod
