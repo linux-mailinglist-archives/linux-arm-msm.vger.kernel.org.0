@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36873581606
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 17:07:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ACD365815FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 17:07:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239538AbiGZPGg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jul 2022 11:06:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39878 "EHLO
+        id S239530AbiGZPGn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jul 2022 11:06:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239499AbiGZPGc (ORCPT
+        with ESMTP id S239526AbiGZPGf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jul 2022 11:06:32 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A575E12AF4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 08:06:31 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id m12so21991551lfj.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 08:06:31 -0700 (PDT)
+        Tue, 26 Jul 2022 11:06:35 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D26E0657E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 08:06:32 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id p21so9174043ljh.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 08:06:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=zf+Atw6W9ce++rwB/xGOClK+4e2ERQWgmlZE86UF1IM=;
-        b=t8jRIVH2Jgs+63JFHB6dXrvZFEi4zlLDp2OJE9G5VlXCyt7niyPHgamL8t76KtfPbw
-         ORV+yASi4K3O4rC98H/5Q8urTjXwJyYMW7U/G1VXcjW6G6y5jIfaFjBwtTGcl41XioMv
-         k0Iu8XmIVDipPe7xNofQ1BwQtDSIRhEeabl573mxEtZwqO/bo8buK/tsr44UPko2cJNa
-         leibi2hTCXEEvnsqZsLDCGwh5hoKjx3F7r+e3gVS2JO6wrNzSJNFEVF99yDsYhoxvb6T
-         sZiatvzgJvtdONXiNGJDDTTLH7yl4eLCDawH06MMHI3Fr2VDvJYHa2pE/7ALL/+5VpSe
-         Tn7Q==
+        bh=T3qVhbIcSdGEti9fhWWV+LyyzVsTFGP7Y5rCFSxl0MY=;
+        b=hU70+XV+SD7FBJKv+w+/xF/8wK3fuWKmRSTRT7EcXtFTZUEzl3WzxysaiSCe50c6cm
+         39XCYdoy23iwsU+kBwJMYWM1k4E3UpN9XSAQHHpji+lMgtRDX/vSKwMQ7odmGlqv33On
+         2M3epAysVBPvOc72YqLvV0TjVLquLhzWM+LYNsNugO1r9YnsfxqYq1f44k6qxuKU66A9
+         QKIpVtlhMyDWdu7GEdDdxE9ae2ZKXKLL47AYMHCpF80EYQxVNM6ZSU6lh8ClSKWjo8xy
+         aU2Ba3qYNvjBu53MYTns3/EXhYHCWlqXw18ArrS6KO0KV97jeulkm+de8VB54UNbwugs
+         NUrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=zf+Atw6W9ce++rwB/xGOClK+4e2ERQWgmlZE86UF1IM=;
-        b=JATfRX9R9PRHsvpT3TCSs9koclMVIKusuCKJcbv9s837sjy4Wwg5FNOBdNnp/5wH0t
-         MOOQN3XPB6gUxxM882M9jExmG0Jn68O8HtE9kre0fxkc6Nd3E32Xm72v3S388DmgpM57
-         EueDNJequwIGauTK85DxsBmKMjp+CeM/vmNBimJ6K1UnbQADHpDVoy+SwXysaFU+z1JC
-         6eZHZ8w63LaeEbJebGgc/cQVdHCz+rB5tCkPPv4iXAMdgZVAL4Xl97uTNGAYAzrysIu3
-         UIYWBDJnDzT4IAAlcRXBTAtuR+H/e+QYynFmhvRyn1jG6EFDucxB85kuSgUiVQ1EMQ4l
-         lj8Q==
-X-Gm-Message-State: AJIora/7fWJ/RdEzijRZDqrH+LPJskI4R81jcT6JsF1zroomVovg03G2
-        akV2VOLaIaSzMLCSwN4OU9M858yArcpGzA==
-X-Google-Smtp-Source: AGRyM1taY4mwJsiQlIKI4aO7XHnTqlgPEIVbk1Oxa7W76jDrggoak906bc9JOjlPsftGTvndNx9vOA==
-X-Received: by 2002:a05:6512:ea5:b0:48a:77a6:f9f with SMTP id bi37-20020a0565120ea500b0048a77a60f9fmr6214328lfb.60.1658847989774;
-        Tue, 26 Jul 2022 08:06:29 -0700 (PDT)
+        bh=T3qVhbIcSdGEti9fhWWV+LyyzVsTFGP7Y5rCFSxl0MY=;
+        b=zlTBolLrd0w0oHDyMVMmUpDfiriBP4oRdFAb94o5dlS2I6lTd1gf7E7p5fxO+meOkY
+         rb/aY23ic/B5wXbcnIOHERUxjY0Xkl6VWB0X0No2nvjqDOEQwUzfPXT0aoauOh1hdDz6
+         RaBgMZnfC3ZknLAMqIR3bi8qBxFy2XtTDc5mKYUTT2TDMS8bqX28KFRTtvsIKXZED0dN
+         Rei1wkvwhmfKDNJ/NYYUROv+VYjSwqr2ghlJDfFXFbJtwEWZd3p7Wv3dWdL964B1N5L6
+         vesj6jy/38Lbxm8oXhvn7TZ9Cuo0yghM/CCfJpUro1UopZqN/q6xhQY7b8CmyChN/gKW
+         28dg==
+X-Gm-Message-State: AJIora/rpwRxt3h8TkmqsmCm+i7a+AH6KSSs0E/pTXqDJ4s7P+5OzIV/
+        +xcg/oKnXmomELem1Hghj9124YZpHe38zA==
+X-Google-Smtp-Source: AGRyM1svuo1ptN5wfF9GyHVO/RM9Zxn2Goc/QLcCwSCUIyknguy5NeQKHG+1gqBP+xh8fdpdf3XBbQ==
+X-Received: by 2002:a05:651c:1048:b0:25d:d77b:16d7 with SMTP id x8-20020a05651c104800b0025dd77b16d7mr5846614ljm.60.1658847990976;
+        Tue, 26 Jul 2022 08:06:30 -0700 (PDT)
 Received: from krzk-bin.lan (78-26-46-173.network.trollfjord.no. [78.26.46.173])
-        by smtp.gmail.com with ESMTPSA id a26-20020a194f5a000000b0048a95c16849sm836620lfk.282.2022.07.26.08.06.28
+        by smtp.gmail.com with ESMTPSA id a26-20020a194f5a000000b0048a95c16849sm836620lfk.282.2022.07.26.08.06.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jul 2022 08:06:29 -0700 (PDT)
+        Tue, 26 Jul 2022 08:06:30 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Russell King <linux@armlinux.org.uk>,
         Andy Gross <agross@kernel.org>,
@@ -57,9 +57,9 @@ To:     Russell King <linux@armlinux.org.uk>,
         Will Deacon <will@kernel.org>, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v3 2/5] ARM: multi_v7_defconfig: enable more Qualcomm drivers
-Date:   Tue, 26 Jul 2022 17:06:06 +0200
-Message-Id: <20220726150609.140472-3-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 3/5] arm64: defconfig: enable more Qualcomm drivers
+Date:   Tue, 26 Jul 2022 17:06:07 +0200
+Message-Id: <20220726150609.140472-4-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220726150609.140472-1-krzysztof.kozlowski@linaro.org>
 References: <20220726150609.140472-1-krzysztof.kozlowski@linaro.org>
@@ -76,33 +76,36 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Enable Qualcomm drivers:
-1. Command DB (used in SDX55 and SDX65).
-2. On Chip Memory - OCMEM (used in MSM8974)
-3. RPMh and RPMh Power domain (used in SDX55 and SDX65).
+1. Last Level Cache Controller (many platforms supported).
+2. On Chip Memory - OCMEM (used in MSM8992 and MSM8994)
+3. Subsystem Power Manager - SPM (used in MSM8916 and SDM660).
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm/configs/multi_v7_defconfig | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/configs/defconfig | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm/configs/multi_v7_defconfig b/arch/arm/configs/multi_v7_defconfig
-index 5a5c772eedab..a23cdd352d23 100644
---- a/arch/arm/configs/multi_v7_defconfig
-+++ b/arch/arm/configs/multi_v7_defconfig
-@@ -1070,9 +1070,13 @@ CONFIG_ASPEED_LPC_CTRL=m
- CONFIG_ASPEED_LPC_SNOOP=m
- CONFIG_ASPEED_P2A_CTRL=m
- CONFIG_RASPBERRYPI_POWER=y
-+CONFIG_QCOM_COMMAND_DB=m
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 29d86eb839b7..eb9d48fedc0f 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1112,6 +1112,8 @@ CONFIG_QCOM_AOSS_QMP=y
+ CONFIG_QCOM_COMMAND_DB=y
  CONFIG_QCOM_CPR=y
- CONFIG_QCOM_GSBI=y
+ CONFIG_QCOM_GENI_SE=y
++CONFIG_QCOM_LLCC=m
 +CONFIG_QCOM_OCMEM=m
  CONFIG_QCOM_RMTFS_MEM=m
-+CONFIG_QCOM_RPMH=y
-+CONFIG_QCOM_RPMHPD=y
- CONFIG_QCOM_RPMPD=y
- CONFIG_QCOM_SMEM=y
- CONFIG_QCOM_SMD_RPM=y
+ CONFIG_QCOM_RPMH=y
+ CONFIG_QCOM_RPMHPD=y
+@@ -1121,6 +1123,7 @@ CONFIG_QCOM_SMD_RPM=y
+ CONFIG_QCOM_SMP2P=y
+ CONFIG_QCOM_SMSM=y
+ CONFIG_QCOM_SOCINFO=m
++CONFIG_QCOM_SPM=m
+ CONFIG_QCOM_STATS=m
+ CONFIG_QCOM_WCNSS_CTRL=m
+ CONFIG_QCOM_APR=m
 -- 
 2.34.1
 
