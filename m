@@ -2,126 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E39958163C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 17:16:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BAE458169C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 17:41:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237141AbiGZPP7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jul 2022 11:15:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48956 "EHLO
+        id S234098AbiGZPlo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jul 2022 11:41:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237503AbiGZPP4 (ORCPT
+        with ESMTP id S229644AbiGZPln (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jul 2022 11:15:56 -0400
-Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6410252B3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 08:15:54 -0700 (PDT)
-Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-10e4449327aso1041412fac.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 08:15:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=qi27YQV2llDIQ9MD4a8mHofES1qIg++Nu2kwK03YD9s=;
-        b=CQAIm7dsoQ67sdv3ZNlQe6NjLz8yY6xJUmn7p6/mRDOJU4AfuiFJiSoeJElIgg+tAG
-         mFMrcjFV63EHW9qUCC6hD/DIPS7bFjLG5uHUNoS1kGMSxsOgyukFtbcOG5hcNandjbup
-         xs4PRGPwsd9nAJw0a02gw1hvB8oQ71GiWPhIS7Sa/gVtWAKHNFvVykm9NRZ++5yJMnUE
-         ty3Y/OtxIaKGQq/omAtGXpNGE6FGbRmEK6T9/LLkQJTuu0yCUC6k3ufqEv16KlMVrlB9
-         grZTXFo08BOg6O46yegyIGx8YZplppu+dB0fP8UW3g+MU2okGzhAnk1YL/4NrYCrdKoY
-         wzKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=qi27YQV2llDIQ9MD4a8mHofES1qIg++Nu2kwK03YD9s=;
-        b=Sq/6CLWs5hVgLFIkVjdl+MOovhyHn0/0pYMpCnWUGc3DNY9k7CiHFSJ2BTpl+dsR0Q
-         tgGpTZLuCNbee3GDQkHgrYaX7zevfMRDGLvNx5gfB1fLpNG93cKJDCz914u7NGiROHQ8
-         6zPjMt05rOFWfpEVVKcTc27yvp8hD1H/KxDDXLX008tnIGMa1d+Ljgb6QPd+AlyC8ziq
-         EFms5WDfJCUbttYcgN7BpwbxtviOgA/3HxLk4BMMZDyyuRjxa2Jf454F3GXPOLO/Qzm7
-         9p37ukymqbwXGUq51eGCoE36WEo6pHZTlwGbW0ut50LBrgoIo+6ca7nhTfSYO+YjnsUv
-         rhfw==
-X-Gm-Message-State: AJIora+p/LJBpZ7nnnq6qFrQsf7jW73CjoVElka9EQvPvu9zGc6mRoSD
-        RgrPyWKXZM/pc9pQxSyf3njTUw==
-X-Google-Smtp-Source: AGRyM1uhgZZGXaCq2SBFY+o1bwUROWuIuAPgjZwj+YCssxLFM98pvrFIosfruR3nTAuuiAaROu1fpw==
-X-Received: by 2002:a05:6870:b021:b0:10d:438:15e2 with SMTP id y33-20020a056870b02100b0010d043815e2mr8713667oae.162.1658848553012;
-        Tue, 26 Jul 2022 08:15:53 -0700 (PDT)
-Received: from [192.168.11.16] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id w4-20020a4aa444000000b0041ba884d42csm6015111ool.42.2022.07.26.08.15.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Jul 2022 08:15:52 -0700 (PDT)
-Message-ID: <68600ea4-9f65-f365-382a-444c60b4a25d@kali.org>
-Date:   Tue, 26 Jul 2022 10:15:49 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.11.0
-Subject: Re: [PATCH 10/10] arm64: dts: qcom: sdm845: add LLCC BWMON
-Content-Language: en-US
-To:     Sibi Sankar <quic_sibis@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Tue, 26 Jul 2022 11:41:43 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C8A232BB1B;
+        Tue, 26 Jul 2022 08:41:42 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 20C6A1FB;
+        Tue, 26 Jul 2022 08:41:43 -0700 (PDT)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8B2E03F73B;
+        Tue, 26 Jul 2022 08:41:40 -0700 (PDT)
+Date:   Tue, 26 Jul 2022 16:41:38 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Maximilian Luz <luzmaximilian@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ard Biesheuvel <ardb@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Georgi Djakov <djakov@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>
-References: <20220720192807.130098-1-krzysztof.kozlowski@linaro.org>
- <20220720192807.130098-11-krzysztof.kozlowski@linaro.org>
- <25673493-4171-62b0-f696-1316d115f388@kali.org>
- <96552a95-8939-3ac2-c9b3-14dabaf53923@linaro.org>
- <d814a6da-b0d7-2fd1-fd14-8f1f3b88666f@kali.org>
- <d89a540f-672d-83de-d19d-00f10e4370d1@kali.org>
- <fec6bd98-5efd-fe34-6d75-1765219acd82@linaro.org>
- <25321f37-dbea-188b-1b11-e983a00701b2@quicinc.com>
-From:   Steev Klimaszewski <steev@kali.org>
-In-Reply-To: <25321f37-dbea-188b-1b11-e983a00701b2@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure
+ Application client
+Message-ID: <20220726154138.74avqs6iqlzqpzjk@bogus>
+References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
+ <20220723224949.1089973-5-luzmaximilian@gmail.com>
+ <20220726143005.wt4be7yo7sbd3xut@bogus>
+ <829c8fee-cae5-597d-933d-784b4b57bd73@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <829c8fee-cae5-597d-933d-784b4b57bd73@gmail.com>
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Jul 26, 2022 at 05:15:41PM +0200, Maximilian Luz wrote:
+> 
+> So ultimately I think it's better to add a DT entry for it.
 
-On 7/26/22 6:31 AM, Sibi Sankar wrote:
-> On 7/23/22 2:06 PM, Krzysztof Kozlowski wrote:
->> On 23/07/2022 04:37, Steev Klimaszewski wrote:
->>>>
->>>> Currently it's 5.19.0-rc7 (torvalds tree at 4ba1329c) with a few extra
->>>> patches on top, the bwmon set included.  It's possible that secure
->>>> world uses it, but I do not know enough about that to say one way or
->>>> the other.
->>
->> To test patches you should apply them on maintainer's tree or
->> linux-next. Applying on other trees of course might be useful for
->> testing some backports, but it is independent process and different 
->> issue.
->>
->>>>
->>>> -- steev
->>>>
->>> I think you may be right; I just applied this patchset to -next
->>> (20220722) and i do not see the error message there.  On my 5.19-rc7
->>> tree, i am also testing a patchset that enables qcom devices to access
->>> efivars, so possibly we are ending up in secure world there?
->>
->> Actually mapping of IO space should not touch secure world, so this was
->> a long shot assuming you test it on the next.
->>
->
-> The memory region specified in device tree overlaps with the llcc system
-> cache controller node. Steev probably had the QCOM_LLCC config enabled 
-> when he tested it out on his branch.
->
->>
->> Best regards,
->> Krzysztof
->>
-Good catch!  You are correct, my -next config did not have QCOM_LLCC 
-set, and I am using QCOM_LLCC=m on the 5.19.0 release candidate.
+I disagree for the reason that once you discover more apps running on the
+secure side, you want to add more entries and update DT on the platform
+every time you discover some new firmware entity and you wish to interact
+with it from the non-secure side.
+
+As along as get this application ID can handle any random name, I prefer
+to use that as the discover mechanism and not have this DT.
+--
+Regards,
+Sudeep
