@@ -2,253 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 858845819D7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 20:38:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24356581A2C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 21:16:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239556AbiGZSiW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jul 2022 14:38:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53104 "EHLO
+        id S230287AbiGZTQ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jul 2022 15:16:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239539AbiGZSiV (ORCPT
+        with ESMTP id S239496AbiGZTQ2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jul 2022 14:38:21 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 530B832D99
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 11:38:18 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id h8so21304636wrw.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 11:38:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=j6N0pmFjTqcYOHHvMWdXLEZrWTcV8zp2h7HHkht5ViE=;
-        b=ywaywuIvS7cTnJS09uyXPae4Azt6+q5qheewgaxEG63GjCPCWxiOSFaVxxgQqqEYfu
-         urv9iD3hLCtsJJFh0pVSLrBYkxq7fNYwyld086b2Nix6h0ovq9TPiW9p3JXjJYwinUZe
-         lknDuVNOG27+uwOIqgrsDK4QQjv+E+2in2w4/W2g7BRYd/UugqIuINSjLIH3KCHvJwsR
-         VqPbuyECorN43RDFaYM48Zyqy6uNMKKunutOgPdTHVMhpgAQAt6NB6zGCsVINiOZpX0z
-         gPMPKzlMcFFiugwWs2sm7ao5q20kY0Vp23vBgOoGAhEELTDU3HCrcrYtqgDVC2r2pqNB
-         gYWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=j6N0pmFjTqcYOHHvMWdXLEZrWTcV8zp2h7HHkht5ViE=;
-        b=hAmnGsgBiu1yr6a7JFhiamgMm3tyZi+F3VabUR2xoXpJBOKvRHrKyJaND8wQf5aLZ5
-         qz6qR/WvuHzLbrG2UWLva3KQYUBc/WG4IzL4DZ51eT0hT7AmHhdxcOWiK+UQE4FQAuEf
-         vNe9gbEJK5q7xE+AEQ5NfdHgBlqQZB5oUIni825Qd1oSkKurbZZufQOz3YJJb33Q4OzZ
-         HLoi7HrqIanCKcPo7NQW4DfvNnuVInOb9apfR0UMw+YuoC7e7Y2srXAre2NSsIkaqY1k
-         yh3y87nYh3cyJeZJhrX/k6jA4DELYl1PNrHLgYOAFSsH11ETQke1dX8dMPGj7DcneqaR
-         Ie2A==
-X-Gm-Message-State: AJIora9it4rXzlETADG2ckIYH2z57tKoZCif1E56/MKMabjE6VevCC9o
-        jCqkYiJWIJNMMb+Q4sMTovX9ow==
-X-Google-Smtp-Source: AGRyM1vZ4aIjBeDsIxo7OnqgPf9xQ+rIuz4ELfoYfGifICmrCLqwNOCq5LZ24NUUVvCdIv0/R1aM5A==
-X-Received: by 2002:adf:f0ce:0:b0:21e:5eeb:f33e with SMTP id x14-20020adff0ce000000b0021e5eebf33emr11456384wro.362.1658860696589;
-        Tue, 26 Jul 2022 11:38:16 -0700 (PDT)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id k19-20020a05600c1c9300b003a31fd05e0fsm4520683wms.2.2022.07.26.11.38.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jul 2022 11:38:15 -0700 (PDT)
-Date:   Tue, 26 Jul 2022 21:38:14 +0300
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Kevin Hilman <khilman@kernel.org>,
-        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [RFC] PM: domains: Reverse the order of performance and enabling
- ops
-Message-ID: <YuA0luCtQ1J+ExBi@linaro.org>
-References: <20220720110246.762939-1-abel.vesa@linaro.org>
- <CAPDyKFoh8UV=QC6RhOkc=FSvoeqF_UiWp97h0Qp8dniB=sS+8A@mail.gmail.com>
+        Tue, 26 Jul 2022 15:16:28 -0400
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB8212A274
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 12:16:26 -0700 (PDT)
+Received: from [192.168.1.101] (abxi232.neoplus.adsl.tpnet.pl [83.9.2.232])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 7D13B203ED;
+        Tue, 26 Jul 2022 21:16:24 +0200 (CEST)
+Message-ID: <d120c72d-09d9-d78b-01ae-f5592f6a07be@somainline.org>
+Date:   Tue, 26 Jul 2022 21:16:22 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFoh8UV=QC6RhOkc=FSvoeqF_UiWp97h0Qp8dniB=sS+8A@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [RFC 0/9] clk: qcom: gcc-sdm845: Swicth from expanded definitions
+ to compact macros
+Content-Language: en-US
+To:     Abel Vesa <abel.vesa@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <20220726142303.4126434-1-abel.vesa@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20220726142303.4126434-1-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22-07-21 18:48:10, Ulf Hansson wrote:
-> On Wed, 20 Jul 2022 at 13:03, Abel Vesa <abel.vesa@linaro.org> wrote:
-> >
-> > Rather than enabling and then setting the performance state, which usually
-> > translates into two different levels (voltages) in order to get to the
-> > one required by the consumer, we could give a chance to the providers to
-> > cache the performance state needed by the consumer and then, when powering
-> > on the power domain, the provider could use the cached level instead.
->
-> I don't think it's really clear what you want to do here. Let's see
-> what the discussion below brings us to, but for the next version
-> please elaborate a bit more in the commit message.
+Hello!
 
-Sorry about that. Will give more details in the next version.
+Probably an unnecessary nit: typo in the word 'Switch' in the title
 
->
-> Although, if I understand correctly (also from our offlist
-> discussions), you want to make it possible to move from two calls,
-> into one call into the FW from the genpd provider. So it's basically
-> an optimization, which to me, certainly sounds worth doing.
->
-> Furthermore, to get the complete picture, in the Qcom case, we set a
-> "default" low performance level from the genpd's ->power_on()
-> callback, which is needed to enable basic functionality for some
-> consumers.
->
-> The second call that I refer to is made when genpd calls the
-> ->set_performance() callback (from genpd_runtime_suspend()), which is
-> done by genpd to potentially set a new value for an aggregated
-> performance state of the PM domain. In case when there actually is a
-> new performance state set in this path, we end up calling the FW twice
-> for the Qcom case, where this first one is unnecessary.
->
-> Did I get that right?
+On 26.07.2022 16:22, Abel Vesa wrote:
+> Lets see where this goes.
+> 
+> This RFC is basically a proof-of-concept of how we could use more
+> compact macros rather than expanded definitions for clocks on QCOM
+> platforms. As the subject says, this is only for SDM845 GCC, for now.
+> 
+> Also, there are a couple of hacky solutions here that need to be
+> reworked before it could be merged (if ever). One that comes to mind is
+> the way the branch clock macros differentiate between having no parent,
+> a parent name, or a parent HW. I'm still looking into that, so ...
+> 
+> I tried to make them as compact and readable from the user's POV, but
+> there is some complexity needed in order to allow passing different
+> types (or number) of parents. Maybe that complexity is too crazy and
+> doesn't bring that much benefit.
+> 
+> I managed to put together some semi-automated way to do this for every
+> CC, on every platform, if it's decided so. The only testing I managed to
+> do so far was comparing the preprocessed output before and after. Oh,
+> and the MTP does boot. I still need time to make sure that nothing gets
+> broken.
+> 
+> Also, this series is still WIP, so everything can be reworked fast, if
+> needed.
+> 
+> Abel Vesa (9):
+>   clk: qcom: qcc-sdm845: Collapse gdsc structs into macros
+>   clk: qcom: gcc-sdm845: Switch from parent_hws to parent_data
+>   clk: qcom: rcg: Add macros to collapse definition
+>   clk: qcom: alpha-pll: Add macros to collapse definition
+>   clk: qcom: branch: Add macros to collapse definition
+>   clk: qcom: common: Add macro wrapper for all clock types
+>   clk: qcom: gcc-sdm845: Switch to macros to collapse branch clocks
+>     definitions
+>   clk: qcom: gcc-sdm845: Switch to macros to collapse rcg2 clocks
+>     definitions
+>   clk: qcom: gcc-sdm845: Switch to macros to collapse alpha-pll clocks
+>     definitions
+> 
+>  drivers/clk/qcom/clk-alpha-pll.h |   61 +
+>  drivers/clk/qcom/clk-branch.h    |   82 +
+>  drivers/clk/qcom/clk-rcg.h       |   40 +
+>  drivers/clk/qcom/common.h        |    3 +
+>  drivers/clk/qcom/gcc-sdm845.c    | 3222 ++----------------------------
+>  drivers/clk/qcom/gdsc.h          |   10 +
+>  6 files changed, 406 insertions(+), 3012 deletions(-)
+> 
+> --
+At first I was against it, but now I like it. Saves on LoC and clutter.
+And it will hopefully finally be reviewable, without 15 levels of
+indentation flashing before your eyes :D
 
-Actually, for every ->power_on, there is a ->set_performance right after.
+I am also happy you mentioned a "semi-automated" way to convert things,
+especially since Qualcomm will take some time to adjust to this scheme
+on their downstream kernel (it's already really good, I still have
+arch/arm/mach-msm flashbacks..) and of course, when it comes to platform
+support, the more the merrier!
 
-For example, on genpd_runtime_suspend, this is done:
+Thanks for working on this.
 
-	genpd_lock(genpd);
-	ret = genpd_power_on(genpd, 0);
-	if (!ret)
-        	genpd_restore_performance_state(dev, gpd_data->rpm_pstate);
-	genpd_unlock(genpd);
-
-And same thing on __genpd_dev_pm_attach.
-
-Now, TBH, I can't think of any scenario where a consumer would want its PD powered,
-(which implies a non-zero voltage level) and then changed to a higher performance
-level (higher voltage).
-
-In most scenarios, though, the consumer needs the PD powered on to a specific voltage
-level.
-
-Based on the two statements above, we need ->set_performance to actually act as
-a way to tell the provider to which voltage level to power on the power domain
-when the ->power_on will be called.
-
-So my suggestion with this patch is to reverse the order, do ->set_performance first
-and then ->power_on, this way the provider receives the voltage level required by
-a consumer before the request to power on the PD. Then a provider might use that
-info when powering on/off that PD.
-
->
-> > Also the drop_performance and power_off have to be reversed so that
-> > when the last active consumer suspends, the level doesn't actually drop
-> > until the pd is disabled.
->
-> I don't quite get what this part helps with, is it really needed to
-> improve the behaviour?
-
-Again, why would a consumer need its PD voltage dropped before being powered off?
-
-I think it makes more sense for the ->set_performance in this case to act as a
-way to tell the provider that a specific device has yeilded its voltage level
-request. That way the provider can drop the voltage to the minimum requested by
-the active consumers of that PD.
-
->
-> >
-> > For the power domains that do not provide the set_performance, things
-> > remain unchanged, as does for the power domains that only provide the
-> > set_performance but do not provide the power_on/off.
->
-> Right, good points!
->
-> I get back to review the code soon, just wanted to make sure I have
-> the complete picture first.
->
-> Kind regards
-> Uffe
->
-> >
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >  drivers/base/power/domain.c | 30 +++++++++++++++---------------
-> >  1 file changed, 15 insertions(+), 15 deletions(-)
-> >
-> > diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-> > index 5a2e0232862e..38647c304b73 100644
-> > --- a/drivers/base/power/domain.c
-> > +++ b/drivers/base/power/domain.c
-> > @@ -939,8 +939,8 @@ static int genpd_runtime_suspend(struct device *dev)
-> >                 return 0;
-> >
-> >         genpd_lock(genpd);
-> > -       gpd_data->rpm_pstate = genpd_drop_performance_state(dev);
-> >         genpd_power_off(genpd, true, 0);
-> > +       gpd_data->rpm_pstate = genpd_drop_performance_state(dev);
-> >         genpd_unlock(genpd);
-> >
-> >         return 0;
-> > @@ -978,9 +978,8 @@ static int genpd_runtime_resume(struct device *dev)
-> >                 goto out;
-> >
-> >         genpd_lock(genpd);
-> > +       genpd_restore_performance_state(dev, gpd_data->rpm_pstate);
-> >         ret = genpd_power_on(genpd, 0);
-> > -       if (!ret)
-> > -               genpd_restore_performance_state(dev, gpd_data->rpm_pstate);
-> >         genpd_unlock(genpd);
-> >
-> >         if (ret)
-> > @@ -1018,8 +1017,8 @@ static int genpd_runtime_resume(struct device *dev)
-> >  err_poweroff:
-> >         if (!pm_runtime_is_irq_safe(dev) || genpd_is_irq_safe(genpd)) {
-> >                 genpd_lock(genpd);
-> > -               gpd_data->rpm_pstate = genpd_drop_performance_state(dev);
-> >                 genpd_power_off(genpd, true, 0);
-> > +               gpd_data->rpm_pstate = genpd_drop_performance_state(dev);
-> >                 genpd_unlock(genpd);
-> >         }
-> >
-> > @@ -2747,17 +2746,6 @@ static int __genpd_dev_pm_attach(struct device *dev, struct device *base_dev,
-> >         dev->pm_domain->detach = genpd_dev_pm_detach;
-> >         dev->pm_domain->sync = genpd_dev_pm_sync;
-> >
-> > -       if (power_on) {
-> > -               genpd_lock(pd);
-> > -               ret = genpd_power_on(pd, 0);
-> > -               genpd_unlock(pd);
-> > -       }
-> > -
-> > -       if (ret) {
-> > -               genpd_remove_device(pd, dev);
-> > -               return -EPROBE_DEFER;
-> > -       }
-> > -
-> >         /* Set the default performance state */
-> >         pstate = of_get_required_opp_performance_state(dev->of_node, index);
-> >         if (pstate < 0 && pstate != -ENODEV && pstate != -EOPNOTSUPP) {
-> > @@ -2769,6 +2757,18 @@ static int __genpd_dev_pm_attach(struct device *dev, struct device *base_dev,
-> >                         goto err;
-> >                 dev_gpd_data(dev)->default_pstate = pstate;
-> >         }
-> > +
-> > +       if (power_on) {
-> > +               genpd_lock(pd);
-> > +               ret = genpd_power_on(pd, 0);
-> > +               genpd_unlock(pd);
-> > +       }
-> > +
-> > +       if (ret) {
-> > +               genpd_remove_device(pd, dev);
-> > +               return -EPROBE_DEFER;
-> > +       }
-> > +
-> >         return 1;
-> >
-> >  err:
-> > --
-> > 2.34.3
-> >
->
+Konrad
+> 2.34.3
+> 
