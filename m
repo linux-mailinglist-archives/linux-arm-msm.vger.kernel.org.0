@@ -2,154 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF751580957
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 04:15:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03BDF580A1F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 05:55:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231480AbiGZCPC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Jul 2022 22:15:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54708 "EHLO
+        id S231728AbiGZDzy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Jul 2022 23:55:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231539AbiGZCPB (ORCPT
+        with ESMTP id S229647AbiGZDzx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Jul 2022 22:15:01 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61B1128E2C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 19:15:00 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id b26so18302884wrc.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 19:15:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ZueTuJk4+fWaT2N8rAp4WDmLOe4coMMuivU65OxHSr4=;
-        b=sO/MbMDmlWud/lQx0VVE8LyrPrlx3/3/inI8bzFCRBlUoM6g9VIEAMZdVS3OVF1ZVu
-         EXq3JSTr9y1A9axt0fVyHTVncZwVeOlbsgt82/1v9XSo538Trm3DfNYRQCp8leIMixl0
-         ZvmyLAVfiQW18/8ycOPKYG91v0Huh1x+7CkMaS9TwPdB39Yw9rktaFAKcMXPHxVZbJFA
-         uf+3FFWdlOdDa4yYaFwqHtUVRRJn3h+DZjXKyacYnAIA7/cjvtUFmsnr4fyDRL3LSs9o
-         S1ZIRgFjKrq0lVAS0QJbKbCaiyOFC+6qffGuEBLloZ280d5k5zh0bb00fGXIeVMorsGo
-         T82g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ZueTuJk4+fWaT2N8rAp4WDmLOe4coMMuivU65OxHSr4=;
-        b=zMN5sJNdax40RXXSHCNutmtQ5g/lDqSaaMUWZ2VQcdFNQ/ZDZLud3J4oT0+axXnUFl
-         bonf2pG4k2q5//FHCq8v9B9hXkQH22aZa27ABTZZcUPcqFZjssS0um7fjc7AfzV44FPI
-         NLtutI0VO3xvuH6jWBelYp1Jg6p40RyEOUgT/BhIrwxcSaED78xsB+d7Om3aFXSPXMAh
-         2ULBQSpBgEbMMAtFdG/aKI44zM4n8iXcxDd6tnA60WlIWHZ1FiXbG5buXWg0nVIcatnY
-         7UxVwE7Dc44wsZYUkehzLuMzSPo7iEyR6iWqMEhnSD6VDsNHH+8KJRLbevrJZByDrJvi
-         0GIQ==
-X-Gm-Message-State: AJIora/G9Wx5iZTLmbXxQndTWh9CaO94Rvd1yTOhS8kmPEYbIHqYtCJk
-        ty5JJc4tvAZ4hjCKZOMobUAsFw==
-X-Google-Smtp-Source: AGRyM1v9mBpyQgUQSVGBkX3ZZ1Up1KtlzDqMjyVemFM9j38e+GPJ9/iCh9gOb0W7x15dLpAdgQZwig==
-X-Received: by 2002:a05:6000:18ad:b0:21d:9aca:379 with SMTP id b13-20020a05600018ad00b0021d9aca0379mr9375146wri.312.1658801698930;
-        Mon, 25 Jul 2022 19:14:58 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id r67-20020a1c2b46000000b003a308e9a192sm20005984wmr.30.2022.07.25.19.14.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Jul 2022 19:14:58 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     stanimir.varbanov@linaro.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
-        mchehab@kernel.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bryan.odonoghue@linaro.org
-Subject: [PATCH 2/2] media: venus: Fix NV12 decoder buffer discovery on HFI_VERSION_1XX
-Date:   Tue, 26 Jul 2022 03:14:55 +0100
-Message-Id: <20220726021455.1814096-3-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220726021455.1814096-1-bryan.odonoghue@linaro.org>
-References: <20220726021455.1814096-1-bryan.odonoghue@linaro.org>
+        Mon, 25 Jul 2022 23:55:53 -0400
+Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16A717658
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Jul 2022 20:55:52 -0700 (PDT)
+Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
+        by mailout4.samsung.com (KnoxPortal) with ESMTP id 20220726035550epoutp04122d2b753fdff8e3136c871019a6e209~FRNws5GXv2244122441epoutp04W
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 03:55:50 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20220726035550epoutp04122d2b753fdff8e3136c871019a6e209~FRNws5GXv2244122441epoutp04W
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1658807750;
+        bh=fbcLM874Vz+W4WSi9y5XBWvhudbB9qUC0fnLm9sOjTg=;
+        h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
+        b=mDUIqTcKQ4p9gY96ARyLc81vML3F60LykcQfMTV1wI9nUyYpp/LzAiaoJ11iwJ2aE
+         6EGuRw3WdSuRDKiC8iqYVbWZStB/enMjV/6xCHW0on4S2t5LEcJukV33K1++BGKN9w
+         BuGR9jbxb2VGxxRinHO8Fbdqnry/JIj697A+UQek=
+Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
+        epcas5p3.samsung.com (KnoxPortal) with ESMTP id
+        20220726035549epcas5p31e2872f38aadcf0a99c6cefbcb81689a~FRNv1yBv30765407654epcas5p3H;
+        Tue, 26 Jul 2022 03:55:49 +0000 (GMT)
+Received: from epsmges5p3new.samsung.com (unknown [182.195.38.174]) by
+        epsnrtp2.localdomain (Postfix) with ESMTP id 4LsNNy1zYxz4x9Q0; Tue, 26 Jul
+        2022 03:55:46 +0000 (GMT)
+Received: from epcas5p3.samsung.com ( [182.195.41.41]) by
+        epsmges5p3new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        64.EA.09639.BB56FD26; Tue, 26 Jul 2022 12:55:39 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+        epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
+        20220726035538epcas5p4135e63f642ef49535ff12d25c5846e4d~FRNl6b2do0887508875epcas5p4K;
+        Tue, 26 Jul 2022 03:55:38 +0000 (GMT)
+Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
+        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20220726035538epsmtrp2c8c3317535a72cb2990c979f4f47e800~FRNl5j9vJ0718607186epsmtrp2z;
+        Tue, 26 Jul 2022 03:55:38 +0000 (GMT)
+X-AuditID: b6c32a4b-e6dff700000025a7-11-62df65bb1675
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        D8.6B.08905.AB56FD26; Tue, 26 Jul 2022 12:55:38 +0900 (KST)
+Received: from alimakhtar03 (unknown [107.122.12.5]) by epsmtip1.samsung.com
+        (KnoxPortal) with ESMTPA id
+        20220726035536epsmtip15e06a5b0baf4bea3dd788359ca92263c~FRNkMRmxr2640726407epsmtip1Y;
+        Tue, 26 Jul 2022 03:55:36 +0000 (GMT)
+From:   "Alim Akhtar" <alim.akhtar@samsung.com>
+To:     "'Johan Hovold'" <johan+linaro@kernel.org>,
+        "'Rob Herring'" <robh+dt@kernel.org>,
+        "'Krzysztof Kozlowski'" <krzysztof.kozlowski+dt@linaro.org>,
+        "'Martin K. Petersen'" <martin.petersen@oracle.com>
+Cc:     "'Andy Gross'" <agross@kernel.org>,
+        "'Bjorn Andersson'" <bjorn.andersson@linaro.org>,
+        "'Avri Altman'" <avri.altman@wdc.com>,
+        "'Bart Van Assche'" <bvanassche@acm.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+In-Reply-To: <20220711101441.4896-1-johan+linaro@kernel.org>
+Subject: RE: [PATCH] dt-bindings: ufs: qcom,ufs: add SC8280XP binding
+Date:   Tue, 26 Jul 2022 09:25:35 +0530
+Message-ID: <000001d8a0a3$913c2120$b3b46360$@samsung.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQGXKANTK7IsGceyoQ2tYQ03261akwKSTS7Prf5j5AA=
+Content-Language: en-us
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrMJsWRmVeSWpSXmKPExsWy7bCmpu7u1PtJBrfXCFmce/ybxeLlz6ts
+        Fqf3v2OxmPbhJ7PF/CPnWC1WVFr0vXjIbDFx/1l2i8u75rBZdF/fwWax/Pg/JovWvUfYHXg8
+        Ll/x9ti0qpPN4861PWweH5/eYvH4vEnOo/1AN1MAW1S2TUZqYkpqkUJqXnJ+SmZeuq2Sd3C8
+        c7ypmYGhrqGlhbmSQl5ibqqtkotPgK5bZg7QhUoKZYk5pUChgMTiYiV9O5ui/NKSVIWM/OIS
+        W6XUgpScApMCveLE3OLSvHS9vNQSK0MDAyNToMKE7IzPDwoKpvJVbP8wmbmBcSZ3FyMnh4SA
+        icSr2c9Yuxi5OIQEdjNK7PjUzQiSEBL4xCjx5r0ZROIbo8SC6fuYYTq6m99CdexllJh8uYUZ
+        wnnJKPHv/2mwKjYBXYkdi9vYQBIiAmcYJbZ9PAOWYBZYxyTx7qIgiM0pYCOx//hsFhBbWMBV
+        4sfvGUC7OThYBFQlTr3SBwnzClhK/Nh2hh3CFpQ4OfMJC8QYeYntb+dAXaQg8fPpMlYQW0TA
+        SuJ01y82iBpxiZdHj7CD3CAhcIRDoqN3IjtEg4vE1p1LWCFsYYlXx7dAxaUkPr/bywZyg4SA
+        h8SiP1IQ4QyJt8vXM0LY9hIHrsxhASlhFtCUWL9LH2IVn0Tv7ydMEJ28Eh1tQhDVqhLN766y
+        QNjSEhO7u6GWekicOnaNcQKj4iwkj81C8tgsJA/MQli2gJFlFaNkakFxbnpqsWmBcV5qOTy2
+        k/NzNzGCU6+W9w7GRw8+6B1iZOJgPMQowcGsJMKbEH0/SYg3JbGyKrUoP76oNCe1+BCjKTCw
+        JzJLiSbnA5N/Xkm8oYmlgYmZmZmJpbGZoZI4r9fVTUlCAumJJanZqakFqUUwfUwcnFINTCfr
+        3EyfOU7sC9PsCuXb9L2xrn39U8ZLaWteb5w1NWryklWn61VM6207pCa2Twk1v5i0nZ3/kanf
+        m+sH/3/y0uAucvWqbD1kJ90U0cWxMDJXpq7y0oRl5laSW354q1xg+loUWHCV0Tp2XZankL2k
+        XMnCNTmcM5+WaOqHpnDnrdXgOcyYyFmaF65a0jgzpVfok6N78UU9y8D/E/YXZjtZH45P2Lfg
+        565sToHMVS/fG6/Jm/+3Ut7WZbbe9kr9i3e+e2kwzGPz9mlbeaxom0N8VrvWLAXmyXfnT3j1
+        NqCt6/EpG2vrjSlvHl4Mv9zGWlov4JjoMnH/y6QPh0tjpy2z4vY7GCt6+92hDR6/0oyUWIoz
+        Eg21mIuKEwFqoCUERgQAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprLIsWRmVeSWpSXmKPExsWy7bCSnO6u1PtJBvfmy1qce/ybxeLlz6ts
+        Fqf3v2OxmPbhJ7PF/CPnWC1WVFr0vXjIbDFx/1l2i8u75rBZdF/fwWax/Pg/JovWvUfYHXg8
+        Ll/x9ti0qpPN4861PWweH5/eYvH4vEnOo/1AN1MAWxSXTUpqTmZZapG+XQJXxucHBQVT+Sq2
+        f5jM3MA4k7uLkZNDQsBEorv5LWsXIxeHkMBuRommrc9ZIBLSEtc3TmCHsIUlVv57zg5R9JxR
+        YtX72WBFbAK6EjsWt7GBJEQEzjBK3H7cwgLiMAtsYZJoPbaTEaKll1Hi6ME9zCAtnAI2EvuP
+        Q7QLC7hK/Pg9A6iIg4NFQFXi1Ct9kDCvgKXEj21n2CFsQYmTM5+wgJQwC+hJtG1kBAkzC8hL
+        bH87hxniOgWJn0+XsYLYIgJWEqe7frFB1IhLvDx6hH0Co/AsJJNmIUyahWTSLCQdCxhZVjFK
+        phYU56bnFhsWGOallusVJ+YWl+al6yXn525iBMegluYOxu2rPugdYmTiYDzEKMHBrCTCmxB9
+        P0mINyWxsiq1KD++qDQntfgQozQHi5I474Wuk/FCAumJJanZqakFqUUwWSYOTqkGpsie9l9y
+        K5wE/BjmP2dRWHLM3fHSusmbzzoGG83I6herfqeRmy0SMjv2FxP/0V/37nJ2ptssffemZdF2
+        y6SQ9lZRo0eKApZhafePKpUUsi2Zzb/ibtLiDWvqqo4ttTq2fguv9jOd63NvJ0lM3G7zv/t3
+        jGqv0cLtlTGM6VrSfLaVJ3P/y4vZXLpX0mOW7XL/cb6Uyru3Ka/frzXP75z7YtHt2Qn7Sjgs
+        DQzX2dhUq5c+2dO9fbn2/ZY+P2GNG4qm7IFZ5u/SFv7Zde2Ay5nQ8ycUXqsEn1LVFpd51n5R
+        QVS77yrH4+JPoZNk9kgG/TxYXb7N1zxh5T7p2Rc31cvtOx3sc69SOqWmZeHmqbXzlViKMxIN
+        tZiLihMBzC3QSjADAAA=
+X-CMS-MailID: 20220726035538epcas5p4135e63f642ef49535ff12d25c5846e4d
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20220711101520epcas5p421bdaef157484ed146577e5deea04e09
+References: <CGME20220711101520epcas5p421bdaef157484ed146577e5deea04e09@epcas5p4.samsung.com>
+        <20220711101441.4896-1-johan+linaro@kernel.org>
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-HFI_VERSION_1XX uses HFI_BUFFER_OUTPUT not HFI_BUFFER_OUTPUT2 for decoder
-buffers.
++ Martin K
 
-venus_helper_check_format() places a constraint on an output buffer to be
-of type HFI_BUFFER_OUTPUT2. HFI_1XX uses HFI_BUFFER_OUTPUT though.
+>-----Original Message-----
+>From: Johan Hovold [mailto:johan+linaro@kernel.org]
+>Sent: Monday, July 11, 2022 3:45 PM
+>To: Rob Herring <robh+dt@kernel.org>; Krzysztof Kozlowski
+><krzysztof.kozlowski+dt@linaro.org>
+>Cc: Andy Gross <agross@kernel.org>; Bjorn Andersson
+><bjorn.andersson@linaro.org>; Alim Akhtar <alim.akhtar@samsung.com>;
+>Avri Altman <avri.altman@wdc.com>; Bart Van Assche
+><bvanassche@acm.org>; linux-arm-msm@vger.kernel.org; linux-
+>scsi@vger.kernel.org; devicetree@vger.kernel.org; linux-
+>kernel@vger.kernel.org; Johan Hovold <johan+linaro@kernel.org>
+>Subject: [PATCH] dt-bindings: ufs: qcom,ufs: add SC8280XP binding
+>
+>Add SC8280XP to the DT schema.
+>
+>Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+>---
 
-Switching to the logic used in venus_helper_get_out_fmts() first checking
-for HFI_BUFFER_OUTPUT and then HFI_BUFFER_OUTPUT2 resolves on HFI_1XX.
+Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
 
-db410c before:
-root@linaro-alip:~# v4l2-ctl  -d /dev/video0 --list-formats
-ioctl: VIDIOC_ENUM_FMT
-        Type: Video Capture Multiplanar
+@ Martin, 
+Is this something you can take via your tree?
 
-        [0]: 'MPG4' (MPEG-4 Part 2 ES, compressed)
-        [1]: 'H263' (H.263, compressed)
-        [2]: 'H264' (H.264, compressed)
-        [3]: 'VP80' (VP8, compressed)
+> Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 ++
+> 1 file changed, 2 insertions(+)
+>
+>diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>index dcd32c10205a..f2d6298d926c 100644
+>--- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>+++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>@@ -26,6 +26,7 @@ properties:
+>           - qcom,msm8994-ufshc
+>           - qcom,msm8996-ufshc
+>           - qcom,msm8998-ufshc
+>+          - qcom,sc8280xp-ufshc
+>           - qcom,sdm845-ufshc
+>           - qcom,sm6350-ufshc
+>           - qcom,sm8150-ufshc
+>@@ -98,6 +99,7 @@ allOf:
+>           contains:
+>             enum:
+>               - qcom,msm8998-ufshc
+>+              - qcom,sc8280xp-ufshc
+>               - qcom,sm8250-ufshc
+>               - qcom,sm8350-ufshc
+>               - qcom,sm8450-ufshc
+>--
+>2.35.1
 
-root@linaro-alip:~# v4l2-ctl  -d /dev/video1 --list-formats
-ioctl: VIDIOC_ENUM_FMT
-        Type: Video Capture Multiplanar
-
-db410c after:
-root@linaro-alip:~# v4l2-ctl  -d /dev/video0 --list-formats
-ioctl: VIDIOC_ENUM_FMT
-        Type: Video Capture Multiplanar
-
-        [0]: 'MPG4' (MPEG-4 Part 2 ES, compressed)
-        [1]: 'H263' (H.263, compressed)
-        [2]: 'H264' (H.264, compressed)
-        [3]: 'VP80' (VP8, compressed)
-
-root@linaro-alip:~# v4l2-ctl  -d /dev/video1 --list-formats
-ioctl: VIDIOC_ENUM_FMT
-        Type: Video Capture Multiplanar
-
-        [0]: 'NV12' (Y/CbCr 4:2:0)
-
-Validated playback with ffplay on db410c with h264 and vp8 decoding.
-
-Fixes: 9593126dae3e ("media: venus: Add a handling of QC08C compressed format")
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- drivers/media/platform/qcom/venus/helpers.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index 5c1104379c491..623be6393c706 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -1802,7 +1802,7 @@ bool venus_helper_check_format(struct venus_inst *inst, u32 v4l2_pixfmt)
- 	struct venus_core *core = inst->core;
- 	u32 fmt = to_hfi_raw_fmt(v4l2_pixfmt);
- 	struct hfi_plat_caps *caps;
--	u32 buftype;
-+	bool found;
- 
- 	if (!fmt)
- 		return false;
-@@ -1811,12 +1811,13 @@ bool venus_helper_check_format(struct venus_inst *inst, u32 v4l2_pixfmt)
- 	if (!caps)
- 		return false;
- 
--	if (inst->session_type == VIDC_SESSION_TYPE_DEC)
--		buftype = HFI_BUFFER_OUTPUT2;
--	else
--		buftype = HFI_BUFFER_OUTPUT;
-+	found = find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT, fmt);
-+	if (found)
-+		goto done;
- 
--	return find_fmt_from_caps(caps, buftype, fmt);
-+	found = find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT2, fmt);
-+done:
-+	return found;
- }
- EXPORT_SYMBOL_GPL(venus_helper_check_format);
- 
--- 
-2.36.1
 
