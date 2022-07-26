@@ -2,292 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42C6B5815FE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 17:07:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC204581635
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 17:15:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239549AbiGZPGw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jul 2022 11:06:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39934 "EHLO
+        id S234859AbiGZPPt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jul 2022 11:15:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239550AbiGZPGn (ORCPT
+        with ESMTP id S230204AbiGZPPs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jul 2022 11:06:43 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EA582ED62
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 08:06:37 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id y11so22924710lfs.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 08:06:37 -0700 (PDT)
+        Tue, 26 Jul 2022 11:15:48 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5D3E17E37;
+        Tue, 26 Jul 2022 08:15:44 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id ss3so26638446ejc.11;
+        Tue, 26 Jul 2022 08:15:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=702UKJef+ijroSaHlhvyou4bXF2nWMpJnOXocdF4icA=;
-        b=kg0tY+GccxSTnXoaRLa/eQTKkLL/PiW3qt8H7YVYxK/fygHpMIPveekV6TAHhXpjvs
-         TClL8/7eooF+t1L7vCCDqqWPWFi79ey8GNFBMzFIMyMPwI22M5WJ7U7pVp2PjB9wwuvb
-         0uOAm5ns4OQjq5aCLZaSFoNKhIDLQ9n5aMXwzprtK5Yu7MuzbMkhpAocIsZ7uCzoZadx
-         naEDLhGsuj0HhpWyKG7BxbswjKOn2OWFQpAqOknK80cX2Py2HpqYB5bdsI5chn/yvAjK
-         o7FHPGTgLxlPQ+O9MDm6v3DlpEw3C10L5eUkaf6jHJ1qw/dfTZNgm+cIzrmcTi1hvGS0
-         fQFw==
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=30GuoeOYEvgEQlnD0yosJbbGlRpqnBP8ZH8v0N+fbbM=;
+        b=WA9cp6J4DMRCi6V/ZUoDCx4Wggz6MkNUhuqxfezjLmF1FgU6HooYR4VlbHI5bN4y/T
+         lRAMp473cFVjMzq94EeSV4cpMBtm1y4if9fWoNBlHo07PQX7DAIXqJbqCoOc3KxxIjFA
+         h7ogDzORqjuCRbY/nmNRbRD7yo1gLtv0MTGRONdv7Q3qGHODXCIcex/kqrgOUyJNqvVd
+         FjglzRRvUN47zp6G1o/8S+y05ziKBuHHbTCaUKaYIVbJ2Og3nxQERpV+KjTjpdXFZ8T6
+         XX6RrTF7agiS4WETWDVOrKzoNdosM1AIsGmIs/noTZmB8+p6fKpc2FAoz/WiHLYijCnS
+         7FMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=702UKJef+ijroSaHlhvyou4bXF2nWMpJnOXocdF4icA=;
-        b=MVrNGXrboGRXf3sSd/PEYt0sKgGGcrL6LAx/Qozw4dUJKt9NzlgaWZNGvyfnpzoFTg
-         ZbD8hdmOwlRBlAmtL5bmX1muyArbv5nhzJZCh4ilRlb59L1rq3/JBvIsPjAVszSJbbhM
-         KuCUP1OadBnJ7OgrUxiHRuFJ9PUonvzEkzhRfLfig22OIMoaiO9hfYlEKkHCBdH9UhBL
-         OEdMUjIjSTveWCJW0hEnaeXYm/5Ppfrqo98CKwnynlm1/UJ7RcSQkc8Gh5S79RFnCHbY
-         QTSpJ4XaEU0ACArbhFSntqrq+SdOEmzfpTERbPyRD9DJpSIkwRwz0rVOQtLiqu8HLGeR
-         u5aw==
-X-Gm-Message-State: AJIora84qkZ2G9hZpwa0Ca7oZ4YFtpBobqSISgBab1Nf0qLRPhP+Hfli
-        XS9i+NIIcym9dovRPm/mdoSVkg==
-X-Google-Smtp-Source: AGRyM1ua0glGJ6cyqvRdljJjPEIF3jN7HAKBS1PJ0Q+S0BW4aD51QH+FNQ7NUWN4OHRFb06gbjwOgg==
-X-Received: by 2002:a05:6512:10d0:b0:48a:6cee:50d0 with SMTP id k16-20020a05651210d000b0048a6cee50d0mr6430652lfg.222.1658847993710;
-        Tue, 26 Jul 2022 08:06:33 -0700 (PDT)
-Received: from krzk-bin.lan (78-26-46-173.network.trollfjord.no. [78.26.46.173])
-        by smtp.gmail.com with ESMTPSA id a26-20020a194f5a000000b0048a95c16849sm836620lfk.282.2022.07.26.08.06.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jul 2022 08:06:33 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Russell King <linux@armlinux.org.uk>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v3 5/5] ARM: qcom_defconfig: order items with savedefconfig
-Date:   Tue, 26 Jul 2022 17:06:09 +0200
-Message-Id: <20220726150609.140472-6-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220726150609.140472-1-krzysztof.kozlowski@linaro.org>
-References: <20220726150609.140472-1-krzysztof.kozlowski@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=30GuoeOYEvgEQlnD0yosJbbGlRpqnBP8ZH8v0N+fbbM=;
+        b=TDgd96YvW+qLdIbESibZZUA/ovaoY9+mhRO6OPNd2GVUOpVrv6KXk0JmLoFC/4Wsfi
+         NE7JRfP1fAyi8d8AueKZIrBvO9IblVyKhRYBBrcBHre+4XWwWwX4Ec+4dW41oba3YAA7
+         Wr/4uNwo9pkZ+94+FfD3ildfRAVxIKMQel188aUECjDqU6t7sn7MaBiboRxF+/6cn6dx
+         eMHWJrgU8vcr8A7WwhZloWvV0v/CNrnfaPf4otUK55WOgA3eg6+2peE6h8C6eVCGsAaY
+         bth0wUkysxIh/z4OXETSQi5PdYJ9sooDNXXYdgBvJNdqJF0kRynzoj+sMkEty6hyPK07
+         31zA==
+X-Gm-Message-State: AJIora/cnG4rT8p6tiGnH2aeAsRuQDOmmcgbeHvIYT/wJZCXprrdeLQy
+        sLjccca+UyvN/Tt3/ovX3P4=
+X-Google-Smtp-Source: AGRyM1t3w6HTBhhoGB8HDsuc1By/1sTlXh3Y1sOyLWo7gXako1oA99HHAoo8isN8KKOguO0yWOgcVA==
+X-Received: by 2002:a17:907:7ba9:b0:72f:2994:74aa with SMTP id ne41-20020a1709077ba900b0072f299474aamr14486870ejc.85.1658848543107;
+        Tue, 26 Jul 2022 08:15:43 -0700 (PDT)
+Received: from [10.30.0.4] ([37.120.217.82])
+        by smtp.gmail.com with ESMTPSA id ca17-20020aa7cd71000000b0043c92c44c53sm193645edb.93.2022.07.26.08.15.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Jul 2022 08:15:42 -0700 (PDT)
+Message-ID: <829c8fee-cae5-597d-933d-784b4b57bd73@gmail.com>
+Date:   Tue, 26 Jul 2022 17:15:41 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,UPPERCASE_75_100 autolearn=no
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure
+ Application client
+Content-Language: en-US
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ard Biesheuvel <ardb@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
+ <20220723224949.1089973-5-luzmaximilian@gmail.com>
+ <20220726143005.wt4be7yo7sbd3xut@bogus>
+From:   Maximilian Luz <luzmaximilian@gmail.com>
+In-Reply-To: <20220726143005.wt4be7yo7sbd3xut@bogus>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no
         autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Run savedefconfig and order the entries, without removing or adding
-anything.  This reduces conflicts, as new entries should not be added to
-the end, and makes it easier to spot differences against actual config.
+On 7/26/22 16:30, Sudeep Holla wrote:
+> On Sun, Jul 24, 2022 at 12:49:49AM +0200, Maximilian Luz wrote:
+>> Add bindings for the Qualcomm Trusted Execution Environment (TrEE) UEFI
+>> Secure application (uefisecapp) client.
+>>
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm/configs/qcom_defconfig | 56 ++++++++++++++++-----------------
- 1 file changed, 28 insertions(+), 28 deletions(-)
+[...]
 
-diff --git a/arch/arm/configs/qcom_defconfig b/arch/arm/configs/qcom_defconfig
-index f02448187eac..1c7c864661fa 100644
---- a/arch/arm/configs/qcom_defconfig
-+++ b/arch/arm/configs/qcom_defconfig
-@@ -1,6 +1,7 @@
- CONFIG_SYSVIPC=y
- CONFIG_NO_HZ=y
- CONFIG_HIGH_RES_TIMERS=y
-+CONFIG_PREEMPT=y
- CONFIG_IKCONFIG=y
- CONFIG_IKCONFIG_PROC=y
- CONFIG_CGROUPS=y
-@@ -10,29 +11,28 @@ CONFIG_EMBEDDED=y
- # CONFIG_SLUB_DEBUG is not set
- # CONFIG_COMPAT_BRK is not set
- CONFIG_PROFILING=y
--CONFIG_KPROBES=y
--CONFIG_MODULES=y
--CONFIG_MODULE_UNLOAD=y
--CONFIG_MODULE_FORCE_UNLOAD=y
--CONFIG_MODVERSIONS=y
--CONFIG_PARTITION_ADVANCED=y
- CONFIG_ARCH_QCOM=y
- CONFIG_ARCH_MSM8X60=y
- CONFIG_ARCH_MSM8960=y
- CONFIG_ARCH_MSM8974=y
- CONFIG_ARCH_MDM9615=y
--CONFIG_PCI=y
--CONFIG_PCI_MSI=y
--CONFIG_PCIE_QCOM=y
- CONFIG_SMP=y
--CONFIG_PREEMPT=y
-+CONFIG_ARM_PSCI=y
- CONFIG_HIGHMEM=y
- CONFIG_ARM_APPENDED_DTB=y
- CONFIG_ARM_ATAG_DTB_COMPAT=y
-+CONFIG_CPU_FREQ=y
-+CONFIG_CPUFREQ_DT=y
- CONFIG_CPU_IDLE=y
- CONFIG_ARM_CPUIDLE=y
- CONFIG_VFP=y
- CONFIG_NEON=y
-+CONFIG_KPROBES=y
-+CONFIG_MODULES=y
-+CONFIG_MODULE_UNLOAD=y
-+CONFIG_MODULE_FORCE_UNLOAD=y
-+CONFIG_MODVERSIONS=y
-+CONFIG_PARTITION_ADVANCED=y
- # CONFIG_CORE_DUMP_DEFAULT_ELF_HEADERS is not set
- CONFIG_CMA=y
- CONFIG_NET=y
-@@ -56,15 +56,18 @@ CONFIG_BT_HCIUART_BCM=y
- CONFIG_CFG80211=m
- CONFIG_MAC80211=m
- CONFIG_RFKILL=y
-+CONFIG_PCI=y
-+CONFIG_PCI_MSI=y
-+CONFIG_PCIE_QCOM=y
- CONFIG_DEVTMPFS=y
- CONFIG_DEVTMPFS_MOUNT=y
- CONFIG_MTD=y
-+CONFIG_MTD_QCOMSMEM_PARTS=y
- CONFIG_MTD_BLOCK=y
- CONFIG_MTD_M25P80=y
- CONFIG_MTD_RAW_NAND=y
- CONFIG_MTD_NAND_QCOM=y
- CONFIG_MTD_SPI_NOR=y
--CONFIG_MTD_QCOMSMEM_PARTS=y
- CONFIG_MTD_UBI=y
- CONFIG_BLK_DEV_LOOP=y
- CONFIG_BLK_DEV_RAM=y
-@@ -133,10 +136,10 @@ CONFIG_PINCTRL_MSM8660=y
- CONFIG_PINCTRL_MSM8960=y
- CONFIG_PINCTRL_MDM9615=y
- CONFIG_PINCTRL_MSM8X74=y
--CONFIG_PINCTRL_SDX55=y
- CONFIG_PINCTRL_QCOM_SPMI_PMIC=y
- CONFIG_PINCTRL_QCOM_SSBI_PMIC=y
- CONFIG_GPIOLIB=y
-+CONFIG_PINCTRL_SDX55=y
- CONFIG_GPIO_SYSFS=y
- CONFIG_POWER_RESET=y
- CONFIG_POWER_RESET_MSM=y
-@@ -144,15 +147,17 @@ CONFIG_CHARGER_QCOM_SMBB=y
- CONFIG_CHARGER_BQ24190=m
- CONFIG_THERMAL=y
- CONFIG_QCOM_TSENS=y
-+CONFIG_WATCHDOG=y
-+CONFIG_QCOM_WDT=y
- CONFIG_MFD_PM8XXX=y
- CONFIG_MFD_QCOM_RPM=y
- CONFIG_MFD_SPMI_PMIC=y
- CONFIG_REGULATOR=y
- CONFIG_REGULATOR_FIXED_VOLTAGE=y
- CONFIG_REGULATOR_QCOM_RPM=y
-+CONFIG_REGULATOR_QCOM_RPMH=y
- CONFIG_REGULATOR_QCOM_SMD_RPM=y
- CONFIG_REGULATOR_QCOM_SPMI=y
--CONFIG_REGULATOR_QCOM_RPMH=y
- CONFIG_MEDIA_SUPPORT=y
- CONFIG_DRM=y
- CONFIG_DRM_MSM=m
-@@ -160,11 +165,11 @@ CONFIG_DRM_PANEL_SIMPLE=y
- CONFIG_DRM_PANEL_EDP=y
- CONFIG_DRM_ANALOGIX_ANX78XX=m
- CONFIG_FB=y
--CONFIG_FRAMEBUFFER_CONSOLE=y
- # CONFIG_LCD_CLASS_DEVICE is not set
- CONFIG_BACKLIGHT_CLASS_DEVICE=y
- CONFIG_BACKLIGHT_LM3630A=y
- CONFIG_BACKLIGHT_LP855X=y
-+CONFIG_FRAMEBUFFER_CONSOLE=y
- CONFIG_SOUND=y
- CONFIG_SND=y
- CONFIG_SND_DYNAMIC_MINORS=y
-@@ -180,6 +185,7 @@ CONFIG_USB_MON=y
- CONFIG_USB_EHCI_HCD=y
- CONFIG_USB_EHCI_MSM=y
- CONFIG_USB_ACM=y
-+CONFIG_USB_DWC3=y
- CONFIG_USB_CHIPIDEA=y
- CONFIG_USB_CHIPIDEA_UDC=y
- CONFIG_USB_CHIPIDEA_HOST=y
-@@ -196,7 +202,6 @@ CONFIG_USB_CONFIGFS_ECM=y
- CONFIG_USB_CONFIGFS_F_FS=y
- CONFIG_USB_ULPI_BUS=y
- CONFIG_USB_ETH=m
--CONFIG_USB_DWC3=y
- CONFIG_MMC=y
- CONFIG_MMC_BLOCK_MINORS=32
- CONFIG_MMC_ARMMMCI=y
-@@ -218,8 +223,8 @@ CONFIG_COMMON_CLK_QCOM=y
- CONFIG_QCOM_A7PLL=y
- CONFIG_QCOM_CLK_APCS_SDX55=y
- CONFIG_QCOM_CLK_RPM=y
--CONFIG_QCOM_CLK_RPMH=y
- CONFIG_QCOM_CLK_SMD_RPM=y
-+CONFIG_QCOM_CLK_RPMH=y
- CONFIG_APQ_MMCC_8084=y
- CONFIG_IPQ_GCC_4019=y
- CONFIG_IPQ_LCC_806X=y
-@@ -229,12 +234,12 @@ CONFIG_MDM_LCC_9615=y
- CONFIG_MSM_MMCC_8960=y
- CONFIG_MSM_MMCC_8974=y
- CONFIG_SDX_GCC_55=y
--CONFIG_MSM_IOMMU=y
--CONFIG_ARM_SMMU=y
- CONFIG_HWSPINLOCK=y
- CONFIG_HWSPINLOCK_QCOM=y
- CONFIG_MAILBOX=y
- CONFIG_QCOM_APCS_IPC=y
-+CONFIG_MSM_IOMMU=y
-+CONFIG_ARM_SMMU=y
- CONFIG_REMOTEPROC=y
- CONFIG_QCOM_ADSP_PIL=y
- CONFIG_QCOM_Q6V5_PAS=y
-@@ -248,13 +253,13 @@ CONFIG_QCOM_GSBI=y
- CONFIG_QCOM_OCMEM=y
- CONFIG_QCOM_PM=y
- CONFIG_QCOM_RMTFS_MEM=y
-+CONFIG_QCOM_RPMH=y
-+CONFIG_QCOM_RPMHPD=y
- CONFIG_QCOM_RPMPD=y
- CONFIG_QCOM_SMEM=y
- CONFIG_QCOM_SMD_RPM=y
- CONFIG_QCOM_SMP2P=y
- CONFIG_QCOM_SMSM=y
--CONFIG_QCOM_RPMH=y
--CONFIG_QCOM_RPMHPD=y
- CONFIG_QCOM_SOCINFO=y
- CONFIG_QCOM_WCNSS_CTRL=y
- CONFIG_EXTCON_QCOM_SPMI_MISC=y
-@@ -273,10 +278,10 @@ CONFIG_BMP280=y
- CONFIG_PWM=y
- CONFIG_PHY_QCOM_APQ8064_SATA=y
- CONFIG_PHY_QCOM_IPQ806X_SATA=y
--CONFIG_PHY_QCOM_USB_HS=y
--CONFIG_PHY_QCOM_USB_HSIC=y
- CONFIG_PHY_QCOM_QMP=y
-+CONFIG_PHY_QCOM_USB_HS=y
- CONFIG_PHY_QCOM_USB_SNPS_FEMTO_V2=y
-+CONFIG_PHY_QCOM_USB_HSIC=y
- CONFIG_QCOM_QFPROM=y
- CONFIG_INTERCONNECT=y
- CONFIG_INTERCONNECT_QCOM=y
-@@ -302,8 +307,8 @@ CONFIG_CRYPTO_USER=m
- CONFIG_CRYPTO_USER_API=m
- CONFIG_CRYPTO_USER_API_HASH=m
- CONFIG_CRYPTO_USER_API_SKCIPHER=m
--CONFIG_CRYPTO_USER_API_AEAD=m
- CONFIG_CRYPTO_USER_API_RNG=m
-+CONFIG_CRYPTO_USER_API_AEAD=m
- CONFIG_CRYPTO_DEV_QCOM_RNG=m
- CONFIG_DMA_CMA=y
- CONFIG_CMA_SIZE_MBYTES=64
-@@ -313,8 +318,3 @@ CONFIG_DEBUG_INFO=y
- CONFIG_MAGIC_SYSRQ=y
- CONFIG_DEBUG_FS=y
- # CONFIG_SCHED_DEBUG is not set
--CONFIG_WATCHDOG=y
--CONFIG_QCOM_WDT=y
--CONFIG_ARM_PSCI=y
--CONFIG_CPU_FREQ=y
--CONFIG_CPUFREQ_DT=y
--- 
-2.34.1
+>> +examples:
+>> +  - |
+>> +    firmware {
+>> +        scm {
+>> +            compatible = "qcom,scm-sc8180x", "qcom,scm";
+>> +        };
+>> +        tee-uefisecapp {
+>> +            compatible = "qcom,tee-uefisecapp";
+>> +        };
+> 
+> Do you expect some issues using the scm driver APIs without the
+> any additions in the DT ? I mean can't you auto-discover by using the
+> APIs. I haven't looked at the driver or any other patches in the series,
+> but I would like to know if we can avoid adding any new bindings if it
+> can be discovered via those SCM driver APIs.
 
+Not at scale, at least as far as I can tell.
+
+Part of the setup-process of this driver is to query an "application ID"
+from a unique string identifying the application (in this case
+"qcom.tz.uefisecapp"). If that call fails, we know the app is not there.
+
+But: If we'd want to support more than just "uefisecapp" we'd have to
+query each app in some predefined list. As far as I can tell, there's no
+method to enumerate all present/loaded ones. The Windows driver seems to
+use a hard-coded list of apps that are present on some specific SoC.
+
+It might be possible that there exists such a method, but if it does, the
+Windows driver doesn't seem to use it and I don't know about it.
+
+Also, there would need to be at least some type of compatible to
+indicate the presence of that TrEE / Secure Application interface used by
+uefisecapp. Unless you want to send some potentially unsupported SCM
+commands on every platform with qcom,scm and see what comes back.
+
+So ultimately I think it's better to add a DT entry for it. That also
+(hopefully) ensures that someone tested and (at least in some way)
+validated this. Again, It's a reverse engineered driver.
+
+Regards,
+Max
