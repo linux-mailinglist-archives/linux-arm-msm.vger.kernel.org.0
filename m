@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B00835811AB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 13:10:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 897A65811AD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 13:10:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238746AbiGZLKf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jul 2022 07:10:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58758 "EHLO
+        id S229759AbiGZLKq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jul 2022 07:10:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229759AbiGZLKe (ORCPT
+        with ESMTP id S238770AbiGZLKp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jul 2022 07:10:34 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73C512CCBF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 04:10:33 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id q7so680397ljp.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 04:10:33 -0700 (PDT)
+        Tue, 26 Jul 2022 07:10:45 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80D2531222
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 04:10:43 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id t1so22101168lft.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 04:10:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=PQoT/9aESy6cKgnq3qKItMEedeT8sT0bie9jvIUX+0E=;
-        b=TyAjvgK6vMsf4yFceEPO32ykAZ2EroeXpFWIixcUnNwQ5uKhKmpbad0GqaTnHbRb+D
-         Xls3tg65nC+2PzCb/an+blW795LXivyMPziF5T69PxBOdhfQcXTwcqc5n/asKiZrxar5
-         VJCMFKzvVPvqHR62UFo22S37g6JjcfQOOtUqMoSQM689w1c2oMnVzSsPoCC0hj4HixLu
-         e5moXJwDYErZgvOSBfyR4+TbtbncAJgj6On8fMcoM+87ui5AOUhdlxlHPbY/7NA0u5DP
-         RJmo6mmgGEFxBeAECZRcox20aZExKFx/T4G2IUSTzQBvswodZQwsFA6ui4sZ5qyC7sMN
-         mTVA==
+        bh=/gVsxDRvhf7UN6aoVco2tQLHspKhkHUI4EyoT3bQKdI=;
+        b=AfqLw07swmMsDTGXqKJS88WfLHAQvmcJMW9agznPEJB+PJd1KV4YcuQ3ezRT3o/sQ8
+         Qi0Ik9iksIHXi8TER4sIKSUcJc6B0TL+tmFfbCu0BejvWq43ePJl3rnpRL3uB66gSoTy
+         NBkovWu4AvsB0cJw7/aCf++vKrX5wJnnTdElaTdpM5G4taGxr9za4zwLccjxFjqEHnfP
+         uXVaqq57YvUJD5P6AtOzIlgxmqsFpMEhM/lIpRd1xBK/sFkxys3iInuf81Fb3PLQbH6+
+         O87dP5vnQv4Wkx9m48Zg/TkLB51Buon7NTb9jJVZOkXXHQoV2wagfO/JDgrsBupqtK/t
+         p5fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=PQoT/9aESy6cKgnq3qKItMEedeT8sT0bie9jvIUX+0E=;
-        b=YNhjqDhsGHXr8jtThZG8V+D0RNS1wQeyy1Kp8RddBCTA+3zV19NoR3l+VNNXL8jTh5
-         7XgL/ilA2ereYTAgKrqm9smnsqrOVfQrX9eF/XXiTKDuqG/mKNzN9+gkUiuC0CeMcCBi
-         KjdISzFVsPN+ISD1bQmV3GcHwOkoG8uuEpfI2ioXXrhy0tgOHRR4j//iRoEsNc21VQIl
-         NDDTnLWBPiRg3Rze+C6mFyMXOpJNJCPSJBnJYATW1pNAF05UUVQeB3E6X/009VjclFVZ
-         YQy0mTJBcG0GxChpx1a8ocgHbdk3491OiAPeNbgf+pn1UnihNqbyEMarmYFLN/WpWkVS
-         s8KQ==
-X-Gm-Message-State: AJIora94/7owWSwntUUNM4pGrvPsT47XPPUbUHYvbBhYLfNsA0xCrUhX
-        Hez8M7Z/sSi+aE1MBxyomh8LTw==
-X-Google-Smtp-Source: AGRyM1vF4sBG9hH+Oh/N7qzQCKfItcHFL6WlkggHt+XBLNrJA6pFgXPHP/pQ9K4RqSU/GBa6wT++mg==
-X-Received: by 2002:a05:651c:2328:b0:25e:14b2:9aca with SMTP id bi40-20020a05651c232800b0025e14b29acamr850580ljb.437.1658833831523;
-        Tue, 26 Jul 2022 04:10:31 -0700 (PDT)
+        bh=/gVsxDRvhf7UN6aoVco2tQLHspKhkHUI4EyoT3bQKdI=;
+        b=PuEHIMxRTJ+tW9i8tQqZmPTdYK6si6LH/SWbiG6UWPsFMqjoJmb9n15tFTDlSJ0dPF
+         YyRVRqoHS/odwZVNl3iX0EcDGCtxdkW87rE5pPK6nLWL2ajLAFuq+dekXd1j6JzKhjm0
+         oQ3bYC+GCOLcWKId7ROhtoWUqGPWleRk+pVI66yZLrXdjkCi7tNmM8pNoEMHFW0I0Mrf
+         HOxdHMowkfV9WZD+qt3HMZqNQy2k88TES5WBRq0ukXz8Vc5Ce7GHHcfqvCksOB7oX54b
+         KUd0n1lHEMAuxbxIpg95zjmpR3qyR2ZTkDyid5vbqM/ftoIsSR/tNGnR/9J7kz7koNzJ
+         fzgg==
+X-Gm-Message-State: AJIora9ZQlu5KtvuPH2JO0HZ+E9dh7bxImux+vvV6Lk+4Bxzatt+Nsh7
+        AtY3SBqq6z3MfSGGBBdWtNfKZA==
+X-Google-Smtp-Source: AGRyM1vvVg7azGF7pulgSeMTkOv0DvQvG63cXTXUtyIIdhvhK1UI9J4KLX+uotNNvorVGnvc5hGeaA==
+X-Received: by 2002:a19:490c:0:b0:481:4b9e:cbdb with SMTP id w12-20020a19490c000000b004814b9ecbdbmr6795726lfa.350.1658833841897;
+        Tue, 26 Jul 2022 04:10:41 -0700 (PDT)
 Received: from [192.168.3.197] (78-26-46-173.network.trollfjord.no. [78.26.46.173])
-        by smtp.gmail.com with ESMTPSA id t26-20020ac24c1a000000b0048a7b5ee999sm2215561lfq.209.2022.07.26.04.10.30
+        by smtp.gmail.com with ESMTPSA id o1-20020ac25e21000000b0048a8586293asm1550874lfg.48.2022.07.26.04.10.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Jul 2022 04:10:31 -0700 (PDT)
-Message-ID: <6316f6ad-b5ce-33f2-a074-a3f6f0db2da3@linaro.org>
-Date:   Tue, 26 Jul 2022 13:10:29 +0200
+        Tue, 26 Jul 2022 04:10:41 -0700 (PDT)
+Message-ID: <93ae1e3d-d352-d92d-c04a-18fc9f7b01a3@linaro.org>
+Date:   Tue, 26 Jul 2022 13:10:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.12.0
-Subject: Re: [PATCH 4/7] arm64: dts: qcom: msm8996: fix supported-hw in
- cpufreq OPP tables
+Subject: Re: [PATCH 5/7] arm64: dts: qcom: msm8996: add support for speed bin
+ 3
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -66,14 +66,15 @@ To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Yassine Oudjana <yassine.oudjana@gmail.com>
 References: <20220724140421.1933004-1-dmitry.baryshkov@linaro.org>
- <20220724140421.1933004-5-dmitry.baryshkov@linaro.org>
+ <20220724140421.1933004-6-dmitry.baryshkov@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220724140421.1933004-5-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220724140421.1933004-6-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -81,13 +82,12 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 24/07/2022 16:04, Dmitry Baryshkov wrote:
-> Adjust MSM8996 cpufreq tables according to tables in msm-3.18. Some of
-> the frequencies are not supported on speed bins other than 0. Also other
-> speed bins support intermediate topmost frequencies, not supported on
-> speed bin 0. Implement all these differencies.
+> Add support for msm8996, speed bin 3. It supports full range of
+> frequencies on the power cluster, but is limited to 1.8 GHz on
+> performance cluster.
 > 
-> Fixes: 90173a954a22 ("arm64: dts: qcom: msm8996: Add CPU opps")
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 
 
 Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
