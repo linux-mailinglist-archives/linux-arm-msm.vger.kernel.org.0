@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E351C5811B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 13:10:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0782C5811B1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 13:11:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238800AbiGZLKw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jul 2022 07:10:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58970 "EHLO
+        id S238496AbiGZLLF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jul 2022 07:11:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238790AbiGZLKv (ORCPT
+        with ESMTP id S232759AbiGZLLD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jul 2022 07:10:51 -0400
+        Tue, 26 Jul 2022 07:11:03 -0400
 Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACAF43121A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 04:10:50 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id p11so17299643lfu.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 04:10:50 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93B1B31222
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 04:11:02 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id t1so22102362lft.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 04:11:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=BIbHtoZSMIZLyh0GmjmBn+JXyuxmYDwFKOWUgfWh8+M=;
-        b=Ff6DNl8enN/fI7RtHSJN8+TCzhdhaVFAu13OTyARia1ol6Lul1CAXBtq9FXG+isi+X
-         vEbFZAQoH+0WnzjHKsSe1xpoXRAUz2SdNEci4W3i1Mcqd8L4xE0VBZdI3hoa50w8Rpq8
-         qfKr5EvtpmaKnNh212LxJKcsM1DbvaQ0fq53ncAYyxlpxU8aebSkQmuPKCaeiKocgtIQ
-         9PduEPHKb+NET1M9pJN0CwTc/Q5U+q8bWE+8wtHAg9GS3cuS+BIFsp2G+gbL+Tgnauff
-         cbZ10Fg2phDtvVYf1vdZJg38UpSShXpnfjnSc44Dg/Lw5M5Ort+J5KwUu+W4hsehLDP2
-         GDqg==
+        bh=kYJTt3SQA/1p4kh/g9yntKNFicSu2rdf6TlMLv2CCvk=;
+        b=eqJ46c7AjqTGWxQ7bcboDTaiH0YYyLKFJN3viXgUyxRERrDZAnzgp+gbzXvDCzYErh
+         A7SweSz2ZuQ4ouJjVoDR32w3ahDtoZNDhSVyMLKIa6U3oYNVP+tNvCj3PF7PgLg6bvDO
+         b6KR+ydpJrElb2cq8puIwPppPbF/OTXEnPKsA4VQyrbtdi44TY9XjK2npxsDN2LDa1BW
+         SI1HvlmVX7fVlm6qYFzXPn+C70NcgbtHU5smq2l0s/og+LLX4EdODbCAeNvUVneWdVku
+         z1EwLqU38JSPvmps6wx2UGcldJYPdoz53v/Kg5NEsH2SIn9fNwEadYhxscG348PPX7fj
+         JWBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=BIbHtoZSMIZLyh0GmjmBn+JXyuxmYDwFKOWUgfWh8+M=;
-        b=xsf7HEQOT4ntHXNgXo8F7NVtthr1moWvllLFVJ0e4vqSmf6ZhFiiIwtM+T/gNg17Ni
-         LTZx8FScQX2Pq79QTMC/7HoGCjeO84CHJM6Rh8uf2rgOqWWoGp2YMKbfsjutm9L8Jn6y
-         kWlZgWu8U6zNvBWXEb57r99i5nQoXZ8DiQLj9nHYd4+fT7p34hh5NyjeH5HUxfhXRdA7
-         ycHfVJufjKnpeKwdTvceJau7lETLrBboC3LoDsapU0GRNHp68S3g2MNw5kbdnV7Qk5D/
-         nLKbR4Z4mWvsRV99mPGtWM6Xo7LfkpIZA/qaBgA4qLxlYcdPKUFwP31qDEdTgqbGSfNe
-         0e4w==
-X-Gm-Message-State: AJIora+GMDflkUhIXG/xaWMUgoEcBz9tkke62QDtsCcEN//ziLI6zZOA
-        ohHgEJ8oC0XhcZZl4H9MXg10+Q==
-X-Google-Smtp-Source: AGRyM1uhe0CVkxx0pdcTRAFVVCH1nMl3/26PwxbOwZYC+4Ql298ZJaf5X8t6W2VY3V3003c6em02Gw==
-X-Received: by 2002:a05:6512:131b:b0:48a:26dd:d823 with SMTP id x27-20020a056512131b00b0048a26ddd823mr6023574lfu.661.1658833849080;
-        Tue, 26 Jul 2022 04:10:49 -0700 (PDT)
+        bh=kYJTt3SQA/1p4kh/g9yntKNFicSu2rdf6TlMLv2CCvk=;
+        b=BgsK05xxbj49Mu7Kx7NYb/t5TvV2jgmm1jKlxUIbpXASMfd5ArD8vqM77A2G+fMXYN
+         NMdY7REmo5oGWzrxKFgyXK626JmAZ21FxG10LJMU16AG0P1+SJ/qhedFYmvTOLb4zgSF
+         wQd4vQgtidCcMzjp1WLtD42qfePXAAiUc6xukroXrtpUaSexLK4wbQ9ziBN8BcupWQZf
+         WtbDZW/8okKNtRMQ8cxCK3A1TApDnZK2HFf1DO+woYJeJgFq6BBvO0tFZS0ZwALGK7K0
+         sH3nYKaCAp5eCgqgQmVVcBpsDMT7agaXPmf2ogRWSQ5xiKNX5qTpIBU9ene6FH7+xuVF
+         gJ4g==
+X-Gm-Message-State: AJIora9YPgoF+EYYekjDCuTOX1weinXoUmAJR+5ao6phYmDoWaNvUhHH
+        WnmQMcgT3Tola8SROAJZmwGjgg==
+X-Google-Smtp-Source: AGRyM1vOfPSLpOl+PoB59ltOyfAbUzDmkmHsqkURfRJe0bRil9VTvKILBTvjRAQ82byt7ZrPVyiyEg==
+X-Received: by 2002:a05:6512:2392:b0:48a:8770:f5a6 with SMTP id c18-20020a056512239200b0048a8770f5a6mr4075711lfv.389.1658833862169;
+        Tue, 26 Jul 2022 04:11:02 -0700 (PDT)
 Received: from [192.168.3.197] (78-26-46-173.network.trollfjord.no. [78.26.46.173])
-        by smtp.gmail.com with ESMTPSA id f11-20020a2e380b000000b0025e07e701b8sm1078641lja.63.2022.07.26.04.10.47
+        by smtp.gmail.com with ESMTPSA id i6-20020ac25d26000000b0048a91d3ae3dsm868026lfb.221.2022.07.26.04.11.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Jul 2022 04:10:48 -0700 (PDT)
-Message-ID: <0c349122-6164-bccf-2d70-072e14f059ef@linaro.org>
-Date:   Tue, 26 Jul 2022 13:10:47 +0200
+        Tue, 26 Jul 2022 04:11:01 -0700 (PDT)
+Message-ID: <fa54704b-55ea-fa3d-5d1e-75d8e9fccc10@linaro.org>
+Date:   Tue, 26 Jul 2022 13:11:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.12.0
-Subject: Re: [PATCH 6/7] arm64: dts: qcom: msm8996: fix GPU OPP table
+Subject: Re: [PATCH 7/7] arm64: dts: qcom: msm8996pro: expand Adreno OPP table
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -65,9 +65,9 @@ To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Yassine Oudjana <yassine.oudjana@gmail.com>
 References: <20220724140421.1933004-1-dmitry.baryshkov@linaro.org>
- <20220724140421.1933004-7-dmitry.baryshkov@linaro.org>
+ <20220724140421.1933004-8-dmitry.baryshkov@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220724140421.1933004-7-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220724140421.1933004-8-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -80,13 +80,15 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 24/07/2022 16:04, Dmitry Baryshkov wrote:
-> Fix Adreno OPP table according to the msm-3.18. Enable 624 MHz for the
-> speed bin 3 and 560 MHz for bins 2 and 3.
+> There are minor differeces between msm8996 and msm8996pro in terms of
+> GPU frequencies support. For example msm8996pro supports 652.8 MHz
+> frequency for the Adreno. Reclect these differences in msm8996pro.dtsi.
 > 
-> Fixes: 69cc3114ab0f ("arm64: dts: Add Adreno GPU definitions")
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/msm8996.dtsi | 10 +++++-----
+>  arch/arm64/boot/dts/qcom/msm8996pro.dtsi | 25 ++++++++++++++++++++++++
+>  1 file changed, 25 insertions(+)
+> 
 
 
 Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
