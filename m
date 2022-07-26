@@ -2,119 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 24356581A2C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 21:16:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C066581B16
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 22:34:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230287AbiGZTQ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jul 2022 15:16:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48228 "EHLO
+        id S229658AbiGZUeH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jul 2022 16:34:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239496AbiGZTQ2 (ORCPT
+        with ESMTP id S239940AbiGZUeG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jul 2022 15:16:28 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB8212A274
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 12:16:26 -0700 (PDT)
-Received: from [192.168.1.101] (abxi232.neoplus.adsl.tpnet.pl [83.9.2.232])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 7D13B203ED;
-        Tue, 26 Jul 2022 21:16:24 +0200 (CEST)
-Message-ID: <d120c72d-09d9-d78b-01ae-f5592f6a07be@somainline.org>
-Date:   Tue, 26 Jul 2022 21:16:22 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [RFC 0/9] clk: qcom: gcc-sdm845: Swicth from expanded definitions
- to compact macros
-Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>,
+        Tue, 26 Jul 2022 16:34:06 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9BC522BE6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 13:34:04 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id z13so17335401ljj.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 13:34:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LBgfLrjfrDzFKMd04kVmm9cQnQP6aRPvjjtNa3eyuWY=;
+        b=IPrAYfeo0Ayz6XdL7LQp+CxK6bh+AlcqHl+DTv//M50yF8BB6VfDiGJZMgiWyGapX9
+         qEVmhIHwdOfE5sIMZ1BFcmtmkYJwuLoTN+ZA9oahViyotPsNBT3Ark6muE3ohERSZe/Y
+         LSEfuY0Gd1SuPoaJ/u7enrEEVMtKjRX+6fNnDJ6RX8qPsXq6ApSGEKslh9skY0Mo2uh0
+         7FxwLuXmoZ8B7HWjALpmXN4fv0/wh9KGUF8BxZgZCLZYzfm7oSFia6GLN4g+FJiVGsBd
+         Tyhy1jEm/P6bYaGZnrEZjxWkGoaxjjmkyuAt3A39wvIOe8WI6XbyakNbCBQ3iR82LieH
+         vpxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LBgfLrjfrDzFKMd04kVmm9cQnQP6aRPvjjtNa3eyuWY=;
+        b=VIpItDoRJZHMKgipz+EsYRB8teu6us3h3dZZaCiJj7uMCDl8Os1bEEfYynndc9M73c
+         YcB8CL0rX0G3ncaTUUIAiJ7Arq518gccseJLdd/bx7jdyoZDMrs0gbQvcoqw55vmcoxv
+         AxPudKIxHBZPDjh9mNFemd85Mc5N/h/FdQmH4QgCeh6d6m+o6u3cg0XZxxc80sfOYFDi
+         J4KL5fg1EuIhQS68cpMcqH35i1uNS2uQxSeJsZt7EaafqTIAaot78d4/8mOyubAa0rrS
+         RkDWjzn9b1oR7dfnwxeXFQvHsx0WNYPgJVwh/063kzLRO32/d2FmX6TrySiZMDpxRDud
+         PwZQ==
+X-Gm-Message-State: AJIora8j/4xDXwN9eGAVaH658V6WBXg/yOoW2tlYfBk3SiRKjsM+f9iV
+        rdCjj8c3gOwLexBoQtiEcILAxQ==
+X-Google-Smtp-Source: AGRyM1uf8Wk/0bZLrZKza6HRO1fAvjkNQdRTIc6YaIrx7QPGXWmmDIMLIPP6vWcZwr9draHq70JcWQ==
+X-Received: by 2002:a2e:9942:0:b0:25e:887:3fc7 with SMTP id r2-20020a2e9942000000b0025e08873fc7mr3615481ljj.303.1658867643212;
+        Tue, 26 Jul 2022 13:34:03 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id o14-20020ac24e8e000000b0048a8899db0fsm1468548lfr.7.2022.07.26.13.34.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Jul 2022 13:34:02 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <20220726142303.4126434-1-abel.vesa@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220726142303.4126434-1-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: [PATCH v1 0/4] PCI: qcom: Support using the same PHY for both RC and EP
+Date:   Tue, 26 Jul 2022 23:33:57 +0300
+Message-Id: <20220726203401.595934-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello!
+Programming of QMP PCIe PHYs slightly differs between RC and EP modes.
 
-Probably an unnecessary nit: typo in the word 'Switch' in the title
+Currently both qcom and qcom-ep PCIe controllers setup the PHY in the
+default mode, making it impossible to select at runtime whether the PHY
+should be running in RC or in EP modes. Usually this is not an issue,
+since for most devices only the RC mode is used. Some devices (SDX55)
+currently support only the EP mode without supporting the RC mode (at
+this moment).
 
-On 26.07.2022 16:22, Abel Vesa wrote:
-> Lets see where this goes.
-> 
-> This RFC is basically a proof-of-concept of how we could use more
-> compact macros rather than expanded definitions for clocks on QCOM
-> platforms. As the subject says, this is only for SDM845 GCC, for now.
-> 
-> Also, there are a couple of hacky solutions here that need to be
-> reworked before it could be merged (if ever). One that comes to mind is
-> the way the branch clock macros differentiate between having no parent,
-> a parent name, or a parent HW. I'm still looking into that, so ...
-> 
-> I tried to make them as compact and readable from the user's POV, but
-> there is some complexity needed in order to allow passing different
-> types (or number) of parents. Maybe that complexity is too crazy and
-> doesn't bring that much benefit.
-> 
-> I managed to put together some semi-automated way to do this for every
-> CC, on every platform, if it's decided so. The only testing I managed to
-> do so far was comparing the preprocessed output before and after. Oh,
-> and the MTP does boot. I still need time to make sure that nothing gets
-> broken.
-> 
-> Also, this series is still WIP, so everything can be reworked fast, if
-> needed.
-> 
-> Abel Vesa (9):
->   clk: qcom: qcc-sdm845: Collapse gdsc structs into macros
->   clk: qcom: gcc-sdm845: Switch from parent_hws to parent_data
->   clk: qcom: rcg: Add macros to collapse definition
->   clk: qcom: alpha-pll: Add macros to collapse definition
->   clk: qcom: branch: Add macros to collapse definition
->   clk: qcom: common: Add macro wrapper for all clock types
->   clk: qcom: gcc-sdm845: Switch to macros to collapse branch clocks
->     definitions
->   clk: qcom: gcc-sdm845: Switch to macros to collapse rcg2 clocks
->     definitions
->   clk: qcom: gcc-sdm845: Switch to macros to collapse alpha-pll clocks
->     definitions
-> 
->  drivers/clk/qcom/clk-alpha-pll.h |   61 +
->  drivers/clk/qcom/clk-branch.h    |   82 +
->  drivers/clk/qcom/clk-rcg.h       |   40 +
->  drivers/clk/qcom/common.h        |    3 +
->  drivers/clk/qcom/gcc-sdm845.c    | 3222 ++----------------------------
->  drivers/clk/qcom/gdsc.h          |   10 +
->  6 files changed, 406 insertions(+), 3012 deletions(-)
-> 
-> --
-At first I was against it, but now I like it. Saves on LoC and clutter.
-And it will hopefully finally be reviewable, without 15 levels of
-indentation flashing before your eyes :D
+Nevertheless some of the Qualcomm platforms (e.g. the aforementioned
+SDX55) would still benefit from being able to switch between RC and EP
+depending on the driver being used. While it is possible to use
+different compat strings for the PHY depending on the mode, it seems
+like an incorrect approach, since the PHY doesn't differ between
+usecases. It's the PCIe controller, who should decide how to configure
+the PHY.
 
-I am also happy you mentioned a "semi-automated" way to convert things,
-especially since Qualcomm will take some time to adjust to this scheme
-on their downstream kernel (it's already really good, I still have
-arch/arm/mach-msm flashbacks..) and of course, when it comes to platform
-support, the more the merrier!
+This patch series implements the ability to select between RC and EP
+modes, by allowing the PCIe QMP PHY driver to switch between
+programming tables.
 
-Thanks for working on this.
+Note, there is no direct dependency between PCIe and PHY parts of these
+series, so these patches can be merged into respective subsystem trees
+separately.
 
-Konrad
-> 2.34.3
-> 
+Changes since RFC:
+- Fixed the compilation of PCIe EP driver,
+- Changed pri/sec names to primary and secondary,
+- Added comments regarding usage of secondary_rc/_ep fields.
+
+Dmitry Baryshkov (4):
+  phy: qcom-qmp-pcie: split register tables into primary and secondary
+    part
+  phy: qcom-qmp-pcie: support separate tables for EP mode
+  PCI: qcom: Setup PHY to work in RC mode
+  PCI: qcom-ep: Setup PHY to work in EP mode
+
+ drivers/pci/controller/dwc/pcie-qcom-ep.c |   4 +
+ drivers/pci/controller/dwc/pcie-qcom.c    |   4 +
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c  | 169 +++++++++++++---------
+ 3 files changed, 109 insertions(+), 68 deletions(-)
+
+-- 
+2.35.1
+
