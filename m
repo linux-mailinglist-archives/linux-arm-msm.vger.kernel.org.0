@@ -2,46 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EAB5F580E75
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 10:05:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 419CC580E82
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 10:06:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237913AbiGZIFp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jul 2022 04:05:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53754 "EHLO
+        id S237799AbiGZIGv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jul 2022 04:06:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232403AbiGZIFo (ORCPT
+        with ESMTP id S238400AbiGZIGr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jul 2022 04:05:44 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F12B321253;
-        Tue, 26 Jul 2022 01:05:43 -0700 (PDT)
+        Tue, 26 Jul 2022 04:06:47 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 958502DAA4;
+        Tue, 26 Jul 2022 01:06:45 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id AA076B8122C;
-        Tue, 26 Jul 2022 08:05:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E26BC341C0;
-        Tue, 26 Jul 2022 08:05:38 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E90A2614D7;
+        Tue, 26 Jul 2022 08:06:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5999C36AE5;
+        Tue, 26 Jul 2022 08:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1658822741;
+        s=k20201202; t=1658822804;
         bh=AuSXlGXkPcDkuhy4cIR2vtHDpg/jer5nbJzf7kZ8fcg=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=S/jb5CsETxT0qcotIYIMSfXjAxsypMdq9EZIa9Iwl6DxU6FlTg1WpjrgCZnN+J0AA
-         IML2WWN2ZCoyhz/lPyYZ7EM6Sg3zapcaEX2gx7z1Gt+YmD+xxfKIL8n4Bs05UKF1qr
-         rgeEuPYQO0Wen5ks6sbvz0iO7/1BFuMcwBNBAyqUB0G4Ggto9tlf5L8zpbzf62L8vj
-         aTLv3KEN5o8AAZZR1ugZBj4hBHaROiTff9aZFAowgD02P2eSsHbD8Tajp8Z/6/ZSbh
-         L4SnT5gLmfpThWKazRJZyITtTzc71fbJIul8esYVtPiGT+BCrep6Um5Lwcc/RixDvY
-         4L6fUwKtvZmrQ==
-Date:   Tue, 26 Jul 2022 13:35:33 +0530
+        b=RCCcqAC2M4GslsUvGs5C1x4+/2G3a3w3bEuNTAsrTHtM9sH6pN3U++bWLhLWuMidi
+         zyAWadDpmrSgL3lkX4NJrljlmQzjsXQeXb0RJ3rAOeqYMNes0+jhfEafI+YcAXukfV
+         Cb+GkC9NUF1my0VIXuNvFzzLy4cZ13h4wg8V6FlXp3svHe1+70jkp9K9CouDzXWvoE
+         82aN/TJUjy7zVRKWMxIiI5Ke8jDreKJX0p7iWbhun3lHl67Do4z9E+1wMqXTfhLOS2
+         W2LC0sskVe1kYmIVXoAMYvs01+RLxH6s7V76IQE4clsmRJLHP1AwakVhf3OnsjtjV9
+         NQF6jaLu8+bCA==
+Date:   Tue, 26 Jul 2022 13:36:36 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
 To:     Qiang Yu <quic_qianyu@quicinc.com>
 Cc:     quic_hemantk@quicinc.com, loic.poulain@linaro.org,
         quic_jhugo@quicinc.com, mhi@lists.linux.dev,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_cang@quicinc.com
+        quic_cang@quicinc.com, ath11k@lists.infradead.org, kvalo@kernel.org
 Subject: Re: [PATCH v3 1/1] bus: mhi: host: Fix up null pointer access in
  mhi_irq_handler
-Message-ID: <20220726080533.GD5522@workstation>
+Message-ID: <20220726080636.GE5522@workstation>
 References: <1658459838-30802-1-git-send-email-quic_qianyu@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
