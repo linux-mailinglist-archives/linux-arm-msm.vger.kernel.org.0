@@ -2,157 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 903CE5810F3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 12:17:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01F6258110D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Jul 2022 12:25:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237617AbiGZKRG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Jul 2022 06:17:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48664 "EHLO
+        id S233153AbiGZKZP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Jul 2022 06:25:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232241AbiGZKRF (ORCPT
+        with ESMTP id S231345AbiGZKZI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Jul 2022 06:17:05 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36C2321251
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 03:17:04 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id r14so15975213ljp.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 03:17:04 -0700 (PDT)
+        Tue, 26 Jul 2022 06:25:08 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA4883136E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 03:25:05 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id b16so9468004lfb.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Jul 2022 03:25:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=k5O4EHVtxr88sGikNEClrHBrRMv6Wt5HYjbVbFJmD00=;
-        b=vJpAIwYZMErEj5rbGqQ350mc3DCwuGHIizHIV5HmshxNf4Nft1JqUJibbEaQ4UGP3g
-         vw39nBSZJfIqI/XG3vZZaz2dTrpo6uIZi9xYNSTeRGR/DQif/KbWGwtkq388iwShp0gv
-         mP9rVynS6uo9w6P5Jl9Rb1x2SwhDE32s8qhojzZvMBIhdENmCL9rroS/hIDTgtD+zf6z
-         r2ASk5SDwigvx5mC2rkitjtqoKrBzHLSxEzgpL4MnvXE6QduyDQwm115Paei4jBS1Sw0
-         pP/XZdNcsEpxhoxulbvaCJVg7WbhwAwRscys4wzpeIRejNy2KTiv0BM4aZLWBqUsLC5v
-         0ijQ==
+        bh=x+nskSevu+BnV44CpZIDNQEifjnEzcirOFZu/6Dy2ww=;
+        b=f7cF7eFX0+s6Ge80wf+LWz2MZcY6cVEabODf33OiVdmR3hiXwsFE2kBrycyvMAv3ml
+         dr5S4BwlNUXJNsVhOTt1qqDRzR3/kyH9Ab23mD1hGr1nkMJvGfqGoIf9JtZ8r2Yf16kJ
+         tO8c5vm5uk2DUShQgk1L9lI2DL2pS6vmycdihdtk3ZsgUkD40eJmwZvC6Gqql5S8fWXW
+         BTeinqhzrMNQAsl8A2VrvUvmWUdAuwcistWRht0Dc3hawdcMlhcKpG98OVFf2ZI576vK
+         B+xTg+Fo6eLd1oVpC6P/DQ/GG8NpNW7pMfv2nNnrco+GEoaK86MpZ6inM5bFG6ll0MPF
+         vg7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=k5O4EHVtxr88sGikNEClrHBrRMv6Wt5HYjbVbFJmD00=;
-        b=W26fPx4ICJShfcYnuAb3DiWkfYmGtoMerIQhjVsQwFiy5W9l4w2YuQ0CXzqk3o0MJQ
-         vjQWfwxkRDXU30AMMAaIPPTsBVEk7m1DpGyAW1Bb1xpugnQwj7B5p4CML7sI98yvvQSK
-         NZ9MFGgkBayzH10HF3A7ZTXBbleZs7wfv1sG8U8LsSta/ui64H9vUJDkcCOW0sRpz0CG
-         63aEUAf/gjYENPzrr6o2/zG+3ginLK8qcP29g4Is09rOrFyaRh7/sgKvLojd07qKWM9b
-         /eFgWHtx9eoQwbKg8Lu9ymItpshUVporFT4U5rDgfA5g7JqoGQPsMhs61IbEE48j+i/8
-         +piw==
-X-Gm-Message-State: AJIora+FQUFuBSFXxALbKBfFT/aw238F4mz7pLHQFZV1l1SHDKGnwqpj
-        9/NWrtoZIoFyqIqheli2LP+8Lg==
-X-Google-Smtp-Source: AGRyM1uViFn/KmVHqLUDrlNUpPnN4K9sCA2Pesn1Ztt99me1kjgo9CTQ9ebdIYigb0qTu1yG/I46ZQ==
-X-Received: by 2002:a2e:9d02:0:b0:25d:d6b9:b753 with SMTP id t2-20020a2e9d02000000b0025dd6b9b753mr5387184lji.344.1658830622608;
-        Tue, 26 Jul 2022 03:17:02 -0700 (PDT)
+        bh=x+nskSevu+BnV44CpZIDNQEifjnEzcirOFZu/6Dy2ww=;
+        b=6QeivAkUAmp97SKIpZVh0wG7o/yqI3AEN9ISc9CjJA9W3IP3oF8GMlag2BEVNgbnJk
+         KwHJdVE4E49yeQcOqv8SOE+e0jp9j1ne4Cdwz9yhuYkZH8l/5XqVOjG0kYTKfJxzv7ZF
+         Ph67y3xO/hSMI2aWwckMeprtzH6yE/PNf4RNa2XfzICLSQArzlIEfo/uAYXahw98dNJn
+         SJw9LfGnyw63HTEqE3ysehei5CAfVaAxZty/dz8v6jTZVModqoDFgpvF9Xe+ZF8z7vqJ
+         CI/opxKi9HBCLTvXP1nggqEzb0v0tu3xP5EcklwV/OMA6iuT2I/Sk0SJL/4By1iixbr3
+         iC2A==
+X-Gm-Message-State: AJIora9DyeTXmUQG+yBa6RMNu4b648VHq63+nJILd7vimRFZyfjseVip
+        ie8TJ8zyWUijrsP0qlJ9hNT8vg==
+X-Google-Smtp-Source: AGRyM1sYAdgHN8tBKjKpSNdBNjl4YXX//x0wnnc1Dmy6k6JC6knN15yFRPQ3AvGS+PFPLiiSsfim2Q==
+X-Received: by 2002:a05:6512:33c3:b0:48a:83a9:52e1 with SMTP id d3-20020a05651233c300b0048a83a952e1mr4730137lfg.344.1658831104304;
+        Tue, 26 Jul 2022 03:25:04 -0700 (PDT)
 Received: from [192.168.3.197] (78-26-46-173.network.trollfjord.no. [78.26.46.173])
-        by smtp.gmail.com with ESMTPSA id q21-20020ac24a75000000b00484e9e254c4sm3142760lfp.100.2022.07.26.03.17.01
+        by smtp.gmail.com with ESMTPSA id b9-20020a056512070900b00489c8c6c055sm516654lfs.50.2022.07.26.03.25.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Jul 2022 03:17:02 -0700 (PDT)
-Message-ID: <e88d1036-dc58-3fc8-c388-edba9b2d62a7@linaro.org>
-Date:   Tue, 26 Jul 2022 12:17:00 +0200
+        Tue, 26 Jul 2022 03:25:03 -0700 (PDT)
+Message-ID: <a47a33a5-aec7-2a52-f1e8-52c45307862e@linaro.org>
+Date:   Tue, 26 Jul 2022 12:25:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.12.0
-Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure
- Application client
+Subject: Re: [PATCH v4 1/2] dt-bindings: power: reset: qcom-pon: update "reg"
+ property details
 Content-Language: en-US
-To:     Maximilian Luz <luzmaximilian@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
- <20220723224949.1089973-5-luzmaximilian@gmail.com>
+To:     Anjelique Melendez <quic_amelende@quicinc.com>, corbet@lwn.net,
+        sre@kernel.org, robh+dt@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
+        linux-doc@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        David Collins <quic_collinsd@quicinc.com>
+References: <20220725191314.19456-1-quic_amelende@quicinc.com>
+ <20220725191314.19456-2-quic_amelende@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220723224949.1089973-5-luzmaximilian@gmail.com>
+In-Reply-To: <20220725191314.19456-2-quic_amelende@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/07/2022 00:49, Maximilian Luz wrote:
-> Add bindings for the Qualcomm Trusted Execution Environment (TrEE) UEFI
-> Secure application (uefisecapp) client.
+On 25/07/2022 21:13, Anjelique Melendez wrote:
+> From: David Collins <quic_collinsd@quicinc.com>
 > 
-> Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
+> Update the description of "reg" property to add the PON_PBS base
+> address along with PON_HLOS base address.  Also add "reg-names"
+> property constraints.
+> 
+> Signed-off-by: David Collins <quic_collinsd@quicinc.com>
+> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
 > ---
->  .../firmware/qcom,tee-uefisecapp.yaml         | 38 +++++++++++++++++++
->  MAINTAINERS                                   |  1 +
->  2 files changed, 39 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/firmware/qcom,tee-uefisecapp.yaml
+>  Documentation/devicetree/bindings/power/reset/qcom,pon.yaml | 50 +++++++++++++++++++++++++++---
+>  1 file changed, 46 insertions(+), 4 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/firmware/qcom,tee-uefisecapp.yaml b/Documentation/devicetree/bindings/firmware/qcom,tee-uefisecapp.yaml
-> new file mode 100644
-> index 000000000000..9e5de1005d5c
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/firmware/qcom,tee-uefisecapp.yaml
-> @@ -0,0 +1,38 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/soc/qcom/qcom,rpmh-rsc.yaml#
+> diff --git a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+> index 353f155d..d7b6b875 100644
+> --- a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+> +++ b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+> @@ -15,18 +15,27 @@ description: |
+>  
+>    This DT node has pwrkey and resin as sub nodes.
+>  
+> -allOf:
+> -  - $ref: reboot-mode.yaml#
+> -
+>  properties:
+>    compatible:
+>      enum:
+>        - qcom,pm8916-pon
+>        - qcom,pms405-pon
+>        - qcom,pm8998-pon
+> +      - qcom,pmk8350-pon
+>  
+>    reg:
+> -    maxItems: 1
+> +    description: |
+> +      Specifies the SPMI base address for the PON (power-on) peripheral.  For
+> +      PMICs that have the PON peripheral (GEN3) split into PON_HLOS and PON_PBS
+> +      (e.g. PMK8350), this can hold addresses of both PON_HLOS and PON_PBS
+> +      peripherals.  In that case, the PON_PBS address needs to be specified to
+> +      facilitate software debouncing on some PMIC.
+> +    minItems: 1
+> +    maxItems: 2
+> +
+> +  reg-names:
+> +    minItems: 1
+> +    maxItems: 2
+>  
+>    pwrkey:
+>      type: object
+> @@ -42,6 +51,39 @@ required:
+>  
+>  unevaluatedProperties: false
+>  
+> +allOf:
+> +  - $ref: reboot-mode.yaml#
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,pm8916-pon
+> +              - qcom,pms405-pon
+> +              - qcom,pm8998-pon
+> +    then:
+> +      properties:
+> +        reg:
+> +          maxItems: 1
+> +        reg-names:
+> +          items:
+> +            - const: pon
 
-Does not look like you tested the bindings. Please run `make
-dt_binding_check` (see
-Documentation/devicetree/bindings/writing-schema.rst for instructions).
+All your previous patches were actually missing (in commit msg, in the
+code) that piece of information which you add here. You now add
+reg-names with "pon" for older devices. I assumed previous that it is
+somehow needed, so I gave you the hints how it should be coded. But I
+don't understand - why are you doing it?
 
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Trusted Execution Environment UEFI Secure Application
-> +
-> +maintainers:
-> +  - Maximilian Luz <luzmaximilian@gmail.com>
-> +
-> +description: |
-> +  Various Qualcomm SoCs do not allow direct access to UEFI variables. Instead,
-> +  these need to be accessed via the UEFI Secure Application (uefisecapp),
-> +  residing in the Trusted Execution Environment (TrEE). These bindings mark the
-> +  presence of uefisecapp and allow the respective client driver to load and
-> +  install efivar operations, providing the kernel with access to UEFI
-> +  variables.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,tee-uefisecapp
+This should be explained in commit msg. To me it is not needed at all...
+unless you want to mark that first address space is entirely different
+for other devices?
 
-Isn't this SoC-specific device? Generic compatibles are usually not
-expected.
-
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: qcom,pmk8350-pon
+> +    then:
+> +      properties:
+> +        reg:
+> +          minItems: 1
+> +          maxItems: 2
+> +        reg-names:
+> +          minItems: 1
+> +          items:
+> +            - const: hlos
+> +            - const: pbs
 > +
-> +required:
-> +  - compatible
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    firmware {
-> +        scm {
-> +            compatible = "qcom,scm-sc8180x", "qcom,scm";
-> +        };
-> +        tee-uefisecapp {
-> +            compatible = "qcom,tee-uefisecapp";
-
-You did not model here any dependency on SCM. This is not full
-description of the firmware/hardware.
-
+>  examples:
+>    - |
+>     #include <dt-bindings/interrupt-controller/irq.h>
 
 
 Best regards,
