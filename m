@@ -2,119 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B81FD5823C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 12:06:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7346D582465
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 12:32:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231646AbiG0KGW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 06:06:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43830 "EHLO
+        id S231494AbiG0Kcw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 06:32:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231607AbiG0KGV (ORCPT
+        with ESMTP id S229998AbiG0Kcu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 06:06:21 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B828720185
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 03:06:19 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id t22so19998523lfg.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 03:06:19 -0700 (PDT)
+        Wed, 27 Jul 2022 06:32:50 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DE6743E4C;
+        Wed, 27 Jul 2022 03:32:49 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id ss3so30605017ejc.11;
+        Wed, 27 Jul 2022 03:32:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=H6IDJ4C5bccFAxeK6xcFNoHFKmsJbrdAcR26crWC790=;
-        b=E40hhx8eHoltQCcwgV1s2lHhJD1E4fOiMhzkBsFpZZPMX/7dKKSk4nCywaP/Z4T1H6
-         WKAQY44NHZ3ni5KSmOm6zPXj+OqcHI5X6YeSxo3q4/DTJH4Kb14rEp2GC1kY8AY2NiId
-         39SM9VN749ErK7Xx54LKCWcka55Ut4JlDBa0VBDF0L+2P+BDC29SO5W7q4V4zE+Lr38m
-         cRnjz/YFUZShfeG2uTx7uPzurUwB/0WoVPuIe2bGcgN9yp/53xC8QlYBJ4vKeq7b1BXf
-         cIf814COo2wg0GtktE7zRrZxZTbr6WkcLZ+UzYUcJKuJenRcDCcSWa5FSQ6bo6t0GKF3
-         /wQQ==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=E/qzjVJN5WWKHgFz90joUQZKX1gH8+X44tnHcaaleRE=;
+        b=RptdFzJcpvUIKx1+aWtXT+nUxk3D/CeadIyslqlrStwbzgnpeDhIIYo7kMn5RW1RNZ
+         Lss8dmOMV4KPF91dyaHV3FABhVmNY/oSojPyziOhOIIV+qYZv6kV6rXGmJRDxO/VrSTz
+         ripzNTie/9B5pCCfV+LUrnZw3gzCqtVEdd76OuvRZVSMv2Dzv73mabDYzqjNly4c+j99
+         rE1l37B8bbsgScMCwIEWMvxBS5xPkjf0Sv0XOuxs+4nG7OTgCoD5Y3OR30vsQ36Zima3
+         rfztm9WnWz5zp54eu7cfO2DaXCJoy4oZiENv7NwESpIfpUpUg4Hj3nJ5FeJ67BDO1vis
+         SNgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=H6IDJ4C5bccFAxeK6xcFNoHFKmsJbrdAcR26crWC790=;
-        b=N9eXInovYqFdWiympyt9ZaI+2XpgBnYBZW9rKCzLhVwvvFEPEC4IyvVAU2ND7KAvM/
-         QSgnbidXS91+OEwLnK4WCZnePX4DZlCQnB/rlzhZps2njwpxUQCyC8tj8P/FDG3IuoQS
-         80pXdCs6FHugeEhRY6AtFlo8wvbj5S6SxA23BCw5RikTqbNFGOEOAgmYw+rZenZNKK4V
-         FHVrlEXIIZl+brLZBiIFpNCJbprj9pmf/S3Xc4Lj6M+cQn9FO/6LGiQPimYYNZPK8aUw
-         NWk+uKmmnce/SEp7R1kO3YTw7jqB1J4zIB9C0/k2P7PpU7T17M8G66IYFsnsE6N+pkX3
-         kk9Q==
-X-Gm-Message-State: AJIora/A3Mph0bg+lXVEXso7yvJawvWr/Kb+flyMCtzoUkO9j/kLSCbm
-        C0+WXNwmR4bwKnxTl1VRsFcCfA==
-X-Google-Smtp-Source: AGRyM1uOR9dx5+hwW2p1CfkA3e40RUcouNyUvvVCWkoflGa09VHVX+uy7YmdKgma3ApZjtq9G/gxTQ==
-X-Received: by 2002:a05:6512:c2a:b0:489:db52:fc18 with SMTP id z42-20020a0565120c2a00b00489db52fc18mr7628573lfu.99.1658916378062;
-        Wed, 27 Jul 2022 03:06:18 -0700 (PDT)
-Received: from eriador.lumag.spb.ru ([188.162.64.29])
-        by smtp.gmail.com with ESMTPSA id k6-20020a05651c10a600b0025dd5b3fabesm3670900ljn.102.2022.07.27.03.06.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Jul 2022 03:06:17 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Masahiro Yamada <masahiroy@kernel.org>,
-        Michal Marek <michal.lkml@markovi.net>,
-        Nick Desaulniers <ndesaulniers@google.com>
-Cc:     linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH] kbuild: take into account DT_SCHEMA_FILES changes while checking dtbs
-Date:   Wed, 27 Jul 2022 13:06:15 +0300
-Message-Id: <20220727100615.638072-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=E/qzjVJN5WWKHgFz90joUQZKX1gH8+X44tnHcaaleRE=;
+        b=mYMM9+t18zg6Uw78jRYeT9G6dUYPPWdgAUl/cxRTZIwttpGHvqrgf26o+BY19EdRKO
+         3O0HrfvqBB8QLaRIJPWnN06Rn9366hrGUFrigg/ipEzN+zTR7LHXGLBqvbkg2v8NtxOt
+         ohdNg9toX+LRD2OI4Oxa0rmg4Nvzd/imSLi2UkeSzE/4y+MLzkmq4d24zazLlUnqW0yp
+         DOh+Ns5bbqHCPVcqQuZwd/hCpPT/sdl133O1EvBRhTyhekDxCfWh9EMhN1vgifwLK5OY
+         dh8OGkSX3iW00c2WA7uwOY0YLrvF0yiG0XqGmV0LkPg5TTnh18bklsQonGgJ99BkkuAe
+         CXbA==
+X-Gm-Message-State: AJIora/Nsy0sQdLXdbx1Dbzq+vyiCK4C2HUWrVzRDNlHXlf92P6AyZ7Y
+        02wmSfQMrJ9Y7Yf0IUVJAIkHSCYDfG1cI8Go
+X-Google-Smtp-Source: AGRyM1vR9quAcWCfkXjA/aLvO1r/ui2cWaTwBIhM8Iv3YIvvoVrH88WzTJ14z7buMJJoNybKZqjb5Q==
+X-Received: by 2002:a17:906:29d:b0:6f0:18d8:7be0 with SMTP id 29-20020a170906029d00b006f018d87be0mr16330478ejf.561.1658917967712;
+        Wed, 27 Jul 2022 03:32:47 -0700 (PDT)
+Received: from [192.168.74.101] ([77.78.38.236])
+        by smtp.gmail.com with ESMTPSA id d12-20020a50fe8c000000b0043a554818afsm9996918edt.42.2022.07.27.03.32.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Jul 2022 03:32:46 -0700 (PDT)
+Message-ID: <73a82790-52c4-b777-b4ff-f8d361f0bd29@gmail.com>
+Date:   Wed, 27 Jul 2022 13:32:45 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2 2/5] dt-bindings: regulator: Document the PM6125 RPM
+ regulators
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mark Brown <broonie@kernel.org>
+Cc:     Adam Skladowski <a39.skl@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Marko <robimarko@gmail.com>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+References: <20220726181133.3262695-1-iskren.chernev@gmail.com>
+ <20220726181133.3262695-3-iskren.chernev@gmail.com>
+ <7e742415-d93f-83d9-bf01-6f023a4d1a34@linaro.org>
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+In-Reply-To: <7e742415-d93f-83d9-bf01-6f023a4d1a34@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It is useful to be able to recheck dtbs files against a limited set of
-DT schema files. This can be accomplished by using differnt
-DT_SCHEMA_FILES argument values while rerunning make dtbs_check. However
-for some reason if_changed_rule doesn't pick up the rule_dtc changes
-(and doesn't retrigger the build).
 
-Fix this by changing if_changed_rule to if_changed_dep and squashing DTC
-and dt-validate into a single new command. Then if_changed_dep triggers
-on DT_SCHEMA_FILES changes and reruns the build/check.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- scripts/Makefile.lib | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+On 7/27/22 10:26, Krzysztof Kozlowski wrote:
+> On 26/07/2022 20:11, Iskren Chernev wrote:
+>> Document the pm6125 compatible string and available regulators in the QCom SMD
+>> RPM regulator documentation.
+>>
+>> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+>> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+>
+> Unusual SoB chain here as well.
 
-diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
-index c88b98b5dc44..3df470289382 100644
---- a/scripts/Makefile.lib
-+++ b/scripts/Makefile.lib
-@@ -383,17 +383,15 @@ DT_CHECKER_FLAGS ?= $(if $(DT_SCHEMA_FILES),-l $(DT_SCHEMA_FILES),-m)
- DT_BINDING_DIR := Documentation/devicetree/bindings
- DT_TMP_SCHEMA := $(objtree)/$(DT_BINDING_DIR)/processed-schema.json
- 
--quiet_cmd_dtb_check =	CHECK   $@
--      cmd_dtb_check =	$(DT_CHECKER) $(DT_CHECKER_FLAGS) -u $(srctree)/$(DT_BINDING_DIR) -p $(DT_TMP_SCHEMA) $@ || true
-+quiet_cmd_dtb =	DTC/CHECK   $@
-+      cmd_dtb =	$(cmd_dtc) ; $(DT_CHECKER) $(DT_CHECKER_FLAGS) -u $(srctree)/$(DT_BINDING_DIR) -p $(DT_TMP_SCHEMA) $@ || true
-+else
-+quiet_cmd_dtb = $(quiet_cmd_dtc)
-+      cmd_dtb = $(cmd_dtc)
- endif
- 
--define rule_dtc
--	$(call cmd_and_fixdep,dtc)
--	$(call cmd,dtb_check)
--endef
--
- $(obj)/%.dtb: $(src)/%.dts $(DTC) $(DT_TMP_SCHEMA) FORCE
--	$(call if_changed_rule,dtc)
-+	$(call if_changed_dep,dtb)
- 
- $(obj)/%.dtbo: $(src)/%.dts $(DTC) FORCE
- 	$(call if_changed_dep,dtc)
--- 
-2.35.1
+Will fix.
 
+>> ---
+>>  .../devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml | 4 ++++
+>>  1 file changed, 4 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+>> index c233461cc980..1122a3a17f56 100644
+>> --- a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+>> +++ b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+>> @@ -57,6 +57,9 @@ description:
+>>
+>>    For pm660l s1, s2, s3, s5, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, bob
+>>
+>> +  For pm6125 s1, s2, s3, s4, s5, s6, s7, s8, l1, l2, l3, l5, l6, l7, l8, l9,
+>> +  l10, l22, l12, l13, l14, l15, l16, l17, l18, l19, l20, l21, l22, l23, l24
+>> +
+>>    For pma8084, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, l1, l2, l3,
+>>    l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14, l15, l16, l17, l18, l19,
+>>    l20, l21, l22, l23, l24, l25, l26, l27, lvs1, lvs2, lvs3, lvs4, 5vs1
+>> @@ -90,6 +93,7 @@ properties:
+>>        - qcom,rpm-pm8998-regulators
+>>        - qcom,rpm-pm660-regulators
+>>        - qcom,rpm-pm660l-regulators
+>> +      - qcom,rpm-pm6125-regulators
+>
+> Put new entry in alphabetical order.
+
+Will sort first (they are currently not sorted), then add pm6125. Should I also
+sort the driver code?
+
+> Best regards,
+> Krzysztof
