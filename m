@@ -2,142 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C58E2582840
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 16:09:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 222E25828F1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 16:49:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231204AbiG0OJ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 10:09:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37934 "EHLO
+        id S234162AbiG0OtN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 10:49:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231266AbiG0OJ0 (ORCPT
+        with ESMTP id S233042AbiG0OtH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 10:09:26 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B11D3B953
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 07:09:25 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id s9so2316620edd.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 07:09:25 -0700 (PDT)
+        Wed, 27 Jul 2022 10:49:07 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 842631F2D9;
+        Wed, 27 Jul 2022 07:49:06 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id w5so9271893edd.13;
+        Wed, 27 Jul 2022 07:49:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=QtFRrHm4vMqcg+bk4tWbQr1CbqO5/aviSsSa28f21tc=;
-        b=d8fxrLFnDtTqO02Phnf6U+WdtMr5FTtXzSl7ipt4oli55Pv7HQQy7jwtjzdkR3NHoO
-         r+l2EvhuSBjmLFvosAEUE2S1RhWSgdDF1k6pJNRlyCSdImbttMNcbEvjSl0fqEX/1gqC
-         AnxfJKP9S1I++lCPHC4C3f6kYQHE8oekZmucA=
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=LPaTuaFLmOEbvjKAXJoZqNhvaMcLCTVz2uTxxpaOLT4=;
+        b=IpQvEM5IglDTK4hAIv8rSOsoPmWxlqFrhka50slFaDm522pphQTqkRRrvZi93Dj3rw
+         FbXbFIDuMr5F6QqH8l3Y0wjnfYVEj/+iyCC/wpZV5zpwM1qhVoWjY9Mdvde1ZO4x3MBc
+         /OOZLkgzvF5NDtZtV8omSW3HeeLJPpnceD3iniuqHf535QgOzD7Eujhv/uH5S5XpT8Ah
+         dmzQxEGYWtrCHh6IG7S6khuGaGWNrHncNfxgc2a01gaT50VWl9f9Tzg4pwDxIj8EKHbh
+         ynZzvwyhC3lqxPT/YTB1IweGAX8tgVejCbJSZQnGhRI7OouNtjg4QBH5VqstAxHX24pj
+         KX2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=QtFRrHm4vMqcg+bk4tWbQr1CbqO5/aviSsSa28f21tc=;
-        b=BYTJDbyRa+wC5JJNg5kYV+jgSiGQbFwJ1oCUpxYw61Jz6UAnbW8GQocsCI7n5IHsan
-         3DSELm5kH9kXjlRVZV6qQo42Pha6KISyvz6hsvXUTyhx2Jjw+l1nU4ud0EgmZLUS0drS
-         9cIE8/WPKXL8kWv9bvlxFO692WuymTrJrYO/2f3XA4ofCcMBDytRtV3Johm6SDvgySUg
-         QFYKboPOqax6MIlxxfD7ANBg8ZCvEUbP/Zm2Ktyr1ZUt0u5yVDZUP7Zzv74rX4RN5WN6
-         4vs1/IOOIu3iGG9Q9nnbY1IY4bYj3973PYekutdv1J/Yi4EliHB67ckA/sfNJddYaMX5
-         pTjw==
-X-Gm-Message-State: AJIora89+qOmfRqJ9gqgZTTzGEyMJZWJTm4ZX4hcLdS1LlwiCXbclzQM
-        XAFy+KCb7M+aPwfx1Cw0QvZtMtysjYaxVZyw
-X-Google-Smtp-Source: AGRyM1sw1b8Gifliif2YYqgpY5fEY6CBfVAhJPEodImQF3uDtwdl550sK+sBrfctfbY0WdBBUuNNpA==
-X-Received: by 2002:a05:6402:4306:b0:43c:3e09:a9d0 with SMTP id m6-20020a056402430600b0043c3e09a9d0mr10157972edc.194.1658930963429;
-        Wed, 27 Jul 2022 07:09:23 -0700 (PDT)
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com. [209.85.221.43])
-        by smtp.gmail.com with ESMTPSA id o15-20020a056402438f00b0043b986751a7sm10446420edc.41.2022.07.27.07.09.21
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=LPaTuaFLmOEbvjKAXJoZqNhvaMcLCTVz2uTxxpaOLT4=;
+        b=g6ZngTpTskpsXotS5z63oqw7k+4pF8WW2v5im+u4BU5uRunYtUB4clDn+rm0b7KPQg
+         0QuEpz4i5nSsUKlYRKnpBx116fDWaI5agzLUdXmG0g0jS0pqT10go4LOhaFY+E2j1+ow
+         ueF7dVX8zZkULTIu+y0o5WqKFy6IUgIDOzk+4SO858XUNO51ZzsGMtumXNtP+NihSh0E
+         IrxlblMoXMghX38zVaplxzy+B6hwx3JAut+NLAkCJtdKHDJxiQjo+KdyJ7IyM6VHJPti
+         XOuH0QIwVkBQ180ERB8QJxB4AN6wYe4t8ZX9U6EI8nU4/waBJ1fc9gdr8dl1lyGMAfb5
+         7mBg==
+X-Gm-Message-State: AJIora/KVfX8gHdlh1t62NefL/DFuqyKwdS6/T6TARAsbOfeq2zYstCY
+        42Fy+u6jEHKYj5W73z3WxmU=
+X-Google-Smtp-Source: AGRyM1shuKmZUHOkozD8SxT5PDgQ2V3xwex/Ty5Pm1tskXeLPr52wvprybERDmBArchv7c9JzDvLIw==
+X-Received: by 2002:a05:6402:518:b0:43c:a863:55b with SMTP id m24-20020a056402051800b0043ca863055bmr4478615edv.127.1658933345043;
+        Wed, 27 Jul 2022 07:49:05 -0700 (PDT)
+Received: from [10.20.0.4] ([37.120.217.162])
+        by smtp.gmail.com with ESMTPSA id nc19-20020a1709071c1300b00722d5b26ecesm7751494ejc.205.2022.07.27.07.49.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Jul 2022 07:09:21 -0700 (PDT)
-Received: by mail-wr1-f43.google.com with SMTP id l4so2788137wrm.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 07:09:21 -0700 (PDT)
-X-Received: by 2002:a05:6000:178f:b0:21e:98ee:f1e6 with SMTP id
- e15-20020a056000178f00b0021e98eef1e6mr6847820wrg.405.1658930960744; Wed, 27
- Jul 2022 07:09:20 -0700 (PDT)
+        Wed, 27 Jul 2022 07:49:04 -0700 (PDT)
+Message-ID: <7adebeff-a335-8331-bb22-32229f96281e@gmail.com>
+Date:   Wed, 27 Jul 2022 16:49:03 +0200
 MIME-Version: 1.0
-References: <20220725174810.1.If1f94fbbdb7c1d0fb3961de61483a851ad1971a7@changeid>
- <661fa514-cd37-e062-3294-c844b7f0b894@quicinc.com> <CAD=FV=UHhfLn+S8F60EPoC0ip6YzmrihfTz=KmmauXHCxof2QQ@mail.gmail.com>
- <CAA8EJppHr7GjcvqRqXAgjw9mf+ObzCi58-VYSdO_JMfk1-4ifA@mail.gmail.com>
-In-Reply-To: <CAA8EJppHr7GjcvqRqXAgjw9mf+ObzCi58-VYSdO_JMfk1-4ifA@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 27 Jul 2022 07:09:07 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WEK-CrFjSrs7ADfkQmoz=xOmppzyZtsEQGv0ga83i3CQ@mail.gmail.com>
-Message-ID: <CAD=FV=WEK-CrFjSrs7ADfkQmoz=xOmppzyZtsEQGv0ga83i3CQ@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH] drm/msm/dsi: Don't set a load before
- disabling a regulator
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        David Airlie <airlied@linux.ie>,
-        Rajeev Nandan <quic_rajeevny@quicinc.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure
+ Application client
+Content-Language: en-US
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Mark Brown <broonie@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        =?UTF-8?B?Sm9zw6kgRXhww7NzaXRv?= <jose.exposito89@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Sean Paul <sean@poorly.run>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Ard Biesheuvel <ardb@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
+ <20220723224949.1089973-5-luzmaximilian@gmail.com>
+ <20220726143005.wt4be7yo7sbd3xut@bogus>
+ <829c8fee-cae5-597d-933d-784b4b57bd73@gmail.com>
+ <20220726154138.74avqs6iqlzqpzjk@bogus>
+ <d1bc99bb-82ce-aa6e-7fad-e9309fa1c19b@gmail.com>
+ <7284953b-52bb-37ac-fbe1-1fa845c44ff9@linaro.org>
+ <3d752603-365d-3a33-e13e-ca241cee9a11@gmail.com>
+ <20220727132437.pjob3z2nyxsuxgam@bogus>
+From:   Maximilian Luz <luzmaximilian@gmail.com>
+In-Reply-To: <20220727132437.pjob3z2nyxsuxgam@bogus>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 7/27/22 15:24, Sudeep Holla wrote:
+> On Wed, Jul 27, 2022 at 03:03:49PM +0200, Maximilian Luz wrote:
+>>
+>> Is there really a good way around it?
+> 
+> Yes rely on the firmware preferably auto discover, if that is not an option,
+> how about query. It seem to be working in your case.
+> 
+>> As far as I can see the alternative (especially for the apps that
+>> need to be loaded manually) is hard-coding everything in the driver.
+>> Which IMHO just spreads device specific information everywhere.
+>>
+> 
+> It may not be too bad compared to putting loads of firmware details
+> in the DT. What happens if you get a firmware upgrade with changed
+> number of firmware entities or even if the names are changed.
+> 
+> Are these name user ABI in a way that they won't be changed ? Generally
+> these entities tend to use UUID and the name you have might get changed.
 
-On Wed, Jul 27, 2022 at 6:59 AM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Wed, 27 Jul 2022 at 16:57, Doug Anderson <dianders@chromium.org> wrote:
-> >
-> > Hi,
-> >
-> > On Tue, Jul 26, 2022 at 4:53 PM Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
-> > >
-> > > On 7/25/2022 5:49 PM, Douglas Anderson wrote:
-> > > > As of commit 5451781dadf8 ("regulator: core: Only count load for
-> > > > enabled consumers"), a load isn't counted for a disabled
-> > > > regulator. That means all the code in the DSI driver to specify and
-> > > > set loads before disabling a regulator is not actually doing anything
-> > > > useful. Let's remove it.
-> > > >
-> > > > It should be noted that all of the loads set that were being specified
-> > > > were pointless noise anyway. The only use for this number is to pick
-> > > > between low power and high power modes of regulators. Regulators
-> > > > appear to do this changeover at loads on the order of 10000 uA. You
-> > > > would a lot of clients of the same rail for that 100 uA number to
-> > >
-> > > I guess you meant "you would need a lot of clients"
-> >
-> > Yeah, sorry. :( I'll fix it up if I need a v3.
-> >
-> >
-> > > > @@ -259,15 +259,7 @@ static inline struct msm_dsi_host *to_msm_dsi_host(struct mipi_dsi_host *host)
-> > > >   static void dsi_host_regulator_disable(struct msm_dsi_host *msm_host)
-> > > >   {
-> > > It seems like now we can drop this function dsi_host_regulator_disable()
-> > > entirely and just call regulator_bulk_disable() ?
-> >
-> > Sure, if you want. One could still argue that it provides a tiny bit
-> > of abstraction and avoids the caller from having to know where to find
-> > the number of regulators and all that, but I can go either way. Is
-> > this worth a v3, do you think? If so, I might tack it on at the end of
-> > the series.
->
-> I'd say, drop it. Having extra single-call wrappers doesn't seem to add a lot.
+I am pretty certain that these names do not change for a device once it's
+been released. The full ID of the uefisecapp is "qcom.tz.uefisecapp". The
+built-in firmware parts here are core components. So I really do not expect
+them to just remove or rename things. If they would do that, that would
+mean that, on Windows, access to things like the TPM or UEFI variables
+would be broken if both the driver and Registry are not updated in parallel
+with the firmware. So while I can't myself guarantee that this is a stable
+name and interface, it's very much in MS/Qualcomm's interest to keep it
+stable.
 
-Sounds good. I'll wait a little bit of time for feedback on the larger
-series and then send a v3, probably next week.
+Also, I'm not advocating on putting loads of details in the DT. I'm (in
+this series) advocating for a DT compatible that says "this device stores
+EFI variables via that firmware interface". I'd be very surprised if
+MS/Qualcomm suddenly decided to change that out for another interface,
+potentially breaking their own software and devices.
 
--Doug
+> I would ideally prefer even the name to be supplied from the userspace.
+> In this particular case, make this a driver and have the name as the
+> parameter. If the secure side services are used by some non-secure
+> applications, then you will need to have a user-interface which means
+> you can get the named from the userspace. No need to change the driver
+> in either case. Please let me know if I am missing anything to consider
+> here.
+
+ From userspace? For access to EFI variables and (hopefully in the future
+if I've managed to reverse-engineer that) the TPM? Those are things that
+should work out-of-the-box and not require the user to first have to
+configure something... Also, those are things that the kernel might want
+to use (e.g. EFI variables as pstore for crashdumps) before the user is
+even able to configure something (unless we now want to specify things
+on the kernel command line...).
+
+If this were something that only userspace would use then sure, let
+userspace load it and do all the work. But it isn't.
+
+> 
+>> Also: Let's use the TPM app as example. If that would be a SPI or I2C
+>> device, you'd model it in the DT. Just because it's a hardware device
+>> that's accessible via SCM/firmware you now don't?
+>>
+> 
+> Not sure if I understand the comparison here. But if there is some device
+> that is access restricted but needs to be accessed and has mechanism to
+> access, then you would model it as device in DT.
+> 
+> But the one $subject is addressing looks pure software and doesn't make
+> sense to model in DT IMO.
+
+So as soon as access runs via some firmware mechanism, it should not be
+in the DT? The TPM in the example above would also be accessed via some
+firmware API. EFI variables are stored on some SPI flash that is managed
+by the TrustZone. So in both cases kernel calls to firmware calls to
+device. Where do you draw the line?
+
+>> If I were absolutely certain that there is a reliable mechanism to
+>> detect these apps, I'd agree with having a driver to instantiate those
+>> devices. But I am not.
+>>
+> 
+> You did say you use some query API to check this. I haven't seen the driver,
+> so relying on what you said earlier.
+
+I did say that there is an API that turns a unique identifying string ID
+of a secure application into a runtime-dependent integer ID of the
+running application, returning an error if the application is not
+running. I very much doubt that is supposed to be used for checking
+support of certain applications. It could _maybe_ be used that way, but
+the Windows driver doesn't, which makes me not very comfortable doing
+that either.
+
+Further: As far as I can tell, there is also no way of checking whether
+that lookup failure is due to the application not being present or whether
+something internal to the firmware failed. the respective results that the
+call can (as far as I can tell) return are:
+
+	QCTEE_OS_RESULT_SUCCESS			= 0,
+	QCTEE_OS_RESULT_INCOMPLETE		= 1,
+	QCTEE_OS_RESULT_BLOCKED_ON_LISTENER	= 2,
+	QCTEE_OS_RESULT_FAILURE			= 0xFFFFFFFF,
+
+And it will return QCTEE_OS_RESULT_FAILURE when the app name is wrong.
+
+Again, while it _might_ be possible to use that, I don't think it makes a
+very sound approach and I would really prefer not using it in that way.
+
+Regards,
+Max
