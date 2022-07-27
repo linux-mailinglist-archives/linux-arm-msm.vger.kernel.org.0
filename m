@@ -2,57 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E8FFD582386
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 11:55:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 535E558238C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 11:57:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231192AbiG0JzZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 05:55:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35496 "EHLO
+        id S229794AbiG0J5q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 05:57:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231723AbiG0JzP (ORCPT
+        with ESMTP id S229460AbiG0J5p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 05:55:15 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD4E1CF2;
-        Wed, 27 Jul 2022 02:55:12 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6AD00617C3;
-        Wed, 27 Jul 2022 09:55:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 098D7C433C1;
-        Wed, 27 Jul 2022 09:55:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1658915711;
-        bh=bhTSXCt1ePSDDeplP4J42KNtAtIFCBpuBXvtfYursXk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=zPl1dMeO4/qrZZaTMLX020EHP5y6fOJ3ce8u3NVr77etzG1dgVWVvGRn9tTHa3dZe
-         wr9IW2tBG1vu4pBrqj90rObr/YCLQAuMiWijQqFX6dHYKlwduQSZd6mCJfNHLChGv+
-         4PtbJeTw7UCtjLsFi112VIvSYqLv634p7GN3GvCk=
-Date:   Wed, 27 Jul 2022 11:55:08 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Pratham Pratap <quic_ppratap@quicinc.com>
-Cc:     Matthias Kaehlcke <mka@chromium.org>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] usb: dwc3: qcom: Defer dwc3-qcom probe if dwc3 isn't
- probed properly
-Message-ID: <YuELfGQv8lbftnV/@kroah.com>
-References: <1657810516-31143-1-git-send-email-quic_kriskura@quicinc.com>
- <YtAv8R7QlTZCjvRO@kroah.com>
- <YtA78UfeibaQW4pf@google.com>
- <9f8551be-4848-1f68-fe55-2c6108fa2f67@quicinc.com>
+        Wed, 27 Jul 2022 05:57:45 -0400
+Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D57BA27173
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 02:57:43 -0700 (PDT)
+Received: by mail-qv1-xf33.google.com with SMTP id j11so12530598qvt.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 02:57:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=53lHHtLgGKTt9V4FYXYOyjU1GmgFzy4P5pSpDKGgZ6w=;
+        b=PVMtec8RT8WrY/hI2fdU5fZRz3HpXcTT70BXeZeB8odu8Yvf0qJwiZc4mCd30YDiAl
+         d6b1slz+Dkak1vcvvfJjqELk4fdPT9stC5u9RVpzpkq8ttpN46qQuaDYDkP9i7WQ/ezT
+         +YUL0B2nKLf8rbu6VsMk1UzRGJi8HU0CnudmfjmdwJChwAlVjnTObOtwr9qzcTNE7a6w
+         S2inRaRGcQ2I2neYi7/Xa1a5AE81Hd8Q7Z/eBERxVTnNA5v/eyH6lzh+hs3rFbxFrejJ
+         grEV6esSyPqdL76DFdrfvWmLBoDrTlnKjOuxjBv5y/ETFMcIAh+vM+60l6EV9hUj/LQH
+         3/8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=53lHHtLgGKTt9V4FYXYOyjU1GmgFzy4P5pSpDKGgZ6w=;
+        b=6ykLk7EueXrePBEPZlwQMC5NkqSo5ICu1KvN3bsBWuYYp8NAA8xf4Phwdv7ZhObN/J
+         yew+xLG/fGFp9O+uIKQeGhWBtz/eQTKNkj+3Ha2rGd3w2zIsHVH1r1t5HWVgFs2QLlmU
+         w1p+4lYrW7yzHTUffjSmhvTM81TRb+8AieF7SqVNBOefphOfkrw5Q7WNpo1ZaHj49/fx
+         wZ+WGraf85GOXjHsfHsVSVwOHWjbfGHhbHUnPxKtwHowL+7VQME1qKYMpn+d7j5hrfnr
+         IJu5f6YZfORC4FlflhV1kRKxvTilq3Wfj/X4jEAGaW1UHFpsvz7hFGDz7LyRYHR+UIte
+         w1mA==
+X-Gm-Message-State: AJIora+X7vuWK7oylTgyP3VtLTzeqfHKgnRJopZeKR6S5lei/2gtrTNz
+        4da0/hzFVZSfMdBsfiN5uOs7do6h5n0xDhE92J1oVg==
+X-Google-Smtp-Source: AGRyM1szWR/2xIGX9mO0iLSAnkKOAFNqVzTKIjPGDDheFKdTjA03iXww/q5rndlh945EGUuDO4gK7Gv3dmlfYLxh3Yc=
+X-Received: by 2002:a0c:8ecc:0:b0:473:2fa4:df7c with SMTP id
+ y12-20020a0c8ecc000000b004732fa4df7cmr18055616qvb.55.1658915862975; Wed, 27
+ Jul 2022 02:57:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9f8551be-4848-1f68-fe55-2c6108fa2f67@quicinc.com>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+References: <20220706114407.1507412-1-dmitry.baryshkov@linaro.org> <CAK7LNAQPS+U1qq4K+7Rao9P7p94bMU3Y6g0+ALUd3t=ioZqSnw@mail.gmail.com>
+In-Reply-To: <CAK7LNAQPS+U1qq4K+7Rao9P7p94bMU3Y6g0+ALUd3t=ioZqSnw@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 27 Jul 2022 12:57:31 +0300
+Message-ID: <CAA8EJprdCftvie3UF9QpCWr9oQ5SQbqW8OPOHg0qigf9=RXU-w@mail.gmail.com>
+Subject: Re: [PATCH v2] kbuild: allow validating individual dtb files against schema
+To:     Masahiro Yamada <masahiroy@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>, Tom Rini <trini@konsulko.com>,
+        Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -60,16 +71,107 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 27, 2022 at 03:03:01PM +0530, Pratham Pratap wrote:
+On Sat, 16 Jul 2022 at 12:38, Masahiro Yamada <masahiroy@kernel.org> wrote:
+>
+> On Wed, Jul 6, 2022 at 8:44 PM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > While it is possible to validate all generated dtb files against the
+> > schema, it typically results in huge pile of warnings. While working on
+> > a platform it is quite useful to validate just a single file against
+> > schema.
+> >
+> > Allow specifying CHECK_DTBS=1 on a make command line to enable
+> > validation while building dtb files. This reuses the infrastructure
+> > existing for `make dtbs_check`, making dtbs_check a shortcut for
+> > `make CHECK_DTBS=1 dt_binding_check dtbs`.
+> >
+> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Cc: Tom Rini <trini@konsulko.com>
+> > Cc: Masahiro Yamada <masahiroy@kernel.org>
+> > Cc: linux-kbuild@vger.kernel.org
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >
+> > Changes since v1:
+> > - Added dependency to rebuild schema if `make dtbs` was used.
+> >
+> > ---
+> >  Makefile | 20 +++++++++++++++-----
+> >  1 file changed, 15 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/Makefile b/Makefile
+> > index 9aa7de1ca58f..5a9858aa4934 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -1464,14 +1464,18 @@ endif
+> >
+> >  ifneq ($(dtstree),)
+> >
+> > -%.dtb: include/config/kernel.release scripts_dtc
+> > +ifneq ($(CHECK_DTBS),)
+> > +DT_TMP_BINDING := dt_binding
+> > +endif
+> > +
+> > +%.dtb: include/config/kernel.release scripts_dtc $(DT_TMP_BINDING)
+> >         $(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
+> >
+> > -%.dtbo: include/config/kernel.release scripts_dtc
+> > +%.dtbo: include/config/kernel.release scripts_dtc $(DT_TMP_BINDING)
+> >         $(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
+> >
+> >  PHONY += dtbs dtbs_install dtbs_check
+> > -dtbs: include/config/kernel.release scripts_dtc
+> > +dtbs: include/config/kernel.release scripts_dtc $(DT_TMP_BINDING)
+> >         $(Q)$(MAKE) $(build)=$(dtstree)
+> >
+> >  ifneq ($(filter dtbs_check, $(MAKECMDGOALS)),)
+> > @@ -1498,8 +1502,10 @@ ifneq ($(filter dt_binding_check, $(MAKECMDGOALS)),)
+> >  export CHECK_DT_BINDING=y
+> >  endif
+> >
+> > -PHONY += dt_binding_check
+> > -dt_binding_check: scripts_dtc
+> > +dt_binding_check: dt_binding
+> > +
+> > +PHONY += dt_binding
+> > +dt_binding: scripts_dtc
+> >         $(Q)$(MAKE) $(build)=Documentation/devicetree/bindings
+> >
+> >  # ---------------------------------------------------------------------------
+> > @@ -1774,6 +1780,10 @@ help:
+> >         @echo  '                3: more obscure warnings, can most likely be ignored'
+> >         @echo  '                e: warnings are being treated as errors'
+> >         @echo  '                Multiple levels can be combined with W=12 or W=123'
+> > +       @$(if $(dtstree), \
+> > +               echo '  make CHECK_DTBS=1 [targets] Check all generated dtb files against schema'; \
+> > +               echo '         This can be applied both to "dtbs" and to individual "foo.dtb" targets' ; \
+> > +               )
+> >         @echo  ''
+> >         @echo  'Execute "make" or "make all" to build all targets marked with [*] '
+> >         @echo  'For further info see the ./README file'
+> > --
+> > 2.35.1
+> >
+>
+>
+> I think the idea seems OK to me, but we can make it simpler.
+>
+>
+> First, apply the following clean-up patch to reduce the code duplication.
+> https://lore.kernel.org/all/20220716093122.137494-1-masahiroy@kernel.org/T/#u
+>
+>
+> Then, apply the attached patch.diff
+>
+> Please try it.
 
-<snip>
+Please excuse me, it took me a bit to get back to the issue and test your patch.
+It works like a charm, feel free to add while posting it:
 
-Please note that html email is not allowed on kernel mailing lists and
-the messages are thrown away, so no one can see them :(
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Please fix your email client so that you can participate in kernel
-development.
-
-thanks,
-
-greg k-h
+--
+With best wishes
+Dmitry
