@@ -2,41 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E8A535825FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 13:59:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F4C358260E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 14:04:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231614AbiG0L76 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 07:59:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46062 "EHLO
+        id S232681AbiG0MEi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 08:04:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbiG0L76 (ORCPT
+        with ESMTP id S232638AbiG0MEh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 07:59:58 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CACD027CC7;
-        Wed, 27 Jul 2022 04:59:56 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 57A09B81FE6;
-        Wed, 27 Jul 2022 11:59:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EBB5C433C1;
-        Wed, 27 Jul 2022 11:59:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1658923194;
-        bh=Vpeh+fLR8fhAePR4gpuB9Tc/Vj/mATpE0vaPAwGND38=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fTtgb4aqsEJGE/AXv02THG7FNf443jy/W8lSPkzY7uJUaAKkiAuCYKMJZEOqNhzd1
-         qS+X5MYC+GK/K6o+WuCuyQ33Yc3co8k/r+xUuWj9utCwkYlZt7HXBhpiSbJYEUxuMX
-         8WthMAZaUV6AGYTu3CL2BH+DGLJc+I6Bm5+iUod4oi0uGOIBsOf23idAlzgHUZGcHk
-         tJaZ3LWpRttedQxp8ppa1bCgiVd8vkH+0DHO/DFGfFlGOYlJDaaFnSo4qligw1qZMv
-         T3jWxAQh4GEsRu/WMdPeFtUliR1NSjjWw8LbUqfPiNxrgJzQqnCSitArnW0sJObjMn
-         5A4cecE14zJ1w==
-Date:   Wed, 27 Jul 2022 12:59:45 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Iskren Chernev <iskren.chernev@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Adam Skladowski <a39.skl@gmail.com>,
+        Wed, 27 Jul 2022 08:04:37 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07DF94B0EE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 05:04:36 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id b16so14268772lfb.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 05:04:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=2dUZ4AGI+yDI99uFVBIAkMIhm5YNlifPEZHjyoEMmko=;
+        b=w6c+7gFc5bptabl2jpva60XhxykGU+F8kjr9idGrGrRTCUZQS4rGwI4tcucHGdLeOs
+         DUC763HNsyLc7uKz/mGXDbbicgE6tzoj93cfCWUNUnWyHpC3ATvj20W9G5rqQOS1emFC
+         gRiRCycZgA3ucoDHQD6Oy2P5UMpgYdid5MyYaAnud9EYdISYD4O/5+KXsg5NbJPzB7a4
+         5sl+2oAKeHjUCM8W3g373ZLPI4Dp6nu6Ak6yK7ZhAzi43z9g93p3waNKP1x0NLmjkyFM
+         B5TKLarYBWUPcrkHgPPlkfrfZSlnNsZZ5itwSyNVTp75Z72Cg35WzhoEqrSzLMy/mXTe
+         QhKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=2dUZ4AGI+yDI99uFVBIAkMIhm5YNlifPEZHjyoEMmko=;
+        b=T+S2SxJL45/dKWn3BOCopv4ubGPkcxGhRRUk09+ZoB+7NZ7f7QElJQ3lMc26C6Txop
+         AunPYLlOUUP7pMkWtOnW0SW0tGn1zCQDcbcE2Wzf/fe5jvdhQS9qzi6k2SdllNIGB0ms
+         ZkEspb+y4KmmR9L+hHq2xjCX9b9q9vyVwE5le+xNzpZIK+N4DY/UlL1qvNpNdvep7kNA
+         am8NMIOhO99UDAQNs8DOWWa+5NPHWN2/sFkYn/rV9gSpnLUcMuX2RkQ31oGBuQ3lIJf5
+         s7HjxonzCtfkMLSujsWW7pc3EgYgg0j1Yx8zrD1YZjv9F/5X8EYHKowasl0R7V3P+yAr
+         sFZQ==
+X-Gm-Message-State: AJIora8MpTejybd6vPe5L9aTgB+uc5phL48mzcV/RmkshpBuME2qgXlG
+        ioSTJM/abWw7HOUh5o+Df1iE7g==
+X-Google-Smtp-Source: AGRyM1use5uqI8LWDKweipAVSirfmTrNH9lmQFY27iWI4XCfhQb86Ab0tNP7LerX+Ep4k+DAUtcnkw==
+X-Received: by 2002:ac2:4e0d:0:b0:48a:bc83:7fb8 with SMTP id e13-20020ac24e0d000000b0048abc837fb8mr508616lfr.623.1658923474154;
+        Wed, 27 Jul 2022 05:04:34 -0700 (PDT)
+Received: from [192.168.3.197] (78-26-46-173.network.trollfjord.no. [78.26.46.173])
+        by smtp.gmail.com with ESMTPSA id k10-20020ac257ca000000b0048a27abcc34sm1681187lfo.202.2022.07.27.05.04.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Jul 2022 05:04:33 -0700 (PDT)
+Message-ID: <028091af-b1a1-efc6-b404-dcb5b6f3589e@linaro.org>
+Date:   Wed, 27 Jul 2022 14:04:32 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v2 2/5] dt-bindings: regulator: Document the PM6125 RPM
+ regulators
+Content-Language: en-US
+To:     Iskren Chernev <iskren.chernev@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mark Brown <broonie@kernel.org>
+Cc:     Adam Skladowski <a39.skl@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -45,18 +69,16 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Robert Marko <robimarko@gmail.com>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH v2 4/5] regulator: qcom_spmi: Add PM6125 PMIC support
-Message-ID: <YuEosXO1xYMY8Mul@sirena.org.uk>
 References: <20220726181133.3262695-1-iskren.chernev@gmail.com>
- <20220726181133.3262695-5-iskren.chernev@gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="26sqcxpjMBeK/bO+"
-Content-Disposition: inline
-In-Reply-To: <20220726181133.3262695-5-iskren.chernev@gmail.com>
-X-Cookie: No motorized vehicles allowed.
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+ <20220726181133.3262695-3-iskren.chernev@gmail.com>
+ <7e742415-d93f-83d9-bf01-6f023a4d1a34@linaro.org>
+ <73a82790-52c4-b777-b4ff-f8d361f0bd29@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <73a82790-52c4-b777-b4ff-f8d361f0bd29@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,41 +86,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 27/07/2022 12:32, Iskren Chernev wrote:
+> 
+>>> ---
+>>>  .../devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml | 4 ++++
+>>>  1 file changed, 4 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+>>> index c233461cc980..1122a3a17f56 100644
+>>> --- a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+>>> +++ b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+>>> @@ -57,6 +57,9 @@ description:
+>>>
+>>>    For pm660l s1, s2, s3, s5, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, bob
+>>>
+>>> +  For pm6125 s1, s2, s3, s4, s5, s6, s7, s8, l1, l2, l3, l5, l6, l7, l8, l9,
+>>> +  l10, l22, l12, l13, l14, l15, l16, l17, l18, l19, l20, l21, l22, l23, l24
+>>> +
+>>>    For pma8084, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, l1, l2, l3,
+>>>    l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14, l15, l16, l17, l18, l19,
+>>>    l20, l21, l22, l23, l24, l25, l26, l27, lvs1, lvs2, lvs3, lvs4, 5vs1
+>>> @@ -90,6 +93,7 @@ properties:
+>>>        - qcom,rpm-pm8998-regulators
+>>>        - qcom,rpm-pm660-regulators
+>>>        - qcom,rpm-pm660l-regulators
+>>> +      - qcom,rpm-pm6125-regulators
+>>
+>> Put new entry in alphabetical order.
+> 
+> Will sort first (they are currently not sorted), 
 
---26sqcxpjMBeK/bO+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Arh, indeed, they are not sorted.
 
-On Tue, Jul 26, 2022 at 09:11:32PM +0300, Iskren Chernev wrote:
+> then add pm6125. Should I also
+> sort the driver code?
 
-> @@ -2245,7 +2280,6 @@ static const struct spmi_regulator_data pm660l_regu=
-lators[] =3D {
->  	{ }
->  };
->=20
-> -
->  static const struct spmi_regulator_data pm8004_regulators[] =3D {
->  	{ "s2", 0x1700, "vdd_s2", },
->  	{ "s5", 0x2000, "vdd_s5", },
+You can, but don't have to.
 
-Unrelated indentation change (I think undoing a random extra blank line
-added in the prior patch, at least there were some random extras in
-that).
-
---26sqcxpjMBeK/bO+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmLhKK8ACgkQJNaLcl1U
-h9ChSwf/aHTZnhAig+LV40j8fbrE5n7yXzXTD4fInIqXVctRS7cHh7Wjp+WSNONO
-YU/n3Bon7zJMgr80Y9Cm5nHMjjE0Yxx8vD4L7t5YoSgje/4MgX/aeu6xmoR0oOS9
-ts3jzMj9savB/ejl/W8HLFBIfqLzWQm9/TZZ3zHfDgltSbmFYxYzH2PK0j9jIlCW
-MDhDtCodu6ZSO10E6UtOC2Qm3i8An0kcQvSfSn3FroC6QfMdT6yeFZ9swCfABlW8
-M8bn/ijSjKOw2KOGNQQeT7K4mREPcCGj4e7wV7kUa/K0udio2mFEw0SXWRBSHdWy
-iSl+eL5gIBpLBmuuJzVcaEziuiBKWw==
-=UQyf
------END PGP SIGNATURE-----
-
---26sqcxpjMBeK/bO+--
+Best regards,
+Krzysztof
