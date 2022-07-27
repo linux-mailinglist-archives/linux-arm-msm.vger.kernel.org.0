@@ -2,64 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B09EB5833CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 21:43:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E699D5833E5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 22:03:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233755AbiG0Tng (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 15:43:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60366 "EHLO
+        id S229696AbiG0UDE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 16:03:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229680AbiG0Tnf (ORCPT
+        with ESMTP id S229508AbiG0UDD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 15:43:35 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBA491121;
-        Wed, 27 Jul 2022 12:43:34 -0700 (PDT)
+        Wed, 27 Jul 2022 16:03:03 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7343A5A2FF;
+        Wed, 27 Jul 2022 13:03:02 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 762A661AA5;
-        Wed, 27 Jul 2022 19:43:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D00DCC4347C;
-        Wed, 27 Jul 2022 19:43:33 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 1CA66B8227B;
+        Wed, 27 Jul 2022 20:03:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F31C433D6;
+        Wed, 27 Jul 2022 20:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1658951013;
-        bh=22tmQ0744zweWy6Sd0m5sISYSk9XRc5uyToEJOX6XwA=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=elPJyLY8XnqGWGB86Kv1TktpvCzasthPaWVMG01889KU0S0FCJwcY4KebThT+yPJu
-         eq506qPZohKFjQbU3LPGoLvXMmOnndylF41McbCI69PukIe0B0nDzEC2mp4vj01ReY
-         pkLvH5o2UuFwh8SIzbWQwHSL1x1bXOPX2kpBT1/uyBMuDAIemn/utlB/Fwc53XSGlM
-         kx8uSzlXbfgT1MnOr520U02kCcjfVzKTr5dER4vLd7wECOAEf7EGIS/CAWCAlJh6X9
-         kCB7r+TNrD/jhDWFEtJdN4VV+da40hr9EJwCvb2MfTNwXot5liSDa2yFiMqDzCXQUZ
-         tHqp1zR2qdsmA==
-Received: by mail-vs1-f52.google.com with SMTP id 129so9979572vsq.8;
-        Wed, 27 Jul 2022 12:43:33 -0700 (PDT)
-X-Gm-Message-State: AJIora+c4itQHarhgpwxtt5HhOJ0JSgphCi166HPXjRQrCUwdcB9YwiS
-        gcG0Ls9HsKrLHBTh7hCeJ3smFvq8rdR/MaaALQ==
-X-Google-Smtp-Source: AGRyM1sMdp5ur6vooR3ja9tDEyEvMx73JLt7DSWJst3LANXtktK+yJI7uEPlzKk/B9hwwggFCFM+0gj7WxJDm789aLQ=
-X-Received: by 2002:a67:c18d:0:b0:358:5bb6:2135 with SMTP id
- h13-20020a67c18d000000b003585bb62135mr5163757vsj.53.1658951012697; Wed, 27
- Jul 2022 12:43:32 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220726212354.1.I5b9006878bdabd6493b866b46dbd6149968d545b@changeid>
- <20220727160320.GA2755147-robh@kernel.org> <CAD=FV=U8ek0FR=hZwemK5JcbUP=JsnRTtv7WzJKmOb-UFwHfXA@mail.gmail.com>
-In-Reply-To: <CAD=FV=U8ek0FR=hZwemK5JcbUP=JsnRTtv7WzJKmOb-UFwHfXA@mail.gmail.com>
-From:   Rob Herring <robh@kernel.org>
-Date:   Wed, 27 Jul 2022 13:43:20 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqJ=jj6isKbBEKGjax266MS_h+Oehn9zYMMjXzc3K-t4Wg@mail.gmail.com>
-Message-ID: <CAL_JsqJ=jj6isKbBEKGjax266MS_h+Oehn9zYMMjXzc3K-t4Wg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: document zoglin board
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Bob Moragues <moragues@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Bob Moragues <moragues@google.com>,
+        s=k20201202; t=1658952179;
+        bh=bhXdU0USntkiB9VeAjJXudqJtJ1Zhml+HGIlkrxNYwA=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=dGnKjVscu3t5TawgOTdxEwwl8LqhsjRowLOYg2qWQJKUbZFLdh5py6vJBEojWemHW
+         SVTwUXLNCdTNFHdhlL7KZxoeh711XvpjpOZHQE2wZMuVVKByn+M4xg1RUbWB+YMJMP
+         APGh9+toyjXVhTrAlSvLkajsDPFzIew4DBVQXY7yWrrsUlN/8Y1qpsOAO1+eIaP0ii
+         5FezdknkEYoY7Vv0rMRodjvJMvgM1mWFzxVxYYq3EqPwgxrQZNNXUeLBVVgSVXr5dy
+         5ydAQUp+3KAIj0U9jBlFnnnZRU4np/E6YPAYsgH8OTbaa5O4L+x7H6OQRe2/UnrkOy
+         Q4wnU12bL8vkA==
+Date:   Wed, 27 Jul 2022 15:02:57 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@codeaurora.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: Re: [PATCH v2] PCI: qcom: Add support for modular builds
+Message-ID: <20220727200257.GA220948@bhelgaas>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220721193513.GA1747404@bhelgaas>
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -69,52 +63,128 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 27, 2022 at 11:40 AM Doug Anderson <dianders@chromium.org> wrote:
->
-> Hi,
->
-> On Wed, Jul 27, 2022 at 9:03 AM Rob Herring <robh@kernel.org> wrote:
-> >
-> > On Tue, Jul 26, 2022 at 09:24:31PM -0700, Bob Moragues wrote:
-> > > Zoglin is a Hoglin Chromebook with SPI Flash reduced from 64MB to 8MB.
-> > > Zoglin is identical to Hoglin except for the SPI Flash.
-> > > The actual SPI Flash is dynamically probed at and not specified in DTS.
-> > >
-> > > Signed-off-by: Bob Moragues <moragues@chromium.org>
-> > >
-> > > Signed-off-by: Bob Moragues <moragues@google.com>
-> > > ---
-> > >
-> > >  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
-> > >  1 file changed, 1 insertion(+)
-> > >
-> > > diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> > > index 581485392404..63091df3cbb3 100644
-> > > --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> > > +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> > > @@ -475,6 +475,7 @@ properties:
-> > >
-> > >        - description: Qualcomm Technologies, Inc. sc7280 CRD platform (newest rev)
-> > >          items:
-> > > +          - const: google,zoglin
-> > >            - const: google,hoglin
-> > >            - const: qcom,sc7280
-> >
-> > Is just "google,hoglin", "qcom,sc7280" no longer valid? If it is valid,
-> > you need another entry.
->
-> If it makes people happy to have another entry then it wouldn't hurt,
-> but it has no long term benefit and I would recommend against it. The
-> next patch in this series changes the existing "hoglin" device tree to
-> have all 3 compatible strings and thus when both patches land then
-> make dtbs_check will pass. I assume that is the only goal of
-> documenting these boards here. Certainly if you had a device tree that
-> had only "google,zoglin" it would boot fine on zoglin devices and if
-> you had a device tree that had only "google,hoglin" it would boot fine
-> on hoglin device. This is true of all of the entries for Chromebooks
-> that have multiple compatible entries.
+On Thu, Jul 21, 2022 at 02:35:13PM -0500, Bjorn Helgaas wrote:
+> On Thu, Jul 21, 2022 at 08:47:20AM +0200, Johan Hovold wrote:
+> > Allow the Qualcomm PCIe controller driver to be built as a module, which
+> > is useful for multi-platform kernels as well as during development.
+> > 
+> > Reviewed-by: Rob Herring <robh@kernel.org>
+> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> 
+> Applied to pci/ctrl/qcom for v5.20, thanks!
 
-Why even add the entry? If it is just a different SPI flash, you can
-tell that from the SPI flash compatible or device ID.
+I'm going to drop this one for now, since the module vs remove
+discussion [1] is still ongoing.
 
-Rob
+This patch actually makes it both *modular* and *removable*.  I think
+the modular part is uncontroversial and valuable by itself.
+
+If you want to just make it modular and *non*-removable, I think that
+would be fine and we can add removability next cycle if we think it's
+safe.
+
+[1] https://lore.kernel.org/r/20220721195433.GA1747571@bhelgaas
+
+> > Changes in v2
+> >  - rebase on next-20220720 (adjust context)
+> >  - add Rob and Mani's reviewed-by tags
+> > 
+> > 
+> >  drivers/pci/controller/dwc/Kconfig     |  2 +-
+> >  drivers/pci/controller/dwc/pcie-qcom.c | 36 +++++++++++++++++++++++---
+> >  2 files changed, 34 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
+> > index 62ce3abf0f19..230f56d1a268 100644
+> > --- a/drivers/pci/controller/dwc/Kconfig
+> > +++ b/drivers/pci/controller/dwc/Kconfig
+> > @@ -168,7 +168,7 @@ config PCI_HISI
+> >  	  Hip05 and Hip06 SoCs
+> >  
+> >  config PCIE_QCOM
+> > -	bool "Qualcomm PCIe controller"
+> > +	tristate "Qualcomm PCIe controller"
+> >  	depends on OF && (ARCH_QCOM || COMPILE_TEST)
+> >  	depends on PCI_MSI_IRQ_DOMAIN
+> >  	select PCIE_DW_HOST
+> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > index 5ed164c2afa3..d176c635016b 100644
+> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > @@ -16,7 +16,7 @@
+> >  #include <linux/io.h>
+> >  #include <linux/iopoll.h>
+> >  #include <linux/kernel.h>
+> > -#include <linux/init.h>
+> > +#include <linux/module.h>
+> >  #include <linux/of_device.h>
+> >  #include <linux/of_gpio.h>
+> >  #include <linux/pci.h>
+> > @@ -1518,6 +1518,15 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
+> >  	return ret;
+> >  }
+> >  
+> > +static void qcom_pcie_host_deinit(struct qcom_pcie *pcie)
+> > +{
+> > +	qcom_ep_reset_assert(pcie);
+> > +	if (pcie->cfg->ops->post_deinit)
+> > +		pcie->cfg->ops->post_deinit(pcie);
+> > +	phy_power_off(pcie->phy);
+> > +	pcie->cfg->ops->deinit(pcie);
+> > +}
+> > +
+> >  static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
+> >  	.host_init = qcom_pcie_host_init,
+> >  };
+> > @@ -1752,6 +1761,22 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+> >  	return ret;
+> >  }
+> >  
+> > +static int qcom_pcie_remove(struct platform_device *pdev)
+> > +{
+> > +	struct qcom_pcie *pcie = platform_get_drvdata(pdev);
+> > +	struct device *dev = &pdev->dev;
+> > +
+> > +	dw_pcie_host_deinit(&pcie->pci->pp);
+> > +	qcom_pcie_host_deinit(pcie);
+> > +
+> > +	phy_exit(pcie->phy);
+> > +
+> > +	pm_runtime_put_sync(dev);
+> > +	pm_runtime_disable(dev);
+> > +
+> > +	return 0;
+> > +}
+> > +
+> >  static const struct of_device_id qcom_pcie_match[] = {
+> >  	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
+> >  	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
+> > @@ -1771,6 +1796,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+> >  	{ .compatible = "qcom,pcie-ipq6018", .data = &ipq6018_cfg },
+> >  	{ }
+> >  };
+> > +MODULE_DEVICE_TABLE(of, qcom_pcie_match);
+> >  
+> >  static void qcom_fixup_class(struct pci_dev *dev)
+> >  {
+> > @@ -1786,10 +1812,14 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
+> >  
+> >  static struct platform_driver qcom_pcie_driver = {
+> >  	.probe = qcom_pcie_probe,
+> > +	.remove = qcom_pcie_remove,
+> >  	.driver = {
+> >  		.name = "qcom-pcie",
+> > -		.suppress_bind_attrs = true,
+> >  		.of_match_table = qcom_pcie_match,
+> >  	},
+> >  };
+> > -builtin_platform_driver(qcom_pcie_driver);
+> > +module_platform_driver(qcom_pcie_driver);
+> > +
+> > +MODULE_AUTHOR("Stanimir Varbanov <svarbanov@mm-sol.com>");
+> > +MODULE_DESCRIPTION("Qualcomm PCIe root complex driver");
+> > +MODULE_LICENSE("GPL");
+> > -- 
+> > 2.35.1
+> > 
