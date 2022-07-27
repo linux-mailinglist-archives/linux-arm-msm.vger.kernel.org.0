@@ -2,156 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2810658217F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 09:49:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5AB958220D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 10:28:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229535AbiG0Htj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 03:49:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48258 "EHLO
+        id S230320AbiG0I2U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 04:28:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbiG0Hth (ORCPT
+        with ESMTP id S229604AbiG0I2T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 03:49:37 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D02E422CB;
-        Wed, 27 Jul 2022 00:49:36 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id z18so8021703edb.10;
-        Wed, 27 Jul 2022 00:49:36 -0700 (PDT)
+        Wed, 27 Jul 2022 04:28:19 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 660D645057;
+        Wed, 27 Jul 2022 01:28:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=7qrKymhpLOAPYDYIFsDNUzeQR021XnkNkwlPESUcTX8=;
-        b=FY9ZK6DN7/WlouONO+X7GQTuYKV2MQxX+NxsAxG9h3cBD5XAQJUqonvfI5qp4qOB5Q
-         ym19B8AQOzTbLQmo2n2Gmx0t4SpoqBf50VL5TRiTAyTxa+i4Yj2d2+Dd2a6oqLySyJJe
-         MFvtgnnuQdxYYqDUf90lSOotu51KM13cmu9MDpbImfwBVrYDvC0X4kaO45i2IPiJgp/M
-         cvvHCP3n+c25o6DnZEyE+O3l0/lKE6l/+wtE6pAiJMSl+YHcjuNvAdwsYCRHQh5+cYOH
-         sKf7q0xFFxSLN8MHdvsFSIwT8AK/auwulCLQB/zGBG6yIAM8odehRGMp6xtMXIMaog5m
-         OOjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=7qrKymhpLOAPYDYIFsDNUzeQR021XnkNkwlPESUcTX8=;
-        b=Ag3D5HZIYniQISiOlna4J7vkAAF+vI4xdKfBMI8MJNuKf9d9w58GjGvXbN4nLGpJuw
-         mR2RlsmJfZy0sxu7A8PAnR2KddKdxyA9EiWp+KGqh+3q/EcDIUkTJqOdyofkWJRSNAz0
-         ireQXL8QUjppDlI6Bj25cCFvAdZyVU5Lws9l7sbTIzygvt0ZPW7DMbf0XWIiCf0a6xbG
-         m8ehH5LG5iMEUZ/7+z2aGeW/Qo7Rp0dW/GWlnbO8p/wqtugMRZdTPlY2CeXHRcJ/qA/1
-         AB9q51mOVEsgO55wudMJPVy6Lh0vpvC+hPZpFg0of46yxZAR0W/3KTFxw2bdXsyZPxvb
-         GGMw==
-X-Gm-Message-State: AJIora9q5Z8KammNEnru6qIOauVE1ZiGeQdoUG5By6qP4qJ2niIAb9c8
-        op8Ul5aKOz3pls+8bPO2fH2fHAZfn6NYKTGu
-X-Google-Smtp-Source: AGRyM1tXpncuFPJXAmibcjFfJyU4q/R3OQaxywdRzAQa2B0nQnvOw7ZLhPVOhUShHwVnwox3XPIyqw==
-X-Received: by 2002:a05:6402:1f01:b0:43a:239e:e65a with SMTP id b1-20020a0564021f0100b0043a239ee65amr21521389edb.428.1658908174880;
-        Wed, 27 Jul 2022 00:49:34 -0700 (PDT)
-Received: from [192.168.74.101] ([77.78.38.236])
-        by smtp.gmail.com with ESMTPSA id bt8-20020a0564020a4800b0043bba5ed21csm9698792edb.15.2022.07.27.00.49.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Jul 2022 00:49:34 -0700 (PDT)
-Message-ID: <79fce900-2825-45ca-44f2-9fb94b5eeed3@gmail.com>
-Date:   Wed, 27 Jul 2022 10:49:32 +0300
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1658910498; x=1690446498;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=tvgkr2Ds+DOMW1MZx5jh+W1rCZXn15syWivjTwgXnik=;
+  b=R13Qu9KpGmtgiY9k4v6EuX7cAFhx5Wb3uua0t16VZs2jAWVFTeziOsAF
+   k4YlVJ9+hEioAquaMLQMIPunGm1RapXnvfjgTJnNVHzWyw8CwbLcVhAw1
+   SC2MPqBlO/+uyHrKSGKsQ5DwT7zA/NmIhQYFthfYt6Zc3IVprKs9GOJSf
+   Y=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 27 Jul 2022 01:28:17 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jul 2022 01:28:17 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 27 Jul 2022 01:28:16 -0700
+Received: from c-skakit-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 27 Jul 2022 01:28:13 -0700
+From:   Satya Priya <quic_c_skakit@quicinc.com>
+To:     Rob Herring <robh@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Satya Priya <quic_c_skakit@quicinc.com>
+Subject: [PATCH V7 0/5] Add support for audio clock gating resets for SC7280
+Date:   Wed, 27 Jul 2022 13:57:52 +0530
+Message-ID: <1658910477-6494-1-git-send-email-quic_c_skakit@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 1/5] dt-bindings: regulator: Document the PM6125 SPMI
- PMIC
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Adam Skladowski <a39.skl@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Robert Marko <robimarko@gmail.com>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20220726181133.3262695-1-iskren.chernev@gmail.com>
- <20220726181133.3262695-2-iskren.chernev@gmail.com>
- <CAA8EJpoLMioMy61np6Y8Gn+Uhb8EvgU6bwuUyouuNcDz0XwByg@mail.gmail.com>
-From:   Iskren Chernev <iskren.chernev@gmail.com>
-In-Reply-To: <CAA8EJpoLMioMy61np6Y8Gn+Uhb8EvgU6bwuUyouuNcDz0XwByg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+[v7]
+  * Fix commit text of [5/5]. Remove '.' from Fixes tag.
 
+[v6]
+  * Add [1], [2] to handle the regmap overlap of lpasscc and lpass_aon 
 
-On 7/26/22 23:36, Dmitry Baryshkov wrote:
-> On Tue, 26 Jul 2022 at 21:11, Iskren Chernev <iskren.chernev@gmail.com> wrote:
->>
->> Add support for pm6125 compatible string and add relevant supplies in QCom SPMI
->> regulator documentation.
->>
->> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
->> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
-> 
-> The order of sign-offs seems incorrect. The sender's signature should
-> be the last one.
+[v5]
+  * Fix the fail path and add pm_runtime_disable().
 
-Sure, will do!
+[v4]
+  * Fix the "fixes" tag.
 
->> ---
->>  .../regulator/qcom,spmi-regulator.yaml        | 19 +++++++++++++++++++
->>  1 file changed, 19 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
->> index 8b7c4af4b551..d8f18b441484 100644
->> --- a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
->> +++ b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
->> @@ -12,6 +12,7 @@ maintainers:
->>  properties:
->>    compatible:
->>      enum:
->> +      - qcom,pm6125-regulators
->>        - qcom,pm660-regulators
->>        - qcom,pm660l-regulators
->>        - qcom,pm8004-regulators
->> @@ -106,6 +107,24 @@ required:
->>    - compatible
->>
->>  allOf:
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - qcom,pm6125-regulators
->> +    then:
->> +      properties:
->> +        vdd_l1_l7_l17_l18-supply: true
->> +        vdd_l2_l3_l4-supply: true
->> +        vdd_l5_l15_l19_l20_l21_l22-supply: true
->> +        vdd_l6_l8-supply: true
->> +        vdd_l9_l11-supply: true
->> +        vdd_l10_l13_l14-supply: true
->> +        vdd_l12_l16-supply: true
->> +        vdd_l23_l24-supply: true
->> +      patternProperties:
->> +        "^vdd_s[1-8]-supply$": true
-> 
-> Add an empty line please.
+[v3]
+  * Remove the maxItems from reg property.
 
-All other if-then blocks don't have newlines, shall I add one between each as
-well?
+[v2]
+  * Update/fix the YAML for reg property against each compatible.
 
->>    - if:
->>        properties:
->>          compatible:
->> --
->> 2.37.1
->>
-> 
-> 
+[v1]
+  * Add support for clock gating resets for lpass audio clock
+    controller & MCLKs.
+
+Satya Priya (2):
+  dt-bindings: clock: Add "qcom,adsp-pil-mode" property
+  clk: qcom: lpass: Handle the regmap overlap of lpasscc and lpass_aon
+
+Taniya Das (3):
+  dt-bindings: clock: Add resets for LPASS audio clock controller for
+    SC7280
+  dt-bindings: clock: Add support for external MCLKs for LPASS on SC7280
+  clk: qcom: lpass: Add support for resets & external mclk for SC7280
+
+ .../bindings/clock/qcom,sc7280-lpasscc.yaml        |  6 +-
+ .../bindings/clock/qcom,sc7280-lpasscorecc.yaml    | 26 ++++++++-
+ drivers/clk/qcom/lpassaudiocc-sc7280.c             | 66 +++++++++++++++++++++-
+ drivers/clk/qcom/lpasscc-sc7280.c                  | 44 ---------------
+ drivers/clk/qcom/lpasscorecc-sc7280.c              | 33 +++++++++++
+ .../dt-bindings/clock/qcom,lpassaudiocc-sc7280.h   |  5 ++
+ .../dt-bindings/clock/qcom,lpasscorecc-sc7280.h    |  2 +
+ 7 files changed, 130 insertions(+), 52 deletions(-)
+
+-- 
+2.7.4
+
