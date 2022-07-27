@@ -2,60 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E699D5833E5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 22:03:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B8F765833EE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 22:09:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229696AbiG0UDE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 16:03:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43734 "EHLO
+        id S232026AbiG0UJL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 16:09:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229508AbiG0UDD (ORCPT
+        with ESMTP id S233678AbiG0UJH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 16:03:03 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7343A5A2FF;
-        Wed, 27 Jul 2022 13:03:02 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 1CA66B8227B;
-        Wed, 27 Jul 2022 20:03:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F31C433D6;
-        Wed, 27 Jul 2022 20:02:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1658952179;
-        bh=bhXdU0USntkiB9VeAjJXudqJtJ1Zhml+HGIlkrxNYwA=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=dGnKjVscu3t5TawgOTdxEwwl8LqhsjRowLOYg2qWQJKUbZFLdh5py6vJBEojWemHW
-         SVTwUXLNCdTNFHdhlL7KZxoeh711XvpjpOZHQE2wZMuVVKByn+M4xg1RUbWB+YMJMP
-         APGh9+toyjXVhTrAlSvLkajsDPFzIew4DBVQXY7yWrrsUlN/8Y1qpsOAO1+eIaP0ii
-         5FezdknkEYoY7Vv0rMRodjvJMvgM1mWFzxVxYYq3EqPwgxrQZNNXUeLBVVgSVXr5dy
-         5ydAQUp+3KAIj0U9jBlFnnnZRU4np/E6YPAYsgH8OTbaa5O4L+x7H6OQRe2/UnrkOy
-         Q4wnU12bL8vkA==
-Date:   Wed, 27 Jul 2022 15:02:57 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH v2] PCI: qcom: Add support for modular builds
-Message-ID: <20220727200257.GA220948@bhelgaas>
+        Wed, 27 Jul 2022 16:09:07 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47A685B786
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 13:09:05 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id z13so20582474ljj.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 13:09:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xJtun5NcNR5wLyutYX62IIiLTVDFy1hcC9gXT6STMk8=;
+        b=XZtW6FVvaqmfalpx0q3HcwspGk2aOxr4ZIX759Vec0uZcWMN3UvIJP4v7oOSyem4KV
+         dGssTb1ubfo3rpB+ZdbMkUMkemuYuXSFgC4ZVolkm+eBdzjsCzfdIue4h4zns1j6OqCZ
+         vOYomoKyEhZ0IaRbpKm7JEshAe9RNzYfi8fPwXSeeDMKTZEKpj2X8WChDoR0G3SxsRP0
+         MmZQpAW1zn0p4lctA+YdJUvtLaJ86pI+8W613zPeSRJF2ybzSCik0qQguFSSvguU39GQ
+         B3CVa5LNF1dVHJ+FvUEE22LBsG528g7pIVSNpe0B6CxLQShQbAiiQRwrUEDO8dI8iNM2
+         BT+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xJtun5NcNR5wLyutYX62IIiLTVDFy1hcC9gXT6STMk8=;
+        b=cIbiGzFO/QKfr57EOxDCejZXxOLRwWgGGJUY4ALaPQ7NaoCiJN/lEZT3WuNXDgcZnC
+         ZFXk0ePXG1i8yO+TV880ZLqgD9hJawrrtbOasYpktPgoeTLaVGd11JFdHC4WVmpopiaT
+         VhTRgWFMp2wK2UoNjWHWWHOpv+gb3dQxmNMrTDHgE7A9lEUkfsm0TEy4ZbELVbSB6+bs
+         lrPcqAJQnF8QI8biNE4ptkmj9UtqUnTAhWmNLmVFQV5520VCdLDwDfRQCbxCG6wurMT4
+         4x7Z8nbx5BGrgdQp8gVjwVUsEo+ffkfUlzFhH6sCrRzz7kV6c4OLh1kTcJb4ULuqaWmY
+         YYZw==
+X-Gm-Message-State: AJIora/tP0HOwPPLBLaEieKzaAIfNtny3debIoRcLikpSnHm7oGVTpyV
+        HcNGWIQ3LT+PoZDTNlyfnH/R1Q==
+X-Google-Smtp-Source: AGRyM1sfdGc2AXkd9v7L61hwgPs8XRui3lZKm4ip1NQ849VBvnGRnqYMpuE3luDBme8hNv+XItguaA==
+X-Received: by 2002:a2e:8789:0:b0:25d:edad:f50b with SMTP id n9-20020a2e8789000000b0025dedadf50bmr8740460lji.86.1658952543402;
+        Wed, 27 Jul 2022 13:09:03 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id b9-20020ac24109000000b004870f517c89sm3961649lfi.33.2022.07.27.13.09.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Jul 2022 13:09:02 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH] firmware/psci: Add debugfs support to ease debugging
+Date:   Wed, 27 Jul 2022 23:09:01 +0300
+Message-Id: <20220727200901.1142557-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220721193513.GA1747404@bhelgaas>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,128 +68,176 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 21, 2022 at 02:35:13PM -0500, Bjorn Helgaas wrote:
-> On Thu, Jul 21, 2022 at 08:47:20AM +0200, Johan Hovold wrote:
-> > Allow the Qualcomm PCIe controller driver to be built as a module, which
-> > is useful for multi-platform kernels as well as during development.
-> > 
-> > Reviewed-by: Rob Herring <robh@kernel.org>
-> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> 
-> Applied to pci/ctrl/qcom for v5.20, thanks!
+To ease debugging of PSCI supported features, add debugfs file called
+'psci' describing PSCI and SMC CC versions, enabled features and
+options.
 
-I'm going to drop this one for now, since the module vs remove
-discussion [1] is still ongoing.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/firmware/psci/psci.c | 112 ++++++++++++++++++++++++++++++++++-
+ include/uapi/linux/psci.h    |   9 +++
+ 2 files changed, 120 insertions(+), 1 deletion(-)
 
-This patch actually makes it both *modular* and *removable*.  I think
-the modular part is uncontroversial and valuable by itself.
+diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
+index b907768eea01..6595cc964635 100644
+--- a/drivers/firmware/psci/psci.c
++++ b/drivers/firmware/psci/psci.c
+@@ -9,6 +9,7 @@
+ #include <linux/acpi.h>
+ #include <linux/arm-smccc.h>
+ #include <linux/cpuidle.h>
++#include <linux/debugfs.h>
+ #include <linux/errno.h>
+ #include <linux/linkage.h>
+ #include <linux/of.h>
+@@ -324,12 +325,121 @@ static void psci_sys_poweroff(void)
+ 	invoke_psci_fn(PSCI_0_2_FN_SYSTEM_OFF, 0, 0, 0);
+ }
+ 
+-static int __init psci_features(u32 psci_func_id)
++static int psci_features(u32 psci_func_id)
+ {
+ 	return invoke_psci_fn(PSCI_1_0_FN_PSCI_FEATURES,
+ 			      psci_func_id, 0, 0);
+ }
+ 
++#ifdef CONFIG_DEBUG_FS
++
++#define PSCI_ID(ver, _name) \
++	{ .fn = PSCI_##ver##_FN_##_name, .name = #_name, }
++#define PSCI_ID_NATIVE(ver, _name) \
++	{ .fn = PSCI_FN_NATIVE(ver, _name), .name = #_name, }
++
++/* A table of all optional functions */
++static const struct {
++	u32 fn;
++	const char *name;
++} psci_fn_ids[] = {
++	PSCI_ID_NATIVE(0_2, MIGRATE),
++	PSCI_ID(0_2, MIGRATE_INFO_TYPE),
++	PSCI_ID_NATIVE(0_2, MIGRATE_INFO_UP_CPU),
++	PSCI_ID(1_0, CPU_FREEZE),
++	PSCI_ID_NATIVE(1_0, CPU_DEFAULT_SUSPEND),
++	PSCI_ID_NATIVE(1_0, NODE_HW_STATE),
++	PSCI_ID_NATIVE(1_0, SYSTEM_SUSPEND),
++	PSCI_ID(1_0, SET_SUSPEND_MODE),
++	PSCI_ID_NATIVE(1_0, STAT_RESIDENCY),
++	PSCI_ID_NATIVE(1_0, STAT_COUNT),
++	PSCI_ID_NATIVE(1_1, SYSTEM_RESET2),
++};
++
++static int psci_debugfs_read(struct seq_file *s, void *data)
++{
++	int feature, type, i;
++	u32 ver;
++
++	ver = psci_ops.get_version();
++	seq_printf(s, "PSCIv%d.%d\n",
++		   PSCI_VERSION_MAJOR(ver),
++		   PSCI_VERSION_MINOR(ver));
++
++	/* PSCI_FEATURES is available only starting from 1.0 */
++	if (PSCI_VERSION_MAJOR(ver) < 1)
++		return 0;
++
++	feature = psci_features(ARM_SMCCC_VERSION_FUNC_ID);
++	if (feature != PSCI_RET_NOT_SUPPORTED) {
++		ver = invoke_psci_fn(ARM_SMCCC_VERSION_FUNC_ID, 0, 0, 0);
++		seq_printf(s, "SMC Calling Convention v%d.%d\n",
++			   PSCI_VERSION_MAJOR(ver),
++			   PSCI_VERSION_MINOR(ver));
++	} else {
++		seq_printf(s, "SMC Calling Convention v1.0 is assumed\n");
++	}
++
++	feature = psci_features(PSCI_FN_NATIVE(0_2, CPU_SUSPEND));
++	if (feature < 0) {
++		seq_printf(s, "PSCI_FEATURES(CPU_SUSPEND) error (%d)\n", feature);
++	} else {
++		seq_printf(s, "OSI is %ssupported\n",
++			   (feature & BIT(0)) ? "" : "not ");
++		seq_printf(s, "%s StateID format is used\n",
++			   (feature & BIT(1)) ? "Extended" : "Original");
++	}
++
++	type = psci_ops.migrate_info_type();
++	if (type == PSCI_0_2_TOS_UP_MIGRATE ||
++	    type == PSCI_0_2_TOS_UP_NO_MIGRATE) {
++		unsigned long cpuid;
++
++		seq_printf(s, "Trusted OS %smigrate capable\n",
++			   type == PSCI_0_2_TOS_UP_NO_MIGRATE ? "not " : "");
++		cpuid = psci_migrate_info_up_cpu();
++		seq_printf(s, "Trusted OS resident on physical CPU 0x%lx (#%d)\n", cpuid, resident_cpu);
++	} else if (type == PSCI_0_2_TOS_MP) {
++		seq_printf(s, "Trusted OS migration not required\n");
++	} else {
++		if (type != PSCI_RET_NOT_SUPPORTED)
++			seq_printf(s, "MIGRATE_INFO_TYPE returned unknown type (%d)\n", type);
++	}
++
++	for (i = 0; i < ARRAY_SIZE(psci_fn_ids); i++) {
++		feature = psci_features(psci_fn_ids[i].fn);
++		if (feature == PSCI_RET_NOT_SUPPORTED)
++			continue;
++		if (feature < 0)
++			seq_printf(s, "PSCI_FEATURES(%s) error (%d)\n", psci_fn_ids[i].name, feature);
++		else
++			seq_printf(s, "%s is supported\n", psci_fn_ids[i].name);
++	}
++
++	return 0;
++}
++
++static int psci_debugfs_open(struct inode *inode, struct file *f)
++{
++	return single_open(f, psci_debugfs_read, NULL);
++}
++
++static const struct file_operations psci_debugfs_ops = {
++	.owner = THIS_MODULE,
++	.open = psci_debugfs_open,
++	.release = single_release,
++	.read = seq_read,
++	.llseek = seq_lseek
++};
++
++static int __init psci_debugfs_init(void)
++{
++	return PTR_ERR_OR_ZERO(debugfs_create_file("psci", S_IRUGO, NULL, NULL,
++						   &psci_debugfs_ops));
++}
++late_initcall(psci_debugfs_init)
++#endif
++
+ #ifdef CONFIG_CPU_IDLE
+ static int psci_suspend_finisher(unsigned long state)
+ {
+diff --git a/include/uapi/linux/psci.h b/include/uapi/linux/psci.h
+index 2bf93c0d6354..f6f0bad5858b 100644
+--- a/include/uapi/linux/psci.h
++++ b/include/uapi/linux/psci.h
+@@ -48,11 +48,20 @@
+ #define PSCI_0_2_FN64_MIGRATE_INFO_UP_CPU	PSCI_0_2_FN64(7)
+ 
+ #define PSCI_1_0_FN_PSCI_FEATURES		PSCI_0_2_FN(10)
++#define PSCI_1_0_FN_CPU_FREEZE			PSCI_0_2_FN(11)
++#define PSCI_1_0_FN_CPU_DEFAULT_SUSPEND		PSCI_0_2_FN(12)
++#define PSCI_1_0_FN_NODE_HW_STATE		PSCI_0_2_FN(13)
+ #define PSCI_1_0_FN_SYSTEM_SUSPEND		PSCI_0_2_FN(14)
+ #define PSCI_1_0_FN_SET_SUSPEND_MODE		PSCI_0_2_FN(15)
++#define PSCI_1_0_FN_STAT_RESIDENCY		PSCI_0_2_FN(16)
++#define PSCI_1_0_FN_STAT_COUNT			PSCI_0_2_FN(17)
+ #define PSCI_1_1_FN_SYSTEM_RESET2		PSCI_0_2_FN(18)
+ 
++#define PSCI_1_0_FN64_CPU_DEFAULT_SUSPEND	PSCI_0_2_FN64(12)
++#define PSCI_1_0_FN64_NODE_HW_STATE		PSCI_0_2_FN64(13)
+ #define PSCI_1_0_FN64_SYSTEM_SUSPEND		PSCI_0_2_FN64(14)
++#define PSCI_1_0_FN64_STAT_RESIDENCY		PSCI_0_2_FN64(16)
++#define PSCI_1_0_FN64_STAT_COUNT		PSCI_0_2_FN64(17)
+ #define PSCI_1_1_FN64_SYSTEM_RESET2		PSCI_0_2_FN64(18)
+ 
+ /* PSCI v0.2 power state encoding for CPU_SUSPEND function */
+-- 
+2.35.1
 
-If you want to just make it modular and *non*-removable, I think that
-would be fine and we can add removability next cycle if we think it's
-safe.
-
-[1] https://lore.kernel.org/r/20220721195433.GA1747571@bhelgaas
-
-> > Changes in v2
-> >  - rebase on next-20220720 (adjust context)
-> >  - add Rob and Mani's reviewed-by tags
-> > 
-> > 
-> >  drivers/pci/controller/dwc/Kconfig     |  2 +-
-> >  drivers/pci/controller/dwc/pcie-qcom.c | 36 +++++++++++++++++++++++---
-> >  2 files changed, 34 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
-> > index 62ce3abf0f19..230f56d1a268 100644
-> > --- a/drivers/pci/controller/dwc/Kconfig
-> > +++ b/drivers/pci/controller/dwc/Kconfig
-> > @@ -168,7 +168,7 @@ config PCI_HISI
-> >  	  Hip05 and Hip06 SoCs
-> >  
-> >  config PCIE_QCOM
-> > -	bool "Qualcomm PCIe controller"
-> > +	tristate "Qualcomm PCIe controller"
-> >  	depends on OF && (ARCH_QCOM || COMPILE_TEST)
-> >  	depends on PCI_MSI_IRQ_DOMAIN
-> >  	select PCIE_DW_HOST
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > index 5ed164c2afa3..d176c635016b 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > @@ -16,7 +16,7 @@
-> >  #include <linux/io.h>
-> >  #include <linux/iopoll.h>
-> >  #include <linux/kernel.h>
-> > -#include <linux/init.h>
-> > +#include <linux/module.h>
-> >  #include <linux/of_device.h>
-> >  #include <linux/of_gpio.h>
-> >  #include <linux/pci.h>
-> > @@ -1518,6 +1518,15 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
-> >  	return ret;
-> >  }
-> >  
-> > +static void qcom_pcie_host_deinit(struct qcom_pcie *pcie)
-> > +{
-> > +	qcom_ep_reset_assert(pcie);
-> > +	if (pcie->cfg->ops->post_deinit)
-> > +		pcie->cfg->ops->post_deinit(pcie);
-> > +	phy_power_off(pcie->phy);
-> > +	pcie->cfg->ops->deinit(pcie);
-> > +}
-> > +
-> >  static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
-> >  	.host_init = qcom_pcie_host_init,
-> >  };
-> > @@ -1752,6 +1761,22 @@ static int qcom_pcie_probe(struct platform_device *pdev)
-> >  	return ret;
-> >  }
-> >  
-> > +static int qcom_pcie_remove(struct platform_device *pdev)
-> > +{
-> > +	struct qcom_pcie *pcie = platform_get_drvdata(pdev);
-> > +	struct device *dev = &pdev->dev;
-> > +
-> > +	dw_pcie_host_deinit(&pcie->pci->pp);
-> > +	qcom_pcie_host_deinit(pcie);
-> > +
-> > +	phy_exit(pcie->phy);
-> > +
-> > +	pm_runtime_put_sync(dev);
-> > +	pm_runtime_disable(dev);
-> > +
-> > +	return 0;
-> > +}
-> > +
-> >  static const struct of_device_id qcom_pcie_match[] = {
-> >  	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
-> >  	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
-> > @@ -1771,6 +1796,7 @@ static const struct of_device_id qcom_pcie_match[] = {
-> >  	{ .compatible = "qcom,pcie-ipq6018", .data = &ipq6018_cfg },
-> >  	{ }
-> >  };
-> > +MODULE_DEVICE_TABLE(of, qcom_pcie_match);
-> >  
-> >  static void qcom_fixup_class(struct pci_dev *dev)
-> >  {
-> > @@ -1786,10 +1812,14 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
-> >  
-> >  static struct platform_driver qcom_pcie_driver = {
-> >  	.probe = qcom_pcie_probe,
-> > +	.remove = qcom_pcie_remove,
-> >  	.driver = {
-> >  		.name = "qcom-pcie",
-> > -		.suppress_bind_attrs = true,
-> >  		.of_match_table = qcom_pcie_match,
-> >  	},
-> >  };
-> > -builtin_platform_driver(qcom_pcie_driver);
-> > +module_platform_driver(qcom_pcie_driver);
-> > +
-> > +MODULE_AUTHOR("Stanimir Varbanov <svarbanov@mm-sol.com>");
-> > +MODULE_DESCRIPTION("Qualcomm PCIe root complex driver");
-> > +MODULE_LICENSE("GPL");
-> > -- 
-> > 2.35.1
-> > 
