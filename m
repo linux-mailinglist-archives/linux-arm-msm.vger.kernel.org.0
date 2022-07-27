@@ -2,116 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C2CA5825BF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 13:39:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB5F15825F7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 13:57:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232285AbiG0Ljk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 07:39:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54168 "EHLO
+        id S229489AbiG0L5p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 07:57:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232246AbiG0LjT (ORCPT
+        with ESMTP id S231375AbiG0L5o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 07:39:19 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 112A04A83F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 04:38:59 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id v21so904610ljh.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 04:38:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=MGUgabyld/EeWL+9XhnAgZD2EBdXnWluJ901k882Jpg=;
-        b=V5XzwXTKWH6s0hot7/PtPjtvOzCNi+SEBJkUHj157j7tvL/Phb8KT6SkItkdoTzpdv
-         09lGUuIsJCRieoy8cD/BkLtkvdLkAC+Ynp5sYksR+lEfretIPqExC24P+7yLAGMZAA3H
-         IxNPafDhUZnmPzYo/AfBuGPNAvHsvc46Yq5AJ+fbBBDq+jtmq78lIJLpO/escX0NsAvL
-         blF3F1+C3UyTXku/Bq5X2ONn8bgig2lGmvv8KQ+dKBt2X7ojSgdFclTKqYAFOw0umPmO
-         UuzCKUgYVWNiExNmMNR/KYE+Eenoeds+rzdMsehNhKdBnTox9340mpgyvjVmolJUtKuV
-         pNgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=MGUgabyld/EeWL+9XhnAgZD2EBdXnWluJ901k882Jpg=;
-        b=EnmRSMgU8y4bpLbwyzqTrbuAnfpKiziWlcPebmnF+rrNb6T2ksFkPWHMHGM1jwr/vS
-         WHZGXZtYQOXEokiL+xDCnTksBsaTgBz3L2UM6MMYAcPXkRturUDvErwrVLw1j8VxvcdA
-         C1Do1J06eO0j0+sJ6m3SBrxTlaVAb/ouiwLEutHF1qna0qUugCG4Eez3obPltX1+9I9s
-         TbrNvLrLWx2mN5E3aUpSEsl9fUb4wXCBBnlZZy3t0pNNnIUwMbu+h7+4gnTOCS/7jjJC
-         uO8irSI/p9Bp+cBxpom1vn8oIddtUAs2mfyfVQXMw4TDO8X4td0OkUGkjmApjGgaid3e
-         5L5A==
-X-Gm-Message-State: AJIora/FZcmDWOG8bYewHNn0eiVckbCuOnSDgMrMYqO0HT52LyBt7V31
-        brSv6gBAVtK+ZBuUKKiLwh9aUg==
-X-Google-Smtp-Source: AGRyM1sQ74WtezfGlT4uCwItsqqfEXVEkE7x/nMn5V7yq4uiRQSeAryO4OrKcJgV8n1vzGNnBcDCRA==
-X-Received: by 2002:a2e:87ce:0:b0:25d:e933:f76c with SMTP id v14-20020a2e87ce000000b0025de933f76cmr7174054ljj.99.1658921937293;
-        Wed, 27 Jul 2022 04:38:57 -0700 (PDT)
-Received: from [192.168.3.197] (78-26-46-173.network.trollfjord.no. [78.26.46.173])
-        by smtp.gmail.com with ESMTPSA id z10-20020a056512376a00b00486d8a63c07sm3628641lft.121.2022.07.27.04.38.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Jul 2022 04:38:56 -0700 (PDT)
-Message-ID: <7284953b-52bb-37ac-fbe1-1fa845c44ff9@linaro.org>
-Date:   Wed, 27 Jul 2022 13:38:55 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure
- Application client
-Content-Language: en-US
-To:     Maximilian Luz <luzmaximilian@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
+        Wed, 27 Jul 2022 07:57:44 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC3F727CC7;
+        Wed, 27 Jul 2022 04:57:43 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5974F6186D;
+        Wed, 27 Jul 2022 11:57:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F3CC433D6;
+        Wed, 27 Jul 2022 11:57:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1658923062;
+        bh=OEoVs/MhSXgR4IWqrhVfbtNjizq9Kvd/Pib0wQFyWH4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=fRDXzn1tXMPuTUSTgVRhPAFjh3z1U1OcjCyjiTNw0vat+ApVqVFWoV7rbsOGIGbnY
+         6NyQR6rH1xQmGrxMJE+nrudPqOqH3jp08fYn5S5OHPMDHcJTBqZhzPt38m3GkjAnXP
+         a9xslA49t4Sp5G1gpZNwIQDyB8xsJuEK/dLRU5hr1vJXNv/CnK3VsFq+pClIu2jawv
+         yiU+4UvE5+dqHPlfg3/ifSaNmcv8PBNWnDoc/uKFGCB0UovyacXlsGFcsWbqyEH69a
+         CN9eQjKDMGSYLJJVVyv5RtH7busZBmkWbsY+qUjtv9LdjhkqbWAn+iG09N+z8FyyWj
+         JP3bCVOdKcRNw==
+Date:   Wed, 27 Jul 2022 12:57:34 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Iskren Chernev <iskren.chernev@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
- <20220723224949.1089973-5-luzmaximilian@gmail.com>
- <20220726143005.wt4be7yo7sbd3xut@bogus>
- <829c8fee-cae5-597d-933d-784b4b57bd73@gmail.com>
- <20220726154138.74avqs6iqlzqpzjk@bogus>
- <d1bc99bb-82ce-aa6e-7fad-e9309fa1c19b@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <d1bc99bb-82ce-aa6e-7fad-e9309fa1c19b@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Marko <robimarko@gmail.com>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH v2 3/5] regulator: qcom_spmi: Add support for new
+ regulator types
+Message-ID: <YuEoLteLBgd+b8sg@sirena.org.uk>
+References: <20220726181133.3262695-1-iskren.chernev@gmail.com>
+ <20220726181133.3262695-4-iskren.chernev@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="c8wmvTBeVsGJsd6K"
+Content-Disposition: inline
+In-Reply-To: <20220726181133.3262695-4-iskren.chernev@gmail.com>
+X-Cookie: No motorized vehicles allowed.
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/07/2022 19:01, Maximilian Luz wrote:
-> On 7/26/22 17:41, Sudeep Holla wrote:
->> On Tue, Jul 26, 2022 at 05:15:41PM +0200, Maximilian Luz wrote:
->>>
->>> So ultimately I think it's better to add a DT entry for it.
->>
->> I disagree for the reason that once you discover more apps running on the
->> secure side, you want to add more entries and update DT on the platform
->> every time you discover some new firmware entity and you wish to interact
->> with it from the non-secure side.
-> 
-> Just as you'll have to add a driver to the kernel and update whatever is
-> probing the TrEE interface and add those strings to that interface. If
-> you then start doing SoC-specific lists, I think you'd be pretty much
-> re-implementing a DT in the kernel driver...
 
-But you don't have any of these names in the DT either. Your DT node
-only indicates the presence of your driver, but does not hold any
-additional information like these IDs.
+--c8wmvTBeVsGJsd6K
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Basically we start modelling firmware components in devicetree. :/
+On Tue, Jul 26, 2022 at 09:11:31PM +0300, Iskren Chernev wrote:
 
-Best regards,
-Krzysztof
+> Add support for some regulator types that are missing in this driver, all
+> belonging to the FTSMPS426 register layout.  This is done in preparation
+> for adding support for the PM6125 PMIC.
+
+> +	.set_mode		= spmi_regulator_ftsmps3_set_mode,
+> +	.get_mode		= spmi_regulator_ftsmps426_get_mode,
+
+Why are set and get asymmetric?
+
+> @@ -1473,7 +1557,7 @@ static const struct spmi_regulator_mapping supported_regulators[] = {
+>  	SPMI_VREG(LDO,   HT_P600,  0, INF, HFS430, hfs430, ht_p600, 10000),
+>  	SPMI_VREG(LDO,   HT_P150,  0, INF, HFS430, hfs430, ht_p150, 10000),
+>  	SPMI_VREG(BUCK,  GP_CTL,   0, INF, SMPS,   smps,   smps,   100000),
+> -	SPMI_VREG(BUCK,  HFS430,   0, INF, HFS430, hfs430, hfs430,  10000),
+> +	SPMI_VREG(BUCK,  HFS430,   0,   3, HFS430, hfs430, hfs430,  10000),
+
+The changelog said we were adding support for new types but this looks
+like changing an existing type.
+
+--c8wmvTBeVsGJsd6K
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmLhKC0ACgkQJNaLcl1U
+h9Byawf/SgzRmAePGy24aoL5THi5Xf0CjThrfjmk/FuY4MGwem/ClESAYTdf0o2m
+9Php3xEMaCevtBlamg0SBQ0wcS+n5xVJRdTrsa1w2WmOVX5yWTXcAHrhbZF4zw9n
+T24wbt0fVKQf++QgZV+CvyKGcF6WwT8QUV+XZVUnLNAYXCzi48K1TBK6kLovF6Wm
+qiJyXOC2uSzSRcsw/pFYjDTV5RDMtdw83G2pVPW3KKWxgvfk/7fOk+uHm2i8WJQd
+MB9VqRs1glNuTVqWvjQd/4KSoNZqr/O+J4bJ5i51Naof9XyCv4XtEc2AK6QBzZkJ
+H9KnHQgCubqerwbYSrENJftdUGYn8A==
+=gE9t
+-----END PGP SIGNATURE-----
+
+--c8wmvTBeVsGJsd6K--
