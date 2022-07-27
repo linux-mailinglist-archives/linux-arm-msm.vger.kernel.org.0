@@ -2,65 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D2F535831BE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 20:15:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3EEE5831D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 20:19:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243042AbiG0SPk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 14:15:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57252 "EHLO
+        id S236698AbiG0STE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 14:19:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243023AbiG0SPY (ORCPT
+        with ESMTP id S233393AbiG0SSr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 14:15:24 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC724DC9B5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 10:16:21 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id c139so16691402pfc.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 10:16:21 -0700 (PDT)
+        Wed, 27 Jul 2022 14:18:47 -0400
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1930FEB591
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 10:18:39 -0700 (PDT)
+Received: by mail-pg1-x52b.google.com with SMTP id r186so16464733pgr.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 10:18:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=7Cp8hxjyFsaE82FE3kUlY/wY5Sc8ygaOOh3psw0ODPs=;
-        b=gIyZY+gxDZfn2uH7MJzbE5BziRTX/OSE4vebEBtwvh9ioc/VZPVS5z293x+NDyQ21k
-         wysreh65HygpoMKCHphFLL/OXEJY6K7Zv+rjD35eg87HO/Ztwawh6hw4EKDxk1rOIe08
-         nLodSxyUXcbcB/JwXp66ZF3IBu+moTfdWcbZcdPYJZuHPvyu0siarx9pdvLteiom/3P1
-         v/hA4gJkOWaY0nBYTvT93ZFJbsct5uRlTyJQZNQ6DaHBdbgKx6dif+QDa/x4fbU2vGRJ
-         YPqbAG7SWVfyAo1yRXVXRe4Urq06+4YcxAdzhX0ghaOF9vQ4/Ic+WKh6nDiYLft0VzEj
-         vVwg==
+        bh=WWCmALyIfyfxZcOwM+WnJXH5fX1Oapc9tMvQ2tyZ/gA=;
+        b=RUGgbOZZiX9cKnAXmZSPCy70hMCEU8askQzkDRUlKVRVAodzICC7cgYAtYsie3UFzj
+         L3TePliA+yGPcmjr9x0ihXFmgK0+p4Z3HIkfxhwXrqOWNp0iGDI0M7axOhthf2bDWtJ4
+         fBf6wfG0P3yVO8lG6QMrjVT4qbsz6kbB6X+qRNG2/qP73aP5H0otgk4wulFpir6yq5tz
+         PEN2viguJ7e1Q/BwDt8QZmdhSyl6gW9R07YA2Tnh+ksZj3osBIQsfKJL1SPw2Ow8ScZK
+         6Z3t+/LppY9MZsKP3phkfXXWV7Kqz0/JNYxDVQQDkmyopr9z6n707dy7026MIwcW3iHy
+         5WCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=7Cp8hxjyFsaE82FE3kUlY/wY5Sc8ygaOOh3psw0ODPs=;
-        b=NtxV26bMErwGyOs9akWik+Bc4QarnAcRnN0uhQv1P5r/Ub0dHIzyns1Vohvf2vusLA
-         dhy6VBduBiVZnAJ+lMb0fMOYx8gPU8Cn2fhkXap3fLREmrFg7B34UEq7CdVvdYS8UbZD
-         LaW2wgk0+D/FAZi1WtuRcbd3PQQOhKxYZzcPvT4ajdVh3CWS/AOG5q41rF8sVXM6LS5g
-         TCtyus8IoU7K5Pwc4JGyh/pTAEUq/6uJ2yVkujidC26EGyieH54ddjiX73jxDi/vDLGr
-         VmKokUNtFz3c9RjWtyp5ZN7BJQZcZjzWS4WHMPbvfJP/YFHeVlVi8Sr+HLrlSf0+nmTu
-         uBJg==
-X-Gm-Message-State: AJIora+potbWxNXYP27Y6lL/5Jbgs/z1nZ6pPGjDEUDIg/xm2GX0DHc7
-        aIA0/DNsGQpCuIraYciIvY23Wg==
-X-Google-Smtp-Source: AGRyM1t2p9mLNeFavg6JDGmNsDD591QfvcjLUIlhogsJg0Lzwt6k1eggGwfztu5hHmesV0ZyMMzfrg==
-X-Received: by 2002:a63:4722:0:b0:40d:289e:8637 with SMTP id u34-20020a634722000000b0040d289e8637mr19464184pga.362.1658942179666;
-        Wed, 27 Jul 2022 10:16:19 -0700 (PDT)
+        bh=WWCmALyIfyfxZcOwM+WnJXH5fX1Oapc9tMvQ2tyZ/gA=;
+        b=K7etkyLdYIyOC494AIIy9lKhNDkDbpWQ6urxTqHYICAaes4p94Sa9ehAZTanXp0vyB
+         cQM/zRv4R1ZuTy/yXpcCEjYFI/Flwe6xGeAcRVgWaoX6zA3F9HpEHV15pX34bzaBjsJP
+         5xK55/apVrEJLYGEKzW6zowgzJeMqXatGGb9l5I/Dv3+dSw5Ie9/ZdDRV3arjCFMZNYM
+         z3a6qBjXxwQKgtla8V1cwzGEQLo49ScdzyN8FylSV/3tnxvbzkC7+ru5mLK+WFP7o7SC
+         NyBs9BxhGYJS61x9rscEKM9AAKlXWq+CC8DFcS+vlPKur2NafJd1VcbGUgZoBRI/TxCF
+         wITQ==
+X-Gm-Message-State: AJIora9qrCqvXxTv6F9DyXRzdQ4kG4yGoKR9L2qDWC+lo/zLJpOk24pU
+        lgcpMNT7gP7uV21alGKLEzExUTx7ceHCBQ==
+X-Google-Smtp-Source: AGRyM1v6W5TTmMy+3aH01G2tHhgfhxx5mBK5jrf+PdOXn2Kww1Zmm2jC4Vo9LZW2r3fOUH6xPga6Jw==
+X-Received: by 2002:a05:6a00:130a:b0:52c:5932:7160 with SMTP id j10-20020a056a00130a00b0052c59327160mr1898840pfu.19.1658942318560;
+        Wed, 27 Jul 2022 10:18:38 -0700 (PDT)
 Received: from p14s (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
-        by smtp.gmail.com with ESMTPSA id c1-20020a17090a674100b001f262f6f717sm2061945pjm.3.2022.07.27.10.16.18
+        by smtp.gmail.com with ESMTPSA id n59-20020a17090a5ac100b001f2b0f8e047sm2081502pji.27.2022.07.27.10.18.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Jul 2022 10:16:18 -0700 (PDT)
-Date:   Wed, 27 Jul 2022 11:16:16 -0600
+        Wed, 27 Jul 2022 10:18:37 -0700 (PDT)
+Date:   Wed, 27 Jul 2022 11:18:36 -0600
 From:   Mathieu Poirier <mathieu.poirier@linaro.org>
 To:     Chris Lew <quic_clew@quicinc.com>
 Cc:     bjorn.andersson@linaro.org, linux-remoteproc@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/4] rpmsg: core: Add rx done hooks
-Message-ID: <20220727171616.GA199805@p14s>
+Subject: Re: [PATCH 2/4] rpmsg: char: Add support to use rpmsg_rx_done
+Message-ID: <20220727171836.GB199805@p14s>
 References: <1654651005-15475-1-git-send-email-quic_clew@quicinc.com>
- <1654651005-15475-2-git-send-email-quic_clew@quicinc.com>
+ <1654651005-15475-3-git-send-email-quic_clew@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1654651005-15475-2-git-send-email-quic_clew@quicinc.com>
+In-Reply-To: <1654651005-15475-3-git-send-email-quic_clew@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -70,140 +70,100 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 07, 2022 at 06:16:42PM -0700, Chris Lew wrote:
-> In order to reduce the amount of copies in the rpmsg framework, it is
-> necessary for clients to take brief ownership of the receive buffer.
-> 
-> Add the capability for clients to notify the rpmsg framework and the
-> underlying transports when it is going to hold onto a buffer and also
-> notify when the client is done with the buffer.
-> 
-> In the .rx_cb of the rpmsg drivers, if they wish to use the received
-> buffer at a later point, they should return RPMSG_DEFER. Otherwise
-> returning RPMSG_HANDLED (0) will signal the framework that the client
-> is done with the resources and can continue with cleanup.
-> 
-> The clients should check if their rpmsg endpoint supports the rx_done
-> operation with the new state variable in the rpmsg_endpoint since not
-> all endpoints will have the ability to support this operation.
+On Tue, Jun 07, 2022 at 06:16:43PM -0700, Chris Lew wrote:
+> Add support into the rpmsg char driver to skip copying the data into an
+> skb if the endpoint supports rpmsg_rx_done. If the endpoint supports
+> the rx_done operation, allocate a zero sized skb and set the data to
+> the buffer returned in the rx callback. When the packet is read from
+> the character device, release the memory by calling rpmsg_rx_done().
 > 
 > Signed-off-by: Chris Lew <quic_clew@quicinc.com>
 > ---
->  drivers/rpmsg/rpmsg_core.c     | 20 ++++++++++++++++++++
->  drivers/rpmsg/rpmsg_internal.h |  1 +
->  include/linux/rpmsg.h          | 24 ++++++++++++++++++++++++
->  3 files changed, 45 insertions(+)
+>  drivers/rpmsg/rpmsg_char.c | 50 ++++++++++++++++++++++++++++++++++++++++++++--
+>  1 file changed, 48 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
-> index 290c1f02da10..359be643060f 100644
-> --- a/drivers/rpmsg/rpmsg_core.c
-> +++ b/drivers/rpmsg/rpmsg_core.c
-> @@ -351,6 +351,26 @@ ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
+> diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
+> index b6183d4f62a2..be62ddcf356c 100644
+> --- a/drivers/rpmsg/rpmsg_char.c
+> +++ b/drivers/rpmsg/rpmsg_char.c
+> @@ -91,8 +91,8 @@ int rpmsg_chrdev_eptdev_destroy(struct device *dev, void *data)
 >  }
->  EXPORT_SYMBOL(rpmsg_get_mtu);
+>  EXPORT_SYMBOL(rpmsg_chrdev_eptdev_destroy);
 >  
-> +/**
-> + * rpmsg_rx_done() - release resources related to @data from a @rx_cb
-> + * @ept:	the rpmsg endpoint
-> + * @data:	payload from a message
-> + *
-> + * Returns 0 on success and an appropriate error value on failure.
-> + */
-> +int rpmsg_rx_done(struct rpmsg_endpoint *ept, void *data)
-> +{
-> +	if (WARN_ON(!ept))
-> +		return -EINVAL;
-> +	if (!ept->ops->rx_done)
-> +		return -ENXIO;
-> +	if (!ept->rx_done)
-> +		return -EINVAL;
-> +
-> +	return ept->ops->rx_done(ept, data);
-> +}
-> +EXPORT_SYMBOL(rpmsg_rx_done);
-> +
->  /*
->   * match a rpmsg channel with a channel info struct.
->   * this is used to make sure we're not creating rpmsg devices for channels
-> diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
-> index a22cd4abe7d1..99cb86ce638e 100644
-> --- a/drivers/rpmsg/rpmsg_internal.h
-> +++ b/drivers/rpmsg/rpmsg_internal.h
-> @@ -76,6 +76,7 @@ struct rpmsg_endpoint_ops {
->  	__poll_t (*poll)(struct rpmsg_endpoint *ept, struct file *filp,
->  			     poll_table *wait);
->  	ssize_t (*get_mtu)(struct rpmsg_endpoint *ept);
-> +	int (*rx_done)(struct rpmsg_endpoint *ept, void *data);
->  };
->  
->  struct device *rpmsg_find_device(struct device *parent,
-> diff --git a/include/linux/rpmsg.h b/include/linux/rpmsg.h
-> index 523c98b96cb4..8e34222e8bca 100644
-> --- a/include/linux/rpmsg.h
-> +++ b/include/linux/rpmsg.h
-> @@ -63,6 +63,18 @@ struct rpmsg_device {
->  	const struct rpmsg_device_ops *ops;
->  };
->  
-> +/**
-> + * rpmsg rx callback return definitions
-> + * @RPMSG_HANDLED: rpmsg user is done processing data, framework can free the
-> + *                 resources related to the buffer
-> + * @RPMSG_DEFER:   rpmsg user is not done processing data, framework will hold
-> + *                 onto resources related to the buffer until rpmsg_rx_done is
-> + *                 called. User should check their endpoint to see if rx_done
-> + *                 is a supported operation.
-> + */
-> +#define RPMSG_HANDLED	0
-> +#define RPMSG_DEFER	1
-> +
->  typedef int (*rpmsg_rx_cb_t)(struct rpmsg_device *, void *, int, void *, u32);
->  
->  /**
-> @@ -71,6 +83,7 @@ typedef int (*rpmsg_rx_cb_t)(struct rpmsg_device *, void *, int, void *, u32);
->   * @refcount: when this drops to zero, the ept is deallocated
->   * @cb: rx callback handler
->   * @cb_lock: must be taken before accessing/changing @cb
-> + * @rx_done: if set, rpmsg endpoint supports rpmsg_rx_done
->   * @addr: local rpmsg address
->   * @priv: private data for the driver's use
->   *
-> @@ -93,6 +106,7 @@ struct rpmsg_endpoint {
->  	struct kref refcount;
->  	rpmsg_rx_cb_t cb;
->  	struct mutex cb_lock;
-> +	bool rx_done;
-
-Do you see a scenario where rpmsg_endpoint_ops::rx_done holds a valid pointer
-but rpmsg_epndpoint::rx_done is set to false?  If not please remove.
-
->  	u32 addr;
->  	void *priv;
->  
-> @@ -192,6 +206,8 @@ __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
->  
->  ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept);
->  
-> +int rpmsg_rx_done(struct rpmsg_endpoint *ept, void *data);
-> +
->  #else
->  
->  static inline int rpmsg_register_device_override(struct rpmsg_device *rpdev,
-> @@ -316,6 +332,14 @@ static inline ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
->  	return -ENXIO;
+> -static int rpmsg_ept_cb(struct rpmsg_device *rpdev, void *buf, int len,
+> -			void *priv, u32 addr)
+> +static int rpmsg_ept_copy_cb(struct rpmsg_device *rpdev, void *buf, int len,
+> +			     void *priv, u32 addr)
+>  {
+>  	struct rpmsg_eptdev *eptdev = priv;
+>  	struct sk_buff *skb;
+> @@ -113,6 +113,43 @@ static int rpmsg_ept_cb(struct rpmsg_device *rpdev, void *buf, int len,
+>  	return 0;
 >  }
 >  
-> +static inline int rpmsg_rx_done(struct rpmsg_endpoint *ept, void *data)
+> +static int rpmsg_ept_no_copy_cb(struct rpmsg_device *rpdev, void *buf, int len,
+> +				void *priv, u32 addr)
 > +{
-> +	/* This shouldn't be possible */
-> +	WARN_ON(1);
+> +	struct rpmsg_eptdev *eptdev = priv;
+> +	struct sk_buff *skb;
 > +
-> +	return -ENXIO;
+> +	skb = alloc_skb(0, GFP_ATOMIC);
+> +	if (!skb)
+> +		return -ENOMEM;
+> +
+> +	skb->head = buf;
+> +	skb->data = buf;
+> +	skb_reset_tail_pointer(skb);
+> +	skb_set_end_offset(skb, len);
+> +	skb_put(skb, len);
+> +
+
+I was worried about all that open ended code but looking at the sk_buff API I
+don't think it is possible to do otherwise.  As such:
+
+Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+
+
+> +	spin_lock(&eptdev->queue_lock);
+> +	skb_queue_tail(&eptdev->queue, skb);
+> +	spin_unlock(&eptdev->queue_lock);
+> +
+> +	/* wake up any blocking processes, waiting for new data */
+> +	wake_up_interruptible(&eptdev->readq);
+> +
+> +	return RPMSG_DEFER;
 > +}
 > +
->  #endif /* IS_ENABLED(CONFIG_RPMSG) */
+> +static int rpmsg_ept_cb(struct rpmsg_device *rpdev, void *buf, int len,
+> +			void *priv, u32 addr)
+> +{
+> +	struct rpmsg_eptdev *eptdev = priv;
+> +	rpmsg_rx_cb_t cb;
+> +
+> +	cb = (eptdev->ept->rx_done) ? rpmsg_ept_no_copy_cb : rpmsg_ept_copy_cb;
+> +
+> +	return cb(rpdev, buf, len, priv, addr);
+> +}
+> +
+>  static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
+>  {
+>  	struct rpmsg_eptdev *eptdev = cdev_to_eptdev(inode->i_cdev);
+> @@ -210,6 +247,15 @@ static ssize_t rpmsg_eptdev_read_iter(struct kiocb *iocb, struct iov_iter *to)
+>  	if (copy_to_iter(skb->data, use, to) != use)
+>  		use = -EFAULT;
 >  
->  /* use a macro to avoid include chaining to get THIS_MODULE */
+> +	if (eptdev->ept->rx_done) {
+> +		rpmsg_rx_done(eptdev->ept, skb->data);
+> +		/*
+> +		 * Data memory is freed by rpmsg_rx_done(), reset the skb data
+> +		 * pointers so kfree_skb() does not try to free a second time.
+> +		 */
+> +		skb->head = NULL;
+> +		skb->data = NULL;
+> +	}
+>  	kfree_skb(skb);
+>  
+>  	return use;
 > -- 
 > 2.7.4
 > 
