@@ -2,67 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16CF958211B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 09:31:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2810658217F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 09:49:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229971AbiG0Hbk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 03:31:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35568 "EHLO
+        id S229535AbiG0Htj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 03:49:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230161AbiG0Hbj (ORCPT
+        with ESMTP id S229447AbiG0Hth (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 03:31:39 -0400
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AC6541989;
-        Wed, 27 Jul 2022 00:31:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1658907098; x=1690443098;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=z69HSat8Qj8N9Swm2OyvSJng4HnatU7uq+BtNwOD/fg=;
-  b=laJvjcb396m+0dkvuv0KA1DVnU/0EY264MxMHg3KLLlOkqcQn1ZfoYNn
-   avecNee2pyDFgr0wRPwCPPtbXekCyEESRaJi+6D20bEzweuxLqUGztHtU
-   9/8vBt5UbZkTBHuU7JCCYvGvcGDkfCpbRnO9a39HjImC8YoTI/aslefek
-   Yc5JyJNX2fcPWas+KwhGkmpvRXLPYqSY8fen1gzTnK1+Hn5tro5n12Fee
-   57gq/PB54ZMsYxf8hdhmJGtjH2ACzPH97OZtmNTJcQBJZ0iCB7Ib5sAa0
-   n8NfAsJym3oTydHvqAtUj9hstpzHC2vSupPHi2GlSTUWu1de82CkHXfrH
-   Q==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10420"; a="267935419"
-X-IronPort-AV: E=Sophos;i="5.93,195,1654585200"; 
-   d="scan'208";a="267935419"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jul 2022 00:31:37 -0700
-X-IronPort-AV: E=Sophos;i="5.93,195,1654585200"; 
-   d="scan'208";a="659079055"
-Received: from rongch2-mobl.ccr.corp.intel.com (HELO [10.249.171.125]) ([10.249.171.125])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jul 2022 00:31:34 -0700
-Subject: Re: [kbuild-all] Re: [PATCH v2 3/5] thermal: qcom: tsens: Add driver
- support for re-initialization quirk
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        kernel test robot <lkp@intel.com>, linux-pm@vger.kernel.org
-Cc:     kbuild-all@lists.01.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, linux-arm-msm@vger.kernel.org,
-        daniel.lezcano@linaro.org, robh+dt@kernel.org, rafael@kernel.org,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>
-References: <20220724122424.2509021-4-bhupesh.sharma@linaro.org>
- <202207260755.tUajnfB4-lkp@intel.com>
- <f1e7ac3b-e3e3-4843-2a07-f9f05b49c2b9@linaro.org>
-From:   "Chen, Rong A" <rong.a.chen@intel.com>
-Message-ID: <55ee862c-ab22-04e3-c24e-7c9d099bb4da@intel.com>
-Date:   Wed, 27 Jul 2022 15:31:32 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Firefox/78.0 Thunderbird/78.12.0
+        Wed, 27 Jul 2022 03:49:37 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D02E422CB;
+        Wed, 27 Jul 2022 00:49:36 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id z18so8021703edb.10;
+        Wed, 27 Jul 2022 00:49:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=7qrKymhpLOAPYDYIFsDNUzeQR021XnkNkwlPESUcTX8=;
+        b=FY9ZK6DN7/WlouONO+X7GQTuYKV2MQxX+NxsAxG9h3cBD5XAQJUqonvfI5qp4qOB5Q
+         ym19B8AQOzTbLQmo2n2Gmx0t4SpoqBf50VL5TRiTAyTxa+i4Yj2d2+Dd2a6oqLySyJJe
+         MFvtgnnuQdxYYqDUf90lSOotu51KM13cmu9MDpbImfwBVrYDvC0X4kaO45i2IPiJgp/M
+         cvvHCP3n+c25o6DnZEyE+O3l0/lKE6l/+wtE6pAiJMSl+YHcjuNvAdwsYCRHQh5+cYOH
+         sKf7q0xFFxSLN8MHdvsFSIwT8AK/auwulCLQB/zGBG6yIAM8odehRGMp6xtMXIMaog5m
+         OOjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=7qrKymhpLOAPYDYIFsDNUzeQR021XnkNkwlPESUcTX8=;
+        b=Ag3D5HZIYniQISiOlna4J7vkAAF+vI4xdKfBMI8MJNuKf9d9w58GjGvXbN4nLGpJuw
+         mR2RlsmJfZy0sxu7A8PAnR2KddKdxyA9EiWp+KGqh+3q/EcDIUkTJqOdyofkWJRSNAz0
+         ireQXL8QUjppDlI6Bj25cCFvAdZyVU5Lws9l7sbTIzygvt0ZPW7DMbf0XWIiCf0a6xbG
+         m8ehH5LG5iMEUZ/7+z2aGeW/Qo7Rp0dW/GWlnbO8p/wqtugMRZdTPlY2CeXHRcJ/qA/1
+         AB9q51mOVEsgO55wudMJPVy6Lh0vpvC+hPZpFg0of46yxZAR0W/3KTFxw2bdXsyZPxvb
+         GGMw==
+X-Gm-Message-State: AJIora9q5Z8KammNEnru6qIOauVE1ZiGeQdoUG5By6qP4qJ2niIAb9c8
+        op8Ul5aKOz3pls+8bPO2fH2fHAZfn6NYKTGu
+X-Google-Smtp-Source: AGRyM1tXpncuFPJXAmibcjFfJyU4q/R3OQaxywdRzAQa2B0nQnvOw7ZLhPVOhUShHwVnwox3XPIyqw==
+X-Received: by 2002:a05:6402:1f01:b0:43a:239e:e65a with SMTP id b1-20020a0564021f0100b0043a239ee65amr21521389edb.428.1658908174880;
+        Wed, 27 Jul 2022 00:49:34 -0700 (PDT)
+Received: from [192.168.74.101] ([77.78.38.236])
+        by smtp.gmail.com with ESMTPSA id bt8-20020a0564020a4800b0043bba5ed21csm9698792edb.15.2022.07.27.00.49.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Jul 2022 00:49:34 -0700 (PDT)
+Message-ID: <79fce900-2825-45ca-44f2-9fb94b5eeed3@gmail.com>
+Date:   Wed, 27 Jul 2022 10:49:32 +0300
 MIME-Version: 1.0
-In-Reply-To: <f1e7ac3b-e3e3-4843-2a07-f9f05b49c2b9@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2 1/5] dt-bindings: regulator: Document the PM6125 SPMI
+ PMIC
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_PASS,SPF_NONE autolearn=ham
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Marko <robimarko@gmail.com>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+References: <20220726181133.3262695-1-iskren.chernev@gmail.com>
+ <20220726181133.3262695-2-iskren.chernev@gmail.com>
+ <CAA8EJpoLMioMy61np6Y8Gn+Uhb8EvgU6bwuUyouuNcDz0XwByg@mail.gmail.com>
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+In-Reply-To: <CAA8EJpoLMioMy61np6Y8Gn+Uhb8EvgU6bwuUyouuNcDz0XwByg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,91 +89,69 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 7/26/2022 7:38 PM, Bhupesh Sharma wrote:
-> Hi,
+On 7/26/22 23:36, Dmitry Baryshkov wrote:
+> On Tue, 26 Jul 2022 at 21:11, Iskren Chernev <iskren.chernev@gmail.com> wrote:
+>>
+>> Add support for pm6125 compatible string and add relevant supplies in QCom SPMI
+>> regulator documentation.
+>>
+>> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+>> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
 > 
-> On 7/26/22 4:40 AM, kernel test robot wrote:
->> Hi Bhupesh,
+> The order of sign-offs seems incorrect. The sender's signature should
+> be the last one.
+
+Sure, will do!
+
+>> ---
+>>  .../regulator/qcom,spmi-regulator.yaml        | 19 +++++++++++++++++++
+>>  1 file changed, 19 insertions(+)
 >>
->> Thank you for the patch! Yet something to improve:
+>> diff --git a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
+>> index 8b7c4af4b551..d8f18b441484 100644
+>> --- a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
+>> +++ b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
+>> @@ -12,6 +12,7 @@ maintainers:
+>>  properties:
+>>    compatible:
+>>      enum:
+>> +      - qcom,pm6125-regulators
+>>        - qcom,pm660-regulators
+>>        - qcom,pm660l-regulators
+>>        - qcom,pm8004-regulators
+>> @@ -106,6 +107,24 @@ required:
+>>    - compatible
 >>
->> [auto build test ERROR on rafael-pm/thermal]
->> [also build test ERROR on linus/master v5.19-rc8 next-20220725]
->> [If your patch is applied to the wrong git tree, kindly drop us a note.
->> And when submitting patch, we suggest to use '--base' as documented in
->> https://git-scm.com/docs/git-format-patch#_base_tree_information]
->>
->> url:    
->> https://github.com/intel-lab-lkp/linux/commits/Bhupesh-Sharma/Add-support-for-tsens-controller-reinit-via-trustzone/20220724-202546 
->>
->> base:   
->> https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git 
->> thermal
->> config: ia64-randconfig-r005-20220724 
->> (https://download.01.org/0day-ci/archive/20220726/202207260755.tUajnfB4-lkp@intel.com/config) 
->>
->> compiler: ia64-linux-gcc (GCC) 12.1.0
->> reproduce (this is a W=1 build):
->>          wget 
->> https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross 
->> -O ~/bin/make.cross
->>          chmod +x ~/bin/make.cross
->>          # 
->> https://github.com/intel-lab-lkp/linux/commit/2356630fadc0a622264bf292b6930f8c728b0709 
->>
->>          git remote add linux-review 
->> https://github.com/intel-lab-lkp/linux
->>          git fetch --no-tags linux-review 
->> Bhupesh-Sharma/Add-support-for-tsens-controller-reinit-via-trustzone/20220724-202546 
->>
->>          git checkout 2356630fadc0a622264bf292b6930f8c728b0709
->>          # save the config file
->>          mkdir build_dir && cp config build_dir/.config
->>          COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 
->> make.cross W=1 O=build_dir ARCH=ia64 SHELL=/bin/bash
->>
->> If you fix the issue, kindly add following tag where applicable
->> Reported-by: kernel test robot <lkp@intel.com>
->>
->> All errors (new ones prefixed by >>):
->>
->>     ia64-linux-ld: drivers/thermal/qcom/tsens.o: in function 
->> `tsens_probe':
->>>> tsens.c:(.text+0x6d2): undefined reference to `qcom_scm_is_available'
->>     ia64-linux-ld: drivers/thermal/qcom/tsens.o: in function 
->> `tsens_health_check_and_reinit.constprop.0':
->>>> tsens.c:(.text+0x10c2): undefined reference to `qcom_scm_tsens_reinit'
+>>  allOf:
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            enum:
+>> +              - qcom,pm6125-regulators
+>> +    then:
+>> +      properties:
+>> +        vdd_l1_l7_l17_l18-supply: true
+>> +        vdd_l2_l3_l4-supply: true
+>> +        vdd_l5_l15_l19_l20_l21_l22-supply: true
+>> +        vdd_l6_l8-supply: true
+>> +        vdd_l9_l11-supply: true
+>> +        vdd_l10_l13_l14-supply: true
+>> +        vdd_l12_l16-supply: true
+>> +        vdd_l23_l24-supply: true
+>> +      patternProperties:
+>> +        "^vdd_s[1-8]-supply$": true
 > 
-> It seems you have missed picking up [PATCH 1/5] firmware: qcom: scm: Add 
-> support for tsens reinit workaround before running the checks on this 
-> patch which is a part of this series itself (see [1]).
+> Add an empty line please.
 
-Hi Bhupesh,
+All other if-then blocks don't have newlines, shall I add one between each as
+well?
 
-Thanks for the feedback, the bot applied the full patch set to test,
-please see
-
- 
-https://github.com/intel-lab-lkp/linux/commits/Bhupesh-Sharma/Add-support-for-tsens-controller-reinit-via-trustzone/20220724-202546 
-
-
-Maybe the bot chose a wrong base branch to apply which caused the
-unexpected issue.
-
-Best Regards,
-Rong Chen
-
-> 
-> If I pick the PATCHes in the right order [PATCH 1/5], [PATCH 2/5] 
-> followed by [PATCH 3/5], I don't see the compilation error being 
-> reported (even with W=1 build options).
-> 
-> [1]. 
-> https://lore.kernel.org/linux-arm-msm/20220724122424.2509021-2-bhupesh.sharma@linaro.org/ 
+>>    - if:
+>>        properties:
+>>          compatible:
+>> --
+>> 2.37.1
+>>
 > 
 > 
-> Thanks,
-> Bhupesh
-> _______________________________________________
-> kbuild-all mailing list -- kbuild-all@lists.01.org
-> To unsubscribe send an email to kbuild-all-leave@lists.01.org
