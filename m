@@ -2,204 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2578C582A7F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 18:17:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D2F535831BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 20:15:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234925AbiG0QRN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 12:17:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44838 "EHLO
+        id S243042AbiG0SPk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 14:15:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234874AbiG0QRK (ORCPT
+        with ESMTP id S243023AbiG0SPY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 12:17:10 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3D554B49D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 09:17:03 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id q18so14762669wrx.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 09:17:03 -0700 (PDT)
+        Wed, 27 Jul 2022 14:15:24 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC724DC9B5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 10:16:21 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id c139so16691402pfc.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 10:16:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Icy1itBuOJXPstLh7p436HInbNyv8F9IUq31oFPnQsU=;
-        b=H/TLrFlbsbJ9lD+RstNCXJV/CCKbsOXFc/Yh8RuzRSJqpS1AqSUt1SGssOGgx2Bgw9
-         U7qqW4LztdS96jje0uAwnvNQ91W9j9lvoQnvAkINasOMhRGnAKvjgXehcXhMhqA3crlz
-         yepNMV/YU7YeYpCzpJXWAb5Zm7L5p7mdfDbVvPq2rqRi91EIHIZ+Hh2YFohb++cFx7Dl
-         eypXGhmtyb1f1ehB2Skfz142QCQUoOMEmMAPqvVm6npvMxEHkn9PnRPZvXNe5SAjOu2w
-         eSirbX6E+tBfeUu3O/rZ0fau+rraf8bAgeLDYOv78FO+5p9Pd7R8aK6L1QqMr4O0esXf
-         5gwg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=7Cp8hxjyFsaE82FE3kUlY/wY5Sc8ygaOOh3psw0ODPs=;
+        b=gIyZY+gxDZfn2uH7MJzbE5BziRTX/OSE4vebEBtwvh9ioc/VZPVS5z293x+NDyQ21k
+         wysreh65HygpoMKCHphFLL/OXEJY6K7Zv+rjD35eg87HO/Ztwawh6hw4EKDxk1rOIe08
+         nLodSxyUXcbcB/JwXp66ZF3IBu+moTfdWcbZcdPYJZuHPvyu0siarx9pdvLteiom/3P1
+         v/hA4gJkOWaY0nBYTvT93ZFJbsct5uRlTyJQZNQ6DaHBdbgKx6dif+QDa/x4fbU2vGRJ
+         YPqbAG7SWVfyAo1yRXVXRe4Urq06+4YcxAdzhX0ghaOF9vQ4/Ic+WKh6nDiYLft0VzEj
+         vVwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Icy1itBuOJXPstLh7p436HInbNyv8F9IUq31oFPnQsU=;
-        b=1RG9ASA25ou5xm2DorcIJ6nEcX6nWMzf8kze2LggawUb4ADM/a9Hz2ZmCZiGUlHGyR
-         7O1oLDZ5P4IWyZmZLt8B6vf3fUWEIBKKaOZP92Pn3zjgxaztsuOyTyqyP9IqowARvjvl
-         j59h1n+c+nRnccyNhKeXTRfevcRoWEg5g+rVA/gq8RFxyqX3yj+ZDEJeQgwzl+YoOTlm
-         Ti91wJCieSr4MWdx5ClZFEV+F/EZEQASKYueaG+soWRsmFiWHIAyG9OdKcHdrpx6czp5
-         ziWrMATZzNqxRJCjtw7X1lpqkLX1bw8IJEwi4jyRI6anfOeKNzmEnGsK7ELMxlfDAG5x
-         xIOQ==
-X-Gm-Message-State: AJIora+uCDQLvGCzby6fINBaOCrZwkNJwp/BzgfhIA7IrVJ1hTIIq2Qc
-        1Di+zX82JNi1+vbc7Gw3gvGO7w==
-X-Google-Smtp-Source: AGRyM1s7fzRmS3iTUCrcUn1INv3SC5qrLxw8s+lr9E2h2PnmVvOvHeXo1vP8RuEuCtFeTJgxsQPcCg==
-X-Received: by 2002:a5d:5582:0:b0:21e:9c12:4d65 with SMTP id i2-20020a5d5582000000b0021e9c124d65mr6460870wrv.175.1658938622078;
-        Wed, 27 Jul 2022 09:17:02 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id l4-20020a05600012c400b0021e4829d359sm17245474wrx.39.2022.07.27.09.17.01
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=7Cp8hxjyFsaE82FE3kUlY/wY5Sc8ygaOOh3psw0ODPs=;
+        b=NtxV26bMErwGyOs9akWik+Bc4QarnAcRnN0uhQv1P5r/Ub0dHIzyns1Vohvf2vusLA
+         dhy6VBduBiVZnAJ+lMb0fMOYx8gPU8Cn2fhkXap3fLREmrFg7B34UEq7CdVvdYS8UbZD
+         LaW2wgk0+D/FAZi1WtuRcbd3PQQOhKxYZzcPvT4ajdVh3CWS/AOG5q41rF8sVXM6LS5g
+         TCtyus8IoU7K5Pwc4JGyh/pTAEUq/6uJ2yVkujidC26EGyieH54ddjiX73jxDi/vDLGr
+         VmKokUNtFz3c9RjWtyp5ZN7BJQZcZjzWS4WHMPbvfJP/YFHeVlVi8Sr+HLrlSf0+nmTu
+         uBJg==
+X-Gm-Message-State: AJIora+potbWxNXYP27Y6lL/5Jbgs/z1nZ6pPGjDEUDIg/xm2GX0DHc7
+        aIA0/DNsGQpCuIraYciIvY23Wg==
+X-Google-Smtp-Source: AGRyM1t2p9mLNeFavg6JDGmNsDD591QfvcjLUIlhogsJg0Lzwt6k1eggGwfztu5hHmesV0ZyMMzfrg==
+X-Received: by 2002:a63:4722:0:b0:40d:289e:8637 with SMTP id u34-20020a634722000000b0040d289e8637mr19464184pga.362.1658942179666;
+        Wed, 27 Jul 2022 10:16:19 -0700 (PDT)
+Received: from p14s (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
+        by smtp.gmail.com with ESMTPSA id c1-20020a17090a674100b001f262f6f717sm2061945pjm.3.2022.07.27.10.16.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Jul 2022 09:17:01 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     kvalo@kernel.org, loic.poulain@linaro.org
-Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, wcn36xx@lists.infradead.org,
-        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bryan.odonoghue@linaro.org
-Subject: [PATCH v3 4/4] wcn36xx: Add debugfs entry to read firmware feature strings
-Date:   Wed, 27 Jul 2022 17:16:55 +0100
-Message-Id: <20220727161655.2286867-5-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220727161655.2286867-1-bryan.odonoghue@linaro.org>
-References: <20220727161655.2286867-1-bryan.odonoghue@linaro.org>
+        Wed, 27 Jul 2022 10:16:18 -0700 (PDT)
+Date:   Wed, 27 Jul 2022 11:16:16 -0600
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Chris Lew <quic_clew@quicinc.com>
+Cc:     bjorn.andersson@linaro.org, linux-remoteproc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/4] rpmsg: core: Add rx done hooks
+Message-ID: <20220727171616.GA199805@p14s>
+References: <1654651005-15475-1-git-send-email-quic_clew@quicinc.com>
+ <1654651005-15475-2-git-send-email-quic_clew@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1654651005-15475-2-git-send-email-quic_clew@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add in the ability to easily find the firmware feature bits reported in the
-get feature exchange without having to compile-in debug prints.
+On Tue, Jun 07, 2022 at 06:16:42PM -0700, Chris Lew wrote:
+> In order to reduce the amount of copies in the rpmsg framework, it is
+> necessary for clients to take brief ownership of the receive buffer.
+> 
+> Add the capability for clients to notify the rpmsg framework and the
+> underlying transports when it is going to hold onto a buffer and also
+> notify when the client is done with the buffer.
+> 
+> In the .rx_cb of the rpmsg drivers, if they wish to use the received
+> buffer at a later point, they should return RPMSG_DEFER. Otherwise
+> returning RPMSG_HANDLED (0) will signal the framework that the client
+> is done with the resources and can continue with cleanup.
+> 
+> The clients should check if their rpmsg endpoint supports the rx_done
+> operation with the new state variable in the rpmsg_endpoint since not
+> all endpoints will have the ability to support this operation.
+> 
+> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
+> ---
+>  drivers/rpmsg/rpmsg_core.c     | 20 ++++++++++++++++++++
+>  drivers/rpmsg/rpmsg_internal.h |  1 +
+>  include/linux/rpmsg.h          | 24 ++++++++++++++++++++++++
+>  3 files changed, 45 insertions(+)
+> 
+> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
+> index 290c1f02da10..359be643060f 100644
+> --- a/drivers/rpmsg/rpmsg_core.c
+> +++ b/drivers/rpmsg/rpmsg_core.c
+> @@ -351,6 +351,26 @@ ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
+>  }
+>  EXPORT_SYMBOL(rpmsg_get_mtu);
+>  
+> +/**
+> + * rpmsg_rx_done() - release resources related to @data from a @rx_cb
+> + * @ept:	the rpmsg endpoint
+> + * @data:	payload from a message
+> + *
+> + * Returns 0 on success and an appropriate error value on failure.
+> + */
+> +int rpmsg_rx_done(struct rpmsg_endpoint *ept, void *data)
+> +{
+> +	if (WARN_ON(!ept))
+> +		return -EINVAL;
+> +	if (!ept->ops->rx_done)
+> +		return -ENXIO;
+> +	if (!ept->rx_done)
+> +		return -EINVAL;
+> +
+> +	return ept->ops->rx_done(ept, data);
+> +}
+> +EXPORT_SYMBOL(rpmsg_rx_done);
+> +
+>  /*
+>   * match a rpmsg channel with a channel info struct.
+>   * this is used to make sure we're not creating rpmsg devices for channels
+> diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
+> index a22cd4abe7d1..99cb86ce638e 100644
+> --- a/drivers/rpmsg/rpmsg_internal.h
+> +++ b/drivers/rpmsg/rpmsg_internal.h
+> @@ -76,6 +76,7 @@ struct rpmsg_endpoint_ops {
+>  	__poll_t (*poll)(struct rpmsg_endpoint *ept, struct file *filp,
+>  			     poll_table *wait);
+>  	ssize_t (*get_mtu)(struct rpmsg_endpoint *ept);
+> +	int (*rx_done)(struct rpmsg_endpoint *ept, void *data);
+>  };
+>  
+>  struct device *rpmsg_find_device(struct device *parent,
+> diff --git a/include/linux/rpmsg.h b/include/linux/rpmsg.h
+> index 523c98b96cb4..8e34222e8bca 100644
+> --- a/include/linux/rpmsg.h
+> +++ b/include/linux/rpmsg.h
+> @@ -63,6 +63,18 @@ struct rpmsg_device {
+>  	const struct rpmsg_device_ops *ops;
+>  };
+>  
+> +/**
+> + * rpmsg rx callback return definitions
+> + * @RPMSG_HANDLED: rpmsg user is done processing data, framework can free the
+> + *                 resources related to the buffer
+> + * @RPMSG_DEFER:   rpmsg user is not done processing data, framework will hold
+> + *                 onto resources related to the buffer until rpmsg_rx_done is
+> + *                 called. User should check their endpoint to see if rx_done
+> + *                 is a supported operation.
+> + */
+> +#define RPMSG_HANDLED	0
+> +#define RPMSG_DEFER	1
+> +
+>  typedef int (*rpmsg_rx_cb_t)(struct rpmsg_device *, void *, int, void *, u32);
+>  
+>  /**
+> @@ -71,6 +83,7 @@ typedef int (*rpmsg_rx_cb_t)(struct rpmsg_device *, void *, int, void *, u32);
+>   * @refcount: when this drops to zero, the ept is deallocated
+>   * @cb: rx callback handler
+>   * @cb_lock: must be taken before accessing/changing @cb
+> + * @rx_done: if set, rpmsg endpoint supports rpmsg_rx_done
+>   * @addr: local rpmsg address
+>   * @priv: private data for the driver's use
+>   *
+> @@ -93,6 +106,7 @@ struct rpmsg_endpoint {
+>  	struct kref refcount;
+>  	rpmsg_rx_cb_t cb;
+>  	struct mutex cb_lock;
+> +	bool rx_done;
 
-root@linaro-alip:~# cat /sys/kernel/debug/ieee80211/phy0/wcn36xx/firmware_feat_caps
-MCC
-P2P
-DOT11AC
-SLM_SESSIONIZATION
-DOT11AC_OPMODE
-SAP32STA
-TDLS
-P2P_GO_NOA_DECOUPLE_INIT_SCAN
-WLANACTIVE_OFFLOAD
-BEACON_OFFLOAD
-SCAN_OFFLOAD
-BCN_MISS_OFFLOAD
-STA_POWERSAVE
-STA_ADVANCED_PWRSAVE
-BCN_FILTER
-RTT
-RATECTRL
-WOW
-WLAN_ROAM_SCAN_OFFLOAD
-SPECULATIVE_PS_POLL
-IBSS_HEARTBEAT_OFFLOAD
-WLAN_SCAN_OFFLOAD
-WLAN_PERIODIC_TX_PTRN
-ADVANCE_TDLS
-BATCH_SCAN
-FW_IN_TX_PATH
-EXTENDED_NSOFFLOAD_SLOT
-CH_SWITCH_V1
-HT40_OBSS_SCAN
-UPDATE_CHANNEL_LIST
-WLAN_MCADDR_FLT
-WLAN_CH144
-TDLS_SCAN_COEXISTENCE
-LINK_LAYER_STATS_MEAS
-MU_MIMO
-EXTENDED_SCAN
-DYNAMIC_WMM_PS
-MAC_SPOOFED_SCAN
-FW_STATS
-WPS_PRBRSP_TMPL
-BCN_IE_FLT_DELTA
+Do you see a scenario where rpmsg_endpoint_ops::rx_done holds a valid pointer
+but rpmsg_epndpoint::rx_done is set to false?  If not please remove.
 
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- drivers/net/wireless/ath/wcn36xx/debug.c | 39 ++++++++++++++++++++++++
- drivers/net/wireless/ath/wcn36xx/debug.h |  1 +
- 2 files changed, 40 insertions(+)
-
-diff --git a/drivers/net/wireless/ath/wcn36xx/debug.c b/drivers/net/wireless/ath/wcn36xx/debug.c
-index 6af306ae41ad9..58b3c0501bfde 100644
---- a/drivers/net/wireless/ath/wcn36xx/debug.c
-+++ b/drivers/net/wireless/ath/wcn36xx/debug.c
-@@ -21,6 +21,7 @@
- #include "wcn36xx.h"
- #include "debug.h"
- #include "pmc.h"
-+#include "firmware.h"
- 
- #ifdef CONFIG_WCN36XX_DEBUGFS
- 
-@@ -136,6 +137,42 @@ static const struct file_operations fops_wcn36xx_dump = {
- 	.write =       write_file_dump,
- };
- 
-+static ssize_t read_file_firmware_feature_caps(struct file *file,
-+					       char __user *user_buf,
-+					       size_t count, loff_t *ppos)
-+{
-+	struct wcn36xx *wcn = file->private_data;
-+	size_t len = 0, buf_len = 2048;
-+	char *buf;
-+	int i;
-+	int ret;
-+
-+	buf = kzalloc(buf_len, GFP_KERNEL);
-+	if (!buf)
-+		return -ENOMEM;
-+
-+	mutex_lock(&wcn->hal_mutex);
-+	for (i = 0; i < MAX_FEATURE_SUPPORTED; i++) {
-+		if (wcn36xx_firmware_get_feat_caps(wcn->fw_feat_caps, i)) {
-+			len += scnprintf(buf + len, buf_len - len, "%s\n",
-+					 wcn36xx_firmware_get_cap_name(i));
-+		}
-+		if (len >= buf_len)
-+			break;
-+	}
-+	mutex_unlock(&wcn->hal_mutex);
-+
-+	ret = simple_read_from_buffer(user_buf, count, ppos, buf, len);
-+	kfree(buf);
-+
-+	return ret;
-+}
-+
-+static const struct file_operations fops_wcn36xx_firmware_feat_caps = {
-+	.open = simple_open,
-+	.read = read_file_firmware_feature_caps,
-+};
-+
- #define ADD_FILE(name, mode, fop, priv_data)		\
- 	do {							\
- 		struct dentry *d;				\
-@@ -163,6 +200,8 @@ void wcn36xx_debugfs_init(struct wcn36xx *wcn)
- 
- 	ADD_FILE(bmps_switcher, 0600, &fops_wcn36xx_bmps, wcn);
- 	ADD_FILE(dump, 0200, &fops_wcn36xx_dump, wcn);
-+	ADD_FILE(firmware_feat_caps, 0200,
-+		 &fops_wcn36xx_firmware_feat_caps, wcn);
- }
- 
- void wcn36xx_debugfs_exit(struct wcn36xx *wcn)
-diff --git a/drivers/net/wireless/ath/wcn36xx/debug.h b/drivers/net/wireless/ath/wcn36xx/debug.h
-index 46307aa562d37..7116d96e0543d 100644
---- a/drivers/net/wireless/ath/wcn36xx/debug.h
-+++ b/drivers/net/wireless/ath/wcn36xx/debug.h
-@@ -31,6 +31,7 @@ struct wcn36xx_dfs_entry {
- 	struct dentry *rootdir;
- 	struct wcn36xx_dfs_file file_bmps_switcher;
- 	struct wcn36xx_dfs_file file_dump;
-+	struct wcn36xx_dfs_file file_firmware_feat_caps;
- };
- 
- void wcn36xx_debugfs_init(struct wcn36xx *wcn);
--- 
-2.36.1
-
+>  	u32 addr;
+>  	void *priv;
+>  
+> @@ -192,6 +206,8 @@ __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
+>  
+>  ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept);
+>  
+> +int rpmsg_rx_done(struct rpmsg_endpoint *ept, void *data);
+> +
+>  #else
+>  
+>  static inline int rpmsg_register_device_override(struct rpmsg_device *rpdev,
+> @@ -316,6 +332,14 @@ static inline ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
+>  	return -ENXIO;
+>  }
+>  
+> +static inline int rpmsg_rx_done(struct rpmsg_endpoint *ept, void *data)
+> +{
+> +	/* This shouldn't be possible */
+> +	WARN_ON(1);
+> +
+> +	return -ENXIO;
+> +}
+> +
+>  #endif /* IS_ENABLED(CONFIG_RPMSG) */
+>  
+>  /* use a macro to avoid include chaining to get THIS_MODULE */
+> -- 
+> 2.7.4
+> 
