@@ -2,112 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D647558279D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 15:24:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35B865827DA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 15:39:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232246AbiG0NYs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 09:24:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34026 "EHLO
+        id S233693AbiG0NjQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 09:39:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232909AbiG0NYr (ORCPT
+        with ESMTP id S232141AbiG0NjP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 09:24:47 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id AAD9631DE0;
-        Wed, 27 Jul 2022 06:24:45 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DF8F315BF;
-        Wed, 27 Jul 2022 06:24:45 -0700 (PDT)
-Received: from bogus (unknown [10.57.11.51])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 969513F73B;
-        Wed, 27 Jul 2022 06:24:41 -0700 (PDT)
-Date:   Wed, 27 Jul 2022 14:24:37 +0100
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Maximilian Luz <luzmaximilian@gmail.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure
- Application client
-Message-ID: <20220727132437.pjob3z2nyxsuxgam@bogus>
-References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
- <20220723224949.1089973-5-luzmaximilian@gmail.com>
- <20220726143005.wt4be7yo7sbd3xut@bogus>
- <829c8fee-cae5-597d-933d-784b4b57bd73@gmail.com>
- <20220726154138.74avqs6iqlzqpzjk@bogus>
- <d1bc99bb-82ce-aa6e-7fad-e9309fa1c19b@gmail.com>
- <7284953b-52bb-37ac-fbe1-1fa845c44ff9@linaro.org>
- <3d752603-365d-3a33-e13e-ca241cee9a11@gmail.com>
+        Wed, 27 Jul 2022 09:39:15 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A18033A19
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 06:39:15 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id e16so13247117qka.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 06:39:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2QFiCXkJxx739jgPLzShntoxWexyJZMXNXrZLpOZHHc=;
+        b=JbCdVgRqKL+Uk7m/7kRGLDKv/rzSbFpfAYZE0yl6HsvBpTbY7idW4B/tXNd5wir9vk
+         hvv5RLBXTs2+kuIughwvTsZHiyJdZdz0/a7NQDOtBLtUzWH9X0ClHbdrZ+BkJ6T7qLUo
+         SEmvK0tQ9eb0fdQmr8Vdw1WXSVcqdp1/yt6myjLyUmsukc3IzCymaoOFbuahrh65dHEu
+         oyTNaywVZJnPuFOmy+l3PwNX4a8B+N19ieCto9w3/SEJZsFYkJYknn5vQUZGnGpRTu52
+         K+oCpqgqFhOlVVE7/QerPMpTbXOGqPIqS9YCZmhzfnf9YkchtB6o1Q+LfVqKBbOxyYE0
+         kUXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2QFiCXkJxx739jgPLzShntoxWexyJZMXNXrZLpOZHHc=;
+        b=RrkrMOK1P/lp6lubSFawSJVRghG5llK3gsTsAqSUtMErmev/BU0lfMK1TApOG77la0
+         o3uhV1bqzQos5LVHhQW3q/XyDfBj1ApumR4YHIEssdsFrL7MYSneJ5gSLaJQO1I7xcjA
+         3nY0ZBSJ3BSMzQWhHkVR+5aMnAK8RP5fedtZdEe0GvKj1ljDYidHL1l4MqVOpSY2ftcG
+         HTBvRMukvp3ykSZMm+xzCmD0n1nXrWooI3R6niPsFaf1rGlIj6sslhnS0zEZF715Bil+
+         omXukm4HCkJOgH/+jPT4IDC159VYPLtgxyDPHPrQkkJMQQKZpksQXEA8BtVMY9k3lupY
+         GnZg==
+X-Gm-Message-State: AJIora+cYV5YtxlnaYv0/fU4fGYypjzGFMSSOKv/41MrpQ/Cf8rnUFRu
+        AHMCgsmpJ/9t2vX/QHcLdqKKuJ9DZBURhBIDEXTx5g9eXZyvJg==
+X-Google-Smtp-Source: AGRyM1voBUoxknVFyqPILlZPKXj50s2zoX+oML6D0mDkVJLzKx23q6u7KvAi+HN/MG4nC9aEI3JVuqX9m0hZQMJ+gdE=
+X-Received: by 2002:ae9:f311:0:b0:6b6:30a9:1bb1 with SMTP id
+ p17-20020ae9f311000000b006b630a91bb1mr16291367qkg.30.1658929154214; Wed, 27
+ Jul 2022 06:39:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3d752603-365d-3a33-e13e-ca241cee9a11@gmail.com>
-X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+References: <CAA8EJpr2S-81+q-vjmk5i+T-JwaadkRpjCr_oGi7fMf7o3iH3A@mail.gmail.com>
+ <20220727111410.bglx2u26456ray2u@bogus> <CAA8EJprNPJfGjkq2=hexbZn-=t2wKG6ZjSm5Mcbo4JuPQ-sc-A@mail.gmail.com>
+In-Reply-To: <CAA8EJprNPJfGjkq2=hexbZn-=t2wKG6ZjSm5Mcbo4JuPQ-sc-A@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 27 Jul 2022 16:39:03 +0300
+Message-ID: <CAA8EJpqP9XMcLP+Pmj5OnXD2_SJ9ULBZ_Q492+x56oQnPzqiUA@mail.gmail.com>
+Subject: Re: PSCI domains without OSI support
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vinod.koul@linaro.org>,
+        Linux PM <linux-pm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 27, 2022 at 03:03:49PM +0200, Maximilian Luz wrote:
+On Wed, 27 Jul 2022 at 16:24, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
-> Is there really a good way around it?
+> On Wed, 27 Jul 2022 at 14:14, Sudeep Holla <sudeep.holla@arm.com> wrote:
+> >
+> > On Wed, Jul 27, 2022 at 12:09:27PM +0300, Dmitry Baryshkov wrote:
 
-Yes rely on the firmware preferably auto discover, if that is not an option,
-how about query. It seem to be working in your case.
-
-> As far as I can see the alternative (especially for the apps that
-> need to be loaded manually) is hard-coding everything in the driver.
-> Which IMHO just spreads device specific information everywhere.
+> > > - Allow DTS forcing the PSCI power domains even if OSI enablement fails?
+> >
+> > Meaning DTS flag for this ? If OSI enable fails, why would you want to
+> > still proceed. It is non-compliant and must be fixed if the firmware
+> > supports OSI and expects OSPM to use the same.
 >
-
-It may not be too bad compared to putting loads of firmware details
-in the DT. What happens if you get a firmware upgrade with changed
-number of firmware entities or even if the names are changed.
-
-Are these name user ABI in a way that they won't be changed ? Generally
-these entities tend to use UUID and the name you have might get changed.
-
-I would ideally prefer even the name to be supplied from the userspace.
-In this particular case, make this a driver and have the name as the
-parameter. If the secure side services are used by some non-secure
-applications, then you will need to have a user-interface which means
-you can get the named from the userspace. No need to change the driver
-in either case. Please let me know if I am missing anything to consider
-here.
-
-> Also: Let's use the TPM app as example. If that would be a SPI or I2C
-> device, you'd model it in the DT. Just because it's a hardware device
-> that's accessible via SCM/firmware you now don't?
+> I'm not sure at this moment. PSCI firmware reports that OSI mode is
+> supported, but then when psci_pd_try_set_osi_mode() tries to switch
+> into OSI mode, it gets NOT_SUPPORTED.
+> Just for the sake of completeness, I added a print to the psci.c to
+> dump the result of the psci_set_osi_mode(false). It also returns
+> NOT_SUPPORTED!
 >
+> My logical assumption would be that the firmware reports support for
+> OS_INITIATED, but then just fails to properly support
+> SET_SUSPEND_MODE.
 
-Not sure if I understand the comparison here. But if there is some device
-that is access restricted but needs to be accessed and has mechanism to
-access, then you would model it as device in DT.
+Okay. From the msm-3.14 commit log:
 
-But the one $subject is addressing looks pure software and doesn't make
-sense to model in DT IMO.
+Add support to terminate all low power modes in PSCI. The lpm-levels will
+work with version 1.0 of PSCI specification using the OS initiated scheme.
+The lpm-levels driver would determine the last man standing and vote into
+TZ accordingly.
 
-> If I were absolutely certain that there is a reliable mechanism to
-> detect these apps, I'd agree with having a driver to instantiate those
-> devices. But I am not.
->
+Which means that the vendor kernel expected to work in the OSI mode
+without calling SET_SUSPEND (such call doesn't exist in 3.14)
 
-You did say you use some query API to check this. I haven't seen the driver,
-so relying on what you said earlier.
+So, this looks like the "force-psci-domains" or "ignore-osi-error"
+flag would be logical.
+The question about testing still holds.
 
---
-Regards,
-Sudeep
+> I should probably try ignoring the error psci-domain.c and continue
+> with binding power domains. What would be the best way to check that
+> the domains setup works as expected?
+
+-- 
+With best wishes
+Dmitry
