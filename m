@@ -2,99 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5653A582A34
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 18:03:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DD8E582A71
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 18:17:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234136AbiG0QD1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 12:03:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34264 "EHLO
+        id S234403AbiG0QRB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 12:17:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233421AbiG0QDX (ORCPT
+        with ESMTP id S232259AbiG0QRA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 12:03:23 -0400
-Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14AE84A838;
-        Wed, 27 Jul 2022 09:03:23 -0700 (PDT)
-Received: by mail-il1-f179.google.com with SMTP id f8so835524ils.13;
-        Wed, 27 Jul 2022 09:03:23 -0700 (PDT)
+        Wed, 27 Jul 2022 12:17:00 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B2913D5A6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 09:16:59 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id i8so2230952wro.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 09:16:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xtL8vSInFUl8C/6EzAwgwZ1g8R0SH+mlFdNxondG6VM=;
+        b=L5J41i3HeSHIXhZiJ2IAdTA+bfA64HsMnn6kufgLIMbFHi+X9zEIwgnljD43gLDnxT
+         1AKTQ+K318ze5f4LqgMMncfL5M5leE2kB+qTiocoansVmuZTKiX41HlYG4xP8yXf8y6G
+         N6TXFwKbQs5pNMJC6SBBY3FnXNzq6aVnaz9JDLUu+zAIad/ZebIalujpSwhi3zDFGnLZ
+         Rflv0LXPx3cbZYFnC9wwfzG0xfWAffdq60YR5HYoZncRwVXvL/XThRbVZoOngPPgvFhV
+         YGvwPXRUsiWV9Qt3oAG7yFK5rPi2MGGom1miKpzPTiBGA7jPBGxuijCsLpRi9NvRVTiP
+         ARNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=wBsnIffBjiQs1dYf9x9tNvshsRG8mL+pqvf1EO0wYjk=;
-        b=fCzXo09KDuA1Jam4oVPaStv29i6W9oYEW3rVDkII+q8Pg/Rwp3UemoYRTdmdeHmAyx
-         SKvYQUxEhf8HbDQGMYCUIVyrpqR58mygd71w6F1eE7vfRbvwtoemEOci31DpW82mm4c3
-         LUGhpfJxiytIbRaCKy0cUXCVKsIzHsze+Tb9p6Pcw1YCW3Pox+Xu5wBFbdFMaeJ9VuLF
-         AAXMxEXusvCK/0SlxEb9igOqb3pjxAHdGDv9C9oUuNTqluLWA/I3V0TZ6e7XN78pEIuO
-         0LeLetqBCqPA0HY1tjcaANRfHpO1dHydnbAynzC9caoLuEgnPCIQ7skbI56qPo40JSsu
-         M25g==
-X-Gm-Message-State: AJIora94+kFUhcZiIYTC+Rb/Zui3h5VvUifmpp12zcVwp1T0m3PT4clp
-        GW+q9ZFQLHS8SghwOroEgw==
-X-Google-Smtp-Source: AGRyM1tPmy1PxfqCjQmXrwzib4b/M/R/vQyHbMQ1eoFA6LUMW4jtRIa+FKY7nd88pa4eRIcxLfaDhg==
-X-Received: by 2002:a05:6e02:1d1b:b0:2dc:dfac:6131 with SMTP id i27-20020a056e021d1b00b002dcdfac6131mr8892921ila.60.1658937802247;
-        Wed, 27 Jul 2022 09:03:22 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id m4-20020a02a144000000b0033eff75fb32sm7921295jah.15.2022.07.27.09.03.21
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xtL8vSInFUl8C/6EzAwgwZ1g8R0SH+mlFdNxondG6VM=;
+        b=FLySebrRhf2oGsxgYsW+k7AYSobE+k1syQzuPoca1M8MUb33f0fHqVCOq/pfOJOtuy
+         6HXGBf2imJldsnt3B1ba9yy6qmUnBaDJye4qfOBxeu7YaypbyvL5L5zX2rxkmN3xdCd4
+         Fdn4j6Y4eqPn0Yyu11f18liQKIpcI6zISwjTjvJi9wrfU7/vzXDHLosMNK380qIYx3tr
+         ugXGQ/rSUWh7Ul2r/EUm0JXx7s/cC/Xp5a4dTn0zntKiMp3GMu/SNrBrg1iwYyX1WmVn
+         oLKns6lCA4WPRAhb6V6QYH8v+i7rt1GbEDid/ct72/irWNaEbawPSZ2wpEQ6+1feTvJQ
+         DisQ==
+X-Gm-Message-State: AJIora9YAQrE9/y52p+pxlnJ4HUF/evZX2kLXgDdcmgflMmGPMbNzWj5
+        Bm7p0siaB4xFujpCWIZaDNl/MA==
+X-Google-Smtp-Source: AGRyM1syLBtUxyOb4DeFEWlEqFXKln1pr0DFer482bcOWdkJij1IkHxbJJ0eDqBWBmHEZUQcJA1GeA==
+X-Received: by 2002:a5d:63ca:0:b0:21e:b7be:668f with SMTP id c10-20020a5d63ca000000b0021eb7be668fmr4818278wrw.272.1658938617479;
+        Wed, 27 Jul 2022 09:16:57 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id l4-20020a05600012c400b0021e4829d359sm17245474wrx.39.2022.07.27.09.16.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Jul 2022 09:03:21 -0700 (PDT)
-Received: (nullmailer pid 2758902 invoked by uid 1000);
-        Wed, 27 Jul 2022 16:03:20 -0000
-Date:   Wed, 27 Jul 2022 10:03:20 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Bob Moragues <moragues@chromium.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Bob Moragues <moragues@google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@codeaurora.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: document zoglin board
-Message-ID: <20220727160320.GA2755147-robh@kernel.org>
-References: <20220726212354.1.I5b9006878bdabd6493b866b46dbd6149968d545b@changeid>
+        Wed, 27 Jul 2022 09:16:56 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     kvalo@kernel.org, loic.poulain@linaro.org
+Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, wcn36xx@lists.infradead.org,
+        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bryan.odonoghue@linaro.org
+Subject: [PATCH v3 0/4] wcn36xx: Add in debugfs export of firmware feature bits
+Date:   Wed, 27 Jul 2022 17:16:51 +0100
+Message-Id: <20220727161655.2286867-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220726212354.1.I5b9006878bdabd6493b866b46dbd6149968d545b@changeid>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 26, 2022 at 09:24:31PM -0700, Bob Moragues wrote:
-> Zoglin is a Hoglin Chromebook with SPI Flash reduced from 64MB to 8MB.
-> Zoglin is identical to Hoglin except for the SPI Flash.
-> The actual SPI Flash is dynamically probed at and not specified in DTS.
-> 
-> Signed-off-by: Bob Moragues <moragues@chromium.org>
-> 
-> Signed-off-by: Bob Moragues <moragues@google.com>
-> ---
-> 
->  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index 581485392404..63091df3cbb3 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -475,6 +475,7 @@ properties:
->  
->        - description: Qualcomm Technologies, Inc. sc7280 CRD platform (newest rev)
->          items:
-> +          - const: google,zoglin
->            - const: google,hoglin
->            - const: qcom,sc7280
+V3:
+- Adds RB from Loic for 3/4 patches - Loic
+- Leaves RB from Loic out of patch 4/4 which has been updated since - bod
+- Uses kzalloc/kfree for memory allocation - Kalle
+- Co-locates memory check adjacent to memory allocation - Kalle
+- Uses scnprintf instead of sprintf - bod
 
-Is just "google,hoglin", "qcom,sc7280" no longer valid? If it is valid, 
-you need another entry.
+V2:
+- Drops "FW Cap = " prefix from each feature item - Loic
 
->  
-> -- 
-> 2.37.1.359.gd136c6c3e2-goog
-> 
-> 
+V1:
+This series tidies up the code to get/set/clear discovered firmware feature
+bits and adds a new debugfs entry to read the feature bits as strings.
+
+cat /sys/kernel/debug/ieee80211/phy0/wcn36xx/firmware_feat_caps
+
+wcn3680b:
+FW Cap = MCC
+FW Cap = P2P
+FW Cap = DOT11AC
+FW Cap = SLM_SESSIONIZATION
+FW Cap = DOT11AC_OPMODE
+FW Cap = SAP32STA
+FW Cap = TDLS
+FW Cap = P2P_GO_NOA_DECOUPLE_INIT_SCAN
+FW Cap = WLANACTIVE_OFFLOAD
+FW Cap = BEACON_OFFLOAD
+FW Cap = SCAN_OFFLOAD
+FW Cap = BCN_MISS_OFFLOAD
+FW Cap = STA_POWERSAVE
+FW Cap = STA_ADVANCED_PWRSAVE
+FW Cap = BCN_FILTER
+FW Cap = RTT
+FW Cap = RATECTRL
+FW Cap = WOW
+FW Cap = WLAN_ROAM_SCAN_OFFLOAD
+FW Cap = SPECULATIVE_PS_POLL
+FW Cap = IBSS_HEARTBEAT_OFFLOAD
+FW Cap = WLAN_SCAN_OFFLOAD
+FW Cap = WLAN_PERIODIC_TX_PTRN
+FW Cap = ADVANCE_TDLS
+FW Cap = BATCH_SCAN
+FW Cap = FW_IN_TX_PATH
+FW Cap = EXTENDED_NSOFFLOAD_SLOT
+FW Cap = CH_SWITCH_V1
+FW Cap = HT40_OBSS_SCAN
+FW Cap = UPDATE_CHANNEL_LIST
+FW Cap = WLAN_MCADDR_FLT
+FW Cap = WLAN_CH144
+FW Cap = TDLS_SCAN_COEXISTENCE
+FW Cap = LINK_LAYER_STATS_MEAS
+FW Cap = MU_MIMO
+FW Cap = EXTENDED_SCAN
+FW Cap = DYNAMIC_WMM_PS
+FW Cap = MAC_SPOOFED_SCAN
+FW Cap = FW_STATS
+FW Cap = WPS_PRBRSP_TMPL
+FW Cap = BCN_IE_FLT_DELTA
+
+wcn3620:
+FW Cap = MCC
+FW Cap = P2P
+FW Cap = SLM_SESSIONIZATION
+FW Cap = DOT11AC_OPMODE
+FW Cap = SAP32STA
+FW Cap = TDLS
+FW Cap = P2P_GO_NOA_DECOUPLE_INIT_SCAN
+FW Cap = WLANACTIVE_OFFLOAD
+FW Cap = BEACON_OFFLOAD
+FW Cap = SCAN_OFFLOAD
+FW Cap = BCN_MISS_OFFLOAD
+FW Cap = STA_POWERSAVE
+FW Cap = STA_ADVANCED_PWRSAVE
+FW Cap = BCN_FILTER
+FW Cap = RTT
+FW Cap = RATECTRL
+FW Cap = WOW
+FW Cap = WLAN_ROAM_SCAN_OFFLOAD
+FW Cap = SPECULATIVE_PS_POLL
+FW Cap = IBSS_HEARTBEAT_OFFLOAD
+FW Cap = WLAN_SCAN_OFFLOAD
+FW Cap = WLAN_PERIODIC_TX_PTRN
+FW Cap = ADVANCE_TDLS
+FW Cap = BATCH_SCAN
+FW Cap = FW_IN_TX_PATH
+FW Cap = EXTENDED_NSOFFLOAD_SLOT
+FW Cap = CH_SWITCH_V1
+FW Cap = HT40_OBSS_SCAN
+FW Cap = UPDATE_CHANNEL_LIST
+FW Cap = WLAN_MCADDR_FLT
+FW Cap = WLAN_CH144
+FW Cap = TDLS_SCAN_COEXISTENCE
+FW Cap = LINK_LAYER_STATS_MEAS
+FW Cap = EXTENDED_SCAN
+FW Cap = DYNAMIC_WMM_PS
+FW Cap = MAC_SPOOFED_SCAN
+FW Cap = FW_STATS
+FW Cap = WPS_PRBRSP_TMPL
+FW Cap = BCN_IE_FLT_DELTA
+
+This is a handy way of debugging WiFi on different platforms without
+necessarily having to recompile to see the debug printout on firmware boot.
+
+Bryan O'Donoghue (4):
+  wcn36xx: Rename clunky firmware feature bit enum
+  wcn36xx: Move firmware feature bit storage to dedicated firmware.c
+    file
+  wcn36xx: Move capability bitmap to string translation function to
+    firmware.c
+  wcn36xx: Add debugfs entry to read firmware feature strings
+
+ drivers/net/wireless/ath/wcn36xx/Makefile   |   3 +-
+ drivers/net/wireless/ath/wcn36xx/debug.c    |  40 +++++++
+ drivers/net/wireless/ath/wcn36xx/debug.h    |   1 +
+ drivers/net/wireless/ath/wcn36xx/firmware.c | 125 ++++++++++++++++++++
+ drivers/net/wireless/ath/wcn36xx/firmware.h |  84 +++++++++++++
+ drivers/net/wireless/ath/wcn36xx/hal.h      |  68 -----------
+ drivers/net/wireless/ath/wcn36xx/main.c     |  86 ++------------
+ drivers/net/wireless/ath/wcn36xx/smd.c      |  57 ++-------
+ drivers/net/wireless/ath/wcn36xx/smd.h      |   3 -
+ 9 files changed, 267 insertions(+), 200 deletions(-)
+ create mode 100644 drivers/net/wireless/ath/wcn36xx/firmware.c
+ create mode 100644 drivers/net/wireless/ath/wcn36xx/firmware.h
+
+-- 
+2.36.1
+
