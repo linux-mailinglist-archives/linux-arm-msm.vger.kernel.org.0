@@ -2,250 +2,301 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AAC1D583461
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 23:04:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F829583469
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 23:04:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235679AbiG0VEB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 17:04:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55898 "EHLO
+        id S235229AbiG0VD5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 17:03:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234481AbiG0VDl (ORCPT
+        with ESMTP id S235204AbiG0VDg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 17:03:41 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49A5A5FAC2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 14:03:38 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id bn9so15198504wrb.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 14:03:37 -0700 (PDT)
+        Wed, 27 Jul 2022 17:03:36 -0400
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE36E5C9E1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 14:03:34 -0700 (PDT)
+Received: by mail-qt1-x835.google.com with SMTP id g24so13534554qtu.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 14:03:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linexp-org.20210112.gappssmtp.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=8xFh1rq3aDGifqxznWcXIlzDVwXWPwBS/X0PUFxM+mQ=;
-        b=Os4s3cBOV2e3Y0mYnCgCqkxxkHzD1cBMqDcAHC8gcZTe63aWrlzqOGSSObJQP8vLn3
-         8sTZytswjtbQIfCxgOUrSZBtPsufGNaJVNuPWfQZuCW6k07lMrQI+LETxXUKaXLIpi7n
-         oMF1oFlAbj6IBM1O5X0wwKbnZ4DIqmLMifx19z/GH+W0vaPproRaaKhae3Up3faxYKgw
-         v4e5pER93vtBBeMkHNEo4ZAsDDMAW85UDKYlOPNNPV0D8lPNlgTDuH23cywkZy/fKigK
-         MtWIOQGrJhrsH5wW5xKhZ3mOajWemTfOCMl9XVw6Ewv0P0OHHmLCoLDF8DdZZ08CUyEl
-         LIhw==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=02o7NHW7mE5ebu0126PDF2CYbdsizz2BnBbhL8NdEqg=;
+        b=Tm2ZkaNh2LR6bPvZ/cqewJKmeCHAy5+psrDGVPYvpqM1X450IkzgAQ+XgzexDjQngg
+         owNTSwca5MOqOoHb4lk+9Th+hVRlXLHRIgCAYVv8KycZMByz2S8zkWkFi1+FZEVZ+Jb4
+         TQUGMXOaCbIjRZQLG0qzPS1GfWehs/4tRmqRYKNE0pAm1YEZsdXZRxDUp0z5RQhHBm4k
+         FwmXaS+6l81Iv9hgWSigRXeRdvEGdB2sdr4iwhNY8TSt8SeWucPdIzebN2z4hSnvo5FB
+         dJt/PEIriVoq5XsJSc9Yah+M3MfBmlXSqhjxhi8jKcdNmtyY+jQJSW/l5/qd3626Skbx
+         TgzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=8xFh1rq3aDGifqxznWcXIlzDVwXWPwBS/X0PUFxM+mQ=;
-        b=Yzl1jX3PoBGGlIoQaOPNxxmxQN99nrXtoqYoEswRF3GsvTB5woQ2FCQy0Yi98s2RgK
-         nF/mqYovmCsINVye4bVdaiBCmMkUdfl+L/lLztiWnJycJvoWuR27YXDR8bQcL1samDpa
-         CrtkU/Zi/NzX4G7lch8+q9XRdQFLHqbOLvUU+OAyZBjnZsTUVVsvv0F/G4LvT4SFdfPH
-         tPHVAxRPNu3wXaWXS1OhBtuQ1JU+c+CoPFGMJxIMm8MUrEeWJ+XIsSv79+o4hN6iAXW4
-         U+XBwdyvhI09oqunjsR8MlOEIBadAmoT6G5DvDb8SvVFUuXy5y09KB7tlZPCjRYDs36a
-         1ExQ==
-X-Gm-Message-State: AJIora+36eQh8GaMi2gatP35MFsllr4kyr6BjfQ1cSJVcJ1BGPx+z1b7
-        l+bSi4Hf2pLi1sN2RKTSlU8YWw==
-X-Google-Smtp-Source: AGRyM1ufjFnK4Z8WJwDATXPSMdlg6sp6iTVEQiKbkZM5M7BWWiuskE1qZef5cAYSGsf3SpN0CWd2Eg==
-X-Received: by 2002:a05:6000:1849:b0:21d:9ad7:f27f with SMTP id c9-20020a056000184900b0021d9ad7f27fmr14767126wri.445.1658955817602;
-        Wed, 27 Jul 2022 14:03:37 -0700 (PDT)
-Received: from mai.box.freepro.com ([2a05:6e02:1041:c10:65a8:ebd8:4098:d9d0])
-        by smtp.gmail.com with ESMTPSA id h6-20020a05600c350600b003a38606385esm37908wmq.3.2022.07.27.14.03.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Jul 2022 14:03:37 -0700 (PDT)
-From:   Daniel Lezcano <daniel.lezcano@linexp.org>
-To:     daniel.lezcano@linaro.org, rafael@kernel.org
-Cc:     rui.zhang@intel.com, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, khilman@baylibre.com,
-        abailon@baylibre.com, lukasz.luba@arm.com, broonie@kernel.org,
-        damien.lemoal@opensource.wdc.com, heiko@sntech.de,
-        hayashi.kunihiko@socionext.com, mhiramat@kernel.org,
-        talel@amazon.com, thierry.reding@gmail.com, digetx@gmail.com,
-        jonathanh@nvidia.com, anarsoul@gmail.com, tiny.windzz@gmail.com,
-        baolin.wang7@gmail.com, f.fainelli@gmail.com,
-        bjorn.andersson@linaro.org, mcoquelin.stm32@gmail.com,
-        glaroque@baylibre.com, miquel.raynal@bootlin.com,
-        shawnguo@kernel.org, niklas.soderlund@ragnatech.se,
-        matthias.bgg@gmail.com, j-keerthy@ti.com,
-        Andy Gross <agross@kernel.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT)
-Subject: [PATCH v3 11/32] thermal/drivers/qcom: Switch to new of API
-Date:   Wed, 27 Jul 2022 23:02:32 +0200
-Message-Id: <20220727210253.3794069-12-daniel.lezcano@linexp.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220727210253.3794069-1-daniel.lezcano@linexp.org>
-References: <20220727210253.3794069-1-daniel.lezcano@linexp.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=02o7NHW7mE5ebu0126PDF2CYbdsizz2BnBbhL8NdEqg=;
+        b=JHFDXEiVmV1S2M3pLvZoZ0AN+YkejI+cR4/qELNBtcpiDLzXUzwyjxfo8XpfIsCeGh
+         zWvYLpOrUT6ueRIrROsnKYVXLuhbv7EEsUrYMP1x4iZoO0dqGmFfALtNxl+seFUFvf5o
+         ywvbpvoEyotd/AGjWSoCr/zzs6mf6QkWFwqA5i1dJoFbqpIRS/Y09OFQwN4wZgb2NW3z
+         J0QB4m2sNaTnCtcarWx67A6HFqYNueGWiwGYZ3UP7/ci+txdVH0Mn3wjbnssIoe22VAb
+         0rQptnn1P9+Bbp6UT6lO3UR87hgpjRJAqvi6r0ug3mCLAjBl5BSV2BpxscDT5W8f7mH7
+         rYmg==
+X-Gm-Message-State: AJIora8G8vwUBFVBVyICsPo12guqhERutffjdgQ2RSbxrzVQACIurrw5
+        lnyQSpcZaSCmr03rmMC5ZofenoCw4ZqmqHa4+0CUeg==
+X-Google-Smtp-Source: AGRyM1toxKRjD6CwT+S5sm6k8X5Fs43XibMUl+5urClP3yJx9YQkvHqRjaGN40aHuz4UkCE3yXHhVDj1TrSr/t66jZU=
+X-Received: by 2002:a05:622a:178a:b0:31e:f9ff:c685 with SMTP id
+ s10-20020a05622a178a00b0031ef9ffc685mr20800708qtk.62.1658955813662; Wed, 27
+ Jul 2022 14:03:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20220727200901.1142557-1-dmitry.baryshkov@linaro.org>
+ <bec61bd7-f547-5254-50a5-6f16c221051e@linaro.org> <CAA8EJpoa-E1=t1JAWNPzueY95Y_DEsJZqzW3PajcjSrNDVoAVg@mail.gmail.com>
+ <efdaa411-8f3b-6a1b-643a-7ed1597c661c@linaro.org> <CAA8EJpof10zsFmgqXZK7QVjTS-J7hGDdZGjBaegpo6eQp_0TPw@mail.gmail.com>
+ <ce2a90f9-0ba8-3152-5f85-679d1ebd16b5@linaro.org>
+In-Reply-To: <ce2a90f9-0ba8-3152-5f85-679d1ebd16b5@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 28 Jul 2022 00:03:22 +0300
+Message-ID: <CAA8EJprC9Oq8Os97mtjB5x4USsVe02O2P_d5WvsR0JY5jECrMA@mail.gmail.com>
+Subject: Re: [PATCH] firmware/psci: Add debugfs support to ease debugging
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The thermal OF code has a new API allowing to migrate the OF
-initialization to a simpler approach. The ops are no longer device
-tree specific and are the generic ones provided by the core code.
+On Wed, 27 Jul 2022 at 23:59, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
+>
+>
+>
+> On 7/28/22 2:26 AM, Dmitry Baryshkov wrote:
+> > On Wed, 27 Jul 2022 at 23:55, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
+> >>
+> >>
+> >>
+> >> On 7/28/22 2:23 AM, Dmitry Baryshkov wrote:
+> >>> On Wed, 27 Jul 2022 at 23:15, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
+> >>>>
+> >>>> Hi Dmitry,
+> >>>>
+> >>>> On 7/28/22 1:39 AM, Dmitry Baryshkov wrote:
+> >>>>> To ease debugging of PSCI supported features, add debugfs file called
+> >>>>> 'psci' describing PSCI and SMC CC versions, enabled features and
+> >>>>> options.
+> >>>>>
+> >>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >>>>> ---
+> >>>>>     drivers/firmware/psci/psci.c | 112 ++++++++++++++++++++++++++++++++++-
+> >>>>>     include/uapi/linux/psci.h    |   9 +++
+> >>>>>     2 files changed, 120 insertions(+), 1 deletion(-)
+> >>>>>
+> >>>>> diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
+> >>>>> index b907768eea01..6595cc964635 100644
+> >>>>> --- a/drivers/firmware/psci/psci.c
+> >>>>> +++ b/drivers/firmware/psci/psci.c
+> >>>>> @@ -9,6 +9,7 @@
+> >>>>>     #include <linux/acpi.h>
+> >>>>>     #include <linux/arm-smccc.h>
+> >>>>>     #include <linux/cpuidle.h>
+> >>>>> +#include <linux/debugfs.h>
+> >>>>>     #include <linux/errno.h>
+> >>>>>     #include <linux/linkage.h>
+> >>>>>     #include <linux/of.h>
+> >>>>> @@ -324,12 +325,121 @@ static void psci_sys_poweroff(void)
+> >>>>>         invoke_psci_fn(PSCI_0_2_FN_SYSTEM_OFF, 0, 0, 0);
+> >>>>>     }
+> >>>>>
+> >>>>> -static int __init psci_features(u32 psci_func_id)
+> >>>>> +static int psci_features(u32 psci_func_id)
+> >>>>
+> >>>> This change doesn't seem related to the patch $SUBJECT.
+> >>>> Also is it really needed? If yes, probably this should be a separate patch.
+> >>>
+> >>> It is related and I don't think it should be moved to a separate
+> >>> patch. Removing the __init annotation from psci_features() is
+> >>> necessary to allow using psci_features() from psci_debufs_read(),
+> >>> which is definitely not an __init code. Otherwise reading from
+> >>> debugfs/psci would cause null pointer exceptions.
+> >>
+> >> Ok, and what is the behavior with CONFIG_DEBUG_FS = n?
+> >> Does your patch work well in that case?
+> >
+> > Yes. Any particular reasons for the question?
+>
+> Your debugfs changes in this patch are protected with CONFIG_DEBUG_FS,
+> while the  __init code change is not.
 
-Convert the ops to the thermal_zone_device_ops format and use the new
-API to register the thermal zone with these generic ops.
+Yes. I'm _removing_ the __init. Making the function available after
+kernel frees the __init memory. I'd have understood your questions if
+I were making an opposite change, marking the function with __init.
+But in this case I doubt it makes any difference.
 
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linexp.org>
----
- drivers/thermal/qcom/qcom-spmi-adc-tm5.c    | 19 +++++++++----------
- drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 12 ++++++------
- drivers/thermal/qcom/tsens.c                | 16 ++++++++--------
- 3 files changed, 23 insertions(+), 24 deletions(-)
+> So, IMO its not really needed if CONFIG_DEBUG_FS is set to =n (hence
+> probably needs to be a separate patch).
 
-diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-index 073943cbcc2b..add6f40e5e2a 100644
---- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-+++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-@@ -357,9 +357,9 @@ static irqreturn_t adc_tm5_gen2_isr(int irq, void *data)
- 	return IRQ_HANDLED;
- }
- 
--static int adc_tm5_get_temp(void *data, int *temp)
-+static int adc_tm5_get_temp(struct thermal_zone_device *tz, int *temp)
- {
--	struct adc_tm5_channel *channel = data;
-+	struct adc_tm5_channel *channel = tz->devdata;
- 	int ret;
- 
- 	if (!channel || !channel->iio)
-@@ -639,9 +639,9 @@ static int adc_tm5_gen2_configure(struct adc_tm5_channel *channel, int low, int
- 	return ret;
- }
- 
--static int adc_tm5_set_trips(void *data, int low, int high)
-+static int adc_tm5_set_trips(struct thermal_zone_device *tz, int low, int high)
- {
--	struct adc_tm5_channel *channel = data;
-+	struct adc_tm5_channel *channel = tz->devdata;
- 	struct adc_tm5_chip *chip;
- 	int ret;
- 
-@@ -660,7 +660,7 @@ static int adc_tm5_set_trips(void *data, int low, int high)
- 	return ret;
- }
- 
--static struct thermal_zone_of_device_ops adc_tm5_thermal_ops = {
-+static const struct thermal_zone_device_ops adc_tm5_thermal_ops = {
- 	.get_temp = adc_tm5_get_temp,
- 	.set_trips = adc_tm5_set_trips,
- };
-@@ -672,11 +672,10 @@ static int adc_tm5_register_tzd(struct adc_tm5_chip *adc_tm)
- 
- 	for (i = 0; i < adc_tm->nchannels; i++) {
- 		adc_tm->channels[i].chip = adc_tm;
--
--		tzd = devm_thermal_zone_of_sensor_register(adc_tm->dev,
--							   adc_tm->channels[i].channel,
--							   &adc_tm->channels[i],
--							   &adc_tm5_thermal_ops);
-+		tzd = devm_thermal_of_zone_register(adc_tm->dev,
-+						    adc_tm->channels[i].channel,
-+						    &adc_tm->channels[i],
-+						    &adc_tm5_thermal_ops);
- 		if (IS_ERR(tzd)) {
- 			if (PTR_ERR(tzd) == -ENODEV) {
- 				dev_warn(adc_tm->dev, "thermal sensor on channel %d is not used\n",
-diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-index 770f82cc9bca..be785ab37e53 100644
---- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-+++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-@@ -186,9 +186,9 @@ static int qpnp_tm_update_temp_no_adc(struct qpnp_tm_chip *chip)
- 	return 0;
- }
- 
--static int qpnp_tm_get_temp(void *data, int *temp)
-+static int qpnp_tm_get_temp(struct thermal_zone_device *tz, int *temp)
- {
--	struct qpnp_tm_chip *chip = data;
-+	struct qpnp_tm_chip *chip = tz->devdata;
- 	int ret, mili_celsius;
- 
- 	if (!temp)
-@@ -263,9 +263,9 @@ static int qpnp_tm_update_critical_trip_temp(struct qpnp_tm_chip *chip,
- 	return qpnp_tm_write(chip, QPNP_TM_REG_SHUTDOWN_CTRL1, reg);
- }
- 
--static int qpnp_tm_set_trip_temp(void *data, int trip, int temp)
-+static int qpnp_tm_set_trip_temp(struct thermal_zone_device *tz, int trip, int temp)
- {
--	struct qpnp_tm_chip *chip = data;
-+	struct qpnp_tm_chip *chip = tz->devdata;
- 	const struct thermal_trip *trip_points;
- 	int ret;
- 
-@@ -283,7 +283,7 @@ static int qpnp_tm_set_trip_temp(void *data, int trip, int temp)
- 	return ret;
- }
- 
--static const struct thermal_zone_of_device_ops qpnp_tm_sensor_ops = {
-+static const struct thermal_zone_device_ops qpnp_tm_sensor_ops = {
- 	.get_temp = qpnp_tm_get_temp,
- 	.set_trip_temp = qpnp_tm_set_trip_temp,
- };
-@@ -446,7 +446,7 @@ static int qpnp_tm_probe(struct platform_device *pdev)
- 	 * read the trip points. get_temp() returns the default temperature
- 	 * before the hardware initialization is completed.
- 	 */
--	chip->tz_dev = devm_thermal_zone_of_sensor_register(
-+	chip->tz_dev = devm_thermal_of_zone_register(
- 		&pdev->dev, 0, chip, &qpnp_tm_sensor_ops);
- 	if (IS_ERR(chip->tz_dev)) {
- 		dev_err(&pdev->dev, "failed to register sensor\n");
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index e49f58e83513..b1b10005fb28 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -532,9 +532,9 @@ static irqreturn_t tsens_irq_thread(int irq, void *data)
- 	return IRQ_HANDLED;
- }
- 
--static int tsens_set_trips(void *_sensor, int low, int high)
-+static int tsens_set_trips(struct thermal_zone_device *tz, int low, int high)
- {
--	struct tsens_sensor *s = _sensor;
-+	struct tsens_sensor *s = tz->devdata;
- 	struct tsens_priv *priv = s->priv;
- 	struct device *dev = priv->dev;
- 	struct tsens_irq_data d;
-@@ -925,9 +925,9 @@ int __init init_common(struct tsens_priv *priv)
- 	return ret;
- }
- 
--static int tsens_get_temp(void *data, int *temp)
-+static int tsens_get_temp(struct thermal_zone_device *tz, int *temp)
- {
--	struct tsens_sensor *s = data;
-+	struct tsens_sensor *s = tz->devdata;
- 	struct tsens_priv *priv = s->priv;
- 
- 	return priv->ops->get_temp(s, temp);
-@@ -991,7 +991,7 @@ static const struct of_device_id tsens_table[] = {
- };
- MODULE_DEVICE_TABLE(of, tsens_table);
- 
--static const struct thermal_zone_of_device_ops tsens_of_ops = {
-+static const struct thermal_zone_device_ops tsens_of_ops = {
- 	.get_temp = tsens_get_temp,
- 	.set_trips = tsens_set_trips,
- };
-@@ -1044,9 +1044,9 @@ static int tsens_register(struct tsens_priv *priv)
- 
- 	for (i = 0;  i < priv->num_sensors; i++) {
- 		priv->sensor[i].priv = priv;
--		tzd = devm_thermal_zone_of_sensor_register(priv->dev, priv->sensor[i].hw_id,
--							   &priv->sensor[i],
--							   &tsens_of_ops);
-+		tzd = devm_thermal_of_zone_register(priv->dev, priv->sensor[i].hw_id,
-+						    &priv->sensor[i],
-+						    &tsens_of_ops);
- 		if (IS_ERR(tzd))
- 			continue;
- 		priv->sensor[i].tzd = tzd;
+An overhead is pretty minimal. And all the troubles to make __init
+annotation depend on CONFIG_DEBUG_FS overweight this overhead.
+
+>
+> Thanks.
+>
+> >>>>>     {
+> >>>>>         return invoke_psci_fn(PSCI_1_0_FN_PSCI_FEATURES,
+> >>>>>                               psci_func_id, 0, 0);
+> >>>>>     }
+> >>>>>
+> >>>>> +#ifdef CONFIG_DEBUG_FS
+> >>>>> +
+> >>>>> +#define PSCI_ID(ver, _name) \
+> >>>>> +     { .fn = PSCI_##ver##_FN_##_name, .name = #_name, }
+> >>>>> +#define PSCI_ID_NATIVE(ver, _name) \
+> >>>>> +     { .fn = PSCI_FN_NATIVE(ver, _name), .name = #_name, }
+> >>>>> +
+> >>>>> +/* A table of all optional functions */
+> >>>>> +static const struct {
+> >>>>> +     u32 fn;
+> >>>>> +     const char *name;
+> >>>>> +} psci_fn_ids[] = {
+> >>>>> +     PSCI_ID_NATIVE(0_2, MIGRATE),
+> >>>>> +     PSCI_ID(0_2, MIGRATE_INFO_TYPE),
+> >>>>> +     PSCI_ID_NATIVE(0_2, MIGRATE_INFO_UP_CPU),
+> >>>>> +     PSCI_ID(1_0, CPU_FREEZE),
+> >>>>> +     PSCI_ID_NATIVE(1_0, CPU_DEFAULT_SUSPEND),
+> >>>>> +     PSCI_ID_NATIVE(1_0, NODE_HW_STATE),
+> >>>>> +     PSCI_ID_NATIVE(1_0, SYSTEM_SUSPEND),
+> >>>>> +     PSCI_ID(1_0, SET_SUSPEND_MODE),
+> >>>>> +     PSCI_ID_NATIVE(1_0, STAT_RESIDENCY),
+> >>>>> +     PSCI_ID_NATIVE(1_0, STAT_COUNT),
+> >>>>> +     PSCI_ID_NATIVE(1_1, SYSTEM_RESET2),
+> >>>>> +};
+> >>>>> +
+> >>>>> +static int psci_debugfs_read(struct seq_file *s, void *data)
+> >>>>> +{
+> >>>>> +     int feature, type, i;
+> >>>>> +     u32 ver;
+> >>>>> +
+> >>>>> +     ver = psci_ops.get_version();
+> >>>>> +     seq_printf(s, "PSCIv%d.%d\n",
+> >>>>> +                PSCI_VERSION_MAJOR(ver),
+> >>>>> +                PSCI_VERSION_MINOR(ver));
+> >>>>> +
+> >>>>> +     /* PSCI_FEATURES is available only starting from 1.0 */
+> >>>>> +     if (PSCI_VERSION_MAJOR(ver) < 1)
+> >>>>> +             return 0;
+> >>>>> +
+> >>>>> +     feature = psci_features(ARM_SMCCC_VERSION_FUNC_ID);
+> >>>>> +     if (feature != PSCI_RET_NOT_SUPPORTED) {
+> >>>>> +             ver = invoke_psci_fn(ARM_SMCCC_VERSION_FUNC_ID, 0, 0, 0);
+> >>>>> +             seq_printf(s, "SMC Calling Convention v%d.%d\n",
+> >>>>> +                        PSCI_VERSION_MAJOR(ver),
+> >>>>> +                        PSCI_VERSION_MINOR(ver));
+> >>>>> +     } else {
+> >>>>> +             seq_printf(s, "SMC Calling Convention v1.0 is assumed\n");
+> >>>>> +     }
+> >>>>> +
+> >>>>> +     feature = psci_features(PSCI_FN_NATIVE(0_2, CPU_SUSPEND));
+> >>>>> +     if (feature < 0) {
+> >>>>> +             seq_printf(s, "PSCI_FEATURES(CPU_SUSPEND) error (%d)\n", feature);
+> >>>>> +     } else {
+> >>>>> +             seq_printf(s, "OSI is %ssupported\n",
+> >>>>> +                        (feature & BIT(0)) ? "" : "not ");
+> >>>>> +             seq_printf(s, "%s StateID format is used\n",
+> >>>>> +                        (feature & BIT(1)) ? "Extended" : "Original");
+> >>>>> +     }
+> >>>>> +
+> >>>>> +     type = psci_ops.migrate_info_type();
+> >>>>> +     if (type == PSCI_0_2_TOS_UP_MIGRATE ||
+> >>>>> +         type == PSCI_0_2_TOS_UP_NO_MIGRATE) {
+> >>>>> +             unsigned long cpuid;
+> >>>>> +
+> >>>>> +             seq_printf(s, "Trusted OS %smigrate capable\n",
+> >>>>> +                        type == PSCI_0_2_TOS_UP_NO_MIGRATE ? "not " : "");
+> >>>>> +             cpuid = psci_migrate_info_up_cpu();
+> >>>>> +             seq_printf(s, "Trusted OS resident on physical CPU 0x%lx (#%d)\n", cpuid, resident_cpu);
+> >>>>> +     } else if (type == PSCI_0_2_TOS_MP) {
+> >>>>> +             seq_printf(s, "Trusted OS migration not required\n");
+> >>>>> +     } else {
+> >>>>> +             if (type != PSCI_RET_NOT_SUPPORTED)
+> >>>>> +                     seq_printf(s, "MIGRATE_INFO_TYPE returned unknown type (%d)\n", type);
+> >>>>> +     }
+> >>>>> +
+> >>>>> +     for (i = 0; i < ARRAY_SIZE(psci_fn_ids); i++) {
+> >>>>> +             feature = psci_features(psci_fn_ids[i].fn);
+> >>>>> +             if (feature == PSCI_RET_NOT_SUPPORTED)
+> >>>>> +                     continue;
+> >>>>> +             if (feature < 0)
+> >>>>> +                     seq_printf(s, "PSCI_FEATURES(%s) error (%d)\n", psci_fn_ids[i].name, feature);
+> >>>>> +             else
+> >>>>> +                     seq_printf(s, "%s is supported\n", psci_fn_ids[i].name);
+> >>>>> +     }
+> >>>>> +
+> >>>>> +     return 0;
+> >>>>> +}
+> >>>>> +
+> >>>>> +static int psci_debugfs_open(struct inode *inode, struct file *f)
+> >>>>> +{
+> >>>>> +     return single_open(f, psci_debugfs_read, NULL);
+> >>>>> +}
+> >>>>> +
+> >>>>> +static const struct file_operations psci_debugfs_ops = {
+> >>>>> +     .owner = THIS_MODULE,
+> >>>>> +     .open = psci_debugfs_open,
+> >>>>> +     .release = single_release,
+> >>>>> +     .read = seq_read,
+> >>>>> +     .llseek = seq_lseek
+> >>>>> +};
+> >>>>> +
+> >>>>> +static int __init psci_debugfs_init(void)
+> >>>>> +{
+> >>>>> +     return PTR_ERR_OR_ZERO(debugfs_create_file("psci", S_IRUGO, NULL, NULL,
+> >>>>> +                                                &psci_debugfs_ops));
+> >>>>> +}
+> >>>>> +late_initcall(psci_debugfs_init)
+> >>>>> +#endif
+> >>>>> +
+> >>>>>     #ifdef CONFIG_CPU_IDLE
+> >>>>>     static int psci_suspend_finisher(unsigned long state)
+> >>>>>     {
+> >>>>> diff --git a/include/uapi/linux/psci.h b/include/uapi/linux/psci.h
+> >>>>> index 2bf93c0d6354..f6f0bad5858b 100644
+> >>>>> --- a/include/uapi/linux/psci.h
+> >>>>> +++ b/include/uapi/linux/psci.h
+> >>>>> @@ -48,11 +48,20 @@
+> >>>>>     #define PSCI_0_2_FN64_MIGRATE_INFO_UP_CPU   PSCI_0_2_FN64(7)
+> >>>>>
+> >>>>>     #define PSCI_1_0_FN_PSCI_FEATURES           PSCI_0_2_FN(10)
+> >>>>> +#define PSCI_1_0_FN_CPU_FREEZE                       PSCI_0_2_FN(11)
+> >>>>> +#define PSCI_1_0_FN_CPU_DEFAULT_SUSPEND              PSCI_0_2_FN(12)
+> >>>>> +#define PSCI_1_0_FN_NODE_HW_STATE            PSCI_0_2_FN(13)
+> >>>>>     #define PSCI_1_0_FN_SYSTEM_SUSPEND          PSCI_0_2_FN(14)
+> >>>>>     #define PSCI_1_0_FN_SET_SUSPEND_MODE                PSCI_0_2_FN(15)
+> >>>>> +#define PSCI_1_0_FN_STAT_RESIDENCY           PSCI_0_2_FN(16)
+> >>>>> +#define PSCI_1_0_FN_STAT_COUNT                       PSCI_0_2_FN(17)
+> >>>>>     #define PSCI_1_1_FN_SYSTEM_RESET2           PSCI_0_2_FN(18)
+> >>>>>
+> >>>>> +#define PSCI_1_0_FN64_CPU_DEFAULT_SUSPEND    PSCI_0_2_FN64(12)
+> >>>>> +#define PSCI_1_0_FN64_NODE_HW_STATE          PSCI_0_2_FN64(13)
+> >>>>>     #define PSCI_1_0_FN64_SYSTEM_SUSPEND                PSCI_0_2_FN64(14)
+> >>>>> +#define PSCI_1_0_FN64_STAT_RESIDENCY         PSCI_0_2_FN64(16)
+> >>>>> +#define PSCI_1_0_FN64_STAT_COUNT             PSCI_0_2_FN64(17)
+> >>>>>     #define PSCI_1_1_FN64_SYSTEM_RESET2         PSCI_0_2_FN64(18)
+> >>>>>
+> >>>>>     /* PSCI v0.2 power state encoding for CPU_SUSPEND function */
+> >>>
+> >>>
+> >>>
+> >
+> >
+> >
+
+
+
 -- 
-2.25.1
-
+With best wishes
+Dmitry
