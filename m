@@ -2,150 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C53E758225F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 10:47:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 198955822D9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 11:13:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231127AbiG0Irg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 04:47:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33048 "EHLO
+        id S229633AbiG0JNN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 05:13:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbiG0Irf (ORCPT
+        with ESMTP id S231599AbiG0JMu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 04:47:35 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDD36220CD;
-        Wed, 27 Jul 2022 01:47:34 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 3C52ECE2017;
-        Wed, 27 Jul 2022 08:47:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F1CAC433C1;
-        Wed, 27 Jul 2022 08:47:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1658911651;
-        bh=4GuO28BznivsDSDth2Dn8Mdw0gdA1bj+aNBMQfgsvzg=;
-        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-        b=Qeiw6FahKTgJxAZujGiIyCQtO+OAtKfwtkI6PQP5YfplD2wNjTCPeJ2JzgncmNsTO
-         Uobyom2VtiwNQ3CMnMPODLwx/f3zupqWRpaATCXrl6BEdsvKxAZi9RHJTiatpKtnxa
-         JH73JF7l4G5B7C7IakWFO1jJNJz35dgP2fAKOHzTQdCVIEVEF/6Y98W4V32yAw0om2
-         RlO1LY3XhAEjlpApVFlwpgvPMAy9cjVuKVV+FLs4pWjC5A8cQa1QPQlMlSZJhRMV1w
-         zXxSkrCrX0fU7VpEDRbhwdYfFsGpphxXfbNBmCSHAh6uf6sX8IssuiC51ma3iWs8gU
-         IS6LsrY+dIRlA==
-From:   Kalle Valo <kvalo@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Caleb Connolly <caleb@connolly.tech>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Amit Pundir <amit.pundir@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, ath10k@lists.infradead.org
-Subject: Re: [PATCH 2/4] arm64: dts: qcom: add sdm845-google-blueline (Pixel 3)
-References: <20220718213051.1475108-1-caleb@connolly.tech>
-        <20220718213051.1475108-3-caleb@connolly.tech>
-        <d8f24aca-2cdf-413f-2b30-ad41b81be1a5@linaro.org>
-Date:   Wed, 27 Jul 2022 11:47:25 +0300
-In-Reply-To: <d8f24aca-2cdf-413f-2b30-ad41b81be1a5@linaro.org> (Dmitry
-        Baryshkov's message of "Tue, 19 Jul 2022 01:13:38 +0300")
-Message-ID: <87o7xbosbm.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Wed, 27 Jul 2022 05:12:50 -0400
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B013748CA2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 02:09:39 -0700 (PDT)
+Received: by mail-qt1-x836.google.com with SMTP id y9so12208098qtv.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 02:09:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=t0hf4UQntBvjEEgtCvAucH7uGKb1uBzrDXI50Jj9ZxE=;
+        b=A/l93MPO1KNPoZGVDh1VU6A6ApZqMu7OLydaCYN7ZJctYpEjXnCB9osGgGauErcew0
+         nxnaFLLzX1LIHCbHUYzPKuDi4YpKsgcsHUpaww+G9xLnCh469E3tkDBQ/HB0UF6RMMEi
+         1ch9o7BjGIj+RxrbI8xq4BC6jUkLxZUysnfHLxp3UbgElfTSoY4bilRe34f21CHX/BwL
+         QRyupQuEMEGJuCWXYjcty/OH0UfI3hKZ5o3yuw6cGMfOyfYxZC1B/jijKfjJd7Ot81Uz
+         uBz6L5JO+CPaZhVhLDBGfnfo9be145yFWeOoz5/JKgapmHKsWwLgb0uq5F6MWNSBzU/O
+         nY8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=t0hf4UQntBvjEEgtCvAucH7uGKb1uBzrDXI50Jj9ZxE=;
+        b=3y8o8HEmX3QltC723xddaXTIxrhJnYvAGqmBFGrW8c71PsIrjZwsolrWjfh1OyaxNk
+         Ceczwpd5bZin7KLProrLB6jSkxyZK3txk18ubz7HJIK5hZh+rptWydCQ7Fvfq7b2RXCv
+         oUOxbd9CqRggb/l3cs23uadH/Gxz0C/+PcITK52OFoY9uYJIW+rQG/GwsrsI/TOw9w+U
+         Sruipf/YK98dJPvnCXGUWM8YVm4kBXw0ieU1PD77Az6FQdrRiKbzsaSPt4Q9DzGxtVss
+         0+9xA/KveAFQ1jbBiRMGmWjJLKZDqdG8ApCTydR71hvGiMyev8untgOoh6jzlX9fZr34
+         LcmA==
+X-Gm-Message-State: AJIora+oT8EUnnZyTSL80pJo2HJXNPe1UAS3w3+hPiexJJSFoQX9QX7I
+        3PEY5Ggk20rqIEir+31YSQDBawQtVck8GFPxIuPh4Q==
+X-Google-Smtp-Source: AGRyM1v2Hu8xIE4ak2/29qw0dXfDCsbwXTinqCIWgXkDLw/iJ212tDw4uXeu+cTi1kcFSjmv49UYSFY8i4sJ2Uc5qxY=
+X-Received: by 2002:a05:622a:451:b0:31f:4257:4eb2 with SMTP id
+ o17-20020a05622a045100b0031f42574eb2mr4993421qtx.370.1658912978790; Wed, 27
+ Jul 2022 02:09:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 27 Jul 2022 12:09:27 +0300
+Message-ID: <CAA8EJpr2S-81+q-vjmk5i+T-JwaadkRpjCr_oGi7fMf7o3iH3A@mail.gmail.com>
+Subject: PSCI domains without OSI support
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vinod.koul@linaro.org>,
+        Linux PM <linux-pm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+ ath10k list
+Hi,
 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+Lately I have been working on improving the msm8996 platform support.
+Vendor kernel seems to support domain-like idle (see [1], [2]).
+However when I tried changing upstream msm8996.dtsi to use PSCI
+domains, I faced the firmware reporting NOT_SUPPORTED to an attempt to
+enable OSI (thus rendering PSCI domains useless, as they are now
+marked with ALWAYS_ON).
 
-> On 19/07/2022 00:30, Caleb Connolly wrote:
->
->> From: Amit Pundir <amit.pundir@linaro.org>
->>
->> This adds an initial dts for the Blueline (Pixel 3). Supported
->> functionality includes display, Debug UART, UFS, USB-C (peripheral), WiFi,
->> Bluetooth and modem.
->>
->> Bootloader compatible board and msm IDs are needed for the kernel to boot
->> with Pixel3 bootloader, so those are added.
->>
->> GPIOs 0 through 3 and 81 through 84 are configured to not be accessible
->> from the application CPUs, so we mark them as reserved to allow the Pixel 3
->> to boot.
->>
->> The reserved-memory locations where obtained from downstream using
->> kernel logs:
->> https://gist.github.com/calebccff/090d10bfac3cb9e9bd98dda30b054c96
->>
->> The rmtfs region is allocated with UIO, making it technically "dynamic".
->> It's address and size can be read from sysfs:
->>
->> blueline:/ # cat /sys/class/uio/uio0/name
->> rmtfs
->> at /sys/class/uio/uio0/maps/map0/addr
->> 0x00000000f2701000
->> blueline:/ # cat /sys/class/uio/uio0/maps/map0/size
->> 0x0000000000200000
->>
->> Like the OnePlus 6, it needs 1kB reserved on either side of the rmtfs
->> memory to workaround some XPU bug which would otherwise cause erroneous
->> XPU violations when accessing the rmtfs_mem region.
->>
->> For wifi, the pixel 3 reports a board-id of 0xFF, and downstream
->> only includes a single bdwlan file. The qcom,ath10k-calibration-variant
->> property is set to ensure that the correct calibration data is used.
->>
->> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->> [AmitP: Cherry-picked and refactored from Bjorn's db845c dts
->>          ("arm64: dts: qcom: Add Dragonboard 845c") https://lkml.org/lkml/2019/6/6/7]
->> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
->> [sumits: merged commits to add board and msm ids, gpio range reservation,
->>    ufs device-reset gpio and adaptation to v5.5+ changes]
->> Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
->> [vinod: Add display nodes]
->> Signed-off-by: Vinod Koul <vkoul@kernel.org>
->> [caleb: remove db845c bits, cleanup, add reserved-memory for modem/wifi]
->> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
->
-> Thanks for your patch, few minor items to improve.
+I noticed that vendor kernel makes a call to cpu_suspend() with
+power_state following the original format (described in PSCI spec
+5.4.2.1). What would be the best way to support this?
+- Allow DTS forcing the PSCI power domains even if OSI enablement fails?
+- Add a separate cpuidle driver?
+- Just forget about it and use plain PSCI as we currently do?
 
-[...]
+Additional topic: for one of idle states the vendor kernel uses a
+proprietary call into the hypervisor ([3]). Up to now we have ignored
+this, as 8996 seems to be the only platform using it. I suppose that
+adding it to cpuidle-psci.c would be frowned upon. Is this assumption
+correct? Would it add another point for adding a separate cpuidle
+driver?
 
->> +&wifi {
->> +	status = "okay";
->> +
->> +	vdd-0.8-cx-mx-supply = <&vreg_l5a_0p8>;
->> +	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
->> +	vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
->> +	vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
->> +
->> +	qcom,snoc-host-cap-8bit-quirk;
->> +	qcom,ath10k-calibration-variant = "google_blueline";
->
-> Ideally Kalle Valo should bless this string, added him to the Cc list.
-> Could you please submit the board file to the ath10k (see [1] for the
-> description and [2] for an example).
+[1] https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LA.UM.6.6.c31-02700-89xx.0/arch/arm/boot/dts/qcom/msm8996-pm.dtsi#L32
 
-Thanks for CC. I prefer "google-blueline" but that's really a cosmetic
-issue.
+[2] https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LA.UM.6.6.c31-02700-89xx.0/drivers/cpuidle/lpm-levels.c#L927
+
+[3] https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LA.UM.6.6.c31-02700-89xx.0/drivers/cpuidle/lpm-levels.c#L944
 
 -- 
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+With best wishes
+Dmitry
