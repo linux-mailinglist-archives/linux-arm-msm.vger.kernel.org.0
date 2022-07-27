@@ -2,140 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F3C6F58353C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 00:15:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B70B583583
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 01:15:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235229AbiG0WPQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 18:15:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59070 "EHLO
+        id S236589AbiG0XPK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 19:15:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237770AbiG0WO7 (ORCPT
+        with ESMTP id S236179AbiG0XOb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 18:14:59 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F256765D7E;
-        Wed, 27 Jul 2022 15:12:05 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 962E8B82286;
-        Wed, 27 Jul 2022 22:12:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF3DC43470;
-        Wed, 27 Jul 2022 22:12:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1658959923;
-        bh=OdgQrrPG8BUR2b2yNmh3OFrDvpcW55FL2Q6+RLHW76M=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=tbnFOJUu/WaozZIVJCnvZPi1eEaf2p6DB34iesgMesKdeS97cbvyEKVMuXt5Mg7A4
-         T45PivH+b5v2OIVkzqMY10rLJKYqlFWYP1f/3D8CQKgRiL+p7gALfiU92g5vIvVhCN
-         fJYncG0GlbctujlX0SqZWGXjut3GGaZG3HgRPyEQLkt+QsjvnW4EAWkb+RzlaPLqM3
-         U/0KGDDATpAoKQMpC/MV17I/kX19Za/qwufcgMiAJcAyzcYfXCs0BdbNMVrw30fqvz
-         rHgLBfAO3GE5MKs2MTLIU6ghgIOIjZa+yy4QDpY7YPpG5rRYb1g5xyWjdaRtilXCNY
-         AWJhvjHqLwiwA==
-Received: by mail-vs1-f51.google.com with SMTP id 66so19403vse.4;
-        Wed, 27 Jul 2022 15:12:03 -0700 (PDT)
-X-Gm-Message-State: AJIora/treDbuxk4foMn4oXsrCwCScbSFimiBlu+1IccC0/TevkbmbD/
-        YTCYtk3qhlhl49wSBkRjnX0U5zbP5+EI2F9rEw==
-X-Google-Smtp-Source: AGRyM1uuRDLPni5HdjqtEIbzt0NQRO8rcoruBURHRVynskfUsrrj94bFcELIF4fzDI38jCj6fSCEHXpT1g2KKT916ss=
-X-Received: by 2002:a05:6102:21aa:b0:35a:1419:1bc7 with SMTP id
- i10-20020a05610221aa00b0035a14191bc7mr2983610vsb.26.1658959922069; Wed, 27
- Jul 2022 15:12:02 -0700 (PDT)
+        Wed, 27 Jul 2022 19:14:31 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 799F84F6A2;
+        Wed, 27 Jul 2022 16:14:14 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id b11so221050eju.10;
+        Wed, 27 Jul 2022 16:14:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=TcR/Hba16utRWgzQ8bdXRxPgeMOIHRSrEa8M8CqJAe8=;
+        b=blQu6uJ/ksKBqhhrpsET0yR3sRRpKO8zTyMyBxMBZHb7cBmfNsb19+xa6J5OtHpuZf
+         denPmiVelgTazluhPaCaJUkc4VZicW4xeY8fhJXMWey7hg5/IDDsP0Lnz8kPhMVcrmoU
+         Ac1g2Wutw6irx1dv5kjcMdZu+0YD3UJlW7xafYm/MV55JHuRTc7dfiq1RzIl0aOqSDs0
+         krBAwEtJL40MFyWUXFUcopB5KtaNkIrg2d0qrZQrbyL/knj1PDssGo9o1QRDdMQz6WX8
+         C5elhvMh1iSDgbFk+dOy8SDBw99MC9LFWSUhNQfnGnTJ0NDAk9kOpntf8KPCYriPCEcS
+         jFEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=TcR/Hba16utRWgzQ8bdXRxPgeMOIHRSrEa8M8CqJAe8=;
+        b=EfaxxfnesWhWhzKyNQ2KuGGMK05PfhERV3e993knBwmPCeZCtqcmK/iDJNyatwZdA8
+         QPsdDkMvMbxk4/D8efuew8J/xGTWV2CQS5lZHlAlUx5exlVPhPbkN7WNez8hKzARsZD2
+         2yTDdJn2jpN5vaM6ZHAXmM6h4Bp7Tz9kOQJNgTq7xwAB0Yq3EadorrJFjKJnBlN3E6gV
+         Ij0zAE9bPGwjhBB5xQFLC8t4HYGHfDs0xBuZRPv6N15ZH+PenkLgerpeJfM3UHDvWnik
+         k5SxkXST6NevSCY9YpQ4NoTE1IyiLyVf9sqQIH/LO377897K/sR7WTCXi7iGrKyCkqWk
+         Yu+A==
+X-Gm-Message-State: AJIora+hc6tRRYFzDf4xHJytf8xak9K4FHPZS3TEYkg2Tkq2uihgE1ck
+        4xtaaGwOqEzAXJwyjAmMWZnJjOEnjUkd+iZN
+X-Google-Smtp-Source: AGRyM1tL0RDZ8Eh6SJuyD07h37mCSFRwuyhUVDR0BMwC/BbTbxZmaeQ3MLIE83tlp7vlSYaKV5/fuA==
+X-Received: by 2002:a17:907:6ea7:b0:72f:2cf2:9aef with SMTP id sh39-20020a1709076ea700b0072f2cf29aefmr19471363ejc.215.1658963652300;
+        Wed, 27 Jul 2022 16:14:12 -0700 (PDT)
+Received: from [192.168.74.101] ([77.78.38.236])
+        by smtp.gmail.com with ESMTPSA id ck15-20020a0564021c0f00b0043adc6552d6sm10806486edb.20.2022.07.27.16.14.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Jul 2022 16:14:11 -0700 (PDT)
+Message-ID: <79077e08-4bd8-6967-748d-876589ef978e@gmail.com>
+Date:   Thu, 28 Jul 2022 02:14:10 +0300
 MIME-Version: 1.0
-References: <20220726212354.1.I5b9006878bdabd6493b866b46dbd6149968d545b@changeid>
- <20220727160320.GA2755147-robh@kernel.org> <CAD=FV=U8ek0FR=hZwemK5JcbUP=JsnRTtv7WzJKmOb-UFwHfXA@mail.gmail.com>
- <CAL_JsqJ=jj6isKbBEKGjax266MS_h+Oehn9zYMMjXzc3K-t4Wg@mail.gmail.com> <CAD=FV=XPTUVKMSrcZdaoztrMU9pCJWXkHLfW-1dHqG70-iR3Yw@mail.gmail.com>
-In-Reply-To: <CAD=FV=XPTUVKMSrcZdaoztrMU9pCJWXkHLfW-1dHqG70-iR3Yw@mail.gmail.com>
-From:   Rob Herring <robh@kernel.org>
-Date:   Wed, 27 Jul 2022 16:11:50 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqL+5DSXoLDYVDbaDisW4uBncBYx--RFOO6-jd0Bed_RAQ@mail.gmail.com>
-Message-ID: <CAL_JsqL+5DSXoLDYVDbaDisW4uBncBYx--RFOO6-jd0Bed_RAQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: document zoglin board
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Bob Moragues <moragues@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Bob Moragues <moragues@google.com>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2 3/5] regulator: qcom_spmi: Add support for new
+ regulator types
+Content-Language: en-US
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adam Skladowski <a39.skl@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@codeaurora.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Jorge Ramirez <jorge.ramirez-ortiz@linaro.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20220726181133.3262695-1-iskren.chernev@gmail.com>
+ <20220726181133.3262695-4-iskren.chernev@gmail.com>
+ <YuEoLteLBgd+b8sg@sirena.org.uk>
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+In-Reply-To: <YuEoLteLBgd+b8sg@sirena.org.uk>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 27, 2022 at 3:59 PM Doug Anderson <dianders@chromium.org> wrote:
->
-> Hi,
->
-> On Wed, Jul 27, 2022 at 12:43 PM Rob Herring <robh@kernel.org> wrote:
-> >
-> > On Wed, Jul 27, 2022 at 11:40 AM Doug Anderson <dianders@chromium.org> wrote:
-> > >
-> > > Hi,
-> > >
-> > > On Wed, Jul 27, 2022 at 9:03 AM Rob Herring <robh@kernel.org> wrote:
-> > > >
-> > > > On Tue, Jul 26, 2022 at 09:24:31PM -0700, Bob Moragues wrote:
-> > > > > Zoglin is a Hoglin Chromebook with SPI Flash reduced from 64MB to 8MB.
-> > > > > Zoglin is identical to Hoglin except for the SPI Flash.
-> > > > > The actual SPI Flash is dynamically probed at and not specified in DTS.
-> > > > >
-> > > > > Signed-off-by: Bob Moragues <moragues@chromium.org>
-> > > > >
-> > > > > Signed-off-by: Bob Moragues <moragues@google.com>
-> > > > > ---
-> > > > >
-> > > > >  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
-> > > > >  1 file changed, 1 insertion(+)
-> > > > >
-> > > > > diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> > > > > index 581485392404..63091df3cbb3 100644
-> > > > > --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> > > > > +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> > > > > @@ -475,6 +475,7 @@ properties:
-> > > > >
-> > > > >        - description: Qualcomm Technologies, Inc. sc7280 CRD platform (newest rev)
-> > > > >          items:
-> > > > > +          - const: google,zoglin
-> > > > >            - const: google,hoglin
-> > > > >            - const: qcom,sc7280
-> > > >
-> > > > Is just "google,hoglin", "qcom,sc7280" no longer valid? If it is valid,
-> > > > you need another entry.
-> > >
-> > > If it makes people happy to have another entry then it wouldn't hurt,
-> > > but it has no long term benefit and I would recommend against it. The
-> > > next patch in this series changes the existing "hoglin" device tree to
-> > > have all 3 compatible strings and thus when both patches land then
-> > > make dtbs_check will pass. I assume that is the only goal of
-> > > documenting these boards here. Certainly if you had a device tree that
-> > > had only "google,zoglin" it would boot fine on zoglin devices and if
-> > > you had a device tree that had only "google,hoglin" it would boot fine
-> > > on hoglin device. This is true of all of the entries for Chromebooks
-> > > that have multiple compatible entries.
-> >
-> > Why even add the entry? If it is just a different SPI flash, you can
-> > tell that from the SPI flash compatible or device ID.
->
-> Yeah, it's really unfortunate. :( The issue is a limitation in the
-> ChromeOS bootloader infrastructure. The ChromeOS build infrastructure
-> cannot handle something that it considers the same "board" as having
-> different SPI flash sizes. This is because the infrastructure always
-> requires that the bootloader "image" be the exact same size as the SPI
-> flash and it assumes a universal firmware (single image) per board.
-> It's unfortunately not very flexible but normally for a given board
-> the SPI flash size is chosen at the start and never changed. The CRD
-> board was an exception here. Though it's not beautiful, this means
-> that the firmware considers this as a different board and looks for a
-> different compatible string on the kernel command line.
 
-Okay, I guess...
 
-Acked-by: Rob Herring <robh@kernel.org>
+
+On 7/27/22 14:57, Mark Brown wrote:
+> On Tue, Jul 26, 2022 at 09:11:31PM +0300, Iskren Chernev wrote:
+>
+>> Add support for some regulator types that are missing in this driver, all
+>> belonging to the FTSMPS426 register layout.  This is done in preparation
+>> for adding support for the PM6125 PMIC.
+>
+>> +	.set_mode		= spmi_regulator_ftsmps3_set_mode,
+>> +	.get_mode		= spmi_regulator_ftsmps426_get_mode,
+>
+> Why are set and get asymmetric?
+
+Because the get method, only uses AUTO and HPM, which have the same value
+for ftsmps3 and ftsmps426 (so there is no need for a new function).
+
+>> @@ -1473,7 +1557,7 @@ static const struct spmi_regulator_mapping supported_regulators[] = {
+>>  	SPMI_VREG(LDO,   HT_P600,  0, INF, HFS430, hfs430, ht_p600, 10000),
+>>  	SPMI_VREG(LDO,   HT_P150,  0, INF, HFS430, hfs430, ht_p150, 10000),
+>>  	SPMI_VREG(BUCK,  GP_CTL,   0, INF, SMPS,   smps,   smps,   100000),
+>> -	SPMI_VREG(BUCK,  HFS430,   0, INF, HFS430, hfs430, hfs430,  10000),
+>> +	SPMI_VREG(BUCK,  HFS430,   0,   3, HFS430, hfs430, hfs430,  10000),
+>
+> The changelog said we were adding support for new types but this looks
+> like changing an existing type.
+
+The code, as written now does a different thing for BUCK, HFS430 (on
+mainline (ML) and downstream (DS) linked in the commit message). Since DS
+only supports newer stuff, to be on safe side, I kept existing behavior for
+rev 0-3 on BUCK(3)+HFS430(10), so at least DS and ML agree on pm6125
+completely.
+
+The commit [1] that adds support for BUCK+HFS430 might be wrong, or it
+might be right for the time being (i.e initial revisions had different
+behavior). I'm CC-ing Jorge.
+
+Question is is BUCK+HFS430 on common2 (ftsmps426) or common3 (ftsmps3) or
+a mix (depending on revision).
+
+[1] 0211f68e626f (regulator: qcom_spmi: add PMS405 SPMI regulator, 2019-06-17)
