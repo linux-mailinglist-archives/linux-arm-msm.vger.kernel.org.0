@@ -2,60 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C78C58338F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 21:28:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B09EB5833CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 21:43:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234523AbiG0T2b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 15:28:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47712 "EHLO
+        id S233755AbiG0Tng (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 15:43:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233637AbiG0T2S (ORCPT
+        with ESMTP id S229680AbiG0Tnf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 15:28:18 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0404F13DEB;
-        Wed, 27 Jul 2022 12:28:16 -0700 (PDT)
+        Wed, 27 Jul 2022 15:43:35 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBA491121;
+        Wed, 27 Jul 2022 12:43:34 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 0FCA7B82267;
-        Wed, 27 Jul 2022 19:28:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70AB5C433D7;
-        Wed, 27 Jul 2022 19:28:13 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 762A661AA5;
+        Wed, 27 Jul 2022 19:43:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D00DCC4347C;
+        Wed, 27 Jul 2022 19:43:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1658950093;
-        bh=Pkak1xmS/KS/lOCrf6Z7riQBx0qJzhip3ZEO4VloQaQ=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=Y5mlaEEyBsAzs0vFdiDD9OrkSxt3CnArNYvAYKUZF4wkR1hvLnsSYS09duKikaka/
-         +lhWgZUcHVU1AvSXa5kKbce0vWtTzwuLjSTCx93g3cGNwXNiBDWNgQSUZj1YHMLDCu
-         CJgJ8oRvBLX8qlkriMtUFsESqfYv8Vf+z9orNQ/eNF+ntpJ9hXwf9cKCXjrmoX2ZgE
-         rGyybK5Gag3+rpYXYQNw40ea+sueNbBgUhLQ2L6jTaSqxyAZgF7yEL0q1U0kfBwrr/
-         M0JSLnJqA99FC/UplkOVcGDqtZwKVqoaGezAJz98YWdXo2YL25n8yzIqo3n4yZs13r
-         X9Z61otK/ipng==
-Date:   Wed, 27 Jul 2022 14:28:11 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
+        s=k20201202; t=1658951013;
+        bh=22tmQ0744zweWy6Sd0m5sISYSk9XRc5uyToEJOX6XwA=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=elPJyLY8XnqGWGB86Kv1TktpvCzasthPaWVMG01889KU0S0FCJwcY4KebThT+yPJu
+         eq506qPZohKFjQbU3LPGoLvXMmOnndylF41McbCI69PukIe0B0nDzEC2mp4vj01ReY
+         pkLvH5o2UuFwh8SIzbWQwHSL1x1bXOPX2kpBT1/uyBMuDAIemn/utlB/Fwc53XSGlM
+         kx8uSzlXbfgT1MnOr520U02kCcjfVzKTr5dER4vLd7wECOAEf7EGIS/CAWCAlJh6X9
+         kCB7r+TNrD/jhDWFEtJdN4VV+da40hr9EJwCvb2MfTNwXot5liSDa2yFiMqDzCXQUZ
+         tHqp1zR2qdsmA==
+Received: by mail-vs1-f52.google.com with SMTP id 129so9979572vsq.8;
+        Wed, 27 Jul 2022 12:43:33 -0700 (PDT)
+X-Gm-Message-State: AJIora+c4itQHarhgpwxtt5HhOJ0JSgphCi166HPXjRQrCUwdcB9YwiS
+        gcG0Ls9HsKrLHBTh7hCeJ3smFvq8rdR/MaaALQ==
+X-Google-Smtp-Source: AGRyM1sMdp5ur6vooR3ja9tDEyEvMx73JLt7DSWJst3LANXtktK+yJI7uEPlzKk/B9hwwggFCFM+0gj7WxJDm789aLQ=
+X-Received: by 2002:a67:c18d:0:b0:358:5bb6:2135 with SMTP id
+ h13-20020a67c18d000000b003585bb62135mr5163757vsj.53.1658951012697; Wed, 27
+ Jul 2022 12:43:32 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220726212354.1.I5b9006878bdabd6493b866b46dbd6149968d545b@changeid>
+ <20220727160320.GA2755147-robh@kernel.org> <CAD=FV=U8ek0FR=hZwemK5JcbUP=JsnRTtv7WzJKmOb-UFwHfXA@mail.gmail.com>
+In-Reply-To: <CAD=FV=U8ek0FR=hZwemK5JcbUP=JsnRTtv7WzJKmOb-UFwHfXA@mail.gmail.com>
+From:   Rob Herring <robh@kernel.org>
+Date:   Wed, 27 Jul 2022 13:43:20 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqJ=jj6isKbBEKGjax266MS_h+Oehn9zYMMjXzc3K-t4Wg@mail.gmail.com>
+Message-ID: <CAL_JsqJ=jj6isKbBEKGjax266MS_h+Oehn9zYMMjXzc3K-t4Wg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: document zoglin board
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Bob Moragues <moragues@chromium.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Bob Moragues <moragues@google.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Selvam Sathappan Periakaruppan <quic_speriaka@quicinc.com>,
-        Baruch Siach <baruch.siach@siklu.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>
-Subject: Re: [PATCH 1/2] PCI: qcom: Drop unnecessary <linux/interrupt.h>
- include
-Message-ID: <20220727192811.GA218230@bhelgaas>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Yt/cOnW6R9ONnFyW@hovoldconsulting.com>
+        Stephen Boyd <sboyd@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -65,21 +69,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 26, 2022 at 02:21:14PM +0200, Johan Hovold wrote:
-> On Fri, Jul 22, 2022 at 10:49:18AM -0500, Bjorn Helgaas wrote:
-> > From: Bjorn Helgaas <bhelgaas@google.com>
-> > 
-> > pcie-qcom.c uses nothing from <linux/interrupt.h>, so remove the
-> > unnecessary include of it.
-> 
-> Appears to be unused since commit 7c5925afbc58 ("PCI: dwc: Move MSI IRQs
-> allocation to IRQ domains hierarchical API") so there may be other
-> driver that also no longer need it.
+On Wed, Jul 27, 2022 at 11:40 AM Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> On Wed, Jul 27, 2022 at 9:03 AM Rob Herring <robh@kernel.org> wrote:
+> >
+> > On Tue, Jul 26, 2022 at 09:24:31PM -0700, Bob Moragues wrote:
+> > > Zoglin is a Hoglin Chromebook with SPI Flash reduced from 64MB to 8MB.
+> > > Zoglin is identical to Hoglin except for the SPI Flash.
+> > > The actual SPI Flash is dynamically probed at and not specified in DTS.
+> > >
+> > > Signed-off-by: Bob Moragues <moragues@chromium.org>
+> > >
+> > > Signed-off-by: Bob Moragues <moragues@google.com>
+> > > ---
+> > >
+> > >  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+> > >  1 file changed, 1 insertion(+)
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> > > index 581485392404..63091df3cbb3 100644
+> > > --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> > > +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> > > @@ -475,6 +475,7 @@ properties:
+> > >
+> > >        - description: Qualcomm Technologies, Inc. sc7280 CRD platform (newest rev)
+> > >          items:
+> > > +          - const: google,zoglin
+> > >            - const: google,hoglin
+> > >            - const: qcom,sc7280
+> >
+> > Is just "google,hoglin", "qcom,sc7280" no longer valid? If it is valid,
+> > you need another entry.
+>
+> If it makes people happy to have another entry then it wouldn't hurt,
+> but it has no long term benefit and I would recommend against it. The
+> next patch in this series changes the existing "hoglin" device tree to
+> have all 3 compatible strings and thus when both patches land then
+> make dtbs_check will pass. I assume that is the only goal of
+> documenting these boards here. Certainly if you had a device tree that
+> had only "google,zoglin" it would boot fine on zoglin devices and if
+> you had a device tree that had only "google,hoglin" it would boot fine
+> on hoglin device. This is true of all of the entries for Chromebooks
+> that have multiple compatible entries.
 
-Thanks for digging that out!  You're right, there's a long list of
-drivers that include <linux/interrupt.h> but don't appear to need it.
-I'm going to drop this patch and try to do them all at once.
+Why even add the entry? If it is just a different SPI flash, you can
+tell that from the SPI flash compatible or device ID.
 
-> > Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-> 
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Rob
