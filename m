@@ -2,301 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F829583469
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 23:04:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B1AF5834FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 23:59:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235229AbiG0VD5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 17:03:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55512 "EHLO
+        id S231338AbiG0V7C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 17:59:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235204AbiG0VDg (ORCPT
+        with ESMTP id S230184AbiG0V7B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 17:03:36 -0400
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE36E5C9E1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 14:03:34 -0700 (PDT)
-Received: by mail-qt1-x835.google.com with SMTP id g24so13534554qtu.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 14:03:34 -0700 (PDT)
+        Wed, 27 Jul 2022 17:59:01 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C50894D82D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 14:59:00 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id ss3so33698815ejc.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 14:59:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=02o7NHW7mE5ebu0126PDF2CYbdsizz2BnBbhL8NdEqg=;
-        b=Tm2ZkaNh2LR6bPvZ/cqewJKmeCHAy5+psrDGVPYvpqM1X450IkzgAQ+XgzexDjQngg
-         owNTSwca5MOqOoHb4lk+9Th+hVRlXLHRIgCAYVv8KycZMByz2S8zkWkFi1+FZEVZ+Jb4
-         TQUGMXOaCbIjRZQLG0qzPS1GfWehs/4tRmqRYKNE0pAm1YEZsdXZRxDUp0z5RQhHBm4k
-         FwmXaS+6l81Iv9hgWSigRXeRdvEGdB2sdr4iwhNY8TSt8SeWucPdIzebN2z4hSnvo5FB
-         dJt/PEIriVoq5XsJSc9Yah+M3MfBmlXSqhjxhi8jKcdNmtyY+jQJSW/l5/qd3626Skbx
-         TgzQ==
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=2GNpZTvzEOIdMaTG5mdwYQJAfUQRhiWdyOdea2yhnhc=;
+        b=g4yEODJXnCca1ye9cHtb/uc3oEbsGeeLFdHft+OzXy+l6oZuSj0OUP/dx4uDW2TEYm
+         bpxc748TQR7loOcWJpuxD8PHNv2frrFxtqL/Azhw3s4a+ViWrAZc9z6R3/kkwaS1vd/k
+         oCdXgBjvwfhI1ULsqSmQKywBduaaqVn5OmQvw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=02o7NHW7mE5ebu0126PDF2CYbdsizz2BnBbhL8NdEqg=;
-        b=JHFDXEiVmV1S2M3pLvZoZ0AN+YkejI+cR4/qELNBtcpiDLzXUzwyjxfo8XpfIsCeGh
-         zWvYLpOrUT6ueRIrROsnKYVXLuhbv7EEsUrYMP1x4iZoO0dqGmFfALtNxl+seFUFvf5o
-         ywvbpvoEyotd/AGjWSoCr/zzs6mf6QkWFwqA5i1dJoFbqpIRS/Y09OFQwN4wZgb2NW3z
-         J0QB4m2sNaTnCtcarWx67A6HFqYNueGWiwGYZ3UP7/ci+txdVH0Mn3wjbnssIoe22VAb
-         0rQptnn1P9+Bbp6UT6lO3UR87hgpjRJAqvi6r0ug3mCLAjBl5BSV2BpxscDT5W8f7mH7
-         rYmg==
-X-Gm-Message-State: AJIora8G8vwUBFVBVyICsPo12guqhERutffjdgQ2RSbxrzVQACIurrw5
-        lnyQSpcZaSCmr03rmMC5ZofenoCw4ZqmqHa4+0CUeg==
-X-Google-Smtp-Source: AGRyM1toxKRjD6CwT+S5sm6k8X5Fs43XibMUl+5urClP3yJx9YQkvHqRjaGN40aHuz4UkCE3yXHhVDj1TrSr/t66jZU=
-X-Received: by 2002:a05:622a:178a:b0:31e:f9ff:c685 with SMTP id
- s10-20020a05622a178a00b0031ef9ffc685mr20800708qtk.62.1658955813662; Wed, 27
- Jul 2022 14:03:33 -0700 (PDT)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=2GNpZTvzEOIdMaTG5mdwYQJAfUQRhiWdyOdea2yhnhc=;
+        b=AgdF/JJoMLbx/ecBZlTiP6LoDeq9CKoRju5zzAcAFoqBebcWllUT5X7/RMcPfLZd97
+         LfVIWr+fTWBJuMgs/qca1UBiISez5Uf1J9HU7Mec9WK0jXoERg6hOF5gWFFE7fssgpBg
+         OBqlVBlC5cshYA7aD94kfePJuqh0XB5THM8h2YUaKOzs6HgK0lgUqIn9xe7UTpOjG6zy
+         pVmGUdF68+yQiwsVpmcQVwggGcI3zVuvGPXEH51Uc3UN/wRis/BWo51gDED0pPSPwq70
+         M41JU4oLIDPtXMYSKJvQCQBmvdk+vw9cYlkHUwV3IIiMefpzJXM/26hsjWB2Htq5QbuU
+         mg0Q==
+X-Gm-Message-State: AJIora/eMqHZEOsqi5fphY9hRhF2CpmX8Fi81BET+WNBEbEbrKpWpMb4
+        xigZzXQFohbDb4f6nfngPmt33mRqXu6pH3CCovU=
+X-Google-Smtp-Source: AGRyM1v5rm2XOtpjuYdCizCcyC6tdRoKngAU7As82maF3L1kM0k7pyNASDYCBsEafiEb4UQUiUJDYQ==
+X-Received: by 2002:a17:907:60c6:b0:72f:4645:ead3 with SMTP id hv6-20020a17090760c600b0072f4645ead3mr18619918ejc.321.1658959139133;
+        Wed, 27 Jul 2022 14:58:59 -0700 (PDT)
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com. [209.85.221.44])
+        by smtp.gmail.com with ESMTPSA id q28-20020a056402249c00b0043cab10f702sm2051392eda.90.2022.07.27.14.58.39
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Jul 2022 14:58:42 -0700 (PDT)
+Received: by mail-wr1-f44.google.com with SMTP id u5so26215761wrm.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 14:58:39 -0700 (PDT)
+X-Received: by 2002:adf:ead2:0:b0:21d:8b49:6138 with SMTP id
+ o18-20020adfead2000000b0021d8b496138mr16061950wrn.138.1658959119013; Wed, 27
+ Jul 2022 14:58:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220727200901.1142557-1-dmitry.baryshkov@linaro.org>
- <bec61bd7-f547-5254-50a5-6f16c221051e@linaro.org> <CAA8EJpoa-E1=t1JAWNPzueY95Y_DEsJZqzW3PajcjSrNDVoAVg@mail.gmail.com>
- <efdaa411-8f3b-6a1b-643a-7ed1597c661c@linaro.org> <CAA8EJpof10zsFmgqXZK7QVjTS-J7hGDdZGjBaegpo6eQp_0TPw@mail.gmail.com>
- <ce2a90f9-0ba8-3152-5f85-679d1ebd16b5@linaro.org>
-In-Reply-To: <ce2a90f9-0ba8-3152-5f85-679d1ebd16b5@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 28 Jul 2022 00:03:22 +0300
-Message-ID: <CAA8EJprC9Oq8Os97mtjB5x4USsVe02O2P_d5WvsR0JY5jECrMA@mail.gmail.com>
-Subject: Re: [PATCH] firmware/psci: Add debugfs support to ease debugging
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
+References: <20220726212354.1.I5b9006878bdabd6493b866b46dbd6149968d545b@changeid>
+ <20220727160320.GA2755147-robh@kernel.org> <CAD=FV=U8ek0FR=hZwemK5JcbUP=JsnRTtv7WzJKmOb-UFwHfXA@mail.gmail.com>
+ <CAL_JsqJ=jj6isKbBEKGjax266MS_h+Oehn9zYMMjXzc3K-t4Wg@mail.gmail.com>
+In-Reply-To: <CAL_JsqJ=jj6isKbBEKGjax266MS_h+Oehn9zYMMjXzc3K-t4Wg@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 27 Jul 2022 14:58:25 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XPTUVKMSrcZdaoztrMU9pCJWXkHLfW-1dHqG70-iR3Yw@mail.gmail.com>
+Message-ID: <CAD=FV=XPTUVKMSrcZdaoztrMU9pCJWXkHLfW-1dHqG70-iR3Yw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: document zoglin board
+To:     Rob Herring <robh@kernel.org>
+Cc:     Bob Moragues <moragues@chromium.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Bob Moragues <moragues@google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 27 Jul 2022 at 23:59, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
+Hi,
+
+On Wed, Jul 27, 2022 at 12:43 PM Rob Herring <robh@kernel.org> wrote:
 >
->
->
-> On 7/28/22 2:26 AM, Dmitry Baryshkov wrote:
-> > On Wed, 27 Jul 2022 at 23:55, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
-> >>
-> >>
-> >>
-> >> On 7/28/22 2:23 AM, Dmitry Baryshkov wrote:
-> >>> On Wed, 27 Jul 2022 at 23:15, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
-> >>>>
-> >>>> Hi Dmitry,
-> >>>>
-> >>>> On 7/28/22 1:39 AM, Dmitry Baryshkov wrote:
-> >>>>> To ease debugging of PSCI supported features, add debugfs file called
-> >>>>> 'psci' describing PSCI and SMC CC versions, enabled features and
-> >>>>> options.
-> >>>>>
-> >>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>>>> ---
-> >>>>>     drivers/firmware/psci/psci.c | 112 ++++++++++++++++++++++++++++++++++-
-> >>>>>     include/uapi/linux/psci.h    |   9 +++
-> >>>>>     2 files changed, 120 insertions(+), 1 deletion(-)
-> >>>>>
-> >>>>> diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
-> >>>>> index b907768eea01..6595cc964635 100644
-> >>>>> --- a/drivers/firmware/psci/psci.c
-> >>>>> +++ b/drivers/firmware/psci/psci.c
-> >>>>> @@ -9,6 +9,7 @@
-> >>>>>     #include <linux/acpi.h>
-> >>>>>     #include <linux/arm-smccc.h>
-> >>>>>     #include <linux/cpuidle.h>
-> >>>>> +#include <linux/debugfs.h>
-> >>>>>     #include <linux/errno.h>
-> >>>>>     #include <linux/linkage.h>
-> >>>>>     #include <linux/of.h>
-> >>>>> @@ -324,12 +325,121 @@ static void psci_sys_poweroff(void)
-> >>>>>         invoke_psci_fn(PSCI_0_2_FN_SYSTEM_OFF, 0, 0, 0);
-> >>>>>     }
-> >>>>>
-> >>>>> -static int __init psci_features(u32 psci_func_id)
-> >>>>> +static int psci_features(u32 psci_func_id)
-> >>>>
-> >>>> This change doesn't seem related to the patch $SUBJECT.
-> >>>> Also is it really needed? If yes, probably this should be a separate patch.
-> >>>
-> >>> It is related and I don't think it should be moved to a separate
-> >>> patch. Removing the __init annotation from psci_features() is
-> >>> necessary to allow using psci_features() from psci_debufs_read(),
-> >>> which is definitely not an __init code. Otherwise reading from
-> >>> debugfs/psci would cause null pointer exceptions.
-> >>
-> >> Ok, and what is the behavior with CONFIG_DEBUG_FS = n?
-> >> Does your patch work well in that case?
+> On Wed, Jul 27, 2022 at 11:40 AM Doug Anderson <dianders@chromium.org> wrote:
 > >
-> > Yes. Any particular reasons for the question?
->
-> Your debugfs changes in this patch are protected with CONFIG_DEBUG_FS,
-> while the  __init code change is not.
-
-Yes. I'm _removing_ the __init. Making the function available after
-kernel frees the __init memory. I'd have understood your questions if
-I were making an opposite change, marking the function with __init.
-But in this case I doubt it makes any difference.
-
-> So, IMO its not really needed if CONFIG_DEBUG_FS is set to =n (hence
-> probably needs to be a separate patch).
-
-An overhead is pretty minimal. And all the troubles to make __init
-annotation depend on CONFIG_DEBUG_FS overweight this overhead.
-
->
-> Thanks.
->
-> >>>>>     {
-> >>>>>         return invoke_psci_fn(PSCI_1_0_FN_PSCI_FEATURES,
-> >>>>>                               psci_func_id, 0, 0);
-> >>>>>     }
-> >>>>>
-> >>>>> +#ifdef CONFIG_DEBUG_FS
-> >>>>> +
-> >>>>> +#define PSCI_ID(ver, _name) \
-> >>>>> +     { .fn = PSCI_##ver##_FN_##_name, .name = #_name, }
-> >>>>> +#define PSCI_ID_NATIVE(ver, _name) \
-> >>>>> +     { .fn = PSCI_FN_NATIVE(ver, _name), .name = #_name, }
-> >>>>> +
-> >>>>> +/* A table of all optional functions */
-> >>>>> +static const struct {
-> >>>>> +     u32 fn;
-> >>>>> +     const char *name;
-> >>>>> +} psci_fn_ids[] = {
-> >>>>> +     PSCI_ID_NATIVE(0_2, MIGRATE),
-> >>>>> +     PSCI_ID(0_2, MIGRATE_INFO_TYPE),
-> >>>>> +     PSCI_ID_NATIVE(0_2, MIGRATE_INFO_UP_CPU),
-> >>>>> +     PSCI_ID(1_0, CPU_FREEZE),
-> >>>>> +     PSCI_ID_NATIVE(1_0, CPU_DEFAULT_SUSPEND),
-> >>>>> +     PSCI_ID_NATIVE(1_0, NODE_HW_STATE),
-> >>>>> +     PSCI_ID_NATIVE(1_0, SYSTEM_SUSPEND),
-> >>>>> +     PSCI_ID(1_0, SET_SUSPEND_MODE),
-> >>>>> +     PSCI_ID_NATIVE(1_0, STAT_RESIDENCY),
-> >>>>> +     PSCI_ID_NATIVE(1_0, STAT_COUNT),
-> >>>>> +     PSCI_ID_NATIVE(1_1, SYSTEM_RESET2),
-> >>>>> +};
-> >>>>> +
-> >>>>> +static int psci_debugfs_read(struct seq_file *s, void *data)
-> >>>>> +{
-> >>>>> +     int feature, type, i;
-> >>>>> +     u32 ver;
-> >>>>> +
-> >>>>> +     ver = psci_ops.get_version();
-> >>>>> +     seq_printf(s, "PSCIv%d.%d\n",
-> >>>>> +                PSCI_VERSION_MAJOR(ver),
-> >>>>> +                PSCI_VERSION_MINOR(ver));
-> >>>>> +
-> >>>>> +     /* PSCI_FEATURES is available only starting from 1.0 */
-> >>>>> +     if (PSCI_VERSION_MAJOR(ver) < 1)
-> >>>>> +             return 0;
-> >>>>> +
-> >>>>> +     feature = psci_features(ARM_SMCCC_VERSION_FUNC_ID);
-> >>>>> +     if (feature != PSCI_RET_NOT_SUPPORTED) {
-> >>>>> +             ver = invoke_psci_fn(ARM_SMCCC_VERSION_FUNC_ID, 0, 0, 0);
-> >>>>> +             seq_printf(s, "SMC Calling Convention v%d.%d\n",
-> >>>>> +                        PSCI_VERSION_MAJOR(ver),
-> >>>>> +                        PSCI_VERSION_MINOR(ver));
-> >>>>> +     } else {
-> >>>>> +             seq_printf(s, "SMC Calling Convention v1.0 is assumed\n");
-> >>>>> +     }
-> >>>>> +
-> >>>>> +     feature = psci_features(PSCI_FN_NATIVE(0_2, CPU_SUSPEND));
-> >>>>> +     if (feature < 0) {
-> >>>>> +             seq_printf(s, "PSCI_FEATURES(CPU_SUSPEND) error (%d)\n", feature);
-> >>>>> +     } else {
-> >>>>> +             seq_printf(s, "OSI is %ssupported\n",
-> >>>>> +                        (feature & BIT(0)) ? "" : "not ");
-> >>>>> +             seq_printf(s, "%s StateID format is used\n",
-> >>>>> +                        (feature & BIT(1)) ? "Extended" : "Original");
-> >>>>> +     }
-> >>>>> +
-> >>>>> +     type = psci_ops.migrate_info_type();
-> >>>>> +     if (type == PSCI_0_2_TOS_UP_MIGRATE ||
-> >>>>> +         type == PSCI_0_2_TOS_UP_NO_MIGRATE) {
-> >>>>> +             unsigned long cpuid;
-> >>>>> +
-> >>>>> +             seq_printf(s, "Trusted OS %smigrate capable\n",
-> >>>>> +                        type == PSCI_0_2_TOS_UP_NO_MIGRATE ? "not " : "");
-> >>>>> +             cpuid = psci_migrate_info_up_cpu();
-> >>>>> +             seq_printf(s, "Trusted OS resident on physical CPU 0x%lx (#%d)\n", cpuid, resident_cpu);
-> >>>>> +     } else if (type == PSCI_0_2_TOS_MP) {
-> >>>>> +             seq_printf(s, "Trusted OS migration not required\n");
-> >>>>> +     } else {
-> >>>>> +             if (type != PSCI_RET_NOT_SUPPORTED)
-> >>>>> +                     seq_printf(s, "MIGRATE_INFO_TYPE returned unknown type (%d)\n", type);
-> >>>>> +     }
-> >>>>> +
-> >>>>> +     for (i = 0; i < ARRAY_SIZE(psci_fn_ids); i++) {
-> >>>>> +             feature = psci_features(psci_fn_ids[i].fn);
-> >>>>> +             if (feature == PSCI_RET_NOT_SUPPORTED)
-> >>>>> +                     continue;
-> >>>>> +             if (feature < 0)
-> >>>>> +                     seq_printf(s, "PSCI_FEATURES(%s) error (%d)\n", psci_fn_ids[i].name, feature);
-> >>>>> +             else
-> >>>>> +                     seq_printf(s, "%s is supported\n", psci_fn_ids[i].name);
-> >>>>> +     }
-> >>>>> +
-> >>>>> +     return 0;
-> >>>>> +}
-> >>>>> +
-> >>>>> +static int psci_debugfs_open(struct inode *inode, struct file *f)
-> >>>>> +{
-> >>>>> +     return single_open(f, psci_debugfs_read, NULL);
-> >>>>> +}
-> >>>>> +
-> >>>>> +static const struct file_operations psci_debugfs_ops = {
-> >>>>> +     .owner = THIS_MODULE,
-> >>>>> +     .open = psci_debugfs_open,
-> >>>>> +     .release = single_release,
-> >>>>> +     .read = seq_read,
-> >>>>> +     .llseek = seq_lseek
-> >>>>> +};
-> >>>>> +
-> >>>>> +static int __init psci_debugfs_init(void)
-> >>>>> +{
-> >>>>> +     return PTR_ERR_OR_ZERO(debugfs_create_file("psci", S_IRUGO, NULL, NULL,
-> >>>>> +                                                &psci_debugfs_ops));
-> >>>>> +}
-> >>>>> +late_initcall(psci_debugfs_init)
-> >>>>> +#endif
-> >>>>> +
-> >>>>>     #ifdef CONFIG_CPU_IDLE
-> >>>>>     static int psci_suspend_finisher(unsigned long state)
-> >>>>>     {
-> >>>>> diff --git a/include/uapi/linux/psci.h b/include/uapi/linux/psci.h
-> >>>>> index 2bf93c0d6354..f6f0bad5858b 100644
-> >>>>> --- a/include/uapi/linux/psci.h
-> >>>>> +++ b/include/uapi/linux/psci.h
-> >>>>> @@ -48,11 +48,20 @@
-> >>>>>     #define PSCI_0_2_FN64_MIGRATE_INFO_UP_CPU   PSCI_0_2_FN64(7)
-> >>>>>
-> >>>>>     #define PSCI_1_0_FN_PSCI_FEATURES           PSCI_0_2_FN(10)
-> >>>>> +#define PSCI_1_0_FN_CPU_FREEZE                       PSCI_0_2_FN(11)
-> >>>>> +#define PSCI_1_0_FN_CPU_DEFAULT_SUSPEND              PSCI_0_2_FN(12)
-> >>>>> +#define PSCI_1_0_FN_NODE_HW_STATE            PSCI_0_2_FN(13)
-> >>>>>     #define PSCI_1_0_FN_SYSTEM_SUSPEND          PSCI_0_2_FN(14)
-> >>>>>     #define PSCI_1_0_FN_SET_SUSPEND_MODE                PSCI_0_2_FN(15)
-> >>>>> +#define PSCI_1_0_FN_STAT_RESIDENCY           PSCI_0_2_FN(16)
-> >>>>> +#define PSCI_1_0_FN_STAT_COUNT                       PSCI_0_2_FN(17)
-> >>>>>     #define PSCI_1_1_FN_SYSTEM_RESET2           PSCI_0_2_FN(18)
-> >>>>>
-> >>>>> +#define PSCI_1_0_FN64_CPU_DEFAULT_SUSPEND    PSCI_0_2_FN64(12)
-> >>>>> +#define PSCI_1_0_FN64_NODE_HW_STATE          PSCI_0_2_FN64(13)
-> >>>>>     #define PSCI_1_0_FN64_SYSTEM_SUSPEND                PSCI_0_2_FN64(14)
-> >>>>> +#define PSCI_1_0_FN64_STAT_RESIDENCY         PSCI_0_2_FN64(16)
-> >>>>> +#define PSCI_1_0_FN64_STAT_COUNT             PSCI_0_2_FN64(17)
-> >>>>>     #define PSCI_1_1_FN64_SYSTEM_RESET2         PSCI_0_2_FN64(18)
-> >>>>>
-> >>>>>     /* PSCI v0.2 power state encoding for CPU_SUSPEND function */
-> >>>
-> >>>
-> >>>
+> > Hi,
 > >
+> > On Wed, Jul 27, 2022 at 9:03 AM Rob Herring <robh@kernel.org> wrote:
+> > >
+> > > On Tue, Jul 26, 2022 at 09:24:31PM -0700, Bob Moragues wrote:
+> > > > Zoglin is a Hoglin Chromebook with SPI Flash reduced from 64MB to 8MB.
+> > > > Zoglin is identical to Hoglin except for the SPI Flash.
+> > > > The actual SPI Flash is dynamically probed at and not specified in DTS.
+> > > >
+> > > > Signed-off-by: Bob Moragues <moragues@chromium.org>
+> > > >
+> > > > Signed-off-by: Bob Moragues <moragues@google.com>
+> > > > ---
+> > > >
+> > > >  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+> > > >  1 file changed, 1 insertion(+)
+> > > >
+> > > > diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> > > > index 581485392404..63091df3cbb3 100644
+> > > > --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> > > > +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> > > > @@ -475,6 +475,7 @@ properties:
+> > > >
+> > > >        - description: Qualcomm Technologies, Inc. sc7280 CRD platform (newest rev)
+> > > >          items:
+> > > > +          - const: google,zoglin
+> > > >            - const: google,hoglin
+> > > >            - const: qcom,sc7280
+> > >
+> > > Is just "google,hoglin", "qcom,sc7280" no longer valid? If it is valid,
+> > > you need another entry.
 > >
-> >
+> > If it makes people happy to have another entry then it wouldn't hurt,
+> > but it has no long term benefit and I would recommend against it. The
+> > next patch in this series changes the existing "hoglin" device tree to
+> > have all 3 compatible strings and thus when both patches land then
+> > make dtbs_check will pass. I assume that is the only goal of
+> > documenting these boards here. Certainly if you had a device tree that
+> > had only "google,zoglin" it would boot fine on zoglin devices and if
+> > you had a device tree that had only "google,hoglin" it would boot fine
+> > on hoglin device. This is true of all of the entries for Chromebooks
+> > that have multiple compatible entries.
+>
+> Why even add the entry? If it is just a different SPI flash, you can
+> tell that from the SPI flash compatible or device ID.
 
+Yeah, it's really unfortunate. :( The issue is a limitation in the
+ChromeOS bootloader infrastructure. The ChromeOS build infrastructure
+cannot handle something that it considers the same "board" as having
+different SPI flash sizes. This is because the infrastructure always
+requires that the bootloader "image" be the exact same size as the SPI
+flash and it assumes a universal firmware (single image) per board.
+It's unfortunately not very flexible but normally for a given board
+the SPI flash size is chosen at the start and never changed. The CRD
+board was an exception here. Though it's not beautiful, this means
+that the firmware considers this as a different board and looks for a
+different compatible string on the kernel command line.
 
-
--- 
-With best wishes
-Dmitry
+-Doug
