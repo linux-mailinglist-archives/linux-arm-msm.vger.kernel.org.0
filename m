@@ -2,109 +2,253 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 52A73582537
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 13:14:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6788658255A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 13:24:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231373AbiG0LOS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 07:14:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38132 "EHLO
+        id S231361AbiG0LYr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 07:24:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbiG0LOS (ORCPT
+        with ESMTP id S231266AbiG0LYr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 07:14:18 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 0E254481C2;
-        Wed, 27 Jul 2022 04:14:16 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3394823A;
-        Wed, 27 Jul 2022 04:14:17 -0700 (PDT)
-Received: from bogus (unknown [10.57.11.51])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DDC0C3F70D;
-        Wed, 27 Jul 2022 04:14:14 -0700 (PDT)
-Date:   Wed, 27 Jul 2022 12:14:10 +0100
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Vinod Koul <vinod.koul@linaro.org>,
-        Linux PM <linux-pm@vger.kernel.org>
-Subject: Re: PSCI domains without OSI support
-Message-ID: <20220727111410.bglx2u26456ray2u@bogus>
-References: <CAA8EJpr2S-81+q-vjmk5i+T-JwaadkRpjCr_oGi7fMf7o3iH3A@mail.gmail.com>
+        Wed, 27 Jul 2022 07:24:47 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0B57481C2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 04:24:44 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id e11so19476975ljl.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 04:24:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=QfNI9S8iAQB3LbkapZoXxskcLzEsEgFs5Xu90Ufn+Fo=;
+        b=tLTwBrMrF6ZS8ik80Si/OmDvu2C+ACrn00QzA+SHTgCNnCu24AizmIdW0qfLIZnvqw
+         XOxnokUx1AjBV7+Ln9RIx7ab52h1FhqKU9+O8NYOf//iuE28seLWFh+oY4hECNAOBmLI
+         mP0JF0TP9wjdNJ1YIv8AHv9qst1btVxwMoOuf5pthMgC50260mj8DxzMfSkYpFj//sbv
+         j2GwvZjGkjkjqJDffjqTbwO4ddajYjjbHNMSpoelJ1BZXSw31CT8mPXlEUGDDjHrGa7F
+         sY+IzGh0LwYxuhTm4rpx5IWyBKqdpLOzc+HSZwuG0PVjPySaYGmNulhyUcx+ZD4fPxP/
+         GulA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=QfNI9S8iAQB3LbkapZoXxskcLzEsEgFs5Xu90Ufn+Fo=;
+        b=gHMCkbmF6SbZaVwI7UfX/1QorBAbtm8j9TIXammVCodkUYMxRbqot5z28jN0PfSdbV
+         I7gtGqMrO5tn5n8GOI5lp9q7ASfWHN75tGNR7G6p+COLYOpSRnR+KGJFZnJNmW26OljZ
+         uB8z11jhjIJ9/p/lJzHgp+ZogkjubOUmZLuPJ6Cdb9Jt9mtwcrkdRqoyuIOvN2IA9QWs
+         NgHStj1DXJXv+C74PTk1UTC2p/1cHHNlp1nRqObJDdI0Jtws9gvOqjrMh2AkPgT4NyTz
+         A/xbkUeAZCLPmtdWvQhOjUlV86+5BLxU9baGG4vIRoLnpiutneKuKDYVpoQ7VPiBv4Pk
+         YEHg==
+X-Gm-Message-State: AJIora/FjJHClcrd6S2GAaEganQSgATRpI6Hwg86P6PsqxITMwwKWI/B
+        v8RABdFqDMJKqJJ+qLcxwpjOFg==
+X-Google-Smtp-Source: AGRyM1vtcQcNcjpFWkWLGED3KxqGPdePSivwwXGP8h+91ivZTdwqbIZvpu2UwagnsZ6t5n50ypIJBg==
+X-Received: by 2002:a05:651c:897:b0:25d:e574:b64 with SMTP id d23-20020a05651c089700b0025de5740b64mr7547002ljq.203.1658921082750;
+        Wed, 27 Jul 2022 04:24:42 -0700 (PDT)
+Received: from [192.168.3.197] (78-26-46-173.network.trollfjord.no. [78.26.46.173])
+        by smtp.gmail.com with ESMTPSA id be20-20020a05651c171400b0025bf58c5338sm3876300ljb.15.2022.07.27.04.24.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Jul 2022 04:24:42 -0700 (PDT)
+Message-ID: <53a602e2-0590-6c6a-597b-fd55faa3a4ab@linaro.org>
+Date:   Wed, 27 Jul 2022 13:24:40 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAA8EJpr2S-81+q-vjmk5i+T-JwaadkRpjCr_oGi7fMf7o3iH3A@mail.gmail.com>
-X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure
+ Application client
+Content-Language: en-US
+To:     Maximilian Luz <luzmaximilian@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ard Biesheuvel <ardb@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>
+References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
+ <20220723224949.1089973-5-luzmaximilian@gmail.com>
+ <e88d1036-dc58-3fc8-c388-edba9b2d62a7@linaro.org>
+ <87c19c5a-d7f4-7183-1322-f62267e01b3b@gmail.com>
+ <11e5c369-c0da-7756-b9e2-ac375dc78e9d@linaro.org>
+ <2e522bcd-5d55-e87f-126c-514f5edaa560@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <2e522bcd-5d55-e87f-126c-514f5edaa560@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 27, 2022 at 12:09:27PM +0300, Dmitry Baryshkov wrote:
-> Hi,
+On 26/07/2022 17:00, Maximilian Luz wrote:
+> On 7/26/22 15:25, Krzysztof Kozlowski wrote:
+>> On 26/07/2022 13:15, Maximilian Luz wrote:
+>>>>> +properties:
+>>>>> +  compatible:
+>>>>> +    const: qcom,tee-uefisecapp
+>>>>
+>>>> Isn't this SoC-specific device? Generic compatibles are usually not
+>>>> expected.
+>>>
+>>> This is essentially software (kernel driver) talking to software (in the
+>>> TrustZone), so I don't expect there to be anything SoC specific about it.
+>>
+>> You are documenting here firmware in TZ (not kernel driver). Isn't this
+>> a specific piece which might vary from device to device?
+>>
+>> IOW, do you expect the same compatible to work for all possible Qualcomm
+>> boards (past and future like in 10 years from now)?
 > 
-> Lately I have been working on improving the msm8996 platform support.
-> Vendor kernel seems to support domain-like idle (see [1], [2]).
-> However when I tried changing upstream msm8996.dtsi to use PSCI
-> domains, I faced the firmware reporting NOT_SUPPORTED to an attempt to
-> enable OSI (thus rendering PSCI domains useless, as they are now
-> marked with ALWAYS_ON).
->
+> I'm not sure if Qualcomm will still use the "uefisecapp" approach in 10
+> years, but I don't expect the interface of uefisecapp to change. The
+> interface is modeled after the respective UEFI functions, which are spec
+> and thus I don't expect those to change. Also, it seems to have been
+> around for a couple of generations and it hasn't changed. The oldest
+> tested is sdm850 (Lenovo Yoga C630), and the latest is sc8280xp
+> (Thinkpad X13s).
 
-That's not good to hear 🙁.
+Expectation is not the same as having a specification saying it will not
+change.
+> 
+> Why not make this behave like a "normal" third-party device? If the
+> interface ever changes use qcom,tee-uefisecapp-v2 or something like
+> that? Again, this does not seem to be directly tied to the SoC.
 
-> I noticed that vendor kernel makes a call to cpu_suspend() with
-> power_state following the original format (described in PSCI spec
-> 5.4.2.1). What would be the best way to support this?
+Such approach is not "normal" for third-party devices. Compatible for
+devices has model number. If the block has specification, then v2 would
+have sense, otherwise you would invent own versioning...
 
-And why is this not possible with the existing code ? Not sure if I
-understood it right, I am assuming you are mentioning that it is not
-possible.
+I would say that firmware implementation can easily change. How much of
+your code is tied to it, I don't know, but argument "I don't expect
+Qualcomm to change something in their firmware" is not the correct argument.
 
-> - Allow DTS forcing the PSCI power domains even if OSI enablement fails?
+> 
+> Then again, if you prefer to name everything based on
+> "qcom,<device>-<soc>" I don't have any strong arguments against it and
+> I'm happy to change that. I just think it will unnecessarily introduce
+> a bunch of compatibles and doesn't reflect the interface "versioning"
+> situation as I see it.
 
-Meaning DTS flag for this ? If OSI enable fails, why would you want to
-still proceed. It is non-compliant and must be fixed if the firmware
-supports OSI and expects OSPM to use the same.
+Why bunch? All devices could bind to one specific compatible, as they
+are compatible.
 
-> - Add a separate cpuidle driver?
+> 
+>>>>> +
+>>>>> +required:
+>>>>> +  - compatible
+>>>>> +
+>>>>> +additionalProperties: false
+>>>>> +
+>>>>> +examples:
+>>>>> +  - |
+>>>>> +    firmware {
+>>>>> +        scm {
+>>>>> +            compatible = "qcom,scm-sc8180x", "qcom,scm";
+>>>>> +        };
+>>>>> +        tee-uefisecapp {
+>>>>> +            compatible = "qcom,tee-uefisecapp";
+>>>>
+>>>> You did not model here any dependency on SCM. This is not full
+>>>> description of the firmware/hardware
+>>>
+>>> How would I do that? A lot of other stuff also depends on SCM being
+>>> present (e.g. qcom_q6v5_pas for loading mdt files) and I don't see them
+>>> declare this in the device tree. As far as I can tell, SCM is pretty
+>>> much expected to be there at all times (i.e. can't be unloaded) and
+>>> drivers check for it when probing via qcom_scm_is_available(),
+>>> deferring probe if not.
+>>
+>> It seems this will be opening a can of worms...
+> 
+> Indeed.
+> 
+>> The problem with existing approach is:
+>> 1. Lack of any probe ordering or probe deferral support.
+>> 2. Lack of any other dependencies, e.g. for PM.
+> 
+> I'm not entirely sure what you mean by "lack of probe deferral support".
+> We have qcom_scm_is_available() and defer probe if that fails. So
+> deferral works, unless I'm misunderstanding something.
 
-I would avoid that.
+And how do you differentiate that qcom_scm_is_available() failed because
+it is not yet available (defer probe) or it is broken and will never
+load? All regular consumer-provider interfaces have it sorted out.
 
-> - Just forget about it and use plain PSCI as we currently do?
->
+> 
+> But yes, correct on the other points.
+> 
+>> Unloading is "solved" only by disallowing the unload, not by proper
+>> device links and module get/put.
+>>
+>> I understand that SCM must be there, but the same for several other
+>> components and for these others we have ways to pass reference around
+>> (e.g. syscon regmap, PHYs handles).
+>>
+>>>
+>>> Don't take this as an excuse as in "I want to leave that out", it's just
+>>> that I don't know how one would declare such a dependency explicitly. If
+>>> you can tell me how to fix it, I'll include that for v2.
+>>
+>> I think there are no dedicated subsystem helpers for this (like for
+>> provider/consumer of resets/power domains/clocks etc), so one way would
+>> be something like nvidia,bpmp is doing.
+> 
+> I assume you're referring to tegra_bpmp_get()? Does this correctly
+> handle PM dependencies? At least as far as I can tell it doesn't
+> explicitly establish a device link, it only gets a reference to the
+> device, which doesn't guarantee the presence of a driver. Nor correct PM
+> ordering. Please correct me if I'm wrong. As far as I know automatic
+> creation of device links only works with certain props defined in
+> of_supplier_bindings, right?
 
-Worst case yes. My main worry is how many of the old SDM SoC has such a
-behaviour and how much they wary from each other. The OSI mode was pushed
-after lengthy discussions to support all these platforms and now we have
-platforms needing separate idle driver ?
+The Tegra choice is not complete, but it implements at least parts of it
+and firmware dependencies are modeled in DTS. Other way would be to add
+your device as child of SMC firmware and then you do not need bindings
+at all...
 
-> Additional topic: for one of idle states the vendor kernel uses a
-> proprietary call into the hypervisor ([3]).
+> 
+> So unless I'm wrong there is also a bunch of other stuff that may be
+> subtly broken. (Again, not a justification to include these changes,
+> just wondering whether there should be a conscious approach to find and
+> fix these things... rather than discover them patch-by-patch).
+> 
+>> meson_sm_get is a bit similar - looking by compatible. This is less
+>> portable and I would prefer the bpmp way (just like syscon phandles).
+> 
+> I have another example (that could be improved via a phandle in DT): For
+> the Surface System Aggregator (in ACPI-land), we have ssam_client_bind().
+> This function 1) checks if the controller is available and ready, 2) if
+> it is gets a reference to it, and 3) establishes a device link for
+> PM-ordering, before 4) returning the reference to that controller to the
+> client. This combined with deferring probe ensures that we will always
+> have a valid reference. And since we're in DT-land, we could hook that
+> up with a phandle reference to SCM and load that instead of having to
+> use a global static.
 
-Again I would say it is not spec compliant.
+Yes, that's better example than Tegra BPMP.
 
-> Up to now we have ignored this, as 8996 seems to be the only platform using
-> it. I suppose that adding it to cpuidle-psci.c would be frowned upon.
+>> The qcom_q6v5_pas could be converted later to use similar approach and
+>> eventually the "tatic struct qcom_scm *__scm;" can be entirely removed.
+>>
+>> Any comments on this approach from Konrad, Bjorn, Dmitry, Vinod and
+>> anyone else?
+> 
+> Regards,
+> Max
 
-Indeed.
 
-> Is this assumption correct? Would it add another point for adding a separate
-> cpuidle driver?
->
-
-I am getting a sense that this would be cleaner approach but I would like
-to understand how much of these non-compliance is carried to the other
-relatively newer SoCs. I understand this is atleast 5-6+ years old. I don't
-want this to set example to deviate from standard driver by adding new
-drivers though they all are supposedly using PSCI(and are not fully compliant)
-
--- 
-Regards,
-Sudeep
+Best regards,
+Krzysztof
