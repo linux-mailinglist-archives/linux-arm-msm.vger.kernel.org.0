@@ -2,168 +2,230 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3EEE5831D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 20:19:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17BD45831E5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 20:22:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236698AbiG0STE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 14:19:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34508 "EHLO
+        id S241067AbiG0SWp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 14:22:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233393AbiG0SSr (ORCPT
+        with ESMTP id S242599AbiG0SWV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 14:18:47 -0400
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1930FEB591
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 10:18:39 -0700 (PDT)
-Received: by mail-pg1-x52b.google.com with SMTP id r186so16464733pgr.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 10:18:39 -0700 (PDT)
+        Wed, 27 Jul 2022 14:22:21 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D272F2852
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 10:21:35 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id h132so16440606pgc.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 10:21:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=WWCmALyIfyfxZcOwM+WnJXH5fX1Oapc9tMvQ2tyZ/gA=;
-        b=RUGgbOZZiX9cKnAXmZSPCy70hMCEU8askQzkDRUlKVRVAodzICC7cgYAtYsie3UFzj
-         L3TePliA+yGPcmjr9x0ihXFmgK0+p4Z3HIkfxhwXrqOWNp0iGDI0M7axOhthf2bDWtJ4
-         fBf6wfG0P3yVO8lG6QMrjVT4qbsz6kbB6X+qRNG2/qP73aP5H0otgk4wulFpir6yq5tz
-         PEN2viguJ7e1Q/BwDt8QZmdhSyl6gW9R07YA2Tnh+ksZj3osBIQsfKJL1SPw2Ow8ScZK
-         6Z3t+/LppY9MZsKP3phkfXXWV7Kqz0/JNYxDVQQDkmyopr9z6n707dy7026MIwcW3iHy
-         5WCw==
+        bh=gLqFxsF2/j9UhzKinC6sGKUkXzM7b+wYfN/HlusP9rw=;
+        b=k8mfwrQ7X3wtEb6WrBgiu95MAf6GLUmK3Vxcxmwfo1s3BPKofGkKNP1MtGCuyBWbwf
+         kMObd7CcTIo6+TAzed0LWbGPP1zwHrUM7hP6pCIDN7ZpHhFK6eby2ld7b3NVoZulQ9km
+         eGv5H9R5j8AzTguVzRt96brX8/mdECNRzXYPeneySXeolFxkE/Gl5bCBw097Ky43di7U
+         NpO5MnGfDYmyYGrZ52jOLcnYhBU04LbG9/lcveuAlPUpKegKGF8l6NWj6mp2GWi05IAD
+         sVVJp/GWHwIEwuQxVewSaFFvoS9+AH8uvLwA3oxDpS3+noz7GyBzCT9L15T2Fd1yTzAB
+         Lmfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=WWCmALyIfyfxZcOwM+WnJXH5fX1Oapc9tMvQ2tyZ/gA=;
-        b=K7etkyLdYIyOC494AIIy9lKhNDkDbpWQ6urxTqHYICAaes4p94Sa9ehAZTanXp0vyB
-         cQM/zRv4R1ZuTy/yXpcCEjYFI/Flwe6xGeAcRVgWaoX6zA3F9HpEHV15pX34bzaBjsJP
-         5xK55/apVrEJLYGEKzW6zowgzJeMqXatGGb9l5I/Dv3+dSw5Ie9/ZdDRV3arjCFMZNYM
-         z3a6qBjXxwQKgtla8V1cwzGEQLo49ScdzyN8FylSV/3tnxvbzkC7+ru5mLK+WFP7o7SC
-         NyBs9BxhGYJS61x9rscEKM9AAKlXWq+CC8DFcS+vlPKur2NafJd1VcbGUgZoBRI/TxCF
-         wITQ==
-X-Gm-Message-State: AJIora9qrCqvXxTv6F9DyXRzdQ4kG4yGoKR9L2qDWC+lo/zLJpOk24pU
-        lgcpMNT7gP7uV21alGKLEzExUTx7ceHCBQ==
-X-Google-Smtp-Source: AGRyM1v6W5TTmMy+3aH01G2tHhgfhxx5mBK5jrf+PdOXn2Kww1Zmm2jC4Vo9LZW2r3fOUH6xPga6Jw==
-X-Received: by 2002:a05:6a00:130a:b0:52c:5932:7160 with SMTP id j10-20020a056a00130a00b0052c59327160mr1898840pfu.19.1658942318560;
-        Wed, 27 Jul 2022 10:18:38 -0700 (PDT)
+        bh=gLqFxsF2/j9UhzKinC6sGKUkXzM7b+wYfN/HlusP9rw=;
+        b=W01jim/cFwLsvjc+92auUBt/zxy13c0Ec9Vbv4awnlJhvV9ezfoPOyMONG3zGLJt26
+         sB+Nbhj0mjyUiLD3D0B6qSL8Zt9bXU3fGxMcC+EJ9Ak98tTnNoHszSxH46aY3KFjxS9o
+         +r7kzA1xedgxqZkM5Mcni00k4LoAkAP4S+UySa1ZZap4PuqCkniUk0cHR+lAxfhQr30a
+         PX1JdLPIAjio8jC+w0V5yPRKiwrXPgDcS0bx4AFCeUsqjN6OVMCZMcRmAbRicHdSziTp
+         2vBEXS5NEReytNB/b/8MT6cpmN1th05CG+tDtOd/fWgN74xyMITbDpMv4zz4Ed3xcw+5
+         XhVg==
+X-Gm-Message-State: AJIora9wLzolkjEKsHeuJntLPaM/48dwXzOeW1FmMl5xyQp6oH8Nb3yn
+        ppNDs8k9lO3ml7W7rB51hrrlWw==
+X-Google-Smtp-Source: AGRyM1u0RiWcWQBpsfCyjeGvV/kUtmFcrrM2vJqoT0INYQm9iIDjACXiFNrxAz4irgXoFCLtdoXj3A==
+X-Received: by 2002:a63:e109:0:b0:419:c3bc:b89 with SMTP id z9-20020a63e109000000b00419c3bc0b89mr19789462pgh.176.1658942494480;
+        Wed, 27 Jul 2022 10:21:34 -0700 (PDT)
 Received: from p14s (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
-        by smtp.gmail.com with ESMTPSA id n59-20020a17090a5ac100b001f2b0f8e047sm2081502pji.27.2022.07.27.10.18.37
+        by smtp.gmail.com with ESMTPSA id o1-20020a17090a678100b001efa35356besm2043368pjj.28.2022.07.27.10.21.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Jul 2022 10:18:37 -0700 (PDT)
-Date:   Wed, 27 Jul 2022 11:18:36 -0600
+        Wed, 27 Jul 2022 10:21:33 -0700 (PDT)
+Date:   Wed, 27 Jul 2022 11:21:31 -0600
 From:   Mathieu Poirier <mathieu.poirier@linaro.org>
 To:     Chris Lew <quic_clew@quicinc.com>
 Cc:     bjorn.andersson@linaro.org, linux-remoteproc@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/4] rpmsg: char: Add support to use rpmsg_rx_done
-Message-ID: <20220727171836.GB199805@p14s>
+Subject: Re: [PATCH 4/4] rpmsg: glink: Add support for rpmsg_rx_done
+Message-ID: <20220727172131.GC199805@p14s>
 References: <1654651005-15475-1-git-send-email-quic_clew@quicinc.com>
- <1654651005-15475-3-git-send-email-quic_clew@quicinc.com>
+ <1654651005-15475-5-git-send-email-quic_clew@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1654651005-15475-3-git-send-email-quic_clew@quicinc.com>
+In-Reply-To: <1654651005-15475-5-git-send-email-quic_clew@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 07, 2022 at 06:16:43PM -0700, Chris Lew wrote:
-> Add support into the rpmsg char driver to skip copying the data into an
-> skb if the endpoint supports rpmsg_rx_done. If the endpoint supports
-> the rx_done operation, allocate a zero sized skb and set the data to
-> the buffer returned in the rx callback. When the packet is read from
-> the character device, release the memory by calling rpmsg_rx_done().
+On Tue, Jun 07, 2022 at 06:16:45PM -0700, Chris Lew wrote:
+> Add the implementation for the hooks of rpmsg_rx_done. If a client
+> signals they want to hold onto a buffer with RPMSG_DEFER in the rx_cb,
+> glink will move that intent to a deferred cleanup list. On the new
+> rpmsg rx_done call, the glink transport will search this deferred
+> cleanup list for the matching buffer and release the intent.
 > 
 > Signed-off-by: Chris Lew <quic_clew@quicinc.com>
 > ---
->  drivers/rpmsg/rpmsg_char.c | 50 ++++++++++++++++++++++++++++++++++++++++++++--
->  1 file changed, 48 insertions(+), 2 deletions(-)
+>  drivers/rpmsg/qcom_glink_native.c | 54 ++++++++++++++++++++++++++++++++++++---
+>  1 file changed, 51 insertions(+), 3 deletions(-)
 > 
-> diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
-> index b6183d4f62a2..be62ddcf356c 100644
-> --- a/drivers/rpmsg/rpmsg_char.c
-> +++ b/drivers/rpmsg/rpmsg_char.c
-> @@ -91,8 +91,8 @@ int rpmsg_chrdev_eptdev_destroy(struct device *dev, void *data)
->  }
->  EXPORT_SYMBOL(rpmsg_chrdev_eptdev_destroy);
+> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+> index 799e602113a1..db0dcc04f393 100644
+> --- a/drivers/rpmsg/qcom_glink_native.c
+> +++ b/drivers/rpmsg/qcom_glink_native.c
+> @@ -146,6 +146,7 @@ enum {
+>   * @riids:	idr of all remote intents
+>   * @intent_work: worker responsible for transmitting rx_done packets
+>   * @done_intents: list of intents that needs to be announced rx_done
+> + * @defer_intents: list of intents held by the client released by rpmsg_rx_done
+>   * @buf:	receive buffer, for gathering fragments
+>   * @buf_offset:	write offset in @buf
+>   * @buf_size:	size of current @buf
+> @@ -174,6 +175,7 @@ struct glink_channel {
+>  	struct idr riids;
+>  	struct work_struct intent_work;
+>  	struct list_head done_intents;
+> +	struct list_head defer_intents;
 >  
-> -static int rpmsg_ept_cb(struct rpmsg_device *rpdev, void *buf, int len,
-> -			void *priv, u32 addr)
-> +static int rpmsg_ept_copy_cb(struct rpmsg_device *rpdev, void *buf, int len,
-> +			     void *priv, u32 addr)
->  {
->  	struct rpmsg_eptdev *eptdev = priv;
->  	struct sk_buff *skb;
-> @@ -113,6 +113,43 @@ static int rpmsg_ept_cb(struct rpmsg_device *rpdev, void *buf, int len,
->  	return 0;
->  }
+>  	struct glink_core_rx_intent *buf;
+>  	int buf_offset;
+> @@ -232,6 +234,7 @@ static struct glink_channel *qcom_glink_alloc_channel(struct qcom_glink *glink,
+>  	init_completion(&channel->intent_req_comp);
 >  
-> +static int rpmsg_ept_no_copy_cb(struct rpmsg_device *rpdev, void *buf, int len,
-> +				void *priv, u32 addr)
-> +{
-> +	struct rpmsg_eptdev *eptdev = priv;
-> +	struct sk_buff *skb;
-> +
-> +	skb = alloc_skb(0, GFP_ATOMIC);
-> +	if (!skb)
-> +		return -ENOMEM;
-> +
-> +	skb->head = buf;
-> +	skb->data = buf;
-> +	skb_reset_tail_pointer(skb);
-> +	skb_set_end_offset(skb, len);
-> +	skb_put(skb, len);
-> +
-
-I was worried about all that open ended code but looking at the sk_buff API I
-don't think it is possible to do otherwise.  As such:
-
-Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-
-
-> +	spin_lock(&eptdev->queue_lock);
-> +	skb_queue_tail(&eptdev->queue, skb);
-> +	spin_unlock(&eptdev->queue_lock);
-> +
-> +	/* wake up any blocking processes, waiting for new data */
-> +	wake_up_interruptible(&eptdev->readq);
-> +
-> +	return RPMSG_DEFER;
-> +}
-> +
-> +static int rpmsg_ept_cb(struct rpmsg_device *rpdev, void *buf, int len,
-> +			void *priv, u32 addr)
-> +{
-> +	struct rpmsg_eptdev *eptdev = priv;
-> +	rpmsg_rx_cb_t cb;
-> +
-> +	cb = (eptdev->ept->rx_done) ? rpmsg_ept_no_copy_cb : rpmsg_ept_copy_cb;
-> +
-> +	return cb(rpdev, buf, len, priv, addr);
-> +}
-> +
->  static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
->  {
->  	struct rpmsg_eptdev *eptdev = cdev_to_eptdev(inode->i_cdev);
-> @@ -210,6 +247,15 @@ static ssize_t rpmsg_eptdev_read_iter(struct kiocb *iocb, struct iov_iter *to)
->  	if (copy_to_iter(skb->data, use, to) != use)
->  		use = -EFAULT;
+>  	INIT_LIST_HEAD(&channel->done_intents);
+> +	INIT_LIST_HEAD(&channel->defer_intents);
+>  	INIT_WORK(&channel->intent_work, qcom_glink_rx_done_work);
 >  
-> +	if (eptdev->ept->rx_done) {
-> +		rpmsg_rx_done(eptdev->ept, skb->data);
-> +		/*
-> +		 * Data memory is freed by rpmsg_rx_done(), reset the skb data
-> +		 * pointers so kfree_skb() does not try to free a second time.
-> +		 */
-> +		skb->head = NULL;
-> +		skb->data = NULL;
+>  	idr_init(&channel->liids);
+> @@ -261,6 +264,12 @@ static void qcom_glink_channel_release(struct kref *ref)
+>  			kfree(intent);
+>  		}
+>  	}
+> +	list_for_each_entry_safe(intent, tmp, &channel->defer_intents, node) {
+> +		if (!intent->reuse) {
+> +			kfree(intent->data);
+> +			kfree(intent);
+> +		}
 > +	}
->  	kfree_skb(skb);
 >  
->  	return use;
+>  	idr_for_each_entry(&channel->liids, tmp, iid) {
+>  		kfree(tmp->data);
+> @@ -549,9 +558,10 @@ static void qcom_glink_rx_done_work(struct work_struct *work)
+>  	spin_unlock_irqrestore(&channel->intent_lock, flags);
+>  }
+>  
+> -static void qcom_glink_rx_done(struct qcom_glink *glink,
+> +static void __qcom_glink_rx_done(struct qcom_glink *glink,
+>  			       struct glink_channel *channel,
+> -			       struct glink_core_rx_intent *intent)
+> +			       struct glink_core_rx_intent *intent,
+> +			       bool defer)
+>  {
+>  	int ret = -EAGAIN;
+>  
+> @@ -569,6 +579,14 @@ static void qcom_glink_rx_done(struct qcom_glink *glink,
+>  		spin_unlock(&channel->intent_lock);
+>  	}
+>  
+> +	/* Move intent to defer list until client calls rpmsg_rx_done */
+> +	if (defer) {
+> +		spin_lock(&channel->intent_lock);
+> +		list_add_tail(&intent->node, &channel->defer_intents);
+> +		spin_unlock(&channel->intent_lock);
+> +		return;
+> +	}
+> +
+>  	/* Schedule the sending of a rx_done indication */
+>  	spin_lock(&channel->intent_lock);
+>  	if (list_empty(&channel->done_intents))
+> @@ -581,6 +599,28 @@ static void qcom_glink_rx_done(struct qcom_glink *glink,
+>  	spin_unlock(&channel->intent_lock);
+>  }
+>  
+> +static int qcom_glink_rx_done(struct rpmsg_endpoint *ept, void *data)
+> +{
+> +	struct glink_channel *channel = to_glink_channel(ept);
+> +	struct qcom_glink *glink = channel->glink;
+> +	struct glink_core_rx_intent *intent, *tmp;
+> +	unsigned long flags;
+> +
+> +	spin_lock_irqsave(&channel->intent_lock, flags);
+> +	list_for_each_entry_safe(intent, tmp, &channel->defer_intents, node) {
+> +		if (intent->data == data) {
+> +			list_del(&intent->node);
+> +			spin_unlock_irqrestore(&channel->intent_lock, flags);
+> +
+> +			qcom_glink_send_rx_done(glink, channel, intent, true);
+> +			return 0;
+> +		}
+> +	}
+> +	spin_unlock_irqrestore(&channel->intent_lock, flags);
+> +
+> +	return -EINVAL;
+> +}
+> +
+>  /**
+>   * qcom_glink_receive_version() - receive version/features from remote system
+>   *
+> @@ -841,6 +881,7 @@ static int qcom_glink_rx_data(struct qcom_glink *glink, size_t avail)
+>  	} __packed hdr;
+>  	unsigned int chunk_size;
+>  	unsigned int left_size;
+> +	bool rx_done_defer;
+>  	unsigned int rcid;
+>  	unsigned int liid;
+>  	int ret = 0;
+> @@ -935,7 +976,12 @@ static int qcom_glink_rx_data(struct qcom_glink *glink, size_t avail)
+>  		intent->offset = 0;
+>  		channel->buf = NULL;
+>  
+> -		qcom_glink_rx_done(glink, channel, intent);
+> +		if (channel->ept.rx_done && ret == RPMSG_DEFER)
+
+I don't see where @ret could be set to RPMSG_DEFER in this function...
+
+Thanks,
+Mathieu
+
+
+> +			rx_done_defer = true;
+> +		else
+> +			rx_done_defer = false;
+> +
+> +		__qcom_glink_rx_done(glink, channel, intent, rx_done_defer);
+>  	}
+>  
+>  advance_rx:
+> @@ -1212,6 +1258,7 @@ static struct rpmsg_endpoint *qcom_glink_create_ept(struct rpmsg_device *rpdev,
+>  	ept->cb = cb;
+>  	ept->priv = priv;
+>  	ept->ops = &glink_endpoint_ops;
+> +	ept->rx_done = true;
+>  
+>  	return ept;
+>  }
+> @@ -1462,6 +1509,7 @@ static const struct rpmsg_endpoint_ops glink_endpoint_ops = {
+>  	.sendto = qcom_glink_sendto,
+>  	.trysend = qcom_glink_trysend,
+>  	.trysendto = qcom_glink_trysendto,
+> +	.rx_done = qcom_glink_rx_done,
+>  };
+>  
+>  static void qcom_glink_rpdev_release(struct device *dev)
 > -- 
 > 2.7.4
 > 
