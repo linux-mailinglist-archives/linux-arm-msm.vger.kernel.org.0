@@ -2,66 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 535E558238C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 11:57:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B81FD5823C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 12:06:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229794AbiG0J5q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 05:57:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36800 "EHLO
+        id S231646AbiG0KGW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 06:06:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbiG0J5p (ORCPT
+        with ESMTP id S231607AbiG0KGV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 05:57:45 -0400
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D57BA27173
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 02:57:43 -0700 (PDT)
-Received: by mail-qv1-xf33.google.com with SMTP id j11so12530598qvt.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 02:57:43 -0700 (PDT)
+        Wed, 27 Jul 2022 06:06:21 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B828720185
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 03:06:19 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id t22so19998523lfg.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 03:06:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=53lHHtLgGKTt9V4FYXYOyjU1GmgFzy4P5pSpDKGgZ6w=;
-        b=PVMtec8RT8WrY/hI2fdU5fZRz3HpXcTT70BXeZeB8odu8Yvf0qJwiZc4mCd30YDiAl
-         d6b1slz+Dkak1vcvvfJjqELk4fdPT9stC5u9RVpzpkq8ttpN46qQuaDYDkP9i7WQ/ezT
-         +YUL0B2nKLf8rbu6VsMk1UzRGJi8HU0CnudmfjmdwJChwAlVjnTObOtwr9qzcTNE7a6w
-         S2inRaRGcQ2I2neYi7/Xa1a5AE81Hd8Q7Z/eBERxVTnNA5v/eyH6lzh+hs3rFbxFrejJ
-         grEV6esSyPqdL76DFdrfvWmLBoDrTlnKjOuxjBv5y/ETFMcIAh+vM+60l6EV9hUj/LQH
-         3/8w==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=H6IDJ4C5bccFAxeK6xcFNoHFKmsJbrdAcR26crWC790=;
+        b=E40hhx8eHoltQCcwgV1s2lHhJD1E4fOiMhzkBsFpZZPMX/7dKKSk4nCywaP/Z4T1H6
+         WKAQY44NHZ3ni5KSmOm6zPXj+OqcHI5X6YeSxo3q4/DTJH4Kb14rEp2GC1kY8AY2NiId
+         39SM9VN749ErK7Xx54LKCWcka55Ut4JlDBa0VBDF0L+2P+BDC29SO5W7q4V4zE+Lr38m
+         cRnjz/YFUZShfeG2uTx7uPzurUwB/0WoVPuIe2bGcgN9yp/53xC8QlYBJ4vKeq7b1BXf
+         cIf814COo2wg0GtktE7zRrZxZTbr6WkcLZ+UzYUcJKuJenRcDCcSWa5FSQ6bo6t0GKF3
+         /wQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=53lHHtLgGKTt9V4FYXYOyjU1GmgFzy4P5pSpDKGgZ6w=;
-        b=6ykLk7EueXrePBEPZlwQMC5NkqSo5ICu1KvN3bsBWuYYp8NAA8xf4Phwdv7ZhObN/J
-         yew+xLG/fGFp9O+uIKQeGhWBtz/eQTKNkj+3Ha2rGd3w2zIsHVH1r1t5HWVgFs2QLlmU
-         w1p+4lYrW7yzHTUffjSmhvTM81TRb+8AieF7SqVNBOefphOfkrw5Q7WNpo1ZaHj49/fx
-         wZ+WGraf85GOXjHsfHsVSVwOHWjbfGHhbHUnPxKtwHowL+7VQME1qKYMpn+d7j5hrfnr
-         IJu5f6YZfORC4FlflhV1kRKxvTilq3Wfj/X4jEAGaW1UHFpsvz7hFGDz7LyRYHR+UIte
-         w1mA==
-X-Gm-Message-State: AJIora+X7vuWK7oylTgyP3VtLTzeqfHKgnRJopZeKR6S5lei/2gtrTNz
-        4da0/hzFVZSfMdBsfiN5uOs7do6h5n0xDhE92J1oVg==
-X-Google-Smtp-Source: AGRyM1szWR/2xIGX9mO0iLSAnkKOAFNqVzTKIjPGDDheFKdTjA03iXww/q5rndlh945EGUuDO4gK7Gv3dmlfYLxh3Yc=
-X-Received: by 2002:a0c:8ecc:0:b0:473:2fa4:df7c with SMTP id
- y12-20020a0c8ecc000000b004732fa4df7cmr18055616qvb.55.1658915862975; Wed, 27
- Jul 2022 02:57:42 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220706114407.1507412-1-dmitry.baryshkov@linaro.org> <CAK7LNAQPS+U1qq4K+7Rao9P7p94bMU3Y6g0+ALUd3t=ioZqSnw@mail.gmail.com>
-In-Reply-To: <CAK7LNAQPS+U1qq4K+7Rao9P7p94bMU3Y6g0+ALUd3t=ioZqSnw@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=H6IDJ4C5bccFAxeK6xcFNoHFKmsJbrdAcR26crWC790=;
+        b=N9eXInovYqFdWiympyt9ZaI+2XpgBnYBZW9rKCzLhVwvvFEPEC4IyvVAU2ND7KAvM/
+         QSgnbidXS91+OEwLnK4WCZnePX4DZlCQnB/rlzhZps2njwpxUQCyC8tj8P/FDG3IuoQS
+         80pXdCs6FHugeEhRY6AtFlo8wvbj5S6SxA23BCw5RikTqbNFGOEOAgmYw+rZenZNKK4V
+         FHVrlEXIIZl+brLZBiIFpNCJbprj9pmf/S3Xc4Lj6M+cQn9FO/6LGiQPimYYNZPK8aUw
+         NWk+uKmmnce/SEp7R1kO3YTw7jqB1J4zIB9C0/k2P7PpU7T17M8G66IYFsnsE6N+pkX3
+         kk9Q==
+X-Gm-Message-State: AJIora/A3Mph0bg+lXVEXso7yvJawvWr/Kb+flyMCtzoUkO9j/kLSCbm
+        C0+WXNwmR4bwKnxTl1VRsFcCfA==
+X-Google-Smtp-Source: AGRyM1uOR9dx5+hwW2p1CfkA3e40RUcouNyUvvVCWkoflGa09VHVX+uy7YmdKgma3ApZjtq9G/gxTQ==
+X-Received: by 2002:a05:6512:c2a:b0:489:db52:fc18 with SMTP id z42-20020a0565120c2a00b00489db52fc18mr7628573lfu.99.1658916378062;
+        Wed, 27 Jul 2022 03:06:18 -0700 (PDT)
+Received: from eriador.lumag.spb.ru ([188.162.64.29])
+        by smtp.gmail.com with ESMTPSA id k6-20020a05651c10a600b0025dd5b3fabesm3670900ljn.102.2022.07.27.03.06.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Jul 2022 03:06:17 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 27 Jul 2022 12:57:31 +0300
-Message-ID: <CAA8EJprdCftvie3UF9QpCWr9oQ5SQbqW8OPOHg0qigf9=RXU-w@mail.gmail.com>
-Subject: Re: [PATCH v2] kbuild: allow validating individual dtb files against schema
-To:     Masahiro Yamada <masahiroy@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+To:     Masahiro Yamada <masahiroy@kernel.org>,
+        Michal Marek <michal.lkml@markovi.net>,
+        Nick Desaulniers <ndesaulniers@google.com>
+Cc:     linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>, Tom Rini <trini@konsulko.com>,
-        Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH] kbuild: take into account DT_SCHEMA_FILES changes while checking dtbs
+Date:   Wed, 27 Jul 2022 13:06:15 +0300
+Message-Id: <20220727100615.638072-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -71,107 +72,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 16 Jul 2022 at 12:38, Masahiro Yamada <masahiroy@kernel.org> wrote:
->
-> On Wed, Jul 6, 2022 at 8:44 PM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > While it is possible to validate all generated dtb files against the
-> > schema, it typically results in huge pile of warnings. While working on
-> > a platform it is quite useful to validate just a single file against
-> > schema.
-> >
-> > Allow specifying CHECK_DTBS=1 on a make command line to enable
-> > validation while building dtb files. This reuses the infrastructure
-> > existing for `make dtbs_check`, making dtbs_check a shortcut for
-> > `make CHECK_DTBS=1 dt_binding_check dtbs`.
-> >
-> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Cc: Tom Rini <trini@konsulko.com>
-> > Cc: Masahiro Yamada <masahiroy@kernel.org>
-> > Cc: linux-kbuild@vger.kernel.org
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >
-> > Changes since v1:
-> > - Added dependency to rebuild schema if `make dtbs` was used.
-> >
-> > ---
-> >  Makefile | 20 +++++++++++++++-----
-> >  1 file changed, 15 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/Makefile b/Makefile
-> > index 9aa7de1ca58f..5a9858aa4934 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -1464,14 +1464,18 @@ endif
-> >
-> >  ifneq ($(dtstree),)
-> >
-> > -%.dtb: include/config/kernel.release scripts_dtc
-> > +ifneq ($(CHECK_DTBS),)
-> > +DT_TMP_BINDING := dt_binding
-> > +endif
-> > +
-> > +%.dtb: include/config/kernel.release scripts_dtc $(DT_TMP_BINDING)
-> >         $(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
-> >
-> > -%.dtbo: include/config/kernel.release scripts_dtc
-> > +%.dtbo: include/config/kernel.release scripts_dtc $(DT_TMP_BINDING)
-> >         $(Q)$(MAKE) $(build)=$(dtstree) $(dtstree)/$@
-> >
-> >  PHONY += dtbs dtbs_install dtbs_check
-> > -dtbs: include/config/kernel.release scripts_dtc
-> > +dtbs: include/config/kernel.release scripts_dtc $(DT_TMP_BINDING)
-> >         $(Q)$(MAKE) $(build)=$(dtstree)
-> >
-> >  ifneq ($(filter dtbs_check, $(MAKECMDGOALS)),)
-> > @@ -1498,8 +1502,10 @@ ifneq ($(filter dt_binding_check, $(MAKECMDGOALS)),)
-> >  export CHECK_DT_BINDING=y
-> >  endif
-> >
-> > -PHONY += dt_binding_check
-> > -dt_binding_check: scripts_dtc
-> > +dt_binding_check: dt_binding
-> > +
-> > +PHONY += dt_binding
-> > +dt_binding: scripts_dtc
-> >         $(Q)$(MAKE) $(build)=Documentation/devicetree/bindings
-> >
-> >  # ---------------------------------------------------------------------------
-> > @@ -1774,6 +1780,10 @@ help:
-> >         @echo  '                3: more obscure warnings, can most likely be ignored'
-> >         @echo  '                e: warnings are being treated as errors'
-> >         @echo  '                Multiple levels can be combined with W=12 or W=123'
-> > +       @$(if $(dtstree), \
-> > +               echo '  make CHECK_DTBS=1 [targets] Check all generated dtb files against schema'; \
-> > +               echo '         This can be applied both to "dtbs" and to individual "foo.dtb" targets' ; \
-> > +               )
-> >         @echo  ''
-> >         @echo  'Execute "make" or "make all" to build all targets marked with [*] '
-> >         @echo  'For further info see the ./README file'
-> > --
-> > 2.35.1
-> >
->
->
-> I think the idea seems OK to me, but we can make it simpler.
->
->
-> First, apply the following clean-up patch to reduce the code duplication.
-> https://lore.kernel.org/all/20220716093122.137494-1-masahiroy@kernel.org/T/#u
->
->
-> Then, apply the attached patch.diff
->
-> Please try it.
+It is useful to be able to recheck dtbs files against a limited set of
+DT schema files. This can be accomplished by using differnt
+DT_SCHEMA_FILES argument values while rerunning make dtbs_check. However
+for some reason if_changed_rule doesn't pick up the rule_dtc changes
+(and doesn't retrigger the build).
 
-Please excuse me, it took me a bit to get back to the issue and test your patch.
-It works like a charm, feel free to add while posting it:
+Fix this by changing if_changed_rule to if_changed_dep and squashing DTC
+and dt-validate into a single new command. Then if_changed_dep triggers
+on DT_SCHEMA_FILES changes and reruns the build/check.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ scripts/Makefile.lib | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
---
-With best wishes
-Dmitry
+diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
+index c88b98b5dc44..3df470289382 100644
+--- a/scripts/Makefile.lib
++++ b/scripts/Makefile.lib
+@@ -383,17 +383,15 @@ DT_CHECKER_FLAGS ?= $(if $(DT_SCHEMA_FILES),-l $(DT_SCHEMA_FILES),-m)
+ DT_BINDING_DIR := Documentation/devicetree/bindings
+ DT_TMP_SCHEMA := $(objtree)/$(DT_BINDING_DIR)/processed-schema.json
+ 
+-quiet_cmd_dtb_check =	CHECK   $@
+-      cmd_dtb_check =	$(DT_CHECKER) $(DT_CHECKER_FLAGS) -u $(srctree)/$(DT_BINDING_DIR) -p $(DT_TMP_SCHEMA) $@ || true
++quiet_cmd_dtb =	DTC/CHECK   $@
++      cmd_dtb =	$(cmd_dtc) ; $(DT_CHECKER) $(DT_CHECKER_FLAGS) -u $(srctree)/$(DT_BINDING_DIR) -p $(DT_TMP_SCHEMA) $@ || true
++else
++quiet_cmd_dtb = $(quiet_cmd_dtc)
++      cmd_dtb = $(cmd_dtc)
+ endif
+ 
+-define rule_dtc
+-	$(call cmd_and_fixdep,dtc)
+-	$(call cmd,dtb_check)
+-endef
+-
+ $(obj)/%.dtb: $(src)/%.dts $(DTC) $(DT_TMP_SCHEMA) FORCE
+-	$(call if_changed_rule,dtc)
++	$(call if_changed_dep,dtb)
+ 
+ $(obj)/%.dtbo: $(src)/%.dts $(DTC) FORCE
+ 	$(call if_changed_dep,dtc)
+-- 
+2.35.1
+
