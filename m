@@ -2,136 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B6BE1582753
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 15:03:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7703E582799
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Jul 2022 15:24:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233532AbiG0NDy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 09:03:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46068 "EHLO
+        id S233103AbiG0NYh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 09:24:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233490AbiG0NDy (ORCPT
+        with ESMTP id S232453AbiG0NYg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 09:03:54 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4370526AD3;
-        Wed, 27 Jul 2022 06:03:53 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id c22so10460241wmr.2;
-        Wed, 27 Jul 2022 06:03:53 -0700 (PDT)
+        Wed, 27 Jul 2022 09:24:36 -0400
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0256631DE0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 06:24:35 -0700 (PDT)
+Received: by mail-qt1-x82e.google.com with SMTP id bz13so12574534qtb.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Jul 2022 06:24:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=SiHZwpQCYfccD1xnABRjwBNsvXyqatith9sO/0ewvoY=;
-        b=GjHqFnyWpHKA/Jz+vu/FGWShm0+Mz6AW0SDGdFOI7AGOATGcBG61VAAYmAXfpM/5S8
-         zfaZCUthDWABPLd8yycyiWxUqFAAqSBBqVn5Ozz5FuaN2UotHuwEzJXSL2iAFcvxjwfU
-         R5qKl757CyZrfHjDMQXWWAue7iTSIkURZEVM6+kAyZtHTPiKwAIa+/LcjzwcDJgKvdx9
-         MEOEAf6qCqwrwwq3pTOR6r3++yYrUikZo96LGMRvVdtWd10bYBlqTkn5kejJpU/sJoev
-         MF2nPCuTGq7pPvhc8sTgTEKaZyZPFHJXm2VR/ct5DlQtv6nGqiqqWR3FtMeHK30XoGG9
-         wS2Q==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ILD3jhWMzdiJ0UnxmEqCyngtffCuYYLo3vFHeHzSO8E=;
+        b=DLJBiRjcDRgTqQ+APm+zW7bpwc5qz4nKHXclIycWYZuqxNnm0JdIiREuTCp/9UPBR+
+         J661FqlbkIWa0uw85l9nCRG0WJqg7HRcp4t3L57KwuzHtgEtqbZwxyTI0MPsXOqfNZy0
+         VV5g3J1ugqLolgivF4VyKGVRm0MoL0jIuMWSpNm8qrbr1IlZGZziprR2Cd5hUZKsMnWQ
+         VfWj27RfxjspxrVGRDe/8vB/RNhogLmWdj88vNyryj0EQEWEObOsLfCy6y98HbrMrFPG
+         TDQfF4l9sxDYfhivjs5PdwFESA+OR5qp69yVSpQwHkwiQEiW9SZ9aa/8PAPxE4b9Cw33
+         pd9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=SiHZwpQCYfccD1xnABRjwBNsvXyqatith9sO/0ewvoY=;
-        b=r+sA8f7XYfnddis4dFsZEd4oRk7ZCokEVV/xo2MG/CfnH8KL/NgObuR1dO8ZIfVUgR
-         aW6r8y9fyDgX1xhM77BFSdF9E5GyfwjiLju+S0DVbGLvwzaphLA53gBZpywFi/uLUXKg
-         KPyI1bBTG/94a6UJmtfv6Y53mWakz4qeNsdmT1KqJiHl5Hx8YSIhGViLiD6f2+qvW0rZ
-         Mj9e+vIjPQh+PHd++pTikNxhdTNIuCIZ3nbHeSaJKD2CHT2awQ6CpQoE/lUDd+R4IXJg
-         yUyVcmRBd9Gbz5+o6vCDbIVgOmeXAwfh4VAky6KTv6n5Y9mmHntUMAURNyk5VzZiDT87
-         2x5A==
-X-Gm-Message-State: AJIora8UbjXXD9TsvZ+rGIFwP1RkGBclkpcWL7suuzzPzMwkkMCMLmyT
-        Bkawsuvp6xpWs8I6ur4M85w=
-X-Google-Smtp-Source: AGRyM1tJyqDtyv+DYGgsu8rV4ce7hW8Up+s8gxPMO1orqS/QB3LEo2yn97xQ+7FJzlw3XtUWOzvjYw==
-X-Received: by 2002:a05:600c:3586:b0:3a3:2c03:1088 with SMTP id p6-20020a05600c358600b003a32c031088mr3207007wmq.64.1658927031617;
-        Wed, 27 Jul 2022 06:03:51 -0700 (PDT)
-Received: from [192.168.2.202] (pd9ea3316.dip0.t-ipconnect.de. [217.234.51.22])
-        by smtp.gmail.com with ESMTPSA id f23-20020a1cc917000000b003a31ca9dfb6sm2684519wmb.32.2022.07.27.06.03.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Jul 2022 06:03:51 -0700 (PDT)
-Message-ID: <3d752603-365d-3a33-e13e-ca241cee9a11@gmail.com>
-Date:   Wed, 27 Jul 2022 15:03:49 +0200
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ILD3jhWMzdiJ0UnxmEqCyngtffCuYYLo3vFHeHzSO8E=;
+        b=TCJSCEiHvmLJKvZe+fnuqeTlSxDWQ76tBenDdatf3oiJQSlBgiBXnxQv1dLfVa5b7Q
+         GdBZJxtax1YI36y8YM0AINxCSddkaw2gvaHuhXnYGFb/EJnGOCGm8Dr8veh3XtibyYKv
+         j6WqHBpEUUaZNzq5eUZntony16PjYCX8CHYQk9UZSuHhY77+lC5G0R/SYyHcv1mZS8so
+         F07kTYAZ5SxNkwUBQmWnmf3KOHKROZnIjG9WpoXyjic5LxpiTMPzy8FWetqxLVe7e1b0
+         hON3vtxKuQkx0zYzKTzpMnv6KNAlpmPWFsu9kvKwCNfyy4j+WFlH2zfvZBIDj803Hnyn
+         wFKg==
+X-Gm-Message-State: AJIora/AthbwyYnryeyab8bOIKEbKaohhBp2XiQfKzYN7E0xYPD/2ffJ
+        rqckATXMjpYh6Zn0WyNGNJaxKGtt10zm6QmIbPmG3g==
+X-Google-Smtp-Source: AGRyM1s2IGOa6eZ4KDwsiroGfmTfXl4fNPiIcS4Py1GAfQE9djxZ0Q54MmpvAJ546bfgLsfuQi9oeBE2J17Eb4XAoaE=
+X-Received: by 2002:a05:622a:178a:b0:31e:f9ff:c685 with SMTP id
+ s10-20020a05622a178a00b0031ef9ffc685mr19041474qtk.62.1658928274125; Wed, 27
+ Jul 2022 06:24:34 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure
- Application client
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>
-Cc:     Andy Gross <agross@kernel.org>,
+References: <CAA8EJpr2S-81+q-vjmk5i+T-JwaadkRpjCr_oGi7fMf7o3iH3A@mail.gmail.com>
+ <20220727111410.bglx2u26456ray2u@bogus>
+In-Reply-To: <20220727111410.bglx2u26456ray2u@bogus>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 27 Jul 2022 16:24:22 +0300
+Message-ID: <CAA8EJprNPJfGjkq2=hexbZn-=t2wKG6ZjSm5Mcbo4JuPQ-sc-A@mail.gmail.com>
+Subject: Re: PSCI domains without OSI support
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
- <20220723224949.1089973-5-luzmaximilian@gmail.com>
- <20220726143005.wt4be7yo7sbd3xut@bogus>
- <829c8fee-cae5-597d-933d-784b4b57bd73@gmail.com>
- <20220726154138.74avqs6iqlzqpzjk@bogus>
- <d1bc99bb-82ce-aa6e-7fad-e9309fa1c19b@gmail.com>
- <7284953b-52bb-37ac-fbe1-1fa845c44ff9@linaro.org>
-From:   Maximilian Luz <luzmaximilian@gmail.com>
-In-Reply-To: <7284953b-52bb-37ac-fbe1-1fa845c44ff9@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Vinod Koul <vinod.koul@linaro.org>,
+        Linux PM <linux-pm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/27/22 13:38, Krzysztof Kozlowski wrote:
-> On 26/07/2022 19:01, Maximilian Luz wrote:
->> On 7/26/22 17:41, Sudeep Holla wrote:
->>> On Tue, Jul 26, 2022 at 05:15:41PM +0200, Maximilian Luz wrote:
->>>>
->>>> So ultimately I think it's better to add a DT entry for it.
->>>
->>> I disagree for the reason that once you discover more apps running on the
->>> secure side, you want to add more entries and update DT on the platform
->>> every time you discover some new firmware entity and you wish to interact
->>> with it from the non-secure side.
->>
->> Just as you'll have to add a driver to the kernel and update whatever is
->> probing the TrEE interface and add those strings to that interface. If
->> you then start doing SoC-specific lists, I think you'd be pretty much
->> re-implementing a DT in the kernel driver...
-> 
-> But you don't have any of these names in the DT either. Your DT node
-> only indicates the presence of your driver, but does not hold any
-> additional information like these IDs.
+On Wed, 27 Jul 2022 at 14:14, Sudeep Holla <sudeep.holla@arm.com> wrote:
+>
+> On Wed, Jul 27, 2022 at 12:09:27PM +0300, Dmitry Baryshkov wrote:
+> > Hi,
+> >
+> > Lately I have been working on improving the msm8996 platform support.
+> > Vendor kernel seems to support domain-like idle (see [1], [2]).
+> > However when I tried changing upstream msm8996.dtsi to use PSCI
+> > domains, I faced the firmware reporting NOT_SUPPORTED to an attempt to
+> > enable OSI (thus rendering PSCI domains useless, as they are now
+> > marked with ALWAYS_ON).
+> >
+>
+> That's not good to hear =F0=9F=99=81.
+>
+> > I noticed that vendor kernel makes a call to cpu_suspend() with
+> > power_state following the original format (described in PSCI spec
+> > 5.4.2.1). What would be the best way to support this?
+>
+> And why is this not possible with the existing code ? Not sure if I
+> understood it right, I am assuming you are mentioning that it is not
+> possible.
 
-Because the compatible implicates the ID-string which implicates the driver
-interface. If the ID-string for uefisecapp would be different we'd very likely
-need a different driver for that as well, meaning a new compatible too. I
-thought it would be superfluous to put that in the DT.
-  
-> Basically we start modelling firmware components in devicetree. :/
+It's not possible with the cpuidle-psci-domains.c. The driver marks
+all genpds as ALWAYS_ON, thus making sure that they are never
+suspended.
 
-Is there really a good way around it? As far as I can see the
-alternative (especially for the apps that need to be loaded manually) is
-hard-coding everything in the driver. Which IMHO just spreads device
-specific information everywhere.
+> > - Allow DTS forcing the PSCI power domains even if OSI enablement fails=
+?
+>
+> Meaning DTS flag for this ? If OSI enable fails, why would you want to
+> still proceed. It is non-compliant and must be fixed if the firmware
+> supports OSI and expects OSPM to use the same.
 
-Also: Let's use the TPM app as example. If that would be a SPI or I2C
-device, you'd model it in the DT. Just because it's a hardware device
-that's accessible via SCM/firmware you now don't?
+I'm not sure at this moment. PSCI firmware reports that OSI mode is
+supported, but then when psci_pd_try_set_osi_mode() tries to switch
+into OSI mode, it gets NOT_SUPPORTED.
+Just for the sake of completeness, I added a print to the psci.c to
+dump the result of the psci_set_osi_mode(false). It also returns
+NOT_SUPPORTED!
 
-If I were absolutely certain that there is a reliable mechanism to
-detect these apps, I'd agree with having a driver to instantiate those
-devices. But I am not.
+My logical assumption would be that the firmware reports support for
+OS_INITIATED, but then just fails to properly support
+SET_SUSPEND_MODE.
+I should probably try ignoring the error psci-domain.c and continue
+with binding power domains. What would be the best way to check that
+the domains setup works as expected?
 
-Regards,
-Max
+>
+> > - Add a separate cpuidle driver?
+>
+> I would avoid that.
+>
+> > - Just forget about it and use plain PSCI as we currently do?
+> >
+>
+> Worst case yes. My main worry is how many of the old SDM SoC has such a
+> behaviour and how much they wary from each other. The OSI mode was pushed
+> after lengthy discussions to support all these platforms and now we have
+> platforms needing separate idle driver ?
+
+I'm not sure. 32-bit SoCs use non-PSCI idle driver. MSM8916, sdm845
+and later SoCs are using proper domains support.
+I tested the sdm660, it looks like it can work with the power domains.
+So this leaves only MSM8992/4/8 in question (at least from the
+platforms that are supported by the mainline).
+
+>
+> > Additional topic: for one of idle states the vendor kernel uses a
+> > proprietary call into the hypervisor ([3]).
+>
+> Again I would say it is not spec compliant.
+
+Yes, of course. Otherwise there would not be such a question.
+Judging from the vendor kernels, this call is limited to 8996 only.
+
+>
+> > Up to now we have ignored this, as 8996 seems to be the only platform u=
+sing
+> > it. I suppose that adding it to cpuidle-psci.c would be frowned upon.
+>
+> Indeed.
+>
+> > Is this assumption correct? Would it add another point for adding a sep=
+arate
+> > cpuidle driver?
+> >
+>
+> I am getting a sense that this would be cleaner approach but I would like
+> to understand how much of these non-compliance is carried to the other
+> relatively newer SoCs. I understand this is atleast 5-6+ years old. I don=
+'t
+> want this to set example to deviate from standard driver by adding new
+> drivers though they all are supposedly using PSCI(and are not fully compl=
+iant)
+
+At this moment I fear that it might be limited to msm8996 only. Maybe
+including 8992/4/8.
+
+--=20
+With best wishes
+Dmitry
