@@ -2,59 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6499C583507
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 00:02:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3C6F58353C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 00:15:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231626AbiG0WC1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Jul 2022 18:02:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46290 "EHLO
+        id S235229AbiG0WPQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Jul 2022 18:15:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229628AbiG0WC0 (ORCPT
+        with ESMTP id S237770AbiG0WO7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Jul 2022 18:02:26 -0400
+        Wed, 27 Jul 2022 18:14:59 -0400
 Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 920D84F6BB;
-        Wed, 27 Jul 2022 15:02:24 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F256765D7E;
+        Wed, 27 Jul 2022 15:12:05 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 3F42BB82282;
-        Wed, 27 Jul 2022 22:02:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB6E6C433D6;
-        Wed, 27 Jul 2022 22:02:21 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 962E8B82286;
+        Wed, 27 Jul 2022 22:12:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF3DC43470;
+        Wed, 27 Jul 2022 22:12:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1658959342;
-        bh=JHxLD7adE29C3PTZwVw6TG/arziY/IL7wPNO7oLQuoo=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=cD8DGlrfRJFeJlWrRdjqTpGlsBiWus7K4m/IXrCbhThL3ipJaa1SJhgU790eSrBud
-         vjDg+rAG4+E28DQyY9eYH0a4HeM+5HTORjsu6zLxnjk0Gi2/qL4BBWXUxMk7T+udx8
-         OJeIvFGjXR8ja6ziFri8PnSQWqcn5Nm54xDv4bS9e4Z87zRsv9k5bwDsShEds1jYFt
-         ZB2KY+AJUKFDuJDMHKOM5ldwXXDibRqbDRulftn2DDtb4c61J12vhcLZ4q0DTo6PKf
-         Hcjeq3ivadB9CgRmpcYkYBHH5ry+Xb8q6nWMkc+KN8mOKuCpSvbgeTj5AfTs4ONTZL
-         ehBHAtVexcNAg==
-Date:   Wed, 27 Jul 2022 17:02:20 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
+        s=k20201202; t=1658959923;
+        bh=OdgQrrPG8BUR2b2yNmh3OFrDvpcW55FL2Q6+RLHW76M=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=tbnFOJUu/WaozZIVJCnvZPi1eEaf2p6DB34iesgMesKdeS97cbvyEKVMuXt5Mg7A4
+         T45PivH+b5v2OIVkzqMY10rLJKYqlFWYP1f/3D8CQKgRiL+p7gALfiU92g5vIvVhCN
+         fJYncG0GlbctujlX0SqZWGXjut3GGaZG3HgRPyEQLkt+QsjvnW4EAWkb+RzlaPLqM3
+         U/0KGDDATpAoKQMpC/MV17I/kX19Za/qwufcgMiAJcAyzcYfXCs0BdbNMVrw30fqvz
+         rHgLBfAO3GE5MKs2MTLIU6ghgIOIjZa+yy4QDpY7YPpG5rRYb1g5xyWjdaRtilXCNY
+         AWJhvjHqLwiwA==
+Received: by mail-vs1-f51.google.com with SMTP id 66so19403vse.4;
+        Wed, 27 Jul 2022 15:12:03 -0700 (PDT)
+X-Gm-Message-State: AJIora/treDbuxk4foMn4oXsrCwCScbSFimiBlu+1IccC0/TevkbmbD/
+        YTCYtk3qhlhl49wSBkRjnX0U5zbP5+EI2F9rEw==
+X-Google-Smtp-Source: AGRyM1uuRDLPni5HdjqtEIbzt0NQRO8rcoruBURHRVynskfUsrrj94bFcELIF4fzDI38jCj6fSCEHXpT1g2KKT916ss=
+X-Received: by 2002:a05:6102:21aa:b0:35a:1419:1bc7 with SMTP id
+ i10-20020a05610221aa00b0035a14191bc7mr2983610vsb.26.1658959922069; Wed, 27
+ Jul 2022 15:12:02 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220726212354.1.I5b9006878bdabd6493b866b46dbd6149968d545b@changeid>
+ <20220727160320.GA2755147-robh@kernel.org> <CAD=FV=U8ek0FR=hZwemK5JcbUP=JsnRTtv7WzJKmOb-UFwHfXA@mail.gmail.com>
+ <CAL_JsqJ=jj6isKbBEKGjax266MS_h+Oehn9zYMMjXzc3K-t4Wg@mail.gmail.com> <CAD=FV=XPTUVKMSrcZdaoztrMU9pCJWXkHLfW-1dHqG70-iR3Yw@mail.gmail.com>
+In-Reply-To: <CAD=FV=XPTUVKMSrcZdaoztrMU9pCJWXkHLfW-1dHqG70-iR3Yw@mail.gmail.com>
+From:   Rob Herring <robh@kernel.org>
+Date:   Wed, 27 Jul 2022 16:11:50 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqL+5DSXoLDYVDbaDisW4uBncBYx--RFOO6-jd0Bed_RAQ@mail.gmail.com>
+Message-ID: <CAL_JsqL+5DSXoLDYVDbaDisW4uBncBYx--RFOO6-jd0Bed_RAQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: document zoglin board
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Bob Moragues <moragues@chromium.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Bob Moragues <moragues@google.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Selvam Sathappan Periakaruppan <quic_speriaka@quicinc.com>,
-        Baruch Siach <baruch.siach@siklu.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>
-Subject: Re: [PATCH 2/2] PCI: qcom: Sort variants by Qcom IP rev
-Message-ID: <20220727220220.GA218338@bhelgaas>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Yt/h7q9OBtlyG+Sw@hovoldconsulting.com>
+        Stephen Boyd <sboyd@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -64,63 +70,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 26, 2022 at 02:45:34PM +0200, Johan Hovold wrote:
-> On Fri, Jul 22, 2022 at 10:49:19AM -0500, Bjorn Helgaas wrote:
-> > From: Bjorn Helgaas <bhelgaas@google.com>
-> > 
-> > Previously the variant resource structs, ops, etc., were in no obvious
-> > order (mostly but not consistently in *Synopsys* IP rev order, which is not
-> > reflected in the naming).
-> > 
-> > Reorder them in order of the struct and function names.  No functional
-> > change intended.
-> > 
-> > Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-> > ---
-> >  drivers/pci/controller/dwc/pcie-qcom.c | 732 ++++++++++++-------------
-> >  1 file changed, 366 insertions(+), 366 deletions(-)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > index c27e3494179f..d0237d821323 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> 
-> Moving code around like this makes code forensics harder as it messes up
-> git blame. At least the callbacks appears to be grouped by IP version
-> currently, so not sure how much you gain from moving the callbacks
-> around.
+On Wed, Jul 27, 2022 at 3:59 PM Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> On Wed, Jul 27, 2022 at 12:43 PM Rob Herring <robh@kernel.org> wrote:
+> >
+> > On Wed, Jul 27, 2022 at 11:40 AM Doug Anderson <dianders@chromium.org> wrote:
+> > >
+> > > Hi,
+> > >
+> > > On Wed, Jul 27, 2022 at 9:03 AM Rob Herring <robh@kernel.org> wrote:
+> > > >
+> > > > On Tue, Jul 26, 2022 at 09:24:31PM -0700, Bob Moragues wrote:
+> > > > > Zoglin is a Hoglin Chromebook with SPI Flash reduced from 64MB to 8MB.
+> > > > > Zoglin is identical to Hoglin except for the SPI Flash.
+> > > > > The actual SPI Flash is dynamically probed at and not specified in DTS.
+> > > > >
+> > > > > Signed-off-by: Bob Moragues <moragues@chromium.org>
+> > > > >
+> > > > > Signed-off-by: Bob Moragues <moragues@google.com>
+> > > > > ---
+> > > > >
+> > > > >  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+> > > > >  1 file changed, 1 insertion(+)
+> > > > >
+> > > > > diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> > > > > index 581485392404..63091df3cbb3 100644
+> > > > > --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> > > > > +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> > > > > @@ -475,6 +475,7 @@ properties:
+> > > > >
+> > > > >        - description: Qualcomm Technologies, Inc. sc7280 CRD platform (newest rev)
+> > > > >          items:
+> > > > > +          - const: google,zoglin
+> > > > >            - const: google,hoglin
+> > > > >            - const: qcom,sc7280
+> > > >
+> > > > Is just "google,hoglin", "qcom,sc7280" no longer valid? If it is valid,
+> > > > you need another entry.
+> > >
+> > > If it makes people happy to have another entry then it wouldn't hurt,
+> > > but it has no long term benefit and I would recommend against it. The
+> > > next patch in this series changes the existing "hoglin" device tree to
+> > > have all 3 compatible strings and thus when both patches land then
+> > > make dtbs_check will pass. I assume that is the only goal of
+> > > documenting these boards here. Certainly if you had a device tree that
+> > > had only "google,zoglin" it would boot fine on zoglin devices and if
+> > > you had a device tree that had only "google,hoglin" it would boot fine
+> > > on hoglin device. This is true of all of the entries for Chromebooks
+> > > that have multiple compatible entries.
+> >
+> > Why even add the entry? If it is just a different SPI flash, you can
+> > tell that from the SPI flash compatible or device ID.
+>
+> Yeah, it's really unfortunate. :( The issue is a limitation in the
+> ChromeOS bootloader infrastructure. The ChromeOS build infrastructure
+> cannot handle something that it considers the same "board" as having
+> different SPI flash sizes. This is because the infrastructure always
+> requires that the bootloader "image" be the exact same size as the SPI
+> flash and it assumes a universal firmware (single image) per board.
+> It's unfortunately not very flexible but normally for a given board
+> the SPI flash size is chosen at the start and never changed. The CRD
+> board was an exception here. Though it's not beautiful, this means
+> that the firmware considers this as a different board and looks for a
+> different compatible string on the kernel command line.
 
-The existing hodge-podge is sloppy and makes code reading harder for
-everybody.  If we want them grouped by IP version, they should be
-*named* by IP version.
+Okay, I guess...
 
-> > -static const struct qcom_pcie_cfg sc8180x_cfg = {
-> > -	.ops = &ops_1_9_0,
-> > -	.has_tbu_clk = true,
-> > -};
-> > -
-> >  static const struct qcom_pcie_cfg ipq6018_cfg = {
-> >  	.ops = &ops_2_9_0,
-> >  };
-> 
-> But this bit I disagree with. Why sort the SoCs configurations by IP
-> revision, when what you typically need is to look them up by name?
-
-Makes sense.
-
-> Also note that this conflicts with my sc8280xp-support and IP-revision
-> series:
-> 
-> 	https://lore.kernel.org/all/20220714071348.6792-1-johan+linaro@kernel.org/
-> 
-> The result of applying that series is that these structs are renamed
-> after the IP revision (and sorted alphabetically) so the end-result is
-> similar.
-> 
-> Could you consider dropping this patch, or at least the struct
-> qcom_pcie_cfg bits, and applying the above series for 5.20?
-
-I dropped it for now.  We can see how it shakes out after your series,
-but not sure I'll get to it for this cycle.
-
-Bjorn
+Acked-by: Rob Herring <robh@kernel.org>
