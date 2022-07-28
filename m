@@ -2,56 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E557583F90
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 15:06:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42619583F94
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 15:06:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238962AbiG1NGH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jul 2022 09:06:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44974 "EHLO
+        id S238953AbiG1NGX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jul 2022 09:06:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238871AbiG1NGG (ORCPT
+        with ESMTP id S238882AbiG1NGW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jul 2022 09:06:06 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F91052DEB;
-        Thu, 28 Jul 2022 06:06:02 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B765261CF2;
-        Thu, 28 Jul 2022 13:06:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 736C0C433C1;
-        Thu, 28 Jul 2022 13:05:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1659013561;
-        bh=RHdNXg2FMd7Dpr3izSu13H5wifouRTsZ4ttGOeY++k0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Fx+EzAVPExp6RzDbyz4pMnd0FalmyWqhpD/NPZ+7WiNGG8GcjBn8nyp/OYK7xHJiG
-         w4DgUBdA+9Geg64LnRtQw8uJ7EjTth1aNc/2pJmEu2Yyo0gyRk5e4kzCrfX+2/kZ1R
-         1D8pgpoAO9N7bH5NvxyjlI7mShuPZNPi6Yn3QYwkZPjp4GReaWEN+pxrlzJJUeZDHz
-         vh2YEyrIPtpZyAsfULG4JszmaDUfH6xtxrehpWABji1NvXHBxNsxAjr/R5DpQaQ6TI
-         +8P4lmajPZqfYXHBVJFR3EVe+gBeihmJ8wm6flDEg9wdwxQeTciuwFtKgn4v91IK1m
-         ZMFnroSCI4Jig==
-Date:   Thu, 28 Jul 2022 14:05:56 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Sudeep Holla <sudeep.holla@arm.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] firmware/psci: Add debugfs support to ease debugging
-Message-ID: <YuKJtKHzoR4DUsOr@sirena.org.uk>
-References: <20220727200901.1142557-1-dmitry.baryshkov@linaro.org>
- <20220728090806.nnighsbx2lcgugon@bogus>
+        Thu, 28 Jul 2022 09:06:22 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC31225E86;
+        Thu, 28 Jul 2022 06:06:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1659013581; x=1690549581;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=b/wEQ01RTadmT60aE0Fd5qVRKAPrU1I1CCnWHz9Go5Y=;
+  b=Kc8OJY/+AhN68NOxkIrzQIrZjewBuw5yC5qyNgyDpKbsOeKqZw5ZuBBO
+   COcs8tTguxwjjiFMdggfdx91dg0y/RP8gmGU4S2rmAL3ABhaE30ORhllr
+   jtuHREt3toOrKSIREDm58oMbfxxHpcp9W3UY/gH+KIKJDLVEcfQFvEiTy
+   o=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 28 Jul 2022 06:06:21 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jul 2022 06:06:21 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 28 Jul 2022 06:06:20 -0700
+Received: from [10.216.53.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 28 Jul
+ 2022 06:06:15 -0700
+Message-ID: <00cd5620-a276-6e55-8997-fbf8285d9a9a@quicinc.com>
+Date:   Thu, 28 Jul 2022 18:36:12 +0530
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="9ApfM92VlMV+pgBD"
-Content-Disposition: inline
-In-Reply-To: <20220728090806.nnighsbx2lcgugon@bogus>
-X-Cookie: People respond to people who respond.
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH] ASoC: qcom: SC7280: Add support for external DMIC bias
+ supply
+Content-Language: en-US
+To:     Mark Brown <broonie@kernel.org>
+CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <lgirdwood@gmail.com>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
+        <devicetree@vger.kernel.org>
+References: <1658992233-28372-1-git-send-email-quic_srivasam@quicinc.com>
+ <YuJpxSuPBB++pl/o@sirena.org.uk>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <YuJpxSuPBB++pl/o@sirena.org.uk>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -60,39 +75,22 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---9ApfM92VlMV+pgBD
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On 7/28/2022 4:19 PM, Mark Brown wrote:
+Thanks for your time Mark!!!
+> On Thu, Jul 28, 2022 at 12:40:33PM +0530, Srinivasa Rao Mandadapu wrote:
+>
+>> +static int sc7280_dmic_micbias(struct snd_soc_dapm_widget *w,
+>> +				struct snd_kcontrol *kcontrol, int event)
+>> +{
+>> +	struct snd_soc_card *card = w->dapm->card;
+>> +	struct sc7280_snd_data *data = snd_soc_card_get_drvdata(card);
+>> +	int ret = 0;
+>> +
+> This is open coding SND_SOC_DAPM_REGULATOR_SUPPLY() isn't it?
 
-On Thu, Jul 28, 2022 at 10:08:06AM +0100, Sudeep Holla wrote:
-> On Wed, Jul 27, 2022 at 11:09:01PM +0300, Dmitry Baryshkov wrote:
+Yes, agree that SND_SOC_DAPM_REGULATOR_SUPPLY can be used here. As I was 
+using two different names for
 
-> > To ease debugging of PSCI supported features, add debugfs file called
-> > 'psci' describing PSCI and SMC CC versions
+VDD supply property and widget name, got confused. I will re post the 
+patch, with single name for both and replace with above macro .
 
-> These 2 are for sure in the boot log. Having them is debugfs accessible
-> via file system add not much value as we would hit issues quite early in
-> the boot for most of the things related to PSCI.
-
-It can be useful to have something that can be queried at any point when
-collecting diagnostics, even if there's been a lot of logging or log
-rotation since boot.  It makes it easier to give people instructions or
-a tool which will reliably collect useful information when filing a bug
-report.
-
---9ApfM92VlMV+pgBD
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmLiibMACgkQJNaLcl1U
-h9Djrgf/birZX09UpgOEo3CESr2Dek7AN1A7Upjzq6E7iRTeEfJsTpmAU96iU2yZ
-ZDL4mCHFDdgos0VDgKY5CPqMZXA5ClqFmTGDmDv4oiQJ7oLd16/bCQQ1Mt7IEExi
-ebjhHC7mG2BK7LSRK8D1v6tf6yaQpWA4Y128YVdu2RlaescUmgxn2iWyi7rcQary
-uYH6fQbc853JsHYjiS4GpCPQUhqHbwegWq7tLC/aHXcZA80cjVhS/C+MCaCZRI9s
-awkAwdApxEBGpSw1OEpXpg5IGnLt5ijR3NLl+uUKHkRlfiLMwi5J0CMb6ecMJnu4
-+z4AttpiEFUj0KbnqMIHUFsslKiVqQ==
-=awB8
------END PGP SIGNATURE-----
-
---9ApfM92VlMV+pgBD--
