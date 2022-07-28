@@ -2,91 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AD6A584076
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 16:00:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 703A05840B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 16:10:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229475AbiG1OAO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jul 2022 10:00:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60660 "EHLO
+        id S231431AbiG1OKp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jul 2022 10:10:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229543AbiG1OAM (ORCPT
+        with ESMTP id S231159AbiG1OKB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jul 2022 10:00:12 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBB6610E3;
-        Thu, 28 Jul 2022 07:00:09 -0700 (PDT)
+        Thu, 28 Jul 2022 10:10:01 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C9CC66120;
+        Thu, 28 Jul 2022 07:09:48 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id ay11-20020a05600c1e0b00b003a3013da120so2589401wmb.5;
+        Thu, 28 Jul 2022 07:09:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1659016811; x=1690552811;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=apUfx5uwPW9Z/IJHLl9owKM3iyON8mPNng7D40fPRRE=;
-  b=NZLKg7plj3Z2mXScQNNSX/DSEWKnKqjqA5a8tTDUUQ1GipZywuJCHoWi
-   y9XkxS38/xKJFmuyphLO3TZ+ePqRzUzaxPrNXOvZZsfVTX/B4lss/uR3b
-   wDpXpcj0yfd0EaYMCSnyrEejkQ4WcKh1VORvuepuSKfqiq1Z9cxUrnbLr
-   k=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 28 Jul 2022 07:00:10 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jul 2022 07:00:09 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 28 Jul 2022 07:00:08 -0700
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 28 Jul 2022 07:00:02 -0700
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
-        <devicetree@vger.kernel.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [PATCH v2] ASoC: qcom: SC7280: Add support for external DMIC bias supply
-Date:   Thu, 28 Jul 2022 19:29:49 +0530
-Message-ID: <1659016789-9933-1-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=ixqHRPr6e7MHs/cE0ogao0EJfks3+o9Xq3/fufygzUo=;
+        b=GX9O/gveVrekkyIe1HGILQb6uOLCLpBWU/EWtJr30BOpjOUJSdJrxcKPOjH9jshgdS
+         axn+o9F83Xtyk2FgV6lPzzQDfvSYMduZflssUI4i7xt/hGwfPz4dlZCYwbzPOhNW85+P
+         x8vIhPNHctkTl5maKKiAk+68zirbIPK85PE+feXTixiBX8e9Cs+kPW8GCkFKLD4wLDMe
+         RiVd3iIZ2r7l4KmgY1KKXWC4Pgyi0qWp5GZu7F8nn6TlycuuBDfCHX28YQy/z/lxECuy
+         HRuhRyTiisc1cj0hva/FHqs2CMCSd+i9DoNqWPh/vgnCIPjUrZtMX98b76C5tqMgxipm
+         LhVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=ixqHRPr6e7MHs/cE0ogao0EJfks3+o9Xq3/fufygzUo=;
+        b=dhUQTkr2vCkKMC4JGEc5CPc6aShYEJBb5EzkMk/IMoiVH/zOgTlfOb/UtaPqOzxmwM
+         NYCub7maHYGCV5aD8sws3BzdhIoL3WWiUxqvQCyEBzDw/i8QefNV3QBae6YSpWtVyd13
+         2dtTW/+s+kAOUIYwLIXm3/ufa4EZapXcxjZIDjSY3V0yrAPee462S+3QhaR7I1kwTjq1
+         eRfQg/sUDyQrx1mQqyorOW3H9VrZ7KQ2grgMuc8yxGeqnqrsVOttuIr1VyAwLm9S8uWB
+         Pt/FhTr7O+58m1hoLvGAo3yJS3PRfE92x9HjGggf+F+eFQ+zJ8yA2pnCYTswZ28QDLto
+         CUdQ==
+X-Gm-Message-State: AJIora8Xsg3W4rAa1Iue9N58qU3zx/BL8BZBvR2jWMCNYtR8yoMHmG3Z
+        dJIoIeNbD7PJGmQmkbK3hdE=
+X-Google-Smtp-Source: AGRyM1uQ8JmKJbrJWgcUJogFvOJNGMZ7Key56sa6wlDnx+PMBxeRB0c9qy5i4aS4okzS8GvyWxQzzw==
+X-Received: by 2002:a1c:288:0:b0:3a3:5332:9d16 with SMTP id 130-20020a1c0288000000b003a353329d16mr6702665wmc.168.1659017386588;
+        Thu, 28 Jul 2022 07:09:46 -0700 (PDT)
+Received: from [192.168.2.202] (pd9ea36f8.dip0.t-ipconnect.de. [217.234.54.248])
+        by smtp.gmail.com with ESMTPSA id o5-20020a05600c510500b003a2d6f26babsm1539451wms.3.2022.07.28.07.09.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 28 Jul 2022 07:09:46 -0700 (PDT)
+Message-ID: <d16d14fd-3edc-32f8-d00b-23b4b8a799fa@gmail.com>
+Date:   Thu, 28 Jul 2022 16:09:44 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure
+ Application client
+Content-Language: en-US
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ard Biesheuvel <ardb@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
+ <20220723224949.1089973-5-luzmaximilian@gmail.com>
+ <20220726143005.wt4be7yo7sbd3xut@bogus>
+ <829c8fee-cae5-597d-933d-784b4b57bd73@gmail.com>
+ <20220726154138.74avqs6iqlzqpzjk@bogus>
+ <d1bc99bb-82ce-aa6e-7fad-e9309fa1c19b@gmail.com>
+ <20220728082330.w4ppmzvjaeywsglu@bogus>
+ <4e777590-616a-558a-031e-3ef1f1e492b4@gmail.com>
+ <20220728112150.hs5el6wufljeoqyy@bogus>
+ <b018e909-e371-fd57-2790-9f0a37b63f29@gmail.com>
+ <20220728134222.hs2v75zkxgtcctrx@bogus>
+From:   Maximilian Luz <luzmaximilian@gmail.com>
+In-Reply-To: <20220728134222.hs2v75zkxgtcctrx@bogus>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update SC7280 machine driver for enabling external dmic bias supply,
-which is required for villager evt boards.
+On 7/28/22 15:42, Sudeep Holla wrote:
+> On Thu, Jul 28, 2022 at 01:45:57PM +0200, Maximilian Luz wrote:
+>>
+>> Would something like this work for you: Add a compatible for the TrEE
+>> interface (e.g. qcom,sc8180x-tee) but not for the specific apps running
+> 
+> IIUC, you would introduce a compatible for each unique production if there
+> is a need. This constitutes as a strong need for that, but you need just
+> that, no need to have any notion or info to indicate TrEE/TEE as you know
+> this product runs those in TEE.
+> 
+> In short, just use the platform specific(not SoC or SoC family) specific
+> compatible to initialise your driver and don't introduce any specific
+> compatible for this particular firmware interface need.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
----
-Changes since v1:
-	-- Replace dapm widget SND_SOC_DAPM_MIC with SND_SOC_DAPM_REGULATOR_SUPPLY.
- sound/soc/qcom/sc7280.c | 1 +
- 1 file changed, 1 insertion(+)
+As Krzysztof mentioned, it would be good to ensure proper device
+ordering wrt. SCM. Having a device node for the overall TrEE interface
+would allow specifying that via DT. We could then still use the platform
+compatible to load the specific things inside that driver.
+Alternatively, we would need to do this extra stuff in qcom_scm.
 
-diff --git a/sound/soc/qcom/sc7280.c b/sound/soc/qcom/sc7280.c
-index da7469a..4a60f34 100644
---- a/sound/soc/qcom/sc7280.c
-+++ b/sound/soc/qcom/sc7280.c
-@@ -356,6 +356,7 @@ static const struct snd_soc_ops sc7280_ops = {
- static const struct snd_soc_dapm_widget sc7280_snd_widgets[] = {
- 	SND_SOC_DAPM_HP("Headphone Jack", NULL),
- 	SND_SOC_DAPM_MIC("Headset Mic", NULL),
-+	SND_SOC_DAPM_REGULATOR_SUPPLY("DMICVDD", 0, 0),
- };
- 
- static int sc7280_snd_platform_probe(struct platform_device *pdev)
--- 
-2.7.4
+I think separating this from qcom_scm into a new driver would be better
+from a code separation and maintenance point of view. Also, this
+reflects what's present in ACPI: There is a QCOM040B device for SCM and
+a QCOM0476 device for TrEE.
 
+Regards,
+Max
