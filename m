@@ -2,140 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 045A2583ECA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 14:26:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E3CC583EF1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 14:36:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237079AbiG1M0l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jul 2022 08:26:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36814 "EHLO
+        id S238703AbiG1Mf7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jul 2022 08:35:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236971AbiG1M0l (ORCPT
+        with ESMTP id S237921AbiG1Mf7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jul 2022 08:26:41 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C88D55465C;
-        Thu, 28 Jul 2022 05:26:39 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2738761C67;
-        Thu, 28 Jul 2022 12:26:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FFEFC433D6;
-        Thu, 28 Jul 2022 12:26:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1659011198;
-        bh=8Dar59EmhP1jxjYE2LuFndzVAZHeUmQW36+jCnv2XdA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=cVFhUFXGw6t4CzMpm8AkQDR+Mjzb+kuOb2etANZRR0hd9gj2hquhxN+Rch6J5mBhp
-         ORpyy2lnWgpL9stsdfeugNONgqeyXtRvf4E/MmERyImpoLm7RN1nAt5lYQeg8AkQ1H
-         7nKjPMWAKld1tAQvkSoHvVYApSvjK6jKxUk7gbCZJfaopC5Cz49uL4k1Dy8K+RnX+V
-         VeZYHFQLlKcmrftVXne4aw/IcV98w7aCx1EBaKWzClVeITPASxiBCnoMmNCowke3bU
-         3T5ANTXyTx/j+961D+a8axNXn+8czb99sCjOhD6i8fuO/M+kHMF2z8pzyubkdHnXj5
-         A8I46JDp7z0Sg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oH2bL-0008NA-48; Thu, 28 Jul 2022 14:26:51 +0200
-Date:   Thu, 28 Jul 2022 14:26:51 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Helgaas <helgaas@kernel.org>
-Cc:     Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Thu, 28 Jul 2022 08:35:59 -0400
+Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ED1166BB4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 05:35:57 -0700 (PDT)
+Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-31f445bd486so17386857b3.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 05:35:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=l6kv977iX0DxQe8GqSszxDwkV+ebVuYMRRbZ1g3snjc=;
+        b=v7uH8UZVPUY1DgE+baRwICn8k4lVtu4x39Wor3Siqsh5ebSZO6yD/Yux6yzwiRQH9Y
+         t7flcF5rbKQPtcSbqdAeCfIh5F1wzgKosuS4A66Nj5mS1FxzuVEwlJAQYDZU7/KLY1DZ
+         2bgWnL258OJuEzxrf4rPJ1VBLSie8koqO4vryM6xiJa+AKDMODACMzTsJHAbIjpcwgpw
+         2V0FI9iCw+jkrjnWnc37TQ2neLspwkUEXgKYrEi2hIlRLqJJsI4LjdkWSZ+av1ph3O11
+         9Na9kpX65gzqHrNLlBXA/KxWoMeQ9bx8QVqllwcC7REyDJf6KlnV6WTSOUlGR6qT/Zym
+         /O9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=l6kv977iX0DxQe8GqSszxDwkV+ebVuYMRRbZ1g3snjc=;
+        b=7EjIoSXLg6kqCn5wMWZTtl7bqHSM+jjg7ZUEa+v8FqaKBHpyoIOhUDkM6b/k3+dUnl
+         UDiXAYuszHXzHJsvTRv3PB+XkoPtKoUr2QTtFGn4wMQtEXIbk9SGg0qu7w6hDe8+l3gW
+         m376iYheC+0IsN87tfgTlEtaErmzBc75HarTD3onSQHcc+63BbiIOwI32R1S7eYnvmj4
+         +h2aXf19aObLeDFtjLMIvn9ydTmy2e3yxLBNdd+6rpDaXejWvk9Lq3NwLb7xCytDqpVj
+         YCKFRPvRkTizyJ4sG0XpdedjGKHQIQ+pNwg1yz1Scvl7GjSTvQNkkakpxnWTbBEvRt3s
+         aFaA==
+X-Gm-Message-State: ACgBeo2yFyoTCKrLDzIxJFEYkc9stwVBFI1J+2MPr+1/SkG4NioWNO5u
+        +0UC10xhPvBp502k51hOt/HYG5U9/P3EWxz9rQ3Zyw==
+X-Google-Smtp-Source: AA6agR58r+D9gfe5rfd35JLF7P8cV3HvNf9eNcgRgUXYK/mn7Yvty9e/DoSp30m6KaxnofxrnwjnlxkivXa0NbBncqw=
+X-Received: by 2002:a81:6a07:0:b0:323:8614:10c2 with SMTP id
+ f7-20020a816a07000000b00323861410c2mr17175ywc.191.1659011756195; Thu, 28 Jul
+ 2022 05:35:56 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
+ <20220723224949.1089973-5-luzmaximilian@gmail.com> <20220726143005.wt4be7yo7sbd3xut@bogus>
+ <829c8fee-cae5-597d-933d-784b4b57bd73@gmail.com> <20220726154138.74avqs6iqlzqpzjk@bogus>
+ <d1bc99bb-82ce-aa6e-7fad-e9309fa1c19b@gmail.com> <7284953b-52bb-37ac-fbe1-1fa845c44ff9@linaro.org>
+ <3d752603-365d-3a33-e13e-ca241cee9a11@gmail.com> <20220727132437.pjob3z2nyxsuxgam@bogus>
+ <CAC_iWj+Pn+h8k=fuDHzYwqD0g4m6jGRt8sCzcz+5+rYqvz9q4w@mail.gmail.com> <fd922f0f-99fd-55a3-a0b5-b62ad2dbfb45@gmail.com>
+In-Reply-To: <fd922f0f-99fd-55a3-a0b5-b62ad2dbfb45@gmail.com>
+From:   Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Date:   Thu, 28 Jul 2022 15:35:20 +0300
+Message-ID: <CAC_iWjLWBJLth26ifFfHvimProHZu_w5SjQNWSH_D2Fs_JXjbA@mail.gmail.com>
+Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure
+ Application client
+To:     Maximilian Luz <luzmaximilian@gmail.com>
+Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Selvam Sathappan Periakaruppan <quic_speriaka@quicinc.com>,
-        Baruch Siach <baruch.siach@siklu.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>
-Subject: Re: [PATCH 2/2] PCI: qcom: Sort variants by Qcom IP rev
-Message-ID: <YuKAi+Dfsw7vodpH@hovoldconsulting.com>
-References: <Yt/h7q9OBtlyG+Sw@hovoldconsulting.com>
- <20220727220220.GA218338@bhelgaas>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220727220220.GA218338@bhelgaas>
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Ard Biesheuvel <ardb@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 27, 2022 at 05:02:20PM -0500, Bjorn Helgaas wrote:
-> On Tue, Jul 26, 2022 at 02:45:34PM +0200, Johan Hovold wrote:
-> > On Fri, Jul 22, 2022 at 10:49:19AM -0500, Bjorn Helgaas wrote:
-> > > From: Bjorn Helgaas <bhelgaas@google.com>
-> > > 
-> > > Previously the variant resource structs, ops, etc., were in no obvious
-> > > order (mostly but not consistently in *Synopsys* IP rev order, which is not
-> > > reflected in the naming).
-> > > 
-> > > Reorder them in order of the struct and function names.  No functional
-> > > change intended.
-> > > 
-> > > Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-> > > ---
-> > >  drivers/pci/controller/dwc/pcie-qcom.c | 732 ++++++++++++-------------
-> > >  1 file changed, 366 insertions(+), 366 deletions(-)
-> > > 
-> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > index c27e3494179f..d0237d821323 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > 
-> > Moving code around like this makes code forensics harder as it messes up
-> > git blame. At least the callbacks appears to be grouped by IP version
-> > currently, so not sure how much you gain from moving the callbacks
-> > around.
-> 
-> The existing hodge-podge is sloppy and makes code reading harder for
-> everybody.  If we want them grouped by IP version, they should be
-> *named* by IP version.
+Hi Maximilian
 
-But they are named by IP version. It's just that people didn't add these
-groups of callbacks in IP version order. (And the fact that different IP
-version share some of these callbacks between revisions doesn't help.)
+On Thu, 28 Jul 2022 at 13:48, Maximilian Luz <luzmaximilian@gmail.com> wrote:
+>
+> On 7/28/22 08:03, Ilias Apalodimas wrote:
+> > Hi all,
+> >
+> > On Wed, 27 Jul 2022 at 16:24, Sudeep Holla <sudeep.holla@arm.com> wrote:
+> >>
+> >> On Wed, Jul 27, 2022 at 03:03:49PM +0200, Maximilian Luz wrote:
+> >>>
+> >>> Is there really a good way around it?
+> >>
+> >> Yes rely on the firmware preferably auto discover, if that is not an option,
+> >> how about query. It seem to be working in your case.
+> >
+> > That's a good point.  We have a similar situation with some Arm
+> > devices and U-Boot.  Let me try to explain a bit.
+> >
+> > There's code plugged in in OP-TEE and U-Boot atm which allows you to
+> > store EFI variables on an RPMB.  This is a nice alternative if your
+> > device doesn't have any other secure storage,  however it presents
+> > some challenges after ExitBootServices, similar to the ones you have
+> > here.
+> >
+> > The eMMC controller usually lives in the non-secure world.  OP-TEE
+> > can't access that, so it relies on a userspace supplicant to perform
+> > the RPMB accesses.  That supplicant is present in U-Boot and
+> > Get/SetVariable works fine before ExitBootServices.  Once Linux boots,
+> >   the 'U-Boot supplicant' goes away and we launch the linux equivalent
+> > one from userspace.  Since variable accessing is a runtime service and
+> > it still has to go through the firmware we can't use those anymore
+> > since U-Boot doesn't preserve the supplicant, the eMMC driver and the
+> > OP-TEE portions needed in the runtime section(and even if it did we
+> > would now have 2 drivers racing to access the same hardware).  Instead
+> > U-Boot copies the variables in runtime memory and
+> > GetVariable/GetNextVariable still works, but SetVariable returns
+> > EFI_UNSUPPORTED.
+> >
+> > I've spent enough time looking at available solutions and although
+> > this indeed breaks the EFI spec, something along the lines of
+> > replacing the runtime services with ones that give you direct access
+> > to the secure world, completely bypassing the firmware is imho our
+> > least bad option.
+>
+> This sounds very similar to what Qualcomm may be doing on some devices.
+> The TrEE interface allows for callbacks and there are indications that
+> one such callback-service is for RPMB. I believe that at least on some
+> platforms, Qualcomm also stores UEFI variables in RPMB and uses the same
+> uefisecapp interface in combination with RPMB listeners installed by the
+> kernel to access them.
+>
+> > I have an ancient branch somewhere that I can polish up and send an
+> > RFC [1],  but the way I enabled that was to install an empty config
+> > table from the firmware.  That empty table is basically an indication
+> > to the kernel saying "Hey I can't store variables, can you do that for
+> > me".
+> >
+> > Is there any chance we can do something similar on that device (or
+> > find a reasonable way of inferring that we need to replace some
+> > services).  That way we could at least have a common entry point to
+> > the kernel and leave out the DT changes.
+> >
+> > [1] https://git.linaro.org/people/ilias.apalodimas/net-next.git/log/?h=setvar_rt_optee_3
+>
+> I would very much like to avoid the need for special bootloaders. The
+> devices we're talking about are WoA devices, meaning they _should_
+> ideally boot just fine with EFI and ACPI.
 
-But sure, adding support for a new version would be easier if there's an
-obvious sorting of the callbacks (as long as people notice the order).
+I've already responded to following email, but I'll repeat it here for
+completeness. It's not a special bootloader.  It's the opposite, it's
+a generic UEFI compliant bootloader which takes advantage of the fact
+EFI is extensible. We are doing something very similar in how we load
+our initrd via the EFI_LOAD_FILE2 protocol.  Whether Qualcomm can add
+that to their bootloaders is a different topic though.  But at some
+point we need to draw a line than keep overloading the DT because a
+vendor decided to go down it's own path.
 
-> > > -static const struct qcom_pcie_cfg sc8180x_cfg = {
-> > > -	.ops = &ops_1_9_0,
-> > > -	.has_tbu_clk = true,
-> > > -};
-> > > -
-> > >  static const struct qcom_pcie_cfg ipq6018_cfg = {
-> > >  	.ops = &ops_2_9_0,
-> > >  };
-> > 
-> > But this bit I disagree with. Why sort the SoCs configurations by IP
-> > revision, when what you typically need is to look them up by name?
-> 
-> Makes sense.
-> 
-> > Also note that this conflicts with my sc8280xp-support and IP-revision
-> > series:
-> > 
-> > 	https://lore.kernel.org/all/20220714071348.6792-1-johan+linaro@kernel.org/
-> > 
-> > The result of applying that series is that these structs are renamed
-> > after the IP revision (and sorted alphabetically) so the end-result is
-> > similar.
-> > 
-> > Could you consider dropping this patch, or at least the struct
-> > qcom_pcie_cfg bits, and applying the above series for 5.20?
-> 
-> I dropped it for now.  We can see how it shakes out after your series,
-> but not sure I'll get to it for this cycle.
+>
+>  From an end-user perspective, it's annoying enough that we'll have to
+> stick with DTs for the time being due to the use of PEPs in ACPI. I
+> really don't want to add some special bootloader for fixups to that.
+> Also, this would just move the problem from kernel to bootloader.
 
-Ok. Thanks.
+But it *is* a bootloader problem.  The bootloader is aware of the fact
+that it can't provide runtime services for X reasons and that's
+exactly why we are trying to set EFI_RT_PROPERTIES_TABLE correctly
+from the firmware.  All we are doing is install a config table to tell
+the OS "I can't do that, can you find a way around it?".
 
-Johan
+Regards
+/Ilias
+
+>
+> If you have any suggestions for another way of detecting this, please
+> feel free to share. I, unfortunately, don't.
+>
+> Regards,
+> Max
