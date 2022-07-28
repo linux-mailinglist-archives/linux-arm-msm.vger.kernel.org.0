@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C2F63583CEF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 13:16:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9A47583CF6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 13:17:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234206AbiG1LQ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jul 2022 07:16:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44314 "EHLO
+        id S235617AbiG1LRR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jul 2022 07:17:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230216AbiG1LQ1 (ORCPT
+        with ESMTP id S234673AbiG1LRQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jul 2022 07:16:27 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AC2263912;
-        Thu, 28 Jul 2022 04:16:26 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id m8so1728051edd.9;
-        Thu, 28 Jul 2022 04:16:26 -0700 (PDT)
+        Thu, 28 Jul 2022 07:17:16 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8621C66AE4;
+        Thu, 28 Jul 2022 04:17:15 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id v17so1771795edc.1;
+        Thu, 28 Jul 2022 04:17:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=I1hcQDsRPMnRc56BCmzgeV/mUPsQfxRSFDip2MB+Kss=;
-        b=q70S7u6oJiCsrKuJPZt99845aiVMvcyznOEvoqs0xtppse3X4bNHBeucluhRlRIB17
-         Hfee1lCq6qk0BFvYf6Kxex6JHeLUqa0j5St90+LzbAuGcEjWJHeUHp94UZj79kp/LuEr
-         T0g8u5bXJB+FohCvoHnyQ2UdhGA3louCqsa2EhAWJnxcTJ71rzBtLPFEeAqhWCnQ0crA
-         J1I6FZFBCVI961ESYAn/cRc1haxmewRSJP3Eqr8OrdTyxXjE7F/5B4k//Ak41fu0fRQ0
-         4CqeUpIQK8IYOOjG3SJRnmatNbV3W7EV2XCoZ0WQX/fEPbk8anmDRVxlLPUx9UVy1Qh5
-         3QHw==
+        bh=JqSmRxqp0J7ys/zMG1Hi5UBxwd/taKfqFeKGDnawJ7Y=;
+        b=LAMWKS1AXyGUSXBdqPdctmi7pC3sn/Mpmv5xMo+kR9c0MIXf/IzvY7n2PctJCJDAmW
+         o6t9KqC8Pm2EUVKreDKRxNbpryxmJ4mjfEqGQ8S33ymSxVG3Re8NBxAKXFNuOdnzCv4G
+         wNHNEGj2b1oj9H6OozE75YPenmKxJpE4fcN6nxjV2iDhc3qX7QME7CGXH3IXunjQRNG2
+         ttuz49Rxvgw46+NviqCsPHxTOwaboUVUfCn1k8Zt9FCiYwsy99uMdISRRAAsHb3juZ4V
+         qywzxytPUmznqO2yRZYZGCLo2XQve8bVkwqiElw3GYxJxkrkKe4nj5Q5yTJqeZb7qNyE
+         LYZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=I1hcQDsRPMnRc56BCmzgeV/mUPsQfxRSFDip2MB+Kss=;
-        b=4vm8Hfynp/dtSv++K1LfsCt9AKiMS1mkL6fYkKJY5akmxpfMzv4yB088bs1eOwMeef
-         p1N/l4Obn0BTbr5J0NSP/oKqUcTYWaCPEPOzOHeVAdYQCcq9C1B28zqGVG5PxMtgEGqr
-         uyjolKavdba5aYa6onCGwYIoH8CTiYlHhYssBdmJiJqIN7+b8Wnmlz52bgN/MTKAQpHl
-         nJ5khiqyvYBKAPk98QnVL7ek/Q1OjhJHt7DKArJWaYYUv21kpUuS2r4jiT9rqE0cudnx
-         4AoZayY8dRbJ+g+kc/0BWLkmXpL1rhQzQFeJA1gyzmSOYjwYXZ5qBByEwjOKbXtD4brr
-         XYxA==
-X-Gm-Message-State: AJIora8nm/F1SV82yAfYHEpe6UfA/Bbca8vf9uIppf1g7SpSdzSO/sOj
-        I3YN2cW19G6/XMuj7thDtdY=
-X-Google-Smtp-Source: AGRyM1voPgPgibrhvl7h3F9hwBmh2W/rUdGDc8VASe+RSNb8IV4fCxzHIbqAtTVnhr2RBOEovu7gaQ==
-X-Received: by 2002:a05:6402:4cc:b0:43c:cd5c:dcfb with SMTP id n12-20020a05640204cc00b0043ccd5cdcfbmr4601784edw.277.1659006984597;
-        Thu, 28 Jul 2022 04:16:24 -0700 (PDT)
+        bh=JqSmRxqp0J7ys/zMG1Hi5UBxwd/taKfqFeKGDnawJ7Y=;
+        b=iqJOtlP0TSTKN5Q6SePaPWdELgp37gJElVKnMiFuS43hYV8jonRakXmLuMhJEZlFuI
+         WpVKswHlO1qnMB+mT7LYzoEgYHgX7lR/NIHIULtVYI9gZ3V6/cCaKL6bObVdAEARe2+D
+         wFigyBw3/96IkfcZp5+8BP16an2Trb0IJprKGlxlJTwZ1BF7kWCmSxYD6k5hz6rNdH+3
+         ZaEamXdkIaU7P8WOZvum0MBbEj+3LkE5oKw7mJwYwCRdcggSlTWX1tlOaXlQvvVnlVWz
+         gxGYS3o7MyZIA6LKGZAOq0b1xBSpXc7ezOwLT3HzA7lqNE+HaqM6N/YoeZWG4OMOuvA0
+         gO5Q==
+X-Gm-Message-State: AJIora8amhQ70iSkjb0nvb3J3r3/ePhH/tZmTe6VnM+ICfmALX8/492D
+        EP/nhqH/5FLpY0SZHpc3ogI=
+X-Google-Smtp-Source: AGRyM1vnp7tadQlas1BNvyD3BGrrb6Uqae0hVJ5/El2FaO0eX8Cyj9i1WSGy6xgudLs+fCHT4laM5A==
+X-Received: by 2002:a05:6402:2786:b0:43a:dc4e:ea63 with SMTP id b6-20020a056402278600b0043adc4eea63mr27947904ede.175.1659007033982;
+        Thu, 28 Jul 2022 04:17:13 -0700 (PDT)
 Received: from brandenburg.sect.tu-berlin.de ([130.149.39.100])
-        by smtp.gmail.com with ESMTPSA id vj16-20020a170907131000b006fec27575f1sm295803ejb.123.2022.07.28.04.16.20
+        by smtp.gmail.com with ESMTPSA id 16-20020a170906311000b0072b13a10477sm303894ejx.108.2022.07.28.04.16.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Jul 2022 04:16:21 -0700 (PDT)
+        Thu, 28 Jul 2022 04:16:47 -0700 (PDT)
 From:   Shinjo Park <peremen@gmail.com>
 Cc:     peremen@gmail.com, David Heidelberg <david@ixit.cz>,
         Andy Gross <agross@kernel.org>,
@@ -57,9 +57,9 @@ Cc:     peremen@gmail.com, David Heidelberg <david@ixit.cz>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 1/3] ARM: dts: qcom: msm8960: add reference to sleep_clk
-Date:   Thu, 28 Jul 2022 13:16:02 +0200
-Message-Id: <20220728111603.30503-1-peremen@gmail.com>
+Subject: [PATCH 2/3] ARM: dts: qcom: msm8960: add references to USB1
+Date:   Thu, 28 Jul 2022 13:16:35 +0200
+Message-Id: <20220728111635.30540-1-peremen@gmail.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -74,27 +74,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Change the reference of sleep_clk to the same as qcom-apq8064.dtsi.
+Use the same USB definition as qcom-apq8064.dtsi, tested on Casio GzOne.
 
 Signed-off-by: Shinjo Park <peremen@gmail.com>
 Reviewed-by: David Heidelberg <david@ixit.cz>
 ---
- arch/arm/boot/dts/qcom-msm8960.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/qcom-msm8960.dtsi | 32 +++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
 diff --git a/arch/arm/boot/dts/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom-msm8960.dtsi
-index e8cd1c9c0..991eb1948 100644
+index 991eb1948..a32073d61 100644
 --- a/arch/arm/boot/dts/qcom-msm8960.dtsi
 +++ b/arch/arm/boot/dts/qcom-msm8960.dtsi
-@@ -71,7 +71,7 @@ pxo_board: pxo_board {
- 			clock-output-names = "pxo_board";
+@@ -4,6 +4,7 @@
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+ #include <dt-bindings/clock/qcom,gcc-msm8960.h>
+ #include <dt-bindings/clock/qcom,lcc-msm8960.h>
++#include <dt-bindings/reset/qcom,gcc-msm8960.h>
+ #include <dt-bindings/mfd/qcom-rpm.h>
+ #include <dt-bindings/soc/qcom,gsbi.h>
+ 
+@@ -201,6 +202,37 @@ regulators {
+ 			};
  		};
  
--		sleep_clk {
-+		sleep_clk: sleep_clk {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
- 			clock-frequency = <32768>;
++		usb1: usb@12500000 {
++			compatible = "qcom,ci-hdrc";
++			reg = <0x12500000 0x200>,
++			      <0x12500200 0x200>;
++			interrupts = <GIC_SPI 100 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc USB_HS1_XCVR_CLK>, <&gcc USB_HS1_H_CLK>;
++			clock-names = "core", "iface";
++			assigned-clocks = <&gcc USB_HS1_XCVR_CLK>;
++			assigned-clock-rates = <60000000>;
++			resets = <&gcc USB_HS1_RESET>;
++			reset-names = "core";
++			phy_type = "ulpi";
++			ahb-burst-config = <0>;
++			phys = <&usb_hs1_phy>;
++			phy-names = "usb-phy";
++			status = "disabled";
++			#reset-cells = <1>;
++
++			ulpi {
++				usb_hs1_phy: phy {
++					compatible = "qcom,usb-hs-phy-msm8960",
++						     "qcom,usb-hs-phy";
++					clocks = <&sleep_clk>, <&cxo_board>;
++					clock-names = "sleep", "ref";
++					resets = <&usb1 0>;
++					reset-names = "por";
++					#phy-cells = <0>;
++				};
++			};
++		};
++
+ 		acc0: clock-controller@2088000 {
+ 			compatible = "qcom,kpss-acc-v1";
+ 			reg = <0x02088000 0x1000>, <0x02008000 0x1000>;
 -- 
 2.34.1
 
