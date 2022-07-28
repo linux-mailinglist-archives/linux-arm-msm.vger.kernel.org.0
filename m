@@ -2,133 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 43DC4583943
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 09:11:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CEF115839CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 09:48:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232973AbiG1HLB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jul 2022 03:11:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41402 "EHLO
+        id S234769AbiG1HsV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jul 2022 03:48:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231701AbiG1HK6 (ORCPT
+        with ESMTP id S234639AbiG1HsU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jul 2022 03:10:58 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8781DD132;
-        Thu, 28 Jul 2022 00:10:57 -0700 (PDT)
+        Thu, 28 Jul 2022 03:48:20 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4DCD61717
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 00:48:17 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id p10so1639319lfd.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 00:48:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1658992257; x=1690528257;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=R4lt1h/LtXD8XZCgX0MqvcNhHlPUrXLCVf+2J1eJ5RA=;
-  b=LUl4HB7awGDJO7ZT3dM+uFHqZqZhXyvs8bFO2qZfgODoMVUVv84Vv2F1
-   NB6HxFc5Sfxm8Qb/Xg+5kJevT+3FQMbKgP/msxqtt3a5TSDB9v1V9MLOE
-   XxysGtHps01KqlPSHpxZRWmrWMuuMZM9yO0ucXEziyEKDEmH/+80Bke4O
-   Y=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 28 Jul 2022 00:10:57 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jul 2022 00:10:56 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 28 Jul 2022 00:10:55 -0700
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 28 Jul 2022 00:10:50 -0700
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
-        <devicetree@vger.kernel.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [PATCH] ASoC: qcom: SC7280: Add support for external DMIC bias supply
-Date:   Thu, 28 Jul 2022 12:40:33 +0530
-Message-ID: <1658992233-28372-1-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=fCUzkrrVti+DuQ9YZ66uDbjkm2O9p7N93LSf/4Y1rqw=;
+        b=FcT3HD9UuvhS0fZm//5zxRGb1EhPOh3t/FJB6OWvAfsVKWqT7XUYgKcSrCYv82NtFG
+         clfqrKO3uRhEgTVGdRV1V/Xe87qmNqaL7fZmyIRmrY9XGSIyhZ7SLrWncsTLE+cVcS8o
+         H2CbJ+ZeSA39R6hTegJnVjTAFXseAMScED4CPXt1byZYCJ75/2P7zx2EdpnwnvKy63Dw
+         3RyTJxsZjPZIg3fKH3tvvgRXwYqcNg5JK/gdms/Kh5nLgVR9xwfrs5LpeyZSDRptlPOO
+         jb3hFCCV2OvHbDPxfI5cOAV8yH4UC+1hD+WJIqhefTXbVk/6UM2RTuxQ6OssTd84hObL
+         ok4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=fCUzkrrVti+DuQ9YZ66uDbjkm2O9p7N93LSf/4Y1rqw=;
+        b=zy/LkKDLPIHC7M9478ZSZlh70qxGDVm0GrK/NZ8kO4T/9CHc7Kp6iqJN5VWv857J7Z
+         1H/zjvVvwD6ZbY2ve50sO2pQKNsZrjuFbdyGqDLVmtK4JHY3DrpyM31MTdlFjVI7sIiG
+         vHidNR1TLnqHMwnlFfPPSfS5llro8fjM60TNLydTh0q+FzdXL/eezU0fEQXrTAHqFjEm
+         1gZ5IOxbWsFmw/dTsfxgaSIlhdFxbRyK0JbvDDbebk5NeXDGskV1vX0/9tlsS4a5ILFq
+         A3Z4OAf1W0zxEbJT/mbaCxJbkktyRrHH7SL2+WOdVLYoboqavZ3bevgHNmbSs105STYz
+         VXeg==
+X-Gm-Message-State: AJIora/QuBzAIVFPmfWlIeJVwos1snpvs3GNeBAm1B+f6fP0DQgeaIyI
+        SMTTm3BF0qbqrjBJXMo5AgEeuw==
+X-Google-Smtp-Source: AGRyM1uXGhPeR606LsJssvTDJlC4T3k/CuVwOkQjtbV4yuWokpohwSrNa+3v0DyoVMsl7lRB4A4mrQ==
+X-Received: by 2002:a05:6512:220a:b0:48a:7b14:d51c with SMTP id h10-20020a056512220a00b0048a7b14d51cmr8647513lfu.267.1658994495906;
+        Thu, 28 Jul 2022 00:48:15 -0700 (PDT)
+Received: from [192.168.3.197] (78-26-46-173.network.trollfjord.no. [78.26.46.173])
+        by smtp.gmail.com with ESMTPSA id b3-20020a056512304300b0048a7ebb3151sm68149lfb.181.2022.07.28.00.48.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 28 Jul 2022 00:48:15 -0700 (PDT)
+Message-ID: <95cbcda8-d1bc-376c-b338-92d1b923f04a@linaro.org>
+Date:   Thu, 28 Jul 2022 09:48:13 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure
+ Application client
+Content-Language: en-US
+To:     Maximilian Luz <luzmaximilian@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ard Biesheuvel <ardb@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>
+References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
+ <20220723224949.1089973-5-luzmaximilian@gmail.com>
+ <e88d1036-dc58-3fc8-c388-edba9b2d62a7@linaro.org>
+ <87c19c5a-d7f4-7183-1322-f62267e01b3b@gmail.com>
+ <11e5c369-c0da-7756-b9e2-ac375dc78e9d@linaro.org>
+ <2e522bcd-5d55-e87f-126c-514f5edaa560@gmail.com>
+ <53a602e2-0590-6c6a-597b-fd55faa3a4ab@linaro.org>
+ <acd7b231-3167-e35c-5cdf-8b3127a7d710@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <acd7b231-3167-e35c-5cdf-8b3127a7d710@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update SC7280 machine driver for enabling external mic bias supply,
-Which is required for villager rev boards.
+On 27/07/2022 15:00, Maximilian Luz wrote:
+>>> Then again, if you prefer to name everything based on
+>>> "qcom,<device>-<soc>" I don't have any strong arguments against it and
+>>> I'm happy to change that. I just think it will unnecessarily introduce
+>>> a bunch of compatibles and doesn't reflect the interface "versioning"
+>>> situation as I see it.
+>>
+>> Why bunch? All devices could bind to one specific compatible, as they
+>> are compatible.
+> 
+> Ah, I think I misunderstood you there. I thought you were advocating for
+> creating compatibles for each SoC just because it's a new SoC and things
+> might be different. I'm not at all against naming this something like
+> qcom,tee-uefisecapp-sc8180x then using that on all platforms that work.
+> I just didn't like the idea of having a bunch of different
+> qcom,tee-uefisecapp-<soc> pointing to the exact same thing without any
+> difference at all.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
----
- sound/soc/qcom/sc7280.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+You start with one specific compatible and if needed later either add
+more specific upfront (qcom,sc8280x-tee-uefisecapp,
+qcom,sc8180x-tee-uefisecapp) or as entirely new one if it is not compatible.
 
-diff --git a/sound/soc/qcom/sc7280.c b/sound/soc/qcom/sc7280.c
-index da7469a..6404e94 100644
---- a/sound/soc/qcom/sc7280.c
-+++ b/sound/soc/qcom/sc7280.c
-@@ -33,6 +33,7 @@ struct sc7280_snd_data {
- 	struct snd_soc_jack hdmi_jack;
- 	bool jack_setup;
- 	bool stream_prepared[LPASS_MAX_PORTS];
-+	struct regulator *vdd_supply;
- };
- 
- static void sc7280_jack_free(struct snd_jack *jack)
-@@ -345,6 +346,24 @@ static int sc7280_snd_startup(struct snd_pcm_substream *substream)
- 	return ret;
- }
- 
-+static int sc7280_dmic_micbias(struct snd_soc_dapm_widget *w,
-+				struct snd_kcontrol *kcontrol, int event)
-+{
-+	struct snd_soc_card *card = w->dapm->card;
-+	struct sc7280_snd_data *data = snd_soc_card_get_drvdata(card);
-+	int ret = 0;
-+
-+	switch (event) {
-+	case SND_SOC_DAPM_PRE_PMU:
-+		ret = regulator_enable(data->vdd_supply);
-+		break;
-+	case SND_SOC_DAPM_POST_PMD:
-+		ret = regulator_disable(data->vdd_supply);
-+		break;
-+	}
-+	return ret;
-+}
-+
- static const struct snd_soc_ops sc7280_ops = {
- 	.startup = sc7280_snd_startup,
- 	.hw_params = sc7280_snd_hw_params,
-@@ -356,6 +375,7 @@ static const struct snd_soc_ops sc7280_ops = {
- static const struct snd_soc_dapm_widget sc7280_snd_widgets[] = {
- 	SND_SOC_DAPM_HP("Headphone Jack", NULL),
- 	SND_SOC_DAPM_MIC("Headset Mic", NULL),
-+	SND_SOC_DAPM_MIC("PMIC BIAS", sc7280_dmic_micbias),
- };
- 
- static int sc7280_snd_platform_probe(struct platform_device *pdev)
-@@ -389,6 +409,10 @@ static int sc7280_snd_platform_probe(struct platform_device *pdev)
- 		link->ops = &sc7280_ops;
- 	}
- 
-+	data->vdd_supply = devm_regulator_get(dev, "vdd-dmic-bias");
-+	if (IS_ERR(data->vdd_supply)
-+		return PTR_ERR(data->vdd_supply);
-+
- 	return devm_snd_soc_register_card(dev, card);
- }
- 
--- 
-2.7.4
+> 
+>>>>>>> +
+>>>>>>> +required:
+>>>>>>> +  - compatible
+>>>>>>> +
+>>>>>>> +additionalProperties: false
+>>>>>>> +
+>>>>>>> +examples:
+>>>>>>> +  - |
+>>>>>>> +    firmware {
+>>>>>>> +        scm {
+>>>>>>> +            compatible = "qcom,scm-sc8180x", "qcom,scm";
+>>>>>>> +        };
+>>>>>>> +        tee-uefisecapp {
+>>>>>>> +            compatible = "qcom,tee-uefisecapp";
+>>>>>>
+>>>>>> You did not model here any dependency on SCM. This is not full
+>>>>>> description of the firmware/hardware
+>>>>>
+>>>>> How would I do that? A lot of other stuff also depends on SCM being
+>>>>> present (e.g. qcom_q6v5_pas for loading mdt files) and I don't see them
+>>>>> declare this in the device tree. As far as I can tell, SCM is pretty
+>>>>> much expected to be there at all times (i.e. can't be unloaded) and
+>>>>> drivers check for it when probing via qcom_scm_is_available(),
+>>>>> deferring probe if not.
+>>>>
+>>>> It seems this will be opening a can of worms...
+>>>
+>>> Indeed.
+>>>
+>>>> The problem with existing approach is:
+>>>> 1. Lack of any probe ordering or probe deferral support.
+>>>> 2. Lack of any other dependencies, e.g. for PM.
+>>>
+>>> I'm not entirely sure what you mean by "lack of probe deferral support".
+>>> We have qcom_scm_is_available() and defer probe if that fails. So
+>>> deferral works, unless I'm misunderstanding something.
+>>
+>> And how do you differentiate that qcom_scm_is_available() failed because
+>> it is not yet available (defer probe) or it is broken and will never
+>> load? All regular consumer-provider interfaces have it sorted out.
+> 
+> Fair point. By shifting that to device links you'll at least know what
+> it's waiting for and the driver won't attempt to probe until that's
+> resolved. But your question applies to that then as well: How do you
+> differentiate between the device link or supplier being broken somehow
+> and the supplier being just not ready yet?
 
+For example like tegra_bpmp_get() is doing.
+
+Best regards,
+Krzysztof
