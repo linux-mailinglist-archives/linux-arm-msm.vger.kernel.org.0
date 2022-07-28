@@ -2,71 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42619583F94
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 15:06:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69443584024
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 15:38:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238953AbiG1NGX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jul 2022 09:06:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45340 "EHLO
+        id S229694AbiG1NiO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jul 2022 09:38:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238882AbiG1NGW (ORCPT
+        with ESMTP id S230029AbiG1NiM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jul 2022 09:06:22 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC31225E86;
-        Thu, 28 Jul 2022 06:06:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1659013581; x=1690549581;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=b/wEQ01RTadmT60aE0Fd5qVRKAPrU1I1CCnWHz9Go5Y=;
-  b=Kc8OJY/+AhN68NOxkIrzQIrZjewBuw5yC5qyNgyDpKbsOeKqZw5ZuBBO
-   COcs8tTguxwjjiFMdggfdx91dg0y/RP8gmGU4S2rmAL3ABhaE30ORhllr
-   jtuHREt3toOrKSIREDm58oMbfxxHpcp9W3UY/gH+KIKJDLVEcfQFvEiTy
-   o=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 28 Jul 2022 06:06:21 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jul 2022 06:06:21 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 28 Jul 2022 06:06:20 -0700
-Received: from [10.216.53.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 28 Jul
- 2022 06:06:15 -0700
-Message-ID: <00cd5620-a276-6e55-8997-fbf8285d9a9a@quicinc.com>
-Date:   Thu, 28 Jul 2022 18:36:12 +0530
+        Thu, 28 Jul 2022 09:38:12 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD6514D178;
+        Thu, 28 Jul 2022 06:38:10 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 518A061D45;
+        Thu, 28 Jul 2022 13:38:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D982C433D6;
+        Thu, 28 Jul 2022 13:38:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1659015489;
+        bh=mmsn/t+5QNmM/FD9heL+FjFHsGTIQcd9xFxfGr8LHzg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=LeIWgEYZiNwFxd3GVsR/NJ2ps0rFuovH3OyVXj6idgqySzM5Ia6bBFqXWnQM/K82j
+         8D+xcAI3NxP4Ov82OJUtvK4jc5YjeDIo6e9n1jELfEBUv33J0xStbJTuEu42rz/te9
+         IxdGUKMq4Y8wz3VeyOLqyhkpe2+OJ6dKVoOIwqBVDJ0A3ENP7bBNLNuXS72+1TWTYK
+         y+RspS2qIj8PFh2e0K4tqb4R9jYPzUlZQcTWjSxaR9I+anWs7svppFS7aIOKr4/5mb
+         J1+0c9F7fYrJ8jLM+iWSUdQm9cBDhGW2E1Swcgd+KQtwWxc28hkoP88qfri9H4vLAq
+         D6d9pozm7mYfw==
+Date:   Thu, 28 Jul 2022 14:38:04 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] firmware/psci: Add debugfs support to ease debugging
+Message-ID: <YuKRPB/Ilb0al3ro@sirena.org.uk>
+References: <20220727200901.1142557-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH] ASoC: qcom: SC7280: Add support for external DMIC bias
- supply
-Content-Language: en-US
-To:     Mark Brown <broonie@kernel.org>
-CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
-        <devicetree@vger.kernel.org>
-References: <1658992233-28372-1-git-send-email-quic_srivasam@quicinc.com>
- <YuJpxSuPBB++pl/o@sirena.org.uk>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-In-Reply-To: <YuJpxSuPBB++pl/o@sirena.org.uk>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="YBGfuNYEyJDOClJJ"
+Content-Disposition: inline
+In-Reply-To: <20220727200901.1142557-1-dmitry.baryshkov@linaro.org>
+X-Cookie: People respond to people who respond.
+X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,22 +58,57 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 7/28/2022 4:19 PM, Mark Brown wrote:
-Thanks for your time Mark!!!
-> On Thu, Jul 28, 2022 at 12:40:33PM +0530, Srinivasa Rao Mandadapu wrote:
->
->> +static int sc7280_dmic_micbias(struct snd_soc_dapm_widget *w,
->> +				struct snd_kcontrol *kcontrol, int event)
->> +{
->> +	struct snd_soc_card *card = w->dapm->card;
->> +	struct sc7280_snd_data *data = snd_soc_card_get_drvdata(card);
->> +	int ret = 0;
->> +
-> This is open coding SND_SOC_DAPM_REGULATOR_SUPPLY() isn't it?
+--YBGfuNYEyJDOClJJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Yes, agree that SND_SOC_DAPM_REGULATOR_SUPPLY can be used here. As I was 
-using two different names for
+On Wed, Jul 27, 2022 at 11:09:01PM +0300, Dmitry Baryshkov wrote:
 
-VDD supply property and widget name, got confused. I will re post the 
-patch, with single name for both and replace with above macro .
+> +} psci_fn_ids[] = {
+> +	PSCI_ID_NATIVE(0_2, MIGRATE),
+> +	PSCI_ID(0_2, MIGRATE_INFO_TYPE),
+> +	PSCI_ID_NATIVE(0_2, MIGRATE_INFO_UP_CPU),
+> +	PSCI_ID(1_0, CPU_FREEZE),
+> +	PSCI_ID_NATIVE(1_0, CPU_DEFAULT_SUSPEND),
+> +	PSCI_ID_NATIVE(1_0, NODE_HW_STATE),
+> +	PSCI_ID_NATIVE(1_0, SYSTEM_SUSPEND),
+> +	PSCI_ID(1_0, SET_SUSPEND_MODE),
+> +	PSCI_ID_NATIVE(1_0, STAT_RESIDENCY),
+> +	PSCI_ID_NATIVE(1_0, STAT_COUNT),
+> +	PSCI_ID_NATIVE(1_1, SYSTEM_RESET2),
+> +};
 
+There's other functions like the MEM_PROTECT ones which we don't
+currently use but it might be interesting to enumerate...
+
+>  #define PSCI_1_0_FN_PSCI_FEATURES		PSCI_0_2_FN(10)
+> +#define PSCI_1_0_FN_CPU_FREEZE			PSCI_0_2_FN(11)
+> +#define PSCI_1_0_FN_CPU_DEFAULT_SUSPEND		PSCI_0_2_FN(12)
+
+...we're already adding functions here.
+
+> +#define PSCI_1_0_FN_NODE_HW_STATE		PSCI_0_2_FN(13)
+
+> +#define PSCI_1_0_FN_STAT_RESIDENCY		PSCI_0_2_FN(16)
+> +#define PSCI_1_0_FN_STAT_COUNT			PSCI_0_2_FN(17)
+
+Some of these state query things might be interesting to actually call
+and output results from at some point, doesn't seem like something that
+should be a blocker though.
+
+--YBGfuNYEyJDOClJJ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmLikTwACgkQJNaLcl1U
+h9BAnwf/RzOG3aFKcvv9K/vZw2k6o3L2Of7BgJ00FEx9o/5mPNrSxvgslC9yvxev
+QQVtI98A4XOjk6gFpmk9OiwlFztF1McyaaDQxmngmaOct2cPYu4NM3p8//4gJJfr
+RQs9kHZSQ5Q5CbA0vycWH9+7DHPX9WUxbbMuFiDfqpd2WaJx7G+U1Uz8e1DqHyq1
+wxwztBOFidoL+rQNqK2TY4RBzIIR2EFAHfKiu6Y4hFlm91qrHPe+YEbkW8Yoa+Xl
++G0L4btuYdJL7g/Dt6gUD7ApUdA17LhvifMcq+HJsaH004DuVOquZK+K9rHEmiAE
+JqWJs6IX9t++1fUdsxFvgIEs2fczJQ==
+=+kLn
+-----END PGP SIGNATURE-----
+
+--YBGfuNYEyJDOClJJ--
