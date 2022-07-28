@@ -2,100 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13CA1583CFC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 13:17:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2283583D53
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 13:24:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235421AbiG1LRu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jul 2022 07:17:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45756 "EHLO
+        id S237042AbiG1LYs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jul 2022 07:24:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234535AbiG1LRt (ORCPT
+        with ESMTP id S236944AbiG1LY2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jul 2022 07:17:49 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E98066B91;
-        Thu, 28 Jul 2022 04:17:48 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id b11so2561992eju.10;
-        Thu, 28 Jul 2022 04:17:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=N83H3oNoMy8JHMUEzp53BdqT7RoVkSAfEBNG/wDBUjY=;
-        b=KJ31dxfLCoduc3d+IUQ4kYZGBFU9qgO6NpH1r1tQdmXzhJK5hAS1eNJIZ8fxOn8yh6
-         Z/o3zOS+FFE35ypH1nQBMun8Bz8pUMKfZBfIcJVmLmVPjVopXYGfiI3/2IVwepuSP7vl
-         7KfT2PI0AEAvHb2y9Ds8HoJjVHe51KtmO7msgGIDKqN23xv9lL+b06FeVvdbfnNeDJmZ
-         P7k26HyxRYKI5KhzIXYnnrIEB3WeGvZ4ffAzyxb72/BfkzZnCcaUy85az6/U9ZMqFyT+
-         7S17hT55n9lmMXkSUeLE+gesvHL0WRIneeZesrWL5SlyEDsukYmopSnKtidq+ZbQlxwF
-         KMKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=N83H3oNoMy8JHMUEzp53BdqT7RoVkSAfEBNG/wDBUjY=;
-        b=DH4tAg0hL8csT9p3MqPOP+rwYLJ6vqIj1u+5FjKnb5BVIsPsVsBBd+QyX1bzmy1tlO
-         kUCpM0TzlDlVn2JKRRpyuoOMgLa5yW9dXqLqWHx5qbM1i15YIV9WKsC4+UIJ9gmejV83
-         cbb11zFzY110DU4mF/6k7mTm9iyZbyoFZSZEiPziRNaL20sibtGpXS1wkruGyc3CmqOp
-         g85uxYRH5PtnSytlNkZxMdcI+3KJz5pofH+M+y9T4aXa4Y69zn9uAeYdyC8a7jtxoCuj
-         f5sf8hcmzXrXpNYRGhsg2PMIqD+vj7yb1W+LEi921ASA7j8/yxuspe/EAnuykVHyXjSW
-         wtxQ==
-X-Gm-Message-State: AJIora+QlPjLQd1t+FMF6QfxE28fXhYpKo8o6B1IYzN8lN4qCpiXI2PU
-        DuFttu0QT/7zoQL9xiMuDkk=
-X-Google-Smtp-Source: AGRyM1vXSWZ9gd1nNMzlzAm590GmiXr4VsPK8b3CHS3FghSTTsgchUiKEiUDMcNJ+mU0tZwLN7VSQQ==
-X-Received: by 2002:a17:907:2724:b0:72b:496c:568a with SMTP id d4-20020a170907272400b0072b496c568amr21163184ejl.305.1659007066439;
-        Thu, 28 Jul 2022 04:17:46 -0700 (PDT)
-Received: from brandenburg.sect.tu-berlin.de ([130.149.39.100])
-        by smtp.gmail.com with ESMTPSA id w10-20020a50fa8a000000b0043bdc47803csm517957edr.30.2022.07.28.04.17.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Jul 2022 04:17:45 -0700 (PDT)
-From:   Shinjo Park <peremen@gmail.com>
-Cc:     peremen@gmail.com, David Heidelberg <david@ixit.cz>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 28 Jul 2022 07:24:28 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 296536D56C;
+        Thu, 28 Jul 2022 04:21:54 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1D598106F;
+        Thu, 28 Jul 2022 04:21:55 -0700 (PDT)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8366F3F73B;
+        Thu, 28 Jul 2022 04:21:52 -0700 (PDT)
+Date:   Thu, 28 Jul 2022 12:21:50 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Maximilian Luz <luzmaximilian@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ard Biesheuvel <ardb@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        Steev Klimaszewski <steev@kali.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] dt-bindings: phy: add definition for MSM8960
-Date:   Thu, 28 Jul 2022 13:17:40 +0200
-Message-Id: <20220728111740.30595-1-peremen@gmail.com>
-X-Mailer: git-send-email 2.34.1
+Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure
+ Application client
+Message-ID: <20220728112150.hs5el6wufljeoqyy@bogus>
+References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
+ <20220723224949.1089973-5-luzmaximilian@gmail.com>
+ <20220726143005.wt4be7yo7sbd3xut@bogus>
+ <829c8fee-cae5-597d-933d-784b4b57bd73@gmail.com>
+ <20220726154138.74avqs6iqlzqpzjk@bogus>
+ <d1bc99bb-82ce-aa6e-7fad-e9309fa1c19b@gmail.com>
+ <20220728082330.w4ppmzvjaeywsglu@bogus>
+ <4e777590-616a-558a-031e-3ef1f1e492b4@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4e777590-616a-558a-031e-3ef1f1e492b4@gmail.com>
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the changes introduced by MSM8960 inclusion.
+On Thu, Jul 28, 2022 at 12:05:15PM +0200, Maximilian Luz wrote:
+> On 7/28/22 10:23, Sudeep Holla wrote:
 
-Signed-off-by: Shinjo Park <peremen@gmail.com>
-Reviewed-by: David Heidelberg <david@ixit.cz>
----
- Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml | 1 +
- 1 file changed, 1 insertion(+)
+[...]
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-index 0655e485b..b3075c5ab 100644
---- a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-@@ -40,6 +40,7 @@ properties:
-           - qcom,usb-hs-phy-apq8064
-           - qcom,usb-hs-phy-msm8226
-           - qcom,usb-hs-phy-msm8916
-+          - qcom,usb-hs-phy-msm8960
-           - qcom,usb-hs-phy-msm8974
-       - const: qcom,usb-hs-phy
- 
--- 
-2.34.1
+> > Worst case I am fine with that as this needs to be one of and future
+> > platforms must get their act right in designing their f/w interface.
+>
+> Again, I fully agree with you that this situation shouldn't exist. But
+> reality is sadly different.
+>
 
+As I mentioned I don't have final authority to say yes or no to DT bindings.
+I have expressed my opinion and I thing allowing this to be generic via DT
+bindings gives no incentive to get the firmware story right. Hence I am happy
+to see this as one-off driver change and then we more changes are added to
+the driver or similar drivers get added in the future, we have a change to
+demand what action has been taken to fix the firmware story.
+
+Just adding DT support(which I disagree) will make future platform to just
+use it and not get improvements in areas of discovery or query from the
+firmware.
+
+--
+Regards,
+Sudeep
