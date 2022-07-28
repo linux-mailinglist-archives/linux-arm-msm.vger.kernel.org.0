@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 02094583DA5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 13:38:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5D42583D9F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 13:38:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236652AbiG1LiG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jul 2022 07:38:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39386 "EHLO
+        id S236771AbiG1LiM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jul 2022 07:38:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236505AbiG1LiC (ORCPT
+        with ESMTP id S236585AbiG1LiF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jul 2022 07:38:02 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF079558C7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 04:37:59 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id s14so1667696ljh.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 04:37:59 -0700 (PDT)
+        Thu, 28 Jul 2022 07:38:05 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7924D52DCE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 04:38:00 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id t1so2410983lft.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 04:38:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=RVi3swbk6lGpU9EJQbU7r2ZRE/KO3o6omSpmuiZtsWw=;
-        b=w1W/Ury8HO4KqOu7zRw6RW6avw1X0Mx7lp+AFM5+L8gNxOjYQrRGluYLjYinO4VTqr
-         csFHyvPdXVlO7fTCGdJATOWpP6feg8Q2vO4EH8iKbG5MMGFH8x+3kWUNn8ZSur9Ty9bu
-         ynZ6X51TqcsJq8MUM9lntwu6UBmSPUeWyIkNP/FHwfkcwtfn7gTY6qv5ayIEhcJJybGy
-         QJLljsCOunRvpMwHvjwjeVhEFxViZ/j8LA3eKF2OKCdNMni5k71uuXxl9J0dhbSlGPGQ
-         sLZjRC6fEAi6u8yV7lRviEE5x/gwau7etD1JTagzZ1GAN0wXTefghUIm26pnMAvXI6Oc
-         6igg==
+        bh=usmNtICGsrCUJyolCdHCzkhV9grLDIARX51+dprqmNM=;
+        b=OkkueWPc06JcsVdkqxZC0yfR7iEdAPUrSqlfEMHIfUkKHSKiwik/UQ57lPBQMSA/1I
+         3MsqLOfCMH3vRS9TYfMGssNRlKMwn+HVH5WptF/ieJDysdoJvH6yufozgZ3BP5h6aSJA
+         030gmIVrX6Nb6eTLTrI6dEZLG1cU6IguhhDjdxybXI2POlMmtJQ57QHCf9oQOwz10cTS
+         bBnCtsZDDDjLfpQtIGzsAd9K8R3Qd0a+3EusnZBQhJBWaCFftQfTDxdxDRe9Ki3loTVe
+         3mqNMEJ6uuABWfLNCIRlG8Hp5aCS2P+ClAZP7Y9ZZ5w2n2uWfisTP2Kh3hfDqnrP+J8E
+         F+EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=RVi3swbk6lGpU9EJQbU7r2ZRE/KO3o6omSpmuiZtsWw=;
-        b=ByJZDMIVzwb8p0l74eTwIK3TFxfSR9foYDGNVPd7Ygp9TtRmh5zwHjGDwGXQZEB2+I
-         3uQa+0YxVvvx4estxLEOpVtk+u09zbZktFZmhuatfXSF12pXonDDmxIziE9Rrbjv6RAY
-         LAM30cpJPQROr2J826xYsdvaUmKKIvc+PU0g6Wj1vQ/b6+iybYzojD3mgoBRp9CLPLnb
-         DkZd3drbXU8hltQzeF5EW7Efojwg6V2BbV5GvLoqZNnn7v4qyGepYMhrLAxNoEuYIadd
-         4+U9zG7Qe7sznZWD9OXm/fuyg35Z/oPsciXVKJoGAxhBObBPcptfrBsimYN3iQtCwQWm
-         dtxg==
-X-Gm-Message-State: AJIora9NXYvohyNA6Z7I6FMB3+cufMoxrJ18dVU67Q37gJDOd2L+NBRB
-        XRIYcNe6XKqKYqe7VKRfc8eX1g==
-X-Google-Smtp-Source: AGRyM1uJZtN6+fLM32G+sSz15AwD0OD2dt1jSpLQqVnJGNSEabBzgYbVhtYm5OMYCfSTeTGs3364Mg==
-X-Received: by 2002:a2e:98d6:0:b0:25e:c2e:a5dd with SMTP id s22-20020a2e98d6000000b0025e0c2ea5ddmr6067980ljj.455.1659008278139;
-        Thu, 28 Jul 2022 04:37:58 -0700 (PDT)
+        bh=usmNtICGsrCUJyolCdHCzkhV9grLDIARX51+dprqmNM=;
+        b=DH1wET0D+wjEJfuET5+JZHWGVTJ4iG9xrdPLm78zbiIq8p/2GZsP2AnQ6jfJRytFkZ
+         CzGxmWZCv8ecG0i6OeyibYNJNoK/pByYiq0dHH3TxF32CkQk1DvCwj4IF4nZCMUUNCX4
+         sP/XTRyfS/Fh/MDjBZdr/A0ds5K25nlN5EpTqCBzyfJhPHffTbSZ09i+vdCYm6C0MkBu
+         47GLrfyRo7Q/7H4JGoDguC06MT4yciKqCGnqB62rd4NRz980r6e8SqQAt4bEnHgagPTQ
+         KKrE4dkGxrExippkLQnQuckpXmIt7Bd71kwrYJ23fEFZk1Q3sQNORGAc9uv3kVnFcuNl
+         1ITw==
+X-Gm-Message-State: AJIora+lj6lv7jU3K5IX5nPEGWkrjhvD6hGnp16YVlvJuFfxb7JgPTu7
+        RoI75mN2XGlcxAcAnKOh0g9FVQ==
+X-Google-Smtp-Source: AGRyM1tCJEwPllfn7MIF+qaJlQLoEgmRtwNJSVZgUN4wRevjVMVDyO7oUcr2xSO1B3uwSfRb36MDFA==
+X-Received: by 2002:a19:ac09:0:b0:48a:c37b:3c06 with SMTP id g9-20020a19ac09000000b0048ac37b3c06mr1234698lfc.532.1659008279789;
+        Thu, 28 Jul 2022 04:37:59 -0700 (PDT)
 Received: from krzk-bin.lan (78-26-46-173.network.trollfjord.no. [78.26.46.173])
-        by smtp.gmail.com with ESMTPSA id l12-20020a2ea80c000000b0025e0396786dsm98192ljq.93.2022.07.28.04.37.57
+        by smtp.gmail.com with ESMTPSA id l12-20020a2ea80c000000b0025e0396786dsm98192ljq.93.2022.07.28.04.37.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Jul 2022 04:37:57 -0700 (PDT)
+        Thu, 28 Jul 2022 04:37:59 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -59,9 +59,9 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>,
         Sibi Sankar <quic_sibis@quicinc.com>
-Subject: [PATCH v2 04/11] soc: qcom: icc-bwmon: store reference to variant data in container
-Date:   Thu, 28 Jul 2022 13:37:41 +0200
-Message-Id: <20220728113748.170548-5-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 05/11] soc: qcom: icc-bwmon: clear all registers on init
+Date:   Thu, 28 Jul 2022 13:37:42 +0200
+Message-Id: <20220728113748.170548-6-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220728113748.170548-1-krzysztof.kozlowski@linaro.org>
 References: <20220728113748.170548-1-krzysztof.kozlowski@linaro.org>
@@ -69,113 +69,80 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Instead of copying pieces of variant-specific data (struct
-icc_bwmon_data) into the state container (struct icc_bwmon), just store
-a pointer to it.
+The hardware programming guide recommends to clear all registers on
+first initialization, through separate field in BWMON_CLEAR register.
 
-This simplifies a bit the code and allows later to grow easily the
-variant-specific data for new BWMON v5.
+This makes sense in general but especially if driver is rebound to avoid
+spurious/early interrupts.
 
 Cc: Rajendra Nayak <quic_rjendra@quicinc.com>
 Cc: Sibi Sankar <quic_sibis@quicinc.com>
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
 ---
- drivers/soc/qcom/icc-bwmon.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/soc/qcom/icc-bwmon.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/soc/qcom/icc-bwmon.c b/drivers/soc/qcom/icc-bwmon.c
-index 9295ea04356a..a820855e85b4 100644
+index a820855e85b4..d2df8feff651 100644
 --- a/drivers/soc/qcom/icc-bwmon.c
 +++ b/drivers/soc/qcom/icc-bwmon.c
-@@ -117,11 +117,10 @@ struct icc_bwmon_data {
+@@ -50,6 +50,7 @@
  
- struct icc_bwmon {
- 	struct device *dev;
-+	const struct icc_bwmon_data *data;
- 	void __iomem *base;
- 	int irq;
+ #define BWMON_CLEAR				0x2a4
+ #define BWMON_CLEAR_CLEAR			BIT(0)
++#define BWMON_CLEAR_CLEAR_ALL			BIT(1)
  
--	unsigned int default_lowbw_kbps;
--	unsigned int sample_ms;
- 	unsigned int max_bw_kbps;
- 	unsigned int min_bw_kbps;
- 	unsigned int target_kbps;
-@@ -198,20 +197,20 @@ static void bwmon_set_threshold(struct icc_bwmon *bwmon, unsigned int reg,
+ #define BWMON_SAMPLE_WINDOW			0x2a8
+ #define BWMON_THRESHOLD_HIGH			0x2ac
+@@ -127,8 +128,12 @@ struct icc_bwmon {
+ 	unsigned int current_kbps;
+ };
+ 
+-static void bwmon_clear_counters(struct icc_bwmon *bwmon)
++static void bwmon_clear_counters(struct icc_bwmon *bwmon, bool clear_all)
  {
- 	unsigned int thres;
- 
--	thres = mult_frac(bwmon_kbps_to_count(kbps), bwmon->sample_ms,
-+	thres = mult_frac(bwmon_kbps_to_count(kbps), bwmon->data->sample_ms,
- 			  MSEC_PER_SEC);
- 	writel_relaxed(thres, bwmon->base + reg);
++	unsigned int val = BWMON_CLEAR_CLEAR;
++
++	if (clear_all)
++		val |= BWMON_CLEAR_CLEAR_ALL;
+ 	/*
+ 	 * Clear counters. The order and barriers are
+ 	 * important. Quoting downstream Qualcomm msm-4.9 tree:
+@@ -137,7 +142,7 @@ static void bwmon_clear_counters(struct icc_bwmon *bwmon)
+ 	 * region. So, we need to make sure the counter clear is completed
+ 	 * before we try to clear the IRQ or do any other counter operations.
+ 	 */
+-	writel(BWMON_CLEAR_CLEAR, bwmon->base + BWMON_CLEAR);
++	writel(val, bwmon->base + BWMON_CLEAR);
  }
  
--static void bwmon_start(struct icc_bwmon *bwmon,
--			const struct icc_bwmon_data *data)
-+static void bwmon_start(struct icc_bwmon *bwmon)
- {
-+	const struct icc_bwmon_data *data = bwmon->data;
+ static void bwmon_clear_irq(struct icc_bwmon *bwmon)
+@@ -208,7 +213,7 @@ static void bwmon_start(struct icc_bwmon *bwmon)
  	unsigned int thres_count;
  	int window;
  
- 	bwmon_clear_counters(bwmon);
+-	bwmon_clear_counters(bwmon);
++	bwmon_clear_counters(bwmon, true);
  
--	window = mult_frac(bwmon->sample_ms, HW_TIMER_HZ, MSEC_PER_SEC);
-+	window = mult_frac(bwmon->data->sample_ms, HW_TIMER_HZ, MSEC_PER_SEC);
+ 	window = mult_frac(bwmon->data->sample_ms, HW_TIMER_HZ, MSEC_PER_SEC);
  	/* Maximum sampling window: 0xfffff */
- 	writel_relaxed(window, bwmon->base + BWMON_SAMPLE_WINDOW);
+@@ -304,7 +309,7 @@ static irqreturn_t bwmon_intr_thread(int irq, void *dev_id)
+ 	bwmon_set_threshold(bwmon, BWMON_THRESHOLD_HIGH, up_kbps);
+ 	bwmon_set_threshold(bwmon, BWMON_THRESHOLD_MED, down_kbps);
+ 	/* Write barriers in bwmon_clear_counters() */
+-	bwmon_clear_counters(bwmon);
++	bwmon_clear_counters(bwmon, false);
+ 	bwmon_clear_irq(bwmon);
+ 	bwmon_enable(bwmon, irq_enable);
  
-@@ -266,7 +265,7 @@ static irqreturn_t bwmon_intr(int irq, void *dev_id)
- 	 */
- 	max = readl(bwmon->base + BWMON_ZONE_MAX(zone)) + 1;
- 	max *= BWMON_COUNT_UNIT_KB;
--	bwmon->target_kbps = mult_frac(max, MSEC_PER_SEC, bwmon->sample_ms);
-+	bwmon->target_kbps = mult_frac(max, MSEC_PER_SEC, bwmon->data->sample_ms);
- 
- 	return IRQ_WAKE_THREAD;
- }
-@@ -328,14 +327,13 @@ static int bwmon_probe(struct platform_device *pdev)
- 	struct device *dev = &pdev->dev;
- 	struct dev_pm_opp *opp;
- 	struct icc_bwmon *bwmon;
--	const struct icc_bwmon_data *data;
- 	int ret;
- 
- 	bwmon = devm_kzalloc(dev, sizeof(*bwmon), GFP_KERNEL);
- 	if (!bwmon)
- 		return -ENOMEM;
- 
--	data = of_device_get_match_data(dev);
-+	bwmon->data = of_device_get_match_data(dev);
- 
- 	bwmon->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(bwmon->base)) {
-@@ -363,8 +361,6 @@ static int bwmon_probe(struct platform_device *pdev)
- 	if (IS_ERR(opp))
- 		return dev_err_probe(dev, ret, "failed to find min peak bandwidth\n");
- 
--	bwmon->sample_ms = data->sample_ms;
--	bwmon->default_lowbw_kbps = data->default_lowbw_kbps;
- 	bwmon->dev = dev;
- 
- 	bwmon_disable(bwmon);
-@@ -375,7 +371,7 @@ static int bwmon_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, ret, "failed to request IRQ\n");
- 
- 	platform_set_drvdata(pdev, bwmon);
--	bwmon_start(bwmon, data);
-+	bwmon_start(bwmon);
- 
- 	return 0;
- }
 -- 
 2.34.1
 
