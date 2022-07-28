@@ -2,97 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA98B583D80
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 13:33:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 053D9583D8F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 13:37:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231272AbiG1Ldx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jul 2022 07:33:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35562 "EHLO
+        id S236049AbiG1Lh5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jul 2022 07:37:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230216AbiG1Ldx (ORCPT
+        with ESMTP id S235946AbiG1Lh5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jul 2022 07:33:53 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 273A943312;
-        Thu, 28 Jul 2022 04:33:52 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 78626106F;
-        Thu, 28 Jul 2022 04:33:52 -0700 (PDT)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A91EB3F73B;
-        Thu, 28 Jul 2022 04:33:49 -0700 (PDT)
-Date:   Thu, 28 Jul 2022 12:33:47 +0100
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Maximilian Luz <luzmaximilian@gmail.com>
-Cc:     Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Thu, 28 Jul 2022 07:37:57 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0278B52DEB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 04:37:55 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id p10so2400701lfd.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 04:37:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=DDXwy09v5kzKGSrtSfqtSiy1i98PELQE2ktj6kzOluw=;
+        b=hGzHTvEkVez1BnQLLcWNc9PRGnf8eblmhwFNLAhTAxKItS4UsxHX/1I4FceQRbPq9o
+         145lgb3pMgV7OmbFcqcNEmHCIYBp8g7Z+e52Fjg8tPprY3GNGFq61WT9Tf4neCxjNu/+
+         GV95yZmunE9dzg6h0jPXmzGjKhEu3IUSBHU9tChhlb4jBgRyczMqX0HZUD41lwM2IkCZ
+         7FHreixOLlTuQ/HfQQpo3vqhzk0IS3rrI61xdloYiceq6FvETefUFeKPRwh9g6AhPqqH
+         KKoXxVrLtK0Pnk6VGQ1daC9u6dGOxTEXQ6cKD+LMSNEbGpplvB3gsPlOTK3vmbFWC7NR
+         ciKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=DDXwy09v5kzKGSrtSfqtSiy1i98PELQE2ktj6kzOluw=;
+        b=ItgknC0xYxxpXazprW6c5mCBwiBPdwQa6dad7EviC+f4ezghj4nvIjvw//v1Y/9yt6
+         iIJ68R3wW7XzK/Led8un7fBy93q8+5rKHMTCvfZvP3wUGHD7OvvZ/nxlpKpRorKIeiP0
+         G3NAEOLn/aKK+LG0Tu7vSrqxaA1vgQZYov1aEtpCC1NkD8RJhqT8yGydfQsd63yDqwH0
+         8c2Ht4v208tHroX1HNNKya0TYrAJLbyBd5q4x1d4+gqjShfPAzhod1quhh/K/pj0Yp90
+         dT4xR22iPkIhcQt+dhW/+mXr8Y6KyrSrxrTO6He7kgQPgdbJ0ht92y8uKqy+XWhzRVjv
+         qAcg==
+X-Gm-Message-State: AJIora+vexNQ6XisGSuiyd/7DjISZBopHeQ4gm3rOVwxjyFEKAJOoeIz
+        N6VVyvvZOPNnmzrnoDf9LIa1DQ==
+X-Google-Smtp-Source: AGRyM1sPCDaukKfCDTYez0xGEZrgkJ/tVyoOHk1t8WUGeH1+uZGLbFvBi9h88tQHwauRo0IhCtkoWw==
+X-Received: by 2002:a05:6512:2821:b0:48a:6a01:3d29 with SMTP id cf33-20020a056512282100b0048a6a013d29mr10219021lfb.649.1659008273103;
+        Thu, 28 Jul 2022 04:37:53 -0700 (PDT)
+Received: from krzk-bin.lan (78-26-46-173.network.trollfjord.no. [78.26.46.173])
+        by smtp.gmail.com with ESMTPSA id l12-20020a2ea80c000000b0025e0396786dsm98192ljq.93.2022.07.28.04.37.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Jul 2022 04:37:52 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Ard Biesheuvel <ardb@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Georgi Djakov <djakov@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure
- Application client
-Message-ID: <20220728113347.ver6argevzmlsc2c@bogus>
-References: <20220723224949.1089973-5-luzmaximilian@gmail.com>
- <20220726143005.wt4be7yo7sbd3xut@bogus>
- <829c8fee-cae5-597d-933d-784b4b57bd73@gmail.com>
- <20220726154138.74avqs6iqlzqpzjk@bogus>
- <d1bc99bb-82ce-aa6e-7fad-e9309fa1c19b@gmail.com>
- <7284953b-52bb-37ac-fbe1-1fa845c44ff9@linaro.org>
- <3d752603-365d-3a33-e13e-ca241cee9a11@gmail.com>
- <20220727132437.pjob3z2nyxsuxgam@bogus>
- <CAC_iWj+Pn+h8k=fuDHzYwqD0g4m6jGRt8sCzcz+5+rYqvz9q4w@mail.gmail.com>
- <fd922f0f-99fd-55a3-a0b5-b62ad2dbfb45@gmail.com>
+Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [PATCH v2 00/11] soc/arm64: qcom: Add LLCC BWMON on SDM845
+Date:   Thu, 28 Jul 2022 13:37:37 +0200
+Message-Id: <20220728113748.170548-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <fd922f0f-99fd-55a3-a0b5-b62ad2dbfb45@gmail.com>
-X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 28, 2022 at 12:48:19PM +0200, Maximilian Luz wrote:
+Hi,
 
-[...]
+Changes since v1
+================
+1. Patch #2: Drop also BWMON_GLOBAL_IRQ_STATUS (Sibi).
+2. Minor rebasings because of above drop.
+3. Patch #4: typo in subject (Sibi).
+4. New patch: arm64: dts: qcom: sdm845: narrow LLCC address space (Sibi).
+5. Add Rb tags.
 
->
-> I would very much like to avoid the need for special bootloaders. The
-> devices we're talking about are WoA devices, meaning they _should_
-> ideally boot just fine with EFI and ACPI.
->
+Description
+===========
+BWMON is a data bandwidth monitor providing throughput/bandwidth over certain
+interconnect links in a SoC.  It might be used to gather current bus usage and
+vote for interconnect bandwidth, thus adjusting the bus speed based on actual
+usage.
 
-Completely agreed.
+Qualcomm SoCs might several BWMON instances.  Extend existing support for CPU
+BWMON (called v4) to LLCC BWMON (called v5).
 
-> From an end-user perspective, it's annoying enough that we'll have to
-> stick with DTs for the time being due to the use of PEPs in ACPI.
+Cc: Rajendra Nayak <quic_rjendra@quicinc.com>
+Cc: Sibi Sankar <quic_sibis@quicinc.com>
 
-But have we explored or investigated what it takes to rewrite ACPI f/w
-to just use standard methods ? Does it require more firmware changes or
-new firmware entities or impossible at any cost ?
+Best regards,
+Krzysztof
 
-For me that is more important than just getting this one on DT. Because
-if you take that path, we will have to keep doing that, with loads of
-unnecessary drivers if they are not shared with any other SoC with DT
-support upstream. We might also miss chance to get things added to the ACPI
-spec as we don't care which means that we never be able to use ACPI on
-similar future platforms even though they get shipped with ACPI.
+Krzysztof Kozlowski (11):
+  dt-bindings: interconnect: qcom,msm8998-bwmon: add support for SDM845
+    LLCC BWMON
+  soc: qcom: icc-bwmon: re-use IRQ enable/clear define
+  soc: qcom: icc-bwmon: drop unused registers
+  soc: qcom: icc-bwmon: store reference to variant data in container
+  soc: qcom: icc-bwmon: clear all registers on init
+  soc: qcom: icc-bwmon: store count unit per variant
+  soc: qcom: icc-bwmon: use regmap and prepare for BWMON v5
+  soc: qcom: icc-bwmon: add per-variant quirks
+  soc: qcom: icc-bwmon: add support for SDM845 LLCC BWMON
+  arm64: dts: qcom: sdm845: narrow LLCC address space
+  arm64: dts: qcom: sdm845: add LLCC BWMON
 
-It will be a loop where we constantly keep converting this ACPI shipped
-platform into DT upstream. IMHO we don't want to be there.
+ .../interconnect/qcom,msm8998-bwmon.yaml      |   1 +
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  39 +-
+ drivers/soc/qcom/icc-bwmon.c                  | 460 ++++++++++++++----
+ 3 files changed, 401 insertions(+), 99 deletions(-)
 
---
-Regards,
-Sudeep
+-- 
+2.34.1
+
