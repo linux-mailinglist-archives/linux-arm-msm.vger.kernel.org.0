@@ -2,135 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 761EF583CE4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 13:11:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2F63583CEF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 13:16:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236779AbiG1LLT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jul 2022 07:11:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40334 "EHLO
+        id S234206AbiG1LQ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jul 2022 07:16:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235501AbiG1LLT (ORCPT
+        with ESMTP id S230216AbiG1LQ1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jul 2022 07:11:19 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28E3E664DF;
-        Thu, 28 Jul 2022 04:11:18 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id DC52FB823DB;
-        Thu, 28 Jul 2022 11:11:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B66C433D6;
-        Thu, 28 Jul 2022 11:11:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1659006675;
-        bh=uatBAKo4u4baHcP13PJdONgrgJTyUoamsnl4XzGT4l4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YayZKOUj3bS7fL8u56pHciHDpbF2c0PaViOBhYZ5tEXuQQcZpZ+VX7wgyB0J17hl3
-         +dFT+tVRbRRZui7gHYS1mboUtlE+DHLIrgwsQ8WlLgbJURZK+T1XsCTsRl3HqIZd3t
-         Qn2BZSBb8OsRl5yOx8pMc8PNJj+vHMtph9iEGuGBV1OBvx/0mJ+0yc9hFQBTtNstid
-         p0ckptTrnBCzzk5mURjq9xfdZ5ZuvT0t4XGfE+4SYKWRfioP8tqmynlGanPeVzX0Aq
-         ivjO8/QN15pxT09unQPhECkjEgdKr5Zg4a7VDhvY8Gjmr2OfZSnlzcHLXE5duZlQM+
-         afiTO69BmYPDA==
-Date:   Thu, 28 Jul 2022 12:11:08 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Iskren Chernev <iskren.chernev@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Adam Skladowski <a39.skl@gmail.com>,
+        Thu, 28 Jul 2022 07:16:27 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AC2263912;
+        Thu, 28 Jul 2022 04:16:26 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id m8so1728051edd.9;
+        Thu, 28 Jul 2022 04:16:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=I1hcQDsRPMnRc56BCmzgeV/mUPsQfxRSFDip2MB+Kss=;
+        b=q70S7u6oJiCsrKuJPZt99845aiVMvcyznOEvoqs0xtppse3X4bNHBeucluhRlRIB17
+         Hfee1lCq6qk0BFvYf6Kxex6JHeLUqa0j5St90+LzbAuGcEjWJHeUHp94UZj79kp/LuEr
+         T0g8u5bXJB+FohCvoHnyQ2UdhGA3louCqsa2EhAWJnxcTJ71rzBtLPFEeAqhWCnQ0crA
+         J1I6FZFBCVI961ESYAn/cRc1haxmewRSJP3Eqr8OrdTyxXjE7F/5B4k//Ak41fu0fRQ0
+         4CqeUpIQK8IYOOjG3SJRnmatNbV3W7EV2XCoZ0WQX/fEPbk8anmDRVxlLPUx9UVy1Qh5
+         3QHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=I1hcQDsRPMnRc56BCmzgeV/mUPsQfxRSFDip2MB+Kss=;
+        b=4vm8Hfynp/dtSv++K1LfsCt9AKiMS1mkL6fYkKJY5akmxpfMzv4yB088bs1eOwMeef
+         p1N/l4Obn0BTbr5J0NSP/oKqUcTYWaCPEPOzOHeVAdYQCcq9C1B28zqGVG5PxMtgEGqr
+         uyjolKavdba5aYa6onCGwYIoH8CTiYlHhYssBdmJiJqIN7+b8Wnmlz52bgN/MTKAQpHl
+         nJ5khiqyvYBKAPk98QnVL7ek/Q1OjhJHt7DKArJWaYYUv21kpUuS2r4jiT9rqE0cudnx
+         4AoZayY8dRbJ+g+kc/0BWLkmXpL1rhQzQFeJA1gyzmSOYjwYXZ5qBByEwjOKbXtD4brr
+         XYxA==
+X-Gm-Message-State: AJIora8nm/F1SV82yAfYHEpe6UfA/Bbca8vf9uIppf1g7SpSdzSO/sOj
+        I3YN2cW19G6/XMuj7thDtdY=
+X-Google-Smtp-Source: AGRyM1voPgPgibrhvl7h3F9hwBmh2W/rUdGDc8VASe+RSNb8IV4fCxzHIbqAtTVnhr2RBOEovu7gaQ==
+X-Received: by 2002:a05:6402:4cc:b0:43c:cd5c:dcfb with SMTP id n12-20020a05640204cc00b0043ccd5cdcfbmr4601784edw.277.1659006984597;
+        Thu, 28 Jul 2022 04:16:24 -0700 (PDT)
+Received: from brandenburg.sect.tu-berlin.de ([130.149.39.100])
+        by smtp.gmail.com with ESMTPSA id vj16-20020a170907131000b006fec27575f1sm295803ejb.123.2022.07.28.04.16.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Jul 2022 04:16:21 -0700 (PDT)
+From:   Shinjo Park <peremen@gmail.com>
+Cc:     peremen@gmail.com, David Heidelberg <david@ixit.cz>,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Jorge Ramirez <jorge.ramirez-ortiz@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH v2 3/5] regulator: qcom_spmi: Add support for new
- regulator types
-Message-ID: <YuJuzNiQczaYi1og@sirena.org.uk>
-References: <20220726181133.3262695-1-iskren.chernev@gmail.com>
- <20220726181133.3262695-4-iskren.chernev@gmail.com>
- <YuEoLteLBgd+b8sg@sirena.org.uk>
- <79077e08-4bd8-6967-748d-876589ef978e@gmail.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 1/3] ARM: dts: qcom: msm8960: add reference to sleep_clk
+Date:   Thu, 28 Jul 2022 13:16:02 +0200
+Message-Id: <20220728111603.30503-1-peremen@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="dHyoJ979ZanZg/3g"
-Content-Disposition: inline
-In-Reply-To: <79077e08-4bd8-6967-748d-876589ef978e@gmail.com>
-X-Cookie: People respond to people who respond.
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Change the reference of sleep_clk to the same as qcom-apq8064.dtsi.
 
---dHyoJ979ZanZg/3g
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Signed-off-by: Shinjo Park <peremen@gmail.com>
+Reviewed-by: David Heidelberg <david@ixit.cz>
+---
+ arch/arm/boot/dts/qcom-msm8960.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-On Thu, Jul 28, 2022 at 02:14:10AM +0300, Iskren Chernev wrote:
-> On 7/27/22 14:57, Mark Brown wrote:
-> > On Tue, Jul 26, 2022 at 09:11:31PM +0300, Iskren Chernev wrote:
+diff --git a/arch/arm/boot/dts/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom-msm8960.dtsi
+index e8cd1c9c0..991eb1948 100644
+--- a/arch/arm/boot/dts/qcom-msm8960.dtsi
++++ b/arch/arm/boot/dts/qcom-msm8960.dtsi
+@@ -71,7 +71,7 @@ pxo_board: pxo_board {
+ 			clock-output-names = "pxo_board";
+ 		};
+ 
+-		sleep_clk {
++		sleep_clk: sleep_clk {
+ 			compatible = "fixed-clock";
+ 			#clock-cells = <0>;
+ 			clock-frequency = <32768>;
+-- 
+2.34.1
 
-> >> Add support for some regulator types that are missing in this driver, all
-> >> belonging to the FTSMPS426 register layout.  This is done in preparation
-> >> for adding support for the PM6125 PMIC.
-
-> >> +	.set_mode		= spmi_regulator_ftsmps3_set_mode,
-> >> +	.get_mode		= spmi_regulator_ftsmps426_get_mode,
-
-> > Why are set and get asymmetric?
-
-> Because the get method, only uses AUTO and HPM, which have the same value
-> for ftsmps3 and ftsmps426 (so there is no need for a new function).
-
-This needs at least a comment.
-
-> >> @@ -1473,7 +1557,7 @@ static const struct spmi_regulator_mapping supported_regulators[] = {
-> >>  	SPMI_VREG(LDO,   HT_P600,  0, INF, HFS430, hfs430, ht_p600, 10000),
-> >>  	SPMI_VREG(LDO,   HT_P150,  0, INF, HFS430, hfs430, ht_p150, 10000),
-> >>  	SPMI_VREG(BUCK,  GP_CTL,   0, INF, SMPS,   smps,   smps,   100000),
-> >> -	SPMI_VREG(BUCK,  HFS430,   0, INF, HFS430, hfs430, hfs430,  10000),
-> >> +	SPMI_VREG(BUCK,  HFS430,   0,   3, HFS430, hfs430, hfs430,  10000),
-
-> > The changelog said we were adding support for new types but this looks
-> > like changing an existing type.
-
-> The code, as written now does a different thing for BUCK, HFS430 (on
-> mainline (ML) and downstream (DS) linked in the commit message). Since DS
-> only supports newer stuff, to be on safe side, I kept existing behavior for
-> rev 0-3 on BUCK(3)+HFS430(10), so at least DS and ML agree on pm6125
-> completely.
-
-This needs describing in the changelog, probably you need multiple
-paches here since you are making a number of different changes each of
-which needs some explanation.
-
-> The commit [1] that adds support for BUCK+HFS430 might be wrong, or it
-> might be right for the time being (i.e initial revisions had different
-> behavior). I'm CC-ing Jorge.
-
-If that's the case perhaps part of this needs to be sent as a fix.
-
---dHyoJ979ZanZg/3g
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmLibssACgkQJNaLcl1U
-h9DhtAf9HGZVngmsBVdOb9tNCdFljmfOsvAGJxBUsuxZAG3q0GSPUYdYI0sS27ZR
-vlacNM7KemWnRIqdWg4lmM2ZMO08Hzf3gztF2f5k1A1E75qKruOW8H4TH1YAfV9z
-qXh96eYpcX3Zqois17zzTkVStKOuhlBOhsjj45upZQ6UQ767rwHJFjRtD2lGDd6i
-QwHJsFRD+YIj/0c8z3P8UyuPAddsEhdKBEGR7oyH7vgpUJRdCJaGokayCP+WYET0
-UH+G0GAyemvHvT/R6BkBf3KExigjchYj4wvQZ2+lmIXIZlm4thM790vc5kB2hVfv
-XhMEs1adyGF8yEiOW4YCqtYQKBD18g==
-=Gp6n
------END PGP SIGNATURE-----
-
---dHyoJ979ZanZg/3g--
