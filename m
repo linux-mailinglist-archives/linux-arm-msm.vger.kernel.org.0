@@ -2,70 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5136B583AF8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 11:07:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0474F583AFA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 11:08:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235287AbiG1JHp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jul 2022 05:07:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47970 "EHLO
+        id S235236AbiG1JIL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jul 2022 05:08:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234498AbiG1JHo (ORCPT
+        with ESMTP id S234498AbiG1JIL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jul 2022 05:07:44 -0400
-Received: from mail.nfschina.com (unknown [IPv6:2400:dd01:100f:2:72e2:84ff:fe10:5f45])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 50524655A4;
-        Thu, 28 Jul 2022 02:07:43 -0700 (PDT)
-Received: from localhost (unknown [127.0.0.1])
-        by mail.nfschina.com (Postfix) with ESMTP id 7A40C1E80D72;
-        Thu, 28 Jul 2022 17:07:43 +0800 (CST)
-X-Virus-Scanned: amavisd-new at test.com
-Received: from mail.nfschina.com ([127.0.0.1])
-        by localhost (mail.nfschina.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id MdfWvtsK_BEc; Thu, 28 Jul 2022 17:07:40 +0800 (CST)
-Received: from localhost.localdomain.localdomain (unknown [219.141.250.2])
-        (Authenticated sender: xupengfei@nfschina.com)
-        by mail.nfschina.com (Postfix) with ESMTPA id 716AA1E80CF5;
-        Thu, 28 Jul 2022 17:07:40 +0800 (CST)
-From:   XU pengfei <xupengfei@nfschina.com>
-To:     abel.vesa@linaro.org
-Cc:     Kernel@nfschina.com, agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org, xupengfei@nfschina.com
-Subject: [PATCH v2] clk/qcom/gcc-sm6350: Remove unnecessary semicolon
-Date:   Thu, 28 Jul 2022 17:07:20 +0800
-Message-Id: <20220728090719.3056-1-xupengfei@nfschina.com>
-X-Mailer: git-send-email 2.18.2
-In-Reply-To: <Yt5FAJiEv0WWuDNV@linaro.org>
-References: <Yt5FAJiEv0WWuDNV@linaro.org>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,RDNS_NONE,
-        SPF_HELO_NONE,SPF_NONE autolearn=no autolearn_force=no version=3.4.6
+        Thu, 28 Jul 2022 05:08:11 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 38096655A8;
+        Thu, 28 Jul 2022 02:08:10 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 96C20106F;
+        Thu, 28 Jul 2022 02:08:10 -0700 (PDT)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 038ED3F73B;
+        Thu, 28 Jul 2022 02:08:08 -0700 (PDT)
+Date:   Thu, 28 Jul 2022 10:08:06 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] firmware/psci: Add debugfs support to ease debugging
+Message-ID: <20220728090806.nnighsbx2lcgugon@bogus>
+References: <20220727200901.1142557-1-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220727200901.1142557-1-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove unnecessary semicolon after qcom_cc_really_probe call.
+On Wed, Jul 27, 2022 at 11:09:01PM +0300, Dmitry Baryshkov wrote:
+> To ease debugging of PSCI supported features, add debugfs file called
+> 'psci' describing PSCI and SMC CC versions
 
-Signed-off-by: XU pengfei <xupengfei@nfschina.com>
----
- drivers/clk/qcom/gcc-sm6350.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+These 2 are for sure in the boot log. Having them is debugfs accessible
+via file system add not much value as we would hit issues quite early in
+the boot for most of the things related to PSCI.
 
-diff --git a/drivers/clk/qcom/gcc-sm6350.c b/drivers/clk/qcom/gcc-sm6350.c
-index a4f7fba70393..69412400efa4 100644
---- a/drivers/clk/qcom/gcc-sm6350.c
-+++ b/drivers/clk/qcom/gcc-sm6350.c
-@@ -2558,7 +2558,7 @@ static int gcc_sm6350_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	return qcom_cc_really_probe(pdev, &gcc_sm6350_desc, regmap);;
-+	return qcom_cc_really_probe(pdev, &gcc_sm6350_desc, regmap);
- }
- 
- static struct platform_driver gcc_sm6350_driver = {
+> enabled features and options.
+> 
+
+We have psci_checker.c which does some minimal testing of PSCI. I prefer
+to add things to that rather than a debugfs as it is run during boot. IMO
+it is usual useful to debug things that cause boot issue most of the time.
+I am not against this so I will leave it to the maintainers.
+
 -- 
-2.18.2
-
+Regards,
+Sudeep
