@@ -2,66 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F2DE583E88
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 14:19:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9945583EC5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 14:25:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235370AbiG1MTf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jul 2022 08:19:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55456 "EHLO
+        id S238394AbiG1MZA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jul 2022 08:25:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230216AbiG1MTe (ORCPT
+        with ESMTP id S238366AbiG1MYy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jul 2022 08:19:34 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 480FE46DAC;
-        Thu, 28 Jul 2022 05:19:33 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id CE7E1B82432;
-        Thu, 28 Jul 2022 12:19:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5207DC433C1;
-        Thu, 28 Jul 2022 12:19:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1659010770;
-        bh=SkS6G0rptpwlgeSV0bISNL3/MaKjQgocq5LaHbB8Mb8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=B2uohG5RUUGwrkh7g6QgjZ5er8K8kvInqsnMXjRoUgM2loTv0i1+C/JEUz5tBMfZU
-         Y3oMw+Bq4m9SE9gPD8WK2JBpZWkmYJsYWoFm31NXm9KnPi19l0bcBKVnpoFOXKnOCC
-         G9DLdUI1mc4qq0FOsP+SoAlPpPPnmRRdIOjw2GRKF9989W29sCX7LyfkNZHOH9gF9j
-         c4bQTTtzOogOwjQewaJNmEtALnKRYn3I+O+gNhAjhUYm0IwKPAKV6+w5dncEmAj3A8
-         4nQAdSlreHtX46Mv9ne8GeFVDPi8EdIbXtLR9xXMb48PpqvFhmCFbyhlALR3DrHHsA
-         oxcyrcdQHlqJw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oH2UR-0008JE-Su; Thu, 28 Jul 2022 14:19:43 +0200
-Date:   Thu, 28 Jul 2022 14:19:43 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Helgaas <helgaas@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Thu, 28 Jul 2022 08:24:54 -0400
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B36566C108
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 05:24:52 -0700 (PDT)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-31bf3656517so17135387b3.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 05:24:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=fPGazMImeq7ZTnaeZ4AGBk0ohlKyyO3QqrKwonvdhpM=;
+        b=fvhONg60bsGwrIHA6bNhsT18PaJmu/2fNF1Lc/SzqBFyU6F7SX+QoTz7oJj0Eo+Bcp
+         YK4p49P2pJjPF6JoiUeG6RQFeNk5awUnc8amp9wuZAJOeLBxqlIFnJtsnW8KKJnPKAlO
+         HlEwteYdyw6ojA1RB10fyUenKWffwJimbpG5FHibao9UhPDS8OMTPBZrHur0hYfxxut+
+         o4+K0QCpXOfJfkn0u+VaAsk+CiaddG3CfVz13pCC2alc0np/Kt2D1N1hg8DGtFvigmwA
+         0tW0GV6TO88ORk1mwskI8ONAivniVnCEa9ZlXYUm2QnRLGkJZNWuxoZq4EwPUcXwoSZl
+         KAyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=fPGazMImeq7ZTnaeZ4AGBk0ohlKyyO3QqrKwonvdhpM=;
+        b=maJ3Ezp1+bCEzshSPJwPLAtyRizL+2b7l/kGKXRLh3BqwDZBeYsKmdwxOcu1soVVjW
+         jDPjYGq7fFmHPBeq9uNggCPFvnZkVm4E5n0J1TKv8OvhebtjFORcPe5quvLarnhNEqte
+         9bpD9+RiqXMI7FFTBbapGEMpYUILSgP2h3IWaq/RhehGf9QIUoX/MbHfo3UQ/k1T3boV
+         5FHEO5XZloOrxdRmKRhfuULWfvUCpjQZn5lsZp9/8PYnJytsT+5LW9r8vZx+F6pLJX6J
+         BUu+ERbGvjHK8laNAArrvw4IJJNwALBFfB9wA7ApDdgkOIsy5XvFIPpAcWqvPAoUPVcn
+         1RNA==
+X-Gm-Message-State: AJIora9XlXWSPIdth3m1x0jflwxUMLBrliK7jDfznNGi4pBbOyQteuIz
+        TT+4+wrXfFMgaXOtdwGmIIO7jjVsbmPLsr1RACjfow==
+X-Google-Smtp-Source: AGRyM1vI7wkmsv9IiuZ7uHDOT8/GD4OMIdM7ZmEHjlWiZkaeOZ1vzw9DdzMlOn/B2DaC5n+8y5yYKGlcs1IlnUMRpcQ=
+X-Received: by 2002:a81:e03:0:b0:31f:4e64:3e9e with SMTP id
+ 3-20020a810e03000000b0031f4e643e9emr10513132ywo.128.1659011091852; Thu, 28
+ Jul 2022 05:24:51 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220723224949.1089973-5-luzmaximilian@gmail.com>
+ <20220726143005.wt4be7yo7sbd3xut@bogus> <829c8fee-cae5-597d-933d-784b4b57bd73@gmail.com>
+ <20220726154138.74avqs6iqlzqpzjk@bogus> <d1bc99bb-82ce-aa6e-7fad-e9309fa1c19b@gmail.com>
+ <7284953b-52bb-37ac-fbe1-1fa845c44ff9@linaro.org> <3d752603-365d-3a33-e13e-ca241cee9a11@gmail.com>
+ <20220727132437.pjob3z2nyxsuxgam@bogus> <CAC_iWj+Pn+h8k=fuDHzYwqD0g4m6jGRt8sCzcz+5+rYqvz9q4w@mail.gmail.com>
+ <fd922f0f-99fd-55a3-a0b5-b62ad2dbfb45@gmail.com> <20220728113347.ver6argevzmlsc2c@bogus>
+In-Reply-To: <20220728113347.ver6argevzmlsc2c@bogus>
+From:   Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Date:   Thu, 28 Jul 2022 15:24:15 +0300
+Message-ID: <CAC_iWjLkSkON99xXoXphY4JWDZXy_OuOye3T_vPru8aj+j=abw@mail.gmail.com>
+Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure
+ Application client
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Maximilian Luz <luzmaximilian@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ard Biesheuvel <ardb@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH v2] PCI: qcom: Add support for modular builds
-Message-ID: <YuJ+31mJNHosH5i5@hovoldconsulting.com>
-References: <20220721193513.GA1747404@bhelgaas>
- <20220727200257.GA220948@bhelgaas>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220727200257.GA220948@bhelgaas>
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,31 +83,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 27, 2022 at 03:02:57PM -0500, Bjorn Helgaas wrote:
-> On Thu, Jul 21, 2022 at 02:35:13PM -0500, Bjorn Helgaas wrote:
-> > On Thu, Jul 21, 2022 at 08:47:20AM +0200, Johan Hovold wrote:
-> > > Allow the Qualcomm PCIe controller driver to be built as a module, which
-> > > is useful for multi-platform kernels as well as during development.
-> > > 
-> > > Reviewed-by: Rob Herring <robh@kernel.org>
-> > > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > 
-> > Applied to pci/ctrl/qcom for v5.20, thanks!
-> 
-> I'm going to drop this one for now, since the module vs remove
-> discussion [1] is still ongoing.
-> 
-> This patch actually makes it both *modular* and *removable*.  I think
-> the modular part is uncontroversial and valuable by itself.
-> 
-> If you want to just make it modular and *non*-removable, I think that
-> would be fine and we can add removability next cycle if we think it's
-> safe.
-> 
-> [1] https://lore.kernel.org/r/20220721195433.GA1747571@bhelgaas
+On Thu, 28 Jul 2022 at 14:33, Sudeep Holla <sudeep.holla@arm.com> wrote:
+>
+> On Thu, Jul 28, 2022 at 12:48:19PM +0200, Maximilian Luz wrote:
+>
+> [...]
+>
+> >
+> > I would very much like to avoid the need for special bootloaders. The
+> > devices we're talking about are WoA devices, meaning they _should_
+> > ideally boot just fine with EFI and ACPI.
+> >
+>
+> Completely agreed.
 
-Nah, I prefer we conclude that discussion so that hopefully this can be
-merged as is.
+This is not a special bootloader though.  Quite the opposite.  It's a
+standard UEFI compliant bootloader, which uses the fact that EFI is
+supposed to be extensible.  It installs a linux specific config table,
+similar to how we install a linux specific protocol to load our initrd
+and it's certainly lot more scalable than adding new stuff to the
+device tree.
 
-Johan
+>
+> > From an end-user perspective, it's annoying enough that we'll have to
+> > stick with DTs for the time being due to the use of PEPs in ACPI.
+>
+> But have we explored or investigated what it takes to rewrite ACPI f/w
+> to just use standard methods ? Does it require more firmware changes or
+> new firmware entities or impossible at any cost ?
+>
+> For me that is more important than just getting this one on DT. Because
+> if you take that path, we will have to keep doing that, with loads of
+> unnecessary drivers if they are not shared with any other SoC with DT
+> support upstream. We might also miss chance to get things added to the ACPI
+> spec as we don't care which means that we never be able to use ACPI on
+> similar future platforms even though they get shipped with ACPI.
+>
+> It will be a loop where we constantly keep converting this ACPI shipped
+> platform into DT upstream. IMHO we don't want to be there.
+>
+> --
+> Regards,
+> Sudeep
+
+Regards
+/Ilias
