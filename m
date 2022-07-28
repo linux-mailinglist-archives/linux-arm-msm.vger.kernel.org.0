@@ -2,47 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ADA215840C4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 16:12:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 505CD5840FB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 16:22:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230371AbiG1OMm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jul 2022 10:12:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39946 "EHLO
+        id S231600AbiG1OWo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jul 2022 10:22:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230347AbiG1OMe (ORCPT
+        with ESMTP id S230153AbiG1OWn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jul 2022 10:12:34 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F19FCE7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 07:12:32 -0700 (PDT)
-Received: from [192.168.1.101] (abxi232.neoplus.adsl.tpnet.pl [83.9.2.232])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Thu, 28 Jul 2022 10:22:43 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6306A46D81;
+        Thu, 28 Jul 2022 07:22:39 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id A5AD91F740;
-        Thu, 28 Jul 2022 16:12:28 +0200 (CEST)
-Message-ID: <b5df1acd-d92d-782f-8fb7-41842611c788@somainline.org>
-Date:   Thu, 28 Jul 2022 16:12:27 +0200
+        by ams.source.kernel.org (Postfix) with ESMTPS id 0BC18B82460;
+        Thu, 28 Jul 2022 14:22:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4054AC433D7;
+        Thu, 28 Jul 2022 14:22:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1659018156;
+        bh=1ZLap4eGsbbvgt1gdvMRC3A6YG6dEbs+KXGpBQ82L6A=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Y5HXFfFEczrHiYs6Rl6biGP/3nCuiwwHhNo5YOCtuOoUXlh+PjOtaQvXtoOkqxEy/
+         i1kASCXtevXkWsrAGL0cxLUWWREmlRmXZY1WbeqcUG8VJnmZrGEqioo4nk+iAPOQck
+         AOYV4w1LOL/5SQKe9uWRhVHfF8SdK8J7GxXOrCCEpmHY1HC/IocRZQHLQEWh95XwY8
+         lAJ83JrcqscTu9NY7kk1EBShHN3GDH7SbGq0lUUS/pqOlYpb8/j/wRoGvFJhTkh1+5
+         AnYoV1tbRWgRTeRLTcHWbtgmw2auX5VDc/xWKUNGTXcEczX56KitMzAMmRHGtSIEWk
+         PjpcEfcl4u7rQ==
+Date:   Thu, 28 Jul 2022 15:22:29 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        robh+dt@kernel.org, quic_plai@quicinc.com, bgoswami@quicinc.com,
+        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
+        quic_rohkumar@quicinc.com, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, judyhsiao@chromium.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v2] ASoC: qcom: SC7280: Add support for external DMIC
+ bias supply
+Message-ID: <YuKbpXVOeGn2l2gd@sirena.org.uk>
+References: <1659016789-9933-1-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 5/5] thermal: qcom: tsens: Add reinit quirk support for
- sm6375 controller
-Content-Language: en-US
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-pm@vger.kernel.org
-Cc:     bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        daniel.lezcano@linaro.org, robh+dt@kernel.org, rafael@kernel.org,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>
-References: <20220724122424.2509021-1-bhupesh.sharma@linaro.org>
- <20220724122424.2509021-6-bhupesh.sharma@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220724122424.2509021-6-bhupesh.sharma@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="MxtsZ/7dcBrss2UQ"
+Content-Disposition: inline
+In-Reply-To: <1659016789-9933-1-git-send-email-quic_srivasam@quicinc.com>
+X-Cookie: People respond to people who respond.
+X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -51,44 +62,42 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--MxtsZ/7dcBrss2UQ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 24.07.2022 14:24, Bhupesh Sharma wrote:
-> tsens controller(s) on Qualcomm sm6375 SoC might start in
-> an unknown state or start with TSENS_EN indicating
-> a 'disabled' state when they enter linux world.
-> 
-> In such cases, it is useful to try and reinit them via
-> trustzone [via scm call(s)], at the very start.
-> 
-> Add hooks for the same in the qcom tsens driver.
-> 
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Amit Kucheria <amitk@kernel.org>
-> Cc: Thara Gopinath <thara.gopinath@gmail.com>
-> Cc: linux-pm@vger.kernel.org
-> Cc: linux-arm-msm@vger.kernel.org
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
-This sadly doesn't work.. the issue on 6375 is that the controller
-is in some weird state at boot and this bit that's higher up:
+On Thu, Jul 28, 2022 at 07:29:49PM +0530, Srinivasa Rao Mandadapu wrote:
+> Update SC7280 machine driver for enabling external dmic bias supply,
+> which is required for villager evt boards.
 
-        ret = regmap_field_read(priv->rf[TSENS_EN], &enabled);
-        if (ret)
-                goto err_put_device;
-        if (!enabled) {
-                dev_err(dev, "%s: device not enabled\n", __func__);
-                ret = -ENODEV;
-                goto err_put_device;
-        }
+> +++ b/sound/soc/qcom/sc7280.c
+> @@ -356,6 +356,7 @@ static const struct snd_soc_ops sc7280_ops =3D {
+>  static const struct snd_soc_dapm_widget sc7280_snd_widgets[] =3D {
+>  	SND_SOC_DAPM_HP("Headphone Jack", NULL),
+>  	SND_SOC_DAPM_MIC("Headset Mic", NULL),
+> +	SND_SOC_DAPM_REGULATOR_SUPPLY("DMICVDD", 0, 0),
+>  };
+> =20
+>  static int sc7280_snd_platform_probe(struct platform_device *pdev)
 
-does not succeed.
+Don't you want to connect this to something?  This won't do anything
+as-is.  I can't see any references to DMICVDD which might be failing to
+resolve in the current sound/soc/qcom.
 
-Moving the code added in the patch up or calling
-qcom_scm_tsens_reinit() or qcom_scm_tsens_reinit() and 
-tsens_reenable_hw_after_scm(priv) directly before this enable
-check also fails. In fact, the latter crashes the platform..
+--MxtsZ/7dcBrss2UQ
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I don't want to block this series, so I suggest the 6375 part can
-be dropped for now.
+-----BEGIN PGP SIGNATURE-----
 
-Konrad
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmLim6UACgkQJNaLcl1U
+h9Dk8wf+MsLnuYuJIjjPKX84On6/bVQTcNFnLcE6zWzTDjoWVmdWlUpcngQ1j7I4
+mW5T0pKVL53Y8VcFCFuY5+awvsL3/tfCfKLpRjoRAhd1rG9kApq3RpgVyQ2OIR1A
+ZbzfRK363FCoo/7EmnenWk/QH9u8jlNU7G5vfBcf8C2VOBwepUHt15YdW3xvHDtv
+J0OyhPXNMuVCAGmhxTRc6ZbAxTbSu7R6u5aW0RquI+Ovfu6G/Hkcf2Yw0NYAd/Kb
+RUP0UjIwsek2lGqM366yItV2PGLDjKNMHDtCZ7i07otKl5TrG5q2DsmY1M+yhnHF
+2U9y6ryaWhXclqdx5B0vtki6mnCf2Q==
+=Uifj
+-----END PGP SIGNATURE-----
+
+--MxtsZ/7dcBrss2UQ--
