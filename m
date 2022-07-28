@@ -2,80 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 76148584037
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 15:42:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AD6A584076
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 16:00:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229772AbiG1Nma (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jul 2022 09:42:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48644 "EHLO
+        id S229475AbiG1OAO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jul 2022 10:00:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229543AbiG1Nm2 (ORCPT
+        with ESMTP id S229543AbiG1OAM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jul 2022 09:42:28 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id E03F661B13;
-        Thu, 28 Jul 2022 06:42:26 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 264B2106F;
-        Thu, 28 Jul 2022 06:42:27 -0700 (PDT)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8D05E3F70D;
-        Thu, 28 Jul 2022 06:42:24 -0700 (PDT)
-Date:   Thu, 28 Jul 2022 14:42:22 +0100
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Maximilian Luz <luzmaximilian@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure
- Application client
-Message-ID: <20220728134222.hs2v75zkxgtcctrx@bogus>
-References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
- <20220723224949.1089973-5-luzmaximilian@gmail.com>
- <20220726143005.wt4be7yo7sbd3xut@bogus>
- <829c8fee-cae5-597d-933d-784b4b57bd73@gmail.com>
- <20220726154138.74avqs6iqlzqpzjk@bogus>
- <d1bc99bb-82ce-aa6e-7fad-e9309fa1c19b@gmail.com>
- <20220728082330.w4ppmzvjaeywsglu@bogus>
- <4e777590-616a-558a-031e-3ef1f1e492b4@gmail.com>
- <20220728112150.hs5el6wufljeoqyy@bogus>
- <b018e909-e371-fd57-2790-9f0a37b63f29@gmail.com>
+        Thu, 28 Jul 2022 10:00:12 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBB6610E3;
+        Thu, 28 Jul 2022 07:00:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1659016811; x=1690552811;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=apUfx5uwPW9Z/IJHLl9owKM3iyON8mPNng7D40fPRRE=;
+  b=NZLKg7plj3Z2mXScQNNSX/DSEWKnKqjqA5a8tTDUUQ1GipZywuJCHoWi
+   y9XkxS38/xKJFmuyphLO3TZ+ePqRzUzaxPrNXOvZZsfVTX/B4lss/uR3b
+   wDpXpcj0yfd0EaYMCSnyrEejkQ4WcKh1VORvuepuSKfqiq1Z9cxUrnbLr
+   k=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 28 Jul 2022 07:00:10 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jul 2022 07:00:09 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 28 Jul 2022 07:00:08 -0700
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 28 Jul 2022 07:00:02 -0700
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
+        <devicetree@vger.kernel.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v2] ASoC: qcom: SC7280: Add support for external DMIC bias supply
+Date:   Thu, 28 Jul 2022 19:29:49 +0530
+Message-ID: <1659016789-9933-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b018e909-e371-fd57-2790-9f0a37b63f29@gmail.com>
-X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 28, 2022 at 01:45:57PM +0200, Maximilian Luz wrote:
->
-> Would something like this work for you: Add a compatible for the TrEE
-> interface (e.g. qcom,sc8180x-tee) but not for the specific apps running
+Update SC7280 machine driver for enabling external dmic bias supply,
+which is required for villager evt boards.
 
-IIUC, you would introduce a compatible for each unique production if there
-is a need. This constitutes as a strong need for that, but you need just
-that, no need to have any notion or info to indicate TrEE/TEE as you know
-this product runs those in TEE.
+Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+---
+Changes since v1:
+	-- Replace dapm widget SND_SOC_DAPM_MIC with SND_SOC_DAPM_REGULATOR_SUPPLY.
+ sound/soc/qcom/sc7280.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-In short, just use the platform specific(not SoC or SoC family) specific
-compatible to initialise your driver and don't introduce any specific
-compatible for this particular firmware interface need.
+diff --git a/sound/soc/qcom/sc7280.c b/sound/soc/qcom/sc7280.c
+index da7469a..4a60f34 100644
+--- a/sound/soc/qcom/sc7280.c
++++ b/sound/soc/qcom/sc7280.c
+@@ -356,6 +356,7 @@ static const struct snd_soc_ops sc7280_ops = {
+ static const struct snd_soc_dapm_widget sc7280_snd_widgets[] = {
+ 	SND_SOC_DAPM_HP("Headphone Jack", NULL),
+ 	SND_SOC_DAPM_MIC("Headset Mic", NULL),
++	SND_SOC_DAPM_REGULATOR_SUPPLY("DMICVDD", 0, 0),
+ };
+ 
+ static int sc7280_snd_platform_probe(struct platform_device *pdev)
+-- 
+2.7.4
 
---
-Regards,
-Sudeep
