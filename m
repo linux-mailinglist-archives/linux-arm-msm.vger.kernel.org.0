@@ -2,134 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F0277583DEC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 13:46:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15D03583DF7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 13:47:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236581AbiG1LqD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jul 2022 07:46:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50302 "EHLO
+        id S234428AbiG1Lrf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jul 2022 07:47:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236175AbiG1LqB (ORCPT
+        with ESMTP id S235201AbiG1Lrf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jul 2022 07:46:01 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 131CABF64;
-        Thu, 28 Jul 2022 04:46:01 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id e15so1848241edj.2;
-        Thu, 28 Jul 2022 04:46:01 -0700 (PDT)
+        Thu, 28 Jul 2022 07:47:35 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B49D7FD1D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 04:47:33 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id s14so1691660ljh.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 04:47:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=jb4sTwGYudzeMZpzODVtElAjSD+BHCr3smpqZiVPtPg=;
-        b=F0dIY41MUWVtomDbuOASiczdY4epsBOlIPUMk+Zx+JfWceMdB8Z6+w2BKeCMmMIT0J
-         dqskrP7CEUTTxjXsiJe74b5dSNN1Hdy2WM/V/YATqFyOZ0MZDstsQ1iingE5DUyZyBJ8
-         J3dGQjsNcQY9BiK+Bjkr7Zpy2U1B9x5/pWA1p4R0jzhU/eCZOeEyhlbp7KFQYcrf7ySF
-         BT6orMmij+SjdA+ZCXzw8J7dAEbrCu8K3rR0fXVkrvw18iIRlFKqYXe4NoDkl/MDiS+7
-         I+PH3+2DM++iUMdB6prHX+c3LSakjSgYy6KwcNGjEfNDqqukpTiRZWigsFEpnWQ91fV9
-         9svA==
+        bh=n0GfnOx42koEcO5+/PVzP+w1zirglEDHUOT3VpjHSPg=;
+        b=K5NRv5yHc/zPIxFDViCXnDRQ3JPb3CkvlN8nCjU0H+WnC+ZCxaSXgX2CsVyjrvfCc4
+         FH3d9VPzUC9U/rbBFX9qZCzeXyPo8/uJ+8o6aqEPvdo+tWKwLPWgNmjG6Bn8CWOGoLPG
+         b1WsistX7ROQS/wAoNm2FmksMVGZfx9laqc/6NgODjwEhzoNM1ZrP5W+2EiwiqKjnI4P
+         3HYYyTjrSHlrmX759/3nS9CqNSUYCecX/CMVF0xDYsaBwXTQ7IBKEgXe9LGTZ+SvWTi0
+         7+3ZZt11Lgzgc9ZH6J5WqvWC9cNV4lDEP08g2heMab2UsLm4y2X/E59OyewWoNCbI0yO
+         neTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=jb4sTwGYudzeMZpzODVtElAjSD+BHCr3smpqZiVPtPg=;
-        b=koxIRPdrU4QcbD0kxr2MN9GWOhyD5CG+72GEsNNLcCRUo5GMEl9/Kq/96AL/mLqI2r
-         B5gE/WDk7Uv81foUahVPxxDR5BDrXZistSUe4IKDwwZjDkbTp7YBNfVg5JbzBrIyRbnc
-         uoEPGFzObnaZwev0vTXiU01aOUGyU5G6hWli6hMHh1R8LMHeVqLu9gCY5JE0BLtKUKTa
-         QAi9nrRya2SZjBuhj7anqv7bZIJO8UVF7A9p94XLxS0+NjF9CdK5iiWZbkqWOQymjpZE
-         +0cg2zkCw0N5PyF3amHoHVpjoOFaQ+CE7u+utfmgE9eB3EnlhXa6Ao9oNjy5nkCUpmdh
-         5GZQ==
-X-Gm-Message-State: AJIora9rgCiKCkOi0NcFg35Cj8DGLznrx0b3hNU4lbvgDi4ApmZ6OuIn
-        rP3nHFwuOem5+fn1FJJ/BBg=
-X-Google-Smtp-Source: AGRyM1vrOHrrFrYpoR24V9fFtx+QZaGulCsCxDHPCEgwzqdNXtWLr8jrUU1xnICMv86CFeggnRIOBQ==
-X-Received: by 2002:aa7:db8a:0:b0:43b:75b1:92e9 with SMTP id u10-20020aa7db8a000000b0043b75b192e9mr27041815edt.223.1659008759613;
-        Thu, 28 Jul 2022 04:45:59 -0700 (PDT)
-Received: from [10.31.0.4] ([37.120.217.162])
-        by smtp.gmail.com with ESMTPSA id u18-20020a1709061db200b0072b2ffc662esm324560ejh.156.2022.07.28.04.45.58
+        bh=n0GfnOx42koEcO5+/PVzP+w1zirglEDHUOT3VpjHSPg=;
+        b=YUI0DP5imB23DoV5wX0TiIAJxcU9F0kiiMB1MAQCInqzZ6LNqvZds/jPkPzwzjUaZf
+         AZXpQYrdrGB0HjByajAdEOIwlv+KV8LgbGWkBX9p/V8HSpwapZGjxsBBd+6ZUNgXEIDr
+         p8NioFtHGhVGhYTUxyR8KvmsmulWurXNT2HS3MP8Qtssk3guT+jAEoUA8XQXf6dxLpYR
+         CopnyFGRAS9FqM5vtcAzpalYYY/kF9x63VyWsIuTRH7puYrmiYHS3x7iyI+uOKZaToQ6
+         AtROXaCou/7t9JYDGSo+JaoEszONYv87YU+I+aO5Td2ihd0eIMJVivMov1wQulEgw1X8
+         LIEA==
+X-Gm-Message-State: AJIora8wbq804LLTvdPZ3MuHKAWm3h9uqyPLg2BJXFHyMBBFuYLNyD7v
+        YIR3z6am3ULNIExQdZb42Q3mkA==
+X-Google-Smtp-Source: AGRyM1v4vjYqO3CkCMpBNTBZ/IKMSVwDPE4TYZ0uxKEVLNs/RiM2204FwMlW7/gwgeSXvTXEKcTw2A==
+X-Received: by 2002:a05:651c:118a:b0:25d:e721:a35a with SMTP id w10-20020a05651c118a00b0025de721a35amr9114206ljo.278.1659008851776;
+        Thu, 28 Jul 2022 04:47:31 -0700 (PDT)
+Received: from [192.168.3.197] (78-26-46-173.network.trollfjord.no. [78.26.46.173])
+        by smtp.gmail.com with ESMTPSA id u30-20020ac251de000000b0048a9603399csm164412lfm.116.2022.07.28.04.47.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Jul 2022 04:45:59 -0700 (PDT)
-Message-ID: <b018e909-e371-fd57-2790-9f0a37b63f29@gmail.com>
-Date:   Thu, 28 Jul 2022 13:45:57 +0200
+        Thu, 28 Jul 2022 04:47:30 -0700 (PDT)
+Message-ID: <aef9bae5-b72b-d520-a8e5-8f6a838775eb@linaro.org>
+Date:   Thu, 28 Jul 2022 13:47:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure
- Application client
+ Thunderbird/91.12.0
+Subject: Re: [PATCH 3/3] dt-bindings: phy: add definition for MSM8960
 Content-Language: en-US
-To:     Sudeep Holla <sudeep.holla@arm.com>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Shinjo Park <peremen@gmail.com>
+Cc:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
- <20220723224949.1089973-5-luzmaximilian@gmail.com>
- <20220726143005.wt4be7yo7sbd3xut@bogus>
- <829c8fee-cae5-597d-933d-784b4b57bd73@gmail.com>
- <20220726154138.74avqs6iqlzqpzjk@bogus>
- <d1bc99bb-82ce-aa6e-7fad-e9309fa1c19b@gmail.com>
- <20220728082330.w4ppmzvjaeywsglu@bogus>
- <4e777590-616a-558a-031e-3ef1f1e492b4@gmail.com>
- <20220728112150.hs5el6wufljeoqyy@bogus>
-From:   Maximilian Luz <luzmaximilian@gmail.com>
-In-Reply-To: <20220728112150.hs5el6wufljeoqyy@bogus>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+References: <20220728111740.30595-1-peremen@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220728111740.30595-1-peremen@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/28/22 13:21, Sudeep Holla wrote:
-> On Thu, Jul 28, 2022 at 12:05:15PM +0200, Maximilian Luz wrote:
->> On 7/28/22 10:23, Sudeep Holla wrote:
+On 28/07/2022 13:17, Shinjo Park wrote:
+> Document the changes introduced by MSM8960 inclusion.
 > 
-> [...]
-> 
->>> Worst case I am fine with that as this needs to be one of and future
->>> platforms must get their act right in designing their f/w interface.
->>
->> Again, I fully agree with you that this situation shouldn't exist. But
->> reality is sadly different.
->>
-> 
-> As I mentioned I don't have final authority to say yes or no to DT bindings.
-> I have expressed my opinion and I thing allowing this to be generic via DT
-> bindings gives no incentive to get the firmware story right. Hence I am happy
-> to see this as one-off driver change and then we more changes are added to
-> the driver or similar drivers get added in the future, we have a change to
-> demand what action has been taken to fix the firmware story.
-> 
-> Just adding DT support(which I disagree) will make future platform to just
-> use it and not get improvements in areas of discovery or query from the
-> firmware.
 
-Okay, that is a good point. Although it's probably debatable how much
-control we have over what goes on with WoA devices.
+1. Thread your submissions.
+2. Use subject prefix matching the file.
 
-Would something like this work for you: Add a compatible for the TrEE
-interface (e.g. qcom,sc8180x-tee) but not for the specific apps running
-in that and then instantiate the app-specific sub-devices from that. We
-would still have to hard-code app-names in the driver (i.e. shift the
-problem from DT to driver and potentially create soc-specific lists),
-but they're no longer in DT (again, I'm not a particular fan of this but
-I could live with that, if needed).
+> Signed-off-by: Shinjo Park <peremen@gmail.com>
+> Reviewed-by: David Heidelberg <david@ixit.cz>
 
-We can then look for a solution for apps that need to be manually loaded
-or vendor/device specific apps once those becomes an issue.
+It is a v1. How the review tag got here?
 
-Regards,
-Max
+Best regards,
+Krzysztof
