@@ -2,120 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36D535843CC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 18:10:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38FBD584402
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 18:16:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229508AbiG1QKL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jul 2022 12:10:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50780 "EHLO
+        id S232050AbiG1QQT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jul 2022 12:16:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbiG1QKJ (ORCPT
+        with ESMTP id S232578AbiG1QQS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jul 2022 12:10:09 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9E8CCD;
-        Thu, 28 Jul 2022 09:10:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1659024606; x=1690560606;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=X9/vv1OubhiRjvTagiSFmkEub0PKOyPJQmKKSarsRW0=;
-  b=OnVB1ttLWNXi/CcYLZ9o9y4qyXBLrvgPzkHNHX5T7g/A1jG2JSTNsvyT
-   VPK/gAuGIG9bsjV4K1n/tB174iUS8bBOL8mJMhyAQSUGmIIezxYt0BExe
-   jTpphGLRepwdy3vLcegVlYOj0OQAgba9Ntfy1DIsfAPYKgkQF720SG8iq
-   M=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 28 Jul 2022 09:10:06 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jul 2022 09:10:06 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 28 Jul 2022 09:10:05 -0700
-Received: from [10.216.19.102] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 28 Jul
- 2022 09:09:58 -0700
-Message-ID: <a92891b1-1fd0-82fa-3dc4-34282e6c2ef3@quicinc.com>
-Date:   Thu, 28 Jul 2022 21:39:55 +0530
+        Thu, 28 Jul 2022 12:16:18 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 9679DBD1;
+        Thu, 28 Jul 2022 09:16:16 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7FFE6106F;
+        Thu, 28 Jul 2022 09:16:16 -0700 (PDT)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B18CE3F70D;
+        Thu, 28 Jul 2022 09:16:13 -0700 (PDT)
+Date:   Thu, 28 Jul 2022 17:16:11 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Ard Biesheuvel <ardb@kernel.org>
+Cc:     Maximilian Luz <luzmaximilian@gmail.com>,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-efi <linux-efi@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure
+ Application client
+Message-ID: <20220728161611.qc6ksoecg64rkov5@bogus>
+References: <829c8fee-cae5-597d-933d-784b4b57bd73@gmail.com>
+ <20220726154138.74avqs6iqlzqpzjk@bogus>
+ <d1bc99bb-82ce-aa6e-7fad-e9309fa1c19b@gmail.com>
+ <7284953b-52bb-37ac-fbe1-1fa845c44ff9@linaro.org>
+ <3d752603-365d-3a33-e13e-ca241cee9a11@gmail.com>
+ <20220727132437.pjob3z2nyxsuxgam@bogus>
+ <CAC_iWj+Pn+h8k=fuDHzYwqD0g4m6jGRt8sCzcz+5+rYqvz9q4w@mail.gmail.com>
+ <fd922f0f-99fd-55a3-a0b5-b62ad2dbfb45@gmail.com>
+ <20220728113347.ver6argevzmlsc2c@bogus>
+ <CAMj1kXHYb-zrKOS_titU79c487ab9WPyKwJBXuj7pdqum=ygaA@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2] ASoC: qcom: SC7280: Add support for external DMIC bias
- supply
-Content-Language: en-US
-To:     Mark Brown <broonie@kernel.org>
-CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
-        <devicetree@vger.kernel.org>
-References: <1659016789-9933-1-git-send-email-quic_srivasam@quicinc.com>
- <YuKbpXVOeGn2l2gd@sirena.org.uk>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-In-Reply-To: <YuKbpXVOeGn2l2gd@sirena.org.uk>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMj1kXHYb-zrKOS_titU79c487ab9WPyKwJBXuj7pdqum=ygaA@mail.gmail.com>
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Jul 28, 2022 at 08:05:58AM -0700, Ard Biesheuvel wrote:
+> On Thu, 28 Jul 2022 at 04:33, Sudeep Holla <sudeep.holla@arm.com> wrote:
+> >
+> > On Thu, Jul 28, 2022 at 12:48:19PM +0200, Maximilian Luz wrote:
+> >
+> > [...]
+> >
+> > >
+> > > I would very much like to avoid the need for special bootloaders. The
+> > > devices we're talking about are WoA devices, meaning they _should_
+> > > ideally boot just fine with EFI and ACPI.
+> > >
+> >
+> > Completely agreed.
+> >
+> > > From an end-user perspective, it's annoying enough that we'll have to
+> > > stick with DTs for the time being due to the use of PEPs in ACPI.
+> >
+> > But have we explored or investigated what it takes to rewrite ACPI f/w
+> > to just use standard methods ? Does it require more firmware changes or
+> > new firmware entities or impossible at any cost ?
+> >
+> > For me that is more important than just getting this one on DT. Because
+> > if you take that path, we will have to keep doing that, with loads of
+> > unnecessary drivers if they are not shared with any other SoC with DT
+> > support upstream. We might also miss chance to get things added to the ACPI
+> > spec as we don't care which means that we never be able to use ACPI on
+> > similar future platforms even though they get shipped with ACPI.
+> >
+> > It will be a loop where we constantly keep converting this ACPI shipped
+> > platform into DT upstream. IMHO we don't want to be there.
+> >
+>
+> Supporting these devices in Linux in ACPI mode would involve
+> reimplementing the PEP subsystem, and reimplementing PEP drivers for
+> all these QCOM peripherals to manage the probing and the power states.
+> I don't think this is realistic at all, and a huge waste of
+> engineering effort otherwise.
+>
 
-On 7/28/2022 7:52 PM, Mark Brown wrote:
-Thanks for your time Mark!!!
-> On Thu, Jul 28, 2022 at 07:29:49PM +0530, Srinivasa Rao Mandadapu wrote:
->> Update SC7280 machine driver for enabling external dmic bias supply,
->> which is required for villager evt boards.
->> +++ b/sound/soc/qcom/sc7280.c
->> @@ -356,6 +356,7 @@ static const struct snd_soc_ops sc7280_ops = {
->>   static const struct snd_soc_dapm_widget sc7280_snd_widgets[] = {
->>   	SND_SOC_DAPM_HP("Headphone Jack", NULL),
->>   	SND_SOC_DAPM_MIC("Headset Mic", NULL),
->> +	SND_SOC_DAPM_REGULATOR_SUPPLY("DMICVDD", 0, 0),
->>   };
->>   
->>   static int sc7280_snd_platform_probe(struct platform_device *pdev)
-> Don't you want to connect this to something?  This won't do anything
-> as-is.  I can't see any references to DMICVDD which might be failing to
-> resolve in the current sound/soc/qcom.
+I am aware of that and hence I am happy to see these as one off drivers
+if needed. But if we don't stop that or keep converting them to DT,
+IMO we will be in vicious circle of this conversion and will never be
+able to support ACPI natively on these platforms. I know it is huge
+effort and not expecting that to be done here, but we need to convey the
+message to use ACPI standards or improve it if there is a need. Using
+PEP is not helpful to run Linux in the long run. Also we may hit a point
+when it may not be trivial to do that ACPI<->DT conversion.
 
-The connection is being done to "VA DMIC"through audio routing in board 
-specific dts file.
+> It is also orthogonal to the discussion, as far as I understand: ACPI
+> is not telling the system whether or not these TZ services should be
+> used instead of EFI runtime calls.
+>
 
-Will post the changes once the main dts patches are landed.
+Agreed and I don't want to block any such discussions. Sorry if I derailed
+the discussion, that was not my intentions.
 
-Ex:-
-
-&sound {
-     DMICVDD-supply = <&pp1800_l2c>;
-
-     audio-routing =
-             "IN1_HPHL", "HPHL_OUT",
-             "IN2_HPHR", "HPHR_OUT",
-             "AMIC1", "MIC BIAS1",
-             "AMIC2", "MIC BIAS2",
-             "VA DMIC0", "DMICVDD",
-             "VA DMIC1", "DMICVDD",
-             "VA DMIC2", "DMICVDD",
-             "VA DMIC3", "DMICVDD",
-             .....
-
-             .....
-
-};
-
-
+--
+Regards,
+Sudeep
