@@ -2,113 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 69443584024
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 15:38:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76148584037
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Jul 2022 15:42:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229694AbiG1NiO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jul 2022 09:38:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45138 "EHLO
+        id S229772AbiG1Nma (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jul 2022 09:42:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230029AbiG1NiM (ORCPT
+        with ESMTP id S229543AbiG1Nm2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jul 2022 09:38:12 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD6514D178;
-        Thu, 28 Jul 2022 06:38:10 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 518A061D45;
-        Thu, 28 Jul 2022 13:38:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D982C433D6;
-        Thu, 28 Jul 2022 13:38:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1659015489;
-        bh=mmsn/t+5QNmM/FD9heL+FjFHsGTIQcd9xFxfGr8LHzg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=LeIWgEYZiNwFxd3GVsR/NJ2ps0rFuovH3OyVXj6idgqySzM5Ia6bBFqXWnQM/K82j
-         8D+xcAI3NxP4Ov82OJUtvK4jc5YjeDIo6e9n1jELfEBUv33J0xStbJTuEu42rz/te9
-         IxdGUKMq4Y8wz3VeyOLqyhkpe2+OJ6dKVoOIwqBVDJ0A3ENP7bBNLNuXS72+1TWTYK
-         y+RspS2qIj8PFh2e0K4tqb4R9jYPzUlZQcTWjSxaR9I+anWs7svppFS7aIOKr4/5mb
-         J1+0c9F7fYrJ8jLM+iWSUdQm9cBDhGW2E1Swcgd+KQtwWxc28hkoP88qfri9H4vLAq
-         D6d9pozm7mYfw==
-Date:   Thu, 28 Jul 2022 14:38:04 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] firmware/psci: Add debugfs support to ease debugging
-Message-ID: <YuKRPB/Ilb0al3ro@sirena.org.uk>
-References: <20220727200901.1142557-1-dmitry.baryshkov@linaro.org>
+        Thu, 28 Jul 2022 09:42:28 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id E03F661B13;
+        Thu, 28 Jul 2022 06:42:26 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 264B2106F;
+        Thu, 28 Jul 2022 06:42:27 -0700 (PDT)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8D05E3F70D;
+        Thu, 28 Jul 2022 06:42:24 -0700 (PDT)
+Date:   Thu, 28 Jul 2022 14:42:22 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Maximilian Luz <luzmaximilian@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ard Biesheuvel <ardb@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure
+ Application client
+Message-ID: <20220728134222.hs2v75zkxgtcctrx@bogus>
+References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
+ <20220723224949.1089973-5-luzmaximilian@gmail.com>
+ <20220726143005.wt4be7yo7sbd3xut@bogus>
+ <829c8fee-cae5-597d-933d-784b4b57bd73@gmail.com>
+ <20220726154138.74avqs6iqlzqpzjk@bogus>
+ <d1bc99bb-82ce-aa6e-7fad-e9309fa1c19b@gmail.com>
+ <20220728082330.w4ppmzvjaeywsglu@bogus>
+ <4e777590-616a-558a-031e-3ef1f1e492b4@gmail.com>
+ <20220728112150.hs5el6wufljeoqyy@bogus>
+ <b018e909-e371-fd57-2790-9f0a37b63f29@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="YBGfuNYEyJDOClJJ"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220727200901.1142557-1-dmitry.baryshkov@linaro.org>
-X-Cookie: People respond to people who respond.
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <b018e909-e371-fd57-2790-9f0a37b63f29@gmail.com>
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Jul 28, 2022 at 01:45:57PM +0200, Maximilian Luz wrote:
+>
+> Would something like this work for you: Add a compatible for the TrEE
+> interface (e.g. qcom,sc8180x-tee) but not for the specific apps running
 
---YBGfuNYEyJDOClJJ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+IIUC, you would introduce a compatible for each unique production if there
+is a need. This constitutes as a strong need for that, but you need just
+that, no need to have any notion or info to indicate TrEE/TEE as you know
+this product runs those in TEE.
 
-On Wed, Jul 27, 2022 at 11:09:01PM +0300, Dmitry Baryshkov wrote:
+In short, just use the platform specific(not SoC or SoC family) specific
+compatible to initialise your driver and don't introduce any specific
+compatible for this particular firmware interface need.
 
-> +} psci_fn_ids[] = {
-> +	PSCI_ID_NATIVE(0_2, MIGRATE),
-> +	PSCI_ID(0_2, MIGRATE_INFO_TYPE),
-> +	PSCI_ID_NATIVE(0_2, MIGRATE_INFO_UP_CPU),
-> +	PSCI_ID(1_0, CPU_FREEZE),
-> +	PSCI_ID_NATIVE(1_0, CPU_DEFAULT_SUSPEND),
-> +	PSCI_ID_NATIVE(1_0, NODE_HW_STATE),
-> +	PSCI_ID_NATIVE(1_0, SYSTEM_SUSPEND),
-> +	PSCI_ID(1_0, SET_SUSPEND_MODE),
-> +	PSCI_ID_NATIVE(1_0, STAT_RESIDENCY),
-> +	PSCI_ID_NATIVE(1_0, STAT_COUNT),
-> +	PSCI_ID_NATIVE(1_1, SYSTEM_RESET2),
-> +};
-
-There's other functions like the MEM_PROTECT ones which we don't
-currently use but it might be interesting to enumerate...
-
->  #define PSCI_1_0_FN_PSCI_FEATURES		PSCI_0_2_FN(10)
-> +#define PSCI_1_0_FN_CPU_FREEZE			PSCI_0_2_FN(11)
-> +#define PSCI_1_0_FN_CPU_DEFAULT_SUSPEND		PSCI_0_2_FN(12)
-
-...we're already adding functions here.
-
-> +#define PSCI_1_0_FN_NODE_HW_STATE		PSCI_0_2_FN(13)
-
-> +#define PSCI_1_0_FN_STAT_RESIDENCY		PSCI_0_2_FN(16)
-> +#define PSCI_1_0_FN_STAT_COUNT			PSCI_0_2_FN(17)
-
-Some of these state query things might be interesting to actually call
-and output results from at some point, doesn't seem like something that
-should be a blocker though.
-
---YBGfuNYEyJDOClJJ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmLikTwACgkQJNaLcl1U
-h9BAnwf/RzOG3aFKcvv9K/vZw2k6o3L2Of7BgJ00FEx9o/5mPNrSxvgslC9yvxev
-QQVtI98A4XOjk6gFpmk9OiwlFztF1McyaaDQxmngmaOct2cPYu4NM3p8//4gJJfr
-RQs9kHZSQ5Q5CbA0vycWH9+7DHPX9WUxbbMuFiDfqpd2WaJx7G+U1Uz8e1DqHyq1
-wxwztBOFidoL+rQNqK2TY4RBzIIR2EFAHfKiu6Y4hFlm91qrHPe+YEbkW8Yoa+Xl
-+G0L4btuYdJL7g/Dt6gUD7ApUdA17LhvifMcq+HJsaH004DuVOquZK+K9rHEmiAE
-JqWJs6IX9t++1fUdsxFvgIEs2fczJQ==
-=+kLn
------END PGP SIGNATURE-----
-
---YBGfuNYEyJDOClJJ--
+--
+Regards,
+Sudeep
