@@ -2,36 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2421D584D2A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jul 2022 10:10:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F41C3584D70
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jul 2022 10:37:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235202AbiG2IK0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Jul 2022 04:10:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49276 "EHLO
+        id S234660AbiG2IhS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Jul 2022 04:37:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235355AbiG2IKZ (ORCPT
+        with ESMTP id S235011AbiG2IhQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Jul 2022 04:10:25 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9940711A04;
-        Fri, 29 Jul 2022 01:10:21 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4C7C361C9A;
-        Fri, 29 Jul 2022 08:10:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D448C433C1;
-        Fri, 29 Jul 2022 08:10:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1659082220;
-        bh=BvKlDnh9cU0HZ+oSmGTqHqFzpwVEA0UVMnTKLAsW1t4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=IsKYdOICG+u2L1NeckIDTea4vZR/7c4ENTer6g0wHVHVt/tnxkZwyNhHCAWDDD1Le
-         qQ8GfZZiaiIeSxYGwaJfWqQz2BHFrOuVk5+8zAknV9s5mz7Vy7+ZXIWO76lrNUGMfU
-         jFQKhw/GO+kCHUZ2Hle2jPVSK7/+XbZKaJWWiPUo=
-Date:   Fri, 29 Jul 2022 10:10:18 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Daniil Lunev <dlunev@chromium.org>
+        Fri, 29 Jul 2022 04:37:16 -0400
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68F6B8246D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jul 2022 01:37:14 -0700 (PDT)
+Received: by mail-yb1-xb31.google.com with SMTP id 123so7075886ybv.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jul 2022 01:37:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=jBtukp+iT13bXS1x4ppbbvLuYQYsK1bKT1T8ZuQYnuU=;
+        b=i22YIsoLhKb/wfkY6xp7KMmlRGqwFcE/LUkGQHT3XnBPKXflWCLwDnGhe3Y2v4aBGb
+         1bUjxWV41SVHBYhWtYuWL7UwmcyfYGERtfCq+CIffVBUqZMKfwET2uQrvA9ZVJBGytX+
+         j/oDivxugVZ2IhpyVx4ou8gTGgTwu7zrhtVng=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=jBtukp+iT13bXS1x4ppbbvLuYQYsK1bKT1T8ZuQYnuU=;
+        b=ULPvgmTpLFEbw5lOTzJ2MJk8sT+TuSmKxL5txspu+r2L20076LWbsIJ1S43P43ym/Y
+         HR6kOwwLMEN3rIZinavNxxkCL94Lc1xVh/VdYtAGIOl0479Q93XoY8W4CCUWMj33hY6g
+         GJAxBdtnBiaEN1ha6wGjuOseRMAXHLJNLPbxrP9eBD8ylKVSf5L0CGmy4XhxEl5O3gux
+         D7V5zD6QA5MgTHoeTrjsx/bnLx1fsko1yN28nw+P5Zl0Nh/Zoa/3K/UJtCi3iM/7My5H
+         Pu9w0XLNEZKZ8N5wEae5+bnMdMXiUvTXHjauv/SurtxHe6b67dddvHL5vrJDFyiHLDUA
+         vOxA==
+X-Gm-Message-State: ACgBeo02IxUhn7D7K59QTNNN5hLhGUgJGwiO8dlL5VHJ+7dlDiCdnTSV
+        MvKDCwSTw9Zv34FI75fTTv5t7fUroQ+u5bDcJ0AfIg==
+X-Google-Smtp-Source: AA6agR4Fodc9JOFrHAphSV1LJgvVUjnQBZ8rGzgsx/oQkn3dAk23lZ2WjEVH2IM56ojvT4WwwhovvzIy+j9G9/w1IU0=
+X-Received: by 2002:a25:8888:0:b0:671:787e:8b3c with SMTP id
+ d8-20020a258888000000b00671787e8b3cmr1820668ybl.478.1659083833529; Fri, 29
+ Jul 2022 01:37:13 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220729020508.4147751-1-dlunev@chromium.org> <20220729120216.v3.1.I6b7934b96fff0d5ea22531e57c0a11f0ccd1acd8@changeid>
+ <YuOV6l/7KoVO4yZp@kroah.com>
+In-Reply-To: <YuOV6l/7KoVO4yZp@kroah.com>
+From:   Daniil Lunev <dlunev@chromium.org>
+Date:   Fri, 29 Jul 2022 18:37:02 +1000
+Message-ID: <CAONX=-f=qnUqVCTuotrEp6MCMk_f+wWj4FPY6skXHHWuitqZiQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] ufs: add function to check CRYPTO capability
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc:     Adrian Hunter <adrian.hunter@intel.com>,
         Bart Van Assche <bvanassche@acm.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
@@ -51,16 +70,9 @@ Cc:     Adrian Hunter <adrian.hunter@intel.com>,
         linux-arm-kernel@lists.infradead.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-mediatek@lists.infradead.org, linux-scsi@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] ufs: add function to check CRYPTO capability
-Message-ID: <YuOV6l/7KoVO4yZp@kroah.com>
-References: <20220729020508.4147751-1-dlunev@chromium.org>
- <20220729120216.v3.1.I6b7934b96fff0d5ea22531e57c0a11f0ccd1acd8@changeid>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220729120216.v3.1.I6b7934b96fff0d5ea22531e57c0a11f0ccd1acd8@changeid>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,26 +80,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 29, 2022 at 12:05:07PM +1000, Daniil Lunev wrote:
-> To align with other capability check functions.
+> This is not a valid changelog text, sorry.  Please read the
+> documentation for how to write a valid one.
+Sorry for that. Though the latest patchset is v4 and that one
+doesn't contain this patch since Eric Biggers pointed out the
+crypto information can be obtained from device's queue sysfs
+node. But I will try to be better further on.
 
-This is not a valid changelog text, sorry.  Please read the
-documentation for how to write a valid one.
+> Something went wrong with your patch, there is no --- line, so git will
+> apply it with the diffstat, right?
+>
+> Did you hand-edit this?
 
-> Signed-off-by: Daniil Lunev <dlunev@chromium.org>
-> 
->  drivers/ufs/core/ufshcd-crypto.c | 8 ++++----
->  drivers/ufs/host/ufs-mediatek.c  | 2 +-
->  drivers/ufs/host/ufs-qcom-ice.c  | 4 ++--
->  drivers/ufs/host/ufshcd-pci.c    | 2 +-
->  include/ufs/ufshcd.h             | 5 +++++
->  5 files changed, 13 insertions(+), 8 deletions(-)
+Hm, I don't recall hand editing it, but the possibility of pilot error is
+always there. I am still getting used to the upstream tooling and
+processes. Sorry for the inconvenience, but as I mentioned, this
+patch is dropped in v4 version (and sorry for high traffic of changes
+on this patchset)
 
-Something went wrong with your patch, there is no --- line, so git will
-apply it with the diffstat, right?
-
-Did you hand-edit this?
-
-thanks,
-
-greg k-h
+Thanks,
+Daniil
