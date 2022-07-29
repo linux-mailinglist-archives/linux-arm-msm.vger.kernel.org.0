@@ -2,77 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 647F7585171
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jul 2022 16:20:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96B30585179
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jul 2022 16:22:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236951AbiG2OU2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Jul 2022 10:20:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58064 "EHLO
+        id S236204AbiG2OWd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Jul 2022 10:22:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236307AbiG2OU1 (ORCPT
+        with ESMTP id S236293AbiG2OWc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Jul 2022 10:20:27 -0400
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F0CAF35
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jul 2022 07:20:26 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id g20-20020a9d6a14000000b0061c84e679f5so3364219otn.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jul 2022 07:20:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=n48rwJ6znQ/JiCvqsQDOhikE94C4sngYxJzSk0+idkE=;
-        b=kEtZGN6Z/CorW5Lq9wq9t9IfRLJyy5KD5gGGTiO1ceZcd1+AdGD/ipjIzeeBB477aM
-         NjaME6VCtJHKdIAtJSf3AyiDtYVfHU2DMx2BK+WgYUfzmxs+P9l5aIpPj8EnP/GCW3Aj
-         63YYjuqGUmZqgyEURS2I7WmMqi6xNyoj1JDqGyqUbbpCzs2wKSkVV+WTKbYNCprRzxDE
-         kaXM6QtugzjaCnUIHwCHVfYbzEMnI4Ny5Tr15HtS6EDQTweVOT7qfNgUGZwOliuIDXfV
-         Szj2FryXQ589F5FlbwRvCpKK+4KZBNbXRUWfVMy+WsWihby1p3QZA93hXObM1VLVwTbf
-         2ZGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=n48rwJ6znQ/JiCvqsQDOhikE94C4sngYxJzSk0+idkE=;
-        b=21h+nNC+8X4fFgMgraJa9RVN8hY2e4GIe1nbQPEiIENFPRt8VAXFDHS8j/1Ts8Nr/Q
-         bJWwKxRTzIv50FaxGI+YSr+ToAqO+53rh/mkmsnmcRYg7+9a/ITEfFJjqJsgxFKMHP+b
-         RMPDUh7eXN2zLgeZXZruh4dezvkP8xsazsYT3xKhiRiEy4WOLurf6b9X0LJ/ZA9/cVC8
-         iZ5zQXQLGH6EhsT/afxAh2MtMbpAfDdsdfUgXBzkDiih9pt3EM9AtAmcLAIoWRpmnYgw
-         hha4T1O1Dvj500yfacvUajCyFLRNv4W2ABjx5JQhpRTj9MuyElwkUomCuEGAMz85Q5rY
-         wPCw==
-X-Gm-Message-State: AJIora+RWlp/9EyjMxzTfZ48PIfCM94kPUGWjn6XDsYIJEd1CzAgstC7
-        BbTaD2Ses3feujOzq79pPCYTSQ==
-X-Google-Smtp-Source: AGRyM1uRHTKEEcbNwdfwMOxF4/qNgi9j0Z4DK9KAiGrml3gkmfEBOEQ2f+23Zdw83v8JeDV2xhvALA==
-X-Received: by 2002:a05:6830:660c:b0:61c:1c4f:3f56 with SMTP id cp12-20020a056830660c00b0061c1c4f3f56mr1498744otb.207.1659104425591;
-        Fri, 29 Jul 2022 07:20:25 -0700 (PDT)
-Received: from [192.168.11.16] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id o32-20020a05687096a000b0010ea56a12a4sm113791oaq.10.2022.07.29.07.20.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Jul 2022 07:20:24 -0700 (PDT)
-Message-ID: <42875ff3-04a2-c465-4063-1ce3b0b35dba@kali.org>
-Date:   Fri, 29 Jul 2022 09:20:22 -0500
+        Fri, 29 Jul 2022 10:22:32 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED97656B8B;
+        Fri, 29 Jul 2022 07:22:31 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 9E0BEB82808;
+        Fri, 29 Jul 2022 14:22:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 624B8C433C1;
+        Fri, 29 Jul 2022 14:22:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1659104549;
+        bh=FYp7dxRuDa2TzbtLpfE1k1l6o7hR4ycZLxQgQwCsplA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=gI52e6Jn7VE10U5yCiJqdCtJ8vq4VD1COs74rMHOXEDNUAB313zvt0660JPDJ89vL
+         uRPByAcorrzRsXtzw4UHnEJYFgnZ0epF0+cuXPtDnI7WiYrbh8tDpLbH5ehEusMPBg
+         eNhTd/WKCWFGW0aqvwRSSQZedj1nbkhf51FcitmIv3mV+5IihAseMfE30NzpLOZ+yz
+         Vbrkd030U5POnTAx7Z0DMhjniNQpxIMtQyv4s34uHp67VcwJhg0wPbvzzST6nu9tlq
+         e55lT7qkLZFj0rAWah49KRFUemdcWzLi8jfIAxIEaMFW92wBqgfG7GfQR8uG/sz0BC
+         dVxKcR7Sz1vGw==
+Date:   Fri, 29 Jul 2022 19:52:21 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Kalle Valo <kvalo@kernel.org>
+Cc:     Qiang Yu <quic_qianyu@quicinc.com>, quic_hemantk@quicinc.com,
+        loic.poulain@linaro.org, quic_jhugo@quicinc.com,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
+        ath11k@lists.infradead.org
+Subject: Re: [PATCH v3 1/1] bus: mhi: host: Fix up null pointer access in
+ mhi_irq_handler
+Message-ID: <20220729142221.GA9937@thinkpad>
+References: <1658459838-30802-1-git-send-email-quic_qianyu@quicinc.com>
+ <20220726080636.GE5522@workstation>
+ <87czdrrc95.fsf@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.11.0
-Subject: Re: [PATCH v2 00/11] soc/arm64: qcom: Add LLCC BWMON on SDM845
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>
-References: <20220728113748.170548-1-krzysztof.kozlowski@linaro.org>
-From:   Steev Klimaszewski <steev@kali.org>
-In-Reply-To: <20220728113748.170548-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87czdrrc95.fsf@kernel.org>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,56 +60,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Tue, Jul 26, 2022 at 08:53:58PM +0300, Kalle Valo wrote:
+> Manivannan Sadhasivam <mani@kernel.org> writes:
+> 
+> > +ath11k, Kalle
+> >
+> > On Fri, Jul 22, 2022 at 11:17:18AM +0800, Qiang Yu wrote:
+> >> The irq handler for a shared IRQ ought to be prepared for running
+> >> even now it's being freed. So let's check the pointer used by
+> >> mhi_irq_handler to avoid null pointer access since it is probably
+> >> released before freeing IRQ.
+> >> 
+> >> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> >
+> > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> 
+> This fixes the crash and my regression tests pass now, thanks. But
+> please see my question below.
+> 
+> Tested-by: Kalle Valo <kvalo@kernel.org>
+> 
 
-On 7/28/22 6:37 AM, Krzysztof Kozlowski wrote:
-> Hi,
->
-> Changes since v1
-> ================
-> 1. Patch #2: Drop also BWMON_GLOBAL_IRQ_STATUS (Sibi).
-> 2. Minor rebasings because of above drop.
-> 3. Patch #4: typo in subject (Sibi).
-> 4. New patch: arm64: dts: qcom: sdm845: narrow LLCC address space (Sibi).
-> 5. Add Rb tags.
->
-> Description
-> ===========
-> BWMON is a data bandwidth monitor providing throughput/bandwidth over certain
-> interconnect links in a SoC.  It might be used to gather current bus usage and
-> vote for interconnect bandwidth, thus adjusting the bus speed based on actual
-> usage.
->
-> Qualcomm SoCs might several BWMON instances.  Extend existing support for CPU
-> BWMON (called v4) to LLCC BWMON (called v5).
->
-> Cc: Rajendra Nayak <quic_rjendra@quicinc.com>
-> Cc: Sibi Sankar <quic_sibis@quicinc.com>
->
-> Best regards,
-> Krzysztof
->
-> Krzysztof Kozlowski (11):
->    dt-bindings: interconnect: qcom,msm8998-bwmon: add support for SDM845
->      LLCC BWMON
->    soc: qcom: icc-bwmon: re-use IRQ enable/clear define
->    soc: qcom: icc-bwmon: drop unused registers
->    soc: qcom: icc-bwmon: store reference to variant data in container
->    soc: qcom: icc-bwmon: clear all registers on init
->    soc: qcom: icc-bwmon: store count unit per variant
->    soc: qcom: icc-bwmon: use regmap and prepare for BWMON v5
->    soc: qcom: icc-bwmon: add per-variant quirks
->    soc: qcom: icc-bwmon: add support for SDM845 LLCC BWMON
->    arm64: dts: qcom: sdm845: narrow LLCC address space
->    arm64: dts: qcom: sdm845: add LLCC BWMON
->
->   .../interconnect/qcom,msm8998-bwmon.yaml      |   1 +
->   arch/arm64/boot/dts/qcom/sdm845.dtsi          |  39 +-
->   drivers/soc/qcom/icc-bwmon.c                  | 460 ++++++++++++++----
->   3 files changed, 401 insertions(+), 99 deletions(-)
->
-Tested on the Lenovo Yoga C630 with QCOM_LLCC=m and no longer see the 
-previous error message.
+Thanks Kalle!
 
-Tested-by: Steev Klimaszewski <steev@kali.org>
+> >> +	/*
+> >> +	 * If CONFIG_DEBUG_SHIRQ is set, the IRQ handler will get invoked during __free_irq()
+> >> +	 * and by that time mhi_ctxt() would've freed. So check for the existence of mhi_ctxt
+> >> +	 * before handling the IRQs.
+> >> +	 */
+> >> +	if (!mhi_cntrl->mhi_ctxt) {
+> >> +		dev_dbg(&mhi_cntrl->mhi_dev->dev,
+> >> +			"mhi_ctxt has been freed\n");
+> >> +		return IRQ_HANDLED;
+> >> +	}
+> 
+> I don't see any protection accessing mhi_cntrl->mhi_ctxt, is this really
+> free of race conditions?
+> 
 
+As Qiang said, it is safe to access mhi_ctxt here.
+
+Thanks,
+Mani
+
+> -- 
+> https://patchwork.kernel.org/project/linux-wireless/list/
+> 
+> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+
+-- 
+மணிவண்ணன் சதாசிவம்
