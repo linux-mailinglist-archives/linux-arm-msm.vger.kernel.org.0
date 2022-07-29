@@ -2,71 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95CA9584FC1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jul 2022 13:49:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24745584FD2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jul 2022 14:01:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235460AbiG2Ltw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Jul 2022 07:49:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59542 "EHLO
+        id S235619AbiG2MBG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Jul 2022 08:01:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233922AbiG2Ltv (ORCPT
+        with ESMTP id S234836AbiG2MBE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Jul 2022 07:49:51 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 9A16474787;
-        Fri, 29 Jul 2022 04:49:50 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 05ED71063;
-        Fri, 29 Jul 2022 04:49:51 -0700 (PDT)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4995D3F73D;
-        Fri, 29 Jul 2022 04:49:49 -0700 (PDT)
-Date:   Fri, 29 Jul 2022 12:49:46 +0100
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] firmware/psci: Add debugfs support to ease debugging
-Message-ID: <20220729114946.jhjjmkw36vjdsyj3@bogus>
-References: <20220727200901.1142557-1-dmitry.baryshkov@linaro.org>
- <20220728090806.nnighsbx2lcgugon@bogus>
- <YuKJtKHzoR4DUsOr@sirena.org.uk>
+        Fri, 29 Jul 2022 08:01:04 -0400
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [5.144.164.164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3062237DF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jul 2022 05:01:03 -0700 (PDT)
+Received: from [192.168.1.101] (abxi232.neoplus.adsl.tpnet.pl [83.9.2.232])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B34871F927;
+        Fri, 29 Jul 2022 14:01:01 +0200 (CEST)
+Message-ID: <f0a4790d-7739-3bc5-b877-2dacbdb5158b@somainline.org>
+Date:   Fri, 29 Jul 2022 14:01:01 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YuKJtKHzoR4DUsOr@sirena.org.uk>
-X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 1/3] ARM: dts: qcom: msm8960: add reference to sleep_clk
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Shinjo Park <peremen@gmail.com>
+Cc:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220728111603.30503-1-peremen@gmail.com>
+ <66e15d42-96fd-5b02-b7c8-a284d3f8d21f@linaro.org>
+ <f932415d-3bee-0948-a016-a2e837dd7256@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <f932415d-3bee-0948-a016-a2e837dd7256@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 28, 2022 at 02:05:56PM +0100, Mark Brown wrote:
-> On Thu, Jul 28, 2022 at 10:08:06AM +0100, Sudeep Holla wrote:
-> > On Wed, Jul 27, 2022 at 11:09:01PM +0300, Dmitry Baryshkov wrote:
-> 
-> > > To ease debugging of PSCI supported features, add debugfs file called
-> > > 'psci' describing PSCI and SMC CC versions
-> 
-> > These 2 are for sure in the boot log. Having them is debugfs accessible
-> > via file system add not much value as we would hit issues quite early in
-> > the boot for most of the things related to PSCI.
-> 
-> It can be useful to have something that can be queried at any point when
-> collecting diagnostics, even if there's been a lot of logging or log
-> rotation since boot.  It makes it easier to give people instructions or
-> a tool which will reliably collect useful information when filing a bug
-> report.
 
-Fair enough. I agree this is will be useful to debug/analyse non boot
-issues.
 
---
-Regards,
-Sudeep
+On 29.07.2022 13:33, Dmitry Baryshkov wrote:
+> On 28/07/2022 14:51, Krzysztof Kozlowski wrote:
+>> On 28/07/2022 13:16, Shinjo Park wrote:
+>>> Change the reference of sleep_clk to the same as qcom-apq8064.dtsi.
+>>
+>> You add label, not change something.
+>>
+>>>
+>>> Signed-off-by: Shinjo Park <peremen@gmail.com>
+>>> Reviewed-by: David Heidelberg <david@ixit.cz>
+>>> ---
+>>>   arch/arm/boot/dts/qcom-msm8960.dtsi | 2 +-
+>>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/arch/arm/boot/dts/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom-msm8960.dtsi
+>>> index e8cd1c9c0..991eb1948 100644
+>>> --- a/arch/arm/boot/dts/qcom-msm8960.dtsi
+>>> +++ b/arch/arm/boot/dts/qcom-msm8960.dtsi
+>>> @@ -71,7 +71,7 @@ pxo_board: pxo_board {
+>>>               clock-output-names = "pxo_board";
+>>>           };
+>>>   -        sleep_clk {
+>>> +        sleep_clk: sleep_clk {
+>>
+>> Since you touch the line, make the device node sleep-clk (device node
+>> names should not have underscores) and mention this in commit msg.
+> 
+> 
+> Then we are back to the compat issues, since the gcc expects the 'sleep_clk' clock.
+clock-output-names = "sleep_clk";
+
+Konrad
+> 
+> 
