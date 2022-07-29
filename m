@@ -2,178 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BF96584CE4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jul 2022 09:47:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2421D584D2A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jul 2022 10:10:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235143AbiG2Hrm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Jul 2022 03:47:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54096 "EHLO
+        id S235202AbiG2IK0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Jul 2022 04:10:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235168AbiG2HrW (ORCPT
+        with ESMTP id S235355AbiG2IKZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Jul 2022 03:47:22 -0400
-Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6612B41D11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jul 2022 00:46:35 -0700 (PDT)
-Received: by mail-qt1-x830.google.com with SMTP id bz13so2789800qtb.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jul 2022 00:46:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7a2a0ZLCLii8uN3XM9tRZ1FUmDJCQ4nEqHpPYUeU1zY=;
-        b=lCPqwpRvt/NnqR0ZT0novgznUAPcweloyzGT0IX8/zddycJU89DRSkB+oFLmpschbb
-         AkOOCugD++rl8invHxWlDbFHzH8HTaPpZKFS6ukn5qn99+sIxSsBCdYHxmvU7yJKMsQ5
-         aez4q352RrBSNOY21itFbb9FZZI6D/LvMFP+NIILvGnwCRbA65H7Xi8rDX0eXbACPKFw
-         6pZRXhOV4Fzz+0R7CNHkko+GrjeC6IeVy9+j/DSjULjgFRyLf6lsall7TMJ+14sFanqX
-         XfrYyWQUvAhw6+CGY4+8NtqnN/pvbyi4su/WbLZgnrXTOs1Fp5YN/WDYwT0fWHx2HFKb
-         k6gA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7a2a0ZLCLii8uN3XM9tRZ1FUmDJCQ4nEqHpPYUeU1zY=;
-        b=BnQa8GIH+Cv15eMzmDlKJy5EcRh1NqwkCfD89XqM9mLJxu++tccxAQ88Oypfbb1f42
-         qUSjq1/yZiRivpsqBv9DcgC6MQTCKAUHBTK9WBYnJAXuIUX3sFJsv3DyrwiA70igYZvS
-         1uV/rwDWgSRgNQC6hg3ZLl8+P92FYsTNeDheZ93gOFOJ8hjmkUx41JNFxfFJ4VL5fVDI
-         B29I4uD0QZzq0mMbFOPa+eMnUTBJyycVj1/2tslNFzWyjX78aDUNK5qVQ4H5C0kMi3uG
-         fj+l+A0orSbExvFMaDZfeHxlkgA3zm/sQ8FW2BDqzykzpGidrgjIG4oJiuV3XaFrY+xS
-         TlSw==
-X-Gm-Message-State: AJIora+ja4iX9ztgCs6FgggivOXbxo2dwo0Qy8yxeBtMfWDAYHrnQod9
-        hYaOqvJW4nd9o+UWxg1x5qZtPSGL1t6Z68bosjZTLA==
-X-Google-Smtp-Source: AGRyM1t17J23zmT/KYA0kbJ3uBVjWNhg+kTZLWesv1/WiyxQ4ejCi05swyXT+0SsIdppg6OYNtteLB+rxLJ8PcETGrg=
-X-Received: by 2002:ac8:5942:0:b0:31f:39f6:aba7 with SMTP id
- 2-20020ac85942000000b0031f39f6aba7mr2229638qtz.295.1659080792592; Fri, 29 Jul
- 2022 00:46:32 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220727100615.638072-1-dmitry.baryshkov@linaro.org>
- <CAL_JsqJjLn8ypBo+bBoO+CE-si7gemP02fi8EWk97QRPPpNoVg@mail.gmail.com>
- <CAK7LNARXbXZFpxiHuLhzjJ4YahfV6z3dNPAdkkmeOXONBx8u3w@mail.gmail.com>
- <CAA8EJprM4WAgfVTJ15azFtSH6POL5uuseHO=zVxRd44RmqKZjw@mail.gmail.com> <CAK7LNAQU42fpqPqUipZYx+685B+Rc8JGdaKcP3TdfQWUept1nQ@mail.gmail.com>
-In-Reply-To: <CAK7LNAQU42fpqPqUipZYx+685B+Rc8JGdaKcP3TdfQWUept1nQ@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 29 Jul 2022 10:46:21 +0300
-Message-ID: <CAA8EJprMsEE-fkpP=QGgpCga5rb9_mJF51cvRjeWsG7NBeijSA@mail.gmail.com>
-Subject: Re: [PATCH] kbuild: take into account DT_SCHEMA_FILES changes while
- checking dtbs
-To:     Masahiro Yamada <masahiroy@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Michal Marek <michal.lkml@markovi.net>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Fri, 29 Jul 2022 04:10:25 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9940711A04;
+        Fri, 29 Jul 2022 01:10:21 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4C7C361C9A;
+        Fri, 29 Jul 2022 08:10:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D448C433C1;
+        Fri, 29 Jul 2022 08:10:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1659082220;
+        bh=BvKlDnh9cU0HZ+oSmGTqHqFzpwVEA0UVMnTKLAsW1t4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=IsKYdOICG+u2L1NeckIDTea4vZR/7c4ENTer6g0wHVHVt/tnxkZwyNhHCAWDDD1Le
+         qQ8GfZZiaiIeSxYGwaJfWqQz2BHFrOuVk5+8zAknV9s5mz7Vy7+ZXIWO76lrNUGMfU
+         jFQKhw/GO+kCHUZ2Hle2jPVSK7/+XbZKaJWWiPUo=
+Date:   Fri, 29 Jul 2022 10:10:18 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Daniil Lunev <dlunev@chromium.org>
+Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Andy Gross <agross@kernel.org>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bean Huo <beanhuo@micron.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Daejun Park <daejun7.park@samsung.com>,
+        Eric Biggers <ebiggers@google.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Mike Snitzer <snitzer@redhat.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v3 1/2] ufs: add function to check CRYPTO capability
+Message-ID: <YuOV6l/7KoVO4yZp@kroah.com>
+References: <20220729020508.4147751-1-dlunev@chromium.org>
+ <20220729120216.v3.1.I6b7934b96fff0d5ea22531e57c0a11f0ccd1acd8@changeid>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220729120216.v3.1.I6b7934b96fff0d5ea22531e57c0a11f0ccd1acd8@changeid>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 29 Jul 2022 at 10:05, Masahiro Yamada <masahiroy@kernel.org> wrote:
->
-> On Fri, Jul 29, 2022 at 3:53 PM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > On Fri, 29 Jul 2022 at 08:55, Masahiro Yamada <masahiroy@kernel.org> wrote:
-> > >
-> > > On Thu, Jul 28, 2022 at 2:36 AM Rob Herring <robh+dt@kernel.org> wrote:
-> > > >
-> > > > On Wed, Jul 27, 2022 at 4:06 AM Dmitry Baryshkov
-> > > > <dmitry.baryshkov@linaro.org> wrote:
-> > > > >
-> > > > > It is useful to be able to recheck dtbs files against a limited set of
-> > > > > DT schema files. This can be accomplished by using differnt
-> > > > > DT_SCHEMA_FILES argument values while rerunning make dtbs_check. However
-> > > > > for some reason if_changed_rule doesn't pick up the rule_dtc changes
-> > > > > (and doesn't retrigger the build).
-> > > > >
-> > > > > Fix this by changing if_changed_rule to if_changed_dep and squashing DTC
-> > > > > and dt-validate into a single new command. Then if_changed_dep triggers
-> > > > > on DT_SCHEMA_FILES changes and reruns the build/check.
-> > > > >
-> > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > ---
-> > > > >  scripts/Makefile.lib | 14 ++++++--------
-> > > > >  1 file changed, 6 insertions(+), 8 deletions(-)
-> > > > >
-> > > > > diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
-> > > > > index c88b98b5dc44..3df470289382 100644
-> > > > > --- a/scripts/Makefile.lib
-> > > > > +++ b/scripts/Makefile.lib
-> > > > > @@ -383,17 +383,15 @@ DT_CHECKER_FLAGS ?= $(if $(DT_SCHEMA_FILES),-l $(DT_SCHEMA_FILES),-m)
-> > > > >  DT_BINDING_DIR := Documentation/devicetree/bindings
-> > > > >  DT_TMP_SCHEMA := $(objtree)/$(DT_BINDING_DIR)/processed-schema.json
-> > > > >
-> > > > > -quiet_cmd_dtb_check =  CHECK   $@
-> > > > > -      cmd_dtb_check =  $(DT_CHECKER) $(DT_CHECKER_FLAGS) -u $(srctree)/$(DT_BINDING_DIR) -p $(DT_TMP_SCHEMA) $@ || true
-> > > > > +quiet_cmd_dtb =        DTC/CHECK   $@
-> > > >
-> > > > This is supposed to be 7 chars or less. DTCCHK or DTC_CHK perhaps. Or
-> > > > always do just 'DTC'. I can fixup when applying.
-> > > >
-> > > > I'll give it a few days for other comments.
-> > >
-> > >
-> > >
-> > > When you change DT_SCHEMA_FILES, re-running dt-validate should be enough.
-> > > You do not need to re-run dtc.
-> > >
-> > > I guess the strangeness comes from the fact that you are trying to do the
-> > >  two different things in a single rule.
-> >
-> > The issue is that with the current rules the dt-validate isn't
-> > re-executed on DT_SCHEMA_FILES changes. Thus comes my proposal.
->
-> Correct.
->
-> What I said is like this.
->
-> # touch the timestamp file, %.dtb.checked
-> $(obj)/%.dtb.checked: $(obj)/%.dtb $(DT_TMP_SCHEMA) FORCE
->         $(call if_changed_rule,dtb_check)
->
-> $(obj)/%.dtb: $(src)/%.dts $(DTC) $FORCE
->         $(call if_changed_rule,dtc)
->
-> $(obj)/%.dtbo: $(src)/%.dts $(DTC) FORCE
->         $(call if_changed_dep,dtc)
->
->
-> With the dtc/check split, we can avoid unneeded regeneration of
-> %.dtb when DT_TMP_SCHEMA or DT_SCHEMA_FILES is
-> changed.
->
->
-> One drawback is we track %.dtb.checked and and %.dtb separately,
-> so something like 53182e81f47d4ea0c727c49ad23cb782173ab849
-> may come back.
+On Fri, Jul 29, 2022 at 12:05:07PM +1000, Daniil Lunev wrote:
+> To align with other capability check functions.
 
-It's up to you and Rob, but I'd really prefer a simpler solution here.
-Regenerating dtbs sounds like a minor pain compared to hacking the
-top-level Makefile again. What I really like is that if one has
-CHECK_DTBS=y (for whatever reason), he can not generate dtb without
-validation.
+This is not a valid changelog text, sorry.  Please read the
+documentation for how to write a valid one.
 
-> BTW, we do not check %.dtbo, why?
->
-> At least, 53182e81f47d4ea0c727c49ad23cb782173ab849
-> was trying to check %.dtbo
+> Signed-off-by: Daniil Lunev <dlunev@chromium.org>
+> 
+>  drivers/ufs/core/ufshcd-crypto.c | 8 ++++----
+>  drivers/ufs/host/ufs-mediatek.c  | 2 +-
+>  drivers/ufs/host/ufs-qcom-ice.c  | 4 ++--
+>  drivers/ufs/host/ufshcd-pci.c    | 2 +-
+>  include/ufs/ufshcd.h             | 5 +++++
+>  5 files changed, 13 insertions(+), 8 deletions(-)
 
-The commit ef8795f3f1ce ("dt-bindings: kbuild: Use DTB files for
-validation") separated .dtb and .dtbo paths. dt-validate is not
-prepared to be executed on top of the .dtbo file. And this is quite
-logical. The dtbo is an overlay, a patch. So it doesn't have to follow
-the schema on its own. We should probably make sure that multi-dtb
-files generated via fdtoverlay are also validated, but it can go in a
-separate commit.
+Something went wrong with your patch, there is no --- line, so git will
+apply it with the diffstat, right?
 
--- 
-With best wishes
-Dmitry
+Did you hand-edit this?
+
+thanks,
+
+greg k-h
