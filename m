@@ -2,202 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2750458498B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jul 2022 04:05:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85EF9584B56
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jul 2022 07:56:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233900AbiG2CFc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jul 2022 22:05:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59128 "EHLO
+        id S232017AbiG2F4P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Jul 2022 01:56:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233460AbiG2CFb (ORCPT
+        with ESMTP id S229512AbiG2F4O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jul 2022 22:05:31 -0400
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 001692613D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 19:05:29 -0700 (PDT)
-Received: by mail-pl1-x631.google.com with SMTP id t2so3359075ply.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 19:05:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=PQPxhecMMGrqgnvl1RYt1P0R5Uvv2aKASwgCAn7Phe8=;
-        b=j5nWXS2yN3xRH2vvBgQIilwdiWeecYwiAszsfvGo+ZmflzeozdenVJVOoJC3cMeVft
-         u8Tz3VEhWSLetIg9GQz+LzvknUDQRMDxjFVGfJY/e2dpb2EqATSyuAiRKBaABEYbHjj+
-         6LtNUvOF+Q1uVxleFDiUoCe80JQv6a9RO5U9w=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=PQPxhecMMGrqgnvl1RYt1P0R5Uvv2aKASwgCAn7Phe8=;
-        b=b0xO/bptuf4piBpsJsq1sS7/8lX+PDjb/jn9VzpvOYgISwC9Qa3YRPDUET35kyGrjM
-         I9B5dJXfdTPYxsRPI2eO6pyneB2byy02f7H7zJVeee3gPDEKZ1swrnvZWwkbmrC+E/ZT
-         yD887smwiOyEMRx1PlozTmdcjxCoFPpbHkRQZ/3GJH6EKBQ7n4keG4sfx/Ri0UQ2GJTc
-         86QKQScSA+EwlDSu7CwPdpv2LM2KfWjPcPSQwQb9L0IAiMZgLKkKQYHJlQF1OEqnzqvf
-         81NEwmCNVCj/5Uq3jj1HUU61uTXJlsB5HOM7QZVjeWRpbisqIgWdPsRh/VzvXF74lWFG
-         nNkw==
-X-Gm-Message-State: ACgBeo29TK3tz+h1xZq1d/8EvwRj28Sv2kl27LuU1Mx1GgV6TPTRS7Og
-        LESTshxRFxcmJh9gkNGXJNL3XA==
-X-Google-Smtp-Source: AA6agR7BCdlcbu27dD6NFwhWH1isDT1btrN6hUxN8jMKdBhGXsxNwG/13hDnNDx3sjS3iFqZ3ECLwA==
-X-Received: by 2002:a17:902:cec1:b0:16d:c4f2:66c5 with SMTP id d1-20020a170902cec100b0016dc4f266c5mr1664693plg.20.1659060329435;
-        Thu, 28 Jul 2022 19:05:29 -0700 (PDT)
-Received: from dlunevwfh.roam.corp.google.com (n122-107-196-14.sbr2.nsw.optusnet.com.au. [122.107.196.14])
-        by smtp.gmail.com with ESMTPSA id y124-20020a62ce82000000b005258df7615bsm1571901pfg.0.2022.07.28.19.05.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Jul 2022 19:05:29 -0700 (PDT)
-From:   Daniil Lunev <dlunev@chromium.org>
-To:     Adrian Hunter <adrian.hunter@intel.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Daniil Lunev <dlunev@chromium.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Andy Gross <agross@kernel.org>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daejun Park <daejun7.park@samsung.com>,
-        Eric Biggers <ebiggers@google.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Mike Snitzer <snitzer@redhat.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-scsi@vger.kernel.org
-Subject: [PATCH v3 1/2] ufs: add function to check CRYPTO capability
-Date:   Fri, 29 Jul 2022 12:05:07 +1000
-Message-Id: <20220729120216.v3.1.I6b7934b96fff0d5ea22531e57c0a11f0ccd1acd8@changeid>
-X-Mailer: git-send-email 2.31.0
-In-Reply-To: <20220729020508.4147751-1-dlunev@chromium.org>
-References: <20220729020508.4147751-1-dlunev@chromium.org>
+        Fri, 29 Jul 2022 01:56:14 -0400
+Received: from conssluserg-01.nifty.com (conssluserg-01.nifty.com [210.131.2.80])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0897879EE8;
+        Thu, 28 Jul 2022 22:56:11 -0700 (PDT)
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47]) (authenticated)
+        by conssluserg-01.nifty.com with ESMTP id 26T5tXmw009590;
+        Fri, 29 Jul 2022 14:55:34 +0900
+DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-01.nifty.com 26T5tXmw009590
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
+        s=dec2015msa; t=1659074134;
+        bh=DnvzI67gOmEywdaRg5LcyVuyJs1mZicZdoCVJ0sG/Zw=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=iU1xPV+gspQicXUBfnJdv27Cy6uH189ToOcGrsZc6rz6EfVJKAFW8PyGtl8sqduVz
+         DEKOnQpDN/kk5sQMstVuoURakgTfcmaXkcY+MvH3ZVmPRsIZLBRWiFZ3GZoFMAx3P5
+         jQtim5RtP0l/4KemdKy1MRNZ7rEzuawGCVOMcmS6P8hdgDoL2x4j0xd1cFkpfWE7ls
+         2d7twDaN1EVZTApreZLIJxhqOCYsLIikcdrd5xT38Oy2/6xZuZIreIF0w5dtIg5xua
+         RAfyu6FxAZBywHMuye7/mVxBadGANZ6fUZmZjggaYsERdMtRJ39YY92ShyALXQzkHi
+         r8keC4xcV5HRA==
+X-Nifty-SrcIP: [209.85.221.47]
+Received: by mail-wr1-f47.google.com with SMTP id z17so1524wrq.4;
+        Thu, 28 Jul 2022 22:55:34 -0700 (PDT)
+X-Gm-Message-State: ACgBeo3eAti7KcMEFTzmPU6lXQMjSYzXkXgZgIMVKO1jQoQX5mN2TlBP
+        B9g6iusWlmMlwg9AOstfYGZsub+qd6QHBOZ55bI=
+X-Google-Smtp-Source: AA6agR64oZVyi4GteBfd0tFx+1t3jcq6sq+GtP6R5+/HXQbl3lcoIt90ALtGAC1an8WMDpPRuA2JJjrNw9mwq6hVkb4=
+X-Received: by 2002:adf:d1e2:0:b0:21d:d40b:d816 with SMTP id
+ g2-20020adfd1e2000000b0021dd40bd816mr1184607wrd.682.1659074132901; Thu, 28
+ Jul 2022 22:55:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20220727100615.638072-1-dmitry.baryshkov@linaro.org> <CAL_JsqJjLn8ypBo+bBoO+CE-si7gemP02fi8EWk97QRPPpNoVg@mail.gmail.com>
+In-Reply-To: <CAL_JsqJjLn8ypBo+bBoO+CE-si7gemP02fi8EWk97QRPPpNoVg@mail.gmail.com>
+From:   Masahiro Yamada <masahiroy@kernel.org>
+Date:   Fri, 29 Jul 2022 14:54:56 +0900
+X-Gmail-Original-Message-ID: <CAK7LNARXbXZFpxiHuLhzjJ4YahfV6z3dNPAdkkmeOXONBx8u3w@mail.gmail.com>
+Message-ID: <CAK7LNARXbXZFpxiHuLhzjJ4YahfV6z3dNPAdkkmeOXONBx8u3w@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: take into account DT_SCHEMA_FILES changes while
+ checking dtbs
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Michal Marek <michal.lkml@markovi.net>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_SOFTFAIL autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To align with other capability check functions.
+On Thu, Jul 28, 2022 at 2:36 AM Rob Herring <robh+dt@kernel.org> wrote:
+>
+> On Wed, Jul 27, 2022 at 4:06 AM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > It is useful to be able to recheck dtbs files against a limited set of
+> > DT schema files. This can be accomplished by using differnt
+> > DT_SCHEMA_FILES argument values while rerunning make dtbs_check. However
+> > for some reason if_changed_rule doesn't pick up the rule_dtc changes
+> > (and doesn't retrigger the build).
+> >
+> > Fix this by changing if_changed_rule to if_changed_dep and squashing DTC
+> > and dt-validate into a single new command. Then if_changed_dep triggers
+> > on DT_SCHEMA_FILES changes and reruns the build/check.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  scripts/Makefile.lib | 14 ++++++--------
+> >  1 file changed, 6 insertions(+), 8 deletions(-)
+> >
+> > diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
+> > index c88b98b5dc44..3df470289382 100644
+> > --- a/scripts/Makefile.lib
+> > +++ b/scripts/Makefile.lib
+> > @@ -383,17 +383,15 @@ DT_CHECKER_FLAGS ?= $(if $(DT_SCHEMA_FILES),-l $(DT_SCHEMA_FILES),-m)
+> >  DT_BINDING_DIR := Documentation/devicetree/bindings
+> >  DT_TMP_SCHEMA := $(objtree)/$(DT_BINDING_DIR)/processed-schema.json
+> >
+> > -quiet_cmd_dtb_check =  CHECK   $@
+> > -      cmd_dtb_check =  $(DT_CHECKER) $(DT_CHECKER_FLAGS) -u $(srctree)/$(DT_BINDING_DIR) -p $(DT_TMP_SCHEMA) $@ || true
+> > +quiet_cmd_dtb =        DTC/CHECK   $@
+>
+> This is supposed to be 7 chars or less. DTCCHK or DTC_CHK perhaps. Or
+> always do just 'DTC'. I can fixup when applying.
+>
+> I'll give it a few days for other comments.
 
-Signed-off-by: Daniil Lunev <dlunev@chromium.org>
 
- drivers/ufs/core/ufshcd-crypto.c | 8 ++++----
- drivers/ufs/host/ufs-mediatek.c  | 2 +-
- drivers/ufs/host/ufs-qcom-ice.c  | 4 ++--
- drivers/ufs/host/ufshcd-pci.c    | 2 +-
- include/ufs/ufshcd.h             | 5 +++++
- 5 files changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd-crypto.c b/drivers/ufs/core/ufshcd-crypto.c
-index 198360fe5e8e1..f819488bbde14 100644
---- a/drivers/ufs/core/ufshcd-crypto.c
-+++ b/drivers/ufs/core/ufshcd-crypto.c
-@@ -118,7 +118,7 @@ static int ufshcd_crypto_keyslot_evict(struct blk_crypto_profile *profile,
- 
- bool ufshcd_crypto_enable(struct ufs_hba *hba)
- {
--	if (!(hba->caps & UFSHCD_CAP_CRYPTO))
-+	if (!ufshcd_is_crypto_supported(hba))
- 		return false;
- 
- 	/* Reset might clear all keys, so reprogram all the keys. */
-@@ -165,7 +165,7 @@ int ufshcd_hba_init_crypto_capabilities(struct ufs_hba *hba)
- 	 * hasn't advertised that crypto is supported.
- 	 */
- 	if (!(hba->capabilities & MASK_CRYPTO_SUPPORT) ||
--	    !(hba->caps & UFSHCD_CAP_CRYPTO))
-+	    !ufshcd_is_crypto_supported(hba))
- 		goto out;
- 
- 	hba->crypto_capabilities.reg_val =
-@@ -225,7 +225,7 @@ void ufshcd_init_crypto(struct ufs_hba *hba)
- {
- 	int slot;
- 
--	if (!(hba->caps & UFSHCD_CAP_CRYPTO))
-+	if (!ufshcd_is_crypto_supported(hba))
- 		return;
- 
- 	/* Clear all keyslots - the number of keyslots is (CFGC + 1) */
-@@ -235,6 +235,6 @@ void ufshcd_init_crypto(struct ufs_hba *hba)
- 
- void ufshcd_crypto_register(struct ufs_hba *hba, struct request_queue *q)
- {
--	if (hba->caps & UFSHCD_CAP_CRYPTO)
-+	if (ufshcd_is_crypto_supported(hba))
- 		blk_crypto_register(&hba->crypto_profile, q);
- }
-diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
-index beabc3ccd30b3..4bdf6a709126d 100644
---- a/drivers/ufs/host/ufs-mediatek.c
-+++ b/drivers/ufs/host/ufs-mediatek.c
-@@ -182,7 +182,7 @@ static int ufs_mtk_hce_enable_notify(struct ufs_hba *hba,
- 			ufs_mtk_host_reset(hba);
- 		}
- 
--		if (hba->caps & UFSHCD_CAP_CRYPTO)
-+		if (ufshcd_is_crypto_supported(hba))
- 			ufs_mtk_crypto_enable(hba);
- 
- 		if (host->caps & UFS_MTK_CAP_DISABLE_AH8) {
-diff --git a/drivers/ufs/host/ufs-qcom-ice.c b/drivers/ufs/host/ufs-qcom-ice.c
-index 745e48ec598f8..180a015b6973d 100644
---- a/drivers/ufs/host/ufs-qcom-ice.c
-+++ b/drivers/ufs/host/ufs-qcom-ice.c
-@@ -161,7 +161,7 @@ static void qcom_ice_optimization_enable(struct ufs_qcom_host *host)
- 
- int ufs_qcom_ice_enable(struct ufs_qcom_host *host)
- {
--	if (!(host->hba->caps & UFSHCD_CAP_CRYPTO))
-+	if (!ufshcd_is_crypto_supported(host->hba))
- 		return 0;
- 	qcom_ice_low_power_mode_enable(host);
- 	qcom_ice_optimization_enable(host);
-@@ -189,7 +189,7 @@ int ufs_qcom_ice_resume(struct ufs_qcom_host *host)
- {
- 	int err;
- 
--	if (!(host->hba->caps & UFSHCD_CAP_CRYPTO))
-+	if (!ufshcd_is_crypto_supported(host->hba))
- 		return 0;
- 
- 	err = qcom_ice_wait_bist_status(host);
-diff --git a/drivers/ufs/host/ufshcd-pci.c b/drivers/ufs/host/ufshcd-pci.c
-index 04166bda41daa..c06ccef348065 100644
---- a/drivers/ufs/host/ufshcd-pci.c
-+++ b/drivers/ufs/host/ufshcd-pci.c
-@@ -89,7 +89,7 @@ static int ufs_intel_hce_enable_notify(struct ufs_hba *hba,
- 				       enum ufs_notify_change_status status)
- {
- 	/* Cannot enable ICE until after HC enable */
--	if (status == POST_CHANGE && hba->caps & UFSHCD_CAP_CRYPTO) {
-+	if (status == POST_CHANGE && ufshcd_is_crypto_supported(hba)) {
- 		u32 hce = ufshcd_readl(hba, REG_CONTROLLER_ENABLE);
- 
- 		hce |= CRYPTO_GENERAL_ENABLE;
-diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-index a92271421718e..ddbf470f8f455 100644
---- a/include/ufs/ufshcd.h
-+++ b/include/ufs/ufshcd.h
-@@ -1005,6 +1005,11 @@ static inline bool ufshcd_is_wb_allowed(struct ufs_hba *hba)
- 	return hba->caps & UFSHCD_CAP_WB_EN;
- }
- 
-+static inline bool ufshcd_is_crypto_supported(struct ufs_hba *hba)
-+{
-+	return hba->caps & UFSHCD_CAP_CRYPTO;
-+}
-+
- #define ufshcd_writel(hba, val, reg)	\
- 	writel((val), (hba)->mmio_base + (reg))
- #define ufshcd_readl(hba, reg)	\
--- 
-2.31.0
+When you change DT_SCHEMA_FILES, re-running dt-validate should be enough.
+You do not need to re-run dtc.
 
+I guess the strangeness comes from the fact that you are trying to do the
+ two different things in a single rule.
+
+
+--
+Best Regards
+Masahiro Yamada
