@@ -2,117 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F8F4585189
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jul 2022 16:26:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C6015851DA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jul 2022 16:56:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236946AbiG2O0S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Jul 2022 10:26:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35368 "EHLO
+        id S235283AbiG2O4B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Jul 2022 10:56:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237056AbiG2O0R (ORCPT
+        with ESMTP id S236796AbiG2O4A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Jul 2022 10:26:17 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E94DC42ACA;
-        Fri, 29 Jul 2022 07:26:15 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 5EEBBCE29C0;
-        Fri, 29 Jul 2022 14:26:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40456C433B5;
-        Fri, 29 Jul 2022 14:26:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1659104772;
-        bh=+uMoBAWIxMSyXxcObfO5cph22nMVTb/iovwbfOaC60I=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=thrMeuuK2VSrxm0ruqnTHhY8+hQZ4zpezH9G8rUOteC7blIg1D/tpQ2cfpPLhfRWE
-         DLyGP04+rju95e1Y5YIEjnQIVfMco+HTxdfUhU14PFmtQQh1g047x3kh0OD4f6GwrG
-         v9meh8C0T+sXUGmTl6+0qTbj6Q16GfWq/O4OhHZgMLklA8wGnx89N6RwGza6azMDJJ
-         pITNu7roK4QkuvIEuWJtaGAcxoUzho3Ee9weqB/uyMy0OvWXRpA0F0mNYyk2TDvzN2
-         Orfsr/0dJKcaRTJ1Ng3LwCtnvza8H6A9Iali8xH/wW6+//gl8L/8HlZHFEPI3KJLfd
-         Nk9WijSbKcf4g==
-Date:   Fri, 29 Jul 2022 19:56:05 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Qiang Yu <quic_qianyu@quicinc.com>
-Cc:     quic_hemantk@quicinc.com, loic.poulain@linaro.org,
-        quic_jhugo@quicinc.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_cang@quicinc.com
-Subject: Re: [PATCH v3 1/1] bus: mhi: host: Fix up null pointer access in
- mhi_irq_handler
-Message-ID: <20220729142605.GB9937@thinkpad>
-References: <1658459838-30802-1-git-send-email-quic_qianyu@quicinc.com>
+        Fri, 29 Jul 2022 10:56:00 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4202165B5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jul 2022 07:55:58 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id f14so3814964qkm.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jul 2022 07:55:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=LU2jKHS2Nm/7auV+iXP7l5+JlImO2zH8Ua3fe+uAhns=;
+        b=OZNDxgLZk8wvXTdP85PMsUJiFJIIaXj4v3T3Ey2Nov8fiANefz2/gBDsigiFOapewA
+         fMI6JTAspaRMOntcwIsXngHPqho4GhdgPVPGySVXZWPoXd0tppemhOuBAL6EUiLwb8Ag
+         6MBpafWXpbKCQBGt0HQIBSQaUXOV2bJJ4U8QYvty6YaxmUP+V69cwI76abBIGId6rcG8
+         2J3nW+bleIJQvESYr6Qk5E73UinO/6hd2LC2T/ENHI4dXFHYNcLJv3vXe5J01rRRQRto
+         PmRJf1K9hWUMiG0NZ1c1k8z5Qfq4lXYyKzCfADSTjLrJJ/6ZEMd1Du9tH6Zqg5WqZ+E1
+         AvSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LU2jKHS2Nm/7auV+iXP7l5+JlImO2zH8Ua3fe+uAhns=;
+        b=eGqJ/La4Hawl44C5ve1/uhUwQVJTohIDZKqJZDl5UeIPgK4YHdb+bwdq8xYne/BQq6
+         zbMlFwUPZiYU1wLL3iearQ+Pz/inPgD2NH5nvG6Wyvpcr3d3Q05+HJ56jZn8Oy2C5Cga
+         jaeeYPu8Mwg2UsJ8Gn8SL5OWXbxEJzPfg7aXv2GcdJ3hNHn5KtKbmlMX/INBRQvJ+6lK
+         ky74zwx/6h6NerCckx6/m+xzan/1tgQhUwZFNubYBzkgVm1ZxaR4Fpqc9aBRzjZ1QhGt
+         JFHTGuCHhbLRvcA4iOcugw05ubb0IsE3swvM7XwO/iueB6Uj4QocDmTUxy8278Co7hQ3
+         aBNA==
+X-Gm-Message-State: AJIora95xobIEkBihOoq2wYHnAdDogFTxaZJGT4C4syESzyq30Da0QjW
+        Yc4NXEKFUmfn5dOzxe/qW09gRH2olqdZf4UvKFd8AGBzR0g=
+X-Google-Smtp-Source: AGRyM1uwfw5+ktHeTJCgth0/QP6b+8gJhL4OadszNPMbvavG0KWq6WmdZnKKeu+eI7Idy2MZJbV2Kx0JdGducq73Kac=
+X-Received: by 2002:ae9:e906:0:b0:6b5:f0ec:ed92 with SMTP id
+ x6-20020ae9e906000000b006b5f0eced92mr2964676qkf.59.1659106557689; Fri, 29 Jul
+ 2022 07:55:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1658459838-30802-1-git-send-email-quic_qianyu@quicinc.com>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20220727200901.1142557-1-dmitry.baryshkov@linaro.org> <YuKRPB/Ilb0al3ro@sirena.org.uk>
+In-Reply-To: <YuKRPB/Ilb0al3ro@sirena.org.uk>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 29 Jul 2022 17:55:46 +0300
+Message-ID: <CAA8EJpqKXoLNKEyfSrUoABFwPqqZT5reiAJ5muGz-+FUwxzUcg@mail.gmail.com>
+Subject: Re: [PATCH] firmware/psci: Add debugfs support to ease debugging
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 22, 2022 at 11:17:18AM +0800, Qiang Yu wrote:
-> The irq handler for a shared IRQ ought to be prepared for running
-> even now it's being freed. So let's check the pointer used by
-> mhi_irq_handler to avoid null pointer access since it is probably
-> released before freeing IRQ.
-> 
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+On Thu, 28 Jul 2022 at 16:38, Mark Brown <broonie@kernel.org> wrote:
+>
+> On Wed, Jul 27, 2022 at 11:09:01PM +0300, Dmitry Baryshkov wrote:
+>
+> > +} psci_fn_ids[] = {
+> > +     PSCI_ID_NATIVE(0_2, MIGRATE),
+> > +     PSCI_ID(0_2, MIGRATE_INFO_TYPE),
+> > +     PSCI_ID_NATIVE(0_2, MIGRATE_INFO_UP_CPU),
+> > +     PSCI_ID(1_0, CPU_FREEZE),
+> > +     PSCI_ID_NATIVE(1_0, CPU_DEFAULT_SUSPEND),
+> > +     PSCI_ID_NATIVE(1_0, NODE_HW_STATE),
+> > +     PSCI_ID_NATIVE(1_0, SYSTEM_SUSPEND),
+> > +     PSCI_ID(1_0, SET_SUSPEND_MODE),
+> > +     PSCI_ID_NATIVE(1_0, STAT_RESIDENCY),
+> > +     PSCI_ID_NATIVE(1_0, STAT_COUNT),
+> > +     PSCI_ID_NATIVE(1_1, SYSTEM_RESET2),
+> > +};
+>
+> There's other functions like the MEM_PROTECT ones which we don't
+> currently use but it might be interesting to enumerate...
 
-Applied to mhi-next! This patch is targeted for v5.20-rcS.
+Argh, missed the next page in PSCI spec. Will fix in v2.
 
-Thanks,
-Mani
+>
+> >  #define PSCI_1_0_FN_PSCI_FEATURES            PSCI_0_2_FN(10)
+> > +#define PSCI_1_0_FN_CPU_FREEZE                       PSCI_0_2_FN(11)
+> > +#define PSCI_1_0_FN_CPU_DEFAULT_SUSPEND              PSCI_0_2_FN(12)
+>
+> ...we're already adding functions here.
+>
+> > +#define PSCI_1_0_FN_NODE_HW_STATE            PSCI_0_2_FN(13)
+>
+> > +#define PSCI_1_0_FN_STAT_RESIDENCY           PSCI_0_2_FN(16)
+> > +#define PSCI_1_0_FN_STAT_COUNT                       PSCI_0_2_FN(17)
+>
+> Some of these state query things might be interesting to actually call
+> and output results from at some point, doesn't seem like something that
+> should be a blocker though.
 
-> ---
-> v2->v3: add comments
-> v1->v2: change dev_err to dev_dbg
-> 
->  drivers/bus/mhi/host/main.c | 19 ++++++++++++++++---
->  1 file changed, 16 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> index f3aef77a..df0fbfe 100644
-> --- a/drivers/bus/mhi/host/main.c
-> +++ b/drivers/bus/mhi/host/main.c
-> @@ -430,12 +430,25 @@ irqreturn_t mhi_irq_handler(int irq_number, void *dev)
->  {
->  	struct mhi_event *mhi_event = dev;
->  	struct mhi_controller *mhi_cntrl = mhi_event->mhi_cntrl;
-> -	struct mhi_event_ctxt *er_ctxt =
-> -		&mhi_cntrl->mhi_ctxt->er_ctxt[mhi_event->er_index];
-> +	struct mhi_event_ctxt *er_ctxt;
->  	struct mhi_ring *ev_ring = &mhi_event->ring;
-> -	dma_addr_t ptr = le64_to_cpu(er_ctxt->rp);
-> +	dma_addr_t ptr;
->  	void *dev_rp;
->  
-> +	/*
-> +	 * If CONFIG_DEBUG_SHIRQ is set, the IRQ handler will get invoked during __free_irq()
-> +	 * and by that time mhi_ctxt() would've freed. So check for the existence of mhi_ctxt
-> +	 * before handling the IRQs.
-> +	 */
-> +	if (!mhi_cntrl->mhi_ctxt) {
-> +		dev_dbg(&mhi_cntrl->mhi_dev->dev,
-> +			"mhi_ctxt has been freed\n");
-> +		return IRQ_HANDLED;
-> +	}
-> +
-> +	er_ctxt = &mhi_cntrl->mhi_ctxt->er_ctxt[mhi_event->er_index];
-> +	ptr = le64_to_cpu(er_ctxt->rp);
-> +
->  	if (!is_valid_ring_ptr(ev_ring, ptr)) {
->  		dev_err(&mhi_cntrl->mhi_dev->dev,
->  			"Event ring rp points outside of the event ring\n");
-> -- 
-> Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-> 
+I thought about it, but deferred for now.
 
 -- 
-மணிவண்ணன் சதாசிவம்
+With best wishes
+Dmitry
