@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D1CB58490F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jul 2022 02:26:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9F57584907
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jul 2022 02:22:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233330AbiG2A01 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Jul 2022 20:26:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58456 "EHLO
+        id S233535AbiG2AWh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Jul 2022 20:22:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232560AbiG2A0Z (ORCPT
+        with ESMTP id S233438AbiG2AWg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Jul 2022 20:26:25 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D450C24F33
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 17:26:24 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id fy29so5765572ejc.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 17:26:24 -0700 (PDT)
+        Thu, 28 Jul 2022 20:22:36 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9E817B1DC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 17:22:35 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id mf4so5818897ejc.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 17:22:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc;
-        bh=tGjb0yv2qHz2eed9IZ1i5rTk8Eynn94CI4Wx2sUGweo=;
-        b=W9UAjOx5uPpd1JmlPNKp+NtqaVYeLK4GU1GwKzuPItS0Z1ouoQaVMhWQsrgrYFQOp0
-         aUa26Wr96X2xIdpAxHirM+flYD2rApHRg6w2J8IJPrwyPRbaLlUmbV9Ybol+YsHq94gB
-         8CpnLiwr6jQWt/Q3/NbCJzjMzVDbbpAazFGn0=
+        bh=YbqiOPzZmbvFzZa130GwJGGGwEXthWuw9oeJXPqxLMw=;
+        b=kRjkFi56KoI/XZGvwlf6yOjdbiP1tOmPWovRkV0lQ9r/9z+zKKFuNvzZ526mN8SbkY
+         2TdEpBoXlMQ+lVoNCpoWhAPvoC8JWZChWscjFpUjaHrW9+uuQyrM093O5JJ2ch0W3yhw
+         53t5JnC3EDdl/YBCZLn7vwtZGg7twxgkwE0VE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc;
-        bh=tGjb0yv2qHz2eed9IZ1i5rTk8Eynn94CI4Wx2sUGweo=;
-        b=JoyS7q8xDusM98JTdwR58ry3m2AlRv/2v98xAy37VYxf+szIkBamoA1dlB7+SoOwGp
-         ojDxmcTH8m5wTKYPBNLrvofWxyoA//ESH/ba2rZVqDJGQljgBuPn9yZ5au+Pu2rslpXu
-         vUzdz+rCDORyMBJqQoc79KP5bZa0TP8rFcbhdnj6E/zqOwn2JDOtVmv/na9Iz/d0Dd09
-         Smna9N9vNrWt/bCsn5bY4C/gC+RFNM4coNvpN94oDM5U+whZhXf3ZZggbePyss/UMHPD
-         MMnF1XBhB17vrh7/BRgbUFc+D7IrTFPOa+KYO9Fc7vD1fLTLtYkG4qXDBzePc7RGOO/v
-         Aljw==
-X-Gm-Message-State: AJIora9NDCQRu/Xl9rG+IEXpXefHcayh7MILWLv8yVfEONIYKrgWerDx
-        DCJsNEbY5eqpRg7vmkKV++B3i4+Z/xCO7BD+BQQ=
-X-Google-Smtp-Source: AGRyM1vDUY8mTBpo2hdUPq7xWvkkZLxLpt/l/+U0iTh9X2UW4pRl06gXxFw27qCBiQs0FJHb2e2myg==
-X-Received: by 2002:a17:907:3e82:b0:6ff:1e04:a365 with SMTP id hs2-20020a1709073e8200b006ff1e04a365mr930957ejc.617.1659054383183;
-        Thu, 28 Jul 2022 17:26:23 -0700 (PDT)
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com. [209.85.208.45])
-        by smtp.gmail.com with ESMTPSA id lz7-20020a170906fb0700b0072aa009aa68sm975333ejb.36.2022.07.28.17.26.23
+        bh=YbqiOPzZmbvFzZa130GwJGGGwEXthWuw9oeJXPqxLMw=;
+        b=B/P9simQibf9Tyef72xICcZVhSL1y6nSO9hyMCI1HBVrXlE3lnVtnDIxRWdm3lTIWr
+         v+xFgeSypM/9M/mp/ph6vpDTOehuSgi3jCvWcgR4/SRbwpIWDfwf4uF37Dgs9cl+6Npu
+         UtSpuiE9rq3dn6jyVWHVRuve5GHwAEWUl0Q6RL6wW3aBWJ6i4QNnKWhXYpe+SXgXs3ie
+         kVbIRydtkEXaTUUutzfzSR+L/lfeMuvq/kemRPSRttusqUTAWWLCxIUegf8pZqMD+vLl
+         17LrVPIwA4F999RJrpeRROoPEM7GfT6XbkENGKRnpLo5FIjFxPQTrXE+BNeBFU9GxgI9
+         9TsQ==
+X-Gm-Message-State: AJIora96UWW025l/yKCV8Qbxp/oEns7E3nl33pN8Tesj8tz8CuvCwmId
+        K2dWMoplyhXYp0Zf+JNS4e/r1z5gW28tGEl8
+X-Google-Smtp-Source: AGRyM1u8VPKs8290QAzwOy9OR5GhVW84BmEKb1qN37XqrmUh//mtyWuS6Ue8mQzxAxyVXWfIPHexLg==
+X-Received: by 2002:a17:907:9605:b0:6f5:c66:7c13 with SMTP id gb5-20020a170907960500b006f50c667c13mr1029484ejc.66.1659054153973;
+        Thu, 28 Jul 2022 17:22:33 -0700 (PDT)
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com. [209.85.221.52])
+        by smtp.gmail.com with ESMTPSA id s11-20020a056402014b00b0043cc66d7accsm1514882edu.36.2022.07.28.17.22.31
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Jul 2022 17:26:23 -0700 (PDT)
-Received: by mail-ed1-f45.google.com with SMTP id a89so4073080edf.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 17:26:23 -0700 (PDT)
-X-Received: by 2002:a5d:5889:0:b0:21d:bccd:38e3 with SMTP id
- n9-20020a5d5889000000b0021dbccd38e3mr698162wrf.659.1659054018014; Thu, 28 Jul
- 2022 17:20:18 -0700 (PDT)
+        Thu, 28 Jul 2022 17:22:32 -0700 (PDT)
+Received: by mail-wr1-f52.google.com with SMTP id u5so4183884wrm.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Jul 2022 17:22:31 -0700 (PDT)
+X-Received: by 2002:adf:fb12:0:b0:20c:79b2:a200 with SMTP id
+ c18-20020adffb12000000b0020c79b2a200mr744258wrr.617.1659054151464; Thu, 28
+ Jul 2022 17:22:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <1657544224-10680-1-git-send-email-quic_vpolimer@quicinc.com> <1657544224-10680-5-git-send-email-quic_vpolimer@quicinc.com>
-In-Reply-To: <1657544224-10680-5-git-send-email-quic_vpolimer@quicinc.com>
+References: <1657544224-10680-1-git-send-email-quic_vpolimer@quicinc.com>
+In-Reply-To: <1657544224-10680-1-git-send-email-quic_vpolimer@quicinc.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 28 Jul 2022 17:20:05 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UN2tFNL=T+eXE4j7bnp6zWgCN4Nz8Q=qgu7y67yRPpdA@mail.gmail.com>
-Message-ID: <CAD=FV=UN2tFNL=T+eXE4j7bnp6zWgCN4Nz8Q=qgu7y67yRPpdA@mail.gmail.com>
-Subject: Re: [PATCH v6 04/10] drm/msm/dp: Add basic PSR support for eDP
+Date:   Thu, 28 Jul 2022 17:22:18 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U_GStziLOCVLs_FC_2Vr=ykGfbb4ZtUp79iV8V=B0cEA@mail.gmail.com>
+Message-ID: <CAD=FV=U_GStziLOCVLs_FC_2Vr=ykGfbb4ZtUp79iV8V=B0cEA@mail.gmail.com>
+Subject: Re: [PATCH v6 00/10] Add PSR support for eDP
 To:     Vinod Polimera <quic_vpolimer@quicinc.com>
 Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
@@ -91,128 +91,105 @@ Hi,
 On Mon, Jul 11, 2022 at 5:57 AM Vinod Polimera
 <quic_vpolimer@quicinc.com> wrote:
 >
-> @@ -359,6 +367,24 @@ void dp_catalog_ctrl_lane_mapping(struct dp_catalog *dp_catalog)
->                         ln_mapping);
->  }
+> Changes in v2:
+>   - Use dp bridge to set psr entry/exit instead of dpu_enocder.
+>   - Don't modify whitespaces.
+>   - Set self refresh aware from atomic_check.
+>   - Set self refresh aware only if psr is supported.
+>   - Provide a stub for msm_dp_display_set_psr.
+>   - Move dp functions to bridge code.
 >
-> +void dp_catalog_ctrl_psr_mainlink_enable(struct dp_catalog *dp_catalog,
-> +                                               bool enable)
-> +{
-> +       u32 val;
-> +       struct dp_catalog_private *catalog = container_of(dp_catalog,
-> +                               struct dp_catalog_private, dp_catalog);
-> +
-> +       val = dp_read_link(catalog, REG_DP_MAINLINK_CTRL);
-> +       val &= ~DP_MAINLINK_CTRL_ENABLE;
-
-nit: the line above is useless. Remove. In the case that you're
-enabling you're just adding the bit back in. In the case that you're
-disabling you're doing the exact same operation below.
-
-
-> @@ -610,6 +636,47 @@ void dp_catalog_ctrl_hpd_config(struct dp_catalog *dp_catalog)
->         dp_write_aux(catalog, REG_DP_DP_HPD_CTRL, DP_DP_HPD_CTRL_HPD_EN);
->  }
+> Changes in v3:
+>   - Change callback names to reflect atomic interfaces.
+>   - Move bridge callback change to separate patch as suggested by Dmitry.
+>   - Remove psr function declaration from msm_drv.h.
+>   - Set self_refresh_aware flag only if psr is supported.
+>   - Modify the variable names to simpler form.
+>   - Define bit fields for PSR settings.
+>   - Add comments explaining the steps to enter/exit psr.
+>   - Change DRM_INFO to drm_dbg_db.
 >
-> +static void dp_catalog_enable_sdp(struct dp_catalog_private *catalog)
-> +{
-> +       /* trigger sdp */
-> +       dp_write_link(catalog, MMSS_DP_SDP_CFG3, UPDATE_SDP);
-> +       dp_write_link(catalog, MMSS_DP_SDP_CFG3, !UPDATE_SDP);
-
-!UPDATE_SDP is a really counter-intuitive way to say 0x0.
-
-
-> @@ -645,6 +712,20 @@ u32 dp_catalog_hpd_get_intr_status(struct dp_catalog *dp_catalog)
->         return isr & (mask | ~DP_DP_HPD_INT_MASK);
->  }
+> Changes in v4:
+>   - Move the get crtc functions to drm_atomic.
+>   - Add atomic functions for DP bridge too.
+>   - Add ternary operator to choose eDP or DP ops.
+>   - Return true/false instead of 1/0.
+>   - mode_valid missing in the eDP bridge ops.
+>   - Move the functions to get crtc into drm_atomic.c.
+>   - Fix compilation issues.
+>   - Remove dpu_assign_crtc and get crtc from drm_enc instead of dpu_enc.
+>   - Check for crtc state enable while reserving resources.
 >
-> +int dp_catalog_ctrl_read_psr_interrupt_status(struct dp_catalog *dp_catalog)
-
-Why is the return type "int" and not "u32". It's a hardware register.
-It's u32 here. The caller assigns it to a u32.
-
-
-> +void dp_ctrl_set_psr(struct dp_ctrl *dp_ctrl, bool enter)
-> +{
-> +       struct dp_ctrl_private *ctrl = container_of(dp_ctrl,
-> +                       struct dp_ctrl_private, dp_ctrl);
-> +
-> +       if (!ctrl->panel->psr_cap.version)
-> +               return;
-> +
-> +       /*
-> +        * When entering PSR,
-> +        * 1. Send PSR enter SDP and wait for the PSR_UPDATE_INT
-> +        * 2. Turn off video
-> +        * 3. Disable the mainlink
-> +        *
-> +        * When exiting PSR,
-> +        * 1. Enable the mainlink
-> +        * 2. Send the PSR exit SDP
-> +        */
-> +       if (enter) {
-> +               reinit_completion(&ctrl->psr_op_comp);
-> +               dp_catalog_ctrl_set_psr(ctrl->catalog, true);
-> +
-> +               if (!wait_for_completion_timeout(&ctrl->psr_op_comp,
-> +                       PSR_OPERATION_COMPLETION_TIMEOUT_JIFFIES)) {
-> +                       DRM_ERROR("PSR_ENTRY timedout\n");
-> +                       dp_catalog_ctrl_set_psr(ctrl->catalog, false);
-> +                       return;
-> +               }
-> +
-> +               dp_catalog_ctrl_state_ctrl(ctrl->catalog, 0);
-> +
-> +               dp_catalog_ctrl_psr_mainlink_enable(ctrl->catalog, false);
-> +       } else {
-> +               dp_catalog_ctrl_psr_mainlink_enable(ctrl->catalog, true);
-> +
-> +               dp_catalog_ctrl_set_psr(ctrl->catalog, false);
-
-My PSR knowledge is not very strong, but I do remember a recent commit
-from Brian Norris fly by for the Analogix controller. See commit
-c4c6ef229593 ("drm/bridge: analogix_dp: Make PSR-exit block less").
-
-In that commit it sounds as if we need to wait for _something_ (resync
-I guess?) here and not just return instantly.
-
-
-> @@ -388,6 +388,8 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
+> Changes in v5:
+>   - Move the mode_valid changes into a different patch.
+>   - Complete psr_op_comp only when isr is set.
+>   - Move the DP atomic callback changes to a different patch.
+>   - Get crtc from drm connector state crtc.
+>   - Move to separate patch for check for crtc state enable while
+> reserving resources.
 >
->         edid = dp->panel->edid;
+> Changes in v6:
+>   - Remove crtc from dpu_encoder_virt struct.
+>   - fix crtc check during vblank toggle crtc.
+>   - Misc changes.
 >
-> +       dp->dp_display.psr_supported = !!dp->panel->psr_cap.version;
-> +
+> Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
+> Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+>
+> Vinod Polimera (10):
+>   drm/msm/disp/dpu: clear dpu_assign_crtc and get crtc from connector
+>     state instead of dpu_enc
+>   drm: add helper functions to retrieve old and new crtc
+>   drm/msm/dp: use atomic callbacks for DP bridge ops
+>   drm/msm/dp: Add basic PSR support for eDP
+>   drm/msm/dp: use the eDP bridge ops to validate eDP modes
+>   drm/bridge: use atomic enable/disable callbacks for panel bridge
+>   drm/bridge: add psr support for panel bridge callbacks
+>   drm/msm/disp/dpu: use atomic enable/disable callbacks for encoder
+>     functions
+>   drm/msm/disp/dpu: add PSR support for eDP interface in dpu driver
+>   drm/msm/disp/dpu: check for crtc enable rather than crtc active to
+>     release shared resources
+>
+>  drivers/gpu/drm/bridge/panel.c              |  68 ++++++++--
+>  drivers/gpu/drm/drm_atomic.c                |  60 +++++++++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  17 ++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  56 +++++----
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |   8 --
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |   2 +-
+>  drivers/gpu/drm/msm/dp/dp_catalog.c         |  81 ++++++++++++
+>  drivers/gpu/drm/msm/dp/dp_catalog.h         |   4 +
+>  drivers/gpu/drm/msm/dp/dp_ctrl.c            |  73 +++++++++++
+>  drivers/gpu/drm/msm/dp/dp_ctrl.h            |   3 +
+>  drivers/gpu/drm/msm/dp/dp_display.c         |  31 +++--
+>  drivers/gpu/drm/msm/dp/dp_display.h         |   2 +
+>  drivers/gpu/drm/msm/dp/dp_drm.c             | 184 ++++++++++++++++++++++++++--
+>  drivers/gpu/drm/msm/dp/dp_drm.h             |   9 +-
+>  drivers/gpu/drm/msm/dp/dp_link.c            |  36 ++++++
+>  drivers/gpu/drm/msm/dp/dp_panel.c           |  22 ++++
+>  drivers/gpu/drm/msm/dp/dp_panel.h           |   6 +
+>  drivers/gpu/drm/msm/dp/dp_reg.h             |  27 ++++
+>  include/drm/drm_atomic.h                    |   7 ++
+>  19 files changed, 631 insertions(+), 65 deletions(-)
 
-nit: remove the "!!". You're already storing this in a "bool" which
-will handle this for you.
+I spent some time looking at the first few patches. I can try to look
+at more later this week, though (as you've noticed) many of my reviews
+are more nit-picks because I don't really have experience with PSR and
+my overall knowledge of the Qualcomm DP driver is pretty weak.
 
+I tried to at least pick to give a Tested-by, but when I did that it
+didn't work flawlessly. I picked this series to the chromeos-5.15
+tree, which is pretty close to mainline right now. I left it sitting
+at a screen with a blinking cursor which pretty much means it's always
+transitioning into and out of PSR. I've seen several glitches on the
+screen with the series applied. :( No idea what's wrong--that's just
+me black-box testing. I did try to add debug printouts to see if we
+were hitting "PSR_UPDATE_ERROR_INT | PSR_WAKE_ERROR_INT" but I didn't
+see my printouts...
 
-> +static const struct drm_bridge_funcs edp_bridge_ops = {
-> +       .atomic_enable = edp_bridge_atomic_enable,
-> +       .atomic_disable = edp_bridge_atomic_disable,
-> +       .atomic_post_disable = edp_bridge_atomic_post_disable,
-> +       .mode_set = dp_bridge_mode_set,
-> +       .mode_valid = dp_bridge_mode_valid,
-> +       .atomic_reset = drm_atomic_helper_bridge_reset,
-> +       .atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
-> +       .atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
-> +       .atomic_check = edp_bridge_atomic_check,
-> +};
-
-nit: the location of your new functions is a little weird. You've got:
-
-1. DP functions
-2. eDP functions
-3. eDP structure
-4. DP structure
-
-I'd expect:
-
-1. DP functions
-2. DP structure
-3. eDP functions
-4. eDP structure
+FWIW: I'm running with KASAN enabled which could affect timings...
+Glitches happen every few minutes or so for me and so far I haven't
+see any glitches without KASAN, but that could just be chance...
 
 -Doug
