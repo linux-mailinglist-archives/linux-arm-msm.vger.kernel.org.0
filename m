@@ -2,143 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 03D3758542C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jul 2022 19:07:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA902585452
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jul 2022 19:18:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236973AbiG2RH3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Jul 2022 13:07:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54314 "EHLO
+        id S238233AbiG2RSb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Jul 2022 13:18:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238301AbiG2RH2 (ORCPT
+        with ESMTP id S234120AbiG2RSa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Jul 2022 13:07:28 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E11B579EE1;
-        Fri, 29 Jul 2022 10:07:25 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id 15-20020a17090a098f00b001f305b453feso8979394pjo.1;
-        Fri, 29 Jul 2022 10:07:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=mcGjaEjlp9E6N37UMib26cBF56AyQFK+2CInJ6FUTCo=;
-        b=qHCdQY3WlD0nJ+rn80athOrlbowIL0rs8FhkpgPJ9TYkDkOSEweR4R8EDy0KurACP1
-         n59UAWHzz6oBskR78bMIkTVPeug25bs4DvwgH6PBj6JwTR3BuZCKX4jZYxcJQRoTSsoB
-         EO102Ezzrh4+I044jkXZiL02C9FLZRyslCHTMx1j1WtJYGMxqJIWdGY8gr6wHV6hs+T7
-         1emmRtbUDGqpCaa7DIORSJRX219g92FvZ8cmIwneiVeIWpc4wZW2Z7p9R7lVfbzCTLBy
-         8VhRaW2OrcTpPvbbwkahlviDe3eIT8o6pPpWjPeGvjaGn0HRkdBBpuWyjt1APQaq71VF
-         sHOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=mcGjaEjlp9E6N37UMib26cBF56AyQFK+2CInJ6FUTCo=;
-        b=etW2bUhtbh8tr7YjraNq5+AjY/VOdbyunvQZ2FINezIGZ1C+8+QsDVksCIj2Bty9Tq
-         QpdCULgAJMnPQ1CD0085KG12zY0LCrxZKI0db9drSIAxxPMBh0kCN8s1Ud7VU5blxPY7
-         9saEKWy5ToI0n9Egzw+E1OCdFUuQAuXxyr1LlVp5TzTSqgNN0UU+8jYi1AZzlVYLxk0g
-         vSW1UiRx3qksG/Bg84fldz6T2bajSeykVlgVUofVknTtCpf9PTeFzNZb761gfGXXWbjO
-         Gt0WFzno4IrUEihX6AtKFoc+aKz5t6iVkTjhcCg58RHFaFgZzyvGqUCCf+9XjJ0OZxPJ
-         lgiQ==
-X-Gm-Message-State: ACgBeo0GXf2kHvVLdOm0PeiKgjeOr1lLgnb3LGyArgv8DKrIrVofktZl
-        X/YaBrFkKayaWaQXCfrKurc=
-X-Google-Smtp-Source: AA6agR7Ol2NVPUvGRtSIxjQvMtgte0Ibyz5jmLGwxyIAGSEGA6qUhCfnNE3RpvIl5YX2vO02JAWceg==
-X-Received: by 2002:a17:90a:d155:b0:1f2:4741:3b74 with SMTP id t21-20020a17090ad15500b001f247413b74mr5710102pjw.201.1659114445182;
-        Fri, 29 Jul 2022 10:07:25 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
-        by smtp.gmail.com with ESMTPSA id g18-20020a63fa52000000b0041a13b1d451sm2805355pgk.59.2022.07.29.10.07.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Jul 2022 10:07:24 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 3/3] drm/msm/prime: Add mmap_info support
-Date:   Fri, 29 Jul 2022 10:07:42 -0700
-Message-Id: <20220729170744.1301044-4-robdclark@gmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220729170744.1301044-1-robdclark@gmail.com>
-References: <20220729170744.1301044-1-robdclark@gmail.com>
+        Fri, 29 Jul 2022 13:18:30 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F109381489;
+        Fri, 29 Jul 2022 10:18:29 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id A6409B828C5;
+        Fri, 29 Jul 2022 17:18:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C15C433C1;
+        Fri, 29 Jul 2022 17:18:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1659115107;
+        bh=e2HT1ixOuJoMonAGRNwr4kq3x5uFCATLmS986J+K4m8=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=N4/Ovl3eVPp1FDYa5h1Ucx7QhWp9a8MJWxt1TzfWEQnnp3hmh8UVT7XtndgTbXUoz
+         tR3iaeYkjB9DNIxgz+msU6R8Wuw17Sxxg/CzJUdUZbDMXcDVkLyKu2BmXyh1ROOGYA
+         3OAW46UBhYsAvSH386Iwzs1xxRSx7jOgvzsdHBLI8ALWMU3jO7ID2/lxnE0HPPfPCK
+         5Cq77PztEvAL2CZJ3EH7e8X2UPumz+O1t/b2wGStWURZXr1C/Kef5BR6tIarlaW3iQ
+         KT10UVBTBzT0s6O6oUKgKLgVb4ualYaeTqx4jHkQx/M9Boi0nRJQG2xOW3HiSjwcoi
+         sZ9wilDCPE1sw==
+Date:   Fri, 29 Jul 2022 12:18:25 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mka@chromium.org,
+        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
+        swboyd@chromium.org, dmitry.baryshkov@linaro.org,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>
+Subject: Re: [PATCH v3] PCI: qcom: Allow L1 and its sub states
+Message-ID: <20220729171825.GA465668@bhelgaas>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1657886366-32685-1-git-send-email-quic_krichai@quicinc.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Fri, Jul 15, 2022 at 05:29:25PM +0530, Krishna chaitanya chundru wrote:
+> Allow L1 and its sub-states in the qcom pcie driver.
+> By default this is disabled in the qcom specific hardware.
+> So enabling it explicitly only for controllers belonging to
+> 2_7_0.
+> 
+> This patch will not affect any link capability registers, this
+> will allow the link transitions to L1 and its sub states only
+> if they are already supported.
+> 
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_drv.c       |  1 +
- drivers/gpu/drm/msm/msm_drv.h       |  1 +
- drivers/gpu/drm/msm/msm_gem_prime.c | 11 +++++++++++
- 3 files changed, 13 insertions(+)
+Applied to pci/ctrl/qcom for v5.20, thanks!
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 1ca4a92ba96e..4979aa8187ec 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -1044,6 +1044,7 @@ static const struct drm_driver msm_driver = {
- 	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
- 	.gem_prime_import_sg_table = msm_gem_prime_import_sg_table,
- 	.gem_prime_mmap     = msm_gem_prime_mmap,
-+	.gem_prime_mmap_info= msm_gem_prime_mmap_info,
- #ifdef CONFIG_DEBUG_FS
- 	.debugfs_init       = msm_debugfs_init,
- #endif
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index 7330d7b5de8e..b4ace34ec889 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -271,6 +271,7 @@ void msm_gem_shrinker_init(struct drm_device *dev);
- void msm_gem_shrinker_cleanup(struct drm_device *dev);
- 
- int msm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma);
-+int msm_gem_prime_mmap_info(struct drm_gem_object *obj);
- struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *obj);
- int msm_gem_prime_vmap(struct drm_gem_object *obj, struct iosys_map *map);
- void msm_gem_prime_vunmap(struct drm_gem_object *obj, struct iosys_map *map);
-diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/msm_gem_prime.c
-index c1d91863df05..2bacab7a1921 100644
---- a/drivers/gpu/drm/msm/msm_gem_prime.c
-+++ b/drivers/gpu/drm/msm/msm_gem_prime.c
-@@ -5,6 +5,7 @@
-  */
- 
- #include <linux/dma-buf.h>
-+#include <uapi/linux/dma-buf.h>
- 
- #include <drm/drm_prime.h>
- 
-@@ -26,6 +27,16 @@ int msm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma)
- 	return drm_gem_prime_mmap(obj, vma);
- }
- 
-+int msm_gem_prime_mmap_info(struct drm_gem_object *obj)
-+{
-+	struct msm_gem_object *msm_obj = to_msm_bo(obj);
-+
-+	if (msm_obj->flags & MSM_BO_WC)
-+		return DMA_BUF_VM_PROT_WC;
-+
-+	return DMA_BUF_VM_PROT_CACHED;
-+}
-+
- struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *obj)
- {
- 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
--- 
-2.36.1
-
+> ----
+> 
+> Changes since v1 & v2:
+> 	- Update in the commit text only.
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index a7202f0..5ef444f 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -41,6 +41,9 @@
+>  #define L23_CLK_RMV_DIS				BIT(2)
+>  #define L1_CLK_RMV_DIS				BIT(1)
+>  
+> +#define PCIE20_PARF_PM_CTRL			0x20
+> +#define REQ_NOT_ENTR_L1				BIT(5)
+> +
+>  #define PCIE20_PARF_PHY_CTRL			0x40
+>  #define PHY_CTRL_PHY_TX0_TERM_OFFSET_MASK	GENMASK(20, 16)
+>  #define PHY_CTRL_PHY_TX0_TERM_OFFSET(x)		((x) << 16)
+> @@ -1261,6 +1264,11 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+>  	val |= BIT(4);
+>  	writel(val, pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
+>  
+> +	/* Enable L1 and L1ss */
+> +	val = readl(pcie->parf + PCIE20_PARF_PM_CTRL);
+> +	val &= ~REQ_NOT_ENTR_L1;
+> +	writel(val, pcie->parf + PCIE20_PARF_PM_CTRL);
+> +
+>  	if (IS_ENABLED(CONFIG_PCI_MSI)) {
+>  		val = readl(pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
+>  		val |= BIT(31);
+> -- 
+> 2.7.4
+> 
