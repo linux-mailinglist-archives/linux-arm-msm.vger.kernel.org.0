@@ -2,58 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 228A9585753
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Jul 2022 01:27:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 34FBC58575F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Jul 2022 01:41:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232132AbiG2X1x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Jul 2022 19:27:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37556 "EHLO
+        id S239627AbiG2Xl0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Jul 2022 19:41:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231536AbiG2X1w (ORCPT
+        with ESMTP id S231683AbiG2XlZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Jul 2022 19:27:52 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3040E0E8;
-        Fri, 29 Jul 2022 16:27:51 -0700 (PDT)
+        Fri, 29 Jul 2022 19:41:25 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E65474349;
+        Fri, 29 Jul 2022 16:41:24 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5485C61419;
-        Fri, 29 Jul 2022 23:27:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EAADC433D6;
-        Fri, 29 Jul 2022 23:27:50 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 11A29B82A07;
+        Fri, 29 Jul 2022 23:41:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F1F9C433D7;
+        Fri, 29 Jul 2022 23:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1659137270;
-        bh=sqRp40R6KJgFmFaL5KDeXGeFZMG+FgczZ+X7+SXM8nA=;
+        s=k20201202; t=1659138081;
+        bh=4+EkarCy89gK1+2w7AQftCu8+S5fGMb83z7dEUIiXOE=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=bC/DwFwxLItlATxZUIJZ/Cs/VQK374rDCareo8AI07Ef02DP8TOyK/AnHj0s4nxYv
-         qUapdff6x4PkNybu399Q+Q4cbG76JO3inAz4xD9/GYuGveSAPrhZZWF57KvTekpYRg
-         EwW1gyK7XbngY9A6lHI3ol8a7p+0UUFcepkbpy+LT2af0eGlF0MUo7lQf19nXV7ppu
-         /Fm2U7mrGQ5ftf3TY0fHoMHjf6X0mwGvNgkJSyW/ujVXGn7g6QLbepi0+jjOW3u3g5
-         vv/UqSGR6tAMA+owPR5mkcI52jFvDGhKC79T7IKj+eP0Z10lpI4DY5K+BEpDzR+Fvw
-         rJCr8HYivhUBg==
+        b=GOZWVzk7d3J6nYjVSRz85NkTzdsL6jKyMZUilc9VqjdvCxKp2asJ9swXC7v6c2aUG
+         TFVUv989BaI2SbUoKdqN1h5Lu4uWz1v2O4UYZyMIj/MkN2ZXQfioqAdQ4YCC3jde7f
+         KHmpNY9al8F3CxJtCaNR0gIMxoGgE2D8AgFQmb9RTmT/1SN83FmJwsP7wnIBnQtYcM
+         lqIDPSrw5gjsM1wcDf1Qw0WUB2xzKK+JStxtOeMF8oJtBFHGY8BKo9hQtJ8lADzyuJ
+         B+fnHDmRi4wCVWQuF1z7Zexou7RWP27IKr8obtOyY7lqF9O/2TcGVOB6ouiAPZoqkt
+         QrSOhfsc2LlZQ==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAOX2RU7NaJL5dTrjz26oiz0psvXKV8C-7HGMmJ-rfNJ3r=y2qg@mail.gmail.com>
-References: <20220515210048.483898-1-robimarko@gmail.com> <20220515210048.483898-10-robimarko@gmail.com> <20220711211047.952F4C34115@smtp.kernel.org> <CAOX2RU7NaJL5dTrjz26oiz0psvXKV8C-7HGMmJ-rfNJ3r=y2qg@mail.gmail.com>
-Subject: Re: [PATCH v4 10/11] clk: qcom: ipq8074: dont disable gcc_sleep_clk_src
+In-Reply-To: <192c5f16-8415-dfa1-39d2-8b404553ecd7@linaro.org>
+References: <20220629225331.357308-1-marijn.suijten@somainline.org> <192c5f16-8415-dfa1-39d2-8b404553ecd7@linaro.org>
+Subject: Re: [PATCH v3 00/11] drm/msm/dsi_phy: Replace parent names with clk_hw pointers
 From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Abhishek Sahu <absahu@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Devicetree List <devicetree@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-clk@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>,
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>, tdas@codeaurora.org
-To:     Robert Marko <robimarko@gmail.com>
-Date:   Fri, 29 Jul 2022 16:27:48 -0700
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rajeev Nandan <quic_rajeevny@quicinc.com>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Jonathan Marek <jonathan@marek.ca>, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org
+Date:   Fri, 29 Jul 2022 16:41:19 -0700
 User-Agent: alot/0.10
-Message-Id: <20220729232750.8EAADC433D6@smtp.kernel.org>
+Message-Id: <20220729234121.9F1F9C433D7@smtp.kernel.org>
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -63,25 +71,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Robert Marko (2022-07-11 14:14:38)
-> On Mon, 11 Jul 2022 at 23:10, Stephen Boyd <sboyd@kernel.org> wrote:
-> >
-> > Quoting Robert Marko (2022-05-15 14:00:47)
-> > > diff --git a/drivers/clk/qcom/gcc-ipq8074.c b/drivers/clk/qcom/gcc-ip=
-q8074.c
-> > > index 3204d550ff76..42d185fe19c8 100644
-> > > --- a/drivers/clk/qcom/gcc-ipq8074.c
-> > > +++ b/drivers/clk/qcom/gcc-ipq8074.c
-> > > @@ -663,6 +663,7 @@ static struct clk_branch gcc_sleep_clk_src =3D {
-> > >                         },
-> > >                         .num_parents =3D 1,
-> > >                         .ops =3D &clk_branch2_ops,
-> > > +                       .flags =3D CLK_IS_CRITICAL,
-> > >                 },
-> >
-> > Why not just remove the clk from the driver? Is anything using it?
+Quoting Dmitry Baryshkov (2022-07-14 03:19:12)
+> On 30/06/2022 01:53, Marijn Suijten wrote:
+> > Marijn Suijten (11):
+> >    clk: divider: Introduce devm_clk_hw_register_divider_parent_hw()
+> >    clk: mux: Introduce devm_clk_hw_register_mux_parent_hws()
+> >    clk: fixed-factor: Introduce *clk_hw_register_fixed_factor_parent_hw=
+()
 >=20
-> Hi Stephen, USB sleep clocks are derived from it so it cant be dropped.
+> Stephen, do we stand a chance of landing patches 1-3 into 5.20? We would =
+
+> like to merge the series into 5.21 through the msm-next. Landing clk=20
+> patches in 5.20 would save us from using immutable branches, etc.
 >=20
 
-And we can't return NULL clks to USB for the sleep clk?
+Sure I can land the first three patches now for 5.20
