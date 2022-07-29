@@ -2,118 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB78D585517
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jul 2022 20:45:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 88CB658565F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Jul 2022 23:08:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229549AbiG2Sp3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Jul 2022 14:45:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40128 "EHLO
+        id S230001AbiG2VIB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Jul 2022 17:08:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229593AbiG2Sp2 (ORCPT
+        with ESMTP id S229931AbiG2VIA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Jul 2022 14:45:28 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6809220E6;
-        Fri, 29 Jul 2022 11:45:27 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id v16-20020a17090abb9000b001f25244c65dso9201095pjr.2;
-        Fri, 29 Jul 2022 11:45:27 -0700 (PDT)
+        Fri, 29 Jul 2022 17:08:00 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5426B1EE;
+        Fri, 29 Jul 2022 14:07:57 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id m20so623765ejx.1;
+        Fri, 29 Jul 2022 14:07:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=c2EeijBCD5jUawkN2N+G+cRbwnfPrl4CcGCf6KqN3lo=;
-        b=nj1dVE9U/6wk/Ik+GunR7coAPp8n0lglv3pUgjOO9utY20bdpgHD0T2yKlJ2v5c6LL
-         kor6XJHPyQ9mDF7s8jBN2mex0sPIrSAXsZsYU/BaC/tI8EZmkO3MhHAuhf7+6b/i9fQX
-         GGKsRpqJsW9laVPAyMfVP0qOOHre3hpBqCW5yYhOpCBmMBioQQPSAKZYNbNiFYB+QS0N
-         cDngiKyo+K/mJdVG3jlNmpKC+5FQV6kySipykg/XGSi21TNnvU04MV6ER5Wqfxe2nGCn
-         iSfakTaO9F6+NZORPSQTDQQGRv0cUV7LbzvbaV2N6TZKUH3LJ+EbwpqtSySNOqYRY3ws
-         Hejg==
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ZnijszfNceP0fwRE0S8xAK/S1dlE8Lve0MOPfHF9xV0=;
+        b=TI9PWFbrEKrjXRos/9Uo8Fvi8+uBVB871xSPksh4fZs05WK9/lANhyvc0xbCN6tHk/
+         9dBct9Pt0lYPys6sF6tsmeWbbkabQDS+RKPHJjS/6+rSjoDY9js1grLMjcrlgo6FfzKO
+         ekPVVXajRES1UZ17yhg11U37Z0c2MlzH3X0QdQktImVIyrgkQ9OuH9S+JkKtQAmscJyc
+         mC18zyJf5bCY82iSZ6gsutlAayCQxof44H5aCu8ynT4WfBUitSS0KgrJomiycR8rk9xf
+         +3FMiaHRsSxXuqi75mu3cBhiXJ9BVSahG+cCNAwbc34xeKaP323PmI6yqr3dkOlXpwyY
+         hn/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=c2EeijBCD5jUawkN2N+G+cRbwnfPrl4CcGCf6KqN3lo=;
-        b=bq9B/eyRGPOpBudXqbVu6G7kRhWTin8HZhlvDU6lud8pe3igjsJ4ecYue3MdnwVdaa
-         QsvPHUvISYubScCagVHPVyeSaFZXCWWEPGyvnNl1DSPXRPY7RvQJJIacqmNO+Iy77CnK
-         xISe8EIaF3VbagfJW2No1BfA8Dj4S+N13ELlAbd2G3tgv5fIa84wnT6fhdJKKKZLpDEP
-         tcpq/6y681JiWSj28Dt0GZIAJDSErzo6LY/elz+qdUTWPL1rJAvV3HdyknMQHyPbLl7T
-         cB50iCsEXK6LnaznfBLP/4KKEX6AB8hO8hnMQnKRvfoMw276T1VeLbE74sZq47TSoCVu
-         Gcqw==
-X-Gm-Message-State: ACgBeo2xS/sbn2yKeQJn/he/5iyuteWzLCDBvvMxHFtgabF0v3oDK6ds
-        UMOxmIdOrSziiWzmJAQLd5bDKZKU47Q=
-X-Google-Smtp-Source: AA6agR7AJqk8Zo4pAhdk4DchNvrL1/Rf6CZo1y3t5iRdFp/ks1c/asvYiC6tU0ijzEVjuhnOiw0FHA==
-X-Received: by 2002:a17:90b:3c2:b0:1f3:19ea:952 with SMTP id go2-20020a17090b03c200b001f319ea0952mr5693204pjb.158.1659120327144;
-        Fri, 29 Jul 2022 11:45:27 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id h15-20020a17090a050f00b001f30f823145sm5686760pjh.55.2022.07.29.11.45.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Jul 2022 11:45:26 -0700 (PDT)
-Message-ID: <7d9607ed-f8eb-f3a2-22e4-4d2a240919c9@gmail.com>
-Date:   Fri, 29 Jul 2022 11:45:10 -0700
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ZnijszfNceP0fwRE0S8xAK/S1dlE8Lve0MOPfHF9xV0=;
+        b=d46danN7t0OHlC8YIfkjD0VPuZpnNyyIBgPAiHkOlnFD8yNnLAKs6wHJgNVUrxVanB
+         iSUSKzbcX+30R2VLIr3oqFiNr5ck86JbD5uIBUnbFH2ZHTsdwEPAtZvnmuUv+obYCe8x
+         GJc9NiY78BSoSB/qrcTLNVn8+v4JNMY3FfQ8TCM8U76b1h8NZRap+d/jdzndEQ0YQS7a
+         gnnxm1rMJ4VNdIwQ/iwNHfWTJ1v+CUMw2d1TGkSYBEfn5yhrAvmJLP5ysQs1f5KSLDcb
+         kGyalMD8Wvx7rmWqGAWCv/JcE1jWe0BwyonZUE8iK7Syfoy4qWYywC7LwpXNPjVOyUOb
+         dh2A==
+X-Gm-Message-State: AJIora8NJxR8byZhTOB0ZhdNfuqhgP/nDAOd8LlsIfhDEBL00oUfRNmc
+        0qM1gyRVX1ZbWSCn5vCjiIo=
+X-Google-Smtp-Source: AGRyM1s5LJD8uCF4WTdrT+orrBGrEqQdXLHZ5a3FoTVkc2Z91A5NB7j7CUbFczwBdb4cxLpFvRDo1g==
+X-Received: by 2002:a17:907:1dca:b0:72b:3cb2:81f7 with SMTP id og10-20020a1709071dca00b0072b3cb281f7mr4046672ejc.567.1659128876170;
+        Fri, 29 Jul 2022 14:07:56 -0700 (PDT)
+Received: from calypso ([80.155.25.210])
+        by smtp.gmail.com with ESMTPSA id l24-20020a056402029800b0043a7293a03dsm2922061edv.7.2022.07.29.14.07.54
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 29 Jul 2022 14:07:55 -0700 (PDT)
+From:   "Jorge Ramirez-Ortiz, Gmail" <jorge.ramirez.ortiz@gmail.com>
+X-Google-Original-From: "Jorge Ramirez-Ortiz, Gmail" <JorgeRamirez-Ortiz>
+Date:   Fri, 29 Jul 2022 23:07:53 +0200
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Iskren Chernev <iskren.chernev@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Jorge Ramirez-Ortiz <jorge@foundries.io>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH v2 3/5] regulator: qcom_spmi: Add support for new
+ regulator types
+Message-ID: <20220729210753.GA17925@calypso>
+References: <20220726181133.3262695-1-iskren.chernev@gmail.com>
+ <20220726181133.3262695-4-iskren.chernev@gmail.com>
+ <YuEoLteLBgd+b8sg@sirena.org.uk>
+ <79077e08-4bd8-6967-748d-876589ef978e@gmail.com>
+ <YuJuzNiQczaYi1og@sirena.org.uk>
+ <245f6090-9f92-8091-d8e6-735ab078c6c8@gmail.com>
+ <YuPM6XqLBuA8A9eY@sirena.org.uk>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH] firmware/psci: Add debugfs support to ease debugging
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>
-Cc:     Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20220727200901.1142557-1-dmitry.baryshkov@linaro.org>
- <20220728090806.nnighsbx2lcgugon@bogus>
- <CAA8EJpr2=y-wT_HV4H5BTm7RPsc=--6C054WHJDpQzehU=Z+VA@mail.gmail.com>
-From:   Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <CAA8EJpr2=y-wT_HV4H5BTm7RPsc=--6C054WHJDpQzehU=Z+VA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YuPM6XqLBuA8A9eY@sirena.org.uk>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no
         autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/28/22 02:20, Dmitry Baryshkov wrote:
-> On Thu, 28 Jul 2022 at 12:08, Sudeep Holla <sudeep.holla@arm.com> wrote:
->>
->> On Wed, Jul 27, 2022 at 11:09:01PM +0300, Dmitry Baryshkov wrote:
->>> To ease debugging of PSCI supported features, add debugfs file called
->>> 'psci' describing PSCI and SMC CC versions
->>
->> These 2 are for sure in the boot log. Having them is debugfs accessible
->> via file system add not much value as we would hit issues quite early in
->> the boot for most of the things related to PSCI.
+On 29/07/22 13:04:57, Mark Brown wrote:
+> On Thu, Jul 28, 2022 at 11:59:03PM +0300, Iskren Chernev wrote:
+> > 
+> > 
+> > On 7/28/22 14:11, Mark Brown wrote:
+> > > On Thu, Jul 28, 2022 at 02:14:10AM +0300, Iskren Chernev wrote:
+> > >> On 7/27/22 14:57, Mark Brown wrote:
+> > >>> On Tue, Jul 26, 2022 at 09:11:31PM +0300, Iskren Chernev wrote:
+> > >
+> > >>>> Add support for some regulator types that are missing in this driver, all
+> > >>>> belonging to the FTSMPS426 register layout.  This is done in preparation
+> > >>>> for adding support for the PM6125 PMIC.
+> > >
+> > >>>> +	.set_mode		= spmi_regulator_ftsmps3_set_mode,
+> > >>>> +	.get_mode		= spmi_regulator_ftsmps426_get_mode,
+> > >
+> > >>> Why are set and get asymmetric?
+> > >
+> > >> Because the get method, only uses AUTO and HPM, which have the same value
+> > >> for ftsmps3 and ftsmps426 (so there is no need for a new function).
+> > >
+> > > This needs at least a comment.
+> > 
+> > I agree, I think to add the function with the right macros, and comment
+> > that it is the same now but might change in the future if support for mode
+> > modes is added.
+> > 
+> > >>>> @@ -1473,7 +1557,7 @@ static const struct spmi_regulator_mapping supported_regulators[] = {
+> > >>>>  	SPMI_VREG(LDO,   HT_P600,  0, INF, HFS430, hfs430, ht_p600, 10000),
+> > >>>>  	SPMI_VREG(LDO,   HT_P150,  0, INF, HFS430, hfs430, ht_p150, 10000),
+> > >>>>  	SPMI_VREG(BUCK,  GP_CTL,   0, INF, SMPS,   smps,   smps,   100000),
+> > >>>> -	SPMI_VREG(BUCK,  HFS430,   0, INF, HFS430, hfs430, hfs430,  10000),
+> > >>>> +	SPMI_VREG(BUCK,  HFS430,   0,   3, HFS430, hfs430, hfs430,  10000),
+> > >
+> > >>> The changelog said we were adding support for new types but this looks
+> > >>> like changing an existing type.
+> > >
+> > >> The code, as written now does a different thing for BUCK, HFS430 (on
+> > >> mainline (ML) and downstream (DS) linked in the commit message). Since DS
+> > >> only supports newer stuff, to be on safe side, I kept existing behavior for
+> > >> rev 0-3 on BUCK(3)+HFS430(10), so at least DS and ML agree on pm6125
+> > >> completely.
+> > >
+> > > This needs describing in the changelog, probably you need multiple
+> > > paches here since you are making a number of different changes each of
+> > > which needs some explanation.
+> > >
+> > >> The commit [1] that adds support for BUCK+HFS430 might be wrong, or it
+> > >> might be right for the time being (i.e initial revisions had different
+> > >> behavior). I'm CC-ing Jorge.
+> > >
+> > > If that's the case perhaps part of this needs to be sent as a fix.
+> > 
+> > The Downstream patch is adding 3 logical types:
+> > - LDO_510 -- these have new subtypes, so no existing PMICs are affected
+> > - FTSMPS3 -- this has a new subtype (0xb), so no existing PMICs are
+> >   affected
+> > - HFSMPS -- this has the same type and subtype (BUCK+HFS430) as an existing
+> >   mainline logical type (HFS430), both declaring 0-INF revisions.
+> > 
+> > So if we fully trust the downstream patch, I can make a fix for the
+> > existing BUCK+HFS430+0-INF, so it uses the slighly modified mode values.
+> > 
+> > Currently the set mode fn differs in LPM mode (5 in the common2 case and
+> > 4 in the common3 case), so if indeed downstream is correct it would mean
+> > this regulator (when turned off) was set to an invalid mode (5 has
+> > undefined meaning in common3 map) from 2019 onward.
+> > 
+> > On the other hand, if we assume downstream is wrong, then their code sets
+> > 4, which actually means RETENTION (not LPM). I really don't know how this
+> > could cause trouble. In fact downstream does a bunch of weird stuff, it
+> > doesn't "just" set to LPM (like mainline), instead there is complex logic
+> > per logical type and "initial mode". Or they're just masking this mistake
+> > ;-)
+> > 
+> > TL;DR Jorge's mail is gone, so we can't get info from the original author.
 > 
-> Yes, it was just to have all the information in a single place.
-> 
->>> enabled features and options.
->>>
->>
->> We have psci_checker.c which does some minimal testing of PSCI. I prefer
->> to add things to that rather than a debugfs as it is run during boot. IMO
->> it is usual useful to debug things that cause boot issue most of the time.
->> I am not against this so I will leave it to the maintainers.
-> 
-> In my case I was not debugging the boot issues (which of course would
-> have required a different approach), but I was trying to understand
-> runtime capabilities, thus debugfs fits pretty well.
-> 
-> Another point for the debugfs entry: most of the people run the kernel
-> with the psci_checker being turned off, but with debugfs being
-> enabled. If we are trying to narrow down firmware capabilities of the
-> random device, it is much easier to ask them to cat the dbeugfs file
-> rather than to rebuild the kernel.
-> 
+> Jorge moved to foundries.io, copying him in in case he remembers
+> anything about this.
 
-Yes I would agree with both of those points, in fact, I would go one step further and add the ability to probe an arbitrary PSCI function ID, since deployed firmware typically go beyond the standard PSCI scope and implement a variety of custom extensions (at least we do).
+I am sorry, I really dont remember the details. I believe this was part of the
+QCS404 upstreaming work so it would have been tested not just by us but also by
+the release team working on the final product. Sorry I cant be of much help, it
+has been a while.
 
-Thanks!
--- 
-Florian
+> 
+> > Another issue is I can't really test any other PMIC (and even my PMIC
+> > I can't turn off most of the regs without loosing critical functionality,
+> > and the BUCKs are kinda important :)).
+> > 
+> > So we can:
+> > 1. politely ask for somebody with access to the secret sauce to say what is
+> >    correct, at least according to the docs (with a timeout)
+> > 2. assume downstream patch is right, and fix the existing HFS430 regulator
+> > 3. maintain the current (patch) behavior, which likely won't affect older
+> >    PMICs, but is still adhering to DS patch, because it adds support for
+> >    this particular PMIC, so presumably it was tested and works with it
+> > 4. drop the pmic patch and rely on SMD
+> > 
+> > Please advice.
+> > 
+> > In any case if we go with 2 or 3, I can split out this particular (BUCK)
+> > part in a separate patch with more information/comments.
+
+
