@@ -2,131 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F41A585A88
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Jul 2022 15:13:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC469585B80
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Jul 2022 20:08:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234544AbiG3NLR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Jul 2022 09:11:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41476 "EHLO
+        id S235450AbiG3SID (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Jul 2022 14:08:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234456AbiG3NLQ (ORCPT
+        with ESMTP id S231625AbiG3SID (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Jul 2022 09:11:16 -0400
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDBC715734;
-        Sat, 30 Jul 2022 06:11:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1659186672; x=1690722672;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=8WinKOkiACvMCIL7j4JUfw0p1az0NmOrR3j3M1UjeuM=;
-  b=J5AWyuR0YDBoB12vabpvWioq1sK41U08jQPEBItvSYvzNQjxDAHeKJzr
-   189DolUf4jELabtTp9FdCbO+cce8OOXSSx6Kw1DFC5kxtPGghcX+xljoF
-   CkekzjOqULACKHOCn2DfQz7FtcdP3LT/eNNLb0SdjnZ2XksGSbJkQa9Cn
-   G9t24rjV9NQIPM/UhFXvLwCCm/qklefJjRJuZvd06zzk6CwCpiKHjPl//
-   /4reYaG+qpzx4uyecPTIB6Qgkhxg0LXVCDGSUixfF7tYDDcG2SXuji7qB
-   UfXg7FhgxtF3BnQdkDrfz0tBoGmhxKgk49NwDWxl1p/jYrrFW2hMCO1ZO
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10424"; a="314727781"
-X-IronPort-AV: E=Sophos;i="5.93,204,1654585200"; 
-   d="scan'208";a="314727781"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jul 2022 06:11:12 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.93,204,1654585200"; 
-   d="scan'208";a="728001021"
-Received: from lkp-server01.sh.intel.com (HELO e0eace57cfef) ([10.239.97.150])
-  by orsmga004.jf.intel.com with ESMTP; 30 Jul 2022 06:11:08 -0700
-Received: from kbuild by e0eace57cfef with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1oHmFI-000Cqf-0W;
-        Sat, 30 Jul 2022 13:11:08 +0000
-Date:   Sat, 30 Jul 2022 21:10:19 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Cc:     kbuild-all@lists.01.org, Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-clk@vger.kernel.org
-Subject: Re: [PATCH 2/5] clk: qcom: Allow custom reset ops
-Message-ID: <202207302137.mPbHPaHz-lkp@intel.com>
-References: <20220730144713.2.I4b69f984a97535179acd9637426a1331f84f6646@changeid>
+        Sat, 30 Jul 2022 14:08:03 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACB5E1572E
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Jul 2022 11:08:01 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id v5so3963508wmj.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Jul 2022 11:08:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=DEFqBxpGYalSFZL6OyvPXVJgfc+DfLkkt00YWVhvQvA=;
+        b=qs5oQJumRaRtz8lFgAlzeo/WdCMLpZRexyaOC9me35nCrjMyQQXoOSYHCod1Tz1QuZ
+         WXkFCx2sOvZJTnLD8wwQcTdyaEwOLyE+ouAIdWkXYSH0FovvG80z3At9m7o6mEp436ZI
+         F+vQbpoIjno8ZU7isqApAgB0bxLwgGATfrgYllwYQksROAriG7+vdzH+XoSO9nAGrEHS
+         +I1mm/WwGWo2hzlKqakTzvxKF666dn7rm+5/yGLynyJVW0mfKoY5qqfpvWXhCoo/9thY
+         nEjxDKMuxIV7i/vqoYr1drhbuez5auYEXErbv4KagE3P8IpKLuf+SURoQKHMttnh8Dps
+         aRYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=DEFqBxpGYalSFZL6OyvPXVJgfc+DfLkkt00YWVhvQvA=;
+        b=O4Muyzioa3KDuQmfvNAB7/2BZR0BOe+ke9/DK888jiG+S1jwBMNrCwo9oZ9JYYzhmX
+         eBN1S5uW2FlabneZHnxRCDgkjb8ELArtbTawVentHqMFdKFZ9uCdm8GVaCI0qcZ350HC
+         3pbqCNFxEeSO4pqZ1/eTzNoTDy7EPp2l2b4TVNp5PxltYsjWF3Wmqg3EXKdbIHTdd6pp
+         EgM/pirf1Kst89PVWZexIzUcAWqlMRktJA6M5e3kjqlJG9Qh98/cWKWfwH5lkpY7X9Iw
+         Tr62eDAJmKolmM0PZuPhT5XF0R3mdvcmGg9w0qyFt6Ux5sEj6xKuSv7YkINXFTukvpiA
+         mdjA==
+X-Gm-Message-State: AJIora+7b5ZtssTHgIeGkWrFGEzXVHvDv8B2aYsooeNS+7B2WDv+xsVs
+        Xx0AcxZZ13yFSOrvj9tCoDuV2w==
+X-Google-Smtp-Source: AGRyM1sdWlbCPaVwiL5pfzStXWu0cIr1reMTk3zcFDoEg0LbWe4fifB89JMFMP8qG8R5r5nNikijxA==
+X-Received: by 2002:a05:600c:798:b0:3a3:f03:f80e with SMTP id z24-20020a05600c079800b003a30f03f80emr6504503wmo.33.1659204480128;
+        Sat, 30 Jul 2022 11:08:00 -0700 (PDT)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id z14-20020a05600c0a0e00b003a31ca9dfb6sm10442420wmp.32.2022.07.30.11.07.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 30 Jul 2022 11:07:59 -0700 (PDT)
+Date:   Sat, 30 Jul 2022 21:07:58 +0300
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Steev Klimaszewski <steev@kali.org>
+Subject: Re: [PATCH] remoteproc: qcom_q6v5_pas: Do not fail if regulators are
+ not found
+Message-ID: <20220730180758.tzgfchqhkqldtm6b@linaro.org>
+References: <20220730062834.12780-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220730144713.2.I4b69f984a97535179acd9637426a1331f84f6646@changeid>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20220730062834.12780-1-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Akhil,
+On 22-07-30 11:58:34, Manivannan Sadhasivam wrote:
+> devm_regulator_get_optional() API will return -ENODEV if the regulator was
+> not found. For the optional supplies CX, PX we should not fail in that case
+> but rather continue. So let's catch that error and continue silently if
+> those regulators are not found.
+>
+> The commit 3f52d118f992 ("remoteproc: qcom_q6v5_pas: Deal silently with
+> optional px and cx regulators") was supposed to do the same but it missed
+> the fact that devm_regulator_get_optional() API returns -ENODEV when the
+> regulator was not found.
+>
+> Cc: Abel Vesa <abel.vesa@linaro.org>
+> Fixes: 3f52d118f992 ("remoteproc: qcom_q6v5_pas: Deal silently with optional px and cx regulators")
+> Reported-by: Steev Klimaszewski <steev@kali.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Thank you for the patch! Perhaps something to improve:
+Yep, makes sense.
 
-[auto build test WARNING on clk/clk-next]
-[also build test WARNING on robh/for-next drm-misc/drm-misc-next drm-tip/drm-tip linus/master v5.19-rc8 next-20220728]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Akhil-P-Oommen/clk-qcom-Support-gdsc-collapse-polling-using-reset-inteface/20220730-171922
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
-config: ia64-randconfig-r031-20220729 (https://download.01.org/0day-ci/archive/20220730/202207302137.mPbHPaHz-lkp@intel.com/config)
-compiler: ia64-linux-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/971a03493e9854ff4a227ee4d80b533997959891
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Akhil-P-Oommen/clk-qcom-Support-gdsc-collapse-polling-using-reset-inteface/20220730-171922
-        git checkout 971a03493e9854ff4a227ee4d80b533997959891
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=ia64 SHELL=/bin/bash drivers/clk/qcom/
+> ---
+>  drivers/remoteproc/qcom_q6v5_pas.c | 18 +++++++++++++++---
+>  1 file changed, 15 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+> index 98f133f9bb60..5bf69ef53819 100644
+> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> @@ -362,12 +362,24 @@ static int adsp_init_clock(struct qcom_adsp *adsp)
+>  static int adsp_init_regulator(struct qcom_adsp *adsp)
+>  {
+>  	adsp->cx_supply = devm_regulator_get_optional(adsp->dev, "cx");
+> -	if (IS_ERR(adsp->cx_supply))
+> -		return PTR_ERR(adsp->cx_supply);
+> +	if (IS_ERR(adsp->cx_supply)) {
+> +		/* Do not fail if the regulator is not found */
 
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
+Maybe this comment is redundant.
 
-All warnings (new ones prefixed by >>):
+> +		if (PTR_ERR(adsp->cx_supply) == -ENODEV)
+> +			adsp->cx_supply = NULL;
+> +		else
+> +			return PTR_ERR(adsp->cx_supply);
+> +	}
+>
+> -	regulator_set_load(adsp->cx_supply, 100000);
+> +	if (adsp->cx_supply)
+> +		regulator_set_load(adsp->cx_supply, 100000);
+>
+>  	adsp->px_supply = devm_regulator_get_optional(adsp->dev, "px");
+> +	if (IS_ERR(adsp->px_supply)) {
+> +		/* Do not fail if the regulator is not found */
 
-   drivers/clk/qcom/reset.c: In function 'qcom_reset':
->> drivers/clk/qcom/reset.c:17:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
-      17 |         const struct qcom_reset_map *map = &rst->reset_map[id];
-         |         ^~~~~
+Same here.
 
-
-vim +17 drivers/clk/qcom/reset.c
-
-    13	
-    14	static int qcom_reset(struct reset_controller_dev *rcdev, unsigned long id)
-    15	{
-    16		struct qcom_reset_controller *rst = to_qcom_reset_controller(rcdev);
-  > 17		const struct qcom_reset_map *map = &rst->reset_map[id];
-    18	
-    19		if (map->op)
-    20			return map->op(map);
-    21	
-    22		rcdev->ops->assert(rcdev, id);
-    23		udelay(1);
-    24		rcdev->ops->deassert(rcdev, id);
-    25		return 0;
-    26	}
-    27	
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+> +		if (PTR_ERR(adsp->px_supply) == -ENODEV)
+> +			adsp->px_supply = NULL;
+> +	}
+> +
+>  	return PTR_ERR_OR_ZERO(adsp->px_supply);
+>  }
+>
+> --
+> 2.25.1
+>
