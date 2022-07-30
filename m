@@ -2,134 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0F825858E2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Jul 2022 08:42:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4389585911
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Jul 2022 10:13:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229884AbiG3GmZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Jul 2022 02:42:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49642 "EHLO
+        id S231465AbiG3INH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Jul 2022 04:13:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231591AbiG3GmS (ORCPT
+        with ESMTP id S229463AbiG3ING (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Jul 2022 02:42:18 -0400
-Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA06BBC99
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jul 2022 23:42:17 -0700 (PDT)
-Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-10d845dcf92so8088296fac.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jul 2022 23:42:17 -0700 (PDT)
+        Sat, 30 Jul 2022 04:13:06 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 105A53ED6F;
+        Sat, 30 Jul 2022 01:13:06 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id ez10so11971408ejc.13;
+        Sat, 30 Jul 2022 01:13:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=kGbqPhsH1tDcPg2Vq6m+ND6aUIHu4Sx5KaDC6bxw6ds=;
-        b=AbqzqYwzUd3P2RzKqvwRNjvU/aPH14MhZzb9Lk/efwPepaOq6YWmrYlUQyggV3dLxf
-         +fg/3YxqD8OQdus7+Z9I7JSB8mr6032AhBQDVUKh22IotcrjVG3mNjXmpYuLH3e/JU8x
-         1e7ifbKSzRZ6wUA/TTOOn1hen8bgNI87H0r/MkoUJut7aH4F1w+glKKrZ7ZDYw7aMpAQ
-         o3+zPEs7GLbkE/wgxFCe2npwLGTlIUU+UKAPdQ3yoGRMkWqrplXYb+yVEc6dbdaCLlIs
-         43yLsDcSUHu+aGZ2fedHiGmhBJA9PWI4+Rrh/3ENKMqZLZk4RFHuJMLdqFjRuMyT47PF
-         +3ig==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=HaIkTEML2/Uw1dJQ6HkKFPAniOMQ8pl6JjcKhaa8iHY=;
+        b=cvRsUTffQLxDnzof/9PJuKrbd9YA5lX3n2Le75GSCMPhxc41hYTSKPoLhNk9EG7u6G
+         WZ1ItHNY1PYt7kYXl14MmlmneMuh3FLRkfXvkmVeE4jgoLQ1jULhDLK8JHREWZkw5UcJ
+         LCcI2AI04lL+B72HMXrrqwlwURjaVy10kuZyM7AJjmKNxJjtePkW8XpdPsiFEeaAFmTq
+         UzOJ61AWHJUGGa6q3n4jcvn6jcq3iEzGwfkaRJlIGVp1Ac4g5wkjPKepoNa/t2mng6mx
+         k6rhP9Lnwb+v7GL1+MymZI0P9ow/ZQtIA+q/o/nT9UkO5YXhXEbzWWv/ebB2uFytzvJE
+         c4bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=kGbqPhsH1tDcPg2Vq6m+ND6aUIHu4Sx5KaDC6bxw6ds=;
-        b=HNt4UVK88Y5vVI27rrDM85QEMoE5jA3eaRaTUMjjVmtBc5zsArkwvGG7B9voqAR8vv
-         ENNqlPbt28VWNe/+lpd/PBOP/jTNemtOiOK3yR4OTwv0I1uEYRA8Lk99TvTu9GWaq99T
-         0MHkyhnuFmXmDOogVkeYhp71uHTLYbnTb6N92xFppnSYI4La7SjU4q9/977RjndNaPDI
-         DTFuWaevw+TUTIjFAj7rTRexCd+jFSypGQC2XVOvW1Hx4q8Z9VkpibUPTkNpfZ5pTtlq
-         u38GIRVuHmGxVRLWcwJcwuYV/KQ++VVozWkWYr337I3B30WBv0G5MT622djAg4262XH9
-         ATNA==
-X-Gm-Message-State: AJIora896ljdIlO+u0zwJHsXaMQ3TptbnYBZmFxOQf8Y6A1cjACPPANg
-        9xA1tmqF5Mcibaz6pgGILFt9r/7qHILM8o4r
-X-Google-Smtp-Source: AGRyM1vi2hZilCYQjsG0akihlWrPV4k+ZAblHm9qjTGio0/wywq5oUG2kFS96pijaB5m2fCnCL/dNQ==
-X-Received: by 2002:a05:6870:2423:b0:fe:4131:6db9 with SMTP id n35-20020a056870242300b000fe41316db9mr3125998oap.75.1659163335299;
-        Fri, 29 Jul 2022 23:42:15 -0700 (PDT)
-Received: from [192.168.11.16] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id a8-20020a056870618800b0010c727a3c79sm1795479oah.26.2022.07.29.23.42.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Jul 2022 23:42:14 -0700 (PDT)
-Message-ID: <493c140d-9519-fcff-7d8d-515c0aec7aea@kali.org>
-Date:   Sat, 30 Jul 2022 01:42:13 -0500
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=HaIkTEML2/Uw1dJQ6HkKFPAniOMQ8pl6JjcKhaa8iHY=;
+        b=Us3UT98le1LpkgcRpZGdf7o6ZVPbqh1/9ERg/AOu0TUodgFiv+r1+E9sRO7KG1tYRt
+         U2i9v4XsgAYn6Faft+X5hZ+3076YymauazfLQemVJFGsIF35bJj0rUGeoa0ZHCogHSPO
+         BAaZJKQlgxRddicP1EGK6oJ+SeSXYAavc96HJPKMVby4K6ePMXTp+mQvGz4N2Hvg9fnj
+         PTOr/nhjEpEV5Kjg9aLk0m5pp4xHyQ1XD7iAsBh+bPd8irYqj1lzy1CLhP/78dJLf+Zo
+         e+nqpTRrCtzWJ1eSHE2RsnCLm7Wbn6o7IdqQ0IPSBJejrdNcrn5DJiDq4DjHfciA4zxE
+         0OXA==
+X-Gm-Message-State: ACgBeo2etpj0mkt1PR4hkLxS0P2CVcfAtXFzFzc+RnTrkfy4+DXbfu0P
+        73JoJoLI3sr1/RYdYg27dbg=
+X-Google-Smtp-Source: AA6agR5/EZ8OQLb69UR35/gl3wbRuRTOuclXZVF3uz0YS4Rt8UUYAFw8Muk3IUawfrEG2/5YUwEnlA==
+X-Received: by 2002:a17:906:98c8:b0:730:4fbd:1624 with SMTP id zd8-20020a17090698c800b007304fbd1624mr800985ejb.612.1659168784282;
+        Sat, 30 Jul 2022 01:13:04 -0700 (PDT)
+Received: from ainazi.fritz.box (p200300d09725550031ca3b9b629d79a8.dip0.t-ipconnect.de. [2003:d0:9725:5500:31ca:3b9b:629d:79a8])
+        by smtp.gmail.com with ESMTPSA id s10-20020aa7c54a000000b0043d1eff72b3sm2199955edr.74.2022.07.30.01.13.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 30 Jul 2022 01:13:03 -0700 (PDT)
+From:   Shinjo Park <peremen@gmail.com>
+Cc:     peremen@gmail.com, David Heidelberg <david@ixit.cz>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/3] ARM: dts: qcom: msm8960: change the device node of sleep_clk
+Date:   Sat, 30 Jul 2022 10:12:32 +0200
+Message-Id: <20220730081232.14181-1-peremen@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <f0a4790d-7739-3bc5-b877-2dacbdb5158b@somainline.org>
+References: <f0a4790d-7739-3bc5-b877-2dacbdb5158b@somainline.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.11.0
-Subject: Re: [PATCH] remoteproc: qcom_q6v5_pas: Do not fail if regulators are
- not found
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Abel Vesa <abel.vesa@linaro.org>
-References: <20220730062834.12780-1-manivannan.sadhasivam@linaro.org>
-From:   Steev Klimaszewski <steev@kali.org>
-In-Reply-To: <20220730062834.12780-1-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Change the device node of sleep_clk to sleep-clk, and add a label. This
+follows the similar convention as qcom-apq8064.dtsi.
 
-On 7/30/22 1:28 AM, Manivannan Sadhasivam wrote:
-> devm_regulator_get_optional() API will return -ENODEV if the regulator was
-> not found. For the optional supplies CX, PX we should not fail in that case
-> but rather continue. So let's catch that error and continue silently if
-> those regulators are not found.
->
-> The commit 3f52d118f992 ("remoteproc: qcom_q6v5_pas: Deal silently with
-> optional px and cx regulators") was supposed to do the same but it missed
-> the fact that devm_regulator_get_optional() API returns -ENODEV when the
-> regulator was not found.
->
-> Cc: Abel Vesa <abel.vesa@linaro.org>
-> Fixes: 3f52d118f992 ("remoteproc: qcom_q6v5_pas: Deal silently with optional px and cx regulators")
-> Reported-by: Steev Klimaszewski <steev@kali.org>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->   drivers/remoteproc/qcom_q6v5_pas.c | 18 +++++++++++++++---
->   1 file changed, 15 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-> index 98f133f9bb60..5bf69ef53819 100644
-> --- a/drivers/remoteproc/qcom_q6v5_pas.c
-> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-> @@ -362,12 +362,24 @@ static int adsp_init_clock(struct qcom_adsp *adsp)
->   static int adsp_init_regulator(struct qcom_adsp *adsp)
->   {
->   	adsp->cx_supply = devm_regulator_get_optional(adsp->dev, "cx");
-> -	if (IS_ERR(adsp->cx_supply))
-> -		return PTR_ERR(adsp->cx_supply);
-> +	if (IS_ERR(adsp->cx_supply)) {
-> +		/* Do not fail if the regulator is not found */
-> +		if (PTR_ERR(adsp->cx_supply) == -ENODEV)
-> +			adsp->cx_supply = NULL;
-> +		else
-> +			return PTR_ERR(adsp->cx_supply);
-> +	}
->   
-> -	regulator_set_load(adsp->cx_supply, 100000);
-> +	if (adsp->cx_supply)
-> +		regulator_set_load(adsp->cx_supply, 100000);
->   
->   	adsp->px_supply = devm_regulator_get_optional(adsp->dev, "px");
-> +	if (IS_ERR(adsp->px_supply)) {
-> +		/* Do not fail if the regulator is not found */
-> +		if (PTR_ERR(adsp->px_supply) == -ENODEV)
-> +			adsp->px_supply = NULL;
-> +	}
-> +
->   	return PTR_ERR_OR_ZERO(adsp->px_supply);
->   }
->   
+Signed-off-by: Shinjo Park <peremen@gmail.com>
+Reviewed-by: David Heidelberg <david@ixit.cz>
+---
 
-Tested on the Lenovo Thinkpad X13s
+v2:
+ - Rewrite commit message
+ - Rename device node to not contain underscore
 
-Tested-by: Steev Klimaszewski <steev@kali.org>
+ arch/arm/boot/dts/qcom-msm8960.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom-msm8960.dtsi
+index e8cd1c9c0924..e1f010c9643e 100644
+--- a/arch/arm/boot/dts/qcom-msm8960.dtsi
++++ b/arch/arm/boot/dts/qcom-msm8960.dtsi
+@@ -71,7 +71,7 @@ pxo_board: pxo_board {
+ 			clock-output-names = "pxo_board";
+ 		};
+ 
+-		sleep_clk {
++		sleep_clk: sleep-clk {
+ 			compatible = "fixed-clock";
+ 			#clock-cells = <0>;
+ 			clock-frequency = <32768>;
+-- 
+2.34.1
 
