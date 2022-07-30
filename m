@@ -2,106 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36EA1585918
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Jul 2022 10:15:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2BFB58596D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Jul 2022 11:18:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229599AbiG3IPs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Jul 2022 04:15:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41788 "EHLO
+        id S233462AbiG3JSN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Jul 2022 05:18:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbiG3IPr (ORCPT
+        with ESMTP id S232154AbiG3JSM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Jul 2022 04:15:47 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94D8931204;
-        Sat, 30 Jul 2022 01:15:45 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id r4so484476edi.8;
-        Sat, 30 Jul 2022 01:15:45 -0700 (PDT)
+        Sat, 30 Jul 2022 05:18:12 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A714F40BD5;
+        Sat, 30 Jul 2022 02:18:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=DDKdfvPOf+QF5S75zEZ60inDKg0zQa4zxUMz/3qhhjw=;
-        b=DNtXLewhpCPQLRrV9vJP88Wd/gtXOmm1g4F0jz/hX6gcANzNKy9dwk3dSCHzvR+W57
-         FypKwlCO3pVgSJz7VYrEZPrau8uTKFrCbpxmHeKVk43fpGXFQQVR0aSRmKIieq6rd+JX
-         Bej6a8Gxht2dRKBI/CNaSUrIzG80adNH4O0yzfDU/7Y9e8rI4hJwQstUA1i5wJ8Oqk1q
-         Po9znxzhjgczBk5ZXfHdq2o+bYsBFy76e8bzcRWoN/SQMk5HXJQm7qFsJ0JLn88w4dRA
-         vqEaG76jkYFpqu7uKxdozerZxLqG05wGZ0vCc2Harb06XlH3sD47fLHbUvxKQPdGgEty
-         n4ZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=DDKdfvPOf+QF5S75zEZ60inDKg0zQa4zxUMz/3qhhjw=;
-        b=WX5UMGxfdka7Q+HX0gttIX47//HzuGcbGbZxORoogGms9xSY2CORUN++vX9ZLrGv10
-         6GQUCswPOv1wxr86rb2euY74sc/YaISPlIdet6uTPPJHimbwSR0gWvddupTa0zgzGRZI
-         FcySQKRb7HAZkL16e2IVNHp/zCtGmJBXj+hgIizctaCza7UcGwzKAAUO8QSh39hilMLv
-         B5i9UjejWqpdN2Z4/DPL0ek6z+X3AgPAzecuX794oMO0t6YzMDZHgdczHiFKi5JRR/ql
-         nN+LuLCL8Ea1t+6h9FUECMkUlra3N4bhOebau5hdYvnib7yksS9XcY+gOcErn2Phn4Jn
-         95WQ==
-X-Gm-Message-State: AJIora97hW3icuFDKTSgr61Lcc5jyvuz8HuzcgjTbtpIQivJZEhGGSBd
-        oPnRRtMlQUzvbhsPuLvwMe4=
-X-Google-Smtp-Source: AGRyM1uTyvrUCgI2ZHsKNbsaTwkFs3WZ8T8oiv1D4riyc+QhF01hJpWu5BF/4iTsm1VaMtQSxJbZ4A==
-X-Received: by 2002:aa7:cd84:0:b0:43c:532b:65e9 with SMTP id x4-20020aa7cd84000000b0043c532b65e9mr7245047edv.330.1659168944114;
-        Sat, 30 Jul 2022 01:15:44 -0700 (PDT)
-Received: from ainazi.fritz.box (p200300d09725550031ca3b9b629d79a8.dip0.t-ipconnect.de. [2003:d0:9725:5500:31ca:3b9b:629d:79a8])
-        by smtp.gmail.com with ESMTPSA id zo6-20020a170906ff4600b006feed200464sm2623673ejb.131.2022.07.30.01.15.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Jul 2022 01:15:43 -0700 (PDT)
-From:   Shinjo Park <peremen@gmail.com>
-Cc:     peremen@gmail.com, David Heidelberg <david@ixit.cz>,
-        Andy Gross <agross@kernel.org>,
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1659172690; x=1690708690;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=9DS4bJLebw1lBvzzjml/GDCUoVQ6Slpznv0XDbK9ev4=;
+  b=YlxCfbAXSbgg/M7bAPTE7Hxu+MnMRHSbVXN/DDYs6BPT1lV3CoF8Hlzv
+   FSKlcCGjsWaUa3vyeMbklLAEO2eXDV1W65Z/SjYg62WJBthEUekjn3m71
+   JiC3XI5wBaGZTmeWuilMM+d8IwhlCFpQlyrodpFL/G9nug0B+4Qq8g/8o
+   U=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 30 Jul 2022 02:18:10 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jul 2022 02:18:09 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Sat, 30 Jul 2022 02:18:09 -0700
+Received: from hyd-lnxbld559.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Sat, 30 Jul 2022 02:18:03 -0700
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+To:     freedreno <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Stephen Boyd" <swboyd@chromium.org>
+CC:     Douglas Anderson <dianders@chromium.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 3/3] dt-bindings: phy: qcom,usb-hs-phy: add definition for MSM8960
-Date:   Sat, 30 Jul 2022 10:15:36 +0200
-Message-Id: <20220730081536.14511-1-peremen@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <84923720-30a6-1a49-48f6-96e078a46743@linaro.org>
-References: <84923720-30a6-1a49-48f6-96e078a46743@linaro.org>
+        Michael Turquette <mturquette@baylibre.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH 0/5] clk/qcom: Support gdsc collapse polling using 'reset' inteface
+Date:   Sat, 30 Jul 2022 14:47:39 +0530
+Message-ID: <1659172664-10345-1-git-send-email-quic_akhilpo@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the changes introduced by MSM8960 inclusion.
 
-Signed-off-by: Shinjo Park <peremen@gmail.com>
-Reviewed-by: David Heidelberg <david@ixit.cz>
----
+Some clients like adreno gpu driver would like to ensure that its gdsc
+is collapsed at hardware during a gpu reset sequence. This is because it
+has a votable gdsc which could be ON due to a vote from another subsystem
+like tz, hyp etc or due to an internal hardware signal. To allow
+this, gpucc driver can expose an interface to the client driver using
+reset framework. Using this the client driver can trigger a polling within
+the gdsc driver.
 
-v2:
- - Rewrite commit message (subject prefix)
+This series is rebased on top of linus's master branch.
 
- Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml | 1 +
- 1 file changed, 1 insertion(+)
+Related discussion: https://patchwork.freedesktop.org/patch/493144/
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-index 0655e485b260..b3075c5ab887 100644
---- a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-@@ -40,6 +40,7 @@ properties:
-           - qcom,usb-hs-phy-apq8064
-           - qcom,usb-hs-phy-msm8226
-           - qcom,usb-hs-phy-msm8916
-+          - qcom,usb-hs-phy-msm8960
-           - qcom,usb-hs-phy-msm8974
-       - const: qcom,usb-hs-phy
- 
+
+Akhil P Oommen (5):
+  dt-bindings: clk: qcom: Support gpu cx gdsc reset
+  clk: qcom: Allow custom reset ops
+  clk: qcom: gpucc-sc7280: Add cx collapse reset support
+  clk: qcom: gdsc: Add a reset op to poll gdsc collapse
+  arm64: dts: qcom: sc7280: Add Reset support for gpu
+
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          |  3 +++
+ drivers/clk/qcom/gdsc.c                       | 23 +++++++++++++++++++----
+ drivers/clk/qcom/gdsc.h                       |  7 +++++++
+ drivers/clk/qcom/gpucc-sc7280.c               |  6 ++++++
+ drivers/clk/qcom/reset.c                      |  6 ++++++
+ drivers/clk/qcom/reset.h                      |  2 ++
+ include/dt-bindings/clock/qcom,gpucc-sc7280.h |  3 +++
+ 7 files changed, 46 insertions(+), 4 deletions(-)
+
 -- 
-2.34.1
+2.7.4
 
