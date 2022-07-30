@@ -2,66 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 51E475858D9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Jul 2022 08:28:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0F825858E2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Jul 2022 08:42:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229810AbiG3G2n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Jul 2022 02:28:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42244 "EHLO
+        id S229884AbiG3GmZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Jul 2022 02:42:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229592AbiG3G2m (ORCPT
+        with ESMTP id S231591AbiG3GmS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Jul 2022 02:28:42 -0400
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F7833AB0F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jul 2022 23:28:41 -0700 (PDT)
-Received: by mail-pg1-x533.google.com with SMTP id e132so5551385pgc.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jul 2022 23:28:41 -0700 (PDT)
+        Sat, 30 Jul 2022 02:42:18 -0400
+Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA06BBC99
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jul 2022 23:42:17 -0700 (PDT)
+Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-10d845dcf92so8088296fac.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Jul 2022 23:42:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=NBtAUHxEkbLQP6foKwTQY2d8N45LtYBpNH+jNTy2rT0=;
-        b=ftDfOLtF5dYlXoV+nV3RwlWyLog+0N7Rnci7XB76q60CevBbllQFUwQagNrP/xnkHY
-         3ShC913lwHgnvm+h/HcMe39Y1eHa3GH5A0v416auJczxoF88AmeMdKBYX/bDz6CC7Wgu
-         IFJJ29sa02bEoYeVPAF77+WtL8wU6QijnIoIYEqIaq/XWer0KXcLv0dTFHzAyXc/AcxI
-         7Xwh7QrSwPTtgXs0z3woVTxLIC2gbfsoVBFc9dnV1HsyInHv50K5ZGDfG859pgI5eEOv
-         WfFbyLeTse+fSlBubjJtdWSwkJL5rnWs2OElLqg24KhKxDEILofbDZ9SmdK2SyVNZwEU
-         DSbA==
+        d=kali.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=kGbqPhsH1tDcPg2Vq6m+ND6aUIHu4Sx5KaDC6bxw6ds=;
+        b=AbqzqYwzUd3P2RzKqvwRNjvU/aPH14MhZzb9Lk/efwPepaOq6YWmrYlUQyggV3dLxf
+         +fg/3YxqD8OQdus7+Z9I7JSB8mr6032AhBQDVUKh22IotcrjVG3mNjXmpYuLH3e/JU8x
+         1e7ifbKSzRZ6wUA/TTOOn1hen8bgNI87H0r/MkoUJut7aH4F1w+glKKrZ7ZDYw7aMpAQ
+         o3+zPEs7GLbkE/wgxFCe2npwLGTlIUU+UKAPdQ3yoGRMkWqrplXYb+yVEc6dbdaCLlIs
+         43yLsDcSUHu+aGZ2fedHiGmhBJA9PWI4+Rrh/3ENKMqZLZk4RFHuJMLdqFjRuMyT47PF
+         +3ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=NBtAUHxEkbLQP6foKwTQY2d8N45LtYBpNH+jNTy2rT0=;
-        b=A7nHUzlQcwLFBm1/71Gd5aY4JtUQrs8aELKBzNLeqGiLGOWQN8sc5RsQAzmBCQWF/W
-         bRACjYifv3rUajVxhO6AqqM6kPFncG5sOpDmWNnAgsnoQUeMUio+09oMHnm3SHfS3tY3
-         O8dvYhlzBgWiJRoDm+CiF0kbK3mRAjObgXv0CWFsJYLg0YJ97w+W0uF52l64voaiPj08
-         V9yohYSP19zkWHv8/Y9jsURv1e93KEVGwhC3vQZeGjukPTBRdsU9LiI3XOHfVCtbHPzN
-         l5XSl3j+LhXJwowbXvpGYwc3gPDgB9CIsYVxr/VGXMq7BqN5k7Fy03BXEuws149TAzYd
-         WYXw==
-X-Gm-Message-State: AJIora/fZyEm4HAnnHmrrEONmjeYmo35D+rcyAEfCyBr6IIEswIxgBlB
-        xseYMRv1pVt4H7gG847ekWoO
-X-Google-Smtp-Source: AGRyM1vvhv50fwHTEcJcUvt5rOZDM4ZAjZeToLNo+fLNjKzzstnbl5thtYVIsCWmoML4Mw7fIeZYiQ==
-X-Received: by 2002:a63:db09:0:b0:41b:6744:a255 with SMTP id e9-20020a63db09000000b0041b6744a255mr5569054pgg.556.1659162520557;
-        Fri, 29 Jul 2022 23:28:40 -0700 (PDT)
-Received: from localhost.localdomain ([220.158.158.170])
-        by smtp.gmail.com with ESMTPSA id k15-20020aa7998f000000b0052592a8ef62sm3982554pfh.110.2022.07.29.23.28.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Jul 2022 23:28:40 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>
-Subject: [PATCH] remoteproc: qcom_q6v5_pas: Do not fail if regulators are not found
-Date:   Sat, 30 Jul 2022 11:58:34 +0530
-Message-Id: <20220730062834.12780-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        bh=kGbqPhsH1tDcPg2Vq6m+ND6aUIHu4Sx5KaDC6bxw6ds=;
+        b=HNt4UVK88Y5vVI27rrDM85QEMoE5jA3eaRaTUMjjVmtBc5zsArkwvGG7B9voqAR8vv
+         ENNqlPbt28VWNe/+lpd/PBOP/jTNemtOiOK3yR4OTwv0I1uEYRA8Lk99TvTu9GWaq99T
+         0MHkyhnuFmXmDOogVkeYhp71uHTLYbnTb6N92xFppnSYI4La7SjU4q9/977RjndNaPDI
+         DTFuWaevw+TUTIjFAj7rTRexCd+jFSypGQC2XVOvW1Hx4q8Z9VkpibUPTkNpfZ5pTtlq
+         u38GIRVuHmGxVRLWcwJcwuYV/KQ++VVozWkWYr337I3B30WBv0G5MT622djAg4262XH9
+         ATNA==
+X-Gm-Message-State: AJIora896ljdIlO+u0zwJHsXaMQ3TptbnYBZmFxOQf8Y6A1cjACPPANg
+        9xA1tmqF5Mcibaz6pgGILFt9r/7qHILM8o4r
+X-Google-Smtp-Source: AGRyM1vi2hZilCYQjsG0akihlWrPV4k+ZAblHm9qjTGio0/wywq5oUG2kFS96pijaB5m2fCnCL/dNQ==
+X-Received: by 2002:a05:6870:2423:b0:fe:4131:6db9 with SMTP id n35-20020a056870242300b000fe41316db9mr3125998oap.75.1659163335299;
+        Fri, 29 Jul 2022 23:42:15 -0700 (PDT)
+Received: from [192.168.11.16] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
+        by smtp.gmail.com with ESMTPSA id a8-20020a056870618800b0010c727a3c79sm1795479oah.26.2022.07.29.23.42.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Jul 2022 23:42:14 -0700 (PDT)
+Message-ID: <493c140d-9519-fcff-7d8d-515c0aec7aea@kali.org>
+Date:   Sat, 30 Jul 2022 01:42:13 -0500
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.11.0
+Subject: Re: [PATCH] remoteproc: qcom_q6v5_pas: Do not fail if regulators are
+ not found
+Content-Language: en-US
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Abel Vesa <abel.vesa@linaro.org>
+References: <20220730062834.12780-1-manivannan.sadhasivam@linaro.org>
+From:   Steev Klimaszewski <steev@kali.org>
+In-Reply-To: <20220730062834.12780-1-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -70,56 +76,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-devm_regulator_get_optional() API will return -ENODEV if the regulator was
-not found. For the optional supplies CX, PX we should not fail in that case
-but rather continue. So let's catch that error and continue silently if
-those regulators are not found.
 
-The commit 3f52d118f992 ("remoteproc: qcom_q6v5_pas: Deal silently with
-optional px and cx regulators") was supposed to do the same but it missed
-the fact that devm_regulator_get_optional() API returns -ENODEV when the
-regulator was not found.
+On 7/30/22 1:28 AM, Manivannan Sadhasivam wrote:
+> devm_regulator_get_optional() API will return -ENODEV if the regulator was
+> not found. For the optional supplies CX, PX we should not fail in that case
+> but rather continue. So let's catch that error and continue silently if
+> those regulators are not found.
+>
+> The commit 3f52d118f992 ("remoteproc: qcom_q6v5_pas: Deal silently with
+> optional px and cx regulators") was supposed to do the same but it missed
+> the fact that devm_regulator_get_optional() API returns -ENODEV when the
+> regulator was not found.
+>
+> Cc: Abel Vesa <abel.vesa@linaro.org>
+> Fixes: 3f52d118f992 ("remoteproc: qcom_q6v5_pas: Deal silently with optional px and cx regulators")
+> Reported-by: Steev Klimaszewski <steev@kali.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>   drivers/remoteproc/qcom_q6v5_pas.c | 18 +++++++++++++++---
+>   1 file changed, 15 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+> index 98f133f9bb60..5bf69ef53819 100644
+> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> @@ -362,12 +362,24 @@ static int adsp_init_clock(struct qcom_adsp *adsp)
+>   static int adsp_init_regulator(struct qcom_adsp *adsp)
+>   {
+>   	adsp->cx_supply = devm_regulator_get_optional(adsp->dev, "cx");
+> -	if (IS_ERR(adsp->cx_supply))
+> -		return PTR_ERR(adsp->cx_supply);
+> +	if (IS_ERR(adsp->cx_supply)) {
+> +		/* Do not fail if the regulator is not found */
+> +		if (PTR_ERR(adsp->cx_supply) == -ENODEV)
+> +			adsp->cx_supply = NULL;
+> +		else
+> +			return PTR_ERR(adsp->cx_supply);
+> +	}
+>   
+> -	regulator_set_load(adsp->cx_supply, 100000);
+> +	if (adsp->cx_supply)
+> +		regulator_set_load(adsp->cx_supply, 100000);
+>   
+>   	adsp->px_supply = devm_regulator_get_optional(adsp->dev, "px");
+> +	if (IS_ERR(adsp->px_supply)) {
+> +		/* Do not fail if the regulator is not found */
+> +		if (PTR_ERR(adsp->px_supply) == -ENODEV)
+> +			adsp->px_supply = NULL;
+> +	}
+> +
+>   	return PTR_ERR_OR_ZERO(adsp->px_supply);
+>   }
+>   
 
-Cc: Abel Vesa <abel.vesa@linaro.org>
-Fixes: 3f52d118f992 ("remoteproc: qcom_q6v5_pas: Deal silently with optional px and cx regulators")
-Reported-by: Steev Klimaszewski <steev@kali.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/remoteproc/qcom_q6v5_pas.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+Tested on the Lenovo Thinkpad X13s
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 98f133f9bb60..5bf69ef53819 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -362,12 +362,24 @@ static int adsp_init_clock(struct qcom_adsp *adsp)
- static int adsp_init_regulator(struct qcom_adsp *adsp)
- {
- 	adsp->cx_supply = devm_regulator_get_optional(adsp->dev, "cx");
--	if (IS_ERR(adsp->cx_supply))
--		return PTR_ERR(adsp->cx_supply);
-+	if (IS_ERR(adsp->cx_supply)) {
-+		/* Do not fail if the regulator is not found */
-+		if (PTR_ERR(adsp->cx_supply) == -ENODEV)
-+			adsp->cx_supply = NULL;
-+		else
-+			return PTR_ERR(adsp->cx_supply);
-+	}
- 
--	regulator_set_load(adsp->cx_supply, 100000);
-+	if (adsp->cx_supply)
-+		regulator_set_load(adsp->cx_supply, 100000);
- 
- 	adsp->px_supply = devm_regulator_get_optional(adsp->dev, "px");
-+	if (IS_ERR(adsp->px_supply)) {
-+		/* Do not fail if the regulator is not found */
-+		if (PTR_ERR(adsp->px_supply) == -ENODEV)
-+			adsp->px_supply = NULL;
-+	}
-+
- 	return PTR_ERR_OR_ZERO(adsp->px_supply);
- }
- 
--- 
-2.25.1
+Tested-by: Steev Klimaszewski <steev@kali.org>
 
