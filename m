@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E162B585FA1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Jul 2022 17:56:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 32741585FC3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Jul 2022 18:21:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237408AbiGaPzk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 31 Jul 2022 11:55:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49402 "EHLO
+        id S235773AbiGaQVn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 31 Jul 2022 12:21:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231197AbiGaPzi (ORCPT
+        with ESMTP id S231197AbiGaQVm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 31 Jul 2022 11:55:38 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B11332DD0;
-        Sun, 31 Jul 2022 08:55:37 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id a13so9828564ljr.11;
-        Sun, 31 Jul 2022 08:55:37 -0700 (PDT)
+        Sun, 31 Jul 2022 12:21:42 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59BE6DEED;
+        Sun, 31 Jul 2022 09:21:41 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id w15so789800ljw.1;
+        Sun, 31 Jul 2022 09:21:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc;
-        bh=68Zx22+TjRH5OHp9EnI3pIbkka2i60cLP3LWWH0Sg2c=;
-        b=l4ePCz6FDfhhsEligq+HCm18CCMTok5xTCZQrrReX+ZUYOwvUZ4V0a/dDVfwv8HYxd
-         /bImxtpWsNTq8qbNBixq02QRsJJ6LksbA4tisVmDpvog88oFpgiT5+WqX0p1OT4B13wW
-         euy5B0EbzYZ1uwfojBRqrfQ9n4HFuMzHp1WpjTtnkfBZTmPx9gh2bk8H/wsng87q0e2X
-         +ZVBIm0aBA4W/3iyj+c+JzexOzICAzVgJjPpfkLgG/zzd4KU0Qz6KqF60zu2p7/DuRpj
-         zC2Sio8thj0xrIiOXLfcbD2MMZKmxoIn9JY079p+r7wWA/bOwVnmsHIeOmHykRp3jQwD
-         ktdQ==
+        bh=1dGgr0VFGhtLTw2WM/wkztVN6+uje12KM3x5Hxm7DpY=;
+        b=i1jAsSiXu3PQvri9Z/MuZh+vK5x12l8cIaezT5HNPS1Vviev0rbKRxjkkZ/EYJ8dcL
+         iA9lw0FsFxdqyITig7Ec0qyXRWHo501j0vBocGeijZhsUQ8V79q5lWJxXgvEohqHkCYs
+         HRIVOAYKs2ZIjBBLle2wIQl3yRT9hdAV1k1m/4qxqCx6DX2H8+iC92PQRXBRXKKPoPwj
+         rEuLISo8Mingm2dpOZ6QpBbRdMgOZmoujhhYj5z2KnLBIbkMLEk4OgV2K8QeDb93a4Ss
+         vBrcqcKn0QvaVOAS87nc4wWY3wYAiA2dhhFgLsd+d/F7FH6NMAFSQoQ2YAP6M0n0Yy+0
+         qnIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc;
-        bh=68Zx22+TjRH5OHp9EnI3pIbkka2i60cLP3LWWH0Sg2c=;
-        b=0CpAW3nzQFCDgzE5eM43lF91GhfRjV1yTXHW5XW/56NKClSKASTSyar9/KJPRyRqhP
-         yddrzVofSgjnidrFpeW3uoxS6yGirGg+UVLFMHi9H/6wna4R8gY5B9wyflyxLxL/oDwX
-         aC11FBc46OwSqP2HmCBF50stIE22vRmdQ3ueCnA5WicjBwk/xMu9Bqp8kRjrYe05jfju
-         lm933ixENo7hb8/cZARO9BtQz/2xEMlkwjpiJcBJn/EqPfSAgh1d0rTGd6Y8SLTJYLyn
-         v2B5SSbeWgZS5xY4kjp7B+MjE33LamekGzof93H92RnAxFEKZcPZHs21LsllUT/Muy5y
-         EhGg==
-X-Gm-Message-State: AJIora83R3ZgIeLe2xX2lXh/yVVfdR35VLuPcpjzbcyNjaZhD8SlOOmH
-        YXJ7lxZpIpkcTGP33IptgB1n6QQAYHfirVsg33E=
-X-Google-Smtp-Source: AGRyM1szAzmxnPmFhMRNyZADWHCi2VJJLy5Mh1bVtJZaNZezIoH1ssQqGJ/HU3W8IgAwtruD9Uu7zTw5d+b2DOEHpPs=
+        bh=1dGgr0VFGhtLTw2WM/wkztVN6+uje12KM3x5Hxm7DpY=;
+        b=7pvwYdOxKHGlknxMVKd9dvEq+HUBaGazRFRMp1gnkdj/DisZ4cJ5f3wDTmwfW/ApAE
+         4K6pfUNc33CT/ulQUWYYOnW8J8vWT2mdS7LAGEcgaEeYhrkRml+qvWAKjx4pSFYdhcyR
+         fCnkcHTqCEZV8mRCu+3fVsc9J+uqB3cIYWGmIAyc0EqFvLxz2WaC9QDojiY8MXiL2F89
+         rWpSODcA3saZDMqRynFRirOLLo5PMHk8TaR2CCTXFvilJpOW7T18UK4Rm+pMNRaN7RgC
+         jV24OZi4jHhuIiC6Eq2yXtK70Wb6usjmDTXxcp772s9wzOvFw8dMla2bC9/V4qpzKEHi
+         BI+A==
+X-Gm-Message-State: AJIora81pfALrPnBTh/6rbk3z9LgjQ6oh1BoH/uwGd4Uur+qsI6sxKgr
+        GCNj0lutJxvVBHUDlhZSJ0JKhUcCdMAT+H6nXskPtQq7
+X-Google-Smtp-Source: AGRyM1v+yPpDbh2c87EFdbeSWze9wULevLuMgW2bBkxqcwF4j94LzukBIAA/N/t/dIwMG5UY2tNq8LtBbuUZEo5uFEk=
 X-Received: by 2002:a05:651c:1993:b0:25e:2766:924 with SMTP id
- bx19-20020a05651c199300b0025e27660924mr4318545ljb.231.1659282935860; Sun, 31
- Jul 2022 08:55:35 -0700 (PDT)
+ bx19-20020a05651c199300b0025e27660924mr4343788ljb.231.1659284499650; Sun, 31
+ Jul 2022 09:21:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <1659174051-27816-1-git-send-email-quic_akhilpo@quicinc.com> <20220730150952.v3.2.Ifee853f6d8217a0fdacc459092bbc9e81a8a7ac7@changeid>
-In-Reply-To: <20220730150952.v3.2.Ifee853f6d8217a0fdacc459092bbc9e81a8a7ac7@changeid>
+References: <1659174051-27816-1-git-send-email-quic_akhilpo@quicinc.com> <20220730150952.v3.4.I4ac27a0b34ea796ce0f938bb509e257516bc6f57@changeid>
+In-Reply-To: <20220730150952.v3.4.I4ac27a0b34ea796ce0f938bb509e257516bc6f57@changeid>
 From:   Rob Clark <robdclark@gmail.com>
-Date:   Sun, 31 Jul 2022 08:56:01 -0700
-Message-ID: <CAF6AEGs7zKDoRY=ijxFQvaZig=UiSPgWkJFA-PY2MTxKWr5bpw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/8] drm/msm: Take single rpm refcount on behalf of all submits
+Date:   Sun, 31 Jul 2022 09:22:04 -0700
+Message-ID: <CAF6AEGuqptUzOtcjG+oA4BQha3Jk-UzDK-8SF_8v5A+8Dg71uQ@mail.gmail.com>
+Subject: Re: [PATCH v3 4/8] drm/msm: Fix cx collapse issue during recovery
 To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
 Cc:     freedreno <freedreno@lists.freedesktop.org>,
         dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
@@ -61,10 +61,12 @@ Cc:     freedreno <freedreno@lists.freedesktop.org>,
         Douglas Anderson <dianders@chromium.org>,
         Matthias Kaehlcke <mka@chromium.org>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
         David Airlie <airlied@linux.ie>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, linux-kernel@vger.kernel.org
+        Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
@@ -78,65 +80,109 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Sat, Jul 30, 2022 at 2:41 AM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
 >
-> Instead of separate refcount for each submit, take single rpm refcount
-> on behalf of all the submits. This makes it easier to drop the rpm
-> refcount during recovery in an upcoming patch.
+> There are some hardware logic under CX domain. For a successful
+> recovery, we should ensure cx headswitch collapses to ensure all the
+> stale states are cleard out. This is especially true to for a6xx family
+> where we can GMU co-processor.
+>
+> Currently, cx doesn't collapse due to a devlink between gpu and its
+> smmu. So the *struct gpu device* needs to be runtime suspended to ensure
+> that the iommu driver removes its vote on cx gdsc.
 >
 > Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
 > ---
 >
-> (no changes since v1)
-
-I see no earlier version of this patch?
-
+> Changes in v3:
+> - Simplied the pm refcount drop since we have just a single refcount now
+> for all active submits
 >
->  drivers/gpu/drm/msm/msm_gpu.c | 12 ++++++++----
->  1 file changed, 8 insertions(+), 4 deletions(-)
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 24 +++++++++++++++++++++---
+>  drivers/gpu/drm/msm/msm_gpu.c         |  4 +---
+>  2 files changed, 22 insertions(+), 6 deletions(-)
 >
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 42ed9a3..1b049c5 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -1193,7 +1193,7 @@ static void a6xx_recover(struct msm_gpu *gpu)
+>  {
+>         struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+>         struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+> -       int i;
+> +       int i, active_submits;
+>
+>         adreno_dump_info(gpu);
+>
+> @@ -1210,8 +1210,26 @@ static void a6xx_recover(struct msm_gpu *gpu)
+>          */
+>         gmu_write(&a6xx_gpu->gmu, REG_A6XX_GMU_GMU_PWR_COL_KEEPALIVE, 0);
+>
+> -       gpu->funcs->pm_suspend(gpu);
+> -       gpu->funcs->pm_resume(gpu);
+> +       pm_runtime_dont_use_autosuspend(&gpu->pdev->dev);
+> +
+> +       /* active_submit won't change until we make a submission */
+> +       mutex_lock(&gpu->active_lock);
+> +       active_submits = gpu->active_submits;
+> +       mutex_unlock(&gpu->active_lock);
+> +
+> +       /* Drop the rpm refcount from active submits */
+> +       if (active_submits)
+> +               pm_runtime_put(&gpu->pdev->dev);
+
+Couldn't this race with an incoming submit triggering active_submits
+to transition 0 -> 1?  Moving the mutex_unlock() would solve this.
+
+Actually, maybe just move the mutex_unlock() to the end of the entire
+sequence.  You could also clear gpu->active_submits and restore it
+before unlocking, so you can drop the removal of the WARN_ON_ONCE
+(patch 6/8) which should otherwise be squashed into this patch to keep
+things bisectable
+
+> +
+> +       /* And the final one from recover worker */
+> +       pm_runtime_put_sync(&gpu->pdev->dev);
+> +
+> +       pm_runtime_use_autosuspend(&gpu->pdev->dev);
+> +
+> +       if (active_submits)
+> +               pm_runtime_get(&gpu->pdev->dev);
+> +
+> +       pm_runtime_get_sync(&gpu->pdev->dev);
+>
+>         msm_gpu_hw_init(gpu);
+>  }
 > diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> index c8cd9bf..e1dd3cc 100644
+> index 1945efb..07e55a6 100644
 > --- a/drivers/gpu/drm/msm/msm_gpu.c
 > +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> @@ -663,11 +663,12 @@ static void retire_submit(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
->         mutex_lock(&gpu->active_lock);
->         gpu->active_submits--;
->         WARN_ON(gpu->active_submits < 0);
-> -       if (!gpu->active_submits)
-> +       if (!gpu->active_submits) {
->                 msm_devfreq_idle(gpu);
-> -       mutex_unlock(&gpu->active_lock);
-> +               pm_runtime_put_autosuspend(&gpu->pdev->dev);
-> +       }
+> @@ -426,9 +426,7 @@ static void recover_worker(struct kthread_work *work)
+>                 /* retire completed submits, plus the one that hung: */
+>                 retire_submits(gpu);
 >
-> -       pm_runtime_put_autosuspend(&gpu->pdev->dev);
-> +       mutex_unlock(&gpu->active_lock);
->
->         msm_gem_submit_put(submit);
->  }
-> @@ -756,14 +757,17 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
->
->         /* Update devfreq on transition from idle->active: */
->         mutex_lock(&gpu->active_lock);
-> -       if (!gpu->active_submits)
-> +       if (!gpu->active_submits) {
-> +               pm_runtime_get(&gpu->pdev->dev);
->                 msm_devfreq_active(gpu);
-> +       }
->         gpu->active_submits++;
->         mutex_unlock(&gpu->active_lock);
->
->         gpu->funcs->submit(gpu, submit);
->         gpu->cur_ctx_seqno = submit->queue->ctx->seqno;
->
-> +       pm_runtime_put(&gpu->pdev->dev);
+> -               pm_runtime_get_sync(&gpu->pdev->dev);
+>                 gpu->funcs->recover(gpu);
+> -               pm_runtime_put_sync(&gpu->pdev->dev);
 
-this looks unbalanced?
+Hmm, could this have some fallout on earlier gens?
+
+I guess I should extend the igt msm_recovery test to run on things
+prior to a6xx..
 
 BR,
 -R
 
->         hangcheck_timer_reset(gpu);
->  }
+>
+>                 /*
+>                  * Replay all remaining submits starting with highest priority
+> @@ -445,7 +443,7 @@ static void recover_worker(struct kthread_work *work)
+>                 }
+>         }
+>
+> -       pm_runtime_put_sync(&gpu->pdev->dev);
+> +       pm_runtime_put(&gpu->pdev->dev);
+>
+>         mutex_unlock(&gpu->lock);
 >
 > --
 > 2.7.4
