@@ -2,70 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C3BA585DCA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Jul 2022 08:33:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 969E6585E30
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Jul 2022 10:43:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236329AbiGaGd0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 31 Jul 2022 02:33:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49474 "EHLO
+        id S236292AbiGaInc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 31 Jul 2022 04:43:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236283AbiGaGdZ (ORCPT
+        with ESMTP id S229456AbiGaInc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 31 Jul 2022 02:33:25 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6922613D72
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Jul 2022 23:33:24 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id bz13so6003832qtb.7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Jul 2022 23:33:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=zqtO3uZt9+T1koeAgCZ+PJaUEdw+iPxfmGhYKCo5TwM=;
-        b=Ag/+5X4ew7HsQZiIo+tLvovcbQAq2aTjSu7qqq/RUa34QI9RsfGAsGG6FRljWpom4a
-         KT6z+cjigdHbgoQD0spzfZ7d9LH6zjUCEqZEj0OrG+zDkbnf0TXDMF+Ox1KKaA992bx7
-         2u3qUMn+wbMr4Yzg3r5a9o7QNVD5Tdpjab8fHWajKI3R1CeMeGIfj52q1RBkKswVvGYD
-         vFluFuRAGbU7ZTuPAFsTz4l78LAiyvCe9zSo/UjD2coPNog9lD2AwkDzaJrKrYjuQ1CU
-         NrE04LxdYqRRdYdH48KbJKk6q4/RtTDU4RiJ5ROC5yvMSoccdgQMdbo1roJnKGw8jWOD
-         Apbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=zqtO3uZt9+T1koeAgCZ+PJaUEdw+iPxfmGhYKCo5TwM=;
-        b=YpG0ClbgBo3gjJ6FRiXXM5b5RNEUaG2wzuIYbLZP448ebxvIvZeg7ucrSbzYTEULlU
-         0P3+zuUnWdtINNz6ar7Fk/Um4NglRjX1iZxQOBLVpXDkkiNcMbokd8aAY48457gNLJy8
-         adYQK4UpzKMbj83DNUAIFiBYmMXQuk8wc4zIvER0JKlh6IluYfZ+cvlpIz5iGDm29+na
-         yDddwfPP7X84MBaKmofGpwiHOztpaENyojDEVH9+XwspAtNsRd1e4eKkQw1cBspQMYpD
-         RLkWj56ku+D2Wn8sVKIu5sv9aXPeENj5qo7wVs24V1t4c9mShCS6tlMm4Bx5PXRLe7dA
-         PLwA==
-X-Gm-Message-State: AJIora8htvNjFf+k8VCDATtKxanNQe9bd76KQNE/hN43rcrwEXqnhDba
-        J8kqiz2f2riEyW1aqJGt2oCDWgDdhGxZpUnYgcBVTw==
-X-Google-Smtp-Source: AGRyM1vJaZN98pwaotBoPrDzExHeTvDQ9MOGkVFjSBDgse8wpdKHRj/YPfCrExbsbO6l4OLVjwtUFyhtRvxFQ7Oyado=
-X-Received: by 2002:a05:622a:451:b0:31f:4257:4eb2 with SMTP id
- o17-20020a05622a045100b0031f42574eb2mr9507979qtx.370.1659249203596; Sat, 30
- Jul 2022 23:33:23 -0700 (PDT)
+        Sun, 31 Jul 2022 04:43:32 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74F6312632;
+        Sun, 31 Jul 2022 01:43:31 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 29B42B80CE4;
+        Sun, 31 Jul 2022 08:43:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD881C433D6;
+        Sun, 31 Jul 2022 08:43:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1659257008;
+        bh=iHmeSLolgWMCdbdbeCxvGWbO1LZfF2j0Uq3ba5TK07A=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=fVomZ5uhxxcT2aYHpDRvNLs8UeURpEPQUEuBd+pEKdwmcLEdt/t7KD1+Bc09VMYiP
+         oArqm5zhw+sorUS69UgAk7yFBVX1+I1ayMEjIZvwl6Zz2nQEVdS5s5kOvcTJYNwJAB
+         bpXr/I2nC1CuEwQAcnMWIpZh2y+0kaHek8qx5GBlqCPQJO3EY7cWk9WtGt3rVPNkrJ
+         Nf+aZytU/WKnBzLkZZBw9CTubGUW95e2d/LEllAVH+P18YlpHgkGqh0C53zxh1vqLR
+         smsnyeJapvJe/647irHnTz5wKaImXtPsjZoM0QpV/dFLYkbrkKWRD5BDKsE7tT4uyZ
+         YH/HriTokiB+Q==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oI4Y1-000343-UA; Sun, 31 Jul 2022 10:43:42 +0200
+Date:   Sun, 31 Jul 2022 10:43:41 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>
+Subject: Re: [PATCH] remoteproc: qcom_q6v5_pas: Do not fail if regulators are
+ not found
+Message-ID: <YuZAvX13W9Qip7Ja@hovoldconsulting.com>
+References: <20220730062834.12780-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-References: <1659237530-436-1-git-send-email-quic_kriskura@quicinc.com>
-In-Reply-To: <1659237530-436-1-git-send-email-quic_kriskura@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sun, 31 Jul 2022 09:33:12 +0300
-Message-ID: <CAA8EJpq=+y7ZOrdAoA-RsLLPgLn5hi+TaTvqetrwz93E+ONjKA@mail.gmail.com>
-Subject: Re: [PATCH] usb: dwc3: qcom: Provide stubs for dwc3_qcom_read_usb2_speed
- function
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220730062834.12780-1-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,77 +58,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 31 Jul 2022 at 06:19, Krishna Kurapati
-<quic_kriskura@quicinc.com> wrote:
->
-> This patch intends to fix a build issue that is occurring due to
-
-Please refrain from the "This patch" phrase. See the
-Documentation/process/submitting-patches.rst for the suggestions for
-the commit message.
-
-> dwc3_qcom_read_usb2_speed function which uses usb_hub_find_child API
-> in its effors to get the speed of devices (HS/FS/LS) connected.
->
-> usb_hub_find_child API is a part of usb core compiled into the kernel
-> when CONFIG_USB=y. In some builds (make randconfig for i386)
-> CONFIG_USB is not set and the usb core is not compiled into the
-> kernel causing linking errors.
->
-> Provide stubs for dwc3_qcom_read_usb2_speed function to use
-> usb_hub_find_child API only if CONFIG_USB is set. Else return
-> USB_SPEED_UNKNOWN.
-
-The commit message describes the issue in terms of CONFIG_USB being
-compiled into the kernel or not. It is not clear if the issue
-manifests with CONFIG_USB=m (which is also 'not compiled into the
-kernel').
-If I understand correctly, the cause for linking errors is not in the
-CONFIG_USB being not compiled into the kernel, but in CONFIG_USB being
-not enabled at all (which is possible since USB_DWC3 depends on USB ||
-USB_GADGET).
-If my understanding is correct, I'd suggest changing the commit
-message to describe the cause rather than just the issue you observed
-on randconfig failure.
-
->
-> Fixes: 6895ea55c385 (usb: dwc3: qcom: Configure wakeup interrupts during suspend)
-> Reported-by: Randy Dunlap <rdunlap@infradead.org>
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+On Sat, Jul 30, 2022 at 11:58:34AM +0530, Manivannan Sadhasivam wrote:
+> devm_regulator_get_optional() API will return -ENODEV if the regulator was
+> not found. For the optional supplies CX, PX we should not fail in that case
+> but rather continue. So let's catch that error and continue silently if
+> those regulators are not found.
+> 
+> The commit 3f52d118f992 ("remoteproc: qcom_q6v5_pas: Deal silently with
+> optional px and cx regulators") was supposed to do the same but it missed
+> the fact that devm_regulator_get_optional() API returns -ENODEV when the
+> regulator was not found.
+> 
+> Cc: Abel Vesa <abel.vesa@linaro.org>
+> Fixes: 3f52d118f992 ("remoteproc: qcom_q6v5_pas: Deal silently with optional px and cx regulators")
+> Reported-by: Steev Klimaszewski <steev@kali.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  drivers/usb/dwc3/dwc3-qcom.c | 7 +++++++
->  1 file changed, 7 insertions(+)
->
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index c5e482f..bd8dc5a 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -299,6 +299,7 @@ static void dwc3_qcom_interconnect_exit(struct dwc3_qcom *qcom)
->         icc_put(qcom->icc_path_apps);
->  }
->
-> +#ifdef CONFIG_USB
->  static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
+>  drivers/remoteproc/qcom_q6v5_pas.c | 18 +++++++++++++++---
+>  1 file changed, 15 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+> index 98f133f9bb60..5bf69ef53819 100644
+> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> @@ -362,12 +362,24 @@ static int adsp_init_clock(struct qcom_adsp *adsp)
+>  static int adsp_init_regulator(struct qcom_adsp *adsp)
 >  {
->         struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-> @@ -318,6 +319,12 @@ static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
->
->         return udev->speed;
->  }
-> +#else
-> +static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
-> +{
-> +       return USB_SPEED_UNKNOWN;
-> +}
-> +#endif
->
->  static void dwc3_qcom_enable_wakeup_irq(int irq, unsigned int polarity)
->  {
-> --
-> 2.7.4
->
+>  	adsp->cx_supply = devm_regulator_get_optional(adsp->dev, "cx");
+> -	if (IS_ERR(adsp->cx_supply))
+> -		return PTR_ERR(adsp->cx_supply);
+> +	if (IS_ERR(adsp->cx_supply)) {
+> +		/* Do not fail if the regulator is not found */
 
+I agree with Abel that these comments shouldn't be necessary.
 
--- 
-With best wishes
-Dmitry
+> +		if (PTR_ERR(adsp->cx_supply) == -ENODEV)
+> +			adsp->cx_supply = NULL;
+> +		else
+> +			return PTR_ERR(adsp->cx_supply);
+> +	}
+>  
+> -	regulator_set_load(adsp->cx_supply, 100000);
+> +	if (adsp->cx_supply)
+> +		regulator_set_load(adsp->cx_supply, 100000);
+>  
+>  	adsp->px_supply = devm_regulator_get_optional(adsp->dev, "px");
+> +	if (IS_ERR(adsp->px_supply)) {
+> +		/* Do not fail if the regulator is not found */
+> +		if (PTR_ERR(adsp->px_supply) == -ENODEV)
+> +			adsp->px_supply = NULL;
+
+Please return the error here as for cx.
+
+> +	}
+> +
+>  	return PTR_ERR_OR_ZERO(adsp->px_supply);
+
+And drop this abomination which just obfuscates code and return 0
+explicitly in the success path.
+
+With that fixed:
+
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+
+Johan
