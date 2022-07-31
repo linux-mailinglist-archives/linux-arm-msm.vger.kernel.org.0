@@ -2,203 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10104585E5C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Jul 2022 11:55:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66903585FA0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Jul 2022 17:56:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236214AbiGaJy4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 31 Jul 2022 05:54:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52462 "EHLO
+        id S237382AbiGaPzS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 31 Jul 2022 11:55:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236455AbiGaJyw (ORCPT
+        with ESMTP id S237343AbiGaPzQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 31 Jul 2022 05:54:52 -0400
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0F441209D
-        for <linux-arm-msm@vger.kernel.org>; Sun, 31 Jul 2022 02:54:48 -0700 (PDT)
-Received: by mail-yb1-xb32.google.com with SMTP id c131so14594246ybf.9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 31 Jul 2022 02:54:48 -0700 (PDT)
+        Sun, 31 Jul 2022 11:55:16 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E2641083;
+        Sun, 31 Jul 2022 08:55:15 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id d14so1913847lfl.13;
+        Sun, 31 Jul 2022 08:55:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=BsZfWrLyYjP0/eroAD6Tswpaa/jZnIwA/CULSdWEsRw=;
-        b=Te2BLHgKyWcngv+lgmyImbh71a//Cv1duStFCayIsf0NUJPLngkUldq0f9S3qHK7Cx
-         c/0zzsaMtN0H1qc9Du2fJt4BBAJHbKOC12EeBPe9qcZ4SexySj8dOm4sHreXcyfG6MAP
-         YLps9hBwq0H97frk/FYEQgEw93EIKYleJUwyXyyghkNag4m0gP/KYmGiDlGo72fc8H2i
-         9HXv/47I3Lo1HbyjZJ6ZNKEKeMhnYkP3KQ+2NIoTou3FNknkV32ZSU0e7T7ayzeUL4dk
-         CG1xp8yBmEO3zY2hkSKezY6hmorwGhaERPgJc1L3P88xj+XzfaXeWQ5/FZce9JZG6dHe
-         Q2FQ==
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=Ne/P7o9VC5S2mG3eYUHz+PPIOi9U0nlbs1682j/rMpQ=;
+        b=WV48Z0y12oRs4Obs5cBKWCSDCXjxTrLfDko81+db6aiT9HAPLr4+cPEPmyGXwV8A9z
+         T0x5i6jBZkVSoyRMOeYFbC788df5F1C0qN2vdmh61+5ChYgdIhYnf5K+IFdWn+Bt+J9b
+         u2TPxAwK7pyVD/qRnKl0ALUTkqLpoLnAsM/zvgo6E0ZC81EZgm5Lg+VShOh32JYfkOxY
+         Vtrfkn1Rvq/2XnjWtwmgImTrZOH1++YLatVCC7SBq9ZOkV87sa40qm864w9+n01qeYQB
+         SY0XxyvNGlHGGHPR5aEUxhbDADFNw2jCgebCn6BJCWV1grzBhEgEK4kQfsf4eQu8BIVV
+         Mngg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=BsZfWrLyYjP0/eroAD6Tswpaa/jZnIwA/CULSdWEsRw=;
-        b=tSkQ5C/Co6qVVxI7CDNqy6rlYLtFKU5m6acKQEJ7yoFpKhCzD15FAYKc0Rt9nQLOhP
-         6v/iDSAY7p1j5K2XvB13fLhWol+0fJIihXdrYzhlVZP+Q4uhjjbhXGfh3XDvcGcnvux1
-         swBI1l1kLQLhHYRtDs5ZGyi9glKfAUOt3uec93KUPUDgyFUzszCRWEY964FuFZTV7VWp
-         ZdzxTcGRp8SpkMbinqhXxLpFc2Mda7MrWRU1DHoaCxB6WQ440oD541hwWHxNIaLmmfpt
-         ksVzekncLvE5+XCS4yR9mkKacfix3w0DlQFjNajUZ8WqpKIP/JrW5Xx3eF8j17MPCjVe
-         oagQ==
-X-Gm-Message-State: ACgBeo2A6DtOQDoDZHfAHfV3eMTbSBjqW9eD1aEZ2GLVqyGajxL1YqPC
-        2YwKnLNr4AMqKw+1wpz1znwlIONk211/R2nf4kgH1A==
-X-Google-Smtp-Source: AA6agR47nDSR8GcbtgCBHh+yHO9YCzoEII6fBOCusqMmxOnIcuKViwritOpcw9qD7bVBj07lvPbygE5GF3WtPvievts=
-X-Received: by 2002:a25:424f:0:b0:671:816f:6979 with SMTP id
- p76-20020a25424f000000b00671816f6979mr7555758yba.26.1659261287749; Sun, 31
- Jul 2022 02:54:47 -0700 (PDT)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=Ne/P7o9VC5S2mG3eYUHz+PPIOi9U0nlbs1682j/rMpQ=;
+        b=jO3tXVcEGXYpyEFquaOXWHNl/5Y1Fh8lGqVO1Z+/TGE8oCMdvnmYM+3aJz4n/sEk1V
+         wzgxxc0h2g4y+ZjqEK0YmemIjzQgtm3ZMrdrv/cd7gOEKpv4AtcECoqaIz7OrFfb59rT
+         Luc+zSAIzBQpgxH4uk4N5yedT0cBtX53UlnmpsxLrQuqH9IWSJnHoaob0uUspyzaZ/3s
+         fR6fvhrorprI1IpccUbwi9abGsfTQS8rX+FCvWhHbQ20hJVe9KP3gueo4ghvHQv9Gugi
+         Zh5j8FWQSQ5dskdGohW4qvZN+xVOa4B0BB/U5QQFbdhn1gjYQ3uKFr+TdjKflF2ZwugH
+         r/Yw==
+X-Gm-Message-State: AJIora+gB5r6hj/h9+JSZR7NnkI9uXFwtayfAInC7t487qfPE2iGXX4l
+        s+xwO0fTIAvt5joupxf3/dSS8cEX9LQkyjXD5jI=
+X-Google-Smtp-Source: AGRyM1vr1MiiyWyo134AlbEHdPJ1v0gL4xTCoCdkZQltOZXrmoBzri1WX7UWCsJ5zokt2FRyr16hRM5p+o4EqG5I/UE=
+X-Received: by 2002:a05:6512:1307:b0:47f:baa4:52c5 with SMTP id
+ x7-20020a056512130700b0047fbaa452c5mr4104696lfu.103.1659282913251; Sun, 31
+ Jul 2022 08:55:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
- <20220723224949.1089973-5-luzmaximilian@gmail.com> <20220726143005.wt4be7yo7sbd3xut@bogus>
- <829c8fee-cae5-597d-933d-784b4b57bd73@gmail.com> <20220726154138.74avqs6iqlzqpzjk@bogus>
- <d1bc99bb-82ce-aa6e-7fad-e9309fa1c19b@gmail.com> <7284953b-52bb-37ac-fbe1-1fa845c44ff9@linaro.org>
- <3d752603-365d-3a33-e13e-ca241cee9a11@gmail.com> <20220727132437.pjob3z2nyxsuxgam@bogus>
- <CAC_iWj+Pn+h8k=fuDHzYwqD0g4m6jGRt8sCzcz+5+rYqvz9q4w@mail.gmail.com>
- <fd922f0f-99fd-55a3-a0b5-b62ad2dbfb45@gmail.com> <CAC_iWjLWBJLth26ifFfHvimProHZu_w5SjQNWSH_D2Fs_JXjbA@mail.gmail.com>
- <b703f678-b2c5-cdeb-ac40-9646e043d1c3@gmail.com> <CAC_iWjLrntWuJUzVuRi0ZOtG6JXNwz7SbS2mrqpuTgU5TV6rQA@mail.gmail.com>
- <d5a19e17-08eb-8bd6-ea18-5da638d13622@gmail.com>
-In-Reply-To: <d5a19e17-08eb-8bd6-ea18-5da638d13622@gmail.com>
-From:   Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Date:   Sun, 31 Jul 2022 12:54:11 +0300
-Message-ID: <CAC_iWj+mEEAVzZ-_Cn9KKw6H9sUB9sz8f16neXi-wXFXWSLycg@mail.gmail.com>
-Subject: Re: [PATCH 4/4] dt-bindings: firmware: Add Qualcomm UEFI Secure
- Application client
-To:     Maximilian Luz <luzmaximilian@gmail.com>
-Cc:     Sudeep Holla <sudeep.holla@arm.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+References: <1659174051-27816-1-git-send-email-quic_akhilpo@quicinc.com> <20220730150952.v3.1.Icf1e8f0c9b3e7e9933c3b48c70477d0582f3243f@changeid>
+In-Reply-To: <20220730150952.v3.1.Icf1e8f0c9b3e7e9933c3b48c70477d0582f3243f@changeid>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Sun, 31 Jul 2022 08:55:38 -0700
+Message-ID: <CAF6AEGsOzd8wMbgpt7bGNdCspNoH4shQfTknwwdyVde8k4zcZw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/8] drm/msm: Remove unnecessary pm_runtime_get/put
+To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Maximilian,
-
-On Thu, 28 Jul 2022 at 20:27, Maximilian Luz <luzmaximilian@gmail.com> wrote:
+On Sat, Jul 30, 2022 at 2:41 AM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
 >
-
-[...]
-
-> >>>>>
-> >>>>> [1] https://git.linaro.org/people/ilias.apalodimas/net-next.git/log/?h=setvar_rt_optee_3
-> >>>>
-> >>>> I would very much like to avoid the need for special bootloaders. The
-> >>>> devices we're talking about are WoA devices, meaning they _should_
-> >>>> ideally boot just fine with EFI and ACPI.
-> >>>
-> >>> I've already responded to following email, but I'll repeat it here for
-> >>> completeness. It's not a special bootloader.  It's the opposite, it's
-> >>> a generic UEFI compliant bootloader which takes advantage of the fact
-> >>> EFI is extensible. We are doing something very similar in how we load
-> >>> our initrd via the EFI_LOAD_FILE2 protocol.  Whether Qualcomm can add
-> >>> that to their bootloaders is a different topic though.  But at some
-> >>> point we need to draw a line than keep overloading the DT because a
-> >>> vendor decided to go down it's own path.
-> >>
-> >> But still, you're asking users to install an extra thing in the boot
-> >> chain.
-> >
-> > Not users.  EFI firmware implementations that want to support this in
-> > a generic way.
+> We already enable gpu power from msm_gpu_submit(), so avoid a duplicate
+> pm_runtime_get/put from msm_job_run().
 >
-> The whole point here is that we don't have control over that. I'd like
-> to fix the firmware, but we're talking about WoA devices where, let's
-> face it, both device and SoC vendor don't really care about Linux. Even
-> if you'd convince them to implement that for future generations, you'd
-> still need them to push firmware updates for older generations.
-> Generations that are end-of-life. IMHO, we should still try support
-> those. Or we just say "sorry, Linux doesn't support that on your WoA
-> device".
-
-Yea we agree on that.  I've mentioned on a previous mail that whether
-Qualcomm wants to support this in a generic way is questionable, since
-we have no control over the firmware.  My only 'objection' is that the
-kernel has a generic way of discovering which runtime services are
-supported, which we will completely ignore based on some DT entries.
-
-In any case let's find something that fits OP-TEE as well, since I can
-send those patches afterwards.
-
+> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> ---
 >
-> >> That's what I mean by "special". So the situation would then be
-> >> this: User needs a) GRUB (or something similar) for booting the kernel
-> >> (or dual-booting, ...), b) DTBLoader for loading the device-tree because
-> >> we don't support the ACPI Qualcomm provided, and c) your thing for EFI
-> >> variables and potentially other firmware fix-ups. b) and c) are both
-> >> things that "normal" users don't expect. IMHO we should try to get rid
-> >> of those "non-standard" things, not add more.
-> >
-> > But that's exactly why EFI is extensible .  You can have non standard
-> > functionality on your firmware for cases like this which doesn't need
-> > to land in the spec.
-> >
-> >>
-> >>>>    From an end-user perspective, it's annoying enough that we'll have to
-> >>>> stick with DTs for the time being due to the use of PEPs in ACPI. I
-> >>>> really don't want to add some special bootloader for fixups to that.
-> >>>> Also, this would just move the problem from kernel to bootloader.
-> >>>
-> >>> But it *is* a bootloader problem.  The bootloader is aware of the fact
-> >>> that it can't provide runtime services for X reasons and that's
-> >>> exactly why we are trying to set EFI_RT_PROPERTIES_TABLE correctly
-> >>> from the firmware.  All we are doing is install a config table to tell
-> >>> the OS "I can't do that, can you find a way around it?".
-> >>
-> >> Sure, but is making the Linux installation process more device
-> >> dependent and complicated really the best way to solve this?
-> >
-> > Isn't it device dependent already?  That boat has sailed already since
-> > we need to change the very definition of runtime services and replace
-> > them with OS specific ones.  If we add it on the DT, you'll end up
-> > with different DTs per OS and potentially per use case.  In my head
-> > the DTs should be part of the firmware (and authenticated by the
-> > firmware as well) instead of loading whatever we want each time.  By
-> > using a config table we can add a u64 (random thought),  that tells
-> > the kernel which TEE implementation will handle variable storage.  So
-> > we can have a common extension to boot loaders, which at least uses
-> > EFI interfaces to communicate the functionality.
+> (no changes since v1)
 >
-> The only thing that is making the installation-process for end-users
-> device dependent is installing the DTB. We can handle the device
-> specific stuff in the kernel, just as we already handle buggy devices.
+>  drivers/gpu/drm/msm/msm_ringbuffer.c | 4 ----
+>  1 file changed, 4 deletions(-)
 >
-> Further, you seem to assume that these devices provide a DT in the first
-> place. WoA devices use ACPI, so they don't. But for the time being (as
-> discussed elsewhere) we unfortunately need to stick with DTs and can't
-> really use ACPI. I agree that we should avoid OS and use-case specific
-> DTs, but I don't see how this would make a DT use-case or OS specific.
-> Things are firmware specific, the interface doesn't change with a
-> different OS, and we're only indicating the presence of that interface.
+> diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
+> index 56eecb4..cad4c35 100644
+> --- a/drivers/gpu/drm/msm/msm_ringbuffer.c
+> +++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
+> @@ -29,8 +29,6 @@ static struct dma_fence *msm_job_run(struct drm_sched_job *job)
+>                 msm_gem_unlock(obj);
+>         }
 >
-> My current suggestion (already sent to Sudeep earlier) is (roughly)
-> this: Add one compatible for the TrEE / TrustZone interface. Then decide
-> to load or instantiate what needs to be loaded in the driver for that.
-> That (depending on maybe SoC / platform / vendor) includes installing
-> the efivar operations. This way we don't have to fill the DT with the
-> specific things running in firmware.
+> -       pm_runtime_get_sync(&gpu->pdev->dev);
+> -
 
-As far as OP-TEE is concerned, I think we can make the 'feature'
-discoverable.  I'll go propose that to op-tee but if that gets
-accepted, we don't need any extra nodes (other than the existing one),
-to wire up efivars_register().
+This is removing a _get_sync() and simply relying on a _get() (async)
+in msm_gpu_submit().. that seems pretty likely to go badly?  I think
+it should probably replace the _get() in msm_gpu_submit() with
+_get_sync() (but also since this is changing position of
+resume/suspend vs active_lock, please make sure you test with lockdep
+enabled)
 
-Thanks
-/Ilias
+BR,
+-R
+
+>         /* TODO move submit path over to using a per-ring lock.. */
+>         mutex_lock(&gpu->lock);
 >
-> Regards,
-> Max
+> @@ -38,8 +36,6 @@ static struct dma_fence *msm_job_run(struct drm_sched_job *job)
+>
+>         mutex_unlock(&gpu->lock);
+>
+> -       pm_runtime_put(&gpu->pdev->dev);
+> -
+>         return dma_fence_get(submit->hw_fence);
+>  }
+>
+> --
+> 2.7.4
+>
