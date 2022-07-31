@@ -2,188 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 32741585FC3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Jul 2022 18:21:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B8E20585FDD
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Jul 2022 18:33:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235773AbiGaQVn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 31 Jul 2022 12:21:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33864 "EHLO
+        id S232336AbiGaQds (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 31 Jul 2022 12:33:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231197AbiGaQVm (ORCPT
+        with ESMTP id S229674AbiGaQdq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 31 Jul 2022 12:21:42 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59BE6DEED;
-        Sun, 31 Jul 2022 09:21:41 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id w15so789800ljw.1;
-        Sun, 31 Jul 2022 09:21:41 -0700 (PDT)
+        Sun, 31 Jul 2022 12:33:46 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3CD7FD2A;
+        Sun, 31 Jul 2022 09:33:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=1dGgr0VFGhtLTw2WM/wkztVN6+uje12KM3x5Hxm7DpY=;
-        b=i1jAsSiXu3PQvri9Z/MuZh+vK5x12l8cIaezT5HNPS1Vviev0rbKRxjkkZ/EYJ8dcL
-         iA9lw0FsFxdqyITig7Ec0qyXRWHo501j0vBocGeijZhsUQ8V79q5lWJxXgvEohqHkCYs
-         HRIVOAYKs2ZIjBBLle2wIQl3yRT9hdAV1k1m/4qxqCx6DX2H8+iC92PQRXBRXKKPoPwj
-         rEuLISo8Mingm2dpOZ6QpBbRdMgOZmoujhhYj5z2KnLBIbkMLEk4OgV2K8QeDb93a4Ss
-         vBrcqcKn0QvaVOAS87nc4wWY3wYAiA2dhhFgLsd+d/F7FH6NMAFSQoQ2YAP6M0n0Yy+0
-         qnIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=1dGgr0VFGhtLTw2WM/wkztVN6+uje12KM3x5Hxm7DpY=;
-        b=7pvwYdOxKHGlknxMVKd9dvEq+HUBaGazRFRMp1gnkdj/DisZ4cJ5f3wDTmwfW/ApAE
-         4K6pfUNc33CT/ulQUWYYOnW8J8vWT2mdS7LAGEcgaEeYhrkRml+qvWAKjx4pSFYdhcyR
-         fCnkcHTqCEZV8mRCu+3fVsc9J+uqB3cIYWGmIAyc0EqFvLxz2WaC9QDojiY8MXiL2F89
-         rWpSODcA3saZDMqRynFRirOLLo5PMHk8TaR2CCTXFvilJpOW7T18UK4Rm+pMNRaN7RgC
-         jV24OZi4jHhuIiC6Eq2yXtK70Wb6usjmDTXxcp772s9wzOvFw8dMla2bC9/V4qpzKEHi
-         BI+A==
-X-Gm-Message-State: AJIora81pfALrPnBTh/6rbk3z9LgjQ6oh1BoH/uwGd4Uur+qsI6sxKgr
-        GCNj0lutJxvVBHUDlhZSJ0JKhUcCdMAT+H6nXskPtQq7
-X-Google-Smtp-Source: AGRyM1v+yPpDbh2c87EFdbeSWze9wULevLuMgW2bBkxqcwF4j94LzukBIAA/N/t/dIwMG5UY2tNq8LtBbuUZEo5uFEk=
-X-Received: by 2002:a05:651c:1993:b0:25e:2766:924 with SMTP id
- bx19-20020a05651c199300b0025e27660924mr4343788ljb.231.1659284499650; Sun, 31
- Jul 2022 09:21:39 -0700 (PDT)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1659285222; x=1690821222;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=89qX1O/H+lET6Ss1xB8dRlPHjGtgPFz4Arj/97wfYiU=;
+  b=LEz1P8FKbECwMzHCcZmuuGdSswCGoGfgCIBJ7oJg91jpqHPHPjZyEZYJ
+   D7e6RBS8AAXnz81j/y2+cVyZFXoRmBhAmj3Xfgto4uQrZKPPot7ISWrsg
+   Sta5KALXf96S8J7JmNexW5GdFYyDVlxQPLNYgNAWOgxx07x2lLQ2pIAIY
+   g=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 31 Jul 2022 09:33:41 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Jul 2022 09:33:41 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Sun, 31 Jul 2022 09:32:40 -0700
+Received: from [10.216.11.73] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Sun, 31 Jul
+ 2022 09:32:35 -0700
+Message-ID: <d7f95663-c0f7-8227-dbc0-fac43bdf6faa@quicinc.com>
+Date:   Sun, 31 Jul 2022 22:02:32 +0530
 MIME-Version: 1.0
-References: <1659174051-27816-1-git-send-email-quic_akhilpo@quicinc.com> <20220730150952.v3.4.I4ac27a0b34ea796ce0f938bb509e257516bc6f57@changeid>
-In-Reply-To: <20220730150952.v3.4.I4ac27a0b34ea796ce0f938bb509e257516bc6f57@changeid>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Sun, 31 Jul 2022 09:22:04 -0700
-Message-ID: <CAF6AEGuqptUzOtcjG+oA4BQha3Jk-UzDK-8SF_8v5A+8Dg71uQ@mail.gmail.com>
-Subject: Re: [PATCH v3 4/8] drm/msm: Fix cx collapse issue during recovery
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH v3 2/8] drm/msm: Take single rpm refcount on behalf of all
+ submits
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>
+CC:     freedreno <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
         Jordan Crouse <jordan@cosmicpenguin.net>,
         Jonathan Marek <jonathan@marek.ca>,
-        Douglas Anderson <dianders@chromium.org>,
+        "Douglas Anderson" <dianders@chromium.org>,
         Matthias Kaehlcke <mka@chromium.org>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Daniel Vetter <daniel@ffwll.ch>,
         David Airlie <airlied@linux.ie>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Sean Paul <sean@poorly.run>, <linux-kernel@vger.kernel.org>
+References: <1659174051-27816-1-git-send-email-quic_akhilpo@quicinc.com>
+ <20220730150952.v3.2.Ifee853f6d8217a0fdacc459092bbc9e81a8a7ac7@changeid>
+ <CAF6AEGs7zKDoRY=ijxFQvaZig=UiSPgWkJFA-PY2MTxKWr5bpw@mail.gmail.com>
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+In-Reply-To: <CAF6AEGs7zKDoRY=ijxFQvaZig=UiSPgWkJFA-PY2MTxKWr5bpw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jul 30, 2022 at 2:41 AM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+On 7/31/2022 9:26 PM, Rob Clark wrote:
+> On Sat, Jul 30, 2022 at 2:41 AM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+>> Instead of separate refcount for each submit, take single rpm refcount
+>> on behalf of all the submits. This makes it easier to drop the rpm
+>> refcount during recovery in an upcoming patch.
+>>
+>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+>> ---
+>>
+>> (no changes since v1)
+> I see no earlier version of this patch?
 >
-> There are some hardware logic under CX domain. For a successful
-> recovery, we should ensure cx headswitch collapses to ensure all the
-> stale states are cleard out. This is especially true to for a6xx family
-> where we can GMU co-processor.
->
-> Currently, cx doesn't collapse due to a devlink between gpu and its
-> smmu. So the *struct gpu device* needs to be runtime suspended to ensure
-> that the iommu driver removes its vote on cx gdsc.
->
-> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> ---
->
-> Changes in v3:
-> - Simplied the pm refcount drop since we have just a single refcount now
-> for all active submits
->
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 24 +++++++++++++++++++++---
->  drivers/gpu/drm/msm/msm_gpu.c         |  4 +---
->  2 files changed, 22 insertions(+), 6 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 42ed9a3..1b049c5 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -1193,7 +1193,7 @@ static void a6xx_recover(struct msm_gpu *gpu)
->  {
->         struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->         struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
-> -       int i;
-> +       int i, active_submits;
->
->         adreno_dump_info(gpu);
->
-> @@ -1210,8 +1210,26 @@ static void a6xx_recover(struct msm_gpu *gpu)
->          */
->         gmu_write(&a6xx_gpu->gmu, REG_A6XX_GMU_GMU_PWR_COL_KEEPALIVE, 0);
->
-> -       gpu->funcs->pm_suspend(gpu);
-> -       gpu->funcs->pm_resume(gpu);
-> +       pm_runtime_dont_use_autosuspend(&gpu->pdev->dev);
-> +
-> +       /* active_submit won't change until we make a submission */
-> +       mutex_lock(&gpu->active_lock);
-> +       active_submits = gpu->active_submits;
-> +       mutex_unlock(&gpu->active_lock);
-> +
-> +       /* Drop the rpm refcount from active submits */
-> +       if (active_submits)
-> +               pm_runtime_put(&gpu->pdev->dev);
+>>   drivers/gpu/drm/msm/msm_gpu.c | 12 ++++++++----
+>>   1 file changed, 8 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+>> index c8cd9bf..e1dd3cc 100644
+>> --- a/drivers/gpu/drm/msm/msm_gpu.c
+>> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+>> @@ -663,11 +663,12 @@ static void retire_submit(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
+>>          mutex_lock(&gpu->active_lock);
+>>          gpu->active_submits--;
+>>          WARN_ON(gpu->active_submits < 0);
+>> -       if (!gpu->active_submits)
+>> +       if (!gpu->active_submits) {
+>>                  msm_devfreq_idle(gpu);
+>> -       mutex_unlock(&gpu->active_lock);
+>> +               pm_runtime_put_autosuspend(&gpu->pdev->dev);
+>> +       }
+>>
+>> -       pm_runtime_put_autosuspend(&gpu->pdev->dev);
+>> +       mutex_unlock(&gpu->active_lock);
+>>
+>>          msm_gem_submit_put(submit);
+>>   }
+>> @@ -756,14 +757,17 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>>
+>>          /* Update devfreq on transition from idle->active: */
+>>          mutex_lock(&gpu->active_lock);
+>> -       if (!gpu->active_submits)
+>> +       if (!gpu->active_submits) {
+>> +               pm_runtime_get(&gpu->pdev->dev);
+>>                  msm_devfreq_active(gpu);
+>> +       }
+>>          gpu->active_submits++;
+>>          mutex_unlock(&gpu->active_lock);
+>>
+>>          gpu->funcs->submit(gpu, submit);
+>>          gpu->cur_ctx_seqno = submit->queue->ctx->seqno;
+>>
+>> +       pm_runtime_put(&gpu->pdev->dev);
+> this looks unbalanced?
+There is another pm_runtime_get_sync at the top of this function. Just 
+before hw_init().
+https://elixir.bootlin.com/linux/v5.19-rc8/source/drivers/gpu/drm/msm/msm_gpu.c#L737
 
-Couldn't this race with an incoming submit triggering active_submits
-to transition 0 -> 1?  Moving the mutex_unlock() would solve this.
+-Akhil.
+>
+> BR,
+> -R
+>
+>>          hangcheck_timer_reset(gpu);
+>>   }
+>>
+>> --
+>> 2.7.4
+>>
 
-Actually, maybe just move the mutex_unlock() to the end of the entire
-sequence.  You could also clear gpu->active_submits and restore it
-before unlocking, so you can drop the removal of the WARN_ON_ONCE
-(patch 6/8) which should otherwise be squashed into this patch to keep
-things bisectable
-
-> +
-> +       /* And the final one from recover worker */
-> +       pm_runtime_put_sync(&gpu->pdev->dev);
-> +
-> +       pm_runtime_use_autosuspend(&gpu->pdev->dev);
-> +
-> +       if (active_submits)
-> +               pm_runtime_get(&gpu->pdev->dev);
-> +
-> +       pm_runtime_get_sync(&gpu->pdev->dev);
->
->         msm_gpu_hw_init(gpu);
->  }
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> index 1945efb..07e55a6 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.c
-> +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> @@ -426,9 +426,7 @@ static void recover_worker(struct kthread_work *work)
->                 /* retire completed submits, plus the one that hung: */
->                 retire_submits(gpu);
->
-> -               pm_runtime_get_sync(&gpu->pdev->dev);
->                 gpu->funcs->recover(gpu);
-> -               pm_runtime_put_sync(&gpu->pdev->dev);
-
-Hmm, could this have some fallout on earlier gens?
-
-I guess I should extend the igt msm_recovery test to run on things
-prior to a6xx..
-
-BR,
--R
-
->
->                 /*
->                  * Replay all remaining submits starting with highest priority
-> @@ -445,7 +443,7 @@ static void recover_worker(struct kthread_work *work)
->                 }
->         }
->
-> -       pm_runtime_put_sync(&gpu->pdev->dev);
-> +       pm_runtime_put(&gpu->pdev->dev);
->
->         mutex_unlock(&gpu->lock);
->
-> --
-> 2.7.4
->
