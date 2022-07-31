@@ -2,72 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 05D335861A7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Aug 2022 00:15:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E26A5861B0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Aug 2022 00:37:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238411AbiGaWP2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 31 Jul 2022 18:15:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53550 "EHLO
+        id S238543AbiGaWhr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 31 Jul 2022 18:37:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229710AbiGaWP1 (ORCPT
+        with ESMTP id S229710AbiGaWhq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 31 Jul 2022 18:15:27 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE628B2C;
-        Sun, 31 Jul 2022 15:15:26 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id bq11so9574523lfb.5;
-        Sun, 31 Jul 2022 15:15:26 -0700 (PDT)
+        Sun, 31 Jul 2022 18:37:46 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60DAF11156;
+        Sun, 31 Jul 2022 15:37:45 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id b16so4203877edd.4;
+        Sun, 31 Jul 2022 15:37:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=JhTc/o85aa/gNSXM1E2WlhOm4hoCmf8aYbOpvTqzACg=;
-        b=IYcyUZylduzwRAWXYDunqrHsrpEt1tyMI6KfAyQj2u1aW7Jxfnw074RjZ9Qmkgdm3N
-         9RNJImzPJX4mezXXmy7NYqTkxLev4LQGq4gwOpL4LxjbKTvL5xpwFXGuW3nmAKTZdN96
-         7hXJ/isn1PiMCoP00zX+uiqg3sqESxr8CHhcLE/0yN/Cr0RkaK1uN5eQoX/J3pVkJs69
-         uMDj87BXk35CXEZ1qI1eb/G9Go4iJ61eNwBj1HEG//jZtfG9sCko1UejSMQ1BbQ1kXv/
-         3IBnG8u4PEJxwWklKhY4vEBZ8xRjuWwTC6QTwYH6/82yuqkV1rK83iA8RXDn186T1/cX
-         lOTA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=sUg3mbi85wkC20O/owxGcBmnSUP/JalL+pPQsthwix4=;
+        b=bB75wBM9YfHXfB9SaWTPbVuoO0448vuhmS1nuYb+3RvRKk5o/oYE28YZm6MhYwehJh
+         jsDQzsO5dmGRbz1HXmJb96WtbnyoE2aWPb2IgFHZ8AW3ryR9g4QsgotgQbmD/LB0Zs6G
+         izsHUSYjfxNY2Oei46E6qbw9SxkhJqrYwq4ZsPCWqYhYspcAqMXqW6oxdYmwcE8NbjEv
+         4rVPiZkmhLe6LvmlMYG/HUv66EIdz0LQbi27fn5YmeeMNwqQFh2IDMsEIqF4Pnw2pLr5
+         c7AI6XnVI+73Ms+lXHNXakQmkuinXCa/TEEvMNcg7Oxky+NRDt3uuLAvyJ0J7jw6cJlH
+         iSYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=JhTc/o85aa/gNSXM1E2WlhOm4hoCmf8aYbOpvTqzACg=;
-        b=LDqq9bLuGJiWgsVHz/sYnLA+QCTickheA9adZ0Jhay+ILbrGWgKMFYYJMa6cpoF0VY
-         hZzMPY9aulbylADa2R7uX1oftQgoZVKebN39di9OTOLcMEqRffeVWdlAtqkJzTUdU4vO
-         wK0QmpuG7c/EYpTNEAxl+jO3dfnnIp4ptpBvLWfH4cEV9+34RpUPjifN89e5TU5n689M
-         Hups69LOBZ2LTapX4GhcwYk1Mi24u3A7KK5ArHr/ZsfuCstC6mNEDJirfcKxxHRY0QP2
-         ahGldPSXxLynhwbC6yY2LhQVRTCFIwpy7E4K7zPk7IfDdsEhP6xM5uKQVfNjj+97jSnm
-         5ceA==
-X-Gm-Message-State: AJIora8pBwL2CRzSHh2S8iXVwWWi+Wkx+AI2RbmsxEnVVOlOzdRETAL2
-        M5gl9sbc0hhuztW/MMYnX3ESJc1ocze4HpaqlJlPVcn1
-X-Google-Smtp-Source: AGRyM1tdLlKik2XqGE1EF+tHF1IzVO89f4sSViGTihMdIqiZb/1V9J01GjK3tML6KEdslkqSQ7uCw8J3NkhPN0aTXfU=
-X-Received: by 2002:a05:6512:1307:b0:47f:baa4:52c5 with SMTP id
- x7-20020a056512130700b0047fbaa452c5mr4437991lfu.103.1659305724920; Sun, 31
- Jul 2022 15:15:24 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=sUg3mbi85wkC20O/owxGcBmnSUP/JalL+pPQsthwix4=;
+        b=DR2SZ4DenoOHHiydT5dJhAaH+HcwYDGzS1TkjqsTrv2ea4uQuXytPyYSE02jiFaC41
+         KCTQQYZyqNgwVHMyHMLsqyBYMoGpoDom5TQf/EG3L+yU0m4pXLi3kJ3hpGSkb882PO+y
+         QZ2I+Ad8dVNWnTDkjhoBeNOjSiP3cl/iBR9qjF4uv9nF0BxileZK1Vp0J8BIPx55/W9q
+         nHUYDawHuEV771JpbrBETr175JcpF8MA4MrUXZEHJEJKNZTnHfdYR2MhJ8jKOvMkGcns
+         Bn7UG+Q1oZjfu+qE/opuFsn69FBLIS6oQ84oCyqcEJXFO56Be5MwHHgzU5otPjmaXVne
+         GmTw==
+X-Gm-Message-State: AJIora+nsYa4Sd4KgSot+bnxwSLD2sHzjjLknCpN05hDXKKnmdl3Dom3
+        Y/3cl199FB8hvTfqmMqwN2I=
+X-Google-Smtp-Source: AGRyM1vW7wD9jdt0hSkZT/Dae8z4eop9k1bk1UppwK+nPRdwezYV3XUJZdN9PLobODHeJRjHPno8zg==
+X-Received: by 2002:a05:6402:4144:b0:431:6ef0:bef7 with SMTP id x4-20020a056402414400b004316ef0bef7mr12640724eda.151.1659307063871;
+        Sun, 31 Jul 2022 15:37:43 -0700 (PDT)
+Received: from localhost ([77.78.38.236])
+        by smtp.gmail.com with ESMTPSA id gw6-20020a170906f14600b0072b2cc08c48sm4485591ejb.63.2022.07.31.15.37.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 31 Jul 2022 15:37:42 -0700 (PDT)
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Mark Brown <broonie@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Marko <robimarko@gmail.com>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Iskren Chernev <iskren.chernev@gmail.com>
+Subject: [PATCH v3 00/13] PM6125 regulator support
+Date:   Mon,  1 Aug 2022 01:37:23 +0300
+Message-Id: <20220731223736.1036286-1-iskren.chernev@gmail.com>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
-References: <1659174051-27816-1-git-send-email-quic_akhilpo@quicinc.com>
- <20220730150952.v3.2.Ifee853f6d8217a0fdacc459092bbc9e81a8a7ac7@changeid>
- <CAF6AEGs7zKDoRY=ijxFQvaZig=UiSPgWkJFA-PY2MTxKWr5bpw@mail.gmail.com> <d7f95663-c0f7-8227-dbc0-fac43bdf6faa@quicinc.com>
-In-Reply-To: <d7f95663-c0f7-8227-dbc0-fac43bdf6faa@quicinc.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Sun, 31 Jul 2022 15:15:49 -0700
-Message-ID: <CAF6AEGt5H=T_0HOLrNqRHZOYNicfk74bgZrQH56k2bYpi5JsRA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/8] drm/msm: Take single rpm refcount on behalf of all submits
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -78,81 +76,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jul 31, 2022 at 9:33 AM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
->
-> On 7/31/2022 9:26 PM, Rob Clark wrote:
-> > On Sat, Jul 30, 2022 at 2:41 AM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
-> >> Instead of separate refcount for each submit, take single rpm refcount
-> >> on behalf of all the submits. This makes it easier to drop the rpm
-> >> refcount during recovery in an upcoming patch.
-> >>
-> >> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> >> ---
-> >>
-> >> (no changes since v1)
-> > I see no earlier version of this patch?
-> >
-> >>   drivers/gpu/drm/msm/msm_gpu.c | 12 ++++++++----
-> >>   1 file changed, 8 insertions(+), 4 deletions(-)
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> >> index c8cd9bf..e1dd3cc 100644
-> >> --- a/drivers/gpu/drm/msm/msm_gpu.c
-> >> +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> >> @@ -663,11 +663,12 @@ static void retire_submit(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
-> >>          mutex_lock(&gpu->active_lock);
-> >>          gpu->active_submits--;
-> >>          WARN_ON(gpu->active_submits < 0);
-> >> -       if (!gpu->active_submits)
-> >> +       if (!gpu->active_submits) {
-> >>                  msm_devfreq_idle(gpu);
-> >> -       mutex_unlock(&gpu->active_lock);
-> >> +               pm_runtime_put_autosuspend(&gpu->pdev->dev);
-> >> +       }
-> >>
-> >> -       pm_runtime_put_autosuspend(&gpu->pdev->dev);
-> >> +       mutex_unlock(&gpu->active_lock);
-> >>
-> >>          msm_gem_submit_put(submit);
-> >>   }
-> >> @@ -756,14 +757,17 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
-> >>
-> >>          /* Update devfreq on transition from idle->active: */
-> >>          mutex_lock(&gpu->active_lock);
-> >> -       if (!gpu->active_submits)
-> >> +       if (!gpu->active_submits) {
-> >> +               pm_runtime_get(&gpu->pdev->dev);
-> >>                  msm_devfreq_active(gpu);
-> >> +       }
-> >>          gpu->active_submits++;
-> >>          mutex_unlock(&gpu->active_lock);
-> >>
-> >>          gpu->funcs->submit(gpu, submit);
-> >>          gpu->cur_ctx_seqno = submit->queue->ctx->seqno;
-> >>
-> >> +       pm_runtime_put(&gpu->pdev->dev);
-> > this looks unbalanced?
-> There is another pm_runtime_get_sync at the top of this function. Just
-> before hw_init().
-> https://elixir.bootlin.com/linux/v5.19-rc8/source/drivers/gpu/drm/msm/msm_gpu.c#L737
+This patch series adds SPMI and SMD regulator support for the PM6125 found on
+SM4250/SM6115 SoCs from QCom.
 
-oh, right.. sorry, I was looking at my local stack of WIP patches
-which went the opposite direction and moved the runpm into just
-msm_job_run().. I'll drop that one
+This code has been tested on:
+* OnePlus Nord N100 (oneplus,billie2, SoC sm4250)
+* Redmi 9T (redmi,lemon, SoC sm6115)
 
-BR,
--R
+The main source used for this change is qpnp pm6125 support patch from caf [1]:
 
->
-> -Akhil.
-> >
-> > BR,
-> > -R
-> >
-> >>          hangcheck_timer_reset(gpu);
-> >>   }
-> >>
-> >> --
-> >> 2.7.4
-> >>
->
+[1]: https://source.codeaurora.org/quic/la/kernel/msm-5.4/commit/?h=kernel.lnx.5.4.r1-rel&id=d1220daeffaa440ffff0a8c47322eb0033bf54f5
+
+v2: https://lkml.org/lkml/2022/7/26/885
+v1: https://lkml.org/lkml/2021/8/28/144
+
+Changes from v2:
+- split spmi new regulator support in 2 patches
+- FTS and LDOs now have set_load and set_pull_down ops
+- add better commit messages on spmi patches
+- fix sob header order
+- fix tested device info (Redmi 9T, NOT Xiaomi 9T)
+- improve formatting in spmi binding docs
+- sort alphabetically in smd binding docs
+- sort alphabetically spmi pmics
+- sort alphabetically smd pmics
+Changes from v1:
+- add dt-bindings
+- split SPMI patch into new reg types and the new PMIC
+- add correct supply mapping
+
+Iskren Chernev (13):
+  dt-bindings: regulator: qcom_spmi: Improve formatting of if-then
+    blocks
+  dt-bindings: regulator: qcom_spmi: Document PM6125 PMIC
+  dt-bindings: regulator: qcom_smd: Sort compatibles alphabetically
+  dt-bindings: regulator: qcom_smd: Document PM6125 PMIC
+  regulator: qcom_spmi: Add support for new regulator types
+  regulator: qcom_spmi: Add support for HFSMPS regulator type
+  regulator: qcom_spmi: Sort pmics alphabetically (part 1)
+  regulator: qcom_spmi: Sort pmics alphabetically (part 2)
+  regulator: qcom_spmi: Add PM6125 PMIC support
+  regulator: qcom_smd: Sort pmics alphabetically (part 1)
+  regulator: qcom_smd: Sort pmics alphabetically (part 2)
+  regulator: qcom_smd: Sort pmics alphabetically (part 3)
+  regulator: qcom_smd: Add PM6125 regulators support
+
+ .../regulator/qcom,smd-rpm-regulator.yaml     |  26 +-
+ .../regulator/qcom,spmi-regulator.yaml        |  32 ++
+ drivers/regulator/qcom_smd-regulator.c        | 400 ++++++++++--------
+ drivers/regulator/qcom_spmi-regulator.c       | 383 ++++++++++++-----
+ 4 files changed, 556 insertions(+), 285 deletions(-)
+
+-- 
+2.37.1
+
