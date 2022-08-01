@@ -2,155 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 04ED3587202
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Aug 2022 22:10:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B2925871FB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Aug 2022 22:08:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234121AbiHAUKk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Aug 2022 16:10:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54252 "EHLO
+        id S232733AbiHAUIZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Aug 2022 16:08:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234075AbiHAUKi (ORCPT
+        with ESMTP id S229901AbiHAUIY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Aug 2022 16:10:38 -0400
-Received: from smtp.smtpout.orange.fr (smtp01.smtpout.orange.fr [80.12.242.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C072EBF4D
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Aug 2022 13:10:37 -0700 (PDT)
-Received: from pop-os.home ([90.11.190.129])
-        by smtp.orange.fr with ESMTPA
-        id Ibd2oiUWV0DonIbd2oUBZk; Mon, 01 Aug 2022 22:03:05 +0200
-X-ME-Helo: pop-os.home
-X-ME-Auth: YWZlNiIxYWMyZDliZWIzOTcwYTEyYzlhMmU3ZiQ1M2U2MzfzZDfyZTMxZTBkMTYyNDBjNDJlZmQ3ZQ==
-X-ME-Date: Mon, 01 Aug 2022 22:03:05 +0200
-X-ME-IP: 90.11.190.129
-From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org
-Subject: [PATCH] usb: dwc3: qcom: Fox some error handling path in dwc3_qcom_probe()
-Date:   Mon,  1 Aug 2022 22:03:03 +0200
-Message-Id: <baf14163148998215eca3eb7d754cc63e1e376dd.1659384164.git.christophe.jaillet@wanadoo.fr>
-X-Mailer: git-send-email 2.34.1
+        Mon, 1 Aug 2022 16:08:24 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94D2827B00;
+        Mon,  1 Aug 2022 13:08:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1659384503; x=1690920503;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=Z2sKdEmuR5GzYMOhpZvEQcMlZYe/O/eQFVyPPPVjpGM=;
+  b=vP7AIw461jRm7Q85tnBz+9hQR10wSdo3fF1HOlrzL/nRL0SZPoszkalN
+   C6VihlJ1msDuUszMMuztzX7QKh3k2UBtsubpWCAAkyeHcBQbV7FBQ5crz
+   1oyug4ILF/WgywcHZ3u83nbEmZo3qcPcJPmXOv+ns/dvFPXJqAvp5iQBS
+   A=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 01 Aug 2022 13:08:23 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Aug 2022 13:08:22 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 1 Aug 2022 13:08:22 -0700
+Received: from [10.110.16.215] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 1 Aug 2022
+ 13:08:20 -0700
+Message-ID: <89f3dfa2-0983-5e33-281f-94539492d1d2@quicinc.com>
+Date:   Mon, 1 Aug 2022 13:08:13 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH] drm/msm/dp: delete DP_RECOVERED_CLOCK_OUT_EN to fix tps4
+Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
+        <airlied@linux.ie>, <bjorn.andersson@linaro.org>,
+        <daniel@ffwll.ch>, <dianders@chromium.org>,
+        <dmitry.baryshkov@linaro.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <vkoul@kernel.org>
+CC:     <quic_aravindh@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1659382970-17477-1-git-send-email-quic_khsieh@quicinc.com>
+ <CAE-0n52=zJ0ScrknAhsvJQc5hXP7+TGaoa4gnaVzsT26bQL_Uw@mail.gmail.com>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <CAE-0n52=zJ0ScrknAhsvJQc5hXP7+TGaoa4gnaVzsT26bQL_Uw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Replace some direct return with goto to the existing error handling path.
-Also release 'parent_res', if needed.
 
 
-In the remove function, handle the case where 'np' is set or not, to call
-the right function as already done in the error handling path of the probe.
-
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
----
-The patch looks not complete and dwc3_qcom_create_urs_usb_platdev() (and
-its acpi_create_platform_device() call) still need undone in the error
-handling path, right?
-
-This looks more tricky to me, so I just point it out and leave it to
-anyone who cares.
-
-The remove function is also likely incomplete (for example 'parent_res'
-leaks if !np).
-
-Even if not perfect, this patch makes code already "better" :)
-
-Comments and follow-up by others welcomed.
-
-
-Finally, I've not searched for Fixes tag because it is likely that these
-issues have been added in several patches. I have the courage to dig into
-this log history.
----
- drivers/usb/dwc3/dwc3-qcom.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index c5e482f53e9d..1fe83fd51947 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -815,9 +815,10 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 		parent_res = res;
- 	} else {
- 		parent_res = kmemdup(res, sizeof(struct resource), GFP_KERNEL);
--		if (!parent_res)
--			return -ENOMEM;
--
-+		if (!parent_res) {
-+			ret = -ENOMEM;
-+			goto clk_disable;
-+		}
- 		parent_res->start = res->start +
- 			qcom->acpi_pdata->qscratch_base_offset;
- 		parent_res->end = parent_res->start +
-@@ -828,9 +829,10 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 			if (IS_ERR_OR_NULL(qcom->urs_usb)) {
- 				dev_err(dev, "failed to create URS USB platdev\n");
- 				if (!qcom->urs_usb)
--					return -ENODEV;
-+					ret = -ENODEV;
- 				else
--					return PTR_ERR(qcom->urs_usb);
-+					ret = PTR_ERR(qcom->urs_usb);
-+				goto free_parent_res;
- 			}
- 		}
- 	}
-@@ -838,13 +840,13 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 	qcom->qscratch_base = devm_ioremap_resource(dev, parent_res);
- 	if (IS_ERR(qcom->qscratch_base)) {
- 		ret = PTR_ERR(qcom->qscratch_base);
--		goto clk_disable;
-+		goto free_parent_res;
- 	}
- 
- 	ret = dwc3_qcom_setup_irq(pdev);
- 	if (ret) {
- 		dev_err(dev, "failed to setup IRQs, err=%d\n", ret);
--		goto clk_disable;
-+		goto free_parent_res;
- 	}
- 
- 	/*
-@@ -906,6 +908,9 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 		of_platform_depopulate(&pdev->dev);
- 	else
- 		platform_device_put(pdev);
-+free_parent_res:
-+	if (!np)
-+		kfree(parent_res);
- clk_disable:
- 	for (i = qcom->num_clocks - 1; i >= 0; i--) {
- 		clk_disable_unprepare(qcom->clks[i]);
-@@ -920,11 +925,15 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- static int dwc3_qcom_remove(struct platform_device *pdev)
- {
- 	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
-+	struct device_node *np = pdev->dev.of_node;
- 	struct device *dev = &pdev->dev;
- 	int i;
- 
- 	device_remove_software_node(&qcom->dwc3->dev);
--	of_platform_depopulate(dev);
-+	if (np)
-+		of_platform_depopulate(&pdev->dev);
-+	else
-+		platform_device_put(pdev);
- 
- 	for (i = qcom->num_clocks - 1; i >= 0; i--) {
- 		clk_disable_unprepare(qcom->clks[i]);
--- 
-2.34.1
-
+On 8/1/2022 12:51 PM, Stephen Boyd wrote:
+> Quoting Kuogee Hsieh (2022-08-01 12:42:50)
+>> Data Symbols scrambled is required for tps4 at link training 2.
+>> Therefore SCRAMBLING_DISABLE bit should not be set for tps4 to
+>> work.
+>> RECOVERED_CLOCK_OUT_EN is for enable simple EYE test for jitter
+>> measurement with minimal equipment for embedded applications purpose
+>> and is not required to be set during normal operation.
+>> Current implementation always have RECOVERED_CLOCK_OUT_EN bit set
+>> which cause SCRAMBLING_DISABLE bit wrongly set at tps4 which prevent
+>> tps4 from working.
+>> This patch delete setting RECOVERED_CLOCK_OUT_EN to fix SCRAMBLING_DISABLE
+>> be wrongly set at tps4.
+>>
+>> Fixes: 956653250b21 ("drm/msm/dp: add support of tps4 (training pattern 4) for HBR3")
+>>
+>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/dp/dp_ctrl.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>> index ab6aa13..013ca02 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>> @@ -1214,7 +1214,7 @@ static int dp_ctrl_link_train_2(struct dp_ctrl_private *ctrl,
+>>          if (ret)
+>>                  return ret;
+>>
+>> -       dp_ctrl_train_pattern_set(ctrl, pattern | DP_RECOVERED_CLOCK_OUT_EN);
+>> +       dp_ctrl_train_pattern_set(ctrl, pattern);
+> This line is from the first patch introducing this driver. Even if this
+> is fixing tps4 support, it sounds like the bit should never have been
+> enabled in the first place. Why isn't the fixes tag targeted at the
+> first commit? Does it hurt to apply it without commit 956653250b21?
+agree, it should be fixed to first patch
