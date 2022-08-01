@@ -2,71 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 80D2F586F33
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Aug 2022 19:04:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 44759586FA2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Aug 2022 19:38:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231466AbiHAREk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Aug 2022 13:04:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52740 "EHLO
+        id S232218AbiHARiT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Aug 2022 13:38:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232361AbiHAREj (ORCPT
+        with ESMTP id S231368AbiHARiS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Aug 2022 13:04:39 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6904539B8B;
-        Mon,  1 Aug 2022 10:04:37 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id z187so1269514pfb.12;
-        Mon, 01 Aug 2022 10:04:37 -0700 (PDT)
+        Mon, 1 Aug 2022 13:38:18 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D65838B7;
+        Mon,  1 Aug 2022 10:38:17 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id z25so18462106lfr.2;
+        Mon, 01 Aug 2022 10:38:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=mcGjaEjlp9E6N37UMib26cBF56AyQFK+2CInJ6FUTCo=;
-        b=kyyjaNp7woKcXT7K+n3fQlDF5rurTZ1cFbBnUazT8LphCUB8Uunsdp08fL8++XY2um
-         qb1LS7PccKyWz0vzjzjNpvlrRmU8E0YxTMjoBsqnK93APqh93yZiOi1E31OHdKCN2E5S
-         2Bha/UZLOERNo8HHII25RrcN8NLrxzdPTQARsRVBoJCYd45cndns0/Iv/28i+nNkJjc0
-         JpbO3XGDCiRSWLri0EY8pCKOQrtrOdxG0f9Mk0TciXDMpON3bZ6TEAdvHjlZ9l3Dfbsw
-         D09IZeer2fLxvoLbGWAZZ0i30jGrtTQnx5m2C3Xhila4KMIUpX2NxB2ppfssLU6hWKhZ
-         DxhQ==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=ZEofs24gWs056HlATsdo9nk24MrkNe/lc9UM4+Isgr8=;
+        b=Y6aD/NFrfESMvBfbHzvKOWWdDZQzFo2aG0nDV5EzCdNn4dWqhzz55mE6mbkGX4X023
+         w5f+dmNk7z7SwcCdijk0Gcahw2NhGVeHrgPh7AyzIc3O4cZ0amRedlG9Aj2zCWP2Gaw1
+         VDLnkeRuX6DyUR1cfRFhGREXishTcJx85CfewWjc51jacmOqc9rgj0omjylug/jBR/iD
+         YJzuXVhof3t/CpA5FNbIDnp70aZKTec0ly7qX39koUnCNNZiPhjlFQD4ssz9erbDBNU+
+         ZGNIK7s7nKoRiy78/O/sovkFTvOuN2Lt7wAQVl7q0vBBO/ctYd5xNyZ5t3J9nT3ZJOhr
+         aOUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=mcGjaEjlp9E6N37UMib26cBF56AyQFK+2CInJ6FUTCo=;
-        b=a+ubxdJZM8puuhRXDn6j9oznJZmjpcZbJNZ2RQa4X1PfZdAJFwl0/ofQcour8aktn8
-         P6P02yjziU/20mbToYsuUKIDu/4PbR2yPMjXude5i+17YjfMfxfJjJGsW3wU4WNv7xyM
-         4Rc0blJFVIrxWrcbt/4H5UmYn2BBgVaLv34n8EkvkfLgL7GUc1/GJjlJlZW8KR0RGC9I
-         OWM2oAk4OwTDlbOTlLyv6mP8Ov98Qr6WTSegs9fgBDIy5AX900rAldiJaMrRtiOm3HZH
-         NYZR7CR1uK+CsFD85UyIkJYQZA5wPjDz7c+LSfdeaqvsORVp7HGQmiC8CssTyeBKX7uJ
-         nDGA==
-X-Gm-Message-State: ACgBeo2ncRWR9QH0JvfJP7AGmVLqQDa96XC11CDDs2gK/T07aaq1KUVz
-        R+X+kkU47W8xO7mKsX6SBCDynXPSjhs=
-X-Google-Smtp-Source: AA6agR7dVYfLrOR+qbczsM1EP90s8etc+W7B7ocadHOyqNO+TOxE1IUloB81XTDszRpVmSoiTlEyiA==
-X-Received: by 2002:a05:6a00:996:b0:52d:170f:c7ca with SMTP id u22-20020a056a00099600b0052d170fc7camr11462141pfg.86.1659373476856;
-        Mon, 01 Aug 2022 10:04:36 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
-        by smtp.gmail.com with ESMTPSA id o8-20020a17090a9f8800b001f2ef2f9c6fsm9041018pjp.56.2022.08.01.10.04.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Aug 2022 10:04:35 -0700 (PDT)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=ZEofs24gWs056HlATsdo9nk24MrkNe/lc9UM4+Isgr8=;
+        b=rxzC5wZDzuwlCiLqKo9z38mFA1vFlEj5hRH5OQ+b4ruowwy0BX/hOzQPU/wOv1hSvr
+         sPO2VzAJ8cH7F+9kGIRNHfMQGtMmpEzkJOrk5QOMwu+OjmohJxl12Le7Ea0mRoYIue2T
+         M4quu1x4ACQQMu5j79QdMiwSviEpR0Wb/r0nCpayYhv+lw974d1Hihs/SYL2DDVDiaUk
+         CsbhPBejwdDgLhhe3OV4DFanRZSMHukLJoIZWqsh0tm4W6DJBV7kvnnDX4CuY7RpdaZx
+         vk2vIQo0wI22al8+7qTDZwkI1/kd0fJOyKCrSfrkoWy7DAR4mACOHdlN6WS3O9SFoWju
+         TcYQ==
+X-Gm-Message-State: AJIora+TxKGqVISF1md73Woimkn12U2z1ZzShqiawVyHHyoDSg+OOBqG
+        Sh1hj66chXgNZyD42c5u8u/gyqcvIHQSnhbeXzoMUVds
+X-Google-Smtp-Source: AGRyM1uH70a7t4bA3N9awioJlcyh926xaZ5LmjMqI/SMlNSixVeVv7X58I/Su0ACuAScAp5/nzenLH2wV2YKiMFTjBI=
+X-Received: by 2002:ac2:4f03:0:b0:481:50f7:ac07 with SMTP id
+ k3-20020ac24f03000000b0048150f7ac07mr5615148lfr.422.1659375495569; Mon, 01
+ Aug 2022 10:38:15 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220708162632.3529864-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20220708162632.3529864-1-bjorn.andersson@linaro.org>
 From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+Date:   Mon, 1 Aug 2022 10:38:41 -0700
+Message-ID: <CAF6AEGuWj_7MPaYCcQa+ewr2MsLGNttKO=HVqmb72SPEemmizw@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/gpu: Drop qos request if devm_devfreq_add_device()
+ fails
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 3/3] drm/msm/prime: Add mmap_info support
-Date:   Mon,  1 Aug 2022 10:04:57 -0700
-Message-Id: <20220801170459.1593706-4-robdclark@gmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220801170459.1593706-1-robdclark@gmail.com>
-References: <20220801170459.1593706-1-robdclark@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -77,68 +71,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Fri, Jul 8, 2022 at 9:24 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> In the event that devm_devfreq_add_device() fails the device's qos freq
+> list is left referencing df->idle_freq and df->boost_freq. Attempting to
+> initialize devfreq again after a probe deferral will then cause invalid
+> memory accesses in dev_pm_qos_add_request().
+>
+> Fix this by dropping the requests in the error path.
+>
+> Fixes: 7c0ffcd40b16 ("drm/msm/gpu: Respect PM QoS constraints")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_drv.c       |  1 +
- drivers/gpu/drm/msm/msm_drv.h       |  1 +
- drivers/gpu/drm/msm/msm_gem_prime.c | 11 +++++++++++
- 3 files changed, 13 insertions(+)
+Reviewed-by: Rob Clark <robdclark@gmail.com>
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 1ca4a92ba96e..4979aa8187ec 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -1044,6 +1044,7 @@ static const struct drm_driver msm_driver = {
- 	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
- 	.gem_prime_import_sg_table = msm_gem_prime_import_sg_table,
- 	.gem_prime_mmap     = msm_gem_prime_mmap,
-+	.gem_prime_mmap_info= msm_gem_prime_mmap_info,
- #ifdef CONFIG_DEBUG_FS
- 	.debugfs_init       = msm_debugfs_init,
- #endif
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index 7330d7b5de8e..b4ace34ec889 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -271,6 +271,7 @@ void msm_gem_shrinker_init(struct drm_device *dev);
- void msm_gem_shrinker_cleanup(struct drm_device *dev);
- 
- int msm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma);
-+int msm_gem_prime_mmap_info(struct drm_gem_object *obj);
- struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *obj);
- int msm_gem_prime_vmap(struct drm_gem_object *obj, struct iosys_map *map);
- void msm_gem_prime_vunmap(struct drm_gem_object *obj, struct iosys_map *map);
-diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/msm_gem_prime.c
-index c1d91863df05..2bacab7a1921 100644
---- a/drivers/gpu/drm/msm/msm_gem_prime.c
-+++ b/drivers/gpu/drm/msm/msm_gem_prime.c
-@@ -5,6 +5,7 @@
-  */
- 
- #include <linux/dma-buf.h>
-+#include <uapi/linux/dma-buf.h>
- 
- #include <drm/drm_prime.h>
- 
-@@ -26,6 +27,16 @@ int msm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma)
- 	return drm_gem_prime_mmap(obj, vma);
- }
- 
-+int msm_gem_prime_mmap_info(struct drm_gem_object *obj)
-+{
-+	struct msm_gem_object *msm_obj = to_msm_bo(obj);
-+
-+	if (msm_obj->flags & MSM_BO_WC)
-+		return DMA_BUF_VM_PROT_WC;
-+
-+	return DMA_BUF_VM_PROT_CACHED;
-+}
-+
- struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *obj)
- {
- 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
--- 
-2.36.1
-
+> ---
+>  drivers/gpu/drm/msm/msm_gpu_devfreq.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> index c2ea978c8921..21e271a318ee 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> @@ -198,6 +198,8 @@ void msm_devfreq_init(struct msm_gpu *gpu)
+>
+>         if (IS_ERR(df->devfreq)) {
+>                 DRM_DEV_ERROR(&gpu->pdev->dev, "Couldn't initialize GPU devfreq\n");
+> +               dev_pm_qos_remove_request(&df->idle_freq);
+> +               dev_pm_qos_remove_request(&df->boost_freq);
+>                 df->devfreq = NULL;
+>                 return;
+>         }
+> --
+> 2.35.1
+>
