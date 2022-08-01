@@ -2,111 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B2925871FB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Aug 2022 22:08:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 19CF458721A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Aug 2022 22:13:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232733AbiHAUIZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Aug 2022 16:08:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52750 "EHLO
+        id S234645AbiHAUM5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Aug 2022 16:12:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229901AbiHAUIY (ORCPT
+        with ESMTP id S234725AbiHAUMH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Aug 2022 16:08:24 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94D2827B00;
-        Mon,  1 Aug 2022 13:08:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1659384503; x=1690920503;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=Z2sKdEmuR5GzYMOhpZvEQcMlZYe/O/eQFVyPPPVjpGM=;
-  b=vP7AIw461jRm7Q85tnBz+9hQR10wSdo3fF1HOlrzL/nRL0SZPoszkalN
-   C6VihlJ1msDuUszMMuztzX7QKh3k2UBtsubpWCAAkyeHcBQbV7FBQ5crz
-   1oyug4ILF/WgywcHZ3u83nbEmZo3qcPcJPmXOv+ns/dvFPXJqAvp5iQBS
-   A=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 01 Aug 2022 13:08:23 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Aug 2022 13:08:22 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 1 Aug 2022 13:08:22 -0700
-Received: from [10.110.16.215] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 1 Aug 2022
- 13:08:20 -0700
-Message-ID: <89f3dfa2-0983-5e33-281f-94539492d1d2@quicinc.com>
-Date:   Mon, 1 Aug 2022 13:08:13 -0700
+        Mon, 1 Aug 2022 16:12:07 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62BF33DF19;
+        Mon,  1 Aug 2022 13:12:04 -0700 (PDT)
+Received: from [192.168.2.145] (109-252-119-232.nat.spd-mgts.ru [109.252.119.232])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
+        (No client certificate requested)
+        (Authenticated sender: dmitry.osipenko)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 7244A6601BA5;
+        Mon,  1 Aug 2022 21:12:01 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1659384722;
+        bh=Ww02GIODxPF1eQWZ6lWAqTXwqaa5UD98G24csRrYi5c=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=cyu+trJyxvIzAtsbdH+eRaHNA5ReSc+WTnNm85JhbbY69TX86XOdfKFz6K6Bgtt46
+         V3Rj9gR4f7vJWIccBBNOEfRNZsgUNDlCdSLbwT61J+kMBlGmqqX6FTNgaPsV1TZd28
+         ns4xMUMxmjX0rjQf8hjiyfknQjYqDOrMwXXu71G73LR64iXE1lNPNnN1sVRtp6VgCX
+         Ys4oEw31upAURNwAx0VCNqt4XCees5Rcr7up0uXnX1WfGwn+HijQaAAHYTN0mj6GHh
+         7z79MZKBEZsa0ciGtS38BnXqmSgTgk6ikSpSREhuugd27TAEXOxtDBELcx+t7M74U5
+         gtRZNHM1r+SXg==
+Message-ID: <6b35b912-68e5-e722-0b5a-0f7bd06c22c2@collabora.com>
+Date:   Mon, 1 Aug 2022 23:11:58 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH] drm/msm/dp: delete DP_RECOVERED_CLOCK_OUT_EN to fix tps4
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v3 09/15] drm/gem: Add LRU/shrinker helper
 Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
-        <airlied@linux.ie>, <bjorn.andersson@linaro.org>,
-        <daniel@ffwll.ch>, <dianders@chromium.org>,
-        <dmitry.baryshkov@linaro.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <vkoul@kernel.org>
-CC:     <quic_aravindh@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1659382970-17477-1-git-send-email-quic_khsieh@quicinc.com>
- <CAE-0n52=zJ0ScrknAhsvJQc5hXP7+TGaoa4gnaVzsT26bQL_Uw@mail.gmail.com>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <CAE-0n52=zJ0ScrknAhsvJQc5hXP7+TGaoa4gnaVzsT26bQL_Uw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20220726175043.1027731-1-robdclark@gmail.com>
+ <20220726175043.1027731-10-robdclark@gmail.com>
+ <def8e47c-067e-0841-4ae4-1eb90244cd50@collabora.com>
+ <CAF6AEGtV4GY6=PmQh0wrKxjxk_baRCzOo=s=Uz-uKBNEn7SBBg@mail.gmail.com>
+From:   Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <CAF6AEGtV4GY6=PmQh0wrKxjxk_baRCzOo=s=Uz-uKBNEn7SBBg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 8/1/22 23:00, Rob Clark wrote:
+> On Mon, Aug 1, 2022 at 12:41 PM Dmitry Osipenko
+> <dmitry.osipenko@collabora.com> wrote:
+>>
+>> On 7/26/22 20:50, Rob Clark wrote:
+>>> +/**
+>>> + * drm_gem_lru_remove - remove object from whatever LRU it is in
+>>> + *
+>>> + * If the object is currently in any LRU, remove it.
+>>> + *
+>>> + * @obj: The GEM object to remove from current LRU
+>>> + */
+>>> +void
+>>> +drm_gem_lru_remove(struct drm_gem_object *obj)
+>>> +{
+>>> +     struct drm_gem_lru *lru = obj->lru;
+>>> +
+>>> +     if (!lru)
+>>> +             return;
+>>> +
+>>> +     mutex_lock(lru->lock);
+>>> +     lru_remove(obj);
+>>> +     mutex_unlock(lru->lock);
+>>> +}
+>>> +EXPORT_SYMBOL(drm_gem_lru_remove);
+>>
+>> I made a preliminary port of the DRM-SHMEM shrinker on top of the the
+>> latest version of dma-buf locking convention and yours LRU patches. It
+>> all works good, the only thing that is missing for the DRM-SHMEM
+>> shrinker is the drm_gem_lru_remove_locked().
+>>
+>> What about to add a locked variant of drm_gem_lru_remove()?
+> 
+> Sounds fine to me.. the only reason it didn't exist yet was because it
+> wasn't needed yet..
 
+There is no use for the drm_gem_lru_move_tail_locked() as well, you're
+not using it in the MSM driver. Hence I thought it might be good to add
+the drm_gem_lru_remove_locked(), or maybe the
+drm_gem_lru_move_tail_locked() should be dropped then?
 
-On 8/1/2022 12:51 PM, Stephen Boyd wrote:
-> Quoting Kuogee Hsieh (2022-08-01 12:42:50)
->> Data Symbols scrambled is required for tps4 at link training 2.
->> Therefore SCRAMBLING_DISABLE bit should not be set for tps4 to
->> work.
->> RECOVERED_CLOCK_OUT_EN is for enable simple EYE test for jitter
->> measurement with minimal equipment for embedded applications purpose
->> and is not required to be set during normal operation.
->> Current implementation always have RECOVERED_CLOCK_OUT_EN bit set
->> which cause SCRAMBLING_DISABLE bit wrongly set at tps4 which prevent
->> tps4 from working.
->> This patch delete setting RECOVERED_CLOCK_OUT_EN to fix SCRAMBLING_DISABLE
->> be wrongly set at tps4.
->>
->> Fixes: 956653250b21 ("drm/msm/dp: add support of tps4 (training pattern 4) for HBR3")
->>
->> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/dp/dp_ctrl.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> index ab6aa13..013ca02 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> @@ -1214,7 +1214,7 @@ static int dp_ctrl_link_train_2(struct dp_ctrl_private *ctrl,
->>          if (ret)
->>                  return ret;
->>
->> -       dp_ctrl_train_pattern_set(ctrl, pattern | DP_RECOVERED_CLOCK_OUT_EN);
->> +       dp_ctrl_train_pattern_set(ctrl, pattern);
-> This line is from the first patch introducing this driver. Even if this
-> is fixing tps4 support, it sounds like the bit should never have been
-> enabled in the first place. Why isn't the fixes tag targeted at the
-> first commit? Does it hurt to apply it without commit 956653250b21?
-agree, it should be fixed to first patch
+> I can respin w/ an addition of a _locked() version, or you can add it
+> on top in your patchset.  Either is fine by me
+
+The either option is fine by me too. If you'll keep the unused
+drm_gem_lru_move_tail_locked(), then will be nice to add
+drm_gem_lru_remove_locked().
+
+-- 
+Best regards,
+Dmitry
