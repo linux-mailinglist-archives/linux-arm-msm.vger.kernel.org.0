@@ -2,103 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5327E5863C9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Aug 2022 07:43:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAB25586571
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Aug 2022 09:00:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231799AbiHAFnN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Aug 2022 01:43:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33406 "EHLO
+        id S229555AbiHAHAs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Aug 2022 03:00:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231483AbiHAFnN (ORCPT
+        with ESMTP id S229546AbiHAHAj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Aug 2022 01:43:13 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8425F13DEB;
-        Sun, 31 Jul 2022 22:43:10 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D16D860C93;
-        Mon,  1 Aug 2022 05:43:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A91FDC433C1;
-        Mon,  1 Aug 2022 05:43:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1659332589;
-        bh=GsGF8A4Me4IQT0F9GvKCQUBEMKLVc7qayH0CzaMRxE8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=uv/bntGh5sgvS9Mm030zD5YjMm0KSOsVTmJ2zCMMkP0eDlk3DDFibIkO5TgLEOWS+
-         HOry+Jf1cRNvOngT2lMtgyHdm7k//Wez9OQQFk1AdAYoz475TMAZ3A4mA7uHYeafxI
-         RQD5OpTuZ9YybIWaOektt0IJnta/E+ZnhB/1ESWgWblwkWvfLA1vOsRtjrwlcp7aJg
-         I8Rtr5vGKxfiPhGpyMW6LUohqyVK5weFKF7QYNOeOt7vxcQ1fBv58pC8v3FoZHq1M5
-         80mtBsjQe9oLTvoT5gw2ZRsLyc03R/8DoMhvAyo5HJ9v798VaaYJyN/2bnVv9YxskM
-         rGzp29fXLaP5Q==
-Date:   Mon, 1 Aug 2022 11:12:55 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        Mon, 1 Aug 2022 03:00:39 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 647766476;
+        Mon,  1 Aug 2022 00:00:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1659337233; x=1690873233;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=0jeXv1E33L+gQVIAcgQyUPgnH9VJughBxAQmW6iNU4g=;
+  b=aRocMJtRb2fLkCq0bafAn4jmJw0Yd3ANc5w7JpufDt8cj+xnxRCnBnmM
+   Yv/+ivdMP1jdt1vLLaeq9IBR0+isPBvyV3c3iveMjKfxxMBvusuq7FvrF
+   Gz9/F5UMNMXZS9gtr2dfxtoJ41sC2ZHmgl0cE0fozU5WVBHMKis1MaLCi
+   o=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 01 Aug 2022 00:00:31 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Aug 2022 00:00:30 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 1 Aug 2022 00:00:29 -0700
+Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 1 Aug 2022 00:00:25 -0700
+From:   Krishna Kurapati <quic_kriskura@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Johan Hovold <johan@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: Re: [RFC PATCH 0/4] cpufreq: qcom-hw: Move clocks to CPU node
-Message-ID: <20220801054255.GA12039@thinkpad>
-References: <cover.1657695140.git.viresh.kumar@linaro.org>
- <20220715160933.GD12197@workstation>
- <20220718015742.uwskqo55qd67jx2w@vireshk-i7>
- <20220801023756.76jswkbwivuntqof@vireshk-i7>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+CC:     Randy Dunlap <rdunlap@infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>
+Subject: [PATCH v2] usb: dwc3: qcom: Provide stubs for dwc3_qcom_read_usb2_speed function
+Date:   Mon, 1 Aug 2022 12:30:15 +0530
+Message-ID: <1659337215-20421-1-git-send-email-quic_kriskura@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220801023756.76jswkbwivuntqof@vireshk-i7>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 01, 2022 at 08:07:56AM +0530, Viresh Kumar wrote:
-> On 18-07-22, 07:27, Viresh Kumar wrote:
-> > The OPP tables, which are part of the CPU nodes, mentions clock rates.
-> > Are these values for the cxo/gpll clocks or the clock that reaches the
-> > CPUs? I believe the latter. The DT is not really complete if the CPU
-> > node mentions the frequency, but not the source clock. It works for
-> > you because you don't want to do clk_set_rate() in this case, but then
-> > it leaves other frameworks, like OPP, confused and rightly so.
-> > 
-> > Normally, there is always a difference in what the OPP table contains
-> > as frequency value and what the hardware programs, mostly it is small
-> > though. It shouldn't prevent us from having the hierarchy clearly
-> > defined in the DT.
-> > 
-> > Based on your description, I think it would be better to make
-> > cpufreq-hw a clock provider and CPUs the consumer of it. It would then
-> > allow the OPP core to not carry the hack to make it all work.
-> 
-> Bjorn / Mani,
-> 
-> Can we please get this sorted out ? I don't want to carry an unnecessary hack in
-> the OPP core for this.
-> 
+Dwc3 Qcom driver makes use of usb_hub_find_child API in its efforts
+to get speed of connected devices (HS/LS/FS) and enable interrupts
+accordingly. usb_hub_find_child API is a part of usb core compiled
+either into the kernel or as a module (CONFIG_USB= Y or M). In some
+builds (make randconfig for i386) CONFIG_USB is not enabled and the
+usb core is not compiled resulting in linking errors.
 
-I'm waiting for inputs from Bjorn.
+Provide stubs for dwc3_qcom_read_usb2_speed function to use
+usb_hub_find_child API only if CONFIG_USB is enabled. Else return
+USB_SPEED_UNKNOWN.
 
-@Bjorn: What do you think of the proposal to add qcom-cpufreq-hw as the clk
-provider for CPUs?
+Fixes: 6895ea55c385 (usb: dwc3: qcom: Configure wakeup interrupts during suspend)
+Reported-by: Randy Dunlap <rdunlap@infradead.org>
+Suggested-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org>
+---
+v2: Updated commit text to include cases when CONFIG_USB=m as well.
 
-Thanks,
-Mani
+ drivers/usb/dwc3/dwc3-qcom.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-> -- 
-> viresh
-
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index c5e482f..bd8dc5a 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -299,6 +299,7 @@ static void dwc3_qcom_interconnect_exit(struct dwc3_qcom *qcom)
+ 	icc_put(qcom->icc_path_apps);
+ }
+ 
++#ifdef CONFIG_USB
+ static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
+ {
+ 	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
+@@ -318,6 +319,12 @@ static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
+ 
+ 	return udev->speed;
+ }
++#else
++static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
++{
++	return USB_SPEED_UNKNOWN;
++}
++#endif
+ 
+ static void dwc3_qcom_enable_wakeup_irq(int irq, unsigned int polarity)
+ {
 -- 
-மணிவண்ணன் சதாசிவம்
+2.7.4
+
