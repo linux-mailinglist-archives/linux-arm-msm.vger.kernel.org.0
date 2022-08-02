@@ -2,184 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FB9658779B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 09:14:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D8755877A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 09:15:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233069AbiHBHOO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Aug 2022 03:14:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53574 "EHLO
+        id S235685AbiHBHPd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Aug 2022 03:15:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233057AbiHBHON (ORCPT
+        with ESMTP id S232948AbiHBHPb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Aug 2022 03:14:13 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDACE491D4
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Aug 2022 00:14:11 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id y23so4341845ljh.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Aug 2022 00:14:11 -0700 (PDT)
+        Tue, 2 Aug 2022 03:15:31 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A1D72A72D
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Aug 2022 00:15:30 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id y11so20657277lfs.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Aug 2022 00:15:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=VO7iKisYqXn9gq//Drvzc4IU8FHAbNWbiNlXqoODgOM=;
-        b=BHY9W6lthh/+SlYcXhzf70uhuZagL1J/CwBCzUmFuyXKE0AnmUk3pZJ5BbF7yrgkkz
-         4+UKPB7g/1kcN0oJ+P3369aGQq9DXdsqJCtcyvKpib8uWCA3rw/EznQmChAS18o7r2+G
-         cSSHN2xMb7QaroRC3i39Sv9zoEQQBqFhDM/sAJ1Isf4UqXHEPiE4pcCywtmDIXwugaa1
-         pn0vdICsjDOqAiZzdUe8cczXT3mzcme7KmNwtVrKJB3EKwt15P3OZkfj+Pe7ciNZD1mx
-         fC61YXxXrpsD3UibIQTCA/AfZ+y2Nf4bM12NrWSaEEpo3hI4u+g9AefaHxvN1jGXHBRh
-         xljg==
+        bh=c61IBeGENLBrfZtlLVNhveGWmLmYNBW+8+c+xekhbN4=;
+        b=xisHHreQsg8+3CNQvjUzLiFcibwj9uUxJ2QlQewRTagHGQoP36+CZbvfc/rrpsOTsr
+         5esKvZs4yhrgNcCEKQfRA3I3wq+Z+aiJ4Y9V4JV9TjrlXTOYVgTtCTsuw7qLBwDyRZ8r
+         WFsaNN8T6wlUS6CDzl9oPjiDS/FhO/T5pJ2zo8hhy/FhwQRYsHZfYcgHV10LIKiWJ/Po
+         lUoNmmJpUGJxZvrh8NRphScyouZmrcNiWwwzMayOFyD/ettTncNk4fs4mGCUJ4OyrRKU
+         1kIDK3/XM4M0j7gW7SDCyhs9oNuaWY1jF6MdTEPNM1s52BlkfE+Zztk6ElhqAeojqbnP
+         NYYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=VO7iKisYqXn9gq//Drvzc4IU8FHAbNWbiNlXqoODgOM=;
-        b=SVNSEcRKUwIHO0m/ORhwHTgCd5am+b35+Gbu4esPBE2ardzyjic2HiimXR4XJmkkvH
-         oxCOxCF2AYn5R+LxaQsyxEGjs5k9v3hJsfdOcufBW3jY3wrXaacRP6NQYhxl+FeInc2r
-         LyFW4LUF5pLHi2PA4+dcXo+4/VgETj/OUpZs/Q+y/onz4Nw9JQ67+loY/lT1mfxFo8MY
-         EKSanUZv8b0yb4FNnav5czOP/Uk50QoXQgGxZCtSzWXXT0BV7eAoP3jccg2wJmnpquXX
-         l8VLHar3LIWvHP/ZK3S1VQnhD1LaOkC0a3avU2HDS0eDXmz/+qOTA5P2qciIH4jCWIpa
-         hoWg==
-X-Gm-Message-State: ACgBeo2EG/+Nu7n34z69Ikqe/RHePZn0VH5rHjAuL7iys+05qWTW5CTG
-        M7CcZGzwd9XARcx3/J2Z5I/kuQ==
-X-Google-Smtp-Source: AA6agR6/Jmi2axMFmM5dshEATFksCp6XfsK+VigG+KH8Rzfsrr0wC0UgMCu/xHtn///Lcw2NpmrIKA==
-X-Received: by 2002:a2e:90c2:0:b0:25e:5d60:14b with SMTP id o2-20020a2e90c2000000b0025e5d60014bmr382110ljg.24.1659424450278;
-        Tue, 02 Aug 2022 00:14:10 -0700 (PDT)
+        bh=c61IBeGENLBrfZtlLVNhveGWmLmYNBW+8+c+xekhbN4=;
+        b=1ApUClOJKRw/76fFU0ipqldB+Rdvw2Y8+LVlfozU5zibfgqn9J3PhcDC3WcyHSaVlo
+         7U+jtCCzHetVvtTeURz/biYY7+ZtKzJx0bt/1PFi7GAZSGbFj0eYEU8ZvMpKBkxIUu8z
+         aKy23OfQGXR5/EjwKL9Ic5WHLtZQEztvI805wlRjHab70CG/+aWGnVzUCqZ4LCt2mhZi
+         RZjZB9XP0oazXl9fAIGkUWA5Y7sz9rqcr/WQ6fFQt/YWTMs47se0elK2JbNKyfKHdCGv
+         j1Rp1XNqoxzro5MXAnAWl/CCA7ItXTEZqrXPeEqTBRxtHTUf20j//3ndlLQnEipOQvbu
+         Lpiw==
+X-Gm-Message-State: ACgBeo3vJ8MTz8ifozYSWtaCU33ivG7cdpd7NW5khig477G6NXZGrrVd
+        FCpK6nBQ6vrNcE7S4qw6ZHPamiIPMHWJ1Q==
+X-Google-Smtp-Source: AA6agR4DKQ54iF2lBgq5cgDu5t0vw5ELL8IbGd6dlICfMebN3W4GFM72tUtCrYKW0uIY59zfuFAv0Q==
+X-Received: by 2002:a05:6512:3c8d:b0:48a:f74a:67b6 with SMTP id h13-20020a0565123c8d00b0048af74a67b6mr3619423lfv.231.1659424528774;
+        Tue, 02 Aug 2022 00:15:28 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id z19-20020a2ebe13000000b0025e2b567434sm1801513ljq.9.2022.08.02.00.14.09
+        by smtp.gmail.com with ESMTPSA id g12-20020a2ea4ac000000b0025e48907929sm922293ljm.23.2022.08.02.00.15.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Aug 2022 00:14:09 -0700 (PDT)
-Message-ID: <8715e07f-9d58-1ae3-9a3a-25828b545905@linaro.org>
-Date:   Tue, 2 Aug 2022 10:14:09 +0300
+        Tue, 02 Aug 2022 00:15:28 -0700 (PDT)
+Message-ID: <9098554e-5327-0b7f-f4d0-a81880556136@linaro.org>
+Date:   Tue, 2 Aug 2022 10:15:27 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH v3 5/8] drm/msm/a6xx: Ensure CX collapse during gpu
- recovery
+Subject: Re: [PATCH 3/5] clk: qcom: gpucc-sc7280: Add cx collapse reset
+ support
 Content-Language: en-GB
 To:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
         freedreno <freedreno@lists.freedesktop.org>,
         dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Jordan Crouse <jordan@cosmicpenguin.net>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <1659174051-27816-1-git-send-email-quic_akhilpo@quicinc.com>
- <20220730150952.v3.5.I176567525af2b9439a7e485d0ca130528666a55c@changeid>
+References: <1659172664-10345-1-git-send-email-quic_akhilpo@quicinc.com>
+ <20220730144713.3.I5e64ff4b77bb9079eb2edeea8a02585c9e76778f@changeid>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220730150952.v3.5.I176567525af2b9439a7e485d0ca130528666a55c@changeid>
+In-Reply-To: <20220730144713.3.I5e64ff4b77bb9079eb2edeea8a02585c9e76778f@changeid>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/07/2022 12:40, Akhil P Oommen wrote:
-> Because there could be transient votes from other drivers/tz/hyp which
-> may keep the cx gdsc enabled, we should poll until cx gdsc collapses.
-> We can use the reset framework to poll for cx gdsc collapse from gpucc
-> clk driver.
-> 
-> This feature requires support from the platform's gpucc driver.
+On 30/07/2022 12:17, Akhil P Oommen wrote:
+> Allow a consumer driver to poll for cx gdsc collapse through Reset
+> framework.
 > 
 > Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
 > ---
 > 
-> Changes in v3:
-> - Use reset interface from gpucc driver to poll for cx gdsc collapse
->    https://patchwork.freedesktop.org/series/106860/
+>   drivers/clk/qcom/gpucc-sc7280.c | 6 ++++++
+>   1 file changed, 6 insertions(+)
 > 
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 4 ++++
->   drivers/gpu/drm/msm/msm_gpu.c         | 4 ++++
->   drivers/gpu/drm/msm/msm_gpu.h         | 4 ++++
->   3 files changed, 12 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 1b049c5..721d5e6 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -10,6 +10,7 @@
->   
->   #include <linux/bitfield.h>
->   #include <linux/devfreq.h>
-> +#include <linux/reset.h>
->   #include <linux/soc/qcom/llcc-qcom.h>
->   
->   #define GPU_PAS_ID 13
-> @@ -1224,6 +1225,9 @@ static void a6xx_recover(struct msm_gpu *gpu)
->   	/* And the final one from recover worker */
->   	pm_runtime_put_sync(&gpu->pdev->dev);
->   
-> +	/* Call into gpucc driver to poll for cx gdsc collapse */
-> +	reset_control_reset(gpu->cx_collapse);
-
-Do we have a race between the last pm_runtime_put_sync(), this polling 
-and other voters removing their votes beforehand?
-
-> +
->   	pm_runtime_use_autosuspend(&gpu->pdev->dev);
->   
->   	if (active_submits)
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> index 07e55a6..4a57627 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.c
-> +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> @@ -14,6 +14,7 @@
->   #include <generated/utsrelease.h>
->   #include <linux/string_helpers.h>
->   #include <linux/devcoredump.h>
-> +#include <linux/reset.h>
->   #include <linux/sched/task.h>
->   
->   /*
-> @@ -903,6 +904,9 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->   	if (IS_ERR(gpu->gpu_cx))
->   		gpu->gpu_cx = NULL;
->   
-> +	gpu->cx_collapse = devm_reset_control_get_optional(&pdev->dev,
-> +			"cx_collapse");
-> +
->   	gpu->pdev = pdev;
->   	platform_set_drvdata(pdev, &gpu->adreno_smmu);
->   
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-> index 6def008..ab59fd2 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.h
-> +++ b/drivers/gpu/drm/msm/msm_gpu.h
-> @@ -13,6 +13,7 @@
->   #include <linux/interconnect.h>
->   #include <linux/pm_opp.h>
->   #include <linux/regulator/consumer.h>
-> +#include <linux/reset.h>
->   
->   #include "msm_drv.h"
->   #include "msm_fence.h"
-> @@ -268,6 +269,9 @@ struct msm_gpu {
->   	bool hw_apriv;
->   
->   	struct thermal_cooling_device *cooling;
-> +
-> +	/* To poll for cx gdsc collapse during gpu recovery */
-> +	struct reset_control *cx_collapse;
+> diff --git a/drivers/clk/qcom/gpucc-sc7280.c b/drivers/clk/qcom/gpucc-sc7280.c
+> index 9a832f2..f5df51d 100644
+> --- a/drivers/clk/qcom/gpucc-sc7280.c
+> +++ b/drivers/clk/qcom/gpucc-sc7280.c
+> @@ -433,12 +433,18 @@ static const struct regmap_config gpu_cc_sc7280_regmap_config = {
+>   	.fast_io = true,
 >   };
 >   
->   static inline struct msm_gpu *dev_to_gpu(struct device *dev)
+> +static const struct qcom_reset_map gpucc_sc7280_resets[] = {
+> +	[GPU_CX_COLLAPSE] = { .op = gdsc_wait_for_collapse, .priv = &cx_gdsc },
+> +};
+> +
+>   static const struct qcom_cc_desc gpu_cc_sc7280_desc = {
+>   	.config = &gpu_cc_sc7280_regmap_config,
+>   	.clks = gpu_cc_sc7280_clocks,
+>   	.num_clks = ARRAY_SIZE(gpu_cc_sc7280_clocks),
+>   	.gdscs = gpu_cc_sc7180_gdscs,
+>   	.num_gdscs = ARRAY_SIZE(gpu_cc_sc7180_gdscs),
+> +	.resets = gpucc_sc7280_resets,
+> +	.num_resets = ARRAY_SIZE(gpucc_sc7280_resets),
+
+An implementation question. Do we have to poll for the GDSC on platforms 
+like sm8150/sm8250 which have the plain BCR resets?
+
+>   };
+>   
+>   static const struct of_device_id gpu_cc_sc7280_match_table[] = {
 
 
 -- 
