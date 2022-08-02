@@ -2,120 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A341587F77
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 17:52:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB937588004
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 18:12:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237605AbiHBPww (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Aug 2022 11:52:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54790 "EHLO
+        id S237878AbiHBQMl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Aug 2022 12:12:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237470AbiHBPwN (ORCPT
+        with ESMTP id S237769AbiHBQMY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Aug 2022 11:52:13 -0400
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4416932446;
-        Tue,  2 Aug 2022 08:51:57 -0700 (PDT)
-Received: by mail-pg1-x533.google.com with SMTP id s206so12694321pgs.3;
-        Tue, 02 Aug 2022 08:51:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=tv9XZJtMf2UZGPK9r5daZO8lAjNs4ugv43Of9czCQIM=;
-        b=ewcgdHYUnR0pjbQr7lLrbohv0CIdWnfTaVa/OdLqKa56REj1mZVDD3loCWUUXysHJb
-         r1nv6LvBlTqUGW5Yn7MekuRqEHSPnRvgfxi8RbvnxLAPMdUnKJd3gAzv7ZK0ctBMmKFK
-         Cx5FfFd7GebaOk14M/0AQVBAEON772Rfp5BU7zVsirwUcKBaErJ3PfTATLVq4G/Bw+B/
-         vKxsWxn33KGmbgUmEWsOn1uNznXGWHDoB+nDhkdNc08TKQ/kKKSY/K7/EoMlTGURdLwc
-         r5hqBVOcuKvFTYPqyq2XRu1L0cPf/efn+WxvfX6OEEhuXH/KXeoqWzwOqXhYXUDDISLP
-         8bUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=tv9XZJtMf2UZGPK9r5daZO8lAjNs4ugv43Of9czCQIM=;
-        b=68dfkfG8SJFu1kDPS5mMp5mH00Dupkd5w9UkwsbbM9/7zL4X0BAT2d3Nqz8kfQfBSS
-         TNxOV1uAhfoehp+oola1czTcPbi+odBcvUdNeCYR4GA898RF+hbWnQXGIGkUuL/CPKMh
-         2NcmLWxQENsPQZh2ITNTFlpgrKRlQW1jx00e37bxDZoXogLVvo9VNv6b2vnm0bUW3CNp
-         CHJh667quPOvAuMZz1fbB8tlUS5bAJLcId8NMu7h7RxNXZnkm0GP4iUE2vRzILOSjvYe
-         vxlKPUMu5+ddwObdoDL825vZeG+1PiAsm4ftZYj29L7+H5ABFavOF9ewcDWWhDScFqEA
-         b1ZQ==
-X-Gm-Message-State: ACgBeo2E1xbxP5MDZ9O/bykAd3zlFhXHVBg0uIlLYfHgnzFieLxCWKtS
-        ELd9ojVCrY+JXN/Uvemt+Cw=
-X-Google-Smtp-Source: AA6agR7fjw8jn0jQNN1u5zHtoNHt/wIMLL6YxqIYFMtVGwrrRbd03oug9Bjkf/Ril+hPJDZo6qr8WQ==
-X-Received: by 2002:aa7:82c2:0:b0:52d:2317:8938 with SMTP id f2-20020aa782c2000000b0052d23178938mr15195307pfn.75.1659455516225;
-        Tue, 02 Aug 2022 08:51:56 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
-        by smtp.gmail.com with ESMTPSA id s20-20020aa78bd4000000b0052d5e93fcb7sm5315612pfd.191.2022.08.02.08.51.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Aug 2022 08:51:55 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v4 15/15] drm/msm/gem: Convert to lockdep assert
-Date:   Tue,  2 Aug 2022 08:51:48 -0700
-Message-Id: <20220802155152.1727594-16-robdclark@gmail.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220802155152.1727594-1-robdclark@gmail.com>
-References: <20220802155152.1727594-1-robdclark@gmail.com>
+        Tue, 2 Aug 2022 12:12:24 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0385850052;
+        Tue,  2 Aug 2022 09:10:35 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 307A2B81F3C;
+        Tue,  2 Aug 2022 16:10:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A2EC433C1;
+        Tue,  2 Aug 2022 16:10:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1659456616;
+        bh=Nkv50wjEjwjvKeT/CT9Bw+rEyYj4hlT2HtGPgfNDiLg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ShiYKZZll/TUcf/6YOoavTXXFuv6UfUKJ2oZKkZDCc6SdXS05rIqn1MbTzJF2xR9b
+         cWIArTjsMIBb4kDksZsEUYg+bg8b6TYq7LT5uaRQ0udeyISEXDWRY1Tr0dLMDctFxR
+         rp7GUPOmwY7xN8bE/Zom87JjderUmY9BplnxM6D+8hy4FR5svQ5/EKqvvoOqcRAOqm
+         Oifc5PLfGRdNqO0s7gBTIOEKIVRl4Ek4boSZuhMvfMINDI4mZLwP8rytd2LV9xrBWi
+         XhqBzMg+8LWWV89V3HMUIZ0ZJ5+CPI/DjC3UqRXT8MeJg9Hl7mWS7DwqPD1D8cSdHe
+         5ak6OA9XmTRcg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oIuTY-0002II-Dw; Tue, 02 Aug 2022 18:10:33 +0200
+Date:   Tue, 2 Aug 2022 18:10:32 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] usb: dwc3: qcom: Defer dwc3-qcom probe if dwc3 isn't
+ probed properly
+Message-ID: <YulMeEngNyoBOGBP@hovoldconsulting.com>
+References: <1657891312-21748-1-git-send-email-quic_kriskura@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1657891312-21748-1-git-send-email-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Fri, Jul 15, 2022 at 06:51:52PM +0530, Krishna Kurapati wrote:
+> On SC7180 devices, it is observed that dwc3 probing is deferred
+> because device_links_check_suppliers() finds that '88e3000.phy'
+> isn't ready yet.
+> 
+> As a part of its probe call, dwc3-qcom driver checks if dwc3 core
+> is wakeup capable or not. If the dwc3 core is wakeup capable, driver
+> configures dwc-qcom's power domain to be always ON. Also it configures
+> dp/dm interrupts accordingly to support wakeup from system suspend.
+> 
+> More info regarding the same can be found at:
+> commit d9be8d5c5b03 ("usb: dwc3: qcom: Keep power domain on to retain controller status")
+> commit 6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
+> 
+> In the event, dwc3 probe gets deferred and is processed after dwc3-qcom
+> probe, driver ends up reading the wakeup capability of dwc3 core as false
+> leading to instability in suspend/resume path.
+> 
+> To avoid this scenario, ensure dwc3_probe is successful by checking
+> if appropriate driver is assigned to it or not after the of_platform_populate
+> call. If it isn't then defer dwc3-qcom probe as well.
+> 
+> Fixes: 649f5c842ba3 ("usb: dwc3: core: Host wake up support from system suspend")
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
+> v2: Set return value to EPROBE_DEFER to drop reference to dwc3 node
+> 
+>  drivers/usb/dwc3/dwc3-qcom.c | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index 7703655..6676b39 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -722,6 +722,9 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
+>  		dev_err(dev, "failed to get dwc3 platform device\n");
+>  	}
+>  
+> +	if (!qcom->dwc3->dev.driver)
+> +		ret = -EPROBE_DEFER;
+> +
+>  node_put:
+>  	of_node_put(dwc3_np);
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_gem.h | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+NAK.
 
-diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index 3c6add51d13b..c4844cf3a585 100644
---- a/drivers/gpu/drm/msm/msm_gem.h
-+++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -197,8 +197,8 @@ msm_gem_unlock(struct drm_gem_object *obj)
- 	dma_resv_unlock(obj->resv);
- }
- 
--static inline bool
--msm_gem_is_locked(struct drm_gem_object *obj)
-+static inline void
-+msm_gem_assert_locked(struct drm_gem_object *obj)
- {
- 	/*
- 	 * Destroying the object is a special case.. msm_gem_free_object()
-@@ -212,13 +212,10 @@ msm_gem_is_locked(struct drm_gem_object *obj)
- 	 * Unfortunately lockdep is not aware of this detail.  So when the
- 	 * refcount drops to zero, we pretend it is already locked.
- 	 */
--	return dma_resv_is_locked(obj->resv) || (kref_read(&obj->refcount) == 0);
--}
--
--static inline void
--msm_gem_assert_locked(struct drm_gem_object *obj)
--{
--	GEM_WARN_ON(!msm_gem_is_locked(obj));
-+	lockdep_assert_once(
-+		(kref_read(&obj->refcount) == 0) ||
-+		(lockdep_is_held(&obj->resv->lock.base) != LOCK_STATE_NOT_HELD)
-+	);
- }
- 
- /* imported/exported objects are not purgeable: */
--- 
-2.36.1
+We should not be adding hacks like this to the driver.
 
+There are other ways to avoid this, but please take a look at the
+following series which makes the problem identified by this patch go
+away first:
+
+	https://lore.kernel.org/all/20220802151404.1797-1-johan+linaro@kernel.org
+
+Johan
