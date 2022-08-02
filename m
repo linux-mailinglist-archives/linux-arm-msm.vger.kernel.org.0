@@ -2,153 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EFBFC587632
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 06:16:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A367558769C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 07:22:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235404AbiHBEQe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Aug 2022 00:16:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40156 "EHLO
+        id S232999AbiHBFV6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Aug 2022 01:21:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235156AbiHBEQd (ORCPT
+        with ESMTP id S229459AbiHBFV5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Aug 2022 00:16:33 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63BFA45F42
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Aug 2022 21:16:31 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id d16so4232848pll.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Aug 2022 21:16:31 -0700 (PDT)
+        Tue, 2 Aug 2022 01:21:57 -0400
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D4251AF2B;
+        Mon,  1 Aug 2022 22:21:56 -0700 (PDT)
+Received: by mail-qk1-x72f.google.com with SMTP id e12so7346014qkl.2;
+        Mon, 01 Aug 2022 22:21:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=C6HB9uTf60BVvbZncr5sQL+IFnZUsS8J9nTGcw/j7Rw=;
-        b=I5zwxvwvpyxGnk+WHFLO8Pq0Xiy8ph21o0HfIj5lWh/zSJvjtYDcB7CfxzHEFe2k6Z
-         nLLHXeQ4HgdBoguSnbmcfEqCwWJZt37yUWd+EL7QBE42k6gwXCVS4gBq4vZaRaCqh2a9
-         pA1JQ8GlvGGx8vQs2wvT/1XEcX9zqjDorlZfCllU3IqBCnRN5AuCTG5+sn+PbBR/9VJa
-         BUOH68KZ83K4c4kjVl/hBectysySO199fxqsDvlTXU4wVZhciWTjyaMU+OJEvbn78w3q
-         ubZohpLWD09yHAQNsmQ0jWFcIMY0sNNUizQwXK+c7QzSqu9LS1EVInAMtgBmED5fVBbf
-         JZ+A==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=k7svTWijbOHvAesQ0w5EVWAjAc0X5sP2sPoMjwLsgKk=;
+        b=AyTNojgznH7RvlKYPmau0BCzz169o8wYWqsBn70HAoMPN8/aWJyvyGTo7o9KwH39UJ
+         0gr45C5VdX3nfPmG8K2FrQI1P8eF0o9QKW74VigdEzcpf8lI3otJyy+S2xn/mgTJW2n0
+         arFvEWVQ02Zb6aTtoxL8JkFFSuawp7y4s8/QN2QsA1jSUwpTASFnNE+EidYMbIwGYZtE
+         0TO/suv5+trjuqnS0zt58hvnXM27egXlgTVG/n3A9vEvP1L+qggHySmw6tyjZmQFhihD
+         FWsZj5vVxR2Lyth2gC0lz/DLu4isYxtvHQRW3JwHSiH/ACfii+q8enQe86ldVe+mMyY7
+         uIgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=C6HB9uTf60BVvbZncr5sQL+IFnZUsS8J9nTGcw/j7Rw=;
-        b=dCHGQIfpOUn4OdjG10+yBGhnnXgysZlrq2sjsKcPG18B1jvCUtV5lXeMfEENH/Z8IF
-         xcCfwvVj77oLrDDKxdDH1NT8T/Lh5V1oeMOaSHodqQew1tou/mfiTWCsb1Dv/BfTwhGz
-         zAcX53x4lYQRcbp8HpNKlV0mNvM5l4mrP3QoRtrrBFjZZWUMF71al/Xkt3lK51tAYpVS
-         CGPjKcJ3+QTJm59nsDXHRZWRbyeW42QpCLYuSchDwQj/7DrG5YeTZKdgqufHn8H6IQ4s
-         WB36DGduoVsCZLVETnHWGNZipAY9/actePbYaRyTGLv9aAg+n2qRvs1N45KJeX+rSovn
-         JzsQ==
-X-Gm-Message-State: ACgBeo2xT3CiPF7E6hOptbtCZQfi8zYfn70ZnP2qkEBnP/jfoVjEiVRG
-        niQfkHhJcDOO24cLHnsHZScJcw==
-X-Google-Smtp-Source: AA6agR55b4L32phqlkvghpqYBJ6oUKz/RakdVBDEkF0S4WlcvUiscniySP1WanMVX+5sSPICd6zHBA==
-X-Received: by 2002:a17:90a:930b:b0:1ed:5441:1fff with SMTP id p11-20020a17090a930b00b001ed54411fffmr22416378pjo.238.1659413790733;
-        Mon, 01 Aug 2022 21:16:30 -0700 (PDT)
-Received: from localhost ([122.171.18.80])
-        by smtp.gmail.com with ESMTPSA id m9-20020a170902f64900b0016d2e8c2228sm10356025plg.238.2022.08.01.21.16.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Aug 2022 21:16:29 -0700 (PDT)
-Date:   Tue, 2 Aug 2022 09:46:26 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=k7svTWijbOHvAesQ0w5EVWAjAc0X5sP2sPoMjwLsgKk=;
+        b=LRi2D2wB690LDbYfSbFKi41zoKGCid3j4DuLnbnlOneHIcCNgOURflaKzzs+an9RIa
+         HdNPU9BwLLavmLDtmFSSs167CMKp+kHUzdLRhbEqfVyCkmnt8B0qadX50IPxxVkOsEP/
+         EM1SVe6mr/EBhT6SjPh2UOBs6DySXDO92UfdVLo/Jex+e7QGxXxmnt6lQIZu0WALOm/K
+         6suaHRKlZ6poIfdeP5R79wt/A6o3IAc9yozxVqUcMI7cQcmA13eeEDDINcFKEAxGCe/L
+         wYiKoCJKdK3YsIGZ3j8fwjptvG5sBxR77QCvBMqVSClhANC0eMo2L/M/Q2A+KuZmj8dD
+         L6mA==
+X-Gm-Message-State: AJIora9m6Eb4JackTT1jT4qeWjxQ4TLAVqOdSPvRrFqujGmFaLb5JhMf
+        KoAwA+dytp38dgFW3/TjvAY=
+X-Google-Smtp-Source: AGRyM1vS/GqkW//9PDrWhcECfukLSsdFSrfigwfHztLWyzDXNbSWOeiZMRi07ZNo+/CfK63V6qP4JQ==
+X-Received: by 2002:a05:620a:28c8:b0:6b5:e327:3358 with SMTP id l8-20020a05620a28c800b006b5e3273358mr13807751qkp.365.1659417715563;
+        Mon, 01 Aug 2022 22:21:55 -0700 (PDT)
+Received: from ?IPV6:2600:4040:2036:c00:8cba:859f:2aeb:cce8? ([2600:4040:2036:c00:8cba:859f:2aeb:cce8])
+        by smtp.gmail.com with ESMTPSA id bz24-20020a05622a1e9800b003051ea4e7f6sm8377507qtb.48.2022.08.01.22.21.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Aug 2022 22:21:55 -0700 (PDT)
+Message-ID: <cbccc7c3-a45e-43d0-50d9-55776579afa1@gmail.com>
+Date:   Tue, 2 Aug 2022 01:21:54 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2 2/3] ARM: dts: qcom: msm8960: add the device node of
+ USB1
+Content-Language: en-US
+To:     Shinjo Park <peremen@gmail.com>
+Cc:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Linux Kernel Functional Testing <lkft@linaro.org>
-Subject: Re: [PATCH] venus: pm_helpers: Fix warning in OPP during probe
-Message-ID: <20220802041626.cjsuatqecw3qxsxm@vireshk-i7>
-References: <20220801151641.1069181-1-stanimir.varbanov@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220801151641.1069181-1-stanimir.varbanov@linaro.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <76ed8999-c211-f8ea-c70c-21fddd75a896@linaro.org>
+ <20220730081412.14297-1-peremen@gmail.com>
+From:   Rudraksha Gupta <guptarud@gmail.com>
+In-Reply-To: <20220730081412.14297-1-peremen@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01-08-22, 18:16, Stanimir Varbanov wrote:
-> Fix the following WARN triggered during Venus driver probe on
-> 5.19.0-rc8-next-20220728:
-> 
->  WARNING: CPU: 7 PID: 339 at drivers/opp/core.c:2471 dev_pm_opp_set_config+0x49c/0x610
->  Modules linked in: qcom_spmi_adc5 rtc_pm8xxx qcom_spmi_adc_tm5 leds_qcom_lpg led_class_multicolor
->   qcom_pon qcom_vadc_common venus_core(+) qcom_spmi_temp_alarm v4l2_mem2mem videobuf2_v4l2 msm(+)
->   videobuf2_common crct10dif_ce spi_geni_qcom snd_soc_sm8250 i2c_qcom_geni gpu_sched
->   snd_soc_qcom_common videodev qcom_q6v5_pas soundwire_qcom drm_dp_aux_bus qcom_stats
->   drm_display_helper qcom_pil_info soundwire_bus snd_soc_lpass_va_macro mc qcom_q6v5
->   phy_qcom_snps_femto_v2 qcom_rng snd_soc_lpass_macro_common snd_soc_lpass_wsa_macro
->   lpass_gfm_sm8250 slimbus qcom_sysmon qcom_common qcom_glink_smem qmi_helpers
->   qcom_wdt mdt_loader socinfo icc_osm_l3 display_connector
->   drm_kms_helper qnoc_sm8250 drm fuse ip_tables x_tables ipv6
->  CPU: 7 PID: 339 Comm: systemd-udevd Not tainted 5.19.0-rc8-next-20220728 #4
->  Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
->  pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
->  pc : dev_pm_opp_set_config+0x49c/0x610
->  lr : dev_pm_opp_set_config+0x58/0x610
->  sp : ffff8000093c3710
->  x29: ffff8000093c3710 x28: ffffbca3959d82b8 x27: ffff8000093c3d00
->  x26: ffffbca3959d8e08 x25: ffff4396cac98118 x24: ffff4396c0e24810
->  x23: ffff4396c4272c40 x22: ffff4396c0e24810 x21: ffff8000093c3810
->  x20: ffff4396cac36800 x19: ffff4396cac96800 x18: 0000000000000000
->  x17: 0000000000000003 x16: ffffbca3f4edf198 x15: 0000001cba64a858
->  x14: 0000000000000180 x13: 000000000000017e x12: 0000000000000000
->  x11: 0000000000000002 x10: 0000000000000a60 x9 : ffff8000093c35c0
->  x8 : ffff4396c4273700 x7 : ffff43983efca6c0 x6 : ffff43983efca640
->  x5 : 00000000410fd0d0 x4 : ffff4396c4272c40 x3 : ffffbca3f5d1e008
->  x2 : 0000000000000000 x1 : ffff4396c2421600 x0 : ffff4396cac96860
->  Call trace:
->   dev_pm_opp_set_config+0x49c/0x610
->   devm_pm_opp_set_config+0x18/0x70
->   vcodec_domains_get+0xb8/0x1638 [venus_core]
->   core_get_v4+0x1d8/0x218 [venus_core]
->   venus_probe+0xf4/0x468 [venus_core]
->   platform_probe+0x68/0xd8
->   really_probe+0xbc/0x2a8
->   __driver_probe_device+0x78/0xe0
->   driver_probe_device+0x3c/0xf0
->   __driver_attach+0x70/0x120
->   bus_for_each_dev+0x70/0xc0
->   driver_attach+0x24/0x30
->   bus_add_driver+0x150/0x200
->   driver_register+0x64/0x120
->   __platform_driver_register+0x28/0x38
->   qcom_venus_driver_init+0x24/0x1000 [venus_core]
->   do_one_initcall+0x54/0x1c8
->   do_init_module+0x44/0x1d0
->   load_module+0x16c8/0x1aa0
->   __do_sys_finit_module+0xbc/0x110
->   __arm64_sys_finit_module+0x20/0x30
->   invoke_syscall+0x44/0x108
->   el0_svc_common.constprop.0+0xcc/0xf0
->   do_el0_svc+0x2c/0xb8
->   el0_svc+0x2c/0x88
->   el0t_64_sync_handler+0xb8/0xc0
->   el0t_64_sync+0x18c/0x190
->   qcom-venus: probe of aa00000.video-codec failed with error -16
-> 
-> The fix is re-ordering the code related to OPP core. The OPP core
-> expects all configuration options to be provided before the OPP
-> table is added.
-> 
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-
-Changed this to Suggested-by.
-
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> ---
->  drivers/media/platform/qcom/venus/pm_helpers.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
-
-Applied. Thanks.
-
--- 
-viresh
+ > #include <dt-bindings/clock/qcom,lcc-msm8960.h>
+Does not apply cleanly to mainline. Please include the above
