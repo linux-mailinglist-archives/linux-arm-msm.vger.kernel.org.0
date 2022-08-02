@@ -2,74 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DD2F75880DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 19:17:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7ACA588116
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 19:34:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233461AbiHBRRi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Aug 2022 13:17:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47398 "EHLO
+        id S229779AbiHBReA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Aug 2022 13:34:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230280AbiHBRRh (ORCPT
+        with ESMTP id S229530AbiHBRd6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Aug 2022 13:17:37 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C254D1D0E1;
-        Tue,  2 Aug 2022 10:17:36 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 69CEE611CB;
-        Tue,  2 Aug 2022 17:17:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFE03C433C1;
-        Tue,  2 Aug 2022 17:17:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1659460655;
-        bh=ezo/DMFL/JZvUXZGmbP9Yp6XteEVnCTIPlNYh1llQVE=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=a/0QMhAwa99UhhzkA/GaZ6skt+cIxlFs8m4phu2lVbgEKs8dAuQajL3z/PhmuCPaM
-         FDVa81594txuJ6Xr9STpLGFG7y+g07ES9nX30wKOpuL+gQ7zgDrUjDvJHTpe1A4m2m
-         RDbcrd/tssUPIkaaWNEG4vIhBbaUyU6WWUeJwnQcg+SiDGhhWTaM1GLet9g376AV7n
-         4Ek//phbCj5VOJKH/lMwneV582MPbDyHRh3KM/4EWS5Yt7fv03eq2eb4UMhxmcCJ4U
-         +re1YFXDh1Ux02PHKxrlABplvVUqmFrmPRUWOJbRf+VA/RMft1hLs35Nl3qPvsy013
-         W/CYZ7tl1w0Nw==
-Received: by mail-ua1-f43.google.com with SMTP id c19so6049621uat.6;
-        Tue, 02 Aug 2022 10:17:35 -0700 (PDT)
-X-Gm-Message-State: ACgBeo19klTm7nkg3xVLYWntjoXIVqqGPELxu+K8cEGZFwzwGFViHj2a
-        58pkbCOPEbRRsjmvua1xw1TnJbKGySIefMhZmw==
-X-Google-Smtp-Source: AA6agR7y4buQNvya5WmrFhrh5GEnJcFBluchloSidybizQJCjyZ9Adx3yyIrlsqlhrS3nobQjHpb5sanNqcqWcHzULM=
-X-Received: by 2002:ab0:2b06:0:b0:384:c4af:107c with SMTP id
- e6-20020ab02b06000000b00384c4af107cmr8357117uar.77.1659460654762; Tue, 02 Aug
- 2022 10:17:34 -0700 (PDT)
+        Tue, 2 Aug 2022 13:33:58 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C22B21242;
+        Tue,  2 Aug 2022 10:33:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1659461637; x=1690997637;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=Xg0j2fV5pjKaMVpU3vjT96qHabloA6UA5+zz85rlDHc=;
+  b=TBJgClY5ZqJ0hhVX5mzw3mUfTGec7Gh0qPMw47D85m3grIplpgkkW8OT
+   XytW3fP5xBHH/x1AanccSwpq1zghsUnwVUutGA8v8P+RPb4S50fGZdxWI
+   qwcO3Yui2b+GBoc58a8Sl1SUwgW2rs6iIVcWR9ZssfV0BVCiiTW6u/74T
+   o=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 02 Aug 2022 10:33:56 -0700
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Aug 2022 10:33:55 -0700
+Received: from [10.110.16.211] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 2 Aug 2022
+ 10:33:54 -0700
+Message-ID: <23ae507d-1a01-9a33-52fb-73ac9efca8aa@quicinc.com>
+Date:   Tue, 2 Aug 2022 10:33:39 -0700
 MIME-Version: 1.0
-References: <20220802151404.1797-1-johan+linaro@kernel.org> <20220802151404.1797-6-johan+linaro@kernel.org>
-In-Reply-To: <20220802151404.1797-6-johan+linaro@kernel.org>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Tue, 2 Aug 2022 11:17:22 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqL5ZCzfd06rxOdQodFjk4G3QpDCsxA5heM71x0q5d-hCw@mail.gmail.com>
-Message-ID: <CAL_JsqL5ZCzfd06rxOdQodFjk4G3QpDCsxA5heM71x0q5d-hCw@mail.gmail.com>
-Subject: Re: [PATCH 5/8] Revert "dt-bindings: usb: dwc3: Add wakeup-source
- property support"
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH v12 0/9] Coresight: Add support for TPDM and TPDA
+Content-Language: en-US
+To:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
-        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux USB List <linux-usb@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        "Rob Herring" <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20220710021032.27455-1-quic_jinlmao@quicinc.com>
+ <3f714c34-277d-ef71-b527-f758172160f9@quicinc.com>
+ <20260db2-8c7e-e2b6-2385-74f433e4b55e@quicinc.com>
+From:   Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <20260db2-8c7e-e2b6-2385-74f433e4b55e@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,29 +80,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 2, 2022 at 9:14 AM Johan Hovold <johan+linaro@kernel.org> wrote:
->
-> This reverts commit 098c4d43b91a269e89f60331a26a3f3b914677ed.
->
-> A devicetree binding should describe hardware capabilities and not be
-> used to configure power-management policies (even if things are a bit
-> blurry when it comes to "wakeup-source").
 
-Whether a device's interrupt can cause a wakeup is a h/w feature.
-That's not policy. If Linux also uses this to decide whether or not to
-enable wakeup, then that's its policy.
 
-> It should also not be used to
-> work around Linux driver implementation issues such as how to coordinate
-> the glue and core dwc3 drivers.
->
-> For the Qualcomm dwc3 controllers, it is the glue device that manages
-> the wakeup interrupts, which may or may not be able to wake the system
-> up from system suspend.
+On 8/2/2022 7:43 AM, Jinlong Mao wrote:
+> Hi Reviewers,
+> 
+> Please help to review V12 series of TPDM/TPDA patches.
+> 
+> Thanks
+> 
 
-While the reasoning to add this may have been for QCom, having this
-property for other users makes sense. On some platforms, 'snps,dwc3'
-is the only node (i.e. there's no wrapper node). So I don't think this
-should be reverted.
+Suzuki and Mathieu, we are almost there it seems in getting the 
+acceptance of these patches, so I hope you find the time to review these 
+patches. I guess it is almost a year now for these patches and had a 
+good amount of reviews and revisions :)
 
-Rob
+---Trilok Soni
