@@ -2,76 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D23E587822
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 09:46:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85274587865
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 09:51:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236085AbiHBHqj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Aug 2022 03:46:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51394 "EHLO
+        id S236330AbiHBHvu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Aug 2022 03:51:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235904AbiHBHqj (ORCPT
+        with ESMTP id S236219AbiHBHve (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Aug 2022 03:46:39 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9ED5B2B1A4
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Aug 2022 00:46:37 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id m22so8962634lfl.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Aug 2022 00:46:37 -0700 (PDT)
+        Tue, 2 Aug 2022 03:51:34 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B34F54F18D
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Aug 2022 00:51:07 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id z4so101418ljn.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Aug 2022 00:51:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=RKbt80axAQfOB4DhyqkpntLd+mhVQK1GRd49ynJihfU=;
-        b=PkIXQyslez+E7OClgkr1a3L2n8MrBiO1qQrWB0iEBpqF85yBM16nTVVnK69vt1BX9a
-         dl53gBBPqrQBHlSp7bSLOXVfZmcQAABz7xVHVmjVCwJf6fMY5GAAYqawSSRnuZVHimal
-         h/Cn79WypwdlQLIudVKifLGZJ96vXlw09GTQrkb2fmj4vDZ3qPsLfvSLKQwcM2S3UXKz
-         7SWpM4tbclwB/+B40/YO7wEwi0Lxpmp2s1K30KxtsEz9aLyqSQ8vfta7cyaIxBcBcbqE
-         ryo5CKKpDfmxpk5arXytTKgGJbCUBSSu3wIiUGuyYAwfxkR08pNg2xdt3FGEWL7u/tsa
-         zWzQ==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=KZltZr/4NkwY3ziTNTcm8uGPp+xZ+8XkMJFiPkxcvFQ=;
+        b=Gnn6F9Um0vDb/h89yLPdb1rwtantM0TcbgpTwkhQ9C/81KNiRpB+qIZJyzPrEs7/kL
+         jL16qyTgG0b9vtKRiZ53JSadQQmwYJa2l38/+TNhKL/wfsQzMxI1DWwbuWN4zUYKf2EN
+         1uTe2epmuaperXNX8Xsr43EahWdxOFwN7LL6UAA8oirbQaB8H0gpHTuv2+nARUSCi+LK
+         6WbZEhDB0tXAvpzrX8Q+0BnwakVMLc7Sq3019Ye8eNadyHfF6UpEVZT2v0BUnEp8JlOv
+         nmN8ErL0p8YyNNIDiNIL270adnMdNxsnxo3M09FOVqS/W3EjEWKw4lq40nuzI8o8WDuj
+         YD4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=RKbt80axAQfOB4DhyqkpntLd+mhVQK1GRd49ynJihfU=;
-        b=62BdSPr+eTFmdFOdxCTtQPaY+tUkyzwSMNICscZtBlx9kbLpD3C17tbh/G3ZAlRFzu
-         vYLJkngoJJr6RK2WZBvrm16fVE8Jp1j82TUFNjb+jWAVNSejgSHjbkPtZwxYn9DJF+LH
-         ia1aoLTqsSDIjlfBuoAd4PMLQHnvR0NCU81pyunJ3zCF1GKH1dD4d1xRRSqWo2L9MzLZ
-         WzJzceFJV2gcsMoUaFV3qamb92bQ0e+T3C6IdDevDkRmvyEcy6M8a7ax8JzbceNkMTuo
-         gkZOJUbvaXQwT/bsvwdN5Ons5RnfnHy7Yg+WzYCKSGK3Jvq0m9gqFvjIgdDS+KkF/6tM
-         HTiA==
-X-Gm-Message-State: ACgBeo3k5zVqXngf9O6vcqd/oOIva8a/z9WvMxyB5VqF9+Qk6WvHkQc/
-        XITuuHpe3yKnVHY1FRhhCgYjYg==
-X-Google-Smtp-Source: AA6agR5NptaxdnaipUCkSDf+B4BKrGT4sXCp0b/ozr3XF1G2x4DcIcXHqMbKokL3W4oiWztQ7iLycw==
-X-Received: by 2002:a05:6512:70a:b0:48a:ee11:1002 with SMTP id b10-20020a056512070a00b0048aee111002mr4532370lfs.501.1659426395967;
-        Tue, 02 Aug 2022 00:46:35 -0700 (PDT)
-Received: from [192.168.1.6] ([213.161.169.44])
-        by smtp.gmail.com with ESMTPSA id m1-20020a056512358100b0048af6019c01sm863795lfr.246.2022.08.02.00.46.34
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=KZltZr/4NkwY3ziTNTcm8uGPp+xZ+8XkMJFiPkxcvFQ=;
+        b=ANBwiqbSBP0QWenRp42qKEi2xIq2FAqsNDU9M9dlCXE0pgY+nghnQ7wwe4y8XZTXrd
+         HEj9ecYYHEMjG0mII9uJJ0AVbh8cpi8WCuiDHIsgiarf5eSJfih/3iIxup64A9nHfzZW
+         K8mMwSnYOasBksn6idMEtCENW8xnzhYrmj+ssaNKus9DQ5DwtlunlXWCwN3Yd0T9rar3
+         ydoq9rLgh7R1CYZPPEyl0sJ0H2c+ST8ll4PqHtsZrNevKLltU22T+jMKBSALlGaQYFMf
+         IG0G8pzucVox/V+rsaIut/N4tHGKbzxfp1DAcCwKq6EefQTzHgByFhDyUYb3PyXyzBUf
+         zH/w==
+X-Gm-Message-State: ACgBeo3XVlSq9ci4VLBxmvida06uX1Xmxm+D3rWas+RDW7cIoIosPVTo
+        88s28zLRxx8yqc37PoXN9W4knw==
+X-Google-Smtp-Source: AA6agR6ua7oHBR59juEc+5zZXX8Y8OMP9D0y0Vjm9UnPOZIMQu+1i+dL6dS8pjN9q9GBlEPMaAwboQ==
+X-Received: by 2002:a2e:9053:0:b0:25e:5c99:9fb5 with SMTP id n19-20020a2e9053000000b0025e5c999fb5mr582908ljg.268.1659426665719;
+        Tue, 02 Aug 2022 00:51:05 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id p8-20020a2e8048000000b0025e5755fd16sm367574ljg.36.2022.08.02.00.51.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Aug 2022 00:46:35 -0700 (PDT)
-Message-ID: <822b24fb-add3-b49f-d64e-15b577929edf@linaro.org>
-Date:   Tue, 2 Aug 2022 09:46:33 +0200
+        Tue, 02 Aug 2022 00:51:05 -0700 (PDT)
+Message-ID: <c786ed2a-e22a-5ae4-5b5b-0c0c2815cc57@linaro.org>
+Date:   Tue, 2 Aug 2022 10:51:04 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sdm845-xiaomi-beryllium-common:
- move common nodes to a common dtsi
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Joel Selvaraj <joel.selvaraj@outlook.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v2 04/11] gunyah: Common types and error codes for Gunyah
+ hypercalls
+Content-Language: en-GB
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <BY5PR02MB70099020AC1D181D15909F64EA9A9@BY5PR02MB7009.namprd02.prod.outlook.com>
- <BY5PR02MB70091276EDE0CE4FCB6CFBD5EA9A9@BY5PR02MB7009.namprd02.prod.outlook.com>
- <20220801185304.ozoydbmbgqe6fqdy@SoMainline.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220801185304.ozoydbmbgqe6fqdy@SoMainline.org>
-Content-Type: text/plain; charset=UTF-8
+        Jonathan Corbet <corbet@lwn.net>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20220801211240.597859-1-quic_eberman@quicinc.com>
+ <20220801211240.597859-5-quic_eberman@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220801211240.597859-5-quic_eberman@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -83,66 +92,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/08/2022 20:53, Marijn Suijten wrote:
-> On 2022-08-01 16:55:11, Joel Selvaraj wrote:
->> Since there are two variants of Xiaomi Poco F1, move the common nodes from
->> Tianma variant into a new common dtsi. The EBBG variant will also inherit
->> the new common dtsi.
->>
->> Signed-off-by: Joel Selvaraj <joel.selvaraj@outlook.com>
->> ---
+On 02/08/2022 00:12, Elliot Berman wrote:
+> Add architecture-independent standard error codes, types, and macros for
+> Gunyah hypercalls.
 > 
-> Any summary what changed since v1?
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> ---
+>   MAINTAINERS            |  1 +
+>   include/linux/gunyah.h | 75 ++++++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 76 insertions(+)
+>   create mode 100644 include/linux/gunyah.h
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 02f97ac90cdf..2e4f1d9ed47b 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -8744,6 +8744,7 @@ S:	Maintained
+>   F:	Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
+>   F:	Documentation/virt/gunyah/
+>   F:	arch/arm64/include/asm/gunyah.h
+> +F:	include/linux/gunyah.h
+>   
+>   HABANALABS PCI DRIVER
+>   M:	Oded Gabbay <ogabbay@kernel.org>
+> diff --git a/include/linux/gunyah.h b/include/linux/gunyah.h
+> new file mode 100644
+> index 000000000000..69931a0f5736
+> --- /dev/null
+> +++ b/include/linux/gunyah.h
+> @@ -0,0 +1,75 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#ifndef _GUNYAH_H
+> +#define _GUNYAH_H
+> +
+> +#include <linux/types.h>
+> +#include <linux/errno.h>
+> +#include <asm/gunyah.h>
+> +
+> +typedef u64 gh_capid_t;
 
-+1 (although I already reviewed it)
+I think there was a rule on typedefs? Maybe I'm mistaken, couldn't find 
+one. Why do you need it in the first place? Just use u64. Or 'enum 
+gh_capid'.
 
-> 
->>  .../qcom/sdm845-xiaomi-beryllium-common.dtsi  | 595 ++++++++++++++++++
->>  .../qcom/sdm845-xiaomi-beryllium-tianma.dts   | 590 +----------------
->>  2 files changed, 598 insertions(+), 587 deletions(-)
->>  create mode 100644 arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
->> new file mode 100644
->> index 000000000000..83edcb1171f5
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-> 
-> I haven't re-read what was discussed in v1, but doing it this way causes
-> git to _not_ record this as a rename but instead state that everything
-> has been removed from sdm845-xiaomi-beryllium-tianma.dts, and a new file
-> sdm845-xiaomi-beryllium-common.dtsi was introduced with inconveniently
-> almost identical contents (see the unnecessary size of the patch that
-> follows).
-
-The patch should be formatted a bit different. I agree that if combined
-with first patch and proper settings (-M10% -C10%, optionally also
-experiment with -B although here it looks not needed).
-
-I reviewed the diff side-by-sie and there were differences (labels)
-tricky to spot. If you generate the patch correctly, not much of review
-is needed...
-
-> 
-> Instead, I'd keep the original patch with a rename from
-> sdm845-xiaomi-beryllium.dts to sdm845-xiaomi-beryllium-common.dtsi, and
-> _also_ update the existing:
-> 
-> 	dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium.dtb
-> 
-> in Makefile to match this rename so that it keeps compiling, even if
-> that means we treat a .dtsi as a .dts which may (likely) not be treated
-> correctly by existing build rules.
-> 
-> If it doesn't - and this approach is probably frowned upon anyway - it
-> is perhaps easiest to generalize sdm845-xiaomi-beryllium.dtb (as
-> suggested above) _and_ introduce sdm845-xiaomi-beryllium-tianma.dtb
-> _and_ update Makefile in a _single_ patch, such that everyting keeps
-> compiling and stays consistent wrt how git treats renames.  Later
-> patches update the compatible and add the ebbg variant.
-> 
-> - Marijn
+> +
+> +/* Common Gunyah macros */
+> +#define GH_CAPID_INVAL	U64_MAX
+> +
 
 
-Best regards,
-Krzysztof
+
+-- 
+With best wishes
+Dmitry
