@@ -2,243 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB58C587BB3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 13:40:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0CB1587BC9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 13:51:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236476AbiHBLkV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Aug 2022 07:40:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39146 "EHLO
+        id S235649AbiHBLvr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Aug 2022 07:51:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236506AbiHBLkU (ORCPT
+        with ESMTP id S233950AbiHBLvq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Aug 2022 07:40:20 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 230A72676;
-        Tue,  2 Aug 2022 04:40:17 -0700 (PDT)
+        Tue, 2 Aug 2022 07:51:46 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32988313AD
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Aug 2022 04:51:41 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id rq15so19445572ejc.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Aug 2022 04:51:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1659440418; x=1690976418;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=YpUtE1Gh283+1zH/RtwpbH/r5au2IVBLc5uPyBfB2ZA=;
-  b=nPc7GzHoaoGhNsJxthttxFiXkhknMfN8DFN+/Ai/J3wOLG/l0IvqOfry
-   piFiotBOPAAotBp07eF4Ps1uMlu3VROZ7aaGB60TIsaZNcH49dTiMVhOU
-   WhtRrlEyFZN/lNeLxpTP2hejXBKzYUA4W9CvZX3L3CD2z96GE6YTm0DVN
-   c=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 02 Aug 2022 04:40:17 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Aug 2022 04:40:16 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 2 Aug 2022 04:39:49 -0700
-Received: from [10.216.56.39] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 2 Aug 2022
- 04:39:46 -0700
-Message-ID: <1f284b9c-257b-a127-55c0-e6cc8c07a9eb@quicinc.com>
-Date:   Tue, 2 Aug 2022 17:07:51 +0530
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=5X7O27EsbrEVXij2N4a86EZ0C/gr3WyCbXj7RYwB9Po=;
+        b=SNJDh3+wc1Jhv0IgV0MOSxzggPT9Fbncs/BV1eZVLqZjoVCIXtCBKU1+LgZhu3cMie
+         Qkq0bZtZEOkiHoVzsJqqpmUxyu4FqbcCT9EBXCDUOT7XglI/SRaffe68cJXZDxazLm7D
+         jzvuDX3CoYccBdt5kwJaEjJ6Y8FFfPNEr76BFrBc4ZtSCOWo8jszoLNCyACpazJ4TtCS
+         demH198kv33SeTNXupSa4tFT02hvdfEUkLRq+ks38jz7MhI+FNvwxInNjR+EJMdDZo2f
+         4SEYXKxVEU8MnQ0M6vdNI5JkgA9bbGXZdeizo9YzB3tOWE1MTRuKjEtuK+UY9/Him4p9
+         u2aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=5X7O27EsbrEVXij2N4a86EZ0C/gr3WyCbXj7RYwB9Po=;
+        b=ukzv7l2lAWZCaFDFMyodduvCpJS17FwekT2O0Woqk8Ms7t7IrZWIDqqZ/u6GLoo7Gr
+         5v5dp04H6zkcgLKkdKxVUVmRd7dUtktSHb7FvQFzvbYXV0t2LkqhShqyKddyfhC8aKCo
+         wkkjglj5+9pUngAeDzEh2gMoynRa3xMYn2poK54BLvn5L8wBvalfh3O1ngWwMU3pm/KP
+         9OHxodVhHU/hYDM8hcL+JvUwDOAy0iTVYErclWIWfWwOFljmR9e5vhC+cZ4LGTI3COFM
+         tF68weQAdbbyQNGzDmhgsSsgVaa1xoM8FRemEI638m+AdQ1O9pWtS5wiZRaUQQx/QV02
+         XaRA==
+X-Gm-Message-State: AJIora/ElbKnbu393ZfVYZCIsw5NGiG+g0fgQuqBuuUYtYiOewmtbHy+
+        6PxF1ASCy5UAnTAneJ44I/NV+TG2mq+kLw==
+X-Google-Smtp-Source: AA6agR5p02Ez5M7iERoxC/VS8zm2sk+chMafUxEIpvq6MRvmm5x9KO6OwZ+CGXcJXci74xS4WF7/Gw==
+X-Received: by 2002:adf:de0f:0:b0:21e:ead4:23f5 with SMTP id b15-20020adfde0f000000b0021eead423f5mr12545590wrm.641.1659441089142;
+        Tue, 02 Aug 2022 04:51:29 -0700 (PDT)
+Received: from [192.168.86.238] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.googlemail.com with ESMTPSA id y3-20020a056000108300b0021d6d18a9f8sm15087211wrw.76.2022.08.02.04.51.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Aug 2022 04:51:28 -0700 (PDT)
+Message-ID: <dfd07f84-c4bd-a18c-2263-49f999f2934c@linaro.org>
+Date:   Tue, 2 Aug 2022 12:51:27 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH v2 4/5] firmware: qcom: scm: Add wait-queue helper
- functions
+Subject: Re: [PATCH 0/4] firmware: Add support for Qualcomm UEFI Secure
+ Application
 Content-Language: en-US
-To:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
+To:     Maximilian Luz <luzmaximilian@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Philipp Zabel" <p.zabel@pengutronix.de>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     David Heidelberg <david@ixit.cz>,
-        Robert Marko <robimarko@gmail.com>,
-        Elliot Berman <quic_eberman@quicinc.com>
-References: <1658529438-9234-1-git-send-email-quic_gurus@quicinc.com>
- <1658529438-9234-5-git-send-email-quic_gurus@quicinc.com>
-From:   Rajendra Nayak <quic_rjendra@quicinc.com>
-In-Reply-To: <1658529438-9234-5-git-send-email-quic_gurus@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Ard Biesheuvel <ardb@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20220723224949.1089973-1-luzmaximilian@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Maximilian,
 
-On 7/23/2022 4:07 AM, Guru Das Srinagesh wrote:
-> When the firmware (FW) supports multiple requests per VM, and the VM
-> also supports it via the `allow-multi-call` device tree flag, the
-> floodgates are thrown open for them to all reach the firmware at the
-> same time.
+On 23/07/2022 23:49, Maximilian Luz wrote:
+> On modern Qualcomm platforms, access to EFI variables is restricted to
+> the secure world / TrustZone, i.e. the Trusted Execution Environment
+> (TrEE or TEE) as Qualcomm seems to call it. To access EFI variables, we
+> therefore need to talk to the UEFI Secure Application (uefisecapp),
+> residing in the TrEE.
 > 
-> Since the firmware currently being used has limited resources, it guards
-> them with a resource lock and puts requests on a wait-queue internally
-> and signals to HLOS that it is doing so. It does this by returning two
-> new return values in addition to success or error: SCM_WAITQ_SLEEP and
-> SCM_WAITQ_WAKE.
+> This series adds support for accessing EFI variables on those platforms.
 > 
->    1) SCM_WAITQ_SLEEP:
+> To do this, we first need to add some SCM call functions used to manage
+> and talk to Secure Applications. A very small subset of this interface
+> is added in the second patch (whereas the first one exports the required
+> functions for that). Interface specifications are extracted from [1].
+> While this does not (yet) support re-entrant SCM calls (including
+> callbacks and listeners), this is enough to talk to the aforementioned
+> uefisecapp on a couple of platforms (I've tested this on a Surface Pro X
+> and heard reports from Lenovo Flex 5G, Lenovo Thinkpad x13s, and Lenovo
+> Yoga C630 devices).
 > 
->    	When an SCM call receives this return value instead of success
->    	or error, FW has placed this call on a wait-queue and
->    	has signalled HLOS to put it to non-interruptible sleep. (The
-> 	mechanism to wake it back up will be described in detail in the
-> 	next patch for the sake of simplicity.)
+> The third patch adds a client driver for uefisecapp, installing the
+> respective efivar operations. The application interface has been reverse
+> engineered from the Windows QcTrEE8180.sys driver.
 > 
-> 	Along with this return value, FW also passes to HLOS `wq_ctx` -
-> 	a unique number (UID) identifying the wait-queue that it has put
-> 	the call on, internally. This is to help HLOS with its own
-> 	bookkeeping to wake this sleeping call later.
+> Apart from uefisecapp, there are more Secure Applications running that
+> we might want to support in the future. For example, on the Surface Pro
+> X (sc8180x-based), the TPM is also managed via one.
 > 
-> 	Additionally, FW also passes to HLOS `smc_call_ctx` - a UID
-> 	identifying the SCM call thus being put to sleep. This is also
-> 	for HLOS' bookkeeping to wake this call up later.
-> 
-> 	These two additional values are passed via the a1 and a2
-> 	registers.
-> 
-> 	N.B.: The "ctx" in the above UID names = "context".
-> 
->    2) SCM_WAITQ_WAKE:
-> 
->    	When an SCM call receives this return value instead of success
->    	or error, FW wishes to signal HLOS to wake up a (different)
->    	previously sleeping call.
-> 
->    	FW tells HLOS which call to wake up via the additional return
->    	values `wq_ctx`, `smc_call_ctx` and `flags`. The first two have
->    	already been explained above.
-> 
->    	`flags` can be either WAKE_ONE or WAKE_ALL. Meaning, wake either
->    	one, or all, of the SCM calls that HLOS is associating with the
->    	given `wq_ctx`.
-> 
-> A sleeping SCM call can be woken up by either an interrupt that FW
-> raises, or via a SCM_WAITQ_WAKE return value for a new SCM call.
+> I'm not sure whether this should go to drivers/firmware or to
+> drivers/soc/qcom. I've put this into firmware as all of this is
+> essentially an interface to the secure firmware running in the TrustZone
+> (and SCM stuff is handled here already), but please let me know if I
+> should move this.
 
-Do you know why the FW was not designed to always use an interrupt?
-That would have made the handling of this in kernel a lot less complicated.
-  
-> The handshake mechanism that HLOS uses to talk to FW about wait-queue
-> operations involves three new SMC calls. These are:
-> 
->    1) get_wq_ctx():
-> 
->      	Arguments: 	None
->      	Returns:	wq_ctx, flags, more_pending
-> 
->      	Get the wait-queue context, and wake up either one or all of the
->      	sleeping SCM calls associated with that wait-queue.
-> 
->      	Additionally, repeat this if there are more wait-queues that are
->      	ready to have their requests woken up (`more_pending`).
-> 
->    2) wq_resume(smc_call_ctx):
-> 
->    	Arguments:	smc_call_ctx
-> 
->    	HLOS needs to issue this in response to receiving an
->    	IRQ, passing to FW the same smc_call_ctx that FW
->    	receives from HLOS via the get_wq_ctx() call.
-> 
->    3) wq_wake_ack(smc_call_ctx):
-> 
->    	Arguments:	smc_call_ctx
-> 
->    	HLOS needs to issue this in response to receiving an
->    	SCM_WAITQ_WAKE, passing to FW the same smc_call_ctx that FW
->    	passed to HLOS via the SMC_WAITQ_WAKE call.
-> 
-> (Reminder that the full handshake mechanism will be detailed in the
-> subsequent patch.)
-> 
-> Also add the interrupt handler that wakes up a sleeping SCM call.
-> 
-> Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
-> ---
-[]..
+ From what I see so far is that this is adapted from downstream qseecom 
+driver, this approach could work for a limited usecases but not 
+scalable, as we cannot add drivers for each Qualcomm specific TA in kernel.
+This has to be handled in much generic way using Linux TEE framework, 
+and let the userspace side deal with TA specific bits.
 
-> +struct completion *qcom_scm_lookup_wq(struct qcom_scm *scm, u32 wq_ctx)
-> +{
-> +	struct completion *wq = NULL;
-> +	u32 wq_ctx_idr = wq_ctx;
-> +	unsigned long flags;
-> +	int err;
-> +
-> +	spin_lock_irqsave(&scm->waitq.idr_lock, flags);
-> +	wq = idr_find(&scm->waitq.idr, wq_ctx);
-> +	if (wq)
-> +		goto out;
-> +
-> +	wq = devm_kzalloc(scm->dev, sizeof(*wq), GFP_ATOMIC);
-> +	if (!wq) {
-> +		wq = ERR_PTR(-ENOMEM);
-> +		goto out;
-> +	}
-> +
-> +	init_completion(wq);
-> +
-> +	err = idr_alloc_u32(&scm->waitq.idr, wq, &wq_ctx_idr,
-> +			    U32_MAX, GFP_ATOMIC);
-> +	if (err < 0) {
-> +		devm_kfree(scm->dev, wq);
-> +		wq = ERR_PTR(err);
-> +	}
-> +
-> +out:
-> +	spin_unlock_irqrestore(&scm->waitq.idr_lock, flags);
-> +	return wq;
-> +}
-> +
-> +void scm_waitq_flag_handler(struct completion *wq, u32 flags)
-> +{
-> +	switch (flags) {
-> +	case QCOM_SMC_WAITQ_FLAG_WAKE_ONE:
-> +		complete(wq);
-> +		break;
-> +	case QCOM_SMC_WAITQ_FLAG_WAKE_ALL:
-> +		complete_all(wq);
-> +		break;
-> +	default:
-> +		pr_err("invalid flags: %u\n", flags);
-> +	}
-> +}
-> +
-> +static void scm_irq_work(struct work_struct *work)
-> +{
-> +	int ret;
-> +	u32 wq_ctx, flags, more_pending = 0;
-> +	struct completion *wq_to_wake;
-> +	struct qcom_scm_waitq *w = container_of(work, struct qcom_scm_waitq, scm_irq_work);
-> +	struct qcom_scm *scm = container_of(w, struct qcom_scm, waitq);
-> +
-> +	do {
-> +		ret = scm_get_wq_ctx(&wq_ctx, &flags, &more_pending);
-> +		if (ret) {
-> +			pr_err("GET_WQ_CTX SMC call failed: %d\n", ret);
-> +			return;
-> +		}
-> +
-> +		wq_to_wake = qcom_scm_lookup_wq(scm, wq_ctx);
-> +		if (IS_ERR_OR_NULL(wq_to_wake)) {
-> +			pr_err("No waitqueue found for wq_ctx %d: %ld\n",
-> +					wq_ctx, PTR_ERR(wq_to_wake));
-> +			return;
+AFAIU, Qualcomm is moving away from qseecom interface to new smc-invoke 
+interface, most of Qualcomm SoCs starting from SDM660 already have 
+support to this.
 
-What happens if at this point 'more_pending' was true? will the FW raise
-another interrupt?
+This interface provides a better abstracted IPC mechanism to talk to TA. 
+Most of these TA specific interfaces are packed in closed userspace source.
+Having said that QTEE smcinvoke driver can be modeled as a proper TEE 
+driver with Userspace driving the TA specific bits using existing tee uapis.
+This also brings in other features like loading, Listeners aka 
+callbacks, secure memory allocations..etc.
 
-> +		}
-> +
-> +		scm_waitq_flag_handler(wq_to_wake, flags);
-> +	} while (more_pending);
-> +}
+In the past, I have tried to do a prototype of this smcinvoke driver as 
+a proper tee driver, incase you are interested patches are at 
+https://git.linaro.org/landing-teams/working/qualcomm/kernel.git/log/?h=tracking-qcomlt-qcomtee
+Plan is to discuss with Qualcomm and send it for upstream review.
 
+
+I think its worth exploring if uefisecapp can talk smcinvoke.
+I can ping Qualcomm engineers to see if that is doable.
+
+
+thanks,
+Srini
+
+
+> 
+> Regards,
+> Max
+> 
+> [1]: https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/blob/auto-kernel.lnx.4.14.c34/drivers/misc/qseecom.c
+> 
+> Maximilian Luz (4):
+>    firmware: qcom_scm: Export SCM call functions
+>    firmware: Add support for Qualcomm Trusted Execution Environment SCM
+>      calls
+>    firmware: Add support for Qualcomm UEFI Secure Application
+>    dt-bindings: firmware: Add Qualcomm UEFI Secure Application client
+> 
+>   .../firmware/qcom,tee-uefisecapp.yaml         |  38 +
+>   MAINTAINERS                                   |  14 +
+>   drivers/firmware/Kconfig                      |  20 +
+>   drivers/firmware/Makefile                     |   2 +
+>   drivers/firmware/qcom_scm.c                   | 118 ++-
+>   drivers/firmware/qcom_scm.h                   |  47 --
+>   drivers/firmware/qcom_tee.c                   | 213 +++++
+>   drivers/firmware/qcom_tee_uefisecapp.c        | 761 ++++++++++++++++++
+>   include/linux/qcom_scm.h                      |  49 ++
+>   include/linux/qcom_tee.h                      | 179 ++++
+>   10 files changed, 1355 insertions(+), 86 deletions(-)
+>   create mode 100644 Documentation/devicetree/bindings/firmware/qcom,tee-uefisecapp.yaml
+>   create mode 100644 drivers/firmware/qcom_tee.c
+>   create mode 100644 drivers/firmware/qcom_tee_uefisecapp.c
+>   create mode 100644 include/linux/qcom_tee.h
+> 
