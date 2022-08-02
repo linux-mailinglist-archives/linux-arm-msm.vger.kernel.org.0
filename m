@@ -2,161 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C199D5883C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 23:49:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFBBE5883E4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 00:11:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235244AbiHBVtH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Aug 2022 17:49:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57422 "EHLO
+        id S234299AbiHBWLe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Aug 2022 18:11:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235462AbiHBVs6 (ORCPT
+        with ESMTP id S229751AbiHBWLd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Aug 2022 17:48:58 -0400
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12olkn2043.outbound.protection.outlook.com [40.92.23.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4266852453;
-        Tue,  2 Aug 2022 14:48:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=SMnTXuqpEhIKb/NgRctewzmkxMqWVqp/Jv/GQTk8BYBzvR1qSpGtMS6Lwp8PvTqp3lglx68EAt1KVeuUbYTcibmqfe5fVqpfzeQ11rv+RWUoH47ZUcOGbIdullj+GUN03L4M9GFEW9B9PqGBpvz2mf6AXl3API86YJuYryRWwYl95SkZ8BdZipx1ziW9TO5QSQuQmbTXEcAAwHvqZhJQs0mSYUjZp4vXgn5TINU1uNEnzfKpcXTk7zyVestKvYOJgBw1AFWKGkANEa1J7KlCOKytuL71m/YZo8BxgtEeMsoln03TBMc9jDKw7Wyimbde5eDlJfy+kGfq3iWUblZrwg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ecHLiGX9LIOMGnLzK1OLXnFdK9Os7h/F4goajBAvJao=;
- b=oRVwledqp4FUjqroI8f+40FP5sL0puHXO0JMtUy2Pk9hTN2e8yKowjWEVewFJ+P7qdz2vD+b0eNsKTQkvF1b1hifTeSESIinOM56+C7e9o2I8VtHhC3XllH2Zw5x09LqsaS8Fr3x4wbj67ajhiaZe71LEa79XvFTK6qC2QOaLs3vAvs3T2A+kSCM+mIIbcRW7XV8Iklb6exMxzrsWBiaEkDRQrGw0y3jb5Yasq+ESg/irB6LWPiLbg1FWFXPj3KtREoBaMvdOxBl9XTApVbpOK1ScaXDu4EcSsEadUYWZzWW5mJ8BCLKydFdw0GOpz/9v5FiHeg5r0z/MAiwsN1N1w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ecHLiGX9LIOMGnLzK1OLXnFdK9Os7h/F4goajBAvJao=;
- b=IRGZ7wCYjD6TyUSG5B9BNHnbEkH2BLFzVgjZQHRjbN3AvtMdEcppEND2Lo1ws8vE9scH/Yun7cP97+wa6qVlvkKdn2aNEMHuxLfFs0sI739Yn84NY7wqDdovXYVCEZWe9UyWwBwAqs7TeVYSHJKjM1ktvqTllyd64JhUIW1mP9KpHA1fh0fhjP0JY7jkuhINWBokvUlQwkc6SzNKfgdRbCOQvTScoVvqCocBHsnuqIpvw8KimdAOloiW8MUG7+T0EAWc9JfDDcOD7g30IW6G+2N3zOHeW/uxDG7sYH7IeRSPV4H0unC2chMyy6RzQQ0W9XYUb36xE9WI7EypWHrq2g==
-Received: from BY5PR02MB7009.namprd02.prod.outlook.com (2603:10b6:a03:236::13)
- by BYAPR02MB5960.namprd02.prod.outlook.com (2603:10b6:a03:126::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5482.16; Tue, 2 Aug
- 2022 21:48:52 +0000
-Received: from BY5PR02MB7009.namprd02.prod.outlook.com
- ([fe80::e080:d670:29c7:9180]) by BY5PR02MB7009.namprd02.prod.outlook.com
- ([fe80::e080:d670:29c7:9180%8]) with mapi id 15.20.5504.014; Tue, 2 Aug 2022
- 21:48:52 +0000
-Message-ID: <BY5PR02MB7009690D397E52593431E12CEA9D9@BY5PR02MB7009.namprd02.prod.outlook.com>
-Date:   Wed, 3 Aug 2022 03:18:43 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.0.3
-Subject: Re: [PATCH v2 0/3] Add support for Xiaomi Poco F1 EBBG variant
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Tue, 2 Aug 2022 18:11:33 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5208A286DC;
+        Tue,  2 Aug 2022 15:11:31 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id kb8so13730491ejc.4;
+        Tue, 02 Aug 2022 15:11:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=HHiVzz56fzfDth3bW/WcgM5Qc1HIfz8NCIqzrBsVAqA=;
+        b=Ep2scTW+1V+PPP51UKUrN/QcsHJFvcufwTIrXWw53crGOzKX0lGl9zG98wdoAn0v60
+         ZFPNCdnxeYQ4PMoOVhCD4HYuQzQ1JbxicXYg97IzVtPgGWEZQC6rRdgesoK0CyB8kw98
+         1xx1VH4Zp+QzQ1K/Fne6HePh9wA/AuhHpYQ11TtfP6TBcNK07lbuA0RJ4d2n4frolIiC
+         8DugPNCvRESj8EtrPpHy2ZUX3DqcXTvTPuTuRYBwjstArjoZAD3PwU/pJ9Huzk3IUm64
+         xbqACAI2zyXvFw1evnqtnQNQIrUXCyiq/8gS2UeLGyowMOdh1GX0y5TRlzEp8O3zsqs4
+         bL+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=HHiVzz56fzfDth3bW/WcgM5Qc1HIfz8NCIqzrBsVAqA=;
+        b=DsvgE7ugZSfMoWIOsX8xStMGjGCY1xKB9io7DVFzoQFfUns5MJYJYiLV6rHhGs1BN5
+         Z7jTGuWxR75cq852netMiQeW69PmBtsNE61iBUmD9bjmHCWSu8RtnZcvK4x7MWBPpvyn
+         pusWxCRhcKS0cVUTckczzeSEasFPh3yjjU9OjYxz/H0Qg7tRcNXPT05EzQF77MKOJlHG
+         oWzXsa8yxLrQ9DO4Z4I2gXwYQM0Rs+jUfJ9SauRCyFo0QUnh57+UjStDxM0EQNfKlVzz
+         O9FlJoVD6MNoRgQa+uTJNu6uFXUVj1S/Q+8GkxBJ9CVQsicQHtfmMCqPcnu7arjYDet+
+         7DRw==
+X-Gm-Message-State: ACgBeo0BnRa68DKwlWlJAZuqThk/80LNnI2avOPn07RcYTvJw7vj8+KJ
+        FjKplrTIf/onbOCm76VkrFQ=
+X-Google-Smtp-Source: AA6agR4uy8jogXMuvE9MxR3ZPhOX/nwv7hlTjSbAYm8NBwcVR59Ubxdo7aRW9vlsLU7ZJkb1sACdxA==
+X-Received: by 2002:a17:907:9726:b0:730:9e04:f738 with SMTP id jg38-20020a170907972600b007309e04f738mr4851247ejc.631.1659478289863;
+        Tue, 02 Aug 2022 15:11:29 -0700 (PDT)
+Received: from localhost ([77.78.38.236])
+        by smtp.gmail.com with ESMTPSA id v9-20020a170906292900b0071cbc7487e1sm6589271ejd.69.2022.08.02.15.11.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Aug 2022 15:11:28 -0700 (PDT)
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <BY5PR02MB70099020AC1D181D15909F64EA9A9@BY5PR02MB7009.namprd02.prod.outlook.com>
- <BY5PR02MB700972E09CC9D8ED6EFBA59AEA9A9@BY5PR02MB7009.namprd02.prod.outlook.com>
- <CAA8EJpqBVaPt6dc+=u1YZwxEo9i4Y6+QFK5ko0Gd3091pKYXjw@mail.gmail.com>
-From:   Joel Selvaraj <joel.selvaraj@outlook.com>
-In-Reply-To: <CAA8EJpqBVaPt6dc+=u1YZwxEo9i4Y6+QFK5ko0Gd3091pKYXjw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TMN:  [LkgtmTZFtixG8NNrdJ79qV3i9C9buPhkgCACLcPei/V/mOtZ9OAIVovb2AXkKxRP]
-X-ClientProxiedBy: BMXPR01CA0081.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:b00:54::21) To BY5PR02MB7009.namprd02.prod.outlook.com
- (2603:10b6:a03:236::13)
-X-Microsoft-Original-Message-ID: <55619ad3-d6fc-a7cd-753f-04dfcc2e8e8f@outlook.com>
+        Mark Brown <broonie@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Marko <robimarko@gmail.com>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Iskren Chernev <iskren.chernev@gmail.com>
+Subject: [PATCH v4 00/13] PM6125 regulator support
+Date:   Wed,  3 Aug 2022 01:10:59 +0300
+Message-Id: <20220802221112.2280686-1-iskren.chernev@gmail.com>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 1b998159-f5e4-48ad-b0b8-08da74d0ca50
-X-MS-TrafficTypeDiagnostic: BYAPR02MB5960:EE_
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: gOebMrC55vdRO667VFxELrzN7VQNAHYmofE0rds1r+U0mH0kgbHsOJUxUzkrZrij3DuzQ9WxVzSrGxX3i/KYuNQg+qfMdAPv6aMJSlgAIEyZs3sllslbAwS2GKiuhVv6bFo+SQ8OvDok+7Ro85vyOUqVm/gAhHQD+R3RTP5HblMaqgRqGVef6ASdYc0qpvgPKoi2UMMm68lcq/6agfgsorShGt/sF0KWbZ1nDQq/7h9Im8vJ1iJdcTTgr4aW6eClq7Lc6nav5JBUTHOrZWiU1mT8chY9ykbEN0tCrKTwXgE9QLp5dsbQG8BZY806lVXYZVx6Uc2ECREVRTV2HauWTB2RKDwJp9zRQjCoNVAEBTjc5e5dmHRe3443xiRlicC7trNluf4GN2vkcpLeo10ZW8KgyQZrA26j+EkaNDdjNrNXwlXwTPQYtw7Fkh1w8LbYfwj+jvimd19SxOHIot21gu43IPfumj7eQEpNs3IIxrL8ERZsEkCgGvAKwVMsXXnVS8zdWqTrP16pEGa0mN2R14ZOo0U0MVVnbY3n1SDxoCaHF/Pl7OcH4LLp5sl7mFUlrdN0oaKvTMU5YGqacEwQZv+BCXiwH83TI87NJa+HkaqxAybTl75GLZoxY4yv4j7sJ7rxVPZddq/dOCLFbRdigoilqx2TaLSFqSLqJI6Y0kQXuH8SuRpneRXf6/9bsp3d
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?K3pRVFZ5NTBwWUgva0cwS2NqcEtTNFN0ck5JalJJOTUrM0FtdWpJcEpiNS9O?=
- =?utf-8?B?US9vVlliaHg0U0VMMnp2MGNQSHh3RmpGdC9ZQ3FwbnF4RlREd0lzRWxWcUM1?=
- =?utf-8?B?bWYyRnpLcFdBUk9waksrVjlSa3FtSEVmSHVwSm5ZRkplNVBsVXY1dEoxV29U?=
- =?utf-8?B?RzAwU2hkUHZrbWgvL1EzamJablJ2OFRPeFFoVmI1QURIaGhMenBCd2JRY2xQ?=
- =?utf-8?B?clA2ZlVoZkJmTk5kZG9xejlDVnJ3akppYlRZQ0U0YjF6a213dGZvc09tbGJW?=
- =?utf-8?B?RHN5V21aemtGYVFGUHBaRXpSUXNKWDBmL01lQUVpQ1RzbkNDVFZJc1BIL2JH?=
- =?utf-8?B?L0d6bFNxL0U5Z29MOTZLeHdrRS9XNGtZT3JJRW5ZbEhJdVNaVDNmMjd5RldO?=
- =?utf-8?B?bG1mTnBKQ1B1bFVoQ0dlZnN3T0drKzFjdjl4Ty9oWVc2VDVwYlhFd1E0K2F4?=
- =?utf-8?B?MDNGWFBmdmMyT2ZLclJCeWpEb3lkZFZXc05paC9aWWdGVjF5Z0pWZmhYbWpR?=
- =?utf-8?B?MTNUQXplOFpsenJENGYrTFM5SW9yVndJM1JaeXB6Tml4QUhvZkNNMittL2tF?=
- =?utf-8?B?NGQ5K1phVGpTQzVhYVNVL0hkNldaME5ReXhIRExjRTZuc2E4UjBsRzdEeUhQ?=
- =?utf-8?B?bzVUT1RIRzA2dzhYUEFUOGxMNFhaNTZyUnp6eHlUTStsVzFUalJ4TEJTMDRh?=
- =?utf-8?B?ZjZjUHNKVjgxTzJBVTJuRWpRRmpyTjNIWFQ5Z1pBbWEvdEZmbmNsRkp4K1k5?=
- =?utf-8?B?U1EwZHRXOEpWanYyOEhOb1BZNmUyVDBSY2lvZzZ3QlFZZk5jMXlOUVU2ZWFp?=
- =?utf-8?B?ODBTNGJHVWxKYnY5cENYNk9YWDl1eGs0aElVMjhoc0JkdlBlMWl3UlpuOEE1?=
- =?utf-8?B?c3laWVdJajNQM0VSZWZBeExUUW43NFBxZC9UT0F4ekMyRnphbW42Y2ZDeGdC?=
- =?utf-8?B?RWpJVDBESnAxTEhkY3gyeWtUR1l3SjN6M0Nyek5SeVIvRnBlRG5iV3RDWHF1?=
- =?utf-8?B?OU5YTythbEdnZWdpK29WNVFwSVdaYVgrRjhDWnA1SThwc202ZUYxSmRBeXJa?=
- =?utf-8?B?KzRXemFEZ0I0MFA2T2IvTTQxN1FUaGp2TnFUaHM5RXZKQnlPUTZrbk4zSi9X?=
- =?utf-8?B?RTY5S0lVYVpKd0hUWmp4SllvRjMwc0dsNFhSa2RZVS93ODlZZHdpTFh4aHc5?=
- =?utf-8?B?RFJsZzVtd3IwQS84TW9nZTY2RGNIUnF6ZWF2a1pTNVBUbGJoWkFRQUsrU0Nm?=
- =?utf-8?B?NXlkVFhPaGZaOVlWS2NxTVNCRG10OXZaeHNmTnpNN09XMXc1QTdnT0toSlFZ?=
- =?utf-8?B?bGhOQzVoczRIZkZBcVJDS3p4eTFPTFY4TktpdnFzUEpwS0NPN2FVcENHY0gy?=
- =?utf-8?B?NE5jQ0FmMjJWR0plZWF4aEpYa2dnU2M3OGJ4RHVuTGQ2cUFoOHdRR01UT2ta?=
- =?utf-8?B?Zm1oUWMyamthTDhnNklGZVpKK25yRVR3MXpTZzh1elZJUml3OGRpVDEyRytl?=
- =?utf-8?B?N3o1Z2l2TGNKeWJRTFRzbmdBNjNPeWIvWkRiNWNCYlQ3by9SdHBiRUhFK1lL?=
- =?utf-8?B?UGxRdEdqa1VpVXU3dnZwUk9KMkVNRllUaW1jSC96MUMvRkNmaGc5UDhtRktV?=
- =?utf-8?B?dkJsVUhuRU96ODJoWUFSR3B4U1ZJZCtSSStDM05ocGdlc3JTSnBSNnZzZFVp?=
- =?utf-8?B?d1VUZW9uc1VxNGV3Ui9WZG5MUzBoTjJGVytZSGg5cUswazdyK3hXTHAxTlNr?=
- =?utf-8?B?NGtxU3ArZmpMZnJvM3Z6SkVvYklhZ2ZHOUVDd1VjdFhIZEJCM2V6aDdHaDM3?=
- =?utf-8?B?azFtSXk0Q2dmNDJwZ0pNQT09?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1b998159-f5e4-48ad-b0b8-08da74d0ca50
-X-MS-Exchange-CrossTenant-AuthSource: BY5PR02MB7009.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Aug 2022 21:48:52.7181
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR02MB5960
-X-Spam-Status: No, score=0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_MUA_MOZILLA,
-        FREEMAIL_FROM,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_PASS,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry Baryshkov
+This patch series adds SPMI and SMD regulator support for the PM6125 found on
+SM4250/SM6115 SoCs from QCom.
 
-On 01/08/22 20:30, Dmitry Baryshkov wrote:
-> Hi,
-> 
-> On Mon, 1 Aug 2022 at 14:44, Joel Selvaraj <joel.selvaraj@outlook.com> wrote:
->>
->> To be honest, I have no idea why my patch series doesn't get linked
->> properly. I think there is some issue in my OS. I use git format-patch
->> and git send-mail to send patches. It used to work fine. But it doesn't
->> want to work anymore :/ Is there a mailing list for sending test mails?
->> or how do I debug this? Kindly let me know if anyone has any
->> suggestions.
-> 
-> Judging from the following headers, it's not your OS, it is M$
-> rewriting the headers.
-> 
-> Message-ID: <BY5PR02MB70099020AC1D181D15909F64EA9A9@BY5PR02MB7009.namprd02.prod.outlook.com>
-> X-Microsoft-Original-Message-ID:
-> <20220801112512.209047-1-joel.selvaraj@outlook.com>
-> 
-> According to some mentions on the Internet, M$ relies on headers
-> rewriting and will not change this behaviour.
-> 
-> I'd suggest switching to another SMTP submission host. I think it
-> should be e.g. possible to tell GMail to send mails with @outlook.com
-> addresses. However this might confuse some of the mail clients into
-> believing it is spam since the email will SOFTFAIL the SPF check.
-> 
-> Switching to another mail provider might be an option too.
+This code has been tested on:
+* OnePlus Nord N100 (oneplus,billie2, SoC sm4250)
+* Redmi 9T (redmi,lemon, SoC sm6115)
 
-Thanks for the suggestion. Plan to switch the mail provider for the next
-patch. Hope it goes well.
+The main source used for this change is qpnp pm6125 support patch from caf [1]:
 
-Best Regards,
-Joel Selvaraj
+[1]: https://source.codeaurora.org/quic/la/kernel/msm-5.4/commit/?h=kernel.lnx.5.4.r1-rel&id=d1220daeffaa440ffff0a8c47322eb0033bf54f5
+
+v3: https://lkml.org/lkml/2022/7/31/303
+v2: https://lkml.org/lkml/2022/7/26/885
+v1: https://lkml.org/lkml/2021/8/28/144
+
+Changes from v3:
+- fix compilation issue reported by kernel test robot
+- reorder HFSMPS/LDO+FTSMPS patches
+- add new slew-rate computation for HFSMPS
+- add proper pull-down support for new regs
+- name new regs/vals after HFSMPS instead of FTSMPS
+- address indentation/newline issues reported by Krzysztof
+- improve commit messages on SPMI/RPM related patches
+Changes from v2:
+- split spmi new regulator support in 2 patches
+- FTS and LDOs now have set_load and set_pull_down ops
+- add better commit messages on spmi patches
+- fix sob header order
+- fix tested device info (Redmi 9T, NOT Xiaomi 9T)
+- improve formatting in spmi binding docs
+- sort alphabetically in smd binding docs
+- sort alphabetically spmi pmics
+- sort alphabetically smd pmics
+Changes from v1:
+- add dt-bindings
+- split SPMI patch into new reg types and the new PMIC
+- add correct supply mapping
+
+Iskren Chernev (13):
+  dt-bindings: regulator: qcom_spmi: Improve formatting of if-then
+    blocks
+  dt-bindings: regulator: qcom_spmi: Document PM6125 PMIC
+  dt-bindings: regulator: qcom_smd: Sort compatibles alphabetically
+  dt-bindings: regulator: qcom_smd: Document PM6125 PMIC
+  regulator: qcom_spmi: Add support for HFSMPS regulator type
+  regulator: qcom_spmi: Add support for LDO_510 and FTSMPS
+  regulator: qcom_spmi: Sort pmics alphabetically (part 1)
+  regulator: qcom_spmi: Sort pmics alphabetically (part 2)
+  regulator: qcom_spmi: Add PM6125 PMIC support
+  regulator: qcom_smd: Sort pmics alphabetically (part 1)
+  regulator: qcom_smd: Sort pmics alphabetically (part 2)
+  regulator: qcom_smd: Sort pmics alphabetically (part 3)
+  regulator: qcom_smd: Add PM6125 RPM regulators
+
+ .../regulator/qcom,smd-rpm-regulator.yaml     |  26 +-
+ .../regulator/qcom,spmi-regulator.yaml        |  32 ++
+ drivers/regulator/qcom_smd-regulator.c        | 400 ++++++++++--------
+ drivers/regulator/qcom_spmi-regulator.c       | 378 ++++++++++++-----
+ 4 files changed, 551 insertions(+), 285 deletions(-)
+
+-- 
+2.37.1
 
