@@ -2,142 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C9EB58777E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 09:07:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FB9658779B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 09:14:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235837AbiHBHHI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Aug 2022 03:07:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47074 "EHLO
+        id S233069AbiHBHOO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Aug 2022 03:14:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235680AbiHBHGm (ORCPT
+        with ESMTP id S233057AbiHBHON (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Aug 2022 03:06:42 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6990D491F0
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Aug 2022 00:06:35 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id z20so7538911ljq.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Aug 2022 00:06:35 -0700 (PDT)
+        Tue, 2 Aug 2022 03:14:13 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDACE491D4
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Aug 2022 00:14:11 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id y23so4341845ljh.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Aug 2022 00:14:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=YyBYmLXFn5IFerrIXB88rk828Nzxi3yZBlN5vWZi/gM=;
-        b=cqShYtc7B4W7+q0vK7VkTMRnsYgBNGzLw6e2P8pZuRkHXrMnlMerLmoE/2weJs4sSA
-         ocXKFpxuWtWtb1fhSYbnxLu9yBchBRsggPdcY+GsiMqQxQzl00PcrID3nMwsn5j9ljUn
-         Q2q45sZ0s6MZWe2aMQmOCqU3abPyz7zyeyliIBvgJZlj/OJ2VmjEBuPNg2NKYSZqJV2f
-         Ba5lIM6m2qZ7Q8GEkOJJ7xmwxGbFeEGtWqzPlCAIjZVbwXph3xyaIznRTbSr/mrwh18N
-         idKySTQiWRH+Y6UU3DZwyzzDiy5UABGQzp8uHK8B+9SG0ZaLpx4iZXISVU0aDf2GPW/L
-         sVsQ==
+        bh=VO7iKisYqXn9gq//Drvzc4IU8FHAbNWbiNlXqoODgOM=;
+        b=BHY9W6lthh/+SlYcXhzf70uhuZagL1J/CwBCzUmFuyXKE0AnmUk3pZJ5BbF7yrgkkz
+         4+UKPB7g/1kcN0oJ+P3369aGQq9DXdsqJCtcyvKpib8uWCA3rw/EznQmChAS18o7r2+G
+         cSSHN2xMb7QaroRC3i39Sv9zoEQQBqFhDM/sAJ1Isf4UqXHEPiE4pcCywtmDIXwugaa1
+         pn0vdICsjDOqAiZzdUe8cczXT3mzcme7KmNwtVrKJB3EKwt15P3OZkfj+Pe7ciNZD1mx
+         fC61YXxXrpsD3UibIQTCA/AfZ+y2Nf4bM12NrWSaEEpo3hI4u+g9AefaHxvN1jGXHBRh
+         xljg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=YyBYmLXFn5IFerrIXB88rk828Nzxi3yZBlN5vWZi/gM=;
-        b=VrEfxvzol7KdY3Hwlao6jbgoB0/+k/TqI6hTk/dpWkyw9Lb9OZzYqjtLw9xc+RewYj
-         AVSoqAO9O3zZnqc8ib56eq29H7Dvl/4Ke4/1uvlg/2zMPIsMUN02iicdChsuxbe36gtH
-         OvC3xaAQp0ivb0MctIpO4qIRnICOtsurRcp5p0un0CTPIxM8j+qzX7s3DoTb4ozE6Oce
-         67dhm75yynGXEInc6kfBuHD4YDqBSIKcXKFmn/gV+ZDkY1jfbzQZ/lQ9npXJqnjE1LwX
-         FJMTrgCIh8TQi61/xe/pL04wnZcYaUJT393UfUgpwEfTIaDiy7eqTs7ROAN+YeC9nLPi
-         ayDA==
-X-Gm-Message-State: AJIora/aS2/iSACJ+a3JHXsHh+k1rVz3OEkgoi1ocs8g5NWmqH6vcdDP
-        rMkTPujPZyEFKNFZDWqIh3q/6Q==
-X-Google-Smtp-Source: AGRyM1vyFzsFMTCPRJxtHWx7y5a7FMF92v+tAByHTMxUB/MOjUpdCznNzN7CY7oLLyxTnSAivEK0hg==
-X-Received: by 2002:a2e:bd0a:0:b0:25d:d2a3:7366 with SMTP id n10-20020a2ebd0a000000b0025dd2a37366mr6103917ljq.35.1659423993628;
-        Tue, 02 Aug 2022 00:06:33 -0700 (PDT)
+        bh=VO7iKisYqXn9gq//Drvzc4IU8FHAbNWbiNlXqoODgOM=;
+        b=SVNSEcRKUwIHO0m/ORhwHTgCd5am+b35+Gbu4esPBE2ardzyjic2HiimXR4XJmkkvH
+         oxCOxCF2AYn5R+LxaQsyxEGjs5k9v3hJsfdOcufBW3jY3wrXaacRP6NQYhxl+FeInc2r
+         LyFW4LUF5pLHi2PA4+dcXo+4/VgETj/OUpZs/Q+y/onz4Nw9JQ67+loY/lT1mfxFo8MY
+         EKSanUZv8b0yb4FNnav5czOP/Uk50QoXQgGxZCtSzWXXT0BV7eAoP3jccg2wJmnpquXX
+         l8VLHar3LIWvHP/ZK3S1VQnhD1LaOkC0a3avU2HDS0eDXmz/+qOTA5P2qciIH4jCWIpa
+         hoWg==
+X-Gm-Message-State: ACgBeo2EG/+Nu7n34z69Ikqe/RHePZn0VH5rHjAuL7iys+05qWTW5CTG
+        M7CcZGzwd9XARcx3/J2Z5I/kuQ==
+X-Google-Smtp-Source: AA6agR6/Jmi2axMFmM5dshEATFksCp6XfsK+VigG+KH8Rzfsrr0wC0UgMCu/xHtn///Lcw2NpmrIKA==
+X-Received: by 2002:a2e:90c2:0:b0:25e:5d60:14b with SMTP id o2-20020a2e90c2000000b0025e5d60014bmr382110ljg.24.1659424450278;
+        Tue, 02 Aug 2022 00:14:10 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id e1-20020a05651236c100b0048afa5daaf3sm629717lfs.123.2022.08.02.00.06.32
+        by smtp.gmail.com with ESMTPSA id z19-20020a2ebe13000000b0025e2b567434sm1801513ljq.9.2022.08.02.00.14.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Aug 2022 00:06:33 -0700 (PDT)
-Message-ID: <43d19449-cf06-2302-b536-4ade5f79c5fd@linaro.org>
-Date:   Tue, 2 Aug 2022 10:06:32 +0300
+        Tue, 02 Aug 2022 00:14:09 -0700 (PDT)
+Message-ID: <8715e07f-9d58-1ae3-9a3a-25828b545905@linaro.org>
+Date:   Tue, 2 Aug 2022 10:14:09 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH 2/5] clk: qcom: Allow custom reset ops
+Subject: Re: [PATCH v3 5/8] drm/msm/a6xx: Ensure CX collapse during gpu
+ recovery
 Content-Language: en-GB
 To:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
         freedreno <freedreno@lists.freedesktop.org>,
         dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Jordan Crouse <jordan@cosmicpenguin.net>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
         Philipp Zabel <p.zabel@pengutronix.de>,
-        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
+        Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
         linux-kernel@vger.kernel.org
-References: <1659172664-10345-1-git-send-email-quic_akhilpo@quicinc.com>
- <20220730144713.2.I4b69f984a97535179acd9637426a1331f84f6646@changeid>
+References: <1659174051-27816-1-git-send-email-quic_akhilpo@quicinc.com>
+ <20220730150952.v3.5.I176567525af2b9439a7e485d0ca130528666a55c@changeid>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220730144713.2.I4b69f984a97535179acd9637426a1331f84f6646@changeid>
+In-Reply-To: <20220730150952.v3.5.I176567525af2b9439a7e485d0ca130528666a55c@changeid>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/07/2022 12:17, Akhil P Oommen wrote:
-> Add support to allow soc specific clk drivers to specify a custom reset
-> operation. A consumer-driver of the reset framework can call
-> "reset_control_reset()" api to trigger this.
+On 30/07/2022 12:40, Akhil P Oommen wrote:
+> Because there could be transient votes from other drivers/tz/hyp which
+> may keep the cx gdsc enabled, we should poll until cx gdsc collapses.
+> We can use the reset framework to poll for cx gdsc collapse from gpucc
+> clk driver.
+> 
+> This feature requires support from the platform's gpucc driver.
 > 
 > Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
 > ---
 > 
->   drivers/clk/qcom/reset.c | 6 ++++++
->   drivers/clk/qcom/reset.h | 2 ++
->   2 files changed, 8 insertions(+)
+> Changes in v3:
+> - Use reset interface from gpucc driver to poll for cx gdsc collapse
+>    https://patchwork.freedesktop.org/series/106860/
 > 
-> diff --git a/drivers/clk/qcom/reset.c b/drivers/clk/qcom/reset.c
-> index 819d194..4782bf1 100644
-> --- a/drivers/clk/qcom/reset.c
-> +++ b/drivers/clk/qcom/reset.c
-> @@ -13,6 +13,12 @@
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 4 ++++
+>   drivers/gpu/drm/msm/msm_gpu.c         | 4 ++++
+>   drivers/gpu/drm/msm/msm_gpu.h         | 4 ++++
+>   3 files changed, 12 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 1b049c5..721d5e6 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -10,6 +10,7 @@
 >   
->   static int qcom_reset(struct reset_controller_dev *rcdev, unsigned long id)
->   {
-> +	struct qcom_reset_controller *rst = to_qcom_reset_controller(rcdev);
-> +	const struct qcom_reset_map *map = &rst->reset_map[id];
-> +
-> +	if (map->op)
-> +		return map->op(map);
+>   #include <linux/bitfield.h>
+>   #include <linux/devfreq.h>
+> +#include <linux/reset.h>
+>   #include <linux/soc/qcom/llcc-qcom.h>
+>   
+>   #define GPU_PAS_ID 13
+> @@ -1224,6 +1225,9 @@ static void a6xx_recover(struct msm_gpu *gpu)
+>   	/* And the final one from recover worker */
+>   	pm_runtime_put_sync(&gpu->pdev->dev);
+>   
+> +	/* Call into gpucc driver to poll for cx gdsc collapse */
+> +	reset_control_reset(gpu->cx_collapse);
 
-This looks like a hack. For example, assert() and deassert() would still 
-follow the usual pattern of updating the bits. Please at least make them 
-return -EOPNOTSUP if map->op is defined.
-
-A slightly better solution would be to make qcom_reset implementation 
-optional (and depending on desc->num_resets being greater than 0). Then 
-you can register your own reset controller implementation from the gpucc 
-driver.
-
+Do we have a race between the last pm_runtime_put_sync(), this polling 
+and other voters removing their votes beforehand?
 
 > +
->   	rcdev->ops->assert(rcdev, id);
->   	udelay(1);
->   	rcdev->ops->deassert(rcdev, id);
-> diff --git a/drivers/clk/qcom/reset.h b/drivers/clk/qcom/reset.h
-> index 2a08b5e..295deeb 100644
-> --- a/drivers/clk/qcom/reset.h
-> +++ b/drivers/clk/qcom/reset.h
-> @@ -11,6 +11,8 @@
->   struct qcom_reset_map {
->   	unsigned int reg;
->   	u8 bit;
-> +	int (*op)(const struct qcom_reset_map *map);
-> +	void *priv;
+>   	pm_runtime_use_autosuspend(&gpu->pdev->dev);
+>   
+>   	if (active_submits)
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+> index 07e55a6..4a57627 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> @@ -14,6 +14,7 @@
+>   #include <generated/utsrelease.h>
+>   #include <linux/string_helpers.h>
+>   #include <linux/devcoredump.h>
+> +#include <linux/reset.h>
+>   #include <linux/sched/task.h>
+>   
+>   /*
+> @@ -903,6 +904,9 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>   	if (IS_ERR(gpu->gpu_cx))
+>   		gpu->gpu_cx = NULL;
+>   
+> +	gpu->cx_collapse = devm_reset_control_get_optional(&pdev->dev,
+> +			"cx_collapse");
+> +
+>   	gpu->pdev = pdev;
+>   	platform_set_drvdata(pdev, &gpu->adreno_smmu);
+>   
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+> index 6def008..ab59fd2 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.h
+> +++ b/drivers/gpu/drm/msm/msm_gpu.h
+> @@ -13,6 +13,7 @@
+>   #include <linux/interconnect.h>
+>   #include <linux/pm_opp.h>
+>   #include <linux/regulator/consumer.h>
+> +#include <linux/reset.h>
+>   
+>   #include "msm_drv.h"
+>   #include "msm_fence.h"
+> @@ -268,6 +269,9 @@ struct msm_gpu {
+>   	bool hw_apriv;
+>   
+>   	struct thermal_cooling_device *cooling;
+> +
+> +	/* To poll for cx gdsc collapse during gpu recovery */
+> +	struct reset_control *cx_collapse;
 >   };
 >   
->   struct regmap;
+>   static inline struct msm_gpu *dev_to_gpu(struct device *dev)
 
 
 -- 
