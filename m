@@ -2,101 +2,234 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EA705877AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 09:17:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15AFE5877CD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 09:28:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231804AbiHBHRX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Aug 2022 03:17:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56832 "EHLO
+        id S231804AbiHBH2s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Aug 2022 03:28:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235785AbiHBHRV (ORCPT
+        with ESMTP id S233933AbiHBH2p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Aug 2022 03:17:21 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C8C545F63
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Aug 2022 00:17:20 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id e5so9733649qts.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Aug 2022 00:17:20 -0700 (PDT)
+        Tue, 2 Aug 2022 03:28:45 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E4C7491C2
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Aug 2022 00:28:43 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id y11so20695955lfs.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Aug 2022 00:28:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=bL6fGScq+yhoKFMlnh6d0gxqoohgKkceu0Z+UVQzyQI=;
-        b=RcIOpJJ0Ov5o4fHdrPK1zfrXJX6gdPFzu7fjwuuUjXM6UHBZyGruAo4zx7iEo477RD
-         Fp4PVSRuVwiRll7m1oVNQrgPxvrYz3awbWW7JV8FAoP6ENu1uux5Q5wq/CSFU9COSbdY
-         yd6A0uqiEvPxRvSttO9SFeT73/nDoFT0jIVbJXgwqetOUrapXbl8kWmYRLLjXaCVKKvT
-         PXNdJ7RGAsU6C5mOPZ076oZabnIasPRsJts5TmEhMIHgfutaqLl1x3vF0LHCdEXA72EA
-         5WcDgdW0Rj7KiTODrCDuU6Zh+yUKhdkUUXTNHeNT6SDa9Er0lLYq63Ruiq+b6AGe1jGS
-         93Bw==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=2wW+pW8iv7CjZwE7FU2+N4FeVyi5IA1nYjrBItlvXmw=;
+        b=iwn1tkT0IhoEXGX91JW2PcDuYxmh0sZlbFzZMYZOrrw/UIOxzQjSq/+0r3dsMFJ2zh
+         iovWS6WF6yFL6Lpv/H2Z0hQwOeTcmvbRLK9E/b9IJRbPgJ/7ZE8odQuky/UlYjRLxKbh
+         e4mNgfYfKgA9abky2bywIRt6wdEbYu8ep5e4jLvAeIDXnmRf7zH6noR59Y4YNESS4tWu
+         ggDgnVeER0iQ0C0+1W/iOcKvoAhqHddyWu8IOicJ0UTu2cN19lEHrM6rBf1ugixcQHrs
+         aGq5qLpkN4qBdx5d9fws5Cxk0EYwAlEKwwP4ytBFKwHUXoCT8Au381UNCsrGsLWdOIIe
+         b9sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=bL6fGScq+yhoKFMlnh6d0gxqoohgKkceu0Z+UVQzyQI=;
-        b=ogdWMCglTGociEIyIQYn5LZruFFrJNEpyLh54X2WQH6Bsrk9o/iv9txF4hGfsq81ef
-         Vm2rBIn2eQEJvrneeRPMOV2wRQK1KePwsEuxFVs15dH+LMduhmQqWPKyREwA7JAf30V0
-         bQ83FWQJ4EjmzK6d4lWVV69dtC8X+ocP0potJh0lvLwh/tVgr41uGPgoosFNz+oWPeu3
-         3QQa2BnkJO6bhO4jIjtdDhE3gAX8sDggpv5633MAoZ0BphVsvjSaUH3xuVQJ2M7SJJia
-         2Htn2n0mV4zHotoBhzLZjqeNgdlPwiAdglaD6qgCizfrldnYR1BsR88lAlo6rB3SsSSs
-         A6bw==
-X-Gm-Message-State: AJIora8iebXWYMmRTylD+AkEZo0Yee/8gBHljM9xyJ4e54RdU3CC85j+
-        sle69aCL1vtODOvVp5a4+r4dbj46CMZPW8svI/Xk5w==
-X-Google-Smtp-Source: AGRyM1ujC1egqaRzzJh0wgVInw8CjeH7Adwmb22QYBOfvTBE0sjoUrTqJEXPccOS4SayDbm/OEgA5ksInidWTbnis8w=
-X-Received: by 2002:ac8:5942:0:b0:31f:39f6:aba7 with SMTP id
- 2-20020ac85942000000b0031f39f6aba7mr16851230qtz.295.1659424639554; Tue, 02
- Aug 2022 00:17:19 -0700 (PDT)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=2wW+pW8iv7CjZwE7FU2+N4FeVyi5IA1nYjrBItlvXmw=;
+        b=pcLeUOtCvArSWMHb/T2lIozcWEyKvhmIkf7hcl1fx/mJu1HBHByF9rVI5M/QtabgjR
+         YvocwtISsCv0f1lDDmMl7SRfeQxF2TpwJ7qBhBgHl1yhMPsDToeWZdqBpZ53un57ED5A
+         p8PyDKtaOWqdqQURYT6zq9wbWLtQ+ZUjCcD1CJ2fi3M6c8vpyrz8deJHeMtOYUnmAtgQ
+         ZEPmppw5xCQXJoazKfAlw0pnt0oXDiT0c5FYZT3ZiJfFyRirduIk7UJEwBrJR75F7VuW
+         OHdqN4NCp1IMcRV6GBbBayWUY6zHYj4UkF0TVuODFXvVyNdDTN4zH2xqekp+fCQ4bCRY
+         CZCg==
+X-Gm-Message-State: AJIora/+5gOs75VvIXOCF2qt3V9dNQWg1bzvkHOJirp9CaasPpQFl5aV
+        AmCwuZKXyTgjbvqNRQmUEPWhNg==
+X-Google-Smtp-Source: AGRyM1sbs7Pia9l1GPT3H8p4ExsIV87tAWP6X7IH/C7nolnZru4z6kO5bAYo4b+ZdPy+yuX7k/jpzA==
+X-Received: by 2002:a05:6512:1318:b0:482:ae30:fc77 with SMTP id x24-20020a056512131800b00482ae30fc77mr7266024lfu.279.1659425321572;
+        Tue, 02 Aug 2022 00:28:41 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id bu7-20020a056512168700b0048a1a70d14dsm2004992lfb.94.2022.08.02.00.28.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Aug 2022 00:28:41 -0700 (PDT)
+Message-ID: <0ad6bd7b-b5cb-6f9a-eeca-b493c5bfa8b3@linaro.org>
+Date:   Tue, 2 Aug 2022 10:28:40 +0300
 MIME-Version: 1.0
-References: <20220801212244.1124867-1-daniel.lezcano@linexp.org> <20220801212244.1124867-12-daniel.lezcano@linexp.org>
-In-Reply-To: <20220801212244.1124867-12-daniel.lezcano@linexp.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v2 02/11] dt-bindings: Add binding for gunyah hypervisor
+Content-Language: en-GB
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org
+Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20220801211240.597859-1-quic_eberman@quicinc.com>
+ <20220801211240.597859-3-quic_eberman@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 2 Aug 2022 10:17:08 +0300
-Message-ID: <CAA8EJpqS9_VUfX23j2BdUUxT=5=ig1k5ycKhiHy0xW+2zO05=Q@mail.gmail.com>
-Subject: Re: [PATCH v4 11/32] thermal/drivers/qcom: Switch to new of API
-To:     Daniel Lezcano <daniel.lezcano@linexp.org>
-Cc:     daniel.lezcano@linaro.org, rafael@kernel.org, rui.zhang@intel.com,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        khilman@baylibre.com, abailon@baylibre.com, lukasz.luba@arm.com,
-        broonie@kernel.org, damien.lemoal@opensource.wdc.com,
-        heiko@sntech.de, hayashi.kunihiko@socionext.com,
-        mhiramat@kernel.org, talel@amazon.com, thierry.reding@gmail.com,
-        digetx@gmail.com, jonathanh@nvidia.com, anarsoul@gmail.com,
-        tiny.windzz@gmail.com, baolin.wang7@gmail.com,
-        f.fainelli@gmail.com, bjorn.andersson@linaro.org,
-        mcoquelin.stm32@gmail.com, glaroque@baylibre.com,
-        miquel.raynal@bootlin.com, shawnguo@kernel.org,
-        niklas.soderlund@ragnatech.se, matthias.bgg@gmail.com,
-        j-keerthy@ti.com, Andy Gross <agross@kernel.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20220801211240.597859-3-quic_eberman@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 2 Aug 2022 at 00:24, Daniel Lezcano <daniel.lezcano@linexp.org> wrote:
->
-> The thermal OF code has a new API allowing to migrate the OF
-> initialization to a simpler approach. The ops are no longer device
-> tree specific and are the generic ones provided by the core code.
->
-> Convert the ops to the thermal_zone_device_ops format and use the new
-> API to register the thermal zone with these generic ops.
->
-> Signed-off-by: Daniel Lezcano <daniel.lezcano@linexp.org>
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+On 02/08/2022 00:12, Elliot Berman wrote:
+> When Linux is booted as a guest under the Gunyah hypervisor, Gunyah
+> applies a devicetree overlay describing the virtual platform
+> configuration of the guest VM, such as the message queue capability IDs
+> for communicating with the Resource Manager. Add the DT bindings that
+> Gunyah adheres for the hypervisor node and message queues.
+> 
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 > ---
->  drivers/thermal/qcom/qcom-spmi-adc-tm5.c    | 19 +++++++++----------
->  drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 12 ++++++------
->  drivers/thermal/qcom/tsens.c                | 16 ++++++++--------
->  3 files changed, 23 insertions(+), 24 deletions(-)
+>   .../bindings/firmware/gunyah-hypervisor.yaml  | 84 +++++++++++++++++++
+>   MAINTAINERS                                   |  1 +
+>   2 files changed, 85 insertions(+)
+>   create mode 100644 Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml b/Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
+> new file mode 100644
+> index 000000000000..e50d932e768c
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
+> @@ -0,0 +1,84 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/firmware/gunyah-hypervisor.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Gunyah Hypervisor
+> +
+> +maintainers:
+> +  - Murali Nalajala <quic_mnalajal@quicinc.com>
+> +  - Elliot Berman <quic_eberman@quicinc.com>
+> +
+> +description: |+
+> +  On systems which support devicetree, Gunyah generates and overlays a deviceetree overlay which
+> +  describes the basic configuration of the hypervisor. Virtual machines use this information for
+> +  initial discovery that they are running as a Gunyah guest VM.
+> +  See also: https://github.com/quic/gunyah-resource-manager/blob/develop/src/vm_creation/dto_construct.c
+> +
+> +properties:
+> +  compatible:
+> +    oneOf:
+> +      - items:
+> +          - const: gunyah-hypervisor-1.0
+> +          - const: gunyah-hypervisor
+
+Just:
+  - items:
+   - const: gunyah-hypervisor-1.0
+   - const: gunyah-hypervisor
+
+oneOf is not necessary
+
+> +
+> +  "#address-cells":
+> +    description: Number of cells needed to represent 64-bit capability IDs.
+> +    const: 2
+> +  "#size-cells":
+> +    description: must be 0, because capability IDs are not memory address
+> +                  ranges and do not have a size.
+> +    const: 0
+> +
+> +patternProperties:
+> +  "^gunyah-resource-mgr(@.*)?":
+> +    type: object
+> +    description:
+> +      Resource Manager node which is required to communicate to Resource
+> +      Manager VM using Gunyah Message Queues.
+> +
+> +    properties:
+> +      compatible:
+> +        oneOf:
+
+Again, please drop the oneOf.
+
+> +          - items:
+> +              - const: gunyah-resource-manager-1-0
+> +              - const: gunyah-resource-manager
+> +      reg:
+> +        items:
+> +          - description: Gunyah capability ID of the TX message queue
+> +          - description: Gunyah capability ID of the RX message queue
+> +      interrupts:
+> +        items:
+> +          - description: Interrupt for the TX message queue
+> +          - description: Interrupt for the RX message queue
+> +    additionalProperties: false
+> +    required:
+> +      - compatible
+> +      - reg
+> +      - interrupts
+> +
+> +additionalProperties: false
+> +
+> +required:
+> +  - compatible
+> +  - "#address-cells"
+> +  - "#size-cells"
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +    hypervisor {
+> +        #address-cells = <2>;
+> +        #size-cells = <0>;
+> +        compatible = "gunyah-hypervisor-1.0", "gunyah-hypervisor";
+> +
+> +        gunyah-resource-mgr@1 {
+> +            compatible = "gunyah-resource-manager-1-0", "gunyah-resource-manager";
+> +            interrupts = <GIC_SPI 3 IRQ_TYPE_EDGE_RISING>, /* TX full IRQ */
+> +                         <GIC_SPI 4 IRQ_TYPE_EDGE_RISING>; /* RX empty IRQ */
+> +            reg = <0x00000000 0x00000000>, <0x00000000 0x00000001>;
+> +                  /* TX, RX cap ids */
+
+Do these cap ids persist from platform to platform? Then you might want 
+to define generic values for these caps.
+
+Also it feels like you are misusing the #address-cells/reg properties. 
+For example, the device should have its @NNNN to be equal to the first 
+addres. But you are using the second reg.
+
+I think that using a separate property with /bits/ 64 might be a better 
+solution.
+
+> +        };
+> +    };
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 18fb034526e1..0cd12ea6c11c 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -8741,6 +8741,7 @@ M:	Elliot Berman <quic_eberman@quicinc.com>
+>   M:	Murali Nalajala <quic_mnalajal@quicinc.com>
+>   L:	linux-arm-msm@vger.kernel.org
+>   S:	Maintained
+> +F:	Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
+>   F:	Documentation/virt/gunyah/
+>   
+>   HABANALABS PCI DRIVER
+
 
 -- 
 With best wishes
