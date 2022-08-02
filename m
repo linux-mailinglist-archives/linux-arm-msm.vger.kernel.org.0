@@ -2,91 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 954A058831B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 22:27:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B235B58835F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 23:22:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234721AbiHBU1m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Aug 2022 16:27:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35344 "EHLO
+        id S229485AbiHBVWE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Aug 2022 17:22:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233756AbiHBU1m (ORCPT
+        with ESMTP id S229854AbiHBVWD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Aug 2022 16:27:42 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69D511ADAE
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Aug 2022 13:27:40 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id a7so14961487ejp.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Aug 2022 13:27:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=lby9lvyugHd82C4d0KaHXp3LJIsW6TZwJseJofssqh0=;
-        b=dY4VR24PCrKQgsbFRhU1dAE4OtBv7+g3WLBV6S0FMdma0ru6Hreb2eW7/GMoGlAU2N
-         +H3WCgfto09f7rg2xmE2XndfDGLlP1XP9cH6qP0XE5OsnuzLQ6/RGW78tSovVY8cjzqo
-         yB9f0OUxFUU+z39N6BBZEGLX0BRV57fefxMM8=
+        Tue, 2 Aug 2022 17:22:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 5210D50739
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Aug 2022 14:22:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1659475320;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=jQhPEwH3goRpU8FRyBDXxZC2WkI1FDwYRPXft+9J3uE=;
+        b=ZTG1Sx+FvItbv8eyevjwp5VAd6fSkvewaLSLH0lpfj6mogUb4yqJyqYlm7r4G/z24zpHB3
+        bfb17PCZJCWIqsgSvWeFROW8+DxY+y7c6pkXemyJvsGoxGcHMt3XgTNuR9ZnH0QxWsWaT6
+        8LdkFgG78E3qQxMV9xqIsM+6xPSgYK4=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-26--zsgNiktMcCUTQaUdV9a9g-1; Tue, 02 Aug 2022 17:21:59 -0400
+X-MC-Unique: -zsgNiktMcCUTQaUdV9a9g-1
+Received: by mail-qt1-f197.google.com with SMTP id k3-20020ac86043000000b0033cab47c483so849475qtm.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Aug 2022 14:21:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=lby9lvyugHd82C4d0KaHXp3LJIsW6TZwJseJofssqh0=;
-        b=lOyyu7JYuvFEfHvuUL207Fwhcd8IT5w3JJfUQln/FJ3D+xPplfH118IE1hXiuH2W+2
-         yMV3LrrymJv6MNF2rqgYyJ3UdAgr5L7mX5AmxJIS/G9hhGzVJqtvtHPZFQM+jzYl92f+
-         BLYBodrL+9LhTdGst2JnVR5hQSLgmWNxUIKj12XrAe+q0v/+iJiwAUCr/LB8TVFobIKu
-         XmHkf3eYx4hiPH82UGs4TEZ5K4qMig3DU8t88wAQ4C8mgdjiT/ujqiFYz4ngs2X7CyQ9
-         nOhqlke3Ar4JRYaJlOBqJOwokjXCawUMA+O3NRolA266zPl0vfiNbFz+fpmwmskplnQ6
-         dSVw==
-X-Gm-Message-State: AJIora+8oviCZ26Fas9Nno07+rm3FPz9NyUP6B+AIPXW39BvIxECNrIk
-        UAXn/lefO9Bb757nn1GSFyYR/i6r+ADcVNGN
-X-Google-Smtp-Source: AGRyM1tUSmyEdmdYBb/DoN1StbFKo/94xHsIAksRoozTC/SJb8P4tP4J8ugmjDjKO0fpAfJgOU3yEA==
-X-Received: by 2002:a17:907:2722:b0:72b:6d79:1a46 with SMTP id d2-20020a170907272200b0072b6d791a46mr17583368ejl.713.1659472058790;
-        Tue, 02 Aug 2022 13:27:38 -0700 (PDT)
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com. [209.85.221.51])
-        by smtp.gmail.com with ESMTPSA id u2-20020a1709061da200b006fec4ee28d0sm6564536ejh.189.2022.08.02.13.27.38
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Aug 2022 13:27:38 -0700 (PDT)
-Received: by mail-wr1-f51.google.com with SMTP id p10so15003729wru.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Aug 2022 13:27:38 -0700 (PDT)
-X-Received: by 2002:a5d:5889:0:b0:21d:bccd:38e3 with SMTP id
- n9-20020a5d5889000000b0021dbccd38e3mr13824780wrf.659.1659472057895; Tue, 02
- Aug 2022 13:27:37 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=jQhPEwH3goRpU8FRyBDXxZC2WkI1FDwYRPXft+9J3uE=;
+        b=IHNqo1KZTDg5Rzba4U77YhPlxCMOJUYft5rcNu3OAZ4u+GZdzwx0SG77bkN5wcpsaQ
+         DB8pGOK++jh1C2QNDcO+OwuBr/4rjnnib+bAsfWsFzc6W1nsDQdNuiHHiNfHXAx/XoCK
+         09IlbD4h6+qdbZaimiWLFKZSRJRgcgFonIZATd9sy1Tb+Iy+Hst3O5f7ESSWJT65ss/s
+         Xza2w5m32p5IO+BZ6Irl4xV9Gjs9B2gho993GGnlykOfzV/doZwTntJZkmKIOa6THu7e
+         dqo3rp0hkXKv5JYYDo6icarnSLePT6NWxe8DHeB9oC+5LIL4Wrzkva0V8re9x2uX3Q8N
+         T6ow==
+X-Gm-Message-State: AJIora/OESUic2EVf2/RgS7crBd5YcPS8Q4Q/pYjTucEChUeJMwdwpHq
+        aFB+pv9nj3O2D3m8lyHdC7IGtBrIFtbRs3KGrk8RzWFaGmN5re6Rys1TCa4MTelw48PwfvTZpHo
+        odfIQlTf66S7/WfvPLHbRQXx4lg==
+X-Received: by 2002:ac8:7c4e:0:b0:31f:36ad:e809 with SMTP id o14-20020ac87c4e000000b0031f36ade809mr19580842qtv.441.1659475318574;
+        Tue, 02 Aug 2022 14:21:58 -0700 (PDT)
+X-Google-Smtp-Source: AGRyM1up+f0v7Bn9Uarm0rhHT+yPJxwAn6o3wRiFDpB+iSM6ATGR0cOoe0i5MAVMSQg4awnLzQAyQg==
+X-Received: by 2002:ac8:7c4e:0:b0:31f:36ad:e809 with SMTP id o14-20020ac87c4e000000b0031f36ade809mr19580823qtv.441.1659475318372;
+        Tue, 02 Aug 2022 14:21:58 -0700 (PDT)
+Received: from halaneylaptop ([2600:1700:1ff0:d0e0::2e])
+        by smtp.gmail.com with ESMTPSA id m26-20020ac866da000000b00339163a06fcsm2047794qtp.6.2022.08.02.14.21.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Aug 2022 14:21:57 -0700 (PDT)
+Date:   Tue, 2 Aug 2022 16:21:54 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
+        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org
+Subject: Re: [PATCH 1/8] usb: dwc3: fix PHY disable sequence
+Message-ID: <20220802212154.jh65gds4jpzbvqn6@halaneylaptop>
+References: <20220802151404.1797-1-johan+linaro@kernel.org>
+ <20220802151404.1797-2-johan+linaro@kernel.org>
 MIME-Version: 1.0
-References: <20220802200649.2122084-1-broonie@kernel.org>
-In-Reply-To: <20220802200649.2122084-1-broonie@kernel.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 2 Aug 2022 13:27:25 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X2aPq8Zsv-GSfj8Kz_9+MFxmejchoF4LUUY3tOLx3Ntw@mail.gmail.com>
-Message-ID: <CAD=FV=X2aPq8Zsv-GSfj8Kz_9+MFxmejchoF4LUUY3tOLx3Ntw@mail.gmail.com>
-Subject: Re: linux-next: build failure after merge of the tty tree
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Greg KH <greg@kroah.com>,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux Next Mailing List <linux-next@vger.kernel.org>,
-        linux-serial@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220802151404.1797-2-johan+linaro@kernel.org>
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Tue, Aug 02, 2022 at 05:13:57PM +0200, Johan Hovold wrote:
+> Generic PHYs must be powered-off before they can be tore down.
+> 
+> Similarly, suspending legacy PHYs after having powered them off makes no
+> sense.
+> 
+> Fix the dwc3_core_exit() (e.g. called during suspend) and open-coded
+> dwc3_probe() error-path sequences that got this wrong.
+> 
+> Note that this makes dwc3_core_exit() match the dwc3_core_init() error
+> path with respect to powering off the PHYs.
+> 
+> Fixes: 03c1fd622f72 ("usb: dwc3: core: add phy cleanup for probe error handling")
+> Fixes: c499ff71ff2a ("usb: dwc3: core: re-factor init and exit paths")
+> Cc: stable@vger.kernel.org      # 4.8
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
 
-On Tue, Aug 2, 2022 at 1:07 PM <broonie@kernel.org> wrote:
->
-> Caused by commit
->
->   c474c775716edd46a5 ("tty: serial: qcom-geni-serial: Fix get_clk_div_rate() which otherwise could return a sub-optimal clock rate.")
->
-> I have used the tree from 20220727 instead.
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 
-Posted a fix: ("tty: serial: qcom-geni-serial: Fix %lu -> %u in print
-statements") [1]
+>  drivers/usb/dwc3/core.c | 19 ++++++++++---------
+>  1 file changed, 10 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> index c5c238ab3083..16d1f328775f 100644
+> --- a/drivers/usb/dwc3/core.c
+> +++ b/drivers/usb/dwc3/core.c
+> @@ -833,15 +833,16 @@ static void dwc3_core_exit(struct dwc3 *dwc)
+>  {
+>  	dwc3_event_buffers_cleanup(dwc);
+>  
+> +	usb_phy_set_suspend(dwc->usb2_phy, 1);
+> +	usb_phy_set_suspend(dwc->usb3_phy, 1);
+> +	phy_power_off(dwc->usb2_generic_phy);
+> +	phy_power_off(dwc->usb3_generic_phy);
+> +
+>  	usb_phy_shutdown(dwc->usb2_phy);
+>  	usb_phy_shutdown(dwc->usb3_phy);
+>  	phy_exit(dwc->usb2_generic_phy);
+>  	phy_exit(dwc->usb3_generic_phy);
+>  
+> -	usb_phy_set_suspend(dwc->usb2_phy, 1);
+> -	usb_phy_set_suspend(dwc->usb3_phy, 1);
+> -	phy_power_off(dwc->usb2_generic_phy);
+> -	phy_power_off(dwc->usb3_generic_phy);
+>  	dwc3_clk_disable(dwc);
+>  	reset_control_assert(dwc->reset);
+>  }
+> @@ -1879,16 +1880,16 @@ static int dwc3_probe(struct platform_device *pdev)
+>  	dwc3_debugfs_exit(dwc);
+>  	dwc3_event_buffers_cleanup(dwc);
+>  
+> -	usb_phy_shutdown(dwc->usb2_phy);
+> -	usb_phy_shutdown(dwc->usb3_phy);
+> -	phy_exit(dwc->usb2_generic_phy);
+> -	phy_exit(dwc->usb3_generic_phy);
+> -
+>  	usb_phy_set_suspend(dwc->usb2_phy, 1);
+>  	usb_phy_set_suspend(dwc->usb3_phy, 1);
+>  	phy_power_off(dwc->usb2_generic_phy);
+>  	phy_power_off(dwc->usb3_generic_phy);
+>  
+> +	usb_phy_shutdown(dwc->usb2_phy);
+> +	usb_phy_shutdown(dwc->usb3_phy);
+> +	phy_exit(dwc->usb2_generic_phy);
+> +	phy_exit(dwc->usb3_generic_phy);
+> +
+>  	dwc3_ulpi_exit(dwc);
+>  
+>  err4:
+> -- 
+> 2.35.1
+> 
 
-[1] https://lore.kernel.org/r/20220802132250.1.Iea061e14157a17e114dbe2eca764568a02d6b889@changeid
