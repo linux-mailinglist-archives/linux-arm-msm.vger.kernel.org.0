@@ -2,86 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 09E1D587B15
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 12:54:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB58C587BB3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 13:40:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236104AbiHBKyV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Aug 2022 06:54:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59752 "EHLO
+        id S236476AbiHBLkV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Aug 2022 07:40:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233829AbiHBKyT (ORCPT
+        with ESMTP id S236506AbiHBLkU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Aug 2022 06:54:19 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E50B1AF04
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Aug 2022 03:54:18 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id r14so15227407ljp.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Aug 2022 03:54:18 -0700 (PDT)
+        Tue, 2 Aug 2022 07:40:20 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 230A72676;
+        Tue,  2 Aug 2022 04:40:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=k/Q7X6FiTaxzyTMXxbbQRlGSpVkQViGsC2v5dU+gKqs=;
-        b=my2KLGdr1IhY1mYpjSo3vp1aSC2H0iWCr0XrDEVg+DDFbGVMt9k4y7TNZSZ4WAySHR
-         jEbtXsvd2SxKaJFO9iCFYbQ1Xf2IA+U7pdpE4mgqQ6cjCGDsnWATLf3QncJ9Yhqq2f4A
-         JDa2IUF1aGgDEge1N/9hH2yD3JYKH7aB297cR1RAT/hucRkBJc2jqlP1kZMd4K0s1VO3
-         rCYNwqFeRL3KoXrr9EtPFuC4bqKmvrsX2sBVKWEmq09d5CpxA8AM0BXrBtsvElD2Kchi
-         XSzFoKf0BDZA3kerx+brFWTlsOGgjr3kWQ7IVwoTui/BmB0OVWX5TXEo4lVGl/0IPL9o
-         jhHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=k/Q7X6FiTaxzyTMXxbbQRlGSpVkQViGsC2v5dU+gKqs=;
-        b=X/jAIRdM9qo0+YCTxpOCHa9wz5e22hO1gKjkc/UMvzVQ396ae9c/dXbsCrgj+VkQ7G
-         zHnbtdCjwVAJHjOh7he/OfVsoQQBfLjfnnUlsmdGV2ji2+IY3EbgyYROy9WqaqE0m5BD
-         wCWBjE1dv/jqSNaTDsmLz73XrN2FqsdB+U13BjEpPYXJoZp+mZKUKD5h3HF7PMZjY5gC
-         qASvOpDgde89ROf/5LfMv2BHHJdEk5fTrP11ZZtmFiY5DU/Xukf7hvDsGTiY6duBRz5B
-         sWjSxFoJmbt0tV+L/rqCYhx5Pe0eunXmaM2QMdVCUxOxH7Y75F5f605+uvZ9d7iB8Qru
-         O7Ig==
-X-Gm-Message-State: ACgBeo0YaqEoB+zc57q7oF89jRwmhwWdeaZHP2dVgHywVPISWv/EtMrO
-        rBqKKaoSgv5v5lyIMQxvplnPzA==
-X-Google-Smtp-Source: AA6agR6cc+tQ3dfd9VGRdTgGi1UQwgjRLGNCZ6mtI3GN0976KBHlTjTPg6i/IR0SEBdEcoTYZTj1dQ==
-X-Received: by 2002:a05:651c:211e:b0:25e:4fa0:1512 with SMTP id a30-20020a05651c211e00b0025e4fa01512mr2951334ljq.39.1659437656758;
-        Tue, 02 Aug 2022 03:54:16 -0700 (PDT)
-Received: from [192.168.1.6] ([213.161.169.44])
-        by smtp.gmail.com with ESMTPSA id a19-20020ac25e73000000b0048b120ba622sm149440lfr.81.2022.08.02.03.54.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Aug 2022 03:54:16 -0700 (PDT)
-Message-ID: <26aa894f-7680-478e-7dc1-a42c0ea22c4a@linaro.org>
-Date:   Tue, 2 Aug 2022 12:54:13 +0200
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1659440418; x=1690976418;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=YpUtE1Gh283+1zH/RtwpbH/r5au2IVBLc5uPyBfB2ZA=;
+  b=nPc7GzHoaoGhNsJxthttxFiXkhknMfN8DFN+/Ai/J3wOLG/l0IvqOfry
+   piFiotBOPAAotBp07eF4Ps1uMlu3VROZ7aaGB60TIsaZNcH49dTiMVhOU
+   WhtRrlEyFZN/lNeLxpTP2hejXBKzYUA4W9CvZX3L3CD2z96GE6YTm0DVN
+   c=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 02 Aug 2022 04:40:17 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Aug 2022 04:40:16 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 2 Aug 2022 04:39:49 -0700
+Received: from [10.216.56.39] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 2 Aug 2022
+ 04:39:46 -0700
+Message-ID: <1f284b9c-257b-a127-55c0-e6cc8c07a9eb@quicinc.com>
+Date:   Tue, 2 Aug 2022 17:07:51 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v2 02/11] dt-bindings: Add binding for gunyah hypervisor
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2 4/5] firmware: qcom: scm: Add wait-queue helper
+ functions
 Content-Language: en-US
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org
-Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
+To:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20220801211240.597859-1-quic_eberman@quicinc.com>
- <20220801211240.597859-3-quic_eberman@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220801211240.597859-3-quic_eberman@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Philipp Zabel" <p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC:     David Heidelberg <david@ixit.cz>,
+        Robert Marko <robimarko@gmail.com>,
+        Elliot Berman <quic_eberman@quicinc.com>
+References: <1658529438-9234-1-git-send-email-quic_gurus@quicinc.com>
+ <1658529438-9234-5-git-send-email-quic_gurus@quicinc.com>
+From:   Rajendra Nayak <quic_rjendra@quicinc.com>
+In-Reply-To: <1658529438-9234-5-git-send-email-quic_gurus@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,133 +72,173 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/08/2022 23:12, Elliot Berman wrote:
-> When Linux is booted as a guest under the Gunyah hypervisor, Gunyah
-> applies a devicetree overlay describing the virtual platform
-> configuration of the guest VM, such as the message queue capability IDs
-> for communicating with the Resource Manager. Add the DT bindings that
-> Gunyah adheres for the hypervisor node and message queues.
 
-Previously you explained that this cannot be discoverable, because EL2
-hypervisor follows micro-kernel architecture and it is small. Size of
-your code is not a reason to push things to DT... This is a kind of
-explanation like: we did not add auto-discoverability, because we don't
-want to add more code.
-
+On 7/23/2022 4:07 AM, Guru Das Srinagesh wrote:
+> When the firmware (FW) supports multiple requests per VM, and the VM
+> also supports it via the `allow-multi-call` device tree flag, the
+> floodgates are thrown open for them to all reach the firmware at the
+> same time.
 > 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> Since the firmware currently being used has limited resources, it guards
+> them with a resource lock and puts requests on a wait-queue internally
+> and signals to HLOS that it is doing so. It does this by returning two
+> new return values in addition to success or error: SCM_WAITQ_SLEEP and
+> SCM_WAITQ_WAKE.
+> 
+>    1) SCM_WAITQ_SLEEP:
+> 
+>    	When an SCM call receives this return value instead of success
+>    	or error, FW has placed this call on a wait-queue and
+>    	has signalled HLOS to put it to non-interruptible sleep. (The
+> 	mechanism to wake it back up will be described in detail in the
+> 	next patch for the sake of simplicity.)
+> 
+> 	Along with this return value, FW also passes to HLOS `wq_ctx` -
+> 	a unique number (UID) identifying the wait-queue that it has put
+> 	the call on, internally. This is to help HLOS with its own
+> 	bookkeeping to wake this sleeping call later.
+> 
+> 	Additionally, FW also passes to HLOS `smc_call_ctx` - a UID
+> 	identifying the SCM call thus being put to sleep. This is also
+> 	for HLOS' bookkeeping to wake this call up later.
+> 
+> 	These two additional values are passed via the a1 and a2
+> 	registers.
+> 
+> 	N.B.: The "ctx" in the above UID names = "context".
+> 
+>    2) SCM_WAITQ_WAKE:
+> 
+>    	When an SCM call receives this return value instead of success
+>    	or error, FW wishes to signal HLOS to wake up a (different)
+>    	previously sleeping call.
+> 
+>    	FW tells HLOS which call to wake up via the additional return
+>    	values `wq_ctx`, `smc_call_ctx` and `flags`. The first two have
+>    	already been explained above.
+> 
+>    	`flags` can be either WAKE_ONE or WAKE_ALL. Meaning, wake either
+>    	one, or all, of the SCM calls that HLOS is associating with the
+>    	given `wq_ctx`.
+> 
+> A sleeping SCM call can be woken up by either an interrupt that FW
+> raises, or via a SCM_WAITQ_WAKE return value for a new SCM call.
+
+Do you know why the FW was not designed to always use an interrupt?
+That would have made the handling of this in kernel a lot less complicated.
+  
+> The handshake mechanism that HLOS uses to talk to FW about wait-queue
+> operations involves three new SMC calls. These are:
+> 
+>    1) get_wq_ctx():
+> 
+>      	Arguments: 	None
+>      	Returns:	wq_ctx, flags, more_pending
+> 
+>      	Get the wait-queue context, and wake up either one or all of the
+>      	sleeping SCM calls associated with that wait-queue.
+> 
+>      	Additionally, repeat this if there are more wait-queues that are
+>      	ready to have their requests woken up (`more_pending`).
+> 
+>    2) wq_resume(smc_call_ctx):
+> 
+>    	Arguments:	smc_call_ctx
+> 
+>    	HLOS needs to issue this in response to receiving an
+>    	IRQ, passing to FW the same smc_call_ctx that FW
+>    	receives from HLOS via the get_wq_ctx() call.
+> 
+>    3) wq_wake_ack(smc_call_ctx):
+> 
+>    	Arguments:	smc_call_ctx
+> 
+>    	HLOS needs to issue this in response to receiving an
+>    	SCM_WAITQ_WAKE, passing to FW the same smc_call_ctx that FW
+>    	passed to HLOS via the SMC_WAITQ_WAKE call.
+> 
+> (Reminder that the full handshake mechanism will be detailed in the
+> subsequent patch.)
+> 
+> Also add the interrupt handler that wakes up a sleeping SCM call.
+> 
+> Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
 > ---
->  .../bindings/firmware/gunyah-hypervisor.yaml  | 84 +++++++++++++++++++
->  MAINTAINERS                                   |  1 +
->  2 files changed, 85 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml b/Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
-> new file mode 100644
-> index 000000000000..e50d932e768c
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
-> @@ -0,0 +1,84 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/firmware/gunyah-hypervisor.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Gunyah Hypervisor
-> +
-> +maintainers:
-> +  - Murali Nalajala <quic_mnalajal@quicinc.com>
-> +  - Elliot Berman <quic_eberman@quicinc.com>
-> +
-> +description: |+
-> +  On systems which support devicetree, Gunyah generates and overlays a deviceetree overlay which
-> +  describes the basic configuration of the hypervisor. Virtual machines use this information for
-> +  initial discovery that they are running as a Gunyah guest VM.
-> +  See also: https://github.com/quic/gunyah-resource-manager/blob/develop/src/vm_creation/dto_construct.c
-> +
-> +properties:
-> +  compatible:
-> +    oneOf:
-> +      - items:
-> +          - const: gunyah-hypervisor-1.0
-> +          - const: gunyah-hypervisor
-> +
-> +  "#address-cells":
-> +    description: Number of cells needed to represent 64-bit capability IDs.
-> +    const: 2
+[]..
 
-Blank line between definition of each property.
-
-> +  "#size-cells":
-> +    description: must be 0, because capability IDs are not memory address
-> +                  ranges and do not have a size.
-> +    const: 0
+> +struct completion *qcom_scm_lookup_wq(struct qcom_scm *scm, u32 wq_ctx)
+> +{
+> +	struct completion *wq = NULL;
+> +	u32 wq_ctx_idr = wq_ctx;
+> +	unsigned long flags;
+> +	int err;
 > +
-> +patternProperties:
-> +  "^gunyah-resource-mgr(@.*)?":
-> +    type: object
-> +    description:
-> +      Resource Manager node which is required to communicate to Resource
-> +      Manager VM using Gunyah Message Queues.
+> +	spin_lock_irqsave(&scm->waitq.idr_lock, flags);
+> +	wq = idr_find(&scm->waitq.idr, wq_ctx);
+> +	if (wq)
+> +		goto out;
 > +
-> +    properties:
-> +      compatible:
-> +        oneOf:
-> +          - items:
-> +              - const: gunyah-resource-manager-1-0
-> +              - const: gunyah-resource-manager
-
-Blank line.
-
-> +      reg:
-> +        items:
-> +          - description: Gunyah capability ID of the TX message queue
-> +          - description: Gunyah capability ID of the RX message queue
-
-Blank line.
-
-> +      interrupts:
-> +        items:
-> +          - description: Interrupt for the TX message queue
-> +          - description: Interrupt for the RX message queue
-
-Blank line.
-
-> +    additionalProperties: false
-
-Blank line.
-
-> +    required:
-> +      - compatible
-> +      - reg
-> +      - interrupts
+> +	wq = devm_kzalloc(scm->dev, sizeof(*wq), GFP_ATOMIC);
+> +	if (!wq) {
+> +		wq = ERR_PTR(-ENOMEM);
+> +		goto out;
+> +	}
 > +
-> +additionalProperties: false
+> +	init_completion(wq);
 > +
-> +required:
-> +  - compatible
-> +  - "#address-cells"
-> +  - "#size-cells"
+> +	err = idr_alloc_u32(&scm->waitq.idr, wq, &wq_ctx_idr,
+> +			    U32_MAX, GFP_ATOMIC);
+> +	if (err < 0) {
+> +		devm_kfree(scm->dev, wq);
+> +		wq = ERR_PTR(err);
+> +	}
 > +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +out:
+> +	spin_unlock_irqrestore(&scm->waitq.idr_lock, flags);
+> +	return wq;
+> +}
 > +
-> +    hypervisor {
-> +        #address-cells = <2>;
-> +        #size-cells = <0>;
-> +        compatible = "gunyah-hypervisor-1.0", "gunyah-hypervisor";
+> +void scm_waitq_flag_handler(struct completion *wq, u32 flags)
+> +{
+> +	switch (flags) {
+> +	case QCOM_SMC_WAITQ_FLAG_WAKE_ONE:
+> +		complete(wq);
+> +		break;
+> +	case QCOM_SMC_WAITQ_FLAG_WAKE_ALL:
+> +		complete_all(wq);
+> +		break;
+> +	default:
+> +		pr_err("invalid flags: %u\n", flags);
+> +	}
+> +}
 > +
-> +        gunyah-resource-mgr@1 {
-> +            compatible = "gunyah-resource-manager-1-0", "gunyah-resource-manager";
-> +            interrupts = <GIC_SPI 3 IRQ_TYPE_EDGE_RISING>, /* TX full IRQ */
-> +                         <GIC_SPI 4 IRQ_TYPE_EDGE_RISING>; /* RX empty IRQ */
-> +            reg = <0x00000000 0x00000000>, <0x00000000 0x00000001>;
-> +                  /* TX, RX cap ids */
-> +        };
-> +    };
+> +static void scm_irq_work(struct work_struct *work)
+> +{
+> +	int ret;
+> +	u32 wq_ctx, flags, more_pending = 0;
+> +	struct completion *wq_to_wake;
+> +	struct qcom_scm_waitq *w = container_of(work, struct qcom_scm_waitq, scm_irq_work);
+> +	struct qcom_scm *scm = container_of(w, struct qcom_scm, waitq);
+> +
+> +	do {
+> +		ret = scm_get_wq_ctx(&wq_ctx, &flags, &more_pending);
+> +		if (ret) {
+> +			pr_err("GET_WQ_CTX SMC call failed: %d\n", ret);
+> +			return;
+> +		}
+> +
+> +		wq_to_wake = qcom_scm_lookup_wq(scm, wq_ctx);
+> +		if (IS_ERR_OR_NULL(wq_to_wake)) {
+> +			pr_err("No waitqueue found for wq_ctx %d: %ld\n",
+> +					wq_ctx, PTR_ERR(wq_to_wake));
+> +			return;
 
+What happens if at this point 'more_pending' was true? will the FW raise
+another interrupt?
 
-Best regards,
-Krzysztof
+> +		}
+> +
+> +		scm_waitq_flag_handler(wq_to_wake, flags);
+> +	} while (more_pending);
+> +}
+
