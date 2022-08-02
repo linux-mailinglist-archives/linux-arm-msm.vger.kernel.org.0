@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F2DB587927
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 10:38:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BA565879CB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Aug 2022 11:24:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236437AbiHBIi4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Aug 2022 04:38:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40864 "EHLO
+        id S234193AbiHBJY1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Aug 2022 05:24:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236434AbiHBIiz (ORCPT
+        with ESMTP id S232258AbiHBJY0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Aug 2022 04:38:55 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E4E440BDE
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Aug 2022 01:38:53 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id z25so20976623lfr.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Aug 2022 01:38:53 -0700 (PDT)
+        Tue, 2 Aug 2022 05:24:26 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D95FD1A06D
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Aug 2022 02:24:24 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id f20so13864601lfc.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Aug 2022 02:24:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=OUlNVrJftmJ2XfuB3wDshZNv/WR+XBtPkC09jnanpmY=;
-        b=wPsQf9BgZWpy0q27jb7/9V/6AeIs+AAlD45SBnMIRQ16xfnhaYsgSlyFWW2/PISiLs
-         qK2irYUDp2EIT7BkMxtsceOKJCFQ29u6JdmeOOtmCocgRrGBr/cBXoWIs3hfMNBEEfxQ
-         EMjREyZPkUGamG4vhygIZTayMiXWVFxTshSLANg/lj6pBGdXz5ZvNZlg0pSxXX4/zcJS
-         MlxEmpHBbOdhW0z4JUHptfv2oNQz/5WQiPvFul85fEaIEyILXa2yFyUjkkf+5doryFZ9
-         11g/sNIBagAyybksgBRc2C24lTGcwMJbT+ld8YatmlMfAcwm94A114UsmnFlfxa5soTZ
-         io6A==
+        bh=1n1ZKC51PL7oA8qvseMiLtJyJ6uxOwh3lLvNachyl1g=;
+        b=SkPaGq8iz1oHc+v7esobJprt9PJgk67NAJHJdsKvxA4Kb40e4boROTAcUc2xJkDOtP
+         feiZ4DFggiNTTdytEx5RqfqnF9zoj0Ovv/NDSwuP+Qt0gSOM4kTxBz9LaBBmjh3gYcI8
+         om5PBZP8AbVCWg0xSi5ruxNf2iyyRdZ6CY6rsQhR1zD0h/wCidH1BKH47KOcQMNSiZ1N
+         PDGarGTsjYrWojQ6gq85qllU6HPIBbbsDHui241G6b21VvTZmfSgB3jGRCj7C0tgt98M
+         VyA5lbHDlWTfKlqOFAmu36bhGTfFSSzXVtOIqwgMAJG6jd9t9YyBW54hF1K3wE0OYD3g
+         ZvsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=OUlNVrJftmJ2XfuB3wDshZNv/WR+XBtPkC09jnanpmY=;
-        b=pXA0POLuyXiN5RJVIV4wGtQ26UXVzDZ7td39kqg5rjrhB92/ZDuPunhLu2S+eJ024c
-         ENoh7B7esv3QkHZa3/nXRGWNgCqAcB7tevXdTVLpz8eZTMwJvMX23beRY6/jSrkC+eqv
-         6BKZJrjiqOxUAvBBGzA4NzrYyqCe2iy9p59USa3QKxJqFuPcZRGCP+iJzqk6qXf2zWsa
-         zhOveG7ZMHm+ss8U3BAW2oXvS+d0zBMIzp1hG/JMPgaV7q5XIc3Al/U06bwmBelJoq6Q
-         svMiRy6qF0pfPyn9sBsVWl2DVnivQwH2maFc/iQICaSK7Poe420PXAwvVii/HnBam1FT
-         r0Pw==
-X-Gm-Message-State: ACgBeo2Zz6oQIRqYYq586RXXMmVp7a5Y38JkG++zCMkH5dAPYE3Tzbnz
-        KZkmRqmeNdt7yqDH/lrh4FiibA==
-X-Google-Smtp-Source: AA6agR5ZVmGpYFxuTsEJLxQ7mSYVQFY+1aKXLwklROUAmeEvG7kRXnZXEHSDo/EizY7YdFM0JJv6sQ==
-X-Received: by 2002:ac2:465e:0:b0:48a:ebc2:2cbf with SMTP id s30-20020ac2465e000000b0048aebc22cbfmr4866933lfo.374.1659429531862;
-        Tue, 02 Aug 2022 01:38:51 -0700 (PDT)
+        bh=1n1ZKC51PL7oA8qvseMiLtJyJ6uxOwh3lLvNachyl1g=;
+        b=D/v9EVOGifXhrj+M3x8SWa8UYKILxZKJIpngeREW9ItdBFzNjAXNQnEUGodOFJfuaH
+         P6Rg9jzIhCi0cmhx5D+vHgb/PXWHMcrxDg+S5FaqYo9kN2VdVBA83q02IP74mb34PF9m
+         UZaaZ9ls8bI2g73eX8bWGFxIogXLnMpmtOUpai7YJWK9bN8hcAyD96EZpj86wczM4hbq
+         4GSveFYskJvzLovePcXpU88BM4M62zzR8yfAQ5KL4BymNW7r1T4zz29b/JwJJGFju40H
+         lDtqza+GddyX1nuy5vPNE46yYAiDKmj8SzjVyAOxc88jyq2OLPZMLFHYbkWt+HpMOl5S
+         adIA==
+X-Gm-Message-State: AJIora/XFzydn9i3fHMY7VxZM3nHSuyyvpZuze9PltSsRd2LjDj9opI+
+        GWXvQ2dAlD4bgE8fr4Tq6iNNoA==
+X-Google-Smtp-Source: AGRyM1uBK8mjLp2Dc3a0wZ5cXTLENaz5MzrxfwZV1SGtxG45Quj5zu+tMF8YQMQoSC9KIbWP1jib7Q==
+X-Received: by 2002:a19:f004:0:b0:48a:bf41:1e70 with SMTP id p4-20020a19f004000000b0048abf411e70mr6530388lfc.342.1659432263152;
+        Tue, 02 Aug 2022 02:24:23 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id c25-20020a056512075900b0048afdf1ba33sm585309lfs.208.2022.08.02.01.38.50
+        by smtp.gmail.com with ESMTPSA id z13-20020a2eb52d000000b0025dc0adf38csm119052ljm.61.2022.08.02.02.24.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Aug 2022 01:38:51 -0700 (PDT)
-Message-ID: <869e9d41-7a21-c01a-ccbd-53bfb236938c@linaro.org>
-Date:   Tue, 2 Aug 2022 11:38:50 +0300
+        Tue, 02 Aug 2022 02:24:22 -0700 (PDT)
+Message-ID: <50230652-c1ae-4ce2-907c-9bdc6b827f8e@linaro.org>
+Date:   Tue, 2 Aug 2022 12:24:21 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH v2 09/11] gunyah: rsc_mgr: Add auxiliary devices for
- console
+Subject: Re: [PATCH v2 00/11] Drivers for gunyah hypervisor
 Content-Language: en-GB
 To:     Elliot Berman <quic_eberman@quicinc.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
@@ -77,9 +76,8 @@ Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
         devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
 References: <20220801211240.597859-1-quic_eberman@quicinc.com>
- <20220801211240.597859-10-quic_eberman@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220801211240.597859-10-quic_eberman@quicinc.com>
+In-Reply-To: <20220801211240.597859-1-quic_eberman@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -93,74 +91,106 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 02/08/2022 00:12, Elliot Berman wrote:
-> Gunyah resource manager exposes a concrete functionalities which
-> complicate a single resource manager driver. Use auxiliary bus
-> to help split high level functions for the resource manager and keep the
-> primary resource manager driver focused on the RPC with RM itself.
-> Delegate Resource Manager's console functionality to the auxiliary bus.
+> Gunyah is a Type-1 hypervisor independent of any
+> high-level OS kernel, and runs in a higher CPU privilege level. It does
+> not depend on any lower-privileged OS kernel/code for its core
+> functionality. This increases its security and can support a much smaller
+> trusted computing base than a Type-2 hypervisor.
 > 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
->   drivers/virt/gunyah/rsc_mgr.c | 61 ++++++++++++++++++++++++++++++++++-
->   1 file changed, 60 insertions(+), 1 deletion(-)
+> Gunyah is an open source hypervisor. The source repo is available at
+> https://github.com/quic/gunyah-hypervisor.
 > 
-> diff --git a/drivers/virt/gunyah/rsc_mgr.c b/drivers/virt/gunyah/rsc_mgr.c
-> index b8268ee02fab..44b22cef7d44 100644
-> --- a/drivers/virt/gunyah/rsc_mgr.c
-> +++ b/drivers/virt/gunyah/rsc_mgr.c
-> @@ -91,6 +91,11 @@ struct gh_rm_notif_complete {
->   	struct work_struct work;
->   };
->   
-> +struct gh_rsc_mgr_adev {
-> +	struct auxiliary_device adev;
-> +	struct list_head list;
-> +};
-> +
->   struct gh_rsc_mgr {
->   	struct task_struct *recv_task;
->   	struct gunyah_device *msgq_tx, *msgq_rx;
-> @@ -99,6 +104,13 @@ struct gh_rsc_mgr {
->   	struct mutex call_idr_lock;
->   
->   	struct mutex send_lock;
-> +
-> +	struct list_head adevs;
-> +};
-> +
-> +/* List of auxiliary devices which resource manager creates */
-> +static const char * const adev_names[] = {
-> +	"console",
->   };
+> The diagram below shows the architecture.
+> 
+> ::
+> 
+>          Primary VM           Secondary VMs
 
-Which other auxilliary devices do you expect at this moment?
+Is there any significant difference between Primary VM and other VMs?
 
->   
->   static struct gh_rsc_mgr *__rsc_mgr;
-> @@ -516,6 +528,14 @@ int gh_rm_unregister_notifier(struct notifier_block *nb)
->   }
->   EXPORT_SYMBOL_GPL(gh_rm_unregister_notifier);
->   
-> +static void gh_rm_adev_release(struct device *dev)
-> +{
-> +	struct gh_rsc_mgr_adev *rm_adev = container_of(dev, struct gh_rsc_mgr_adev, adev.dev);
-> +
-> +	list_del(&rm_adev->list);
+>       +-----+ +-----+  | +-----+ +-----+ +-----+
+>       |     | |     |  | |     | |     | |     |
+>   EL0 | APP | | APP |  | | APP | | APP | | APP |
+>       |     | |     |  | |     | |     | |     |
+>       +-----+ +-----+  | +-----+ +-----+ +-----+
+>   ---------------------|-------------------------
+>       +--------------+ | +----------------------+
+>       |              | | |                      |
+>   EL1 | Linux Kernel | | |Linux kernel/Other OS |   ...
+>       |              | | |                      |
+>       +--------------+ | +----------------------+
+>   --------hvc/smc------|------hvc/smc------------
+>       +----------------------------------------+
+>       |                                        |
+>   EL2 |            Gunyah Hypervisor           |
+>       |                                        |
+>       +----------------------------------------+
+> 
+> Gunyah provides these following features.
+> 
+> - Threads and Scheduling: The scheduler schedules virtual CPUs (VCPUs) on
+> physical CPUs and enables time-sharing of the CPUs.
 
-is there a race for the rsc_mgr->list? Can multiple release functions be 
-called in parallel?
-Rather than having a list, it would be easier to have an array of 
-devices. Less race conditions, simpler code.
+Is the scheduling provided behind the back of the OS or does it require 
+cooperation?
 
-Or just add gh_rsc_msg->console_adev and use it directly without any 
-additional bells and whistles.
+> - Memory Management: Gunyah tracks memory ownership and use of all memory
+> under its control. Memory partitioning between VMs is a fundamental
+> security feature.
+> - Interrupt Virtualization: All interrupts are handled in the hypervisor
+> and routed to the assigned VM.
+> - Inter-VM Communication: There are several different mechanisms provided
+> for communicating between VMs.
+> - Device Virtualization: Para-virtualization of devices is supported using
+> inter-VM communication. Low level system features and devices such as
+> interrupt controllers are supported with emulation where required.
 
-> +	kfree(rm_adev);
-> +}
-> +
->   static struct gunyah_device *gh_msgq_platform_probe_direction(struct platform_device *pdev,
->   				u8 gh_type, int idx)
->   {
+After reviewing some of the patches from the series, I'd like to 
+understand, what does it provide (and can be provided) to the VMs.
+
+I'd like to understand it first, before going deep into the API issues.
+
+1) The hypervisor provides message queues, doorbells and vCPUs
+
+Each of resources has it's own capability ID.
+Why is it called capability? Is it just a misname for the resource ID, 
+or has it any other meaning behind? If it is a capability, who is 
+capable of what?
+
+At this moment you create allocate two message queues with fixed IDs for 
+communication with resource manager. Then you use these message queues 
+to organize a console and a pack of tty devices.
+
+What other kinds of services does RM provide to the guest OS?
+Do you expect any other drivers to be calling into the RM?
+
+What is the usecase for the doorbells? Who provides doorbells?
+
+You mentioned that the RM generates DT overlays. What kind of 
+information goes to the overlay?
+
+My current impression of this series is that you have misused the 
+concept of devices. Rather than exporting MSGQs and BELLs as 
+gunyah_devices and then using them from other drivers, I'd suggest 
+turning them into resources provided by the gunyah driver core. I 
+mentioned using the mailbox API for this. Another subsystem that might 
+ring the bell for you is the remoteproc, especially the rproc_subdev.
+
+I might be completely wrong about this, but if my in-mind picture of 
+Gunyah is correct, I'd have implemented the gunyah core subsytem as 
+mailbox provider, RM as a separate platform driver consuming these 
+mailboxes and in turn being a remoteproc driver, and consoles as 
+remoteproc subdevices.
+
+I can assume that at some point you would like to use Gunyah to boot 
+secondary VMs from the primary VM by calling into RM, etc.
+Most probably at this moment a VM would be allocated other bells, 
+message queues, etc. If this assumption is correct, them the VM can 
+become a separate device (remoteproc?) in the Linux device tree.
+
+I might be wrong in any of the assumptions above. Please feel free to 
+correct me. We can then think about a better API for your usecase.
+
 -- 
 With best wishes
 Dmitry
