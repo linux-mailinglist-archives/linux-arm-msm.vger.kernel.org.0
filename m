@@ -2,128 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB18D58929A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 21:11:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AAE375892E8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 21:52:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238405AbiHCTLq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Aug 2022 15:11:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51982 "EHLO
+        id S233695AbiHCTwg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Aug 2022 15:52:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236764AbiHCTLp (ORCPT
+        with ESMTP id S233409AbiHCTwf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Aug 2022 15:11:45 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 460E822B29
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Aug 2022 12:11:44 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id v16-20020a17090abb9000b001f25244c65dso2976383pjr.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Aug 2022 12:11:44 -0700 (PDT)
+        Wed, 3 Aug 2022 15:52:35 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC4A73206C;
+        Wed,  3 Aug 2022 12:52:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Yem/qpYgEmCA72j+50vuDoYqx1yqH6LmWKyXF9t4QJg=;
-        b=EwxcoNIv8M8nBbi4W52JGeZOlI+IHvVO1zFTLNFcaeZacJh9+EWETN98RqBn/VQxu6
-         tCrof60TWxBkZ5GDGErF9ZuxvR8nwF+2Pc/wZrDG1ZNQg3Qg+n2XVZsdsY8DPBEuS72x
-         QQ29+MDE/K9tTT1pexxtQ+L7ZNYHVNzt0AB6s=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Yem/qpYgEmCA72j+50vuDoYqx1yqH6LmWKyXF9t4QJg=;
-        b=D2ofcOGG2sSX1j1hYtzf8Kp2AdgCs0aFMHx8DCZwSSvuz2oW9aiFXFKAUYgHo4s5Td
-         h5AM0bYS0s2kIGXZenQeAiqTnBO26wkT7lJCup/lhenwPLVRpCbfbAfsY8SICYClWFQZ
-         GT+3elbxHBrMRsKqOZGe8AY+52EQGN/TYrstx3zSc9TNcbVdF5Jge4SK9kmCjKMP5fos
-         wOF/tjou3XUmcNgn6IOO41Jm7g/6QcvI7Y+1P3k7gUudUeZL24NknhYT3RgRLhDRU/Oz
-         RaaGV37Vtt7Wt58fBi0Jkt1AbxcxjN2dSlINyiCyrqfkNUFAP5CG0xMZKrA1h8UoKj37
-         ukqw==
-X-Gm-Message-State: ACgBeo2vR6PGZ24AyrdYsxhWCNZKBim7jikp8CozrmbSVZTO1XUfHaXC
-        JOPoFqlhXcN+Q/XnZ+ClnEVntw==
-X-Google-Smtp-Source: AA6agR7H1WXgeyhi8psPWgku2rAwpAfqOGEf+yJ1MpMRzacBssEBrY3b5f72u5r2VE1mq17XXJL1sw==
-X-Received: by 2002:a17:90b:1c0a:b0:1f3:1848:591c with SMTP id oc10-20020a17090b1c0a00b001f31848591cmr6248533pjb.24.1659553903773;
-        Wed, 03 Aug 2022 12:11:43 -0700 (PDT)
-Received: from localhost ([2620:15c:11a:202:238b:c074:f5f8:56d0])
-        by smtp.gmail.com with UTF8SMTPSA id k15-20020a170902c40f00b0016dbaf3ff2esm2456247plk.22.2022.08.03.12.11.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Aug 2022 12:11:43 -0700 (PDT)
-Date:   Wed, 3 Aug 2022 12:11:41 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
-        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/8] usb: dwc3: qcom: fix broken non-host-mode suspend
-Message-ID: <YurIbcXHPF6K3oPa@google.com>
-References: <20220802151404.1797-1-johan+linaro@kernel.org>
- <20220802151404.1797-4-johan+linaro@kernel.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1659556352; x=1691092352;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=kPJ0bv7qD5e3QqW3xXd4I/PtJrU1pHCZsHBtKoPlWvs=;
+  b=tEUk2aNrZl6iVqoMvtc+5O9miFM/5DPDY1ecp6666psLC3N1Ur2n1C2X
+   U5LpRosIlvgPYKw4Cfl/VFJyDSAinIl0zFPXEnB9CVfo+U+mk67NjLBbt
+   AJxR2NAb8yvi/cG7b0H3lCCxBiMD1VJHaBjn7PN140SgfqhhBqLkTPKYd
+   w=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 03 Aug 2022 12:52:31 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Aug 2022 12:52:31 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 3 Aug 2022 12:52:30 -0700
+Received: from [10.216.4.234] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 3 Aug 2022
+ 12:52:26 -0700
+Message-ID: <c80d70b6-a7ad-5900-ea7a-f0f2157e4a40@quicinc.com>
+Date:   Thu, 4 Aug 2022 01:22:21 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220802151404.1797-4-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH 1/2] drm/msm: Move hangcheck timer restart
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>, <dri-devel@lists.freedesktop.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
+        "Rob Clark" <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20220803172302.1976981-1-robdclark@gmail.com>
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+In-Reply-To: <20220803172302.1976981-1-robdclark@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 02, 2022 at 05:13:59PM +0200, Johan Hovold wrote:
-> A recent commit implementing wakeup support in host mode instead broke
-> suspend for peripheral and OTG mode.
+On 8/3/2022 10:53 PM, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> The hack that was added in the suspend path to determine the speed of
-> any device connected to the USB2 bus not only accesses internal driver
-> data for a child device, but also dereferences a NULL pointer when not
-> in host mode and there is no HCD.
+> Don't directly restart the hangcheck timer from the timer handler, but
+> instead start it after the recover_worker replays remaining jobs.
 > 
-> As the controller can switch role at any time when in OTG mode, there's
-> no quick fix to this, and since reverting would leave us with broken
-> suspend in host-mode (wakeup triggers immediately), keep the hack for
-> now and only fix the NULL-pointer dereference.
+> If the kthread is blocked for other reasons, there is no point to
+> immediately restart the timer.  Fixes a random symptom of the problem
+> fixed in the next patch.
 > 
-> Fixes: 6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
->  drivers/usb/dwc3/dwc3-qcom.c | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
+>   drivers/gpu/drm/msm/msm_gpu.c | 14 +++++++++-----
+>   1 file changed, 9 insertions(+), 5 deletions(-)
 > 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index be2e3dd36440..b75ff40f75a2 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -301,8 +301,17 @@ static void dwc3_qcom_interconnect_exit(struct dwc3_qcom *qcom)
->  static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
->  {
->  	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-> -	struct usb_hcd *hcd = platform_get_drvdata(dwc->xhci);
->  	struct usb_device *udev;
-> +	struct usb_hcd *hcd;
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+> index fba85f894314..8f9c48eabf7d 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> @@ -328,6 +328,7 @@ find_submit(struct msm_ringbuffer *ring, uint32_t fence)
+>   }
+>   
+>   static void retire_submits(struct msm_gpu *gpu);
+> +static void hangcheck_timer_reset(struct msm_gpu *gpu);
+>   
+>   static void get_comm_cmdline(struct msm_gem_submit *submit, char **comm, char **cmd)
+>   {
+> @@ -420,6 +421,8 @@ static void recover_worker(struct kthread_work *work)
+>   	}
+>   
+>   	if (msm_gpu_active(gpu)) {
+> +		bool restart_hangcheck = false;
 > +
-> +	if (qcom->mode != USB_DR_MODE_HOST)
-> +		return USB_SPEED_UNKNOWN;
+>   		/* retire completed submits, plus the one that hung: */
+>   		retire_submits(gpu);
+>   
+> @@ -436,10 +439,15 @@ static void recover_worker(struct kthread_work *work)
+>   			unsigned long flags;
+>   
+>   			spin_lock_irqsave(&ring->submit_lock, flags);
+> -			list_for_each_entry(submit, &ring->submits, node)
+> +			list_for_each_entry(submit, &ring->submits, node) {
+>   				gpu->funcs->submit(gpu, submit);
+> +				restart_hangcheck = true;
+> +			}
+>   			spin_unlock_irqrestore(&ring->submit_lock, flags);
+>   		}
+> +
+> +		if (restart_hangcheck)
+> +			hangcheck_timer_reset(gpu);
+>   	}
+>   
+>   	mutex_unlock(&gpu->lock);
+> @@ -515,10 +523,6 @@ static void hangcheck_handler(struct timer_list *t)
+>   		kthread_queue_work(gpu->worker, &gpu->recover_work);
+>   	}
+>   
+> -	/* if still more pending work, reset the hangcheck timer: */
+In the scenario mentioned here, shouldn't we restart the timer?
 
-Couldn't instead the below block in dwc3_qcom_suspend() be conditional on
-the controller being in host mode?
+-Akhil.
+> -	if (fence_after(ring->fctx->last_fence, ring->hangcheck_fence))
+> -		hangcheck_timer_reset(gpu);
+> -
+>   	/* workaround for missing irq: */
+>   	msm_gpu_retire(gpu);
+>   }
+> 
 
-	if (device_may_wakeup(qcom->dev)) {
-		qcom->usb2_speed = dwc3_qcom_read_usb2_speed(qcom);
-		dwc3_qcom_enable_interrupts(qcom);
-	}
-
-I see, the problem is that the role switch could happen at any time as the
-commit message says. With this patch there is also a race though, the role
-switch could happen just after the check and before obtaining 'hcd'.
