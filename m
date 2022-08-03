@@ -2,107 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D630758936A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 22:44:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DA805893F3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 23:15:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237378AbiHCUoD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Aug 2022 16:44:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49342 "EHLO
+        id S236764AbiHCVPf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Aug 2022 17:15:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235125AbiHCUoD (ORCPT
+        with ESMTP id S236629AbiHCVPe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Aug 2022 16:44:03 -0400
-Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD3019FC5;
-        Wed,  3 Aug 2022 13:44:02 -0700 (PDT)
-Received: by mail-il1-f173.google.com with SMTP id g18so9071476ilk.4;
-        Wed, 03 Aug 2022 13:44:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=5ihkIh4wV1fLXjf3U2JooUONElLr3RHi6M3ZqoiMU1c=;
-        b=UuN5xGmUyP3ssVu+e40gt2vuozli/tKcwHNdC2Kq9v2V3ipsf+NF91v0FUUIPUOil2
-         uPubgaedIGWxXCuAVhZ2cd11biiFSDmZE/gZYKMf1KEjmpxTYGP+tO/Fmue67KfJ9Ouf
-         MHd6wAZkNED/5zt9ed4W2kUl56BwpXHT25uyOrW79TiFRjmcXnqftgbuYJa8DhQ2SaeN
-         4Dl3DFbzNQvi+k1zSZjyUyE1Fo5bDYCB/1v6ZVWUc9eX8IQ4Hy/Ddefml5uo2DXg2xjv
-         BPcybb8HtoKFMmgkY3jgBmDDoKyab526nYy8wbo0gA2UjRqco9IQk1CftzDGt4g58e0D
-         s/rA==
-X-Gm-Message-State: AJIora9WMyUbo3vILpbTMTcH2g+FzKwuIkiGvfMf/h6U4vPM5LBWGV00
-        t+By59l3XABPhxdefqBADUz7gfJ3Lw==
-X-Google-Smtp-Source: AGRyM1tBRJ9MpqM0nDRf8tCJ080e9rYHNY/c2FkMyOFX/aZRufmggHz0JsQQ23h/hJREgb+v8jolfw==
-X-Received: by 2002:a92:c544:0:b0:2dc:f222:9fba with SMTP id a4-20020a92c544000000b002dcf2229fbamr11586142ilj.270.1659559441945;
-        Wed, 03 Aug 2022 13:44:01 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id u133-20020a02238b000000b0033f4a1114a6sm8130652jau.178.2022.08.03.13.44.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Aug 2022 13:44:01 -0700 (PDT)
-Received: (nullmailer pid 2590318 invoked by uid 1000);
-        Wed, 03 Aug 2022 20:43:59 -0000
-Date:   Wed, 3 Aug 2022 14:43:59 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     linux-remoteproc@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, quic_plai@quicinc.com, bgoswami@quicinc.com,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        quic_rohkumar@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 2/8] dt-bindings: remoteproc: qcom: adsp: Add compatible
- name for SC7280
-Message-ID: <20220803204359.GA2586715-robh@kernel.org>
-References: <1659536480-5176-1-git-send-email-quic_srivasam@quicinc.com>
- <1659536480-5176-3-git-send-email-quic_srivasam@quicinc.com>
+        Wed, 3 Aug 2022 17:15:34 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7A266438;
+        Wed,  3 Aug 2022 14:15:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1659561332; x=1691097332;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=0w88LZuPDXSZwsBSm1gnwJoM1Sx1Hf9Wz1DWZUbtL9s=;
+  b=lFKbJN8GG1F27J9xJMb/sQ6Bbm+kbYMlLDI7PzezCzmHOUeLlOd7cifZ
+   xX48seR1ZLJfraHmNmoI1jqIiGcoJv9CNIgRb7jUKQ+xncYnKpBx3xLGT
+   zpg0gQoXxmncAiiIarVF8ljw6dFeR4nHP6qda0YY1ngMjqaThCTjMSgxB
+   c=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 03 Aug 2022 14:15:31 -0700
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Aug 2022 14:15:31 -0700
+Received: from [10.134.65.5] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 3 Aug 2022
+ 14:15:30 -0700
+Message-ID: <0f9afb39-83a9-96ec-2ee0-f511d4fa3403@quicinc.com>
+Date:   Wed, 3 Aug 2022 14:15:30 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1659536480-5176-3-git-send-email-quic_srivasam@quicinc.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v2 03/11] arm64: gunyah: Add Gunyah hypercalls ABI
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Marc Zyngier <maz@kernel.org>
+CC:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        <devicetree@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20220801211240.597859-1-quic_eberman@quicinc.com>
+ <20220801211240.597859-4-quic_eberman@quicinc.com>
+ <e1a93490-7deb-8221-f3f8-83546946c61a@linaro.org>
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <e1a93490-7deb-8221-f3f8-83546946c61a@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 03, 2022 at 07:51:14PM +0530, Srinivasa Rao Mandadapu wrote:
-> Add compatible name and update max reg items for SC7280 base platforms.
+Hi Dmitry,
+
+On 8/2/2022 6:34 AM, Dmitry Baryshkov wrote:
+> On 02/08/2022 00:12, Elliot Berman wrote:
+>> Add initial support to perform Gunyah hypercalls. The arm64 ABI for
+>> Gunyah hypercalls generally follows the SMC Calling Convention.
 > 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> ---
->  .../devicetree/bindings/remoteproc/qcom,lpass-adsp-pil.yaml          | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
+> Seeing a c&p (or c&rework) from arm-smccc.h, could you please describe:
 > 
-> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,lpass-adsp-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,lpass-adsp-pil.yaml
-> index 9f11332..147996f 100644
-> --- a/Documentation/devicetree/bindings/remoteproc/qcom,lpass-adsp-pil.yaml
-> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,lpass-adsp-pil.yaml
-> @@ -17,11 +17,12 @@ properties:
->    compatible:
->      enum:
->        - qcom,sdm845-adsp-pil
-> +      - qcom,sc7280-adsp-pil
->  
->    reg:
-> -    maxItems: 1
-> +    maxItems: 2
+> 1) Why can't you use the existing arm_smccc_1_1_hvc()? I checked, you 
+> don't seem to be getting more than 4 values back.
+> 
 
-sdm845 has 2 entries too?
+The Gunyah APIs can return up to 8 values. As you observed though, these 
+initial patches are only using the first 4 values back. I'd like to use 
+the larger v1.2 so I don't need to update later.
 
->      description:
-> -      The base address and size of the qdsp6ss register
-> +      The base address and size of the qdsp6ss register and mcc register
+> 2) If #1 is not possible, why can't you add necessary glue code to the 
+> arm-smccc.h (as your code to support nargs/multiple return values is 
+> generic enough) and use corresponding macro in asm/gunyah.h ?
+> 
 
-Better expressed as:
-
-minItems: 1
-items:
-  - description: qdsp6ss register
-  - description: mcc register
-
-Though the descriptions could expand on what those registers are.
-
-Rob
+I think the code here may be considered Gunyah-specific as I am limiting 
+to 8 arguments and return values. If I add to arm-smccc.h, I would need 
+to expand out to x17. Does it make sense to add another SMCCC 1.2 
+interface to arm-smccc.h?
