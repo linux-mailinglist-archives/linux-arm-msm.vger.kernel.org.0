@@ -2,58 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E526658934A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 22:34:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D630758936A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 22:44:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236734AbiHCUeY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Aug 2022 16:34:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43180 "EHLO
+        id S237378AbiHCUoD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Aug 2022 16:44:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232488AbiHCUeX (ORCPT
+        with ESMTP id S235125AbiHCUoD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Aug 2022 16:34:23 -0400
-Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9A4BF68;
-        Wed,  3 Aug 2022 13:34:21 -0700 (PDT)
-Received: by mail-io1-f41.google.com with SMTP id z145so399475iof.9;
-        Wed, 03 Aug 2022 13:34:21 -0700 (PDT)
+        Wed, 3 Aug 2022 16:44:03 -0400
+Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD3019FC5;
+        Wed,  3 Aug 2022 13:44:02 -0700 (PDT)
+Received: by mail-il1-f173.google.com with SMTP id g18so9071476ilk.4;
+        Wed, 03 Aug 2022 13:44:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=message-id:date:subject:references:in-reply-to:cc:to:from
-         :x-gm-message-state:from:to:cc;
-        bh=fyYePxjSKLpCDUc26DEQ4fndG8Oeo8s9amEB/iAl1Uw=;
-        b=B9chz2vbmiyrgJ4ZSrG5/kS+47Yys1O9pR8hotAi7MulpUOv2gUj9nBcBzD/6QLcCz
-         1PS11KVoobDqgAdFJbuDZJJwUWZygNS68U5HgggOZC7pvNgayfEoakE1wA9LJCpxKXJK
-         VBBZT1ZtEfRHtASTWMvu73kXTHyV0GMVaPSw4sgDdpDuoI0q1aBHUSj8/3PkrvCJL5VE
-         fel71z8o4X1ybSLOW6Wjvp+UA4S0xpivG0AxAyGaygN4PNrey7rv6L39biXFLiHq4xgh
-         1fQGmTsF7XUcLAteh9WMOIHRxRASRJlN4+vBqPDSQP+ywPTctUGE9xvfUwOiv0fq8ECf
-         VOaQ==
-X-Gm-Message-State: AJIora8mmjSciM9fHUSXMBCRkywsy1ydlDG/TAZFPd+Afzg0xwsRNCH/
-        lhWtZS6dneykG9HUXihLLA==
-X-Google-Smtp-Source: AGRyM1vhjM0ZBmXAJQ1EAzwnqAbTEo4T9AGfF470cX6CscugTD4dxGUNvWDuPeOPW7zL+gtBSXv+Iw==
-X-Received: by 2002:a05:6638:d93:b0:341:5cab:4d9 with SMTP id l19-20020a0566380d9300b003415cab04d9mr11383863jaj.146.1659558860997;
-        Wed, 03 Aug 2022 13:34:20 -0700 (PDT)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=5ihkIh4wV1fLXjf3U2JooUONElLr3RHi6M3ZqoiMU1c=;
+        b=UuN5xGmUyP3ssVu+e40gt2vuozli/tKcwHNdC2Kq9v2V3ipsf+NF91v0FUUIPUOil2
+         uPubgaedIGWxXCuAVhZ2cd11biiFSDmZE/gZYKMf1KEjmpxTYGP+tO/Fmue67KfJ9Ouf
+         MHd6wAZkNED/5zt9ed4W2kUl56BwpXHT25uyOrW79TiFRjmcXnqftgbuYJa8DhQ2SaeN
+         4Dl3DFbzNQvi+k1zSZjyUyE1Fo5bDYCB/1v6ZVWUc9eX8IQ4Hy/Ddefml5uo2DXg2xjv
+         BPcybb8HtoKFMmgkY3jgBmDDoKyab526nYy8wbo0gA2UjRqco9IQk1CftzDGt4g58e0D
+         s/rA==
+X-Gm-Message-State: AJIora9WMyUbo3vILpbTMTcH2g+FzKwuIkiGvfMf/h6U4vPM5LBWGV00
+        t+By59l3XABPhxdefqBADUz7gfJ3Lw==
+X-Google-Smtp-Source: AGRyM1tBRJ9MpqM0nDRf8tCJ080e9rYHNY/c2FkMyOFX/aZRufmggHz0JsQQ23h/hJREgb+v8jolfw==
+X-Received: by 2002:a92:c544:0:b0:2dc:f222:9fba with SMTP id a4-20020a92c544000000b002dcf2229fbamr11586142ilj.270.1659559441945;
+        Wed, 03 Aug 2022 13:44:01 -0700 (PDT)
 Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id d11-20020a023f0b000000b00339e669df91sm8131503jaa.153.2022.08.03.13.34.19
+        by smtp.gmail.com with ESMTPSA id u133-20020a02238b000000b0033f4a1114a6sm8130652jau.178.2022.08.03.13.44.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Aug 2022 13:34:20 -0700 (PDT)
-Received: (nullmailer pid 2576745 invoked by uid 1000);
-        Wed, 03 Aug 2022 20:34:18 -0000
+        Wed, 03 Aug 2022 13:44:01 -0700 (PDT)
+Received: (nullmailer pid 2590318 invoked by uid 1000);
+        Wed, 03 Aug 2022 20:43:59 -0000
+Date:   Wed, 3 Aug 2022 14:43:59 -0600
 From:   Rob Herring <robh@kernel.org>
 To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     quic_plai@quicinc.com, tiwai@suse.com,
-        linux-arm-msm@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org, quic_rohkumar@quicinc.com,
-        bgoswami@quicinc.com, srinivas.kandagatla@linaro.org,
-        perex@perex.cz, agross@kernel.org, broonie@kernel.org,
-        robh+dt@kernel.org, linux-remoteproc@vger.kernel.org,
+Cc:     linux-remoteproc@vger.kernel.org, agross@kernel.org,
         bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+        broonie@kernel.org, quic_plai@quicinc.com, bgoswami@quicinc.com,
+        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
+        quic_rohkumar@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/8] dt-bindings: remoteproc: qcom: adsp: Add compatible
+ name for SC7280
+Message-ID: <20220803204359.GA2586715-robh@kernel.org>
+References: <1659536480-5176-1-git-send-email-quic_srivasam@quicinc.com>
+ <1659536480-5176-3-git-send-email-quic_srivasam@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <1659536480-5176-3-git-send-email-quic_srivasam@quicinc.com>
-References: <1659536480-5176-1-git-send-email-quic_srivasam@quicinc.com> <1659536480-5176-3-git-send-email-quic_srivasam@quicinc.com>
-Subject: Re: [PATCH 2/8] dt-bindings: remoteproc: qcom: adsp: Add compatible name for SC7280
-Date:   Wed, 03 Aug 2022 14:34:18 -0600
-Message-Id: <1659558858.555688.2576744.nullmailer@robh.at.kernel.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -64,7 +68,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 03 Aug 2022 19:51:14 +0530, Srinivasa Rao Mandadapu wrote:
+On Wed, Aug 03, 2022 at 07:51:14PM +0530, Srinivasa Rao Mandadapu wrote:
 > Add compatible name and update max reg items for SC7280 base platforms.
 > 
 > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
@@ -72,28 +76,33 @@ On Wed, 03 Aug 2022 19:51:14 +0530, Srinivasa Rao Mandadapu wrote:
 >  .../devicetree/bindings/remoteproc/qcom,lpass-adsp-pil.yaml          | 5 +++--
 >  1 file changed, 3 insertions(+), 2 deletions(-)
 > 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,lpass-adsp-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,lpass-adsp-pil.yaml
+> index 9f11332..147996f 100644
+> --- a/Documentation/devicetree/bindings/remoteproc/qcom,lpass-adsp-pil.yaml
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,lpass-adsp-pil.yaml
+> @@ -17,11 +17,12 @@ properties:
+>    compatible:
+>      enum:
+>        - qcom,sdm845-adsp-pil
+> +      - qcom,sc7280-adsp-pil
+>  
+>    reg:
+> -    maxItems: 1
+> +    maxItems: 2
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+sdm845 has 2 entries too?
 
-yamllint warnings/errors:
+>      description:
+> -      The base address and size of the qdsp6ss register
+> +      The base address and size of the qdsp6ss register and mcc register
 
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,lpass-adsp-pil.example.dtb: remoteproc@17300000: reg: [[389021696, 1036]] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,lpass-adsp-pil.yaml
+Better expressed as:
 
-doc reference errors (make refcheckdocs):
+minItems: 1
+items:
+  - description: qdsp6ss register
+  - description: mcc register
 
-See https://patchwork.ozlabs.org/patch/
+Though the descriptions could expand on what those registers are.
 
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+Rob
