@@ -2,51 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 85178588FA1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 17:46:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54FBB588FD8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 17:55:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237672AbiHCPqg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Aug 2022 11:46:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46506 "EHLO
+        id S238544AbiHCPzo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Aug 2022 11:55:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233926AbiHCPqf (ORCPT
+        with ESMTP id S238256AbiHCPzS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Aug 2022 11:46:35 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 093ACEE09
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Aug 2022 08:46:34 -0700 (PDT)
+        Wed, 3 Aug 2022 11:55:18 -0400
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57A2548C97
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Aug 2022 08:53:30 -0700 (PDT)
 Received: from [192.168.1.101] (abxi232.neoplus.adsl.tpnet.pl [83.9.2.232])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id E96CA3F672;
-        Wed,  3 Aug 2022 17:46:31 +0200 (CEST)
-Message-ID: <d5a35d28-3b4e-c763-a1fb-89aa3dae6fd2@somainline.org>
-Date:   Wed, 3 Aug 2022 17:46:31 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 8BCDC3F759;
+        Wed,  3 Aug 2022 17:53:28 +0200 (CEST)
+Message-ID: <38d82563-12dd-3d74-efb7-7066c114f016@somainline.org>
+Date:   Wed, 3 Aug 2022 17:53:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH 1/5] arm64: dts: qcom: sdm845-db845c: drop power-domains
- from CCI I2C sensors
+Subject: Re: [PATCH v1] pinctrl: qcom: sm8250: Fix PDC map
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
+To:     Jianhua Lu <lujianhua000@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     corbet@lwn.net
-References: <20220802153947.44457-1-krzysztof.kozlowski@linaro.org>
- <20220802153947.44457-2-krzysztof.kozlowski@linaro.org>
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220803015645.22388-1-lujianhua000@gmail.com>
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220802153947.44457-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220803015645.22388-1-lujianhua000@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -55,45 +50,36 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 2.08.2022 17:39, Krzysztof Kozlowski wrote:
-> The Camera Control Interface I2C controller device node belongs to
-> TITAN_TOP_GDSC power domain, so its children do not need to specify it
-> again.  The OV7251 and OV8856 camera sensor bindings do not allow
-> power-domains.
+On 3.08.2022 03:56, Jianhua Lu wrote:
+> Fix the PDC mapping for SM8250, gpio39 is mapped to irq73(not irq37).
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
+> Fixes: b41efeed507a("pinctrl: qcom: sm8250: Specify PDC map.")
+> Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
 > ---
 > 
-> Not tested on hardware.
-> ---
-Not tested on hardware either, but looks good.
+> Changes in v1:
+Acutally, it should be v2 as the first send is assumed to be a v1.
+> - fixes typo error(mapped target is irq, not gpio).
+> 
+
+The change looks in line with msm-4.19 though.
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 
 Konrad
->  arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 4 ----
->  1 file changed, 4 deletions(-)
+>  drivers/pinctrl/qcom/pinctrl-sm8250.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> index c6e2c571b452..b9304f81290a 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> @@ -1228,8 +1228,6 @@ camera@10 {
->  		 * both have to be enabled through the power management
->  		 * gpios.
->  		 */
-> -		power-domains = <&clock_camcc TITAN_TOP_GDSC>;
-> -
->  		dovdd-supply = <&vreg_lvs1a_1p8>;
->  		avdd-supply = <&cam0_avdd_2v8>;
->  		dvdd-supply = <&cam0_dvdd_1v2>;
-> @@ -1273,8 +1271,6 @@ camera@60 {
->  		 *
->  		 * No 1.2V vddd-supply regulator is used.
->  		 */
-> -		power-domains = <&clock_camcc TITAN_TOP_GDSC>;
-> -
->  		vdddo-supply = <&vreg_lvs1a_1p8>;
->  		vdda-supply = <&cam3_avdd_2v8>;
->  
+> diff --git a/drivers/pinctrl/qcom/pinctrl-sm8250.c b/drivers/pinctrl/qcom/pinctrl-sm8250.c
+> index af144e724bd9..3bd7f9fedcc3 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-sm8250.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-sm8250.c
+> @@ -1316,7 +1316,7 @@ static const struct msm_pingroup sm8250_groups[] = {
+>  static const struct msm_gpio_wakeirq_map sm8250_pdc_map[] = {
+>  	{ 0, 79 }, { 1, 84 }, { 2, 80 }, { 3, 82 }, { 4, 107 }, { 7, 43 },
+>  	{ 11, 42 }, { 14, 44 }, { 15, 52 }, { 19, 67 }, { 23, 68 }, { 24, 105 },
+> -	{ 27, 92 }, { 28, 106 }, { 31, 69 }, { 35, 70 }, { 39, 37 },
+> +	{ 27, 92 }, { 28, 106 }, { 31, 69 }, { 35, 70 }, { 39, 73 },
+>  	{ 40, 108 }, { 43, 71 }, { 45, 72 }, { 47, 83 }, { 51, 74 }, { 55, 77 },
+>  	{ 59, 78 }, { 63, 75 }, { 64, 81 }, { 65, 87 }, { 66, 88 }, { 67, 89 },
+>  	{ 68, 54 }, { 70, 85 }, { 77, 46 }, { 80, 90 }, { 81, 91 }, { 83, 97 },
