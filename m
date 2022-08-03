@@ -2,102 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ACA79589179
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 19:33:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65BD458922A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 20:21:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238126AbiHCRdh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Aug 2022 13:33:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41942 "EHLO
+        id S237942AbiHCSV4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Aug 2022 14:21:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236024AbiHCRdg (ORCPT
+        with ESMTP id S237855AbiHCSVz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Aug 2022 13:33:36 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4BD420BE1
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Aug 2022 10:33:32 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id w10so17062918plq.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Aug 2022 10:33:32 -0700 (PDT)
+        Wed, 3 Aug 2022 14:21:55 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39D981A38B
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Aug 2022 11:21:51 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id a7so19959304ejp.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Aug 2022 11:21:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Dy6IYhyMjLV91h2ReHssZ9zYJNgTd/qtSQuKQsaMXrc=;
-        b=Nfb88RfP6LTCuL8dBDqDdh5UI6nFNU8KegwOL3F3TogolrjKRmHfAk7/BKpHwdDW5O
-         K1GxOxMdZmzLEJXC82fmsI0F07sfzJrrrrl+50+7vp4n2xdF1yKh7sf1hL4udl/GKUrs
-         r7wF/sNJAba2N0BzIvwwiQCmir5APDQxjGvxg=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=altzbewDE/Wwwgxa1r3vizNyU1k5iQam4KRzm34xggw=;
+        b=KV0eLWruUwaMIjIN+TLkEejbtz4M25VvPf+mMKE/qdUUQAMgh0ImEPVq4lO0UI5LQp
+         H+rj8qGzlImNhA/w++um3Vsfebu0uNGKpdSjnkYWbOE5fSGDutzvpnWVhfzGxrD5szdd
+         bPJAqVhUqF8QXR4rkudQ7Fqr7K09F8z+dZCJeDsnlTWCrKRxd/ZeEiw+ONW1erZ5gmaZ
+         FQdcG53MqxjTcrQe2rhdDg4rEQOWVM8UtgTitVJ2YHfPMkdLVPr5o9jWADi2Cj+3wkGl
+         xDL/iKcxoSDIEwH/+usTHQEJPH6Sj4WaoO9WVGZdPpV/RQp8JI65eShqNwzTvYWHhgr4
+         Qd5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Dy6IYhyMjLV91h2ReHssZ9zYJNgTd/qtSQuKQsaMXrc=;
-        b=XY+EIJtCY5o+28t8zZNOqbIJ5ggcNrMOSlGbZG2uBKWFTQqIZyRkzzzUNXGNMVLb2x
-         U/7vsMUn6tALGNU341uVIW4aPEjh/FlJMS8sYhTd7xpjJ3KxYgOAgo7u5aD5gdabJUx8
-         SObzYgATLYtsombIlX5+/MUtcN4FQ/mMthVJcOz/aDLKssQa6Qvp+jstLQz8lSjwTm0K
-         xJdKI5Af1DpzbUXh/KJ04JP+tv2Wjtab4+pGAsE5aP12ACycEQNn+ajg5vYFv85QZVh5
-         3OoUmv9o0zYZImTaJLEitPPaFZjOK854RXsBzBY3xUUiEGXSD8r6UXNerWjsoiawNEpu
-         6d7w==
-X-Gm-Message-State: ACgBeo0SNGW+1QPR5z/aMsEEOUBWSEB0s7wY4k706HM8jjY/qDQT7V5X
-        FSwhfYEBZzutv/Hd41HKR/TPrA==
-X-Google-Smtp-Source: AA6agR4OTofGOrxUeI0Yz5ovXwcIJgH+wgxqCKULul0vj1fASevyAdjtsOHPEKEqbnSejux4ft0vvA==
-X-Received: by 2002:a17:90b:4b91:b0:1f4:e116:8f1 with SMTP id lr17-20020a17090b4b9100b001f4e11608f1mr6031640pjb.121.1659548012211;
-        Wed, 03 Aug 2022 10:33:32 -0700 (PDT)
-Received: from localhost ([2620:15c:11a:202:238b:c074:f5f8:56d0])
-        by smtp.gmail.com with UTF8SMTPSA id e6-20020a17090a728600b001f31468f2f4sm1883181pjg.46.2022.08.03.10.33.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Aug 2022 10:33:31 -0700 (PDT)
-Date:   Wed, 3 Aug 2022 10:33:29 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
-        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org
-Subject: Re: [PATCH 1/8] usb: dwc3: fix PHY disable sequence
-Message-ID: <Yuqxaf2nvegDyLtp@google.com>
-References: <20220802151404.1797-1-johan+linaro@kernel.org>
- <20220802151404.1797-2-johan+linaro@kernel.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=altzbewDE/Wwwgxa1r3vizNyU1k5iQam4KRzm34xggw=;
+        b=MohdmZZWHGj3wBuYGVq5H5tdQ69ZBCO9INhpJ5PNjgLO1EvgzwfgFtVB/3WaIBaBUO
+         Hb93ZMMMLUB838T35YmXNTREJmxm5dsYIbQ48Kxp5opGvJfr3V45dUZGkGoRxHl2PggA
+         bc1PMIQeQVx1wPEO51aX7UW0MpK3xvljIL543zAMxYkj4ptKnCQi0XOr20heiUqJKfND
+         TJH+TroewxwH4kqHkz1L0rsCnLNbRgCsp4vTooyMXtTPrWqq8aTMMvNpUU6nlX/GuMv7
+         M/GyGkV1hp56M5DYvZDrTFyon0mALmtY0uqc9j5hF2A4Aw8kCuUojh9bLsrg39hYnS2b
+         G8ww==
+X-Gm-Message-State: AJIora+Oc9f+wm3lGLDeY9o05MW86EGPqbOdlTrEYVEKJVrSVlickazG
+        jPXK5Pb7aeYiQRR9No4oZ9BDA+n+NVXzkRctBxc4Pw==
+X-Google-Smtp-Source: AGRyM1ttga43cTYdEGBr+E0O1w9eKgXTrUP1AahWa0gawLTIeHHKdh/aMaZ7BE4vxr7VjbsHG0yboWsmwhtICvtHyTc=
+X-Received: by 2002:a17:906:2ed7:b0:72f:d080:411 with SMTP id
+ s23-20020a1709062ed700b0072fd0800411mr20905120eji.203.1659550909766; Wed, 03
+ Aug 2022 11:21:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220802151404.1797-2-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20220803015645.22388-1-lujianhua000@gmail.com>
+In-Reply-To: <20220803015645.22388-1-lujianhua000@gmail.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Wed, 3 Aug 2022 20:21:38 +0200
+Message-ID: <CACRpkdYVLeAU5L0yGQqBsqk5TiQnoSGwbBBums=uNiX8r5JDww@mail.gmail.com>
+Subject: Re: [PATCH v1] pinctrl: qcom: sm8250: Fix PDC map
+To:     Jianhua Lu <lujianhua000@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 02, 2022 at 05:13:57PM +0200, Johan Hovold wrote:
-> Generic PHYs must be powered-off before they can be tore down.
-> 
-> Similarly, suspending legacy PHYs after having powered them off makes no
-> sense.
-> 
-> Fix the dwc3_core_exit() (e.g. called during suspend) and open-coded
-> dwc3_probe() error-path sequences that got this wrong.
-> 
-> Note that this makes dwc3_core_exit() match the dwc3_core_init() error
-> path with respect to powering off the PHYs.
-> 
-> Fixes: 03c1fd622f72 ("usb: dwc3: core: add phy cleanup for probe error handling")
-> Fixes: c499ff71ff2a ("usb: dwc3: core: re-factor init and exit paths")
-> Cc: stable@vger.kernel.org      # 4.8
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+On Wed, Aug 3, 2022 at 3:57 AM Jianhua Lu <lujianhua000@gmail.com> wrote:
 
-I also wondered about this earlier, but didn't take action.
+> Fix the PDC mapping for SM8250, gpio39 is mapped to irq73(not irq37).
+>
+> Fixes: b41efeed507a("pinctrl: qcom: sm8250: Specify PDC map.")
+> Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
+> ---
+>
+> Changes in v1:
+> - fixes typo error(mapped target is irq, not gpio).
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+This v2 version named v1 applied!
+
+Thanks for a quick fixup.
+
+Yours,
+Linus Walleij
