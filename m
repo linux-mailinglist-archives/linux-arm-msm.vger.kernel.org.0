@@ -2,79 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D4CA588774
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 08:37:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A578C5887A9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 09:01:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235816AbiHCGhe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Aug 2022 02:37:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49216 "EHLO
+        id S232739AbiHCHBb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Aug 2022 03:01:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234709AbiHCGhc (ORCPT
+        with ESMTP id S233310AbiHCHBS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Aug 2022 02:37:32 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B5A32B19A
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Aug 2022 23:37:30 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id u1so14779726lfq.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Aug 2022 23:37:30 -0700 (PDT)
+        Wed, 3 Aug 2022 03:01:18 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 262B4958E
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Aug 2022 00:01:17 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id w15so8852129ljw.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Aug 2022 00:01:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=3C/lNt77+qlJDztrS8WVjy6lbQy6qfEyINiYOOYnU18=;
-        b=OkTTeDdgE1wq3JFHiRmbjgpyqJF9kC+95jnwwzwrKilHNWflwBySJidfMTBFuX1US3
-         JLlom3TZgEzsdoeqoGjWDbLUUs/wzgFAasq1I/3bubb/U3cA+rKmxQqyjFFm6Goml4Kd
-         yL4A1YBkBsHnJ5jm/nuf9kXHpK+/Wh/bXGqfyfPkqHdEjzw69+Co4UoPHz1VMgo2gXTQ
-         n0GGainzh8Hw+TW+JVZ9ockkmlKNfPaTYHI2oNT/mHU4J9H03QGZhyxvdaY0z6pejV3B
-         UVlfzuHuwgOOoVEZDOtR0K6eVjW6IEUuWpk30GlQNTScVwvI6zi1tmQlxysqusRscnZk
-         PhYA==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=6iA1iDDg2wT5L45f8xQzKm/33un6F5eze6/xZZLONzc=;
+        b=LkvUnyrn95oArIe+LqyBPWpm1Tt2+ZtXN95srDZ5S+5JY8SHMNFCerf6bdm4APJdn6
+         pkJKDqEuHtWTkYZikpsKLdLZMI3efKjCne42dk/2e8BoavLopWbtWPcWkepqIG+FNaVx
+         PUeKEZEz+dUPctCW73YN2EegSF+mACNF2p8RL+wXldyT9iUEVHK6baWiqjsg2wk4kpo7
+         ISKUm5jCmT9QM+8c0lca0bzNeZqvKaY95u3FVnNWawRL6ViswAhd2UDHVVMO3ILYeXip
+         gWXQY9ROaAm7zs/4Rl0dspJ+EIFeUBrQewxwxcOAQquWoukUL+ok3egO167EgYiTnPDF
+         OOCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=3C/lNt77+qlJDztrS8WVjy6lbQy6qfEyINiYOOYnU18=;
-        b=019ALpD94C2h4ax185V8qJA3mvrUNeWJYERb74ptXMUAHI3IcV66pMQsG2zg2lzTlf
-         QGqpIKMORqMQ3QVtDGLAvAaTOufkoXbJ2Zm5fsT781IciII+4rlwpCuKzVaP/JdEq/jc
-         GeciD4pkrz5EyGvoVLm02JSbciSDNfWUCiCfOyWSiIOrvjAA7ut0X5yADWogGt09AiKE
-         Cy8z5ZyLCbD+5uEJrz8zPiFVANGEG9MSYZi73QRlqhBTT+iujCRmYqzEV9MAh8nfK4Ef
-         8HZ0592vlfn5J4BBoVNr627qONpp5Xgp6Awga2M8h14HpdbwHGp93Pz+fhWHBFl/1eGm
-         RI5Q==
-X-Gm-Message-State: AJIora8CiDv0DpOqgxgTsWJZq8eM3bYOPyCGSnwuNakJL/dDsNRx/0Cc
-        4i1h020taR7TEBMGWmK7gMc9Pg==
-X-Google-Smtp-Source: AGRyM1s5ZskGPA3x2RfGUG+ZddgaBOYCr+PGg5vqJBsdELbLJDGDQFIGpzGmtTAa7OvrGnkfkkU8OQ==
-X-Received: by 2002:a05:6512:3f0c:b0:48a:433:6d3b with SMTP id y12-20020a0565123f0c00b0048a04336d3bmr8447107lfa.570.1659508649004;
-        Tue, 02 Aug 2022 23:37:29 -0700 (PDT)
-Received: from [192.168.1.6] ([213.161.169.44])
-        by smtp.gmail.com with ESMTPSA id a11-20020a19f80b000000b0048af437ce87sm1246604lff.183.2022.08.02.23.37.24
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=6iA1iDDg2wT5L45f8xQzKm/33un6F5eze6/xZZLONzc=;
+        b=c5tW1M3cWW+t3W4ZkxAmo4R7vYjA9axW++YoBFyrviOfEJApcqL1I2MWlQWFJ66c+t
+         FBGBXTBrysuX8rnOWWQMmdUN1lhM9bYFvBqM93kWd2pYEezBv7h1NDoobDhvO11Vt8gu
+         aG4I+prhIkRMMkionbGJzybCIOAzYfrvxo6mRiwC6PNNkmWeL4oaJUd6sYUoA+fPrs0R
+         uFVbohJvGanP7fmbIc8YETMnEny9GD2ja6wQrMl7n7rx+74NYkfKV1fOAYv1efoNzCEX
+         8ifs/LruXj25sHBktBpruvJzg8gknCDOb9jGrY/IsXG/H8A/O5QjmaV+3kDo5qnY/TTQ
+         27Kw==
+X-Gm-Message-State: AJIora+LbbCMlX0Oq824wsaqrfBXZr2q6bpmB6KweFxPZ7zezb4DAQUz
+        EvMKioCrd3cSg3OtsP5JxJqEEw==
+X-Google-Smtp-Source: AGRyM1s5IdB0FWkmOIReBn0TOtbL6cM9VogND3jzcIcT1PiaxHFmSz63MP1zi2G7w0ZRDn/hAlW+kg==
+X-Received: by 2002:a05:651c:1584:b0:25d:c6ad:6237 with SMTP id h4-20020a05651c158400b0025dc6ad6237mr7395214ljq.509.1659510075506;
+        Wed, 03 Aug 2022 00:01:15 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id f34-20020a0565123b2200b0048ad13756dcsm2118746lfv.223.2022.08.03.00.01.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Aug 2022 23:37:27 -0700 (PDT)
-Message-ID: <f2453080-d71b-3c33-ba8e-d2ed15e06927@linaro.org>
-Date:   Wed, 3 Aug 2022 08:37:23 +0200
+        Wed, 03 Aug 2022 00:01:15 -0700 (PDT)
+Message-ID: <6723fb49-4768-c40b-0d00-6be594adccf0@linaro.org>
+Date:   Wed, 3 Aug 2022 10:01:14 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH 1/5] dt-bindings: clk: qcom: Support gpu cx gdsc reset
-Content-Language: en-US
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v3 1/6] drm/msm/dsi: Fix number of regulators for
+ msm8996_dsi_cfg
+Content-Language: en-GB
+To:     Douglas Anderson <dianders@chromium.org>,
         Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, Mark Brown <broonie@kernel.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Archit Taneja <architt@codeaurora.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1659172664-10345-1-git-send-email-quic_akhilpo@quicinc.com>
- <20220730144713.1.I68b749219741db01356a42d782f74265d29a2ac3@changeid>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220730144713.1.I68b749219741db01356a42d782f74265d29a2ac3@changeid>
-Content-Type: text/plain; charset=UTF-8
+        Loic Poulain <loic.poulain@linaro.org>,
+        Rajeev Nandan <quic_rajeevny@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-kernel@vger.kernel.org
+References: <20220802223738.898592-1-dianders@chromium.org>
+ <20220802153434.v3.1.I1056ee3f77f71287f333279efe4c85f88d403f65@changeid>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220802153434.v3.1.I1056ee3f77f71287f333279efe4c85f88d403f65@changeid>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -85,17 +87,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/07/2022 11:17, Akhil P Oommen wrote:
-> Add necessary definitions in gpucc bindings to ensure gpu cx gdsc collapse
-> through 'reset' framework for SC7280.
+On 03/08/2022 01:37, Douglas Anderson wrote:
+> 3 regulators are specified listed but the number 2 is specified. Fix
+> it.
 > 
-> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> Fixes: 3a3ff88a0fc1 ("drm/msm/dsi: Add 8x96 info in dsi_cfg")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 > ---
+> 
+> (no changes since v2)
+> 
+> Changes in v2:
+> - ("Fix number of regulators for msm8996_dsi_cfg") new for v2.
+> 
+>   drivers/gpu/drm/msm/dsi/dsi_cfg.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+> index 2c23324a2296..02000a7b7a18 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+> @@ -109,7 +109,7 @@ static const char * const dsi_8996_bus_clk_names[] = {
+>   static const struct msm_dsi_config msm8996_dsi_cfg = {
+>   	.io_offset = DSI_6G_REG_SHIFT,
+>   	.reg_cfg = {
+> -		.num = 2,
+> +		.num = 3,
+>   		.regs = {
+>   			{"vdda", 18160, 1 },	/* 1.25 V */
+>   			{"vcca", 17000, 32 },	/* 0.925 V */
 
-Assuming discussion in cover letter sorts out:
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
