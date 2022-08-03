@@ -2,91 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D4A3F58880C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 09:37:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F5CD588816
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 09:42:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235213AbiHCHh1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Aug 2022 03:37:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59556 "EHLO
+        id S233103AbiHCHmZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Aug 2022 03:42:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234178AbiHCHh0 (ORCPT
+        with ESMTP id S229480AbiHCHmZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Aug 2022 03:37:26 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 620101F2C0
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Aug 2022 00:37:25 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id bq11so20103274lfb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Aug 2022 00:37:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=ZFL1rpNY6wsrWyWGElxKgonarXbu9XUulVlTCMlwgB8=;
-        b=Le0GMSUGuNXx+DN948ov64Ao1jAZwv3kaV4yFwbqE5JSOZv9bCE4+/3ZSAy4eNXvy2
-         GVzdyrzDcvEKPn3V6hjk6Ah9wwBzbLF5W30zMnjoOw0oEKhaSdnHLrNGngyDfkApaaQ6
-         n6hzafHDmdkraBiVziOE/q0LfblRzzL26eOH/BS8SJ2e8HEoby/q6TY2+6uqbRZn0Xzj
-         2MDd7XGl49TpxybUemiYLCAd8nmjzo9nw/QNKZ1ykvGRnJw18BtVdAjrsrM1kyQY377J
-         LKjMj1bPjon2t3fbDC3m/vNX3dLWevmTDyUc4bPdChSMLz4bTHrim4NXP+iQ9HofyJrX
-         EOOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=ZFL1rpNY6wsrWyWGElxKgonarXbu9XUulVlTCMlwgB8=;
-        b=jlcMTTOurWn9F5Xah6SzQAq/k9yt+Ma5/S5TvepN1j1nCoLOBVwdDa7OrT7f6KQ59q
-         n4gZVkwSGC9S3M5urewe2Pgng4V6/6WpmqnJJANvWpktdy+ChJFi3asd+S/+4xTlo/mi
-         jszHxgIDNVqYRWyBdWF8oXKomaVLAm9gtkPe1rLduu57X8xF5EmTQgRXWtC++fJ9Izg6
-         riEZHl4Ucgm4Buh68wGL1J9KrrY0X4e7Rd+dr0XQLRmwHoR0m+nVuGFF8k4GKugXZ+i4
-         eolZWxy2VGqJPhvbdjyfQbVYcFpxHRziVdksIHePDsGZvKf0pIk2fOnWT0q6xqqNYR0w
-         nq1g==
-X-Gm-Message-State: AJIora8dphR7Fmwp4QIG+6iNl98jZu+y98gZNVaru4UDpuZVr8iW7zrc
-        npg97xRfvxyS1CwfhWd7zEWNcw==
-X-Google-Smtp-Source: AGRyM1uVZPcFKVrcPg3zLx0Sinm/50QHNCT/fy+51eTa2lNlbroLZyAtLonhS6dhSihB/nl0XSStUg==
-X-Received: by 2002:a05:6512:3f23:b0:48a:90ed:10a5 with SMTP id y35-20020a0565123f2300b0048a90ed10a5mr8325616lfa.93.1659512243670;
-        Wed, 03 Aug 2022 00:37:23 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id p13-20020a2eb98d000000b0025e4ca99066sm1120098ljp.139.2022.08.03.00.37.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Aug 2022 00:37:23 -0700 (PDT)
-Message-ID: <7de9cd34-dc37-053e-63dc-54b6879ce181@linaro.org>
-Date:   Wed, 3 Aug 2022 10:37:22 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v3 0/6] drm/msm/dsi regulator improvements
-Content-Language: en-GB
-To:     Douglas Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, Mark Brown <broonie@kernel.org>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Archit Taneja <architt@codeaurora.org>,
+        Wed, 3 Aug 2022 03:42:25 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C9EB1F613;
+        Wed,  3 Aug 2022 00:42:22 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0E15C61549;
+        Wed,  3 Aug 2022 07:42:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632A1C433D6;
+        Wed,  3 Aug 2022 07:42:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1659512541;
+        bh=C1RNQNhb6enxYiFbEUhew2HqPznAB4gqXj2tpJtcyZs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=k2iPDf+eltJE5B21ZIHSKvCu4VABtozVmm1EaM8KjBJlO6+PqP80veFq9Hgf4wits
+         Y5lBrNWixQ8rgkdslbeUwr/PlrOJxrcUSOW2ZgNBgTSWtb5wi2JLn7+b7IMk61NXLr
+         LnDuqYdx3U+Gz6Xcf6k1OkO/sLctnO6I42CM/mDglsByz/4BkiO+Ft9B428a326Xld
+         /uy+rz5gHXFhifH7ESC70NGBPecbwCNrQWzyssI2Ch5zmKIHzjV0nyGrKCOXr9ztHG
+         FX7YNUpoWRqTVXoKu4A2U6d1+LJtHsYkfayJYktLOi/1oTeEzyL1rT/GfUdeIKZ1Fl
+         Y+eW6JDeqejng==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oJ91a-0006mH-JA; Wed, 03 Aug 2022 09:42:39 +0200
+Date:   Wed, 3 Aug 2022 09:42:38 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Jonathan Marek <jonathan@marek.ca>,
-        =?UTF-8?B?Sm9zw6kgRXhww7NzaXRv?= <jose.exposito89@gmail.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Rajeev Nandan <quic_rajeevny@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Sireesh Kodali <sireeshkodali1@gmail.com>,
         Stephen Boyd <swboyd@chromium.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        linux-kernel@vger.kernel.org
-References: <20220802223738.898592-1-dianders@chromium.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220802223738.898592-1-dianders@chromium.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
+        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/8] Revert "usb: dwc3: qcom: Keep power domain on to
+ retain controller status"
+Message-ID: <Yuom7k3Y4tDhy/QJ@hovoldconsulting.com>
+References: <20220802151404.1797-1-johan+linaro@kernel.org>
+ <20220802151404.1797-3-johan+linaro@kernel.org>
+ <3c175fd4-861a-37a9-4cd7-87370c2e46df@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3c175fd4-861a-37a9-4cd7-87370c2e46df@quicinc.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -94,69 +74,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/08/2022 01:37, Douglas Anderson wrote:
-> The main goal of this series is to make a small dent in cleaning up
-> the way we deal with regulator loads for DSI drivers.
+On Tue, Aug 02, 2022 at 11:30:34PM +0530, Krishna Kurapati PSSNV wrote:
 > 
-> As of v3 of this series, the regulator API improvements needed for the
-> later patches in the series are merged into mainline. Thus this series
-> only contains the DSI changes now.
-> 
-> I'd expect:
-> * The first two patches are bugfixes found while converting the DSI
->    driver over. Those could land any time.
-> * The third patch ("drm/msm/dsi: Don't set a load before disabling a
->    regulator") is a patch a sent the other day verbatim, included in
->    this series because it's highly related. It could land any
->    time.
-> * The next two patches use the new APIs. Since those APIs are now in
->    mainline those could also land any time.
-> * The last patch is just cleanup I noticed as I was touching the
->    function. It's not really related to regulators but it applies atop
->    these. In theory it could be rebased to land separately.
-> 
-> Changes in v3:
-> - ("Improve dsi_phy_driver_probe() probe error handling") new for v3.
-> - Do all the PHYs too.
-> - Fix typo in commit message.
-> - Get rid of error print after devm_regulator_bulk_get_const().
-> - Just directly call the bulk commands; get rid of the wrapper.
-> - Update commit message to point at the git hash of the regulator change.
-> 
-> Changes in v2:
-> - ("Fix number of regulators for SDM660") new for v2.
-> - ("Fix number of regulators for msm8996_dsi_cfg") new for v2.
-> - ("Take advantage of devm_regulator_bulk_get_const") new for v2.
-> - ("Use the new regulator bulk feature to specify the load") new for v2.
-> 
-> Douglas Anderson (6):
->    drm/msm/dsi: Fix number of regulators for msm8996_dsi_cfg
->    drm/msm/dsi: Fix number of regulators for SDM660
+> On 8/2/2022 8:43 PM, Johan Hovold wrote:
+> > This reverts commit d9be8d5c5b032e5383ff5c404ff4155e9c705429.
+> >
+> > Generic power-domain flags must be set before the power-domain is
+> > initialised and must specifically not be modified by drivers for devices
+> > that happen to be in the domain.
+> >
+> > To make sure that USB power-domains are left enabled during system
+> > suspend when a device in the domain is in the wakeup path, the
+> > GENPD_FLAG_ACTIVE_WAKEUP flag should instead be set for the domain
+> > unconditionally when it is registered.
 
-These two can be picked into the -fixes branch. The reset looks like 
-5.21/6.1 material
+> In case we need the genpd framework to set the GENPD_FLAG_ACTIVE_WAKEUP
+> flag for a particular domain that will be used by a device (which is
+> wakeup capable) and hasn't been probed yet , can you help me understand if
+> there any dt-flags we  can add to convey the same the genpd  framework
+> so that it will set that flag during domain registration ?
 
->    drm/msm/dsi: Don't set a load before disabling a regulator
->    drm/msm/dsi: Use the new regulator bulk feature to specify the load
->    drm/msm/dsi: Take advantage of devm_regulator_bulk_get_const()
->    drm/msm/dsi: Improve dsi_phy_driver_probe() probe error handling
-> 
->   drivers/gpu/drm/msm/dsi/dsi.h                 |  13 --
->   drivers/gpu/drm/msm/dsi/dsi_cfg.c             | 172 +++++++++---------
->   drivers/gpu/drm/msm/dsi/dsi_cfg.h             |   3 +-
->   drivers/gpu/drm/msm/dsi/dsi_host.c            |  96 ++--------
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c         | 160 ++++------------
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy.h         |   5 +-
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c    |  20 +-
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c    |  32 ++--
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c    |  14 +-
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c    |  28 +--
->   .../gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c   |  12 +-
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c     |  32 ++--
->   12 files changed, 197 insertions(+), 390 deletions(-)
-> 
+This can't be expressed in DT (currently), so what you need is something
+like the below:
 
+diff --git a/drivers/clk/qcom/gcc-sc7280.c b/drivers/clk/qcom/gcc-sc7280.c
+index 7ff64d4d5920..4ff855269467 100644
+--- a/drivers/clk/qcom/gcc-sc7280.c
++++ b/drivers/clk/qcom/gcc-sc7280.c
+@@ -3125,6 +3125,7 @@ static struct gdsc gcc_usb30_prim_gdsc = {
+        .gdscr = 0xf004,
+        .pd = {
+                .name = "gcc_usb30_prim_gdsc",
++               .flags = GENPD_FLAG_ACTIVE_WAKEUP,
+        },
+        .pwrsts = PWRSTS_OFF_ON,
+        .flags = VOTABLE,
+@@ -3134,6 +3135,7 @@ static struct gdsc gcc_usb30_sec_gdsc = {
+        .gdscr = 0x9e004,
+        .pd = {
+                .name = "gcc_usb30_sec_gdsc",
++               .flags = GENPD_FLAG_ACTIVE_WAKEUP,
+        },
+        .pwrsts = PWRSTS_OFF_ON,
+        .flags = VOTABLE,
 
--- 
-With best wishes
-Dmitry
+to make sure that genpd keeps these domains powered during system
+suspend if they are used by devices that are in the wakeup path.
+
+Johan
