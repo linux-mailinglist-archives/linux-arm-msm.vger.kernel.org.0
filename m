@@ -2,134 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97035588AE7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 13:09:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55238588B2C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 13:29:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234887AbiHCLJa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Aug 2022 07:09:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36286 "EHLO
+        id S235853AbiHCL3L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Aug 2022 07:29:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232706AbiHCLJa (ORCPT
+        with ESMTP id S235935AbiHCL3J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Aug 2022 07:09:30 -0400
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31FEB1AD83
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Aug 2022 04:09:29 -0700 (PDT)
-Received: by mail-qt1-x82e.google.com with SMTP id d16so914869qtw.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Aug 2022 04:09:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=Ni8odVu9N3fk9U9c9SMmRIWk/Y6CS1n2Honac+jmqgs=;
-        b=Th5oMiLjG03N9iifNJ+PqTAXgjG8zvJ0AEDvGCFY4OmRya8dUm1vyXHag+GTqc/UH9
-         g63yIX90v3j3GhyXhCtEJR8a97K9KRbms0q9AZb4WCqU0tDqUTBM7403hP+yEHMKTMAs
-         8Fgwcm5ZP06m4PxK/WZEmfee7579c4OpAMvGP8/JHVyvgGC2BQoq3QYN11tI/rTw3M4a
-         Km0n4F/sLlmf1Qyy+NtyQXRKCk+Kfewv+RMWDeNiuSn2pyzn27e7C0dRCRftX30AXelh
-         dH+n7OCSzAjSKZfS0OYZeQl1GihHZVFu1rpsE45QcePSqDaYKKLmnRoLDg9+R3Z5vAzZ
-         eRxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=Ni8odVu9N3fk9U9c9SMmRIWk/Y6CS1n2Honac+jmqgs=;
-        b=xhsJHlA2mORpJbRoRi8jboM5f3gsX5/TfR4mavbhYgWQ/V+Vc1b43sS6EufAFZmaJy
-         gV5HnrCPjL2ZG0V37MOKHqbB/Fg2v1btnUvGtraeRYO7O8iKAxp6JUKuHTTVVitDTXRj
-         cHr9lQfP6bbXacOKznJE9FJQDmF/q0JPWEnAEJgaajY/LDjTOqSj7TBAX7sahWfsDuBB
-         lgRLMp/euh+2knkUJs/stvWyijeLL7Z5ZHcIrjKabEfnJLBtzI4/lqpcusP42ZDnlF6G
-         YM5yhQhFIQg0cZP0yW8cA6+YlPsgyvchhx+UOkPBfu7sSw6FHP//+icLWWp+Ia4+g+qM
-         7FJQ==
-X-Gm-Message-State: AJIora/mRVnVXFhYEYXRi1mvS87DoYjeXzaI4gehi/2PP3mjsEckhrJ0
-        2pUBp/RyPOW9bPt7t8/eBhEc4dxBDn8qD3wiYozv3w==
-X-Google-Smtp-Source: AGRyM1seDx27XYMUBT57CYfQofAFqfovuO2uZ8Up/W6X6P7dbfW63+VBwTQvz9D+Wu7uMwiNerkJzyu2CRWYpP9Q8cE=
-X-Received: by 2002:ac8:5942:0:b0:31f:39f6:aba7 with SMTP id
- 2-20020ac85942000000b0031f39f6aba7mr21127160qtz.295.1659524968328; Wed, 03
- Aug 2022 04:09:28 -0700 (PDT)
-MIME-Version: 1.0
-References: <1659174051-27816-1-git-send-email-quic_akhilpo@quicinc.com>
- <20220730150952.v3.5.I176567525af2b9439a7e485d0ca130528666a55c@changeid>
- <8715e07f-9d58-1ae3-9a3a-25828b545905@linaro.org> <0a81938b-f30e-fa78-fd73-c753af4e324b@quicinc.com>
-In-Reply-To: <0a81938b-f30e-fa78-fd73-c753af4e324b@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 3 Aug 2022 14:09:16 +0300
-Message-ID: <CAA8EJppAprzF5S-zvYYo53QenosUkXU49kiWWzWndVwhWZgS7Q@mail.gmail.com>
-Subject: Re: [PATCH v3 5/8] drm/msm/a6xx: Ensure CX collapse during gpu recovery
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Wed, 3 Aug 2022 07:29:09 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FB7B357C3;
+        Wed,  3 Aug 2022 04:29:06 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 273Awv2w025786;
+        Wed, 3 Aug 2022 11:29:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=apAJC9A1P4zDZZhOp4LM7NtUEQKsAgXOLw893NJkRig=;
+ b=WG/8/is7UNuWpvhyuyOEZK/gSNXF3d5jyBbdX/ywjSoTmndb0jgIFYxAToJHW6D2Nmpb
+ v0/NCDzTdI3j4R5Fn/wy32jUBYN+eBgw2OINBNNm85EWESezz5s1Yiy4we0j2r+Om0kV
+ ArwUXrPrGvHFpyl/x4UVvQMu1FoBl1zSFxacgqOnlj78f/DD25JB2UeEdZAKEhfP0dht
+ UgN0Ta222Mb37bFQPUgFGOzjHwotBBWcfVZciWqe9wsI3ZnvVWFIch6NLaTKjXU3PUTf
+ FRkgKs9cwjFR0chnyxgtBak+ZkqX1w0J9zV7MTqS/L+2br667Nv7s1EUiOdIDbEzfn69 kQ== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3hqev411ur-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 03 Aug 2022 11:29:03 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 273BSwMC023584;
+        Wed, 3 Aug 2022 11:28:58 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3hmwqkd7d8-1;
+        Wed, 03 Aug 2022 11:28:58 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 273BSwsL023564;
+        Wed, 3 Aug 2022 11:28:58 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-krichai-hyd.qualcomm.com [10.213.110.37])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 273BSwfH023559;
+        Wed, 03 Aug 2022 11:28:58 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 4058933)
+        id 6E16141BE; Wed,  3 Aug 2022 16:58:57 +0530 (+0530)
+From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
+To:     helgaas@kernel.org
+Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mka@chromium.org,
+        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
+        swboyd@chromium.org, dmitry.baryshkov@linaro.org,
+        Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Subject: [PATCH v5 0/3] PCI: Restrict pci transactions after pci suspend
+Date:   Wed,  3 Aug 2022 16:58:51 +0530
+Message-Id: <1659526134-22978-1-git-send-email-quic_krichai@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 4It0i_2UFOMb7dbzcS1xEfH7a397He8Z
+X-Proofpoint-ORIG-GUID: 4It0i_2UFOMb7dbzcS1xEfH7a397He8Z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-03_03,2022-08-02_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ impostorscore=0 lowpriorityscore=0 mlxscore=0 clxscore=1015
+ priorityscore=1501 spamscore=0 adultscore=0 phishscore=0 bulkscore=0
+ mlxlogscore=788 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2206140000 definitions=main-2208030050
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 3 Aug 2022 at 13:15, Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
->
-> On 8/2/2022 12:44 PM, Dmitry Baryshkov wrote:
-> > On 30/07/2022 12:40, Akhil P Oommen wrote:
-> >> Because there could be transient votes from other drivers/tz/hyp which
-> >> may keep the cx gdsc enabled, we should poll until cx gdsc collapses.
-> >> We can use the reset framework to poll for cx gdsc collapse from gpucc
-> >> clk driver.
-> >>
-> >> This feature requires support from the platform's gpucc driver.
-> >>
-> >> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> >> ---
-> >>
-> >> Changes in v3:
-> >> - Use reset interface from gpucc driver to poll for cx gdsc collapse
-> >>    https://patchwork.freedesktop.org/series/106860/
-> >>
-> >>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 4 ++++
-> >>   drivers/gpu/drm/msm/msm_gpu.c         | 4 ++++
-> >>   drivers/gpu/drm/msm/msm_gpu.h         | 4 ++++
-> >>   3 files changed, 12 insertions(+)
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> >> b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> >> index 1b049c5..721d5e6 100644
-> >> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> >> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> >> @@ -10,6 +10,7 @@
-> >>     #include <linux/bitfield.h>
-> >>   #include <linux/devfreq.h>
-> >> +#include <linux/reset.h>
-> >>   #include <linux/soc/qcom/llcc-qcom.h>
-> >>     #define GPU_PAS_ID 13
-> >> @@ -1224,6 +1225,9 @@ static void a6xx_recover(struct msm_gpu *gpu)
-> >>       /* And the final one from recover worker */
-> >>       pm_runtime_put_sync(&gpu->pdev->dev);
-> >>   +    /* Call into gpucc driver to poll for cx gdsc collapse */
-> >> +    reset_control_reset(gpu->cx_collapse);
-> >
-> > Do we have a race between the last pm_runtime_put_sync(), this polling
-> > and other voters removing their votes beforehand?
-> I can't see any issue with a race here. reset_control_reset() will
-> return immediately in that case.
+If the endpoint device state is D0 and irq's are not freed, then
+kernel try to mask interrupts in system suspend path by writing in to
+the vector table (for MSIX interrupts) and config space (for MSI's).
 
-Ack, ok then.
+These transactions are initiated in the pm suspend after pcie clocks got
+disabled as part of platform driver pm  suspend call. Due to it, these
+transactions are resulting in un-clocked access and eventually to crashes.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+So added a logic in qcom driver to restrict these unclocked access.
+And updated the logic to check the link state before masking
+or unmasking the interrupts.
 
+And some devices are taking time to settle the link in L1ss, so added a
+retry logic in the suspend ops.
+
+Krishna chaitanya chundru (3):
+  PCI: qcom: Add system PM support
+  PCI: qcom: Restrict pci transactions after pci suspend
+  PCI: qcom: Add retry logic for link to be stable in L1ss
+
+ drivers/pci/controller/dwc/pcie-designware-host.c |  14 ++-
+ drivers/pci/controller/dwc/pcie-qcom.c            | 117 +++++++++++++++++++++-
+ 2 files changed, 127 insertions(+), 4 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.7.4
+
