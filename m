@@ -2,85 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDCCD5887EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 09:29:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 496645887FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 09:31:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234709AbiHCH31 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Aug 2022 03:29:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52638 "EHLO
+        id S234370AbiHCHbl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Aug 2022 03:31:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230166AbiHCH30 (ORCPT
+        with ESMTP id S235619AbiHCHax (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Aug 2022 03:29:26 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA4261AF3C;
-        Wed,  3 Aug 2022 00:29:23 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id l22so20487427wrz.7;
-        Wed, 03 Aug 2022 00:29:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=DnwCv3ne7t4VsczDACOd/QZeuOU46Y+vUbACe7h+Vcc=;
-        b=Z9sHp1rQ6UEA5jgNJMBEfObRj9UkraU1s6VGfAtODedoODzmyqMJs74Ou1T5zAFdl/
-         qlvnNMM43doBpGk4tYPtiFceevUd2Kooh4xnSc80aLayidq54YvRiZkrvbN/5Ivzb34D
-         Ju1khvS/beoLsMQjxcLMPukRYK3sjOwroQoqzxErS0ZlNu0A54/+3Kk4CX+hXF19U/Zw
-         vvc36mm9E3bZJFIW8e+eJ4n4Z00djrTvjghQi6wAOE6LlwaKZhIV3CBlh5dankXnRcPK
-         rQ989EL6fWmQT7Z+p//oyV8FipQr8khyVR8x9+oLPYGZaf3AqjSSlm9GQvdcVW8kmi+m
-         4KHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=DnwCv3ne7t4VsczDACOd/QZeuOU46Y+vUbACe7h+Vcc=;
-        b=Z8vCkjL3Ya7tVZET/3YFuqLO06OJ/KzIBFMeTCLbMwwQcawfzH0HVFisKZ0jz/IUaw
-         DUu3JOY0coWh4SmdjtOBApn2+fTPD7ER/vUjZEIIy5TLJud+DyyFbtFy7pklRjpXxU4I
-         mwkvJGs/mLqTZ31Htqvo3QlRP7sHvKoAqLo8wVkIGuKj5nJ2RgYsSrWSzcnUR7gonk0P
-         hm5Mbc00vJHIE2P6iJcqwrGEh4knvshV9XyeRVB3F2BToc9wU3oixU2yKMXQTqx+ejqE
-         TOhIgd9NgGkh8qvfNKibpyorVkoR7YQWUMVQhgokl5jt19B4DoKxvv/8GzbNvGiCVmyU
-         XvSw==
-X-Gm-Message-State: ACgBeo3HVC9kFmqx2iOPblM61EGIHlXOVubuUu8QoeZowcTtQRhyrXj0
-        qTVTA3XDknFgYp27yjHuhOo=
-X-Google-Smtp-Source: AA6agR4B4mTSnCya1ay3mFK+wvoTuG8FqPaeL+iK2sTy/kBDZ8JKZSekqB8xHebkI7cpKW3jtLjAGg==
-X-Received: by 2002:a05:6000:887:b0:21e:24a0:f302 with SMTP id ca7-20020a056000088700b0021e24a0f302mr14565311wrb.466.1659511762271;
-        Wed, 03 Aug 2022 00:29:22 -0700 (PDT)
-Received: from ainazi.localnet (p200300d09706d9000384b2cb471c28f8.dip0.t-ipconnect.de. [2003:d0:9706:d900:384:b2cb:471c:28f8])
-        by smtp.gmail.com with ESMTPSA id a5-20020adffb85000000b0021e5cc26dd0sm17176199wrr.62.2022.08.03.00.29.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Aug 2022 00:29:21 -0700 (PDT)
-From:   Shinjo Park <peremen@gmail.com>
-To:     Rudraksha Gupta <guptarud@gmail.com>
-Cc:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Wed, 3 Aug 2022 03:30:53 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D2E79FF2;
+        Wed,  3 Aug 2022 00:30:51 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 4B8F9B821A5;
+        Wed,  3 Aug 2022 07:30:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E87C433C1;
+        Wed,  3 Aug 2022 07:30:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1659511848;
+        bh=TyMeEqWBu5IifHReIBRw1bgA+Mfnb0FI1r7G9D1jkLs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ABFSsOPJVQ0vYhOl0vmk1f9ZZRJ2Jgb9fm+bK4TccFFZg1kKdvTJA+TdRy73eFCuv
+         QoLYn4wuL+y2ZMpQVyJwESGS+RP1Zq/+d7a/SFs/VXtI2JiK1e1s9B/MwjVPqkJ9NH
+         fGD0MyfqyoddyH/32g6Vfmf3f2C/94xNFRFKDgvQJJLZbh/UxKXOJn26cGXTughDz8
+         VV5a7kzy1kE9iVJLD6uDJS3ZCMMX9R9Af/C97KPQXx6i4WMwEi1g7hg14DXrPO3sXh
+         1LrRxqXCXuv1bHBcWQqYaA/XgIkoDDwUGJPJ8SZ+RfsPmandC9GpMN0K+S5VcA7hmc
+         P4mSt0rBdUP4Q==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oJ8qQ-0004OS-Mm; Wed, 03 Aug 2022 09:31:06 +0200
+Date:   Wed, 3 Aug 2022 09:31:06 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] ARM: dts: qcom: msm8960: add the device node of USB1
-Date:   Wed, 03 Aug 2022 09:29:20 +0200
-Message-ID: <2654048.mvXUDI8C0e@ainazi>
-In-Reply-To: <cbccc7c3-a45e-43d0-50d9-55776579afa1@gmail.com>
-References: <76ed8999-c211-f8ea-c70c-21fddd75a896@linaro.org> <20220730081412.14297-1-peremen@gmail.com> <cbccc7c3-a45e-43d0-50d9-55776579afa1@gmail.com>
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
+        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux USB List <linux-usb@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 5/8] Revert "dt-bindings: usb: dwc3: Add wakeup-source
+ property support"
+Message-ID: <YuokOn0KHEqv/CR4@hovoldconsulting.com>
+References: <20220802151404.1797-1-johan+linaro@kernel.org>
+ <20220802151404.1797-6-johan+linaro@kernel.org>
+ <CAL_JsqL5ZCzfd06rxOdQodFjk4G3QpDCsxA5heM71x0q5d-hCw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAL_JsqL5ZCzfd06rxOdQodFjk4G3QpDCsxA5heM71x0q5d-hCw@mail.gmail.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022=EB=85=84 8=EC=9B=94 2=EC=9D=BC =ED=99=94=EC=9A=94=EC=9D=BC =EC=98=
-=A4=EC=A0=84 7=EC=8B=9C 21=EB=B6=84 54=EC=B4=88 CEST Rudraksha Gupta wrote:
->  > #include <dt-bindings/clock/qcom,lcc-msm8960.h>
->=20
-> Does not apply cleanly to mainline. Please include the above
+On Tue, Aug 02, 2022 at 11:17:22AM -0600, Rob Herring wrote:
+> On Tue, Aug 2, 2022 at 9:14 AM Johan Hovold <johan+linaro@kernel.org> wrote:
 
-Will be fixed in the next revision of this patch.
+> > It should also not be used to
+> > work around Linux driver implementation issues such as how to coordinate
+> > the glue and core dwc3 drivers.
+> >
+> > For the Qualcomm dwc3 controllers, it is the glue device that manages
+> > the wakeup interrupts, which may or may not be able to wake the system
+> > up from system suspend.
+> 
+> While the reasoning to add this may have been for QCom, having this
+> property for other users makes sense. On some platforms, 'snps,dwc3'
+> is the only node (i.e. there's no wrapper node). So I don't think this
+> should be reverted.
 
+Fair enough. Let's keep it in the core child node then where we can
+still retrieve from the glue parent directly.
 
+(I assume you're not suggesting also adding 'wakeup-source' to the qcom
+glue node, which is where the actual wakeup interrupts live.)
+
+The glue and core parts needs to work in concert even if the current
+implementation tends to make that harder than it should be.
+
+Johan
