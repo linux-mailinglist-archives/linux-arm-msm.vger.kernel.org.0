@@ -2,80 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FE755887FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 09:32:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4A3F58880C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 09:37:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234312AbiHCHcy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Aug 2022 03:32:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56128 "EHLO
+        id S235213AbiHCHh1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Aug 2022 03:37:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230071AbiHCHcx (ORCPT
+        with ESMTP id S234178AbiHCHh0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Aug 2022 03:32:53 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF4AE1D31F
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Aug 2022 00:32:51 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id s14so18029007ljh.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Aug 2022 00:32:51 -0700 (PDT)
+        Wed, 3 Aug 2022 03:37:26 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 620101F2C0
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Aug 2022 00:37:25 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id bq11so20103274lfb.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Aug 2022 00:37:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=tCz0eZ7hj0SBYcW7YLoM4xbGHfSBezEbOzG70uXQv2E=;
-        b=UQnCKUKKvtVHCY04Bl7gqxpeS17g7R/aV2jI3AoSjsZfWJZMyaaAucq3S6ZVXgkTOK
-         8NQueQoHM9J1NqcdLQx6udmD+BA7fg207woCKShBKdwPrAdWPUsix8mGKei4mR6jJGJL
-         D+4ziuOUQQ6J71TRGCTKo9dO1iISn8GyrkmYNYtDTLB2MqQ81Xy146ExsRs7JxQgBB0A
-         TOvOvp1A9r1hYt06GpxirVyV1MXhxxtiiOh6KA9uAuJyEFvhYtnKr4vbYiSHzbVq51e7
-         EnpPx/9htA3E8rp+kVh0uVpakb16GqcjsDHF8bp4hm4BNYpBoYp5hlanbFhZYRvnGMLX
-         tHGA==
+        bh=ZFL1rpNY6wsrWyWGElxKgonarXbu9XUulVlTCMlwgB8=;
+        b=Le0GMSUGuNXx+DN948ov64Ao1jAZwv3kaV4yFwbqE5JSOZv9bCE4+/3ZSAy4eNXvy2
+         GVzdyrzDcvEKPn3V6hjk6Ah9wwBzbLF5W30zMnjoOw0oEKhaSdnHLrNGngyDfkApaaQ6
+         n6hzafHDmdkraBiVziOE/q0LfblRzzL26eOH/BS8SJ2e8HEoby/q6TY2+6uqbRZn0Xzj
+         2MDd7XGl49TpxybUemiYLCAd8nmjzo9nw/QNKZ1ykvGRnJw18BtVdAjrsrM1kyQY377J
+         LKjMj1bPjon2t3fbDC3m/vNX3dLWevmTDyUc4bPdChSMLz4bTHrim4NXP+iQ9HofyJrX
+         EOOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=tCz0eZ7hj0SBYcW7YLoM4xbGHfSBezEbOzG70uXQv2E=;
-        b=GaiZXnY+JRykLY9irvNyKfDpenUWnccVBg8kfrCccEuU+9mYFn6ESbu9AqLwNFqJla
-         80vQEqAoAzdNSwhW8Lq4apezEpuvPVUS4plaJ+hQ4tysQfthOMVSEV26oyN5KBc5UXob
-         XQhMSZsV+YskEkcq6gTSdCNiPdbgJejsNRx4Mhp4g+89d1+ihLOqzVl27w4IIeEey4vo
-         APdksDOmelt4FD+hHfAvT9UpSJM6GAywyVsN2euRkjQ6by0lVCvBOwY/afT+BDzMb7Un
-         pRIZUeTd+o/F9/0ogEjZBIKQJM5XLoDobPvZ4glcbvMfAfTc3AGKAgxiu6vmxHjZTg4M
-         ZRww==
-X-Gm-Message-State: AJIora/oy4uZdvOEZVEi5bn5EZI/I2liaAYVLR23Hd0CyqiLRgBadK8C
-        sIYNRPNdrjDCkIX2pNPnH3TfMQ==
-X-Google-Smtp-Source: AGRyM1uNPBvCp/iMne+R+R5SxoIvwyxixvegV3a1Ek6hsgb/gXtraJ6LYaaBAC7qNVfH0EePFBnE+w==
-X-Received: by 2002:a2e:9d59:0:b0:25e:1eda:86f6 with SMTP id y25-20020a2e9d59000000b0025e1eda86f6mr7888434ljj.315.1659511970088;
-        Wed, 03 Aug 2022 00:32:50 -0700 (PDT)
+        bh=ZFL1rpNY6wsrWyWGElxKgonarXbu9XUulVlTCMlwgB8=;
+        b=jlcMTTOurWn9F5Xah6SzQAq/k9yt+Ma5/S5TvepN1j1nCoLOBVwdDa7OrT7f6KQ59q
+         n4gZVkwSGC9S3M5urewe2Pgng4V6/6WpmqnJJANvWpktdy+ChJFi3asd+S/+4xTlo/mi
+         jszHxgIDNVqYRWyBdWF8oXKomaVLAm9gtkPe1rLduu57X8xF5EmTQgRXWtC++fJ9Izg6
+         riEZHl4Ucgm4Buh68wGL1J9KrrY0X4e7Rd+dr0XQLRmwHoR0m+nVuGFF8k4GKugXZ+i4
+         eolZWxy2VGqJPhvbdjyfQbVYcFpxHRziVdksIHePDsGZvKf0pIk2fOnWT0q6xqqNYR0w
+         nq1g==
+X-Gm-Message-State: AJIora8dphR7Fmwp4QIG+6iNl98jZu+y98gZNVaru4UDpuZVr8iW7zrc
+        npg97xRfvxyS1CwfhWd7zEWNcw==
+X-Google-Smtp-Source: AGRyM1uVZPcFKVrcPg3zLx0Sinm/50QHNCT/fy+51eTa2lNlbroLZyAtLonhS6dhSihB/nl0XSStUg==
+X-Received: by 2002:a05:6512:3f23:b0:48a:90ed:10a5 with SMTP id y35-20020a0565123f2300b0048a90ed10a5mr8325616lfa.93.1659512243670;
+        Wed, 03 Aug 2022 00:37:23 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id bp23-20020a056512159700b0048a83336343sm2339145lfb.252.2022.08.03.00.32.49
+        by smtp.gmail.com with ESMTPSA id p13-20020a2eb98d000000b0025e4ca99066sm1120098ljp.139.2022.08.03.00.37.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Aug 2022 00:32:49 -0700 (PDT)
-Message-ID: <3f79c5b1-9ce8-6aeb-300a-565ba018ae11@linaro.org>
-Date:   Wed, 3 Aug 2022 10:32:48 +0300
+        Wed, 03 Aug 2022 00:37:23 -0700 (PDT)
+Message-ID: <7de9cd34-dc37-053e-63dc-54b6879ce181@linaro.org>
+Date:   Wed, 3 Aug 2022 10:37:22 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH v3 6/6] drm/msm/dsi: Improve dsi_phy_driver_probe() probe
- error handling
+Subject: Re: [PATCH v3 0/6] drm/msm/dsi regulator improvements
 Content-Language: en-GB
 To:     Douglas Anderson <dianders@chromium.org>,
         Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
 Cc:     dri-devel@lists.freedesktop.org, Mark Brown <broonie@kernel.org>,
         linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Archit Taneja <architt@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         David Airlie <airlied@linux.ie>,
         Jonathan Marek <jonathan@marek.ca>,
         =?UTF-8?B?Sm9zw6kgRXhww7NzaXRv?= <jose.exposito89@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
         Rajeev Nandan <quic_rajeevny@quicinc.com>,
         Sean Paul <sean@poorly.run>,
+        Sireesh Kodali <sireeshkodali1@gmail.com>,
         Stephen Boyd <swboyd@chromium.org>,
+        Vinod Koul <vkoul@kernel.org>,
         Vladimir Lypak <vladimir.lypak@gmail.com>,
         linux-kernel@vger.kernel.org
 References: <20220802223738.898592-1-dianders@chromium.org>
- <20220802153434.v3.6.I969118a35934a0e5007fe4f80e3e28e9c0b7602a@changeid>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220802153434.v3.6.I969118a35934a0e5007fe4f80e3e28e9c0b7602a@changeid>
+In-Reply-To: <20220802223738.898592-1-dianders@chromium.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,163 +95,66 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 03/08/2022 01:37, Douglas Anderson wrote:
-> The dsi_phy_driver_probe() function has a "goto fail" for no
-> reason. Change it to just always return directly when it sees an
-> error. Make this simpler by leveraging dev_err_probe() which is
-> designed to make code like this shorter / simpler.
+> The main goal of this series is to make a small dent in cleaning up
+> the way we deal with regulator loads for DSI drivers.
 > 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Minor nit below.
-
-> ---
+> As of v3 of this series, the regulator API improvements needed for the
+> later patches in the series are merged into mainline. Thus this series
+> only contains the DSI changes now.
+> 
+> I'd expect:
+> * The first two patches are bugfixes found while converting the DSI
+>    driver over. Those could land any time.
+> * The third patch ("drm/msm/dsi: Don't set a load before disabling a
+>    regulator") is a patch a sent the other day verbatim, included in
+>    this series because it's highly related. It could land any
+>    time.
+> * The next two patches use the new APIs. Since those APIs are now in
+>    mainline those could also land any time.
+> * The last patch is just cleanup I noticed as I was touching the
+>    function. It's not really related to regulators but it applies atop
+>    these. In theory it could be rebased to land separately.
 > 
 > Changes in v3:
 > - ("Improve dsi_phy_driver_probe() probe error handling") new for v3.
+> - Do all the PHYs too.
+> - Fix typo in commit message.
+> - Get rid of error print after devm_regulator_bulk_get_const().
+> - Just directly call the bulk commands; get rid of the wrapper.
+> - Update commit message to point at the git hash of the regulator change.
 > 
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 74 ++++++++++-----------------
->   1 file changed, 27 insertions(+), 47 deletions(-)
+> Changes in v2:
+> - ("Fix number of regulators for SDM660") new for v2.
+> - ("Fix number of regulators for msm8996_dsi_cfg") new for v2.
+> - ("Take advantage of devm_regulator_bulk_get_const") new for v2.
+> - ("Use the new regulator bulk feature to specify the load") new for v2.
 > 
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> index 0a00f9b73fc5..57cd525de7a1 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> @@ -621,12 +621,9 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
->   	phy->pdev = pdev;
->   
->   	phy->id = dsi_phy_get_id(phy);
-> -	if (phy->id < 0) {
-> -		ret = phy->id;
-> -		DRM_DEV_ERROR(dev, "%s: couldn't identify PHY index, %d\n",
-> -			__func__, ret);
-> -		goto fail;
-> -	}
-> +	if (phy->id < 0)
-> +		return dev_err_probe(dev, phy->id,
-> +				     "Couldn't identify PHY index\n");
->   
->   	phy->regulator_ldo_mode = of_property_read_bool(dev->of_node,
->   				"qcom,dsi-phy-regulator-ldo-mode");
-> @@ -634,88 +631,71 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
->   		phy->cphy_mode = (phy_type == PHY_TYPE_CPHY);
->   
->   	phy->base = msm_ioremap_size(pdev, "dsi_phy", &phy->base_size);
-> -	if (IS_ERR(phy->base)) {
-> -		DRM_DEV_ERROR(dev, "%s: failed to map phy base\n", __func__);
-> -		ret = -ENOMEM;
+> Douglas Anderson (6):
+>    drm/msm/dsi: Fix number of regulators for msm8996_dsi_cfg
+>    drm/msm/dsi: Fix number of regulators for SDM660
 
-Here (and in a few cases later) this changes the error code from crafted 
--ENOMEM to the proper one returned by msm_ioremap_size(). This should be 
-mentioned in the commit message.
+These two can be picked into the -fixes branch. The reset looks like 
+5.21/6.1 material
 
-> -		goto fail;
-> -	}
-> +	if (IS_ERR(phy->base))
-> +		return dev_err_probe(dev, PTR_ERR(phy->base),
-> +				     "Failed to map phy base\n");
->   
->   	phy->pll_base = msm_ioremap_size(pdev, "dsi_pll", &phy->pll_size);
-> -	if (IS_ERR(phy->pll_base)) {
-> -		DRM_DEV_ERROR(&pdev->dev, "%s: failed to map pll base\n", __func__);
-> -		ret = -ENOMEM;
-> -		goto fail;
-> -	}
-> +	if (IS_ERR(phy->pll_base))
-> +		return dev_err_probe(dev, PTR_ERR(phy->pll_base),
-> +				     "Failed to map pll base\n");
->   
->   	if (phy->cfg->has_phy_lane) {
->   		phy->lane_base = msm_ioremap_size(pdev, "dsi_phy_lane", &phy->lane_size);
-> -		if (IS_ERR(phy->lane_base)) {
-> -			DRM_DEV_ERROR(&pdev->dev, "%s: failed to map phy lane base\n", __func__);
-> -			ret = -ENOMEM;
-> -			goto fail;
-> -		}
-> +		if (IS_ERR(phy->lane_base))
-> +			return dev_err_probe(dev, PTR_ERR(phy->lane_base),
-> +					     "Failed to map phy lane base\n");
->   	}
->   
->   	if (phy->cfg->has_phy_regulator) {
->   		phy->reg_base = msm_ioremap_size(pdev, "dsi_phy_regulator", &phy->reg_size);
-> -		if (IS_ERR(phy->reg_base)) {
-> -			DRM_DEV_ERROR(&pdev->dev, "%s: failed to map phy regulator base\n", __func__);
-> -			ret = -ENOMEM;
-> -			goto fail;
-> -		}
-> +		if (IS_ERR(phy->reg_base))
-> +			return dev_err_probe(dev, PTR_ERR(phy->reg_base),
-> +					     "Failed to map phy regulator base\n");
->   	}
->   
->   	if (phy->cfg->ops.parse_dt_properties) {
->   		ret = phy->cfg->ops.parse_dt_properties(phy);
->   		if (ret)
-> -			goto fail;
-> +			return ret;
->   	}
->   
->   	ret = devm_regulator_bulk_get_const(dev, phy->cfg->num_regulators,
->   					    phy->cfg->regulator_data,
->   					    &phy->supplies);
->   	if (ret)
-> -		goto fail;
-> +		return ret;
->   
->   	phy->ahb_clk = msm_clk_get(pdev, "iface");
-> -	if (IS_ERR(phy->ahb_clk)) {
-> -		DRM_DEV_ERROR(dev, "%s: Unable to get ahb clk\n", __func__);
-> -		ret = PTR_ERR(phy->ahb_clk);
-> -		goto fail;
-> -	}
-> +	if (IS_ERR(phy->ahb_clk))
-> +		return dev_err_probe(dev, PTR_ERR(phy->ahb_clk),
-> +				     "Unable to get ahb clk\n");
->   
->   	/* PLL init will call into clk_register which requires
->   	 * register access, so we need to enable power and ahb clock.
->   	 */
->   	ret = dsi_phy_enable_resource(phy);
->   	if (ret)
-> -		goto fail;
-> +		return ret;
->   
->   	if (phy->cfg->ops.pll_init) {
->   		ret = phy->cfg->ops.pll_init(phy);
-> -		if (ret) {
-> -			DRM_DEV_INFO(dev,
-> -				"%s: pll init failed: %d, need separate pll clk driver\n",
-> -				__func__, ret);
-> -			goto fail;
-> -		}
-> +		if (ret)
-> +			return dev_err_probe(dev, ret,
-> +					     "PLL init failed; need separate clk driver\n");
->   	}
->   
->   	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get,
->   				     phy->provided_clocks);
-> -	if (ret) {
-> -		DRM_DEV_ERROR(dev, "%s: failed to register clk provider: %d\n", __func__, ret);
-> -		goto fail;
-> -	}
-> +	if (ret)
-> +		return dev_err_probe(dev, ret,
-> +				     "Failed to register clk provider\n");
->   
->   	dsi_phy_disable_resource(phy);
->   
->   	platform_set_drvdata(pdev, phy);
->   
->   	return 0;
-> -
-> -fail:
-> -	return ret;
->   }
->   
->   static struct platform_driver dsi_phy_platform_driver = {
+>    drm/msm/dsi: Don't set a load before disabling a regulator
+>    drm/msm/dsi: Use the new regulator bulk feature to specify the load
+>    drm/msm/dsi: Take advantage of devm_regulator_bulk_get_const()
+>    drm/msm/dsi: Improve dsi_phy_driver_probe() probe error handling
+> 
+>   drivers/gpu/drm/msm/dsi/dsi.h                 |  13 --
+>   drivers/gpu/drm/msm/dsi/dsi_cfg.c             | 172 +++++++++---------
+>   drivers/gpu/drm/msm/dsi/dsi_cfg.h             |   3 +-
+>   drivers/gpu/drm/msm/dsi/dsi_host.c            |  96 ++--------
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c         | 160 ++++------------
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy.h         |   5 +-
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c    |  20 +-
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c    |  32 ++--
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c    |  14 +-
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c    |  28 +--
+>   .../gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c   |  12 +-
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c     |  32 ++--
+>   12 files changed, 197 insertions(+), 390 deletions(-)
+> 
 
 
 -- 
