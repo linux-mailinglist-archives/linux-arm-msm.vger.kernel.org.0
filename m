@@ -2,45 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A8E805893FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 23:16:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB0E0589400
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 23:19:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236629AbiHCVQJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Aug 2022 17:16:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41348 "EHLO
+        id S238192AbiHCVTJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Aug 2022 17:19:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238684AbiHCVQI (ORCPT
+        with ESMTP id S236622AbiHCVTI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Aug 2022 17:16:08 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DACE205F0;
-        Wed,  3 Aug 2022 14:16:07 -0700 (PDT)
+        Wed, 3 Aug 2022 17:19:08 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0352020F44;
+        Wed,  3 Aug 2022 14:19:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1659561367; x=1691097367;
+  t=1659561548; x=1691097548;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=L/w39cfmWhGsov1KGqnJepfBKH9f2u+IHPg9Lhj37Ts=;
-  b=CrvTX1IRj0U17hpeOUXE+lWvKwWXk7LZtnfmgx8IBa+2t6HK7LEQ3co+
-   ntnddIDCDrgJ+wOUte9NlTW+deWanN0dL2/fnS8hPyBi12tY7BG+x2X1N
-   y2XNwDfFi5w+XwlbAdDHjlM3SB0PxNx8HqDkbIB1n0liD0OH2N/wFoViH
-   g=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 03 Aug 2022 14:16:07 -0700
+  bh=FYATxmG4+2tHBYdXXi8Z00HPGFZQScUMILv1Li5GzKg=;
+  b=XUdGeHkK65KZtwvqeCpYqrRBbvlHDBDG3i0H8++/4yWc/B/XGdE+SI0Q
+   PZcO+XeKiUD6WKnMHDT1Z4WVW+yzYCGb/lS3H/dz5L071m0Q/ldwqi0XO
+   h1WdA3aHWi3b0KXj98UmbDWnUbDPYZfWUvFA3oflsGUq2spmXMhHTm840
+   E=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 03 Aug 2022 14:19:07 -0700
 X-QCInternal: smtphost
 Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Aug 2022 14:16:07 -0700
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Aug 2022 14:19:07 -0700
 Received: from [10.134.65.5] (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 3 Aug 2022
- 14:16:06 -0700
-Message-ID: <848c50eb-92f1-2731-79bf-10a531803f8e@quicinc.com>
-Date:   Wed, 3 Aug 2022 14:16:06 -0700
+ 14:19:07 -0700
+Message-ID: <8fb71bca-4568-f452-807a-70676245143f@quicinc.com>
+Date:   Wed, 3 Aug 2022 14:19:06 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.9.1
-Subject: Re: [PATCH v2 04/11] gunyah: Common types and error codes for Gunyah
- hypercalls
+Subject: Re: [PATCH v2 09/11] gunyah: rsc_mgr: Add auxiliary devices for
+ console
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
@@ -60,10 +60,10 @@ CC:     Murali Nalajala <quic_mnalajal@quicinc.com>,
         <devicetree@vger.kernel.org>, <linux-doc@vger.kernel.org>,
         <linux-arm-msm@vger.kernel.org>
 References: <20220801211240.597859-1-quic_eberman@quicinc.com>
- <20220801211240.597859-5-quic_eberman@quicinc.com>
- <24a2d70e-0ed1-5f7d-9c9c-261afac73989@linaro.org>
+ <20220801211240.597859-10-quic_eberman@quicinc.com>
+ <869e9d41-7a21-c01a-ccbd-53bfb236938c@linaro.org>
 From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <24a2d70e-0ed1-5f7d-9c9c-261afac73989@linaro.org>
+In-Reply-To: <869e9d41-7a21-c01a-ccbd-53bfb236938c@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
@@ -80,118 +80,79 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 8/2/2022 12:33 AM, Dmitry Baryshkov wrote:
+On 8/2/2022 1:38 AM, Dmitry Baryshkov wrote:
 > On 02/08/2022 00:12, Elliot Berman wrote:
->> Add architecture-independent standard error codes, types, and macros for
->> Gunyah hypercalls.
+>> Gunyah resource manager exposes a concrete functionalities which
+>> complicate a single resource manager driver. Use auxiliary bus
+>> to help split high level functions for the resource manager and keep the
+>> primary resource manager driver focused on the RPC with RM itself.
+>> Delegate Resource Manager's console functionality to the auxiliary bus.
 >>
 >> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 >> ---
->>   MAINTAINERS            |  1 +
->>   include/linux/gunyah.h | 75 ++++++++++++++++++++++++++++++++++++++++++
->>   2 files changed, 76 insertions(+)
->>   create mode 100644 include/linux/gunyah.h
+>>   drivers/virt/gunyah/rsc_mgr.c | 61 ++++++++++++++++++++++++++++++++++-
+>>   1 file changed, 60 insertions(+), 1 deletion(-)
 >>
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 02f97ac90cdf..2e4f1d9ed47b 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -8744,6 +8744,7 @@ S:    Maintained
->>   F:    Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
->>   F:    Documentation/virt/gunyah/
->>   F:    arch/arm64/include/asm/gunyah.h
->> +F:    include/linux/gunyah.h
->>   HABANALABS PCI DRIVER
->>   M:    Oded Gabbay <ogabbay@kernel.org>
->> diff --git a/include/linux/gunyah.h b/include/linux/gunyah.h
->> new file mode 100644
->> index 000000000000..69931a0f5736
->> --- /dev/null
->> +++ b/include/linux/gunyah.h
->> @@ -0,0 +1,75 @@
->> +/* SPDX-License-Identifier: GPL-2.0-only */
->> +/*
->> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights 
->> reserved.
->> + */
+>> diff --git a/drivers/virt/gunyah/rsc_mgr.c 
+>> b/drivers/virt/gunyah/rsc_mgr.c
+>> index b8268ee02fab..44b22cef7d44 100644
+>> --- a/drivers/virt/gunyah/rsc_mgr.c
+>> +++ b/drivers/virt/gunyah/rsc_mgr.c
+>> @@ -91,6 +91,11 @@ struct gh_rm_notif_complete {
+>>       struct work_struct work;
+>>   };
+>> +struct gh_rsc_mgr_adev {
+>> +    struct auxiliary_device adev;
+>> +    struct list_head list;
+>> +};
 >> +
->> +#ifndef _GUNYAH_H
->> +#define _GUNYAH_H
+>>   struct gh_rsc_mgr {
+>>       struct task_struct *recv_task;
+>>       struct gunyah_device *msgq_tx, *msgq_rx;
+>> @@ -99,6 +104,13 @@ struct gh_rsc_mgr {
+>>       struct mutex call_idr_lock;
+>>       struct mutex send_lock;
 >> +
->> +#include <linux/types.h>
->> +#include <linux/errno.h>
->> +#include <asm/gunyah.h>
+>> +    struct list_head adevs;
+>> +};
 >> +
->> +typedef u64 gh_capid_t;
->> +
->> +/* Common Gunyah macros */
->> +#define GH_CAPID_INVAL    U64_MAX
->> +
->> +#define GH_ERROR_OK            0
+>> +/* List of auxiliary devices which resource manager creates */
+>> +static const char * const adev_names[] = {
+>> +    "console",
+>>   };
 > 
-> Is there any semantic difference between GH_ERROR_foo < 0 and 
-> GH_ERROR_bar > 0 ?
+> Which other auxilliary devices do you expect at this moment?
 > 
 
-GH_ERROR_foo < 0 comes from Gunyah's plumbing for handling hypercalls. 
-GH_ERROR_bar > 0 comes from the hypercall itself.
+Only foresee a VM loader auxiliary device.
 
->> +#define GH_ERROR_UNIMPLEMENTED        -1
->> +#define GH_ERROR_RETRY            -2
->> +
->> +#define GH_ERROR_ARG_INVAL        1
->> +#define GH_ERROR_ARG_SIZE        2
->> +#define GH_ERROR_ARG_ALIGN        3
->> +
->> +#define GH_ERROR_NOMEM            10
->> +
->> +#define GH_ERROR_ADDR_OVFL        20
->> +#define GH_ERROR_ADDR_UNFL        21
->> +#define GH_ERROR_ADDR_INVAL        22
->> +
->> +#define GH_ERROR_DENIED            30
->> +#define GH_ERROR_BUSY            31
->> +#define GH_ERROR_IDLE            32
->> +
->> +#define GH_ERROR_IRQ_BOUND        40
->> +#define GH_ERROR_IRQ_UNBOUND        41
->> +
->> +#define GH_ERROR_CSPACE_CAP_NULL    50
->> +#define GH_ERROR_CSPACE_CAP_REVOKED    51
->> +#define GH_ERROR_CSPACE_WRONG_OBJ_TYPE    52
->> +#define GH_ERROR_CSPACE_INSUF_RIGHTS    53
->> +#define GH_ERROR_CSPACE_FULL        54
->> +
->> +#define GH_ERROR_MSGQUEUE_EMPTY        60
->> +#define GH_ERROR_MSGQUEUE_FULL        61
->> +
->> +static inline int gh_remap_error(int gh_error)
+>>   static struct gh_rsc_mgr *__rsc_mgr;
+>> @@ -516,6 +528,14 @@ int gh_rm_unregister_notifier(struct 
+>> notifier_block *nb)
+>>   }
+>>   EXPORT_SYMBOL_GPL(gh_rm_unregister_notifier);
+>> +static void gh_rm_adev_release(struct device *dev)
 >> +{
->> +    switch (gh_error) {
->> +    case GH_ERROR_OK:
->> +        return 0;
->> +    case GH_ERROR_NOMEM:
->> +        return -ENOMEM;
->> +    case GH_ERROR_DENIED:
->> +    case GH_ERROR_CSPACE_CAP_NULL:
->> +    case GH_ERROR_CSPACE_CAP_REVOKED:
->> +    case GH_ERROR_CSPACE_WRONG_OBJ_TYPE:
->> +    case GH_ERROR_CSPACE_INSUF_RIGHTS:
->> +    case GH_ERROR_CSPACE_FULL:
->> +        return -EACCES;
->> +    case GH_ERROR_BUSY:
->> +    case GH_ERROR_IDLE:
->> +        return -EBUSY;
->> +    case GH_ERROR_IRQ_BOUND:
->> +    case GH_ERROR_IRQ_UNBOUND:
->> +    case GH_ERROR_MSGQUEUE_FULL:
->> +    case GH_ERROR_MSGQUEUE_EMPTY:
->> +        return -EPERM;
->> +    default:
->> +        return -EINVAL;
->> +    }
+>> +    struct gh_rsc_mgr_adev *rm_adev = container_of(dev, struct 
+>> gh_rsc_mgr_adev, adev.dev);
+>> +
+>> +    list_del(&rm_adev->list);
+> 
+> is there a race for the rsc_mgr->list? Can multiple release functions be 
+> called in parallel?
+> Rather than having a list, it would be easier to have an array of 
+> devices. Less race conditions, simpler code.
+> 
+> Or just add gh_rsc_msg->console_adev and use it directly without any 
+> additional bells and whistles.
+> 
+
+I like this approach, it is much simpler.
+
+>> +    kfree(rm_adev);
 >> +}
 >> +
->> +#endif
-> 
-> 
+>>   static struct gunyah_device *gh_msgq_platform_probe_direction(struct 
+>> platform_device *pdev,
+>>                   u8 gh_type, int idx)
+>>   {
