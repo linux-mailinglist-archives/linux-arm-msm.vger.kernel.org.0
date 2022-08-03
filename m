@@ -2,79 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B64E858886F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 10:06:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 132CF5888DA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 10:50:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236597AbiHCIGO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Aug 2022 04:06:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50826 "EHLO
+        id S233943AbiHCIuZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Aug 2022 04:50:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbiHCIGN (ORCPT
+        with ESMTP id S234300AbiHCIuZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Aug 2022 04:06:13 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDFB92181C
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Aug 2022 01:06:11 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id z25so25327413lfr.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Aug 2022 01:06:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=ZWDDdDUD/SeLY4Y1864eieW1iTgOf5yvfzhjZam9Gdo=;
-        b=UNQND0cz6Sg0ZYwWcksx3XWvJ3WA4eaJxJp4yui/nV3EMdbkFSaBpOGwZnon5itiyZ
-         eywb/D5cj+hY1KS92HUbT03Xzas2PMYxD5h5Q0Y0DXf4MLApk1H/im+q2nbWQuI/3srA
-         JbcxOqZhrwiuK+nf5i/uzmxpRWcKaxLW84wVDO6hw8G1VTgEX9mUuFsTcRgXNuqhqmED
-         QejTlDnrX6hYUCBUgZEX4fTFRURYsPw2lSkBZ7uWPUVZXutxAK4LsNlnQ14O34pEI+NI
-         I7UYa7XeYFObT79SeRKCG9CY6UvSMaYOTBdtpWbCHenXA7328Ga6gOZ+RoxN5Xg3UHFk
-         H/KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=ZWDDdDUD/SeLY4Y1864eieW1iTgOf5yvfzhjZam9Gdo=;
-        b=8RQzjHUJv0TS9vha8Tci3tk21wHiu1DI41tpEvMQMRim/w0jfpmvhNPXBXPfWwYTP6
-         9wOFhFzXZAOuSLCJW3zTfhVC7yEj/gYyminir+nKMic3HkWm/zydnySLd/iJcViqNMp8
-         JfUYdxoL0DzLIaaDuazuJuJ+q4cqqFZI51XIZQd95HE52FAP8Jvcogxa+Esto6HEqAaH
-         dy9lBN4DKpe4axB9HuGCZOgSNRL5D1xsuoJX/OEr9BISG2JjPjgXtI/o8EHkEpI/XYIu
-         PJhBizWgJrK+7aokxGtOtxlxlwHIwEj2Ixv5i24IPaHu1pwEZgjXuF+TwpSNqFJJSCul
-         Q8pw==
-X-Gm-Message-State: ACgBeo3xsyfcXgZrxOlq5+QSUOKO8wthvmQe2d2BufZ5lVSPEcscQS5Q
-        nV1Ab8vJFliwMqg6vSoiHqkdww==
-X-Google-Smtp-Source: AA6agR6YIKvmWjYaexviQIzgrn1Fy4OPtC8l6gFirTc4+daaC5Q/9KztGMbcs4zaIhmKkO0ln/EelA==
-X-Received: by 2002:ac2:43c8:0:b0:48a:f0e9:fc06 with SMTP id u8-20020ac243c8000000b0048af0e9fc06mr6238061lfl.458.1659513970078;
-        Wed, 03 Aug 2022 01:06:10 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id t9-20020ac24c09000000b0048a8586293asm2368309lfq.48.2022.08.03.01.06.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Aug 2022 01:06:09 -0700 (PDT)
-Message-ID: <89469b0d-e6aa-4d60-c93c-a99256f65445@linaro.org>
-Date:   Wed, 3 Aug 2022 11:06:08 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v3 00/13] PM6125 regulator support
-Content-Language: en-GB
-To:     Iskren Chernev <iskren.chernev@gmail.com>,
+        Wed, 3 Aug 2022 04:50:25 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 399C26453;
+        Wed,  3 Aug 2022 01:50:23 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 00AE0B8218A;
+        Wed,  3 Aug 2022 08:50:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C428C433D6;
+        Wed,  3 Aug 2022 08:50:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1659516620;
+        bh=lcBBGQP1cMln4snVW0FD2LaDsPlFtDJyczxrGwOfe/4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=OrIYoUrDNQaIPpBy3vKM446Otlu8KmxoDb7pEMlvauKF7D1Xab/3fdFp1iRDL9kRC
+         IM1rVrmCLTUhG5FKX2RFndcSUocoe9fCExwYM0ebi5Hjqbw3DhF+nNrep+i0zz/DPj
+         FAIaudx1LT9qDJ1gRdke5kiieCNY3cE3llwzr8aiyNih2Bbw1ISDo0O7ws0RQ0y3Hu
+         a0asIBkOeA6fGE0bWLLp0smArL+b7RQ0ovxEqKC6yFwywVyi3AikPnKKQfxsLuI4Lc
+         osLerpkW0Mxk6ErF5Wc19cwB8OVlFdZ7VVTekDd+nIQjkw45PLTbTYBlEkx3pIbCfI
+         djPijGU1gqHtw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oJA5O-0007O7-Fj; Wed, 03 Aug 2022 10:50:38 +0200
+Date:   Wed, 3 Aug 2022 10:50:38 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Doug Anderson <dianders@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Mark Brown <broonie@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Andy Gross <agross@kernel.org>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
+        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
         Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Robert Marko <robimarko@gmail.com>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20220731223736.1036286-1-iskren.chernev@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220731223736.1036286-1-iskren.chernev@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v16 0/3] eDP/DP Phy vdda realted function
+Message-ID: <Yuo23sdBe6tI7g5K@hovoldconsulting.com>
+References: <1657038556-2231-1-git-send-email-quic_khsieh@quicinc.com>
+ <YtkrDcjTGhpaU1e0@hovoldconsulting.com>
+ <CAA8EJprQnnWjDZJy9+zUBsVQCi3jtc0Ngtzzk9MXpwOvuAS68g@mail.gmail.com>
+ <CAD=FV=W0m-x9JC=5hQ3urSNmUp8sY-u8YkNd66yrKfRNAH4rcg@mail.gmail.com>
+ <YuPiJWQ1/wQbkvD8@hovoldconsulting.com>
+ <YuPps+cvVAMugWmy@sirena.org.uk>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="YTsIOlOo8860ehFK"
+Content-Disposition: inline
+In-Reply-To: <YuPps+cvVAMugWmy@sirena.org.uk>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,65 +81,85 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/08/2022 01:37, Iskren Chernev wrote:
-> This patch series adds SPMI and SMD regulator support for the PM6125 found on
-> SM4250/SM6115 SoCs from QCom.
-> 
-> This code has been tested on:
-> * OnePlus Nord N100 (oneplus,billie2, SoC sm4250)
-> * Redmi 9T (redmi,lemon, SoC sm6115)
-> 
-> The main source used for this change is qpnp pm6125 support patch from caf [1]:
-> 
-> [1]: https://source.codeaurora.org/quic/la/kernel/msm-5.4/commit/?h=kernel.lnx.5.4.r1-rel&id=d1220daeffaa440ffff0a8c47322eb0033bf54f5
-> 
-> v2: https://lkml.org/lkml/2022/7/26/885
-> v1: https://lkml.org/lkml/2021/8/28/144
-> 
-> Changes from v2:
-> - split spmi new regulator support in 2 patches
-> - FTS and LDOs now have set_load and set_pull_down ops
-> - add better commit messages on spmi patches
-> - fix sob header order
-> - fix tested device info (Redmi 9T, NOT Xiaomi 9T)
-> - improve formatting in spmi binding docs
-> - sort alphabetically in smd binding docs
-> - sort alphabetically spmi pmics
-> - sort alphabetically smd pmics
-> Changes from v1:
-> - add dt-bindings
-> - split SPMI patch into new reg types and the new PMIC
-> - add correct supply mapping
-> 
-> Iskren Chernev (13):
->    dt-bindings: regulator: qcom_spmi: Improve formatting of if-then
->      blocks
->    dt-bindings: regulator: qcom_spmi: Document PM6125 PMIC
->    dt-bindings: regulator: qcom_smd: Sort compatibles alphabetically
->    dt-bindings: regulator: qcom_smd: Document PM6125 PMIC
->    regulator: qcom_spmi: Add support for new regulator types
->    regulator: qcom_spmi: Add support for HFSMPS regulator type
->    regulator: qcom_spmi: Sort pmics alphabetically (part 1)
->    regulator: qcom_spmi: Sort pmics alphabetically (part 2)
->    regulator: qcom_spmi: Add PM6125 PMIC support
->    regulator: qcom_smd: Sort pmics alphabetically (part 1)
->    regulator: qcom_smd: Sort pmics alphabetically (part 2)
->    regulator: qcom_smd: Sort pmics alphabetically (part 3)
 
-What is the reason for these part1/2 and part1/2/3 splits? I think you 
-can collapse them into two respective patches, one sorting of spmi, 
-another one sorting the smd regulators
+--YTsIOlOo8860ehFK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->    regulator: qcom_smd: Add PM6125 regulators support
-> 
->   .../regulator/qcom,smd-rpm-regulator.yaml     |  26 +-
->   .../regulator/qcom,spmi-regulator.yaml        |  32 ++
->   drivers/regulator/qcom_smd-regulator.c        | 400 ++++++++++--------
->   drivers/regulator/qcom_spmi-regulator.c       | 383 ++++++++++++-----
->   4 files changed, 556 insertions(+), 285 deletions(-)
-> 
+On Fri, Jul 29, 2022 at 03:07:47PM +0100, Mark Brown wrote:
+> On Fri, Jul 29, 2022 at 03:35:33PM +0200, Johan Hovold wrote:
+>=20
+> > I guess we just need to drop all those regulator-allow-set-load
+> > properties for now even if using DT for power-management configuration
+> > this way does seem to run against the whole DT-as-hardware-description
+> > idea (e.g. we may want to add them back when/if active- and idle loads
+> > are specified by the corresponding Linux drivers).
+>=20
+> Well, there's also a question of if the hardware can usefully make use
+> of the facility - is there any non-suspend state where the regulator
+> needs to be on but is drawing so little current that it's worth trying
+> to select a lower power mode?
 
+Good point.
 
--- 
-With best wishes
-Dmitry
+> > But that doesn't address the problem that was trying to highlight here,
+> > and that you had noticed years ago, namely that using set_load only
+> > works reliably if *all* consumers use it.
+>=20
+> > Shouldn't an enabled regulator from a consumer that didn't specify a
+> > load somehow result in HPM always being selected (e.g. count as INT_MAX
+> > load as Doug suggested some years ago)?
+>=20
+> Possibly, but note that as well as the consumers with software drivers
+> you also have to consider any passive consumers on the board which may
+> not have any representation in DT so the actual numbers may well be off
+> even if every consumer is trying to keep things up to date.  You also
+> come back to the "let's just shove a random number in here" problem.
+
+Right, but some of that could be captured in DT with
+'regulator-system-load'.
+
+> For ultimate saftey we probably want a command line option to gate the
+> feature which people can set to say they've audited their full
+> software/hardware integration stack.
+
+That sounds like it could be useful.
+=20
+> > At some point in the discussion I thought Mark suggested removing
+> > set_load from drivers that don't actually manage active and idle loads.
+> > That would also work, at least until the day one of the drivers adds
+> > support for idle loads.
+>=20
+> Yes, if the driver isn't actively managing loads it's probably not doing
+> anything useful.
+
+Ok, thanks for confirming. Perhaps we should drop the set_loads() added
+to the PHY driver by this series then.
+=20
+> The difficulties with this sort of system integration question is an
+> unfortunate consequence of DT, having to describe what's safe for an
+> unknown software stack is fundamentally hard.  I do question how much
+> effort it's worth putting into enabling this, especially in cases where
+> the regulator is shared - how much power is actually saved in the grand
+> scheme of things given that this is only taking effect when the system
+> is out of suspend and we tend to be talking about some percentage of the
+> power being drawn on something which is presumably already consuming
+> very little power for this to be at all relevant?
+
+I tend to agree. Thanks again for your input!
+
+Johan
+
+--YTsIOlOo8860ehFK
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQQHbPq+cpGvN/peuzMLxc3C7H1lCAUCYuo22gAKCRALxc3C7H1l
+CArBAP4+W07nkP4v5zuEdV1LepVpAWJtpTTVnGwdfkVwnr5FAgD+I8xjWidPc2Kq
+nD+BAXuccWyyiOPlBuyM2GD/ZXjL1wQ=
+=ehiB
+-----END PGP SIGNATURE-----
+
+--YTsIOlOo8860ehFK--
