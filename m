@@ -2,75 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38A6B588ABC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 12:45:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97035588AE7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 13:09:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231533AbiHCKpT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Aug 2022 06:45:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51046 "EHLO
+        id S234887AbiHCLJa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Aug 2022 07:09:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233605AbiHCKpS (ORCPT
+        with ESMTP id S232706AbiHCLJa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Aug 2022 06:45:18 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6008E26F4;
-        Wed,  3 Aug 2022 03:45:17 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id b21-20020a05600c4e1500b003a32bc8612fso677576wmq.3;
-        Wed, 03 Aug 2022 03:45:17 -0700 (PDT)
+        Wed, 3 Aug 2022 07:09:30 -0400
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31FEB1AD83
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Aug 2022 04:09:29 -0700 (PDT)
+Received: by mail-qt1-x82e.google.com with SMTP id d16so914869qtw.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Aug 2022 04:09:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=m8278Hs6Ub3EKMJF6GHEl38sS0VhPP4vdfVJwEcQvvY=;
-        b=Cjv3D3SJgeNwX9oRHLovihTb8AsRyqpxlr+x9A+T5AWC07BI5KvyUVLF97fQdRQJVf
-         mf9zw/bGLdIG7tQ1wE4fkG565unYDF1Xn/xxZ8/Fwi4+dnQ1/G4LKb/CHSJiiOwcDpfV
-         0OLKZIyE4Nge4V3hF3sv+RcODzX5Ymi0uH12f8dYGKIbsX8+Z6EEBgM0nVBX09/l1FvX
-         vcR733pkMKZ4QU65SqvcvKG/owSHdftRMljplsovc2yncR/J4IVxNFcmBRZz7Q0FyweP
-         Gu4tdkUJY7YCP8laCAtfm9gp6e/pMpgH9a2uG1To8VvMO1vpDgyO6KXAZYotaIvFT3dA
-         zIcQ==
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=Ni8odVu9N3fk9U9c9SMmRIWk/Y6CS1n2Honac+jmqgs=;
+        b=Th5oMiLjG03N9iifNJ+PqTAXgjG8zvJ0AEDvGCFY4OmRya8dUm1vyXHag+GTqc/UH9
+         g63yIX90v3j3GhyXhCtEJR8a97K9KRbms0q9AZb4WCqU0tDqUTBM7403hP+yEHMKTMAs
+         8Fgwcm5ZP06m4PxK/WZEmfee7579c4OpAMvGP8/JHVyvgGC2BQoq3QYN11tI/rTw3M4a
+         Km0n4F/sLlmf1Qyy+NtyQXRKCk+Kfewv+RMWDeNiuSn2pyzn27e7C0dRCRftX30AXelh
+         dH+n7OCSzAjSKZfS0OYZeQl1GihHZVFu1rpsE45QcePSqDaYKKLmnRoLDg9+R3Z5vAzZ
+         eRxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=m8278Hs6Ub3EKMJF6GHEl38sS0VhPP4vdfVJwEcQvvY=;
-        b=7gIOBngEzsRgkhbH1/b7+I5hfq4hGkFgXKcADc1TZP7l/aRu+rd5WdvAk7ZDUlJqJt
-         sMjDnAk3UR8rl+eJ5HDc3nJzj+JFr5VBdJsM9A4/5JiI/TJoSk3Rq367aV7L17XBgz+6
-         mVJhTebTdYnhHdZu7cCmAY3d8FJpnTgVFVLLJ1NYj7xvXPQLVZg7gS3vNtBOYlJIN7bd
-         3uEnpjSJ/mbWzH4pB2WaUUpQ92hxumzqYAP/uVFNhSXvcAn/DXMQHMDM8kfbSmJO0xpq
-         8uGi22r5twXckM6b/EW7w4/K/EXaIBVz3sG347vjHcm2OBBpTEa7C6qIys2xiV/k5ph8
-         JwaA==
-X-Gm-Message-State: ACgBeo3/d1cRFcWPrYiZ7TyWVsdXgS55cu+A0jpiZyZ5WbvmspQrTizf
-        p7RTWaBy7MGn9EB4sD5Lp8IiCki+qCNF0g==
-X-Google-Smtp-Source: AA6agR7Qfl1ygpQk+wsDGvjIMmphX8TDddKZmwv90ZS0evv7n2nA3qK7C9Bnx3Zsc2Gk/9dWcBmImA==
-X-Received: by 2002:a05:600c:284a:b0:3a2:ffb7:b56f with SMTP id r10-20020a05600c284a00b003a2ffb7b56fmr2448224wmb.134.1659523515641;
-        Wed, 03 Aug 2022 03:45:15 -0700 (PDT)
-Received: from ainazi.localnet (p200300d09706d9000384b2cb471c28f8.dip0.t-ipconnect.de. [2003:d0:9706:d900:384:b2cb:471c:28f8])
-        by smtp.gmail.com with ESMTPSA id bg7-20020a05600c3c8700b003a3186fa559sm2203463wmb.29.2022.08.03.03.45.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Aug 2022 03:45:15 -0700 (PDT)
-From:   Shinjo Park <peremen@gmail.com>
-To:     dmitry.baryshkov@linaro.org
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        mturquette@baylibre.com, quic_tdas@quicinc.com, robh+dt@kernel.org,
-        swboyd@chromium.org
-Subject: Re: [PATCH 00/15] clk: qcom: use parent_hws/_data for APQ8064 clocks
-Date:   Wed, 03 Aug 2022 12:45:14 +0200
-Message-ID: <5883539.lOV4Wx5bFT@ainazi>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=Ni8odVu9N3fk9U9c9SMmRIWk/Y6CS1n2Honac+jmqgs=;
+        b=xhsJHlA2mORpJbRoRi8jboM5f3gsX5/TfR4mavbhYgWQ/V+Vc1b43sS6EufAFZmaJy
+         gV5HnrCPjL2ZG0V37MOKHqbB/Fg2v1btnUvGtraeRYO7O8iKAxp6JUKuHTTVVitDTXRj
+         cHr9lQfP6bbXacOKznJE9FJQDmF/q0JPWEnAEJgaajY/LDjTOqSj7TBAX7sahWfsDuBB
+         lgRLMp/euh+2knkUJs/stvWyijeLL7Z5ZHcIrjKabEfnJLBtzI4/lqpcusP42ZDnlF6G
+         YM5yhQhFIQg0cZP0yW8cA6+YlPsgyvchhx+UOkPBfu7sSw6FHP//+icLWWp+Ia4+g+qM
+         7FJQ==
+X-Gm-Message-State: AJIora/mRVnVXFhYEYXRi1mvS87DoYjeXzaI4gehi/2PP3mjsEckhrJ0
+        2pUBp/RyPOW9bPt7t8/eBhEc4dxBDn8qD3wiYozv3w==
+X-Google-Smtp-Source: AGRyM1seDx27XYMUBT57CYfQofAFqfovuO2uZ8Up/W6X6P7dbfW63+VBwTQvz9D+Wu7uMwiNerkJzyu2CRWYpP9Q8cE=
+X-Received: by 2002:ac8:5942:0:b0:31f:39f6:aba7 with SMTP id
+ 2-20020ac85942000000b0031f39f6aba7mr21127160qtz.295.1659524968328; Wed, 03
+ Aug 2022 04:09:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+References: <1659174051-27816-1-git-send-email-quic_akhilpo@quicinc.com>
+ <20220730150952.v3.5.I176567525af2b9439a7e485d0ca130528666a55c@changeid>
+ <8715e07f-9d58-1ae3-9a3a-25828b545905@linaro.org> <0a81938b-f30e-fa78-fd73-c753af4e324b@quicinc.com>
+In-Reply-To: <0a81938b-f30e-fa78-fd73-c753af4e324b@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 3 Aug 2022 14:09:16 +0300
+Message-ID: <CAA8EJppAprzF5S-zvYYo53QenosUkXU49kiWWzWndVwhWZgS7Q@mail.gmail.com>
+Subject: Re: [PATCH v3 5/8] drm/msm/a6xx: Ensure CX collapse during gpu recovery
+To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Tested-by: Shinjo Park <peremen@gmail.com> # tested on Gasio GzOne w/ MSM8960
+On Wed, 3 Aug 2022 at 13:15, Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+>
+> On 8/2/2022 12:44 PM, Dmitry Baryshkov wrote:
+> > On 30/07/2022 12:40, Akhil P Oommen wrote:
+> >> Because there could be transient votes from other drivers/tz/hyp which
+> >> may keep the cx gdsc enabled, we should poll until cx gdsc collapses.
+> >> We can use the reset framework to poll for cx gdsc collapse from gpucc
+> >> clk driver.
+> >>
+> >> This feature requires support from the platform's gpucc driver.
+> >>
+> >> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> >> ---
+> >>
+> >> Changes in v3:
+> >> - Use reset interface from gpucc driver to poll for cx gdsc collapse
+> >>    https://patchwork.freedesktop.org/series/106860/
+> >>
+> >>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 4 ++++
+> >>   drivers/gpu/drm/msm/msm_gpu.c         | 4 ++++
+> >>   drivers/gpu/drm/msm/msm_gpu.h         | 4 ++++
+> >>   3 files changed, 12 insertions(+)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >> b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >> index 1b049c5..721d5e6 100644
+> >> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >> @@ -10,6 +10,7 @@
+> >>     #include <linux/bitfield.h>
+> >>   #include <linux/devfreq.h>
+> >> +#include <linux/reset.h>
+> >>   #include <linux/soc/qcom/llcc-qcom.h>
+> >>     #define GPU_PAS_ID 13
+> >> @@ -1224,6 +1225,9 @@ static void a6xx_recover(struct msm_gpu *gpu)
+> >>       /* And the final one from recover worker */
+> >>       pm_runtime_put_sync(&gpu->pdev->dev);
+> >>   +    /* Call into gpucc driver to poll for cx gdsc collapse */
+> >> +    reset_control_reset(gpu->cx_collapse);
+> >
+> > Do we have a race between the last pm_runtime_put_sync(), this polling
+> > and other voters removing their votes beforehand?
+> I can't see any issue with a race here. reset_control_reset() will
+> return immediately in that case.
+
+Ack, ok then.
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
+-- 
+With best wishes
+Dmitry
