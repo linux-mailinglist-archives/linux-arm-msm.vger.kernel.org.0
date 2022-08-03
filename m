@@ -2,147 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EBF6C588830
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 09:46:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58AC3588847
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 09:51:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235140AbiHCHql (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Aug 2022 03:46:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37264 "EHLO
+        id S237141AbiHCHvK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Aug 2022 03:51:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234974AbiHCHqk (ORCPT
+        with ESMTP id S237022AbiHCHvI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Aug 2022 03:46:40 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03E4B27B39;
-        Wed,  3 Aug 2022 00:46:39 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id z16so20443691wrh.12;
-        Wed, 03 Aug 2022 00:46:38 -0700 (PDT)
+        Wed, 3 Aug 2022 03:51:08 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EB872F01D
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Aug 2022 00:51:05 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id u1so14997160lfq.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Aug 2022 00:51:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=I336059hUhtPeHDoaaIpuKg419qdPUulZW8pRMrdOCQ=;
-        b=hPMDk+B5MFdjHfySxJPi1wx5TbVV3Cg2LAHwgl8y+kFWBK3kx4OVXKMEfAPg/SG5fm
-         bVeHg9ugxTLs6J7JBoBMb56XRytLK7kSMD1EhlmHDq32T5+CrNkNvldo+xcUohx5yIty
-         0Lqth9AEx3oHB9zCHcgK8T4rlT7xD2gXIquz9qiXkI9wNU1fXXql6ns8yA8QNi8LOpAi
-         LPfr301OCZ4+rVfDD/2N4xK2B/xiK2JzZyMMyz5KFPa1U/ZlXSRIzdbgT0h9pm01ZT3C
-         QiXkWnYx1WEt2VLg4KNbUI3f5gIBynsNCAa9AuwPM+NdoZLWygw/E/xh9FTxrY/0uutn
-         SVnw==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=+qiNOnMPVcTggFsBYHaEzoH71rIPx2WFWj8O2ocXAy4=;
+        b=uq+URaz+toowYbgnRcqZtbVNfoJLMcGt0+mCMN6c4utMJEJaeA5YVcCVJC49LdS9NL
+         d5+Xn4PJqdZqZkspXztypEG/BhOpaDb9Hd81lVM2j1UHQNaFd35LeeZe/SoZ+w7bEetC
+         HWNCGeB+WRsF/UvjU2VEaipfognobec/W32odphoRvTj9ST3tgbNK2cMFTmUFrobwzv7
+         q7ffRrFFHbw2Go1lxNzrS5Ls+C4mqXdGbwDbjnKCjy5AphKWp+ntdwYY8NiTkl3p7Pxx
+         uuN73NbhqgkYqDkQo1vMKSr2Ef29rx/a/oBH/WIgrRjF3ZGBGpzDecFxWGzQi2/Me4EE
+         x++Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=I336059hUhtPeHDoaaIpuKg419qdPUulZW8pRMrdOCQ=;
-        b=a5kAAppQQyv6dfuYXbJHw8E6w4WF0APZrDnfPm35rBgN753S7784p+5jAraCtHNh11
-         KSgaOSvXjha18I2UHwIAB1SLNNYLVyswrbPyWmqBaxNMhdCbaGCAhmki1FMup4ELtuxe
-         SPW7KTySvs/TGRsBdxATtrdeQGZyc2q7g/ukx4MoQJBk0yr4zDa7T3slXhwELGhJV5LW
-         ynVnYdYYZRBmV7cawzciOdJH2xlzatYnXOuAgtMRbQh3eGpBwdi/XIxxcu7nxUooG/fH
-         C4skOnwMPy8lwGnf3rlVJuNdj+3rZIXiQ+hLIiZv3KUeRIo8UYuzZYQdF/3PwYznXjyZ
-         mfDw==
-X-Gm-Message-State: ACgBeo1REyEAZ4SERYGdRpmZjOWUu/mnis1LhvLzUSORC8Rcsv8yHvdQ
-        ICJZt2J6u4M0Gt1f/cP9xGjIclb3HLUE2w==
-X-Google-Smtp-Source: AA6agR5XPSD6S7JLAYUPl8iTo8MWqmsqnxkKHS6mEj8TlHgabno488AXSIhpWEyr0e3/9tdx6QbdMw==
-X-Received: by 2002:a05:6000:1a8e:b0:21d:a7a8:54f4 with SMTP id f14-20020a0560001a8e00b0021da7a854f4mr15376651wry.654.1659512797152;
-        Wed, 03 Aug 2022 00:46:37 -0700 (PDT)
-Received: from ainazi.fritz.box (p200300d09706d9000384b2cb471c28f8.dip0.t-ipconnect.de. [2003:d0:9706:d900:384:b2cb:471c:28f8])
-        by smtp.gmail.com with ESMTPSA id 123-20020a1c1981000000b003a4c6e67f01sm1505065wmz.6.2022.08.03.00.46.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Aug 2022 00:46:36 -0700 (PDT)
-From:   Shinjo Park <peremen@gmail.com>
-Cc:     peremen@gmail.com, David Heidelberg <david@ixit.cz>,
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=+qiNOnMPVcTggFsBYHaEzoH71rIPx2WFWj8O2ocXAy4=;
+        b=TEB8c3kNi11NBJBTWxjo0t6fSSNSS+8oHYK6qg/Sy5lccBYl18wWh4cOqFhpLTOcqv
+         segdLdR6LELETi+QYCbZWwORA6Ofseuui5VWWxkLLnObFGGD+uLDX3Ke/3fB5KPSNz+N
+         WK3kDWV8XEDrPcNd18b6rWTCIWclGPktwsip9/T61K7VSawCTviydnstW9jFbBfAcO89
+         O8FIhqqK53uTTlj6HnJLzphoAFY/x9HNJoNHNNlZ38yt1Lq9tlzh5V2nWKwZKi26XuoQ
+         Jus6XDHtNvaBIV99T9j0BObBnNr7RzyjNSsUPqtlypc04AjCS+GbK6DNVeG2rzysn4T0
+         OEHg==
+X-Gm-Message-State: AJIora/E+tP6OfJScSShDv44wO+9/1wZUPVkQtuWLmqU+9AV/R8uPvPQ
+        I3NjDg1NfClSulMjcwZt2h907g==
+X-Google-Smtp-Source: AGRyM1siGEUEnyJJOowXE+Po+lvFcMlMH8ag+fSkZEu8Bp76hF8nWN1ylZYYQUMn2Mw72TmbBS0iFg==
+X-Received: by 2002:a05:6512:12d4:b0:48a:8d45:7208 with SMTP id p20-20020a05651212d400b0048a8d457208mr9125479lfg.192.1659513064031;
+        Wed, 03 Aug 2022 00:51:04 -0700 (PDT)
+Received: from [192.168.1.6] ([77.222.167.48])
+        by smtp.gmail.com with ESMTPSA id k6-20020ac257c6000000b0048b03012d0dsm793539lfo.254.2022.08.03.00.51.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Aug 2022 00:51:03 -0700 (PDT)
+Message-ID: <971ad767-68b7-bbb7-f147-c3cce24fbe4f@linaro.org>
+Date:   Wed, 3 Aug 2022 09:51:00 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH 5/8] Revert "dt-bindings: usb: dwc3: Add wakeup-source
+ property support"
+Content-Language: en-US
+To:     Johan Hovold <johan@kernel.org>, Rob Herring <robh+dt@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v3 2/3] ARM: dts: qcom: msm8960: add the device node of USB1
-Date:   Wed,  3 Aug 2022 09:46:08 +0200
-Message-Id: <20220803074608.21048-1-peremen@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <2654048.mvXUDI8C0e@ainazi>
-References: <2654048.mvXUDI8C0e@ainazi>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
+        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux USB List <linux-usb@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+References: <20220802151404.1797-1-johan+linaro@kernel.org>
+ <20220802151404.1797-6-johan+linaro@kernel.org>
+ <CAL_JsqL5ZCzfd06rxOdQodFjk4G3QpDCsxA5heM71x0q5d-hCw@mail.gmail.com>
+ <YuokOn0KHEqv/CR4@hovoldconsulting.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <YuokOn0KHEqv/CR4@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use the same USB definition as qcom-apq8064.dtsi, tested on Casio GzOne.
+On 03/08/2022 09:31, Johan Hovold wrote:
+> On Tue, Aug 02, 2022 at 11:17:22AM -0600, Rob Herring wrote:
+>> On Tue, Aug 2, 2022 at 9:14 AM Johan Hovold <johan+linaro@kernel.org> wrote:
+> 
+>>> It should also not be used to
+>>> work around Linux driver implementation issues such as how to coordinate
+>>> the glue and core dwc3 drivers.
+>>>
+>>> For the Qualcomm dwc3 controllers, it is the glue device that manages
+>>> the wakeup interrupts, which may or may not be able to wake the system
+>>> up from system suspend.
+>>
+>> While the reasoning to add this may have been for QCom, having this
+>> property for other users makes sense. On some platforms, 'snps,dwc3'
+>> is the only node (i.e. there's no wrapper node). So I don't think this
+>> should be reverted.
+> 
+> Fair enough. Let's keep it in the core child node then where we can
+> still retrieve from the glue parent directly.
+> 
+> (I assume you're not suggesting also adding 'wakeup-source' to the qcom
+> glue node, which is where the actual wakeup interrupts live.)
+> 
+> The glue and core parts needs to work in concert even if the current
+> implementation tends to make that harder than it should be.
 
-Signed-off-by: Shinjo Park <peremen@gmail.com>
-Reviewed-by: David Heidelberg <david@ixit.cz>
----
+I think it can still exist in the glue node (so your next patch),
+because as you said this is the place with wakeup interrupt, so it looks
+like correct hardware description. In the next patch you would need to
+disallow it for the DWC node.
 
-v3:
- - Include missing clock/qcom,lcc-msm8960.h to make cleanly applicable
-
-v2:
- - Rewrite commit message
- - Reorder status line
-
- arch/arm/boot/dts/qcom-msm8960.dtsi | 33 +++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
-
-diff --git a/arch/arm/boot/dts/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom-msm8960.dtsi
-index e14e1c5d1..0e099aa7c 100644
---- a/arch/arm/boot/dts/qcom-msm8960.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8960.dtsi
-@@ -3,6 +3,8 @@
- 
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/clock/qcom,gcc-msm8960.h>
-+#include <dt-bindings/clock/qcom,lcc-msm8960.h>
-+#include <dt-bindings/reset/qcom,gcc-msm8960.h>
- #include <dt-bindings/mfd/qcom-rpm.h>
- #include <dt-bindings/soc/qcom,gsbi.h>
- 
-@@ -167,6 +169,37 @@ regulators {
- 			};
- 		};
- 
-+		usb1: usb@12500000 {
-+			compatible = "qcom,ci-hdrc";
-+			reg = <0x12500000 0x200>,
-+			      <0x12500200 0x200>;
-+			interrupts = <GIC_SPI 100 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc USB_HS1_XCVR_CLK>, <&gcc USB_HS1_H_CLK>;
-+			clock-names = "core", "iface";
-+			assigned-clocks = <&gcc USB_HS1_XCVR_CLK>;
-+			assigned-clock-rates = <60000000>;
-+			resets = <&gcc USB_HS1_RESET>;
-+			reset-names = "core";
-+			phy_type = "ulpi";
-+			ahb-burst-config = <0>;
-+			phys = <&usb_hs1_phy>;
-+			phy-names = "usb-phy";
-+			#reset-cells = <1>;
-+			status = "disabled";
-+
-+			ulpi {
-+				usb_hs1_phy: phy {
-+					compatible = "qcom,usb-hs-phy-msm8960",
-+						     "qcom,usb-hs-phy";
-+					clocks = <&sleep_clk>, <&cxo_board>;
-+					clock-names = "sleep", "ref";
-+					resets = <&usb1 0>;
-+					reset-names = "por";
-+					#phy-cells = <0>;
-+				};
-+			};
-+		};
-+
- 		acc0: clock-controller@2088000 {
- 			compatible = "qcom,kpss-acc-v1";
- 			reg = <0x02088000 0x1000>, <0x02008000 0x1000>;
--- 
-2.34.1
-
+Best regards,
+Krzysztof
