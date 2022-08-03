@@ -2,159 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AFB75887CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 09:19:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDCCD5887EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Aug 2022 09:29:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233532AbiHCHTD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Aug 2022 03:19:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46976 "EHLO
+        id S234709AbiHCH31 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Aug 2022 03:29:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229789AbiHCHTB (ORCPT
+        with ESMTP id S230166AbiHCH30 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Aug 2022 03:19:01 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 816CA17063
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Aug 2022 00:19:00 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id y23so7654057ljh.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Aug 2022 00:19:00 -0700 (PDT)
+        Wed, 3 Aug 2022 03:29:26 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA4261AF3C;
+        Wed,  3 Aug 2022 00:29:23 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id l22so20487427wrz.7;
+        Wed, 03 Aug 2022 00:29:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=9qWosSLXhyptc60Y7AzA5SZJpqZuA+8KmqVAtrjeBq8=;
-        b=ZzSM1bueO0NTpO74C+tO6GnDLLj76TrW+4XYe3o5ZiCcjdQrcc8xG75ruStb6Qp2NB
-         ol/HnraOGLcStmk1KS86MLbDyA2HxMEM+MHqXtKkNX0rkS+X7NC1e0Hv9PevITZk+tlc
-         6iHUTeyK0IvfE1qxrdUo04QloDRZ8McSS6NeEp4XsmHJUXbm9LakYizL3be2SvyYosl5
-         Gjh23j7NYHcCibZdpNuQkazLuXP5FcGAKrylYVl3jawBv5l10s9Dvp3Qrn9rmkKI2GI8
-         xTVw5d+pRy0y/aqTQG59x4dQGIPwVGENSGb6gIEgCUJ/Cmdy+mFVeKrj1GveyN2+oKFW
-         K4CA==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=DnwCv3ne7t4VsczDACOd/QZeuOU46Y+vUbACe7h+Vcc=;
+        b=Z9sHp1rQ6UEA5jgNJMBEfObRj9UkraU1s6VGfAtODedoODzmyqMJs74Ou1T5zAFdl/
+         qlvnNMM43doBpGk4tYPtiFceevUd2Kooh4xnSc80aLayidq54YvRiZkrvbN/5Ivzb34D
+         Ju1khvS/beoLsMQjxcLMPukRYK3sjOwroQoqzxErS0ZlNu0A54/+3Kk4CX+hXF19U/Zw
+         vvc36mm9E3bZJFIW8e+eJ4n4Z00djrTvjghQi6wAOE6LlwaKZhIV3CBlh5dankXnRcPK
+         rQ989EL6fWmQT7Z+p//oyV8FipQr8khyVR8x9+oLPYGZaf3AqjSSlm9GQvdcVW8kmi+m
+         4KHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=9qWosSLXhyptc60Y7AzA5SZJpqZuA+8KmqVAtrjeBq8=;
-        b=xujjemYUCCoBaSrfq8dbCzTTq8DBv+c2NtOOuRoAdPLPt+yjpQM8/cwlTbRZA99GwR
-         ZQLVJAfTnMwrZjZ5K2wPy7NsaP3bOkb2cB9PeeOfPkacdD2V+YIRirFaFmMzHR8YMTxJ
-         qBSFDQmVb5vRARRianKvlFoVxBJKW8dKhmj5lg7WEyleYjben0CN8zPEolao8HLW1YXM
-         U+AZ9M7EX+6BVS+sv1q3FGCgbyVtsAhUvQj2Wx3sD9z2H5my62B9AmkkyRTOA7ksxwrE
-         +KiJRM1qf+uPa4YYznDMLRkohSfsRzsDgGdePS8xRklb0vP5Dc7yGeHvZuRUfm9YJfyi
-         oLlw==
-X-Gm-Message-State: ACgBeo24ag724MhDBsgePSFNRFkD1XfDrdYt8El6aED6fGomi23WCObV
-        23E3wdrYP2tOHDqXc12oIeYdGw==
-X-Google-Smtp-Source: AA6agR4m8eXNXB/epkX5NIGw5gtrqihlWFLmZBQ/K5mkZcX5VyNEOs/67u0bqyznWFTBGERH32dlog==
-X-Received: by 2002:a05:651c:905:b0:25e:67a8:4dd0 with SMTP id e5-20020a05651c090500b0025e67a84dd0mr1396572ljq.232.1659511138894;
-        Wed, 03 Aug 2022 00:18:58 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v5-20020a2ea605000000b0025dd5b3fabesm2119728ljp.102.2022.08.03.00.18.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Aug 2022 00:18:58 -0700 (PDT)
-Message-ID: <228e5e34-6467-a75b-129d-2b37b32acf13@linaro.org>
-Date:   Wed, 3 Aug 2022 10:18:57 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v3 5/6] drm/msm/dsi: Take advantage of
- devm_regulator_bulk_get_const()
-Content-Language: en-GB
-To:     Douglas Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, Mark Brown <broonie@kernel.org>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=DnwCv3ne7t4VsczDACOd/QZeuOU46Y+vUbACe7h+Vcc=;
+        b=Z8vCkjL3Ya7tVZET/3YFuqLO06OJ/KzIBFMeTCLbMwwQcawfzH0HVFisKZ0jz/IUaw
+         DUu3JOY0coWh4SmdjtOBApn2+fTPD7ER/vUjZEIIy5TLJud+DyyFbtFy7pklRjpXxU4I
+         mwkvJGs/mLqTZ31Htqvo3QlRP7sHvKoAqLo8wVkIGuKj5nJ2RgYsSrWSzcnUR7gonk0P
+         hm5Mbc00vJHIE2P6iJcqwrGEh4knvshV9XyeRVB3F2BToc9wU3oixU2yKMXQTqx+ejqE
+         TOhIgd9NgGkh8qvfNKibpyorVkoR7YQWUMVQhgokl5jt19B4DoKxvv/8GzbNvGiCVmyU
+         XvSw==
+X-Gm-Message-State: ACgBeo3HVC9kFmqx2iOPblM61EGIHlXOVubuUu8QoeZowcTtQRhyrXj0
+        qTVTA3XDknFgYp27yjHuhOo=
+X-Google-Smtp-Source: AA6agR4B4mTSnCya1ay3mFK+wvoTuG8FqPaeL+iK2sTy/kBDZ8JKZSekqB8xHebkI7cpKW3jtLjAGg==
+X-Received: by 2002:a05:6000:887:b0:21e:24a0:f302 with SMTP id ca7-20020a056000088700b0021e24a0f302mr14565311wrb.466.1659511762271;
+        Wed, 03 Aug 2022 00:29:22 -0700 (PDT)
+Received: from ainazi.localnet (p200300d09706d9000384b2cb471c28f8.dip0.t-ipconnect.de. [2003:d0:9706:d900:384:b2cb:471c:28f8])
+        by smtp.gmail.com with ESMTPSA id a5-20020adffb85000000b0021e5cc26dd0sm17176199wrr.62.2022.08.03.00.29.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Aug 2022 00:29:21 -0700 (PDT)
+From:   Shinjo Park <peremen@gmail.com>
+To:     Rudraksha Gupta <guptarud@gmail.com>
+Cc:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Jonathan Marek <jonathan@marek.ca>,
-        =?UTF-8?B?Sm9zw6kgRXhww7NzaXRv?= <jose.exposito89@gmail.com>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Rajeev Nandan <quic_rajeevny@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Sireesh Kodali <sireeshkodali1@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20220802223738.898592-1-dianders@chromium.org>
- <20220802153434.v3.5.I55a9e65cb1c22221316629e98768ff473f47a067@changeid>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220802153434.v3.5.I55a9e65cb1c22221316629e98768ff473f47a067@changeid>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v2 2/3] ARM: dts: qcom: msm8960: add the device node of USB1
+Date:   Wed, 03 Aug 2022 09:29:20 +0200
+Message-ID: <2654048.mvXUDI8C0e@ainazi>
+In-Reply-To: <cbccc7c3-a45e-43d0-50d9-55776579afa1@gmail.com>
+References: <76ed8999-c211-f8ea-c70c-21fddd75a896@linaro.org> <20220730081412.14297-1-peremen@gmail.com> <cbccc7c3-a45e-43d0-50d9-55776579afa1@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/08/2022 01:37, Douglas Anderson wrote:
-> As of the commit 1de452a0edda ("regulator: core: Allow drivers to
-> define their init data as const") we no longer need to do copying of
-> regulator bulk data from initdata to something dynamic. Let's take
-> advantage of that.
-> 
-> In addition to saving some code, this also moves us to using
-> ARRAY_SIZE() to specify how many regulators we have which is less
-> error prone.
-> 
-> This gets rid of some layers of wrappers which makes it obvious that
-> we can get rid of an extra error print.
-> devm_regulator_bulk_get_const() prints errors for you so you don't
-> need an extra layer of printing.
-> 
-> In all cases here I have preserved the old settings without any
-> investigation about whether the loads being set are sensible. In the
-> cases of some of the PHYs if several PHYs in the same file used
-> exactly the same settings I had them point to the same data structure.
-> 
-> NOTE: Though I haven't done the math, this is likely an overall
-> savings in terms of "static const" data. We previously always
-> allocated space for 8 supplies. Each of these supplies took up 36
-> bytes of data (32 for name, 4 for an int).
-> 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+On 2022=EB=85=84 8=EC=9B=94 2=EC=9D=BC =ED=99=94=EC=9A=94=EC=9D=BC =EC=98=
+=A4=EC=A0=84 7=EC=8B=9C 21=EB=B6=84 54=EC=B4=88 CEST Rudraksha Gupta wrote:
+>  > #include <dt-bindings/clock/qcom,lcc-msm8960.h>
+>=20
+> Does not apply cleanly to mainline. Please include the above
 
-Ah, so to array conversion is already done. That's great.
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Will be fixed in the next revision of this patch.
 
 
-> ---
-> 
-> Changes in v3:
-> - Do all the PHYs too.
-
-It would have been easier if DSI and DSI PHY were split to separate patches.
-
-> - Get rid of error print after devm_regulator_bulk_get_const().
-> - Just directly call the bulk commands; get rid of the wrapper.
-> - Update commit message to point at the git hash of the regulator change.
-> 
-> Changes in v2:
-> - ("Take advantage of devm_regulator_bulk_get_const") new for v2.
-> 
->   drivers/gpu/drm/msm/dsi/dsi.h                 |  12 --
->   drivers/gpu/drm/msm/dsi/dsi_cfg.c             | 172 +++++++++---------
->   drivers/gpu/drm/msm/dsi/dsi_cfg.h             |   3 +-
->   drivers/gpu/drm/msm/dsi/dsi_host.c            |  42 ++---
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c         |  37 +---
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy.h         |   5 +-
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c    |  20 +-
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c    |  32 ++--
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c    |  14 +-
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c    |  28 +--
->   .../gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c   |  12 +-
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c     |  32 ++--
->   12 files changed, 167 insertions(+), 242 deletions(-)
-
--- 
-With best wishes
-Dmitry
