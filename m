@@ -2,162 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1304D58A2C2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Aug 2022 23:33:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8850658A2C7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Aug 2022 23:38:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235203AbiHDVd1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Aug 2022 17:33:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50428 "EHLO
+        id S232616AbiHDViq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Aug 2022 17:38:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234816AbiHDVdZ (ORCPT
+        with ESMTP id S234587AbiHDVip (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Aug 2022 17:33:25 -0400
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45C42248F6
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Aug 2022 14:33:23 -0700 (PDT)
-Received: by mail-pg1-x52b.google.com with SMTP id 12so1026202pga.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Aug 2022 14:33:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=vYaDvUJ9r4UGTKuVjXopXRfBzot6ijDWJtz0uXFMHR0=;
-        b=ePBy7JgHhVbC+RePbrVuQPX/dxKFpEjwEmLw2ZtraZ5KywxyBhQA/joyWGIVB6wHqr
-         X077mRmwc3K8nu8o0V0kqlMTH+xBvNO6ILDnWa6JuME4DIE5iEL0gQDjURwpeICnbvyo
-         QYEkiP5WupoXHL5SUPBs8+Ya+lgjEzDm+LoNY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=vYaDvUJ9r4UGTKuVjXopXRfBzot6ijDWJtz0uXFMHR0=;
-        b=39bmgEZmkECn1GJmKFNL4Z0dYDGM5vOvxTiHkHbecSFIAGHWMk9tjV8/t9CdmLO1JT
-         F7/M+i6KWv96HGgqbc/lqvGgYqVxfDR9ps7SxcD3L/81oHaIvjG+mzYw78MxsAcMgK5h
-         +h92Gzf+t3qSIDahZSPUA9iAXC1mEsetJ22NtXN5hattRAiRAL1+rt1BovWkIKA4xP11
-         fLbEF6UuyBoTeUzMJDOL4pQDgZru8J5JsjvV81wvxsau3SImcgqVFZ0BQ/TP543GQax2
-         /a1O+SY9Y8EavhwYMIU8szDWJhFkQEwPdOr2N+Ye7kEjK25QtCgCWC2hOiu7yH/tzw5y
-         /rUA==
-X-Gm-Message-State: ACgBeo32f/Cz6AO/L0232tkp85Gf7nOGg1WtwxNhsTMZXURuicMFK6bM
-        B4Akuy1ITPEokis0ZkrfUX+5Xg==
-X-Google-Smtp-Source: AA6agR4McsMJc49mlH9ZdYiVvmgISwj1z95oxvo8/NlEocMn1wQgsswTty3yaXNEf8y/pXmasLLEfA==
-X-Received: by 2002:a63:1245:0:b0:41a:29a3:aa31 with SMTP id 5-20020a631245000000b0041a29a3aa31mr2976612pgs.583.1659648801911;
-        Thu, 04 Aug 2022 14:33:21 -0700 (PDT)
-Received: from localhost ([2620:15c:11a:202:87c4:32ca:84b6:e942])
-        by smtp.gmail.com with UTF8SMTPSA id h4-20020a170902f7c400b0016d5e4d29f8sm1474596plw.9.2022.08.04.14.33.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Aug 2022 14:33:21 -0700 (PDT)
-Date:   Thu, 4 Aug 2022 14:33:19 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
-        swboyd@chromium.org, dmitry.baryshkov@linaro.org,
+        Thu, 4 Aug 2022 17:38:45 -0400
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 307B56E891;
+        Thu,  4 Aug 2022 14:38:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1659649121; x=1691185121;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=7V7nahT9XjNpAFfGKFhNDUbQQAH1G6z336pao7dnqlM=;
+  b=ZZ7FUJ5XVQGAbp6SzaZDrtwUxunSYus8PbNB0GqiTMiwv0kDyU9srbc7
+   pTTds5DCE0gzVRMJfWAMwhmrUrUEr0aVQhFBdGtYFqwUPoHWFQV6a/qU8
+   7rqTgquS9nxRfQOK2Dg+T4n3IpJaAbI+bprTOJ3WHe5eV9sbBrO9xW5Lk
+   De5GaBW4LhwHxdLtFsQ/ieYkWLrsj35SB5tuN3nVAHXUREb1UNJLLrgHm
+   QZbYlMLhheSBVsPXHBMIaNv4wHygg/uWX7b+dsB4gOW6hRFpLnCCwcKp2
+   J07ZVXlcVyc3X/sB3QnMEXYiQX1z6Nl4EBymyxiLWYyWuMsAGDDG3qmxE
+   g==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10429"; a="288810594"
+X-IronPort-AV: E=Sophos;i="5.93,216,1654585200"; 
+   d="scan'208";a="288810594"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Aug 2022 14:38:40 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.93,216,1654585200"; 
+   d="scan'208";a="692782608"
+Received: from lkp-server01.sh.intel.com (HELO e0eace57cfef) ([10.239.97.150])
+  by FMSMGA003.fm.intel.com with ESMTP; 04 Aug 2022 14:38:36 -0700
+Received: from kbuild by e0eace57cfef with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1oJiY7-000IsJ-2b;
+        Thu, 04 Aug 2022 21:38:35 +0000
+Date:   Fri, 5 Aug 2022 05:38:30 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>
+Cc:     kbuild-all@lists.01.org, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>
-Subject: Re: [PATCH v5 3/3] PCI: qcom: Add retry logic for link to be stable
- in L1ss
-Message-ID: <Yuw7HyoFX4jk6eOE@google.com>
-References: <1659526134-22978-1-git-send-email-quic_krichai@quicinc.com>
- <1659526134-22978-4-git-send-email-quic_krichai@quicinc.com>
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
+        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: Re: [PATCH v2 6/9] usb: dwc3: qcom: fix peripheral and OTG suspend
+Message-ID: <202208050544.ijUhoUyB-lkp@intel.com>
+References: <20220804151001.23612-7-johan+linaro@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1659526134-22978-4-git-send-email-quic_krichai@quicinc.com>
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <20220804151001.23612-7-johan+linaro@kernel.org>
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 03, 2022 at 04:58:54PM +0530, Krishna chaitanya chundru wrote:
-> Some specific devices are taking time to settle the link in L1ss.
-> So added a retry logic before returning from the suspend op.
-> 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 25 ++++++++++++++++++++-----
->  1 file changed, 20 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index f7dd5dc..f3201bd 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1829,15 +1829,30 @@ static int __maybe_unused qcom_pcie_pm_suspend(struct device *dev)
->  {
->  	struct qcom_pcie *pcie = dev_get_drvdata(dev);
->  	u32 val;
-> +	ktime_t timeout, start;
->  
->  	if (!pcie->cfg->supports_system_suspend)
->  		return 0;
->  
-> -	/* if the link is not in l1ss don't turn off clocks */
-> -	val = readl(pcie->parf + PCIE20_PARF_PM_STTS);
-> -	if (!(val & PCIE20_PARF_PM_STTS_LINKST_IN_L1SUB)) {
-> -		dev_warn(dev, "Link is not in L1ss\n");
-> -		return 0;
-> +	start = ktime_get();
-> +	/* Wait max 100 ms */
-> +	timeout = ktime_add_ms(start, 100);
+Hi Johan,
 
-In my tests 100 ms is ample margin for most NVMe models (it's often 0 and
-generally < 10), however with one model I saw delays of up to 150 ms, so
-this should probably be 200 ms or so (it's a long time, but most of the
-time the actual delay is significantly lower
+I love your patch! Perhaps something to improve:
 
-> +	while (1) {
-> +		bool timedout = ktime_after(ktime_get(), timeout);
+[auto build test WARNING on usb/usb-testing]
+[also build test WARNING on linus/master next-20220804]
+[cannot apply to robh/for-next v5.19]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-'timedout' looks very similar to the other local variable 'timeout'
-in this function. Actually why not just do without the new variable and
-put this after reading the register.
+url:    https://github.com/intel-lab-lkp/linux/commits/Johan-Hovold/usb-dwc3-qcom-fix-wakeup-implementation/20220804-231122
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git usb-testing
+config: arc-randconfig-r002-20220804 (https://download.01.org/0day-ci/archive/20220805/202208050544.ijUhoUyB-lkp@intel.com/config)
+compiler: arc-elf-gcc (GCC) 12.1.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/f3778ca026b16474e49c5e0188a0eb91d73eef2f
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Johan-Hovold/usb-dwc3-qcom-fix-wakeup-implementation/20220804-231122
+        git checkout f3778ca026b16474e49c5e0188a0eb91d73eef2f
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arc SHELL=/bin/bash drivers/usb/dwc3/
 
-   		if (ktime_after(ktime_get(), timeout)) {
-			dev_warn(dev, "Link is not in L1ss\n");
- 			return 0;
-		}
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
 
-> +
-> +		/* if the link is not in l1ss don't turn off clocks */
-> +		val = readl(pcie->parf + PCIE20_PARF_PM_STTS);
-> +		if ((val & PCIE20_PARF_PM_STTS_LINKST_IN_L1SUB)) {
-> +			dev_info(dev, "Link enters L1ss after %d ms\n",
-> +					ktime_to_ms(ktime_get() - start));
+All warnings (new ones prefixed by >>):
+
+   drivers/usb/dwc3/dwc3-qcom.c: In function 'dwc3_qcom_read_usb2_speed':
+>> drivers/usb/dwc3/dwc3-qcom.c:313:25: warning: variable 'hcd' set but not used [-Wunused-but-set-variable]
+     313 |         struct usb_hcd *hcd;
+         |                         ^~~
 
 
-Probably this should be dev_dbg() to avoid cluttering the kernel log that
-isn't relevant most of the time.
+vim +/hcd +313 drivers/usb/dwc3/dwc3-qcom.c
 
-> +			break;
-> +		}
-> +
-> +		if (timedout) {
-> +			dev_warn(dev, "Link is not in L1ss\n");
-> +			return 0;
-> +		}
-> +		usleep_range(1000, 1200);
+   308	
+   309	static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
+   310	{
+   311		struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
+   312		struct usb_device *udev;
+ > 313		struct usb_hcd *hcd;
+   314	
+   315		/*
+   316		 * FIXME: Fix this layering violation.
+   317		 */
+   318		hcd = platform_get_drvdata(dwc->xhci);
+   319	
+   320		/*
+   321		 * It is possible to query the speed of all children of
+   322		 * USB2.0 root hub via usb_hub_for_each_child(). DWC3 code
+   323		 * currently supports only 1 port per controller. So
+   324		 * this is sufficient.
+   325		 */
+   326	#ifdef CONFIG_USB
+   327		udev = usb_hub_find_child(hcd->self.root_hub, 1);
+   328	#else
+   329		udev = NULL;
+   330	#endif
+   331		if (!udev)
+   332			return USB_SPEED_UNKNOWN;
+   333	
+   334		return udev->speed;
+   335	}
+   336	
 
-You could use fsleep() instead of specifying a range.
-
-Based on my testing I think a slightly higher delay like 5ms wouldn't hurt.
-That would result in less 'busy looping' for slower NVMes and would still
-be reasonable fast for those that need 10 ms or so.
-
-Actually you could replace the entire loop with something like this:
-
-	if (readl_poll_timeout(pcie->parf + PCIE20_PARF_PM_STTS, val,
-	    val & PCIE20_PARF_PM_STTS_LINKST_IN_L1SUB, 5000, 200000) {
-	    dev_warn(dev, "Link is not in L1ss\n");
-	    return 0;
-	}
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
