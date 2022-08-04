@@ -2,87 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA9E8589D75
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Aug 2022 16:26:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3889589DA2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Aug 2022 16:38:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235205AbiHDO0j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Aug 2022 10:26:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42700 "EHLO
+        id S233171AbiHDOin (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Aug 2022 10:38:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233867AbiHDO0i (ORCPT
+        with ESMTP id S240013AbiHDOiL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Aug 2022 10:26:38 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5381E1D320;
-        Thu,  4 Aug 2022 07:26:37 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id F1619B82543;
-        Thu,  4 Aug 2022 14:26:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38F69C433D7;
-        Thu,  4 Aug 2022 14:26:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1659623194;
-        bh=kJ43JWsEz+uMpFYqJXj4bQ6eXVdUikHcsKfdWWwD/KQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=LsLMLOOiFTw4tVszTY+DQBv8Ekmh9xZpWhAYBKbaJA6Ly4nkrq6Q3cAwRsyHgrs/U
-         6UYQZlOupk2YCA4ebQ0N+irI+BoQA5UsYnP9o9R2zQuT5cfQiE5cSe72tCH2HeVSTy
-         y6a4HO/fBjz4ZRbE0MfILE5CC/uoqX3yI+4vdzjJDVeus0T2vAHgv3hqDHyslN6bX1
-         TcN1a+Gwjr0zTWLaO2DYGhHLZ+jGQMumPrzMPDd/88gf0+xM15cZJVCC11T2crFNSb
-         BepRZJGMxCjqHKFRD+nDChYZ5eUFKSSz0OAr7lPmkz2xmZ+FbbT8VTAfjOPzvyo/FL
-         HShAVY8iFXsfQ==
-Date:   Thu, 4 Aug 2022 15:26:30 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH v2] firmware/psci: Add debugfs support to ease debugging
-Message-ID: <YuvXFhvecggOlSNP@sirena.org.uk>
-References: <20220804131507.3738094-1-dmitry.baryshkov@linaro.org>
+        Thu, 4 Aug 2022 10:38:11 -0400
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7F3C4BD3B
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Aug 2022 07:38:00 -0700 (PDT)
+Received: by mail-qt1-x82b.google.com with SMTP id u12so15022800qtk.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Aug 2022 07:38:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=7+IHbVKhZDeIBaRjLawIcx6LVul+QTItAJZIivf7gqY=;
+        b=ufg49NFoFDlcynz7pWTVmRZhy3xSI5kCn759tZ9vmnuuILMCnEORQp/wBS20nhayS0
+         0V/i9wvAy3/uIPea3V1Dc3KE6RFzKLuc6hvXJCqHND9c6lE2XyrjkibgMVbhDeCn1v2R
+         gyUSdh5efbQF1Kfqv/rldgMScFGi1Zexm0JHNJFrnmsrmNTcqvJkS+57bkDuzgzP49qa
+         9fpV2hKosk1g95G4qPSblTffq9M3wpMi/Fp/BVJkOYDM++1irp2TinOWITa9Hh41mj1e
+         Md8QcHg4Gk2QOv3qB75ic5zv5DgccD9sqiLfEBzzfZ6NHDB5JxQX5smDIAnM9m40i0vL
+         VmvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=7+IHbVKhZDeIBaRjLawIcx6LVul+QTItAJZIivf7gqY=;
+        b=su6aNe5xpyjClkGAoUFAGPNm2Cu7yZHf/1QK36ZaT705JMCppPo7vyytvV6kPL/0ZD
+         vpfOq/vDhWvNsKWJpNaBnne2+AiNtAT7T8HqISfvOUfQ3eYYhAKYBmNbtw3xZ73boX7j
+         /om8AUaMKC2vpfBbQkz1BiW028xKPPK8MrtjejCn9z+07+UWuopf/37jaK6RsNzSh2nO
+         yeub0Rs6ypFXxL9l6mJdAW2JN0I0NPKmrqYWxSEtPvzzlyEQ0FjL812vWqJzLihEE2Rw
+         xnfrzTvt9503ZCFdZXX6p5brvdVTMbOSH7vUTzSy6M5jiH9AHhcBfnHA7Iop+IxCOgre
+         y0iA==
+X-Gm-Message-State: ACgBeo0SjkERoYFS2SxNZslPxre9ZtsnYYC4LRfXi4sEHMgWzCGhYWy8
+        8BQJ3d7Br90oU/puoHrx6eePQZmLMua6GugtFKUjsw==
+X-Google-Smtp-Source: AA6agR4WNXQ2KgIruLMHS5Z92OaFYRF1mhbz0dJnN3rCVTFktyanCvf1eGyY73ch+e2FzcsIKbVSG1MHLbE2q7LsGcE=
+X-Received: by 2002:ac8:5942:0:b0:31f:39f6:aba7 with SMTP id
+ 2-20020ac85942000000b0031f39f6aba7mr1755983qtz.295.1659623879819; Thu, 04 Aug
+ 2022 07:37:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="lLA8ezdjSYFQcsDA"
-Content-Disposition: inline
-In-Reply-To: <20220804131507.3738094-1-dmitry.baryshkov@linaro.org>
-X-Cookie: Did I say 2?  I lied.
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20220804103456.3176943-1-abel.vesa@linaro.org>
+In-Reply-To: <20220804103456.3176943-1-abel.vesa@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 4 Aug 2022 17:37:48 +0300
+Message-ID: <CAA8EJpoYrXNBeZfDTAmjhsHaMqO+jeUVt4BtQkKy=T7Q0EuH8A@mail.gmail.com>
+Subject: Re: [RFC] clk: qcom: common: Detach the power domain at the end of probe
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, 4 Aug 2022 at 13:35, Abel Vesa <abel.vesa@linaro.org> wrote:
+>
+> None of the CCs actually need the PD attached to their device,
+> but rather some GDSCs registered by those CCs need that PD as a parent
+> in order to propagate power gating and the performance state.
+>
+> So lets detach the PD from the CC right at the end of probe, after
+> everything has been successfully set up.
 
---lLA8ezdjSYFQcsDA
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Would it still be possible to read the clock registers if we detach
+the device from the domain?
+I think it was the original issue behind putting the dispcc/videocc
+into the MMCX domain: to be able to poke into the clock registers,
+which are gated by the MMCX.
 
-On Thu, Aug 04, 2022 at 04:15:07PM +0300, Dmitry Baryshkov wrote:
 
-> To ease debugging of PSCI supported features, add debugfs file called
-> 'psci' describing PSCI and SMC CC versions, enabled features and
-> options.
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 
-Reviewed-by: Mark Brown <broonie@kernel.org>
 
---lLA8ezdjSYFQcsDA
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmLr1xUACgkQJNaLcl1U
-h9AdvQf/QoCaOK9nXSAn5nJhNIpJB+a5M/pKd52iK7mLTaAfaiYE1kIfkqnn0Mf6
-fDeqGp7Jl7ICGToafNQZax2Qexmk3J4X+Xsi9cfjQbMYmpxJVVKtoaZNfm1aGeJ9
-M4tVWm00BabZYACaAbZvBryc4tMlELq1oVldu6NZ2u7YMSyE2SqBiiOMX6JPFQec
-xqv7psfSYDp4rMRKJ+2vaehyKEXeVWgnrH24sdWIywooWrI+VLG2+LBFfIdOszuB
-YdXXfLWkC16LgrLGmXoPT5kH7r+B1DXKIDazLnnz/qa2B7S3xJk0TV1ov73AlWYN
-pKe1V7tNR83Bbkcrq6zrG+lkYoatgQ==
-=Cw/3
------END PGP SIGNATURE-----
-
---lLA8ezdjSYFQcsDA--
+-- 
+With best wishes
+Dmitry
