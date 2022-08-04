@@ -2,242 +2,249 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DDBCF589DB2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Aug 2022 16:39:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00F3E589DDE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Aug 2022 16:49:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240084AbiHDOjx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Aug 2022 10:39:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53016 "EHLO
+        id S235182AbiHDOtu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Aug 2022 10:49:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239924AbiHDOjh (ORCPT
+        with ESMTP id S233403AbiHDOtt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Aug 2022 10:39:37 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7ECD501A9
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Aug 2022 07:39:31 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id z187so9623218pfb.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Aug 2022 07:39:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=eqpuB/jZzr6RZg9MRH4VQT6RcEmZ2WxwGiLdN4NtIg4=;
-        b=evryTDQOO0HgjyAOUk7ubNrfNSGdkhoTL9o+GwIA/OY2hY+51Vj6trYOWxPbPml4FT
-         rw9PKgSLcUoxCoT9TO13RHS09VL6LyK+mQWk3vhspjXMvgg7lc90ilqNvrtMSLhZl4Nj
-         X1qeLbUpaXlwz6DeNwYCPuZGQ5yXzp18XZzuo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=eqpuB/jZzr6RZg9MRH4VQT6RcEmZ2WxwGiLdN4NtIg4=;
-        b=CJRRcT7L6/bRiJAKRDX78G0Nk7IspOP6EpSL/LsiiM3tiAT8KEoi+rrsUZvdVXq4vW
-         F+0JNpy3z0rEyB7cqQ3SAWOM89U3+eXqHpfbAYyHm29bfgwCh/h/EJ2MlQkhg/d4gUEh
-         hWmfPpBIJsk3jyLgBCfJQrESPkjXPfJCvAtKOI1MEXf9bxeIENYolEK3E6SFi6k5IBfR
-         sLMKagKk89RqC+0dGD15Mqtn3ulxJKI6PgXrhEjPnyiarzZJrQcJph0DujQ721lrnXyL
-         vcCCjujQJT7vTK7NQJNOEKkzIzKC3MgwCAvkAujDF7vW04anXB/azNClHVjuegjsvBmU
-         bCtg==
-X-Gm-Message-State: ACgBeo0/uKdFxeE54BSEMgaGoLCpTx/H9e+ZW0QuyjD2H11RM7qXkD9a
-        xKvvGHhLxAv+Q9ecQd7o8tKP0Q==
-X-Google-Smtp-Source: AA6agR7Vaijl6KTd0e85hYD7XDfBZESwSM8wGKiYzx4xW6HUQmtTu+dDVpncWOtNc9BzWoeu3QXNSg==
-X-Received: by 2002:a63:87:0:b0:419:f2d0:1e3b with SMTP id 129-20020a630087000000b00419f2d01e3bmr1963782pga.234.1659623970813;
-        Thu, 04 Aug 2022 07:39:30 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:aa71:2553:6f54:5cb1])
-        by smtp.gmail.com with ESMTPSA id h7-20020a170902680700b0016a111c83cdsm1075071plk.119.2022.08.04.07.39.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Aug 2022 07:39:30 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Rajeev Nandan <quic_rajeevny@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v4 6/6] drm/msm/dsi: Improve dsi_phy_driver_probe() probe error handling
-Date:   Thu,  4 Aug 2022 07:38:53 -0700
-Message-Id: <20220804073608.v4.6.I969118a35934a0e5007fe4f80e3e28e9c0b7602a@changeid>
-X-Mailer: git-send-email 2.37.1.455.g008518b4e5-goog
-In-Reply-To: <20220804143854.1544395-1-dianders@chromium.org>
-References: <20220804143854.1544395-1-dianders@chromium.org>
+        Thu, 4 Aug 2022 10:49:49 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 969E018C;
+        Thu,  4 Aug 2022 07:49:47 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 15AEB11FB;
+        Thu,  4 Aug 2022 07:49:48 -0700 (PDT)
+Received: from FVFF77S0Q05N.cambridge.arm.com (FVFF77S0Q05N.cambridge.arm.com [10.1.29.144])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5998F3F73B;
+        Thu,  4 Aug 2022 07:49:46 -0700 (PDT)
+Date:   Thu, 4 Aug 2022 15:49:43 +0100
+From:   Mark Rutland <mark.rutland@arm.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Mark Brown <broonie@kernel.org>
+Subject: Re: [PATCH v2] firmware/psci: Add debugfs support to ease debugging
+Message-ID: <YuvchxwbbI3H+kxY@FVFF77S0Q05N.cambridge.arm.com>
+References: <20220804131507.3738094-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220804131507.3738094-1-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The dsi_phy_driver_probe() function has a "goto fail" for no
-reason. Change it to just always return directly when it sees an
-error. Make this simpler by leveraging dev_err_probe() which is
-designed to make code like this shorter / simpler.
+On Thu, Aug 04, 2022 at 04:15:07PM +0300, Dmitry Baryshkov wrote:
+> To ease debugging of PSCI supported features, add debugfs file called
+> 'psci' describing PSCI and SMC CC versions, enabled features and
+> options.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+> Changes since v1:
+> - Extended the table to include MEM_PROTECT functions (noted by Mark
+>   Brown)
+> - Switched to seq_puts where possible
+> - Changed S_IRUGO to 0444
+> ---
+>  drivers/firmware/psci/psci.c | 116 ++++++++++++++++++++++++++++++++++-
+>  include/uapi/linux/psci.h    |  14 +++++
+>  2 files changed, 129 insertions(+), 1 deletion(-)
 
-NOTE: as part of this, we now pass through error codes directly from
-msm_ioremap_size() rather than translating to -ENOMEM. This changed
-mostly because it's much more convenient when using dev_err_probe()
-and also it's usually encouraged not to hide error codes like the old
-code was doing unless there is a good reason. I can't see any reason
-why we'd need to return -ENOMEM instead of -EINVAL from the probe
-function.
+TBH I am really not keen on exposing this to userspace. AFAICT this is his is
+incredibly niche, and is going to be very painful to maintain.
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
----
+Without a strong rationale, I do not thing we should do this.
 
-Changes in v4:
-- Mention error code change in commit message.
+Who is going to use this, and when?
 
-Changes in v3:
-- ("Improve dsi_phy_driver_probe() probe error handling") new for v3.
+I'd be much happier logging stuff as it's probed into dmesg; I'm happy to add
+more information there (and/or a command line parameter to be more verbose).
 
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 74 ++++++++++-----------------
- 1 file changed, 27 insertions(+), 47 deletions(-)
+Thanks,
+Mark.
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-index 0a00f9b73fc5..57cd525de7a1 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-@@ -621,12 +621,9 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
- 	phy->pdev = pdev;
- 
- 	phy->id = dsi_phy_get_id(phy);
--	if (phy->id < 0) {
--		ret = phy->id;
--		DRM_DEV_ERROR(dev, "%s: couldn't identify PHY index, %d\n",
--			__func__, ret);
--		goto fail;
--	}
-+	if (phy->id < 0)
-+		return dev_err_probe(dev, phy->id,
-+				     "Couldn't identify PHY index\n");
- 
- 	phy->regulator_ldo_mode = of_property_read_bool(dev->of_node,
- 				"qcom,dsi-phy-regulator-ldo-mode");
-@@ -634,88 +631,71 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
- 		phy->cphy_mode = (phy_type == PHY_TYPE_CPHY);
- 
- 	phy->base = msm_ioremap_size(pdev, "dsi_phy", &phy->base_size);
--	if (IS_ERR(phy->base)) {
--		DRM_DEV_ERROR(dev, "%s: failed to map phy base\n", __func__);
--		ret = -ENOMEM;
--		goto fail;
--	}
-+	if (IS_ERR(phy->base))
-+		return dev_err_probe(dev, PTR_ERR(phy->base),
-+				     "Failed to map phy base\n");
- 
- 	phy->pll_base = msm_ioremap_size(pdev, "dsi_pll", &phy->pll_size);
--	if (IS_ERR(phy->pll_base)) {
--		DRM_DEV_ERROR(&pdev->dev, "%s: failed to map pll base\n", __func__);
--		ret = -ENOMEM;
--		goto fail;
--	}
-+	if (IS_ERR(phy->pll_base))
-+		return dev_err_probe(dev, PTR_ERR(phy->pll_base),
-+				     "Failed to map pll base\n");
- 
- 	if (phy->cfg->has_phy_lane) {
- 		phy->lane_base = msm_ioremap_size(pdev, "dsi_phy_lane", &phy->lane_size);
--		if (IS_ERR(phy->lane_base)) {
--			DRM_DEV_ERROR(&pdev->dev, "%s: failed to map phy lane base\n", __func__);
--			ret = -ENOMEM;
--			goto fail;
--		}
-+		if (IS_ERR(phy->lane_base))
-+			return dev_err_probe(dev, PTR_ERR(phy->lane_base),
-+					     "Failed to map phy lane base\n");
- 	}
- 
- 	if (phy->cfg->has_phy_regulator) {
- 		phy->reg_base = msm_ioremap_size(pdev, "dsi_phy_regulator", &phy->reg_size);
--		if (IS_ERR(phy->reg_base)) {
--			DRM_DEV_ERROR(&pdev->dev, "%s: failed to map phy regulator base\n", __func__);
--			ret = -ENOMEM;
--			goto fail;
--		}
-+		if (IS_ERR(phy->reg_base))
-+			return dev_err_probe(dev, PTR_ERR(phy->reg_base),
-+					     "Failed to map phy regulator base\n");
- 	}
- 
- 	if (phy->cfg->ops.parse_dt_properties) {
- 		ret = phy->cfg->ops.parse_dt_properties(phy);
- 		if (ret)
--			goto fail;
-+			return ret;
- 	}
- 
- 	ret = devm_regulator_bulk_get_const(dev, phy->cfg->num_regulators,
- 					    phy->cfg->regulator_data,
- 					    &phy->supplies);
- 	if (ret)
--		goto fail;
-+		return ret;
- 
- 	phy->ahb_clk = msm_clk_get(pdev, "iface");
--	if (IS_ERR(phy->ahb_clk)) {
--		DRM_DEV_ERROR(dev, "%s: Unable to get ahb clk\n", __func__);
--		ret = PTR_ERR(phy->ahb_clk);
--		goto fail;
--	}
-+	if (IS_ERR(phy->ahb_clk))
-+		return dev_err_probe(dev, PTR_ERR(phy->ahb_clk),
-+				     "Unable to get ahb clk\n");
- 
- 	/* PLL init will call into clk_register which requires
- 	 * register access, so we need to enable power and ahb clock.
- 	 */
- 	ret = dsi_phy_enable_resource(phy);
- 	if (ret)
--		goto fail;
-+		return ret;
- 
- 	if (phy->cfg->ops.pll_init) {
- 		ret = phy->cfg->ops.pll_init(phy);
--		if (ret) {
--			DRM_DEV_INFO(dev,
--				"%s: pll init failed: %d, need separate pll clk driver\n",
--				__func__, ret);
--			goto fail;
--		}
-+		if (ret)
-+			return dev_err_probe(dev, ret,
-+					     "PLL init failed; need separate clk driver\n");
- 	}
- 
- 	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get,
- 				     phy->provided_clocks);
--	if (ret) {
--		DRM_DEV_ERROR(dev, "%s: failed to register clk provider: %d\n", __func__, ret);
--		goto fail;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret,
-+				     "Failed to register clk provider\n");
- 
- 	dsi_phy_disable_resource(phy);
- 
- 	platform_set_drvdata(pdev, phy);
- 
- 	return 0;
--
--fail:
--	return ret;
- }
- 
- static struct platform_driver dsi_phy_platform_driver = {
--- 
-2.37.1.455.g008518b4e5-goog
-
+> 
+> diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
+> index 1628f1edef4a..42cae0ba10e2 100644
+> --- a/drivers/firmware/psci/psci.c
+> +++ b/drivers/firmware/psci/psci.c
+> @@ -9,6 +9,7 @@
+>  #include <linux/acpi.h>
+>  #include <linux/arm-smccc.h>
+>  #include <linux/cpuidle.h>
+> +#include <linux/debugfs.h>
+>  #include <linux/errno.h>
+>  #include <linux/linkage.h>
+>  #include <linux/of.h>
+> @@ -326,12 +327,125 @@ static void psci_sys_poweroff(void)
+>  	invoke_psci_fn(PSCI_0_2_FN_SYSTEM_OFF, 0, 0, 0);
+>  }
+>  
+> -static int __init psci_features(u32 psci_func_id)
+> +static int psci_features(u32 psci_func_id)
+>  {
+>  	return invoke_psci_fn(PSCI_1_0_FN_PSCI_FEATURES,
+>  			      psci_func_id, 0, 0);
+>  }
+>  
+> +#ifdef CONFIG_DEBUG_FS
+> +
+> +#define PSCI_ID(ver, _name) \
+> +	{ .fn = PSCI_##ver##_FN_##_name, .name = #_name, }
+> +#define PSCI_ID_NATIVE(ver, _name) \
+> +	{ .fn = PSCI_FN_NATIVE(ver, _name), .name = #_name, }
+> +
+> +/* A table of all optional functions */
+> +static const struct {
+> +	u32 fn;
+> +	const char *name;
+> +} psci_fn_ids[] = {
+> +	PSCI_ID_NATIVE(0_2, MIGRATE),
+> +	PSCI_ID(0_2, MIGRATE_INFO_TYPE),
+> +	PSCI_ID_NATIVE(0_2, MIGRATE_INFO_UP_CPU),
+> +	PSCI_ID(1_0, CPU_FREEZE),
+> +	PSCI_ID_NATIVE(1_0, CPU_DEFAULT_SUSPEND),
+> +	PSCI_ID_NATIVE(1_0, NODE_HW_STATE),
+> +	PSCI_ID_NATIVE(1_0, SYSTEM_SUSPEND),
+> +	PSCI_ID(1_0, SET_SUSPEND_MODE),
+> +	PSCI_ID_NATIVE(1_0, STAT_RESIDENCY),
+> +	PSCI_ID_NATIVE(1_0, STAT_COUNT),
+> +	PSCI_ID_NATIVE(1_1, SYSTEM_RESET2),
+> +	PSCI_ID(1_1, MEM_PROTECT),
+> +	PSCI_ID_NATIVE(1_1, MEM_PROTECT_CHECK_RANGE),
+> +};
+> +
+> +static int psci_debugfs_read(struct seq_file *s, void *data)
+> +{
+> +	int feature, type, i;
+> +	u32 ver;
+> +
+> +	ver = psci_ops.get_version();
+> +	seq_printf(s, "PSCIv%d.%d\n",
+> +		   PSCI_VERSION_MAJOR(ver),
+> +		   PSCI_VERSION_MINOR(ver));
+> +
+> +	/* PSCI_FEATURES is available only starting from 1.0 */
+> +	if (PSCI_VERSION_MAJOR(ver) < 1)
+> +		return 0;
+> +
+> +	feature = psci_features(ARM_SMCCC_VERSION_FUNC_ID);
+> +	if (feature != PSCI_RET_NOT_SUPPORTED) {
+> +		ver = invoke_psci_fn(ARM_SMCCC_VERSION_FUNC_ID, 0, 0, 0);
+> +		seq_printf(s, "SMC Calling Convention v%d.%d\n",
+> +			   PSCI_VERSION_MAJOR(ver),
+> +			   PSCI_VERSION_MINOR(ver));
+> +	} else {
+> +		seq_puts(s, "SMC Calling Convention v1.0 is assumed\n");
+> +	}
+> +
+> +	feature = psci_features(PSCI_FN_NATIVE(0_2, CPU_SUSPEND));
+> +	if (feature < 0) {
+> +		seq_printf(s, "PSCI_FEATURES(CPU_SUSPEND) error (%d)\n", feature);
+> +	} else {
+> +		seq_printf(s, "OSI is %ssupported\n",
+> +			   (feature & BIT(0)) ? "" : "not ");
+> +		seq_printf(s, "%s StateID format is used\n",
+> +			   (feature & BIT(1)) ? "Extended" : "Original");
+> +	}
+> +
+> +	type = psci_ops.migrate_info_type();
+> +	if (type == PSCI_0_2_TOS_UP_MIGRATE ||
+> +	    type == PSCI_0_2_TOS_UP_NO_MIGRATE) {
+> +		unsigned long cpuid;
+> +
+> +		seq_printf(s, "Trusted OS %smigrate capable\n",
+> +			   type == PSCI_0_2_TOS_UP_NO_MIGRATE ? "not " : "");
+> +		cpuid = psci_migrate_info_up_cpu();
+> +		seq_printf(s, "Trusted OS resident on physical CPU 0x%lx (#%d)\n",
+> +			   cpuid, resident_cpu);
+> +	} else if (type == PSCI_0_2_TOS_MP) {
+> +		seq_puts(s, "Trusted OS migration not required\n");
+> +	} else {
+> +		if (type != PSCI_RET_NOT_SUPPORTED)
+> +			seq_printf(s, "MIGRATE_INFO_TYPE returned unknown type (%d)\n", type);
+> +	}
+> +
+> +	for (i = 0; i < ARRAY_SIZE(psci_fn_ids); i++) {
+> +		feature = psci_features(psci_fn_ids[i].fn);
+> +		if (feature == PSCI_RET_NOT_SUPPORTED)
+> +			continue;
+> +		if (feature < 0)
+> +			seq_printf(s, "PSCI_FEATURES(%s) error (%d)\n",
+> +				   psci_fn_ids[i].name, feature);
+> +		else
+> +			seq_printf(s, "%s is supported\n", psci_fn_ids[i].name);
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int psci_debugfs_open(struct inode *inode, struct file *f)
+> +{
+> +	return single_open(f, psci_debugfs_read, NULL);
+> +}
+> +
+> +static const struct file_operations psci_debugfs_ops = {
+> +	.owner = THIS_MODULE,
+> +	.open = psci_debugfs_open,
+> +	.release = single_release,
+> +	.read = seq_read,
+> +	.llseek = seq_lseek
+> +};
+> +
+> +static int __init psci_debugfs_init(void)
+> +{
+> +	return PTR_ERR_OR_ZERO(debugfs_create_file("psci", 0444, NULL, NULL,
+> +						   &psci_debugfs_ops));
+> +}
+> +late_initcall(psci_debugfs_init)
+> +#endif
+> +
+>  #ifdef CONFIG_CPU_IDLE
+>  static int psci_suspend_finisher(unsigned long state)
+>  {
+> diff --git a/include/uapi/linux/psci.h b/include/uapi/linux/psci.h
+> index 2bf93c0d6354..3511095c2702 100644
+> --- a/include/uapi/linux/psci.h
+> +++ b/include/uapi/linux/psci.h
+> @@ -48,12 +48,26 @@
+>  #define PSCI_0_2_FN64_MIGRATE_INFO_UP_CPU	PSCI_0_2_FN64(7)
+>  
+>  #define PSCI_1_0_FN_PSCI_FEATURES		PSCI_0_2_FN(10)
+> +#define PSCI_1_0_FN_CPU_FREEZE			PSCI_0_2_FN(11)
+> +#define PSCI_1_0_FN_CPU_DEFAULT_SUSPEND		PSCI_0_2_FN(12)
+> +#define PSCI_1_0_FN_NODE_HW_STATE		PSCI_0_2_FN(13)
+>  #define PSCI_1_0_FN_SYSTEM_SUSPEND		PSCI_0_2_FN(14)
+>  #define PSCI_1_0_FN_SET_SUSPEND_MODE		PSCI_0_2_FN(15)
+> +#define PSCI_1_0_FN_STAT_RESIDENCY		PSCI_0_2_FN(16)
+> +#define PSCI_1_0_FN_STAT_COUNT			PSCI_0_2_FN(17)
+> +
+>  #define PSCI_1_1_FN_SYSTEM_RESET2		PSCI_0_2_FN(18)
+> +#define PSCI_1_1_FN_MEM_PROTECT			PSCI_0_2_FN(19)
+> +#define PSCI_1_1_FN_MEM_PROTECT_CHECK_RANGE	PSCI_0_2_FN(19)
+>  
+> +#define PSCI_1_0_FN64_CPU_DEFAULT_SUSPEND	PSCI_0_2_FN64(12)
+> +#define PSCI_1_0_FN64_NODE_HW_STATE		PSCI_0_2_FN64(13)
+>  #define PSCI_1_0_FN64_SYSTEM_SUSPEND		PSCI_0_2_FN64(14)
+> +#define PSCI_1_0_FN64_STAT_RESIDENCY		PSCI_0_2_FN64(16)
+> +#define PSCI_1_0_FN64_STAT_COUNT		PSCI_0_2_FN64(17)
+> +
+>  #define PSCI_1_1_FN64_SYSTEM_RESET2		PSCI_0_2_FN64(18)
+> +#define PSCI_1_1_FN64_MEM_PROTECT_CHECK_RANGE	PSCI_0_2_FN64(19)
+>  
+>  /* PSCI v0.2 power state encoding for CPU_SUSPEND function */
+>  #define PSCI_0_2_POWER_STATE_ID_MASK		0xffff
+> -- 
+> 2.35.1
+> 
