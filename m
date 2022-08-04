@@ -2,99 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 76FAB58A299
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Aug 2022 22:58:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1304D58A2C2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Aug 2022 23:33:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235995AbiHDU6p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Aug 2022 16:58:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33482 "EHLO
+        id S235203AbiHDVd1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Aug 2022 17:33:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229813AbiHDU6o (ORCPT
+        with ESMTP id S234816AbiHDVdZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Aug 2022 16:58:44 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C0422A253;
-        Thu,  4 Aug 2022 13:58:43 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id t22so779070lfg.1;
-        Thu, 04 Aug 2022 13:58:43 -0700 (PDT)
+        Thu, 4 Aug 2022 17:33:25 -0400
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45C42248F6
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Aug 2022 14:33:23 -0700 (PDT)
+Received: by mail-pg1-x52b.google.com with SMTP id 12so1026202pga.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Aug 2022 14:33:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=HHRxra4X537rFoFLJVgbKCdXy3OgEpyBQ3xZYMyvpjQ=;
-        b=RmYddp5MQJnZzXnr8V2AYL6D/FVJBs0IagfHmjm/yzhO1l9jSKd4IFV2QMdxuCeSLy
-         Wct5aoV58PnZVzkpPjTA9+I/s3kzdtD8V/izMHLlSJeI1DiCI6pZCoyd0GIeQ9cbGFIO
-         UyuizjsIA9ysCGBiJTdxuuAughj61pBJFqEmFnAzR7OKmuQ/k5mUNXSx8muv1MHEc6a+
-         zUWRuz67D3GXvFo1aYvPMu0WoyVd/WP9OKd4lx8HSLKE6wPraRYX/jqg3dCxH9lHyvFJ
-         6O/1r+vG7EhyfjJgjOvqmw1JCz/9QfYp6oT7JOCs9fU0bR0jgL/GT0eTZwcvKDbaMAmX
-         EF9A==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=vYaDvUJ9r4UGTKuVjXopXRfBzot6ijDWJtz0uXFMHR0=;
+        b=ePBy7JgHhVbC+RePbrVuQPX/dxKFpEjwEmLw2ZtraZ5KywxyBhQA/joyWGIVB6wHqr
+         X077mRmwc3K8nu8o0V0kqlMTH+xBvNO6ILDnWa6JuME4DIE5iEL0gQDjURwpeICnbvyo
+         QYEkiP5WupoXHL5SUPBs8+Ya+lgjEzDm+LoNY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=HHRxra4X537rFoFLJVgbKCdXy3OgEpyBQ3xZYMyvpjQ=;
-        b=3Rvts7jxHQUE4lpbGJ3UiRLmpHJHa2dpA9t2F9ydhDhJCwWn3xcv3mRMJbl1VGVrHY
-         +dASQmocYdzarWjhBjxFnkQMD7+13Go79F2+hTaEP8Gg0Ezat829yjdOpW5hyQib+kmI
-         +g3eAAAHyCNdofUEhORjsR3JEZjBb1WYIGyrwoevzjt9RHSo5zqrjLtThmY8seQUMfDF
-         zJVWMqyhOSpDA0CaSFpDlpNghCER2Q8fSBeoxjCcKApwDbFPvmEW99vaW4JyyxWcHCBo
-         Lu0cfITSXUz1PW6dufNnV9o35HQi6YxSNucKZPNGBOkrpL02WtLUAoJRq1pN4ROtjW2q
-         WIAg==
-X-Gm-Message-State: ACgBeo2PgabxHeq6GtWPPrfFLp4H2xPyYsignxpgt6Ei3a+dzEJzhxZ1
-        +fjeK1oDppllELnGwiU11zY=
-X-Google-Smtp-Source: AA6agR5EKgutuExmcrsuCmY+FSTABsMDT5T5D217XKizNZ3lCL5+bACCWYACNuHci4qxuT3uksCwRw==
-X-Received: by 2002:a05:6512:2806:b0:48a:f74d:da0e with SMTP id cf6-20020a056512280600b0048af74dda0emr1415679lfb.477.1659646721622;
-        Thu, 04 Aug 2022 13:58:41 -0700 (PDT)
-Received: from [192.168.2.145] (109-252-119-232.nat.spd-mgts.ru. [109.252.119.232])
-        by smtp.googlemail.com with ESMTPSA id s9-20020ac24649000000b0048a9e899693sm238517lfo.16.2022.08.04.13.58.40
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=vYaDvUJ9r4UGTKuVjXopXRfBzot6ijDWJtz0uXFMHR0=;
+        b=39bmgEZmkECn1GJmKFNL4Z0dYDGM5vOvxTiHkHbecSFIAGHWMk9tjV8/t9CdmLO1JT
+         F7/M+i6KWv96HGgqbc/lqvGgYqVxfDR9ps7SxcD3L/81oHaIvjG+mzYw78MxsAcMgK5h
+         +h92Gzf+t3qSIDahZSPUA9iAXC1mEsetJ22NtXN5hattRAiRAL1+rt1BovWkIKA4xP11
+         fLbEF6UuyBoTeUzMJDOL4pQDgZru8J5JsjvV81wvxsau3SImcgqVFZ0BQ/TP543GQax2
+         /a1O+SY9Y8EavhwYMIU8szDWJhFkQEwPdOr2N+Ye7kEjK25QtCgCWC2hOiu7yH/tzw5y
+         /rUA==
+X-Gm-Message-State: ACgBeo32f/Cz6AO/L0232tkp85Gf7nOGg1WtwxNhsTMZXURuicMFK6bM
+        B4Akuy1ITPEokis0ZkrfUX+5Xg==
+X-Google-Smtp-Source: AA6agR4McsMJc49mlH9ZdYiVvmgISwj1z95oxvo8/NlEocMn1wQgsswTty3yaXNEf8y/pXmasLLEfA==
+X-Received: by 2002:a63:1245:0:b0:41a:29a3:aa31 with SMTP id 5-20020a631245000000b0041a29a3aa31mr2976612pgs.583.1659648801911;
+        Thu, 04 Aug 2022 14:33:21 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:87c4:32ca:84b6:e942])
+        by smtp.gmail.com with UTF8SMTPSA id h4-20020a170902f7c400b0016d5e4d29f8sm1474596plw.9.2022.08.04.14.33.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Aug 2022 13:58:40 -0700 (PDT)
-Message-ID: <1355f1f6-d6c9-6d5f-9b5f-333084c6561b@gmail.com>
-Date:   Thu, 4 Aug 2022 23:58:34 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [RFC] PM: domains: Reverse the order of performance and enabling
- ops
-Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Kevin Hilman <khilman@kernel.org>,
-        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
+        Thu, 04 Aug 2022 14:33:21 -0700 (PDT)
+Date:   Thu, 4 Aug 2022 14:33:19 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
+        swboyd@chromium.org, dmitry.baryshkov@linaro.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-References: <20220720110246.762939-1-abel.vesa@linaro.org>
- <CAPDyKFoh8UV=QC6RhOkc=FSvoeqF_UiWp97h0Qp8dniB=sS+8A@mail.gmail.com>
- <YuA0luCtQ1J+ExBi@linaro.org>
- <CAPDyKFo4tryzYQK=q6aPGxocmoq=duC2B1RMh1QoV_maVCApjA@mail.gmail.com>
- <20220729094646.xqlhfjzxo3gk4n27@linaro.org>
-From:   Dmitry Osipenko <digetx@gmail.com>
-In-Reply-To: <20220729094646.xqlhfjzxo3gk4n27@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>
+Subject: Re: [PATCH v5 3/3] PCI: qcom: Add retry logic for link to be stable
+ in L1ss
+Message-ID: <Yuw7HyoFX4jk6eOE@google.com>
+References: <1659526134-22978-1-git-send-email-quic_krichai@quicinc.com>
+ <1659526134-22978-4-git-send-email-quic_krichai@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1659526134-22978-4-git-send-email-quic_krichai@quicinc.com>
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-29.07.2022 12:46, Abel Vesa пишет:
->> I have looped in Dmitry and Thierry to see if they think the change
->> should be fine for Tegra platforms too.
->>
-> Good. But the tegra usecase uses only the ->set_performance and does not
-> use ->power_on and ->power_off for that specific PD. So I don't think
-> their usecase will be affected by the order reverse.
+On Wed, Aug 03, 2022 at 04:58:54PM +0530, Krishna chaitanya chundru wrote:
+> Some specific devices are taking time to settle the link in L1ss.
+> So added a retry logic before returning from the suspend op.
 > 
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 25 ++++++++++++++++++++-----
+>  1 file changed, 20 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index f7dd5dc..f3201bd 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1829,15 +1829,30 @@ static int __maybe_unused qcom_pcie_pm_suspend(struct device *dev)
+>  {
+>  	struct qcom_pcie *pcie = dev_get_drvdata(dev);
+>  	u32 val;
+> +	ktime_t timeout, start;
+>  
+>  	if (!pcie->cfg->supports_system_suspend)
+>  		return 0;
+>  
+> -	/* if the link is not in l1ss don't turn off clocks */
+> -	val = readl(pcie->parf + PCIE20_PARF_PM_STTS);
+> -	if (!(val & PCIE20_PARF_PM_STTS_LINKST_IN_L1SUB)) {
+> -		dev_warn(dev, "Link is not in L1ss\n");
+> -		return 0;
+> +	start = ktime_get();
+> +	/* Wait max 100 ms */
+> +	timeout = ktime_add_ms(start, 100);
 
-For Tegra it indeed shouldn't change anything.
+In my tests 100 ms is ample margin for most NVMe models (it's often 0 and
+generally < 10), however with one model I saw delays of up to 150 ms, so
+this should probably be 200 ms or so (it's a long time, but most of the
+time the actual delay is significantly lower
+
+> +	while (1) {
+> +		bool timedout = ktime_after(ktime_get(), timeout);
+
+'timedout' looks very similar to the other local variable 'timeout'
+in this function. Actually why not just do without the new variable and
+put this after reading the register.
+
+   		if (ktime_after(ktime_get(), timeout)) {
+			dev_warn(dev, "Link is not in L1ss\n");
+ 			return 0;
+		}
+
+> +
+> +		/* if the link is not in l1ss don't turn off clocks */
+> +		val = readl(pcie->parf + PCIE20_PARF_PM_STTS);
+> +		if ((val & PCIE20_PARF_PM_STTS_LINKST_IN_L1SUB)) {
+> +			dev_info(dev, "Link enters L1ss after %d ms\n",
+> +					ktime_to_ms(ktime_get() - start));
+
+
+Probably this should be dev_dbg() to avoid cluttering the kernel log that
+isn't relevant most of the time.
+
+> +			break;
+> +		}
+> +
+> +		if (timedout) {
+> +			dev_warn(dev, "Link is not in L1ss\n");
+> +			return 0;
+> +		}
+> +		usleep_range(1000, 1200);
+
+You could use fsleep() instead of specifying a range.
+
+Based on my testing I think a slightly higher delay like 5ms wouldn't hurt.
+That would result in less 'busy looping' for slower NVMes and would still
+be reasonable fast for those that need 10 ms or so.
+
+Actually you could replace the entire loop with something like this:
+
+	if (readl_poll_timeout(pcie->parf + PCIE20_PARF_PM_STTS, val,
+	    val & PCIE20_PARF_PM_STTS_LINKST_IN_L1SUB, 5000, 200000) {
+	    dev_warn(dev, "Link is not in L1ss\n");
+	    return 0;
+	}
