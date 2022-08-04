@@ -2,127 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D1FE58980D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Aug 2022 09:05:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5481558986C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Aug 2022 09:35:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236920AbiHDHFO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Aug 2022 03:05:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34450 "EHLO
+        id S238967AbiHDHe7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Aug 2022 03:34:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238670AbiHDHFN (ORCPT
+        with ESMTP id S233711AbiHDHe5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Aug 2022 03:05:13 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C2B6CD0
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Aug 2022 00:05:12 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id v1so2659009qkg.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Aug 2022 00:05:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=uD+oKDSdjeuj/x+J4VpWwCNMihrBqS4okZLqrGLp+oU=;
-        b=KJIuSp3xFRoIfccZKnqM693LSOM6w20XEVpxV9nRanvLv8W+nOvTGeQkWOKoobaGWw
-         0y67qVZTIRVKrh1J3yueI/px+rWHxv3lHSQWBdMpYSXwzFwBbiePKBsRSxPeXdvcIlJW
-         eUSPnK0VbjXGt/0h8Z7eXPaMyGUOGzn026kEAf+h2701FnYozszagguE22GDaJgk0EXy
-         WRkUXi8zL1ZWX8pppPgRgXAPXizaqnGsW3wfg2FfzdvM9K8oTiTBsUrJE9XY05Xdj2VA
-         LiFShI6ntPecTxZ9x5E6tZHNfLtirwAX7JgLTdJxfcROgG8/UnBBZdDnJ7gB7rQgda0x
-         dK4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=uD+oKDSdjeuj/x+J4VpWwCNMihrBqS4okZLqrGLp+oU=;
-        b=VaumpwKfSATh96398w+2yzBigcvd+7no2C3N5V7BpP3ex3i5+RZQb4h65Nf+lEQrXY
-         3vivt+7TSf1Je1h85/LnL+0ZwrOcG6I6zHE9so8V8DqjzopKD3R8R2OlNhxiIPm3gXih
-         VFybcVwFwo7GbFok+L7Lk4EWB7aBuJwX/BqCdreaCIJ+x8p4WIUoozi7VgDb9Im9GbfX
-         aPRA7CCDMML9FPYQKTqGBULvyB8rIwwFbdcbdRhu8wmBir1lfQg3Wet768OWnTlJjSO4
-         t+mpySIiMeVMjjQS7RrCsUkzolhqz6rmUu/2XW+S8aqH+ZPZmoEimllIN8Z7woPz2Isc
-         irTA==
-X-Gm-Message-State: ACgBeo25WLFJkkTdeRwQp+Ak7hRSHSuDrQQkhJePsEQG5jOTbqUgBSYV
-        Z8veGSdxQav7mG1kx70yTJUGyOzjR+yW8aPVyQgq6w==
-X-Google-Smtp-Source: AA6agR4ePnHG7rHeMl5Py0nAvETcIQ4KSdWFDeuK5QHJQAe9Sps2HxxlWGqyY7gSNp/Xj7m9MDvi4eZwL/+yxQEsWc4=
-X-Received: by 2002:a37:de18:0:b0:6b8:f2f3:f917 with SMTP id
- h24-20020a37de18000000b006b8f2f3f917mr321801qkj.203.1659596711365; Thu, 04
- Aug 2022 00:05:11 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220801211240.597859-1-quic_eberman@quicinc.com>
- <20220801211240.597859-4-quic_eberman@quicinc.com> <e1a93490-7deb-8221-f3f8-83546946c61a@linaro.org>
- <0f9afb39-83a9-96ec-2ee0-f511d4fa3403@quicinc.com>
-In-Reply-To: <0f9afb39-83a9-96ec-2ee0-f511d4fa3403@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 4 Aug 2022 10:04:59 +0300
-Message-ID: <CAA8EJprQ9Nc=6ms0VNVhO1rg6UXDHDrCb7WRwwkfLhxKrJBqjQ@mail.gmail.com>
-Subject: Re: [PATCH v2 03/11] arm64: gunyah: Add Gunyah hypercalls ABI
-To:     Elliot Berman <quic_eberman@quicinc.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
+        Thu, 4 Aug 2022 03:34:57 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DACF28E29;
+        Thu,  4 Aug 2022 00:34:57 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id CA8A2612D3;
+        Thu,  4 Aug 2022 07:34:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2366DC433D6;
+        Thu,  4 Aug 2022 07:34:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1659598496;
+        bh=MGOY78NG2d2SKFi6yJqShuDYdWhD9bgmij+Ad5jmRpc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Ew3XvjJbix0q34wQ9O9nF530Z7d+EgTIibHKMfZvh/weR0mceAWte7sU8eqBYDZDp
+         QjGJ7JFtt0sZdqQN+sN5CoC6ajOJ/k+bmFGehy0abody2TVYSSFGoJMxWUvAgJolnN
+         wUkwHcOAR1OKWHHXRq3ycpUZEZSkQZqBdKXiM+TDREyOjMutBPzb1jadLKC1jCpUUq
+         WA1KrAVljq6PU43C2raO0BTBuRHcw94CZrONuTu2olEnB/hA6ygzXhBWHBitxs7xXB
+         xxwBm9fGWVTwfn4otaORvKN87IVgkimyXGuoJyZPKYRRm19zO4i5Yyqh28OjIe6bu8
+         D52DqB5Z8j98A==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oJVO0-00035j-4y; Thu, 04 Aug 2022 09:35:16 +0200
+Date:   Thu, 4 Aug 2022 09:35:16 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
+        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 4/8] usb: dwc3: qcom: fix runtime PM wakeup
+Message-ID: <Yut2tLqGfu82xcDs@hovoldconsulting.com>
+References: <20220802151404.1797-1-johan+linaro@kernel.org>
+ <20220802151404.1797-5-johan+linaro@kernel.org>
+ <YurviWfzut9sursr@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YurviWfzut9sursr@google.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 4 Aug 2022 at 00:15, Elliot Berman <quic_eberman@quicinc.com> wrote:
->
-> Hi Dmitry,
->
-> On 8/2/2022 6:34 AM, Dmitry Baryshkov wrote:
-> > On 02/08/2022 00:12, Elliot Berman wrote:
-> >> Add initial support to perform Gunyah hypercalls. The arm64 ABI for
-> >> Gunyah hypercalls generally follows the SMC Calling Convention.
-> >
-> > Seeing a c&p (or c&rework) from arm-smccc.h, could you please describe:
-> >
-> > 1) Why can't you use the existing arm_smccc_1_1_hvc()? I checked, you
-> > don't seem to be getting more than 4 values back.
-> >
->
-> The Gunyah APIs can return up to 8 values. As you observed though, these
-> initial patches are only using the first 4 values back. I'd like to use
-> the larger v1.2 so I don't need to update later.
+On Wed, Aug 03, 2022 at 02:58:33PM -0700, Matthias Kaehlcke wrote:
+> On Tue, Aug 02, 2022 at 05:14:00PM +0200, Johan Hovold wrote:
+> > A device must enable wakeups during runtime suspend regardless of
+> > whether it is capable and allowed to wake the system up from system
+> > suspend.
+> > 
+> > Fixes: 2664deb09306 ("usb: dwc3: qcom: Honor wakeup enabled/disabled state")
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> 
+> Ah, I wasn't aware that the same wakeup mechanism is used in runtime suspend.
+> 
+> In how far is runtime PM actually supported/used by this driver? The device is
+> set 'active' in _probe(), and there are no other pm_runtime_* calls, except
+> in dwc3_qcom_remove() and qcom_dwc3_resume_irq(). How does the device get from
+> 'active' into 'suspended'?
 
-I'd suggest following the hyperv example here. It uses arm_smccc_1_1
-when possible and 1_2 only when required. Note, that if you are using
-the 1_2 call all the times, you are somewhat wasting the cpu cycles by
-always copying x0...x17 instead of just x0...x3.
+It will be runtime suspended when the child (core) device suspends, but
+you need to enable runtime PM through sysfs first.
 
-> > 2) If #1 is not possible, why can't you add necessary glue code to the
-> > arm-smccc.h (as your code to support nargs/multiple return values is
-> > generic enough) and use corresponding macro in asm/gunyah.h ?
-> >
->
-> I think the code here may be considered Gunyah-specific as I am limiting
-> to 8 arguments and return values. If I add to arm-smccc.h, I would need
-> to expand out to x17. Does it make sense to add another SMCCC 1.2
-> interface to arm-smccc.h?
+And the controller is resumed in the wakeup-interrupt handler for the
+runtime PM case.
 
-You do not need to handle 8 arguments at this moment, until the moment
-you really need this code, I'd suggest postponing this change. And
-when you need it, having the generic code is better than having the
-gh-specific code.
+It seems to work ok, and it looks like the driver has supported this
+since it was first merged.
 
-
--- 
-With best wishes
-Dmitry
+Johan
