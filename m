@@ -2,92 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1FA658A1A8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Aug 2022 22:00:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76FAB58A299
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Aug 2022 22:58:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239846AbiHDUAq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Aug 2022 16:00:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58712 "EHLO
+        id S235995AbiHDU6p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Aug 2022 16:58:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236332AbiHDUAl (ORCPT
+        with ESMTP id S229813AbiHDU6o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Aug 2022 16:00:41 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 284EE65821
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Aug 2022 13:00:38 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id z19so812160plb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Aug 2022 13:00:38 -0700 (PDT)
+        Thu, 4 Aug 2022 16:58:44 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C0422A253;
+        Thu,  4 Aug 2022 13:58:43 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id t22so779070lfg.1;
+        Thu, 04 Aug 2022 13:58:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=uPKzNE7zSTqAILSSyuQ5RS5DAOTT4hKdjbxnUqUAfI4=;
-        b=I0H9xhAFu8B0PsZ2wzzp9dtRhFmaNDy2JgRcar6ZmKjHC/c5ykMQ8R40A5dsr2y0/B
-         V2x0ZFDTcqJvx0FgcTPvj7uCgEvLEg80RKdgaL6hDHSSlnD2dhNgXezAdxki/NMJQcXt
-         i52PCJT3NtE8YdPWCZWd2C6QsxqTzIEDIItv8=
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=HHRxra4X537rFoFLJVgbKCdXy3OgEpyBQ3xZYMyvpjQ=;
+        b=RmYddp5MQJnZzXnr8V2AYL6D/FVJBs0IagfHmjm/yzhO1l9jSKd4IFV2QMdxuCeSLy
+         Wct5aoV58PnZVzkpPjTA9+I/s3kzdtD8V/izMHLlSJeI1DiCI6pZCoyd0GIeQ9cbGFIO
+         UyuizjsIA9ysCGBiJTdxuuAughj61pBJFqEmFnAzR7OKmuQ/k5mUNXSx8muv1MHEc6a+
+         zUWRuz67D3GXvFo1aYvPMu0WoyVd/WP9OKd4lx8HSLKE6wPraRYX/jqg3dCxH9lHyvFJ
+         6O/1r+vG7EhyfjJgjOvqmw1JCz/9QfYp6oT7JOCs9fU0bR0jgL/GT0eTZwcvKDbaMAmX
+         EF9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uPKzNE7zSTqAILSSyuQ5RS5DAOTT4hKdjbxnUqUAfI4=;
-        b=ExONsHWyTqrSXiXNbVAFREy1UAjTxQrcHeXOhTxjkyjd+/6lfrrx/WpB+S6ELtQpTx
-         Nhm7so0aZkhiqtNEgYUKhJxynREgiI2o1cDVFFCRQxtfmRi+oToImeDCUeZLFpdA8G7S
-         uFZH1tIu/AdJQ61O2xRhIc3TMHLFMMFSEVM19X+OUlCjQjwQng3lJkfTDNCZSOGdE9E0
-         aJWPLSBXvty5xW3ZQunm6rM7awyNHDpGAFd9h45zEb6FsangHanCzFzPVFA1pGJ04vGX
-         DAKm4UPUdpQOLea9+vWGWATyyBukrIhNPgfCsvBd/+dGoJe3wFWee7qMLsD6StIRgV7f
-         pqXQ==
-X-Gm-Message-State: ACgBeo0+6ORAlOc+p8llvGQrslw5zD3u4gL6EsScHui5mv3tjhI9km4k
-        jft2864rqgj1/KPc86pGFU+HEg==
-X-Google-Smtp-Source: AA6agR7XAhmDcGQM/wvX7qqgr70EsoFmAqGZ++uJh7cLd6Ebn25QM1du7Mx7NuF3B2s4Oa4Axp1WrA==
-X-Received: by 2002:a17:902:ce8c:b0:16c:4be6:254d with SMTP id f12-20020a170902ce8c00b0016c4be6254dmr3306258plg.51.1659643237649;
-        Thu, 04 Aug 2022 13:00:37 -0700 (PDT)
-Received: from localhost ([2620:15c:11a:202:87c4:32ca:84b6:e942])
-        by smtp.gmail.com with UTF8SMTPSA id z5-20020aa79e45000000b0051bc5f4df1csm1364362pfq.154.2022.08.04.13.00.35
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=HHRxra4X537rFoFLJVgbKCdXy3OgEpyBQ3xZYMyvpjQ=;
+        b=3Rvts7jxHQUE4lpbGJ3UiRLmpHJHa2dpA9t2F9ydhDhJCwWn3xcv3mRMJbl1VGVrHY
+         +dASQmocYdzarWjhBjxFnkQMD7+13Go79F2+hTaEP8Gg0Ezat829yjdOpW5hyQib+kmI
+         +g3eAAAHyCNdofUEhORjsR3JEZjBb1WYIGyrwoevzjt9RHSo5zqrjLtThmY8seQUMfDF
+         zJVWMqyhOSpDA0CaSFpDlpNghCER2Q8fSBeoxjCcKApwDbFPvmEW99vaW4JyyxWcHCBo
+         Lu0cfITSXUz1PW6dufNnV9o35HQi6YxSNucKZPNGBOkrpL02WtLUAoJRq1pN4ROtjW2q
+         WIAg==
+X-Gm-Message-State: ACgBeo2PgabxHeq6GtWPPrfFLp4H2xPyYsignxpgt6Ei3a+dzEJzhxZ1
+        +fjeK1oDppllELnGwiU11zY=
+X-Google-Smtp-Source: AA6agR5EKgutuExmcrsuCmY+FSTABsMDT5T5D217XKizNZ3lCL5+bACCWYACNuHci4qxuT3uksCwRw==
+X-Received: by 2002:a05:6512:2806:b0:48a:f74d:da0e with SMTP id cf6-20020a056512280600b0048af74dda0emr1415679lfb.477.1659646721622;
+        Thu, 04 Aug 2022 13:58:41 -0700 (PDT)
+Received: from [192.168.2.145] (109-252-119-232.nat.spd-mgts.ru. [109.252.119.232])
+        by smtp.googlemail.com with ESMTPSA id s9-20020ac24649000000b0048a9e899693sm238517lfo.16.2022.08.04.13.58.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Aug 2022 13:00:37 -0700 (PDT)
-Date:   Thu, 4 Aug 2022 13:00:34 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
-        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 5/9] usb: dwc3: qcom: fix runtime PM wakeup
-Message-ID: <YuwlYh7b1oBoMuBT@google.com>
-References: <20220804151001.23612-1-johan+linaro@kernel.org>
- <20220804151001.23612-6-johan+linaro@kernel.org>
+        Thu, 04 Aug 2022 13:58:40 -0700 (PDT)
+Message-ID: <1355f1f6-d6c9-6d5f-9b5f-333084c6561b@gmail.com>
+Date:   Thu, 4 Aug 2022 23:58:34 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220804151001.23612-6-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [RFC] PM: domains: Reverse the order of performance and enabling
+ ops
+Content-Language: en-US
+To:     Abel Vesa <abel.vesa@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Kevin Hilman <khilman@kernel.org>,
+        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-pm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+References: <20220720110246.762939-1-abel.vesa@linaro.org>
+ <CAPDyKFoh8UV=QC6RhOkc=FSvoeqF_UiWp97h0Qp8dniB=sS+8A@mail.gmail.com>
+ <YuA0luCtQ1J+ExBi@linaro.org>
+ <CAPDyKFo4tryzYQK=q6aPGxocmoq=duC2B1RMh1QoV_maVCApjA@mail.gmail.com>
+ <20220729094646.xqlhfjzxo3gk4n27@linaro.org>
+From:   Dmitry Osipenko <digetx@gmail.com>
+In-Reply-To: <20220729094646.xqlhfjzxo3gk4n27@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 04, 2022 at 05:09:57PM +0200, Johan Hovold wrote:
-> A device must enable wakeups during runtime suspend regardless of
-> whether it is capable and allowed to wake the system up from system
-> suspend.
+29.07.2022 12:46, Abel Vesa пишет:
+>> I have looped in Dmitry and Thierry to see if they think the change
+>> should be fine for Tegra platforms too.
+>>
+> Good. But the tegra usecase uses only the ->set_performance and does not
+> use ->power_on and ->power_off for that specific PD. So I don't think
+> their usecase will be affected by the order reverse.
 > 
-> Fixes: 2664deb09306 ("usb: dwc3: qcom: Honor wakeup enabled/disabled state")
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-Tested-by: Matthias Kaehlcke <mka@chromium.org>
+For Tegra it indeed shouldn't change anything.
