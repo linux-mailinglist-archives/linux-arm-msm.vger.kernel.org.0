@@ -2,143 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2A1F5897A8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Aug 2022 08:11:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51D095897FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Aug 2022 09:00:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237782AbiHDGLx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Aug 2022 02:11:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33380 "EHLO
+        id S238967AbiHDHAb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Aug 2022 03:00:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232853AbiHDGLw (ORCPT
+        with ESMTP id S238960AbiHDHAa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Aug 2022 02:11:52 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AE5661125;
-        Wed,  3 Aug 2022 23:11:51 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id B0B69B8249A;
-        Thu,  4 Aug 2022 06:11:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D482C433D6;
-        Thu,  4 Aug 2022 06:11:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1659593508;
-        bh=PivNYhd22ovz+3c6fY+dmZ86T6hM9cCpwWw+EopqWP4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=myg4Gp10acovpgRnnfSKryNqfyVKKViZXK1u0deeL6F4aa6LZ1N8UL9QvwaJ28yo6
-         Fygt4uhFxm94uQ3uytn+h5rZBQrvX42egEhWguL0i4eMWtdzmxUUVbcFpe8j/kuHUE
-         GxhRYhdEqCmH5o4J4UNNMJMesufhU34SS+FV2S775wjtDUa9bYfFG4oIwZL/2EzXgk
-         zIAUZ1SOLoAqvsPvV6TeFTUTrzCXk4mOxCnKH8rXVzbAKbUEOzgh/yyKbwY/TsdMSq
-         M8vIZwBt0mweADhcme2s4WcaM++IClUfe1aX+HC24qXMFnMGINPsjFZsElpDisrr0L
-         xzgTkGurmr1/g==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oJU5Y-0003e7-4q; Thu, 04 Aug 2022 08:12:08 +0200
-Date:   Thu, 4 Aug 2022 08:12:08 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
-        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/8] usb: dwc3: qcom: fix broken non-host-mode suspend
-Message-ID: <YutjOESZRD+4mr3Z@hovoldconsulting.com>
-References: <20220802151404.1797-1-johan+linaro@kernel.org>
- <20220802151404.1797-4-johan+linaro@kernel.org>
- <YurIbcXHPF6K3oPa@google.com>
+        Thu, 4 Aug 2022 03:00:30 -0400
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71C1AD52;
+        Thu,  4 Aug 2022 00:00:29 -0700 (PDT)
+Received: by mail-ej1-f44.google.com with SMTP id j8so9969918ejx.9;
+        Thu, 04 Aug 2022 00:00:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=ECLfKYmeenEL4SeYJZvv5l6e7YoOhn0B24jd3MKIjIw=;
+        b=MG9Ji2XLFBueKpvQdtDEQM3mZ0IKBD0JSgN+FCcmvfBhMB/PuPZKv+ML9rbU++U3ur
+         BKj4l+LxufbhkiXRu9vD/979BRQiC+F/ewJPfSxaJzoEJxCsvzRpgQ6reOmPVuZR9mgN
+         AcyQF4VqLngDXLLmzjnX98BcxPxtp+VRerykD1DUkoVTXQxgVptS2FV+IGBrIrU0OJoh
+         +Hea2OZBiz81R1jcq3Y6uD1vXFNuv0hpWqQkapAXlUBhRfkl6XiMVqEFtrhAz0TOcPq8
+         g8ySZw7mb/oUZnoexbLFb44QneV85vD2cYBHKhiA11mFW7sWePXxSaIWm7laTXrNK4Gk
+         tr5A==
+X-Gm-Message-State: ACgBeo3EBkwNie52bRu31pGNPfUM094w3ScREh7m7llPgkveaSzNuoka
+        QS6/JrXTQ6HC6yn7Aov9J6M=
+X-Google-Smtp-Source: AA6agR4yFpx47dVm/RC/ZkrlkXcUG4sIfJIv18K9LaDTRO1FlCl9Tyd5iQoHsYNTYyYgRgYODCa/gg==
+X-Received: by 2002:a17:907:7601:b0:730:3da4:217c with SMTP id jx1-20020a170907760100b007303da4217cmr335873ejc.563.1659596428094;
+        Thu, 04 Aug 2022 00:00:28 -0700 (PDT)
+Received: from ?IPV6:2a0b:e7c0:0:107::70f? ([2a0b:e7c0:0:107::70f])
+        by smtp.gmail.com with ESMTPSA id ky6-20020a170907778600b007307d099ed7sm4978ejc.121.2022.08.04.00.00.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Aug 2022 00:00:27 -0700 (PDT)
+Message-ID: <e49e5b1f-d178-3e39-87f1-1cccba31ace1@kernel.org>
+Date:   Thu, 4 Aug 2022 09:00:26 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YurIbcXHPF6K3oPa@google.com>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH] tty: serial: qcom-geni-serial: Fix %lu -> %u in print
+ statements
+Content-Language: en-US
+To:     Douglas Anderson <dianders@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Mark Brown <broonie@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-serial@vger.kernel.org
+References: <20220802132250.1.Iea061e14157a17e114dbe2eca764568a02d6b889@changeid>
+From:   Jiri Slaby <jirislaby@kernel.org>
+In-Reply-To: <20220802132250.1.Iea061e14157a17e114dbe2eca764568a02d6b889@changeid>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 03, 2022 at 12:11:41PM -0700, Matthias Kaehlcke wrote:
-> On Tue, Aug 02, 2022 at 05:13:59PM +0200, Johan Hovold wrote:
-> > A recent commit implementing wakeup support in host mode instead broke
-> > suspend for peripheral and OTG mode.
-> > 
-> > The hack that was added in the suspend path to determine the speed of
-> > any device connected to the USB2 bus not only accesses internal driver
-> > data for a child device, but also dereferences a NULL pointer when not
-> > in host mode and there is no HCD.
-> > 
-> > As the controller can switch role at any time when in OTG mode, there's
-> > no quick fix to this, and since reverting would leave us with broken
-> > suspend in host-mode (wakeup triggers immediately), keep the hack for
-> > now and only fix the NULL-pointer dereference.
-> > 
-> > Fixes: 6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > ---
-> >  drivers/usb/dwc3/dwc3-qcom.c | 11 ++++++++++-
-> >  1 file changed, 10 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> > index be2e3dd36440..b75ff40f75a2 100644
-> > --- a/drivers/usb/dwc3/dwc3-qcom.c
-> > +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> > @@ -301,8 +301,17 @@ static void dwc3_qcom_interconnect_exit(struct dwc3_qcom *qcom)
-> >  static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
-> >  {
-> >  	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-> > -	struct usb_hcd *hcd = platform_get_drvdata(dwc->xhci);
-> >  	struct usb_device *udev;
-> > +	struct usb_hcd *hcd;
-> > +
-> > +	if (qcom->mode != USB_DR_MODE_HOST)
-> > +		return USB_SPEED_UNKNOWN;
+On 02. 08. 22, 22:23, Douglas Anderson wrote:
+> When we multiply an unsigned int by a u32 we still end up with an
+> unsigned int. That means we should specify "%u" not "%lu" in the
+> format code.
 > 
-> Couldn't instead the below block in dwc3_qcom_suspend() be conditional on
-> the controller being in host mode?
+> NOTE: this fix was chosen instead of somehow promoting the value to
+> "unsigned long" since the max baud rate from the earlier call to
+> uart_get_baud_rate() is 4000000 and the max sampling rate is 32.
+> 4000000 * 32 = 0x07a12000, not even close to overflowing 32-bits.
+
+Acked-by: Jiri Slaby <jirislaby@kernel.org>
+
+I wonder, how this became unnoticed by the 0day bot?
+
+> Fixes: c474c775716e ("tty: serial: qcom-geni-serial: Fix get_clk_div_rate() which otherwise could return a sub-optimal clock rate.")
+> Reported-by: Mark Brown <broonie@kernel.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
 > 
-> 	if (device_may_wakeup(qcom->dev)) {
-> 		qcom->usb2_speed = dwc3_qcom_read_usb2_speed(qcom);
-> 		dwc3_qcom_enable_interrupts(qcom);
-> 	}
+>   drivers/tty/serial/qcom_geni_serial.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> index f754619451dc..f7c1f1807040 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -1033,12 +1033,12 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
+>   		sampling_rate, &clk_div);
+>   	if (!clk_rate) {
+>   		dev_err(port->se.dev,
+> -			"Couldn't find suitable clock rate for %lu\n",
+> +			"Couldn't find suitable clock rate for %u\n",
+>   			baud * sampling_rate);
+>   		goto out_restart_rx;
+>   	}
+>   
+> -	dev_dbg(port->se.dev, "desired_rate-%lu, clk_rate-%lu, clk_div-%u\n",
+> +	dev_dbg(port->se.dev, "desired_rate-%u, clk_rate-%lu, clk_div-%u\n",
+>   			baud * sampling_rate, clk_rate, clk_div);
+>   
+>   	uport->uartclk = clk_rate;
 
-Yeah, the authors clearly didn't consider non-host mode when
-implementing this and keeping wakeups disabled in that case probably
-doesn't break anything that was ever working.
 
-> I see, the problem is that the role switch could happen at any time as the
-> commit message says. With this patch there is also a race though, the role
-> switch could happen just after the check and before obtaining 'hcd'.
-
-No, there's no race here as I'm checking the static configuration that
-comes from DT. Specifically, I'm not trying to add support for wakeup in
-OTG mode, but just prevent suspend from crashing.
-
-I may be possible address also the host-role in OTG mode, but that means
-continuing to build on this layer violation.
-
-Note that we're in the suspend callback of the parent so as long as the
-drivers for the descendant devices has disabled role switching at this
-stage during suspend, we should be good.
-
-But I'm torn about simply ripping this patch out and trying to fix it
-up. I want the feature, but the patch adding this clearly wasn't ready
-for merging.
-
-I'll take another look at this.
-
-Johan
+-- 
+js
+suse labs
