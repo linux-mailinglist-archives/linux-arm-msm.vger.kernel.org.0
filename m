@@ -2,162 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D7F7158953C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Aug 2022 02:18:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 777CB5895AB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Aug 2022 03:36:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239177AbiHDASo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Aug 2022 20:18:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38998 "EHLO
+        id S238616AbiHDBgX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Aug 2022 21:36:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239263AbiHDASm (ORCPT
+        with ESMTP id S229728AbiHDBgV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Aug 2022 20:18:42 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D49995F10C;
-        Wed,  3 Aug 2022 17:18:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1659572318; x=1691108318;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=i99TJo8RbVnlx7Q6fpfJKMDoIMtmjkVLJodpurQRRV4=;
-  b=XlCA0K9dU8zRDgkOsTQEq8Ur+RrF3/jBbmX7a9beiPsA0FlKNqcldf3A
-   LrPXrEjz1oY1Mjb/KM2Qa3E/Y70d65hQ3FYJUzgWw38rMfrDkEvGXQQYM
-   kRIuisMl8nmFwwAjpicgeO3zgBYDgWJAOO9N3HnV+l/zguNP99uNlhmIS
-   4=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 03 Aug 2022 17:18:38 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Aug 2022 17:18:39 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 3 Aug 2022 17:18:38 -0700
-Received: from [10.38.247.209] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 3 Aug 2022
- 17:18:34 -0700
-Message-ID: <ce929e8d-cecb-b06d-507d-2d411c98c46f@quicinc.com>
-Date:   Wed, 3 Aug 2022 17:18:32 -0700
+        Wed, 3 Aug 2022 21:36:21 -0400
+X-Greylist: delayed 419 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 03 Aug 2022 18:36:19 PDT
+Received: from proxmox1.postmarketos.org (proxmox1.postmarketos.org [IPv6:2a01:4f8:a0:821d::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 4C2D720BD7;
+        Wed,  3 Aug 2022 18:36:19 -0700 (PDT)
+Received: from [192.168.20.102] (unknown [77.239.252.99])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by proxmox1.postmarketos.org (Postfix) with ESMTPSA id 1C9D514015B;
+        Thu,  4 Aug 2022 01:29:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
+        s=donut; t=1659576558;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=nRaqQSwJE0HG3dU4ptJs4IAer95j88GgLQPrsa6QiKQ=;
+        b=yqIm8IT+tVTcypMS/waMqRVq2pDNsPD5JJrWicP0sd46VynMJL5Z3Rmt7mxIZYqhn9GJwX
+        YZ6AknPi0KgiKLUVYGGi9fzCmn4CUjMig4BdMF3Z8ij8YGd9lCQVsr2PMoqK7je7K6PVtd
+        EE7nWOy8JgbrqmshX6Vr4dhH+90anyI=
+Message-ID: <f66c2053-74bd-04fb-13e4-8eeb7f426608@postmarketos.org>
+Date:   Thu, 4 Aug 2022 04:29:17 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v3 4/6] drm/msm/dsi: Use the new regulator bulk feature to
- specify the load
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH] clk: qcom: gcc-sdm660: Use floor ops for SDCC1 clock
 Content-Language: en-US
-To:     Douglas Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <dri-devel@lists.freedesktop.org>, Mark Brown <broonie@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        "Daniel Vetter" <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Rajeev Nandan <quic_rajeevny@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Vinod Koul <vkoul@kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20220802223738.898592-1-dianders@chromium.org>
- <20220802153434.v3.4.I7b3c72949883846badb073cfeae985c55239da1d@changeid>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220802153434.v3.4.I7b3c72949883846badb073cfeae985c55239da1d@changeid>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220714203822.186448-1-marijn.suijten@somainline.org>
+From:   Alexey Minnekhanov <alexeymin@postmarketos.org>
+In-Reply-To: <20220714203822.186448-1-marijn.suijten@somainline.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 7/14/22 23:38, Marijn Suijten wrote:
+> In commit 3f905469c8ce ("clk: qcom: gcc: Use floor ops for SDCC clocks")
+> floor ops were applied to SDCC2 only, but flooring is also required on
+> the SDCC1 apps clock which is used by the eMMC card on Sony's Nile
+> platform, and otherwise result in the typicial "Card appears
+> overclocked" warnings observed on many other platforms before:
+> 
+>      mmc0: Card appears overclocked; req 52000000 Hz, actual 100000000 Hz
+>      mmc0: Card appears overclocked; req 52000000 Hz, actual 100000000 Hz
+>      mmc0: Card appears overclocked; req 104000000 Hz, actual 192000000 Hz
+> 
+> Fixes: f2a76a2955c0 ("clk: qcom: Add Global Clock controller (GCC) driver for SDM660")
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+>
 
+Tried this on my SDM660 xiaomi-lavender, warnings are gone, thanks!
 
-On 8/2/2022 3:37 PM, Douglas Anderson wrote:
-> As of commit 6eabfc018e8d ("regulator: core: Allow specifying an
-> initial load w/ the bulk API") we can now specify the initial load in
-> the bulk data rather than having to manually call regulator_set_load()
-> on each regulator. Let's use it.
-> 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
-> 
-> Changes in v3:
-> - Update commit message to point at the git hash of the regulator change.
-> 
-> Changes in v2:
-> - ("Use the new regulator bulk feature to specify the load") new for v2.
-> 
->   drivers/gpu/drm/msm/dsi/dsi_host.c    | 13 +++----------
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 13 +++----------
->   2 files changed, 6 insertions(+), 20 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 9df278d39559..a0a1b6d61d05 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -260,8 +260,10 @@ static int dsi_regulator_init(struct msm_dsi_host *msm_host)
->   	int num = msm_host->cfg_hnd->cfg->reg_cfg.num;
->   	int i, ret;
->   
-> -	for (i = 0; i < num; i++)
-> +	for (i = 0; i < num; i++) {
->   		s[i].supply = regs[i].name;
-> +		s[i].init_load_uA = regs[i].enable_load;
-> +	}
->   
->   	ret = devm_regulator_bulk_get(&msm_host->pdev->dev, num, s);
->   	if (ret < 0) {
-> @@ -270,15 +272,6 @@ static int dsi_regulator_init(struct msm_dsi_host *msm_host)
->   		return ret;
->   	}
->   
-> -	for (i = 0; i < num; i++) {
-> -		if (regs[i].enable_load >= 0) {
-> -			ret = regulator_set_load(s[i].consumer,
-> -						 regs[i].enable_load);
-> -			if (ret < 0)
-> -				return ret;
-> -		}
-> -	}
-> -
->   	return 0;
->   }
->   
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> index 7c105120d73e..efb6b1726cdb 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> @@ -515,8 +515,10 @@ static int dsi_phy_regulator_init(struct msm_dsi_phy *phy)
->   	int num = phy->cfg->reg_cfg.num;
->   	int i, ret;
->   
-> -	for (i = 0; i < num; i++)
-> +	for (i = 0; i < num; i++) {
->   		s[i].supply = regs[i].name;
-> +		s[i].init_load_uA = regs[i].enable_load;
-> +	}
->   
->   	ret = devm_regulator_bulk_get(dev, num, s);
->   	if (ret < 0) {
-> @@ -529,15 +531,6 @@ static int dsi_phy_regulator_init(struct msm_dsi_phy *phy)
->   		return ret;
->   	}
->   
-> -	for (i = 0; i < num; i++) {
-> -		if (regs[i].enable_load >= 0) {
-> -			ret = regulator_set_load(s[i].consumer,
-> -							regs[i].enable_load);
-> -			if (ret < 0)
-> -				return ret;
-> -		}
-> -	}
-> -
->   	return 0;
->   }
->   
+Tested-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
