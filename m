@@ -2,58 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 74D0B589524
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Aug 2022 02:13:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40BEC58952A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Aug 2022 02:14:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238819AbiHDAMw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Aug 2022 20:12:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34700 "EHLO
+        id S240204AbiHDAOP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Aug 2022 20:14:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240093AbiHDAMv (ORCPT
+        with ESMTP id S240201AbiHDAON (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Aug 2022 20:12:51 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7C364B48D;
-        Wed,  3 Aug 2022 17:12:50 -0700 (PDT)
+        Wed, 3 Aug 2022 20:14:13 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DE364D147;
+        Wed,  3 Aug 2022 17:14:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1659571971; x=1691107971;
+  t=1659572053; x=1691108053;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=06hoXfj0l/m4jLS8OfPlNj8veo6ll8SvlYcusmzMU+E=;
-  b=g0tPaEOKNhpaNuJQ/o4k8xjzDlJLDH0BckzZneCK8BiNQjHQCBKrJBii
-   ovALH/+Po/b4QraCsnimoQJADqlQealT+7ECbwkdVS2XpUnPWtzgSOx7U
-   ZM12up1l6gplWJWkXxjuBlk0R6LpOHWUm48dMxWmEBGXIcRz7uHm8JenJ
-   g=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 03 Aug 2022 17:12:50 -0700
+  bh=FDJvzeGuC8bBs/salTTDaf5k6IyWQvEiM6UfPyOQ9jo=;
+  b=RlMoiQjWHcWfE0qNlL8sMdWM4cSJ7EaMrLkVjuQdJs+H70EvF5vJ2bjd
+   VvdiUrkBkJ8wU3VjZ1hBk5fllviC/7GOp6Dd5Lj/eIKUqnDUHD3zDoCmR
+   CD5Nt76hrj0eq7r6SGWnrEzn4EQu+dwS3yE3KtuAO2LOd+kE0omEaNH6s
+   4=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 03 Aug 2022 17:14:12 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Aug 2022 17:12:50 -0700
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Aug 2022 17:14:12 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 3 Aug 2022 17:12:29 -0700
+ 15.2.986.22; Wed, 3 Aug 2022 17:14:12 -0700
 Received: from [10.38.247.209] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 3 Aug 2022
- 17:12:25 -0700
-Message-ID: <6e6aeb9d-9ced-a5b8-1461-bca9f4135b20@quicinc.com>
-Date:   Wed, 3 Aug 2022 17:12:23 -0700
+ 17:14:08 -0700
+Message-ID: <a1cc2a80-4d5e-e931-9063-aec772184bc0@quicinc.com>
+Date:   Wed, 3 Aug 2022 17:14:06 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.2
-Subject: Re: [PATCH v3 1/6] drm/msm/dsi: Fix number of regulators for
- msm8996_dsi_cfg
+Subject: Re: [PATCH v3 2/6] drm/msm/dsi: Fix number of regulators for SDM660
 Content-Language: en-US
 To:     Douglas Anderson <dianders@chromium.org>,
         Rob Clark <robdclark@gmail.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 CC:     <dri-devel@lists.freedesktop.org>, Mark Brown <broonie@kernel.org>,
         <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        "Archit Taneja" <architt@codeaurora.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "David Airlie" <airlied@linux.ie>,
+        "Daniel Vetter" <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Loic Poulain <loic.poulain@linaro.org>,
         Rajeev Nandan <quic_rajeevny@quicinc.com>,
@@ -61,13 +58,13 @@ CC:     <dri-devel@lists.freedesktop.org>, Mark Brown <broonie@kernel.org>,
         Stephen Boyd <swboyd@chromium.org>,
         <linux-kernel@vger.kernel.org>
 References: <20220802223738.898592-1-dianders@chromium.org>
- <20220802153434.v3.1.I1056ee3f77f71287f333279efe4c85f88d403f65@changeid>
+ <20220802153434.v3.2.I94b3c3e412b7c208061349f05659e126483171b1@changeid>
 From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220802153434.v3.1.I1056ee3f77f71287f333279efe4c85f88d403f65@changeid>
+In-Reply-To: <20220802153434.v3.2.I94b3c3e412b7c208061349f05659e126483171b1@changeid>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
@@ -81,36 +78,39 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 8/2/2022 3:37 PM, Douglas Anderson wrote:
-> 3 regulators are specified listed but the number 2 is specified. Fix
-> it.
+> 1 regulators is specified listed but the number 2 is specified. This
+> presumably means we try to get a regulator with no name. Fix it.
 > 
-> Fixes: 3a3ff88a0fc1 ("drm/msm/dsi: Add 8x96 info in dsi_cfg")
+> Fixes: 033f47f7f121 ("drm/msm/dsi: Add DSI configuration for SDM660")
 > Signed-off-by: Douglas Anderson <dianders@chromium.org>
 
+Agree with Marijn's comment here:
+
+https://patchwork.freedesktop.org/patch/496153/?series=106731&rev=2#comment_894595
+
+Will queue for -fixes with the fixes tag he has given
+
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-
-Will queue this for -fixes.
-
 > ---
 > 
 > (no changes since v2)
 > 
 > Changes in v2:
-> - ("Fix number of regulators for msm8996_dsi_cfg") new for v2.
+> - ("Fix number of regulators for SDM660") new for v2.
 > 
 >   drivers/gpu/drm/msm/dsi/dsi_cfg.c | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-> index 2c23324a2296..02000a7b7a18 100644
+> index 02000a7b7a18..72c018e26f47 100644
 > --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
 > +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-> @@ -109,7 +109,7 @@ static const char * const dsi_8996_bus_clk_names[] = {
->   static const struct msm_dsi_config msm8996_dsi_cfg = {
+> @@ -148,7 +148,7 @@ static const char * const dsi_sdm660_bus_clk_names[] = {
+>   static const struct msm_dsi_config sdm660_dsi_cfg = {
 >   	.io_offset = DSI_6G_REG_SHIFT,
 >   	.reg_cfg = {
 > -		.num = 2,
-> +		.num = 3,
+> +		.num = 1,
 >   		.regs = {
->   			{"vdda", 18160, 1 },	/* 1.25 V */
->   			{"vcca", 17000, 32 },	/* 0.925 V */
+>   			{"vdda", 12560, 4 },	/* 1.2 V */
+>   		},
