@@ -2,298 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E3928589E9E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Aug 2022 17:26:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 60DAA589EA9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Aug 2022 17:27:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239510AbiHDP0o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Aug 2022 11:26:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34118 "EHLO
+        id S240063AbiHDP10 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Aug 2022 11:27:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235936AbiHDP0n (ORCPT
+        with ESMTP id S240011AbiHDP1U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Aug 2022 11:26:43 -0400
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9FFB1EAC4
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Aug 2022 08:26:41 -0700 (PDT)
-Received: by mail-qk1-x734.google.com with SMTP id m22so3063468qkm.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Aug 2022 08:26:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=LMfqn114ViYGfJ/tgikcxyhcWrzGqivQiC5keCabEz0=;
-        b=NdISfji8XhyKB67q8QMZWCelg46f9R9V0JGmqypRy3D6k1qqNIN6Sovmly7Bnr84rq
-         MHRGWHEEQ+hXW8xtWqr0KYOLAgHoBy6LUDDUMml74pINAL65QSJ30l0lqBlDa//fDb51
-         xgnsdB6tJdXii/dGEWlcZwctkJ3RiVaxhFfnbcRaWkYTNwQwmGvAGLDIRnActlYb8PHj
-         K2ap2nDftpuCBE3fzQiQh1a9cPR1cxVc/rqH2OOeQ1EquQ4vYBOQ9zVJOrLPbKItb3sy
-         ro4ILxlDHTlzEoS8OFyod83xSuvewpineH9jr5VR4oCnLc/ac1+zqM8k2LUet/KfNXwn
-         kIVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=LMfqn114ViYGfJ/tgikcxyhcWrzGqivQiC5keCabEz0=;
-        b=2tvlWVluNmTDPJ1uMUcA/j/ouFVuQsqSC3871Bvc86NY+OO9crY1MK7qPprdaMwWLi
-         wopBaqCqxsIymUcmYumtoRcUAJ9B0SMfVdhyXxdgv9vPMct844++U0Z0WdUMtdbHY+Wm
-         GcZPLGMNzTi3x/1MDtpcoC1vm9NJIPsBKMJ3OW96oAcM/bOhovsu3OIr7LAcwf4CL71S
-         kRGM0NwrdeC7mrUQON6feiyMWnrjkZRWOaCJC5sbiMl18lRnLhE4g1+PTclWwyw4eL+b
-         EKHZLoCyZCnzqNCcf1MQ+20fKC5HOoePLNZu3IZ56XsFTerAyEarVOorvq4shzapS6eE
-         RkKQ==
-X-Gm-Message-State: ACgBeo3ixwEDNRNjddTtduic0aGJRQK2E19QepWAgNYnANM+V/7xKjrL
-        DSwwZJ6CcBYssppF+NgyJxmwLjp8GcopCfsG9bvQKQ==
-X-Google-Smtp-Source: AA6agR6pLYm7L2r+swF/+kYACjodN0qQ+kyeHS2Ytmy1otBvKR+Gq8iznmfKqi5Fon7Wzc1DI5ynizxAMMmF4P9uQ1c=
-X-Received: by 2002:a05:620a:4305:b0:6a9:3829:c03 with SMTP id
- u5-20020a05620a430500b006a938290c03mr1682838qko.363.1659626801024; Thu, 04
- Aug 2022 08:26:41 -0700 (PDT)
+        Thu, 4 Aug 2022 11:27:20 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D66955FACC;
+        Thu,  4 Aug 2022 08:27:14 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 669AD6133D;
+        Thu,  4 Aug 2022 15:27:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C19A8C43470;
+        Thu,  4 Aug 2022 15:27:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1659626833;
+        bh=GcT+t3fY2lBiq6UnUtFwmaQDgH7RekWK+46407Ycrqk=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=nE+9jzIcYkkGohg5oz+E1uC/dhSOAqMTfaFtqoa8w0fsiTsl6MsKNsmlYh+YRjNn5
+         9yon2bNXQBvryirZls8imSj6rsu6Jx6riDA/2kMRhojnKgWDZh3N+uaV38saUipYv+
+         tIJnUNMwyUfMlXixT9GK0lj0uBP46b8v2qTpVbEyYTmbN5QiBEZZmWP+U/uXYwFTA+
+         rFmAPgWgKoDFqbrOhbWenUr3DjWSbX2yGB/pH3H5VRyiSzumkJlhMMtRIU928r5NmJ
+         REaLruqAHipb/iELkTqQD18Rf+xJAd5/rolPd351HOWunlcFNEoccvE+DZSEKMkLDZ
+         p8C24HHBWDe/A==
+Received: by mail-vs1-f42.google.com with SMTP id q190so5283662vsb.7;
+        Thu, 04 Aug 2022 08:27:13 -0700 (PDT)
+X-Gm-Message-State: ACgBeo1JMr40fzSQHIAWfm6k81n/r9zADLbmYOlltbKfSi5g0/gTWWo4
+        t+4LCdtu6W+bPweFyyzAuIczgGNCQLjeRHd7Xg==
+X-Google-Smtp-Source: AA6agR6SZ2PuCPGzJQoQL+fdjB++pN0JauXVh7VtZVxDBoP7C7j7EeWOJv3bMZRCBrH7oAAf5w3X5aq5n5P7SN/A3Wo=
+X-Received: by 2002:a67:c19c:0:b0:386:3a4b:dd5 with SMTP id
+ h28-20020a67c19c000000b003863a4b0dd5mr1017211vsj.53.1659626832642; Thu, 04
+ Aug 2022 08:27:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220804131507.3738094-1-dmitry.baryshkov@linaro.org> <YuvchxwbbI3H+kxY@FVFF77S0Q05N.cambridge.arm.com>
-In-Reply-To: <YuvchxwbbI3H+kxY@FVFF77S0Q05N.cambridge.arm.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 4 Aug 2022 18:26:29 +0300
-Message-ID: <CAA8EJppqWTwXxKX3pxTc=P5kGWMuibKA54UNhq1Yoca+RHvm2w@mail.gmail.com>
-Subject: Re: [PATCH v2] firmware/psci: Add debugfs support to ease debugging
-To:     Mark Rutland <mark.rutland@arm.com>
-Cc:     Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Mark Brown <broonie@kernel.org>
+References: <20220727100615.638072-1-dmitry.baryshkov@linaro.org>
+ <CAL_JsqJjLn8ypBo+bBoO+CE-si7gemP02fi8EWk97QRPPpNoVg@mail.gmail.com>
+ <CAK7LNARXbXZFpxiHuLhzjJ4YahfV6z3dNPAdkkmeOXONBx8u3w@mail.gmail.com>
+ <CAA8EJprM4WAgfVTJ15azFtSH6POL5uuseHO=zVxRd44RmqKZjw@mail.gmail.com>
+ <CAK7LNAQU42fpqPqUipZYx+685B+Rc8JGdaKcP3TdfQWUept1nQ@mail.gmail.com> <CAA8EJprMsEE-fkpP=QGgpCga5rb9_mJF51cvRjeWsG7NBeijSA@mail.gmail.com>
+In-Reply-To: <CAA8EJprMsEE-fkpP=QGgpCga5rb9_mJF51cvRjeWsG7NBeijSA@mail.gmail.com>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Thu, 4 Aug 2022 09:27:00 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqLptaL_Uv++dEzUx83n3c+AAu9rYUv6Zbb7sLbJE35wWA@mail.gmail.com>
+Message-ID: <CAL_JsqLptaL_Uv++dEzUx83n3c+AAu9rYUv6Zbb7sLbJE35wWA@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: take into account DT_SCHEMA_FILES changes while
+ checking dtbs
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Masahiro Yamada <masahiroy@kernel.org>,
+        Michal Marek <michal.lkml@markovi.net>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 4 Aug 2022 at 17:49, Mark Rutland <mark.rutland@arm.com> wrote:
+On Fri, Jul 29, 2022 at 1:46 AM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
-> On Thu, Aug 04, 2022 at 04:15:07PM +0300, Dmitry Baryshkov wrote:
-> > To ease debugging of PSCI supported features, add debugfs file called
-> > 'psci' describing PSCI and SMC CC versions, enabled features and
-> > options.
+> On Fri, 29 Jul 2022 at 10:05, Masahiro Yamada <masahiroy@kernel.org> wrote:
 > >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> > Changes since v1:
-> > - Extended the table to include MEM_PROTECT functions (noted by Mark
-> >   Brown)
-> > - Switched to seq_puts where possible
-> > - Changed S_IRUGO to 0444
-> > ---
-> >  drivers/firmware/psci/psci.c | 116 ++++++++++++++++++++++++++++++++++-
-> >  include/uapi/linux/psci.h    |  14 +++++
-> >  2 files changed, 129 insertions(+), 1 deletion(-)
+> > On Fri, Jul 29, 2022 at 3:53 PM Dmitry Baryshkov
+> > <dmitry.baryshkov@linaro.org> wrote:
+> > >
+> > > On Fri, 29 Jul 2022 at 08:55, Masahiro Yamada <masahiroy@kernel.org> wrote:
+> > > >
+> > > > On Thu, Jul 28, 2022 at 2:36 AM Rob Herring <robh+dt@kernel.org> wrote:
+> > > > >
+> > > > > On Wed, Jul 27, 2022 at 4:06 AM Dmitry Baryshkov
+> > > > > <dmitry.baryshkov@linaro.org> wrote:
+> > > > > >
+> > > > > > It is useful to be able to recheck dtbs files against a limited set of
+> > > > > > DT schema files. This can be accomplished by using differnt
+> > > > > > DT_SCHEMA_FILES argument values while rerunning make dtbs_check. However
+> > > > > > for some reason if_changed_rule doesn't pick up the rule_dtc changes
+> > > > > > (and doesn't retrigger the build).
+> > > > > >
+> > > > > > Fix this by changing if_changed_rule to if_changed_dep and squashing DTC
+> > > > > > and dt-validate into a single new command. Then if_changed_dep triggers
+> > > > > > on DT_SCHEMA_FILES changes and reruns the build/check.
+> > > > > >
+> > > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > > > ---
+> > > > > >  scripts/Makefile.lib | 14 ++++++--------
+> > > > > >  1 file changed, 6 insertions(+), 8 deletions(-)
+> > > > > >
+> > > > > > diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
+> > > > > > index c88b98b5dc44..3df470289382 100644
+> > > > > > --- a/scripts/Makefile.lib
+> > > > > > +++ b/scripts/Makefile.lib
+> > > > > > @@ -383,17 +383,15 @@ DT_CHECKER_FLAGS ?= $(if $(DT_SCHEMA_FILES),-l $(DT_SCHEMA_FILES),-m)
+> > > > > >  DT_BINDING_DIR := Documentation/devicetree/bindings
+> > > > > >  DT_TMP_SCHEMA := $(objtree)/$(DT_BINDING_DIR)/processed-schema.json
+> > > > > >
+> > > > > > -quiet_cmd_dtb_check =  CHECK   $@
+> > > > > > -      cmd_dtb_check =  $(DT_CHECKER) $(DT_CHECKER_FLAGS) -u $(srctree)/$(DT_BINDING_DIR) -p $(DT_TMP_SCHEMA) $@ || true
+> > > > > > +quiet_cmd_dtb =        DTC/CHECK   $@
+> > > > >
+> > > > > This is supposed to be 7 chars or less. DTCCHK or DTC_CHK perhaps. Or
+> > > > > always do just 'DTC'. I can fixup when applying.
+> > > > >
+> > > > > I'll give it a few days for other comments.
+> > > >
+> > > >
+> > > >
+> > > > When you change DT_SCHEMA_FILES, re-running dt-validate should be enough.
+> > > > You do not need to re-run dtc.
+> > > >
+> > > > I guess the strangeness comes from the fact that you are trying to do the
+> > > >  two different things in a single rule.
+> > >
+> > > The issue is that with the current rules the dt-validate isn't
+> > > re-executed on DT_SCHEMA_FILES changes. Thus comes my proposal.
+> >
+> > Correct.
+> >
+> > What I said is like this.
+> >
+> > # touch the timestamp file, %.dtb.checked
+> > $(obj)/%.dtb.checked: $(obj)/%.dtb $(DT_TMP_SCHEMA) FORCE
+
+Not really a fan of the thousands of files that creates. Maybe if it
+was turned into something useful like a list of schemas that apply to
+the dtb. IOW, a dependency list. That would speed up re-running after
+a schema change. Though if a schema change created new dependencies,
+that wouldn't work.
+
+> >         $(call if_changed_rule,dtb_check)
+> >
+> > $(obj)/%.dtb: $(src)/%.dts $(DTC) $FORCE
+> >         $(call if_changed_rule,dtc)
+> >
+> > $(obj)/%.dtbo: $(src)/%.dts $(DTC) FORCE
+> >         $(call if_changed_dep,dtc)
+> >
+> >
+> > With the dtc/check split, we can avoid unneeded regeneration of
+> > %.dtb when DT_TMP_SCHEMA or DT_SCHEMA_FILES is
+> > changed.
+> >
+> >
+> > One drawback is we track %.dtb.checked and and %.dtb separately,
+> > so something like 53182e81f47d4ea0c727c49ad23cb782173ab849
+> > may come back.
 >
-> TBH I am really not keen on exposing this to userspace. AFAICT this is his is
-> incredibly niche, and is going to be very painful to maintain.
+> It's up to you and Rob, but I'd really prefer a simpler solution here.
+> Regenerating dtbs sounds like a minor pain compared to hacking the
+> top-level Makefile again. What I really like is that if one has
+> CHECK_DTBS=y (for whatever reason), he can not generate dtb without
+> validation.
+
+I lean towards just rebuilding the dtbs. That's pretty quick and
+ensures we get dtc warnings with schema warnings. In the long run, I
+would like to make the schema checks not optional to run. The
+impediment to doing that is lots of warnings (but not not some
+platforms), adding a tool dependency, and validation time.
+
+> > BTW, we do not check %.dtbo, why?
+> >
+> > At least, 53182e81f47d4ea0c727c49ad23cb782173ab849
+> > was trying to check %.dtbo
 >
-> Without a strong rationale, I do not thing we should do this.
->
-> Who is going to use this, and when?
+> The commit ef8795f3f1ce ("dt-bindings: kbuild: Use DTB files for
+> validation") separated .dtb and .dtbo paths. dt-validate is not
+> prepared to be executed on top of the .dtbo file. And this is quite
+> logical. The dtbo is an overlay, a patch. So it doesn't have to follow
+> the schema on its own. We should probably make sure that multi-dtb
+> files generated via fdtoverlay are also validated, but it can go in a
+> separate commit.
 
-I sketched this while trying to narrow down the particular issue on
-the Qualcomm platform (which started as an attempt to implement PSCI
-domains, but then led to understanding that while the platform claims
-supports OSI, it doesn't support SET_SUSPEND). We were going to use
-this to help to narrow down issues with the PSCI support on other
-platforms as well.
-Moreover during v1 review I saw at least a subtle request to include
-other information as well (e.g. the output from STAT_*),
+It needs some attention to see how well validation of overlays works or not.
 
->
-> I'd be much happier logging stuff as it's probed into dmesg; I'm happy to add
-> more information there (and/or a command line parameter to be more verbose).
-
-Collecting logs is a nice thing, but asking the user to send the
-debugfs file is much easier compared to rebooting the kernel with
-different cmdline args (which in the Qualcomm case involves rebuilding
-the boot image).
-
->
-> Thanks,
-> Mark.
->
-> >
-> > diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
-> > index 1628f1edef4a..42cae0ba10e2 100644
-> > --- a/drivers/firmware/psci/psci.c
-> > +++ b/drivers/firmware/psci/psci.c
-> > @@ -9,6 +9,7 @@
-> >  #include <linux/acpi.h>
-> >  #include <linux/arm-smccc.h>
-> >  #include <linux/cpuidle.h>
-> > +#include <linux/debugfs.h>
-> >  #include <linux/errno.h>
-> >  #include <linux/linkage.h>
-> >  #include <linux/of.h>
-> > @@ -326,12 +327,125 @@ static void psci_sys_poweroff(void)
-> >       invoke_psci_fn(PSCI_0_2_FN_SYSTEM_OFF, 0, 0, 0);
-> >  }
-> >
-> > -static int __init psci_features(u32 psci_func_id)
-> > +static int psci_features(u32 psci_func_id)
-> >  {
-> >       return invoke_psci_fn(PSCI_1_0_FN_PSCI_FEATURES,
-> >                             psci_func_id, 0, 0);
-> >  }
-> >
-> > +#ifdef CONFIG_DEBUG_FS
-> > +
-> > +#define PSCI_ID(ver, _name) \
-> > +     { .fn = PSCI_##ver##_FN_##_name, .name = #_name, }
-> > +#define PSCI_ID_NATIVE(ver, _name) \
-> > +     { .fn = PSCI_FN_NATIVE(ver, _name), .name = #_name, }
-> > +
-> > +/* A table of all optional functions */
-> > +static const struct {
-> > +     u32 fn;
-> > +     const char *name;
-> > +} psci_fn_ids[] = {
-> > +     PSCI_ID_NATIVE(0_2, MIGRATE),
-> > +     PSCI_ID(0_2, MIGRATE_INFO_TYPE),
-> > +     PSCI_ID_NATIVE(0_2, MIGRATE_INFO_UP_CPU),
-> > +     PSCI_ID(1_0, CPU_FREEZE),
-> > +     PSCI_ID_NATIVE(1_0, CPU_DEFAULT_SUSPEND),
-> > +     PSCI_ID_NATIVE(1_0, NODE_HW_STATE),
-> > +     PSCI_ID_NATIVE(1_0, SYSTEM_SUSPEND),
-> > +     PSCI_ID(1_0, SET_SUSPEND_MODE),
-> > +     PSCI_ID_NATIVE(1_0, STAT_RESIDENCY),
-> > +     PSCI_ID_NATIVE(1_0, STAT_COUNT),
-> > +     PSCI_ID_NATIVE(1_1, SYSTEM_RESET2),
-> > +     PSCI_ID(1_1, MEM_PROTECT),
-> > +     PSCI_ID_NATIVE(1_1, MEM_PROTECT_CHECK_RANGE),
-> > +};
-> > +
-> > +static int psci_debugfs_read(struct seq_file *s, void *data)
-> > +{
-> > +     int feature, type, i;
-> > +     u32 ver;
-> > +
-> > +     ver = psci_ops.get_version();
-> > +     seq_printf(s, "PSCIv%d.%d\n",
-> > +                PSCI_VERSION_MAJOR(ver),
-> > +                PSCI_VERSION_MINOR(ver));
-> > +
-> > +     /* PSCI_FEATURES is available only starting from 1.0 */
-> > +     if (PSCI_VERSION_MAJOR(ver) < 1)
-> > +             return 0;
-> > +
-> > +     feature = psci_features(ARM_SMCCC_VERSION_FUNC_ID);
-> > +     if (feature != PSCI_RET_NOT_SUPPORTED) {
-> > +             ver = invoke_psci_fn(ARM_SMCCC_VERSION_FUNC_ID, 0, 0, 0);
-> > +             seq_printf(s, "SMC Calling Convention v%d.%d\n",
-> > +                        PSCI_VERSION_MAJOR(ver),
-> > +                        PSCI_VERSION_MINOR(ver));
-> > +     } else {
-> > +             seq_puts(s, "SMC Calling Convention v1.0 is assumed\n");
-> > +     }
-> > +
-> > +     feature = psci_features(PSCI_FN_NATIVE(0_2, CPU_SUSPEND));
-> > +     if (feature < 0) {
-> > +             seq_printf(s, "PSCI_FEATURES(CPU_SUSPEND) error (%d)\n", feature);
-> > +     } else {
-> > +             seq_printf(s, "OSI is %ssupported\n",
-> > +                        (feature & BIT(0)) ? "" : "not ");
-> > +             seq_printf(s, "%s StateID format is used\n",
-> > +                        (feature & BIT(1)) ? "Extended" : "Original");
-> > +     }
-> > +
-> > +     type = psci_ops.migrate_info_type();
-> > +     if (type == PSCI_0_2_TOS_UP_MIGRATE ||
-> > +         type == PSCI_0_2_TOS_UP_NO_MIGRATE) {
-> > +             unsigned long cpuid;
-> > +
-> > +             seq_printf(s, "Trusted OS %smigrate capable\n",
-> > +                        type == PSCI_0_2_TOS_UP_NO_MIGRATE ? "not " : "");
-> > +             cpuid = psci_migrate_info_up_cpu();
-> > +             seq_printf(s, "Trusted OS resident on physical CPU 0x%lx (#%d)\n",
-> > +                        cpuid, resident_cpu);
-> > +     } else if (type == PSCI_0_2_TOS_MP) {
-> > +             seq_puts(s, "Trusted OS migration not required\n");
-> > +     } else {
-> > +             if (type != PSCI_RET_NOT_SUPPORTED)
-> > +                     seq_printf(s, "MIGRATE_INFO_TYPE returned unknown type (%d)\n", type);
-> > +     }
-> > +
-> > +     for (i = 0; i < ARRAY_SIZE(psci_fn_ids); i++) {
-> > +             feature = psci_features(psci_fn_ids[i].fn);
-> > +             if (feature == PSCI_RET_NOT_SUPPORTED)
-> > +                     continue;
-> > +             if (feature < 0)
-> > +                     seq_printf(s, "PSCI_FEATURES(%s) error (%d)\n",
-> > +                                psci_fn_ids[i].name, feature);
-> > +             else
-> > +                     seq_printf(s, "%s is supported\n", psci_fn_ids[i].name);
-> > +     }
-> > +
-> > +     return 0;
-> > +}
-> > +
-> > +static int psci_debugfs_open(struct inode *inode, struct file *f)
-> > +{
-> > +     return single_open(f, psci_debugfs_read, NULL);
-> > +}
-> > +
-> > +static const struct file_operations psci_debugfs_ops = {
-> > +     .owner = THIS_MODULE,
-> > +     .open = psci_debugfs_open,
-> > +     .release = single_release,
-> > +     .read = seq_read,
-> > +     .llseek = seq_lseek
-> > +};
-> > +
-> > +static int __init psci_debugfs_init(void)
-> > +{
-> > +     return PTR_ERR_OR_ZERO(debugfs_create_file("psci", 0444, NULL, NULL,
-> > +                                                &psci_debugfs_ops));
-> > +}
-> > +late_initcall(psci_debugfs_init)
-> > +#endif
-> > +
-> >  #ifdef CONFIG_CPU_IDLE
-> >  static int psci_suspend_finisher(unsigned long state)
-> >  {
-> > diff --git a/include/uapi/linux/psci.h b/include/uapi/linux/psci.h
-> > index 2bf93c0d6354..3511095c2702 100644
-> > --- a/include/uapi/linux/psci.h
-> > +++ b/include/uapi/linux/psci.h
-> > @@ -48,12 +48,26 @@
-> >  #define PSCI_0_2_FN64_MIGRATE_INFO_UP_CPU    PSCI_0_2_FN64(7)
-> >
-> >  #define PSCI_1_0_FN_PSCI_FEATURES            PSCI_0_2_FN(10)
-> > +#define PSCI_1_0_FN_CPU_FREEZE                       PSCI_0_2_FN(11)
-> > +#define PSCI_1_0_FN_CPU_DEFAULT_SUSPEND              PSCI_0_2_FN(12)
-> > +#define PSCI_1_0_FN_NODE_HW_STATE            PSCI_0_2_FN(13)
-> >  #define PSCI_1_0_FN_SYSTEM_SUSPEND           PSCI_0_2_FN(14)
-> >  #define PSCI_1_0_FN_SET_SUSPEND_MODE         PSCI_0_2_FN(15)
-> > +#define PSCI_1_0_FN_STAT_RESIDENCY           PSCI_0_2_FN(16)
-> > +#define PSCI_1_0_FN_STAT_COUNT                       PSCI_0_2_FN(17)
-> > +
-> >  #define PSCI_1_1_FN_SYSTEM_RESET2            PSCI_0_2_FN(18)
-> > +#define PSCI_1_1_FN_MEM_PROTECT                      PSCI_0_2_FN(19)
-> > +#define PSCI_1_1_FN_MEM_PROTECT_CHECK_RANGE  PSCI_0_2_FN(19)
-> >
-> > +#define PSCI_1_0_FN64_CPU_DEFAULT_SUSPEND    PSCI_0_2_FN64(12)
-> > +#define PSCI_1_0_FN64_NODE_HW_STATE          PSCI_0_2_FN64(13)
-> >  #define PSCI_1_0_FN64_SYSTEM_SUSPEND         PSCI_0_2_FN64(14)
-> > +#define PSCI_1_0_FN64_STAT_RESIDENCY         PSCI_0_2_FN64(16)
-> > +#define PSCI_1_0_FN64_STAT_COUNT             PSCI_0_2_FN64(17)
-> > +
-> >  #define PSCI_1_1_FN64_SYSTEM_RESET2          PSCI_0_2_FN64(18)
-> > +#define PSCI_1_1_FN64_MEM_PROTECT_CHECK_RANGE        PSCI_0_2_FN64(19)
-> >
-> >  /* PSCI v0.2 power state encoding for CPU_SUSPEND function */
-> >  #define PSCI_0_2_POWER_STATE_ID_MASK         0xffff
-> > --
-> > 2.35.1
-> >
-
-
-
--- 
-With best wishes
-Dmitry
+Rob
