@@ -2,252 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 005E758A37C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 00:53:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55CB458A4AD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 04:15:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239937AbiHDWxK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Aug 2022 18:53:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43490 "EHLO
+        id S234807AbiHECPe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Aug 2022 22:15:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240384AbiHDWwm (ORCPT
+        with ESMTP id S233821AbiHECPb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Aug 2022 18:52:42 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7828472ECC
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Aug 2022 15:52:25 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id p10so1335033wru.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Aug 2022 15:52:25 -0700 (PDT)
+        Thu, 4 Aug 2022 22:15:31 -0400
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D3A6E0C9;
+        Thu,  4 Aug 2022 19:15:30 -0700 (PDT)
+Received: by mail-pl1-x633.google.com with SMTP id t2so1451336ply.2;
+        Thu, 04 Aug 2022 19:15:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linexp-org.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=vL3GxmFU1PfAZ2z+EriRN+gI33Lgd51OZIsIx0JbBgQ=;
-        b=yM44Wh6z3wJTBMnHfb3b1dfUay/HasrI8/FPqDYipy7laYSv8NBJjoiujkVFmaNbWf
-         knliAe/emTNw8WpEGJLMoF8BsHjT4vFMPWkB3SIsFPTlX+YuizukuUsMXnfBY0U3k5kS
-         M8m0JI+mbMtXAZaLLIGK+jaeUQMGxe8R+bEMzOeeEJkMByJsYihMjgZu/L2B6cW1VN02
-         Fmexa+z/yVq0Fl0ug0IpRm9rXqHCluUsygqxJ0lrzJGy8e3j3O7ZeewJScNNl6QJfZBX
-         XAONeDF2jTlOBaTzCLKGY5LPIuESKIY7u44+YnAc1W2bb6Q3kLC3Bfz2gVV7n91K7dlo
-         9mgw==
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc;
+        bh=c1hElks0EiMPqEj2Pxzet0gd4GBC1sIlq2K90tOv6P8=;
+        b=S2UshQ0EqqI16RU+oVisaaT0G2aRtg4cUJ7NrGmuTwh5yfSUqpaPzCz3Ycntlwy12b
+         iTq/SgsqK1J/GZQUAzpk7vMBa1hgEZHv/wUq+cm5HI1hmfcamIxx+j/2iBNzMyfB/g1l
+         GMR1d/udXWgQV3IRffyIY23+S9JypxTPIcWmo0S0sakgGjsNwKV3gSvx+mP6qISxkpp6
+         anBeg+tF2kHT4030INR9EElFJSHh7JdRmP5xGFt573VttQ+mad0H94Hbrd0V9OkbkYrA
+         fwK5dlmyqkInpT7uIiO4DRPLOZOdQ7rOUESJdfl1iu3C8mTj6C8TmQVnHi+WhSxpPsrY
+         gAqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=vL3GxmFU1PfAZ2z+EriRN+gI33Lgd51OZIsIx0JbBgQ=;
-        b=kInLxcpM/wsrA5mDWse+QdAt/ZvIvvZxIuTfNivlaWFUJbd1JrtjO2kxDUebt5Jhta
-         QUZbLcSGov8vpcxSIynzReH2rVWRz+fg9kxYCFld4jioFlVSvjt+6mwOrkBYLhE+N7Uh
-         N7P+JOGNqcOPxyNtSJ9U3hBl7N5z80R3+cGpdnp/hIAdOGLU9YrUwEajipiAGOm0/tIy
-         933PkQQrRd5B46Q+/xJofBfYv7/diqeRPuhXI6wMESV9epJsrbaT178u17/QgU5BuTh3
-         /BNYUrJ8jV0QJLbsm7fSiAIsl8DUJ7d8O5bjej+oFEFGGI7H9aqWdT/rinAJ3+I4wDrh
-         wU0A==
-X-Gm-Message-State: ACgBeo2oY8l6+fKRa5XUaNlIft+mKFrYeIKOFLYdX994sj2dG8Bc/Xyq
-        gqa/KShil7gXMQU5+LvpZWwRPw==
-X-Google-Smtp-Source: AA6agR7GtRRrwnORSwHv9+/lG71h9IqM8KPR+qQP8MisIhY2vs7sXJ3Mv8MiOtY6l6s2gE9uVzoqoQ==
-X-Received: by 2002:a5d:638b:0:b0:220:6f3e:9186 with SMTP id p11-20020a5d638b000000b002206f3e9186mr2444214wru.49.1659653543594;
-        Thu, 04 Aug 2022 15:52:23 -0700 (PDT)
-Received: from mai.box.freepro.com ([2a05:6e02:1041:c10:31aa:ed2c:3f7:19d])
-        by smtp.gmail.com with ESMTPSA id a16-20020a056000051000b0021f87e8945asm2495906wrf.12.2022.08.04.15.52.21
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=c1hElks0EiMPqEj2Pxzet0gd4GBC1sIlq2K90tOv6P8=;
+        b=k6KTlXGi5EIKBBeFFf/3ArTK1LQuZkHUxA5dMyQugrBJwhN8WjrKfEKbQq0Dr1u+HV
+         7bXZVMBUgKwwvcVpN53/6HAzUOQnq+iOzvwYweBkXfd1Qq8LCvygmRqSDRPEf4P9MSax
+         rrwwvhwKOkf8510oPPBQqn0JiK0zjgZI3NZszE6bloBTQhXmLye1TsrJ4EhkaNGsgaZk
+         G7Lm6lK6xVWzMysN/KA7ojys8rhBKGi2BLTxjXIHCaHbHATlQ1KJFSkrqXb9+wos9qs6
+         7cNbNIAj6nKUOin5S9cUMHu4dTBs3zMoUkf4MPvu/FFoSZec79s5KcWoZfWUi5OBEFuF
+         /hBg==
+X-Gm-Message-State: ACgBeo3qTOu5/sHO8DRaCgMDR4WiliA2U+iSwufEqxJQtGcZRJkwvVvO
+        KaTg/3S2M8SiwNz0Wf/64x4=
+X-Google-Smtp-Source: AA6agR77ZHGZ+uxxpgNccpYoYp2kC5VbtTjWiRxAsLO9g70ROMk1CG91pYyGdCg3c0KLZc022PYBFw==
+X-Received: by 2002:a17:90b:3947:b0:1f5:104:f8cd with SMTP id oe7-20020a17090b394700b001f50104f8cdmr13304151pjb.26.1659665729890;
+        Thu, 04 Aug 2022 19:15:29 -0700 (PDT)
+Received: from debian.me (subs02-180-214-232-7.three.co.id. [180.214.232.7])
+        by smtp.gmail.com with ESMTPSA id j11-20020a17090a2a8b00b001ef8ea89a33sm4430792pjd.2.2022.08.04.19.15.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Aug 2022 15:52:23 -0700 (PDT)
-From:   Daniel Lezcano <daniel.lezcano@linexp.org>
-To:     daniel.lezcano@linaro.org, rafael@kernel.org
-Cc:     rui.zhang@intel.com, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, khilman@baylibre.com,
-        abailon@baylibre.com, lukasz.luba@arm.com, broonie@kernel.org,
-        damien.lemoal@opensource.wdc.com, heiko@sntech.de,
-        hayashi.kunihiko@socionext.com, mhiramat@kernel.org,
-        talel@amazon.com, thierry.reding@gmail.com, digetx@gmail.com,
-        jonathanh@nvidia.com, anarsoul@gmail.com, tiny.windzz@gmail.com,
-        baolin.wang7@gmail.com, f.fainelli@gmail.com,
-        bjorn.andersson@linaro.org, mcoquelin.stm32@gmail.com,
-        glaroque@baylibre.com, miquel.raynal@bootlin.com,
-        shawnguo@kernel.org, niklas.soderlund@ragnatech.se,
-        matthias.bgg@gmail.com, j-keerthy@ti.com,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Thu, 04 Aug 2022 19:15:29 -0700 (PDT)
+Received: by debian.me (Postfix, from userid 1000)
+        id DBC291047E5; Fri,  5 Aug 2022 09:15:24 +0700 (WIB)
+Date:   Fri, 5 Aug 2022 09:15:24 +0700
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+To:     Elliot Berman <quic_eberman@quicinc.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT)
-Subject: [PATCH v5 11/33] thermal/drivers/qcom: Switch to new of API
-Date:   Fri,  5 Aug 2022 00:43:27 +0200
-Message-Id: <20220804224349.1926752-12-daniel.lezcano@linexp.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220804224349.1926752-1-daniel.lezcano@linexp.org>
-References: <20220804224349.1926752-1-daniel.lezcano@linexp.org>
+        linux-arm-kernel@lists.infradead.org,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 00/11] Drivers for gunyah hypervisor
+Message-ID: <Yux9PO0x+9aAVNj6@debian.me>
+References: <20220801211240.597859-1-quic_eberman@quicinc.com>
+ <YuuC0NISKFVIhUD1@debian.me>
+ <3dd4b206-8771-972b-7f4d-4935c5fbea3e@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <3dd4b206-8771-972b-7f4d-4935c5fbea3e@quicinc.com>
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The thermal OF code has a new API allowing to migrate the OF
-initialization to a simpler approach. The ops are no longer device
-tree specific and are the generic ones provided by the core code.
+On Thu, Aug 04, 2022 at 02:48:58PM -0700, Elliot Berman wrote:
+> > 
+> > Hi,
+> > 
+> > I can't apply this series on top of mainline or linux-next. On what tree
+> > (and what commit) this series is based on? I'd like to do htmldocs test.
+> > 
+> 
+> The series should apply cleanly on commit 4a57a8400075 ("vf/remap: return
+> the amount of bytes actually deduplicated") from Linus's tree.
+> 
 
-Convert the ops to the thermal_zone_device_ops format and use the new
-API to register the thermal zone with these generic ops.
+Applied, thanks.
 
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linexp.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/thermal/qcom/qcom-spmi-adc-tm5.c    | 19 +++++++++----------
- drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 12 ++++++------
- drivers/thermal/qcom/tsens.c                | 16 ++++++++--------
- 3 files changed, 23 insertions(+), 24 deletions(-)
+Next time, don't forget to specify --base when using git-format-patch.
 
-diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-index 073943cbcc2b..add6f40e5e2a 100644
---- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-+++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-@@ -357,9 +357,9 @@ static irqreturn_t adc_tm5_gen2_isr(int irq, void *data)
- 	return IRQ_HANDLED;
- }
- 
--static int adc_tm5_get_temp(void *data, int *temp)
-+static int adc_tm5_get_temp(struct thermal_zone_device *tz, int *temp)
- {
--	struct adc_tm5_channel *channel = data;
-+	struct adc_tm5_channel *channel = tz->devdata;
- 	int ret;
- 
- 	if (!channel || !channel->iio)
-@@ -639,9 +639,9 @@ static int adc_tm5_gen2_configure(struct adc_tm5_channel *channel, int low, int
- 	return ret;
- }
- 
--static int adc_tm5_set_trips(void *data, int low, int high)
-+static int adc_tm5_set_trips(struct thermal_zone_device *tz, int low, int high)
- {
--	struct adc_tm5_channel *channel = data;
-+	struct adc_tm5_channel *channel = tz->devdata;
- 	struct adc_tm5_chip *chip;
- 	int ret;
- 
-@@ -660,7 +660,7 @@ static int adc_tm5_set_trips(void *data, int low, int high)
- 	return ret;
- }
- 
--static struct thermal_zone_of_device_ops adc_tm5_thermal_ops = {
-+static const struct thermal_zone_device_ops adc_tm5_thermal_ops = {
- 	.get_temp = adc_tm5_get_temp,
- 	.set_trips = adc_tm5_set_trips,
- };
-@@ -672,11 +672,10 @@ static int adc_tm5_register_tzd(struct adc_tm5_chip *adc_tm)
- 
- 	for (i = 0; i < adc_tm->nchannels; i++) {
- 		adc_tm->channels[i].chip = adc_tm;
--
--		tzd = devm_thermal_zone_of_sensor_register(adc_tm->dev,
--							   adc_tm->channels[i].channel,
--							   &adc_tm->channels[i],
--							   &adc_tm5_thermal_ops);
-+		tzd = devm_thermal_of_zone_register(adc_tm->dev,
-+						    adc_tm->channels[i].channel,
-+						    &adc_tm->channels[i],
-+						    &adc_tm5_thermal_ops);
- 		if (IS_ERR(tzd)) {
- 			if (PTR_ERR(tzd) == -ENODEV) {
- 				dev_warn(adc_tm->dev, "thermal sensor on channel %d is not used\n",
-diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-index 770f82cc9bca..be785ab37e53 100644
---- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-+++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-@@ -186,9 +186,9 @@ static int qpnp_tm_update_temp_no_adc(struct qpnp_tm_chip *chip)
- 	return 0;
- }
- 
--static int qpnp_tm_get_temp(void *data, int *temp)
-+static int qpnp_tm_get_temp(struct thermal_zone_device *tz, int *temp)
- {
--	struct qpnp_tm_chip *chip = data;
-+	struct qpnp_tm_chip *chip = tz->devdata;
- 	int ret, mili_celsius;
- 
- 	if (!temp)
-@@ -263,9 +263,9 @@ static int qpnp_tm_update_critical_trip_temp(struct qpnp_tm_chip *chip,
- 	return qpnp_tm_write(chip, QPNP_TM_REG_SHUTDOWN_CTRL1, reg);
- }
- 
--static int qpnp_tm_set_trip_temp(void *data, int trip, int temp)
-+static int qpnp_tm_set_trip_temp(struct thermal_zone_device *tz, int trip, int temp)
- {
--	struct qpnp_tm_chip *chip = data;
-+	struct qpnp_tm_chip *chip = tz->devdata;
- 	const struct thermal_trip *trip_points;
- 	int ret;
- 
-@@ -283,7 +283,7 @@ static int qpnp_tm_set_trip_temp(void *data, int trip, int temp)
- 	return ret;
- }
- 
--static const struct thermal_zone_of_device_ops qpnp_tm_sensor_ops = {
-+static const struct thermal_zone_device_ops qpnp_tm_sensor_ops = {
- 	.get_temp = qpnp_tm_get_temp,
- 	.set_trip_temp = qpnp_tm_set_trip_temp,
- };
-@@ -446,7 +446,7 @@ static int qpnp_tm_probe(struct platform_device *pdev)
- 	 * read the trip points. get_temp() returns the default temperature
- 	 * before the hardware initialization is completed.
- 	 */
--	chip->tz_dev = devm_thermal_zone_of_sensor_register(
-+	chip->tz_dev = devm_thermal_of_zone_register(
- 		&pdev->dev, 0, chip, &qpnp_tm_sensor_ops);
- 	if (IS_ERR(chip->tz_dev)) {
- 		dev_err(&pdev->dev, "failed to register sensor\n");
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index e49f58e83513..b1b10005fb28 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -532,9 +532,9 @@ static irqreturn_t tsens_irq_thread(int irq, void *data)
- 	return IRQ_HANDLED;
- }
- 
--static int tsens_set_trips(void *_sensor, int low, int high)
-+static int tsens_set_trips(struct thermal_zone_device *tz, int low, int high)
- {
--	struct tsens_sensor *s = _sensor;
-+	struct tsens_sensor *s = tz->devdata;
- 	struct tsens_priv *priv = s->priv;
- 	struct device *dev = priv->dev;
- 	struct tsens_irq_data d;
-@@ -925,9 +925,9 @@ int __init init_common(struct tsens_priv *priv)
- 	return ret;
- }
- 
--static int tsens_get_temp(void *data, int *temp)
-+static int tsens_get_temp(struct thermal_zone_device *tz, int *temp)
- {
--	struct tsens_sensor *s = data;
-+	struct tsens_sensor *s = tz->devdata;
- 	struct tsens_priv *priv = s->priv;
- 
- 	return priv->ops->get_temp(s, temp);
-@@ -991,7 +991,7 @@ static const struct of_device_id tsens_table[] = {
- };
- MODULE_DEVICE_TABLE(of, tsens_table);
- 
--static const struct thermal_zone_of_device_ops tsens_of_ops = {
-+static const struct thermal_zone_device_ops tsens_of_ops = {
- 	.get_temp = tsens_get_temp,
- 	.set_trips = tsens_set_trips,
- };
-@@ -1044,9 +1044,9 @@ static int tsens_register(struct tsens_priv *priv)
- 
- 	for (i = 0;  i < priv->num_sensors; i++) {
- 		priv->sensor[i].priv = priv;
--		tzd = devm_thermal_zone_of_sensor_register(priv->dev, priv->sensor[i].hw_id,
--							   &priv->sensor[i],
--							   &tsens_of_ops);
-+		tzd = devm_thermal_of_zone_register(priv->dev, priv->sensor[i].hw_id,
-+						    &priv->sensor[i],
-+						    &tsens_of_ops);
- 		if (IS_ERR(tzd))
- 			continue;
- 		priv->sensor[i].tzd = tzd;
 -- 
-2.25.1
-
+An old man doll... just what I always wanted! - Clara
