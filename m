@@ -2,71 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 271A658B0E6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 22:45:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1834B58B133
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 23:39:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234198AbiHEUpP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Aug 2022 16:45:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57360 "EHLO
+        id S238046AbiHEVjo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Aug 2022 17:39:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233844AbiHEUpO (ORCPT
+        with ESMTP id S232791AbiHEVjn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Aug 2022 16:45:14 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA6FDC31
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Aug 2022 13:45:12 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id c17so4967176lfb.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Aug 2022 13:45:12 -0700 (PDT)
+        Fri, 5 Aug 2022 17:39:43 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E7B46D578
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Aug 2022 14:39:42 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id z4so4310770ljn.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Aug 2022 14:39:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=0TL+KsWEH2gAv2tG32X/aHSElzxPjelb7tyuw0X2ktA=;
-        b=hYcV9MvIFC2JU9Eb0aEl0W2IkYnwU0M/7MJe7kNotsxxGb7rzmTAArJIGlnCMEpBFQ
-         pPiHQtdxXaV28TAiAVuC81eH3WsPqIGohFcXFukTVvCtZiwIR4hPqK81mDDeKzuWmPf0
-         ZlIsGm2RxONfAUwc30AgHv9FIrrmDJ12WY/4kxrAyaLjpMxOInOff4TlhRQKFz1lrEVv
-         RVLK/s6DbKoJ5JdBudvbNnT2vKLZ8r7Umm0QVLZ0hz8319frsQSHlFawQLzl07k2CPnU
-         DeRUiJSkfnNdDdQEedQZFUbhnubJIsuRhV77SoCuMn2r1GfYnm+vMucrcek5kDIde1yF
-         wmjw==
+        bh=Ib6oNoeC1y7DWmUGX1sKZNT4F0DH8JMdm8hi9j96RuE=;
+        b=dEwdegAtlsp946F0kCYkkcY24jSOKl3+Nqut8Wt1pdvXqyUYl7/7FfTPIOiIoLjar/
+         DYbjlHAYIyNqczQqwxycAnMkcX7157CtSuvG5YrOXLaFAuPs30i0V6VnHZFjm59svJE6
+         8XjJ4BFWc3xhN7WHSCCHbdkFK2R2GVrzJ8kqERdvxnU3hvmIi9gQxCJLqDqSBpPD+KKX
+         2Xa6r999PQDA+QEH0Cx0+OPdVhDnJ6d6c+5zA6C9QIUKfp37Tfz7zo9mGYfqM3FH6dW7
+         jSXKSlgvCcHkFrRQr34NM5Za7WI8zy2RbYQXhDux00NYvRsFBMOzmw3m5RmkO4DNhIt2
+         c8/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=0TL+KsWEH2gAv2tG32X/aHSElzxPjelb7tyuw0X2ktA=;
-        b=wURV1MDeNqdUP6rTu+6Ow0LcxCPDA+n7ZGkKe/KuiDS/K8JlZgLwfDSBr7hpfEmtST
-         BEJZ6RUPjvlndBXPTF1PZL1rJ0dxH8z1OlP3zp0k881Fg5U5ujvXqnB2yt0pKjPhMrlo
-         auyefI8oS2mIimQrxjrZinu7P6z2JDaaguSV8zXn86gycHaAHcqnGN4F+NT72aKrpwUo
-         ENvfp1VpXY4+AfNikaLibs1DrJBciXD+u5jl1rV1T5emeoAaUexth125BdGHHtXOY+zj
-         m36qNcZ0UVzCPJ9z/+q8HDsbOLtosfkBI+mG3aiRlXv8OVDVUTo1LynBtOhCQ0EaREbf
-         uzTw==
-X-Gm-Message-State: ACgBeo0giwdN81fdO5w5n+kl79QcO/eQVigABnBVudNydJKyTZMti9Ki
-        FddHiyJGDhPxATkcQPAzl5fWug==
-X-Google-Smtp-Source: AA6agR4SKWjC/3ZHqelPX+EtvITTb8dtny30WmQp8msYulc0FhmEzXTUMEHh/FlP/5tgK3Y6QM5mkg==
-X-Received: by 2002:a05:6512:2306:b0:48b:2905:21a8 with SMTP id o6-20020a056512230600b0048b290521a8mr3101462lfu.167.1659732311209;
-        Fri, 05 Aug 2022 13:45:11 -0700 (PDT)
+        bh=Ib6oNoeC1y7DWmUGX1sKZNT4F0DH8JMdm8hi9j96RuE=;
+        b=nZhCzNeQ5Jo8gBsmrYYuVDzUgAKEenO/HqTR2/cIEkPN6FyXR2tSa8fbE5prIh3w20
+         oiiOjCmDKlUOTt9VBiIV/MNeM2/TAiqd4aMa7fKdWRYhFn40Fs3MEzsXN59sdU4hu6kg
+         WW128gjTL4p3yRFV+sokQiR7rD6gcSzJ5FAVoXT0OzHEkQ+BzMQUPjzkBY7PUufUBatW
+         pN2hRNiDvPPJ8DzoAAivhPg4m1viaz/LUQPePNKJlkYSr3Db+lx+bcPeca/dKwo2/OYv
+         ubE2TVzRP+0iQvl0EUlj98Epf/+BAi7RvvKNWPGh3GUqZEtsr3DkvFeo0ZpHfqaOHWo1
+         FSLQ==
+X-Gm-Message-State: ACgBeo23VnPRh5dvuiyDmgyrKfDGQlokgHU5Cd3xvb5qG43PESv8dGJg
+        0SYjuNx89D1qpnOmh6M4VW/rIQ==
+X-Google-Smtp-Source: AA6agR7mXVPjX6BpjKrzHQR728WlcEp54YPNDbHE4HL+JwWX1mBqH/QF6PbWCziisye51GE1kIgDhA==
+X-Received: by 2002:a2e:2e1a:0:b0:25e:4c40:48f4 with SMTP id u26-20020a2e2e1a000000b0025e4c4048f4mr2388553lju.421.1659735580908;
+        Fri, 05 Aug 2022 14:39:40 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s9-20020ac24649000000b0048a9e899693sm579825lfo.16.2022.08.05.13.45.10
+        by smtp.gmail.com with ESMTPSA id f1-20020a056512360100b0048afe02c925sm584278lfs.219.2022.08.05.14.39.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Aug 2022 13:45:10 -0700 (PDT)
-Message-ID: <7cc0f897-1482-5623-2c91-1922a7ceebcf@linaro.org>
-Date:   Fri, 5 Aug 2022 23:45:10 +0300
+        Fri, 05 Aug 2022 14:39:40 -0700 (PDT)
+Message-ID: <9a53b01f-e112-314b-faa1-13f0ed36f595@linaro.org>
+Date:   Sat, 6 Aug 2022 00:39:39 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [External] Re: qcom: Add firmware for Lenovo ThinkPad X13s
+Subject: Re: PSCI domains without OSI support
 Content-Language: en-GB
-To:     Mark Pearson <markpearson@lenovo.com>, linux-firmware@kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Cc:     bjorn.andersson@linaro.org
-References: <9a79936b-70e2-f964-55ac-e2be8e9346ed@lenovo.com>
- <2a4ae0d4-8ba2-a202-0051-6bd7b170bccd@linaro.org>
- <c5b97755-608f-48e6-40ae-22095866a110@lenovo.com>
+To:     Sudeep Holla <sudeep.holla@arm.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vinod.koul@linaro.org>,
+        Linux PM <linux-pm@vger.kernel.org>
+References: <CAA8EJpr2S-81+q-vjmk5i+T-JwaadkRpjCr_oGi7fMf7o3iH3A@mail.gmail.com>
+ <20220727111410.bglx2u26456ray2u@bogus>
+ <CAA8EJprNPJfGjkq2=hexbZn-=t2wKG6ZjSm5Mcbo4JuPQ-sc-A@mail.gmail.com>
+ <20220728084012.jjbmycplye3zuaok@bogus>
+ <CAPDyKFqT23A_4EdBe=2-+6821BzjPvGzsMositM2=Of692iv3A@mail.gmail.com>
+ <20220805160020.fc5s3hv3u5h4gcmv@bogus>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <c5b97755-608f-48e6-40ae-22095866a110@lenovo.com>
+In-Reply-To: <20220805160020.fc5s3hv3u5h4gcmv@bogus>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -77,84 +83,96 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/08/2022 15:43, Mark Pearson wrote:
-> Hi Dmitry
+On 05/08/2022 19:00, Sudeep Holla wrote:
+> On Fri, Aug 05, 2022 at 04:12:42PM +0200, Ulf Hansson wrote:
+>> On Thu, 28 Jul 2022 at 10:40, Sudeep Holla <sudeep.holla@arm.com> wrote:
+>>>
+>>> On Wed, Jul 27, 2022 at 04:24:22PM +0300, Dmitry Baryshkov wrote:
+>>>> On Wed, 27 Jul 2022 at 14:14, Sudeep Holla <sudeep.holla@arm.com> wrote:
+>>>>>
+>>>>> On Wed, Jul 27, 2022 at 12:09:27PM +0300, Dmitry Baryshkov wrote:
+>>>>>> - Allow DTS forcing the PSCI power domains even if OSI enablement fails?
+>>>>>
+>>>>> Meaning DTS flag for this ? If OSI enable fails, why would you want to
+>>>>> still proceed. It is non-compliant and must be fixed if the firmware
+>>>>> supports OSI and expects OSPM to use the same.
+>>>>
+>>>> I'm not sure at this moment. PSCI firmware reports that OSI mode is
+>>>> supported, but then when psci_pd_try_set_osi_mode() tries to switch
+>>>> into OSI mode, it gets NOT_SUPPORTED.
+>>>
+>>> Yikes, fix the damn broken firmware. That is utter non-sense. I don't
+>>> understand why would the firmware authors enable some feature before it
+>>> is ready.
+>>
+>> I certainly agree that the FW is broken and should really have been
+>> fixed, but that seems unlikely to happen when moving forward.
+>>
+>> On the other hand, it's quite common that we try to add workarounds at
+>> the Linux side to fix FW issues. Of course, it depends on what kind of
+>> hacks it means for us to carry.
+>>
+>> In this particular case, I am of the opinion that it looks like the
+>> "hack" may be worth it. Unless I have underestimated the problem, it
+>> seems like a new DT property/flag and a simple if-clause in
+>> psci_pd_try_set_osi_mode() should do the trick for us.
+>>
 > 
-> On 8/5/22 05:36, Dmitry Baryshkov wrote:
->> On 03/08/2022 23:37, Mark Pearson wrote:
->>> The following changes since commit
->>> 150864a4d73e8c448eb1e2c68e65f07635fe1a66:
->>>
->>>     amdgpu partially revert "amdgpu: update beige goby to release 22.20"
->>> (2022-07-25 14:16:04 -0400)
->>>
->>> are available in the Git repository at:
->>>
->>>    
->>> https://github.com/mrhpearson/linux-firmware>>> lenovo-thinkpad-x13s
->>>
->>> for you to fetch changes up to 4ae4ae88918928e15006eb129ad981aa58216b59:
->>>
->>>     qcom: Add firmware for Lenovo ThinkPad X13s (2022-08-03 16:29:07
->>> -0400)
->>
->> Mark, it's so great to see firmware packages for Lenovo laptops being
->> submitted!
->>
->>>
->>> ----------------------------------------------------------------
->>> Mark Pearson (1):
->>>         qcom: Add firmware for Lenovo ThinkPad X13s
->>>
->>>    WHENCE                             |   8 ++++++++
->>>    qcom/LENOVO/21BX/adspr.jsn         |  28 ++++++++++++++++++++++++++++
->>>    qcom/LENOVO/21BX/adspua.jsn        |  29 +++++++++++++++++++++++++++++
->>>    qcom/LENOVO/21BX/battmgr.jsn       |  22 ++++++++++++++++++++++
->>>    qcom/LENOVO/21BX/cdspr.jsn         |  22 ++++++++++++++++++++++
->>>    qcom/LENOVO/21BX/qcadsp8280.mbn    | Bin 0 -> 14367860 bytes
->>>    qcom/LENOVO/21BX/qccdsp8280.mbn    | Bin 0 -> 3575808 bytes
->>>    qcom/LENOVO/21BX/qcdxkmsuc8280.mbn | Bin 0 -> 14392 bytes
->>>    qcom/LENOVO/21BX/qcslpi8280.mbn    | Bin 0 -> 6213632 bytes
+> I don't like the idea of new property/flag for this for simple reason.
+> Once you have that it is impossible to control if downstream new platforms
+> are using it and they will expect it to be maintained once they ship the
+> product.
 
-Another nit to consider. I suppose that these files follow the name for 
-them on the window platform. Another point to consider is to rename the 
-files to follow the usual pattern that we have on other platforms 
-(adsp.mbn instead of qcadsp8280.mbn).
+According to my quick research the requested issue was present on 
+platforms revealed from 2015 (2013?) to 2017. Since sdm845 (December 
+2017) the issue is not present. So this is a part of history rather than 
+current platforms being in need of this quirk.
 
-But as with the paths, the final decision should be probably in hands of 
-Bjorn and linux-firmware maintainers.
+> 
+>> I wouldn't mind maintaining such small parts, when going forward - and
+>> of course I think we should also reject any newer platforms from using
+>> it.
+>>
+> 
+> The only way that we can achieve this IMO is to have quirks based on
+> platform compatible which needs to be updated and can be rejected for
+> newer platforms. New flags means new feature which is expected to be
+> supported for long and hard to control newer platforms not using them.
+
+I see your point. However from my point of view, the DT property allows 
+more finer-grained control.
+
+Compare the semantics:
+- Proprety: assume that the platform is in OSI mode, do not call 
+psci_osi_set_mode().
+
+- Platform compat list: If the psci_osi_set_mode() has failed, ignore 
+the error. I would not dare to blindly assume that e.g. all msm8996 
+devices are in OSI mode.
 
 [skipped]
 
+>> To me, it seems like a pity, if we just decided to leave all those
+>> devices out there in the field, lacking support for deeper idle
+>> states. Don't you think?
 >>
->> P.S. Can we hope to get firmware for older laptops to be published too?
->> It would be really great if it would be possible to provide full support
->> for Yoga C630 or Flex5G using redistributable firmware from linux-firmware.
->>
-> I looked into this previously for the C630 and was nacked I'm afraid.
 > 
-> Going back to the older platforms is a harder ask unfortunately because
-> along with the FW you really need changes in the boot loader and I know
-> I won't win that argument.
+> Sure, but I don't like new flags for handling this for reasons stated
+> above. Unless DT maintainers expect to take "new flag/property" for
+> some reasons that I am not aware of, I prefer the check on existing
+> platform compatible to deal with this problem so that this problem
+> doesn't trickle down to newer platforms as well. Thoughts ?
+> 
+> And please add that we can't add any compatibles that are added later
+> than certain date to that list when we are adding this support.
 
-Well... We would be happy if we can get redistributable FW even without 
-bootloader changes.
+Then we are ruling out existing platforms, which are not yet supported 
+by Linux. Hopefully you meant that we can not extend this list with 
+platforms developed/announced after certain date (I might be slightly 
+wrong here, but I estimate that the end of 2018 as a safe boundary).
 
-We have been successfully running Linux on C630 and Flex5G by manually 
-fetching the firmware from the Windows partitions. Getting it into 
-linux-firmware would help major distros to support those laptops without 
-having to resort to 'read files from Win partition' hacks.
-
-> I'll try again once we get a bit further along with this platform but
-> realistically, the chances of it happening are small. I'm (quite openly)
-> using this PoC project to prove that we can do Linux on one of our ARM
-> laptops and then hope to use our experiences to drive future platforms
-> and get it included fully in the Linux cert program. Right now the X13s
-> is a trial/test project to see how far we can push it.
-
-Yes, let's focus on getting the firmware X13s in, sort all arising 
-questions and then, if possible, use that as a lever to help publishing 
-fw for older models. Fingers crossed.
+Newer platforms (sdm845, 2018, qcs404, 2019, etc) report SET_SUSPEND as 
+supported (and return DENIED in attempt to set the PC mode).
 
 -- 
 With best wishes
