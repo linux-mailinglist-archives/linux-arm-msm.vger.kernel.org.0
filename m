@@ -2,156 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A108958A4F2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 05:18:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91A6B58A63D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 08:57:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236237AbiHEDS3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Aug 2022 23:18:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44272 "EHLO
+        id S240047AbiHEG5k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Aug 2022 02:57:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231240AbiHEDS1 (ORCPT
+        with ESMTP id S236168AbiHEG5j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Aug 2022 23:18:27 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81B2B1ADBD;
-        Thu,  4 Aug 2022 20:18:26 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id p14-20020a17090a74ce00b001f4d04492faso1588739pjl.4;
-        Thu, 04 Aug 2022 20:18:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc;
-        bh=dGYMCOz7SHHXIGnQZJoT2yL9F7+ItkeSLAYiEd5KAOI=;
-        b=ELs5vsFdsHHaBNhkddTaTNfbgVIbnI2C2d1WpHhJSbxQVMworf7ODpv8biIDO1XwDJ
-         WapH7MXVx9tx+txZqCvysNg/wPD9koNRG8MIjNn5NO+xiW1mSAIGPGRj29orr3K+nQQr
-         1c2gXJNo6lHzrcD2OZ/MWaGupThdmAIk4i8xtrNVAuWmFBIxW0Ps2uCnRDsSJaMm67tH
-         E2BGYGzJQsN0skjyGVCXKqYg3cCwIVFkAeZBzUfZ0BF33utsDcNCRFyM3W3dytgzpSlZ
-         l9y5i3h2jUnsBj7moErUp9HV2NHD67xNZtnI5ozvNE1CpxoEZyAruvpFiBCMgMV5RSum
-         a4mQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=dGYMCOz7SHHXIGnQZJoT2yL9F7+ItkeSLAYiEd5KAOI=;
-        b=q2mF1A6wXcg2wiOejZAo8UvcjqbpgONEuKp1D753K9DUG/OEU0gNL3gIP+p/n2CjKo
-         WfouFGU5ZKtLEsUMo1OB3n2RqWy+DGu7l/RvOXz35YTgx70c+ErGwV+k2c7n2zV+/UEO
-         bvBdNJDwTk+rlFw22AhLMoOavpYBkty3s5QA9FDs6J2ncPd7DsLJGSu63Iy6qiPPjeMV
-         6xOyFrVDRkMR5hkKazrbMgNzF9xbwMsCkHIWZ2J82EflMCVpYuao2+CcQiGDxRfyYBed
-         DhlDU6TbnhlZwNnSZHVqv7qgcMbJ8mlWsuKHK1IJDPQJOHjWlh8KaCOL+isSgG7AZUc4
-         BWNw==
-X-Gm-Message-State: ACgBeo0o2lvTYA07fqHuN2IwtoCcF/dBET52qpUL6hgRz9PCSvku+aI5
-        1bAM5KRlg9CO8tO7Z9yMfjU=
-X-Google-Smtp-Source: AA6agR7wqzg/IAW3j2aI3DIRX0dQJZG84zUNQ3wTDJZQ7py6klBJvNNGqj5JveAZz4Mo/yzbIsCmpw==
-X-Received: by 2002:a17:902:aa4b:b0:164:11ad:af0f with SMTP id c11-20020a170902aa4b00b0016411adaf0fmr4759329plr.54.1659669506007;
-        Thu, 04 Aug 2022 20:18:26 -0700 (PDT)
-Received: from debian.me (subs02-180-214-232-7.three.co.id. [180.214.232.7])
-        by smtp.gmail.com with ESMTPSA id z12-20020a170903018c00b0016f9355c12csm146644plg.288.2022.08.04.20.18.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Aug 2022 20:18:25 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-        id 43913103D6D; Fri,  5 Aug 2022 10:18:22 +0700 (WIB)
-Date:   Fri, 5 Aug 2022 10:18:21 +0700
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     Elliot Berman <quic_eberman@quicinc.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-doc@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
+        Fri, 5 Aug 2022 02:57:39 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A932973936;
+        Thu,  4 Aug 2022 23:57:37 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6D71461291;
+        Fri,  5 Aug 2022 06:57:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F29C433B5;
+        Fri,  5 Aug 2022 06:57:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1659682656;
+        bh=7wVSYAXfgVRFomBLJ5fepMw1/KUsFhNQwWZThUeegwY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=lZy9/fITFaey8t+kOVz6102aWgEQed/6TU/EP200llXv1YeHyxlrtAjahm/CYBJYR
+         C9hDI6UIHfrro+AWYmxu/Mq/jDokusSgR/BQnBVC0DZIF0TN25Zyb9STlCFCR2uuho
+         YCzwhA1U5w9/4ZAotSCw9MPvonjVuXE0Yu5bB9r8XC2eg0GzWUNG296yCZ2eGtWV/r
+         BRBEU7KYN5g4KNJEq/GXu+DxvVPTvv4VuVYM0plm0bRzNHdbwbHFb9W/STvm8ooOSv
+         GDrFLnH32f/UuwPb0tV3ayRPj68OAYwKEwzwdNVIwYColT0LK1vsSbErGEhuTMJwEv
+         pge1KeVNxzkcg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oJrHU-0007IR-27; Fri, 05 Aug 2022 08:58:00 +0200
+Date:   Fri, 5 Aug 2022 08:58:00 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     kernel test robot <lkp@intel.com>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>, kbuild-all@lists.01.org,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 01/11] docs: gunyah: Introduce Gunyah Hypervisor
-Message-ID: <YuyL/ThXq5FTdDF/@debian.me>
-References: <20220801211240.597859-1-quic_eberman@quicinc.com>
- <20220801211240.597859-2-quic_eberman@quicinc.com>
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
+        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 6/9] usb: dwc3: qcom: fix peripheral and OTG suspend
+Message-ID: <Yuy/eM1Wo+gDAJPQ@hovoldconsulting.com>
+References: <20220804151001.23612-7-johan+linaro@kernel.org>
+ <202208050544.ijUhoUyB-lkp@intel.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-        protocol="application/pgp-signature"; boundary="CDe3ZMtaoNUi6bsc"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220801211240.597859-2-quic_eberman@quicinc.com>
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <202208050544.ijUhoUyB-lkp@intel.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, Aug 05, 2022 at 05:38:30AM +0800, kernel test robot wrote:
+> Hi Johan,
+> 
+> I love your patch! Perhaps something to improve:
+> 
+> [auto build test WARNING on usb/usb-testing]
+> [also build test WARNING on linus/master next-20220804]
+> [cannot apply to robh/for-next v5.19]
+> [If your patch is applied to the wrong git tree, kindly drop us a note.
+> And when submitting patch, we suggest to use '--base' as documented in
+> https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> 
+> url:    https://github.com/intel-lab-lkp/linux/commits/Johan-Hovold/usb-dwc3-qcom-fix-wakeup-implementation/20220804-231122
+> base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git usb-testing
+> config: arc-randconfig-r002-20220804 (https://download.01.org/0day-ci/archive/20220805/202208050544.ijUhoUyB-lkp@intel.com/config)
+> compiler: arc-elf-gcc (GCC) 12.1.0
+> reproduce (this is a W=1 build):
+>         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+>         chmod +x ~/bin/make.cross
+>         # https://github.com/intel-lab-lkp/linux/commit/f3778ca026b16474e49c5e0188a0eb91d73eef2f
+>         git remote add linux-review https://github.com/intel-lab-lkp/linux
+>         git fetch --no-tags linux-review Johan-Hovold/usb-dwc3-qcom-fix-wakeup-implementation/20220804-231122
+>         git checkout f3778ca026b16474e49c5e0188a0eb91d73eef2f
+>         # save the config file
+>         mkdir build_dir && cp config build_dir/.config
+>         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arc SHELL=/bin/bash drivers/usb/dwc3/
+> 
+> If you fix the issue, kindly add following tag where applicable
+> Reported-by: kernel test robot <lkp@intel.com>
+> 
+> All warnings (new ones prefixed by >>):
+> 
+>    drivers/usb/dwc3/dwc3-qcom.c: In function 'dwc3_qcom_read_usb2_speed':
+> >> drivers/usb/dwc3/dwc3-qcom.c:313:25: warning: variable 'hcd' set but not used [-Wunused-but-set-variable]
+>      313 |         struct usb_hcd *hcd;
+>          |                         ^~~> 
 
---CDe3ZMtaoNUi6bsc
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'm not seeing this one with gcc-10.3.0, but I'll slap a __maybe_unused
+in there to keep your robot's W=1 builds quiet.
 
-On Mon, Aug 01, 2022 at 02:12:30PM -0700, Elliot Berman wrote:
-> +Communication with the resource manager from each guest VM happens with =
-message-queue.rst. Details
-> +about the specific messages can be found in drivers/virt/gunyah/rsc_mgr.c
-> +
-> +::
-> +  +-------+   +--------+   +--------+
-> +  |  RM   |   |  VM_A  |   |  VM_B  |
-> +  +-.-.-.-+   +---.----+   +---.----+
-> +    | |           |            |
-> +  +-.-.-----------.------------.----+
-> +  | | \=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D/             |    |
-> +  |  \=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D/     |
-> +  |            Gunyah               |
-> +  +---------------------------------+
-> +
-=20
-Hi,
-
-The diagram above triggers htmldocs warnings:
-
-Documentation/virt/gunyah/index.rst:71: WARNING: Unexpected indentation.
-Documentation/virt/gunyah/index.rst:72: WARNING: Block quote ends without a=
- blank line; unexpected unindent.
-
-I have applied the fixup:
-
-diff --git a/Documentation/virt/gunyah/index.rst b/Documentation/virt/gunya=
-h/index.rst
-index 95ba9b71ab30d2..b74f7a6f9d4904 100644
---- a/Documentation/virt/gunyah/index.rst
-+++ b/Documentation/virt/gunyah/index.rst
-@@ -65,6 +65,7 @@ Communication with the resource manager from each guest V=
-M happens with message-
- about the specific messages can be found in drivers/virt/gunyah/rsc_mgr.c
-=20
- ::
-+
-   +-------+   +--------+   +--------+
-   |  RM   |   |  VM_A  |   |  VM_B  |
-   +-.-.-.-+   +---.----+   +---.----+
-
-Thanks.
-
---=20
-An old man doll... just what I always wanted! - Clara
-
---CDe3ZMtaoNUi6bsc
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTsebsWCPCpxY9T92n/R0PGQ3AzwAUCYuyL8QAKCRD/R0PGQ3Az
-wIH4AXwMEGCNxDAFPNOHop9sYqB9aXN0jkTDhEyMg2yMS/FmHyc3YpZWZzibpTNO
-vpSWGswBgLHuROnpjtQaE+LrM3t1yFcRPbTqSAq0SROAboKu1LFGQBkZNScxtMvK
-4VnHdleViQ==
-=PK/l
------END PGP SIGNATURE-----
-
---CDe3ZMtaoNUi6bsc--
+Johan
