@@ -2,71 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F16E658ACB3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 16:58:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8355B58AD24
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 17:41:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241086AbiHEO6W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Aug 2022 10:58:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44998 "EHLO
+        id S240845AbiHEPlx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Aug 2022 11:41:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241033AbiHEO6J (ORCPT
+        with ESMTP id S238592AbiHEPlw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Aug 2022 10:58:09 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BB7E65569
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Aug 2022 07:58:00 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id 186-20020a1c02c3000000b003a34ac64bdfso1823106wmc.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Aug 2022 07:58:00 -0700 (PDT)
+        Fri, 5 Aug 2022 11:41:52 -0400
+Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D325275F5
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Aug 2022 08:41:49 -0700 (PDT)
+Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-10e6bdbe218so3298485fac.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Aug 2022 08:41:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=Ig27WRkfztA7dqT0A9KX7uwx0v4kJP7JKwqv4NKg4G4=;
-        b=WN+INDc+KXSjVG027ata+4qfVunryIEZU6sgh3iax/8D9/p2S9ztTZRMQ4etCKaxnt
-         vUgz/8dusKxhBI9HwFhN/PcjjXREeiS8k5tPfljZLpeAJ0S+2XyXsKqfKgkg0iRsByN8
-         B8xVyZHnuexjAehxQZ7BKes+eB+3LQiVQQaB2wplcEWVYLfCvCXsfI+Th5EiPw5Y+TCx
-         sSH8N/xB/+s7FAxX5lb7U+jZ9ot78qPkX9lMKZDs1tXdCyNkfOnCRWoaYGIZMr2euZFh
-         TySZYRhFEhEQIjS5H+nHRp3NdECfJ/496KkIdlSZ+s3YecaACOc1UIqT3bXR1WWZsmno
-         WMWg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=lOl/GNDv/KDZqcxla19dOB87ZLzXemHoorThzLeF0nk=;
+        b=SEg2h8EVLAfFh7GhldRUFlAwtZoATfI03IG9hm1z4XE4v5EpzjDBGOCLaq2Tra2uM3
+         Z/W8+5F2Iyx4aIttXSjr1k33Uvt9OeoHkJ+IeKybmB5ARUPYN7HoU2LoOI+hXYkMR1vo
+         rXJRVGq7y/KqWHVdL7njjI6ji/KFmZFLgg4BejAgcPPLGxQR0irCMnGvSLDG4iSQgj3X
+         5FV+XK8hjXV6qEpYIqfN9ASatNMKYP/vHlpEGyXuZahlH9Ar41d2Pgr1UMK6c+2y7DtM
+         3CLYwZcPacIcYKdAVIsZLo6EhRJp8KPO49vHBwBAJlpvE5bVP6RpBtB0ADO46+mV5N11
+         RfJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=Ig27WRkfztA7dqT0A9KX7uwx0v4kJP7JKwqv4NKg4G4=;
-        b=fA5NGfhU959r4XnrS698Je8Y0aLl9YPF46D9rXpZTtSKMx/xUEG82JwoR98EOyoO//
-         im+Ht3Wuf4PE4NFWuYCSzIv12WYrQJ/U9cY1NKcACJkkd7a+UOb5QOQ6o52a4JJ3l2Mv
-         90aZ0S2hENg0UrvNIVpSzb0m1a9duExsvknjqJqO3AdbsQT+I+u7PHRj9ywvN/ZjJJUK
-         RjRvZk8a4Jm+N4rP6pn9sVnNfkoEajBJ8l1tPvmGNRr5nUiohM/ZkOX2XPiLzju6VPZb
-         vZFWwVpLnx+qZoEj3jf4/8vQ7mWYYB7QjKm1vdExyPBsQJTtLYB+c5cN8SBpVFxWbvNI
-         1QIA==
-X-Gm-Message-State: ACgBeo3EJsH8wTsd8PocoRhFLiqWcTLQU4s3S6zW+Z8MwbmvvSOYxZ8a
-        vle5F/1wkhBxw1fLwpLfU5bLRQ==
-X-Google-Smtp-Source: AA6agR4O1T7LTxjrOyXb06FtUVWTnJXQ5ps/gLDs0Xl/YCEB7dj1QGhOpBJJLpyUARnDYEE1ldkRBQ==
-X-Received: by 2002:a05:600c:a02:b0:39c:97cc:82e3 with SMTP id z2-20020a05600c0a0200b0039c97cc82e3mr9770907wmp.97.1659711480499;
-        Fri, 05 Aug 2022 07:58:00 -0700 (PDT)
-Received: from mai.box.freepro.com ([2a05:6e02:1041:c10:aef0:8606:da6b:79ef])
-        by smtp.gmail.com with ESMTPSA id y1-20020adfd081000000b0022159d92004sm3102448wrh.82.2022.08.05.07.57.59
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=lOl/GNDv/KDZqcxla19dOB87ZLzXemHoorThzLeF0nk=;
+        b=4/iPUhnGJM7jJoOC+PQxc2aCZkBDaoU6LP1oiIy9hSnkueBRUqPTT1cieJUFWLkH4/
+         kjr8l6KnaGEMtSVJrMEsTNcnxr9HSF7mIrEmUfD6QkUW0vmm23Wr5otL4BBctIrT13v5
+         yDgExUHRYoXs4f4YlmncVyimEwwfmkmB51dml5v868ZKltX/kflmXjdsTGaramrUC0EP
+         /yAdKn0RnxafSX/bnDYXtONiDvsOB0NKO++PsY16sMakSdznAuzKLIjXk6jbSwg7pfRl
+         670RpRxnVGVxhwqgiWI5GCC7Q9yJEVJm/XSP+8MoZIES2GMwbiE0GkrGp9RB+YxNbnQL
+         Dgug==
+X-Gm-Message-State: ACgBeo24neWX80FEsUOnWC3bZieS9MVXrElNp4Dmti0rjUYx5rMAUtoG
+        S64ofYD0/hv/9ek/S46ecPSiYQ==
+X-Google-Smtp-Source: AA6agR7S++p3NhUJDcoiw3cYSM27nFYZSPnG8O9ctA346/+CKhxkqi2xphHJwmSQ1ttlZUzT9zVrtQ==
+X-Received: by 2002:a05:6870:5591:b0:10e:20d0:b2cb with SMTP id n17-20020a056870559100b0010e20d0b2cbmr6746473oao.12.1659714108120;
+        Fri, 05 Aug 2022 08:41:48 -0700 (PDT)
+Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id l15-20020a4a854f000000b004357c1d1efasm753500ooh.21.2022.08.05.08.41.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Aug 2022 07:58:00 -0700 (PDT)
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-To:     daniel.lezcano@linaro.org, rafael@kernel.org
-Cc:     rui.zhang@intel.com, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT)
-Subject: [PATCH v1 11/26] thermal/drivers/qcom: Use generic thermal_zone_get_trip() function
-Date:   Fri,  5 Aug 2022 16:57:14 +0200
-Message-Id: <20220805145729.2491611-12-daniel.lezcano@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220805145729.2491611-1-daniel.lezcano@linaro.org>
-References: <20220805145729.2491611-1-daniel.lezcano@linaro.org>
+        Fri, 05 Aug 2022 08:41:47 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org, johan+linaro@kernel.org
+Subject: [PATCH] phy: qcom: edp: Postpone clk_set_rate until the PLL is up
+Date:   Fri,  5 Aug 2022 08:44:32 -0700
+Message-Id: <20220805154432.546740-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,80 +71,105 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The thermal framework gives the possibility to register the trip
-points with the thermal zone. When that is done, no get_trip_* ops are
-needed and they can be removed.
+When the platform was booted with the involved clocks enabled the
+clk_set_rate() of the link and pixel clocks will perculate to the
+children, which will fail to update because the PHY driver has just shut
+down the PLL.
 
-Convert ops content logic into generic trip points and register them with the
-thermal zone.
+Postpone the clock rate updates until the PLL is back online to avoid
+reconfiguring the clocks while the PLL is not ticking.
 
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Fixes: f199223cb490 ("phy: qcom: Introduce new eDP PHY driver")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 39 +++++++++------------
- 1 file changed, 17 insertions(+), 22 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-edp.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-index be785ab37e53..127e8c90211c 100644
---- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-+++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-@@ -263,17 +263,17 @@ static int qpnp_tm_update_critical_trip_temp(struct qpnp_tm_chip *chip,
- 	return qpnp_tm_write(chip, QPNP_TM_REG_SHUTDOWN_CTRL1, reg);
+diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
+index 7e3570789845..b66b83c388ed 100644
+--- a/drivers/phy/qualcomm/phy-qcom-edp.c
++++ b/drivers/phy/qualcomm/phy-qcom-edp.c
+@@ -272,31 +272,30 @@ static int qcom_edp_configure_pll(const struct qcom_edp *edp)
+ 	return 0;
  }
  
--static int qpnp_tm_set_trip_temp(struct thermal_zone_device *tz, int trip, int temp)
-+static int qpnp_tm_set_trip_temp(struct thermal_zone_device *tz, int trip_id, int temp)
+-static int qcom_edp_set_vco_div(const struct qcom_edp *edp)
++static int qcom_edp_set_vco_div(const struct qcom_edp *edp, unsigned long *pixel_freq)
  {
- 	struct qpnp_tm_chip *chip = tz->devdata;
--	const struct thermal_trip *trip_points;
-+	struct thermal_trip trip;
- 	int ret;
+ 	const struct phy_configure_opts_dp *dp_opts = &edp->dp_opts;
+-	unsigned long pixel_freq;
+ 	u32 vco_div;
  
--	trip_points = of_thermal_get_trip_points(chip->tz_dev);
--	if (!trip_points)
--		return -EINVAL;
-+	ret = thermal_zone_get_trip(chip->tz_dev, trip_id, &trip);
+ 	switch (dp_opts->link_rate) {
+ 	case 1620:
+ 		vco_div = 0x1;
+-		pixel_freq = 1620000000UL / 2;
++		*pixel_freq = 1620000000UL / 2;
+ 		break;
+ 
+ 	case 2700:
+ 		vco_div = 0x1;
+-		pixel_freq = 2700000000UL / 2;
++		*pixel_freq = 2700000000UL / 2;
+ 		break;
+ 
+ 	case 5400:
+ 		vco_div = 0x2;
+-		pixel_freq = 5400000000UL / 4;
++		*pixel_freq = 5400000000UL / 4;
+ 		break;
+ 
+ 	case 8100:
+ 		vco_div = 0x0;
+-		pixel_freq = 8100000000UL / 6;
++		*pixel_freq = 8100000000UL / 6;
+ 		break;
+ 
+ 	default:
+@@ -306,15 +305,13 @@ static int qcom_edp_set_vco_div(const struct qcom_edp *edp)
+ 
+ 	writel(vco_div, edp->edp + DP_PHY_VCO_DIV);
+ 
+-	clk_set_rate(edp->dp_link_hw.clk, dp_opts->link_rate * 100000);
+-	clk_set_rate(edp->dp_pixel_hw.clk, pixel_freq);
+-
+ 	return 0;
+ }
+ 
+ static int qcom_edp_phy_power_on(struct phy *phy)
+ {
+ 	const struct qcom_edp *edp = phy_get_drvdata(phy);
++	unsigned long pixel_freq;
+ 	int timeout;
+ 	int ret;
+ 	u32 val;
+@@ -363,7 +360,7 @@ static int qcom_edp_phy_power_on(struct phy *phy)
+ 	writel(0x01, edp->tx1 + TXn_TRAN_DRVR_EMP_EN);
+ 	writel(0x04, edp->tx1 + TXn_TX_BAND);
+ 
+-	ret = qcom_edp_set_vco_div(edp);
++	ret = qcom_edp_set_vco_div(edp, &pixel_freq);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -409,8 +406,15 @@ static int qcom_edp_phy_power_on(struct phy *phy)
+ 
+ 	writel(0x19, edp->edp + DP_PHY_CFG);
+ 
+-	return readl_poll_timeout(edp->edp + DP_PHY_STATUS,
+-				  val, val & BIT(1), 500, 10000);
++	ret = readl_poll_timeout(edp->edp + DP_PHY_STATUS,
++				 val, val & BIT(1), 500, 10000);
 +	if (ret)
 +		return ret;
- 
--	if (trip_points[trip].type != THERMAL_TRIP_CRITICAL)
-+	if (trip.type != THERMAL_TRIP_CRITICAL)
- 		return 0;
- 
- 	mutex_lock(&chip->lock);
-@@ -299,22 +299,17 @@ static irqreturn_t qpnp_tm_isr(int irq, void *data)
- 
- static int qpnp_tm_get_critical_trip_temp(struct qpnp_tm_chip *chip)
- {
--	int ntrips;
--	const struct thermal_trip *trips;
--	int i;
--
--	ntrips = of_thermal_get_ntrips(chip->tz_dev);
--	if (ntrips <= 0)
--		return THERMAL_TEMP_INVALID;
--
--	trips = of_thermal_get_trip_points(chip->tz_dev);
--	if (!trips)
--		return THERMAL_TEMP_INVALID;
--
--	for (i = 0; i < ntrips; i++) {
--		if (of_thermal_is_trip_valid(chip->tz_dev, i) &&
--		    trips[i].type == THERMAL_TRIP_CRITICAL)
--			return trips[i].temperature;
-+	struct thermal_trip trip;
-+	int i, ret;
 +
-+	for (i = 0; i < thermal_zone_get_num_trips(chip->tz_dev); i++) {
++	clk_set_rate(edp->dp_link_hw.clk, edp->dp_opts.link_rate * 100000);
++	clk_set_rate(edp->dp_pixel_hw.clk, pixel_freq);
 +
-+		ret = thermal_zone_get_trip(chip->tz_dev, i, &trip);
-+		if (ret)
-+			continue;
-+
-+		if (trip.type == THERMAL_TRIP_CRITICAL)
-+			return trip.temperature;
- 	}
++	return 0;
+ }
  
- 	return THERMAL_TEMP_INVALID;
+ static int qcom_edp_phy_power_off(struct phy *phy)
 -- 
-2.25.1
+2.35.1
 
