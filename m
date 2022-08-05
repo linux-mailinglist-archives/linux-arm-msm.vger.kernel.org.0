@@ -2,142 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 06C6A58A835
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 10:40:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C1F858A8AC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 11:23:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235621AbiHEIkP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Aug 2022 04:40:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58336 "EHLO
+        id S240357AbiHEJXY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Aug 2022 05:23:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234956AbiHEIkO (ORCPT
+        with ESMTP id S233773AbiHEJXV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Aug 2022 04:40:14 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A850C64;
-        Fri,  5 Aug 2022 01:40:12 -0700 (PDT)
+        Fri, 5 Aug 2022 05:23:21 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 857EB78203;
+        Fri,  5 Aug 2022 02:23:20 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 1239BB82659;
-        Fri,  5 Aug 2022 08:40:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB55C433D6;
-        Fri,  5 Aug 2022 08:40:08 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1B2ED6181A;
+        Fri,  5 Aug 2022 09:23:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C628C433D7;
+        Fri,  5 Aug 2022 09:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1659688809;
-        bh=hAlOWo0xSVS1q+XjsMEjNMfwAR8lstA2lMQ30Qmj/V8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=QdrmKQ5hAFYAOFqUDfvhlIll4nYmCnsUP//sQ+J7r0UxNJiuPIBQkyrChaZH4I/Ah
-         orlYKPOQKJYgxbqZDy5WykOFeKLQhMKhP14Bd1kgdML9VNzr5o2GvsbwAEOH6x8Ezj
-         gEj7LwrgsQB/v4COdsgGSGpJRgXHxLuyIoxF4/p/5q3OHLSTqvR/YlEMoewfdqsLFA
-         hpzNYh6ztezevoe7rSP06oKlwkDxM/lQZ7MnqslLYddMAuKWPE2YPgx+oHTMXsZ/JU
-         c0qObE9ymz6oFhGNO7ye/aCL3NT7H75B0uieX0Q8cxnN8kvxYHRfQdgM2TMnS/293k
-         p/M1JecFKsBkQ==
+        s=k20201202; t=1659691399;
+        bh=DAxKUz0LlJb4IegCrjgY4Md5USCcmXrIxdb4ljvc8co=;
+        h=From:To:Cc:Subject:Date:From;
+        b=PfKtlMjOlT8zzvd9fyqZZQ3IKWRHBzrJaU1RWHFPCwzIddSmYtJnGe6ckjTiLuwbi
+         jKz7wlW565rQRieSQAYioEIWkPZUWE1ZEWGkXStV1PlMfNMrBMEGQxa+78nrXzFkfh
+         /DhDvq7PEuCjskgq9LBB1nppX+d6lAzPDMJg/B9zEof+TBLxAmSN24xLjfP2Qjke2m
+         xCLoy0sVe1RF18aAL6a+d0r1nYJM/yLdQa2RWb9kJK2sYi7avLRjoDhNPM0sHPqYjl
+         Z0YPpMntJHjXlBQtGmaarntrncLUh3/C2pQNtKyvRLMjCLqirgErt7CL9qk9gG9CGA
+         +jzzWPZmW2coQ==
 Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oJssi-0008UA-Bi; Fri, 05 Aug 2022 10:40:32 +0200
-Date:   Fri, 5 Aug 2022 10:40:32 +0200
-From:   Johan Hovold <johan@kernel.org>
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1oJtYU-0001J9-SX; Fri, 05 Aug 2022 11:23:43 +0200
+From:   Johan Hovold <johan+linaro@kernel.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s: Add LID
- switch
-Message-ID: <YuzXgGQkLEqwqp31@hovoldconsulting.com>
-References: <20220730193617.1688563-1-bjorn.andersson@linaro.org>
+        linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 0/7] arm64: dts: qcom: sc8280xp: HID wakeup sources and alt. touchpad
+Date:   Fri,  5 Aug 2022 11:23:10 +0200
+Message-Id: <20220805092317.4985-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220730193617.1688563-1-bjorn.andersson@linaro.org>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jul 30, 2022 at 12:36:17PM -0700, Bjorn Andersson wrote:
-> Add gpio-keys for exposing the LID switch state.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 25 +++++++++++++++++++
->  1 file changed, 25 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> index 84dc92dda0b8..f3246cc13d15 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> @@ -7,6 +7,8 @@
->  /dts-v1/;
->  
->  #include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/input/gpio-keys.h>
-> +#include <dt-bindings/input/input.h>
->  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->  
->  #include "sc8280xp.dtsi"
-> @@ -26,6 +28,21 @@ backlight {
->  		pinctrl-0 = <&edp_bl_en>, <&edp_bl_pwm>;
->  	};
->  
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&hall_int_state>;
-> +
-> +		switch-lid {
-> +			gpios = <&tlmm 107 GPIO_ACTIVE_LOW>;
-> +			linux,input-type = <EV_SW>;
-> +			linux,code = <SW_LID>;
-> +			wakeup-source;
-> +			wakeup-event-action = <EV_ACT_DEASSERTED>;
-> +		};
-> +	};
-> +
->  	vreg_edp_bl: regulator-edp-bl {
->  		compatible = "regulator-fixed";
->  
-> @@ -347,6 +364,14 @@ reset {
->  		};
->  	};
->  
-> +	hall_int_state: hall-int-state {
+This series clean up the sc8280xp CRD and X13s HID nodes somewhat and
+marks the keyboard and touchpad as wakeup sources.
 
-This node should go before the keyboard node to maintain the sort order.
+Included is also support for the alternate (second-source) touchpad
+found on some X13s laptops. Note that the node is disabled for now as
+ideally the boot firmware should be determining which touchpad is
+actually populated.
 
-Also, none of the other labels have a "state" suffix and the other
-active-low pin node names have a "-n" suffix.
+With some additional fixes it is possible to have both nodes enabled and
+letting Linux do the probing, but let's wait for a conclusion to the
+discussion about whether that is desirable before enabling them both:
 
-So I believe this should be
-
-	hall_int_n: hall-int-n-state
-
-for consistency.
-
-> +		pins = "gpio107";
-> +		function = "gpio";
-> +
-
-Newline not needed (nor used in the other nodes).
-
-> +		input-enable;
-> +		bias-disable;
-> +	};
-> +
->  	qup0_i2c4_default: qup0-i2c4-default-state {
->  		pins = "gpio171", "gpio172";
->  		function = "qup4";
-
-Looks good otherwise and appears to work as intended:
-
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
+	https://lore.kernel.org/all/YuJXMHoT4ijUxnRb@hovoldconsulting.com
 
 Johan
+
+
+Johan Hovold (7):
+  arm64: dts: qcom: sc8280xp-crd: disable touchscreen pull-up
+  arm64: dts: qcom: sc8280xp-crd: move HID pin config
+  arm64: dts: qcom: sc8280xp-crd: mark HID wakeup sources
+  arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s: disable touchscreen
+    pull-up
+  arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s: move HID pin config
+  arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s: mark HID wakeup
+    sources
+  arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s: add alternate
+    touchpad
+
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     | 22 +++++++++--
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 38 +++++++++++++++++--
+ 2 files changed, 54 insertions(+), 6 deletions(-)
+
+-- 
+2.35.1
+
