@@ -2,75 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0ED0458AB6B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 15:12:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 23CE858AB6D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 15:12:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240565AbiHENMg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Aug 2022 09:12:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35238 "EHLO
+        id S240587AbiHENMq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Aug 2022 09:12:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240497AbiHENMg (ORCPT
+        with ESMTP id S237246AbiHENMp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Aug 2022 09:12:36 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3FA71F2E1
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Aug 2022 06:12:33 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id c17so3397415lfb.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Aug 2022 06:12:33 -0700 (PDT)
+        Fri, 5 Aug 2022 09:12:45 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C60791AF15
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Aug 2022 06:12:42 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id d14so3330323lfl.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Aug 2022 06:12:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=32oPY26HyZpCLO4OQmtTa4kmQRSIB5Bf+mmIizddE0U=;
-        b=DVwqN94Pleq+XK1w7wpI6aecDOgGaxvp+PEXCn5D891TmajdP6/ervyiTeft18CTLE
-         4irKTzYr4CkfTGGgyEeJse6Oi2ZvBmNXxY0W07A1Os4I90T3u4+h0Mz+7E3b94zdAD0+
-         zvGRA8b9WEHDXGJ7fjvFEvUrM1rRCHH+0uXsBCPfO3D5O41wkeWZHwAPnG6W5AVN+/fv
-         XVjLofjHBfr3fYDn34lOvGsGJD80hs166sO2E9R0CmUHY4UBf9dMzpK4KVHeTwp8q+Qy
-         HLd5oPrHaEhD9d6k1KLGeJ8k/DSfOiOGt0ZWZ3Ds7+pnIrUdT6stOqbziFmGvhGprUs0
-         veKg==
+        bh=t/8LVIjMjMtifqjxq4IosBgupuLi3Ozw09/5VJFa+fM=;
+        b=tGlkH0R5QgmO3NyvNYVmpxwgU69IEQmZqDRmCF7+RvZHDSjauqVRjuXnhiMjU/0Hxu
+         pp1OWNJePW4LBTLEI/whfNN++jsQfkYQFSjlPuU7a+my41xaN6UcIcvT4795XY7ykyzf
+         xqOGnGXVvKDqcPMMvJLD9RqKFLY4fINVTl0fPA3TE29aZZZF6zbHMiyAwaHI+dK7FxoW
+         Xw7tiOyJ8lnpFkd3vT83rdvCCiLBQJAAUwJ++VCPHS3ywxHZBprd9sdK9pJ7CGBuJaAj
+         Ymbbn/AcX4+cyF7/gJzi7I3XeOW2ULhmKIBAahOVrDXh3QYcgHWaMp++nBYhfFf8UfYd
+         rdnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=32oPY26HyZpCLO4OQmtTa4kmQRSIB5Bf+mmIizddE0U=;
-        b=mqpjQx5sMNRRfp6Vn9+qg/V5OMMJUC/qF5ftXtNvAMPtltRhL33345uirqm58yxUC8
-         LhKl/ZZl3nfJOhcQwM57ADd49Dju5EfcdbWP6kTYe2Se7F7jGCds43xDNaxWL/fkNi2i
-         0I9K5NMCl+ncwI9s5UmmO2173N7WwX3U8z7S648XhncbWYcOOhatnbYSNEQl2u/xf+In
-         PkJ0odimp+Ep5o6b9//OqLespoC1Wzg6e0sn+Hi/bH7SQ8lcu+NGQhyLmw6GhIqevaOx
-         UrdLKOoqBYKF1HjCfxca5N3l9CjasrBllKzFLGNQGnHmtZqdV2OD9r4QhdNNyMQJat6o
-         mcaA==
-X-Gm-Message-State: ACgBeo1AGOBVt6Gu9Z3KFGWUxt5Iy+E0XhSwfdZfqBgRYbAVLpQtJMIH
-        LhVLnNe4Qzl2ZSDsn6TvzC5xiQ==
-X-Google-Smtp-Source: AA6agR5OYw7pufokfC0v4jIrBZkOUQFYx/Ur2tt4AI4vbADbi6FK0+P0lxEsSDSo+iupn6XfNK0aXA==
-X-Received: by 2002:a05:6512:3c91:b0:48b:f05:7caf with SMTP id h17-20020a0565123c9100b0048b0f057cafmr2562548lfv.455.1659705152033;
-        Fri, 05 Aug 2022 06:12:32 -0700 (PDT)
+        bh=t/8LVIjMjMtifqjxq4IosBgupuLi3Ozw09/5VJFa+fM=;
+        b=LfWrxK6nKr5/Ny4qh2VB2wGLxl7rDwyOo7HrcMG/DGc9qyLO+tX8X6XGSPv5GdrqFu
+         nG4qqDQIiZTb9+1d88NF4aSXXmLDJPxaCQugs9AdpyVzrUZdSW8Sz0dMbkuJkrQyVhvt
+         bPiau5CnsffcHdG/KKecymahEeyJ2n89eRbHBllcUiJxVckbJwI3NNSVL/lcWaMhBRNQ
+         e+44lnBK5oCOxVm+5YpyvToqsi0gmSLgr709kRKp4ppxhp2XmdRZpOAGhQybvEdYAtn3
+         JYeXq+p7GqIZ9NoXTmYLlDAfB0/Hcad+n8WeMnRHyZapPWCpNbZfVcltkbIqn06XD7y+
+         IcYQ==
+X-Gm-Message-State: ACgBeo0geJPrLNEbZumgdK+9wZid1qj/hkMbu4FrBUPjpVrGphkqc8pt
+        zF3cwihdrixzUnVH3Q9OjvR07A==
+X-Google-Smtp-Source: AA6agR42Hh5lsk8zdVjHUrOm+xUmo6Pkvw4GiWCd8FWMsEkS64EA74QTy3tQU07tBzxzrXfGqwa9ig==
+X-Received: by 2002:a05:6512:2284:b0:48b:492e:eeb5 with SMTP id f4-20020a056512228400b0048b492eeeb5mr801147lfu.616.1659705161201;
+        Fri, 05 Aug 2022 06:12:41 -0700 (PDT)
 Received: from [192.168.1.101] ([195.24.90.54])
-        by smtp.googlemail.com with ESMTPSA id k11-20020ac257cb000000b0048a73208cbbsm465084lfo.280.2022.08.05.06.12.29
+        by smtp.googlemail.com with ESMTPSA id k15-20020a05651c10af00b0025e6de76589sm460372ljn.106.2022.08.05.06.12.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Aug 2022 06:12:31 -0700 (PDT)
-Message-ID: <b05ab985-5021-99de-813f-efdecf6934e3@linaro.org>
-Date:   Fri, 5 Aug 2022 16:12:26 +0300
+        Fri, 05 Aug 2022 06:12:40 -0700 (PDT)
+Message-ID: <264c907b-2f0a-2721-6b4b-be7dfd9ff61f@linaro.org>
+Date:   Fri, 5 Aug 2022 16:12:32 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH 2/2] media: venus: Fix NV12 decoder buffer discovery on
- HFI_VERSION_1XX
+Subject: Re: [PATCH 1/2] media: venus: dec: Handle the case where find_format
+ fails
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        stanimir.varbanov@linaro.org, agross@kernel.org,
         bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
         mchehab@kernel.org
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
 References: <20220726021455.1814096-1-bryan.odonoghue@linaro.org>
- <20220726021455.1814096-3-bryan.odonoghue@linaro.org>
+ <20220726021455.1814096-2-bryan.odonoghue@linaro.org>
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-In-Reply-To: <20220726021455.1814096-3-bryan.odonoghue@linaro.org>
+In-Reply-To: <20220726021455.1814096-2-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,31 +79,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Bryan,
 
+You forgot to CC: stable.
 
 On 7/26/22 05:14, Bryan O'Donoghue wrote:
-> HFI_VERSION_1XX uses HFI_BUFFER_OUTPUT not HFI_BUFFER_OUTPUT2 for decoder
-> buffers.
+> Debugging the decoder on msm8916 I noticed the vdec probe was crashing if
+> the fmt pointer was NULL.
 > 
-> venus_helper_check_format() places a constraint on an output buffer to be
-> of type HFI_BUFFER_OUTPUT2. HFI_1XX uses HFI_BUFFER_OUTPUT though.
+> A similar fix from Colin Ian King found by Coverity was implemented for the
+> encoder. Implement the same fix on the decoder.
 > 
+> Fixes: 7472c1c69138 ("[media] media: venus: vdec: add video decoder files")
 
-<cut>
-
-> 
-> Validated playback with ffplay on db410c with h264 and vp8 decoding.
-> 
-> Fixes: 9593126dae3e ("media: venus: Add a handling of QC08C compressed format")
-
-Cc: stable@vger.kernel.org  # v5.19
+Cc: stable@vger.kernel.org  # v4.13+
 
 > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->  drivers/media/platform/qcom/venus/helpers.c | 13 +++++++------
->  1 file changed, 7 insertions(+), 6 deletions(-)
+>  drivers/media/platform/qcom/venus/vdec.c | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index ac0bb45d07f4b..4ceaba37e2e57 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -183,6 +183,8 @@ vdec_try_fmt_common(struct venus_inst *inst, struct v4l2_format *f)
+>  		else
+>  			return NULL;
+>  		fmt = find_format(inst, pixmp->pixelformat, f->type);
+> +		if (!fmt)
+> +			return NULL;
+>  	}
+>  
+>  	pixmp->width = clamp(pixmp->width, frame_width_min(inst),
 
 -- 
 regards,
