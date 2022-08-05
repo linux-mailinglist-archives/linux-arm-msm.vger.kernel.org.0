@@ -2,133 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5023558A8E1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 11:36:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B62A858A9B8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 12:52:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235062AbiHEJgR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Aug 2022 05:36:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40202 "EHLO
+        id S240564AbiHEKvu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Aug 2022 06:51:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232052AbiHEJgQ (ORCPT
+        with ESMTP id S240497AbiHEKvs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Aug 2022 05:36:16 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A396F29C91
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Aug 2022 02:36:15 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id bq11so2656006lfb.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Aug 2022 02:36:15 -0700 (PDT)
+        Fri, 5 Aug 2022 06:51:48 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7035C1AF08
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Aug 2022 03:51:43 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id a18-20020a05600c349200b003a30de68697so3876046wmq.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Aug 2022 03:51:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=tLxPkoMovnTjvaiV/iJ/9xu7RPBak6OouLYkRbQhJTY=;
-        b=ei1io9w2pYFYVfXJxsJIvfwnc9KlWG8ySrrOu9GGZT7Hj5WwkTN5CjCghh8GJrdrMa
-         nIEHRZAk1lKOmpAfQFZ0YycCd5zPBKZn9L5FXKS+RjJIJ6Fuw7Ja70Hb9ncKsgFjNfAP
-         AvG+frpVOv4MbB+i1eAXtdzWuWT0ghpXCgglikDrPIHGPfjFCl3q7Tz2D8jCgUyRcDEX
-         P9KJIufNAmG/2PuetPaeGPhsf2WyAzYxr9QMJg9WY46wOk1N/rDMhyAqORvHAVTDSFdx
-         PcKhaSj5PNkpuszlWLO4dc+Ed5l7G7oPN78zCbBQvl/NuC7BefaJ9mQGRulu5/4fUgYs
-         RPsQ==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc;
+        bh=14I21r/C2T5gj5MFV9rNnjq+AZGCTtTGTud4uPILJ6o=;
+        b=odqbUrp/6t9+aD0+zZPOFFfmmSgvMJuRVpCRk1PePuU926IozOvJ9NdK+sfmVufOwa
+         cQ23Nq4buCcvGH01u/QXbURGoNPYopJay4P7KBTh5+BInjeMltMAEJjMUai43c+inrra
+         GQeQjZlftth6fdytyMnNvqTolLDelT1WbR1JMpMnvuL7PHeBpjVNyj31XHq+r6oIry0J
+         z3o+HI34em56UVc480k88EhM55KKAq/+ZTVM5pxGr84XN3hzEkvpZhjL1ZQMP5++Jlps
+         da1eZXsOtzRCfrXbUDuSFoSg24KASv+u6Rz98idPFTCl38uSLihWfsAimQjyOZ8yG9d+
+         e6Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc;
-        bh=tLxPkoMovnTjvaiV/iJ/9xu7RPBak6OouLYkRbQhJTY=;
-        b=EHQTvgUz/6u8gye25rOYS79Le4To6lVRjeuP1yTq5Dx8lzq3iI0r7JY/SOmujRi0zC
-         dmWzE3rCCbuBnf/3nnlj2YAPjhtkBE9qZSqXx8I57ysjAgx0otEziIiBeJ8Nzu3dymEW
-         veHqXZzRvqRaQVORHtmzA4zXhRXj5gFfiFbYZFEBlKfDFF4vatBvVtUXhiGlBULlIkST
-         r5t9GH8nq+W/X1aq6LD6QvhUsXnsEHU6IXnWH9jQ5JQU7xtcO4kdD1qV9Geen064WVYn
-         Qm+sDZbpMcbuOkI+CiVbRG82BsmjbasNQGsUcqSEnMCaOKi5cDMuRKoFbfRX8coOgM7O
-         v49A==
-X-Gm-Message-State: ACgBeo0ocO/ydaNSsV2kZ52N8eDMaD1micxNEAtGXDFdq7pCmr0txbSJ
-        9HBI55UHBqDV/gJ0MuKNuc7ZsMc7rpjWHg==
-X-Google-Smtp-Source: AA6agR4SS5kQEaAe9pPmds9idl/Ql+nXNdCDdYMRjHkFQi6huZKjhqIcfeHoJkLVQV/4Y9pFDj7gHQ==
-X-Received: by 2002:a05:6512:3f11:b0:48a:3043:e7 with SMTP id y17-20020a0565123f1100b0048a304300e7mr2051198lfa.524.1659692174012;
-        Fri, 05 Aug 2022 02:36:14 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id bp40-20020a05651215a800b0048a9603399fsm405109lfb.267.2022.08.05.02.36.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Aug 2022 02:36:13 -0700 (PDT)
-Message-ID: <2a4ae0d4-8ba2-a202-0051-6bd7b170bccd@linaro.org>
-Date:   Fri, 5 Aug 2022 12:36:12 +0300
+        bh=14I21r/C2T5gj5MFV9rNnjq+AZGCTtTGTud4uPILJ6o=;
+        b=qHz74mqILXfZc60BknbIdc8XLtlTqtlcVANR0p/xM/TIjZ4awmwY4EAO+Ruo9uf/Jn
+         9be3FjLkUmjEEl2olnfkQspWY/CqwPG3eAa6guf2A+FSO96sq656QkOzz9wmFdIoIj+p
+         5T1NzmUlk+KG7YKaruBeLhdsS/lxvqrj1hCP1eCXXLW5aqQtQRGNXdC6zfLJMiFQXIbR
+         vMViYLViAVXWVTRUlgvU9Dzc78UC/bdgt/Oo1fr79h6ODEGddICCvDG22OmlwJwaaOqn
+         F9oiG/t0e9gtywmbRVBn3HUsWia+SfKCn3uQwjNUJRgr72mLkeNqN/ApbP3zk9HKRmb2
+         3p0A==
+X-Gm-Message-State: ACgBeo0IDr/XMLiBAVNma+2zAlUxsULfwmCI4PM1p/w0ErwKGuphW8nz
+        6UXsugzEYe32JaaUjCoSNuujSw==
+X-Google-Smtp-Source: AA6agR7IVfW6BEm1e5JyH456NjFhWR6xebJRTIYxwMXOLXJdc09b9LQRA5oZOMRai6bfYr4f/zWXIw==
+X-Received: by 2002:a05:600c:35ce:b0:3a3:1b7f:bbd8 with SMTP id r14-20020a05600c35ce00b003a31b7fbbd8mr4150961wmq.22.1659696702015;
+        Fri, 05 Aug 2022 03:51:42 -0700 (PDT)
+Received: from google.com (cpc155339-bagu17-2-0-cust87.1-3.cable.virginm.net. [86.27.177.88])
+        by smtp.gmail.com with ESMTPSA id n18-20020a05600c4f9200b003a504f9fcefsm4220988wmq.11.2022.08.05.03.51.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Aug 2022 03:51:41 -0700 (PDT)
+Date:   Fri, 5 Aug 2022 11:51:39 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Mark Brown <broonie@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_collinsd@quicinc.com,
+        quic_subbaram@quicinc.com, quic_jprakash@quicinc.com,
+        Lee Jones <lee@kernel.org>
+Subject: Re: [PATCH V15 6/9] mfd: pm8008: Use i2c_new_dummy_device() API
+Message-ID: <Yuz2O+lZ5W7RviuA@google.com>
+References: <Yr6oLlmfWRkiAZG7@google.com>
+ <52c6ab15-1cd8-324e-4bcc-c449d8bceb19@quicinc.com>
+ <Yr66ZZqEnBApHYMA@google.com>
+ <0481d3cc-4bb9-4969-0232-76ba57ff260d@quicinc.com>
+ <YsLhxx+L3+GJDRyO@google.com>
+ <bcc5f059-b991-296a-bba6-9cb1236097f2@quicinc.com>
+ <Ys1tYAO39LKzEAOE@google.com>
+ <dc737abb-041b-491a-14f1-a584f9e64a3d@quicinc.com>
+ <CAE-0n528QaTtZFp=WAaHShegFRpKVN_67jQfUJTtsRPr6s--zA@mail.gmail.com>
+ <52039cd1-4390-7abb-d296-0eb7ac0c3b15@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: qcom: Add firmware for Lenovo ThinkPad X13s
-Content-Language: en-GB
-To:     Mark Pearson <markpearson@lenovo.com>, linux-firmware@kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Cc:     bjorn.andersson@linaro.org
-References: <9a79936b-70e2-f964-55ac-e2be8e9346ed@lenovo.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <9a79936b-70e2-f964-55ac-e2be8e9346ed@lenovo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <52039cd1-4390-7abb-d296-0eb7ac0c3b15@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FSL_HELO_FAKE,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/08/2022 23:37, Mark Pearson wrote:
-> The following changes since commit 150864a4d73e8c448eb1e2c68e65f07635fe1a66:
-> 
->    amdgpu partially revert "amdgpu: update beige goby to release 22.20"
-> (2022-07-25 14:16:04 -0400)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/mrhpearson/linux-firmware lenovo-thinkpad-x13s
-> 
-> for you to fetch changes up to 4ae4ae88918928e15006eb129ad981aa58216b59:
-> 
->    qcom: Add firmware for Lenovo ThinkPad X13s (2022-08-03 16:29:07 -0400)
-
-Mark, it's so great to see firmware packages for Lenovo laptops being 
-submitted!
+On Tue, 02 Aug 2022, Satya Priya Kakitapalli (Temp) wrote:
 
 > 
-> ----------------------------------------------------------------
-> Mark Pearson (1):
->        qcom: Add firmware for Lenovo ThinkPad X13s
+> On 7/27/2022 6:49 AM, Stephen Boyd wrote:
+> > Quoting Satya Priya Kakitapalli (Temp) (2022-07-21 23:31:16)
+> > >               regulator-name = "pm8008_l6";
+> > >           };
+> > > 
+> > >           pm8008_l7: ldo7@4600 {
+> > >               reg = <0x4600>;
+> > >               regulator-name = "pm8008_l7";
+> > >           };
+> > >       };
+> > > };
+> > > 
+> > > 
+> > > Stephen/Mark, Please do let me know if you are OK with this design.
+> > > 
+> > I was happy with the previous version of the DT node. That had one node
+> > for the "pm8008 chip", which is important because it really is one
+> > package. Why isn't that possible to implement and also register i2c
+> > devices on the i2c bus for the second address?
+
+If devices have different addresses, they should have their own nodes, no?
+
+> If we add everything under single DT node i.e., 0x8 device, then, we have to
+> use i2c_new_dummy_device() to register 0x9 device, and pass regmap etc to
+> child(which Lee is not OK with). Even if I register the regulators as i2c
+> devices, I am not sure how we can retrieve the 0x9 regmap in the LDO probe,
+> because when I use dev->parent there, it refers to 0x8, as I am adding
+> everything under 0x8.
 > 
->   WHENCE                             |   8 ++++++++
->   qcom/LENOVO/21BX/adspr.jsn         |  28 ++++++++++++++++++++++++++++
->   qcom/LENOVO/21BX/adspua.jsn        |  29 +++++++++++++++++++++++++++++
->   qcom/LENOVO/21BX/battmgr.jsn       |  22 ++++++++++++++++++++++
->   qcom/LENOVO/21BX/cdspr.jsn         |  22 ++++++++++++++++++++++
->   qcom/LENOVO/21BX/qcadsp8280.mbn    | Bin 0 -> 14367860 bytes
->   qcom/LENOVO/21BX/qccdsp8280.mbn    | Bin 0 -> 3575808 bytes
->   qcom/LENOVO/21BX/qcdxkmsuc8280.mbn | Bin 0 -> 14392 bytes
->   qcom/LENOVO/21BX/qcslpi8280.mbn    | Bin 0 -> 6213632 bytes
->   9 files changed, 109 insertions(+)
->   create mode 100644 qcom/LENOVO/21BX/adspr.jsn
->   create mode 100644 qcom/LENOVO/21BX/adspua.jsn
->   create mode 100644 qcom/LENOVO/21BX/battmgr.jsn
->   create mode 100644 qcom/LENOVO/21BX/cdspr.jsn
->   create mode 100755 qcom/LENOVO/21BX/qcadsp8280.mbn
->   create mode 100755 qcom/LENOVO/21BX/qccdsp8280.mbn
->   create mode 100755 qcom/LENOVO/21BX/qcdxkmsuc8280.mbn
->   create mode 100755 qcom/LENOVO/21BX/qcslpi8280.mbn
-
-I think it's the time to settle onto firmware paths for the 
-Qualcomm-based devices. At some point it was proposed to use 
-qcom/<SoC>/device/*mbn.
-
-So, in your case it could be qcom/sc8280xp/Lenovo_21BX/
-
-Bjorn, WDYT?
-
-
-P.S. Can we hope to get firmware for older laptops to be published too? 
-It would be really great if it would be possible to provide full support 
-for Yoga C630 or Flex5G using redistributable firmware from linux-firmware.
+> 
+> To implement what Lee suggested here [1], I will have to add two devices
+> separately in the DT.
+> 
+> [V15,6/9] mfd: pm8008: Use i2c_new_dummy_device() API - Patchwork
+> (kernel.org) <https://patchwork.kernel.org/project/linux-arm-msm/patch/1655200111-18357-7-git-send-email-quic_c_skakit@quicinc.com/#24933901>
 
 -- 
-With best wishes
-Dmitry
+Lee Jones [李琼斯]
+Principal Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
