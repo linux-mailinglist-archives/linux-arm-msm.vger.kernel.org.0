@@ -2,74 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 153B658AD80
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 17:51:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 53E5058ADAC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 17:53:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241100AbiHEPvZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Aug 2022 11:51:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56364 "EHLO
+        id S241284AbiHEPxD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Aug 2022 11:53:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241132AbiHEPvM (ORCPT
+        with ESMTP id S241316AbiHEPva (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Aug 2022 11:51:12 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D46C25C2;
-        Fri,  5 Aug 2022 08:48:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1659714540; x=1691250540;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=/GoEO3MQX6GpaiRN/wVo8Qf4miq+EhSGO4siUcJ3nck=;
-  b=lNQ3gFAhjW/SUpL42cKDVy827s91j5gZU+4ep1w2JtRyQaE4pASkU++K
-   LtJ1tR2jmBR+iltKQmUEhSh9Y1u8E33fcb+YAj1LIqF7+A4SE2fzCKkjY
-   tkk7pxD3pvRAtDrbDAmF6kWFUAzBTR95tdlBUqmalwJcyImSouRJwI2PV
-   M=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 05 Aug 2022 08:48:56 -0700
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Aug 2022 08:48:56 -0700
-Received: from [10.110.78.233] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 5 Aug 2022
- 08:48:55 -0700
-Message-ID: <91e1c682-b33f-d136-d3bb-2ed4f07d7029@quicinc.com>
-Date:   Fri, 5 Aug 2022 08:48:55 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v2 01/11] docs: gunyah: Introduce Gunyah Hypervisor
-Content-Language: en-US
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <linux-doc@vger.kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        "Srivatsa Vaddagiri" <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Fri, 5 Aug 2022 11:51:30 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id B6EB9767D;
+        Fri,  5 Aug 2022 08:50:19 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3ADA7106F;
+        Fri,  5 Aug 2022 08:50:20 -0700 (PDT)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 373063F73B;
+        Fri,  5 Aug 2022 08:50:18 -0700 (PDT)
+Date:   Fri, 5 Aug 2022 16:50:15 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
         Sudeep Holla <sudeep.holla@arm.com>,
-        "Marc Zyngier" <maz@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <20220801211240.597859-1-quic_eberman@quicinc.com>
- <20220801211240.597859-2-quic_eberman@quicinc.com>
- <YuyL/ThXq5FTdDF/@debian.me>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <YuyL/ThXq5FTdDF/@debian.me>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] firmware/psci: Print a warning if PSCI doesn't accept
+ PC mode
+Message-ID: <20220805155015.vea3eorojeghmg3l@bogus>
+References: <20220804130750.3706897-1-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220804130750.3706897-1-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,48 +49,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Aug 04, 2022 at 04:07:50PM +0300, Dmitry Baryshkov wrote:
+> The function psci_pd_try_set_osi_mode() will print an error if enabling
+> OSI mode fails. To ease debugging PSCI issues print corresponding
+> message if switching to PC mode fails too.
+>
 
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
 
-On 8/4/2022 8:18 PM, Bagas Sanjaya wrote:
-> On Mon, Aug 01, 2022 at 02:12:30PM -0700, Elliot Berman wrote:
->> +Communication with the resource manager from each guest VM happens with message-queue.rst. Details
->> +about the specific messages can be found in drivers/virt/gunyah/rsc_mgr.c
->> +
->> +::
->> +  +-------+   +--------+   +--------+
->> +  |  RM   |   |  VM_A  |   |  VM_B  |
->> +  +-.-.-.-+   +---.----+   +---.----+
->> +    | |           |            |
->> +  +-.-.-----------.------------.----+
->> +  | | \==========/             |    |
->> +  |  \========================/     |
->> +  |            Gunyah               |
->> +  +---------------------------------+
->> +
->   
-> Hi,
-> 
-> The diagram above triggers htmldocs warnings:
-> 
-> Documentation/virt/gunyah/index.rst:71: WARNING: Unexpected indentation.
-> Documentation/virt/gunyah/index.rst:72: WARNING: Block quote ends without a blank line; unexpected unindent.
-> 
-> I have applied the fixup:
-> 
-> diff --git a/Documentation/virt/gunyah/index.rst b/Documentation/virt/gunyah/index.rst
-> index 95ba9b71ab30d2..b74f7a6f9d4904 100644
-> --- a/Documentation/virt/gunyah/index.rst
-> +++ b/Documentation/virt/gunyah/index.rst
-> @@ -65,6 +65,7 @@ Communication with the resource manager from each guest VM happens with message-
->   about the specific messages can be found in drivers/virt/gunyah/rsc_mgr.c
->   
->   ::
-> +
->     +-------+   +--------+   +--------+
->     |  RM   |   |  VM_A  |   |  VM_B  |
->     +-.-.-.-+   +---.----+   +---.----+
-> 
-> Thanks.
-> 
-
-Thanks! Updated for v3.
+--
+Regards,
+Sudeep
