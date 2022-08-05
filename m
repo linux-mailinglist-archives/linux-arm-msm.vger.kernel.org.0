@@ -2,56 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7648958A759
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 09:45:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63C4E58A763
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 09:47:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237752AbiHEHpI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Aug 2022 03:45:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45876 "EHLO
+        id S237685AbiHEHrk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Aug 2022 03:47:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235706AbiHEHpF (ORCPT
+        with ESMTP id S240425AbiHEHpl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Aug 2022 03:45:05 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B38F663B8;
-        Fri,  5 Aug 2022 00:45:04 -0700 (PDT)
+        Fri, 5 Aug 2022 03:45:41 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 658FE6316;
+        Fri,  5 Aug 2022 00:45:38 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 6B420B82759;
-        Fri,  5 Aug 2022 07:45:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C3CC433D6;
-        Fri,  5 Aug 2022 07:45:01 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id DB388616E4;
+        Fri,  5 Aug 2022 07:45:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F47C433D6;
+        Fri,  5 Aug 2022 07:45:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1659685502;
-        bh=1PTV6BUxFKhS7tDLJA42w4aPezXS3cLAXgtgcOiJYV4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=BJmBTPj3Vs/7Eof9/Z4kgx3aeS5ndr4rSoJ6CQVsH0rBEUDxL1oZ4JBEYSaS54xpJ
-         G7BoT3dkNvxa6K8sI+QrfNtedbBVAV3f4zTh1vIFwIvZWYHkHbjBFcgvZTShaNyKy0
-         4toGqZCr+BMhrBPuXgh0YRl+Gv9FGrMdlsPgVLCJZvzag6BoCTspo5ThOskHM5anAc
-         7x3eUbJ4JmRJvhBJnKdjK2Pc936Q4/BSLoBIkAwP2V/M2iCiw/VWdUkgEbGz3CbgmL
-         zGzHNvoPmS2ATq2Puv/q8XDbooeBAJ4qYYWMyqfkphcCgQaWl6tlo/E+xkk9GTZbax
-         yIoeDXFgGdnZQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1oJs1O-0005aj-4K; Fri, 05 Aug 2022 09:45:26 +0200
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        s=k20201202; t=1659685537;
+        bh=WTsZVOhy8UINvvU6B34tZEK7L2rz5HxDD4IhL7e6o7c=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=R1LlXQDVY81assRL6w8F0vO/KQ1J0/xiF2hY/rgsbtV0SyiwNU165kthYEaLWEtKs
+         yGaCKQUHFIAMG5XX6KF5a2c18nM6VyRTvpbajl/k/DplwgIYNFOACH460C+pjnNDHC
+         mFyknTxNvSs8Twq5UAQ5MRQevm33JBPOYeJ3ozTDjasM8AyyBTjg0gZnSiU+J8SnpQ
+         1b3dRzCZsydJZy2wdS7d3GEWqbWktv8qpIKQaACAIFzeOLaSxYLM2imiK70wiz34wv
+         URwsEhCNWOfdgQ1ms0ktapYg+Qs6e19l383YC6PPLGZufGu+dKFJI7UgKcZ9BksGM6
+         ateg3n4blMizg==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.95)
+        (envelope-from <maz@kernel.org>)
+        id 1oJs1W-0016yT-RF;
+        Fri, 05 Aug 2022 08:45:34 +0100
+Date:   Fri, 05 Aug 2022 08:45:34 +0100
+Message-ID: <87les3w2u9.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     Elliot Berman <quic_eberman@quicinc.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 2/2] usb: dwc3: qcom: clean up icc init
-Date:   Fri,  5 Aug 2022 09:45:00 +0200
-Message-Id: <20220805074500.21469-3-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220805074500.21469-1-johan+linaro@kernel.org>
-References: <20220805074500.21469-1-johan+linaro@kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        devicetree@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 00/11] Drivers for gunyah hypervisor
+In-Reply-To: <Yux9PO0x+9aAVNj6@debian.me>
+References: <20220801211240.597859-1-quic_eberman@quicinc.com>
+        <YuuC0NISKFVIhUD1@debian.me>
+        <3dd4b206-8771-972b-7f4d-4935c5fbea3e@quicinc.com>
+        <Yux9PO0x+9aAVNj6@debian.me>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: bagasdotme@gmail.com, quic_eberman@quicinc.com, bjorn.andersson@linaro.org, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, agross@kernel.org, linux-arm-kernel@lists.infradead.org, lorenzo.pieralisi@arm.com, sudeep.holla@arm.com, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, corbet@lwn.net, will@kernel.org, catalin.marinas@arm.com, devicetree@vger.kernel.org, linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -61,55 +83,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Clean up the interconnect-initialisation helper by increasing
-indentation of (or merging) continuation lines and adding brackets
-around multi-line blocks in order to improve readability.
+On Fri, 05 Aug 2022 03:15:24 +0100,
+Bagas Sanjaya <bagasdotme@gmail.com> wrote:
+> 
+> On Thu, Aug 04, 2022 at 02:48:58PM -0700, Elliot Berman wrote:
+> > > 
+> > > Hi,
+> > > 
+> > > I can't apply this series on top of mainline or linux-next. On what tree
+> > > (and what commit) this series is based on? I'd like to do htmldocs test.
+> > > 
+> > 
+> > The series should apply cleanly on commit 4a57a8400075 ("vf/remap: return
+> > the amount of bytes actually deduplicated") from Linus's tree.
+> > 
+> 
+> Applied, thanks.
+> 
+> Next time, don't forget to specify --base when using git-format-patch.
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/usb/dwc3/dwc3-qcom.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+Or even better, use a tagged release as the base (an early -rc would
+do), and not some random commit.
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index 196efa9f2545..f2ff4fe1490a 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -253,7 +253,7 @@ static int dwc3_qcom_interconnect_init(struct dwc3_qcom *qcom)
- 	qcom->icc_path_ddr = of_icc_get(dev, "usb-ddr");
- 	if (IS_ERR(qcom->icc_path_ddr)) {
- 		dev_err(dev, "failed to get usb-ddr path: %ld\n",
--			PTR_ERR(qcom->icc_path_ddr));
-+				PTR_ERR(qcom->icc_path_ddr));
- 		return PTR_ERR(qcom->icc_path_ddr);
- 	}
- 
-@@ -265,20 +265,19 @@ static int dwc3_qcom_interconnect_init(struct dwc3_qcom *qcom)
- 	}
- 
- 	max_speed = usb_get_maximum_speed(&qcom->dwc3->dev);
--	if (max_speed >= USB_SPEED_SUPER || max_speed == USB_SPEED_UNKNOWN)
-+	if (max_speed >= USB_SPEED_SUPER || max_speed == USB_SPEED_UNKNOWN) {
- 		ret = icc_set_bw(qcom->icc_path_ddr,
--			USB_MEMORY_AVG_SS_BW, USB_MEMORY_PEAK_SS_BW);
--	else
-+				USB_MEMORY_AVG_SS_BW, USB_MEMORY_PEAK_SS_BW);
-+	} else {
- 		ret = icc_set_bw(qcom->icc_path_ddr,
--			USB_MEMORY_AVG_HS_BW, USB_MEMORY_PEAK_HS_BW);
--
-+				USB_MEMORY_AVG_HS_BW, USB_MEMORY_PEAK_HS_BW);
-+	}
- 	if (ret) {
- 		dev_err(dev, "failed to set bandwidth for usb-ddr path: %d\n", ret);
- 		return ret;
- 	}
- 
--	ret = icc_set_bw(qcom->icc_path_apps,
--		APPS_USB_AVG_BW, APPS_USB_PEAK_BW);
-+	ret = icc_set_bw(qcom->icc_path_apps, APPS_USB_AVG_BW, APPS_USB_PEAK_BW);
- 	if (ret) {
- 		dev_err(dev, "failed to set bandwidth for apps-usb path: %d\n", ret);
- 		return ret;
+Thanks,
+
+	M.
+
 -- 
-2.35.1
-
+Without deviation from the norm, progress is not possible.
