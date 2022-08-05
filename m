@@ -2,150 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9966B58ABCA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 15:48:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D4A558ABE8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 15:57:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236457AbiHENsi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Aug 2022 09:48:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55622 "EHLO
+        id S240593AbiHEN5s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Aug 2022 09:57:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236298AbiHENsh (ORCPT
+        with ESMTP id S237309AbiHEN5n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Aug 2022 09:48:37 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D42794E863
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Aug 2022 06:48:35 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id z25so3549641lfr.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Aug 2022 06:48:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7Qu42GkSZgSwJNVcCZcDAVdJgynuhwiHLKNU0w0qTtI=;
-        b=jTc9Thnexb9GxgUgrlkof29rYFwEScpVooPrSpeoAddqfUklQtPW2FvIf+uA8yhNB2
-         ksRm0oHYBDIGrC2ls2PGDj/jq+VtZz3xUag/gUBSZiaG/PR+hKiLQ6TOl05QbzJvssH7
-         ePm6GgMf7mIm+O2laFeDHqN6FL6YZgSyF0TfxQEEFVtE5Wx9ZM7tGAPDAi/6h3XZIQzb
-         6n8TEwgYK2khaJv77FcKOZXr66GhFIWlQPF5VoSlE5SlMDCbY9J4M7kmU+gyB1J451dr
-         E5j7GfVPRGa7WxX/PX9fBa43JfBEWmzXmc4J1qK8JtKRi8tubxh4OntZYYdQm72Wxkje
-         jyvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7Qu42GkSZgSwJNVcCZcDAVdJgynuhwiHLKNU0w0qTtI=;
-        b=QFNd6/mUkuIL/kXDIuI04lxy/1C4LlXZtxObmMxQr4uLWWs8OGb4YQ8gM5hLGaMlHB
-         1aDcIK+NP/gommpX17NY4wrjPGrS6f/Pc+HxQ/ycyEwBPHNCQNWKcOvfI6byev2+gCdQ
-         Fm+/q11jVlRyYXnd2Pg6f5hRjGVBdXuDlSaQ0uyK6/kQbYUHQNzQ51bSbCRKuiKetaTd
-         GBYhV43oHLsgQQqb4Vhozj5PvzyKsTTSejDwHxEwRv2INiheuwTpeESR3GZoMh0M9+13
-         smcAZmu9XsmfBdL07rH6Ncn6Omkk0vZMDzYMNjcWhOKwyxsDh/T3xVGZoeMZx60w75m+
-         VDQg==
-X-Gm-Message-State: ACgBeo0PU93GI+IE0TpHQvBm5VQCL1N2KKYvks5vldpJYQiy5UE3WUFY
-        Z1wKvz4vuVoRlTydUredMHtMwvqBulYB7CZYXV0AtA==
-X-Google-Smtp-Source: AA6agR6zlbnodh7A88lmlV3/ndU82/uMEk4Guofki8d9vqHREYM9WObWKDa13yhXY+LMQ0DPNGeGgkbtP80ffPZFn/M=
-X-Received: by 2002:a05:6512:3403:b0:481:60ae:7ebc with SMTP id
- i3-20020a056512340300b0048160ae7ebcmr2489455lfr.358.1659707314190; Fri, 05
- Aug 2022 06:48:34 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAA8EJpr2S-81+q-vjmk5i+T-JwaadkRpjCr_oGi7fMf7o3iH3A@mail.gmail.com>
- <20220727111410.bglx2u26456ray2u@bogus> <CAA8EJprNPJfGjkq2=hexbZn-=t2wKG6ZjSm5Mcbo4JuPQ-sc-A@mail.gmail.com>
- <CAA8EJpqP9XMcLP+Pmj5OnXD2_SJ9ULBZ_Q492+x56oQnPzqiUA@mail.gmail.com> <CAA8EJppWSQTrZgN7yBLhLepuxEiFsBnkhcXOgXrz2qjGj3GcLw@mail.gmail.com>
-In-Reply-To: <CAA8EJppWSQTrZgN7yBLhLepuxEiFsBnkhcXOgXrz2qjGj3GcLw@mail.gmail.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Fri, 5 Aug 2022 15:47:56 +0200
-Message-ID: <CAPDyKFo5ejVDn+9meM+5=bb8SF=a8DGABP4KYF9AHhc-DCuf1Q@mail.gmail.com>
-Subject: Re: PSCI domains without OSI support
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Sudeep Holla <sudeep.holla@arm.com>, linux-arm-msm@vger.kernel.org,
+        Fri, 5 Aug 2022 09:57:43 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA8774F183;
+        Fri,  5 Aug 2022 06:57:41 -0700 (PDT)
+Received: from localhost.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 540B91F9E2;
+        Fri,  5 Aug 2022 15:57:38 +0200 (CEST)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vinod.koul@linaro.org>,
-        Linux PM <linux-pm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org
+Subject: [PATCH v2 0/5] Add Qcom PM6125 PMIC, and use in Sony Xperia Seine PDX201
+Date:   Fri,  5 Aug 2022 15:57:24 +0200
+Message-Id: <20220805135729.1037079-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.37.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 27 Jul 2022 at 22:51, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Wed, 27 Jul 2022 at 16:39, Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > On Wed, 27 Jul 2022 at 16:24, Dmitry Baryshkov
-> > <dmitry.baryshkov@linaro.org> wrote:
-> > >
-> > > On Wed, 27 Jul 2022 at 14:14, Sudeep Holla <sudeep.holla@arm.com> wrote:
-> > > >
-> > > > On Wed, Jul 27, 2022 at 12:09:27PM +0300, Dmitry Baryshkov wrote:
-> >
-> > > > > - Allow DTS forcing the PSCI power domains even if OSI enablement fails?
-> > > >
-> > > > Meaning DTS flag for this ? If OSI enable fails, why would you want to
-> > > > still proceed. It is non-compliant and must be fixed if the firmware
-> > > > supports OSI and expects OSPM to use the same.
-> > >
-> > > I'm not sure at this moment. PSCI firmware reports that OSI mode is
-> > > supported, but then when psci_pd_try_set_osi_mode() tries to switch
-> > > into OSI mode, it gets NOT_SUPPORTED.
-> > > Just for the sake of completeness, I added a print to the psci.c to
-> > > dump the result of the psci_set_osi_mode(false). It also returns
-> > > NOT_SUPPORTED!
-> > >
-> > > My logical assumption would be that the firmware reports support for
-> > > OS_INITIATED, but then just fails to properly support
-> > > SET_SUSPEND_MODE.
-> >
-> > Okay. From the msm-3.14 commit log:
-> >
-> > Add support to terminate all low power modes in PSCI. The lpm-levels will
-> > work with version 1.0 of PSCI specification using the OS initiated scheme.
-> > The lpm-levels driver would determine the last man standing and vote into
-> > TZ accordingly.
-> >
-> > Which means that the vendor kernel expected to work in the OSI mode
-> > without calling SET_SUSPEND (such call doesn't exist in 3.14)
->
-> After adding the debugfs file, it's clear that this is the case.
->
-> Compare msm8996:
-> PSCIv1.0
-> SMC Calling Convention v1.0 is assumed
-> OSI is supported
-> Extended StateID format is used
->
-> vs sdm845:
-> PSCIv1.1
-> SMC Calling Convention v1.2
-> OSI is supported
-> Extended StateID format is used
-> CPU_FREEZE is supported
-> SET_SUSPEND_MODE is supported
->
-> Judging by people reporting 'failure to enable OSI mode' on several
-> other Qualcomm SoCs (msm8976, msm8953), this bug is present on several
-> older Qualcomm platforms.
->
-> >
-> > So, this looks like the "force-psci-domains" or "ignore-osi-error"
-> > flag would be logical.
-> > The question about testing still holds.
+This series adds initial support for the PM6125 PMIC, and its power key
+handling and thermal monitoring capabilities are configured for Sony's
+PDX201 (Xperia 10II).
 
-Alright, so this looks like a deviation from the spec. Nevertheless,
-it seems quite simple for us to fix by overriding the FW error, by
-adding a new DT flag, in the way you propose.
+One patch for pm660 is included to fix a node address mismatch with its
+reg field.
 
-In principle, I think the new DT flag should avoid us to call
-psci_set_osi_mode() in psci_pd_try_set_osi_mode(), but rather just
-return true when the flag is set.
+Note that this series has been based on top of:
 
-In this way, the GENPD_FLAG_ALWAYS_ON will not be set for the genpds
-that are created, so things should work as the PSCI FW has OSI mode
-enabled.
+  https://lore.kernel.org/linux-arm-msm/20220508100336.127176-1-marijn.suijten@somainline.org/T/#u
 
-Kind regards
-Uffe
+To prevent conflicts with the moving around of sdc2 nodes, presuming
+that series is applied first.
+
+All dts patches are expected to go through the QCOM DTS tree, whereas
+the sole iio patch goes through the IIO tree.
+
+Changes since v1:
+- Dropped both pinctrl patches that have already been applied;
+- Add -us suffix to qcom,hw-settle-time properties on ADC TM5 nodes
+  (this suffix is not present on regular ADC5/VADC nodes);
+- Add -state suffix to pm6125_gpio pinctrl nodes;
+- Use PMIC_GPIO_FUNC_NORMAL instead of the string-literal "normal";
+- Removed #address-cells and #size-cells from empty pmic@1 node;
+- Removed ADC5_AMUX_THM3 / ADC5_GPIO2_100K_PU channels from the ADC5
+  patch, these are unused on my board and hence untested.
+
+v1: https://lore.kernel.org/phone-devel/20220511220613.1015472-1-marijn.suijten@somainline.org/T/#u
+
+Marijn Suijten (5):
+  arm64: dts: qcom: pm660: Use unique ADC5_VCOIN address in node name
+  iio: adc: qcom-spmi-adc5: Add missing VCOIN/GPIO[134] channels
+  arm64: dts: qcom: Add PM6125 PMIC
+  arm64: dts: qcom: sm6125-seine: Include PM6125 and configure PON
+  arm64: dts: qcom: sm6125-seine: Configure additional trinket
+    thermistors
+
+ arch/arm64/boot/dts/qcom/pm6125.dtsi          | 154 +++++++++++++++++
+ arch/arm64/boot/dts/qcom/pm660.dtsi           |   2 +-
+ .../qcom/sm6125-sony-xperia-seine-pdx201.dts  | 162 +++++++++++++++++-
+ drivers/iio/adc/qcom-spmi-adc5.c              |   8 +
+ 4 files changed, 324 insertions(+), 2 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/pm6125.dtsi
+
+-- 
+2.37.1
+
