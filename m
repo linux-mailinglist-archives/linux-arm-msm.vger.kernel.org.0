@@ -2,85 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B62A858A9B8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 12:52:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B40858A9DA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 13:02:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240564AbiHEKvu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Aug 2022 06:51:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58058 "EHLO
+        id S233740AbiHELCX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Aug 2022 07:02:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240497AbiHEKvs (ORCPT
+        with ESMTP id S230169AbiHELCW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Aug 2022 06:51:48 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7035C1AF08
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Aug 2022 03:51:43 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id a18-20020a05600c349200b003a30de68697so3876046wmq.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Aug 2022 03:51:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc;
-        bh=14I21r/C2T5gj5MFV9rNnjq+AZGCTtTGTud4uPILJ6o=;
-        b=odqbUrp/6t9+aD0+zZPOFFfmmSgvMJuRVpCRk1PePuU926IozOvJ9NdK+sfmVufOwa
-         cQ23Nq4buCcvGH01u/QXbURGoNPYopJay4P7KBTh5+BInjeMltMAEJjMUai43c+inrra
-         GQeQjZlftth6fdytyMnNvqTolLDelT1WbR1JMpMnvuL7PHeBpjVNyj31XHq+r6oIry0J
-         z3o+HI34em56UVc480k88EhM55KKAq/+ZTVM5pxGr84XN3hzEkvpZhjL1ZQMP5++Jlps
-         da1eZXsOtzRCfrXbUDuSFoSg24KASv+u6Rz98idPFTCl38uSLihWfsAimQjyOZ8yG9d+
-         e6Mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc;
-        bh=14I21r/C2T5gj5MFV9rNnjq+AZGCTtTGTud4uPILJ6o=;
-        b=qHz74mqILXfZc60BknbIdc8XLtlTqtlcVANR0p/xM/TIjZ4awmwY4EAO+Ruo9uf/Jn
-         9be3FjLkUmjEEl2olnfkQspWY/CqwPG3eAa6guf2A+FSO96sq656QkOzz9wmFdIoIj+p
-         5T1NzmUlk+KG7YKaruBeLhdsS/lxvqrj1hCP1eCXXLW5aqQtQRGNXdC6zfLJMiFQXIbR
-         vMViYLViAVXWVTRUlgvU9Dzc78UC/bdgt/Oo1fr79h6ODEGddICCvDG22OmlwJwaaOqn
-         F9oiG/t0e9gtywmbRVBn3HUsWia+SfKCn3uQwjNUJRgr72mLkeNqN/ApbP3zk9HKRmb2
-         3p0A==
-X-Gm-Message-State: ACgBeo0IDr/XMLiBAVNma+2zAlUxsULfwmCI4PM1p/w0ErwKGuphW8nz
-        6UXsugzEYe32JaaUjCoSNuujSw==
-X-Google-Smtp-Source: AA6agR7IVfW6BEm1e5JyH456NjFhWR6xebJRTIYxwMXOLXJdc09b9LQRA5oZOMRai6bfYr4f/zWXIw==
-X-Received: by 2002:a05:600c:35ce:b0:3a3:1b7f:bbd8 with SMTP id r14-20020a05600c35ce00b003a31b7fbbd8mr4150961wmq.22.1659696702015;
-        Fri, 05 Aug 2022 03:51:42 -0700 (PDT)
-Received: from google.com (cpc155339-bagu17-2-0-cust87.1-3.cable.virginm.net. [86.27.177.88])
-        by smtp.gmail.com with ESMTPSA id n18-20020a05600c4f9200b003a504f9fcefsm4220988wmq.11.2022.08.05.03.51.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Aug 2022 03:51:41 -0700 (PDT)
-Date:   Fri, 5 Aug 2022 11:51:39 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Mark Brown <broonie@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_collinsd@quicinc.com,
-        quic_subbaram@quicinc.com, quic_jprakash@quicinc.com,
-        Lee Jones <lee@kernel.org>
-Subject: Re: [PATCH V15 6/9] mfd: pm8008: Use i2c_new_dummy_device() API
-Message-ID: <Yuz2O+lZ5W7RviuA@google.com>
-References: <Yr6oLlmfWRkiAZG7@google.com>
- <52c6ab15-1cd8-324e-4bcc-c449d8bceb19@quicinc.com>
- <Yr66ZZqEnBApHYMA@google.com>
- <0481d3cc-4bb9-4969-0232-76ba57ff260d@quicinc.com>
- <YsLhxx+L3+GJDRyO@google.com>
- <bcc5f059-b991-296a-bba6-9cb1236097f2@quicinc.com>
- <Ys1tYAO39LKzEAOE@google.com>
- <dc737abb-041b-491a-14f1-a584f9e64a3d@quicinc.com>
- <CAE-0n528QaTtZFp=WAaHShegFRpKVN_67jQfUJTtsRPr6s--zA@mail.gmail.com>
- <52039cd1-4390-7abb-d296-0eb7ac0c3b15@quicinc.com>
+        Fri, 5 Aug 2022 07:02:22 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD42E1DA68
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Aug 2022 04:02:19 -0700 (PDT)
+Received: from [192.168.1.101] (abxi232.neoplus.adsl.tpnet.pl [83.9.2.232])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 9F8D63EE91;
+        Fri,  5 Aug 2022 13:02:16 +0200 (CEST)
+Message-ID: <03f115b0-74ae-7793-5248-61df76ab184b@somainline.org>
+Date:   Fri, 5 Aug 2022 13:02:14 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <52039cd1-4390-7abb-d296-0eb7ac0c3b15@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FSL_HELO_FAKE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH 0/7] arm64: dts: qcom: sc8280xp: HID wakeup sources and
+ alt. touchpad
+Content-Language: en-US
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220805092317.4985-1-johan+linaro@kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20220805092317.4985-1-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -89,47 +50,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 02 Aug 2022, Satya Priya Kakitapalli (Temp) wrote:
 
+
+On 5.08.2022 11:23, Johan Hovold wrote:
+> This series clean up the sc8280xp CRD and X13s HID nodes somewhat and
+> marks the keyboard and touchpad as wakeup sources.
 > 
-> On 7/27/2022 6:49 AM, Stephen Boyd wrote:
-> > Quoting Satya Priya Kakitapalli (Temp) (2022-07-21 23:31:16)
-> > >               regulator-name = "pm8008_l6";
-> > >           };
-> > > 
-> > >           pm8008_l7: ldo7@4600 {
-> > >               reg = <0x4600>;
-> > >               regulator-name = "pm8008_l7";
-> > >           };
-> > >       };
-> > > };
-> > > 
-> > > 
-> > > Stephen/Mark, Please do let me know if you are OK with this design.
-> > > 
-> > I was happy with the previous version of the DT node. That had one node
-> > for the "pm8008 chip", which is important because it really is one
-> > package. Why isn't that possible to implement and also register i2c
-> > devices on the i2c bus for the second address?
+> Included is also support for the alternate (second-source) touchpad
+> found on some X13s laptops. Note that the node is disabled for now as
+> ideally the boot firmware should be determining which touchpad is
+> actually populated.
+Interesting, what bootloader is used on these? Are you chainloading
+something on top of Qualcomm's XBL UEFI?
 
-If devices have different addresses, they should have their own nodes, no?
-
-> If we add everything under single DT node i.e., 0x8 device, then, we have to
-> use i2c_new_dummy_device() to register 0x9 device, and pass regmap etc to
-> child(which Lee is not OK with). Even if I register the regulators as i2c
-> devices, I am not sure how we can retrieve the 0x9 regmap in the LDO probe,
-> because when I use dev->parent there, it refers to 0x8, as I am adding
-> everything under 0x8.
+Konrad
+> 
+> With some additional fixes it is possible to have both nodes enabled and
+> letting Linux do the probing, but let's wait for a conclusion to the
+> discussion about whether that is desirable before enabling them both:
+> 
+> 	https://lore.kernel.org/all/YuJXMHoT4ijUxnRb@hovoldconsulting.com
+> 
+> Johan
 > 
 > 
-> To implement what Lee suggested here [1], I will have to add two devices
-> separately in the DT.
+> Johan Hovold (7):
+>   arm64: dts: qcom: sc8280xp-crd: disable touchscreen pull-up
+>   arm64: dts: qcom: sc8280xp-crd: move HID pin config
+>   arm64: dts: qcom: sc8280xp-crd: mark HID wakeup sources
+>   arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s: disable touchscreen
+>     pull-up
+>   arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s: move HID pin config
+>   arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s: mark HID wakeup
+>     sources
+>   arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s: add alternate
+>     touchpad
 > 
-> [V15,6/9] mfd: pm8008: Use i2c_new_dummy_device() API - Patchwork
-> (kernel.org) <https://patchwork.kernel.org/project/linux-arm-msm/patch/1655200111-18357-7-git-send-email-quic_c_skakit@quicinc.com/#24933901>
-
--- 
-Lee Jones [李琼斯]
-Principal Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+>  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     | 22 +++++++++--
+>  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 38 +++++++++++++++++--
+>  2 files changed, 54 insertions(+), 6 deletions(-)
+> 
