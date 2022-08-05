@@ -2,60 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 483C258A8B7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 11:23:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5257358A8D7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Aug 2022 11:32:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231347AbiHEJX1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Aug 2022 05:23:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57656 "EHLO
+        id S236859AbiHEJcw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Aug 2022 05:32:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240459AbiHEJXY (ORCPT
+        with ESMTP id S235839AbiHEJcv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Aug 2022 05:23:24 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A866E78206;
-        Fri,  5 Aug 2022 02:23:23 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id E1B3DCE299E;
-        Fri,  5 Aug 2022 09:23:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCBCDC43152;
-        Fri,  5 Aug 2022 09:23:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1659691400;
-        bh=+jrbsnZp5g5cBhtVRPraJopq2jNO8OVSWOuAvexfeLU=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=s/ouyJvqUbiHSXDG0HOoHHd3m1yvVPWYPGk+sT2dmNu9lK17XcWI7rHwz0nFNDxMZ
-         NkTTOzOL+jHZX0U7hPtWVU465wj1KtRNpE+qYJzibGAZoLTkTOFL0mQHQ1NPjrD0+x
-         CQ75aT+yXo95tWi/F3ZeEXhb2YFF7fnyDSIiS+LY6oJtEXAO+y7KrI9aNoxg01p8xb
-         E+3pJx2/CTDkFRmarU3Kcxp6oT/+ipYYkrfHxI0SudAHPweFvQR1WYyYwHz5cFw+/d
-         9AtOm5yPYc6zVP5UprYwUA+Yj81JtQAyxB/HXxctDKD5J6+L0FhL8a7Gcs9UnXKZMk
-         tOSivNbh+yyBA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1oJtYW-0001JR-9G; Fri, 05 Aug 2022 11:23:44 +0200
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 7/7] arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s: add alternate touchpad
-Date:   Fri,  5 Aug 2022 11:23:17 +0200
-Message-Id: <20220805092317.4985-8-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220805092317.4985-1-johan+linaro@kernel.org>
-References: <20220805092317.4985-1-johan+linaro@kernel.org>
+        Fri, 5 Aug 2022 05:32:51 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94106101CA;
+        Fri,  5 Aug 2022 02:32:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1659691967;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=Gek2ApRASV6t/JsLkbPetk9rIIshaj3vueYp6pv94oo=;
+    b=soPEJ9X+3yQHY7NbKoeM+laRqEsPFguU+2ARJND3uJX90HGRE+TIV7zDH6jG4GqEho
+    uiEGQXWfNGUb6yjSlubmJVdU2iv/6pa9YHdICk0ThTOAdgm85GeJs0HSquBExjs0sb7P
+    KRHomvyRy83rkqwzEGYNhkJqybewsXHWkCLumLEJIJ87UgvjbYYgEgGXUUARJnOxMGg1
+    aEoZhePF2n/IXzH+ePnIubLHgS8o8eppIivYcOaOnj3LgUbWEN/Z3z55GKQpr0O53jDp
+    FGCNhnNK8NH1xdDOgzNrfm1hUA4wKj0LJ5D9MYeWWeKsNOwsdEojJcFsaTyU0dDeqlf3
+    6nvw==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLVrKw7/aY="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.47.0 AUTH)
+    with ESMTPSA id u1045ey759WkZA8
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Fri, 5 Aug 2022 11:32:46 +0200 (CEST)
+Date:   Fri, 5 Aug 2022 11:32:38 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Jun Nie <jun.nie@linaro.org>
+Cc:     abel.vesa@linaro.org, bjorn.andersson@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, agross@kernel.org,
+        shawn.guo@linaro.org, bryan.odonoghue@linaro.org,
+        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 0/4] Support dynamic voltage frequency scaling inside
+ clock controller
+Message-ID: <YuzimmCqk2pA5sFZ@gerhold.net>
+References: <20220805074935.1158098-1-jun.nie@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220805074935.1158098-1-jun.nie@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,45 +62,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for the alternate (second-source) touchpad found on some
-X13s laptops.
+On Fri, Aug 05, 2022 at 03:49:31PM +0800, Jun Nie wrote:
+> Support dynamic voltage frequency scaling inside clock controller with
+> changes in clock framework. And added msm8916 as the first SoC to
+> support this feature.
+> 
 
-Note that alternate touchpad is kept disabled for now. The boot firmware
-should determine which device is actually populated and enable only the
-corresponding node.
+As far as I understand it was decided to handle this on the consumer
+driver side in mainline, together with OPP tables and "required-opps" in
+the device tree. If you look at e.g. sc7180.dtsi you can see that this
+is heavily used there. Also see e.g. [1] for some links to related
+discussions.
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts   | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+For MSM8916 at least the SDHCI and DSI driver should support this 
+already. Some other older drivers (e.g. QUP, USB) would need some change
+similar to [2] (just like they still need changes for interconnects).
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index 1ca72f6ba55a..bdeb2d05aaa1 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -211,6 +211,22 @@ &qup2_i2c5 {
- 
- 	status = "okay";
- 
-+	touchpad@15 {
-+		compatible = "hid-over-i2c";
-+		reg = <0x15>;
-+
-+		hid-descr-addr = <0x1>;
-+		interrupts-extended = <&tlmm 182 IRQ_TYPE_LEVEL_LOW>;
-+		vdd-supply = <&vreg_misc_3p3>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&tpad_default>;
-+
-+		wakeup-source;
-+
-+		status = "disabled";
-+	};
-+
- 	touchpad@2c {
- 		compatible = "hid-over-i2c";
- 		reg = <0x2c>;
--- 
-2.35.1
+I'm not entirely sure why it was decided to not do this as part of the
+clock core (maybe someone can explain or link a relevant mailing list
+post?), but we should try to keep it consistent in any case. :)
 
+Thanks,
+Stephan
+
+[1]: https://lore.kernel.org/linux-arm-msm/20200910162610.GA7008@gerhold.net/
+[2]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=0472f8d3c054a0ff58122fc9d2dbf84f197a284f
