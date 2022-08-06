@@ -2,118 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B0A1B58B85B
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Aug 2022 23:02:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7393558B86F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Aug 2022 23:28:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233580AbiHFVCt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Aug 2022 17:02:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45292 "EHLO
+        id S232441AbiHFV2p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Aug 2022 17:28:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232650AbiHFVCr (ORCPT
+        with ESMTP id S232426AbiHFV2o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Aug 2022 17:02:47 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66BA311833;
-        Sat,  6 Aug 2022 14:02:47 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id y141so5078256pfb.7;
-        Sat, 06 Aug 2022 14:02:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=LnCYxidkbqPSIhSju2tTZKFe01JSQbzeOLwbX11AAGA=;
-        b=X4SjB28poocY80XBxfAS4UQBWvh89vlmp+kEbdLqdAy34xD/m9ryGH0elE2B5WsBml
-         FrmXfF6fR/rBexMEuo7zWEmANf4o6Ww9TkRuC9m8gsfA3iNd7olBmUWaIR4+rdO0g7GC
-         nkyMEg8u66d8Y5QW/8s/phgRzZDLTl72bV/HtpgI1y32PsSKGi7XJI6/vYSUJtjc7YUp
-         sbDUeKedHgmjiPXhr4sa0oVagt/Rvt7HfmESQNeq9S3zVS6teThicb8+zVAJWO0jRDbI
-         oci44NiGNZo1+IWJwx5Z2ks5FfOKVevJ0TahJRqUH2p/NjErWXe4IQ/SxN7+6RTYJzwm
-         f6DA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=LnCYxidkbqPSIhSju2tTZKFe01JSQbzeOLwbX11AAGA=;
-        b=MB3qMRjkf7biLzieJSGB2fg8TCvd1Mtvw35pVnfR28Z7oWai/D982+BtqQBKFhkycl
-         KRmQqFe5nchhqfz5iXcl6aDfmYrLmmXqm1fkUOZBNbroRQiExS7YrjV9/pHMRaY4ya/P
-         OpXzSpIXUwdquUR9ynI6citG6+pb/L5WOL0ZtT5o/Azf3myRGtNISFCnRrIK/kUmDbHn
-         qT3GJio8A4werC4TZT3kwpHe3GG5F7rVXLjTBU8pFX+NIviGMb48ujD6zr/B3ItkeaJc
-         hPLkytJtZ/TW8A1c0sTzKM5hG/qHDhMUu/+oZDHvpR2kJe055Xc/iI5APwo0BVXK9g2S
-         j8nw==
-X-Gm-Message-State: ACgBeo0CTs/vnGulmqcPnA+xBHAzS6G6O8H0lN/BgoDfjfa84yL7lWvY
-        HBES1a1V5wvWUvh8QvGecL5T1EgxwmFiEg==
-X-Google-Smtp-Source: AA6agR72Gz7vEJVNeKZ1E7yqvPrB0xhFZbxFctqWWpBUcJkuh50bKes31Khl2Vt0d/VyttYOzZOrqQ==
-X-Received: by 2002:a63:6a41:0:b0:41c:86b0:596b with SMTP id f62-20020a636a41000000b0041c86b0596bmr10045444pgc.582.1659819766925;
-        Sat, 06 Aug 2022 14:02:46 -0700 (PDT)
-Received: from fedora.. ([2405:201:e01d:6040:3f6e:eaa:537b:816f])
-        by smtp.gmail.com with ESMTPSA id c203-20020a624ed4000000b0052ea306a1e8sm4538815pfb.210.2022.08.06.14.02.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Aug 2022 14:02:46 -0700 (PDT)
-From:   Joel Selvaraj <joelselvaraj.oss@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Joel Selvaraj <joelselvaraj.oss@gmail.com>
-Subject: [PATCH v3 2/2] arm64: dts: qcom: sdm845-xiaomi-beryllium-ebbg: introduce Xiaomi Poco F1 EBBG variant
-Date:   Sun,  7 Aug 2022 02:32:20 +0530
-Message-Id: <20220806210220.31565-3-joelselvaraj.oss@gmail.com>
-X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20220806210220.31565-1-joelselvaraj.oss@gmail.com>
-References: <20220806210220.31565-1-joelselvaraj.oss@gmail.com>
+        Sat, 6 Aug 2022 17:28:44 -0400
+Received: from mail-40136.proton.ch (mail-40136.proton.ch [185.70.40.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFA09F5AE
+        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Aug 2022 14:28:41 -0700 (PDT)
+Date:   Sat, 06 Aug 2022 21:28:34 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
+        s=protonmail; t=1659821319; x=1660080519;
+        bh=3t+gm/btLHdYkkZ3NYKAbKt5z6sF6HBJyqJOtSUuQ1s=;
+        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
+         References:Feedback-ID:From:To:Cc:Date:Subject:Reply-To:
+         Feedback-ID:Message-ID;
+        b=ZDLi9yFLqFvPl8PXPH6W+mA7LQJriDtwjhXbPycmo6Z7qDf3glJxf5Y0bQSGsM+ai
+         EjqAqQGqzewMZ3DawEPtRqCOBesJmxc83bP2ftBsX8264xcac5LDHI9pRS0OSeeyw8
+         eLe32FYpgQzfxQcG+eSwutmgHgVWA5LWNWEOA2/4=
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+From:   Caleb Connolly <caleb@connolly.tech>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+Reply-To: Caleb Connolly <caleb@connolly.tech>
+Subject: Re: [PATCH] soc: qcom: rpmhpd: Use highest corner until sync_state
+Message-ID: <151c8978-1fa8-6b21-8544-baf5abb45241@connolly.tech>
+In-Reply-To: <20220806155035.968340-1-bjorn.andersson@linaro.org>
+References: <20220806155035.968340-1-bjorn.andersson@linaro.org>
+Feedback-ID: 10753939:user:proton
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Introduce support for the Xiaomi Poco F1 EBBG variant. The EBBG variant
-uses EBBG FT8719 panel manufactured by EBBG.
 
-Signed-off-by: Joel Selvaraj <joelselvaraj.oss@gmail.com>
----
- arch/arm64/boot/dts/qcom/Makefile                      |  1 +
- .../boot/dts/qcom/sdm845-xiaomi-beryllium-ebbg.dts     | 10 ++++++++++
- 2 files changed, 11 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-ebbg.dts
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 02db413b228c..29f15031a199 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -106,6 +106,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-oneplus-fajita.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-sony-xperia-tama-akari.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-sony-xperia-tama-akatsuki.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-sony-xperia-tama-apollo.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium-ebbg.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium-tianma.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-shift-axolotl.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-ebbg.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-ebbg.dts
-new file mode 100644
-index 000000000000..1e0be481b9da
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-ebbg.dts
-@@ -0,0 +1,10 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+/dts-v1/;
-+
-+#include "sdm845-xiaomi-beryllium-common.dtsi"
-+
-+&display_panel {
-+	compatible = "ebbg,ft8719";
-+	status = "okay";
-+};
--- 
-2.37.1
+On 06/08/2022 16:50, Bjorn Andersson wrote:
+> In some cases the hardware that the bootloader has left configured
+> depends on RPMH power domains for their operation up until the point
+> where the related Linux device driver probes and can inherit that
+> configuration, or power down the hardware gracefully.
+>
+> Unfortunately as Linux probes the releavant drivers in sequence there
+> are periods during the Linux boot flow where either the genpd refcount
+> will reach 0, or worse where the active performance_state votes does not
+> meet the requirements of the state that the hardware was left in.
+>
+> One specific example of this is during boot of e.g. SM8150/SC8180X,
+> where the display clock controller probes, without any particular
+> performance state needs (to access its registers). This will drop the
+> MMCX rail to MIN_SVS, which isn't sufficient to sustain the clock rates
+> that the later probing MDP is configured to. This results in an
+> unrecoverable system state.
+Hi Bjorn,
+
+Seems like my sm8150 device dies before getting this far, bah!
+
+>
+> Handle both these cases by keeping the RPMH power-domais that are
+> referenced voted for highest state, until sync_state indicates that all
+> devices referencing the RPMH power-domain driver has been probed.
+>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Caleb Connolly <caleb@connolly.tech>
+> ---
+>   drivers/soc/qcom/rpmhpd.c | 35 ++++++++++++++++++++++++++++++++++-
+>   1 file changed, 34 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
+> index 092f6ab09acf..494bb6c75ed7 100644
+> --- a/drivers/soc/qcom/rpmhpd.c
+> +++ b/drivers/soc/qcom/rpmhpd.c
+> @@ -39,6 +39,7 @@
+>    * @res_name:=09=09Resource name used for cmd-db lookup
+>    * @addr:=09=09Resource address as looped up using resource name from
+>    *=09=09=09cmd-db
+> + * @state_synced:       Indicator that sync_state has been invoked for t=
+he rpmhpd resource
+>    */
+>   struct rpmhpd {
+>   =09struct device=09*dev;
+> @@ -54,6 +55,7 @@ struct rpmhpd {
+>   =09bool=09=09enabled;
+>   =09const char=09*res_name;
+>   =09u32=09=09addr;
+> +=09bool=09=09state_synced;
+>   };
+>
+>   struct rpmhpd_desc {
+> @@ -493,7 +495,13 @@ static int rpmhpd_aggregate_corner(struct rpmhpd *pd=
+, unsigned int corner)
+>   =09unsigned int this_active_corner =3D 0, this_sleep_corner =3D 0;
+>   =09unsigned int peer_active_corner =3D 0, peer_sleep_corner =3D 0;
+>
+> -=09to_active_sleep(pd, corner, &this_active_corner, &this_sleep_corner);
+> +=09if (pd->state_synced) {
+> +=09=09to_active_sleep(pd, corner, &this_active_corner, &this_sleep_corne=
+r);
+> +=09} else {
+> +=09=09/* Clamp to highest corner if sync_state hasn't happened */
+> +=09=09this_active_corner =3D pd->level_count - 1;
+> +=09=09this_sleep_corner =3D pd->level_count - 1;
+> +=09}
+>
+>   =09if (peer && peer->enabled)
+>   =09=09to_active_sleep(peer, peer->corner, &peer_active_corner,
+> @@ -708,11 +716,36 @@ static int rpmhpd_probe(struct platform_device *pde=
+v)
+>   =09return of_genpd_add_provider_onecell(pdev->dev.of_node, data);
+>   }
+>
+> +static void rpmhpd_sync_state(struct device *dev)
+> +{
+> +=09const struct rpmhpd_desc *desc =3D of_device_get_match_data(dev);
+> +=09struct rpmhpd **rpmhpds =3D desc->rpmhpds;
+> +=09unsigned int corner;
+> +=09struct rpmhpd *pd;
+> +=09unsigned int i;
+> +
+> +=09mutex_lock(&rpmhpd_lock);
+> +=09for (i =3D 0; i < desc->num_pds; i++) {
+> +=09=09pd =3D rpmhpds[i];
+> +=09=09if (!pd)
+> +=09=09=09continue;
+> +
+> +=09=09pd->state_synced =3D true;
+> +=09=09if (pd->enabled)
+> +=09=09=09corner =3D max(pd->corner, pd->enable_corner);
+> +=09=09else
+> +=09=09=09corner =3D 0;
+> +=09=09rpmhpd_aggregate_corner(pd, corner);
+> +=09}
+> +=09mutex_unlock(&rpmhpd_lock);
+> +}
+> +
+>   static struct platform_driver rpmhpd_driver =3D {
+>   =09.driver =3D {
+>   =09=09.name =3D "qcom-rpmhpd",
+>   =09=09.of_match_table =3D rpmhpd_match_table,
+>   =09=09.suppress_bind_attrs =3D true,
+> +=09=09.sync_state =3D rpmhpd_sync_state,
+>   =09},
+>   =09.probe =3D rpmhpd_probe,
+>   };
+> --
+> 2.35.1
+>
+
+--
+Kind Regards,
+Caleb
 
