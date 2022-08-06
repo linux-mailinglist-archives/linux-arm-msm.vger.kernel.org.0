@@ -2,140 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3375F58B597
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Aug 2022 14:40:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A40B58B5C0
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Aug 2022 15:48:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230096AbiHFMky (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Aug 2022 08:40:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53828 "EHLO
+        id S230443AbiHFNs0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Aug 2022 09:48:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229853AbiHFMky (ORCPT
+        with ESMTP id S230388AbiHFNsY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Aug 2022 08:40:54 -0400
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFD66637C;
-        Sat,  6 Aug 2022 05:40:52 -0700 (PDT)
-Received: by mail-pg1-x52d.google.com with SMTP id bh13so4785906pgb.4;
-        Sat, 06 Aug 2022 05:40:52 -0700 (PDT)
+        Sat, 6 Aug 2022 09:48:24 -0400
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DBCDE02A
+        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Aug 2022 06:48:22 -0700 (PDT)
+Received: by mail-pg1-x530.google.com with SMTP id r186so4889487pgr.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Aug 2022 06:48:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc;
-        bh=o6pt3V1ha9yMo8oPh0RhSV7A5lQkFUBOGwSJxIjKq5Y=;
-        b=K3zZNGyQzBOJGo9GHJ77B64dvtlpK4HGVReHiflBNDRpOjaH5sqOdA8CSpHY5CKTyf
-         jMxciE0uAHt180KJ/Y+huKoZL4LmZDsa6WkKOyCwoxB/ThJX4uVJEg7ZTShFI/az0Ar2
-         z7gP6VTnSFHOO3nyj7PfGi5h2pn3jkcI30MOA4gJBLa6ZPkeSr1jNi+ni+/957EXpVKE
-         8cMH0A3oIzRK5Ii74+i2xFTbbdfg/VV4lJGKX03EHlP6Q0ikAumdp8EVEn0EXa//V+ro
-         7vXPHclNzVW+zRBDjtu+d19HsGrRLP2TD974QnRupiahEXDmXn0SLRi8PGivCy1jVQMg
-         wXwg==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=TvgStXa3vG7bi+uh32sGsPJgv8LsfCjRHZ5xxTji6lE=;
+        b=ES3bR2McfzepqYPSSNZOJNByBNU66z7MPhvQimFx/YBeXozBQ6nqrnDlDbGbWmPwSk
+         jF4AdnNySCbx+TDceM4oFR52qxYMPnSx7jmX/XQKO+sY0PuyxqAVZNmRGnyIU2wmdkx7
+         hDVIJPE6RdXG2SN+O3oftHsK2uHvwrAkTXmGdD20/1QNRd9WyipNhksqSZ0YVj4sZvKc
+         zfmAFbEB72Bj1nhfml0x1z0w5AI3814EtRv3vMPdgDfroYP1WYcjTt7rJ/WMwrUduNfQ
+         p5X7GKIr3sWEGAxQkhqNKUBnhB8H8OoPuHLACJWTsPT6lYwUdt7LBWYI9DGGiZaMrI0a
+         FOLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=o6pt3V1ha9yMo8oPh0RhSV7A5lQkFUBOGwSJxIjKq5Y=;
-        b=MuBhcaN1sy6pV/Eqib90wu6mq4X9exrknzIt6r/5Lboiv/kWeTUoRcoyQwzic31Lrt
-         +hRxKMynQUo2hhRN/6CmIG6Q97xtJnLfdhkSOCy+zhFgryoJjiNATBV5PhpOI/y/J7Ye
-         5n+FvHt3dfM0oH/Nyb+IVKk8dKxsM+kQ0TcjziQig4ZbZTRhpcoBh1pgYI/MPxec4A4e
-         iNAKydSf1obiV6qHyXlNqWhlnd9zQ3ZOATd/Iz4JL9+/vQFSUU0GrIly5DKUDuUEaj2K
-         TDjGcvflPA8yKlCSFvtRQ1QJul0OJ6/b0+bHp/3kjTpmC8XRNxmvNWOW4CAmn7hx9C2K
-         8fxw==
-X-Gm-Message-State: ACgBeo3sRzCO6lBRQ0AuiwzbcMO4UVNsNYzN068b67bvwKA1jAT2fWWl
-        JrbkAnNyrVe+HlHRTN1MmHA=
-X-Google-Smtp-Source: AA6agR4HVXRr5ozE4MZULCJYLmm+yzEtIzOb6rNsc6/YEix1fRqJBoSHmvvrRwFlh1pZPSou+4rtrw==
-X-Received: by 2002:a63:d555:0:b0:41b:ca49:54c3 with SMTP id v21-20020a63d555000000b0041bca4954c3mr9091265pgi.360.1659789652285;
-        Sat, 06 Aug 2022 05:40:52 -0700 (PDT)
-Received: from debian.me (subs02-180-214-232-10.three.co.id. [180.214.232.10])
-        by smtp.gmail.com with ESMTPSA id r19-20020a634413000000b0040c9df2b060sm3072702pga.30.2022.08.06.05.40.50
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=TvgStXa3vG7bi+uh32sGsPJgv8LsfCjRHZ5xxTji6lE=;
+        b=u++PjF4tnln/NoQSbrL33FNb16qkY/ItQfPdqAj5Wjnn6TVw2i6l+iw7H06jf7d1bN
+         /pQ2UsxcD9zxxvR2h6q+zDJMkmTNb/qQgpUC9AqB3qKCQyRQ97T5mL6+6HHCC4tA9oLf
+         l9CJLKQn7a9qJtDDqiNC+zPtfCvoC8ZTwrStFZ7X4Idoh3Z16hA0Yi7RXSodSRnQbMSO
+         JsdpRroRrx6pxPwgiZKj6UjDSBf/RwiIx5byhWZKiAudXb1dst7lSjrsBSWTe/b8kbvN
+         Zs7bBTVRCGc2mOZI+fpbrSIlzjAkk/gLXAKxyY+wv6KKLNWvRI1oCJVBZeXdOZaCJ6xV
+         Zt8g==
+X-Gm-Message-State: ACgBeo2jV8tn49xrzbD2mwGz9s5qj6HzqdZxZn++6kZlgF7YAnBZ5iPx
+        Y2wA2dVqm2zJBy+f+gbG8tyQ
+X-Google-Smtp-Source: AA6agR4fxjllwhUaGWVmBM/fFPtDlHG357VCe4ud9OsIE0eNpij3HDe+s37YBQUhgIivve2UUInYvQ==
+X-Received: by 2002:a63:85c8:0:b0:41b:f27f:5a7e with SMTP id u191-20020a6385c8000000b0041bf27f5a7emr9588798pgd.590.1659793701451;
+        Sat, 06 Aug 2022 06:48:21 -0700 (PDT)
+Received: from thinkpad ([117.202.188.20])
+        by smtp.gmail.com with ESMTPSA id k92-20020a17090a4ce500b001f506804af3sm3276667pjh.52.2022.08.06.06.48.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Aug 2022 05:40:51 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-        id 80D7A103B77; Sat,  6 Aug 2022 19:40:46 +0700 (WIB)
-Date:   Sat, 6 Aug 2022 19:40:46 +0700
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     Jim Cromie <jim.cromie@gmail.com>
-Cc:     linux-kernel@vger.kernel.org, jbaron@akamai.com,
-        gregkh@linuxfoundation.org, dri-devel@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org, intel-gvt-dev@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, daniel.vetter@ffwll.ch,
-        seanpaul@chromium.org, robdclark@gmail.com,
-        linux-doc@vger.kernel.org
-Subject: Re: [PATCH v5 19/33] doc-dyndbg: edit dynamic-debug-howto for
- brevity, audience
-Message-ID: <Yu5hTr6qcLwiPRNp@debian.me>
-References: <20220805215355.3509287-1-jim.cromie@gmail.com>
- <20220805215355.3509287-20-jim.cromie@gmail.com>
+        Sat, 06 Aug 2022 06:48:21 -0700 (PDT)
+Date:   Sat, 6 Aug 2022 19:18:10 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
+        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org, Andrew Halaney <ahalaney@redhat.com>
+Subject: Re: [PATCH v2 1/9] usb: dwc3: fix PHY disable sequence
+Message-ID: <20220806134810.GB14384@thinkpad>
+References: <20220804151001.23612-1-johan+linaro@kernel.org>
+ <20220804151001.23612-2-johan+linaro@kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-        protocol="application/pgp-signature"; boundary="zCnbKQzWNc0slIHJ"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220805215355.3509287-20-jim.cromie@gmail.com>
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220804151001.23612-2-johan+linaro@kernel.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Aug 04, 2022 at 05:09:53PM +0200, Johan Hovold wrote:
+> Generic PHYs must be powered-off before they can be tore down.
+> 
+> Similarly, suspending legacy PHYs after having powered them off makes no
+> sense.
+> 
+> Fix the dwc3_core_exit() (e.g. called during suspend) and open-coded
+> dwc3_probe() error-path sequences that got this wrong.
+> 
+> Note that this makes dwc3_core_exit() match the dwc3_core_init() error
+> path with respect to powering off the PHYs.
+> 
+> Fixes: 03c1fd622f72 ("usb: dwc3: core: add phy cleanup for probe error handling")
+> Fixes: c499ff71ff2a ("usb: dwc3: core: re-factor init and exit paths")
+> Cc: stable@vger.kernel.org      # 4.8
+> Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
---zCnbKQzWNc0slIHJ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-On Fri, Aug 05, 2022 at 03:53:41PM -0600, Jim Cromie wrote:
-> Rework/modernize docs:
->=20
->  - use /proc/dynamic_debug/control in examples
->    its *always* there (when dyndbg is config'd), even when <debugfs> is n=
-ot.
->    drop <debugfs> talk, its a distraction here.
->=20
->  - alias ddcmd=3D'echo $* > /proc/dynamic_debug/control
->    focus on args: declutter, hide boilerplate, make pwd independent.
->=20
->  - swap sections: Viewing before Controlling. control file as Catalog.
->=20
->  - focus on use by a system administrator
->    add an alias to make examples more readable
->    drop grep-101 lessons, admins know this.
->=20
->  - use init/main.c as 1st example, thread it thru doc where useful.
->    everybodys kernel boots, runs these.
->=20
->  - add *prdbg* api section
->    to the bottom of the file, its for developers more than admins.
->    move list of api functions there.
->=20
->  - simplify - drop extra words, phrases, sentences.
->=20
->  - add "decorator" flags line to unify "prefix", trim fmlt descriptions
->=20
-> CC: linux-doc@vger.kernel.org
-> Signed-off-by: Jim Cromie <jim.cromie@gmail.com>
->=20
+Thanks,
+Mani
 
-The documentation LGTM (no new warnings).
+> ---
+>  drivers/usb/dwc3/core.c | 19 ++++++++++---------
+>  1 file changed, 10 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> index c5c238ab3083..16d1f328775f 100644
+> --- a/drivers/usb/dwc3/core.c
+> +++ b/drivers/usb/dwc3/core.c
+> @@ -833,15 +833,16 @@ static void dwc3_core_exit(struct dwc3 *dwc)
+>  {
+>  	dwc3_event_buffers_cleanup(dwc);
+>  
+> +	usb_phy_set_suspend(dwc->usb2_phy, 1);
+> +	usb_phy_set_suspend(dwc->usb3_phy, 1);
+> +	phy_power_off(dwc->usb2_generic_phy);
+> +	phy_power_off(dwc->usb3_generic_phy);
+> +
+>  	usb_phy_shutdown(dwc->usb2_phy);
+>  	usb_phy_shutdown(dwc->usb3_phy);
+>  	phy_exit(dwc->usb2_generic_phy);
+>  	phy_exit(dwc->usb3_generic_phy);
+>  
+> -	usb_phy_set_suspend(dwc->usb2_phy, 1);
+> -	usb_phy_set_suspend(dwc->usb3_phy, 1);
+> -	phy_power_off(dwc->usb2_generic_phy);
+> -	phy_power_off(dwc->usb3_generic_phy);
+>  	dwc3_clk_disable(dwc);
+>  	reset_control_assert(dwc->reset);
+>  }
+> @@ -1879,16 +1880,16 @@ static int dwc3_probe(struct platform_device *pdev)
+>  	dwc3_debugfs_exit(dwc);
+>  	dwc3_event_buffers_cleanup(dwc);
+>  
+> -	usb_phy_shutdown(dwc->usb2_phy);
+> -	usb_phy_shutdown(dwc->usb3_phy);
+> -	phy_exit(dwc->usb2_generic_phy);
+> -	phy_exit(dwc->usb3_generic_phy);
+> -
+>  	usb_phy_set_suspend(dwc->usb2_phy, 1);
+>  	usb_phy_set_suspend(dwc->usb3_phy, 1);
+>  	phy_power_off(dwc->usb2_generic_phy);
+>  	phy_power_off(dwc->usb3_generic_phy);
+>  
+> +	usb_phy_shutdown(dwc->usb2_phy);
+> +	usb_phy_shutdown(dwc->usb3_phy);
+> +	phy_exit(dwc->usb2_generic_phy);
+> +	phy_exit(dwc->usb3_generic_phy);
+> +
+>  	dwc3_ulpi_exit(dwc);
+>  
+>  err4:
+> -- 
+> 2.35.1
+> 
 
-Reviewed-by: Bagas Sanjaya <bagasdotme@gmail.com>
-
---=20
-An old man doll... just what I always wanted! - Clara
-
---zCnbKQzWNc0slIHJ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTsebsWCPCpxY9T92n/R0PGQ3AzwAUCYu5hNQAKCRD/R0PGQ3Az
-wGuzAYDy/O8VqIX4dB6ItFwNHJm1rs7Qg4OuYgYbKFvhP69MPdWx64MR4soFNSUx
-y/x/+HABgNTyMUR8QKMtJnT6K443IFX7iqf6bs05/IbT4PqLQjZXkpc+PQBWALvU
-6LjFercp5g==
-=Aeer
------END PGP SIGNATURE-----
-
---zCnbKQzWNc0slIHJ--
+-- 
+மணிவண்ணன் சதாசிவம்
