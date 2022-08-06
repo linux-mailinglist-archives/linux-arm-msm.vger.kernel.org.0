@@ -2,76 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6484558B682
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Aug 2022 17:32:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 290FA58B694
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Aug 2022 17:47:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232753AbiHFPcG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Aug 2022 11:32:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51086 "EHLO
+        id S231283AbiHFPry (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Aug 2022 11:47:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232240AbiHFPcF (ORCPT
+        with ESMTP id S230328AbiHFPry (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Aug 2022 11:32:05 -0400
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED68E60ED;
-        Sat,  6 Aug 2022 08:32:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1659799924; x=1691335924;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=vu6Y2qO+FKc1QzYLh0uE+Z7hKMHTWrM2Cu3ji9kmzag=;
-  b=lZTEGDWobUMLTrszQnVLxpsd8gvmy4c9fqUAQEijBmNhopr1zbqZwLa4
-   +GnQ4Xgh/sFKlGJle9zCQdzHkwl/4eJa+0aFVqAPCw3r2kKZgM/B/J0Il
-   PHZJDFeZ2rybct2CS9oUQ+eyLdLZxdC82xgLV5Qnlp808TQqiZVhw1gQ9
-   9hXjQu9f1JGOqIUbiLdeHncMzxN0CobpMyPqaXbdO+nHxfWaqoMduQRT8
-   5FToH0Dj3AatrnE+2p9vSrVRz3upn/uSSncH8D2aova5h1NhEnrowY+3L
-   5HQbYokExRuetqP4maa60mFt8xTrcPymCbRINmXG3Fay6ECyGlcvbUZaq
-   g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10431"; a="270148834"
-X-IronPort-AV: E=Sophos;i="5.93,217,1654585200"; 
-   d="scan'208";a="270148834"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Aug 2022 08:32:04 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.93,217,1654585200"; 
-   d="scan'208";a="603901993"
-Received: from lkp-server01.sh.intel.com (HELO e0eace57cfef) ([10.239.97.150])
-  by orsmga002.jf.intel.com with ESMTP; 06 Aug 2022 08:32:00 -0700
-Received: from kbuild by e0eace57cfef with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1oKLmR-000KU3-1p;
-        Sat, 06 Aug 2022 15:31:59 +0000
-Date:   Sat, 6 Aug 2022 23:31:13 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Sat, 6 Aug 2022 11:47:54 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEDC8CE18
+        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Aug 2022 08:47:52 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id r195so946775oie.6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Aug 2022 08:47:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=caXVr+Ow74BLwv+HS14+x281MgD0udLpKluE18as/Ys=;
+        b=VHEZu3Cwu4px+UJViXxvzKV7E95aCzJ2aiY9lO4e4RhVGcj9hhN0kP8q7PIw1YTHXF
+         kQgxw2z7mU04HilX4dFWC6r8YEcMg72LC2LhvmQQcnKHfcZ0HWrhujw3p1BEq2bUYcaD
+         sGb+fh+48bNn37LAHMu2ypIKDguXTHM34Bp5U4VNZl/SQDD89k44So6m+PJp5jFi2WYK
+         /Zy130UgYjC59SOmWJr796RPcG+GCLL+0aVE7l1l3yu23VDmgQTODvv/XxtYEtKanUfR
+         nXGom+YnrtpXr318v7Izrc8WNL8PxIWWLZJqj5kOhsiO73Walx+QrZr8fcKHBpsggPZD
+         HFPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=caXVr+Ow74BLwv+HS14+x281MgD0udLpKluE18as/Ys=;
+        b=JKmAHCs9O8YmMhG+/I0uLGOinOtg/qLqUbZmHGm/SUeicUq2P4a1EuccdRI7OFSu6X
+         czOlYVo2ibBou6nGosLEOXGrR3lDmQEPCg5BD1DGkprMq5WIr208jB5dn0teZRwPJBtd
+         bLuxoFSWBeX/LTiq+b42wuRnT+J9Jg4MVMzRWRtTGlSNgHEouUM50qlIt4rfVou9Kutk
+         C8KbpmX0PCN2e2rVeKp33H/s9x44gEXgww7iu5U74gxD4Z2v9g9VAlo5oNAgVdF3r+u4
+         Es8TyffQbRfxHOmLW3wtybOxaJryDgp0C3VQ5P7JRgpbKa1dwdtD5rDRIdh7MPSLsPT+
+         uJ2w==
+X-Gm-Message-State: ACgBeo0JRz/5Nq32waviiLrVCGp3r7S3vVOz4BN1VrJ56F5SACQ14O1I
+        HJK84dfI0vg6DIEOuPDAclKucQ==
+X-Google-Smtp-Source: AA6agR6y5oy/LUCU35T62Z6S8hBuiVdaT0GXrFkBgxrv4vWOTvfFQraczJvPuKJG5j1mrmffegNVOg==
+X-Received: by 2002:a05:6808:1442:b0:342:a346:348e with SMTP id x2-20020a056808144200b00342a346348emr5306009oiv.11.1659800872275;
+        Sat, 06 Aug 2022 08:47:52 -0700 (PDT)
+Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id p2-20020aca4202000000b00342bd6ad315sm794008oia.33.2022.08.06.08.47.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 06 Aug 2022 08:47:51 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-doc@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>
-Cc:     kbuild-all@lists.01.org, Elliot Berman <quic_eberman@quicinc.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 01/11] docs: gunyah: Introduce Gunyah Hypervisor
-Message-ID: <202208062327.dI3HuYk5-lkp@intel.com>
-References: <20220801211240.597859-2-quic_eberman@quicinc.com>
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+Subject: [PATCH] soc: qcom: rpmhpd: Use highest corner until sync_state
+Date:   Sat,  6 Aug 2022 08:50:35 -0700
+Message-Id: <20220806155035.968340-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220801211240.597859-2-quic_eberman@quicinc.com>
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,44 +71,104 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Elliot,
+In some cases the hardware that the bootloader has left configured
+depends on RPMH power domains for their operation up until the point
+where the related Linux device driver probes and can inherit that
+configuration, or power down the hardware gracefully.
 
-I love your patch! Perhaps something to improve:
+Unfortunately as Linux probes the releavant drivers in sequence there
+are periods during the Linux boot flow where either the genpd refcount
+will reach 0, or worse where the active performance_state votes does not
+meet the requirements of the state that the hardware was left in.
 
-[auto build test WARNING on arm64/for-next/core]
-[also build test WARNING on v5.19]
-[cannot apply to linus/master next-20220805]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+One specific example of this is during boot of e.g. SM8150/SC8180X,
+where the display clock controller probes, without any particular
+performance state needs (to access its registers). This will drop the
+MMCX rail to MIN_SVS, which isn't sufficient to sustain the clock rates
+that the later probing MDP is configured to. This results in an
+unrecoverable system state.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Elliot-Berman/Drivers-for-gunyah-hypervisor/20220802-051534
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/arm64/linux.git for-next/core
-reproduce: make htmldocs
+Handle both these cases by keeping the RPMH power-domais that are
+referenced voted for highest state, until sync_state indicates that all
+devices referencing the RPMH power-domain driver has been probed.
 
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ drivers/soc/qcom/rpmhpd.c | 35 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
 
-All warnings (new ones prefixed by >>):
-
->> Documentation/virt/gunyah/index.rst:71: WARNING: Unexpected indentation.
->> Documentation/virt/gunyah/index.rst:72: WARNING: Block quote ends without a blank line; unexpected unindent.
-
-vim +71 Documentation/virt/gunyah/index.rst
-
-    66	
-    67	::
-    68	  +-------+   +--------+   +--------+
-    69	  |  RM   |   |  VM_A  |   |  VM_B  |
-    70	  +-.-.-.-+   +---.----+   +---.----+
-  > 71	    | |           |            |
-  > 72	  +-.-.-----------.------------.----+
-    73	  | | \==========/             |    |
-    74	  |  \========================/     |
-    75	  |            Gunyah               |
-    76	  +---------------------------------+
-    77	
-
+diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
+index 092f6ab09acf..494bb6c75ed7 100644
+--- a/drivers/soc/qcom/rpmhpd.c
++++ b/drivers/soc/qcom/rpmhpd.c
+@@ -39,6 +39,7 @@
+  * @res_name:		Resource name used for cmd-db lookup
+  * @addr:		Resource address as looped up using resource name from
+  *			cmd-db
++ * @state_synced:       Indicator that sync_state has been invoked for the rpmhpd resource
+  */
+ struct rpmhpd {
+ 	struct device	*dev;
+@@ -54,6 +55,7 @@ struct rpmhpd {
+ 	bool		enabled;
+ 	const char	*res_name;
+ 	u32		addr;
++	bool		state_synced;
+ };
+ 
+ struct rpmhpd_desc {
+@@ -493,7 +495,13 @@ static int rpmhpd_aggregate_corner(struct rpmhpd *pd, unsigned int corner)
+ 	unsigned int this_active_corner = 0, this_sleep_corner = 0;
+ 	unsigned int peer_active_corner = 0, peer_sleep_corner = 0;
+ 
+-	to_active_sleep(pd, corner, &this_active_corner, &this_sleep_corner);
++	if (pd->state_synced) {
++		to_active_sleep(pd, corner, &this_active_corner, &this_sleep_corner);
++	} else {
++		/* Clamp to highest corner if sync_state hasn't happened */
++		this_active_corner = pd->level_count - 1;
++		this_sleep_corner = pd->level_count - 1;
++	}
+ 
+ 	if (peer && peer->enabled)
+ 		to_active_sleep(peer, peer->corner, &peer_active_corner,
+@@ -708,11 +716,36 @@ static int rpmhpd_probe(struct platform_device *pdev)
+ 	return of_genpd_add_provider_onecell(pdev->dev.of_node, data);
+ }
+ 
++static void rpmhpd_sync_state(struct device *dev)
++{
++	const struct rpmhpd_desc *desc = of_device_get_match_data(dev);
++	struct rpmhpd **rpmhpds = desc->rpmhpds;
++	unsigned int corner;
++	struct rpmhpd *pd;
++	unsigned int i;
++
++	mutex_lock(&rpmhpd_lock);
++	for (i = 0; i < desc->num_pds; i++) {
++		pd = rpmhpds[i];
++		if (!pd)
++			continue;
++
++		pd->state_synced = true;
++		if (pd->enabled)
++			corner = max(pd->corner, pd->enable_corner);
++		else
++			corner = 0;
++		rpmhpd_aggregate_corner(pd, corner);
++	}
++	mutex_unlock(&rpmhpd_lock);
++}
++
+ static struct platform_driver rpmhpd_driver = {
+ 	.driver = {
+ 		.name = "qcom-rpmhpd",
+ 		.of_match_table = rpmhpd_match_table,
+ 		.suppress_bind_attrs = true,
++		.sync_state = rpmhpd_sync_state,
+ 	},
+ 	.probe = rpmhpd_probe,
+ };
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.35.1
+
