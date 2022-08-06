@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7473958B617
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Aug 2022 16:33:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BBE658B622
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Aug 2022 16:35:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231733AbiHFOdW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Aug 2022 10:33:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47856 "EHLO
+        id S231938AbiHFOfk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Aug 2022 10:35:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231660AbiHFOdV (ORCPT
+        with ESMTP id S231233AbiHFOfj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Aug 2022 10:33:21 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B43D6DF4E
-        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Aug 2022 07:33:20 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id z19so4976428plb.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Aug 2022 07:33:20 -0700 (PDT)
+        Sat, 6 Aug 2022 10:35:39 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DF13DFCE
+        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Aug 2022 07:35:38 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id u133so4548750pfc.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Aug 2022 07:35:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=hZsvYReDneXNRGD9Ri34paDQng4soD5qGv+2z4J+I+w=;
-        b=BdBZ4Li3Y94+2gVjZ+pujBDNmGjjbCDMKXkFvYwiTEb8Ix5BRMQdNPuQ1P5WpuVGvo
-         T+le9Aa3wkjezzc0VqshtWfp/4eGgMu5P9NNyT4ZbEs9yXueWZB1lN1sNXQfJpoQ8+DW
-         pzwBzVsdOYf+gjRfbjNVV/jqoMmq6d1Rnsevf5FE7PDVIrHoMrume6P+gyY/1o5lzitr
-         rkOcHK7xrr6sOrTP5LxKKkepkeSpc6OLDEs2pNETIMP+Z0gFDqkcz3z9hhTfeFiTuzHN
-         KJBXn38JJu+tu1+RL02y8qxRzMIgWtRJ4GpOtWnue/5E/ZGyZH6J9rJpZRQRdbG49ybj
-         /7Jg==
+        bh=1D/80i9Z0nZkycuUkNoAcEIyiKHwsYEJG9bfZe9RA6k=;
+        b=Oy8rIZsIwYOxTINnlEQ/wP6W+gHg55yQUtXB1EmEw9aBCIPIaF/ZdE8jqBapGNxi4b
+         QjD009j2OxcYZwnFJIZULyKiMjooSxv5d5IabX0ltoSJHISNjq6dhtCWKMH0rQVdB48l
+         ZTz6Wb5ZYLwrFOtpa655fEa9LfX+4Fucae0cqtzggvTJiT6sHpoYP13JeXz1UgIQvetG
+         Wa3WG09iZL0YdRi5Yw+J4cnb7jTa/KFFkDNlXnFwOQYAILDjL9HqJIFuFyMGgbM35mD6
+         snUZVan7Yvn4kpxmBRQcI3Wxiws9QVeLlep0zYEHGxgOLz20X6Vidoz8uR2JvGEWrvCd
+         X0nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=hZsvYReDneXNRGD9Ri34paDQng4soD5qGv+2z4J+I+w=;
-        b=28o2BKs7kyegtsZV5XZF/F3KLcBZ25EcAghsNGesMnLlWRc4+vGyWLBIMEtbYgHgbQ
-         jB4JAj4YmJQIidpfdtKpgMBGeC/tcW9PL46mX4cEYQMnWlK1pfGALTQ//S2T7tT2m2vV
-         byWGgtsiRNGtiTkNCmcj9klHSVZNBHpNeCK2H0EpStbguofTLA5m9qMRNEqeFtTfYEBw
-         glYGtNlS+/S0735fQJ68NrmeDskOmKVvTDETSwb2Pu/45yN7DzoEpgM0RK7n5FSBVyZU
-         byCst/C9A6L4zLsh5SL2msyCx+1yAYyxGynkpQfuMv/o5qP8/B9jh6pvoYIjWnQTw1Ho
-         aohQ==
-X-Gm-Message-State: ACgBeo3pa6DUqG6xDB5TGtQzKsrb0rUT7P65QeW1KHaWAknsRCj3xr68
-        jPBGiyoh5KBOJbxiYBOKZwb7
-X-Google-Smtp-Source: AA6agR7biwjrZH3fe7nViG6ekyA+bwZh0nAc43cXMOLRCFfNZu4KhPzA4sp8F60devRIaLBglDCOug==
-X-Received: by 2002:a17:902:e94f:b0:16d:847b:3343 with SMTP id b15-20020a170902e94f00b0016d847b3343mr11470880pll.103.1659796400131;
-        Sat, 06 Aug 2022 07:33:20 -0700 (PDT)
+        bh=1D/80i9Z0nZkycuUkNoAcEIyiKHwsYEJG9bfZe9RA6k=;
+        b=vLBT5pAfLz6Y4DbwH72SuhQCgJZVWjm1BQAyAtKDkeMMiMbO5GqKQCVAhVRFz0d85c
+         hPj67wSDsU8bA+RBclCDjJBIXM/4o17nJbxTkUzrgvMBOITTg4QHUXeLKgv0RU4arRQi
+         DtJ5COtgsnlh1VylfnrOA2GLHr18KqbS7oDZQzxK2EJubeOigmXGn1SHpsnhZI+cSy4z
+         8nKrBtaUcj6uxf9RrGUkC+AW1BH7hVtAsmiqnAqqFDxI3+I/0+qAxQVWKStIn1F1mN53
+         9v6P+b9HftSHMO0ePYIibTV7+9TX82u/5VlIqNLlDMOYZIwYNXFfYz1+cm6eYvjVLx0w
+         gI4Q==
+X-Gm-Message-State: ACgBeo39lG5NH7Uj7CAVIWgutHSzpaPT83Ute8U9U9XyjvLSzgQBadh/
+        HuHgaJLa4s3vMFsaM2pmpq+O
+X-Google-Smtp-Source: AA6agR5WB0gMQVi/j7aZbv3bvTE6aBfq2g85CHNUCRmMU+FdolPTbBfM9RTyCSvYwZQy0jfkrqYK7w==
+X-Received: by 2002:a63:5650:0:b0:41a:dfa4:bdee with SMTP id g16-20020a635650000000b0041adfa4bdeemr9583170pgm.515.1659796537541;
+        Sat, 06 Aug 2022 07:35:37 -0700 (PDT)
 Received: from thinkpad ([117.202.188.20])
-        by smtp.gmail.com with ESMTPSA id 134-20020a62198c000000b0052ab764fa78sm5048238pfz.185.2022.08.06.07.33.13
+        by smtp.gmail.com with ESMTPSA id g6-20020a170902c38600b0016d27cead72sm5029259plg.196.2022.08.06.07.35.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Aug 2022 07:33:19 -0700 (PDT)
-Date:   Sat, 6 Aug 2022 20:03:11 +0530
+        Sat, 06 Aug 2022 07:35:37 -0700 (PDT)
+Date:   Sat, 6 Aug 2022 20:05:29 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Johan Hovold <johan+linaro@kernel.org>
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -66,18 +66,16 @@ Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
         quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
         linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org
-Subject: Re: [PATCH v2 4/9] usb: dwc3: qcom: fix use-after-free on runtime-PM
- wakeup
-Message-ID: <20220806143311.GE14384@thinkpad>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 5/9] usb: dwc3: qcom: fix runtime PM wakeup
+Message-ID: <20220806143529.GF14384@thinkpad>
 References: <20220804151001.23612-1-johan+linaro@kernel.org>
- <20220804151001.23612-5-johan+linaro@kernel.org>
+ <20220804151001.23612-6-johan+linaro@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220804151001.23612-5-johan+linaro@kernel.org>
+In-Reply-To: <20220804151001.23612-6-johan+linaro@kernel.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -88,29 +86,13 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 04, 2022 at 05:09:56PM +0200, Johan Hovold wrote:
-> The Qualcomm dwc3 runtime-PM implementation checks the xhci
-> platform-device pointer in the wakeup-interrupt handler to determine
-> whether the controller is in host mode and if so triggers a resume.
+On Thu, Aug 04, 2022 at 05:09:57PM +0200, Johan Hovold wrote:
+> A device must enable wakeups during runtime suspend regardless of
+> whether it is capable and allowed to wake the system up from system
+> suspend.
 > 
-> After a role switch in OTG mode the xhci platform-device would have been
-> freed and the next wakeup from runtime suspend would access the freed
-> memory.
-> 
-> Note that role switching is executed from a freezable workqueue, which
-> guarantees that the pointer is stable during suspend.
-> 
-> Also note that runtime PM has been broken since commit 2664deb09306
-> ("usb: dwc3: qcom: Honor wakeup enabled/disabled state"), which
-> incidentally also prevents this issue from being triggered.
-> 
-> Fixes: a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver")
-> Cc: stable@vger.kernel.org      # 4.18
+> Fixes: 2664deb09306 ("usb: dwc3: qcom: Honor wakeup enabled/disabled state")
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-
-It'd be good to mention the introduction of dwc3_qcom_is_host() function.
-Initially I thought it is used in a single place, but going through the rest of
-the patches reveals that it is used later on.
 
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
@@ -118,56 +100,91 @@ Thanks,
 Mani
 
 > ---
-> 
-> Changes in v2
->  - new patch
-> 
->  drivers/usb/dwc3/dwc3-qcom.c | 14 +++++++++++++-
->  drivers/usb/dwc3/host.c      |  1 +
->  2 files changed, 14 insertions(+), 1 deletion(-)
+>  drivers/usb/dwc3/dwc3-qcom.c | 19 +++++++++++--------
+>  1 file changed, 11 insertions(+), 8 deletions(-)
 > 
 > diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index e9364141661b..6884026b9fad 100644
+> index 6884026b9fad..05b4666fde14 100644
 > --- a/drivers/usb/dwc3/dwc3-qcom.c
 > +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -298,6 +298,14 @@ static void dwc3_qcom_interconnect_exit(struct dwc3_qcom *qcom)
->  	icc_put(qcom->icc_path_apps);
+> @@ -397,7 +397,7 @@ static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
+>  	dwc3_qcom_enable_wakeup_irq(qcom->ss_phy_irq, 0);
 >  }
 >  
-> +/* Only usable in contexts where the role can not change. */
-> +static bool dwc3_qcom_is_host(struct dwc3_qcom *qcom)
-> +{
-> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-> +
-> +	return dwc->xhci;
-> +}
-> +
->  static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
+> -static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
+> +static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
 >  {
->  	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-> @@ -460,7 +468,11 @@ static irqreturn_t qcom_dwc3_resume_irq(int irq, void *data)
->  	if (qcom->pm_suspended)
->  		return IRQ_HANDLED;
+>  	u32 val;
+>  	int i, ret;
+> @@ -416,7 +416,7 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
+>  	if (ret)
+>  		dev_warn(qcom->dev, "failed to disable interconnect: %d\n", ret);
 >  
-> -	if (dwc->xhci)
-> +	/*
-> +	 * This is safe as role switching is done from a freezable workqueue
-> +	 * and the wakeup interrupts are disabled as part of resume.
-> +	 */
-> +	if (dwc3_qcom_is_host(qcom))
->  		pm_runtime_resume(&dwc->xhci->dev);
->  
->  	return IRQ_HANDLED;
-> diff --git a/drivers/usb/dwc3/host.c b/drivers/usb/dwc3/host.c
-> index f56c30cf151e..f6f13e7f1ba1 100644
-> --- a/drivers/usb/dwc3/host.c
-> +++ b/drivers/usb/dwc3/host.c
-> @@ -135,4 +135,5 @@ int dwc3_host_init(struct dwc3 *dwc)
->  void dwc3_host_exit(struct dwc3 *dwc)
->  {
->  	platform_device_unregister(dwc->xhci);
-> +	dwc->xhci = NULL;
+> -	if (device_may_wakeup(qcom->dev)) {
+> +	if (wakeup) {
+>  		qcom->usb2_speed = dwc3_qcom_read_usb2_speed(qcom);
+>  		dwc3_qcom_enable_interrupts(qcom);
+>  	}
+> @@ -426,7 +426,7 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
+>  	return 0;
 >  }
+>  
+> -static int dwc3_qcom_resume(struct dwc3_qcom *qcom)
+> +static int dwc3_qcom_resume(struct dwc3_qcom *qcom, bool wakeup)
+>  {
+>  	int ret;
+>  	int i;
+> @@ -434,7 +434,7 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom)
+>  	if (!qcom->is_suspended)
+>  		return 0;
+>  
+> -	if (device_may_wakeup(qcom->dev))
+> +	if (wakeup)
+>  		dwc3_qcom_disable_interrupts(qcom);
+>  
+>  	for (i = 0; i < qcom->num_clocks; i++) {
+> @@ -945,9 +945,11 @@ static int dwc3_qcom_remove(struct platform_device *pdev)
+>  static int __maybe_unused dwc3_qcom_pm_suspend(struct device *dev)
+>  {
+>  	struct dwc3_qcom *qcom = dev_get_drvdata(dev);
+> +	bool wakeup = device_may_wakeup(dev);
+>  	int ret = 0;
+>  
+> -	ret = dwc3_qcom_suspend(qcom);
+> +
+> +	ret = dwc3_qcom_suspend(qcom, wakeup);
+>  	if (!ret)
+>  		qcom->pm_suspended = true;
+>  
+> @@ -957,9 +959,10 @@ static int __maybe_unused dwc3_qcom_pm_suspend(struct device *dev)
+>  static int __maybe_unused dwc3_qcom_pm_resume(struct device *dev)
+>  {
+>  	struct dwc3_qcom *qcom = dev_get_drvdata(dev);
+> +	bool wakeup = device_may_wakeup(dev);
+>  	int ret;
+>  
+> -	ret = dwc3_qcom_resume(qcom);
+> +	ret = dwc3_qcom_resume(qcom, wakeup);
+>  	if (!ret)
+>  		qcom->pm_suspended = false;
+>  
+> @@ -970,14 +973,14 @@ static int __maybe_unused dwc3_qcom_runtime_suspend(struct device *dev)
+>  {
+>  	struct dwc3_qcom *qcom = dev_get_drvdata(dev);
+>  
+> -	return dwc3_qcom_suspend(qcom);
+> +	return dwc3_qcom_suspend(qcom, true);
+>  }
+>  
+>  static int __maybe_unused dwc3_qcom_runtime_resume(struct device *dev)
+>  {
+>  	struct dwc3_qcom *qcom = dev_get_drvdata(dev);
+>  
+> -	return dwc3_qcom_resume(qcom);
+> +	return dwc3_qcom_resume(qcom, true);
+>  }
+>  
+>  static const struct dev_pm_ops dwc3_qcom_dev_pm_ops = {
 > -- 
 > 2.35.1
 > 
