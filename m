@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E48FC58B5C6
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Aug 2022 15:52:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C70C358B5FE
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Aug 2022 16:15:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231283AbiHFNwO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Aug 2022 09:52:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55476 "EHLO
+        id S231261AbiHFOPs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Aug 2022 10:15:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230211AbiHFNwN (ORCPT
+        with ESMTP id S230049AbiHFOPs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Aug 2022 09:52:13 -0400
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA483F5AD
-        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Aug 2022 06:52:09 -0700 (PDT)
-Received: by mail-pf1-x42b.google.com with SMTP id f192so4486612pfa.9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Aug 2022 06:52:09 -0700 (PDT)
+        Sat, 6 Aug 2022 10:15:48 -0400
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F137E65DE
+        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Aug 2022 07:15:46 -0700 (PDT)
+Received: by mail-pg1-x52c.google.com with SMTP id r22so2496665pgm.5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Aug 2022 07:15:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=RSxdi8xvKopT4hYxNJXBxrYk0uMobA98LNnzcb7HFVY=;
-        b=L+iEfobGTIaZdBDTSWhiVWJAZiZ8J3cHBW5T7IMiYfbYWN6pMGIpn4ibaosnyacFo8
-         lj56/jZr80p2dQSxieT0G8Nu44GDc5SNf06Ky1AEO0wJzgBKSC7Amd37CgGErQazzyXN
-         GJBkiXSMD8sjCFwt6TtJC+149MEsZy7JQojiPyp3ZDmLHjZWaQvirxTScxBsFBLddSYS
-         0Zc+2XXYAUr0oEZbd0kzYuPjrrv7FWgr7XzvGAog+cmJImXnYKRHeqAsn/M0qtb8fICr
-         lsnsFFfNysyxqWMiEiXtDmSrUwZPfOIQUcsWh/s0M3HuYdkhqaI8vM6d+l7e0KMP74LN
-         yofw==
+        bh=AdmoEx+WmT67i1BIIL03YLuO83QgajHTg/kt7epiFgg=;
+        b=VrZJ2jGiKcVNK94TZNAGg/tkmL38wNQtqKf1THHLxvabAuue0RgYwgLjqMlPwYJPwr
+         deDcuS/h4N+T+kUZ1zX+bKB6wUO8FseklOntC5piKZ2TBQXA+rDUSkYQyJamrMZ4szC4
+         keWYVLrynR5M35re6QSxMrHFCuncmrp+JoLVjK2k2SlTzRYqJIcchVo36wfjSnctADoa
+         xXLnAGuLJhUVz/NhozC9XK+6Sziz3RJNO+6pYDcF657f5KRrEJqe5hKTQOf/q3sInf4L
+         AQ9TNGqMj0SVJBi/kJN4Q0FY4CvxGad5RLpwYq1a9DhRtI7QM/E3yk58J1ji5u9WyHP5
+         KSLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=RSxdi8xvKopT4hYxNJXBxrYk0uMobA98LNnzcb7HFVY=;
-        b=y9mQt0jHfV+ipeHFh5g6bxdvvF66A7vGH7UtRflK0hJBASivSxHVtJhXeA6bIKquTJ
-         YPRxh5XVmpxhoHPk2/GlVNO1NXsqB5NmQyaIXvhNMYgIkm6jpz77j7fx2Wyava57MWGa
-         HbuZVs57VTYZmJ8omwqUXx3Hl5NUaGMI/WkqrwhcSGNj09tIIbhBZDKILQRV61IJPHoz
-         kRnPdJW4CC/au63Welsk7FjxdIiBHPlBoYrJBX/nbdJ9ZhOXqIA29HgufebjywUY1alO
-         vW4Ov/51B5jaGs0Fv4ICSIWXMdnvGmKFzNi0j6Qz7sI3EldGpN4e7EaK0ImWsH1dRBUV
-         tUGQ==
-X-Gm-Message-State: ACgBeo1Qb1XIrIraDSIgXQVsUeVmXDSomogVGBPSw5e12S1xqHwSQiQi
-        7JuxUOHLFtiW5Ir0dmQpbVOw
-X-Google-Smtp-Source: AA6agR4llsfdiV0e9G+rpfDan2dDPwXhlGV/pR1ZWerFm73wdHeBTQAbJhZg+U3ergp2R/NH+VAzlg==
-X-Received: by 2002:a05:6a00:21c8:b0:52b:ffc0:15e7 with SMTP id t8-20020a056a0021c800b0052bffc015e7mr11353080pfj.29.1659793929300;
-        Sat, 06 Aug 2022 06:52:09 -0700 (PDT)
+        bh=AdmoEx+WmT67i1BIIL03YLuO83QgajHTg/kt7epiFgg=;
+        b=ENa8b6biqbjLdkj9o/SRmdFqBK06ehlqlueC3Ad+kNMkW0ephhG4lIzXTu1H8SuBVv
+         187ieUUuQvjKSIGoKUGni2b11L6aYxTtZuPnw6vyYDkKpBOYzmHpaEVC4qcABgUBUz+I
+         zPdHQhM7g0RBoS8ffVBvdoM/V6SqQqIBhmzkF302GUZd3ATDd6aLPi5n0acW63Xv3V+X
+         HOZj08p6KfWjq0nn3QZduxOIDJjzWAMsKQpMGgcgAB0Z+/LNyM+NPvwRCi7bIKnsX1p+
+         tGXjxWd55vsg6Et8H8uE3Zu6xK8xhW42Ip3lnlcXIHpJV7Ys6zYQDbRhJT7nwVyCXcHP
+         aaCg==
+X-Gm-Message-State: ACgBeo3NE6FdyXt0MTxsr6crbrgncw5KKQIbNfFKwq6ySBp+Z/tOe/U0
+        7Asyyr0BW7PzViI1TyEN86NC
+X-Google-Smtp-Source: AA6agR53FZGAkMJLYJQ36JfX/HuotRuqldhgQsqY+teYfZJBmLRHMgEFBpkrxL9w0zZ1OKME5h++eQ==
+X-Received: by 2002:a63:560e:0:b0:41c:590a:62ed with SMTP id k14-20020a63560e000000b0041c590a62edmr9686308pgb.250.1659795346368;
+        Sat, 06 Aug 2022 07:15:46 -0700 (PDT)
 Received: from thinkpad ([117.202.188.20])
-        by smtp.gmail.com with ESMTPSA id u11-20020a17090341cb00b0016be14a776asm4965153ple.286.2022.08.06.06.52.02
+        by smtp.gmail.com with ESMTPSA id z10-20020a6553ca000000b0041c1965dd96sm3207803pgr.27.2022.08.06.07.15.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Aug 2022 06:52:08 -0700 (PDT)
-Date:   Sat, 6 Aug 2022 19:22:00 +0530
+        Sat, 06 Aug 2022 07:15:45 -0700 (PDT)
+Date:   Sat, 6 Aug 2022 19:45:36 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Johan Hovold <johan+linaro@kernel.org>
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -66,20 +66,20 @@ Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
         quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
         linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/9] Revert "usb: dwc3: qcom: Keep power domain on to
- retain controller status"
-Message-ID: <20220806135200.GC14384@thinkpad>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Randy Dunlap <rdunlap@infradead.org>
+Subject: Re: [PATCH v2 3/9] usb: dwc3: qcom: fix gadget-only builds
+Message-ID: <20220806141536.GD14384@thinkpad>
 References: <20220804151001.23612-1-johan+linaro@kernel.org>
- <20220804151001.23612-3-johan+linaro@kernel.org>
+ <20220804151001.23612-4-johan+linaro@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220804151001.23612-3-johan+linaro@kernel.org>
+In-Reply-To: <20220804151001.23612-4-johan+linaro@kernel.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,98 +87,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 04, 2022 at 05:09:54PM +0200, Johan Hovold wrote:
-> This reverts commit d9be8d5c5b032e5383ff5c404ff4155e9c705429.
+On Thu, Aug 04, 2022 at 05:09:55PM +0200, Johan Hovold wrote:
+> A recent change added a dependency to the USB host stack and broke
+> gadget-only builds of the driver.
 > 
-> Generic power-domain flags must be set before the power-domain is
-> initialised and must specifically not be modified by drivers for devices
-> that happen to be in the domain.
-> 
-> To make sure that USB power-domains are left enabled during system
-> suspend when a device in the domain is in the wakeup path, the
-> GENPD_FLAG_ACTIVE_WAKEUP flag should instead be set for the domain
-> unconditionally when it is registered.
-> 
-> Note that this also avoids keeping power-domains on during suspend when
-> wakeup has not been enabled (e.g. through sysfs).
-> 
-> For the runtime PM case, making sure that the PHYs are not suspended and
-> that they are in the same domain as the controller prevents the domain
-> from being suspended. If there are cases where this is not possible or
-> desirable, the genpd implementation may need to be extended.
-> 
-> Fixes: d9be8d5c5b03 ("usb: dwc3: qcom: Keep power domain on to retain controller status")
+> Fixes: 6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
+> Reported-by: Randy Dunlap <rdunlap@infradead.org>
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> --`-
+> 
+> Changes in v2
+>  - new patch
+> 
+>  drivers/usb/dwc3/dwc3-qcom.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index be2e3dd36440..e9364141661b 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -310,8 +310,11 @@ static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
+>  	 * currently supports only 1 port per controller. So
+>  	 * this is sufficient.
+>  	 */
+> +#ifdef CONFIG_USB
+>  	udev = usb_hub_find_child(hcd->self.root_hub, 1);
+> -
+> +#else
+> +	udev = NULL;
+> +#endif
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Perhaps the check should be moved to the caller instead? This function still
+references "usb_hcd" struct and I don't think that's intended for gadget only
+mode.
 
 Thanks,
 Mani
 
-> ---
->  drivers/usb/dwc3/dwc3-qcom.c | 28 +++++++---------------------
->  1 file changed, 7 insertions(+), 21 deletions(-)
-> 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index c5e482f53e9d..be2e3dd36440 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -17,7 +17,6 @@
->  #include <linux/of_platform.h>
->  #include <linux/platform_device.h>
->  #include <linux/phy/phy.h>
-> -#include <linux/pm_domain.h>
->  #include <linux/usb/of.h>
->  #include <linux/reset.h>
->  #include <linux/iopoll.h>
-> @@ -757,13 +756,12 @@ dwc3_qcom_create_urs_usb_platdev(struct device *dev)
+>  	if (!udev)
+>  		return USB_SPEED_UNKNOWN;
 >  
->  static int dwc3_qcom_probe(struct platform_device *pdev)
->  {
-> -	struct device_node *np = pdev->dev.of_node;
-> -	struct device *dev = &pdev->dev;
-> -	struct dwc3_qcom *qcom;
-> -	struct resource	*res, *parent_res = NULL;
-> -	int ret, i;
-> -	bool ignore_pipe_clk;
-> -	struct generic_pm_domain *genpd;
-> +	struct device_node	*np = pdev->dev.of_node;
-> +	struct device		*dev = &pdev->dev;
-> +	struct dwc3_qcom	*qcom;
-> +	struct resource		*res, *parent_res = NULL;
-> +	int			ret, i;
-> +	bool			ignore_pipe_clk;
->  
->  	qcom = devm_kzalloc(&pdev->dev, sizeof(*qcom), GFP_KERNEL);
->  	if (!qcom)
-> @@ -772,8 +770,6 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
->  	platform_set_drvdata(pdev, qcom);
->  	qcom->dev = &pdev->dev;
->  
-> -	genpd = pd_to_genpd(qcom->dev->pm_domain);
-> -
->  	if (has_acpi_companion(dev)) {
->  		qcom->acpi_pdata = acpi_device_get_match_data(dev);
->  		if (!qcom->acpi_pdata) {
-> @@ -881,17 +877,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
->  	if (ret)
->  		goto interconnect_exit;
->  
-> -	if (device_can_wakeup(&qcom->dwc3->dev)) {
-> -		/*
-> -		 * Setting GENPD_FLAG_ALWAYS_ON flag takes care of keeping
-> -		 * genpd on in both runtime suspend and system suspend cases.
-> -		 */
-> -		genpd->flags |= GENPD_FLAG_ALWAYS_ON;
-> -		device_init_wakeup(&pdev->dev, true);
-> -	} else {
-> -		genpd->flags |= GENPD_FLAG_RPM_ALWAYS_ON;
-> -	}
-> -
-> +	device_init_wakeup(&pdev->dev, 1);
->  	qcom->is_suspended = false;
->  	pm_runtime_set_active(dev);
->  	pm_runtime_enable(dev);
 > -- 
 > 2.35.1
 > 
