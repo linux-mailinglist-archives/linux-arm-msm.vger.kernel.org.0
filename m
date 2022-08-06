@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2263A58B728
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Aug 2022 18:58:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEDF158B72B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Aug 2022 18:59:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233621AbiHFQ6V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Aug 2022 12:58:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39862 "EHLO
+        id S233619AbiHFQ6Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Aug 2022 12:58:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233955AbiHFQ6R (ORCPT
+        with ESMTP id S233819AbiHFQ6W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Aug 2022 12:58:17 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 085CC12D3B
-        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Aug 2022 09:58:05 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id a8so5325420pjg.5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Aug 2022 09:58:05 -0700 (PDT)
+        Sat, 6 Aug 2022 12:58:22 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B733ADEFB
+        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Aug 2022 09:58:21 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id x2-20020a17090ab00200b001f4da5cdc9cso10941487pjq.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Aug 2022 09:58:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=gwFfS7FgstQLbRyJIK3YRj+mJRK29ux6Bl+pErHZDnY=;
-        b=kXnYRlqgtGyktsODjODWihItFMICAbPOj95ikmPuA4ZKki2dyIvj64m5ESMfxVr5wS
-         zoo2rCjSc5qpGU/Hsxx+o7jSeF5kCv+4LzxBRL3vb5MncTAzoL2FO14yBwpwJCzbm95h
-         cSmonlhRGCEtW5F025mqyohVfvuoe+AXRTp91OmTQ/PwiDPi8oANfe0ejeaveJgoH9ai
-         +mtu746bV/XAHwpnw84D6xZfmPP6/OvFt4bvgujSDMROGB2FfHJuLQv8w+9DU4qydSzf
-         12hcFpMSbcnDLfZLm3HTQvTzAQ6HHtet+Z2RW+5fjh4QY52U5PsEYzCiEIDrvZsTCY2V
-         V8cw==
+        bh=NzKRGCeBw0HtZvKt86J1N8xa2Nei5fwynFuykQCdLQY=;
+        b=DHTC+sGNoi7LqLQozrWuyyfRQqoSg03P1aHoLXkI8tWwYUaCyUgW5/k2EI6xCutxYy
+         nhk42CqaJrjb5fkFSkoU7ogO7gVIbrHwWSHidtTBi6Vq7M5OUi41obYCAslWtPEaUrSB
+         vExCW5o+a24cPgRwh2uoTfP0h7HaxHDpJLj17B8YERKDyNxwQrJvCqnPBiTozyrioFgU
+         cIgQIxqXLFpvlcE0M31nPVAZnXTrZabYtaDZOrBnT6OumxZUfDpd29ithvLQuAh5FJST
+         4mm4OouSP2LN3+xKhebKwkVLvlKyJay1shHXzMhZdKD/s852mGtaiSs80pkWCfp8tkr1
+         VNlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=gwFfS7FgstQLbRyJIK3YRj+mJRK29ux6Bl+pErHZDnY=;
-        b=LqEEdtJlLllDxNy0RXiWy28o/6Xhl4iQB1nGxwZAeQGQ5Xref3g4s8xHUvC5aYdggT
-         H7/366RO87ipELSO510PprWj+DyX+QK8So4zLCuKp+MB2swx9ftKxNAfD3JGkjzqnu0S
-         s4ImO2usaw+RzwRcU0VcJUwTGfsdtNp+iJ63fbh/5pJGCr1finRuMal7+BQMstHwXVYt
-         yAo7P/vXVWJDfHdqVVL/DUyCVL+cphmAl5sbUYUgV1JVCyolRmOoZVxm5/Tesmll+RUm
-         W8Qmn98MPtNF8fEiZGVkmNHsciRf2VvJsv/r3e7LwtqTAuEoYNgNN3ppgH1uHlSzNNlY
-         Ztbw==
-X-Gm-Message-State: ACgBeo1nqf/zlghYwcj7FdJMKVNfnJ9Qj8GVVKfMz3VkN3rxtB95QfzB
-        PHR4XFfnlOIsCk/X8pOaMWII
-X-Google-Smtp-Source: AA6agR5GiSlxh2cmlWyeDiHHjzxfvaCgZ9HYTvYeOKAiYpTa/s1YAOHFRmxWKcrx16+h4JnQNfJcjg==
-X-Received: by 2002:a17:90a:4805:b0:1f5:39ab:29a9 with SMTP id a5-20020a17090a480500b001f539ab29a9mr12901550pjh.202.1659805084471;
-        Sat, 06 Aug 2022 09:58:04 -0700 (PDT)
+        bh=NzKRGCeBw0HtZvKt86J1N8xa2Nei5fwynFuykQCdLQY=;
+        b=ifsQr54GW9s7RA2Id6GIXdiFAAWY91UB9/HPr7CMze//q1VOUAz97zHv93jB/MIQ3L
+         6X7FDwQLbOXcgnwl6g3fKQlWkHQVtrVwUHYSQH7GbU9U64ClzLEWS2GM+yOqUeCy9VKZ
+         pPY1vlVxPQtDkH+LWQcYXKjHBUEo0x20frNytIoNC27KiSGwmV2wAtFmFmS3wde5PBhM
+         li6Zr2qX/EVzE6zcRvUsflPzNid6LFDNg0oKfMUi38ZTLFry21k4LgJD2XBNIQQXotKm
+         6el1KRJCRHE5zibhfSpnAt8V+MIKwPBd7VPzZDAm684Kag/Zz6mzKvreSbrKaYLVet0T
+         l8Sg==
+X-Gm-Message-State: ACgBeo2C3SaS4K+zeugCEWpnLpnkDva26ld1EFL3kwO4JReR5+PyBRue
+        PMXx1r055TKaCxPYUPYZaFAn
+X-Google-Smtp-Source: AA6agR6O44L9sEXXxNs0RX4ePvxszqiwayW4yVSDY2VVIsklhuLkNbxXEeRTDxElsUym3WXDsmfZSg==
+X-Received: by 2002:a17:902:d509:b0:16f:1e1:2063 with SMTP id b9-20020a170902d50900b0016f01e12063mr11576561plg.131.1659805101181;
+        Sat, 06 Aug 2022 09:58:21 -0700 (PDT)
 Received: from thinkpad ([117.202.188.20])
-        by smtp.gmail.com with ESMTPSA id y1-20020a17090322c100b0016d93c84049sm5347778plg.54.2022.08.06.09.58.00
+        by smtp.gmail.com with ESMTPSA id f1-20020a170902f38100b0016c1b178628sm5093820ple.269.2022.08.06.09.58.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Aug 2022 09:58:04 -0700 (PDT)
-Date:   Sat, 6 Aug 2022 22:27:58 +0530
+        Sat, 06 Aug 2022 09:58:20 -0700 (PDT)
+Date:   Sat, 6 Aug 2022 22:28:15 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Johan Hovold <johan+linaro@kernel.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -59,19 +59,19 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/7] arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s:
- move HID pin config
-Message-ID: <20220806165758.GR14384@thinkpad>
+Subject: Re: [PATCH 6/7] arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s:
+ mark HID wakeup sources
+Message-ID: <20220806165815.GS14384@thinkpad>
 References: <20220805092317.4985-1-johan+linaro@kernel.org>
- <20220805092317.4985-6-johan+linaro@kernel.org>
+ <20220805092317.4985-7-johan+linaro@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220805092317.4985-6-johan+linaro@kernel.org>
+In-Reply-To: <20220805092317.4985-7-johan+linaro@kernel.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,9 +79,9 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 05, 2022 at 11:23:15AM +0200, Johan Hovold wrote:
-> The HID pin configurations belong in the HID nodes rather than i2c bus
-> node.
+On Fri, Aug 05, 2022 at 11:23:16AM +0200, Johan Hovold wrote:
+> The touchpad and keyboard can wake the system from suspend so declare
+> them as wakeup sources.
 > 
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
@@ -91,67 +91,28 @@ Thanks,
 Mani
 
 > ---
->  .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts   | 16 ++++++++++++++--
->  1 file changed, 14 insertions(+), 2 deletions(-)
+>  arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
 > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> index 85efce641a4e..76ba2d5fa17e 100644
+> index 76ba2d5fa17e..1ca72f6ba55a 100644
 > --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
 > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> @@ -177,7 +177,7 @@ &qup0_i2c4 {
->  	clock-frequency = <400000>;
+> @@ -221,6 +221,8 @@ touchpad@2c {
 >  
->  	pinctrl-names = "default";
-> -	pinctrl-0 = <&qup0_i2c4_default>, <&ts0_default>;
-> +	pinctrl-0 = <&qup0_i2c4_default>;
->  
->  	status = "okay";
->  
-> @@ -185,9 +185,13 @@ &qup0_i2c4 {
->  	touchscreen@10 {
->  		compatible = "hid-over-i2c";
->  		reg = <0x10>;
+>  		pinctrl-names = "default";
+>  		pinctrl-0 = <&tpad_default>;
 > +
->  		hid-descr-addr = <0x1>;
->  		interrupts-extended = <&tlmm 175 IRQ_TYPE_LEVEL_LOW>;
->  		vdd-supply = <&vreg_misc_3p3>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&ts0_default>;
->  	};
->  };
->  
-> @@ -203,24 +207,32 @@ &qup2_i2c5 {
->  	clock-frequency = <400000>;
->  
->  	pinctrl-names = "default";
-> -	pinctrl-0 = <&qup2_i2c5_default>, <&kybd_default>, <&tpad_default>;
-> +	pinctrl-0 = <&qup2_i2c5_default>;
->  
->  	status = "okay";
->  
->  	touchpad@2c {
->  		compatible = "hid-over-i2c";
->  		reg = <0x2c>;
-> +
->  		hid-descr-addr = <0x20>;
->  		interrupts-extended = <&tlmm 182 IRQ_TYPE_LEVEL_LOW>;
->  		vdd-supply = <&vreg_misc_3p3>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&tpad_default>;
+> +		wakeup-source;
 >  	};
 >  
 >  	keyboard@68 {
->  		compatible = "hid-over-i2c";
->  		reg = <0x68>;
+> @@ -233,6 +235,8 @@ keyboard@68 {
+>  
+>  		pinctrl-names = "default";
+>  		pinctrl-0 = <&kybd_default>;
 > +
->  		hid-descr-addr = <0x1>;
->  		interrupts-extended = <&tlmm 104 IRQ_TYPE_LEVEL_LOW>;
->  		vdd-supply = <&vreg_misc_3p3>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&kybd_default>;
+> +		wakeup-source;
 >  	};
 >  };
 >  
