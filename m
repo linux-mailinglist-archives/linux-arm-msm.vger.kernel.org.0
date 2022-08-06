@@ -2,74 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F01CA58B64F
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Aug 2022 17:11:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6484558B682
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Aug 2022 17:32:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231987AbiHFPLa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Aug 2022 11:11:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39004 "EHLO
+        id S232753AbiHFPcG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Aug 2022 11:32:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231879AbiHFPL3 (ORCPT
+        with ESMTP id S232240AbiHFPcF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Aug 2022 11:11:29 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3D071115C
-        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Aug 2022 08:11:28 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id o5-20020a17090a3d4500b001ef76490983so5434129pjf.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Aug 2022 08:11:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=uNTrR3FasBAQMZvag/1ZkGzsFnEubFSwQWW0r3u0bpQ=;
-        b=jQ5Op+/wi+m8XJza4qwokAOyy6lXE5asFJMJUNbwRNcNEFIymmE49JGYoMBxEa7yff
-         7Zn2/Vw7umKF49LZDQR2rRVFmvFRaAFxlneJSIPVwWzC2Txdr0kl6DyoVkzusbnE0vEf
-         BMvCgLtiwiYBFUZDoy+Kb562hLp5EYX8c9dz1W23qthlaXP5gwaY//WB9bSY31t3lxzE
-         f9d4imlmrLjUN/FDWnH8nzeRBNbqRQskfX/ghz0Qzbcp7bSGQpto4/P4EZ6sBxwR0ois
-         utqMf/Xqdxk/ZJZ+Lhxs58LeOVsWZW8KCV08F4yrYtmZ981kWzLh1Lkbu7P3xvVfMJSa
-         FfnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=uNTrR3FasBAQMZvag/1ZkGzsFnEubFSwQWW0r3u0bpQ=;
-        b=xEY4Sf67mGAZ9QhYm8zArRLO8SruatlfiN+wc9qb4ATcONeBnlkJzSntoKQNdkm49L
-         CNuZgSpxwLk7VvBpRvXIPBqSYYH9Sq7ciUAiUi390VlC04Lst26O+/JXzLap59dAo7v3
-         ufoUSZyFoWPOCbVT3IMOFQlpEPDBzmMmZffKf8iaDB9AkB7dfDO0Y6YUN4Yarounlzu2
-         NBg89XiNQjSLppVhoCQn4ImvUKQAyvJflaikf55fA80HcGQKOcn9y7pNKA4CYkAgoxqm
-         NtVRNf7IleyCvZkSLrZv2Ov9MpbnUyXjPdR0bSvFBjlV/Suw9iBtEMF9+mQJxOYRQnXN
-         NnSA==
-X-Gm-Message-State: ACgBeo2yBDs4GoE5cmykKMaKtKaozFfy0fJGBnxKbxtyWu2/kDV8aWOW
-        ROdl2Od2TWOa+JrWv7om0G+BtayRmCL+
-X-Google-Smtp-Source: AA6agR7euGOAJs8f5MZrGZbmyOv6YvxueyCIXdiOeuB6GdWkadVl1S4hXJs9RUyi9GHaw/tFkthvow==
-X-Received: by 2002:a17:902:eac2:b0:16d:cce2:e5c6 with SMTP id p2-20020a170902eac200b0016dcce2e5c6mr11472074pld.149.1659798688431;
-        Sat, 06 Aug 2022 08:11:28 -0700 (PDT)
-Received: from thinkpad ([117.202.188.20])
-        by smtp.gmail.com with ESMTPSA id bc10-20020a170902930a00b0016c454598b5sm5089919plb.167.2022.08.06.08.11.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Aug 2022 08:11:28 -0700 (PDT)
-Date:   Sat, 6 Aug 2022 20:41:23 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sat, 6 Aug 2022 11:32:05 -0400
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED68E60ED;
+        Sat,  6 Aug 2022 08:32:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1659799924; x=1691335924;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=vu6Y2qO+FKc1QzYLh0uE+Z7hKMHTWrM2Cu3ji9kmzag=;
+  b=lZTEGDWobUMLTrszQnVLxpsd8gvmy4c9fqUAQEijBmNhopr1zbqZwLa4
+   +GnQ4Xgh/sFKlGJle9zCQdzHkwl/4eJa+0aFVqAPCw3r2kKZgM/B/J0Il
+   PHZJDFeZ2rybct2CS9oUQ+eyLdLZxdC82xgLV5Qnlp808TQqiZVhw1gQ9
+   9hXjQu9f1JGOqIUbiLdeHncMzxN0CobpMyPqaXbdO+nHxfWaqoMduQRT8
+   5FToH0Dj3AatrnE+2p9vSrVRz3upn/uSSncH8D2aova5h1NhEnrowY+3L
+   5HQbYokExRuetqP4maa60mFt8xTrcPymCbRINmXG3Fay6ECyGlcvbUZaq
+   g==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10431"; a="270148834"
+X-IronPort-AV: E=Sophos;i="5.93,217,1654585200"; 
+   d="scan'208";a="270148834"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Aug 2022 08:32:04 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.93,217,1654585200"; 
+   d="scan'208";a="603901993"
+Received: from lkp-server01.sh.intel.com (HELO e0eace57cfef) ([10.239.97.150])
+  by orsmga002.jf.intel.com with ESMTP; 06 Aug 2022 08:32:00 -0700
+Received: from kbuild by e0eace57cfef with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1oKLmR-000KU3-1p;
+        Sat, 06 Aug 2022 15:31:59 +0000
+Date:   Sat, 6 Aug 2022 23:31:13 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-doc@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>
+Cc:     kbuild-all@lists.01.org, Elliot Berman <quic_eberman@quicinc.com>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] clk: gcc-sc8280xp: keep USB power-domains always-on
-Message-ID: <20220806151123.GJ14384@thinkpad>
-References: <20220805121250.10347-1-johan+linaro@kernel.org>
- <20220805121250.10347-3-johan+linaro@kernel.org>
+        linux-arm-kernel@lists.infradead.org,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 01/11] docs: gunyah: Introduce Gunyah Hypervisor
+Message-ID: <202208062327.dI3HuYk5-lkp@intel.com>
+References: <20220801211240.597859-2-quic_eberman@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220805121250.10347-3-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <20220801211240.597859-2-quic_eberman@quicinc.com>
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,63 +79,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 05, 2022 at 02:12:50PM +0200, Johan Hovold wrote:
-> The Qualcomm DWC3 driver suspend implementation appears to be incomplete
-> for SC8280XP so keep the USB power domains always-on for now so that the
-> controller survives a suspend cycle.
-> 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Hi Elliot,
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+I love your patch! Perhaps something to improve:
 
-Thanks,
-Mani
+[auto build test WARNING on arm64/for-next/core]
+[also build test WARNING on v5.19]
+[cannot apply to linus/master next-20220805]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-> ---
->  drivers/clk/qcom/gcc-sc8280xp.c | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
-> index eaeada42e13a..7768e6901dcc 100644
-> --- a/drivers/clk/qcom/gcc-sc8280xp.c
-> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
-> @@ -6843,12 +6843,17 @@ static struct gdsc ufs_phy_gdsc = {
->  	.pwrsts = PWRSTS_OFF_ON,
->  };
->  
-> +/*
-> + * The Qualcomm DWC3 driver suspend implementation appears to be incomplete
-> + * for sc8280xp so keep the USB power domains always-on for now.
-> + */
->  static struct gdsc usb30_mp_gdsc = {
->  	.gdscr = 0xab004,
->  	.pd = {
->  		.name = "usb30_mp_gdsc",
->  	},
->  	.pwrsts = PWRSTS_OFF_ON,
-> +	.flags = ALWAYS_ON,
->  };
->  
->  static struct gdsc usb30_prim_gdsc = {
-> @@ -6857,6 +6862,7 @@ static struct gdsc usb30_prim_gdsc = {
->  		.name = "usb30_prim_gdsc",
->  	},
->  	.pwrsts = PWRSTS_OFF_ON,
-> +	.flags = ALWAYS_ON,
->  };
->  
->  static struct gdsc usb30_sec_gdsc = {
-> @@ -6865,6 +6871,7 @@ static struct gdsc usb30_sec_gdsc = {
->  		.name = "usb30_sec_gdsc",
->  	},
->  	.pwrsts = PWRSTS_OFF_ON,
-> +	.flags = ALWAYS_ON,
->  };
->  
->  static struct clk_regmap *gcc_sc8280xp_clocks[] = {
-> -- 
-> 2.35.1
-> 
+url:    https://github.com/intel-lab-lkp/linux/commits/Elliot-Berman/Drivers-for-gunyah-hypervisor/20220802-051534
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/arm64/linux.git for-next/core
+reproduce: make htmldocs
+
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
+
+All warnings (new ones prefixed by >>):
+
+>> Documentation/virt/gunyah/index.rst:71: WARNING: Unexpected indentation.
+>> Documentation/virt/gunyah/index.rst:72: WARNING: Block quote ends without a blank line; unexpected unindent.
+
+vim +71 Documentation/virt/gunyah/index.rst
+
+    66	
+    67	::
+    68	  +-------+   +--------+   +--------+
+    69	  |  RM   |   |  VM_A  |   |  VM_B  |
+    70	  +-.-.-.-+   +---.----+   +---.----+
+  > 71	    | |           |            |
+  > 72	  +-.-.-----------.------------.----+
+    73	  | | \==========/             |    |
+    74	  |  \========================/     |
+    75	  |            Gunyah               |
+    76	  +---------------------------------+
+    77	
 
 -- 
-மணிவண்ணன் சதாசிவம்
+0-DAY CI Kernel Test Service
+https://01.org/lkp
