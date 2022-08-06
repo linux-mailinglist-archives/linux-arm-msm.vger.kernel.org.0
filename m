@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BBE658B622
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Aug 2022 16:35:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E53858B63B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Aug 2022 16:57:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231938AbiHFOfk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Aug 2022 10:35:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50088 "EHLO
+        id S231754AbiHFO5b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Aug 2022 10:57:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231233AbiHFOfj (ORCPT
+        with ESMTP id S230525AbiHFO5a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Aug 2022 10:35:39 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DF13DFCE
-        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Aug 2022 07:35:38 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id u133so4548750pfc.10
-        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Aug 2022 07:35:38 -0700 (PDT)
+        Sat, 6 Aug 2022 10:57:30 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CF41DFBC
+        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Aug 2022 07:57:29 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id e8-20020a17090a280800b001f2fef7886eso5388737pjd.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Aug 2022 07:57:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=1D/80i9Z0nZkycuUkNoAcEIyiKHwsYEJG9bfZe9RA6k=;
-        b=Oy8rIZsIwYOxTINnlEQ/wP6W+gHg55yQUtXB1EmEw9aBCIPIaF/ZdE8jqBapGNxi4b
-         QjD009j2OxcYZwnFJIZULyKiMjooSxv5d5IabX0ltoSJHISNjq6dhtCWKMH0rQVdB48l
-         ZTz6Wb5ZYLwrFOtpa655fEa9LfX+4Fucae0cqtzggvTJiT6sHpoYP13JeXz1UgIQvetG
-         Wa3WG09iZL0YdRi5Yw+J4cnb7jTa/KFFkDNlXnFwOQYAILDjL9HqJIFuFyMGgbM35mD6
-         snUZVan7Yvn4kpxmBRQcI3Wxiws9QVeLlep0zYEHGxgOLz20X6Vidoz8uR2JvGEWrvCd
-         X0nw==
+        bh=Zp8ScE6+c88OFj3/AkcT1uLw5Dnq1hTT03Wi6C4EzHM=;
+        b=fHnoxmmpFeHcvoV1HH6LKTm8AASI2wIP6w2rlIGDoV0OLs+0N4DGfvoQx2xWXRkaaY
+         e7QKqzwuDF7MGltZD8M474UUSqQSpPE8SA8A2pnnbhF2h5M8hWrUYEXqKKtJ+k5pbGnI
+         oikkwgDdzYHTRRgYf/33zivy58FYZm1BLG5HyD0tuMOmQGvvTh2+ava1FURY6Wy3c60P
+         HXld4bjhrX/CwMCTRLWFIHtgYxhj7uzZrLYQcsR9yWzLKjM9HwddTrm+z3ZlnAPy/+au
+         dLiVJhWQGDZJO6NJ7Ddg3s042qpDjiRmrh9BleeTsoGPfqmQpV8928ymFG8HDuPH4Nxc
+         7Emw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=1D/80i9Z0nZkycuUkNoAcEIyiKHwsYEJG9bfZe9RA6k=;
-        b=vLBT5pAfLz6Y4DbwH72SuhQCgJZVWjm1BQAyAtKDkeMMiMbO5GqKQCVAhVRFz0d85c
-         hPj67wSDsU8bA+RBclCDjJBIXM/4o17nJbxTkUzrgvMBOITTg4QHUXeLKgv0RU4arRQi
-         DtJ5COtgsnlh1VylfnrOA2GLHr18KqbS7oDZQzxK2EJubeOigmXGn1SHpsnhZI+cSy4z
-         8nKrBtaUcj6uxf9RrGUkC+AW1BH7hVtAsmiqnAqqFDxI3+I/0+qAxQVWKStIn1F1mN53
-         9v6P+b9HftSHMO0ePYIibTV7+9TX82u/5VlIqNLlDMOYZIwYNXFfYz1+cm6eYvjVLx0w
-         gI4Q==
-X-Gm-Message-State: ACgBeo39lG5NH7Uj7CAVIWgutHSzpaPT83Ute8U9U9XyjvLSzgQBadh/
-        HuHgaJLa4s3vMFsaM2pmpq+O
-X-Google-Smtp-Source: AA6agR5WB0gMQVi/j7aZbv3bvTE6aBfq2g85CHNUCRmMU+FdolPTbBfM9RTyCSvYwZQy0jfkrqYK7w==
-X-Received: by 2002:a63:5650:0:b0:41a:dfa4:bdee with SMTP id g16-20020a635650000000b0041adfa4bdeemr9583170pgm.515.1659796537541;
-        Sat, 06 Aug 2022 07:35:37 -0700 (PDT)
+        bh=Zp8ScE6+c88OFj3/AkcT1uLw5Dnq1hTT03Wi6C4EzHM=;
+        b=FruuMEyrca2UcnhlYkbpIx/jHIxVyZYZLmI4xIOsf2dA+67Bf/zPIZrGJTwCaPKc6L
+         jAKdNgjY8o5RBn0yDwLbkdrCg6GZ2AGETn84akOQL7cANhdFzF/K7/mB1voE/pve9bnO
+         SO3RP/CfrlrBbHiWW7tR490JpoNIMrRPx/pVU0bbl6bmctmvlW162+pT0NezVjrFJLcN
+         LMF5DoIG2mUVS4jwEY9KDk4wtPhSMWx40Y4JDpoHSngGu5mtK9708Vk1oZjuMWr8MLpi
+         EdCkVmBqpIKAw0w0QGVfu2CpNyBShw+fhniRuOFAvp5kr6G0dNsJTR5wN5M4uBQ9RTYf
+         G7gw==
+X-Gm-Message-State: ACgBeo3IthphH0yRoxFGy7dTMZzDHd7pdu1FseyofG+oJQ3lwm5DNKAH
+        k0gl0AC0DQ3PatQFYtBltipI
+X-Google-Smtp-Source: AA6agR4EEvWRlq/QQqKTal9guvRl28ZShkyfmd7akMs1njO/0hmq2B4MFXAaWfp3TkOQHhrWkOdaZA==
+X-Received: by 2002:a17:902:ec90:b0:16e:d8d8:c2db with SMTP id x16-20020a170902ec9000b0016ed8d8c2dbmr11377058plg.69.1659797848472;
+        Sat, 06 Aug 2022 07:57:28 -0700 (PDT)
 Received: from thinkpad ([117.202.188.20])
-        by smtp.gmail.com with ESMTPSA id g6-20020a170902c38600b0016d27cead72sm5029259plg.196.2022.08.06.07.35.31
+        by smtp.gmail.com with ESMTPSA id o8-20020a1709026b0800b0016e2309bcf1sm5139998plk.13.2022.08.06.07.57.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Aug 2022 07:35:37 -0700 (PDT)
-Date:   Sat, 6 Aug 2022 20:05:29 +0530
+        Sat, 06 Aug 2022 07:57:28 -0700 (PDT)
+Date:   Sat, 6 Aug 2022 20:27:19 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Johan Hovold <johan+linaro@kernel.org>
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -67,18 +67,18 @@ Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
         linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 5/9] usb: dwc3: qcom: fix runtime PM wakeup
-Message-ID: <20220806143529.GF14384@thinkpad>
+Subject: Re: [PATCH v2 8/9] usb: dwc3: qcom: fix wakeup implementation
+Message-ID: <20220806145719.GG14384@thinkpad>
 References: <20220804151001.23612-1-johan+linaro@kernel.org>
- <20220804151001.23612-6-johan+linaro@kernel.org>
+ <20220804151001.23612-9-johan+linaro@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220804151001.23612-6-johan+linaro@kernel.org>
+In-Reply-To: <20220804151001.23612-9-johan+linaro@kernel.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,105 +86,93 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 04, 2022 at 05:09:57PM +0200, Johan Hovold wrote:
-> A device must enable wakeups during runtime suspend regardless of
-> whether it is capable and allowed to wake the system up from system
-> suspend.
+On Thu, Aug 04, 2022 at 05:10:00PM +0200, Johan Hovold wrote:
+> It is the Qualcomm glue wakeup interrupts that may be able to wake the
+> system from suspend and this can now be described in the devicetree.
 > 
-> Fixes: 2664deb09306 ("usb: dwc3: qcom: Honor wakeup enabled/disabled state")
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> Move the wakeup-source property handling over from the core driver and
+> instead propagate the capability setting to the core device during
+> probe.
+> 
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+The "wakeup-source" property is still defined in the DWC binding, so other
+platform glue drivers are free to assume that wakeup capability is handled by
+the DWC driver.
+
+> This is needed as there is currently no way for the core driver to query
+> the wakeup setting of the glue device, but it is the core driver that
+> manages the PHY power state during suspend.
+> 
+> Also don't leave the PHYs enabled when system wakeup has been disabled
+> through sysfs.
+> 
+
+Can you please elaborate on how this is handled in the patch?
 
 Thanks,
 Mani
 
+> Fixes: 649f5c842ba3 ("usb: dwc3: core: Host wake up support from system suspend")
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->  drivers/usb/dwc3/dwc3-qcom.c | 19 +++++++++++--------
->  1 file changed, 11 insertions(+), 8 deletions(-)
+>  drivers/usb/dwc3/core.c      | 5 ++---
+>  drivers/usb/dwc3/dwc3-qcom.c | 6 +++++-
+>  2 files changed, 7 insertions(+), 4 deletions(-)
 > 
+> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> index 16d1f328775f..8c8e32651473 100644
+> --- a/drivers/usb/dwc3/core.c
+> +++ b/drivers/usb/dwc3/core.c
+> @@ -1822,7 +1822,6 @@ static int dwc3_probe(struct platform_device *pdev)
+>  
+>  	platform_set_drvdata(pdev, dwc);
+>  	dwc3_cache_hwparams(dwc);
+> -	device_init_wakeup(&pdev->dev, of_property_read_bool(dev->of_node, "wakeup-source"));
+>  
+>  	spin_lock_init(&dwc->lock);
+>  	mutex_init(&dwc->mutex);
+> @@ -1984,7 +1983,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+>  		dwc3_core_exit(dwc);
+>  		break;
+>  	case DWC3_GCTL_PRTCAP_HOST:
+> -		if (!PMSG_IS_AUTO(msg) && !device_can_wakeup(dwc->dev)) {
+> +		if (!PMSG_IS_AUTO(msg) && !device_may_wakeup(dwc->dev)) {
+>  			dwc3_core_exit(dwc);
+>  			break;
+>  		}
+> @@ -2045,7 +2044,7 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
+>  		spin_unlock_irqrestore(&dwc->lock, flags);
+>  		break;
+>  	case DWC3_GCTL_PRTCAP_HOST:
+> -		if (!PMSG_IS_AUTO(msg) && !device_can_wakeup(dwc->dev)) {
+> +		if (!PMSG_IS_AUTO(msg) && !device_may_wakeup(dwc->dev)) {
+>  			ret = dwc3_core_init_for_resume(dwc);
+>  			if (ret)
+>  				return ret;
 > diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index 6884026b9fad..05b4666fde14 100644
+> index 6ae0b7fc4e2c..b05f67d206d2 100644
 > --- a/drivers/usb/dwc3/dwc3-qcom.c
 > +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -397,7 +397,7 @@ static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
->  	dwc3_qcom_enable_wakeup_irq(qcom->ss_phy_irq, 0);
->  }
+> @@ -786,6 +786,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+>  	struct resource		*res, *parent_res = NULL;
+>  	int			ret, i;
+>  	bool			ignore_pipe_clk;
+> +	bool			wakeup_source;
 >  
-> -static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
-> +static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
->  {
->  	u32 val;
->  	int i, ret;
-> @@ -416,7 +416,7 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
+>  	qcom = devm_kzalloc(&pdev->dev, sizeof(*qcom), GFP_KERNEL);
+>  	if (!qcom)
+> @@ -901,7 +902,10 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
 >  	if (ret)
->  		dev_warn(qcom->dev, "failed to disable interconnect: %d\n", ret);
+>  		goto interconnect_exit;
 >  
-> -	if (device_may_wakeup(qcom->dev)) {
-> +	if (wakeup) {
->  		qcom->usb2_speed = dwc3_qcom_read_usb2_speed(qcom);
->  		dwc3_qcom_enable_interrupts(qcom);
->  	}
-> @@ -426,7 +426,7 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
->  	return 0;
->  }
->  
-> -static int dwc3_qcom_resume(struct dwc3_qcom *qcom)
-> +static int dwc3_qcom_resume(struct dwc3_qcom *qcom, bool wakeup)
->  {
->  	int ret;
->  	int i;
-> @@ -434,7 +434,7 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom)
->  	if (!qcom->is_suspended)
->  		return 0;
->  
-> -	if (device_may_wakeup(qcom->dev))
-> +	if (wakeup)
->  		dwc3_qcom_disable_interrupts(qcom);
->  
->  	for (i = 0; i < qcom->num_clocks; i++) {
-> @@ -945,9 +945,11 @@ static int dwc3_qcom_remove(struct platform_device *pdev)
->  static int __maybe_unused dwc3_qcom_pm_suspend(struct device *dev)
->  {
->  	struct dwc3_qcom *qcom = dev_get_drvdata(dev);
-> +	bool wakeup = device_may_wakeup(dev);
->  	int ret = 0;
->  
-> -	ret = dwc3_qcom_suspend(qcom);
+> -	device_init_wakeup(&pdev->dev, 1);
+> +	wakeup_source = of_property_read_bool(dev->of_node, "wakeup-source");
+> +	device_init_wakeup(&pdev->dev, wakeup_source);
+> +	device_init_wakeup(&qcom->dwc3->dev, wakeup_source);
 > +
-> +	ret = dwc3_qcom_suspend(qcom, wakeup);
->  	if (!ret)
->  		qcom->pm_suspended = true;
->  
-> @@ -957,9 +959,10 @@ static int __maybe_unused dwc3_qcom_pm_suspend(struct device *dev)
->  static int __maybe_unused dwc3_qcom_pm_resume(struct device *dev)
->  {
->  	struct dwc3_qcom *qcom = dev_get_drvdata(dev);
-> +	bool wakeup = device_may_wakeup(dev);
->  	int ret;
->  
-> -	ret = dwc3_qcom_resume(qcom);
-> +	ret = dwc3_qcom_resume(qcom, wakeup);
->  	if (!ret)
->  		qcom->pm_suspended = false;
->  
-> @@ -970,14 +973,14 @@ static int __maybe_unused dwc3_qcom_runtime_suspend(struct device *dev)
->  {
->  	struct dwc3_qcom *qcom = dev_get_drvdata(dev);
->  
-> -	return dwc3_qcom_suspend(qcom);
-> +	return dwc3_qcom_suspend(qcom, true);
->  }
->  
->  static int __maybe_unused dwc3_qcom_runtime_resume(struct device *dev)
->  {
->  	struct dwc3_qcom *qcom = dev_get_drvdata(dev);
->  
-> -	return dwc3_qcom_resume(qcom);
-> +	return dwc3_qcom_resume(qcom, true);
->  }
->  
->  static const struct dev_pm_ops dwc3_qcom_dev_pm_ops = {
+>  	qcom->is_suspended = false;
+>  	pm_runtime_set_active(dev);
+>  	pm_runtime_enable(dev);
 > -- 
 > 2.35.1
 > 
