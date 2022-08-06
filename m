@@ -2,56 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C65258B704
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Aug 2022 18:44:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BE0C58B70C
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Aug 2022 18:51:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233807AbiHFQou (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Aug 2022 12:44:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60048 "EHLO
+        id S231904AbiHFQvf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Aug 2022 12:51:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232588AbiHFQor (ORCPT
+        with ESMTP id S231678AbiHFQve (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Aug 2022 12:44:47 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B7D212AD0
-        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Aug 2022 09:44:45 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id g12so4754183pfb.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Aug 2022 09:44:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=EeVXZM18o949tN0qq5RHF4dl6C4L5bffGDwRqH8GiUU=;
-        b=xQcDen4rmkms9d2IMbQOqk5TIScNtuNMuhz7oPH4Hl05YdCwGN0N7niRmyFza+nrNc
-         uSqw+CWMwkNT5y2WEpVOrXCCwNxnVwW6y6r8ziqM8mWL9JhEzTOCY8ayweKOEWPRaiG6
-         uHr+69m3di/tJbcooBQH8QIhHosVYCHaS6YgvihezHzvUTNICFZZllFeuZRFmiI3q/Rg
-         O9F1V6MBG4zz4rFIlwO8s0pSsDYQd5Y7g35FL+iv6iQl0pcFMoABjC/wvF8jq6iIDPGj
-         xgMmLW+9MoWPmq4s/hgk/4x3IurGNfwxV5A8Mj0BRQ15ZOUctAsiXkiZ2nzcQGGU+/ux
-         +Waw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=EeVXZM18o949tN0qq5RHF4dl6C4L5bffGDwRqH8GiUU=;
-        b=SfCRqil2ru5wYC6vC2tc5osSfwrPx2zvzTykBTk+EyJZ2/KfCsa49YusM+as+myWtm
-         SOz8dt+5XekzYBQPlLlf0c2+e3JpwaKuo45Ldr4pICtj+BJzdhgj90RXK/Pdf1sMAI/I
-         J819KFxAPPKT6pjUgPwVPgT6PkeZuVnf4AM2Xg8hbAmKwxAu37Ert3bX5ooEzHNL4HSe
-         7wUocgIZ6szt1VpuA/05hm/MUX/r06Jafo2q4E1X1nc8YocHh+SixyFklsbWxrhcGlXB
-         Ut/z6h8klzmfqEHltRiy/awpmrw2OswH0cfQdJMz/XHFWREvaCq25+FhI2/8hNt/fMdh
-         P55A==
-X-Gm-Message-State: ACgBeo1I492omHrAE4oAovGShFVO5/4TWGAvbGGz34umnIfZHplUv+4n
-        IXxc2NHPjibaVCiGjvNR8pLS
-X-Google-Smtp-Source: AA6agR4GjBwEjRaNT6AKyfrcOBbIQjOgmfF57fE8Ye3GD77o1OL3xoCGwCKLzYSbl8ZRr7ndVeCXWQ==
-X-Received: by 2002:a63:2bcc:0:b0:40c:95b5:46a4 with SMTP id r195-20020a632bcc000000b0040c95b546a4mr9907552pgr.535.1659804284859;
-        Sat, 06 Aug 2022 09:44:44 -0700 (PDT)
-Received: from thinkpad ([117.202.188.20])
-        by smtp.gmail.com with ESMTPSA id x26-20020aa78f1a000000b0052e2435784asm5378736pfr.8.2022.08.06.09.44.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Aug 2022 09:44:44 -0700 (PDT)
-Date:   Sat, 6 Aug 2022 22:14:35 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Johan Hovold <johan@kernel.org>
+        Sat, 6 Aug 2022 12:51:34 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACC8DDEAB;
+        Sat,  6 Aug 2022 09:51:33 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 66711B8060E;
+        Sat,  6 Aug 2022 16:51:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A1FC433C1;
+        Sat,  6 Aug 2022 16:51:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1659804691;
+        bh=VnrvTUGe1dNVc7jCq++HzAzCuD0PNW0MzC6BQG5Rie0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=vLeitvsKx6r79fikRlCnosNLcf8K9LipyoCIFpBtEP3Qqpm2Zvw5IGzmvNKQPsGXh
+         fQTiU8aMGNwKqM+lHmg0Zgkxly4nHrNUtDLe+LDsZVl5ZIMWK0wW0FMnxgLzrgMZmO
+         mh51bz3Z0a2G17zjqFcpwa/BciVvT5bW8rWpnuzaxmg0hhkE3dnfRlNAoyD0BeoEfT
+         5a+CD0lqpjvmOYXNQLkmHug5QaIopA4inT1xCWUciau5ZwQuEkMDtrbnUckFyA73MO
+         HBzl3+Mlo+sMw/KvShy2YrywC0DTTxg9pZhUco0316sdtI5ryoDx5OmaO1ZcI+uE4s
+         pPHKlLl34NhuQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oKN1p-0003Uh-Rx; Sat, 06 Aug 2022 18:51:58 +0200
+Date:   Sat, 6 Aug 2022 18:51:57 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Cc:     Johan Hovold <johan+linaro@kernel.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Felipe Balbi <balbi@kernel.org>,
@@ -68,21 +54,20 @@ Cc:     Johan Hovold <johan+linaro@kernel.org>,
         quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
         linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org
-Subject: Re: [PATCH v2 4/9] usb: dwc3: qcom: fix use-after-free on runtime-PM
- wakeup
-Message-ID: <20220806164435.GL14384@thinkpad>
+        Randy Dunlap <rdunlap@infradead.org>
+Subject: Re: [PATCH v2 3/9] usb: dwc3: qcom: fix gadget-only builds
+Message-ID: <Yu6cLSRcSEDZ24lY@hovoldconsulting.com>
 References: <20220804151001.23612-1-johan+linaro@kernel.org>
- <20220804151001.23612-5-johan+linaro@kernel.org>
- <20220806143311.GE14384@thinkpad>
- <Yu6SE1wKXk6/qT9Z@hovoldconsulting.com>
+ <20220804151001.23612-4-johan+linaro@kernel.org>
+ <20220806141536.GD14384@thinkpad>
+ <Yu6RBQNSatiwu1WV@hovoldconsulting.com>
+ <20220806164250.GK14384@thinkpad>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Yu6SE1wKXk6/qT9Z@hovoldconsulting.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <20220806164250.GK14384@thinkpad>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -91,79 +76,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Aug 06, 2022 at 06:08:51PM +0200, Johan Hovold wrote:
-> On Sat, Aug 06, 2022 at 08:03:11PM +0530, Manivannan Sadhasivam wrote:
-> > On Thu, Aug 04, 2022 at 05:09:56PM +0200, Johan Hovold wrote:
-> > > The Qualcomm dwc3 runtime-PM implementation checks the xhci
-> > > platform-device pointer in the wakeup-interrupt handler to determine
-> > > whether the controller is in host mode and if so triggers a resume.
+On Sat, Aug 06, 2022 at 10:12:50PM +0530, Manivannan Sadhasivam wrote:
+> On Sat, Aug 06, 2022 at 06:04:21PM +0200, Johan Hovold wrote:
+> > On Sat, Aug 06, 2022 at 07:45:36PM +0530, Manivannan Sadhasivam wrote:
+> > > On Thu, Aug 04, 2022 at 05:09:55PM +0200, Johan Hovold wrote:
+> > > > A recent change added a dependency to the USB host stack and broke
+> > > > gadget-only builds of the driver.
+> > > > 
+> > > > Fixes: 6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
+> > > > Reported-by: Randy Dunlap <rdunlap@infradead.org>
+> > > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > > > --`-
+> > > > 
+> > > > Changes in v2
+> > > >  - new patch
+> > > > 
+> > > >  drivers/usb/dwc3/dwc3-qcom.c | 5 ++++-
+> > > >  1 file changed, 4 insertions(+), 1 deletion(-)
+> > > > 
+> > > > diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> > > > index be2e3dd36440..e9364141661b 100644
+> > > > --- a/drivers/usb/dwc3/dwc3-qcom.c
+> > > > +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> > > > @@ -310,8 +310,11 @@ static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
+> > > >  	 * currently supports only 1 port per controller. So
+> > > >  	 * this is sufficient.
+> > > >  	 */
+> > > > +#ifdef CONFIG_USB
+> > > >  	udev = usb_hub_find_child(hcd->self.root_hub, 1);
+> > > > -
+> > > > +#else
+> > > > +	udev = NULL;
+> > > > +#endif
 > > > 
-> > > After a role switch in OTG mode the xhci platform-device would have been
-> > > freed and the next wakeup from runtime suspend would access the freed
-> > > memory.
-> > > 
-> > > Note that role switching is executed from a freezable workqueue, which
-> > > guarantees that the pointer is stable during suspend.
-> > > 
-> > > Also note that runtime PM has been broken since commit 2664deb09306
-> > > ("usb: dwc3: qcom: Honor wakeup enabled/disabled state"), which
-> > > incidentally also prevents this issue from being triggered.
-> > > 
-> > > Fixes: a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver")
-> > > Cc: stable@vger.kernel.org      # 4.18
-> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > > Perhaps the check should be moved to the caller instead? This function still
+> > > references "usb_hcd" struct and I don't think that's intended for gadget only
+> > > mode.
 > > 
-> > It'd be good to mention the introduction of dwc3_qcom_is_host() function.
-> > Initially I thought it is used in a single place, but going through the rest of
-> > the patches reveals that it is used later on.
+> > That wouldn't help with the build failure, which is what this patch is
+> > addressing.
+> > 
 > 
-> I think the helper is warranted on its own as it serves as documentation
-> of the underlying assumptions that this code relies on.
+> I should've put it clearly. You should guard the entire function and not just
+> usb_hub_find_child(). This way it becomes clear that this whole function depends
+> on the USB host functionality. Like,
 > 
+> #ifdef CONFIG_USB
+> static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
+> {
+> ...
+> }
+> #elif
+> static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
+> {
+> 	return USB_SPEED_UNKNOWN
+> }
+> #endif
 
-That's even better.
+Yeah, that's what Krishna suggested but I wanted to keep the ifdeffery
+minimal when fixing the build failure (we generally try to avoid adding
+stub functions to implementation files).
 
-Thanks,
-Mani
+Non-host mode was clearly never considered when adding the function in
+question as the code blows up otherwise regardless of whether CONFIG_USB
+is enabled or not (and a later patch in the series addresses that).
 
-> > > +/* Only usable in contexts where the role can not change. */
-> > > +static bool dwc3_qcom_is_host(struct dwc3_qcom *qcom)
-> > > +{
-> > > +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-> > > +
-> > > +	return dwc->xhci;
-> > > +}
-> > > +
-> > >  static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
-> > >  {
-> > >  	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-> > > @@ -460,7 +468,11 @@ static irqreturn_t qcom_dwc3_resume_irq(int irq, void *data)
-> > >  	if (qcom->pm_suspended)
-> > >  		return IRQ_HANDLED;
-> > >  
-> > > -	if (dwc->xhci)
-> > > +	/*
-> > > +	 * This is safe as role switching is done from a freezable workqueue
-> > > +	 * and the wakeup interrupts are disabled as part of resume.
-> > > +	 */
-> > > +	if (dwc3_qcom_is_host(qcom))
-> > >  		pm_runtime_resume(&dwc->xhci->dev);
-> > >  
-> > >  	return IRQ_HANDLED;
-> > > diff --git a/drivers/usb/dwc3/host.c b/drivers/usb/dwc3/host.c
-> > > index f56c30cf151e..f6f13e7f1ba1 100644
-> > > --- a/drivers/usb/dwc3/host.c
-> > > +++ b/drivers/usb/dwc3/host.c
-> > > @@ -135,4 +135,5 @@ int dwc3_host_init(struct dwc3 *dwc)
-> > >  void dwc3_host_exit(struct dwc3 *dwc)
-> > >  {
-> > >  	platform_device_unregister(dwc->xhci);
-> > > +	dwc->xhci = NULL;
-> > >  }
-> > > -- 
-> > > 2.35.1
-> 
-> Johan
+But I'll revisit this too in a couple of weeks.
 
--- 
-மணிவண்ணன் சதாசிவம்
+Thanks for reviewing.
+
+Johan
