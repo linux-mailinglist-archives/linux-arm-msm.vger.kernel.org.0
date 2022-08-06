@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3898358B82F
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Aug 2022 22:24:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F1A658B834
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Aug 2022 22:26:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232206AbiHFUYe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Aug 2022 16:24:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53528 "EHLO
+        id S231330AbiHFU0a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Aug 2022 16:26:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231939AbiHFUYd (ORCPT
+        with ESMTP id S232426AbiHFU03 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Aug 2022 16:24:33 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70EDCF5B6
-        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Aug 2022 13:24:32 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id u1so7706435lfq.4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Aug 2022 13:24:32 -0700 (PDT)
+        Sat, 6 Aug 2022 16:26:29 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 404E4F5BC
+        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Aug 2022 13:26:28 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id c17so7718613lfb.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Aug 2022 13:26:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=L81E5ZZqDFMGva8vhhqWkoOGy11PnHnlgRUepkoIMRE=;
-        b=pNdpumK7dRQhTNmHg8fHd8fARN5aLciY1pJEgeA7VjWorBMCYCR6avAs1H+8NrAYct
-         P9kTl/xB+Vu961rEUoPwBL4R039PxxFH/vmMzr8VYmJC26a/L70QO7yDRaSed1sb9Q/4
-         XQB3Yh062v9NkzV8BIW6xJutSFYZwMKIMTzxwcqaMvcUgEP9E4vMeJ9qmKrTXJcYeCZE
-         qofJcZhZUnY815TH6kncoUIDwuhvGPEbBa1SjMmuDslMRQV6XzubsornP323VPKaabBB
-         fMvgYMO83PEJMQGXm/KDtRJjRB8GmdXFoVKYskimlWWa8EY7ZfQN/ZPqambnDleVMMj2
-         PCbQ==
+        bh=ROYvf8g259PGwFxDxBtSZpunTSjof4WFaayVaRYHt6s=;
+        b=YyIiRHEiDcm4t8olsQ7JXPjWvimPvxqSO4a0uMonk2AWyV0py44U4CnfElvXQ+dsWf
+         Em9yY3ngkfhhXLSFEFkE+GAb3bcMKdbZVqgGit+fb/YKczs95IEbJkUOjVs2gF2M0xJh
+         gH13ghOjyYKk19oGjQfDyVbncJKgReavpB6espV1Z9R59+jRh6jRykH5iMps4QfDeJ8I
+         IE0Qi/Lj/bnstyoLUEsqeEeONd+sm0Xi0qHw96QQIWINbb6D5V6TAcglKgO2rwKbYqWT
+         bQig78PJjdibXCv1lIOL3FhmudO0ztA/+RMXAcDepVhluosKKHvQvqSJMxo+usSv2lYO
+         YcLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=L81E5ZZqDFMGva8vhhqWkoOGy11PnHnlgRUepkoIMRE=;
-        b=C5v1eKyGxplD8c0DMbjKbz3GxLVW1ayi+0BHZg9fl7Nu6ZjxD4vBXgarajIOnwZ+kw
-         6G72ziRSf+tI2qIHYQQEzs/BlBJYiohQlkFFN5uiG8aQKoJpgGUdLMznuSLKT1kYpbjP
-         +Oa8q8RPIx7vUn6e9cnGmPDISCNpjwQOwhdECBrs1O3Q9dfSAVoArTbPCDibVmw7Dlt2
-         77d6k4IvvEHMuT3530It04eon3//Z3hd/QS6fk3jfFNk3VXfAtLae9k953Weyf6LmjpJ
-         Rf3WZEqRBYw6H8MSh2U8y1NQZ8pcC28THTtm2M1ERdzXkSy217UX9U1d1w+BFN+w/682
-         8y4A==
-X-Gm-Message-State: ACgBeo2sT4gOO2Fq3KF+QQ++DMueF3tswEQWRu++UpcwUuCfE6C3Ky7+
-        YWGON/zKenL0heZwL834Tgoctw==
-X-Google-Smtp-Source: AA6agR5lVvAiHeEcNLAV5iU350kW/Ex4qB3rNv32eRKWqNAJmpEum8Ysgv9e2ievMPN0opC9S5br/g==
-X-Received: by 2002:a05:6512:1155:b0:48a:fb9a:32d8 with SMTP id m21-20020a056512115500b0048afb9a32d8mr4083593lfg.672.1659817470728;
-        Sat, 06 Aug 2022 13:24:30 -0700 (PDT)
+        bh=ROYvf8g259PGwFxDxBtSZpunTSjof4WFaayVaRYHt6s=;
+        b=EesRFEkJEao0hy3cWtHy7Ra/8U7s5817V0WGJBIiTrsdSzmAbIGD0GsBrkGFNNPySO
+         +AO/9QhrOMLcx88kxWsdwr24YGZtBYXBcKb1PRSYK0nDeWf1gRqcvPDAP1waXhhJYmKJ
+         AdG8kqv44eYQ/o5UpoHiY4XxmpuD8PpPE7LrNHzz0SmTaj+K4uIGE46NBxLz0ZBnl3EH
+         sWl2OLp5dPdiiMW0tfE+du2I4c8UCm7kzivSgfoLgdKzLdxvUp0XJv7lje01lifwd9oa
+         8exxHY9LnN12qjc4Tqso3EcVf7pCTmcsZOV3HrwyIcHaq2eXlNO8hFgYlxL3T5+hj5H6
+         yX6w==
+X-Gm-Message-State: ACgBeo3XhaRZ0fLb6gMntHsJzrjOMxqvh2ousy50mGKIuDwbsMXdLBwv
+        rXh3lBEDTVCmA+wFSF2dFJv0yg==
+X-Google-Smtp-Source: AA6agR5jirJciuwIXYIOI2zYJj3CGahbCPgxcpB0S3yRhZMr/rkIxUNwZe9S3GiZP/CRKwuxAJbpng==
+X-Received: by 2002:ac2:4e15:0:b0:48b:7a5f:923c with SMTP id e21-20020ac24e15000000b0048b7a5f923cmr2132926lfr.134.1659817586613;
+        Sat, 06 Aug 2022 13:26:26 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id f10-20020a056512228a00b0048b2be5320csm864540lfu.118.2022.08.06.13.24.29
+        by smtp.gmail.com with ESMTPSA id cf40-20020a056512282800b0047f84ecae2esm862310lfb.236.2022.08.06.13.26.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 06 Aug 2022 13:24:30 -0700 (PDT)
-Message-ID: <2aec8537-47b0-5e80-b2cf-70084652f64e@linaro.org>
-Date:   Sat, 6 Aug 2022 23:24:29 +0300
+        Sat, 06 Aug 2022 13:26:26 -0700 (PDT)
+Message-ID: <0ed40651-1638-3701-f310-cd50102ae763@linaro.org>
+Date:   Sat, 6 Aug 2022 23:26:25 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH 4/8] remoteproc: qcom: Update hard coded values with
- macros
+Subject: Re: [PATCH 5/8] remoteproc: qcom: Add efuse evb selection control
 Content-Language: en-GB
 To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         linux-remoteproc@vger.kernel.org, agross@kernel.org,
@@ -68,9 +67,9 @@ To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         swboyd@chromium.org, judyhsiao@chromium.org,
         devicetree@vger.kernel.org
 References: <1659536480-5176-1-git-send-email-quic_srivasam@quicinc.com>
- <1659536480-5176-5-git-send-email-quic_srivasam@quicinc.com>
+ <1659536480-5176-6-git-send-email-quic_srivasam@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1659536480-5176-5-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <1659536480-5176-6-git-send-email-quic_srivasam@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,47 +83,60 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 03/08/2022 17:21, Srinivasa Rao Mandadapu wrote:
-> Update hard coded values with appropriate macro names.
-
-'Replace'
-
-Other than that,
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+> Add efuse evb selection control and enable it for starting ADSP.
 > 
 > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+
+Is the lpass_efuse region used solely by the ADSP or is it shared with 
+anybody else (e.g. other sound-related devices)? If the latter is true, 
+then please use syscon for the lpass_efuse region.
+
 > ---
->   drivers/remoteproc/qcom_q6v5_adsp.c | 7 +++++--
->   1 file changed, 5 insertions(+), 2 deletions(-)
+>   drivers/remoteproc/qcom_q6v5_adsp.c | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
 > 
 > diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-> index bb4494c..a9fcb5c 100644
+> index a9fcb5c..201cc21 100644
 > --- a/drivers/remoteproc/qcom_q6v5_adsp.c
 > +++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-> @@ -54,6 +54,9 @@
+> @@ -56,6 +56,7 @@
 >   
->   #define QCOM_Q6V5_RPROC_PROXY_PD_MAX	3
+>   #define LPASS_BOOT_CORE_START	BIT(0)
+>   #define LPASS_BOOT_CMD_START	BIT(0)
+> +#define LPASS_EFUSE_Q6SS_EVB_SEL 0x0
 >   
-> +#define LPASS_BOOT_CORE_START	BIT(0)
-> +#define LPASS_BOOT_CMD_START	BIT(0)
-> +
 >   struct adsp_pil_data {
 >   	int crash_reason_smem;
->   	const char *firmware_name;
-> @@ -364,10 +367,10 @@ static int adsp_start(struct rproc *rproc)
+> @@ -85,6 +86,7 @@ struct qcom_adsp {
+>   	struct clk_bulk_data *clks;
+>   
+>   	void __iomem *qdsp6ss_base;
+> +	void __iomem *lpass_efuse;
+>   
+>   	struct reset_control *pdc_sync_reset;
+>   	struct reset_control *restart;
+> @@ -366,6 +368,9 @@ static int adsp_start(struct rproc *rproc)
+>   	/* Program boot address */
 >   	writel(adsp->mem_phys >> 4, adsp->qdsp6ss_base + RST_EVB_REG);
 >   
+> +	if (adsp->lpass_efuse)
+> +		writel(LPASS_EFUSE_Q6SS_EVB_SEL, adsp->lpass_efuse);
+> +
 >   	/* De-assert QDSP6 stop core. QDSP6 will execute after out of reset */
-> -	writel(0x1, adsp->qdsp6ss_base + CORE_START_REG);
-> +	writel(LPASS_BOOT_CORE_START, adsp->qdsp6ss_base + CORE_START_REG);
+>   	writel(LPASS_BOOT_CORE_START, adsp->qdsp6ss_base + CORE_START_REG);
 >   
->   	/* Trigger boot FSM to start QDSP6 */
-> -	writel(0x1, adsp->qdsp6ss_base + BOOT_CMD_REG);
-> +	writel(LPASS_BOOT_CMD_START, adsp->qdsp6ss_base + BOOT_CMD_REG);
+> @@ -520,6 +525,11 @@ static int adsp_init_mmio(struct qcom_adsp *adsp,
+>   		return PTR_ERR(adsp->qdsp6ss_base);
+>   	}
 >   
->   	/* Wait for core to come out of reset */
->   	ret = readl_poll_timeout(adsp->qdsp6ss_base + BOOT_STATUS_REG,
+> +	adsp->lpass_efuse =  devm_platform_ioremap_resource_byname(pdev, "lpass_efuse");
+> +	if (IS_ERR(adsp->lpass_efuse)) {
+> +		adsp->lpass_efuse = NULL;
+> +		dev_dbg(adsp->dev, "failed to map LPASS efuse registers\n");
+> +	}
+>   	syscon = of_parse_phandle(pdev->dev.of_node, "qcom,halt-regs", 0);
+>   	if (!syscon) {
+>   		dev_err(&pdev->dev, "failed to parse qcom,halt-regs\n");
 
 
 -- 
