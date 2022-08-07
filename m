@@ -2,128 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE0B558BBC0
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Aug 2022 18:01:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE89758BBC7
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Aug 2022 18:08:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234531AbiHGQBs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 7 Aug 2022 12:01:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55372 "EHLO
+        id S230020AbiHGQIa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 7 Aug 2022 12:08:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234383AbiHGQBr (ORCPT
+        with ESMTP id S229449AbiHGQI3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 7 Aug 2022 12:01:47 -0400
-Received: from mail-4018.proton.ch (mail-4018.proton.ch [185.70.40.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E07D19FF9
-        for <linux-arm-msm@vger.kernel.org>; Sun,  7 Aug 2022 09:01:41 -0700 (PDT)
-Date:   Sun, 07 Aug 2022 16:01:31 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1659888099; x=1660147299;
-        bh=E97y01Qgk0NfD6wZHnPXassl6h4rNnG16nJI4wW+NRo=;
-        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
-         References:Feedback-ID:From:To:Cc:Date:Subject:Reply-To:
-         Feedback-ID:Message-ID;
-        b=ZkIc6m0+x/UKjButZsnHohuBXNA9X/KmRuQoAyH7XPiip7z6QsUyvnULofhrYrnY5
-         5KlIhBRSYjt+7e9ZLYfTe7o95BbEMyrYTQ+Bq9KOpLsYlGvRARy24Ow+X/SVko6VD4
-         ZElgqpItqi1lpV5tKX+WfKl32CdVlWvsG8CHJwxg=
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>
-From:   Caleb Connolly <caleb@connolly.tech>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-input@vger.kernel.org,
-        phone-devel@vger.kernel.org
-Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: Re: [PATCH 1/3] input: add event codes for user programmable switch events
-Message-ID: <4067646c-36d2-7c05-1bdd-955f8fc69924@connolly.tech>
-In-Reply-To: <Yr4timTL6mBlik0m@builder.lan>
-References: <20220516142158.1612109-1-caleb@connolly.tech> <Yr4timTL6mBlik0m@builder.lan>
-Feedback-ID: 10753939:user:proton
+        Sun, 7 Aug 2022 12:08:29 -0400
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11C3E31A;
+        Sun,  7 Aug 2022 09:08:29 -0700 (PDT)
+Received: by mail-pg1-x52e.google.com with SMTP id d7so6568583pgc.13;
+        Sun, 07 Aug 2022 09:08:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=5LZXNn7pnpmQJ9fitC0ymrlN4xtjBHI2SmcGn+8C2hU=;
+        b=MlaYW+6iOUFKWzQ+Rbg9UNxvCteOXhlxwIiJRJ6hjtXeWXtVnr34mlZJr3TzkZtGyu
+         WiYG1+YiWdu21dvUEGqW8+gOsjDojLAW6g+DJB9C6e0mJP1J1+lZUQ8Zwbcvtnqb8S44
+         EgZ4S3b5mgGfJtsr6pN803E0HPlosIV34N1fGNVkaFYW2vwdqQ3zAxoZCF8q0Y1iMYNW
+         QCqzcjeaAZHk7HnQqQsZ4qiQ19vqIWIcCYtKb9jMd/LIvMzX+eSNXk8MUaTL0HF94WXo
+         qbci2YS384PoSkwu0Na4O9xjlY0T0upgzUPdqdp35jDwA7W5jXqw7CPcgz/RXu7aWrtH
+         LVcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=5LZXNn7pnpmQJ9fitC0ymrlN4xtjBHI2SmcGn+8C2hU=;
+        b=p/pOxleZllcjT9d8VKrD3WPGItloc0G2J4/kwoAzt4WTyvsou8Uu2XH3kJ6lPdLQHQ
+         1wEB1qnHclIGCKf77JJUwutMMrAinrKf3VwWFZ5SOyjM3Cl7i3ZB05qoBkiyzateEShK
+         RptiIzPwCgUXeRnyXcK7Oc27/nlQ3E5kQhy8xqtSi5y7cIUNQsHO0JwziV90PwDSna1k
+         0X8XnZ1BzaNwU8hBSx5fcq4/55XWHDv1IUYJXcHgNJhWbyQC4he2JgT1lEy6RuR+mQj2
+         ElRggzCFhUTrLfxRWGCcCJRuyYrFDBFG/J04VzquElZ1g/3efe4jPhHPQ5vPK1k0Y68v
+         1u+g==
+X-Gm-Message-State: ACgBeo0tagSXB3yicqYDH/5bBOcQLwkM05YCeKleCdNkaQ0xTH00pBPv
+        r90AmlK5eMSxkON2odHVBAfXw1aPMaw=
+X-Google-Smtp-Source: AA6agR4ovtqBAWw/GdrxlybKf+QUZMi07LtPvSAXrIFSiyw7Do2MuwxwOAUK1JFh656lYB/iHLMa3g==
+X-Received: by 2002:a05:6a00:22c8:b0:52d:586f:19c3 with SMTP id f8-20020a056a0022c800b0052d586f19c3mr14778379pfj.80.1659888508416;
+        Sun, 07 Aug 2022 09:08:28 -0700 (PDT)
+Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
+        by smtp.gmail.com with ESMTPSA id s22-20020a17090a075600b001f21f5c81a5sm8930336pje.19.2022.08.07.09.08.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 07 Aug 2022 09:08:27 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v2 1/2] drm/msm: Move hangcheck timer restart
+Date:   Sun,  7 Aug 2022 09:09:00 -0700
+Message-Id: <20220807160901.2353471-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Rob Clark <robdclark@chromium.org>
 
+Don't directly restart the hangcheck timer from the timer handler, but
+instead start it after the recover_worker replays remaining jobs.
 
-On 01/07/2022 00:11, Bjorn Andersson wrote:
-> On Mon 16 May 09:22 CDT 2022, Caleb Connolly wrote:
->
->> Add SW_PROG{1,2,3,4} for device switches which are handled by userspace.
->>
->> This can be used for devices with "generic" switches which are intended
->> to be user-programmable, for example OnePlus phones contain a tri-state
->> key which can be used for switching between mute/vibrate/ring, or
->> programmed by the user to perform any arbitrary actions.
->>
->> These are analogous to the keys KEY_PROG{1,2,3,4} found on some
->> keyboards.
->>
->> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
->
-> This looks reasonable to me.
->
-> Dmitry, what do you think?
-Any chance someone could take a look at this? (Sorry I really should have b=
-umped
-this a few weeks ago).
->
-> Regards,
-> Bjorn
->
->> ---
->> See the next patch in this series for an example usecase.
->> ---
->>   include/linux/mod_devicetable.h        | 2 +-
->>   include/uapi/linux/input-event-codes.h | 6 +++++-
->>   2 files changed, 6 insertions(+), 2 deletions(-)
->>
->> diff --git a/include/linux/mod_devicetable.h b/include/linux/mod_devicet=
-able.h
->> index 5da5d990ff58..45364fbeaaf7 100644
->> --- a/include/linux/mod_devicetable.h
->> +++ b/include/linux/mod_devicetable.h
->> @@ -326,7 +326,7 @@ struct pcmcia_device_id {
->>   #define INPUT_DEVICE_ID_LED_MAX=09=090x0f
->>   #define INPUT_DEVICE_ID_SND_MAX=09=090x07
->>   #define INPUT_DEVICE_ID_FF_MAX=09=090x7f
->> -#define INPUT_DEVICE_ID_SW_MAX=09=090x10
->> +#define INPUT_DEVICE_ID_SW_MAX=09=090x14
->>   #define INPUT_DEVICE_ID_PROP_MAX=090x1f
->>
->>   #define INPUT_DEVICE_ID_MATCH_BUS=091
->> diff --git a/include/uapi/linux/input-event-codes.h b/include/uapi/linux=
-/input-event-codes.h
->> index dff8e7f17074..339153886a13 100644
->> --- a/include/uapi/linux/input-event-codes.h
->> +++ b/include/uapi/linux/input-event-codes.h
->> @@ -917,7 +917,11 @@
->>   #define SW_MUTE_DEVICE=09=090x0e  /* set =3D device disabled */
->>   #define SW_PEN_INSERTED=09=090x0f  /* set =3D pen inserted */
->>   #define SW_MACHINE_COVER=090x10  /* set =3D cover closed */
->> -#define SW_MAX=09=09=090x10
->> +#define SW_PROG1=09=090x11  /* set =3D program 1 (user defined) */
->> +#define SW_PROG2=09=090x12  /* set =3D program 2 (user defined) */
->> +#define SW_PROG3=09=090x13  /* set =3D program 3 (user defined) */
->> +#define SW_PROG4=09=090x14  /* set =3D program 4 (user defined) */
->> +#define SW_MAX=09=09=090x14
->>   #define SW_CNT=09=09=09(SW_MAX+1)
->>
->>   /*
->> --
->> 2.36.1
->>
->>
+If the kthread is blocked for other reasons, there is no point to
+immediately restart the timer.  Fixes a random symptom of the problem
+fixed in the next patch.
 
---
-Kind Regards,
-Caleb
+v2: Keep the hangcheck timer restart in the timer handler in the case
+    where we aren't scheduling recover_worker
+
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_gpu.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index fba85f894314..6762001d9945 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -328,6 +328,7 @@ find_submit(struct msm_ringbuffer *ring, uint32_t fence)
+ }
+ 
+ static void retire_submits(struct msm_gpu *gpu);
++static void hangcheck_timer_reset(struct msm_gpu *gpu);
+ 
+ static void get_comm_cmdline(struct msm_gem_submit *submit, char **comm, char **cmd)
+ {
+@@ -420,6 +421,8 @@ static void recover_worker(struct kthread_work *work)
+ 	}
+ 
+ 	if (msm_gpu_active(gpu)) {
++		bool restart_hangcheck = false;
++
+ 		/* retire completed submits, plus the one that hung: */
+ 		retire_submits(gpu);
+ 
+@@ -436,10 +439,15 @@ static void recover_worker(struct kthread_work *work)
+ 			unsigned long flags;
+ 
+ 			spin_lock_irqsave(&ring->submit_lock, flags);
+-			list_for_each_entry(submit, &ring->submits, node)
++			list_for_each_entry(submit, &ring->submits, node) {
+ 				gpu->funcs->submit(gpu, submit);
++				restart_hangcheck = true;
++			}
+ 			spin_unlock_irqrestore(&ring->submit_lock, flags);
+ 		}
++
++		if (restart_hangcheck)
++			hangcheck_timer_reset(gpu);
+ 	}
+ 
+ 	mutex_unlock(&gpu->lock);
+@@ -498,6 +506,7 @@ static void hangcheck_handler(struct timer_list *t)
+ 	struct drm_device *dev = gpu->dev;
+ 	struct msm_ringbuffer *ring = gpu->funcs->active_ring(gpu);
+ 	uint32_t fence = ring->memptrs->fence;
++	bool restart_hangcheck = true;
+ 
+ 	if (fence != ring->hangcheck_fence) {
+ 		/* some progress has been made.. ya! */
+@@ -513,10 +522,16 @@ static void hangcheck_handler(struct timer_list *t)
+ 				gpu->name, ring->fctx->last_fence);
+ 
+ 		kthread_queue_work(gpu->worker, &gpu->recover_work);
++
++		/* If we do recovery, we want to defer restarting the hangcheck
++		 * timer until recovery completes and the remaining non-guilty
++		 * jobs are re-played.
++		 */
++		restart_hangcheck = false;
+ 	}
+ 
+ 	/* if still more pending work, reset the hangcheck timer: */
+-	if (fence_after(ring->fctx->last_fence, ring->hangcheck_fence))
++	if (restart_hangcheck && fence_after(ring->fctx->last_fence, ring->hangcheck_fence))
+ 		hangcheck_timer_reset(gpu);
+ 
+ 	/* workaround for missing irq: */
+-- 
+2.36.1
 
