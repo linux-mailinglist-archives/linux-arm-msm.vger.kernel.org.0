@@ -2,79 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34FFD58C356
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 08:32:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73AFA58C398
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 09:00:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236235AbiHHGcT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Aug 2022 02:32:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35518 "EHLO
+        id S235329AbiHHHAI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Aug 2022 03:00:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233495AbiHHGcS (ORCPT
+        with ESMTP id S231756AbiHHHAG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Aug 2022 02:32:18 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA5E8BCBA
-        for <linux-arm-msm@vger.kernel.org>; Sun,  7 Aug 2022 23:32:16 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id a9so11214011lfm.12
-        for <linux-arm-msm@vger.kernel.org>; Sun, 07 Aug 2022 23:32:16 -0700 (PDT)
+        Mon, 8 Aug 2022 03:00:06 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A9E7DFB9
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Aug 2022 00:00:03 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id gk3so14843947ejb.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Aug 2022 00:00:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=TcTcVYINkT1LgQg4jB7USFvBaNV5S683l5CtEZpWSgI=;
-        b=TGZkbfF2KN2XSw0JdREuQhXjlwQCdDbgydsKd9WjxRJNii6SYwx5+oOtiKjXAJCorf
-         4ca1RBnrVNF0L8Slj1dQGmbdYey16Fwwp9MWliaUDp2cJC6waEA97E24RirVkn3lo0Wd
-         4ObKzy0CgBCnrOeszWPZ7MOHM7a3/vIJ5pC1grNGra+dfE0GOY9K8i3jgrjUpiUo2iLO
-         +RvGYv7JzjhxJ8ryIHnQmdPbGkOfNPvzrvNZbu2YRmYCG7L9Py5nE8JqmcGakLDpn+aD
-         HoS0yKBoTcZT+f4Eix+tnkH8rJwqFXSNJPNkz/O6XTPzYryRYYsK6T3/acsf8Y3YUxKl
-         FNgQ==
+        d=fairphone.com; s=fair;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc;
+        bh=2/N6mFP+TYpvLhr23ybFH/UP8B6EWzbXHA/jkbBuIoc=;
+        b=lkU29Ua428YWYVoXEMmDC0UaKbp+MGrvym2etqoPjNHVD2NL3tW0LF47PkXL04Ez3I
+         vvDnB0EtThz40r8LCfeh+Mi4sLOX5jf8l3WCEzdsZk29I34a9O4PwXXIdG1oZTobtiTS
+         Pr8yAIQcboCA7RWA0WoPC/lm1iMyf/gbxHMWKW/BfGmB15dsR2/tcpYYVI1egrVLe5QD
+         n4sJi1Cd7mLiUIbqcvP7KLtQx9ydpy1/5chSsTH6oupCLjJMhZSlmioLlr6BVSn6QEkW
+         RVhYK9yeeUKGculzGgFZU/b7kaWseSpXzQZagr+e3yArPV0ouWvwmyQdyF8oANNnxi7k
+         zzOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=TcTcVYINkT1LgQg4jB7USFvBaNV5S683l5CtEZpWSgI=;
-        b=tf4QzDE8XsnHWyo2hej+CKrsTyr3gOYPKvtDY0iqnLT9LGM2HjEE/p0fVED1mcWGzV
-         a/DL/ZTEMITt8DAifHVoJpfm1Wthm72/jYRRtBzmNzE2PdvB2fHdwhIvVXUsSKWeRCJ5
-         iQfPQvt0PuQOc5W/ZfyxA896VD1CNVAbZOxFQwHK+a8Npua4GYxQIU0mWgH3hFqVRJDk
-         pSloKMJprK0qPwQ3oQ/1CvE0+AZki7cLNamCJ3BJ9siken6NUIFIfUjy+xCGNKEh9W0H
-         6W3aMTKGtn2hlv6tqRJ1BPKl8gLa+shgnqVSMsA5Ti9GYGE9ux3Mn8h6p0DprZKXZ+Ul
-         KA+g==
-X-Gm-Message-State: ACgBeo2VSj+r+IJCyVybKk3lySLdqCZiA3kyIyAECggXaFBLqL3tUcpo
-        Cg5Y0beqMyihyuNRPG+o9CY1MA==
-X-Google-Smtp-Source: AA6agR5L7HlkTLMcyJ04cu9bbbvPKW99qL/El8g6wA5S21j2RAKlk0lSK55nP0DM01EO4L3wHGlWsQ==
-X-Received: by 2002:a05:6512:31c5:b0:48b:38cf:51f8 with SMTP id j5-20020a05651231c500b0048b38cf51f8mr5964416lfe.315.1659940335132;
-        Sun, 07 Aug 2022 23:32:15 -0700 (PDT)
-Received: from [192.168.1.39] ([83.146.140.105])
-        by smtp.gmail.com with ESMTPSA id z22-20020a2e9656000000b0025e4de48d36sm1271201ljh.94.2022.08.07.23.32.13
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc;
+        bh=2/N6mFP+TYpvLhr23ybFH/UP8B6EWzbXHA/jkbBuIoc=;
+        b=E/u5kfeGwBnJqXiUTeSROD8b1Ns+nfZu8oTqThdXK0OANvEWIoFTK/i77G/aX5LmCy
+         WTDsvFUa6w1KH91oXicQRtDO0ZNL1hOhvp59eJjLouDvkusZ36TXWKXqDcewanCi1CpD
+         JPvxVIMFtpltxWWapeFRTWrt7vd4yx1KOdu4ihCPfiSzmV/Ki+WDLZP1lrcRzTQqAEbz
+         iBsF4pucNQypRjtHtaZk0iWx5SBqn/N2z03C7tCwkipyBmWh1Ib2oF1RBlHNKuBrYBLL
+         prLJsZem/zj02pmcizdu8Xsj2BRr6BnFu47KaqXRJNlGf3YZ9ZkirMUfxxa2bqbkEJB+
+         bOyQ==
+X-Gm-Message-State: ACgBeo1CZusffU9wZjBxgE7lUjmqyFhFyj4wvhTEiusdLIR1tsz5PWJk
+        N0zKh1BuOhmJXIToD5UFt24Jjw==
+X-Google-Smtp-Source: AA6agR6hGuVY0jLoIpyBwpB68Ep5URWwiz9kxZGjZ1bEwFDjjVx2YCyxBdkT2y7+2dYKFcVRfMWxGg==
+X-Received: by 2002:a17:907:2721:b0:731:2aeb:7940 with SMTP id d1-20020a170907272100b007312aeb7940mr6385812ejl.448.1659942001700;
+        Mon, 08 Aug 2022 00:00:01 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id zk19-20020a17090733d300b0072aadbd48c7sm4512240ejb.84.2022.08.08.00.00.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 07 Aug 2022 23:32:14 -0700 (PDT)
-Message-ID: <1359679e-fdc8-1d71-0ff5-a7972e118c37@linaro.org>
-Date:   Mon, 8 Aug 2022 09:32:13 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v3 1/2] arm64: dts: qcom: split beryllium dts into common
- dtsi and tianma dts
-Content-Language: en-US
-To:     Joel Selvaraj <joelselvaraj.oss@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20220806210220.31565-1-joelselvaraj.oss@gmail.com>
- <20220806210220.31565-2-joelselvaraj.oss@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220806210220.31565-2-joelselvaraj.oss@gmail.com>
+        Mon, 08 Aug 2022 00:00:01 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Date:   Mon, 08 Aug 2022 08:59:59 +0200
+Message-Id: <CM0GBVEZHLBT.1V54N4FCEN7V6@otso>
+Cc:     "Robin Reckmann" <robin.reckmann@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <linaro-mm-sig@lists.linaro.org>
+Subject: Re: [PATCH] i2c: qcom-geni: Fix GPI DMA buffer sync-back
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Robin Reckmann" <robin.reckmann@googlemail.com>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        "Konrad Dybcio" <konrad.dybcio@somainline.org>,
+        "Sumit Semwal" <sumit.semwal@linaro.org>,
+        =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+X-Mailer: aerc 0.11.0
+References: <20220807140455.409417-1-robin.reckmann@gmail.com>
+In-Reply-To: <20220807140455.409417-1-robin.reckmann@gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,90 +79,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/08/2022 23:02, Joel Selvaraj wrote:
-> There are two panel variants of Xiaomi Poco F1. Tianma and EBBG panel.
-> The previous beryllium dts supported the Tianma variant. In order to
-> add support for EBBG variant, the common nodes from beryllium dts are
-> moved to a new common dtsi and to make the variants distinguishable,
-> sdm845-xiaomi-beryllium.dts is now named as
-> sdm845-xiaomi-beryllium-tianma.dts
-> 
-> Signed-off-by: Joel Selvaraj <joelselvaraj.oss@gmail.com>
+Hi Robin,
+
+On Sun Aug 7, 2022 at 4:04 PM CEST, Robin Reckmann wrote:
+> Fix i2c transfers using GPI DMA mode for all message types that do not se=
+t
+> the I2C_M_DMA_SAFE flag (e.g. SMBus "read byte").
+>
+> In this case a bounce buffer is returned by i2c_get_dma_safe_msg_buf(),
+> and it has to synced back to the message after the transfer is done.
+>
+> Add missing assignment of dma buffer in geni_i2c_gpi().
+>
+> Set xferred in i2c_put_dma_safe_msg_buf() to true in case of no error to
+> ensure the sync-back of this dma buffer to the message.
+>
+> Signed-off-by: Robin Reckmann <robin.reckmann@gmail.com>
+
+This makes I2C with GPI DMA work on sm6350/sm7725 fairphone-fp4!
+Thanks for fixing this!
+
+Tested-by: Luca Weiss <luca.weiss@fairphone.com>
+
+Regards
+Luca
+
 > ---
->  arch/arm64/boot/dts/qcom/Makefile                      |  2 +-
->  ...ryllium.dts => sdm845-xiaomi-beryllium-common.dtsi} |  9 +++++----
->  .../boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts   | 10 ++++++++++
->  3 files changed, 16 insertions(+), 5 deletions(-)
->  rename arch/arm64/boot/dts/qcom/{sdm845-xiaomi-beryllium.dts => sdm845-xiaomi-beryllium-common.dtsi} (98%)
->  create mode 100644 arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 2f8aec2cc6db..02db413b228c 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -106,7 +106,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-oneplus-fajita.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-sony-xperia-tama-akari.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-sony-xperia-tama-akatsuki.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-sony-xperia-tama-apollo.dtb
-> -dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium-tianma.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-shift-axolotl.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-> similarity index 98%
-> rename from arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-> rename to arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-> index d88dc07205f7..83edcb1171f5 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-> @@ -221,8 +221,7 @@ &dsi0 {
->  	status = "okay";
->  	vdda-supply = <&vreg_l26a_1p2>;
->  
-> -	panel@0 {
-> -		compatible = "tianma,fhd-video";
-> +	display_panel: panel@0 {
->  		reg = <0>;
->  		vddio-supply = <&vreg_l14a_1p8>;
->  		vddpos-supply = <&lab>;
-> @@ -234,8 +233,10 @@ panel@0 {
->  		backlight = <&pmi8998_wled>;
->  		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
->  
-> +		status = "disabled";
-> +
->  		port {
-> -			tianma_nt36672a_in_0: endpoint {
-> +			panel_in_0: endpoint {
->  				remote-endpoint = <&dsi0_out>;
->  			};
->  		};
-> @@ -243,7 +244,7 @@ tianma_nt36672a_in_0: endpoint {
->  };
->  
->  &dsi0_out {
-> -	remote-endpoint = <&tianma_nt36672a_in_0>;
-> +	remote-endpoint = <&panel_in_0>;
->  	data-lanes = <0 1 2 3>;
->  };
->  
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
-> new file mode 100644
-> index 000000000000..fcbef5ad2909
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
-> @@ -0,0 +1,10 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +
-> +/dts-v1/;
-> +
-> +#include "sdm845-xiaomi-beryllium-common.dtsi"
+>  drivers/i2c/busses/i2c-qcom-geni.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-=
+qcom-geni.c
+> index 6ac402ea58fb..d3541e94794e 100644
+> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> @@ -484,12 +484,12 @@ static void geni_i2c_gpi_unmap(struct geni_i2c_dev =
+*gi2c, struct i2c_msg *msg,
+>  {
+>  	if (tx_buf) {
+>  		dma_unmap_single(gi2c->se.dev->parent, tx_addr, msg->len, DMA_TO_DEVIC=
+E);
+> -		i2c_put_dma_safe_msg_buf(tx_buf, msg, false);
+> +		i2c_put_dma_safe_msg_buf(tx_buf, msg, !gi2c->err);
+>  	}
+> =20
+>  	if (rx_buf) {
+>  		dma_unmap_single(gi2c->se.dev->parent, rx_addr, msg->len, DMA_FROM_DEV=
+ICE);
+> -		i2c_put_dma_safe_msg_buf(rx_buf, msg, false);
+> +		i2c_put_dma_safe_msg_buf(rx_buf, msg, !gi2c->err);
+>  	}
+>  }
+> =20
+> @@ -553,6 +553,7 @@ static int geni_i2c_gpi(struct geni_i2c_dev *gi2c, st=
+ruct i2c_msg *msg,
+>  	desc->callback_param =3D gi2c;
+> =20
+>  	dmaengine_submit(desc);
+> +	*buf =3D dma_buf;
+>  	*dma_addr_p =3D addr;
+> =20
+>  	return 0;
+> --=20
+> 2.25.1
 
-Nice diff.
-
-However what happened to compatibles? Why do you have now two boards
-with same compatible and model name?
-
-Best regards,
-Krzysztof
