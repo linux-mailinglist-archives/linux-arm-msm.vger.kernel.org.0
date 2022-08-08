@@ -2,70 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE64B58C24D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 06:17:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D19D558C311
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 07:54:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232118AbiHHERA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Aug 2022 00:17:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56232 "EHLO
+        id S235717AbiHHFy3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Aug 2022 01:54:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229684AbiHHERA (ORCPT
+        with ESMTP id S233627AbiHHFy1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Aug 2022 00:17:00 -0400
-Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBC7F11A05
-        for <linux-arm-msm@vger.kernel.org>; Sun,  7 Aug 2022 21:16:57 -0700 (PDT)
-Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-10ec41637b3so9328416fac.4
-        for <linux-arm-msm@vger.kernel.org>; Sun, 07 Aug 2022 21:16:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc;
-        bh=A1wQCN+G4M0V+6iscdY6rHphe27jvr6cvhQav4ATh4g=;
-        b=nhupKK7xasVVbtSVOhRdLJMsQ2LhjS6UtriAqRLXljpCMaLNKxLm8NpX8xPevInbmD
-         pVdMC1GqDlyaeV+VNvIjq8fboL0jdOEXkuvsXe/dScrW0lXzKTmzAH4VvmY2aIqrXYan
-         k+SuhI0S40GulBJFJ0jXzvSF8exODF8W2CtwxQ9dKlh8eHcGusyvLkMPWL93/FDVGgCx
-         KLEyw495xIr+KXgNqwYELDTbcjnCtcS3TgK1QXOmKPCzuC5dbOe37s2oiTFT/M8Aq9xV
-         j86eDiPl/1Dcq/JywF+/1xi3tojqYD2jCixmVnut0e8UyRWD7wVO6eb/WjNnkyLQoVOC
-         kaew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=A1wQCN+G4M0V+6iscdY6rHphe27jvr6cvhQav4ATh4g=;
-        b=RAR/DzsD+1rV9+PPkYNC5qWnwKRFKq3ZOXx5x6+goEnCehpsfKjKQskUwn8VDPi2nN
-         GHIV9cEB1yrix0ZmzDr3tZFRpnV+zlYU+yTUmSrvZvHVY90D3UPbMAo8Q6z725AoeCJq
-         OhJ3yWMpzOjhIbdDWGtrqMmL/KS5jsZiZAeF3tCxNPLChlGu7lKwKVTlRx3a6F0TI/2t
-         4+d8MJ/bmTUwS9Xsx1NEzKhYVfCJeN2dt15wCglmbIzowY1qODn6a5+VWNeDuARND08z
-         WezeIB4THEydrJa/R/E/14ZPImTvgkVh+pm/nf/yHQUq04UcX9SL6WcUx8YCB6cFMX8l
-         7MSQ==
-X-Gm-Message-State: ACgBeo2HLMkYhFMfvep1kpi2zGNwmo9b/xY91rJIrguZC+3piGVfvaAf
-        WEefytos/9frkoo+kdIv30iqvw==
-X-Google-Smtp-Source: AA6agR75dIdMIrCZ6M5BWdLYUfC/wGKyZq7QqmGYD5iCbAbL/Os4tkFoP8YSIGPlOY0u2bfkmwMNJw==
-X-Received: by 2002:a05:6870:a689:b0:10c:289b:78df with SMTP id i9-20020a056870a68900b0010c289b78dfmr7905740oam.25.1659932217063;
-        Sun, 07 Aug 2022 21:16:57 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id u11-20020a9d4d8b000000b00636d76b607bsm849528otk.30.2022.08.07.21.16.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Aug 2022 21:16:56 -0700 (PDT)
-Date:   Sun, 7 Aug 2022 21:19:37 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Molly Sophia <mollysophia379@gmail.com>
+        Mon, 8 Aug 2022 01:54:27 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F21A11002;
+        Sun,  7 Aug 2022 22:54:26 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 9D443B80DD4;
+        Mon,  8 Aug 2022 05:54:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75FD7C433C1;
+        Mon,  8 Aug 2022 05:54:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1659938064;
+        bh=fdGOCwmBEK9CWaxIAUwPDifSkxj7PaxAllZU82W3Ry4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=QDZCAORd+CDcOLkVaf1UPrSE3hL4ymPfTAuq2qSfODI7WxCqUcSnMbh3DtyhlFmJv
+         7SevWPkePl6NqhsK3RYndm1t2fn+fbAom30UPqa0cR2amyetfoRRWdGx3CXGiYHDZt
+         Of7afz3KYKWFNMpBPluGeh5layWLYJjc5TrLg/hYiVSPzaKx/phIj8DYFxCEetS+oo
+         VPrPWivn++E8p3/wtNdfSWjzbrNpsPym6oOUjOxkAaODCg0y8DOZiS8eb0oXiG0/zS
+         mkb3Gcc7zQP6MSKndbsDnnz9oUxVJbMYhXXwdUWBULqeM/HcNnDV8ZG1umR+7Q9Piu
+         gsv6IZjnMR64A==
+Date:   Mon, 8 Aug 2022 07:54:16 +0200
+From:   Wolfram Sang <wsa@kernel.org>
+To:     Robin Reckmann <robin.reckmann@googlemail.com>
 Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] pinctrl: qcom: sc8180x: Fix gpio_wakeirq_map
-Message-ID: <YvCO2SfpXtTfawW5@ripper>
-References: <20220807122645.13830-1-mollysophia379@gmail.com>
- <20220807122645.13830-2-mollysophia379@gmail.com>
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
+        Robin Reckmann <robin.reckmann@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org
+Subject: Re: [PATCH] i2c: qcom-geni: Fix GPI DMA buffer sync-back
+Message-ID: <YvClCC4ArBEjQJl9@shikoro>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+        Robin Reckmann <robin.reckmann@googlemail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
+        Robin Reckmann <robin.reckmann@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org
+References: <20220807140455.409417-1-robin.reckmann@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="XD4kyBoxfGtTDMuX"
 Content-Disposition: inline
-In-Reply-To: <20220807122645.13830-2-mollysophia379@gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <20220807140455.409417-1-robin.reckmann@gmail.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,44 +73,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun 07 Aug 05:26 PDT 2022, Molly Sophia wrote:
 
-> Currently in the wakeirq_map, gpio36 and gpio37 have the same wakeirq
-> number, resulting in gpio37 being unable to trigger interrupts.
-> It looks like that this is a typo in the wakeirq map. So fix it.
-> 
+--XD4kyBoxfGtTDMuX
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thank you for finding this, I've been scratching my head about the
-i2c-hid interrupts on this gpio for a while now. This indeed looks like
-a typo, and the documentation confirms that 44 is the correct PDC irq
-line.
+On Sun, Aug 07, 2022 at 11:04:54PM +0900, Robin Reckmann wrote:
+> Fix i2c transfers using GPI DMA mode for all message types that do not set
+> the I2C_M_DMA_SAFE flag (e.g. SMBus "read byte").
+>=20
+> In this case a bounce buffer is returned by i2c_get_dma_safe_msg_buf(),
+> and it has to synced back to the message after the transfer is done.
+>=20
+> Add missing assignment of dma buffer in geni_i2c_gpi().
+>=20
+> Set xferred in i2c_put_dma_safe_msg_buf() to true in case of no error to
+> ensure the sync-back of this dma buffer to the message.
+>=20
+> Signed-off-by: Robin Reckmann <robin.reckmann@gmail.com>
 
-> Signed-off-by: Molly Sophia <mollysophia379@gmail.com>
+Thank you! What would be a Fixes tag for this?
 
-Fixes: 97423113ec4b ("pinctrl: qcom: Add sc8180x TLMM driver")
-Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Regards,
-Bjorn
+--XD4kyBoxfGtTDMuX
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> ---
->  drivers/pinctrl/qcom/pinctrl-sc8180x.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sc8180x.c b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-> index 6bec7f143134..b4bf009fe23e 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-> @@ -1582,7 +1582,7 @@ static const int sc8180x_acpi_reserved_gpios[] = {
->  static const struct msm_gpio_wakeirq_map sc8180x_pdc_map[] = {
->  	{ 3, 31 }, { 5, 32 }, { 8, 33 }, { 9, 34 }, { 10, 100 }, { 12, 104 },
->  	{ 24, 37 }, { 26, 38 }, { 27, 41 }, { 28, 42 }, { 30, 39 }, { 36, 43 },
-> -	{ 37, 43 }, { 38, 45 }, { 39, 118 }, { 39, 125 }, { 41, 47 },
-> +	{ 37, 44 }, { 38, 45 }, { 39, 118 }, { 39, 125 }, { 41, 47 },
->  	{ 42, 48 }, { 46, 50 }, { 47, 49 }, { 48, 51 }, { 49, 53 }, { 50, 52 },
->  	{ 51, 116 }, { 51, 123 }, { 53, 54 }, { 54, 55 }, { 55, 56 },
->  	{ 56, 57 }, { 58, 58 }, { 60, 60 }, { 68, 62 }, { 70, 63 }, { 76, 86 },
-> -- 
-> 2.25.1
-> 
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmLwpQQACgkQFA3kzBSg
+KbYMhRAArxGcGhOSEP/LoXFsoUt62gmN7SUbYALnShNEsiAAsIyfcDokRbSxVfPk
+hoe7hFLjoEL+ZcARfiqvYWGbTpX6dlFx3TUdkkVkL6oyCJ/YcfvgFat7FwV0cNyP
+ce2soTTDV0gDRecDLRald5RA50fdPcvcUpEhrwJDb/2JjffKXhJs4rlCOfHVUNXt
+QbVwJVj54xgMeCmLrN6FsR14lTzQ5m+CnbHeDJCrKPFIxAIVIWwXvSU6lhucNYCo
+lFn0Q4ZDdOnBEy2miNvvdPT0BEKxplT4SgJpD3zGjxGnFSIbO0w8kdZLvfioCrA0
+s5gQxVZpHxtLtKtQruAgX8r2+JW1zSSxG8aicdX9QgNABybcYfHV4tH/CJikDLMb
+VTPc8qi0HtPLMnBribfmECcHaeLzEe38gtb7aGDUG4z8wXZgePXRGfnqLtCDGykg
+4Vomw99Ugc/1+XwwrpUr0JLBYqVPXq2veOsirnGo0OR3iJGajMZw4y9Tlct9AQZZ
+IL7lfPhTlO2WS2rVfURyOXZCUg1/tax/RgDfzFvjJesvy9+hpZ/pq9Csl+k1b+GZ
+8lbslOpKD0bM/WLDWYbrel6IH/openjxQ7M5UNusGNAnEmZPpm5QMfxsa3tjQEm7
+Tv2AXDVrVjdsK4dpcqarPjowL/IJ2I8CntN4+KefRLE0ZOhthtU=
+=HpON
+-----END PGP SIGNATURE-----
+
+--XD4kyBoxfGtTDMuX--
