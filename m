@@ -2,56 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 29F4E58C0F1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 03:57:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A0BFA58C249
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 06:14:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243538AbiHHB5J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 7 Aug 2022 21:57:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52078 "EHLO
+        id S231438AbiHHEOY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Aug 2022 00:14:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243810AbiHHB4E (ORCPT
+        with ESMTP id S229541AbiHHEOY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 7 Aug 2022 21:56:04 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EB841C90A;
-        Sun,  7 Aug 2022 18:39:37 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C057760DF8;
-        Mon,  8 Aug 2022 01:39:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00568C433D7;
-        Mon,  8 Aug 2022 01:39:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1659922776;
-        bh=RSDlD8Uga25bmtLYdSTBMn3lox5GFYwmoLKXqo5AMGo=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=olZVpdX1siRj/tcvR/WLVfDm5+y4gnTXUtPssiQHgUdVG9ovTlQfKc5xgL2YVem+5
-         KYQrbJHzcb+L4D2GJpJRPefZk/brpWkWjS1dZY/P10SytMEfA82HpRWEj5+2ss5RDX
-         FSrUe6Se2y/Y4WfqEcGW6tiL9pqu9vfiz/2RZHjMRwC+0El3L3KTCGOPpWIJqMoH2c
-         gANMkqA9a9AZdw+z92LhfHbmJ2R+4g8e6Yqy3+8U0urdsLSQUChNVIXCpshGr8t98P
-         3eD/tC3PzPZAqOoiDfBYVsAamJHm1pMQn8MiSbehUcKPNv9UZ3BDQlwRXFG+87OG9Z
-         Cq6DXMkNVbbQg==
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, agross@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 13/16] arm64: dts: qcom: ipq8074: fix NAND node name
-Date:   Sun,  7 Aug 2022 21:39:10 -0400
-Message-Id: <20220808013914.316709-13-sashal@kernel.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220808013914.316709-1-sashal@kernel.org>
-References: <20220808013914.316709-1-sashal@kernel.org>
+        Mon, 8 Aug 2022 00:14:24 -0400
+Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DF58B7EA
+        for <linux-arm-msm@vger.kernel.org>; Sun,  7 Aug 2022 21:14:23 -0700 (PDT)
+Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-10e6bdbe218so9296328fac.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 07 Aug 2022 21:14:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc;
+        bh=qmLBxFW+3s+rCmQcO8LAZd85qoQ4WtG1SRphg8cshdY=;
+        b=aQe40ynVPeQxBTcCJez+hV9n972g8nFlngA7qNiWeuOD7UL705xTobhQf5AK4kN3jK
+         zI9Wwrn475srTl53VcrJmgUpAEH73qUwwpDPzylyogm3CrhDy5U88ESEFyhOlWNiwybR
+         nsb6HQO0r1MEY67ropqdZgAQjxEg9rJeK+zvwQtrVdHPcQTNyyuGuI6be0sc1T26Jy9G
+         LVlJgHXpEWd72snf/DI35geV8DPBQ5GNaPMEDm0SZzIFDbTcXf3fy/NOs6/of04FYDq7
+         3qLTQ1RckM8nylEw1PHbPCmNvuXRsC8iuZXU8sH0Fxzxai7hwmHbuvrsLgP3HcOUkVYI
+         +jbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=qmLBxFW+3s+rCmQcO8LAZd85qoQ4WtG1SRphg8cshdY=;
+        b=ISK1JeHFOnY+Q7dYVEuYeUg9+4SSRKOqf1zVuoq9fIhpfhYZMMmD5Sd4iSkeULFuo5
+         22cRV3tfg4zYSb+e8uB6OKadT/7Ors+2n3D2onthd0ULsU1JjKeoq4hQtpRKG998ibl4
+         GVdc1Sc3VB77VrSSvYapCvYyjErEOnFeaueXSQPPKC9Gq3YcO5841CNcg79DCE8snQ1U
+         6PSnXW5/SXQTqbNtZJC79BxWvOEdINp8dzROEqZJQNGfTo0al28EoHshTQqgNPAUfIp0
+         yDy8MtgbB16LtYjic4cb7Oqgxtal8dSuo/jOxOD4/+4KEfv4QjDfdgWycoeub7Htp3fd
+         3//Q==
+X-Gm-Message-State: ACgBeo02CxOwG58sOLfArr8ZOV7/aNe/+uP2+Nk8lGhF+T7QMYk9od62
+        kpBxpyEfAzdRpI0GBFTnR0fQkQ==
+X-Google-Smtp-Source: AA6agR7eKw+LY/1AYw4Clvjj3N7KQ2qVzP8/QS88PQyLyxWL4cigwgsrj5QDPvrVAq1rFHRLHZkALA==
+X-Received: by 2002:a05:6870:32cb:b0:10c:289b:76ba with SMTP id r11-20020a05687032cb00b0010c289b76bamr11677580oac.72.1659932062441;
+        Sun, 07 Aug 2022 21:14:22 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id n21-20020a9d7115000000b00636df4fd5eesm548322otj.34.2022.08.07.21.14.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 07 Aug 2022 21:14:21 -0700 (PDT)
+Date:   Sun, 7 Aug 2022 21:17:02 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Molly Sophia <mollysophia379@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] pinctrl: qcom: sc8180x: Fix wrong pin numbers
+Message-ID: <YvCOPn85G3tKlc/l@ripper>
+References: <20220807122645.13830-1-mollysophia379@gmail.com>
+ <20220807122645.13830-3-mollysophia379@gmail.com>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220807122645.13830-3-mollysophia379@gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -60,35 +74,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Robert Marko <robimarko@gmail.com>
+On Sun 07 Aug 05:26 PDT 2022, Molly Sophia wrote:
 
-[ Upstream commit b39961659ffc3c3a9e3d0d43b0476547b5f35d49 ]
+> The pin numbers for UFS_RESET and SDC2_* are not
+> consistent in the pinctrl driver for sc8180x.
+> So fix it.
+> 
+> Signed-off-by: Molly Sophia <mollysophia379@gmail.com>
 
-Per schema it should be nand-controller@79b0000 instead of nand@79b0000.
-Fix it to match nand-controller.yaml requirements.
+Fixes: 97423113ec4b ("pinctrl: qcom: Add sc8180x TLMM driver")
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Link: https://lore.kernel.org/r/20220621120642.518575-1-robimarko@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Regards,
+Bjorn
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index f48d14cd10a3..bdee07305ce5 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -261,7 +261,7 @@ qpic_bam: dma@7984000 {
- 			status = "disabled";
- 		};
- 
--		qpic_nand: nand@79b0000 {
-+		qpic_nand: nand-controller@79b0000 {
- 			compatible = "qcom,ipq8074-nand";
- 			reg = <0x79b0000 0x10000>;
- 			#address-cells = <1>;
--- 
-2.35.1
-
+> ---
+>  drivers/pinctrl/qcom/pinctrl-sc8180x.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/pinctrl/qcom/pinctrl-sc8180x.c b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
+> index b4bf009fe23e..704a99d2f93c 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-sc8180x.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
+> @@ -530,10 +530,10 @@ DECLARE_MSM_GPIO_PINS(187);
+>  DECLARE_MSM_GPIO_PINS(188);
+>  DECLARE_MSM_GPIO_PINS(189);
+>  
+> -static const unsigned int sdc2_clk_pins[] = { 190 };
+> -static const unsigned int sdc2_cmd_pins[] = { 191 };
+> -static const unsigned int sdc2_data_pins[] = { 192 };
+> -static const unsigned int ufs_reset_pins[] = { 193 };
+> +static const unsigned int ufs_reset_pins[] = { 190 };
+> +static const unsigned int sdc2_clk_pins[] = { 191 };
+> +static const unsigned int sdc2_cmd_pins[] = { 192 };
+> +static const unsigned int sdc2_data_pins[] = { 193 };
+>  
+>  enum sc8180x_functions {
+>  	msm_mux_adsp_ext,
+> -- 
+> 2.25.1
+> 
