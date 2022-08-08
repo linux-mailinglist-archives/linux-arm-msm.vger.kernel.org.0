@@ -2,48 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 64C6758C7C7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 13:46:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84DFB58C8E9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 15:01:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237576AbiHHLqh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Aug 2022 07:46:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49696 "EHLO
+        id S235289AbiHHNBm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Aug 2022 09:01:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234639AbiHHLqg (ORCPT
+        with ESMTP id S243057AbiHHNAV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Aug 2022 07:46:36 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F1D06341
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Aug 2022 04:46:34 -0700 (PDT)
-Received: from [192.168.1.101] (abxh187.neoplus.adsl.tpnet.pl [83.9.1.187])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Mon, 8 Aug 2022 09:00:21 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D68ED2DA;
+        Mon,  8 Aug 2022 06:00:18 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 2D60F3F6FC;
-        Mon,  8 Aug 2022 13:46:32 +0200 (CEST)
-Message-ID: <c9402e30-f410-8c29-2da4-4cbc993de6a5@somainline.org>
-Date:   Mon, 8 Aug 2022 13:46:31 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH] i2c: qcom-geni: Fix GPI DMA buffer sync-back
-Content-Language: en-US
-To:     Robin Reckmann <robin.reckmann@googlemail.com>,
-        Andy Gross <agross@kernel.org>,
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 727C3611EC;
+        Mon,  8 Aug 2022 13:00:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7380EC433D6;
+        Mon,  8 Aug 2022 13:00:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1659963617;
+        bh=2CWNRw3SZiNvEQoOHynSGdYSYJb4sRo+hBpwso9st7A=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=DxqMMGjE2+zN11NBpzF97pIQ41023k+y+C7iX7t+zKsRV76Nzt0SQcAkNnu42IZM/
+         a8PpHdwwm38uPzySKx+RcKH/Ai8Ni3puw0YW4cfStCQkGElMzYPDLgxJcv+uN/KtEr
+         CudkyIYeDGmaoOUSvvx1G9T+LzuKUH7oJGT0Ui/w=
+Date:   Mon, 8 Aug 2022 15:00:14 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
-Cc:     Robin Reckmann <robin.reckmann@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org
-References: <20220807140455.409417-1-robin.reckmann@gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220807140455.409417-1-robin.reckmann@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] usb: dwc3: qcom: Provide stubs for
+ dwc3_qcom_read_usb2_speed function
+Message-ID: <YvEI3vQ+Km1oOisQ@kroah.com>
+References: <1659337215-20421-1-git-send-email-quic_kriskura@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1659337215-20421-1-git-send-email-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -51,63 +58,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 7.08.2022 16:04, Robin Reckmann wrote:
-> Fix i2c transfers using GPI DMA mode for all message types that do not set
-> the I2C_M_DMA_SAFE flag (e.g. SMBus "read byte").
+On Mon, Aug 01, 2022 at 12:30:15PM +0530, Krishna Kurapati wrote:
+> Dwc3 Qcom driver makes use of usb_hub_find_child API in its efforts
+> to get speed of connected devices (HS/LS/FS) and enable interrupts
+> accordingly. usb_hub_find_child API is a part of usb core compiled
+> either into the kernel or as a module (CONFIG_USB= Y or M). In some
+> builds (make randconfig for i386) CONFIG_USB is not enabled and the
+> usb core is not compiled resulting in linking errors.
 > 
-> In this case a bounce buffer is returned by i2c_get_dma_safe_msg_buf(),
-> and it has to synced back to the message after the transfer is done.
+> Provide stubs for dwc3_qcom_read_usb2_speed function to use
+> usb_hub_find_child API only if CONFIG_USB is enabled. Else return
+> USB_SPEED_UNKNOWN.
 > 
-> Add missing assignment of dma buffer in geni_i2c_gpi().
-> 
-> Set xferred in i2c_put_dma_safe_msg_buf() to true in case of no error to
-> ensure the sync-back of this dma buffer to the message.
-> 
-> Signed-off-by: Robin Reckmann <robin.reckmann@gmail.com>
+> Fixes: 6895ea55c385 (usb: dwc3: qcom: Configure wakeup interrupts during suspend)
+> Reported-by: Randy Dunlap <rdunlap@infradead.org>
+> Suggested-by: Randy Dunlap <rdunlap@infradead.org>
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> Acked-by: Randy Dunlap <rdunlap@infradead.org>
+> Tested-by: Randy Dunlap <rdunlap@infradead.org>
 > ---
-Makes SM8450 Xperia 1 IV boot with the touchscreen but enabled (previously
-it would simply crash), but the touchscreen itself does not work yet (not
-yet sure if something is still missing on my part wrt hw setup):
-
-[    1.838819] gpi 900000.dma-controller: Error in Transaction
-[    1.838944] geni_i2c 990000.i2c: DMA txn failed:3
-[    1.839166] geni_i2c 990000.i2c: GPI transfer failed: -5
-
-
-Still, this is a very nice improvement.
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-
-Konrad
->  drivers/i2c/busses/i2c-qcom-geni.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
+> v2: Updated commit text to include cases when CONFIG_USB=m as well.
 > 
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index 6ac402ea58fb..d3541e94794e 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -484,12 +484,12 @@ static void geni_i2c_gpi_unmap(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->  {
->  	if (tx_buf) {
->  		dma_unmap_single(gi2c->se.dev->parent, tx_addr, msg->len, DMA_TO_DEVICE);
-> -		i2c_put_dma_safe_msg_buf(tx_buf, msg, false);
-> +		i2c_put_dma_safe_msg_buf(tx_buf, msg, !gi2c->err);
->  	}
->  
->  	if (rx_buf) {
->  		dma_unmap_single(gi2c->se.dev->parent, rx_addr, msg->len, DMA_FROM_DEVICE);
-> -		i2c_put_dma_safe_msg_buf(rx_buf, msg, false);
-> +		i2c_put_dma_safe_msg_buf(rx_buf, msg, !gi2c->err);
->  	}
+>  drivers/usb/dwc3/dwc3-qcom.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index c5e482f..bd8dc5a 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -299,6 +299,7 @@ static void dwc3_qcom_interconnect_exit(struct dwc3_qcom *qcom)
+>  	icc_put(qcom->icc_path_apps);
 >  }
 >  
-> @@ -553,6 +553,7 @@ static int geni_i2c_gpi(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
->  	desc->callback_param = gi2c;
->  
->  	dmaengine_submit(desc);
-> +	*buf = dma_buf;
->  	*dma_addr_p = addr;
->  
->  	return 0;
+> +#ifdef CONFIG_USB
+
+How is code for a USB host driver being built if CONFIG_USB is not
+enabled?
+
+Shouldn't this driver be split up cleaner to not be built at all if that
+is not happening and this is a gadget-only configuration?
+
+thanks,
+
+greg k-h
