@@ -2,61 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 719DC58C8F9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 15:05:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C07EF58C92A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 15:13:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243050AbiHHNFn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Aug 2022 09:05:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49168 "EHLO
+        id S243142AbiHHNNA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Aug 2022 09:13:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243073AbiHHNFm (ORCPT
+        with ESMTP id S242800AbiHHNM7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Aug 2022 09:05:42 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BA5DBAE;
-        Mon,  8 Aug 2022 06:05:42 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Mon, 8 Aug 2022 09:12:59 -0400
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [5.144.164.163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7138C0
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Aug 2022 06:12:56 -0700 (PDT)
+Received: from SoMainline.org (D57D4C6E.static.ziggozakelijk.nl [213.125.76.110])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id BB096B80DDE;
-        Mon,  8 Aug 2022 13:05:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF838C433C1;
-        Mon,  8 Aug 2022 13:05:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1659963939;
-        bh=YopFz7vgFlUtdQVWfCGUYhY4nRi11uEOqzfp9ekNOZU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ddotj7ibW0VfGX2PLydzyRMIVLUENRDo5GSFrTqRtFurJHsF+YqCLSaIzWijv5dBQ
-         ZYWlgM+95IjdUugnuiT7ojUfgExcacV1Yf2BzO5yI49/dKNX/VRRuKfXOaNnrpKO6p
-         t5fpLEUUuSTv3wSo2EI7HFaTMxJ56VLyC2v4XAFM=
-Date:   Mon, 8 Aug 2022 15:05:36 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Felipe Balbi <balbi@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 447E31F697;
+        Mon,  8 Aug 2022 15:12:53 +0200 (CEST)
+Date:   Mon, 8 Aug 2022 15:12:51 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Joel Selvaraj <joelselvaraj.oss@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
-        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Randy Dunlap <rdunlap@infradead.org>
-Subject: Re: [PATCH v2 3/9] usb: dwc3: qcom: fix gadget-only builds
-Message-ID: <YvEKIJ+GujHt7XvT@kroah.com>
-References: <20220804151001.23612-1-johan+linaro@kernel.org>
- <20220804151001.23612-4-johan+linaro@kernel.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Subject: Re: [PATCH v3 1/2] arm64: dts: qcom: split beryllium dts into common
+ dtsi and tianma dts
+Message-ID: <20220808130940.yztpesbkgootqwds@SoMainline.org>
+References: <20220806210220.31565-1-joelselvaraj.oss@gmail.com>
+ <20220806210220.31565-2-joelselvaraj.oss@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220804151001.23612-4-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <20220806210220.31565-2-joelselvaraj.oss@gmail.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -65,49 +49,105 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 04, 2022 at 05:09:55PM +0200, Johan Hovold wrote:
-> A recent change added a dependency to the USB host stack and broke
-> gadget-only builds of the driver.
+On 2022-08-07 02:32:19, Joel Selvaraj wrote:
+> There are two panel variants of Xiaomi Poco F1. Tianma and EBBG panel.
+> The previous beryllium dts supported the Tianma variant. In order to
+> add support for EBBG variant, the common nodes from beryllium dts are
+> moved to a new common dtsi and to make the variants distinguishable,
+> sdm845-xiaomi-beryllium.dts is now named as
+> sdm845-xiaomi-beryllium-tianma.dts
 > 
-> Fixes: 6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
-> Reported-by: Randy Dunlap <rdunlap@infradead.org>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> Signed-off-by: Joel Selvaraj <joelselvaraj.oss@gmail.com>
+
+Nice, this is much more concise now and keeps the tree compiling _with
+this dts_ at all times, at the detriment of stuffing "many" changes in a
+single patch which is fine here, IMO.
+
+I just hope users of this dtb notice the name changed (unless
+unreferenced dtbs get cleaned after a dirty-rebuild) when their scripts
+are inevitably hardcoded to take this specificly named dtb to flash to
+the(ir) phone.
+
+After giving both DTs a unique compatible as pointed out by Krzysztof,
+please add my:
+
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+
 > ---
+>  arch/arm64/boot/dts/qcom/Makefile                      |  2 +-
+>  ...ryllium.dts => sdm845-xiaomi-beryllium-common.dtsi} |  9 +++++----
+>  .../boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts   | 10 ++++++++++
+>  3 files changed, 16 insertions(+), 5 deletions(-)
+>  rename arch/arm64/boot/dts/qcom/{sdm845-xiaomi-beryllium.dts => sdm845-xiaomi-beryllium-common.dtsi} (98%)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
 > 
-> Changes in v2
->  - new patch
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 2f8aec2cc6db..02db413b228c 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -106,7 +106,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-oneplus-fajita.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-sony-xperia-tama-akari.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-sony-xperia-tama-akatsuki.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-sony-xperia-tama-apollo.dtb
+> -dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium-tianma.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-shift-axolotl.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
+> similarity index 98%
+> rename from arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+> rename to arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
+> index d88dc07205f7..83edcb1171f5 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
+> @@ -221,8 +221,7 @@ &dsi0 {
+>  	status = "okay";
+>  	vdda-supply = <&vreg_l26a_1p2>;
+>  
+> -	panel@0 {
+> -		compatible = "tianma,fhd-video";
+> +	display_panel: panel@0 {
+>  		reg = <0>;
+>  		vddio-supply = <&vreg_l14a_1p8>;
+>  		vddpos-supply = <&lab>;
+> @@ -234,8 +233,10 @@ panel@0 {
+>  		backlight = <&pmi8998_wled>;
+>  		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
+>  
+> +		status = "disabled";
+> +
+>  		port {
+> -			tianma_nt36672a_in_0: endpoint {
+> +			panel_in_0: endpoint {
+>  				remote-endpoint = <&dsi0_out>;
+>  			};
+>  		};
+> @@ -243,7 +244,7 @@ tianma_nt36672a_in_0: endpoint {
+>  };
+>  
+>  &dsi0_out {
+> -	remote-endpoint = <&tianma_nt36672a_in_0>;
+> +	remote-endpoint = <&panel_in_0>;
+>  	data-lanes = <0 1 2 3>;
+>  };
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
+> new file mode 100644
+> index 000000000000..fcbef5ad2909
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
+> @@ -0,0 +1,10 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +
+> +/dts-v1/;
+> +
+> +#include "sdm845-xiaomi-beryllium-common.dtsi"
+> +
+> +&display_panel {
+> +	compatible = "tianma,fhd-video";
+> +	status = "okay";
+> +};
+> -- 
+> 2.37.1
 > 
->  drivers/usb/dwc3/dwc3-qcom.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index be2e3dd36440..e9364141661b 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -310,8 +310,11 @@ static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
->  	 * currently supports only 1 port per controller. So
->  	 * this is sufficient.
->  	 */
-> +#ifdef CONFIG_USB
->  	udev = usb_hub_find_child(hcd->self.root_hub, 1);
-
-If a gadget driver needs this for some reason, then the #ifdef should be
-put in a .h file, not in a .c file.
-
-But step back a minute and ask why a host-config-only function is being
-called when a device is in gadget-only mode?  This feels like a
-design/logic issue in this file, NOT something to paper over with a
-#ifdef in a .c file
-
-This implies that if this device is NOT in a host configuration, then
-the suspend path of it is not configured properly at all, as why would
-it be checking or caring about this at all if this is in gadget-only
-mode?
-
-Something else is wrong here, let's fix the root problem please.  Maybe
-this driver should just never be built in gadget-only mode, as it is
-never intended to support that option?
-
-thanks,
-
-greg k-h
