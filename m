@@ -2,50 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5092258BFC1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 03:43:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DC3D58C040
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 03:49:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242828AbiHHBnF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 7 Aug 2022 21:43:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41242 "EHLO
+        id S243064AbiHHBtf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 7 Aug 2022 21:49:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243174AbiHHBl6 (ORCPT
+        with ESMTP id S243180AbiHHBsm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 7 Aug 2022 21:41:58 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78C2A13E13;
-        Sun,  7 Aug 2022 18:35:30 -0700 (PDT)
+        Sun, 7 Aug 2022 21:48:42 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A4201658D;
+        Sun,  7 Aug 2022 18:37:16 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 01619B80E10;
-        Mon,  8 Aug 2022 01:35:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56B9C43470;
-        Mon,  8 Aug 2022 01:35:26 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D4ED860DF5;
+        Mon,  8 Aug 2022 01:37:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26EBBC433D7;
+        Mon,  8 Aug 2022 01:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1659922527;
-        bh=or9ghtm9eTD9b4MK7ycw9/x0MKycVDa98HnF9GQBIvY=;
+        s=k20201202; t=1659922635;
+        bh=N2/qNlfn1NrRpb3l/ZqIDoo9ANS0WmXcev3dBXNe8Vk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=gLzbWqmqyN5JpQwiSdhKEmDr7E1hBoR0aWo3umVtSWAbMzML5+xFCoeIYW227lCDM
-         h5D+0zSfdZ2inw3uHxRHKMkjIPi2/doZi9SVqqofKbuYOZ/2pl6blNFPmf5DSeg7sz
-         zFd5ToiJ/N0cK8ZR+J1FiQdwdOQP/v8L5+sjmOYK1mLVI27xk6A/W+j7a01iDAtcFy
-         mpTcE4ssGJEqozWcsBJCzzDfygESDmNpzIrLNRtLAjHtLHSqd5IxcwaMP//HVkb2yD
-         l5pMi+hxLAPH4JOiFV2FdgjdxHI9sUvDv8OgJMc7i5l+0SOTOiNtxvBknTcOoLJzOb
-         Z4bxk0lSILCOg==
+        b=YCSPxOo/1BvhnmeBxmzRdIvUjoMlohoj9N32iVUL9Km1ZbbHVo2N7io2r7hUFSQqU
+         /VcVQSAjbr7yt0ghTFStPqwU0B+uP9qsxlQuYQq/i9CfBYftWwlZrpd7ouoBKTNg88
+         YCGoWEuLeZgp/sgOgdVGDGuod9ifbthlLWYKvnKA0gDrfcWIMILJNr1rleE+XWdW3Y
+         Z1igCvVNjIbZ+BQvtuOE8w9fo7FmxSLQLR3/i+jJAC+EeJNs3ezXzUm6WwO2OnWrxY
+         O+SrrcoFjJC+cQTAWlOzawyQahgxcwnEbyoL2ORR2ApxNyR+7x4uAVTYq/fAciJ7lx
+         UWcG+XoPxfYjQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Sasha Levin <sashal@kernel.org>, agross@kernel.org,
         robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.18 42/53] arm64: dts: qcom: ipq8074: fix NAND node name
-Date:   Sun,  7 Aug 2022 21:33:37 -0400
-Message-Id: <20220808013350.314757-42-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 34/45] ARM: dts: qcom: sdx55: Fix the IRQ trigger type for UART
+Date:   Sun,  7 Aug 2022 21:35:38 -0400
+Message-Id: <20220808013551.315446-34-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220808013350.314757-1-sashal@kernel.org>
-References: <20220808013350.314757-1-sashal@kernel.org>
+In-Reply-To: <20220808013551.315446-1-sashal@kernel.org>
+References: <20220808013551.315446-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -60,35 +59,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Robert Marko <robimarko@gmail.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit b39961659ffc3c3a9e3d0d43b0476547b5f35d49 ]
+[ Upstream commit ae500b351ab0006d933d804a2b7507fe1e98cecc ]
 
-Per schema it should be nand-controller@79b0000 instead of nand@79b0000.
-Fix it to match nand-controller.yaml requirements.
+The trigger type should be LEVEL_HIGH. So fix it!
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Link: https://lore.kernel.org/r/20220621120642.518575-1-robimarko@gmail.com
+Link: https://lore.kernel.org/r/20220530080842.37024-2-manivannan.sadhasivam@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 +-
+ arch/arm/boot/dts/qcom-sdx55.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 8d4e0e193439..664fba3632b1 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -534,7 +534,7 @@ qpic_bam: dma-controller@7984000 {
- 			status = "disabled";
- 		};
- 
--		qpic_nand: nand@79b0000 {
-+		qpic_nand: nand-controller@79b0000 {
- 			compatible = "qcom,ipq8074-nand";
- 			reg = <0x079b0000 0x10000>;
- 			#address-cells = <1>;
+diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
+index b5b784c5c65e..0e76d03087fe 100644
+--- a/arch/arm/boot/dts/qcom-sdx55.dtsi
++++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
+@@ -205,7 +205,7 @@ gcc: clock-controller@100000 {
+ 		blsp1_uart3: serial@831000 {
+ 			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
+ 			reg = <0x00831000 0x200>;
+-			interrupts = <GIC_SPI 26 IRQ_TYPE_LEVEL_LOW>;
++			interrupts = <GIC_SPI 26 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&gcc 30>,
+ 				 <&gcc 9>;
+ 			clock-names = "core", "iface";
 -- 
 2.35.1
 
