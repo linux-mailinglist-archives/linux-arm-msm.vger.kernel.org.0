@@ -2,52 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84DFB58C8E9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 15:01:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 719DC58C8F9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 15:05:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235289AbiHHNBm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Aug 2022 09:01:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43588 "EHLO
+        id S243050AbiHHNFn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Aug 2022 09:05:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243057AbiHHNAV (ORCPT
+        with ESMTP id S243073AbiHHNFm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Aug 2022 09:00:21 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D68ED2DA;
-        Mon,  8 Aug 2022 06:00:18 -0700 (PDT)
+        Mon, 8 Aug 2022 09:05:42 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BA5DBAE;
+        Mon,  8 Aug 2022 06:05:42 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 727C3611EC;
-        Mon,  8 Aug 2022 13:00:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7380EC433D6;
-        Mon,  8 Aug 2022 13:00:17 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id BB096B80DDE;
+        Mon,  8 Aug 2022 13:05:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF838C433C1;
+        Mon,  8 Aug 2022 13:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1659963617;
-        bh=2CWNRw3SZiNvEQoOHynSGdYSYJb4sRo+hBpwso9st7A=;
+        s=korg; t=1659963939;
+        bh=YopFz7vgFlUtdQVWfCGUYhY4nRi11uEOqzfp9ekNOZU=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=DxqMMGjE2+zN11NBpzF97pIQ41023k+y+C7iX7t+zKsRV76Nzt0SQcAkNnu42IZM/
-         a8PpHdwwm38uPzySKx+RcKH/Ai8Ni3puw0YW4cfStCQkGElMzYPDLgxJcv+uN/KtEr
-         CudkyIYeDGmaoOUSvvx1G9T+LzuKUH7oJGT0Ui/w=
-Date:   Mon, 8 Aug 2022 15:00:14 +0200
+        b=ddotj7ibW0VfGX2PLydzyRMIVLUENRDo5GSFrTqRtFurJHsF+YqCLSaIzWijv5dBQ
+         ZYWlgM+95IjdUugnuiT7ojUfgExcacV1Yf2BzO5yI49/dKNX/VRRuKfXOaNnrpKO6p
+         t5fpLEUUuSTv3wSo2EI7HFaTMxJ56VLyC2v4XAFM=
+Date:   Mon, 8 Aug 2022 15:05:36 +0200
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Felipe Balbi <balbi@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Randy Dunlap <rdunlap@infradead.org>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
+        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
         linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] usb: dwc3: qcom: Provide stubs for
- dwc3_qcom_read_usb2_speed function
-Message-ID: <YvEI3vQ+Km1oOisQ@kroah.com>
-References: <1659337215-20421-1-git-send-email-quic_kriskura@quicinc.com>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Randy Dunlap <rdunlap@infradead.org>
+Subject: Re: [PATCH v2 3/9] usb: dwc3: qcom: fix gadget-only builds
+Message-ID: <YvEKIJ+GujHt7XvT@kroah.com>
+References: <20220804151001.23612-1-johan+linaro@kernel.org>
+ <20220804151001.23612-4-johan+linaro@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1659337215-20421-1-git-send-email-quic_kriskura@quicinc.com>
+In-Reply-To: <20220804151001.23612-4-johan+linaro@kernel.org>
 X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -58,45 +65,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 01, 2022 at 12:30:15PM +0530, Krishna Kurapati wrote:
-> Dwc3 Qcom driver makes use of usb_hub_find_child API in its efforts
-> to get speed of connected devices (HS/LS/FS) and enable interrupts
-> accordingly. usb_hub_find_child API is a part of usb core compiled
-> either into the kernel or as a module (CONFIG_USB= Y or M). In some
-> builds (make randconfig for i386) CONFIG_USB is not enabled and the
-> usb core is not compiled resulting in linking errors.
+On Thu, Aug 04, 2022 at 05:09:55PM +0200, Johan Hovold wrote:
+> A recent change added a dependency to the USB host stack and broke
+> gadget-only builds of the driver.
 > 
-> Provide stubs for dwc3_qcom_read_usb2_speed function to use
-> usb_hub_find_child API only if CONFIG_USB is enabled. Else return
-> USB_SPEED_UNKNOWN.
-> 
-> Fixes: 6895ea55c385 (usb: dwc3: qcom: Configure wakeup interrupts during suspend)
+> Fixes: 6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
 > Reported-by: Randy Dunlap <rdunlap@infradead.org>
-> Suggested-by: Randy Dunlap <rdunlap@infradead.org>
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> Acked-by: Randy Dunlap <rdunlap@infradead.org>
-> Tested-by: Randy Dunlap <rdunlap@infradead.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
-> v2: Updated commit text to include cases when CONFIG_USB=m as well.
 > 
->  drivers/usb/dwc3/dwc3-qcom.c | 7 +++++++
->  1 file changed, 7 insertions(+)
+> Changes in v2
+>  - new patch
+> 
+>  drivers/usb/dwc3/dwc3-qcom.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 > 
 > diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index c5e482f..bd8dc5a 100644
+> index be2e3dd36440..e9364141661b 100644
 > --- a/drivers/usb/dwc3/dwc3-qcom.c
 > +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -299,6 +299,7 @@ static void dwc3_qcom_interconnect_exit(struct dwc3_qcom *qcom)
->  	icc_put(qcom->icc_path_apps);
->  }
->  
+> @@ -310,8 +310,11 @@ static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
+>  	 * currently supports only 1 port per controller. So
+>  	 * this is sufficient.
+>  	 */
 > +#ifdef CONFIG_USB
+>  	udev = usb_hub_find_child(hcd->self.root_hub, 1);
 
-How is code for a USB host driver being built if CONFIG_USB is not
-enabled?
+If a gadget driver needs this for some reason, then the #ifdef should be
+put in a .h file, not in a .c file.
 
-Shouldn't this driver be split up cleaner to not be built at all if that
-is not happening and this is a gadget-only configuration?
+But step back a minute and ask why a host-config-only function is being
+called when a device is in gadget-only mode?  This feels like a
+design/logic issue in this file, NOT something to paper over with a
+#ifdef in a .c file
+
+This implies that if this device is NOT in a host configuration, then
+the suspend path of it is not configured properly at all, as why would
+it be checking or caring about this at all if this is in gadget-only
+mode?
+
+Something else is wrong here, let's fix the root problem please.  Maybe
+this driver should just never be built in gadget-only mode, as it is
+never intended to support that option?
 
 thanks,
 
