@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C07EF58C92A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 15:13:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BEBD858C936
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 15:16:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243142AbiHHNNA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Aug 2022 09:13:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55606 "EHLO
+        id S243271AbiHHNQJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Aug 2022 09:16:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242800AbiHHNM7 (ORCPT
+        with ESMTP id S233946AbiHHNQJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Aug 2022 09:12:59 -0400
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [5.144.164.163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7138C0
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Aug 2022 06:12:56 -0700 (PDT)
+        Mon, 8 Aug 2022 09:16:09 -0400
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1F2926F6;
+        Mon,  8 Aug 2022 06:16:05 -0700 (PDT)
 Received: from SoMainline.org (D57D4C6E.static.ziggozakelijk.nl [213.125.76.110])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 447E31F697;
-        Mon,  8 Aug 2022 15:12:53 +0200 (CEST)
-Date:   Mon, 8 Aug 2022 15:12:51 +0200
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id AE4BC1F5A3;
+        Mon,  8 Aug 2022 15:16:03 +0200 (CEST)
+Date:   Mon, 8 Aug 2022 15:16:02 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Joel Selvaraj <joelselvaraj.oss@gmail.com>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -31,17 +31,17 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] arm64: dts: qcom: split beryllium dts into common
- dtsi and tianma dts
-Message-ID: <20220808130940.yztpesbkgootqwds@SoMainline.org>
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: sdm845-xiaomi-beryllium-ebbg:
+ introduce Xiaomi Poco F1 EBBG variant
+Message-ID: <20220808131602.nv66ozm2q62obj5t@SoMainline.org>
 References: <20220806210220.31565-1-joelselvaraj.oss@gmail.com>
- <20220806210220.31565-2-joelselvaraj.oss@gmail.com>
+ <20220806210220.31565-3-joelselvaraj.oss@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220806210220.31565-2-joelselvaraj.oss@gmail.com>
+In-Reply-To: <20220806210220.31565-3-joelselvaraj.oss@gmail.com>
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -49,94 +49,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-08-07 02:32:19, Joel Selvaraj wrote:
-> There are two panel variants of Xiaomi Poco F1. Tianma and EBBG panel.
-> The previous beryllium dts supported the Tianma variant. In order to
-> add support for EBBG variant, the common nodes from beryllium dts are
-> moved to a new common dtsi and to make the variants distinguishable,
-> sdm845-xiaomi-beryllium.dts is now named as
-> sdm845-xiaomi-beryllium-tianma.dts
+On 2022-08-07 02:32:20, Joel Selvaraj wrote:
+> Introduce support for the Xiaomi Poco F1 EBBG variant. The EBBG variant
+> uses EBBG FT8719 panel manufactured by EBBG.
 > 
 > Signed-off-by: Joel Selvaraj <joelselvaraj.oss@gmail.com>
 
-Nice, this is much more concise now and keeps the tree compiling _with
-this dts_ at all times, at the detriment of stuffing "many" changes in a
-single patch which is fine here, IMO.
-
-I just hope users of this dtb notice the name changed (unless
-unreferenced dtbs get cleaned after a dirty-rebuild) when their scripts
-are inevitably hardcoded to take this specificly named dtb to flash to
-the(ir) phone.
-
-After giving both DTs a unique compatible as pointed out by Krzysztof,
-please add my:
+Also after adding a distinct compatible to the new board file:
 
 Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 
 > ---
->  arch/arm64/boot/dts/qcom/Makefile                      |  2 +-
->  ...ryllium.dts => sdm845-xiaomi-beryllium-common.dtsi} |  9 +++++----
->  .../boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts   | 10 ++++++++++
->  3 files changed, 16 insertions(+), 5 deletions(-)
->  rename arch/arm64/boot/dts/qcom/{sdm845-xiaomi-beryllium.dts => sdm845-xiaomi-beryllium-common.dtsi} (98%)
->  create mode 100644 arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
+>  arch/arm64/boot/dts/qcom/Makefile                      |  1 +
+>  .../boot/dts/qcom/sdm845-xiaomi-beryllium-ebbg.dts     | 10 ++++++++++
+>  2 files changed, 11 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-ebbg.dts
 > 
 > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 2f8aec2cc6db..02db413b228c 100644
+> index 02db413b228c..29f15031a199 100644
 > --- a/arch/arm64/boot/dts/qcom/Makefile
 > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -106,7 +106,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-oneplus-fajita.dtb
+> @@ -106,6 +106,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-oneplus-fajita.dtb
 >  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-sony-xperia-tama-akari.dtb
 >  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-sony-xperia-tama-akatsuki.dtb
 >  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-sony-xperia-tama-apollo.dtb
-> -dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium-tianma.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium-ebbg.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium-tianma.dtb
 >  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-shift-axolotl.dtb
 >  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-> similarity index 98%
-> rename from arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-> rename to arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-> index d88dc07205f7..83edcb1171f5 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-> @@ -221,8 +221,7 @@ &dsi0 {
->  	status = "okay";
->  	vdda-supply = <&vreg_l26a_1p2>;
->  
-> -	panel@0 {
-> -		compatible = "tianma,fhd-video";
-> +	display_panel: panel@0 {
->  		reg = <0>;
->  		vddio-supply = <&vreg_l14a_1p8>;
->  		vddpos-supply = <&lab>;
-> @@ -234,8 +233,10 @@ panel@0 {
->  		backlight = <&pmi8998_wled>;
->  		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
->  
-> +		status = "disabled";
-> +
->  		port {
-> -			tianma_nt36672a_in_0: endpoint {
-> +			panel_in_0: endpoint {
->  				remote-endpoint = <&dsi0_out>;
->  			};
->  		};
-> @@ -243,7 +244,7 @@ tianma_nt36672a_in_0: endpoint {
->  };
->  
->  &dsi0_out {
-> -	remote-endpoint = <&tianma_nt36672a_in_0>;
-> +	remote-endpoint = <&panel_in_0>;
->  	data-lanes = <0 1 2 3>;
->  };
->  
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-ebbg.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-ebbg.dts
 > new file mode 100644
-> index 000000000000..fcbef5ad2909
+> index 000000000000..1e0be481b9da
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-ebbg.dts
 > @@ -0,0 +1,10 @@
 > +// SPDX-License-Identifier: GPL-2.0
 > +
@@ -145,7 +90,7 @@ Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 > +#include "sdm845-xiaomi-beryllium-common.dtsi"
 > +
 > +&display_panel {
-> +	compatible = "tianma,fhd-video";
+> +	compatible = "ebbg,ft8719";
 > +	status = "okay";
 > +};
 > -- 
