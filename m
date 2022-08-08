@@ -2,81 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F3F4B58CABA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 16:49:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48B5458CCA0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 19:22:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243305AbiHHOtT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Aug 2022 10:49:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41028 "EHLO
+        id S235741AbiHHRWO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Aug 2022 13:22:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243491AbiHHOtT (ORCPT
+        with ESMTP id S233288AbiHHRWN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Aug 2022 10:49:19 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 353FFBC08
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Aug 2022 07:49:18 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id b16so11635291edd.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Aug 2022 07:49:18 -0700 (PDT)
+        Mon, 8 Aug 2022 13:22:13 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDE8315FF6
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Aug 2022 10:22:11 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id bh13so9155207pgb.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Aug 2022 10:22:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=sGGMDrvq70fK3xNBUxx3zSxTGxbNUsun6AK0mtlXrck=;
-        b=aNeNHYUnGAERLnnsoWYIWNZLsBb+XskAb+Zbzep5u56gCqHprwCZpAhjmoxi0eGCt3
-         ENCGw+eikSwJrImaEpmJpnt4dXgTf5WdEsQDkixIVfLWK3xndLG9hJyfN5tlBSXsjS8b
-         iSl4IzQlwipS4OiUW+qYCtv4IWP6ti/mpxM7E=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=4ISRmfPuzAq5iPA9W7SoAaYtOXEzjnhWi555d7SJED8=;
+        b=nY3cdk1gWCUthARunn+1V5ONlEaJCy1aeQA+5MIdzACrZnvUMxuvRRGrBP8vmXW716
+         KEwygp7xRisTAS1k8qmj7xeHcaG4KkSGfbHhM8pBHkUFiJaS/v3cwWb9su+SqtTlAZu/
+         k3I2I1qk80aFlw2YsI5Ai9QRQDlq/U3MgxLDs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=sGGMDrvq70fK3xNBUxx3zSxTGxbNUsun6AK0mtlXrck=;
-        b=K2jwjGW4PRdXMg6+VqHFh/jMC+AxBprdOcUtxzhMQV6QpM8jm/MPKZtqdMZRInOxMC
-         Eg1gkO+lTUf8ZTdbRcvjAGamNygCp/P7OBAQCXHZZzgRGAGr3DaunJvLmKS6mdJ3WbwY
-         FMuUSu7Q0ybXtvWd9yi4vbBssx539hPjDabIuRMfmCvdKcDrvHGz/rYVltNXQ82p5B9X
-         eUJhQ4YCH4AprgLHtFlNjlrDlHmBFv3eb0vpgBF82CJ5ekqPAqWVynsLzYNES3ZK5P62
-         X1L7nFbyEw/j7Zp28LZVAlW3whi8JI3XDxHol2lyCtqpNsFDWef72cr8WZannvJxiA+R
-         wobA==
-X-Gm-Message-State: ACgBeo0mNJ6G2XmemwUDpEwPgCFIRugrObO5tgnvgGB3D/pes8lnJOS7
-        tULgIcOMVYQH9nudng0/wWrzPGiubsGQ0glo
-X-Google-Smtp-Source: AA6agR6pyqtYqfeVBP2kw6R8i9GvZaAEUIlNIK+Sxc/pgOO9Sl4X9xuZQ+D8MTeD+Vx5WGoECMHdeg==
-X-Received: by 2002:a05:6402:40cd:b0:43e:5a4c:b5a5 with SMTP id z13-20020a05640240cd00b0043e5a4cb5a5mr17985576edb.154.1659970156476;
-        Mon, 08 Aug 2022 07:49:16 -0700 (PDT)
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com. [209.85.221.47])
-        by smtp.gmail.com with ESMTPSA id v17-20020a170906293100b0073065767404sm3399224ejd.34.2022.08.08.07.49.13
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=4ISRmfPuzAq5iPA9W7SoAaYtOXEzjnhWi555d7SJED8=;
+        b=aSMAJHFUeX/OgnUzekOkEvLeXR1ghFtcBYU8jJMFtFrZXwOPQAjl/XWxvhrY6+yEE2
+         truatfiqZXgNXCWWpRb2gJXSaaC5v8cji3hwKIEYadR6EinexhM4ZP3pJZI+tM9khPh6
+         9utEPBG03B8nIhn6cJ/6dqj++sxbfQofqTqHHvOC69m+qwj8GMs6Ob2hswiayksCub+s
+         kAcIUJoTbDwf428TW2peAmK92sD+ZDf1vcSTiklhDEUXwiJJVn4mnkCZU+4qBrxte0wI
+         1ysA7VFlfeczrjrrKmRH+mvPiwyt0dnuulQ43TxzFd5aXnmvJhf7FOXiv6gaxDwt5vJS
+         CJ6g==
+X-Gm-Message-State: ACgBeo1E/laxyAFpn1oa9nmKn6sQMAk6GdoQLaHnKnCr6gmTyuXMcha5
+        brsQAYGsNULqmGqChfenDwSllw==
+X-Google-Smtp-Source: AA6agR66v0hA8Eemx2dKzdaVrT6+rtDHvVGdEsmUWrdfx899jKGr/hzPQxI3VEKvhRUidNhEM1Uhzg==
+X-Received: by 2002:a63:2244:0:b0:41d:a9c4:e83 with SMTP id t4-20020a632244000000b0041da9c40e83mr1943438pgm.271.1659979331250;
+        Mon, 08 Aug 2022 10:22:11 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:7a1:96b:e08b:5ba0])
+        by smtp.gmail.com with UTF8SMTPSA id cp2-20020a170902e78200b0016db7f49cc2sm9008576plb.115.2022.08.08.10.22.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Aug 2022 07:49:15 -0700 (PDT)
-Received: by mail-wr1-f47.google.com with SMTP id j7so11203878wrh.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Aug 2022 07:49:13 -0700 (PDT)
-X-Received: by 2002:adf:f90d:0:b0:20c:de32:4d35 with SMTP id
- b13-20020adff90d000000b0020cde324d35mr11636287wrr.583.1659970153270; Mon, 08
- Aug 2022 07:49:13 -0700 (PDT)
+        Mon, 08 Aug 2022 10:22:10 -0700 (PDT)
+Date:   Mon, 8 Aug 2022 10:22:07 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
+        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 8/9] usb: dwc3: qcom: fix wakeup implementation
+Message-ID: <YvFGP90eyXoPbcy8@google.com>
+References: <20220804151001.23612-1-johan+linaro@kernel.org>
+ <20220804151001.23612-9-johan+linaro@kernel.org>
+ <Yuv7AM/5jtO/pgcm@google.com>
+ <Yu1MO9sgPslEDAjR@google.com>
+ <Yu6VTYn2/cG79dvl@hovoldconsulting.com>
 MIME-Version: 1.0
-References: <1659608930-4370-1-git-send-email-quic_kalyant@quicinc.com>
- <CAA8EJpoAN4CVMKNouh3pPtX-5rnBeL3_T60M5cNhirNEmNeEkQ@mail.gmail.com> <BN0PR02MB8142FFB573A4D05B0560A13996639@BN0PR02MB8142.namprd02.prod.outlook.com>
-In-Reply-To: <BN0PR02MB8142FFB573A4D05B0560A13996639@BN0PR02MB8142.namprd02.prod.outlook.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 8 Aug 2022 07:49:01 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=U4cddyPxg2D5KP9ew2i=AQOSn=Jz_OmuZ0BrZCu2+MLA@mail.gmail.com>
-Message-ID: <CAD=FV=U4cddyPxg2D5KP9ew2i=AQOSn=Jz_OmuZ0BrZCu2+MLA@mail.gmail.com>
-Subject: Re: [v1] drm/msm/disp/dpu1: add support for hierarchical flush for
- dspp in sc7280
-To:     Kalyan Thota <kalyant@qti.qualcomm.com>
-Cc:     "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
-        "Kalyan Thota (QUIC)" <quic_kalyant@quicinc.com>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "robdclark@gmail.com" <robdclark@gmail.com>,
-        "swboyd@chromium.org" <swboyd@chromium.org>,
-        "Vinod Polimera (QUIC)" <quic_vpolimer@quicinc.com>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Yu6VTYn2/cG79dvl@hovoldconsulting.com>
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,20 +85,118 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Sat, Aug 06, 2022 at 06:22:37PM +0200, Johan Hovold wrote:
+> On Fri, Aug 05, 2022 at 09:58:35AM -0700, Matthias Kaehlcke wrote:
+> > On Thu, Aug 04, 2022 at 09:59:44AM -0700, Matthias Kaehlcke wrote:
+> > > On Thu, Aug 04, 2022 at 05:10:00PM +0200, Johan Hovold wrote:
+> > > > It is the Qualcomm glue wakeup interrupts that may be able to wake the
+> > > > system from suspend and this can now be described in the devicetree.
+> > > > 
+> > > > Move the wakeup-source property handling over from the core driver and
+> > > > instead propagate the capability setting to the core device during
+> > > > probe.
+> > > > 
+> > > > This is needed as there is currently no way for the core driver to query
+> > > > the wakeup setting of the glue device, but it is the core driver that
+> > > > manages the PHY power state during suspend.
+> > > > 
+> > > > Also don't leave the PHYs enabled when system wakeup has been disabled
+> > > > through sysfs.
+> > > > 
+> > > > Fixes: 649f5c842ba3 ("usb: dwc3: core: Host wake up support from system suspend")
+> > > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > > > ---
+> > > >  drivers/usb/dwc3/core.c      | 5 ++---
+> > > >  drivers/usb/dwc3/dwc3-qcom.c | 6 +++++-
+> > > >  2 files changed, 7 insertions(+), 4 deletions(-)
+> > > > 
+> > > > diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> > > > index 16d1f328775f..8c8e32651473 100644
+> > > > --- a/drivers/usb/dwc3/core.c
+> > > > +++ b/drivers/usb/dwc3/core.c
+> > > > @@ -1822,7 +1822,6 @@ static int dwc3_probe(struct platform_device *pdev)
+> > > >  
+> > > >  	platform_set_drvdata(pdev, dwc);
+> > > >  	dwc3_cache_hwparams(dwc);
+> > > > -	device_init_wakeup(&pdev->dev, of_property_read_bool(dev->of_node, "wakeup-source"));
+> > > >  
+> > > >  	spin_lock_init(&dwc->lock);
+> > > >  	mutex_init(&dwc->mutex);
+> > > > @@ -1984,7 +1983,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+> > > >  		dwc3_core_exit(dwc);
+> > > >  		break;
+> > > >  	case DWC3_GCTL_PRTCAP_HOST:
+> > > > -		if (!PMSG_IS_AUTO(msg) && !device_can_wakeup(dwc->dev)) {
+> > > > +		if (!PMSG_IS_AUTO(msg) && !device_may_wakeup(dwc->dev)) {
+> > > 
+> > > Let me explain the rationale for why device_can_wakeup() was used here:
+> > > 
+> > > On QCOM SC7180 based Chromebooks we observe that the onboard USB hub consumes
+> > > ~80 mW during system suspend when the PHYs are disabled, as opposed to ~17 mW
+> > > when the PHYs remain enabled. This is a significant delta when the device is
+> > > on a battery power.
+> > > 
+> > > The initial idea was to leave the PHYs always enabled (in a low power mode),
+> > > but then I dug up commit c4a5153e87fd ("usb: dwc3: core: Power-off core/PHYs
+> > > on system_suspend in host mode"), which provides a rationale for the PHYs
+> > > being powered off:
+> > > 
+> > >   Commit 689bf72c6e0d ("usb: dwc3: Don't reinitialize core during
+> > >   host bus-suspend/resume") updated suspend/resume routines to not
+> > >   power_off and reinit PHYs/core for host mode.
+> > >   It broke platforms that rely on DWC3 core to power_off PHYs to
+> > >   enter low power state on system suspend.
+> > > 
+> > > Unfortunately we don't know which platforms are impacted by this. The idea
+> > > behind using device_can_wakeup() was to use it as a proxy for platforms
+> > > that are *not* impacted. If a platform supports USB wakeup supposedly the
+> > > SoC can enter its low power mode during system suspend with the PHYs
+> > > enabled.
+> > > 
+> > > By now I'm not 100% sure if the above assumption is correct. I recently
+> > > saw allegations that the power consumption of a given QC SoC with USB
+> > > wakeup support drops significantly when wakeup is disabled (i.e. when
+> > > the PHYs are off), but haven't confirmed this yet.
+> > 
+> > So far power measurements don't support the claim that SoC power
+> > consumption is substantially lower with USB wakeup disabled/the PHYs
+> > off. I asked the person who made that claim to provide more
+> > details/data (the discussion is in an internal forum).
+> 
+> Thanks for the background on this. So clearly it has nothing to with
+> supporting wakeup as the commit summary claimed, and this should
+> probably never have been made to depend on wakeup capability either.
 
-On Mon, Aug 8, 2022 at 3:44 AM Kalyan Thota <kalyant@qti.qualcomm.com> wrote:
->
-> >I'd like to land at least patches 6-8 from [1] next cycle. They clean up the CTL
-> >interface. Could you please rebase your patch on top of them?
-> >
->
-> Sure I'll wait for the series to rebase. @Doug can you comment if this is okay and this patch is not needed immediately ?
->
-> >[1] https://patchwork.freedesktop.org/series/99909/
+To be clear, there are two different (supposed) impacts on suspend power:
 
-I don't personally see a problem basing them atop a cleanup. If the
-patches Dmitry points at are targeted for the next cycle then that
-seems like a pretty reasonable timeframe to me.
+1. with the PHYs powered off an onboard hub on SC7180/SC7280 boards draws
+   ~80mW during system suspend, vs. ~17mW with the PHYs being on. This is
+   confirmed.
 
--Doug
+   For SC7180/SC7280 Chrome OS boards in particular it would be ok to
+   power the PHYs off based on device_may_wakeup(), since Chrome OS
+   leaves USB wakeup enabled, hence the PHYs would remain powered as
+   desired.
+
+   However boards that opt for disabling USB wakeup could be impacted
+   by increased power consumption of USB peripherals, as seen with the
+   hub of SC7180/SC7280 Chrome OS boards.
+
+2. with the PHYs on during system suspend allegedly some QC SoCs can't
+   reach their lowest power mode (commit c4a5153e87fd). I don't know
+   which SoCs are impacted.
+
+   Someone from QC claims that SC7280 has significantly lower power
+   consumption with "USB wakeup disabled", so far this has not been
+   confirmed by my colleague who takes power measurements, I'm in
+   the process of clarifying what "USB wakeup disabled" exactly
+   means in this context (e.g. no wakeup source flag vs. no wakeup
+   capable device plugged).
+
+> I'll revisit this after the merge window, but perhaps we should just rip
+> this out completely and use a more descriptive property to configure the
+> PHY suspend state. But depending on the results from your internal
+> measurements, perhaps not even that is needed.
+
+Ok, I'll keep you posted on power findings on our side, though that will
+only cover SC7180/SC7280.
