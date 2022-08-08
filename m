@@ -2,896 +2,321 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B5C458C609
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 12:05:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 733BD58C6AE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 12:44:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237617AbiHHKFm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Aug 2022 06:05:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33444 "EHLO
+        id S239196AbiHHKoo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Aug 2022 06:44:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237452AbiHHKFl (ORCPT
+        with ESMTP id S237412AbiHHKol (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Aug 2022 06:05:41 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21248C35;
-        Mon,  8 Aug 2022 03:05:39 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id z16so10229240wrh.12;
-        Mon, 08 Aug 2022 03:05:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:message-id:cc:to:subject:from
-         :date:from:to:cc;
-        bh=nf6kbaFIPlN/MAI3WZhDRdpzeTbJE6jLVbPnorTzyvQ=;
-        b=FMekjcbSSizuzMYNtrrdEHelQEF4fdCYoDj8VzHps+HGdH1K5SjI8GblAobIJsmfcE
-         fcFBBgSIXF7urCR+8kDhx4NGJUUFuTuww17gfX4FY5RDwzH8gYYRxx7k9/p9rosE3g0n
-         Q/YjFNtPoihHY2ODkOJHoFQ1jGip7h6UT6tqYgbIca2O1sx4R+gAoWO7vz7JqbiMk5PQ
-         D3Ix2vIsMQPp7GErG208BkI2kx+mgzxObv+0Rj0pHHQhco1oxJa0qoRCEIm0/uY8lqfl
-         mBjDk7d+p/UoLfBzcgLnReloN1ibZnm2Z2VKqJm3aojyVY2mSjy3aGrpKO3wuTUe5k6G
-         CywQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:references:in-reply-to:message-id:cc:to:subject:from
-         :date:x-gm-message-state:from:to:cc;
-        bh=nf6kbaFIPlN/MAI3WZhDRdpzeTbJE6jLVbPnorTzyvQ=;
-        b=y/GH3EMjPvg7O9BX39ZiuShyyXmhlAe9DabXhE6jdoqPgioLDoLav9otW3KKD+TUJB
-         f7J3MQi8IowLfYb2X4PIKnvwJpLrfrzjUdpEEWrr/kT9YfBQqSCo6U9qnIup8U4+2ewp
-         5zYT8xfZRjFa0uwlzq1DFSE/xr8y/h27/hmuB/HBlsoHJ7Ai/WXGCSeWzagMxy2hNnLo
-         L1wLXFCRBMV66PfHB0e24URPkvE12h/50jEZtGKQHnBOFtLZPGAssSVjoUtDFvq0WxHR
-         nlnQEiLoogUg4olJdwhJa22thQrl3mno2uOXc1bsyXy0g8Tvqc+IiC0U1219lAi3vBq/
-         tYMg==
-X-Gm-Message-State: ACgBeo2psYcgCwiAFwmQ6cJfMJZ9RV4tYZeQQmF3Lv50kOEzqodEfeOe
-        //K0DImd6joeLwEWmaGbgrg=
-X-Google-Smtp-Source: AA6agR6zkNJxSirAEHI3fbx5x+BtG4pUxbwGfTf0xTt2NTTOkOwGy4yH3BsYyhpaT7Kbqtru+y2Pgw==
-X-Received: by 2002:adf:d845:0:b0:21e:f89e:8864 with SMTP id k5-20020adfd845000000b0021ef89e8864mr10855054wrl.9.1659953137548;
-        Mon, 08 Aug 2022 03:05:37 -0700 (PDT)
-Received: from [192.168.187.232] ([105.235.133.28])
-        by smtp.gmail.com with ESMTPSA id x17-20020adfec11000000b0021ee0e233d9sm10821367wrn.96.2022.08.08.03.05.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Aug 2022 03:05:37 -0700 (PDT)
-Date:   Mon, 08 Aug 2022 11:05:16 +0100
-From:   Yassine Oudjana <yassine.oudjana@gmail.com>
-Subject: Re: [PATCH 8/8] power: supply: Add driver for Qualcomm SMBCHG
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Sebastian Reichel <sre@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Alejandro Tafalla <atafalla@dnyon.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Message-Id: <S0KAGR.INJ75H9K5FWO1@gmail.com>
-In-Reply-To: <02243d57-d7aa-7aa9-4f95-24c417ff8c69@linaro.org>
-References: <20220808073459.396278-1-y.oudjana@protonmail.com>
-        <20220808073459.396278-9-y.oudjana@protonmail.com>
-        <02243d57-d7aa-7aa9-4f95-24c417ff8c69@linaro.org>
-X-Mailer: geary/40.0
+        Mon, 8 Aug 2022 06:44:41 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7839311C31;
+        Mon,  8 Aug 2022 03:44:39 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 278Ah5Tq004306;
+        Mon, 8 Aug 2022 10:44:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=from : to : cc :
+ subject : date : message-id : references : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=qcppdkim1;
+ bh=7QupMRJVdP/PaC1qhfankvhzIQ+woi65KCB80MDAI/I=;
+ b=o9ooCTU76GI9QB1gvo3APJural07mYwODR6twslR3mHnh6t4VNfwzkAr5HaGdIpuiyiP
+ WOhVosbu+913CszpHYn0dVcmboEYLm6ZRFWL9VGAw1hS4NYQg8TSky4ziE9hOmgt3CZN
+ JakV5IcPovcmL8VR0BuzdIPMxrqGa8QXYzht1Adx57iXPBOe4ylg7CBFYmRRci3ykLzK
+ dQuwFMTKV/7BzsNQ2ks7o5cXJ9UnC00Wqjlrl9en7Y7Kct+JnwiUCPQqDoA/cMhVNzJM
+ xnaOrBHeIyjSyZ+KYCAgoB9rYxAzd5usSvSpoquaJm6p2oS9vZFIzM/xhoF9oVE74Hp2 FA== 
+Received: from nam12-mw2-obe.outbound.protection.outlook.com (mail-mw2nam12lp2042.outbound.protection.outlook.com [104.47.66.42])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3hsh2n349q-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 08 Aug 2022 10:44:36 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=GRJawwy75y6w6CuiuqnEYijFjJBx60MNURJEiGtYk7zLUSCoZED7YQmR5xN0fIMZjuiXbnzmaD/jr5skYMv68VGPkS8C8vATmzt0k/CghBm8OBZyDL+j6pAmzgm5DpOu8OOCvyurTyJejZz1ut+se8VYVNXj6MOMHqjebBM52oIgWtgFL87JSRpvZxinYHKRKAud4xPfEeYeQV4kzfStyQIpzUix/8TO0vBSA0aO/2PQ0RM7Ys8CefoDbiKruK5GPwNF/cONlW5/amiacBV7OfbJQCr7/TYeE6lP5CNL0qGs9WnIQI8Nup3Kr0FZb9QL1vAZuobPmAVQBS2wBNGhvg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=7QupMRJVdP/PaC1qhfankvhzIQ+woi65KCB80MDAI/I=;
+ b=DWmEdhuqxqFpHIKnwldsAsFInhtdEiSkNHHgqUHI+3BTLZlO6ZJ8SZwol7+2XUuqV9Wt9ZoukeaaUdy5ARIGXw0XJZ3f8IsmIBwGTeoI3IKHc/2O6XdlRxULhnmRHmidWgBI4axFMtSbXz47zDNCyVI6V95CR1HjaD594EPZbOJU0zZ0lpRFQdZVtVzaROtlY1F5PtSqauNUTf4GPGnmazKhEYbXtoZL9eVtMqODzMKzzu1cyc8TaKVZsfiFVlKlhXZBH0xoEWfAX+pXsiQ0pqHY/UDAcs4lSUaz8k14pjG7lTC/gM3ncMsmlGMAW2QC8jIGpl+kGXyRwD1sadb+jQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=qti.qualcomm.com; dmarc=pass action=none
+ header.from=qti.qualcomm.com; dkim=pass header.d=qti.qualcomm.com; arc=none
+Received: from BN0PR02MB8142.namprd02.prod.outlook.com (2603:10b6:408:16a::19)
+ by BYAPR02MB6008.namprd02.prod.outlook.com (2603:10b6:a03:128::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5504.14; Mon, 8 Aug
+ 2022 10:44:32 +0000
+Received: from BN0PR02MB8142.namprd02.prod.outlook.com
+ ([fe80::9536:90b5:673e:fe57]) by BN0PR02MB8142.namprd02.prod.outlook.com
+ ([fe80::9536:90b5:673e:fe57%7]) with mapi id 15.20.5504.020; Mon, 8 Aug 2022
+ 10:44:32 +0000
+From:   Kalyan Thota <kalyant@qti.qualcomm.com>
+To:     "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
+        "Kalyan Thota (QUIC)" <quic_kalyant@quicinc.com>,
+        "dianders@chromium.org" <dianders@chromium.org>
+CC:     "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "robdclark@gmail.com" <robdclark@gmail.com>,
+        "swboyd@chromium.org" <swboyd@chromium.org>,
+        "Vinod Polimera (QUIC)" <quic_vpolimer@quicinc.com>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>
+Subject: RE: [v1] drm/msm/disp/dpu1: add support for hierarchical flush for
+ dspp in sc7280
+Thread-Topic: [v1] drm/msm/disp/dpu1: add support for hierarchical flush for
+ dspp in sc7280
+Thread-Index: AQHYp+0N9UkeRYRN3ke5e8BPCoOPw62e5kyAgAXtsMA=
+Date:   Mon, 8 Aug 2022 10:44:32 +0000
+Message-ID: <BN0PR02MB8142FFB573A4D05B0560A13996639@BN0PR02MB8142.namprd02.prod.outlook.com>
+References: <1659608930-4370-1-git-send-email-quic_kalyant@quicinc.com>
+ <CAA8EJpoAN4CVMKNouh3pPtX-5rnBeL3_T60M5cNhirNEmNeEkQ@mail.gmail.com>
+In-Reply-To: <CAA8EJpoAN4CVMKNouh3pPtX-5rnBeL3_T60M5cNhirNEmNeEkQ@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 9632d9c8-12cb-489a-e9af-08da792afaa5
+x-ms-traffictypediagnostic: BYAPR02MB6008:EE_
+x-ld-processed: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d,ExtAddr
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: LY53KxL/QfR+TxPX+6C8hfboDJIqHiYU8uoL7QzYczv2dw3CxLymFCNQkGTTxZniYLxlO5Rm5MN+K+D5VJynZ/VADc3nfo+BecIEohs/FV3mN21eMolvc2IH72OCcQQ60P0R0L4XIb+a2J4hPOkevkAuFmRrIYS0jphtrIepl+SJktNqJ11hetiYAEIWo9oFM5w8kdDnif64umx1ZzFxg/RdRwyAzGOIwVvauG7u/abRcfpGgHv7ex4XyUrdqPCwu8Syr6b/vlhmwni6fQoOP1opVyQATIsboiG0CvnMSbEjbpri6aTZejBmNktIhB2YZ38nclG5vGGZ4EWyf1qbnAgpj0vuVCiLI0N70ExuMRcYENt3PaAQnvqdQJLifGtZxB8hi/U6L+XbF//nnB6eiqlkdSiuEWBiEF8oL1Z/t80yR0clb0J1XZ9eK3VGKh5P5w4RAlCpHEAJEH7Zx1Ju4LxNostWDhAlAY+IZDUV+tOjaP/Bsyv8y0CKE15opT4ljajbOi+Xv7JGYGVlUB4SPxbQ3iF2zAJvzFsQAhIZDBrI9XKQE9WlkF0jZ/ON4brC1hPf6ajfgAIcZGYM1cdFxMPN8R1nmf8ke88+1FAcRW2W6res6ctO6kXTZsOM1Vc7Zv3sSNkTNGveohckfphSTYsRqCtZ/Ef5Nsy1Gr7YLgqvidDjeMvtZLRjKyZrXYNusFlSC5X8fYY7BHmPGufxEa3ePKDybpkI4HRrYY/68SIBs7W0yoHU9fdj5ABkwe2e
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN0PR02MB8142.namprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(396003)(376002)(39860400002)(366004)(346002)(136003)(122000001)(26005)(9686003)(38070700005)(186003)(107886003)(83380400001)(38100700002)(8936002)(5660300002)(52536014)(76116006)(8676002)(55016003)(2906002)(478600001)(71200400001)(6506007)(41300700001)(64756008)(66556008)(66476007)(66446008)(66946007)(4326008)(7696005)(110136005)(966005)(54906003)(316002)(33656002)(86362001);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?VXNiMXFzMHFMVTRDeDhid001WjlZSUN2UTY2dDRKdlUyS0I5ajIwS1FaVTRY?=
+ =?utf-8?B?dWtVRTBBSHMxY3pCWGZKUEdZbncvcWJ3dEFwV2tPVkcxNlppd1I1OGdXeUpz?=
+ =?utf-8?B?QW85LzJheXFYUE8rZFhQRkZjLzhCdlVvcUI0V3doVWlhZVRDOFEyMlkxZWlV?=
+ =?utf-8?B?UGhJTUhmZCtlcTdkODExNkpRM0hkV202UTgvRzVaRWdrOHNWVU1vV3EyUW9K?=
+ =?utf-8?B?WittY05yWTdOaVpRTlAweUkwajJubGdnYVZOZXpqK3VWMzNYZTREZXUvcXZp?=
+ =?utf-8?B?ZGY4YTNCNkZmdS9PRTBHS0ZQWlJlRjQ0N1FIQ1lEN01peG45ck1kMzF4UTZm?=
+ =?utf-8?B?OTNaRFZzYnNNMkdxSW0xWktvSFgrbzlDTjVlTW9mWEZWNnJDenZZSnIwK2w2?=
+ =?utf-8?B?LzJyWWZtTkNVeEdSNjZHdm9GRHo4dkthZnVmK0J1b1JDK3pWWERQYm0xV1Nj?=
+ =?utf-8?B?c1FoZUEyVnRHYmwvcmRZaUNUMlBXUFkrVmVaWld1WXBhcU9yYzFORnFhNDVN?=
+ =?utf-8?B?ejI1RENVZzd6ODlmMHNlc2lSR1JMM3VqUG5KeGQySGd6VXZpZ0phaXdPV1hF?=
+ =?utf-8?B?aWpTd0t6WVlwK002eTV3YjNNeFRwV1RrNXVKMnAxbUlzZWg2RFZKbWc2Tmdw?=
+ =?utf-8?B?WnhCS1hNSFhVMngrRmkrTjZTanQxOGlFMHZrWWd1cUFqNEcrWTNiaU1yK0ph?=
+ =?utf-8?B?NHpPdXV0VXV4cEN5bmFmbUlRczRtYXlFT1hzK2I1akQwc2hYZkRHTmpKVVVw?=
+ =?utf-8?B?YURlZERGNTAzM2RQVzdFdDJWMHIvcm1JaUZmalVTd1h2ZHF6aWhWS1ZJcjRo?=
+ =?utf-8?B?b1J5b3dFVGhLN2lyc2VhTFNGaFU5d0ZQMkxabWNnWGh4SHNWNUF1SklsbnFD?=
+ =?utf-8?B?ZnRhL2ZTc3V0UnllTlMvVk1jRVp1TzhSSmpSSDJsb0JzbHRzTXd5V0oyall1?=
+ =?utf-8?B?SWppN0YvYmJMODdZUU9xb1EvclQ4Kzl5MXRWQ3hIemV6aCtDS0tMb0ZCS0ZK?=
+ =?utf-8?B?Ym1YMHVOU1krSFpkTC9GSGFMZTA5a0tKSW9YU2lISnllSHpjempHcVZvSVlT?=
+ =?utf-8?B?KzlMSGM5eExCUmZpcytzUjJoZ3A0UVRGUGUvVmtySDJyNnM3K0xSeTlBODlG?=
+ =?utf-8?B?dXN3WEdQcm9QSVZlcXpTWnVWRHRrZ0ZScU5Ydm9QU1hsd291QTVWam85RDM1?=
+ =?utf-8?B?ODNHbzhBa21jdmZpWWZveFc2dHZKUnZ3cjQ3RkVHNGU3OU5DbHU3UlhkTGh5?=
+ =?utf-8?B?UmV0ek0xS0NwbmdWYXJqVnVmRi9RclJVa2lwRmhrMWV3VVc2NUlIa3IzRVdk?=
+ =?utf-8?B?OEF2MTdadGdyYlM4Tm9UWUZEYk1mZUg0SERKWHVtU1N6bHRaYXFxWjk3NVpZ?=
+ =?utf-8?B?b0orektNeklXd1ZKQWxoRjYxMnNpYno4M1EzNEZwYjJBSUhWcWhVMUl2UDlK?=
+ =?utf-8?B?RFdGWWpEckVTMnpWNGl2WkVSY0UxaUxHSXJNRHlscGF0ZVVTMGliOS9vSkpL?=
+ =?utf-8?B?TGFOTFJIekZvWWdQTURmUzNLcURwUWdGMkVhRUlaT3ppc3krbWYyYUJUeUxZ?=
+ =?utf-8?B?SUpTaTIrV1pKbUl3am4yaU1lY1U3a2VqRFl4b2x6STBmN3FhdVIxazREeHRz?=
+ =?utf-8?B?ZWdja1RNYjIyT3p6NlZVRm42OUMrcXhUMEFCUnkzR2VKNDRUSHpINzl3N3E1?=
+ =?utf-8?B?dE9BTkdCL1Biano2UllGdC95WDE5RVpEZ3RFYS9JaVdHRjZiaEZCK2YrYW5r?=
+ =?utf-8?B?aXNjT2EvYmlQa3R5NCtWcElPeUNLdC9SWk1lOW5HM3ZkOXBOUS90NFlBZGM3?=
+ =?utf-8?B?OFc3YW43c2tkejZkcnduTUpiQ2VVdWlydkNtT3NUSTVqdnM3ZDFOeWhwWGpt?=
+ =?utf-8?B?UlZoWHo5ajRuOExKWGpTWm9jV01ZVG1idk1MUkE4ZnVGK3lOU1Zabmo0Y2tK?=
+ =?utf-8?B?cHR2VVlHRThkTGlwQmhwZ3ZaVTN6YkEwaFRXUXhIeFc4Y3M2eVZMNDAvUXc3?=
+ =?utf-8?B?bDZrbkh6bmFLZTdnTWZRUlUxNTFIelQvaUxrc3pKZkxGSmc1VkRPMHFrb0tv?=
+ =?utf-8?B?NVJSRFJuUjhockpNR2hXTStqcERwSXdSZXdsZ0xNQXFWQVQxR09SYXdVU2ZL?=
+ =?utf-8?B?ckg2Z2w2azdQQTFiQVBscEI0dEZFd0JXdmExUmdkVW9ScWMrNVdPS1RjazV2?=
+ =?utf-8?B?Umc9PQ==?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-OriginatorOrg: qti.qualcomm.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BN0PR02MB8142.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9632d9c8-12cb-489a-e9af-08da792afaa5
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Aug 2022 10:44:32.6799
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: IcPOZk3RdSu+C6x3Eoj09ybiybfXOZ0tOiMr/VOfsgRuQc2tDPDY/ow/Tsg26g6aQ2EQAI6q+8SS6GzUu4QVCDAaTcds25rVoj5F75S667E=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR02MB6008
+X-Proofpoint-GUID: BMCsVjJ_zXtQlR-r1ybWyuLiSBT94zEq
+X-Proofpoint-ORIG-GUID: BMCsVjJ_zXtQlR-r1ybWyuLiSBT94zEq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-08_07,2022-08-05_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 suspectscore=0 phishscore=0 mlxlogscore=999 spamscore=0
+ mlxscore=0 priorityscore=1501 malwarescore=0 adultscore=0 impostorscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2206140000 definitions=main-2208080053
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Mon, Aug 8 2022 at 11:55:02 +03:00:00, Krzysztof Kozlowski 
-<krzysztof.kozlowski@linaro.org> wrote:
-> On 08/08/2022 10:34, Yassine Oudjana wrote:
->>  From: Yassine Oudjana <y.oudjana@protonmail.com>
->> 
->>  Add a driver for the switch-mode battery charger found on
->>  PMICs such as PMI8994. This block is referred to in the vendor
->>  kernel[1] as smbcharger or SMBCHG. It has USB and DC inputs,
->>  and can generate VBUS for USB OTG with a boost regulator.
->>  It supports Qualcomm Quick Charge 2.0, and can operate along
->>  with a parallel charger (SMB1357, or SMB1351 for added Quick
->>  Charge 3.0 support) for improved efficiency at higher currents.
->> 
->>  At the moment, this driver supports charging off of the USB input
->>  at 5V with input current limit up to 3A. It also includes support
->>  for operating the OTG boost regulator as well as extcon
->>  functionality, reporting states of USB and USB_HOST with VBUS and
->>  charge port types.
->> 
->>  Co-developed-by: Alejandro Tafalla <atafalla@dnyon.com>
->>  Signed-off-by: Alejandro Tafalla <atafalla@dnyon.com>
->>  Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
->> 
->>  [1] 
->> https://github.com/android-linux-stable/msm-3.18/blob/kernel.lnx.3.18.r34-rel/drivers/power/qpnp-smbcharger.c
->>  ---
->>   MAINTAINERS                        |    2 +
->>   drivers/power/supply/Kconfig       |   11 +
->>   drivers/power/supply/Makefile      |    1 +
->>   drivers/power/supply/qcom-smbchg.c | 1664 
->> ++++++++++++++++++++++++++++
->>   drivers/power/supply/qcom-smbchg.h |  428 +++++++
->>   5 files changed, 2106 insertions(+)
->>   create mode 100644 drivers/power/supply/qcom-smbchg.c
->>   create mode 100644 drivers/power/supply/qcom-smbchg.h
->> 
->>  diff --git a/MAINTAINERS b/MAINTAINERS
->>  index f6cf3a27d132..9b8693050890 100644
->>  --- a/MAINTAINERS
->>  +++ b/MAINTAINERS
->>  @@ -16964,6 +16964,8 @@ L:	linux-pm@vger.kernel.org
->>   L:	linux-arm-msm@vger.kernel.org
->>   S:	Maintained
->>   F:	Documentation/devicetree/bindings/power/supply/qcom,smbchg.yaml
->>  +F:	drivers/power/supply/qcom-smbchg.c
->>  +F:	drivers/power/supply/qcom-smbchg.h
->> 
->>   QUALCOMM TSENS THERMAL DRIVER
->>   M:	Amit Kucheria <amitk@kernel.org>
->>  diff --git a/drivers/power/supply/Kconfig 
->> b/drivers/power/supply/Kconfig
->>  index 1aa8323ad9f6..246bfc118d9f 100644
->>  --- a/drivers/power/supply/Kconfig
->>  +++ b/drivers/power/supply/Kconfig
->>  @@ -633,6 +633,17 @@ config CHARGER_QCOM_SMBB
->>   	  documentation for more detail.  The base name for this driver is
->>   	  'pm8941_charger'.
->> 
->>  +config CHARGER_QCOM_SMBCHG
->>  +	tristate "Qualcomm Switch-Mode Battery Charger"
-> 
-> As I mentioned in cover letter, this should be either squashed into
-> Caleb's work, merged into some common part or kept separate but with
-> clear explaining why it cannot be merged.
-> 
-> Some incomplete review follows:
-> 
->>  +	depends on MFD_SPMI_PMIC || COMPILE_TEST
->>  +	depends on OF
->>  +	depends on EXTCON
->>  +	depends on REGULATOR
->>  +	select QCOM_PMIC_SEC_WRITE
->>  +	help
->>  +	  Say Y to include support for the Switch-Mode Battery Charger 
->> block
->>  +	  found in Qualcomm PMICs such as PMI8994.
->>  +
->>   config CHARGER_BQ2415X
->>   	tristate "TI BQ2415x battery charger driver"
->>   	depends on I2C
->>  diff --git a/drivers/power/supply/Makefile 
->> b/drivers/power/supply/Makefile
->>  index 7f02f36aea55..7c2c037cd8b1 100644
->>  --- a/drivers/power/supply/Makefile
->>  +++ b/drivers/power/supply/Makefile
->>  @@ -83,6 +83,7 @@ obj-$(CONFIG_CHARGER_MAX8998)	+= max8998_charger.o
->>   obj-$(CONFIG_CHARGER_MP2629)	+= mp2629_charger.o
->>   obj-$(CONFIG_CHARGER_MT6360)	+= mt6360_charger.o
->>   obj-$(CONFIG_CHARGER_QCOM_SMBB)	+= qcom_smbb.o
->>  +obj-$(CONFIG_CHARGER_QCOM_SMBCHG)	+= qcom-smbchg.o
->>   obj-$(CONFIG_CHARGER_BQ2415X)	+= bq2415x_charger.o
->>   obj-$(CONFIG_CHARGER_BQ24190)	+= bq24190_charger.o
->>   obj-$(CONFIG_CHARGER_BQ24257)	+= bq24257_charger.o
->>  diff --git a/drivers/power/supply/qcom-smbchg.c 
->> b/drivers/power/supply/qcom-smbchg.c
->>  new file mode 100644
->>  index 000000000000..23a9667953c9
->>  --- /dev/null
->>  +++ b/drivers/power/supply/qcom-smbchg.c
->>  @@ -0,0 +1,1664 @@
->>  +// SPDX-License-Identifier: GPL-2.0-only
-> 
-> Several things look like based from original sources, so please retain
-> original copyright.
-
-Do I replace the existing copyright here with the original one, just 
-add it, or mention that this driver is based on downstream sources 
-(maybe putting a link as well) then add it?
-
-> 
->>  +/*
->>  + * Power supply driver for Qualcomm PMIC switch-mode battery 
->> charger
->>  + *
->>  + * Copyright (c) 2021 Yassine Oudjana <y.oudjana@protonmail.com>
->>  + * Copyright (c) 2021 Alejandro Tafalla <atafalla@dnyon.com>
->>  + */
->>  +
->>  +#include <asm/unaligned.h>
->>  +#include <linux/errno.h>
->>  +#include <linux/extcon-provider.h>
->>  +#include <linux/kernel.h>
->>  +#include <linux/module.h>
->>  +#include <linux/of.h>
->>  +#include <linux/of_device.h>
->>  +#include <linux/of_irq.h>
->>  +#include <linux/interrupt.h>
->>  +#include <linux/platform_device.h>
->>  +#include <linux/power_supply.h>
->>  +#include <linux/regmap.h>
->>  +#include <linux/slab.h>
->>  +#include <linux/reboot.h>
->>  +#include <linux/regulator/driver.h>
->>  +#include <linux/util_macros.h>
->>  +#include <soc/qcom/pmic-sec-write.h>
->>  +
->>  +#include "qcom-smbchg.h"
->>  +
-> 
-> 
-> (...)
-> 
->>  +/**
->>  + * @brief smbchg_otg_enable() - Enable OTG regulator
->>  + *
->>  + * @param rdev Pointer to regulator_dev
->>  + * @return 0 on success, -errno on failure
->>  + */
->>  +static int smbchg_otg_enable(struct regulator_dev *rdev)
->>  +{
->>  +	struct smbchg_chip *chip = rdev_get_drvdata(rdev);
->>  +	int ret;
->>  +
->>  +	dev_dbg(chip->dev, "Enabling OTG VBUS regulator");
->>  +
->>  +	ret = regmap_update_bits(chip->regmap,
->>  +				 chip->base + SMBCHG_BAT_IF_CMD_CHG, OTG_EN_BIT,
->>  +				 OTG_EN_BIT);
->>  +	if (ret)
->>  +		dev_err(chip->dev, "Failed to enable OTG regulator: %pe\n",
->>  +			ERR_PTR(ret));
->>  +
->>  +	return ret;
->>  +}
->>  +
->>  +/**
->>  + * @brief smbchg_otg_disable() - Disable OTG regulator
->>  + *
->>  + * @param rdev Pointer to regulator_dev
->>  + * @return 0 on success, -errno on failure
->>  + */
->>  +static int smbchg_otg_disable(struct regulator_dev *rdev)
->>  +{
->>  +	struct smbchg_chip *chip = rdev_get_drvdata(rdev);
->>  +	int ret;
->>  +
->>  +	dev_dbg(chip->dev, "Disabling OTG VBUS regulator");
-> 
-> Here and in other places - no dbg messages replacing tracing. We have
-> tracing for that.
-
-Will look into it.
-
-> 
->>  +
->>  +	ret = regmap_update_bits(chip->regmap,
->>  +				 chip->base + SMBCHG_BAT_IF_CMD_CHG, OTG_EN_BIT,
->>  +				 0);
->>  +	if (ret) {
->>  +		dev_err(chip->dev, "Failed to disable OTG regulator: %pe\n",
->>  +			ERR_PTR(ret));
->>  +		return ret;
->>  +	}
->>  +
->>  +	return 0;
->>  +}
->>  +
-> 
-> (...)
-> 
->>  +static irqreturn_t smbchg_handle_charger_error(int irq, void *data)
->>  +{
->>  +	struct smbchg_chip *chip = data;
->>  +
->>  +	dev_err(chip->dev, "Charger error");
->>  +
->>  +	power_supply_changed(chip->usb_psy);
->>  +
->>  +	return IRQ_HANDLED;
->>  +}
->>  +
->>  +static irqreturn_t smbchg_handle_p2f(int irq, void *data)
->>  +{
->>  +	struct smbchg_chip *chip = data;
->>  +
->>  +	dev_dbg(chip->dev, "Fast charging threshold reached");
->>  +
->>  +	power_supply_changed(chip->usb_psy);
->>  +
->>  +	return IRQ_HANDLED;
-> 
-> Several interrupts which are exactly the same... no, use one interrupt
-> handler for all such cases. Anyway I have some doubts about these 20 
-> or
-> more separate interrupt lines...
-
-This was to allow for printing different debug messages. I believe 
-there are interrupt status registers that can be used instead, so I 
-might try to use them to find out the specific event in a single 
-handler while adding tracing.
-
-> 
->>  +}
->>  +
->>  +static irqreturn_t smbchg_handle_rechg(int irq, void *data)
->>  +{
->>  +	struct smbchg_chip *chip = data;
->>  +
->>  +	dev_dbg(chip->dev, "Recharge threshold reached");
->>  +
->>  +	/* Auto-recharge is enabled, nothing to do here */
->>  +	return IRQ_HANDLED;
->>  +}
->>  +
->>  +static irqreturn_t smbchg_handle_taper(int irq, void *data)
->>  +{
->>  +	struct smbchg_chip *chip = data;
->>  +
->>  +	dev_dbg(chip->dev, "Taper charging threshold reached");
->>  +
->>  +	power_supply_changed(chip->usb_psy);
->>  +
->>  +	return IRQ_HANDLED;
->>  +}
->>  +
->>  +static irqreturn_t smbchg_handle_tcc(int irq, void *data)
->>  +{
->>  +	struct smbchg_chip *chip = data;
->>  +
->>  +	dev_dbg(chip->dev, "Termination current reached");
->>  +
->>  +	power_supply_changed(chip->usb_psy);
->>  +
->>  +	return IRQ_HANDLED;
->>  +}
->>  +
->>  +static irqreturn_t smbchg_handle_batt_temp(int irq, void *data)
->>  +{
->>  +	struct smbchg_chip *chip = data;
->>  +
->>  +	power_supply_changed(chip->usb_psy);
->>  +
->>  +	return IRQ_HANDLED;
->>  +}
-> 
-> (...)
-> 
->>  +
->>  +const struct smbchg_irq smbchg_irqs[] = {
-> 
-> You mix everywhere functions with static variables. All variables -
-> except platform_driver related go to the beginning of the file.
-
-They were grouped based on their topic (interrupt handling, power 
-supply properties, ...). Will rearrange them.
-
-> 
->>  +	{ "chg-error", smbchg_handle_charger_error },
->>  +	{ "chg-inhibit", NULL },
->>  +	{ "chg-prechg-sft", NULL },
->>  +	{ "chg-complete-chg-sft", NULL },
->>  +	{ "chg-p2f-thr", smbchg_handle_p2f },
->>  +	{ "chg-rechg-thr", smbchg_handle_rechg },
->>  +	{ "chg-taper-thr", smbchg_handle_taper },
->>  +	{ "chg-tcc-thr", smbchg_handle_tcc },
->>  +	{ "batt-hot", smbchg_handle_batt_temp },
->>  +	{ "batt-warm", smbchg_handle_batt_temp },
->>  +	{ "batt-cold", smbchg_handle_batt_temp },
->>  +	{ "batt-cool", smbchg_handle_batt_temp },
->>  +	{ "batt-ov", NULL },
->>  +	{ "batt-low", NULL },
->>  +	{ "batt-missing", smbchg_handle_batt_presence },
->>  +	{ "batt-term-missing", NULL },
->>  +	{ "usbin-uv", NULL },
->>  +	{ "usbin-ov", NULL },
->>  +	{ "usbin-src-det", smbchg_handle_usb_source_detect },
->>  +	{ "usbid-change", smbchg_handle_usbid_change },
->>  +	{ "otg-fail", smbchg_handle_otg_fail },
->>  +	{ "otg-oc", smbchg_handle_otg_oc },
->>  +	{ "aicl-done", smbchg_handle_aicl_done },
->>  +	{ "dcin-uv", NULL },
->>  +	{ "dcin-ov", NULL },
->>  +	{ "power-ok", NULL },
->>  +	{ "temp-shutdown", smbchg_handle_temp_shutdown },
->>  +	{ "wdog-timeout", NULL },
->>  +	{ "flash-fail", NULL },
->>  +	{ "otst2", NULL },
->>  +	{ "otst3", NULL },
->>  +};
->>  +
->>  +/**
-> 
-> (...)
-> 
->>  +
->>  +static int smbchg_probe(struct platform_device *pdev)
->>  +{
->>  +	struct smbchg_chip *chip;
->>  +	struct regulator_config config = {};
->>  +	struct power_supply_config supply_config = {};
->>  +	int i, irq, ret;
->>  +
->>  +	chip = devm_kzalloc(&pdev->dev, sizeof(*chip), GFP_KERNEL);
->>  +	if (!chip)
->>  +		return -ENOMEM;
->>  +
->>  +	chip->dev = &pdev->dev;
->>  +
->>  +	chip->regmap = dev_get_regmap(chip->dev->parent, NULL);
->>  +	if (!chip->regmap) {
->>  +		dev_err(chip->dev, "Failed to get regmap\n");
->>  +		return -ENODEV;
->>  +	}
->>  +
->>  +	ret = of_property_read_u32(chip->dev->of_node, "reg", 
->> &chip->base);
-> 
-> First: device_xxx
-
-Okay.
-
-> Second: what if address is bigger than u32? Shouldn't this be
-> of_read_number or something similar in device_xxx API?
-
-The address wouldn't exceed sizeof(u16). Actually now I think I 
-should've used property_read_u16 instead. I couldn't find a device_* 
-equivalent of of_read_number (or at least not a direct one), are you 
-sure it exists?
-
-> 
->>  +	if (ret) {
->>  +		dev_err(chip->dev, "Failed to get base address: %pe\n",
->>  +			ERR_PTR(ret));
->>  +		return ret;
->>  +	}
->>  +
->>  +	spin_lock_init(&chip->sec_access_lock);
->>  +	INIT_WORK(&chip->otg_reset_work, smbchg_otg_reset_worker);
->>  +
->>  +	/* Initialize OTG regulator */
->>  +	chip->otg_rdesc.id = -1;
->>  +	chip->otg_rdesc.name = "otg-vbus";
->>  +	chip->otg_rdesc.ops = &smbchg_otg_ops;
->>  +	chip->otg_rdesc.owner = THIS_MODULE;
->>  +	chip->otg_rdesc.type = REGULATOR_VOLTAGE;
->>  +	chip->otg_rdesc.of_match = "otg-vbus";
->>  +
->>  +	config.dev = chip->dev;
->>  +	config.driver_data = chip;
->>  +
->>  +	chip->otg_reg =
->>  +		devm_regulator_register(chip->dev, &chip->otg_rdesc, &config);
-> 
-> This wrapping is difficult to read.
-
-This was done by clang-format. I don't mind changing it manually, but 
-shouldn't it be conforming to the linux code style if it was done 
-automatically following the .clang-format config file in the root of 
-the kernel tree?
-
-> 
->>  +	if (IS_ERR(chip->otg_reg)) {
->>  +		dev_err(chip->dev,
->>  +			"Failed to register OTG VBUS regulator: %pe\n",
->>  +			chip->otg_reg);
->>  +		return PTR_ERR(chip->otg_reg);
->>  +	}
->>  +
->>  +	chip->data = of_device_get_match_data(chip->dev);
->>  +
->>  +	supply_config.drv_data = chip;
->>  +	supply_config.of_node = pdev->dev.of_node;
->>  +	chip->usb_psy = devm_power_supply_register(
-> 
-> This wrapping is difficult to read.
-
-Ditto.
-
-> 
->>  +		chip->dev, &smbchg_usb_psy_desc, &supply_config);
->>  +	if (IS_ERR(chip->usb_psy)) {
->>  +		dev_err(chip->dev, "Failed to register USB power supply: %pe\n",
->>  +			chip->usb_psy);
->>  +		return PTR_ERR(chip->usb_psy);
->>  +	}
->>  +
->>  +	ret = power_supply_get_battery_info(chip->usb_psy, 
->> &chip->batt_info);
->>  +	if (ret) {
->>  +		dev_err(chip->dev, "Failed to get battery info: %pe\n",
->>  +			ERR_PTR(ret));
->>  +		return ret;
->>  +	}
->>  +
->>  +	if (chip->batt_info->voltage_max_design_uv == -EINVAL) {
->>  +		dev_err(chip->dev,
->>  +			"Battery info missing maximum design voltage\n");
->>  +		return -EINVAL;
->>  +	}
->>  +
->>  +	if (chip->batt_info->constant_charge_current_max_ua == -EINVAL) {
->>  +		dev_err(chip->dev,
->>  +			"Battery info missing maximum constant charge current\n");
->>  +		return -EINVAL;
->>  +	}
->>  +
->>  +	/* Initialize extcon */
->>  +	chip->edev = devm_extcon_dev_allocate(chip->dev, 
->> smbchg_extcon_cable);
->>  +	if (IS_ERR(chip->edev)) {
->>  +		dev_err(chip->dev, "Failed to allocate extcon device: %pe\n",
->>  +			chip->edev);
->>  +		return PTR_ERR(chip->edev);
->>  +	}
->>  +
->>  +	ret = devm_extcon_dev_register(chip->dev, chip->edev);
->>  +	if (ret) {
->>  +		dev_err(chip->dev, "Failed to register extcon device: %pe\n",
->>  +			ERR_PTR(ret));
->>  +		return ret;
->>  +	}
->>  +
->>  +	extcon_set_property_capability(chip->edev, EXTCON_USB,
->>  +				       EXTCON_PROP_USB_VBUS);
->>  +	extcon_set_property_capability(chip->edev, EXTCON_USB_HOST,
->>  +				       EXTCON_PROP_USB_VBUS);
->>  +
->>  +	/* Initialize charger */
->>  +	ret = smbchg_init(chip);
->>  +	if (ret)
->>  +		return ret;
->>  +
->>  +	/* Request IRQs */
->>  +	for (i = 0; i < ARRAY_SIZE(smbchg_irqs); ++i) {
->>  +		/* IRQ unused */
->>  +		if (!smbchg_irqs[i].handler)
->>  +			continue;
->>  +
->>  +		irq = of_irq_get_byname(pdev->dev.of_node, smbchg_irqs[i].name);
->>  +		if (irq < 0) {
->>  +			dev_err(chip->dev, "Failed to get %s IRQ: %pe\n",
->>  +				smbchg_irqs[i].name, ERR_PTR(irq));
->>  +			return irq;
->>  +		}
->>  +
->>  +		ret = devm_request_threaded_irq(chip->dev, irq, NULL,
->>  +						smbchg_irqs[i].handler,
->>  +						IRQF_ONESHOT,
->>  +						smbchg_irqs[i].name, chip);
->>  +		if (ret) {
->>  +			dev_err(chip->dev, "failed to request %s IRQ: %pe\n",
->>  +				smbchg_irqs[i].name, ERR_PTR(irq));
->>  +			return ret;
->>  +		}
->>  +	}
->>  +
->>  +	platform_set_drvdata(pdev, chip);
->>  +
->>  +	return 0;
->>  +}
->>  +
->>  +static int smbchg_remove(struct platform_device *pdev)
->>  +{
->>  +	struct smbchg_chip *chip = platform_get_drvdata(pdev);
->>  +
->>  +	smbchg_usb_enable(chip, false);
->>  +	smbchg_charging_enable(chip, false);
->>  +
->>  +	return 0;
->>  +}
->>  +
->>  +static const struct of_device_id smbchg_id_table[] = {
->>  +	{ .compatible = "qcom,pmi8994-smbchg", .data = 
->> &smbchg_pmi8994_data },
->>  +	{ .compatible = "qcom,pmi8996-smbchg", .data = 
->> &smbchg_pmi8996_data },
->>  +	{}
->>  +};
->>  +MODULE_DEVICE_TABLE(of, smbchg_id_table);
->>  +
->>  +static struct platform_driver smbchg_driver = {
->>  +	.probe = smbchg_probe,
->>  +	.remove = smbchg_remove,
->>  +	.driver = {
->>  +		.name = "qcom-smbchg",
->>  +		.of_match_table = smbchg_id_table,
->>  +	},
->>  +};
->>  +module_platform_driver(smbchg_driver);
->>  +
->>  +MODULE_AUTHOR("Yassine Oudjana <y.oudjana@protonmail.com>");
->>  +MODULE_AUTHOR("Alejandro Tafalla <atafalla@dnyon.com>");
->>  +MODULE_DESCRIPTION("Qualcomm PMIC switch-mode battery charger 
->> driver");
->>  +MODULE_LICENSE("GPL");
->>  diff --git a/drivers/power/supply/qcom-smbchg.h 
->> b/drivers/power/supply/qcom-smbchg.h
->>  new file mode 100644
->>  index 000000000000..06445e10b4db
->>  --- /dev/null
->>  +++ b/drivers/power/supply/qcom-smbchg.h
->>  @@ -0,0 +1,428 @@
->>  +/* SPDX-License-Identifier: GPL-2.0-only */
->>  +
->>  +/* Registers */
->>  +/* CHGR */
->>  +#define SMBCHG_CHGR_FV_STS			0x00c
->>  +#define SMBCHG_CHGR_STS				0x00e
->>  +#define SMBCHG_CHGR_RT_STS			0x010
->>  +#define SMBCHG_CHGR_FCC_CFG			0x0f2
->>  +#define SMBCHG_CHGR_FCC_CMP_CFG			0x0f3
->>  +#define SMBCHG_CHGR_FV_CFG			0x0f4
->>  +#define SMBCHG_CHGR_FV_CMP			0x0f5
->>  +#define SMBCHG_CHGR_AFVC_CFG			0x0f6
->>  +#define SMBCHG_CHGR_CHG_INHIB_CFG		0x0f7
->>  +#define SMBCHG_CHGR_TCC_CFG			0x0f9
->>  +#define SMBCHG_CHGR_CCMP_CFG			0x0fa
->>  +#define SMBCHG_CHGR_CHGR_CFG1			0x0fb
->>  +#define SMBCHG_CHGR_CHGR_CFG2			0x0fc
->>  +#define SMBCHG_CHGR_SFT_CFG			0x0fd
->>  +#define SMBCHG_CHGR_CFG				0x0ff
->>  +
->>  +/* OTG */
->>  +#define SMBCHG_OTG_RT_STS			0x110
->>  +#define SMBCHG_OTG_OTG_CFG			0x1f1
->>  +#define SMBCHG_OTG_TRIM6			0x1f6
->>  +#define SMBCHG_OTG_LOW_PWR_OPTIONS		0x1ff
->>  +
->>  +/* BAT-IF */
->>  +#define SMBCHG_BAT_IF_BAT_PRES_STS		0x208
->>  +#define SMBCHG_BAT_IF_RT_STS			0x210
->>  +#define SMBCHG_BAT_IF_CMD_CHG			0x242
->>  +#define SMBCHG_BAT_IF_CMD_CHG_LED		0x243
->>  +#define SMBCHG_BAT_IF_BM_CFG			0x2f3
->>  +#define SMBCHG_BAT_IF_BAT_IF_TRIM7		0x2f7
->>  +#define SMBCHG_BAT_IF_BB_CLMP_SEL		0x2f8
->>  +#define SMBCHG_BAT_IF_ZIN_ICL_PT		0x2fc
->>  +#define SMBCHG_BAT_IF_ZIN_ICL_LV		0x2fd
->>  +#define SMBCHG_BAT_IF_ZIN_ICL_HV		0x2fe
->>  +
->>  +/* USB-CHGPTH */
->>  +#define SMBCHG_USB_CHGPTH_ICL_STS_1		0x307
->>  +#define SMBCHG_USB_CHGPTH_PWR_PATH		0x308
->>  +#define SMBCHG_USB_CHGPTH_ICL_STS_2		0x309
->>  +#define SMBCHG_USB_CHGPTH_RID_STS		0x30b
->>  +#define SMBCHG_USB_CHGPTH_USBIN_HVDCP_STS	0x30c
->>  +#define SMBCHG_USB_CHGPTH_INPUT_STS		0x30d
->>  +#define SMBCHG_USB_CHGPTH_USBID_MSB		0x30e
->>  +#define SMBCHG_USB_CHGPTH_RT_STS		0x310
->>  +#define SMBCHG_USB_CHGPTH_CMD_IL		0x340
->>  +#define SMBCHG_USB_CHGPTH_CMD_APSD		0x341
->>  +#define SMBCHG_USB_CHGPTH_CMD_HVDCP_1		0x342
->>  +#define SMBCHG_USB_CHGPTH_CMD_HVDCP_2		0x343
->>  +#define SMBCHG_USB_CHGPTH_USBIN_CHGR_CFG	0x3f1
->>  +#define SMBCHG_USB_CHGPTH_IL_CFG		0x3f2
->>  +#define SMBCHG_USB_CHGPTH_AICL_CFG		0x3f3
->>  +#define SMBCHG_USB_CHGPTH_CFG			0x3f4
->>  +#define SMBCHG_USB_CHGPTH_APSD_CFG		0x3f5
->>  +#define SMBCHG_USB_CHGPTH_TR_RID		0x3fa
->>  +#define SMBCHG_USB_CHGPTH_ICL_BUF_CONFIG	0x3fc
->>  +#define SMBCHG_USB_CHGPTH_TR_8OR32B		0x3fe
->>  +
->>  +/* DC-CHGPTH */
->>  +#define SMBCHG_DC_CHGPTH_RT_STS			0x410
->>  +#define SMBCHG_DC_CHGPTH_IL_CFG			0x4f2
->>  +#define SMBCHG_DC_CHGPTH_AICL_CFG		0x4f3
->>  +#define SMBCHG_DC_CHGPTH_AICL_WL_SEL_CFG	0x4f5
->>  +
->>  +/* MISC */
->>  +#define SMBCHG_MISC_REVISION1			0x600
->>  +#define SMBCHG_MISC_IDEV_STS			0x608
->>  +#define SMBCHG_MISC_RT_STS			0x610
->>  +#define SMBCHG_MISC_TEST			0x6e2
->>  +#define SMBCHG_MISC_NTC_VOUT_CFG		0x6f3
->>  +#define SMBCHG_MISC_TRIM_OPT_15_8		0x6f5
->>  +#define SMBCHG_MISC_TRIM_OPT_7_0		0x6f6
->>  +#define SMBCHG_MISC_TRIM_14			0x6fe
->>  +
->>  +/* Bits */
->>  +/* CHGR_STS bits */
->>  +#define CHG_TYPE_MASK			GENMASK(2, 1)
->>  +#define CHG_HOLD_OFF_BIT		BIT(3)\
->>  +
->>  +/* CHGR_FCC_CFG bits */
->>  +#define FCC_MASK			GENMASK(4, 0)
->>  +
->>  +/* CHGR_RT_STS bits */
->>  +#define CHG_INHIBIT_BIT			BIT(1)
->>  +#define CHG_COMP_SFT_BIT		BIT(3)
->>  +#define BAT_TCC_REACHED_BIT		BIT(7)
->>  +
->>  +/* CHGR_FV_CFG bits */
->>  +#define FV_MASK				GENMASK(5, 0)
->>  +
->>  +/* CHGR_TCC_CFG bits */
->>  +#define CHG_ITERM_MASK			GENMASK(2, 0)
->>  +
->>  +/* CHGR_CHGR_CFG1 bits */
->>  +#define RECHG_THRESHOLD_SRC_BIT		BIT(1)
->>  +#define TERM_I_SRC_BIT			BIT(2)
->>  +
->>  +/* CHGR_CHGR_CFG2 bits */
->>  +#define CHARGER_INHIBIT_BIT		BIT(0)
->>  +#define AUTO_RECHG_BIT			BIT(2)
->>  +#define I_TERM_BIT			BIT(3)
->>  +#define P2F_CHG_TRAN_BIT		BIT(5)
->>  +#define CHG_EN_POLARITY_BIT		BIT(6)
->>  +#define CHG_EN_SRC_BIT			BIT(7)
->>  +
->>  +/* CHGR_CFG bits */
->>  +#define RCHG_LVL_BIT			BIT(0)
->>  +
->>  +/* BAT_IF_CMD_CHG bits */
->>  +#define OTG_EN_BIT			BIT(0)
->>  +#define CHG_EN_BIT			BIT(1)
->>  +
->>  +/* BAT_IF_RT_STS bits */
->>  +#define HOT_BAT_HARD_BIT		BIT(0)
->>  +#define HOT_BAT_SOFT_BIT		BIT(1)
->>  +#define COLD_BAT_HARD_BIT		BIT(2)
->>  +#define COLD_BAT_SOFT_BIT		BIT(3)
->>  +#define BAT_OV_BIT			BIT(4)
->>  +#define BAT_LOW_BIT			BIT(5)
->>  +#define BAT_MISSING_BIT			BIT(6)
->>  +#define BAT_TERM_MISSING_BIT		BIT(7)
->>  +
->>  +/* USB_CHGPTH_ICL_STS_1 bits */
->>  +#define ICL_STS_MASK			GENMASK(4, 0)
->>  +#define AICL_STS_BIT			BIT(5)
->>  +#define AICL_SUSP_BIT			BIT(6)
->>  +
->>  +/* USB_CHGPTH_CFG bits */
->>  +#define USB51AC_CTRL			BIT(1)
->>  +#define USB51_COMMAND_POL		BIT(2)
->>  +#define CFG_USB3P0_SEL_BIT		BIT(7)
->>  +
->>  +/* USB_CHGPTH_RT_STS bits */
->>  +#define USBIN_OV_BIT			BIT(1)
->>  +#define USBIN_SRC_DET_BIT		BIT(2)
->>  +
->>  +/* USB_CHGPTH_RID_STS bits */
->>  +#define RID_MASK			GENMASK(3, 0)
->>  +
->>  +/* USB_CHGPTH_CMD_IL bits */
->>  +#define USBIN_MODE_HC_BIT		BIT(0)
->>  +#define USB51_MODE_BIT			BIT(1)
->>  +#define ICL_OVERRIDE_BIT		BIT(2)
->>  +#define USBIN_SUSPEND_BIT		BIT(4)
->>  +
->>  +/* USB_CHGPTH_IL_CFG bits */
->>  +#define USBIN_INPUT_MASK		GENMASK(4, 0)
->>  +
->>  +/* USB_CHGPTH_AICL_CFG bits */
->>  +#define USB_CHGPTH_AICL_EN		BIT(2)
->>  +
->>  +/* USB_CHGPTH_APSD_CFG bits */
->>  +#define USB_CHGPTH_APSD_EN		BIT(0)
->>  +
->>  +/* MISC_IDEV_STS bits */
->>  +#define FMB_STS_MASK			GENMASK(3, 0)
->>  +
->>  +/* MISC_TRIM_OPT_15_8 bits */
->>  +#define AICL_RERUN_MASK			GENMASK(5, 4)
->>  +#define AICL_RERUN_DC_BIT		BIT(4)
->>  +#define AICL_RERUN_USB_BIT		BIT(5)
->>  +
->>  +/* Values */
->>  +/* CHGR_STS values */
->>  +#define CHG_TYPE_SHIFT			1
->>  +#define BATT_NOT_CHG_VAL		0x0
->>  +#define BATT_PRE_CHG_VAL		0x1
->>  +#define BATT_FAST_CHG_VAL		0x2
->>  +#define BATT_TAPER_CHG_VAL		0x3
->>  +
->>  +/* CHGR_CHGR_CFG1 values */
->>  +#define	RCHG_SRC_ANA			0
->>  +#define RCHG_SRC_FG			BIT(1)
->>  +#define TERM_SRC_ANA			0
->>  +#define TERM_SRC_FG			BIT(2)
->>  +
->>  +/* CHGR_CHGR_CFG2 values */
->>  +#define CHG_INHIBIT_DIS			0
->>  +#define CHG_INHIBIT_EN			BIT(0)
->>  +#define AUTO_RCHG_EN			0
->>  +#define AUTO_RCHG_DIS			BIT(2)
->>  +#define CURRENT_TERM_EN			0
->>  +#define CURRENT_TERM_DIS		BIT(3)
->>  +#define PRE_FAST_AUTO			0
->>  +#define PRE_FAST_CMD			BIT(5)
->>  +#define CHG_EN_SRC_CMD			0
->>  +#define CHG_EN_SRC_PIN			BIT(7)
->>  +
->>  +/* CHGR_CFG values */
->>  +#define RCHG_THRESH_100MV		0
->>  +#define RCHG_THRESH_200MV		BIT(0)
->>  +
->>  +/* USB_CHGPTH_INPUT_STS values */
->>  +#define USBIN_9V			BIT(5)
->>  +#define USBIN_UNREG			BIT(4)
->>  +#define USBIN_LV			BIT(3)
->>  +
->>  +/* USB_CHGPTH_USBID_MSB values */
->>  +#define USBID_GND_THRESHOLD		0x495
->>  +
->>  +/* USB_CHGPTH_CFG values */
->>  +#define USB51_COMMAND_CONTROL		0
->>  +#define USB51_PIN_CONTROL		BIT(1)
->>  +#define USB51AC_COMMAND1_500		0
->>  +#define USB51AC_COMMAND1_100		BIT(2)
->>  +#define USB_2P0_SEL			0
->>  +#define USB_3P0_SEL			BIT(7)
->>  +
->>  +/* MISC_IDEV_STS values */
->>  +#define USB_TYPE_SDP_BIT		BIT(4)
->>  +#define USB_TYPE_OTHER_BIT		BIT(5)
->>  +#define USB_TYPE_DCP_BIT		BIT(6)
->>  +#define USB_TYPE_CDP_BIT		BIT(7)
->>  +
->>  +/* Constant parameters */
->>  +#define NUM_OTG_RESET_RETRIES		5
->>  +#define OTG_RESET_DELAY_MS		20
->>  +
->>  +/*
->>  + * These values can be indexed using a bitmask:
->>  + * 0: USB 2.0/3.0
->>  + * 1: Limited/full current
->>  + */
->>  +static const int smbchg_lc_ilim_options[] = {
->>  +	[0b00] = 100000,
->>  +	[0b01] = 150000,
->>  +	[0b10] = 500000,
->>  +	[0b11] = 900000
->>  +};
->>  +#define LC_ILIM_USB3_BIT		BIT(0)
->>  +#define LC_ILIM_FULL_CURRENT_BIT	BIT(1)
->>  +#define smbchg_lc_ilim(usb_3, full_current) 
->> smbchg_lc_ilim_options[usb_3 | full_current << 1]
->>  +
->>  +struct smbchg_chip {
->>  +	unsigned int base;
->>  +	struct device *dev;
->>  +	struct regmap *regmap;
->>  +
->>  +	struct power_supply_battery_info *batt_info;
->>  +	struct power_supply *usb_psy;
->>  +
->>  +	struct regulator_desc otg_rdesc;
->>  +	struct regulator_dev *otg_reg;
->>  +	int otg_resets;
->>  +
->>  +	struct extcon_dev *edev;
->>  +
->>  +	spinlock_t sec_access_lock;
->>  +	struct work_struct otg_reset_work;
->>  +
->>  +	const struct smbchg_data *data;
->>  +};
->>  +
->>  +struct smbchg_irq {
->>  +	const char *name;
->>  +	irq_handler_t handler;
->>  +};
->>  +
->>  +struct smbchg_data {
->>  +	const int *iterm_table;
->>  +	unsigned int iterm_table_len;
->>  +	const int *ilim_table;
->>  +	unsigned int ilim_table_len;
->>  +
->>  +	bool reset_otg_on_oc;
->>  +};
->>  +
->>  +static const int smbchg_fv_table[] = {
-> 
-> No static data in headers.
-
-Understood.
-
-> 
-> Best regards,
-> Krzysztof
-
-
+DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IERtaXRyeSBCYXJ5c2hrb3Yg
+PGRtaXRyeS5iYXJ5c2hrb3ZAbGluYXJvLm9yZz4NCj5TZW50OiBUaHVyc2RheSwgQXVndXN0IDQs
+IDIwMjIgOToyOSBQTQ0KPlRvOiBLYWx5YW4gVGhvdGEgKFFVSUMpIDxxdWljX2thbHlhbnRAcXVp
+Y2luYy5jb20+DQo+Q2M6IGRyaS1kZXZlbEBsaXN0cy5mcmVlZGVza3RvcC5vcmc7IGxpbnV4LWFy
+bS1tc21Admdlci5rZXJuZWwub3JnOw0KPmZyZWVkcmVub0BsaXN0cy5mcmVlZGVza3RvcC5vcmc7
+IGRldmljZXRyZWVAdmdlci5rZXJuZWwub3JnOyBsaW51eC0NCj5rZXJuZWxAdmdlci5rZXJuZWwu
+b3JnOyByb2JkY2xhcmtAZ21haWwuY29tOyBkaWFuZGVyc0BjaHJvbWl1bS5vcmc7DQo+c3dib3lk
+QGNocm9taXVtLm9yZzsgVmlub2QgUG9saW1lcmEgKFFVSUMpIDxxdWljX3Zwb2xpbWVyQHF1aWNp
+bmMuY29tPjsNCj5BYmhpbmF2IEt1bWFyIChRVUlDKSA8cXVpY19hYmhpbmF2a0BxdWljaW5jLmNv
+bT4NCj5TdWJqZWN0OiBSZTogW3YxXSBkcm0vbXNtL2Rpc3AvZHB1MTogYWRkIHN1cHBvcnQgZm9y
+IGhpZXJhcmNoaWNhbCBmbHVzaCBmb3IgZHNwcA0KPmluIHNjNzI4MA0KPg0KPldBUk5JTkc6IFRo
+aXMgZW1haWwgb3JpZ2luYXRlZCBmcm9tIG91dHNpZGUgb2YgUXVhbGNvbW0uIFBsZWFzZSBiZSB3
+YXJ5IG9mDQo+YW55IGxpbmtzIG9yIGF0dGFjaG1lbnRzLCBhbmQgZG8gbm90IGVuYWJsZSBtYWNy
+b3MuDQo+DQo+T24gVGh1LCA0IEF1ZyAyMDIyIGF0IDEzOjI5LCBLYWx5YW4gVGhvdGEgPHF1aWNf
+a2FseWFudEBxdWljaW5jLmNvbT4gd3JvdGU6DQo+Pg0KPj4gRmx1c2ggbWVjaGFuaXNtIGZvciBE
+U1BQIGJsb2NrcyBoYXMgY2hhbmdlZCBpbiBzYzcyODAgZmFtaWx5LCBpdA0KPj4gYWxsb3dzIGlu
+ZGl2aWR1YWwgc3ViIGJsb2NrcyB0byBiZSBmbHVzaGVkIGluIGNvb3JkaW5hdGlvbiB3aXRoIG1h
+c3Rlcg0KPj4gZmx1c2ggY29udHJvbC4NCj4+DQo+PiByZXByZXNlbnRhdGlvbjogbWFzdGVyX2Zs
+dXNoICYmIChQQ0NfZmx1c2ggfCBJR0NfZmx1c2ggLi4gZXRjICkNCj4+DQo+PiBUaGlzIGNoYW5n
+ZSBhZGRzIG5lY2Vzc2FyeSBzdXBwb3J0IGZvciB0aGUgYWJvdmUgZGVzaWduLg0KPj4NCj4+IFNp
+Z25lZC1vZmYtYnk6IEthbHlhbiBUaG90YSA8cXVpY19rYWx5YW50QHF1aWNpbmMuY29tPg0KPg0K
+PkknZCBsaWtlIHRvIGxhbmQgYXQgbGVhc3QgcGF0Y2hlcyA2LTggZnJvbSBbMV0gbmV4dCBjeWNs
+ZS4gVGhleSBjbGVhbiB1cCB0aGUgQ1RMDQo+aW50ZXJmYWNlLiBDb3VsZCB5b3UgcGxlYXNlIHJl
+YmFzZSB5b3VyIHBhdGNoIG9uIHRvcCBvZiB0aGVtPw0KPg0KDQpTdXJlIEknbGwgd2FpdCBmb3Ig
+dGhlIHNlcmllcyB0byByZWJhc2UuIEBEb3VnIGNhbiB5b3UgY29tbWVudCBpZiB0aGlzIGlzIG9r
+YXkgYW5kIHRoaXMgcGF0Y2ggaXMgbm90IG5lZWRlZCBpbW1lZGlhdGVseSA/DQoNCj5bMV0gaHR0
+cHM6Ly9wYXRjaHdvcmsuZnJlZWRlc2t0b3Aub3JnL3Nlcmllcy85OTkwOS8NCj4NCj4+IC0tLQ0K
+Pj4gIGRyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9kcHUxL2RwdV9jcnRjLmMgICAgICAgfCAgNCAr
+KysNCj4+ICBkcml2ZXJzL2dwdS9kcm0vbXNtL2Rpc3AvZHB1MS9kcHVfaHdfY2F0YWxvZy5jIHwg
+IDUgKysrLQ0KPj4gZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2h3X2NhdGFsb2cu
+aCB8ICAyICsrDQo+PiAgZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2h3X2N0bC5j
+ICAgICB8IDQwDQo+KysrKysrKysrKysrKysrKysrKysrKysrKy0NCj4+ICBkcml2ZXJzL2dwdS9k
+cm0vbXNtL2Rpc3AvZHB1MS9kcHVfaHdfY3RsLmggICAgIHwgIDMgKysNCj4+ICBkcml2ZXJzL2dw
+dS9kcm0vbXNtL2Rpc3AvZHB1MS9kcHVfaHdfbWRzcy5oICAgIHwgIDcgKysrKysNCj4+ICA2IGZp
+bGVzIGNoYW5nZWQsIDU5IGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pDQo+Pg0KPj4gZGlm
+ZiAtLWdpdCBhL2RyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9kcHUxL2RwdV9jcnRjLmMNCj4+IGIv
+ZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2NydGMuYw0KPj4gaW5kZXggNzc2MzU1
+OC4uNGVjYTMxNyAxMDA2NDQNCj4+IC0tLSBhL2RyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9kcHUx
+L2RwdV9jcnRjLmMNCj4+ICsrKyBiL2RyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9kcHUxL2RwdV9j
+cnRjLmMNCj4+IEBAIC03MDMsNiArNzAzLDEwIEBAIHN0YXRpYyB2b2lkIF9kcHVfY3J0Y19zZXR1
+cF9jcF9ibG9ja3Moc3RydWN0DQo+ZHJtX2NydGMgKmNydGMpDQo+PiAgICAgICAgICAgICAgICAg
+bWl4ZXJbaV0uZmx1c2hfbWFzayB8PSBjdGwtPm9wcy5nZXRfYml0bWFza19kc3BwKGN0bCwNCj4+
+ICAgICAgICAgICAgICAgICAgICAgICAgIG1peGVyW2ldLmh3X2RzcHAtPmlkeCk7DQo+Pg0KPj4g
+KyAgICAgICAgICAgICAgIGlmKGN0bC0+b3BzLnNldF9kc3BwX2hpZXJhcmNoaWNhbF9mbHVzaCkN
+Cj4+ICsgICAgICAgICAgICAgICAgICAgICAgIGN0bC0+b3BzLnNldF9kc3BwX2hpZXJhcmNoaWNh
+bF9mbHVzaChjdGwsDQo+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICBtaXhlcltpXS5od19kc3BwLT5pZHgsDQo+PiArIERTUFBfU1VCX1BDQyk7DQo+PiAr
+DQo+PiAgICAgICAgICAgICAgICAgLyogc3RhZ2UgY29uZmlnIGZsdXNoIG1hc2sgKi8NCj4+ICAg
+ICAgICAgICAgICAgICBjdGwtPm9wcy51cGRhdGVfcGVuZGluZ19mbHVzaChjdGwsDQo+PiBtaXhl
+cltpXS5mbHVzaF9tYXNrKTsNCj4+DQo+PiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9ncHUvZHJtL21z
+bS9kaXNwL2RwdTEvZHB1X2h3X2NhdGFsb2cuYw0KPj4gYi9kcml2ZXJzL2dwdS9kcm0vbXNtL2Rp
+c3AvZHB1MS9kcHVfaHdfY2F0YWxvZy5jDQo+PiBpbmRleCAwMjFlYjJmLi4zYjI3YTg3IDEwMDY0
+NA0KPj4gLS0tIGEvZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2h3X2NhdGFsb2cu
+Yw0KPj4gKysrIGIvZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2h3X2NhdGFsb2cu
+Yw0KPj4gQEAgLTU4LDcgKzU4LDEwIEBADQo+PiAgICAgICAgIChQSU5HUE9OR19TRE04NDVfTUFT
+SyB8IEJJVChEUFVfUElOR1BPTkdfVEUyKSkNCj4+DQo+PiAgI2RlZmluZSBDVExfU0M3MjgwX01B
+U0sgXA0KPj4gLSAgICAgICAoQklUKERQVV9DVExfQUNUSVZFX0NGRykgfCBCSVQoRFBVX0NUTF9G
+RVRDSF9BQ1RJVkUpIHwNCj5CSVQoRFBVX0NUTF9WTV9DRkcpKQ0KPj4gKyAgICAgICAoQklUKERQ
+VV9DVExfQUNUSVZFX0NGRykgfCBcDQo+PiArICAgICAgICBCSVQoRFBVX0NUTF9GRVRDSF9BQ1RJ
+VkUpIHwgXA0KPj4gKyAgICAgICAgQklUKERQVV9DVExfVk1fQ0ZHKSB8IFwNCj4+ICsgICAgICAg
+IEJJVChEUFVfQ1RMX0hJRVJBUkNISUNBTF9GTFVTSCkpDQo+Pg0KPj4gICNkZWZpbmUgTUVSR0Vf
+M0RfU004MTUwX01BU0sgKDApDQo+Pg0KPj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvZ3B1L2RybS9t
+c20vZGlzcC9kcHUxL2RwdV9od19jYXRhbG9nLmgNCj4+IGIvZHJpdmVycy9ncHUvZHJtL21zbS9k
+aXNwL2RwdTEvZHB1X2h3X2NhdGFsb2cuaA0KPj4gaW5kZXggYjg1YjI0Yi4uNzkyMmY2YyAxMDA2
+NDQNCj4+IC0tLSBhL2RyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9kcHUxL2RwdV9od19jYXRhbG9n
+LmgNCj4+ICsrKyBiL2RyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9kcHUxL2RwdV9od19jYXRhbG9n
+LmgNCj4+IEBAIC0xODUsNiArMTg1LDcgQEAgZW51bSB7DQo+PiAgICogQERQVV9DVExfU1BMSVRf
+RElTUExBWTogICAgIENUTCBzdXBwb3J0cyB2aWRlbyBtb2RlIHNwbGl0IGRpc3BsYXkNCj4+ICAg
+KiBARFBVX0NUTF9GRVRDSF9BQ1RJVkU6ICAgICAgQWN0aXZlIENUTCBmb3IgZmV0Y2ggSFcgKFNT
+UFBzKQ0KPj4gICAqIEBEUFVfQ1RMX1ZNX0NGRzogICAgICAgICAgICBDVEwgY29uZmlnIHRvIHN1
+cHBvcnQgbXVsdGlwbGUgVk1zDQo+PiArICogQERQVV9DVExfSElFUkFSQ0hJQ0FMX0ZMVVNIOiBD
+VEwgY29uZmlnIHRvIHN1cHBvcnQgaGllcmFyY2hpY2FsDQo+PiArIGZsdXNoDQo+PiAgICogQERQ
+VV9DVExfTUFYDQo+PiAgICovDQo+PiAgZW51bSB7DQo+PiBAQCAtMTkyLDYgKzE5Myw3IEBAIGVu
+dW0gew0KPj4gICAgICAgICBEUFVfQ1RMX0FDVElWRV9DRkcsDQo+PiAgICAgICAgIERQVV9DVExf
+RkVUQ0hfQUNUSVZFLA0KPj4gICAgICAgICBEUFVfQ1RMX1ZNX0NGRywNCj4+ICsgICAgICAgRFBV
+X0NUTF9ISUVSQVJDSElDQUxfRkxVU0gsDQo+PiAgICAgICAgIERQVV9DVExfTUFYDQo+PiAgfTsN
+Cj4+DQo+PiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2h3
+X2N0bC5jDQo+PiBiL2RyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9kcHUxL2RwdV9od19jdGwuYw0K
+Pj4gaW5kZXggMzU4NGY1ZS4uYjM0ZmMzMCAxMDA2NDQNCj4+IC0tLSBhL2RyaXZlcnMvZ3B1L2Ry
+bS9tc20vZGlzcC9kcHUxL2RwdV9od19jdGwuYw0KPj4gKysrIGIvZHJpdmVycy9ncHUvZHJtL21z
+bS9kaXNwL2RwdTEvZHB1X2h3X2N0bC5jDQo+PiBAQCAtMjgsNiArMjgsOCBAQA0KPj4gICNkZWZp
+bmUgICBDVExfSU5URl9GTFVTSCAgICAgICAgICAgICAgICAweDExMA0KPj4gICNkZWZpbmUgICBD
+VExfSU5URl9NQVNURVIgICAgICAgICAgICAgICAweDEzNA0KPj4gICNkZWZpbmUgICBDVExfRkVU
+Q0hfUElQRV9BQ1RJVkUgICAgICAgICAweDBGQw0KPj4gKyNkZWZpbmUgICBDVExfRFNQUF8wX0ZM
+VVNIICAgICAgICAgICAgIDB4MTNDDQo+DQo+UGxlYXNlIGNoYW5nZSB0byBDVExfRFNQUF9uX0ZM
+VVNIKG4pLg0KPg0KPj4gKw0KPj4NCj4+ICAjZGVmaW5lIENUTF9NSVhFUl9CT1JERVJfT1VUICAg
+ICAgICAgICAgQklUKDI0KQ0KPj4gICNkZWZpbmUgQ1RMX0ZMVVNIX01BU0tfQ1RMICAgICAgICAg
+ICAgICBCSVQoMTcpDQo+PiBAQCAtMjkyLDYgKzI5NCwzNiBAQCBzdGF0aWMgdWludDMyX3QgZHB1
+X2h3X2N0bF9nZXRfYml0bWFza19kc3BwKHN0cnVjdA0KPmRwdV9od19jdGwgKmN0eCwNCj4+ICAg
+ICAgICAgcmV0dXJuIGZsdXNoYml0czsNCj4+ICB9DQo+Pg0KPj4gK3N0YXRpYyB1aW50MzJfdCBk
+cHVfaHdfY3RsX2dldF9iaXRtYXNrX2RzcHBfdjEoc3RydWN0IGRwdV9od19jdGwgKmN0eCwNCj4+
+ICsgICAgICAgZW51bSBkcHVfZHNwcCBkc3BwKQ0KPj4gK3sNCj4+ICsgICAgICAgcmV0dXJuIEJJ
+VCgyOSk7DQo+PiArfQ0KPj4gKw0KPj4gK3N0YXRpYyB2b2lkIGRwdV9od19jdGxfc2V0X2RzcHBf
+aGllcmFyY2hpY2FsX2ZsdXNoKHN0cnVjdCBkcHVfaHdfY3RsICpjdHgsDQo+PiArICAgICAgIGVu
+dW0gZHB1X2RzcHAgZHNwcCwgZW51bSBkcHVfZHNwcF9zdWJfYmxrIGRzcHBfc3ViX2Jsaykgew0K
+Pj4gKyAgICAgICB1aW50MzJfdCBmbHVzaGJpdHMgPSAwLCBhY3RpdmUgPSAwOw0KPj4gKw0KPj4g
+KyAgICAgICBzd2l0Y2ggKGRzcHBfc3ViX2Jsaykgew0KPj4gKyAgICAgICBjYXNlIERTUFBfU1VC
+X0lHQzoNCj4+ICsgICAgICAgICAgICAgICBmbHVzaGJpdHMgPSBCSVQoMik7DQo+PiArICAgICAg
+ICAgICAgICAgYnJlYWs7DQo+PiArICAgICAgIGNhc2UgRFNQUF9TVUJfUENDOg0KPj4gKyAgICAg
+ICAgICAgICAgIGZsdXNoYml0cyA9IEJJVCg0KTsNCj4+ICsgICAgICAgICAgICAgICBicmVhazsN
+Cj4+ICsgICAgICAgY2FzZSBEU1BQX1NVQl9HQzoNCj4+ICsgICAgICAgICAgICAgICBmbHVzaGJp
+dHMgPSBCSVQoNSk7DQo+PiArICAgICAgICAgICAgICAgYnJlYWs7DQo+PiArICAgICAgIGRlZmF1
+bHQ6DQo+PiArICAgICAgICAgICAgICAgcmV0dXJuOw0KPj4gKyAgICAgICB9DQo+PiArDQo+PiAr
+ICAgICAgIGFjdGl2ZSA9IERQVV9SRUdfUkVBRCgmY3R4LT5odywgQ1RMX0RTUFBfMF9GTFVTSCAr
+ICgoZHNwcCAtIDEpDQo+PiArICogNCkpOw0KPg0KPlNvIHRoYXQgdGhpcyBsaW5lIHdpbGwgYmUg
+c2ltcGxlciB0byByZWFkLg0KPg0KPj4gKw0KPj4gKyAgICAgICBEUFVfUkVHX1dSSVRFKCZjdHgt
+Pmh3LCBDVExfRFNQUF8wX0ZMVVNIICsgKChkc3BwIC0gMSkgKiA0KSwNCj4+ICthY3RpdmUgfCBm
+bHVzaGJpdHMpOyB9DQo+PiArDQo+PiAgc3RhdGljIHUzMiBkcHVfaHdfY3RsX3BvbGxfcmVzZXRf
+c3RhdHVzKHN0cnVjdCBkcHVfaHdfY3RsICpjdHgsIHUzMg0KPj4gdGltZW91dF91cykgIHsNCj4+
+ICAgICAgICAgc3RydWN0IGRwdV9od19ibGtfcmVnX21hcCAqYyA9ICZjdHgtPmh3OyBAQCAtNjAw
+LDcgKzYzMiwxMyBAQA0KPj4gc3RhdGljIHZvaWQgX3NldHVwX2N0bF9vcHMoc3RydWN0IGRwdV9o
+d19jdGxfb3BzICpvcHMsDQo+PiAgICAgICAgIG9wcy0+c2V0dXBfYmxlbmRzdGFnZSA9IGRwdV9o
+d19jdGxfc2V0dXBfYmxlbmRzdGFnZTsNCj4+ICAgICAgICAgb3BzLT5nZXRfYml0bWFza19zc3Bw
+ID0gZHB1X2h3X2N0bF9nZXRfYml0bWFza19zc3BwOw0KPj4gICAgICAgICBvcHMtPmdldF9iaXRt
+YXNrX21peGVyID0gZHB1X2h3X2N0bF9nZXRfYml0bWFza19taXhlcjsNCj4+IC0gICAgICAgb3Bz
+LT5nZXRfYml0bWFza19kc3BwID0gZHB1X2h3X2N0bF9nZXRfYml0bWFza19kc3BwOw0KPj4gKyAg
+ICAgICBpZiAoY2FwICYgQklUKERQVV9DVExfSElFUkFSQ0hJQ0FMX0ZMVVNIKSkgew0KPj4gKyAg
+ICAgICAgICAgICAgIG9wcy0+Z2V0X2JpdG1hc2tfZHNwcCA9DQo+PiArIGRwdV9od19jdGxfZ2V0
+X2JpdG1hc2tfZHNwcF92MTsNCj4NCj5XZSBoYXZlIHVzZWQgX3YxIGZvciBhY3RpdmUgQ1RMcy4g
+V2hhdCBpcyB0aGUgcmVsYXRpb25zaGlwIGJldHdlZW4NCj5DVExfSElFUkFSQ0hJTENBTF9GTFVT
+SCBhbmQgYWN0aXZlIENUTHM/DQpBY3RpdmUgQ1RMIGRlc2lnbiByZXBsYWNlcyBsZWdhY3kgQ1RM
+X01FTV9TRUwsIENUTF9PVVRfU0VMIHJlZ2lzdGVycyBpbiBncm91cGluZyB0aGUgcmVzb3VyY2Vz
+IHN1Y2ggYXMgV0IsIElOVEYsIHBpbmdwb25nLCBEU0MgZXRjIGludG8gdGhlIGRhdGEgcGF0aA0K
+RFNQUCBoaWVyYXJjaGljYWwgZmx1c2ggd2lsbCBnaXZlcyB1cyBhIGZpbmVyIGNvbnRyb2wgb24g
+d2hpY2ggcG9zdCBwcm9jZXNzaW5nIGJsb2NrcyB0byBiZSBmbHVzaGVkIGFzIHBhcnQgb2YgdGhl
+IGNvbXBvc2l0aW9uICggbGlrZSBJR0MsIFBDQywgR0MgLi4gZXRjICkNClRoZXNlIGJsb2NrcyBh
+cmUgY29udGFpbmVkIGluIERTUFAgcGFja2FnZS4NCj4NCj4+ICsgICAgICAgICAgICAgICBvcHMt
+PnNldF9kc3BwX2hpZXJhcmNoaWNhbF9mbHVzaCA9DQo+ZHB1X2h3X2N0bF9zZXRfZHNwcF9oaWVy
+YXJjaGljYWxfZmx1c2g7DQo+PiArICAgICAgIH0gZWxzZSB7DQo+PiArICAgICAgICAgICAgICAg
+b3BzLT5nZXRfYml0bWFza19kc3BwID0gZHB1X2h3X2N0bF9nZXRfYml0bWFza19kc3BwOw0KPj4g
+KyAgICAgICB9DQo+PiArDQo+PiAgICAgICAgIGlmIChjYXAgJiBCSVQoRFBVX0NUTF9GRVRDSF9B
+Q1RJVkUpKQ0KPj4gICAgICAgICAgICAgICAgIG9wcy0+c2V0X2FjdGl2ZV9waXBlcyA9DQo+PiBk
+cHVfaHdfY3RsX3NldF9mZXRjaF9waXBlX2FjdGl2ZTsgIH07IGRpZmYgLS1naXQNCj4+IGEvZHJp
+dmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2h3X2N0bC5oDQo+PiBiL2RyaXZlcnMvZ3B1
+L2RybS9tc20vZGlzcC9kcHUxL2RwdV9od19jdGwuaA0KPj4gaW5kZXggYWMxNTQ0NC4uOGVjYWI5
+MSAxMDA2NDQNCj4+IC0tLSBhL2RyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9kcHUxL2RwdV9od19j
+dGwuaA0KPj4gKysrIGIvZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2h3X2N0bC5o
+DQo+PiBAQCAtMTYwLDYgKzE2MCw5IEBAIHN0cnVjdCBkcHVfaHdfY3RsX29wcyB7DQo+PiAgICAg
+ICAgIHVpbnQzMl90ICgqZ2V0X2JpdG1hc2tfZHNwcCkoc3RydWN0IGRwdV9od19jdGwgKmN0eCwN
+Cj4+ICAgICAgICAgICAgICAgICBlbnVtIGRwdV9kc3BwIGJsayk7DQo+Pg0KPj4gKyAgICAgICB2
+b2lkICgqc2V0X2RzcHBfaGllcmFyY2hpY2FsX2ZsdXNoKShzdHJ1Y3QgZHB1X2h3X2N0bCAqY3R4
+LA0KPj4gKyAgICAgICAgICAgICAgIGVudW0gZHB1X2RzcHAgYmxrLCBlbnVtIGRwdV9kc3BwX3N1
+Yl9ibGsNCj4+ICsgZHNwcF9zdWJfYmxrKTsNCj4NCj5UaGUgd29yZCAiaGllcmFyY2hpY2FsIiBt
+ZWFucyBwYXJ0aWN1bGFyIChpbnRlcm5hbCkgaW1wbGVtZW50YXRpb24uDQo+UGxlYXNlIGNoYW5n
+ZSB0byBzb21ldGhpbmcgbGlrZSBzZXRfZHNwcF9ibG9ja19mbHVzaCgpLg0KPk9yIHdpdGggWzJd
+IGluIHBsYWNlLCBpdCBjYW4gYmUgaGlkZGVuIGluIHRoZQ0KPnVwZGF0ZV9wZW5kaW5nX2ZsdXNo
+X2RzcHAoKSBmdW5jdGlvbi4gSnVzdCBwYXNzIHRoZSBzdWJibG9jayB0byB0aGUgZnVuY3Rpb24g
+YW5kDQo+bGV0IHRoZSBkcHVfaHdfY3RsIGNhcmUgYWJvdXQgaXQuDQo+DQo+WzJdIGh0dHBzOi8v
+cGF0Y2h3b3JrLmZyZWVkZXNrdG9wLm9yZy9wYXRjaC80NzMxNTkvP3Nlcmllcz05OTkwOSZyZXY9
+MQ0KPg0KPg0KPj4gKw0KPj4gICAgICAgICAvKioNCj4+ICAgICAgICAgICogU2V0IGFsbCBibGVu
+ZCBzdGFnZXMgdG8gZGlzYWJsZWQNCj4+ICAgICAgICAgICogQGN0eCAgICAgICA6IGN0bCBwYXRo
+IGN0eCBwb2ludGVyDQo+PiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2Rw
+dTEvZHB1X2h3X21kc3MuaA0KPj4gYi9kcml2ZXJzL2dwdS9kcm0vbXNtL2Rpc3AvZHB1MS9kcHVf
+aHdfbWRzcy5oDQo+PiBpbmRleCBiYjljZWFkLi41NjFlMmFiIDEwMDY0NA0KPj4gLS0tIGEvZHJp
+dmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2h3X21kc3MuaA0KPj4gKysrIGIvZHJpdmVy
+cy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2h3X21kc3MuaA0KPj4gQEAgLTE2Niw2ICsxNjYs
+MTMgQEAgZW51bSBkcHVfZHNwcCB7DQo+PiAgICAgICAgIERTUFBfTUFYDQo+PiAgfTsNCj4+DQo+
+PiArZW51bSBkcHVfZHNwcF9zdWJfYmxrew0KPj4gKyAgICAgICBEU1BQX1NVQl9QQ0MgPSAxLA0K
+Pj4gKyAgICAgICBEU1BQX1NVQl9JR0MsDQo+PiArICAgICAgIERTUFBfU1VCX0dDLA0KPj4gKyAg
+ICAgICBEU1BQX1NVQl9NQVgNCj4+ICt9Ow0KPg0KPkknZCBwcmVmZXIgaWYgd2UgY2FuIHVzZSBE
+UFVfRFNQUF8qIGRlZmluaXRpb25zIGluc3RlYWQuDQo+DQo+PiArDQo+PiAgZW51bSBkcHVfY3Rs
+IHsNCj4+ICAgICAgICAgQ1RMXzAgPSAxLA0KPj4gICAgICAgICBDVExfMSwNCj4NCj4NCj4NCj4t
+LQ0KPldpdGggYmVzdCB3aXNoZXMNCj5EbWl0cnkNCg==
