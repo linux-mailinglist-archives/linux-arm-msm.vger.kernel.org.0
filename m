@@ -2,72 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB2E158C5BE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 11:40:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B5C458C609
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Aug 2022 12:05:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242486AbiHHJkM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Aug 2022 05:40:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43438 "EHLO
+        id S237617AbiHHKFm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Aug 2022 06:05:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232190AbiHHJkL (ORCPT
+        with ESMTP id S237452AbiHHKFl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Aug 2022 05:40:11 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C1D513D5B;
-        Mon,  8 Aug 2022 02:40:10 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id v5so4524073wmj.0;
-        Mon, 08 Aug 2022 02:40:10 -0700 (PDT)
+        Mon, 8 Aug 2022 06:05:41 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21248C35;
+        Mon,  8 Aug 2022 03:05:39 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id z16so10229240wrh.12;
+        Mon, 08 Aug 2022 03:05:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:message-id:cc:to:subject:from
          :date:from:to:cc;
-        bh=E3bObQeNWfAS5QLgPfg7sUMtK4GVNOyK0s/0eKslo1E=;
-        b=n4xUNwYQrBnm7yU1iGLZpKf4avwTo8LzGpGAFml+IcMOCih7ZytxcIj9i12FoTpbfb
-         WmSv0fBhNWf99Ds83zZpeHzXoq+lR7ADgY4GVgMQHrTdlIeueoc6V7uIjfnvWdNrhibY
-         G6lqnpTzuOb7h7Yjs2jryiol0LrYnS99GndSFqzE8eTQrqFUbSq3ZdS5tLZ5+j9j+l/X
-         FjZgcy/qWFxw1RzKasEYON1VI+W9MmW77utx3YtqVea75CKjEiUCU1XdkfPI5QRmojWh
-         uB1GxDQLxnlB0PqsZebMAvLZiZ+E7PORCaJhDzYHzdCgMZVYITpi8qNRTXTL+MOf8R+c
-         +6NQ==
+        bh=nf6kbaFIPlN/MAI3WZhDRdpzeTbJE6jLVbPnorTzyvQ=;
+        b=FMekjcbSSizuzMYNtrrdEHelQEF4fdCYoDj8VzHps+HGdH1K5SjI8GblAobIJsmfcE
+         fcFBBgSIXF7urCR+8kDhx4NGJUUFuTuww17gfX4FY5RDwzH8gYYRxx7k9/p9rosE3g0n
+         Q/YjFNtPoihHY2ODkOJHoFQ1jGip7h6UT6tqYgbIca2O1sx4R+gAoWO7vz7JqbiMk5PQ
+         D3Ix2vIsMQPp7GErG208BkI2kx+mgzxObv+0Rj0pHHQhco1oxJa0qoRCEIm0/uY8lqfl
+         mBjDk7d+p/UoLfBzcgLnReloN1ibZnm2Z2VKqJm3aojyVY2mSjy3aGrpKO3wuTUe5k6G
+         CywQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:references:in-reply-to:message-id:cc:to:subject:from
          :date:x-gm-message-state:from:to:cc;
-        bh=E3bObQeNWfAS5QLgPfg7sUMtK4GVNOyK0s/0eKslo1E=;
-        b=RtT/UdKGDwR1t4djcbAZ3Qwv+VLYIn/djrfsQ//JFv3T06sh9FdZMfBP6UedNJ2MZE
-         Qbws6lal1lNpOpiJabLqf7P2+3L9bsM0oZloTJf+jHTPDUvB6gF1zByTxpoGpNP68sVm
-         c0e7AclDzctUIZdJoYjAEkNYAy2zbYxs1ll0K1CArFFj8Ep8ym4q2aOGj/6EEUPXAzvv
-         ctJb1DZyEfRZoujetT4vblL8NpKyH20W5UKNioRh/alITeasmAgDx6radVyU/BjVd5UW
-         5YCfhyGToMIcDwr4MUgMtPKzQEhSncPO+2928pbOEUwVfPlhH94hd8yzE422G80I1jCl
-         l8uQ==
-X-Gm-Message-State: ACgBeo3fmOKYsg7zrxcRfOBZ79oZj9JehOxciOEJ3RE2tMgQkIKxn4fJ
-        UfYjT3XsmDcbK73XGCIgVuWlZbPHrdE=
-X-Google-Smtp-Source: AA6agR4/6G3DlxLmRq8Mu7z7qLd96SSuOojjEF8KqJN4qHkHKABstR7DeLNpfNf3cJEbffptuI11bw==
-X-Received: by 2002:a05:600c:509:b0:3a5:2c2:fb40 with SMTP id i9-20020a05600c050900b003a502c2fb40mr15355763wmc.163.1659951608773;
-        Mon, 08 Aug 2022 02:40:08 -0700 (PDT)
+        bh=nf6kbaFIPlN/MAI3WZhDRdpzeTbJE6jLVbPnorTzyvQ=;
+        b=y/GH3EMjPvg7O9BX39ZiuShyyXmhlAe9DabXhE6jdoqPgioLDoLav9otW3KKD+TUJB
+         f7J3MQi8IowLfYb2X4PIKnvwJpLrfrzjUdpEEWrr/kT9YfBQqSCo6U9qnIup8U4+2ewp
+         5zYT8xfZRjFa0uwlzq1DFSE/xr8y/h27/hmuB/HBlsoHJ7Ai/WXGCSeWzagMxy2hNnLo
+         L1wLXFCRBMV66PfHB0e24URPkvE12h/50jEZtGKQHnBOFtLZPGAssSVjoUtDFvq0WxHR
+         nlnQEiLoogUg4olJdwhJa22thQrl3mno2uOXc1bsyXy0g8Tvqc+IiC0U1219lAi3vBq/
+         tYMg==
+X-Gm-Message-State: ACgBeo2psYcgCwiAFwmQ6cJfMJZ9RV4tYZeQQmF3Lv50kOEzqodEfeOe
+        //K0DImd6joeLwEWmaGbgrg=
+X-Google-Smtp-Source: AA6agR6zkNJxSirAEHI3fbx5x+BtG4pUxbwGfTf0xTt2NTTOkOwGy4yH3BsYyhpaT7Kbqtru+y2Pgw==
+X-Received: by 2002:adf:d845:0:b0:21e:f89e:8864 with SMTP id k5-20020adfd845000000b0021ef89e8864mr10855054wrl.9.1659953137548;
+        Mon, 08 Aug 2022 03:05:37 -0700 (PDT)
 Received: from [192.168.187.232] ([105.235.133.28])
-        by smtp.gmail.com with ESMTPSA id o6-20020a05600c4fc600b003a32490c95dsm18724131wmq.35.2022.08.08.02.39.58
+        by smtp.gmail.com with ESMTPSA id x17-20020adfec11000000b0021ee0e233d9sm10821367wrn.96.2022.08.08.03.05.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Aug 2022 02:40:08 -0700 (PDT)
-Date:   Mon, 08 Aug 2022 10:39:47 +0100
+        Mon, 08 Aug 2022 03:05:37 -0700 (PDT)
+Date:   Mon, 08 Aug 2022 11:05:16 +0100
 From:   Yassine Oudjana <yassine.oudjana@gmail.com>
-Subject: Re: [PATCH 0/8] power: supply: Add driver for Qualcomm SMBCHG
+Subject: Re: [PATCH 8/8] power: supply: Add driver for Qualcomm SMBCHG
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Sebastian Reichel <sre@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
         Yassine Oudjana <y.oudjana@protonmail.com>,
         Alejandro Tafalla <atafalla@dnyon.com>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Message-Id: <BUIAGR.NIMOFVJH9GVZ1@gmail.com>
-In-Reply-To: <a233730b-6ac3-2cb9-cc5c-21ca6289fadc@linaro.org>
+Message-Id: <S0KAGR.INJ75H9K5FWO1@gmail.com>
+In-Reply-To: <02243d57-d7aa-7aa9-4f95-24c417ff8c69@linaro.org>
 References: <20220808073459.396278-1-y.oudjana@protonmail.com>
-        <a233730b-6ac3-2cb9-cc5c-21ca6289fadc@linaro.org>
+        <20220808073459.396278-9-y.oudjana@protonmail.com>
+        <02243d57-d7aa-7aa9-4f95-24c417ff8c69@linaro.org>
 X-Mailer: geary/40.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
@@ -82,63 +82,816 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Mon, Aug 8 2022 at 11:41:26 +03:00:00, Krzysztof Kozlowski 
+On Mon, Aug 8 2022 at 11:55:02 +03:00:00, Krzysztof Kozlowski 
 <krzysztof.kozlowski@linaro.org> wrote:
 > On 08/08/2022 10:34, Yassine Oudjana wrote:
 >>  From: Yassine Oudjana <y.oudjana@protonmail.com>
 >> 
->>  This series adds a driver for the switch-mode battery charger found 
->> on PMICs
->>  such as PMI8994, and referred to in the vendor kernel[1] as 
->> smbcharger or
->>  SMBCHG. More details on this block can be found in the last patch 
->> message.
+>>  Add a driver for the switch-mode battery charger found on
+>>  PMICs such as PMI8994. This block is referred to in the vendor
+>>  kernel[1] as smbcharger or SMBCHG. It has USB and DC inputs,
+>>  and can generate VBUS for USB OTG with a boost regulator.
+>>  It supports Qualcomm Quick Charge 2.0, and can operate along
+>>  with a parallel charger (SMB1357, or SMB1351 for added Quick
+>>  Charge 3.0 support) for improved efficiency at higher currents.
 >> 
->>  This driver currently supports the charger blocks of PMI8994 and 
->> PMI8996.
->>  PMI8950 was also to be supported, but it was dropped due to some 
->> last minute
->>  issues, to be brought back at a later time once ready.
+>>  At the moment, this driver supports charging off of the USB input
+>>  at 5V with input current limit up to 3A. It also includes support
+>>  for operating the OTG boost regulator as well as extcon
+>>  functionality, reporting states of USB and USB_HOST with VBUS and
+>>  charge port types.
 >> 
->>  The OTG regulator remains unused on devices where the charger is 
->> enabled in
->>  this series due to lack of a consumer. Applying a patch[2] adding 
->> vbus-supply
->>  to DWC3 allows it to enable the OTG regulator making USB host 
->> without
->>  external power possible.
+>>  Co-developed-by: Alejandro Tafalla <atafalla@dnyon.com>
+>>  Signed-off-by: Alejandro Tafalla <atafalla@dnyon.com>
+>>  Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
 >> 
 >>  [1] 
 >> https://github.com/android-linux-stable/msm-3.18/blob/kernel.lnx.3.18.r34-rel/drivers/power/qpnp-smbcharger.c
->>  [2] 
->> https://lore.kernel.org/linux-usb/20200805061744.20404-1-mike.looijmans@topic.nl/
+>>  ---
+>>   MAINTAINERS                        |    2 +
+>>   drivers/power/supply/Kconfig       |   11 +
+>>   drivers/power/supply/Makefile      |    1 +
+>>   drivers/power/supply/qcom-smbchg.c | 1664 
+>> ++++++++++++++++++++++++++++
+>>   drivers/power/supply/qcom-smbchg.h |  428 +++++++
+>>   5 files changed, 2106 insertions(+)
+>>   create mode 100644 drivers/power/supply/qcom-smbchg.c
+>>   create mode 100644 drivers/power/supply/qcom-smbchg.h
+>> 
+>>  diff --git a/MAINTAINERS b/MAINTAINERS
+>>  index f6cf3a27d132..9b8693050890 100644
+>>  --- a/MAINTAINERS
+>>  +++ b/MAINTAINERS
+>>  @@ -16964,6 +16964,8 @@ L:	linux-pm@vger.kernel.org
+>>   L:	linux-arm-msm@vger.kernel.org
+>>   S:	Maintained
+>>   F:	Documentation/devicetree/bindings/power/supply/qcom,smbchg.yaml
+>>  +F:	drivers/power/supply/qcom-smbchg.c
+>>  +F:	drivers/power/supply/qcom-smbchg.h
+>> 
+>>   QUALCOMM TSENS THERMAL DRIVER
+>>   M:	Amit Kucheria <amitk@kernel.org>
+>>  diff --git a/drivers/power/supply/Kconfig 
+>> b/drivers/power/supply/Kconfig
+>>  index 1aa8323ad9f6..246bfc118d9f 100644
+>>  --- a/drivers/power/supply/Kconfig
+>>  +++ b/drivers/power/supply/Kconfig
+>>  @@ -633,6 +633,17 @@ config CHARGER_QCOM_SMBB
+>>   	  documentation for more detail.  The base name for this driver is
+>>   	  'pm8941_charger'.
+>> 
+>>  +config CHARGER_QCOM_SMBCHG
+>>  +	tristate "Qualcomm Switch-Mode Battery Charger"
 > 
-> How is it different from PMI8998? I expect not that much, so this 
-> should
-> be based on existing work:
-> https://lore.kernel.org/linux-arm-msm/20220706194125.1861256-1-caleb.connolly@linaro.org/
+> As I mentioned in cover letter, this should be either squashed into
+> Caleb's work, merged into some common part or kept separate but with
+> clear explaining why it cannot be merged.
 > 
-> Unless they are different, but then please create common parts and
-> explain the differences.
+> Some incomplete review follows:
+> 
+>>  +	depends on MFD_SPMI_PMIC || COMPILE_TEST
+>>  +	depends on OF
+>>  +	depends on EXTCON
+>>  +	depends on REGULATOR
+>>  +	select QCOM_PMIC_SEC_WRITE
+>>  +	help
+>>  +	  Say Y to include support for the Switch-Mode Battery Charger 
+>> block
+>>  +	  found in Qualcomm PMICs such as PMI8994.
+>>  +
+>>   config CHARGER_BQ2415X
+>>   	tristate "TI BQ2415x battery charger driver"
+>>   	depends on I2C
+>>  diff --git a/drivers/power/supply/Makefile 
+>> b/drivers/power/supply/Makefile
+>>  index 7f02f36aea55..7c2c037cd8b1 100644
+>>  --- a/drivers/power/supply/Makefile
+>>  +++ b/drivers/power/supply/Makefile
+>>  @@ -83,6 +83,7 @@ obj-$(CONFIG_CHARGER_MAX8998)	+= max8998_charger.o
+>>   obj-$(CONFIG_CHARGER_MP2629)	+= mp2629_charger.o
+>>   obj-$(CONFIG_CHARGER_MT6360)	+= mt6360_charger.o
+>>   obj-$(CONFIG_CHARGER_QCOM_SMBB)	+= qcom_smbb.o
+>>  +obj-$(CONFIG_CHARGER_QCOM_SMBCHG)	+= qcom-smbchg.o
+>>   obj-$(CONFIG_CHARGER_BQ2415X)	+= bq2415x_charger.o
+>>   obj-$(CONFIG_CHARGER_BQ24190)	+= bq24190_charger.o
+>>   obj-$(CONFIG_CHARGER_BQ24257)	+= bq24257_charger.o
+>>  diff --git a/drivers/power/supply/qcom-smbchg.c 
+>> b/drivers/power/supply/qcom-smbchg.c
+>>  new file mode 100644
+>>  index 000000000000..23a9667953c9
+>>  --- /dev/null
+>>  +++ b/drivers/power/supply/qcom-smbchg.c
+>>  @@ -0,0 +1,1664 @@
+>>  +// SPDX-License-Identifier: GPL-2.0-only
+> 
+> Several things look like based from original sources, so please retain
+> original copyright.
+
+Do I replace the existing copyright here with the original one, just 
+add it, or mention that this driver is based on downstream sources 
+(maybe putting a link as well) then add it?
+
+> 
+>>  +/*
+>>  + * Power supply driver for Qualcomm PMIC switch-mode battery 
+>> charger
+>>  + *
+>>  + * Copyright (c) 2021 Yassine Oudjana <y.oudjana@protonmail.com>
+>>  + * Copyright (c) 2021 Alejandro Tafalla <atafalla@dnyon.com>
+>>  + */
+>>  +
+>>  +#include <asm/unaligned.h>
+>>  +#include <linux/errno.h>
+>>  +#include <linux/extcon-provider.h>
+>>  +#include <linux/kernel.h>
+>>  +#include <linux/module.h>
+>>  +#include <linux/of.h>
+>>  +#include <linux/of_device.h>
+>>  +#include <linux/of_irq.h>
+>>  +#include <linux/interrupt.h>
+>>  +#include <linux/platform_device.h>
+>>  +#include <linux/power_supply.h>
+>>  +#include <linux/regmap.h>
+>>  +#include <linux/slab.h>
+>>  +#include <linux/reboot.h>
+>>  +#include <linux/regulator/driver.h>
+>>  +#include <linux/util_macros.h>
+>>  +#include <soc/qcom/pmic-sec-write.h>
+>>  +
+>>  +#include "qcom-smbchg.h"
+>>  +
+> 
+> 
+> (...)
+> 
+>>  +/**
+>>  + * @brief smbchg_otg_enable() - Enable OTG regulator
+>>  + *
+>>  + * @param rdev Pointer to regulator_dev
+>>  + * @return 0 on success, -errno on failure
+>>  + */
+>>  +static int smbchg_otg_enable(struct regulator_dev *rdev)
+>>  +{
+>>  +	struct smbchg_chip *chip = rdev_get_drvdata(rdev);
+>>  +	int ret;
+>>  +
+>>  +	dev_dbg(chip->dev, "Enabling OTG VBUS regulator");
+>>  +
+>>  +	ret = regmap_update_bits(chip->regmap,
+>>  +				 chip->base + SMBCHG_BAT_IF_CMD_CHG, OTG_EN_BIT,
+>>  +				 OTG_EN_BIT);
+>>  +	if (ret)
+>>  +		dev_err(chip->dev, "Failed to enable OTG regulator: %pe\n",
+>>  +			ERR_PTR(ret));
+>>  +
+>>  +	return ret;
+>>  +}
+>>  +
+>>  +/**
+>>  + * @brief smbchg_otg_disable() - Disable OTG regulator
+>>  + *
+>>  + * @param rdev Pointer to regulator_dev
+>>  + * @return 0 on success, -errno on failure
+>>  + */
+>>  +static int smbchg_otg_disable(struct regulator_dev *rdev)
+>>  +{
+>>  +	struct smbchg_chip *chip = rdev_get_drvdata(rdev);
+>>  +	int ret;
+>>  +
+>>  +	dev_dbg(chip->dev, "Disabling OTG VBUS regulator");
+> 
+> Here and in other places - no dbg messages replacing tracing. We have
+> tracing for that.
+
+Will look into it.
+
+> 
+>>  +
+>>  +	ret = regmap_update_bits(chip->regmap,
+>>  +				 chip->base + SMBCHG_BAT_IF_CMD_CHG, OTG_EN_BIT,
+>>  +				 0);
+>>  +	if (ret) {
+>>  +		dev_err(chip->dev, "Failed to disable OTG regulator: %pe\n",
+>>  +			ERR_PTR(ret));
+>>  +		return ret;
+>>  +	}
+>>  +
+>>  +	return 0;
+>>  +}
+>>  +
+> 
+> (...)
+> 
+>>  +static irqreturn_t smbchg_handle_charger_error(int irq, void *data)
+>>  +{
+>>  +	struct smbchg_chip *chip = data;
+>>  +
+>>  +	dev_err(chip->dev, "Charger error");
+>>  +
+>>  +	power_supply_changed(chip->usb_psy);
+>>  +
+>>  +	return IRQ_HANDLED;
+>>  +}
+>>  +
+>>  +static irqreturn_t smbchg_handle_p2f(int irq, void *data)
+>>  +{
+>>  +	struct smbchg_chip *chip = data;
+>>  +
+>>  +	dev_dbg(chip->dev, "Fast charging threshold reached");
+>>  +
+>>  +	power_supply_changed(chip->usb_psy);
+>>  +
+>>  +	return IRQ_HANDLED;
+> 
+> Several interrupts which are exactly the same... no, use one interrupt
+> handler for all such cases. Anyway I have some doubts about these 20 
+> or
+> more separate interrupt lines...
+
+This was to allow for printing different debug messages. I believe 
+there are interrupt status registers that can be used instead, so I 
+might try to use them to find out the specific event in a single 
+handler while adding tracing.
+
+> 
+>>  +}
+>>  +
+>>  +static irqreturn_t smbchg_handle_rechg(int irq, void *data)
+>>  +{
+>>  +	struct smbchg_chip *chip = data;
+>>  +
+>>  +	dev_dbg(chip->dev, "Recharge threshold reached");
+>>  +
+>>  +	/* Auto-recharge is enabled, nothing to do here */
+>>  +	return IRQ_HANDLED;
+>>  +}
+>>  +
+>>  +static irqreturn_t smbchg_handle_taper(int irq, void *data)
+>>  +{
+>>  +	struct smbchg_chip *chip = data;
+>>  +
+>>  +	dev_dbg(chip->dev, "Taper charging threshold reached");
+>>  +
+>>  +	power_supply_changed(chip->usb_psy);
+>>  +
+>>  +	return IRQ_HANDLED;
+>>  +}
+>>  +
+>>  +static irqreturn_t smbchg_handle_tcc(int irq, void *data)
+>>  +{
+>>  +	struct smbchg_chip *chip = data;
+>>  +
+>>  +	dev_dbg(chip->dev, "Termination current reached");
+>>  +
+>>  +	power_supply_changed(chip->usb_psy);
+>>  +
+>>  +	return IRQ_HANDLED;
+>>  +}
+>>  +
+>>  +static irqreturn_t smbchg_handle_batt_temp(int irq, void *data)
+>>  +{
+>>  +	struct smbchg_chip *chip = data;
+>>  +
+>>  +	power_supply_changed(chip->usb_psy);
+>>  +
+>>  +	return IRQ_HANDLED;
+>>  +}
+> 
+> (...)
+> 
+>>  +
+>>  +const struct smbchg_irq smbchg_irqs[] = {
+> 
+> You mix everywhere functions with static variables. All variables -
+> except platform_driver related go to the beginning of the file.
+
+They were grouped based on their topic (interrupt handling, power 
+supply properties, ...). Will rearrange them.
+
+> 
+>>  +	{ "chg-error", smbchg_handle_charger_error },
+>>  +	{ "chg-inhibit", NULL },
+>>  +	{ "chg-prechg-sft", NULL },
+>>  +	{ "chg-complete-chg-sft", NULL },
+>>  +	{ "chg-p2f-thr", smbchg_handle_p2f },
+>>  +	{ "chg-rechg-thr", smbchg_handle_rechg },
+>>  +	{ "chg-taper-thr", smbchg_handle_taper },
+>>  +	{ "chg-tcc-thr", smbchg_handle_tcc },
+>>  +	{ "batt-hot", smbchg_handle_batt_temp },
+>>  +	{ "batt-warm", smbchg_handle_batt_temp },
+>>  +	{ "batt-cold", smbchg_handle_batt_temp },
+>>  +	{ "batt-cool", smbchg_handle_batt_temp },
+>>  +	{ "batt-ov", NULL },
+>>  +	{ "batt-low", NULL },
+>>  +	{ "batt-missing", smbchg_handle_batt_presence },
+>>  +	{ "batt-term-missing", NULL },
+>>  +	{ "usbin-uv", NULL },
+>>  +	{ "usbin-ov", NULL },
+>>  +	{ "usbin-src-det", smbchg_handle_usb_source_detect },
+>>  +	{ "usbid-change", smbchg_handle_usbid_change },
+>>  +	{ "otg-fail", smbchg_handle_otg_fail },
+>>  +	{ "otg-oc", smbchg_handle_otg_oc },
+>>  +	{ "aicl-done", smbchg_handle_aicl_done },
+>>  +	{ "dcin-uv", NULL },
+>>  +	{ "dcin-ov", NULL },
+>>  +	{ "power-ok", NULL },
+>>  +	{ "temp-shutdown", smbchg_handle_temp_shutdown },
+>>  +	{ "wdog-timeout", NULL },
+>>  +	{ "flash-fail", NULL },
+>>  +	{ "otst2", NULL },
+>>  +	{ "otst3", NULL },
+>>  +};
+>>  +
+>>  +/**
+> 
+> (...)
+> 
+>>  +
+>>  +static int smbchg_probe(struct platform_device *pdev)
+>>  +{
+>>  +	struct smbchg_chip *chip;
+>>  +	struct regulator_config config = {};
+>>  +	struct power_supply_config supply_config = {};
+>>  +	int i, irq, ret;
+>>  +
+>>  +	chip = devm_kzalloc(&pdev->dev, sizeof(*chip), GFP_KERNEL);
+>>  +	if (!chip)
+>>  +		return -ENOMEM;
+>>  +
+>>  +	chip->dev = &pdev->dev;
+>>  +
+>>  +	chip->regmap = dev_get_regmap(chip->dev->parent, NULL);
+>>  +	if (!chip->regmap) {
+>>  +		dev_err(chip->dev, "Failed to get regmap\n");
+>>  +		return -ENODEV;
+>>  +	}
+>>  +
+>>  +	ret = of_property_read_u32(chip->dev->of_node, "reg", 
+>> &chip->base);
+> 
+> First: device_xxx
+
+Okay.
+
+> Second: what if address is bigger than u32? Shouldn't this be
+> of_read_number or something similar in device_xxx API?
+
+The address wouldn't exceed sizeof(u16). Actually now I think I 
+should've used property_read_u16 instead. I couldn't find a device_* 
+equivalent of of_read_number (or at least not a direct one), are you 
+sure it exists?
+
+> 
+>>  +	if (ret) {
+>>  +		dev_err(chip->dev, "Failed to get base address: %pe\n",
+>>  +			ERR_PTR(ret));
+>>  +		return ret;
+>>  +	}
+>>  +
+>>  +	spin_lock_init(&chip->sec_access_lock);
+>>  +	INIT_WORK(&chip->otg_reset_work, smbchg_otg_reset_worker);
+>>  +
+>>  +	/* Initialize OTG regulator */
+>>  +	chip->otg_rdesc.id = -1;
+>>  +	chip->otg_rdesc.name = "otg-vbus";
+>>  +	chip->otg_rdesc.ops = &smbchg_otg_ops;
+>>  +	chip->otg_rdesc.owner = THIS_MODULE;
+>>  +	chip->otg_rdesc.type = REGULATOR_VOLTAGE;
+>>  +	chip->otg_rdesc.of_match = "otg-vbus";
+>>  +
+>>  +	config.dev = chip->dev;
+>>  +	config.driver_data = chip;
+>>  +
+>>  +	chip->otg_reg =
+>>  +		devm_regulator_register(chip->dev, &chip->otg_rdesc, &config);
+> 
+> This wrapping is difficult to read.
+
+This was done by clang-format. I don't mind changing it manually, but 
+shouldn't it be conforming to the linux code style if it was done 
+automatically following the .clang-format config file in the root of 
+the kernel tree?
+
+> 
+>>  +	if (IS_ERR(chip->otg_reg)) {
+>>  +		dev_err(chip->dev,
+>>  +			"Failed to register OTG VBUS regulator: %pe\n",
+>>  +			chip->otg_reg);
+>>  +		return PTR_ERR(chip->otg_reg);
+>>  +	}
+>>  +
+>>  +	chip->data = of_device_get_match_data(chip->dev);
+>>  +
+>>  +	supply_config.drv_data = chip;
+>>  +	supply_config.of_node = pdev->dev.of_node;
+>>  +	chip->usb_psy = devm_power_supply_register(
+> 
+> This wrapping is difficult to read.
+
+Ditto.
+
+> 
+>>  +		chip->dev, &smbchg_usb_psy_desc, &supply_config);
+>>  +	if (IS_ERR(chip->usb_psy)) {
+>>  +		dev_err(chip->dev, "Failed to register USB power supply: %pe\n",
+>>  +			chip->usb_psy);
+>>  +		return PTR_ERR(chip->usb_psy);
+>>  +	}
+>>  +
+>>  +	ret = power_supply_get_battery_info(chip->usb_psy, 
+>> &chip->batt_info);
+>>  +	if (ret) {
+>>  +		dev_err(chip->dev, "Failed to get battery info: %pe\n",
+>>  +			ERR_PTR(ret));
+>>  +		return ret;
+>>  +	}
+>>  +
+>>  +	if (chip->batt_info->voltage_max_design_uv == -EINVAL) {
+>>  +		dev_err(chip->dev,
+>>  +			"Battery info missing maximum design voltage\n");
+>>  +		return -EINVAL;
+>>  +	}
+>>  +
+>>  +	if (chip->batt_info->constant_charge_current_max_ua == -EINVAL) {
+>>  +		dev_err(chip->dev,
+>>  +			"Battery info missing maximum constant charge current\n");
+>>  +		return -EINVAL;
+>>  +	}
+>>  +
+>>  +	/* Initialize extcon */
+>>  +	chip->edev = devm_extcon_dev_allocate(chip->dev, 
+>> smbchg_extcon_cable);
+>>  +	if (IS_ERR(chip->edev)) {
+>>  +		dev_err(chip->dev, "Failed to allocate extcon device: %pe\n",
+>>  +			chip->edev);
+>>  +		return PTR_ERR(chip->edev);
+>>  +	}
+>>  +
+>>  +	ret = devm_extcon_dev_register(chip->dev, chip->edev);
+>>  +	if (ret) {
+>>  +		dev_err(chip->dev, "Failed to register extcon device: %pe\n",
+>>  +			ERR_PTR(ret));
+>>  +		return ret;
+>>  +	}
+>>  +
+>>  +	extcon_set_property_capability(chip->edev, EXTCON_USB,
+>>  +				       EXTCON_PROP_USB_VBUS);
+>>  +	extcon_set_property_capability(chip->edev, EXTCON_USB_HOST,
+>>  +				       EXTCON_PROP_USB_VBUS);
+>>  +
+>>  +	/* Initialize charger */
+>>  +	ret = smbchg_init(chip);
+>>  +	if (ret)
+>>  +		return ret;
+>>  +
+>>  +	/* Request IRQs */
+>>  +	for (i = 0; i < ARRAY_SIZE(smbchg_irqs); ++i) {
+>>  +		/* IRQ unused */
+>>  +		if (!smbchg_irqs[i].handler)
+>>  +			continue;
+>>  +
+>>  +		irq = of_irq_get_byname(pdev->dev.of_node, smbchg_irqs[i].name);
+>>  +		if (irq < 0) {
+>>  +			dev_err(chip->dev, "Failed to get %s IRQ: %pe\n",
+>>  +				smbchg_irqs[i].name, ERR_PTR(irq));
+>>  +			return irq;
+>>  +		}
+>>  +
+>>  +		ret = devm_request_threaded_irq(chip->dev, irq, NULL,
+>>  +						smbchg_irqs[i].handler,
+>>  +						IRQF_ONESHOT,
+>>  +						smbchg_irqs[i].name, chip);
+>>  +		if (ret) {
+>>  +			dev_err(chip->dev, "failed to request %s IRQ: %pe\n",
+>>  +				smbchg_irqs[i].name, ERR_PTR(irq));
+>>  +			return ret;
+>>  +		}
+>>  +	}
+>>  +
+>>  +	platform_set_drvdata(pdev, chip);
+>>  +
+>>  +	return 0;
+>>  +}
+>>  +
+>>  +static int smbchg_remove(struct platform_device *pdev)
+>>  +{
+>>  +	struct smbchg_chip *chip = platform_get_drvdata(pdev);
+>>  +
+>>  +	smbchg_usb_enable(chip, false);
+>>  +	smbchg_charging_enable(chip, false);
+>>  +
+>>  +	return 0;
+>>  +}
+>>  +
+>>  +static const struct of_device_id smbchg_id_table[] = {
+>>  +	{ .compatible = "qcom,pmi8994-smbchg", .data = 
+>> &smbchg_pmi8994_data },
+>>  +	{ .compatible = "qcom,pmi8996-smbchg", .data = 
+>> &smbchg_pmi8996_data },
+>>  +	{}
+>>  +};
+>>  +MODULE_DEVICE_TABLE(of, smbchg_id_table);
+>>  +
+>>  +static struct platform_driver smbchg_driver = {
+>>  +	.probe = smbchg_probe,
+>>  +	.remove = smbchg_remove,
+>>  +	.driver = {
+>>  +		.name = "qcom-smbchg",
+>>  +		.of_match_table = smbchg_id_table,
+>>  +	},
+>>  +};
+>>  +module_platform_driver(smbchg_driver);
+>>  +
+>>  +MODULE_AUTHOR("Yassine Oudjana <y.oudjana@protonmail.com>");
+>>  +MODULE_AUTHOR("Alejandro Tafalla <atafalla@dnyon.com>");
+>>  +MODULE_DESCRIPTION("Qualcomm PMIC switch-mode battery charger 
+>> driver");
+>>  +MODULE_LICENSE("GPL");
+>>  diff --git a/drivers/power/supply/qcom-smbchg.h 
+>> b/drivers/power/supply/qcom-smbchg.h
+>>  new file mode 100644
+>>  index 000000000000..06445e10b4db
+>>  --- /dev/null
+>>  +++ b/drivers/power/supply/qcom-smbchg.h
+>>  @@ -0,0 +1,428 @@
+>>  +/* SPDX-License-Identifier: GPL-2.0-only */
+>>  +
+>>  +/* Registers */
+>>  +/* CHGR */
+>>  +#define SMBCHG_CHGR_FV_STS			0x00c
+>>  +#define SMBCHG_CHGR_STS				0x00e
+>>  +#define SMBCHG_CHGR_RT_STS			0x010
+>>  +#define SMBCHG_CHGR_FCC_CFG			0x0f2
+>>  +#define SMBCHG_CHGR_FCC_CMP_CFG			0x0f3
+>>  +#define SMBCHG_CHGR_FV_CFG			0x0f4
+>>  +#define SMBCHG_CHGR_FV_CMP			0x0f5
+>>  +#define SMBCHG_CHGR_AFVC_CFG			0x0f6
+>>  +#define SMBCHG_CHGR_CHG_INHIB_CFG		0x0f7
+>>  +#define SMBCHG_CHGR_TCC_CFG			0x0f9
+>>  +#define SMBCHG_CHGR_CCMP_CFG			0x0fa
+>>  +#define SMBCHG_CHGR_CHGR_CFG1			0x0fb
+>>  +#define SMBCHG_CHGR_CHGR_CFG2			0x0fc
+>>  +#define SMBCHG_CHGR_SFT_CFG			0x0fd
+>>  +#define SMBCHG_CHGR_CFG				0x0ff
+>>  +
+>>  +/* OTG */
+>>  +#define SMBCHG_OTG_RT_STS			0x110
+>>  +#define SMBCHG_OTG_OTG_CFG			0x1f1
+>>  +#define SMBCHG_OTG_TRIM6			0x1f6
+>>  +#define SMBCHG_OTG_LOW_PWR_OPTIONS		0x1ff
+>>  +
+>>  +/* BAT-IF */
+>>  +#define SMBCHG_BAT_IF_BAT_PRES_STS		0x208
+>>  +#define SMBCHG_BAT_IF_RT_STS			0x210
+>>  +#define SMBCHG_BAT_IF_CMD_CHG			0x242
+>>  +#define SMBCHG_BAT_IF_CMD_CHG_LED		0x243
+>>  +#define SMBCHG_BAT_IF_BM_CFG			0x2f3
+>>  +#define SMBCHG_BAT_IF_BAT_IF_TRIM7		0x2f7
+>>  +#define SMBCHG_BAT_IF_BB_CLMP_SEL		0x2f8
+>>  +#define SMBCHG_BAT_IF_ZIN_ICL_PT		0x2fc
+>>  +#define SMBCHG_BAT_IF_ZIN_ICL_LV		0x2fd
+>>  +#define SMBCHG_BAT_IF_ZIN_ICL_HV		0x2fe
+>>  +
+>>  +/* USB-CHGPTH */
+>>  +#define SMBCHG_USB_CHGPTH_ICL_STS_1		0x307
+>>  +#define SMBCHG_USB_CHGPTH_PWR_PATH		0x308
+>>  +#define SMBCHG_USB_CHGPTH_ICL_STS_2		0x309
+>>  +#define SMBCHG_USB_CHGPTH_RID_STS		0x30b
+>>  +#define SMBCHG_USB_CHGPTH_USBIN_HVDCP_STS	0x30c
+>>  +#define SMBCHG_USB_CHGPTH_INPUT_STS		0x30d
+>>  +#define SMBCHG_USB_CHGPTH_USBID_MSB		0x30e
+>>  +#define SMBCHG_USB_CHGPTH_RT_STS		0x310
+>>  +#define SMBCHG_USB_CHGPTH_CMD_IL		0x340
+>>  +#define SMBCHG_USB_CHGPTH_CMD_APSD		0x341
+>>  +#define SMBCHG_USB_CHGPTH_CMD_HVDCP_1		0x342
+>>  +#define SMBCHG_USB_CHGPTH_CMD_HVDCP_2		0x343
+>>  +#define SMBCHG_USB_CHGPTH_USBIN_CHGR_CFG	0x3f1
+>>  +#define SMBCHG_USB_CHGPTH_IL_CFG		0x3f2
+>>  +#define SMBCHG_USB_CHGPTH_AICL_CFG		0x3f3
+>>  +#define SMBCHG_USB_CHGPTH_CFG			0x3f4
+>>  +#define SMBCHG_USB_CHGPTH_APSD_CFG		0x3f5
+>>  +#define SMBCHG_USB_CHGPTH_TR_RID		0x3fa
+>>  +#define SMBCHG_USB_CHGPTH_ICL_BUF_CONFIG	0x3fc
+>>  +#define SMBCHG_USB_CHGPTH_TR_8OR32B		0x3fe
+>>  +
+>>  +/* DC-CHGPTH */
+>>  +#define SMBCHG_DC_CHGPTH_RT_STS			0x410
+>>  +#define SMBCHG_DC_CHGPTH_IL_CFG			0x4f2
+>>  +#define SMBCHG_DC_CHGPTH_AICL_CFG		0x4f3
+>>  +#define SMBCHG_DC_CHGPTH_AICL_WL_SEL_CFG	0x4f5
+>>  +
+>>  +/* MISC */
+>>  +#define SMBCHG_MISC_REVISION1			0x600
+>>  +#define SMBCHG_MISC_IDEV_STS			0x608
+>>  +#define SMBCHG_MISC_RT_STS			0x610
+>>  +#define SMBCHG_MISC_TEST			0x6e2
+>>  +#define SMBCHG_MISC_NTC_VOUT_CFG		0x6f3
+>>  +#define SMBCHG_MISC_TRIM_OPT_15_8		0x6f5
+>>  +#define SMBCHG_MISC_TRIM_OPT_7_0		0x6f6
+>>  +#define SMBCHG_MISC_TRIM_14			0x6fe
+>>  +
+>>  +/* Bits */
+>>  +/* CHGR_STS bits */
+>>  +#define CHG_TYPE_MASK			GENMASK(2, 1)
+>>  +#define CHG_HOLD_OFF_BIT		BIT(3)\
+>>  +
+>>  +/* CHGR_FCC_CFG bits */
+>>  +#define FCC_MASK			GENMASK(4, 0)
+>>  +
+>>  +/* CHGR_RT_STS bits */
+>>  +#define CHG_INHIBIT_BIT			BIT(1)
+>>  +#define CHG_COMP_SFT_BIT		BIT(3)
+>>  +#define BAT_TCC_REACHED_BIT		BIT(7)
+>>  +
+>>  +/* CHGR_FV_CFG bits */
+>>  +#define FV_MASK				GENMASK(5, 0)
+>>  +
+>>  +/* CHGR_TCC_CFG bits */
+>>  +#define CHG_ITERM_MASK			GENMASK(2, 0)
+>>  +
+>>  +/* CHGR_CHGR_CFG1 bits */
+>>  +#define RECHG_THRESHOLD_SRC_BIT		BIT(1)
+>>  +#define TERM_I_SRC_BIT			BIT(2)
+>>  +
+>>  +/* CHGR_CHGR_CFG2 bits */
+>>  +#define CHARGER_INHIBIT_BIT		BIT(0)
+>>  +#define AUTO_RECHG_BIT			BIT(2)
+>>  +#define I_TERM_BIT			BIT(3)
+>>  +#define P2F_CHG_TRAN_BIT		BIT(5)
+>>  +#define CHG_EN_POLARITY_BIT		BIT(6)
+>>  +#define CHG_EN_SRC_BIT			BIT(7)
+>>  +
+>>  +/* CHGR_CFG bits */
+>>  +#define RCHG_LVL_BIT			BIT(0)
+>>  +
+>>  +/* BAT_IF_CMD_CHG bits */
+>>  +#define OTG_EN_BIT			BIT(0)
+>>  +#define CHG_EN_BIT			BIT(1)
+>>  +
+>>  +/* BAT_IF_RT_STS bits */
+>>  +#define HOT_BAT_HARD_BIT		BIT(0)
+>>  +#define HOT_BAT_SOFT_BIT		BIT(1)
+>>  +#define COLD_BAT_HARD_BIT		BIT(2)
+>>  +#define COLD_BAT_SOFT_BIT		BIT(3)
+>>  +#define BAT_OV_BIT			BIT(4)
+>>  +#define BAT_LOW_BIT			BIT(5)
+>>  +#define BAT_MISSING_BIT			BIT(6)
+>>  +#define BAT_TERM_MISSING_BIT		BIT(7)
+>>  +
+>>  +/* USB_CHGPTH_ICL_STS_1 bits */
+>>  +#define ICL_STS_MASK			GENMASK(4, 0)
+>>  +#define AICL_STS_BIT			BIT(5)
+>>  +#define AICL_SUSP_BIT			BIT(6)
+>>  +
+>>  +/* USB_CHGPTH_CFG bits */
+>>  +#define USB51AC_CTRL			BIT(1)
+>>  +#define USB51_COMMAND_POL		BIT(2)
+>>  +#define CFG_USB3P0_SEL_BIT		BIT(7)
+>>  +
+>>  +/* USB_CHGPTH_RT_STS bits */
+>>  +#define USBIN_OV_BIT			BIT(1)
+>>  +#define USBIN_SRC_DET_BIT		BIT(2)
+>>  +
+>>  +/* USB_CHGPTH_RID_STS bits */
+>>  +#define RID_MASK			GENMASK(3, 0)
+>>  +
+>>  +/* USB_CHGPTH_CMD_IL bits */
+>>  +#define USBIN_MODE_HC_BIT		BIT(0)
+>>  +#define USB51_MODE_BIT			BIT(1)
+>>  +#define ICL_OVERRIDE_BIT		BIT(2)
+>>  +#define USBIN_SUSPEND_BIT		BIT(4)
+>>  +
+>>  +/* USB_CHGPTH_IL_CFG bits */
+>>  +#define USBIN_INPUT_MASK		GENMASK(4, 0)
+>>  +
+>>  +/* USB_CHGPTH_AICL_CFG bits */
+>>  +#define USB_CHGPTH_AICL_EN		BIT(2)
+>>  +
+>>  +/* USB_CHGPTH_APSD_CFG bits */
+>>  +#define USB_CHGPTH_APSD_EN		BIT(0)
+>>  +
+>>  +/* MISC_IDEV_STS bits */
+>>  +#define FMB_STS_MASK			GENMASK(3, 0)
+>>  +
+>>  +/* MISC_TRIM_OPT_15_8 bits */
+>>  +#define AICL_RERUN_MASK			GENMASK(5, 4)
+>>  +#define AICL_RERUN_DC_BIT		BIT(4)
+>>  +#define AICL_RERUN_USB_BIT		BIT(5)
+>>  +
+>>  +/* Values */
+>>  +/* CHGR_STS values */
+>>  +#define CHG_TYPE_SHIFT			1
+>>  +#define BATT_NOT_CHG_VAL		0x0
+>>  +#define BATT_PRE_CHG_VAL		0x1
+>>  +#define BATT_FAST_CHG_VAL		0x2
+>>  +#define BATT_TAPER_CHG_VAL		0x3
+>>  +
+>>  +/* CHGR_CHGR_CFG1 values */
+>>  +#define	RCHG_SRC_ANA			0
+>>  +#define RCHG_SRC_FG			BIT(1)
+>>  +#define TERM_SRC_ANA			0
+>>  +#define TERM_SRC_FG			BIT(2)
+>>  +
+>>  +/* CHGR_CHGR_CFG2 values */
+>>  +#define CHG_INHIBIT_DIS			0
+>>  +#define CHG_INHIBIT_EN			BIT(0)
+>>  +#define AUTO_RCHG_EN			0
+>>  +#define AUTO_RCHG_DIS			BIT(2)
+>>  +#define CURRENT_TERM_EN			0
+>>  +#define CURRENT_TERM_DIS		BIT(3)
+>>  +#define PRE_FAST_AUTO			0
+>>  +#define PRE_FAST_CMD			BIT(5)
+>>  +#define CHG_EN_SRC_CMD			0
+>>  +#define CHG_EN_SRC_PIN			BIT(7)
+>>  +
+>>  +/* CHGR_CFG values */
+>>  +#define RCHG_THRESH_100MV		0
+>>  +#define RCHG_THRESH_200MV		BIT(0)
+>>  +
+>>  +/* USB_CHGPTH_INPUT_STS values */
+>>  +#define USBIN_9V			BIT(5)
+>>  +#define USBIN_UNREG			BIT(4)
+>>  +#define USBIN_LV			BIT(3)
+>>  +
+>>  +/* USB_CHGPTH_USBID_MSB values */
+>>  +#define USBID_GND_THRESHOLD		0x495
+>>  +
+>>  +/* USB_CHGPTH_CFG values */
+>>  +#define USB51_COMMAND_CONTROL		0
+>>  +#define USB51_PIN_CONTROL		BIT(1)
+>>  +#define USB51AC_COMMAND1_500		0
+>>  +#define USB51AC_COMMAND1_100		BIT(2)
+>>  +#define USB_2P0_SEL			0
+>>  +#define USB_3P0_SEL			BIT(7)
+>>  +
+>>  +/* MISC_IDEV_STS values */
+>>  +#define USB_TYPE_SDP_BIT		BIT(4)
+>>  +#define USB_TYPE_OTHER_BIT		BIT(5)
+>>  +#define USB_TYPE_DCP_BIT		BIT(6)
+>>  +#define USB_TYPE_CDP_BIT		BIT(7)
+>>  +
+>>  +/* Constant parameters */
+>>  +#define NUM_OTG_RESET_RETRIES		5
+>>  +#define OTG_RESET_DELAY_MS		20
+>>  +
+>>  +/*
+>>  + * These values can be indexed using a bitmask:
+>>  + * 0: USB 2.0/3.0
+>>  + * 1: Limited/full current
+>>  + */
+>>  +static const int smbchg_lc_ilim_options[] = {
+>>  +	[0b00] = 100000,
+>>  +	[0b01] = 150000,
+>>  +	[0b10] = 500000,
+>>  +	[0b11] = 900000
+>>  +};
+>>  +#define LC_ILIM_USB3_BIT		BIT(0)
+>>  +#define LC_ILIM_FULL_CURRENT_BIT	BIT(1)
+>>  +#define smbchg_lc_ilim(usb_3, full_current) 
+>> smbchg_lc_ilim_options[usb_3 | full_current << 1]
+>>  +
+>>  +struct smbchg_chip {
+>>  +	unsigned int base;
+>>  +	struct device *dev;
+>>  +	struct regmap *regmap;
+>>  +
+>>  +	struct power_supply_battery_info *batt_info;
+>>  +	struct power_supply *usb_psy;
+>>  +
+>>  +	struct regulator_desc otg_rdesc;
+>>  +	struct regulator_dev *otg_reg;
+>>  +	int otg_resets;
+>>  +
+>>  +	struct extcon_dev *edev;
+>>  +
+>>  +	spinlock_t sec_access_lock;
+>>  +	struct work_struct otg_reset_work;
+>>  +
+>>  +	const struct smbchg_data *data;
+>>  +};
+>>  +
+>>  +struct smbchg_irq {
+>>  +	const char *name;
+>>  +	irq_handler_t handler;
+>>  +};
+>>  +
+>>  +struct smbchg_data {
+>>  +	const int *iterm_table;
+>>  +	unsigned int iterm_table_len;
+>>  +	const int *ilim_table;
+>>  +	unsigned int ilim_table_len;
+>>  +
+>>  +	bool reset_otg_on_oc;
+>>  +};
+>>  +
+>>  +static const int smbchg_fv_table[] = {
+> 
+> No static data in headers.
+
+Understood.
+
 > 
 > Best regards,
 > Krzysztof
-
-This driver has been in slow developement for a long time before that 
-one existed, which was why no initial attempt at a common driver was 
-made. With that said however, I've been watching its development even 
-before it was sent for review, and It seems that the hardware is 
-actually quite different. For example, the original charger entirely 
-lacks the type-c functionality that exists on the second gen one. There 
-are a couple of similar registers like CMD_APSD (same address and 
-function) CHGR_CFG2 (same/similar function, different address), but 
-other than that there don't seem to be any major similarities. While I 
-guess it would technically be possible to force them into one driver 
-with multiple register tables and separate functions for most tasks, I 
-think it would just unnecessarily complicate things. One thing that is 
-common however is the secure register unlock sequence, which I have 
-separated in patch 6 to allow for its use in other drivers (the fuel 
-gauge block has secure registers too so it will also be used in an 
-upcoming fuel gauge driver).
 
 
