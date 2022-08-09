@@ -2,104 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF26558E3E9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 01:56:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0134958E3EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 01:57:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229819AbiHIX4b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Aug 2022 19:56:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40688 "EHLO
+        id S229882AbiHIX5r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Aug 2022 19:57:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbiHIX4a (ORCPT
+        with ESMTP id S229876AbiHIX5o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Aug 2022 19:56:30 -0400
-Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4B677822B;
-        Tue,  9 Aug 2022 16:56:29 -0700 (PDT)
-Received: by mail-io1-f45.google.com with SMTP id x64so10945126iof.1;
-        Tue, 09 Aug 2022 16:56:29 -0700 (PDT)
+        Tue, 9 Aug 2022 19:57:44 -0400
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C78180491;
+        Tue,  9 Aug 2022 16:57:43 -0700 (PDT)
+Received: by mail-qv1-xf30.google.com with SMTP id l8so5112563qvr.5;
+        Tue, 09 Aug 2022 16:57:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=5ieeVHUhK9lB+3MqvAlvGIRiaFfu/R6p+XaOT3hiyPU=;
+        b=JLCE7r8re+Wlwod+55zbqv3DIfdFytLLboyqhXaRwqaI8EK5xijE2JuN4ESJP7Flhw
+         HsFJBaSHvqNmv8d6BOb/iRqPUz4Aink8Pe86nX28oUGWVND/4JkyyXwMPxfW9qBRH4YA
+         TEdiISlxWZKp/MqgkrJedjGNvOufIo15m7Mi/QvEgPLRJ2X+ROgheUoikYs2ee/2A+t9
+         tayFjWj8LE7v2TZq8nYu5Cq+yXDTybWmCyRy0UFZg4AcoOkf4P9y7X8W55c81tlP2HBj
+         pxwRfkIhw9i+8zkSd8sGGxar4WYvTH6sPwz43X2Q3LAe0Awgvo5nXjSQoHcx8yKIZIX5
+         9xfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=cUmU0GC1UDSnmJIVXi+8Ee4MtJwwMLWlPOVyazdN9nY=;
-        b=gggOX8JIHFgYj49ATvlI9J1ujz4dAt0ZM5uOzRQ0+K4ng3v3DaJ6rgRkA0xtWg5kw6
-         ZaQ91IDhWAFVZz454+21ABE4xisM892D4nKo4F+XLKAwSg8KSi9AuBmoUZ3IAiyacfsS
-         551ul8O0UmKKtHpyuJnEiMkbRXnhtO50sle2BJCHqfdygrvA+UdZQEIKy3vb/ydKjXjz
-         q6Ig2AtmwcPAeliS7eG17wJqO4IT9ryXvQFpWlQcv/BeKGzreh27GvumAezGrYSNoSNg
-         tr1F5yACkcefmtnykK71xrQvLX8xjQn16Yaq5DAMElQ3qMXDsaZIEM5A3B92AhJw4BLB
-         pt5g==
-X-Gm-Message-State: ACgBeo2BYy8h6QDjnVSK8lEQmXVyGJdMfdghUqmKOxuPhXSvQqQePG/V
-        O982HL21aO86DHsxVgVNyyuzcOF9ZQ==
-X-Google-Smtp-Source: AA6agR5qxvy7CdtVRG9jiGXSr7Vt8aDiVERxPZIrGVpkhfJWW35dEu/5hZcoDydvcPduGht/pQei7Q==
-X-Received: by 2002:a05:6602:3c8:b0:672:4e60:7294 with SMTP id g8-20020a05660203c800b006724e607294mr10329634iov.17.1660089388879;
-        Tue, 09 Aug 2022 16:56:28 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id j2-20020a056e02014200b002df56aceb87sm1565516ilr.60.2022.08.09.16.56.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Aug 2022 16:56:28 -0700 (PDT)
-Received: (nullmailer pid 2776475 invoked by uid 1000);
-        Tue, 09 Aug 2022 23:56:25 -0000
-Date:   Tue, 9 Aug 2022 17:56:25 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     David Heidelberg <david@ixit.cz>
-Cc:     linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Caleb Connolly <caleb@connolly.tech>,
-        linux-arm-msm@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        ~okias/devicetree@lists.sr.ht,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, Lee Jones <lee.jones@linaro.org>
-Subject: Re: [PATCH v3] dt-bindings: mfd: convert to yaml Qualcomm SPMI PMIC
-Message-ID: <20220809235625.GA2775377-robh@kernel.org>
-References: <20220626191630.176835-1-david@ixit.cz>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=5ieeVHUhK9lB+3MqvAlvGIRiaFfu/R6p+XaOT3hiyPU=;
+        b=5gPbLQhd3ltOvd2/KLFdV6GtsC0ZoWQiJmMa+COcKbnb/luO7HZs3Nfx+izynJUQKI
+         +FFMKkVLMhB9vwe3Ahm4dGkCcv+5WHfSiSWiI2ZNGFq+GylBQlQUnEymIuxVFNBIu8Wh
+         OcQejk3vuBfKD9r2aaclISCJ0opv7YsgW0Y2+i3B76nt9hkigr1i3nxlvWVPgfCM0fcx
+         M+B8U98QI5S/Vas+hqTYPzERwU6WgIGTY6HoRfuBiVcBJN+VP4uzSrA0XY0TVRqD7duQ
+         3IA6dl1Xpk7NGmAj8IJF2H1dsWOzokRGz4cSieLdPu8rYDxx/T11Qf/7YcGd4lQe0IIe
+         TJNQ==
+X-Gm-Message-State: ACgBeo3d6yWtO801wT08EJBNVdWkbW9J7dSinlUwVTmkAoiXdklQej+m
+        FYi406ebEM3XnD9MwmxFiswQahY2cZSAkXIgDis=
+X-Google-Smtp-Source: AA6agR4acMRXy5qzUtdJsI+ibwQkw9ggoF+j4hNPxhKBkiftE+Q6QnlF6V0u6wUfohaot6lt45HEQg==
+X-Received: by 2002:a05:6214:529e:b0:476:93ab:155c with SMTP id kj30-20020a056214529e00b0047693ab155cmr22176071qvb.25.1660089462471;
+        Tue, 09 Aug 2022 16:57:42 -0700 (PDT)
+Received: from ?IPV6:2600:4040:2036:c00:b4e5:ed6d:fb38:84a5? ([2600:4040:2036:c00:b4e5:ed6d:fb38:84a5])
+        by smtp.gmail.com with ESMTPSA id bz19-20020a05622a1e9300b00341f912e64dsm6627943qtb.93.2022.08.09.16.57.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Aug 2022 16:57:41 -0700 (PDT)
+Message-ID: <479a6fa3-7214-2cca-14b0-b9b335146168@gmail.com>
+Date:   Tue, 9 Aug 2022 19:57:41 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220626191630.176835-1-david@ixit.cz>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2 2/2] ARM: msm8960: Add Samsung Galaxy Express support
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, david@ixit.cz,
+        devicetree@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org
+References: <20220808234723.5184-2-guptarud@gmail.com>
+ <20220809000300.6384-1-guptarud@gmail.com>
+ <20220809000300.6384-2-guptarud@gmail.com>
+ <27f83048-ac75-97eb-c9f0-0829de30e1ad@linaro.org>
+From:   Rudraksha Gupta <guptarud@gmail.com>
+In-Reply-To: <27f83048-ac75-97eb-c9f0-0829de30e1ad@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 26 Jun 2022 21:16:30 +0200, David Heidelberg wrote:
-> Convert Qualcomm SPMI PMIC binding to yaml format.
-> 
-> Additional changes:
->  - filled many missing compatibles
-> 
-> Co-developed-by: Caleb Connolly <caleb@connolly.tech>
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
-> v3:
->  - added subnodes, there are two not converted to YAML yet, but it works
->  - now it prints milion directly unrelated warning to this binding
->    (it's related to the included subnodes bindings, can be merged,
->     but it'll generate more warnings and preferably anyone can takeover
->     from here)
->  - add qcom,pmx65
-> 
-> v2:
->  - changed author to myself, kept Caleb as co-author
->  - moved nodename to properties
->  - add nodenames for pm* with deprecated property
->  - add ^$ to pattern properties
->  - dropped interrupt-names property
->  - added reg prop. to the nodes which have register in nodename
->  - added compatible pmx55
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
->  .../bindings/mfd/qcom,spmi-pmic.txt           |  94 ---------
->  .../bindings/mfd/qcom,spmi-pmic.yaml          | 191 ++++++++++++++++++
->  2 files changed, 191 insertions(+), 94 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
->  create mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-> 
+ > OK, I'll abandon the review. This file is really not matching anything
 
-As this hasn't been picked up, I applied it. Thanks!
+ > in the upstream. Please start your work from a proper upstreamed, recent
+
+ > board.
+
+I based it off of qcom-msm8960-cdp.dts. If there is a dts that you would 
+like
+
+me to model off of, please link it to me. Otherwise, I will find another 
+recent
+
+dts and model off of that
+
