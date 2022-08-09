@@ -2,73 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8292058E1B5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Aug 2022 23:20:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7F2F58E209
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Aug 2022 23:46:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229572AbiHIVUN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Aug 2022 17:20:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51854 "EHLO
+        id S229670AbiHIVqf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Aug 2022 17:46:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229530AbiHIVTx (ORCPT
+        with ESMTP id S229646AbiHIVqa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Aug 2022 17:19:53 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF3896716D
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Aug 2022 14:19:52 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id o184so5544209oif.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Aug 2022 14:19:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc;
-        bh=hNlW3Ttjo6hcKSmczDTwdd2QKUouaTsCCWwKHrhweGE=;
-        b=BRfV4z6DWOOjIZ30/4MWe+gRyxAjuF9V/kCXnVzmgU5d/F/TjuE7CzqQMzTVnJSWZz
-         QXWzD+tEIzNn12p+kpPNgtkCiLilaDe16IedyW0sgbxQBnYJb5gYyaHR+QzXQQAQcJp3
-         9yC713TUBnnUbo50hEll3xfdpSOB/j6luzKJByfxX/z7LMrASEawunk2DG54Z6Hm7V3m
-         vL7NqPsu6G20AHIujJtfQMe5FA6tkBJiYXqi3odx08Jn/JdyeoN56HqWjLtB2Tx2tSBv
-         Zw/7UrRQM3ycLBYgNFttBngeOkc2VaIbtrMr5g+olNyB8lj6g0RvId2OSaJOdFeJob+C
-         UFWw==
+        Tue, 9 Aug 2022 17:46:30 -0400
+Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 869EA6AA37;
+        Tue,  9 Aug 2022 14:46:28 -0700 (PDT)
+Received: by mail-io1-f45.google.com with SMTP id x64so10732766iof.1;
+        Tue, 09 Aug 2022 14:46:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=hNlW3Ttjo6hcKSmczDTwdd2QKUouaTsCCWwKHrhweGE=;
-        b=z7HBGlZ3TxxXGUrDbI2vDvGPL7TrmJNoX5k8NN/SecBUKB/vYci6KkIA3HvMaSCJ86
-         SPOiT3qmoDT7zmdYjxAgPQluG6K420tczn7yjYkdw2yxv1yazZyEWEPuM8TB4zKypkP/
-         EKyEwcYor1T0p1+MUzjH/6YOjLu7pZ6Bn+Jk4PqNX1NSkCGC38wV7SpVpjC6OPP7by+F
-         QGmXWs9+VRNgxeTBo4S61+OwSoYhgtDoMcizbm7tM6YiF64N1MH67QCC8MJipECGKyuU
-         CeFXehs3KtsapyU5j1KQFeu681p1ohBMpKDOO7I6wmIURRfhzTNzYsMG85coliPj+jPZ
-         4NkQ==
-X-Gm-Message-State: ACgBeo23ImGtrlbWB/+6PG7ndgCpqSDlBVzhRwc21Sh5y+IY5ziJYXFF
-        BIVO0TQy9XZPUfhqQjelS8tt6g==
-X-Google-Smtp-Source: AA6agR7idOPYc+eaQAA7KvKF9Mz5DOdDvcYF6yvaDTZ5slwvk0RzyRrzEC/ED8RzxTrKFqY3Ba05Og==
-X-Received: by 2002:a05:6808:302b:b0:2f9:eeef:f03 with SMTP id ay43-20020a056808302b00b002f9eeef0f03mr170439oib.128.1660079992065;
-        Tue, 09 Aug 2022 14:19:52 -0700 (PDT)
-Received: from baldur ([2600:380:785a:7aa8:200:ff:fe00:0])
-        by smtp.gmail.com with ESMTPSA id p10-20020a056830130a00b00636cc9926dbsm229555otq.40.2022.08.09.14.19.50
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=XayUQlMIJx4xqOBJefuvZF3U4IgYP7XvIIx28FpBAnA=;
+        b=eLE1Er+Tjxy0sqv7FEaqa1z67i9nZMaFmlaSucZ0xq2zgOa0FZXcle+BRMnoQOlpSN
+         AMy91AFhDar6o9qE+FBHSur/E7r7EJZV62/6M0BjPd0krk4lZHG9Lq2QFoJ0J0qOAnkG
+         otkhnN4J36gD16lCxXIZ/jBwCmkOWkXdXjz/QP86mOSjmdjQAau+IZqLDQeI7V9PHazq
+         PFGaL3uLWokvYVHXDYuLJU+OfLgCDB7QWZXGe5xq9zxnERGjLXUAIsqg+G2FY7PvfnXz
+         STxcaqHhwDVMiO7RxiM5clCFyPykyr2EeDRqhxtw+bL42yG9UmzbzJar5FeQbqvVw8CD
+         aa+A==
+X-Gm-Message-State: ACgBeo1pF64TJf0LX2wJ6wmNEahDfr74EboiyGtWBKBtyyZsn/hAoRPg
+        WKgcyQWWOiio2x2YP00XOhrg5OBsWg==
+X-Google-Smtp-Source: AA6agR6R8kEAP+IPIQBOiX7Ad+dvYoKbJlhBhksjCpkjIYXd3lyzd52WO+7FVBtQSJ6kMmEEugnQWA==
+X-Received: by 2002:a05:6638:41a9:b0:342:e3ac:b242 with SMTP id az41-20020a05663841a900b00342e3acb242mr6664252jab.295.1660081587753;
+        Tue, 09 Aug 2022 14:46:27 -0700 (PDT)
+Received: from xps15.herring.priv ([64.188.179.248])
+        by smtp.googlemail.com with ESMTPSA id h15-20020a05660208cf00b006842e02b527sm1588648ioz.16.2022.08.09.14.46.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Aug 2022 14:19:51 -0700 (PDT)
-Date:   Tue, 9 Aug 2022 16:19:49 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Satya Priya <quic_c_skakit@quicinc.com>
-Cc:     Rob Herring <robh@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Taniya Das <quic_tdas@quicinc.com>
-Subject: Re: [PATCH V7 1/5] dt-bindings: clock: Add "qcom,adsp-pil-mode"
- property
-Message-ID: <YvLPdVv2/7pJLeru@baldur>
-References: <1658910477-6494-1-git-send-email-quic_c_skakit@quicinc.com>
- <1658910477-6494-2-git-send-email-quic_c_skakit@quicinc.com>
+        Tue, 09 Aug 2022 14:46:27 -0700 (PDT)
+From:   Rob Herring <robh@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Sricharan R <sricharan@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: pinctrl: qcom,ipq6018: Fix example 'gpio-ranges' size
+Date:   Tue,  9 Aug 2022 15:45:56 -0600
+Message-Id: <20220809214556.2489822-1-robh@kernel.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1658910477-6494-2-git-send-email-quic_c_skakit@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,94 +63,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 27 Jul 03:27 CDT 2022, Satya Priya wrote:
+'gpio-ranges' entries have a fixed size of 1 phandle plus arg 3 cells.
+The qcom,ipq6018-pinctrl example is a cell short:
 
-> The LPASS Peripheral loader clocks would be used to bring
-> LPASS out of reset, when this property is present.
-> 
+Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.example.dtb: pinctrl@1000000: gpio-ranges:0: [1, 0, 80] is too short
+	From schema: /usr/local/lib/python3.10/dist-packages/dtschema/schemas/gpio/gpio.yaml
 
-Can you please elaborate on what you mean here?
+Signed-off-by: Rob Herring <robh@kernel.org>
+---
+Please ack and I can send to Linus before rc1.
+---
+ .../devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml       | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-When this property is set you assume that remoteproc is used to boot the
-LPASS and therefor some clocks should be handled differently?
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml
+index b83c7f476e19..931e5c190ead 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml
+@@ -144,7 +144,7 @@ examples:
+               #interrupt-cells = <2>;
+               gpio-controller;
+               #gpio-cells = <2>;
+-              gpio-ranges = <&tlmm 0 80>;
++              gpio-ranges = <&tlmm 0 0 80>;
+ 
+               serial3-pinmux {
+                       pins = "gpio44", "gpio45";
+-- 
+2.34.1
 
-This needs to be written in a way that someone outside of your project
-can understand the purpose.
-
-> This is a cleanup done to handle overlap of regmap of
-> lpasscc and lpass_aon blocks. As a part of this, remove
-> the "cc" regmap from lpasscc node.
-> 
-
-"regmap" is an implementation detail, the binding change should describe
-the changes to the representation of the hardware description.
-
-Thanks,
-Bjorn
-
-> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Reviewed-by: Stephen Boyd <sboyd@kernel.org>
-> ---
->  Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml   | 6 ++----
->  .../devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml         | 7 +++++++
->  2 files changed, 9 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
-> index 47028d7..633887d 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
-> @@ -36,13 +36,11 @@ properties:
->      items:
->        - description: LPASS qdsp6ss register
->        - description: LPASS top-cc register
-> -      - description: LPASS cc register
->  
->    reg-names:
->      items:
->        - const: qdsp6ss
->        - const: top_cc
-> -      - const: cc
->  
->  required:
->    - compatible
-> @@ -59,8 +57,8 @@ examples:
->      #include <dt-bindings/clock/qcom,lpass-sc7280.h>
->      clock-controller@3000000 {
->        compatible = "qcom,sc7280-lpasscc";
-> -      reg = <0x03000000 0x40>, <0x03c04000 0x4>, <0x03389000 0x24>;
-> -      reg-names = "qdsp6ss", "top_cc", "cc";
-> +      reg = <0x03000000 0x40>, <0x03c04000 0x4>;
-> +      reg-names = "qdsp6ss", "top_cc";
->        clocks = <&gcc GCC_CFG_NOC_LPASS_CLK>;
->        clock-names = "iface";
->        #clock-cells = <1>;
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-> index bad9135..5ccfb24 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-> @@ -41,6 +41,12 @@ properties:
->    reg:
->      maxItems: 1
->  
-> +  qcom,adsp-pil-mode:
-> +    description:
-> +      Indicates if the LPASS would be brought out of reset using
-> +      peripheral loader.
-> +    type: boolean
-> +
->  required:
->    - compatible
->    - reg
-> @@ -165,6 +171,7 @@ examples:
->        clocks = <&rpmhcc RPMH_CXO_CLK>, <&rpmhcc RPMH_CXO_CLK_A>,
->                 <&lpasscore LPASS_CORE_CC_CORE_CLK>;
->        clock-names = "bi_tcxo", "bi_tcxo_ao","iface";
-> +      qcom,adsp-pil-mode;
->        #clock-cells = <1>;
->        #power-domain-cells = <1>;
->      };
-> -- 
-> 2.7.4
-> 
