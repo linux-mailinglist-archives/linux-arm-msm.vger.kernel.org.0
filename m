@@ -2,74 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD8AF58D339
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Aug 2022 07:35:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B8E958D3CB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Aug 2022 08:32:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234817AbiHIFfY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Aug 2022 01:35:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38738 "EHLO
+        id S237539AbiHIGcI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Aug 2022 02:32:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233086AbiHIFfX (ORCPT
+        with ESMTP id S235179AbiHIGcH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Aug 2022 01:35:23 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92A0D10FC0
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Aug 2022 22:35:21 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id e15so15642164lfs.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Aug 2022 22:35:21 -0700 (PDT)
+        Tue, 9 Aug 2022 02:32:07 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BFCB1FCFC;
+        Mon,  8 Aug 2022 23:32:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=CLBtSz5zowSZP2ptgXBelVuwhiidhEQF9DkU5FwAQ2o=;
-        b=MIpIA6sm7TY729nBdnH4Wjr8uM1YUZ558QURpKR1u4L6EukE1jenbkTuOPMgrdlh7I
-         y64Rd1JDLgrBmydt+dOufa6MsrJ8A0KKSQKIz1ym3JS+Tm72PR+sAbNLdqeh81rVeiV6
-         0oIPXwJyLmtA0jIq5cDmoiQrlGiriLCxmIyTsP5W38yajddj+q316fl2NnVSUZsBCTsb
-         U7onCSrDA3qRVMG91zDQv2bixKEo96W4h94qKqJO+uNe2XsH79owEtjkBd6yaYRpSSNU
-         OStd7KBlAMSexeY3jL0xH4PDeBsLHx9OjWzTB9DW3mO2Rlzpe+wssVNThK9J93hgw/y9
-         qJwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=CLBtSz5zowSZP2ptgXBelVuwhiidhEQF9DkU5FwAQ2o=;
-        b=nWIzrnABZvJAtsb0WWuNKCq2PUppnu3Z2R++Oe42L8x1qHl7ld41I3R62lt88tktKt
-         WUySa5nZ954/qkxLa2Totgq4Cn6jXgoMsLUx/YNWelQXAF/J8Na4kxLY7MF0oQo+iE2F
-         +HWg9absE2DlNNzQT+R+T8kg1OkCm0z2Soycz7mEMaBHujzZh+KpIR9LFuqOGNbFu4fp
-         5kB86CmtnuH9sCul2/Ex/g7SLa5gdl8TnUnln0TjQMkDgUZ+V6ltWcriJLXNxOWrEiNp
-         zijp81R2Tr/uYNcab/0MLyCl49PQGcdftHDv8Uab1PYoFqGzghJOBJDAF46JESr+dotY
-         oOTg==
-X-Gm-Message-State: ACgBeo0RIt6WxXttDkNbG0ney8LvN6hgB5RPvD/LXn9s5Kh2cVqqHMEo
-        b17bU9Bn06DMUdZQXQ7uduWbIg==
-X-Google-Smtp-Source: AA6agR5fYMdcvjSWJZrYBeyOmmE7yWtMoqDT5jX7CoahSz6MfG2ZP8zWFR9aonG3W/hDYJLVtWYDBw==
-X-Received: by 2002:a05:6512:2390:b0:48c:ef98:4103 with SMTP id c16-20020a056512239000b0048cef984103mr2172907lfv.265.1660023319961;
-        Mon, 08 Aug 2022 22:35:19 -0700 (PDT)
-Received: from [192.168.1.39] ([83.146.140.105])
-        by smtp.gmail.com with ESMTPSA id e15-20020a05651236cf00b0047255d211b2sm1633301lfs.225.2022.08.08.22.35.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Aug 2022 22:35:19 -0700 (PDT)
-Message-ID: <27f83048-ac75-97eb-c9f0-0829de30e1ad@linaro.org>
-Date:   Tue, 9 Aug 2022 08:35:18 +0300
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1660026727; x=1691562727;
+  h=message-id:date:mime-version:subject:to:references:from:
+   in-reply-to:content-transfer-encoding;
+  bh=VyIoMcZ7RkY7NN4Q1ADLKqmIVyptu2nK6LJES8ahh8w=;
+  b=gyYGtKFuQXWlQt4YO5sx/5YX82H++6ksKq3LJ8lmL6YpWT0O0r/TEo1y
+   HAA/6DwaBNkD891ltmhugbnrsedYk1iHLReF4Yo8Qr6woBIcf8UTyr0AN
+   M2yq35rldyVzSwah4zRnKwuLJ/SCJQLuy2VV0u3nYmBYtfgU2dFNcikDg
+   Q=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 08 Aug 2022 23:32:06 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Aug 2022 23:32:05 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 8 Aug 2022 23:32:05 -0700
+Received: from [10.216.39.97] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 8 Aug 2022
+ 23:31:59 -0700
+Message-ID: <dd446961-c455-d721-cc0a-2aec506b2189@quicinc.com>
+Date:   Tue, 9 Aug 2022 12:01:56 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v2 2/2] ARM: msm8960: Add Samsung Galaxy Express support
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 5/8] remoteproc: qcom: Add efuse evb selection control
 Content-Language: en-US
-To:     Rudraksha Gupta <guptarud@gmail.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, david@ixit.cz,
-        devicetree@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org
-References: <20220808234723.5184-2-guptarud@gmail.com>
- <20220809000300.6384-1-guptarud@gmail.com>
- <20220809000300.6384-2-guptarud@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220809000300.6384-2-guptarud@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <linux-remoteproc@vger.kernel.org>, <agross@kernel.org>,
+        <bjorn.andersson@linaro.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>, <devicetree@vger.kernel.org>
+References: <1659536480-5176-1-git-send-email-quic_srivasam@quicinc.com>
+ <1659536480-5176-6-git-send-email-quic_srivasam@quicinc.com>
+ <0ed40651-1638-3701-f310-cd50102ae763@linaro.org>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <0ed40651-1638-3701-f310-cd50102ae763@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,95 +75,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/08/2022 03:03, Rudraksha Gupta wrote:
-> This adds a very basic device tree file for the Samsung Galaxy Express
-> SGH-I437. Currently, the following things work: UART, eMMC, SD Card, and
-> USB.
 
-Use subject prefix matching the subsystem.
-
-> 
-> Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
-> ---
-> v2:
->  - Group the correct changes together
-> 
->  arch/arm/boot/dts/Makefile                    |   1 +
->  .../dts/qcom-msm8960-samsung-expressatt.dts   | 337 ++++++++++++++++++
->  2 files changed, 338 insertions(+)
->  create mode 100644 arch/arm/boot/dts/qcom-msm8960-samsung-expressatt.dts
-> 
-> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> index 05d8aef6e5d2..d55f196ad733 100644
-> --- a/arch/arm/boot/dts/Makefile
-> +++ b/arch/arm/boot/dts/Makefile
-> @@ -1049,6 +1049,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
->  	qcom-msm8660-surf.dtb \
->  	qcom-msm8916-samsung-serranove.dtb \
->  	qcom-msm8960-cdp.dtb \
-> +	qcom-msm8960-samsung-expressatt.dtb \
->  	qcom-msm8974-lge-nexus5-hammerhead.dtb \
->  	qcom-msm8974-sony-xperia-rhine-amami.dtb \
->  	qcom-msm8974-sony-xperia-rhine-honami.dtb \
-> diff --git a/arch/arm/boot/dts/qcom-msm8960-samsung-expressatt.dts b/arch/arm/boot/dts/qcom-msm8960-samsung-expressatt.dts
-> new file mode 100644
-> index 000000000000..cf557f0c9a59
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/qcom-msm8960-samsung-expressatt.dts
-> @@ -0,0 +1,337 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +#include <dt-bindings/input/input.h>
-> +#include "qcom-msm8960.dtsi"
-> +
-> +/ {
-> +	model = "Samsung Galaxy S3 SGH-I437";
-> +	compatible = "samsung,expressatt", "qcom,msm8960";
-
-Undocumented compatible. Run checkpatch.
-
-> +
-> +	aliases {
-> +		serial0 = &gsbi5_serial;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +
-> +		#address-cells = <1>;
-> +		#size-cells = <1>;
-> +		ranges;
-
-These three properties are confusing. Why adding them?
-
-
-> +	};
-> +
-> +	soc {
-> +		gsbi@16400000 {
-
-Override by alias.
-
-> +			status = "ok";
-
-okay, not ok. Status goes at the end of properties.
-
-
-> +			qcom,mode = <GSBI_PROT_I2C_UART>;
-> +			serial@16440000 {
-> +				status = "ok";
-
-Same comments.
-
-> +			};
-> +		};
-> +
-> +		amba {
-> +			/* eMMC */
-> +			sdcc1: mmc@12400000 {
-
-OK, I'll abandon the review. This file is really not matching anything
-in the upstream. Please start your work from a proper upstreamed, recent
-board.
-
-Best regards,
-Krzysztof
+On 8/7/2022 1:56 AM, Dmitry Baryshkov wrote:
+Thanks for Your Time Dmitry!!!
+> On 03/08/2022 17:21, Srinivasa Rao Mandadapu wrote:
+>> Add efuse evb selection control and enable it for starting ADSP.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>
+> Is the lpass_efuse region used solely by the ADSP or is it shared with 
+> anybody else (e.g. other sound-related devices)? If the latter is 
+> true, then please use syscon for the lpass_efuse region.
+This region is being used by ADS PIL driver only.
+>
+>> ---
+>>   drivers/remoteproc/qcom_q6v5_adsp.c | 10 ++++++++++
+>>   1 file changed, 10 insertions(+)
+>>
+>> diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c 
+>> b/drivers/remoteproc/qcom_q6v5_adsp.c
+>> index a9fcb5c..201cc21 100644
+>> --- a/drivers/remoteproc/qcom_q6v5_adsp.c
+>> +++ b/drivers/remoteproc/qcom_q6v5_adsp.c
+>> @@ -56,6 +56,7 @@
+>>     #define LPASS_BOOT_CORE_START    BIT(0)
+>>   #define LPASS_BOOT_CMD_START    BIT(0)
+>> +#define LPASS_EFUSE_Q6SS_EVB_SEL 0x0
+>>     struct adsp_pil_data {
+>>       int crash_reason_smem;
+>> @@ -85,6 +86,7 @@ struct qcom_adsp {
+>>       struct clk_bulk_data *clks;
+>>         void __iomem *qdsp6ss_base;
+>> +    void __iomem *lpass_efuse;
+>>         struct reset_control *pdc_sync_reset;
+>>       struct reset_control *restart;
+>> @@ -366,6 +368,9 @@ static int adsp_start(struct rproc *rproc)
+>>       /* Program boot address */
+>>       writel(adsp->mem_phys >> 4, adsp->qdsp6ss_base + RST_EVB_REG);
+>>   +    if (adsp->lpass_efuse)
+>> +        writel(LPASS_EFUSE_Q6SS_EVB_SEL, adsp->lpass_efuse);
+>> +
+>>       /* De-assert QDSP6 stop core. QDSP6 will execute after out of 
+>> reset */
+>>       writel(LPASS_BOOT_CORE_START, adsp->qdsp6ss_base + 
+>> CORE_START_REG);
+>>   @@ -520,6 +525,11 @@ static int adsp_init_mmio(struct qcom_adsp *adsp,
+>>           return PTR_ERR(adsp->qdsp6ss_base);
+>>       }
+>>   +    adsp->lpass_efuse = 
+>> devm_platform_ioremap_resource_byname(pdev, "lpass_efuse");
+>> +    if (IS_ERR(adsp->lpass_efuse)) {
+>> +        adsp->lpass_efuse = NULL;
+>> +        dev_dbg(adsp->dev, "failed to map LPASS efuse registers\n");
+>> +    }
+>>       syscon = of_parse_phandle(pdev->dev.of_node, "qcom,halt-regs", 0);
+>>       if (!syscon) {
+>>           dev_err(&pdev->dev, "failed to parse qcom,halt-regs\n");
+>
+>
