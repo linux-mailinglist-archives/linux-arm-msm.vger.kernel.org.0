@@ -2,76 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7763F58D26A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Aug 2022 05:44:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55B4358D32E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Aug 2022 07:31:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231805AbiHIDoE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Aug 2022 23:44:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45000 "EHLO
+        id S234152AbiHIFa7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Aug 2022 01:30:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229600AbiHIDoE (ORCPT
+        with ESMTP id S231314AbiHIFa6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Aug 2022 23:44:04 -0400
-Received: from out30-43.freemail.mail.aliyun.com (out30-43.freemail.mail.aliyun.com [115.124.30.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1181A1DA43;
-        Mon,  8 Aug 2022 20:44:01 -0700 (PDT)
-X-Alimail-AntiSpam: AC=PASS;BC=-1|-1;BR=01201311R551e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018045192;MF=jiapeng.chong@linux.alibaba.com;NM=1;PH=DS;RN=13;SR=0;TI=SMTPD_---0VLoAmLY_1660016628;
-Received: from localhost(mailfrom:jiapeng.chong@linux.alibaba.com fp:SMTPD_---0VLoAmLY_1660016628)
-          by smtp.aliyun-inc.com;
-          Tue, 09 Aug 2022 11:43:59 +0800
-From:   Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
-To:     agross@kernel.org
-Cc:     bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
-        amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
-        daniel.lezcano@linaro.org, rui.zhang@intel.com,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
-        Abaci Robot <abaci@linux.alibaba.com>
-Subject: [PATCH] thermal/drivers/qcom/spmi-adc-tm5: Remove unnecessary print function dev_err()
-Date:   Tue,  9 Aug 2022 11:43:46 +0800
-Message-Id: <20220809034346.128607-1-jiapeng.chong@linux.alibaba.com>
-X-Mailer: git-send-email 2.20.1.7.g153144c
+        Tue, 9 Aug 2022 01:30:58 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CA7225DA
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Aug 2022 22:30:56 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id z25so15596323lfr.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Aug 2022 22:30:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=sKwNIt+Su79UppYhwI6KzTX7lzsG54zDOaS458PPq0U=;
+        b=rvIJKHD9j94DMkpsYlJg3wlog0UPCoFTp0kA1NMcJYKV8rCjD+gncCpD/1ZZsUUARL
+         hCGGZEGskm9SXouLFtNhMMEY54eFrCf6lFMWG2uLIkJG9WYlmfbeGQ+SY2ziW4fv6PeX
+         yEQ0HxZqW+oKYoniUoE7HQjVKavsG2YOQu3f7BYpW0ZlRrQ4NVVlts7VRhrVO754cyri
+         q9gndgD+u2WjFyVinTQkjDR2ooQScBxEeP2dHwsY6GZhOVEiSwf9HMFdTZBZmmGQIvyF
+         J/RfZPOb7Leq8OK0PUHNoZ+ccLAw/4pVgBRwMEDrpose5n2n6y2coD+a39O5007ezT7t
+         Rvvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=sKwNIt+Su79UppYhwI6KzTX7lzsG54zDOaS458PPq0U=;
+        b=aQwL056neTUdS+u90WByJeMZmKFv+nJ4vRgrbmBjZpHW18GAGd+yr1EKCqMNfds58k
+         feKQyLId/YHm5VulEN9yJdC4hFhmAPo6wrgTUxvRVBYG5ph95pFsZY6ycVi6G7LJi/xb
+         cSVqQJadb9czEVdOurG/9tYLUsfdtTDOq74q5Ax8+WIK/u/PIsDYK1hNN4GTDL5OYEL/
+         sPvKv5iSflcGhsVO6iFZ4XaTGW2f5xG62mRgyWrHK5dHbwHz5L5HQG6HndnmvEMJbgAJ
+         bjuUReljdcDMbsHEqXg7NX5hxfFmOwsietqkr4LB5r9ZnOKooVDBjOzmCn7WmLd5egQR
+         F0rg==
+X-Gm-Message-State: ACgBeo0cxjeFJMiHYJPNyEMBscjra34XIr14AIa6inxkMNelCAxFxAp6
+        Vdl+pYo9GhHEoxTB68tJa3S7+A==
+X-Google-Smtp-Source: AA6agR6BzACfIJmBVjmp3EG4nPvz2giX+6BEYM6KC8E4LFpoYhpibF1aKDUpao68Wituea3Vd8vUmw==
+X-Received: by 2002:a19:3859:0:b0:48b:2523:d26c with SMTP id d25-20020a193859000000b0048b2523d26cmr7750713lfj.88.1660023054752;
+        Mon, 08 Aug 2022 22:30:54 -0700 (PDT)
+Received: from [192.168.1.39] ([83.146.140.105])
+        by smtp.gmail.com with ESMTPSA id m9-20020a056512358900b0048abf3a550asm1634905lfr.224.2022.08.08.22.30.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Aug 2022 22:30:54 -0700 (PDT)
+Message-ID: <4b39c749-5685-c821-6723-4a950287656d@linaro.org>
+Date:   Tue, 9 Aug 2022 08:30:53 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-9.9 required=5.0 tests=BAYES_00,
-        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,UNPARSEABLE_RELAY,
-        USER_IN_DEF_SPF_WL autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH 1/2] ARM: msm8960: Rename cxo_board to cxo-board and add
+ alias
+Content-Language: en-US
+To:     Rudraksha Gupta <guptarud@gmail.com>,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, david@ixit.cz,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org
+References: <20220808234723.5184-1-guptarud@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220808234723.5184-1-guptarud@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The print function dev_err() is redundant because platform_get_irq()
-already prints an error.
+On 09/08/2022 02:47, Rudraksha Gupta wrote:
+> This patch renames cxo_board to be up to date with the current naming
+> style. It also adds an alias
 
-./drivers/thermal/qcom/qcom-spmi-adc-tm5.c:1029:2-9: line 1029 is redundant because platform_get_irq() already prints an error.
+Do not use "This commit/patch".
+https://elixir.bootlin.com/linux/v5.17.1/source/Documentation/process/submitting-patches.rst#L95
 
-Link: https://bugzilla.openanolis.cn/show_bug.cgi?id=1846
-Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
----
- drivers/thermal/qcom/qcom-spmi-adc-tm5.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+> 
+> Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
+> ---
+>  arch/arm/boot/dts/Makefile     | 1 +
+>  drivers/clk/qcom/gcc-msm8960.c | 2 +-
+>  2 files changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+> index 05d8aef6e5d2..d55f196ad733 100644
+> --- a/arch/arm/boot/dts/Makefile
+> +++ b/arch/arm/boot/dts/Makefile
+> @@ -1049,6 +1049,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
+>  	qcom-msm8660-surf.dtb \
+>  	qcom-msm8916-samsung-serranove.dtb \
+>  	qcom-msm8960-cdp.dtb \
+> +	qcom-msm8960-samsung-expressatt.dtb \
 
-diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-index add6f40e5e2a..af68adf720cc 100644
---- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-+++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-@@ -1025,10 +1025,8 @@ static int adc_tm5_probe(struct platform_device *pdev)
- 	adc_tm->base = reg;
- 
- 	irq = platform_get_irq(pdev, 0);
--	if (irq < 0) {
--		dev_err(dev, "get_irq failed: %d\n", irq);
-+	if (irq < 0)
- 		return irq;
--	}
- 
- 	ret = adc_tm5_get_dt_data(adc_tm, node);
- 	if (ret) {
--- 
-2.20.1.7.g153144c
+This does not look related at all.
 
+>  	qcom-msm8974-lge-nexus5-hammerhead.dtb \
+>  	qcom-msm8974-sony-xperia-rhine-amami.dtb \
+>  	qcom-msm8974-sony-xperia-rhine-honami.dtb \
+> diff --git a/drivers/clk/qcom/gcc-msm8960.c b/drivers/clk/qcom/gcc-msm8960.c
+> index 051745ef99c8..56ce05a846dd 100644
+> --- a/drivers/clk/qcom/gcc-msm8960.c
+> +++ b/drivers/clk/qcom/gcc-msm8960.c
+> @@ -3624,7 +3624,7 @@ static int gcc_msm8960_probe(struct platform_device *pdev)
+>  	if (!match)
+>  		return -EINVAL;
+>  
+> -	ret = qcom_cc_register_board_clk(dev, "cxo_board", "cxo", 19200000);
+> +	ret = qcom_cc_register_board_clk(dev, "cxo-board", "cxo", 19200000);
+
+... and this does not look related to subject prefix.
+
+Best regards,
+Krzysztof
