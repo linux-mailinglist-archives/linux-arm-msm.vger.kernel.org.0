@@ -2,78 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C89958D413
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Aug 2022 08:52:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00B3858D543
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Aug 2022 10:22:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232887AbiHIGwS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Aug 2022 02:52:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56470 "EHLO
+        id S230194AbiHIIWj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Aug 2022 04:22:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238870AbiHIGwI (ORCPT
+        with ESMTP id S229567AbiHIIWh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Aug 2022 02:52:08 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 388A920F42
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Aug 2022 23:51:59 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id v2so7113046lfi.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Aug 2022 23:51:59 -0700 (PDT)
+        Tue, 9 Aug 2022 04:22:37 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4A2D62EE;
+        Tue,  9 Aug 2022 01:22:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=YKNZDEH28vo2hOp+yO+5ohq8JvJ2Azq963eWNXEueng=;
-        b=YPnO3aOsjoKfoky+lJWcp8X+Ot6taMNcOMdzc20QiXMA0XVsHV1mF8SfHypERbMgvP
-         VLvqaGFDuOXjroTO4Hx9SOM085qQ/9ApiXpvQPfFym/MYjpM6pkGvsVF3P4eNl6x2RCV
-         2ahSiq+69pCAiV7nHTCTi3JCjFVsIAbm35PlGTw58/e6sqlHCKPsLce5yPlNeVh/2N/2
-         oycRIeUbS9c+iuD7xVdk9eZyFxtpRNuch3gWt00CIF9BnyKKBQrcuO+SGS5HbSfFrht6
-         satS+5Yclxa/Ni7BmrC5osAGmGdykqzgU2zr9yfxwRS+9dlJ2c401Eih5kyHfgNZV+yA
-         snBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=YKNZDEH28vo2hOp+yO+5ohq8JvJ2Azq963eWNXEueng=;
-        b=BNdPHyO5P5xeavMMBtcCa+Ek1ubtuOD7lg6vhzSrqbdoptkgRTjy77iQ8FyxWGv5Ph
-         R/7gG5qsqkdM95HPRTTQWi+b90U4Eg7fUJJ+f5p4tJ4QZbl4dR384BVVFk8/OkijFyY4
-         V52RUaWUbhGClRCn8JFVjB9Az+h/dNDxZL0svGY06uFi0fHrdMfykMCfdEUeIgLE673W
-         gx76yqgZg1o30dKonoqKrfrkp7J0QT3qbdaMI5wpCrI/H6Iy3ti1zWXBzN3dzCgYJGX6
-         FeDG2EMTFaUOK7gOaX3eeouVHRLDeqvlYtoyzdmOV43/COUkoSxcv+B9r3wbvpVKfBiQ
-         RSAQ==
-X-Gm-Message-State: ACgBeo2BB7o7Q9PHx2skUvqPJp+IcotQIUf3dI/el1dcPfN0UPRvRXln
-        4hK2JB5CO4tApvQ1X88E8d2fWtqICL1kp4mW
-X-Google-Smtp-Source: AA6agR5JNym3jZqwEXK+XRc6gZGTBrm4grb5Lt43yb7sd2tQ2mwtU0gNBV8G9SDZYNmBeRsUMlQVjg==
-X-Received: by 2002:a05:6512:3fa0:b0:48a:c45:275f with SMTP id x32-20020a0565123fa000b0048a0c45275fmr7180583lfa.566.1660027917050;
-        Mon, 08 Aug 2022 23:51:57 -0700 (PDT)
-Received: from [192.168.1.39] ([83.146.140.105])
-        by smtp.gmail.com with ESMTPSA id j16-20020ac25510000000b0048af3154456sm1653751lfk.146.2022.08.08.23.51.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Aug 2022 23:51:56 -0700 (PDT)
-Message-ID: <a35dc076-e33f-1b31-2a01-27bb37301039@linaro.org>
-Date:   Tue, 9 Aug 2022 09:51:54 +0300
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1660033356; x=1691569356;
+  h=message-id:date:mime-version:subject:to:references:from:
+   in-reply-to:content-transfer-encoding;
+  bh=4RdQ7P8S4h5nYU0gs8Q75efzkHo4s0hEdG6A0YIeAVQ=;
+  b=zefqcnHOUEagItcFXVkPaAAHtwq5bhvT10VU2hzM5Y3/xY3LWxyqCA6O
+   OFOnrHqXpDWQja8PND2rRyRja2LhYQVdoSADhlfmkHBWInCTCgBUWR/nL
+   LrtstHDUTcFVTzZ7KlY5V9fzC2waUvOAC3cssQ100enlfbL7TIcRz/fUH
+   8=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 09 Aug 2022 01:22:36 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Aug 2022 01:22:35 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 9 Aug 2022 01:22:35 -0700
+Received: from [10.216.39.97] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 9 Aug 2022
+ 01:22:29 -0700
+Message-ID: <1f340f3d-83f3-6455-7671-34ef40abe6c4@quicinc.com>
+Date:   Tue, 9 Aug 2022 13:52:26 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH] dt-bindings: leds: Describe optional 'reg' property used
- for Qualcomm LPG nodes
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 7/8] remoteproc: qcom: Add support for memory sandbox
 Content-Language: en-US
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        robh@kernel.org, pavel@ucw.cz, devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-References: <20220721195502.1525214-1-bhupesh.sharma@linaro.org>
- <CAA8EJppGS38aP7gyd1c3kNgraAVJDoqUef2cDfZpu2aL_iwW0g@mail.gmail.com>
- <YvFZgr1RRq6tYaVC@ripper>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <YvFZgr1RRq6tYaVC@ripper>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <linux-remoteproc@vger.kernel.org>, <agross@kernel.org>,
+        <bjorn.andersson@linaro.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>, <devicetree@vger.kernel.org>
+References: <1659536480-5176-1-git-send-email-quic_srivasam@quicinc.com>
+ <1659536480-5176-8-git-send-email-quic_srivasam@quicinc.com>
+ <9d78a571-8d02-2967-1f29-21ca737a582f@linaro.org>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <9d78a571-8d02-2967-1f29-21ca737a582f@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,65 +75,206 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/08/2022 21:44, Bjorn Andersson wrote:
-> On Thu 21 Jul 13:19 PDT 2022, Dmitry Baryshkov wrote:
-> 
->> On Thu, 21 Jul 2022 at 22:55, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
->>>
->>> As Bjorn noted in [1], it is useful to describe the optional
->>> 'reg' property for Qualcomm LPG nodes as it is used in
->>> some Qualcomm dts files.
->>
->> I don't think this is correct. LPG block maps to several regions, so
->> using just one of them in reg doesn't look correct.
->>
-> 
-> I agree, but I also like the uniformity of having unit addresses for the
-> devices on the spmi buses.
 
-regulators also do not have reg, so I guess consistency is already gone.
-
-I vote here to reflect the real hardware/device which means:
-1. IIUC, the design of entire SPMI bindings and its implementation is
-around parent device sitting on SPMI bus and children using its
-regmap/io space.
-2. The children are not really re-usable for different cases/devices
-(e.g. standalone WLED or LPG, outside of PMIC).
-3. This means entire design is tightly coupled and LPG (or wled,
-regulators) bindings describe the piece of PMIC, thus I find appropriate
-skipping "reg".
-4. If we want to keep the "reg", then it should rather reflect reality,
-so if Dmitry said - multiple items for separate IO address ranges.
-
-> 
->>> This fixes the following 'make dtbs_check' error reported for
->>> pm8350c & sc8280xp pwm nodes:
->>>
->>> arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb:
->>>  pwm@e800: 'reg' does not match any of the regexes:
->>>  '^led@[0-9a-f]$', 'pinctrl-[0-9]+'
->>
->> I'd prefer to follow the existing schema and to drop the region from
->> those files.
->>
-> 
-> I'm fine either way, but we have more of these nodes, so I would like to
-> hear from the DT maintainers on the direction to take. All nodes on the
-> spmi bus has an (at least one) address, so it would be accurate to state
-> this in the node.
-> 
-> It does however not seem like devicetree@, nor Krzysztof is Cc'ed on
-> this patch, so I've added them...
+On 8/7/2022 2:04 AM, Dmitry Baryshkov wrote:
+Thanks for your time and Valuable inputs Dmitry!!!
+> On 03/08/2022 17:21, Srinivasa Rao Mandadapu wrote:
+>> Add memory sandbox support for ADSP based platforms secure booting.
 >
+> This repeats commit subject. Please replace it with proper commit 
+> message text describing what is done and why.
+Okay. Will update it.
+>
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> ---
+>>   drivers/remoteproc/qcom_q6v5_adsp.c | 101 
+>> +++++++++++++++++++++++++++++++++++-
+>>   1 file changed, 99 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c 
+>> b/drivers/remoteproc/qcom_q6v5_adsp.c
+>> index 3dbd035..f81da47 100644
+>> --- a/drivers/remoteproc/qcom_q6v5_adsp.c
+>> +++ b/drivers/remoteproc/qcom_q6v5_adsp.c
+>> @@ -9,6 +9,7 @@
+>>   #include <linux/firmware.h>
+>>   #include <linux/interrupt.h>
+>>   #include <linux/io.h>
+>> +#include <linux/iommu.h>
+>>   #include <linux/iopoll.h>
+>>   #include <linux/kernel.h>
+>>   #include <linux/mfd/syscon.h>
+>> @@ -48,6 +49,8 @@
+>>   #define LPASS_PWR_ON_REG        0x10
+>>   #define LPASS_HALTREQ_REG        0x0
+>>   +#define SID_MASK_DEFAULT        0xF
+>> +
+>>   #define QDSP6SS_XO_CBCR        0x38
+>>   #define QDSP6SS_CORE_CBCR    0x20
+>>   #define QDSP6SS_SLEEP_CBCR    0x3c
+>> @@ -77,7 +80,7 @@ struct adsp_pil_data {
+>>   struct qcom_adsp {
+>>       struct device *dev;
+>>       struct rproc *rproc;
+>> -
+>> +    struct iommu_domain *iommu_dom;
+>>       struct qcom_q6v5 q6v5;
+>>         struct clk *xo;
+>> @@ -332,6 +335,91 @@ static int adsp_load(struct rproc *rproc, const 
+>> struct firmware *fw)
+>>       return 0;
+>>   }
+>>   +static int adsp_map_smmu(struct qcom_adsp *adsp, struct rproc *rproc)
+>> +{
+>> +    struct of_phandle_args args;
+>> +    int ret, rc, i;
+>> +    long long sid;
+>> +
+>> +    unsigned long mem_phys;
+>> +    unsigned long iova;
+>> +    const __be32 *prop;
+>> +    int access_level;
+>> +    uint32_t len, flag, mem_size;
+>> +    int offset;
+>> +    struct fw_rsc_hdr *hdr;
+>> +    struct fw_rsc_devmem *rsc_fw;
+>> +
+>> +    rc = of_parse_phandle_with_fixed_args(adsp->dev->of_node, 
+>> "iommus", 1, 0, &args);
+>
+> Please do not add implicit dependency on #iommu-cells value.
+Okay. Will change it to "of_parse_phandle_with_args()"
+>
+>> +    if (rc < 0)
+>> +        sid = -1;
+>> +    else
+>> +        sid = args.args[0] & SID_MASK_DEFAULT;
+>> +
+>> +    adsp->iommu_dom = iommu_domain_alloc(&platform_bus_type);
+>
+> please use adsp->dev->bus instead of platform_bus_type here.
+Okay. will update it.
+>
+>> +    if (!adsp->iommu_dom) {
+>> +        dev_err(adsp->dev, "failed to allocate iommu domain\n");
+>> +        return -ENOMEM;
+>> +    }
+>> +
+>> +    ret = iommu_attach_device(adsp->iommu_dom, adsp->dev);
+>> +    if (ret) {
+>> +        dev_err(adsp->dev, "could not attach device ret = %d\n", ret);
+>> +        return -EBUSY;
+>> +    }
+>> +
+>> +    /* Add SID configuration for ADSP Firmware to SMMU */
+>> +    adsp->mem_phys =  adsp->mem_phys | (sid << 32);
+>> +
+>> +    ret = iommu_map(adsp->iommu_dom, adsp->mem_phys, adsp->mem_phys,
+>> +            adsp->mem_size,    IOMMU_READ | IOMMU_WRITE);
+>> +    if (ret) {
+>> +        dev_err(adsp->dev, "Unable to map ADSP Physical Memory\n");
+>> +        return ret;
+>> +    }
+>> +
+>> +    prop = of_get_property(adsp->dev->of_node, "qcom,adsp-memory", 
+>> &len);
+>
+> Non-documented property. So, this chunk is not acceptable.
+Okay. Will add it in dt-bindings too.
+>
+>> +    if (prop) {
+>> +        len /= sizeof(__be32);
+>> +        for (i = 0; i < len; i++) {
+>> +            iova = be32_to_cpu(prop[i++]);
+>> +            mem_phys = be32_to_cpu(prop[i++]);
+>> +            mem_size = be32_to_cpu(prop[i++]);
+>> +            access_level = be32_to_cpu(prop[i]);
+>> +
+>> +            if (access_level)
+>> +                flag = IOMMU_READ | IOMMU_WRITE;
+>> +            else
+>> +                flag = IOMMU_READ;
+>> +
+>> +            ret = iommu_map(adsp->iommu_dom, iova, mem_phys, 
+>> mem_size, flag);
+>> +            if (ret) {
+>> +                dev_err(adsp->dev, "failed to map addr = %p mem_size 
+>> = %x\n",
+>> +                        &(mem_phys), mem_size);
+>> +                return ret;
+>> +            }
+>> +        }
+>> +    } else {
+>> +        if (!rproc->table_ptr)
+>> +            return 0;
+>> +
+>> +        for (i = 0; i < rproc->table_ptr->num; i++) {
+>> +            offset = rproc->table_ptr->offset[i];
+>> +            hdr = (void *)rproc->table_ptr + offset;
+>> +            rsc_fw = (struct fw_rsc_devmem *)hdr + sizeof(*hdr);
+>> +
+>> +            ret = iommu_map(rproc->domain, rsc_fw->da, rsc_fw->pa,
+>> +                        rsc_fw->len, rsc_fw->flags);
+>
+> What about filling an sgtable instead and using it?
 
-Anyway this patch has to be resent to properly reach DT patchwork.
+Here we are just doing IO mapping and allowing ADSP to access the 
+specified memory.
 
-Bhupesh,
+I am not sure,  sg_table applicable here or not as it's not any DMA 
+activity.
 
-Please use scripts/get_maintainer.pl to Cc relevant folks and mailing
-lists. While resending, add appropriate device prefix to subject, so:
-dt-bindings: leds: qcom-lpg:
+Please correct me if my understanding is not enough and It would help me 
+a lot, if any good example shared.
 
+>
+>> +            if (ret) {
+>> +                pr_err("%s; unable to map adsp memory address\n", 
+>> __func__);
+>> +                return ret;
+>> +            }
+>> +        }
+>> +    }
+>> +    return 0;
+>> +}
+>> +
+>> +
+>>   static int adsp_start(struct rproc *rproc)
+>>   {
+>>       struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
+>> @@ -341,7 +429,13 @@ static int adsp_start(struct rproc *rproc)
+>>       ret = qcom_q6v5_prepare(&adsp->q6v5);
+>>       if (ret)
+>>           return ret;
+>> -
+>> +    if (!adsp->is_wpss) {
+>> +        ret = adsp_map_smmu(adsp, rproc);
+>
+> Is this also applicable to cDSP? To sdm845 adsp?
 
-Best regards,
-Krzysztof
+It's applicable to all ADSP SoC variants. I think it's better to add 
+adsp flag("is_adsp") for
+
+distinguishing adsp use cases. Please suggest here.
+
+>
+>> +        if (ret) {
+>> +            dev_err(adsp->dev, "ADSP smmu mapping failed\n");
+>> +            goto adsp_smmu_unmap;
+>> +        }
+>> +    }
+>>       ret = clk_prepare_enable(adsp->xo);
+>>       if (ret)
+>>           goto disable_irqs;
+>> @@ -402,6 +496,9 @@ static int adsp_start(struct rproc *rproc)
+>>       clk_disable_unprepare(adsp->xo);
+>>   disable_irqs:
+>>       qcom_q6v5_unprepare(&adsp->q6v5);
+>> +adsp_smmu_unmap:
+>> +    iommu_unmap(adsp->iommu_dom, adsp->mem_phys, adsp->mem_size);
+>> +    iommu_domain_free(adsp->iommu_dom);
+>>         return ret;
+>>   }
+>
+>
