@@ -2,68 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 93D0558DCF4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Aug 2022 19:19:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 148C358DFA1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Aug 2022 21:03:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244917AbiHIRTL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Aug 2022 13:19:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57516 "EHLO
+        id S1345144AbiHITDY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Aug 2022 15:03:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244901AbiHIRTJ (ORCPT
+        with ESMTP id S1345262AbiHITCu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Aug 2022 13:19:09 -0400
-Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A3121EED4
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Aug 2022 10:19:08 -0700 (PDT)
-Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-10ea30a098bso14723774fac.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Aug 2022 10:19:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc;
-        bh=F3mQ/S2sqzZ4+KCihi4IINlKul8TP/JpqnlGqe/JBSI=;
-        b=dr8AkFIsrOarfhsiqQCVJ2rkVJD9uSzRm4fRn5TABjqY3A1bX9xdxSLbe+2J7gXd3e
-         OHIOVSv4BNs636N16RoXXA4zYBybDXNqXvV/y0PKF4GgKON0ZxvLM1wPLX8ZeqbC7nSk
-         nvr86ucZfOqIOBeqD6DIl46zifJF1jjrnpqOw=
+        Tue, 9 Aug 2022 15:02:50 -0400
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF5FA22BD6;
+        Tue,  9 Aug 2022 11:36:39 -0700 (PDT)
+Received: by mail-io1-f43.google.com with SMTP id l24so10272076ion.13;
+        Tue, 09 Aug 2022 11:36:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc;
-        bh=F3mQ/S2sqzZ4+KCihi4IINlKul8TP/JpqnlGqe/JBSI=;
-        b=D624sXogUDGntq2f32tJBqHthL16w7Wtwjq0lygSb4XRcQU0OEgcoRMMW81DJ+oUYH
-         Dj/H13DJT143tdeh+KhVVz6mZj4RzcYWyHU6VL9Gmmb4Piy15AzOoPMszWPeWAjg91MH
-         6VTISUcExnUq4My+5kfGB1tWpTn7tSxqJX6eADQ/7r49Kjwm5RkSi38FsoLTHCXLRHrf
-         Gqgaqp4cA6qVwo3CIoZy0GB1cR3w893d5KRp70i5NkAbiLZ9lxGFo8pC8XKt3KbrNteS
-         jLKSCqeVQWY4oGMTDRExM3IZIW+qj7OSCViZEfqdDRL3CwyjZYieSdc3v4S4CqiQ123X
-         rGkQ==
-X-Gm-Message-State: ACgBeo1q2FQMzFZymde6TABGG44efff1tFMrfpOzuD9mu8iaLPIqboFy
-        CWFgYkKEHpDzRa5k5mOx7E9YzybFzZ5LFMIc876ZWw==
-X-Google-Smtp-Source: AA6agR6t7xII3eA5jSw3anFzFQR5Hj1055h7MGtwPPp/qxxEWwlt3cmh7elzmmt5eXXzP0Jq6J5t0shhZqzhsk1AgE4=
-X-Received: by 2002:a05:6870:9a17:b0:e9:3d1:f91a with SMTP id
- fo23-20020a0568709a1700b000e903d1f91amr10961672oab.44.1660065547740; Tue, 09
- Aug 2022 10:19:07 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 9 Aug 2022 12:19:07 -0500
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=5EdrWPjpBP3VYdnyEWUwLGGLE7oilUX8uvXCZ6ZG7Vg=;
+        b=6RW5BOXGNi3cvgKJQTeeH9nKUXIVJWsOvSFA73IR7h34oX4dOA1qJiM48ZLA64pm4X
+         o90T+vVIlDLnrz1OZhUxyhlypynNN64bU1QlrzWfTBnhgu5uMH1T2VaY03LDrvid0WSh
+         4OOES+ah9aUHJj86K+3VpIH3BobxNUUDezxyjdiKCHG7+qfU8Yf+JOsztt3q6WrJzUvL
+         G0Xv9jWADOxjuPo7H5xTCxWb/nHWON+hN0getMabFRoPLd8kHv/7UAdns+SvXJT4OPTz
+         tzLLN5tJrqtENmOlJ9cAtn4ojp/4wbtapWH86KXml7LWS1+7ydIialM1FpVNuzKOHSSl
+         y9mA==
+X-Gm-Message-State: ACgBeo07gm4EcGOk9L0wmqPX7tToKSgdmruF3MKtb0QcmSpqJLlLj73Q
+        Bn1a8Xwnb9Zv4S97Qx3EUbQwDA8bNg==
+X-Google-Smtp-Source: AA6agR5yPwtVmgqurmOG5Cpbap2+YlmJxk40xTsHVhmWulzBqkcUJkTyNz/+N2CLRsLMSt09UQhcZw==
+X-Received: by 2002:a02:ccb2:0:b0:342:6ec9:491e with SMTP id t18-20020a02ccb2000000b003426ec9491emr10888479jap.241.1660070199149;
+        Tue, 09 Aug 2022 11:36:39 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id i63-20020a6bb842000000b00684384bfcbbsm1399728iof.24.2022.08.09.11.36.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Aug 2022 11:36:38 -0700 (PDT)
+Received: (nullmailer pid 2162023 invoked by uid 1000);
+        Tue, 09 Aug 2022 18:36:36 -0000
+Date:   Tue, 9 Aug 2022 12:36:36 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     linux-remoteproc@vger.kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, quic_plai@quicinc.com, bgoswami@quicinc.com,
+        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
+        quic_rohkumar@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 1/8] dt-bindings: remoteproc: qcom: adsp: Make ADSP
+ pil loader as generic
+Message-ID: <20220809183636.GA2158474-robh@kernel.org>
+References: <1659611751-7928-1-git-send-email-quic_srivasam@quicinc.com>
+ <1659611751-7928-2-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
-In-Reply-To: <1658910477-6494-6-git-send-email-quic_c_skakit@quicinc.com>
-References: <1658910477-6494-1-git-send-email-quic_c_skakit@quicinc.com> <1658910477-6494-6-git-send-email-quic_c_skakit@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Tue, 9 Aug 2022 12:19:07 -0500
-Message-ID: <CAE-0n52rTakbo3=GUpJ7VPvDSi1jNiqJjXoHJ5w0HRYGvTHjNw@mail.gmail.com>
-Subject: Re: [PATCH V7 5/5] clk: qcom: lpass: Add support for resets &
- external mclk for SC7280
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Taniya Das <quic_tdas@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1659611751-7928-2-git-send-email-quic_srivasam@quicinc.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,21 +69,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Why is linux-clk@vger.kernel.org left off this clk patch series?
-
-Quoting Satya Priya (2022-07-27 01:27:57)
-> From: Taniya Das <quic_tdas@quicinc.com>
->
-> The clock gating control for TX/RX/WSA core bus clocks would be required
-> to be reset(moved from hardware control) from audio core driver. Thus
-> add the support for the reset clocks.
->
-> Update the lpass_aon_cc_main_rcg_clk_src ops to park the RCG at XO after
-> disable as this clock signal is used by hardware to turn ON memories in
-> LPASS. Also add the external mclk to interface external MI2S.
->
-> Fixes: a9dd26639d05 ("clk: qcom: lpass: Add support for LPASS clock controller for SC7280")
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+On Thu, Aug 04, 2022 at 04:45:44PM +0530, Srinivasa Rao Mandadapu wrote:
+> Rename sdm845 adsp pil bindings to generic name, for using same binings
+> file for subsequent SoCs.
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 > ---
+>  .../bindings/remoteproc/qcom,lpass-adsp-pil.yaml   | 160 +++++++++++++++++++++
+>  .../bindings/remoteproc/qcom,sdm845-adsp-pil.yaml  | 160 ---------------------
+>  2 files changed, 160 insertions(+), 160 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,lpass-adsp-pil.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sdm845-adsp-pil.yaml
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Please use the git-format-patch -M option so I'm not reviewing the whole 
+doc again. You also can (and should) change your git config to default 
+to this.
+
+Rob
