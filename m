@@ -2,107 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 792DF58E2C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 00:15:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF26558E3E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 01:56:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229572AbiHIWPI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Aug 2022 18:15:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37264 "EHLO
+        id S229819AbiHIX4b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Aug 2022 19:56:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229518AbiHIWPI (ORCPT
+        with ESMTP id S229506AbiHIX4a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Aug 2022 18:15:08 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78FB11CFDB
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Aug 2022 15:15:04 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id h132so12617144pgc.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Aug 2022 15:15:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc;
-        bh=GI1h58u9NHz7rI/vIwOU5DkUcoHPmL+b4tk5i/xxv5Y=;
-        b=QTP95oQi+RYhXbI8sz4RyTZp0RSE4jP48cyyUmWbTiK1ItvOHbADVtjkGHK/8zFbqv
-         EIzUG3d4HgG5eAQxnVHuBpH33ycuIiNpMEXk8S0LHARhhQGb6AufQVVn/40aQfLvP77W
-         778oK7qnpGZXO0Q2aGCYT4Mad4FGDHlh1br3s7D4D+9Vr7gPQrhXDR8bwR1fyz6kQ1n2
-         /mI7/+oIm6xqfpBjeRephfywWnzvzUcqvvdKwYuFsxmTm/GRVEQb9jKfBsLPvHEPeyBR
-         SLk52BQ10Zm7GZ4Mv5gugSKJZhGFXVOipaGDVsAOq6ABLyMrmGMv+5RYTjL3cqduwO+M
-         O1Rw==
+        Tue, 9 Aug 2022 19:56:30 -0400
+Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4B677822B;
+        Tue,  9 Aug 2022 16:56:29 -0700 (PDT)
+Received: by mail-io1-f45.google.com with SMTP id x64so10945126iof.1;
+        Tue, 09 Aug 2022 16:56:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc;
-        bh=GI1h58u9NHz7rI/vIwOU5DkUcoHPmL+b4tk5i/xxv5Y=;
-        b=tekzAiGmE0DU9DanDBKuGXgxMpx+j/wyXvv4CiN17dGKj5xu8v6igF/MlbO8h/yuKc
-         ql6+trCV2KDxpdeHf3uwW34AdWJJBKTn7dYnUWejr0prUP39xYx4x1710ggmZKMFM9oo
-         sOlDcDxaXU1n7o9vhew/DiV7vZ1sK31GBUI+9UGMDK9k24oOdxWKm3olV9BxngaCG15Z
-         mREZZsqzyHlzv41FsObPlHRnEGzoD2sIuXSPhojx8IYiLbx9BJyWVy342UW+AWuHo9A3
-         H17qdPlOSgv1O1zcS3j+ZnrwnI5mX1LDEdyC9N6YPd9W52JRtDYtAGiDsy/fdWSZ7MPx
-         YXiQ==
-X-Gm-Message-State: ACgBeo2J82sJr6KlazNgEhstk24MBeC7uHbj4U2B4SOyTzShbUx64TWa
-        eqKc0jVoigd5xsUPKUNf/WC5xkhwuu6PvnrVZF0=
-X-Google-Smtp-Source: AA6agR7pJ6r7fhR2kV9XLe+oV3h+/ej1weqLnpTQS1YP5ule1vsDwGSNCnOW6LlEIY2xTapZFY+hu5KXPqSjTYpoaJM=
-X-Received: by 2002:a63:4642:0:b0:41b:d353:c5c7 with SMTP id
- v2-20020a634642000000b0041bd353c5c7mr20359415pgk.568.1660083303718; Tue, 09
- Aug 2022 15:15:03 -0700 (PDT)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=cUmU0GC1UDSnmJIVXi+8Ee4MtJwwMLWlPOVyazdN9nY=;
+        b=gggOX8JIHFgYj49ATvlI9J1ujz4dAt0ZM5uOzRQ0+K4ng3v3DaJ6rgRkA0xtWg5kw6
+         ZaQ91IDhWAFVZz454+21ABE4xisM892D4nKo4F+XLKAwSg8KSi9AuBmoUZ3IAiyacfsS
+         551ul8O0UmKKtHpyuJnEiMkbRXnhtO50sle2BJCHqfdygrvA+UdZQEIKy3vb/ydKjXjz
+         q6Ig2AtmwcPAeliS7eG17wJqO4IT9ryXvQFpWlQcv/BeKGzreh27GvumAezGrYSNoSNg
+         tr1F5yACkcefmtnykK71xrQvLX8xjQn16Yaq5DAMElQ3qMXDsaZIEM5A3B92AhJw4BLB
+         pt5g==
+X-Gm-Message-State: ACgBeo2BYy8h6QDjnVSK8lEQmXVyGJdMfdghUqmKOxuPhXSvQqQePG/V
+        O982HL21aO86DHsxVgVNyyuzcOF9ZQ==
+X-Google-Smtp-Source: AA6agR5qxvy7CdtVRG9jiGXSr7Vt8aDiVERxPZIrGVpkhfJWW35dEu/5hZcoDydvcPduGht/pQei7Q==
+X-Received: by 2002:a05:6602:3c8:b0:672:4e60:7294 with SMTP id g8-20020a05660203c800b006724e607294mr10329634iov.17.1660089388879;
+        Tue, 09 Aug 2022 16:56:28 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id j2-20020a056e02014200b002df56aceb87sm1565516ilr.60.2022.08.09.16.56.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Aug 2022 16:56:28 -0700 (PDT)
+Received: (nullmailer pid 2776475 invoked by uid 1000);
+        Tue, 09 Aug 2022 23:56:25 -0000
+Date:   Tue, 9 Aug 2022 17:56:25 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     David Heidelberg <david@ixit.cz>
+Cc:     linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Caleb Connolly <caleb@connolly.tech>,
+        linux-arm-msm@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        ~okias/devicetree@lists.sr.ht,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, Lee Jones <lee.jones@linaro.org>
+Subject: Re: [PATCH v3] dt-bindings: mfd: convert to yaml Qualcomm SPMI PMIC
+Message-ID: <20220809235625.GA2775377-robh@kernel.org>
+References: <20220626191630.176835-1-david@ixit.cz>
 MIME-Version: 1.0
-Received: by 2002:a05:6a10:e8a6:b0:2d4:fb1c:cc5e with HTTP; Tue, 9 Aug 2022
- 15:15:03 -0700 (PDT)
-Reply-To: wijh555@gmail.com
-From:   "Dr. Ali Moses" <alimoses07@gmail.com>
-Date:   Tue, 9 Aug 2022 15:15:03 -0700
-Message-ID: <CADWzZe65tcOX2+bMZfMLLauGpHEQ9Cdv814nLU=uQvKzDFrEVg@mail.gmail.com>
-Subject: Good Day,
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.2 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:536 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [alimoses07[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
-        *      digit
-        *      [wijh555[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [alimoses07[at]gmail.com]
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  3.1 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220626191630.176835-1-david@ixit.cz>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
--- 
-Hello,
-We the Board Directors believe you are in good health, doing great and
-with the hope that this mail will meet you in good condition, We are
-privileged and delighted to reach you via email" And we are urgently
-waiting to hear from you. and again your number is not connecting.
+On Sun, 26 Jun 2022 21:16:30 +0200, David Heidelberg wrote:
+> Convert Qualcomm SPMI PMIC binding to yaml format.
+> 
+> Additional changes:
+>  - filled many missing compatibles
+> 
+> Co-developed-by: Caleb Connolly <caleb@connolly.tech>
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+> v3:
+>  - added subnodes, there are two not converted to YAML yet, but it works
+>  - now it prints milion directly unrelated warning to this binding
+>    (it's related to the included subnodes bindings, can be merged,
+>     but it'll generate more warnings and preferably anyone can takeover
+>     from here)
+>  - add qcom,pmx65
+> 
+> v2:
+>  - changed author to myself, kept Caleb as co-author
+>  - moved nodename to properties
+>  - add nodenames for pm* with deprecated property
+>  - add ^$ to pattern properties
+>  - dropped interrupt-names property
+>  - added reg prop. to the nodes which have register in nodename
+>  - added compatible pmx55
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>  .../bindings/mfd/qcom,spmi-pmic.txt           |  94 ---------
+>  .../bindings/mfd/qcom,spmi-pmic.yaml          | 191 ++++++++++++++++++
+>  2 files changed, 191 insertions(+), 94 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+>  create mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> 
 
-My regards,
-Dr. Ali Moses..
-
-Sincerely,
-Prof. Chin Guang
+As this hasn't been picked up, I applied it. Thanks!
