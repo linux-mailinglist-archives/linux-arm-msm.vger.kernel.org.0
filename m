@@ -2,68 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D4F258E52A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 05:09:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5443458E5A0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 05:47:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230119AbiHJDJa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Aug 2022 23:09:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40800 "EHLO
+        id S230266AbiHJDri (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Aug 2022 23:47:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230092AbiHJDJ3 (ORCPT
+        with ESMTP id S230213AbiHJDrh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Aug 2022 23:09:29 -0400
-Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3235A7E828
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Aug 2022 20:09:28 -0700 (PDT)
-Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-10cf9f5b500so16365300fac.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Aug 2022 20:09:28 -0700 (PDT)
+        Tue, 9 Aug 2022 23:47:37 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93E207FE71
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Aug 2022 20:47:36 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id u9so16260205oiv.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Aug 2022 20:47:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc;
-        bh=o9OOX4mTumeWxGfGIlGSIHTnrvS7ZQdKXUpha8Z8G0Q=;
-        b=mvbuZ5hQummlWWhg00HRmOlySExapbkSXpopIHAchaI/l9L9Owj7hr2qdU5nu87Igc
-         dacKD61RGtwXYkr0sTVXKXrzgY3xvTHgQ+Lehcnhpyl2BwARsLcdWLkj6tPImLHYI1zh
-         cL7jXyavKoPjc5kysLDJyu3m3eg4+DmwUPGGctCCUcQnwfinQ3/d0LrTn4ASKeKfGpCq
-         xRO846gyQce4nRdTzGcYnC/phkrGLEZSEK90f4uiatkv8JrR+dSRhsmbWPMAbvSylrKY
-         s3JpJzu7CL87x3xOiech525P0Kp+9Q8O6dNN16WRy9nYEqKsUX93//4DLHwMmiG8ERU1
-         ofng==
+        bh=oqmMiH/UG5akAdTqRaQ83MpJc5vNolPSY4pZFXlMR3U=;
+        b=d2yNKN82ZsRLLnQyeZHfug7oj60n9rVTtuJzZxuzdA2uZr+3pJ7kKuFjVbqmF3FSBW
+         4skQlE5iUTHLGyp/FuF0QBnJeWk00M4vjhk812IJfF+zPejn9uTSTwnZdqkQWxEzzvWT
+         +UJ8W/NctdKqU9QGFk/qBy7m9x4vbvftfyItSygujwwLdh9VWOuL5YV52XadM5Fk323+
+         FLJz8pGe3QfKGa39qGrPpl3hIF48ZYWfFtwm8Fn8idGijDnTzFMIS/FhBBFt6hG3NI72
+         e8JW9VKueRF6q0kqHz2ghhWbwbuZP8DiC416SnZKnUJWzly5Qivzk2EzOZlt5xBEGRUt
+         5NbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc;
-        bh=o9OOX4mTumeWxGfGIlGSIHTnrvS7ZQdKXUpha8Z8G0Q=;
-        b=U5GRhs8LKok5+uGq3OCF0vOo/Zu8qHZFe02P5p0fSz7moM7MZSBg7jKrUUyaHuf+1Y
-         rXTmJUzZVgji5bdaPJEBJ5rGFuQRDNY2FyoF1q5PVnLpJ4HLyfVP7DGuB3Ja/PQ4Pj8Y
-         5FFQx678mUXNx5sZgjjOFVEGlLgeZFVDs/QJeGNrzj0zqmKYMRIWNu0rA0jBo4y+lTLe
-         PCz8/X4xjur6Vnlx5XxPXrR9MrEGXwNdmeGUpqQid34p3BnCIe95ifYOXVxNTZNtqG3R
-         MnocM/XhKbshNo6F4FxnEDeAq7FqY1cYtJ+W1/XivNDZBwSuBS8b9yr8kxUXZT/xy3wa
-         YKgA==
-X-Gm-Message-State: ACgBeo0D3e4UcmCsBHEtHyFnI7XWNidLPoms1oK9a2sT3Y8/2okf06Ga
-        2xRBK5IfFG1jjpl9V/ys++GJiA==
-X-Google-Smtp-Source: AA6agR7iTviPqVEw9B40nZ6Lak0B2tK8eToZFcYqTh1tYtSeNKzqauHW0s6cZwkBd15XPi75I7n/EA==
-X-Received: by 2002:a05:6871:7a7:b0:10d:3fb6:b632 with SMTP id o39-20020a05687107a700b0010d3fb6b632mr599519oap.237.1660100967558;
-        Tue, 09 Aug 2022 20:09:27 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id ba41-20020a056870c5a900b00101c76f7831sm3586268oab.24.2022.08.09.20.09.26
+        bh=oqmMiH/UG5akAdTqRaQ83MpJc5vNolPSY4pZFXlMR3U=;
+        b=Bvmev7sjU+pJPNWTdYBzBzakt5qG5/xvOS5FGNEnbyZSJbaaC3xH2yAMszfzvu/5s5
+         EzcebiEWio3mngE0G9IUzqCK49AgY37RSQVIWWlByDcJlF9hz+CIF7qmLu/kKlBr90Wf
+         xr4mmyNegHqsvz3PoIj1/lGs2nBIqg5+sPv5gH644qpckI4x35PmMl9M52yGirkoS4YZ
+         MKoa5r3qQY9ehAZKb3q/GYyaG3HkQ1JG/w2ZphPb2w54DJ7yf+MXdaRVRoAFZMdEVRDG
+         V+sTItwNJXtBexiyqFN2EqzO7x3EkA+GFqJLoVA2WQO+lO5aRaFsrzYyKzpnyWZxS3/a
+         IlhQ==
+X-Gm-Message-State: ACgBeo3xN8v9JxT/HjSWfT3DbcDRLGg/ctjL+H8GroAEyBN65JdkiDQd
+        +26h7iTj7eSdz9uM/gv4njaRmA==
+X-Google-Smtp-Source: AA6agR6LW5x3u433YcgepMxhYX8BW9RBRp7nZ1Z8Bewtym4fkGsFpK5iTiXaqxM+6e7a63AdFH4k1A==
+X-Received: by 2002:a05:6808:ec3:b0:2ec:8fcb:1d4a with SMTP id q3-20020a0568080ec300b002ec8fcb1d4amr681609oiv.162.1660103255928;
+        Tue, 09 Aug 2022 20:47:35 -0700 (PDT)
+Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id n2-20020a4ae742000000b00444f26822e5sm454337oov.10.2022.08.09.20.47.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Aug 2022 20:09:27 -0700 (PDT)
+        Tue, 09 Aug 2022 20:47:35 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] phy: qualcomm: phy-qcom-qmp: add support for combo USB3+DP phy on SDM845
-Date:   Tue,  9 Aug 2022 22:09:26 -0500
-Message-Id: <20220810030926.2794179-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.37.1
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 0/7] drm/msm/dp: Support for external displays
+Date:   Tue,  9 Aug 2022 20:50:06 -0700
+Message-Id: <20220810035013.3582848-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,77 +77,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Introduce support for DisplayPort on SDM845 and SC8280XP, followed by
+introduction of drm_bridge based HPD handling.
 
-Define configuration to be used by combo USB3 + DisplayPort phy on
-SDM845 SoC family. It closely follows sc7180, however like the main USB3
-phy it uses the qmp_v3_usb3phy_cfg config.
+The version of these patches are restarted, as the previous
+drm_connector_oob_hotplug_event()-based approach was abandoned and this only
+barely resembles that effort.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 41 +++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+In this effort the HPD handling is based on the reliance of the hpd_notify()
+being invoked by a downstream (next_bridge) drm_bridge implementation, such as
+the standard display-connector, or a something like an USB Type-C controller
+implementation.
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index 4b1828976104..e9722d8aae59 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -903,6 +903,43 @@ static const struct qmp_phy_combo_cfg sc7180_usb3dpphy_cfg = {
- 	.dp_cfg			= &sc7180_dpphy_cfg,
- };
- 
-+static const struct qmp_phy_cfg sdm845_usb3phy_cfg = {
-+	.type			= PHY_TYPE_USB3,
-+	.nlanes			= 1,
-+
-+	.serdes_tbl		= qmp_v3_usb3_serdes_tbl,
-+	.serdes_tbl_num		= ARRAY_SIZE(qmp_v3_usb3_serdes_tbl),
-+	.tx_tbl			= qmp_v3_usb3_tx_tbl,
-+	.tx_tbl_num		= ARRAY_SIZE(qmp_v3_usb3_tx_tbl),
-+	.rx_tbl			= qmp_v3_usb3_rx_tbl,
-+	.rx_tbl_num		= ARRAY_SIZE(qmp_v3_usb3_rx_tbl),
-+	.pcs_tbl		= qmp_v3_usb3_pcs_tbl,
-+	.pcs_tbl_num		= ARRAY_SIZE(qmp_v3_usb3_pcs_tbl),
-+	.clk_list		= qmp_v3_phy_clk_l,
-+	.num_clks		= ARRAY_SIZE(qmp_v3_phy_clk_l),
-+	.reset_list		= msm8996_usb3phy_reset_l,
-+	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
-+	.vreg_list		= qmp_phy_vreg_l,
-+	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-+	.regs			= qmp_v3_usb3phy_regs_layout,
-+
-+	.start_ctrl		= SERDES_START | PCS_START,
-+	.pwrdn_ctrl		= SW_PWRDN,
-+	.phy_status		= PHYSTATUS,
-+
-+	.has_pwrdn_delay	= true,
-+	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
-+	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
-+
-+	.has_phy_dp_com_ctrl	= true,
-+	.is_dual_lane_phy	= true,
-+};
-+
-+static const struct qmp_phy_combo_cfg sdm845_usb3dpphy_cfg = {
-+	.usb_cfg                = &sdm845_usb3phy_cfg,
-+	.dp_cfg                 = &sc7180_dpphy_cfg,
-+};
-+
- static const struct qmp_phy_cfg sm8150_usb3phy_cfg = {
- 	.type			= PHY_TYPE_USB3,
- 	.nlanes			= 1,
-@@ -2441,6 +2478,10 @@ static const struct of_device_id qcom_qmp_combo_phy_of_match_table[] = {
- 		.compatible = "qcom,sc7180-qmp-usb3-dp-phy",
- 		.data = &sc7180_usb3dpphy_cfg,
- 	},
-+	{
-+		.compatible = "qcom,sdm845-qmp-usb3-dp-phy",
-+		.data = &sdm845_usb3dpphy_cfg,
-+	},
- 	{
- 		.compatible = "qcom,sm8250-qmp-usb3-dp-phy",
- 		.data = &sm8250_usb3dpphy_cfg,
+Bjorn Andersson (7):
+  dt-bindings: msm/dp: Add SDM845 and SC8280XP compatibles
+  drm/msm/dp: Stop using DP id as index in desc
+  drm/msm/dp: Add DP and EDP compatibles for SC8280XP
+  drm/msm/dp: Add SDM845 DisplayPort instance
+  drm/msm/dp: Implement hpd_notify()
+  drm/msm/dp: Don't enable HPD interrupts for edp
+  drm/msm/dp: HPD handling relates to next_bridge
+
+ .../bindings/display/msm/dp-controller.yaml   |   3 +
+ drivers/gpu/drm/msm/dp/dp_display.c           | 136 +++++++++++-------
+ drivers/gpu/drm/msm/dp/dp_display.h           |   1 +
+ drivers/gpu/drm/msm/dp/dp_drm.c               |   3 +
+ drivers/gpu/drm/msm/dp/dp_drm.h               |   2 +
+ drivers/gpu/drm/msm/msm_drv.h                 |   1 +
+ 6 files changed, 92 insertions(+), 54 deletions(-)
+
 -- 
-2.37.1
+2.35.1
 
