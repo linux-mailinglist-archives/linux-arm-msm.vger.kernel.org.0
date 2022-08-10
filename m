@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83BC658E628
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 06:20:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54DAC58E62A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 06:20:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230361AbiHJEU3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Aug 2022 00:20:29 -0400
+        id S230300AbiHJEUb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Aug 2022 00:20:31 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230251AbiHJEU1 (ORCPT
+        with ESMTP id S230322AbiHJEU3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Aug 2022 00:20:27 -0400
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F28A64F6BB
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Aug 2022 21:20:26 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id f3-20020a9d0383000000b00636d99775a2so6193459otf.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Aug 2022 21:20:26 -0700 (PDT)
+        Wed, 10 Aug 2022 00:20:29 -0400
+Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 138754D836
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Aug 2022 21:20:28 -0700 (PDT)
+Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-10d845dcf92so16419970fac.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Aug 2022 21:20:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=NJ4wYR8zqp67KyZb/vxWvGE2htfMdPrc0+SKyjTL/B8=;
-        b=H41UTue3t5ek2dGF5AGZNV/7/59dNzBMFItqwT2SN29PsBBt3MaMIvU3h7/xU/KGl7
-         4UWuu+HB83Z3sWkRe+FrMUDm8Ga+Yd4YTL+7zZhoCYq1nTeLugYG93N7tJpRN4JZT07S
-         wEpVOH0cjidhprNeDulZYIrJg9HEtJwXLombBLlpgi5kUeCkmDg4dZupyLyvfeCJZbQw
-         lZ3I8mUG5D1MmVSziYra9Z17pPCFdm3iWHa83m9aVbIbugVajemCa+MGjlS+urIGzorb
-         L0Jji3l5tveiDlZRcpJ9K1v4EaapYo9zUVtYGGmlcqFRq7blFWvi+pTrVm8MJRFzAYr9
-         LXoQ==
+        bh=aTVS8f/JSGyOOMcrFh4jL8jY1rjH9L8QtIyJGu4bZbg=;
+        b=UbDArE4Pm+4oFBPvXUjJE4EoZgtYV9m3CueDS2qdf8YWgi+l42QLpZ68A4Lv9o7tqH
+         07FFDU/PBmRCnKboo2CsnrevXhfuIDSqxTJuHnzXZbQfP2UJO4BVvN4GVu8DLNEv1D/T
+         0uj8XPWKSyIbIr6I5CSzukQEMizAk/5tAvzOX4hpiHn9532MpmnU1wkXCz0c/2S8Kbgq
+         lF8m34ROzx6z9l8jf+iSgAlvIOhVFqJjX8uZQyjdn7ei8cMgrFumxxRcXvx7s7n9RP+2
+         8sAuLc3PyPf40YmqOIt8KYfYa4RM8nV5gjZq499vEmmMdoZngOse8NQ60sG47y9K0J1/
+         dhPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=NJ4wYR8zqp67KyZb/vxWvGE2htfMdPrc0+SKyjTL/B8=;
-        b=HP2b723sxhqCCWgkqeBQXEJE+5IK6YIPryN7hpW1uk1nGxokWxfzQgOl1w9WkT2tFz
-         a89y3HUMFQC37CCadv9jKjmYNTnme8s8EQNxFxalrvKx3klRuXcsggNwT9TRLSvx6Hlr
-         Nb8fm3YbAwo2iPU3yb0iPw35FA6389JtGR5mKuixDUmWUugdzsdVnIaUJtfaqETy84Km
-         dhsajc5wvq8sfk/tJkirMMx9lGMHykGMaHhOB+lCOeiGUJjc7vp9gIyKZXhoMFBgND4a
-         6/OI1YPTy2AhqTuvxA1aU84cQROE6G8EIwdrMEZ7OE/OyRPAg3nQWJPLHigIW1sWCz9u
-         w3uw==
-X-Gm-Message-State: ACgBeo2TAglwEDeCSsjn28PmzNrcqizt6mfcPmesnHRz+bZyQRj13dXq
-        P3cXcGMMaDMP0M8GHNTwR7kCUK1nqcmRcA==
-X-Google-Smtp-Source: AA6agR5BED3R3XYzgrBxDgGj6zErXv7+kkqjqui9kOVigQoSbEIPHmIlUXdELbhDtw+sZbcrQDoZNg==
-X-Received: by 2002:a05:6830:4493:b0:636:ceb8:91b8 with SMTP id r19-20020a056830449300b00636ceb891b8mr6222330otv.335.1660105226337;
-        Tue, 09 Aug 2022 21:20:26 -0700 (PDT)
+        bh=aTVS8f/JSGyOOMcrFh4jL8jY1rjH9L8QtIyJGu4bZbg=;
+        b=OOZJEYvuiiEgzU/1w8b+dMwUOpZaEEnvcdXGFP0Ao8o5c89KNEMHhI9jecaVfGmjLl
+         g6mrgxXhYYG1ss+n6/so951mtSlVhfKMbi9VFY19ChzDPXdyyqYNQ69l5CoXDlm1csSn
+         Qus4eyRCcFxHzCcwJXsfS4TcYOiiIRXya0ruvB2acwSSBzifUyK8ARnTQHVWhbZeEu8y
+         tITLEh/OMIz6vfBsM/FJ0V4LG/ka1lSX5CrGz5fGSAUFBmqnG8qRiojpFcpzwl+pY5AR
+         nvDysvWi/fcZAFvoEDwlnkA41rJ4n/yUCaoZWUOgSpbgFdQv+77SLL8JKtIlBOUiF8+6
+         KH2w==
+X-Gm-Message-State: ACgBeo1OEDa5N9tsAqBuCq+CoIY/uHSlcZRtRIRYPOjshmh0B36Hhziz
+        /XslLpypuaSOy4jGqVwOtpp3QA==
+X-Google-Smtp-Source: AA6agR4UKF+PdbNUWHpNnCTV5ClF7spXKeVP1b6Jdvjb7hAcOkhJl5oQPyj45SrN8yVoTmlba9+meQ==
+X-Received: by 2002:a05:6870:959b:b0:115:856b:4444 with SMTP id k27-20020a056870959b00b00115856b4444mr667224oao.114.1660105227440;
+        Tue, 09 Aug 2022 21:20:27 -0700 (PDT)
 Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id ba41-20020a056870c5a900b00101c76f7831sm3622747oab.24.2022.08.09.21.20.25
+        by smtp.gmail.com with ESMTPSA id ba41-20020a056870c5a900b00101c76f7831sm3622747oab.24.2022.08.09.21.20.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Aug 2022 21:20:25 -0700 (PDT)
+        Tue, 09 Aug 2022 21:20:26 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Kishon Vijay Abraham I <kishon@ti.com>,
         Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Wesley Cheng <quic_wcheng@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 1/4] dt-bindings: phy: qcom,qmp: Add compatible for SC8280XP USB phys
-Date:   Tue,  9 Aug 2022 21:23:00 -0700
-Message-Id: <20220810042303.3583194-2-bjorn.andersson@linaro.org>
+Subject: [PATCH v2 2/4] phy: qcom-qmp-combo: Parameterize swing and pre_emphasis tables
+Date:   Tue,  9 Aug 2022 21:23:01 -0700
+Message-Id: <20220810042303.3583194-3-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220810042303.3583194-1-bjorn.andersson@linaro.org>
 References: <20220810042303.3583194-1-bjorn.andersson@linaro.org>
@@ -66,7 +66,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,47 +74,161 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SC8280XP platform has a pair of 5nm USB3 UNI phys and a pair of
-5nm USB4/3/DP combo PHYs, add a compatible for these.
+The swing and pre-emphasis tables differ between different PHY versions,
+or perhaps between different platforms. In particular in order to
+introduce SC8280XP these tables needs to be replaced.
+
+Make it possible to specify these tables per PHY config.
 
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml         | 2 ++
- Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml | 1 +
- 2 files changed, 3 insertions(+)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 86 ++++++++++++++---------
+ 1 file changed, 54 insertions(+), 32 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-index 220788ce215f..d8a9c205f039 100644
---- a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-@@ -34,6 +34,7 @@ properties:
-       - qcom,sc8180x-qmp-ufs-phy
-       - qcom,sc8180x-qmp-usb3-phy
-       - qcom,sc8280xp-qmp-ufs-phy
-+      - qcom,sc8280xp-qmp-usb3-uni-phy
-       - qcom,sdm845-qhp-pcie-phy
-       - qcom,sdm845-qmp-pcie-phy
-       - qcom,sdm845-qmp-ufs-phy
-@@ -379,6 +380,7 @@ allOf:
-               - qcom,sm8150-qmp-usb3-uni-phy
-               - qcom,sm8250-qmp-usb3-uni-phy
-               - qcom,sm8350-qmp-usb3-uni-phy
-+              - qcom,sc8280xp-qmp-usb3-uni-phy
-     then:
-       properties:
-         clocks:
-diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
-index b078009ed509..ffc0c5b0f08a 100644
---- a/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
-@@ -16,6 +16,7 @@ properties:
-       - qcom,sc7180-qmp-usb3-dp-phy
-       - qcom,sc7280-qmp-usb3-dp-phy
-       - qcom,sc8180x-qmp-usb3-dp-phy
-+      - qcom,sc8280xp-qmp-usb43dp-phy
-       - qcom,sdm845-qmp-usb3-dp-phy
-       - qcom,sm8250-qmp-usb3-dp-phy
-   reg:
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index 4b1828976104..c6ddb0be1045 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -618,6 +618,34 @@ static struct qmp_regulator_data qmp_phy_vreg_l[] = {
+ 	{ .name = "vdda-pll", .enable_load = 36000 },
+ };
+ 
++static const u8 qmp_dp_v3_pre_emphasis_hbr3_hbr2[4][4] = {
++	{ 0x00, 0x0c, 0x15, 0x1a },
++	{ 0x02, 0x0e, 0x16, 0xff },
++	{ 0x02, 0x11, 0xff, 0xff },
++	{ 0x04, 0xff, 0xff, 0xff }
++};
++
++static const u8 qmp_dp_v3_voltage_swing_hbr3_hbr2[4][4] = {
++	{ 0x02, 0x12, 0x16, 0x1a },
++	{ 0x09, 0x19, 0x1f, 0xff },
++	{ 0x10, 0x1f, 0xff, 0xff },
++	{ 0x1f, 0xff, 0xff, 0xff }
++};
++
++static const u8 qmp_dp_v3_pre_emphasis_hbr_rbr[4][4] = {
++	{ 0x00, 0x0c, 0x14, 0x19 },
++	{ 0x00, 0x0b, 0x12, 0xff },
++	{ 0x00, 0x0b, 0xff, 0xff },
++	{ 0x04, 0xff, 0xff, 0xff }
++};
++
++static const u8 qmp_dp_v3_voltage_swing_hbr_rbr[4][4] = {
++	{ 0x08, 0x0f, 0x16, 0x1f },
++	{ 0x11, 0x1e, 0x1f, 0xff },
++	{ 0x19, 0x1f, 0xff, 0xff },
++	{ 0x1f, 0xff, 0xff, 0xff }
++};
++
+ struct qmp_phy;
+ 
+ /* struct qmp_phy_cfg - per-PHY initialization config */
+@@ -649,6 +677,12 @@ struct qmp_phy_cfg {
+ 	const struct qmp_phy_init_tbl *serdes_tbl_hbr3;
+ 	int serdes_tbl_hbr3_num;
+ 
++	/* DP PHY swing and pre_emphasis tables */
++	const u8 (*swing_hbr_rbr)[4][4];
++	const u8 (*swing_hbr3_hbr2)[4][4];
++	const u8 (*pre_emphasis_hbr_rbr)[4][4];
++	const u8 (*pre_emphasis_hbr3_hbr2)[4][4];
++
+ 	/* DP PHY callbacks */
+ 	int (*configure_dp_phy)(struct qmp_phy *qphy);
+ 	void (*configure_dp_tx)(struct qmp_phy *qphy);
+@@ -881,6 +915,11 @@ static const struct qmp_phy_cfg sc7180_dpphy_cfg = {
+ 	.serdes_tbl_hbr3	= qmp_v3_dp_serdes_tbl_hbr3,
+ 	.serdes_tbl_hbr3_num	= ARRAY_SIZE(qmp_v3_dp_serdes_tbl_hbr3),
+ 
++	.swing_hbr_rbr		= &qmp_dp_v3_voltage_swing_hbr_rbr,
++	.pre_emphasis_hbr_rbr	= &qmp_dp_v3_pre_emphasis_hbr_rbr,
++	.swing_hbr3_hbr2	= &qmp_dp_v3_voltage_swing_hbr3_hbr2,
++	.pre_emphasis_hbr3_hbr2 = &qmp_dp_v3_pre_emphasis_hbr3_hbr2,
++
+ 	.clk_list		= qmp_v3_phy_clk_l,
+ 	.num_clks		= ARRAY_SIZE(qmp_v3_phy_clk_l),
+ 	.reset_list		= sc7180_usb3phy_reset_l,
+@@ -957,6 +996,11 @@ static const struct qmp_phy_cfg sc8180x_dpphy_cfg = {
+ 	.serdes_tbl_hbr3	= qmp_v4_dp_serdes_tbl_hbr3,
+ 	.serdes_tbl_hbr3_num	= ARRAY_SIZE(qmp_v4_dp_serdes_tbl_hbr3),
+ 
++	.swing_hbr_rbr		= &qmp_dp_v3_voltage_swing_hbr_rbr,
++	.pre_emphasis_hbr_rbr	= &qmp_dp_v3_pre_emphasis_hbr_rbr,
++	.swing_hbr3_hbr2	= &qmp_dp_v3_voltage_swing_hbr3_hbr2,
++	.pre_emphasis_hbr3_hbr2 = &qmp_dp_v3_pre_emphasis_hbr3_hbr2,
++
+ 	.clk_list		= qmp_v3_phy_clk_l,
+ 	.num_clks		= ARRAY_SIZE(qmp_v3_phy_clk_l),
+ 	.reset_list		= sc7180_usb3phy_reset_l,
+@@ -1032,6 +1076,11 @@ static const struct qmp_phy_cfg sm8250_dpphy_cfg = {
+ 	.serdes_tbl_hbr3	= qmp_v4_dp_serdes_tbl_hbr3,
+ 	.serdes_tbl_hbr3_num	= ARRAY_SIZE(qmp_v4_dp_serdes_tbl_hbr3),
+ 
++	.swing_hbr_rbr		= &qmp_dp_v3_voltage_swing_hbr_rbr,
++	.pre_emphasis_hbr_rbr	= &qmp_dp_v3_pre_emphasis_hbr_rbr,
++	.swing_hbr3_hbr2	= &qmp_dp_v3_voltage_swing_hbr3_hbr2,
++	.pre_emphasis_hbr3_hbr2 = &qmp_dp_v3_pre_emphasis_hbr3_hbr2,
++
+ 	.clk_list		= qmp_v4_phy_clk_l,
+ 	.num_clks		= ARRAY_SIZE(qmp_v4_phy_clk_l),
+ 	.reset_list		= msm8996_usb3phy_reset_l,
+@@ -1169,38 +1218,11 @@ static void qcom_qmp_v3_phy_dp_aux_init(struct qmp_phy *qphy)
+ 	       qphy->pcs + QSERDES_V3_DP_PHY_AUX_INTERRUPT_MASK);
+ }
+ 
+-static const u8 qmp_dp_v3_pre_emphasis_hbr3_hbr2[4][4] = {
+-	{ 0x00, 0x0c, 0x15, 0x1a },
+-	{ 0x02, 0x0e, 0x16, 0xff },
+-	{ 0x02, 0x11, 0xff, 0xff },
+-	{ 0x04, 0xff, 0xff, 0xff }
+-};
+-
+-static const u8 qmp_dp_v3_voltage_swing_hbr3_hbr2[4][4] = {
+-	{ 0x02, 0x12, 0x16, 0x1a },
+-	{ 0x09, 0x19, 0x1f, 0xff },
+-	{ 0x10, 0x1f, 0xff, 0xff },
+-	{ 0x1f, 0xff, 0xff, 0xff }
+-};
+-
+-static const u8 qmp_dp_v3_pre_emphasis_hbr_rbr[4][4] = {
+-	{ 0x00, 0x0c, 0x14, 0x19 },
+-	{ 0x00, 0x0b, 0x12, 0xff },
+-	{ 0x00, 0x0b, 0xff, 0xff },
+-	{ 0x04, 0xff, 0xff, 0xff }
+-};
+-
+-static const u8 qmp_dp_v3_voltage_swing_hbr_rbr[4][4] = {
+-	{ 0x08, 0x0f, 0x16, 0x1f },
+-	{ 0x11, 0x1e, 0x1f, 0xff },
+-	{ 0x19, 0x1f, 0xff, 0xff },
+-	{ 0x1f, 0xff, 0xff, 0xff }
+-};
+-
+ static int qcom_qmp_phy_combo_configure_dp_swing(struct qmp_phy *qphy,
+ 		unsigned int drv_lvl_reg, unsigned int emp_post_reg)
+ {
+ 	const struct phy_configure_opts_dp *dp_opts = &qphy->dp_opts;
++	const struct qmp_phy_cfg *cfg = qphy->cfg;
+ 	unsigned int v_level = 0, p_level = 0;
+ 	u8 voltage_swing_cfg, pre_emphasis_cfg;
+ 	int i;
+@@ -1211,11 +1233,11 @@ static int qcom_qmp_phy_combo_configure_dp_swing(struct qmp_phy *qphy,
+ 	}
+ 
+ 	if (dp_opts->link_rate <= 2700) {
+-		voltage_swing_cfg = qmp_dp_v3_voltage_swing_hbr_rbr[v_level][p_level];
+-		pre_emphasis_cfg = qmp_dp_v3_pre_emphasis_hbr_rbr[v_level][p_level];
++		voltage_swing_cfg = (*cfg->swing_hbr_rbr)[v_level][p_level];
++		pre_emphasis_cfg = (*cfg->pre_emphasis_hbr_rbr)[v_level][p_level];
+ 	} else {
+-		voltage_swing_cfg = qmp_dp_v3_voltage_swing_hbr3_hbr2[v_level][p_level];
+-		pre_emphasis_cfg = qmp_dp_v3_pre_emphasis_hbr3_hbr2[v_level][p_level];
++		voltage_swing_cfg = (*cfg->swing_hbr3_hbr2)[v_level][p_level];
++		pre_emphasis_cfg = (*cfg->pre_emphasis_hbr3_hbr2)[v_level][p_level];
+ 	}
+ 
+ 	/* TODO: Move check to config check */
 -- 
 2.35.1
 
