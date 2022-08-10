@@ -2,69 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D67B058EF8E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 17:43:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1131C58EF98
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 17:48:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231213AbiHJPnK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Aug 2022 11:43:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34538 "EHLO
+        id S231633AbiHJPss (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Aug 2022 11:48:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231373AbiHJPnI (ORCPT
+        with ESMTP id S229487AbiHJPsr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Aug 2022 11:43:08 -0400
-Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BBB45B7B4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 08:43:07 -0700 (PDT)
-Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-10ec41637b3so18244977fac.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 08:43:07 -0700 (PDT)
+        Wed, 10 Aug 2022 11:48:47 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E760D642D0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 08:48:46 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id z20so16535881ljq.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 08:48:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc;
-        bh=FlmWTYw3/xh3vpaf0ITQZcFdn3jiWTilvaIzda+vquA=;
-        b=gP8IopvwF++4nHY5g9Q9M2/EZO4hp9snQqbqx6iZCX3S0KMDC+fE3+6GgXGXIfjyue
-         Zxz/asDdYOcuqwbFiHPzAL1kv8EsrIyRgdUDMKAFMHKb8wqHHdP12zxUiufqRC16+Hdq
-         Fz+ELgZRml0tCpsH6m80xhthiwaBCQSuVqQj6pPlPRsfxisn5vAn5TUkXkwmWRD8NaO+
-         fe40cB4eUKnxl+FOqZf1LOnAsjZ1FayTzToqBjW4uxOl8SEvMTZtIoFETiDaew6kMiSU
-         f/qKaul2i0jIm4S521mgbbR1A9h9GdguRF6rpzDtiB7eIqLmcL4j97alPU0m0Qlgsv6S
-         mB4g==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=qO3R4TRwFVDwtSz2v/eVHonfq/kJTfpqe/6GQS5ROS8=;
+        b=QGoQSE8L9+ivCxqMtksPllpM+HMweN/IQWYilLu+yTlqKlOjMrmk2RYqbJ4GARJqNj
+         d5A2W/ZnN2qlSE956IWKj5T99iPxXsqbMHAnLH1FZcvXz9vE90pR0YSlZ/qPwBl+PyGP
+         N8AFl5LtST/Q35DGg57+LVj2ay2AbiaOazpgR+tsFPOgTC5MFNoHilqQWj45MQlG9Jw7
+         h6d9kEynTh3c3EsRRVen+RDp1mTmCBhQmW7kOl3LAnAwVNhmAyF4PJy+wBJrAahQhCpo
+         WbB9W1gK3Q5Fk//uf63zRNdr/9UqoxXpY5bhGJ4lbELjTYdWlrnOR3UQC4QhQGiof4it
+         1WZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc;
-        bh=FlmWTYw3/xh3vpaf0ITQZcFdn3jiWTilvaIzda+vquA=;
-        b=0Omz6TTSG6j90qO7Pc7ceSMHVSWtZC5KsicGMm+M3E/38VGVUXYZcuDSHuxCN0U+NK
-         dOHiLAa5NMmPz1ldXFtB5oh8n9xE26rIeP0YZ8eOfs1TQLzieJa9qyf4/smF1gtg9XaK
-         NaHnhidxxOgaiHHsNw7oAAJ27npq1gWG9jp6hMUFtokFJ7sRTrNiG93ZDeLJ95aIJI4n
-         AhmLoUHN5WYOz0J+w8QqFIbWi6cU756yVA8uCMaEQwA2EyBwDAc84Cylxkp5BigV1Gzw
-         1Mr1N6J2UInF7AoZE4FAEKuOKJnWu3Th6Nwr0Oc6dm53g7Vk0lRLJShqf2swpIMVkKv9
-         aBzQ==
-X-Gm-Message-State: ACgBeo1/nCltla1Rh9g02dDIJumrCLWTWHoY/8O+56oOlmHx5yvC2Ikc
-        kQcZMpFpU+DMfboa+NEeopkdNQ==
-X-Google-Smtp-Source: AA6agR525BCxU7jVP2f3Ax1rwULslvscxmIdsGURzbMK84D9WkeX+w6/rxBEuj/LVdsvgO5k9Ugjnw==
-X-Received: by 2002:a05:6870:961f:b0:10b:ad08:8909 with SMTP id d31-20020a056870961f00b0010bad088909mr1657778oaq.269.1660146186397;
-        Wed, 10 Aug 2022 08:43:06 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 12-20020aca0d0c000000b0033b15465357sm682644oin.5.2022.08.10.08.43.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Aug 2022 08:43:05 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
-        krzysztof.kozlowski@linaro.org, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: soc: qcom: smd: reference SMD edge schema
-Date:   Wed, 10 Aug 2022 10:43:04 -0500
-Message-Id: <166014617672.2836654.2552710779449608400.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20220723082358.39544-1-krzysztof.kozlowski@linaro.org>
-References: <20220723082358.39544-1-krzysztof.kozlowski@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=qO3R4TRwFVDwtSz2v/eVHonfq/kJTfpqe/6GQS5ROS8=;
+        b=V4WmHBOr358o3DiScDGN19cOhq6ELw8JCVqXGo/oTUXsOyVP4i5w9LZQ/bi8tCy+d9
+         MVtYfwVhGH/d6p2rjGXfFXsejiE1bT/CADdqTJTqqyNBiY1Fr5Lm9IT94eljpYMFagHS
+         nTOjfC+Pz/YNc/Eg1pe1spUu1BkSxMLecF7JIwgG4zj4ltbr1O7fowbPDz0UPmTwpJXw
+         CRR4Mv1PnXLqyN8wPtmh2J/C4bSxJdZbXna9LdEh1EFH0tkuY3lE2bipt04/5NOxPDsa
+         NTRibjG3Gg02wIA7OXZlZkrJ8sQkbB0HBS7zrEvX0Pb92aenT7RR26cYRIr/wzUBGVus
+         iHxQ==
+X-Gm-Message-State: ACgBeo2o7IOWX/Uaqa9MuLZvi3gsPrJeVY+6xtqBUGaKnjbSbL7I/uaC
+        yT9WrTzI/ls7eVhTg+VtesRmNlVnqWGN/Erg
+X-Google-Smtp-Source: AA6agR6ou9uMnqssZjsv/mQww0BkhDijz8PAkwOIFkni0Ae1gAIMNMbilrMwyON1p5QltdhqGAHpfw==
+X-Received: by 2002:a2e:a889:0:b0:25e:3d55:b092 with SMTP id m9-20020a2ea889000000b0025e3d55b092mr9460020ljq.402.1660146525302;
+        Wed, 10 Aug 2022 08:48:45 -0700 (PDT)
+Received: from [192.168.1.39] ([83.146.140.105])
+        by smtp.gmail.com with ESMTPSA id o7-20020ac25e27000000b0048af7e1b268sm379270lfg.210.2022.08.10.08.48.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Aug 2022 08:48:44 -0700 (PDT)
+Message-ID: <271f4997-dcd6-bad5-1617-d226b724749c@linaro.org>
+Date:   Wed, 10 Aug 2022 18:48:43 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH 4/4] dt-bindings: soc: qcom: stats: Document SDM845
+ compatible
+Content-Language: en-US
+To:     abel.vesa@linaro.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh@kernel.org>,
+        Maulik Shah <mkshah@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <20220810105718.2137015-1-abel.vesa@linaro.org>
+ <20220810105718.2137015-4-abel.vesa@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220810105718.2137015-4-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,20 +81,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 23 Jul 2022 10:23:57 +0200, Krzysztof Kozlowski wrote:
-> The child node of smd is an SMD edge representing remote subsystem.
-> Bring back missing reference from previously sent patch (disappeared
-> when applying).
+On 10/08/2022 13:57, abel.vesa@linaro.org wrote:
+> From: Abel Vesa <abel.vesa@linaro.org>
 > 
+> SDM845 is a special case compared to the other platforms that use RPMh
+> stats, since it only has 2 stats (aosd and cxsd), while the others have
+> a 3rd one (ddr).
 > 
+> So in order for the driver to use the dedicated stats config, we added
+> the SDM845 dedicated compatible, which we document here.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml
+> index 473adca4e973..ad6ac0af16bf 100644
+> --- a/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml
+> @@ -20,6 +20,7 @@ properties:
+>    compatible:
+>      enum:
+>        - qcom,rpmh-stats
+> +      - qcom,rpmh-stats-sdm845
 
-Applied, thanks!
+qcom,sdm845-rpmh-stats
 
-[1/2] dt-bindings: soc: qcom: smd: reference SMD edge schema
-      commit: 568f83ffe69ba38cc10f36417d6cbb6eee4dc802
-[2/2] dt-bindings: soc: qcom: smd-rpm: extend example
-      commit: 56e07c0c9e4a4b59a47a848b021a42cf203c982c
+https://lore.kernel.org/all/20220720073326.19591-1-krzysztof.kozlowski@linaro.org/
 
 Best regards,
--- 
-Bjorn Andersson <bjorn.andersson@linaro.org>
+Krzysztof
