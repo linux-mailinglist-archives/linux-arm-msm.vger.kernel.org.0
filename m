@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1622558E5B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 05:48:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43D4A58E5B4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 05:48:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230283AbiHJDr6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Aug 2022 23:47:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44370 "EHLO
+        id S230375AbiHJDsB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Aug 2022 23:48:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230375AbiHJDrv (ORCPT
+        with ESMTP id S230389AbiHJDrz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Aug 2022 23:47:51 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC893804B8
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Aug 2022 20:47:43 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id j66-20020a9d17c8000000b00636b0377a8cso8859085otj.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Aug 2022 20:47:43 -0700 (PDT)
+        Tue, 9 Aug 2022 23:47:55 -0400
+Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 387148050E
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Aug 2022 20:47:45 -0700 (PDT)
+Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-10e615a36b0so16448419fac.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Aug 2022 20:47:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=1ttBChNoFl/Up8/6fPaOC7Cj26gzigpytaf8DEk+Aek=;
-        b=a9Uh1niVqBnlaw5WkU2oeTeMaYGhUKoDjLPD+aLB52LJew7fkvNgnBYAVhya9bQyED
-         kn85SFmjR/oq4DrmnMIT4bc1Tdgc9Mwy9Ngc1dqVlFA1hbXwlXDPiY0n9xePgpT4cZdh
-         N63rMRKxIOrEO6d5siZMRinYOkVC7ajZKd30KvV/ndtLBR6sxb3buUIL8w6RhbMtLzmc
-         f1+7KC30EXQxRozIsM8NlLI2la4bFyLkGLw771ePE06KjCI/Min5OXbaPL/59QiAA1Uh
-         /FZ8hkhW87XSTgmBfOt1A0L1KLzxCyNWIWdloyoG1owahhd2iBj12XbVgAVDJrZNp0Xh
-         3qHg==
+        bh=uebmoneVYa9z0k/kynCu9/yCmrGe0dGNvEMVLmT1Zfk=;
+        b=G3KpBWShMzBghOxqZeYhWej84Du0/RWKqUTbuNdk04/toga1JbTPeCJGeyMxIIceeZ
+         ZOclunNeeFP94y86JAAe2/ordFnT4pXKQSepNjubsf2qrYyv+brT324b9n9fE1xSvIhL
+         ODjNGVGX9n+i6nuphZ55kG8tUC0yv27uG+x/3hyPI2O7L51gUr8Fur6CclsrMQ8dhFjl
+         QFzmFsNxAO9ONgc5EJsyLtaugjY4ALiCCqTEE+harD4BtjMh9y9YHZ4qwa6Lacvxt6mb
+         cdeLq9UXayp4spdSc9wnRumr54zVxWWxxh8Nw8YbR4RZfGtuBCxL1RlPW4dzNIdJ9LsB
+         dMMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=1ttBChNoFl/Up8/6fPaOC7Cj26gzigpytaf8DEk+Aek=;
-        b=SYSh5FhuZJzV+3PXP5eRkitC8U/sN3SNd+vOle1RuxNfPIs52EI7uCPoOiUM7vR7uQ
-         JulLhIMgMIrzUysWG/vB3iDs5nxh0Gn5DOPft3mpn/IDwXzW3rJbz1tEnDTweP3sW1dr
-         O3B1PCFRsy9tv75CwYO2WdIeb01SSZzvyybb2slCMGSh6H5ZPJo1SB6zmEgQF5FX7tdn
-         lUFnXKhGQRZ9AXVbpqZaQZeIh69Ny/g0X78cPf74NxQF/OYRnRkuu6yn3d6j+JANypMq
-         ks8i6CLPEdFE1iXhGIaIeHGnpsIyBmDwGXdSGy90aqU8IsE5jN0Hb/60BRLD7u1/bJqp
-         ojfw==
-X-Gm-Message-State: ACgBeo1JOFKr8wWLl8NRTIEFKnKXMVhXCwyE2ovFk/2Trr5dl1OsuDh+
-        8reZUF3ZDNhzGaqhOLS6UNJ5jg==
-X-Google-Smtp-Source: AA6agR62YvvK2ysqm9m7OTeHjTz/jhFcl0NG1lth+btptlN+5pshg5puEBxk4ECKPyKNuRLbAd5bLg==
-X-Received: by 2002:a05:6830:638d:b0:636:a941:d467 with SMTP id ch13-20020a056830638d00b00636a941d467mr8664571otb.5.1660103262899;
-        Tue, 09 Aug 2022 20:47:42 -0700 (PDT)
+        bh=uebmoneVYa9z0k/kynCu9/yCmrGe0dGNvEMVLmT1Zfk=;
+        b=TCQ3bEGLseB1oZFVMv0IB6SX3dWEplg0HD6x2T+dIGzJZIb7KDsaZq6O3tK0e2Xd7Y
+         9e/O7oQt/kkWKIBXX3ixYmPIkzb/NCXEB6UN2qeI/mhcrwmJxpULzNq+1uRSASeoWHDi
+         739iThAcqQOm8A/eKC6VcrrrEW5sLKwaxHie08Toc7kWsCga3NaSKZzJ6zFTu+owAvwL
+         6U793USZj/NKSIuSO1OIluiLtMt4guklbneYKYNuJ0A1MWrn61sb5DaFBWeasO8US2+Y
+         x3Kd+oqYBbhl09CJCMRtFUwBdhSM3PfEa8XJl0In2N4x4FP3BvoCmqnAjBx0fNrVpdi1
+         ZEgQ==
+X-Gm-Message-State: ACgBeo2e4IACXPNatHp4iFCai5SWrkpiNb+Bm7+n5WiXzIrgpUzladG0
+        OCONQxJFajUfjRM5LqzBs2O4eA==
+X-Google-Smtp-Source: AA6agR7SI0AvmwIlMO2J6EANOOTDmTDJ52FbWWKdY/n6F04P8Zi6DLT1LKtfBQIHjML93P3JUBeHKA==
+X-Received: by 2002:a05:6871:b10:b0:10e:d8aa:53fd with SMTP id fq16-20020a0568710b1000b0010ed8aa53fdmr695371oab.122.1660103263971;
+        Tue, 09 Aug 2022 20:47:43 -0700 (PDT)
 Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id n2-20020a4ae742000000b00444f26822e5sm454337oov.10.2022.08.09.20.47.41
+        by smtp.gmail.com with ESMTPSA id n2-20020a4ae742000000b00444f26822e5sm454337oov.10.2022.08.09.20.47.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Aug 2022 20:47:42 -0700 (PDT)
+        Tue, 09 Aug 2022 20:47:43 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -62,9 +62,9 @@ Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 6/7] drm/msm/dp: Don't enable HPD interrupts for edp
-Date:   Tue,  9 Aug 2022 20:50:12 -0700
-Message-Id: <20220810035013.3582848-7-bjorn.andersson@linaro.org>
+Subject: [PATCH 7/7] drm/msm/dp: HPD handling relates to next_bridge
+Date:   Tue,  9 Aug 2022 20:50:13 -0700
+Message-Id: <20220810035013.3582848-8-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220810035013.3582848-1-bjorn.andersson@linaro.org>
 References: <20220810035013.3582848-1-bjorn.andersson@linaro.org>
@@ -80,56 +80,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Most instances where HPD interrupts are masked and unmasked are guareded
-by the presence of an EDP panel being connected, but not all. Extend
-this to cover the last few places, as HPD interrupt handling is not used
-for the EDP case.
+The DisplayPort controller's internal HPD interrupt handling is used for
+cases where the HPD signal is connected to a GPIO which is pinmuxed into
+the DisplayPort controller.
+
+Most of the logic for enabling and disabling the HPD-related interrupts
+is conditioned on the presence of an EDP panel, but more generically
+designs that has a downstream drm_bridge (next_bridge) could use this to
+handle the HPD interrupts, instead of the internal mechanism.
+
+So replace the current is_edp-based guards with a check for the presence
+of next_bridge.
 
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/gpu/drm/msm/dp/dp_display.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_display.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 568295381246..bb4db9acaa4f 100644
+index bb4db9acaa4f..3e93918aa276 100644
 --- a/drivers/gpu/drm/msm/dp/dp_display.c
 +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -610,8 +610,10 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
+@@ -610,7 +610,7 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
  	}
  
  	/* enable HDP irq_hpd/replug interrupt */
--	dp_catalog_hpd_config_intr(dp->catalog,
--		DP_DP_IRQ_HPD_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK, true);
-+	if (!dp->dp_display.is_edp)
-+		dp_catalog_hpd_config_intr(dp->catalog,
-+					   DP_DP_IRQ_HPD_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK,
-+					   true);
- 
- 	drm_dbg_dp(dp->drm_dev, "After, type=%d hpd_state=%d\n",
- 			dp->dp_display.connector_type, state);
-@@ -651,8 +653,10 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+-	if (!dp->dp_display.is_edp)
++	if (!dp->dp_display.next_bridge)
+ 		dp_catalog_hpd_config_intr(dp->catalog,
+ 					   DP_DP_IRQ_HPD_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK,
+ 					   true);
+@@ -653,7 +653,7 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
  			dp->dp_display.connector_type, state);
  
  	/* disable irq_hpd/replug interrupts */
--	dp_catalog_hpd_config_intr(dp->catalog,
--		DP_DP_IRQ_HPD_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK, false);
-+	if (!dp->dp_display.is_edp)
-+		dp_catalog_hpd_config_intr(dp->catalog,
-+					   DP_DP_IRQ_HPD_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK,
-+					   false);
- 
- 	/* unplugged, no more irq_hpd handle */
- 	dp_del_event(dp, EV_IRQ_HPD_INT);
-@@ -678,7 +682,8 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+-	if (!dp->dp_display.is_edp)
++	if (!dp->dp_display.next_bridge)
+ 		dp_catalog_hpd_config_intr(dp->catalog,
+ 					   DP_DP_IRQ_HPD_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK,
+ 					   false);
+@@ -682,7 +682,7 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
  	}
  
  	/* disable HPD plug interrupts */
--	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, false);
-+	if (!dp->dp_display.is_edp)
-+		dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, false);
+-	if (!dp->dp_display.is_edp)
++	if (!dp->dp_display.next_bridge)
+ 		dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, false);
  
  	/*
- 	 * We don't need separate work for disconnect as
+@@ -701,7 +701,7 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+ 	dp_display_handle_plugged_change(&dp->dp_display, false);
+ 
+ 	/* enable HDP plug interrupt to prepare for next plugin */
+-	if (!dp->dp_display.is_edp)
++	if (!dp->dp_display.next_bridge)
+ 		dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, true);
+ 
+ 	drm_dbg_dp(dp->drm_dev, "After, type=%d hpd_state=%d\n",
+@@ -1086,8 +1086,8 @@ static void dp_display_config_hpd(struct dp_display_private *dp)
+ 	dp_display_host_init(dp);
+ 	dp_catalog_ctrl_hpd_config(dp->catalog);
+ 
+-	/* Enable plug and unplug interrupts only for external DisplayPort */
+-	if (!dp->dp_display.is_edp)
++	/* Enable plug and unplug interrupts only if not handled by next_bridge */
++	if (!dp->dp_display.next_bridge)
+ 		dp_catalog_hpd_config_intr(dp->catalog,
+ 				DP_DP_HPD_PLUG_INT_MASK |
+ 				DP_DP_HPD_UNPLUG_INT_MASK,
+@@ -1380,8 +1380,7 @@ static int dp_pm_resume(struct device *dev)
+ 
+ 	dp_catalog_ctrl_hpd_config(dp->catalog);
+ 
+-
+-	if (!dp->dp_display.is_edp)
++	if (!dp->dp_display.next_bridge)
+ 		dp_catalog_hpd_config_intr(dp->catalog,
+ 				DP_DP_HPD_PLUG_INT_MASK |
+ 				DP_DP_HPD_UNPLUG_INT_MASK,
 -- 
 2.35.1
 
