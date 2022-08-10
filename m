@@ -2,77 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4192258F2FB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 21:26:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DDF9258F325
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 21:30:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230176AbiHJT0P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Aug 2022 15:26:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56758 "EHLO
+        id S233052AbiHJTax (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Aug 2022 15:30:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229868AbiHJT0N (ORCPT
+        with ESMTP id S232908AbiHJTav (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Aug 2022 15:26:13 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 821406A492;
-        Wed, 10 Aug 2022 12:26:12 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27AJ2fAF009454;
-        Wed, 10 Aug 2022 19:26:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=QRXN9BzYWPSLiDAJmspLQn15ZiL/h1lw0lJm6a2Ic+k=;
- b=ERUIjktCk84jkrZl2shBhuM9Oywox/7ILjzB8kjtsFVPjRZzGxu//TZHV12rI7/CtS4s
- 7q2Uus3SHSyz64msFB26dm02N1d13b104z8RhkHYOLVxgU5VrRCFu2eehTtfHE+2tKig
- T6zh4mvXKZVmH5FOrsRThuy1QdKldpTp27KZQZo1Zvn7ilfbooojpIh+ZJF95R0Kyi6L
- VWBEldKWseDZHWsHzUnm0SCyDNLh2ZOT0cvb/uO9xnnv8bEwhbRbWrgCmiFuHrUI/PW7
- ZL/7B26KY7OgUY7L/TM0uerS5gmtgfOw4QD8YjNHI8+RIc6R0ZUAY3IgK2mavr8jv2Yk zg== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3huwr23pur-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 10 Aug 2022 19:26:04 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.47.97.222])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27AJQ2Vh019356
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 10 Aug 2022 19:26:03 GMT
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 10 Aug 2022 12:26:02 -0700
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 10 Aug 2022 12:26:01 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
-        <airlied@linux.ie>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
-CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v3] drm/msm/dp: check hpd_state before push idle pattern at dp_bridge_disable()
-Date:   Wed, 10 Aug 2022 12:25:51 -0700
-Message-ID: <1660159551-13828-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Wed, 10 Aug 2022 15:30:51 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53DF275389
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 12:30:48 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id l188so18741549oia.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 12:30:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc;
+        bh=NwgXjNaIXT7rH65EUl1dyeLewrPUELXtTgeTQdMLe+E=;
+        b=x51/E5hDzQgFUX5IDIMO+0+qp06hlb6XGB2wzq0X2tJe62rx2rvh5yS8+6Ra2XbppH
+         uoBHnv16WXOfyHrONX8AlICDeiAHAOvTBfm09xJ8VDPUttwhsiIkYaGsYxxkOnVGFTTH
+         UISv5WrjFRuTPF5Chq8qKIyAJsFUzBZHF/gCv/8sonfWDjQ/svsT3NhEqBk1iWikbDVD
+         DSuR8oSWmQTuqDTNw788Wrrk+NKZU3d03rWPjh4Rv25+klF59OMp2VPy4ZDWK+fmTBJw
+         HRqJcWIqa0XU5Ah7r2qMWJ4hJEDxnfFzDWkB8bFJEjqo5+9MjcEtqVRJ/Mq6wuUemxID
+         z30Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=NwgXjNaIXT7rH65EUl1dyeLewrPUELXtTgeTQdMLe+E=;
+        b=N1fj23fMFNStKMTkvPSS/TuzMfpBhhJXqCpW4E2EU/6gFN/PV+y3FyKyLEAwB7n/rP
+         RBWl34PVSGbkWG6omYXJicycSbcFRkdhZF5xgazaUgOqNRiHg/65FQaIQyWei+Qbgu/n
+         Ov+JGa98h67+ZpgheSHfkEfuBx3OvwyFGpy+FTUQPKRIK6ZCfwMNSckzaW/hSa6y/ch/
+         hRHAG7DF9eR9BcIeEfKQHAUpP9aOig0/mJpjAeMBVc+qYBRREFojJsQ94VDtZ8jdySqh
+         Zvogpokduo0NZk+YoTDfDiRFytB9C6bdwmBc6/aobjHQ1s4rKG7/MchQeiyJ67yKezTN
+         dOhQ==
+X-Gm-Message-State: ACgBeo3PNXaJPhqiM/iS2vGtEC9ri5WpeMy1M0Dx5Br4JMNLsQ0BKcFU
+        kJBiQSFy5/Y8CZRuzqxdL1/bMg==
+X-Google-Smtp-Source: AA6agR6uCpFhs/aaQcXxM0h5iWRFp9CRyHa+NsPEEGZPDgDlQJe+SPfDlBEK0GF6bziC+igOBicLrA==
+X-Received: by 2002:a05:6808:124b:b0:2da:38f0:945f with SMTP id o11-20020a056808124b00b002da38f0945fmr1981969oiv.171.1660159847678;
+        Wed, 10 Aug 2022 12:30:47 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id l3-20020aca1903000000b00339c8aab320sm768712oii.3.2022.08.10.12.30.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Aug 2022 12:30:47 -0700 (PDT)
+Date:   Wed, 10 Aug 2022 12:33:23 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Sebastian Reichel <sre@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: power: supply: Add Lenovo Yoga C630 EC
+Message-ID: <YvQIA5Xnp1LaIIUf@ripper>
+References: <20220810030500.2793882-1-bjorn.andersson@linaro.org>
+ <20220810030500.2793882-2-bjorn.andersson@linaro.org>
+ <ceb74aee-6436-f1f6-2408-fd01475cb234@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: QJccwxpnxr0NLiT3POONYcw1jbSwkiXS
-X-Proofpoint-ORIG-GUID: QJccwxpnxr0NLiT3POONYcw1jbSwkiXS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-10_12,2022-08-10_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- mlxscore=0 adultscore=0 mlxlogscore=897 spamscore=0 lowpriorityscore=0
- impostorscore=0 phishscore=0 clxscore=1015 priorityscore=1501
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2208100059
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ceb74aee-6436-f1f6-2408-fd01475cb234@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -83,131 +75,107 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-dp_bridge_disable() is the first step toward tearing down main link.
-Its major function is to start transmitting idle pattern to replace
-video stream. This patch will check hpd_state to make sure main link
-is enabled before commit changes of main link's configuration to
-push idle pattern out to avoid system crashing due to main link clock
-is disabled while access main link registers.
+On Wed 10 Aug 06:35 PDT 2022, Krzysztof Kozlowski wrote:
 
-SError Interrupt on CPU7, code 0x00000000be000411 -- SError
-CPU: 7 PID: 3878 Comm: Xorg Not tainted 5.19.0-stb-cbq #19
-Hardware name: Google Lazor (rev3 - 8) (DT)
-pstate: a04000c9 (NzCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : __cmpxchg_case_acq_32+0x14/0x2c
-lr : do_raw_spin_lock+0xa4/0xdc
-sp : ffffffc01092b6a0
-x29: ffffffc01092b6a0 x28: 0000000000000028 x27: 0000000000000038
-x26: 0000000000000004 x25: ffffffd2973dce48 x24: 0000000000000000
-x23: 00000000ffffffff x22: 00000000ffffffff x21: ffffffd2978d0008
-x20: ffffffd2978d0008 x19: ffffff80ff759fc0 x18: 0000000000000000
-x17: 004800a501260460 x16: 0441043b04600438 x15: 04380000089807d0
-x14: 07b0089807800780 x13: 0000000000000000 x12: 0000000000000000
-x11: 0000000000000438 x10: 00000000000007d0 x9 : ffffffd2973e09e4
-x8 : ffffff8092d53300 x7 : ffffff808902e8b8 x6 : 0000000000000001
-x5 : ffffff808902e880 x4 : 0000000000000000 x3 : ffffff80ff759fc0
-x2 : 0000000000000001 x1 : 0000000000000000 x0 : ffffff80ff759fc0
-Kernel panic - not syncing: Asynchronous SError Interrupt
-CPU: 7 PID: 3878 Comm: Xorg Not tainted 5.19.0-stb-cbq #19
-Hardware name: Google Lazor (rev3 - 8) (DT)
-Call trace:
- dump_backtrace.part.0+0xbc/0xe4
- show_stack+0x24/0x70
- dump_stack_lvl+0x68/0x84
- dump_stack+0x18/0x34
- panic+0x14c/0x32c
- nmi_panic+0x58/0x7c
- arm64_serror_panic+0x78/0x84
- do_serror+0x40/0x64
- el1h_64_error_handler+0x30/0x48
- el1h_64_error+0x68/0x6c
- __cmpxchg_case_acq_32+0x14/0x2c
- _raw_spin_lock_irqsave+0x38/0x4c
- lock_timer_base+0x40/0x78
- __mod_timer+0xf4/0x25c
- schedule_timeout+0xd4/0xfc
- __wait_for_common+0xac/0x140
- wait_for_completion_timeout+0x2c/0x54
- dp_ctrl_push_idle+0x40/0x88
- dp_bridge_disable+0x24/0x30
- drm_atomic_bridge_chain_disable+0x90/0xbc
- drm_atomic_helper_commit_modeset_disables+0x198/0x444
- msm_atomic_commit_tail+0x1d0/0x374
- commit_tail+0x80/0x108
- drm_atomic_helper_commit+0x118/0x11c
- drm_atomic_commit+0xb4/0xe0
- drm_client_modeset_commit_atomic+0x184/0x224
- drm_client_modeset_commit_locked+0x58/0x160
- drm_client_modeset_commit+0x3c/0x64
- __drm_fb_helper_restore_fbdev_mode_unlocked+0x98/0xac
- drm_fb_helper_set_par+0x74/0x80
- drm_fb_helper_hotplug_event+0xdc/0xe0
- __drm_fb_helper_restore_fbdev_mode_unlocked+0x7c/0xac
- drm_fb_helper_restore_fbdev_mode_unlocked+0x20/0x2c
- drm_fb_helper_lastclose+0x20/0x2c
- drm_lastclose+0x44/0x6c
- drm_release+0x88/0xd4
- __fput+0x104/0x220
- ____fput+0x1c/0x28
- task_work_run+0x8c/0x100
- do_exit+0x450/0x8d0
- do_group_exit+0x40/0xac
- __wake_up_parent+0x0/0x38
- invoke_syscall+0x84/0x11c
- el0_svc_common.constprop.0+0xb8/0xe4
- do_el0_svc+0x8c/0xb8
- el0_svc+0x2c/0x54
- el0t_64_sync_handler+0x120/0x1c0
- el0t_64_sync+0x190/0x194
-SMP: stopping secondary CPUs
-Kernel Offset: 0x128e800000 from 0xffffffc008000000
-PHYS_OFFSET: 0x80000000
-CPU features: 0x800,00c2a015,19801c82
-Memory Limit: none
+> On 10/08/2022 06:04, Bjorn Andersson wrote:
+> > Add binding for the Embedded Controller found in the Qualcomm
+> > Snapdragon-based Lenovo Yoga C630.
+> 
+> Thank you for your patch. There is something to discuss/improve.
+> 
+> > +
+> > +description:
+> > +  The Qualcomm Snapdragon-based Lenovo Yoga C630 has an Embedded Controller
+> > +  (EC) which handles things such as battery and USB Type-C. This binding
+> > +  describes the interface, on an I2C bus, to this EC.
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: lenovo,yoga-c630-ec
+> > +
+> > +  reg:
+> > +    const: 0x70
+> > +
+> > +  '#address-cells':
+> > +    const: 1
+> 
+> Just to clarify: the EC have physically two USB connectors?
+> 
 
-Changes in v3:
--- correct Reported-by
--- add call stack trace
+Correct, while it's only possible to do Displayport on the second
+connector, the EC is involved in both the connectors - based on the
+events received from it.
 
-Changes in v2:
--- changes Fixes patch
--- fix eported-by
--- add Closes tag
+> > +
+> > +  '#size-cells':
+> > +    const: 0
+> > +
+> > +  interrupts:
+> > +    maxItems: 1
+> > +
+> > +patternProperties:
+> > +  '^connector@\d$':
+> > +    $ref: /schemas/connector/usb-connector.yaml#
+> 
+> unevaluatedProperties:false inside connector (on its level)
+> 
 
-Fixes: 375a126090b9 ("drm/msm/dp: tear down main link at unplug handle immediately")
-Reported-by: Leonard Lausen <leonard@lausen.nl>
-Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/17
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Okay, will update accordingly.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index b36f8b6..678289a 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1729,10 +1729,20 @@ void dp_bridge_disable(struct drm_bridge *drm_bridge)
- 	struct msm_dp_bridge *dp_bridge = to_dp_bridge(drm_bridge);
- 	struct msm_dp *dp = dp_bridge->dp_display;
- 	struct dp_display_private *dp_display;
-+	u32 state;
- 
- 	dp_display = container_of(dp, struct dp_display_private, dp_display);
- 
-+	mutex_lock(&dp_display->event_mutex);
-+
-+	state = dp_display->hpd_state;
-+	if (state != ST_DISCONNECT_PENDING && state != ST_CONNECTED) {
-+		mutex_unlock(&dp_display->event_mutex);
-+		return;
-+	}
-+
- 	dp_ctrl_push_idle(dp_display->ctrl);
-+	mutex_unlock(&dp_display->event_mutex);
- }
- 
- void dp_bridge_post_disable(struct drm_bridge *drm_bridge)
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - interrupts
+> > +
+> > +additionalProperties: false
+> > +
+> > +examples:
+> > +  - |+
+> > +    #include <dt-bindings/interrupt-controller/irq.h>
+> > +    i2c1 {
+> > +      clock-frequency = <400000>;
+> > +
+> > +      #address-cells = <1>;
+> > +      #size-cells = <0>;
+> > +
+> > +      embedded-controller@70 {
+> > +        compatible = "lenovo,yoga-c630-ec";
+> > +        reg = <0x70>;
+> > +
+> > +        interrupts-extended = <&tlmm 20 IRQ_TYPE_LEVEL_HIGH>;
+> > +
+> > +        #address-cells = <1>;
+> > +        #size-cells = <0>;
+> > +
+> > +        connector@0 {
+> > +          compatible = "usb-c-connector";
+> > +          reg = <0>;
+> > +          power-role = "source";
+> > +          data-role = "host";
+> > +        };
+> > +
+> > +        connector@1 {
+> > +          compatible = "usb-c-connector";
+> > +          reg = <1>;
+> > +          power-role = "source";
+> > +          data-role = "host";
+> > +
+> > +          ports {
+> > +            #address-cells = <1>;
+> > +            #size-cells = <0>;
+> > +            port@1 {
+> > +              reg = <1>;
+> > +              lenovo_ec_dp_in: endpoint {
+> > +                   remote-endpoint = <&mdss_dp_out>;
+> 
+> You have inconsistent indentation. Use 4-spaces for entire DTS example.
+> 
 
+Odd, will fix.
+
+Thanks,
+Bjorn
+
+> Best regards,
+> Krzysztof
