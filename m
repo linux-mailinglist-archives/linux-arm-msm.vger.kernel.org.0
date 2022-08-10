@@ -2,77 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1131C58EF98
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 17:48:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1935D58F180
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 19:23:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231633AbiHJPss (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Aug 2022 11:48:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39080 "EHLO
+        id S233497AbiHJRW7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Aug 2022 13:22:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229487AbiHJPsr (ORCPT
+        with ESMTP id S233485AbiHJRW6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Aug 2022 11:48:47 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E760D642D0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 08:48:46 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id z20so16535881ljq.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 08:48:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=qO3R4TRwFVDwtSz2v/eVHonfq/kJTfpqe/6GQS5ROS8=;
-        b=QGoQSE8L9+ivCxqMtksPllpM+HMweN/IQWYilLu+yTlqKlOjMrmk2RYqbJ4GARJqNj
-         d5A2W/ZnN2qlSE956IWKj5T99iPxXsqbMHAnLH1FZcvXz9vE90pR0YSlZ/qPwBl+PyGP
-         N8AFl5LtST/Q35DGg57+LVj2ay2AbiaOazpgR+tsFPOgTC5MFNoHilqQWj45MQlG9Jw7
-         h6d9kEynTh3c3EsRRVen+RDp1mTmCBhQmW7kOl3LAnAwVNhmAyF4PJy+wBJrAahQhCpo
-         WbB9W1gK3Q5Fk//uf63zRNdr/9UqoxXpY5bhGJ4lbELjTYdWlrnOR3UQC4QhQGiof4it
-         1WZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=qO3R4TRwFVDwtSz2v/eVHonfq/kJTfpqe/6GQS5ROS8=;
-        b=V4WmHBOr358o3DiScDGN19cOhq6ELw8JCVqXGo/oTUXsOyVP4i5w9LZQ/bi8tCy+d9
-         MVtYfwVhGH/d6p2rjGXfFXsejiE1bT/CADdqTJTqqyNBiY1Fr5Lm9IT94eljpYMFagHS
-         nTOjfC+Pz/YNc/Eg1pe1spUu1BkSxMLecF7JIwgG4zj4ltbr1O7fowbPDz0UPmTwpJXw
-         CRR4Mv1PnXLqyN8wPtmh2J/C4bSxJdZbXna9LdEh1EFH0tkuY3lE2bipt04/5NOxPDsa
-         NTRibjG3Gg02wIA7OXZlZkrJ8sQkbB0HBS7zrEvX0Pb92aenT7RR26cYRIr/wzUBGVus
-         iHxQ==
-X-Gm-Message-State: ACgBeo2o7IOWX/Uaqa9MuLZvi3gsPrJeVY+6xtqBUGaKnjbSbL7I/uaC
-        yT9WrTzI/ls7eVhTg+VtesRmNlVnqWGN/Erg
-X-Google-Smtp-Source: AA6agR6ou9uMnqssZjsv/mQww0BkhDijz8PAkwOIFkni0Ae1gAIMNMbilrMwyON1p5QltdhqGAHpfw==
-X-Received: by 2002:a2e:a889:0:b0:25e:3d55:b092 with SMTP id m9-20020a2ea889000000b0025e3d55b092mr9460020ljq.402.1660146525302;
-        Wed, 10 Aug 2022 08:48:45 -0700 (PDT)
-Received: from [192.168.1.39] ([83.146.140.105])
-        by smtp.gmail.com with ESMTPSA id o7-20020ac25e27000000b0048af7e1b268sm379270lfg.210.2022.08.10.08.48.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Aug 2022 08:48:44 -0700 (PDT)
-Message-ID: <271f4997-dcd6-bad5-1617-d226b724749c@linaro.org>
-Date:   Wed, 10 Aug 2022 18:48:43 +0300
+        Wed, 10 Aug 2022 13:22:58 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CCBA7C776;
+        Wed, 10 Aug 2022 10:22:57 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27AGXV3T009468;
+        Wed, 10 Aug 2022 17:22:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=VyhYlud2uqfovhSZhzzloCqW5+1HfHKs87ndVD6JKqA=;
+ b=V0CpsnGlbjhNrU7Ddz4E9qKCnrqJ4xm3uWadcWjXfpGdsyy68hyT56XXWlG2q0LuoPah
+ +jWE97xy3aSPVE3aEyeEJZYRljBtAS5+yIoHkMDGkqcfh0a21mvyeJCW1GcUugrlPC/y
+ WOMNUUqwKw4q/xZPmtMCnClSTXj7ucayleqFe1+wjfH9dc9zHe73yQyb/a/9cWZLdfX8
+ y2piGc/jBrdcrXHMiHcWctTAXG8b4cT0s0aROsYU2xB4CQusAEMchW8s0YnpMkgsSEsn
+ s62JXoAWabHTHAIXPPvYjaqujFGkq000SoFJ1/t8FsFsUbcPSDrCmUTexAOtLfU3jioA Jw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3huwr5k8nc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 10 Aug 2022 17:22:45 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.47.97.222])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27AHMh6m027332
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 10 Aug 2022 17:22:44 GMT
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 10 Aug 2022 10:22:43 -0700
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 10 Aug 2022 10:22:42 -0700
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
+        <airlied@linux.ie>, <agross@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
+        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v2] drm/msm/dp: check hpd_state before push idle pattern at dp_bridge_disable()
+Date:   Wed, 10 Aug 2022 10:22:34 -0700
+Message-ID: <1660152154-17879-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH 4/4] dt-bindings: soc: qcom: stats: Document SDM845
- compatible
-Content-Language: en-US
-To:     abel.vesa@linaro.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh@kernel.org>,
-        Maulik Shah <mkshah@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <20220810105718.2137015-1-abel.vesa@linaro.org>
- <20220810105718.2137015-4-abel.vesa@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220810105718.2137015-4-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: YO5FJ4EgDbVWc2QJ9bjYO2-lWjYKdEBP
+X-Proofpoint-ORIG-GUID: YO5FJ4EgDbVWc2QJ9bjYO2-lWjYKdEBP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-10_11,2022-08-10_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=0 bulkscore=0 spamscore=0 clxscore=1015
+ lowpriorityscore=0 phishscore=0 impostorscore=0 mlxscore=0 adultscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2208100053
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,34 +83,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/08/2022 13:57, abel.vesa@linaro.org wrote:
-> From: Abel Vesa <abel.vesa@linaro.org>
-> 
-> SDM845 is a special case compared to the other platforms that use RPMh
-> stats, since it only has 2 stats (aosd and cxsd), while the others have
-> a 3rd one (ddr).
-> 
-> So in order for the driver to use the dedicated stats config, we added
-> the SDM845 dedicated compatible, which we document here.
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->  Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml
-> index 473adca4e973..ad6ac0af16bf 100644
-> --- a/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml
-> @@ -20,6 +20,7 @@ properties:
->    compatible:
->      enum:
->        - qcom,rpmh-stats
-> +      - qcom,rpmh-stats-sdm845
+dp_bridge_disable() is the first step toward tearing down main link.
+Its major function is to start transmitting idle pattern to replace
+video stream. This patch will check hpd_state to make sure main link
+is enabled before commit changes of main link's configuration to
+push idle pattern out to avoid system crashing due to main link clock
+is disabled while access main link registers.
 
-qcom,sdm845-rpmh-stats
+Changes in v2:
+-- changes Fixes patch
+-- fix eported-by
+-- add Closes tag
 
-https://lore.kernel.org/all/20220720073326.19591-1-krzysztof.kozlowski@linaro.org/
+Fixes: 375a126090b9 ("drm/msm/dp: tear down main link at unplug handle immediately")
+Reported-by: leonard@lausen.nl
+Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/17
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-Best regards,
-Krzysztof
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index b36f8b6..678289a 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -1729,10 +1729,20 @@ void dp_bridge_disable(struct drm_bridge *drm_bridge)
+ 	struct msm_dp_bridge *dp_bridge = to_dp_bridge(drm_bridge);
+ 	struct msm_dp *dp = dp_bridge->dp_display;
+ 	struct dp_display_private *dp_display;
++	u32 state;
+ 
+ 	dp_display = container_of(dp, struct dp_display_private, dp_display);
+ 
++	mutex_lock(&dp_display->event_mutex);
++
++	state = dp_display->hpd_state;
++	if (state != ST_DISCONNECT_PENDING && state != ST_CONNECTED) {
++		mutex_unlock(&dp_display->event_mutex);
++		return;
++	}
++
+ 	dp_ctrl_push_idle(dp_display->ctrl);
++	mutex_unlock(&dp_display->event_mutex);
+ }
+ 
+ void dp_bridge_post_disable(struct drm_bridge *drm_bridge)
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
