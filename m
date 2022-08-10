@@ -2,106 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2362858EACC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 12:58:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 979D258EACF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 12:58:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231783AbiHJK5j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Aug 2022 06:57:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56972 "EHLO
+        id S229471AbiHJK6L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Aug 2022 06:58:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230366AbiHJK51 (ORCPT
+        with ESMTP id S231795AbiHJK5v (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Aug 2022 06:57:27 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2470457256
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 03:57:26 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id r1-20020a05600c35c100b003a326685e7cso1440387wmq.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 03:57:26 -0700 (PDT)
+        Wed, 10 Aug 2022 06:57:51 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D414C60698
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 03:57:47 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id q30so17275101wra.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 03:57:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=rBBoEWxQ8eHN9ua82Tfrxn/AgHbyHcDlLzzI2457Jb4=;
-        b=ZARppJxhemgKTwWIC/Sw52Je79gLogwCfZa3xsMX4+pztJvzjMpsyWPMnGGxwwsKJc
-         t24pI4av8ARbG5YI/59HvPdOarxMarbbV7nzttBqqgrjqW5Jt6NEEpZUAlJY+QEu3wVO
-         wKNdv0Q8tCoO1be3Hm4Yv881lUQsZ97TwwlqpkpK+r77wkkhErw9YvizUlXLSNo57keR
-         SgkqPLxnMJ2fwaRmpwMbBrD4ofYL2+R7MqY16Gyv9IMaNQ80mPSY0B8lkNGrFI8CbooJ
-         uSoEVlv0S1k9VjXck3pkrcFrkRpx8zXkI7p35/4XWKLv17PWdmeOiSkmAqrsaBJNGxXY
-         FcgQ==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc;
+        bh=sxO6pBYMFyCO8T9Rpok+/sK67wCwRESAbANsHwqKpSI=;
+        b=K7Y8Tm9kITFF/BFyTFH0V6bfW4oaN3MI/h6E4kW+InWiIm1nIsbbfRLTAqsB5YeH+z
+         NRHoXt8Tuw1tXRC9lH7jT7SbSl8ocfduH217oNtUuKrmdDCuLxf/0+N83TQSUPBKfe+J
+         iFQG4Lg4u+zKrovIfuojKYkendOtYj1tjxnAbXMNwucP4L3t6Yk1csEjg/0jSLwQgRP0
+         VqLAplSd0rKICVrRA1mqsUoBw39p16tnGFglFUBBmHMiIliGbIEIcWbAa2npPuBnA+nG
+         enwxwP8ED2TMFPAvskKOxGom0Ltbsm74wsjywsswptWAVOK6G/s33PrTfb0ok0lsgXpy
+         b3/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=rBBoEWxQ8eHN9ua82Tfrxn/AgHbyHcDlLzzI2457Jb4=;
-        b=Ugrjr9L/cEx/Ooc4fQo2D2eu/U8pgOHmRlVnuf7kHf6ni9jOiJVGNTI9MAnMe4NPKh
-         hcIvkKgvQppF93C2K5wnYFirKy/KLlhnarWFHbjpD33hivTvlSYMEHa/C7Klyo2Qns/u
-         riLXX51NJ5+c4d4rRCYWektt2nebfiW/slOca5oGDhnW7iyewSXg7ADLhwvXm+hcu3le
-         ZrwilaSYujxfx8oLaF9FsVJ9zTW/IRpMmANmMbIw/ghXzxBDByDUG8ipgjfrZYMvDCqH
-         Bs7ZwIPIumhbbmGKKJ0BML/3iGzLUw16ZVnY0ARbOUspAhdqRiu1e+xnhyNK0ohxSJBJ
-         mKcw==
-X-Gm-Message-State: ACgBeo3VIxK6XuqRGPMD+U792fpq8EuLs9zOt0F+Y94gc3aJe1GTGPP7
-        bX0W+NuEbIOc/OGPuaYIJQdwPw==
-X-Google-Smtp-Source: AA6agR6X/DasRxKJOFo0GKArt+c9XMHzAE5Yl9iE5NGz1PN0RYA/FvsiBFrhiIOHfp3DA2/rnbZIrg==
-X-Received: by 2002:a05:600c:1e05:b0:3a5:b441:e9c with SMTP id ay5-20020a05600c1e0500b003a5b4410e9cmr1309439wmb.24.1660129044621;
-        Wed, 10 Aug 2022 03:57:24 -0700 (PDT)
-Received: from localhost.localdomain ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id bd6-20020a05600c1f0600b003a53731f273sm2101446wmb.31.2022.08.10.03.57.23
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=sxO6pBYMFyCO8T9Rpok+/sK67wCwRESAbANsHwqKpSI=;
+        b=ml4jY2l2Yq2bqOa52ipl5QUyjOWAP9d7uchBrkuOM8xmFSuup1wOW3qsTq5d8weUzr
+         RdbOGtUjvu5lzY4JiNEoQ1LfglT6tJtDicjVW9CqPZpd8OQpObwzasHRPaFu+WxN6Emf
+         ysMnLReMOq/reaQsGSolxbWJTyFPTYazJkimlPnBv9HOY3u6ekNwOW+AuEgZcLUUZIIr
+         HUufabHKKch4AB9/QmBL3P/mjNrANqZUSczywLD6Ckd/MFlmjTlM0IXvTqt8BMfKywL1
+         hOIR5/lTyhqMecOoV7tRmux0DK2nQP1iMC04UJN4TkOtIqbdNWut3wJugBgCU3GHAm33
+         wdeA==
+X-Gm-Message-State: ACgBeo0PZ1bqqydOzWgtaQkO7zGphKDTfEonU4D6wnG+F+Pa+k3U05/G
+        j1g7Euw4hzCqlZay/yQWdlC7bA==
+X-Google-Smtp-Source: AA6agR4xTdof6Q0yg3dmcZLmnb1tj/648aGhpZ33nJUTW6ltxt5UMrIJl1FFK6j9lsHxVBnEXwDWsw==
+X-Received: by 2002:a5d:638b:0:b0:220:6e1a:8794 with SMTP id p11-20020a5d638b000000b002206e1a8794mr17165169wru.193.1660129067349;
+        Wed, 10 Aug 2022 03:57:47 -0700 (PDT)
+Received: from google.com (cpc155339-bagu17-2-0-cust87.1-3.cable.virginm.net. [86.27.177.88])
+        by smtp.gmail.com with ESMTPSA id j14-20020adfe50e000000b0021e4829d359sm15892580wrm.39.2022.08.10.03.57.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Aug 2022 03:57:24 -0700 (PDT)
-From:   abel.vesa@linaro.org
-To:     Andy Gross <agross@kernel.org>,
+        Wed, 10 Aug 2022 03:57:46 -0700 (PDT)
+Date:   Wed, 10 Aug 2022 11:57:44 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     David Heidelberg <david@ixit.cz>, linux-kernel@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Caleb Connolly <caleb@connolly.tech>,
+        linux-arm-msm@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Maulik Shah <mkshah@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Abel Vesa <abel.vesa@linaro.org>
-Subject: [PATCH 4/4] dt-bindings: soc: qcom: stats: Document SDM845 compatible
-Date:   Wed, 10 Aug 2022 13:57:18 +0300
-Message-Id: <20220810105718.2137015-4-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220810105718.2137015-1-abel.vesa@linaro.org>
-References: <20220810105718.2137015-1-abel.vesa@linaro.org>
+        ~okias/devicetree@lists.sr.ht,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, Lee Jones <lee@kernel.org>
+Subject: Re: [PATCH v3] dt-bindings: mfd: convert to yaml Qualcomm SPMI PMIC
+Message-ID: <YvOPKKw60F4qEKM6@google.com>
+References: <20220626191630.176835-1-david@ixit.cz>
+ <20220809235625.GA2775377-robh@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220809235625.GA2775377-robh@kernel.org>
+X-Spam-Status: No, score=1.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FSL_HELO_FAKE,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Abel Vesa <abel.vesa@linaro.org>
+On Tue, 09 Aug 2022, Rob Herring wrote:
 
-SDM845 is a special case compared to the other platforms that use RPMh
-stats, since it only has 2 stats (aosd and cxsd), while the others have
-a 3rd one (ddr).
+> On Sun, 26 Jun 2022 21:16:30 +0200, David Heidelberg wrote:
+> > Convert Qualcomm SPMI PMIC binding to yaml format.
+> > 
+> > Additional changes:
+> >  - filled many missing compatibles
+> > 
+> > Co-developed-by: Caleb Connolly <caleb@connolly.tech>
+> > Signed-off-by: David Heidelberg <david@ixit.cz>
+> > ---
+> > v3:
+> >  - added subnodes, there are two not converted to YAML yet, but it works
+> >  - now it prints milion directly unrelated warning to this binding
+> >    (it's related to the included subnodes bindings, can be merged,
+> >     but it'll generate more warnings and preferably anyone can takeover
+> >     from here)
+> >  - add qcom,pmx65
+> > 
+> > v2:
+> >  - changed author to myself, kept Caleb as co-author
+> >  - moved nodename to properties
+> >  - add nodenames for pm* with deprecated property
+> >  - add ^$ to pattern properties
+> >  - dropped interrupt-names property
+> >  - added reg prop. to the nodes which have register in nodename
+> >  - added compatible pmx55
+> > Signed-off-by: David Heidelberg <david@ixit.cz>
+> > ---
+> >  .../bindings/mfd/qcom,spmi-pmic.txt           |  94 ---------
+> >  .../bindings/mfd/qcom,spmi-pmic.yaml          | 191 ++++++++++++++++++
+> >  2 files changed, 191 insertions(+), 94 deletions(-)
+> >  delete mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+> >  create mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> > 
+> 
+> As this hasn't been picked up, I applied it. Thanks!
 
-So in order for the driver to use the dedicated stats config, we added
-the SDM845 dedicated compatible, which we document here.
+I'd prefer to take it via MFD if it's all the same to you.
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml | 1 +
- 1 file changed, 1 insertion(+)
+In case there are additional fix-ups required during the next cycle.
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml
-index 473adca4e973..ad6ac0af16bf 100644
---- a/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml
-@@ -20,6 +20,7 @@ properties:
-   compatible:
-     enum:
-       - qcom,rpmh-stats
-+      - qcom,rpmh-stats-sdm845
-       - qcom,rpm-stats
-       # For older RPM firmware versions with fixed offset for the sleep stats
-       - qcom,apq8084-rpm-stats
 -- 
-2.34.1
-
+DEPRECATED: Please use lee@kernel.org
