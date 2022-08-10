@@ -2,132 +2,411 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97CE458ED33
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 15:29:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 286C458ED3F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 15:30:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232674AbiHJN2o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Aug 2022 09:28:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35248 "EHLO
+        id S232706AbiHJN3q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Aug 2022 09:29:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232746AbiHJN2X (ORCPT
+        with ESMTP id S232734AbiHJN3W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Aug 2022 09:28:23 -0400
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C780F2FFF9;
-        Wed, 10 Aug 2022 06:28:18 -0700 (PDT)
-Received: by mail-il1-f180.google.com with SMTP id o14so8276767ilt.2;
-        Wed, 10 Aug 2022 06:28:18 -0700 (PDT)
+        Wed, 10 Aug 2022 09:29:22 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72BE641D3D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 06:29:18 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id v131-20020a1cac89000000b003a4bb3f786bso1026092wme.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 06:29:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc;
+        bh=El5U8RK9aLvduD1IUFTA0BkNM1fuVS1EOfWZ+eu1FG0=;
+        b=qEgFzj5kfjWxCE9Ke0H6G2aJHPZWchGAHOH6JwEwXyFZS+ozPmj6u7vrOS6uq0w0pv
+         /4lURZxSnJEIPpKusmIQFAtXn8kGTQgquzDc6lB1gCzFMz/D6zUOCtFG1TF/Eql19YQ0
+         rwqrflc1kDdrp3BUEJd3dZ93ihAecQmoEjhWyC7DlkqZ88k5lJJ03cs8sSm5K0LXupe4
+         LLT2UKTpx+L+nwBy5toeGkQjZdbDe6zVOlefo1FL5YPwG3btjhhxBhC0NBuJ1020X4V4
+         qV/gL7DXSG0CqV4pPBy81nbYTpHmVH7k/f+aloal/O976vHl305gNF3pmoQFiRxRItbN
+         kv0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=message-id:date:subject:references:in-reply-to:cc:to:from
-         :x-gm-message-state:from:to:cc;
-        bh=NzrQIGZCwIus9r1JyqSwJ+/rNe7ZRlaMYtJkznnEWLg=;
-        b=kkiI0jXtB8RIBseTVXcnJJz61eJO5Y056gWHp7gTwj+xOV3S6Epe9hm8t2Omx7nFVo
-         QPLhEazs3RDnjZNW8fsE3nlpTYUsQPv4zELqAnxDVw+mMdGLjas3q4Kue5H29qGCpTxd
-         AcDutLnXiRp6Smhps2a9VORPnPARFf8OUYqf43jBtsZy1c3wRIKje4aPTw2quAK97lH5
-         oys9TYVNArBSHBkgaWod2E0FtgQCgN2Ec6625TIhOPPnyHauTCm5kpKROUhK3RxmCpTG
-         G11OLudjq3yS81rcIvNqXvnnVh6MgY9RoDn4TL6bw4hea2/D6Bi/Lg9Il+yDJ72wYNHD
-         U2qQ==
-X-Gm-Message-State: ACgBeo0wzBqXXlS4Pu+7GAsDzqmW+Me4v/NCsfnHmAsCVV6wm8I8pr6O
-        ob6ldl10A+aedBNMspPmbw==
-X-Google-Smtp-Source: AA6agR5or8CrY7N1/B4wmO+I53M/6xlIzZiBbAgz6RffPqaplg84PR1rPJzhLCT3ceYrBI6TH4xkTA==
-X-Received: by 2002:a92:b00f:0:b0:2d6:5628:6865 with SMTP id x15-20020a92b00f000000b002d656286865mr12008908ilh.230.1660138098027;
-        Wed, 10 Aug 2022 06:28:18 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id t5-20020a92c0c5000000b002dd0bfd2467sm2189282ilf.11.2022.08.10.06.28.16
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=El5U8RK9aLvduD1IUFTA0BkNM1fuVS1EOfWZ+eu1FG0=;
+        b=rCZ34pG+x25o0iOXpJVo/2eGr8epwL4K9hmsIM6QS9IrxyULun4c3IG21+GOCWC348
+         iiSNURJEnk8HwLi/6oPkTorgO/Sd5oCIzbdrYOorv1uNtGfEQ3SHNvzh49KThRQbC4cm
+         zt0CdueVSIe4o1Tq0GJwU0j0tI7R+NRpBcc51cK6tD4jKug+TbgxDT6LoFq0eM5N/KRN
+         fHUuKvb2cqQI4zuKjR5HmFCrii0C35zcTzMUS+weamPBdN9PHaMmKArUGT54++UEvCGh
+         2EqBbMMke+bj/6qVt7dB/dpdbIifjfVmLS7mGCImPLUbvTp+QjEMucYJ+8CfH26FGYWf
+         +dfw==
+X-Gm-Message-State: ACgBeo2BwtLMTpEQkfcnw3jqCjEzZP3SvS/mvZpqCtPdOjzK9mhmW+x1
+        tC95+r2zCFf2p6k3vsdDUxZRhw==
+X-Google-Smtp-Source: AA6agR6d9GnhvvPy9EnDhLzUj5Pi0Mq7K0+QdRKqDXVrcOcpXTVWdG9uBWZ1rThQqssw/R9iAn8rZg==
+X-Received: by 2002:a05:600c:a07:b0:39e:da6e:fc49 with SMTP id z7-20020a05600c0a0700b0039eda6efc49mr2386804wmp.143.1660138155970;
+        Wed, 10 Aug 2022 06:29:15 -0700 (PDT)
+Received: from google.com (cpc155339-bagu17-2-0-cust87.1-3.cable.virginm.net. [86.27.177.88])
+        by smtp.gmail.com with ESMTPSA id z9-20020a5d4d09000000b0021dd08ad8d7sm16298130wrt.46.2022.08.10.06.29.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Aug 2022 06:28:17 -0700 (PDT)
-Received: (nullmailer pid 3991541 invoked by uid 1000);
-        Wed, 10 Aug 2022 13:28:15 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        lgirdwood@gmail.com, linux-remoteproc@vger.kernel.org,
-        agross@kernel.org, bgoswami@quicinc.com, swboyd@chromium.org,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
-        quic_rohkumar@quicinc.com, robh+dt@kernel.org,
-        quic_plai@quicinc.com, linux-kernel@vger.kernel.org,
-        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
-        judyhsiao@chromium.org
-In-Reply-To: <1660117558-21829-3-git-send-email-quic_srivasam@quicinc.com>
-References: <1660117558-21829-1-git-send-email-quic_srivasam@quicinc.com> <1660117558-21829-3-git-send-email-quic_srivasam@quicinc.com>
-Subject: Re: [PATCH v3 2/8] dt-bindings: remoteproc: qcom: adsp: Add required bindings for SC7280
-Date:   Wed, 10 Aug 2022 07:28:15 -0600
-Message-Id: <1660138095.893744.3991540.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+        Wed, 10 Aug 2022 06:29:15 -0700 (PDT)
+Date:   Wed, 10 Aug 2022 14:29:13 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     David Heidelberg <david@ixit.cz>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, ~okias/devicetree@lists.sr.ht,
+        Caleb Connolly <caleb@connolly.tech>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>
+Subject: Re: [PATCH v3] dt-bindings: mfd: convert to yaml Qualcomm SPMI PMIC
+Message-ID: <YvOyqUGOjlZ7qE5K@google.com>
+References: <20220626191630.176835-1-david@ixit.cz>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220626191630.176835-1-david@ixit.cz>
+X-Spam-Status: No, score=1.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FSL_HELO_FAKE,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 10 Aug 2022 13:15:52 +0530, Srinivasa Rao Mandadapu wrote:
-> Add compatible name, clocks and update max reg items for SC7280
-> based platforms.
-> Add adsp-memory-regions property, required for memory sandboxing.
+ On Sun, 26 Jun 2022, David Heidelberg wrote:
+
+> Convert Qualcomm SPMI PMIC binding to yaml format.
 > 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Reviewed-by: Rob Herring <robh@kernel.org>
+> Additional changes:
+>  - filled many missing compatibles
+> 
+> Co-developed-by: Caleb Connolly <caleb@connolly.tech>
+> Signed-off-by: David Heidelberg <david@ixit.cz>
 > ---
-> Changes since V2:
-> 	-- Add clock property.
-> 	-- Add qcom,adsp-memory-regions property.
-> Changes since V1:
-> 	-- Change reg property maxItems to minItems and update description.
+> v3:
+>  - added subnodes, there are two not converted to YAML yet, but it works
+>  - now it prints milion directly unrelated warning to this binding
+>    (it's related to the included subnodes bindings, can be merged,
+>     but it'll generate more warnings and preferably anyone can takeover
+>     from here)
+>  - add qcom,pmx65
 > 
->  .../bindings/remoteproc/qcom,lpass-adsp-pil.yaml          | 15 ++++++++++++---
->  1 file changed, 12 insertions(+), 3 deletions(-)
+> v2:
+>  - changed author to myself, kept Caleb as co-author
+>  - moved nodename to properties
+>  - add nodenames for pm* with deprecated property
+>  - add ^$ to pattern properties
+>  - dropped interrupt-names property
+>  - added reg prop. to the nodes which have register in nodename
+>  - added compatible pmx55
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>  .../bindings/mfd/qcom,spmi-pmic.txt           |  94 ---------
+>  .../bindings/mfd/qcom,spmi-pmic.yaml          | 191 ++++++++++++++++++
+>  2 files changed, 191 insertions(+), 94 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+>  create mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
 > 
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+> deleted file mode 100644
+> index eb78e3ae7703..000000000000
+> --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+> +++ /dev/null
+> @@ -1,94 +0,0 @@
+> -          Qualcomm SPMI PMICs multi-function device bindings
+> -
+> -The Qualcomm SPMI series presently includes PM8941, PM8841 and PMA8084
+> -PMICs.  These PMICs use a QPNP scheme through SPMI interface.
+> -QPNP is effectively a partitioning scheme for dividing the SPMI extended
+> -register space up into logical pieces, and set of fixed register
+> -locations/definitions within these regions, with some of these regions
+> -specifically used for interrupt handling.
+> -
+> -The QPNP PMICs are used with the Qualcomm Snapdragon series SoCs, and are
+> -interfaced to the chip via the SPMI (System Power Management Interface) bus.
+> -Support for multiple independent functions are implemented by splitting the
+> -16-bit SPMI slave address space into 256 smaller fixed-size regions, 256 bytes
+> -each. A function can consume one or more of these fixed-size register regions.
+> -
+> -Required properties:
+> -- compatible:      Should contain one of:
+> -                   "qcom,pm660",
+> -                   "qcom,pm660l",
+> -                   "qcom,pm7325",
+> -                   "qcom,pm8004",
+> -                   "qcom,pm8005",
+> -                   "qcom,pm8019",
+> -                   "qcom,pm8028",
+> -                   "qcom,pm8110",
+> -                   "qcom,pm8150",
+> -                   "qcom,pm8150b",
+> -                   "qcom,pm8150c",
+> -                   "qcom,pm8150l",
+> -                   "qcom,pm8226",
+> -                   "qcom,pm8350c",
+> -                   "qcom,pm8841",
+> -                   "qcom,pm8901",
+> -                   "qcom,pm8909",
+> -                   "qcom,pm8916",
+> -                   "qcom,pm8941",
+> -                   "qcom,pm8950",
+> -                   "qcom,pm8953",
+> -                   "qcom,pm8994",
+> -                   "qcom,pm8998",
+> -                   "qcom,pma8084",
+> -                   "qcom,pmd9635",
+> -                   "qcom,pmi8950",
+> -                   "qcom,pmi8962",
+> -                   "qcom,pmi8994",
+> -                   "qcom,pmi8998",
+> -                   "qcom,pmk8002",
+> -                   "qcom,pmk8350",
+> -                   "qcom,pmr735a",
+> -                   "qcom,smb2351",
+> -                   or generalized "qcom,spmi-pmic".
+> -- reg:             Specifies the SPMI USID slave address for this device.
+> -                   For more information see:
+> -                   Documentation/devicetree/bindings/spmi/spmi.yaml
+> -
+> -Required properties for peripheral child nodes:
+> -- compatible:      Should contain "qcom,xxx", where "xxx" is a peripheral name.
+> -
+> -Optional properties for peripheral child nodes:
+> -- interrupts:      Interrupts are specified as a 4-tuple. For more information
+> -                   see:
+> -                   Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
+> -- interrupt-names: Corresponding interrupt name to the interrupts property
+> -
+> -Each child node of SPMI slave id represents a function of the PMIC. In the
+> -example below the rtc device node represents a peripheral of pm8941
+> -SID = 0. The regulator device node represents a peripheral of pm8941 SID = 1.
+> -
+> -Example:
+> -
+> -	spmi {
+> -		compatible = "qcom,spmi-pmic-arb";
+> -
+> -		pm8941@0 {
+> -			compatible = "qcom,pm8941", "qcom,spmi-pmic";
+> -			reg = <0x0 SPMI_USID>;
+> -
+> -			rtc {
+> -				compatible = "qcom,rtc";
+> -				interrupts = <0x0 0x61 0x1 IRQ_TYPE_EDGE_RISING>;
+> -				interrupt-names = "alarm";
+> -			};
+> -		};
+> -
+> -		pm8941@1 {
+> -			compatible = "qcom,pm8941", "qcom,spmi-pmic";
+> -			reg = <0x1 SPMI_USID>;
+> -
+> -			regulator {
+> -				compatible = "qcom,regulator";
+> -				regulator-name = "8941_boost";
+> -			};
+> -		};
+> -	};
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> new file mode 100644
+> index 000000000000..32daebc3a0bc
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> @@ -0,0 +1,191 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SPMI PMICs multi-function device
+> +
+> +description: |
+> +  Some Qualcomm PMICs used with the Snapdragon series SoCs are interfaced
+> +  to the chip via the SPMI (System Power Management Interface) bus.
+> +  Support for multiple independent functions are implemented by splitting the
+> +  16-bit SPMI peripheral address space into 256 smaller fixed-size regions, 256 bytes
+> +  each. A function can consume one or more of these fixed-size register regions.
+> +
+> +  The Qualcomm SPMI series includes the PM8941, PM8841, PMA8084, PM8998 and other
+> +  PMICs.  These PMICs use a "QPNP" scheme through SPMI interface.
+> +  QPNP is effectively a partitioning scheme for dividing the SPMI extended
+> +  register space up into logical pieces, and set of fixed register
+> +  locations/definitions within these regions, with some of these regions
+> +  specifically used for interrupt handling.
+> +
+> +maintainers:
+> +  - Stephen Boyd <sboyd@kernel.org>
+> +
+> +properties:
+> +  $nodename:
+> +    oneOf:
+> +      - pattern: '^pmic@.*$'
+> +      - pattern: '^pm(a|s)?[0-9]*@.*$'
+> +        deprecated: true
+> +
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,pm660
+> +          - qcom,pm660l
+> +          - qcom,pm6150
+> +          - qcom,pm6150l
+> +          - qcom,pm6350
+> +          - qcom,pm7325
+> +          - qcom,pm8004
+> +          - qcom,pm8005
+> +          - qcom,pm8009
+> +          - qcom,pm8019
+> +          - qcom,pm8110
+> +          - qcom,pm8150
+> +          - qcom,pm8150b
+> +          - qcom,pm8150l
+> +          - qcom,pm8226
+> +          - qcom,pm8350
+> +          - qcom,pm8350b
+> +          - qcom,pm8350c
+> +          - qcom,pm8841
+> +          - qcom,pm8909
+> +          - qcom,pm8916
+> +          - qcom,pm8941
+> +          - qcom,pm8950
+> +          - qcom,pm8994
+> +          - qcom,pm8998
+> +          - qcom,pma8084
+> +          - qcom,pmd9635
+> +          - qcom,pmi8950
+> +          - qcom,pmi8962
+> +          - qcom,pmi8994
+> +          - qcom,pmi8998
+> +          - qcom,pmk8350
+> +          - qcom,pmm8155au
+> +          - qcom,pmr735a
+> +          - qcom,pmr735b
+> +          - qcom,pms405
+> +          - qcom,pmx55
+> +          - qcom,pmx65
+> +          - qcom,smb2351
+> +      - const: qcom,spmi-pmic
+> +
+> +  reg:
+> +    minItems: 1
+> +    maxItems: 2
+> +
+> +  '#address-cells':
+> +    const: 1
+> +
+> +  '#size-cells':
+> +    const: 0
+> +
+> +  labibb:
+> +    type: object
+> +    $ref: /schemas/regulator/qcom-labibb-regulator.yaml#
+> +
+> +  regulators:
+> +    type: object
+> +    $ref: /schemas/regulator/regulator.yaml#
+> +
+> +patternProperties:
+> +  "^adc@[0-9a-f]+$":
+> +    type: object
+> +    $ref: /schemas/iio/adc/qcom,spmi-vadc.yaml#
+> +
+> +  "^adc-tm@[0-9a-f]+$":
+> +    type: object
+> +    $ref: /schemas/thermal/qcom-spmi-adc-tm5.yaml#
+> +
+> +  "^audio-codec@[0-9a-f]+$":
+> +    type: object
+> +    additionalProperties: true # FIXME qcom,pm8916-wcd-analog-codec binding not converted yet
+> +
+> +  "extcon@[0-9a-f]+$":
+> +    type: object
+> +    $ref: /schemas/extcon/qcom,pm8941-misc.yaml#
+> +
+> +  "gpio(s)?@[0-9a-f]+$":
+> +    type: object
+> +    $ref: /schemas/pinctrl/qcom,pmic-gpio.yaml#
+> +
+> +  "pon@[0-9a-f]+$":
+> +    type: object
+> +    $ref: /schemas/power/reset/qcom,pon.yaml#
+> +
+> +  "pwm@[0-9a-f]+$":
+> +    type: object
+> +    $ref: /schemas/leds/leds-qcom-lpg.yaml#
+> +
+> +  "^rtc@[0-9a-f]+$":
+> +    type: object
+> +    $ref: /schemas/rtc/qcom-pm8xxx-rtc.yaml#
+> +
+> +  "^temp-alarm@[0-9a-f]+$":
+> +    type: object
+> +    $ref: /schemas/thermal/qcom,spmi-temp-alarm.yaml#
+> +
+> +  "^vibrator@[0-9a-f]+$":
+> +    type: object
+> +    additionalProperties: true # FIXME qcom,pm8916-vib binding not converted yet
+> +
+> +  "^mpps@[0-9a-f]+$":
+> +    type: object
+> +    $ref: /schemas/pinctrl/qcom,pmic-mpp.yaml#
+> +
+> +  "(.*)?(wled|leds)@[0-9a-f]+$":
+> +    type: object
+> +    $ref: /schemas/leds/backlight/qcom-wled.yaml#
+> +    unevaluatedProperties: false
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/spmi/spmi.h>
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +    spmi@c440000 {
+> +        compatible = "qcom,spmi-pmic-arb";
+> +        reg = <0x0c440000 0x1100>,
+> +              <0x0c600000 0x2000000>,
+> +              <0x0e600000 0x100000>,
+> +              <0x0e700000 0xa0000>,
+> +              <0x0c40a000 0x26000>;
+> +        reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
+> +        interrupt-names = "periph_irq";
+> +        interrupts = <GIC_SPI 481 IRQ_TYPE_LEVEL_HIGH>;
+> +        qcom,ee = <0>;
+> +        qcom,channel = <0>;
+> +        #address-cells = <2>;
+> +        #size-cells = <0>;
+> +        interrupt-controller;
+> +        #interrupt-cells = <4>;
+> +        cell-index = <0>;
+> +
+> +        pmi8998_lsid0: pmic@2 {
+> +            compatible = "qcom,pmi8998", "qcom,spmi-pmic";
+> +            reg = <0x2 SPMI_USID>;
+> +            #address-cells = <1>;
+> +            #size-cells = <0>;
+> +
+> +            pmi8998_gpio: gpios@c000 {
+> +                compatible = "qcom,pmi8998-gpio", "qcom,spmi-gpio";
+> +                reg = <0xc000>;
+> +                gpio-controller;
+> +                gpio-ranges = <&pmi8998_gpio 0 0 14>;
+> +                #gpio-cells = <2>;
+> +                interrupt-controller;
+> +                #interrupt-cells = <2>;
+> +            };
+> +        };
+> +    };
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,lpass-adsp-pil.yaml: properties:qcom,adsp-memory-regions: 'oneOf' conditional failed, one must be fixed:
-	[{'description': 'List of memory regions accessed by ADSP firmware.'}] is too short
-	False schema does not allow 1
-	hint: "minItems" is only needed if less than the "items" list length
-	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,lpass-adsp-pil.yaml: properties:qcom,adsp-memory-regions: 'oneOf' conditional failed, one must be fixed:
-	'type' is a required property
-		hint: A vendor boolean property can use "type: boolean"
-	'description' is a required property
-		hint: A vendor boolean property can use "type: boolean"
-	Additional properties are not allowed ('items', 'minItems' were unexpected)
-		hint: A vendor boolean property can use "type: boolean"
-	/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,lpass-adsp-pil.yaml: properties:qcom,adsp-memory-regions: 'oneOf' conditional failed, one must be fixed:
-		'enum' is a required property
-		'const' is a required property
-		hint: A vendor string property with exact values has an implicit type
-		from schema $id: http://devicetree.org/meta-schemas/vendor-props.yaml#
-	/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,lpass-adsp-pil.yaml: properties:qcom,adsp-memory-regions: 'oneOf' conditional failed, one must be fixed:
-		'$ref' is a required property
-		'allOf' is a required property
-		hint: A vendor property needs a $ref to types.yaml
-		from schema $id: http://devicetree.org/meta-schemas/vendor-props.yaml#
-	hint: Vendor specific properties must have a type and description unless they have a defined, common suffix.
-	from schema $id: http://devicetree.org/meta-schemas/vendor-props.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,lpass-adsp-pil.yaml: ignoring, error in schema: properties: qcom,adsp-memory-regions
-Documentation/devicetree/bindings/remoteproc/qcom,lpass-adsp-pil.example.dtb:0:0: /example-0/remoteproc@17300000: failed to match any schema with compatible: ['qcom,sdm845-adsp-pil']
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+-- 
+DEPRECATED: Please use lee@kernel.org
