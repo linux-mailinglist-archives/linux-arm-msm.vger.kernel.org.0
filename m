@@ -2,147 +2,200 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7963A58F21B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 20:06:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 852BB58F246
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 20:25:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231424AbiHJSGs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Aug 2022 14:06:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45328 "EHLO
+        id S232981AbiHJSZ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Aug 2022 14:25:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233514AbiHJSGr (ORCPT
+        with ESMTP id S232992AbiHJSZZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Aug 2022 14:06:47 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 722902C11D;
-        Wed, 10 Aug 2022 11:06:46 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27AENRUn028982;
-        Wed, 10 Aug 2022 18:06:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=urovFjwyUIrNv8ionU3KKfK6oFEHTpFwSdY8Q0J/Szc=;
- b=k7VNa+Ckrqc6AEKV26OxW1Rt3tc3U/1ykVhLsckCDGRlzfe30v2tZXzRnMDuDrFWjtjR
- Wmi+XB8slltVRWy6sXyX73zMZVXs9ZMTtL8AFFFEsRSKOS6AU3SAwarxA51h+xmj4koh
- CvQYmtr/8icG8FeXVckegtfYwojYzwSL9T53in52ohT5+jek5BcvFrbfHMhzbGCsrgFB
- kOIWw9O9TvEtxJ4aSGvHh8GYBRucGi/5kX5RYOd5IrCpcXnLAvonY2qT/qSuYrmgJTRr
- k/jE6dpxHcrXrxlJ1xIbhQ9BY2NDzcAm0+qalyrS+oqu/oapGqtuNlVQtOmzb6mqVVRZ sg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3huwr5kgnm-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 10 Aug 2022 18:06:40 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.47.97.222])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27AI6cuw007552
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 10 Aug 2022 18:06:38 GMT
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 10 Aug 2022 11:06:38 -0700
-Received: from [10.111.167.201] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 10 Aug
- 2022 11:06:34 -0700
-Message-ID: <6bfc8bf9-c9ce-e58a-d081-bf84e332963f@quicinc.com>
-Date:   Wed, 10 Aug 2022 11:06:32 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v2] drm/msm/dp: check hpd_state before push idle pattern
- at dp_bridge_disable()
+        Wed, 10 Aug 2022 14:25:25 -0400
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2041.outbound.protection.outlook.com [40.107.236.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 530B17B7B2;
+        Wed, 10 Aug 2022 11:25:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=J0NKo6TTsJdrrN6ek4jlMZ7dthsr3gQFluS6xELWkyENZevVVpatPzQqWMVzJfYuQoLZGFNy0Gnqxra6pDisQZA+S7S4K+3ked+D0Q6m37x6gadoTvsCjp7gWOLwi4wQeLj99E4+VAlb2o0U5mtORnEMI2ZC47cJ7AfFrL7dXd2XsXaUyMIjGgkrzvlW9ai7l4mf/4MdBfMU7TC+N/aT4hgF1bRhMr+VVdXXTk9eXSdvjARmgKhy4g8Q3Af0L/lBHhfPbINNdWLPzxyhlYAb1UBCtQctwq5ZmaMiUsyTOD7Uh/QdJdeGeRrvFBAlgH/1C/YRY+cAOwWF2x+LPkMGRg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2z7V89+Xj5X0XVh1KdQTRSnY17YH9p3d/j77vjpwuV8=;
+ b=JF93jQ7KcNQOqtwYh49V0MWIFqrQfFeWUpFqg7kmZGjwDtxFEp4LYMqZkUoAiSZLxghNM3iiykyqtLIurmktybuXLuWDb78yye5w2KkNtdtCQecqExuVzY9sARhrySifukOVjZcX4qtBenSi7QGHPi/A/0VLNPCoKucKViv5HgdtzGzEuc/S/MsAP6+bAiwa2QwsU6t1TlB2EeadtRJUU5v8CgIBXGtu2HrJ5XSBQJfnvXy8XYThab0YIquZF2dqAxKoRtux2+0i+EozbGRCxrPOgULulUB1cVV781uoE7BHrc+gEBwYIVHigGZ65ZDEa80W5uJz/TmH5jwxaPQGaQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2z7V89+Xj5X0XVh1KdQTRSnY17YH9p3d/j77vjpwuV8=;
+ b=zV/+VDK1NRLBc4HNZyv+qJWWVPyDUPULiXoZTFoeVvOtFYaNveS1aIOE8SlWhBEKfmvSIyajBaQ2W78AtbdwZsef9IYvMPn5HfpkbFq81s5Qwbn5WlZbwaycRdvW/eGoDkI7d8r5qjY+2yGPEZZ3OYAlSBey/dav1VNoF7fzKWE=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BN8PR12MB3587.namprd12.prod.outlook.com (2603:10b6:408:43::13)
+ by CH2PR12MB3799.namprd12.prod.outlook.com (2603:10b6:610:21::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5504.17; Wed, 10 Aug
+ 2022 18:25:19 +0000
+Received: from BN8PR12MB3587.namprd12.prod.outlook.com
+ ([fe80::905:1701:3b51:7e39]) by BN8PR12MB3587.namprd12.prod.outlook.com
+ ([fe80::905:1701:3b51:7e39%2]) with mapi id 15.20.5504.020; Wed, 10 Aug 2022
+ 18:25:18 +0000
+Message-ID: <87724722-b9f3-a016-c25c-4b0415f2c37f@amd.com>
+Date:   Wed, 10 Aug 2022 20:25:08 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [Linaro-mm-sig] [PATCH v2 3/5] dma-buf: Move all dma-bufs to
+ dynamic locking specification
 Content-Language: en-US
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <bjorn.andersson@linaro.org>
-CC:     <quic_aravindh@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1660152154-17879-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <1660152154-17879-1-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _KAxPZ-wkgKM8Tfl3uAwkTYdMjjP5qmf
-X-Proofpoint-ORIG-GUID: _KAxPZ-wkgKM8Tfl3uAwkTYdMjjP5qmf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-10_12,2022-08-10_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=0 bulkscore=0 spamscore=0 clxscore=1015
- lowpriorityscore=0 phishscore=0 impostorscore=0 mlxscore=0 adultscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2208100054
+To:     Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+        =?UTF-8?Q?Christian_K=c3=b6nig?= <ckoenig.leichtzumerken@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Gurchetan Singh <gurchetansingh@chromium.org>,
+        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Daniel Almeida <daniel.almeida@collabora.com>,
+        Gert Wollny <gert.wollny@collabora.com>,
+        Gustavo Padovan <gustavo.padovan@collabora.com>,
+        Daniel Stone <daniel@fooishbar.org>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Rob Clark <robdclark@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        =?UTF-8?Q?Thomas_Hellstr=c3=b6m?= <thomas_os@shipmail.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Dmitry Osipenko <digetx@gmail.com>,
+        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
+        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        kernel@collabora.com, virtualization@lists.linux-foundation.org,
+        spice-devel@lists.freedesktop.org, linux-rdma@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20220725151839.31622-1-dmitry.osipenko@collabora.com>
+ <20220725151839.31622-4-dmitry.osipenko@collabora.com>
+ <6c8bded9-1809-608f-749a-5ee28b852d32@gmail.com>
+ <562fbacf-3673-ff3c-23a1-124284b4456c@collabora.com>
+From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
+In-Reply-To: <562fbacf-3673-ff3c-23a1-124284b4456c@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: FR0P281CA0045.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:48::14) To BN8PR12MB3587.namprd12.prod.outlook.com
+ (2603:10b6:408:43::13)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: ee30698b-870b-4316-1e1f-08da7afdada4
+X-MS-TrafficTypeDiagnostic: CH2PR12MB3799:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: rbV18GfgWn+DjVzrKRIm7sNzLJj+8hXrueSX16ldQSYbsw2tQzDEmpjmhi2L0A3iEPxYtgZBkmlVzHOCPXSYvAmaW2T71ZlJdxFhl+yHqwB/SvQVm7vKp1Mm2TI0vjiPGCBcwyPAscfx7UeTBL20vwR4qZST6L1GUcv1V8qWJXje3MoW8Wtnh0MXSWhi0ri7vLTJCmt/X5lhTGvse/EEVemZH0l08OIgGtEnotUQ1m5VlaxwdF06AWF9qS49bLx22OkIY9hgRu9dNBIF/OlroAR8Y5KQtWXSHvnhc7qfus6OQSX8ndGe7Q4K7clFmq9FTCFSCkQERH/P30PpTkn/Ws3qfghkxgNwuL87D4mIGi5Dkuz2qWsmq6pIN6B26I2zCXTSnxFglSuFjR/iQ+ODYTInrVH7keaMhFncT+S9mb8a5m7OB7CU5ioI4e3+STU0dUvi/ykei7BoDfaW9iwubSnWJwNIEBFXu97DCmxIPnodvYX2XeKVHxBVuXbSbOA3r4gMQLN3Pv/L7Uv96sX96qlcnAU80fIAT5clAR996FJ+PfJ8F7hxeNXzKygc5Sr9DWIFoACkgj17i7DSN+RQpuXu7CrINzvcWPkeqB07MQIG+PyM1WPKGAiFUz/NAxZKnAvpCI2j053kGvpD0eLEIPFELEDgGriMz1skoViGKWq9OjCU7lvQb2pdd7Y5m8EJP4nMjDwMcvV8JQfy6nQ33rpATBXlPwGHYSr6m3vwptqvUWc0fE1MSLTnzyX2YR5MyfuPQXJrZy3HzlYoW5LGVhFc3sQJ2hLHSfos8Z9MS8xAA+4+GqPSULF3jhaVwp7e2u0PUvm+0zTuQqLa5faRGLEIOAtCi49TXjiVUNecVAtbslsyRTDvZR6bHFaSuT44
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3587.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(346002)(366004)(376002)(39860400002)(136003)(396003)(66476007)(38100700002)(86362001)(7406005)(921005)(66946007)(66556008)(53546011)(7416002)(45080400002)(6666004)(110136005)(4326008)(6506007)(8676002)(6512007)(2906002)(31696002)(6486002)(478600001)(316002)(966005)(41300700001)(186003)(36756003)(66574015)(2616005)(83380400001)(8936002)(5660300002)(31686004)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MXVjV01hVWlaYzhCZExpTTBtQmlwN1pDcHZxU1d3bEVnRm10UXU3d0dRWDhq?=
+ =?utf-8?B?Nm1yY2RneHpPWVFUNzZncmtVTmVUTjVOcFNLbXJ1c09mRGZaVWY0dlR2Q2RP?=
+ =?utf-8?B?WkdnR1JQQjI3dHY3NkJHNitMcUZYbyt4MEF2bDZldmV5T1B1aGZiSDFBSVhq?=
+ =?utf-8?B?SWZPb2haWWlFMW14QjFvdmZIUDBtZUNnQ2lZR3BzTjJLTXBIMmVoOUlkTWVx?=
+ =?utf-8?B?N3ZEOGIwU216ODd1SDlObUltR3h4YjFuM1M1eElVMVMrUC9aMjVzL3RwNEt6?=
+ =?utf-8?B?RFRQTVFvQzRtQ21EcS9mWFNRc2s5Mm9QNlk4WDZuZWtFbUVFOEtUWmFIaVRa?=
+ =?utf-8?B?RVJlL3ZCVVZReGZjaXBET0lTOERsbEJHa3lsWTlrSWtjZGRlRlh3Q1p2dlhG?=
+ =?utf-8?B?ZG8rVGhoczVjSUVQZlNWdjB1VlFpaXZxbXFDWkhzMW5SelZhd3lSSnc2STJ2?=
+ =?utf-8?B?Qit1L0tEUmQ4YU1XVDh6akV6UTExczlsUmo0RGQvY2ZCUC9rb1I5dTZ6bzVj?=
+ =?utf-8?B?K01rY0tQVVJ1eWRPcktpampiR3FkNWZoTWtUQW5aS3ZZczZJVlRHVmJhRUgx?=
+ =?utf-8?B?WXpTT3VyMlRxYjNvVEtqYXg3VmhlNW1Ld3ZCVzNLZ3dlaHRpOEk4NEpGdmNV?=
+ =?utf-8?B?eVVNT1cxWUhxM1NyV0IzMTM3NWF3M05ZWGJVQ2JSYU5sQVpRemIxTjkzczV5?=
+ =?utf-8?B?cFF0emhneXE3V2pPUlRvWFdnK3NPcGk3YUVhRzRjdlRjdnhWci91NmxDRWtz?=
+ =?utf-8?B?N1VhMHBGeW9HQzBKbEpqWWNaK1I0ZVByVWlPTTJvT2NxTUdpOWhBckxkaldZ?=
+ =?utf-8?B?b2VvWGpFQUpkTnczb2xzVXhGM2htT1M2UERzcWpRb21mZnZOYy93TlY5aE5n?=
+ =?utf-8?B?QWFzdmNEK2JpQjd0YUMyR0c3YzZ1Nm92Wmw5Z3hBV0pjVGYzbTA1VENZRjd6?=
+ =?utf-8?B?Z3JMdEtJM29uZEVqVGt5K3MzYXdlWit1NXRWS3AwZGg3SlJPVi82US9MSkxa?=
+ =?utf-8?B?RktNdmE4NlN4ZU1NZUpkVG9tdnNUM2swQzJzYUhYWVlkRkZibEl4VlhHZnZI?=
+ =?utf-8?B?ZDkraE56V3BCcUd5NllFNEJVVzExTFlrTnllRU5LSWlpcVpndmVuNGF6Vk9r?=
+ =?utf-8?B?QmptOXIvbUpoZVhBc2Y3Y0FTbXA2cHdIOWtqZUg1V0NlY1QyZytINGhqSEtW?=
+ =?utf-8?B?QlRnRVI4a3dCTVoraUxIVW9VNE5jVGQvUk84WGxlYUtOeGhGYzVNVjVFeldP?=
+ =?utf-8?B?WXN2QTE1Zm1hUTJMb2EzbHU4YkU0STd5dEhQazllT2xyVTlUdlVkMUVlM1JH?=
+ =?utf-8?B?VHI3cXlheFdmMVZTVmI5MzhoR0crQUx1N0tNNFhzRHZRaE85czUwdC9iaXpF?=
+ =?utf-8?B?WG5GYUlCQVphMUhaeFVibUVweXU0OVU2YXB4RjA5MndwVkVudFpxckc0OFhY?=
+ =?utf-8?B?c25SbDlaWFNjYzRuWFpOOWhvVDJYN3lXS1RDbFRVOHJKaEFhQW9icVMxeTFW?=
+ =?utf-8?B?NEVPRXdWTWpKMmw0KzBtMlFubEVINjBQckdXMEMrSFZja0t5WG1JNVFsSnE3?=
+ =?utf-8?B?dUR3UnhYbGJPSjd1WWVBU003ZnZ2STNZYjQydm54QWhJOE91WnNZM0o1SnlG?=
+ =?utf-8?B?VTNKOVpyTlBsc0Y2TEpwRDdYTytubGpybHNiT0RlSjFZUUVaQ0VKV0U2Zm1G?=
+ =?utf-8?B?bm1aaXN0eUpxZHZLQm42eVpkM2tGbzF1VEhZTTRrSzF0MWxlRjdvZENyM0Zi?=
+ =?utf-8?B?d3E3NnhLL2U1YldlN1dMbU1wdEZrUk55TmZBZ2pOVW05MlRxb3NhQ2RhbC9r?=
+ =?utf-8?B?MHVtWEJSZTk5NTZCRTZWTzRrV3RTVDNEakd3TkRtWXF2WTNFYkJ5U2wyeXRl?=
+ =?utf-8?B?WW4wMlBuZ3cxakpKRlJNUnRHaFI2MW4vY3A5RU0xd2lENk04dkZjcnFzQ09s?=
+ =?utf-8?B?QldxSldsVlN3cC9QYmhUWU40cjh1d2tpNEs3aFFyeEl5OXV0T1F2ZkxHN3Vt?=
+ =?utf-8?B?dkViblV5VGZxTVVNTG9iM01uVTBWWlBDcnpLL1ExVmN6T3JDQmxwTEdGd2Nk?=
+ =?utf-8?B?NCtpWHgwY1ZlcElyMXlNREZJQXIzOFJHazZ3YmlvZndaalp1QXBpRTdWejY5?=
+ =?utf-8?B?eU5SSk1PQXBya2xTRW9lOUlaNzh0Q3F3ZkNQMC9sRmZaNlNKSEc5bFBWNkd1?=
+ =?utf-8?Q?aszJjPlvcmjj5qPTmh4lFkw/+Z70uA1yNv+GH0XlwYVg?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ee30698b-870b-4316-1e1f-08da7afdada4
+X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3587.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Aug 2022 18:25:18.7531
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: RnSwu3NPxQo7v4swMSByEMvQIdn9sDlawOfJVot6gjHBiluOb/rqqG1pXdfra/EQ
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB3799
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Am 10.08.22 um 19:49 schrieb Dmitry Osipenko:
+> On 8/10/22 14:30, Christian König wrote:
+>> Am 25.07.22 um 17:18 schrieb Dmitry Osipenko:
+>>> This patch moves the non-dynamic dma-buf users over to the dynamic
+>>> locking specification. The strict locking convention prevents deadlock
+>>> situation for dma-buf importers and exporters.
+>>>
+>>> Previously the "unlocked" versions of the dma-buf API functions weren't
+>>> taking the reservation lock and this patch makes them to take the lock.
+>>>
+>>> Intel and AMD GPU drivers already were mapping imported dma-bufs under
+>>> the held lock, hence the "locked" variant of the functions are added
+>>> for them and the drivers are updated to use the "locked" versions.
+>> In general "Yes, please", but that won't be that easy.
+>>
+>> You not only need to change amdgpu and i915, but all drivers
+>> implementing the map_dma_buf(), unmap_dma_buf() callbacks.
+>>
+>> Auditing all that code is a huge bunch of work.
+> Hm, neither of drivers take the resv lock in map_dma_buf/unmap_dma_buf.
+> It's easy to audit them all and I did it. So either I'm missing
+> something or it doesn't take much time to check them all. Am I really
+> missing something?
 
+Ok, so this is only changing map/unmap now?
 
-On 8/10/2022 10:22 AM, Kuogee Hsieh wrote:
-> dp_bridge_disable() is the first step toward tearing down main link.
-> Its major function is to start transmitting idle pattern to replace
-> video stream. This patch will check hpd_state to make sure main link
-> is enabled before commit changes of main link's configuration to
-> push idle pattern out to avoid system crashing due to main link clock
-> is disabled while access main link registers.
+In this case please separate this from the documentation change.
 
-Do you also want to give the full stack of unclocked access here?
+I would also drop the _locked postfix from the function name, just 
+having _unlocked on all functions which are supposed to be called with 
+the lock held should be sufficient.
 
-> 
-> Changes in v2:
-> -- changes Fixes patch
-> -- fix eported-by
-> -- add Closes tag
-> 
-> Fixes: 375a126090b9 ("drm/msm/dp: tear down main link at unplug handle immediately")
-> Reported-by: leonard@lausen.nl
+Thanks for looking into this,
+Christian.
 
-This is still incorrect. Should be:
+>
+> https://nam11.safelinks.protection.outlook.com/?url=https%3A%2F%2Felixir.bootlin.com%2Flinux%2Flatest%2FA%2Fident%2Fmap_dma_buf&amp;data=05%7C01%7Cchristian.koenig%40amd.com%7C70fd52d0a82a477bfbfe08da7af8bec7%7C3dd8961fe4884e608e11a82d994e183d%7C0%7C0%7C637957506041914442%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&amp;sdata=K47uCULsoiURjze0H0ksUa4vzJ%2BxqgoShH9106FvyyA%3D&amp;reserved=0
+>
 
-Reported-by: Leonard Lausen <leonard@lausen.nl>
-
-> Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/17
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/dp/dp_display.c | 10 ++++++++++
->   1 file changed, 10 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index b36f8b6..678289a 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -1729,10 +1729,20 @@ void dp_bridge_disable(struct drm_bridge *drm_bridge)
->   	struct msm_dp_bridge *dp_bridge = to_dp_bridge(drm_bridge);
->   	struct msm_dp *dp = dp_bridge->dp_display;
->   	struct dp_display_private *dp_display;
-> +	u32 state;
->   
->   	dp_display = container_of(dp, struct dp_display_private, dp_display);
->   
-> +	mutex_lock(&dp_display->event_mutex);
-> +
-> +	state = dp_display->hpd_state;
-> +	if (state != ST_DISCONNECT_PENDING && state != ST_CONNECTED) {
-> +		mutex_unlock(&dp_display->event_mutex);
-> +		return;
-> +	}
-> +
->   	dp_ctrl_push_idle(dp_display->ctrl);
-> +	mutex_unlock(&dp_display->event_mutex);
->   }
->   
->   void dp_bridge_post_disable(struct drm_bridge *drm_bridge)
