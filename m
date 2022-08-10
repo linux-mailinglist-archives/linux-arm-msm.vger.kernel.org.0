@@ -2,132 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 836D358E843
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 09:53:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 750A558E816
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 09:48:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231482AbiHJHxO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Aug 2022 03:53:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47092 "EHLO
+        id S231407AbiHJHsE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Aug 2022 03:48:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231608AbiHJHwv (ORCPT
+        with ESMTP id S231450AbiHJHr4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Aug 2022 03:52:51 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3C227538F;
-        Wed, 10 Aug 2022 00:52:49 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27A7p9Jg028345;
-        Wed, 10 Aug 2022 07:52:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=1iE0DpdNCuq7rixrkuGLXBP6KOOLHYoU/iAW8OpeD/w=;
- b=dovs4+bOE/jJwycii+hBMJmkDMMgbGiZ3WmTvlNMhnYxgnd3plTw2qYMgBl37dryysDM
- /fEPyCVMpQDhExCvgPGuCUoO0L9ANvCoszA6fbZMn5nAwq3FqeowOSY1js9rzSjvYmOX
- 9Gq8H4XIZeY/twFTGdOfAlAfvj/kFo/WZQka39NwZme/uLrBFwncT/St6Eux4CkXAVm8
- TBJlvq1ANJhvKoXqECBhUxMj3/FAijYnkM42lsQzdg8jXyyGHsezdDBfwtICwuQfa5aN
- rUPijf6qQWtSri3+2liaB30zsfkzVDisY0A6Un4d426+zlD2EiApKKTNkV/KFkKluY/Q 5A== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3huwqgsm2v-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 10 Aug 2022 07:52:09 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.47.97.222])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27A7l8hr032595
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 10 Aug 2022 07:47:08 GMT
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 10 Aug 2022 00:47:08 -0700
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 10 Aug 2022 00:47:03 -0700
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <linux-remoteproc@vger.kernel.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>, <devicetree@vger.kernel.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [PATCH v3 8/8] remoteproc: qcom: Update QDSP6 out-of-reset timeout value
-Date:   Wed, 10 Aug 2022 13:15:58 +0530
-Message-ID: <1660117558-21829-9-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1660117558-21829-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1660117558-21829-1-git-send-email-quic_srivasam@quicinc.com>
+        Wed, 10 Aug 2022 03:47:56 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BF5F6E89D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 00:47:55 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id w15so15290796ljw.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 00:47:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=ws3xDmWAM6yboeXN1KDvG4lH4Cj9ukWxfaS0mjDB9TI=;
+        b=DInQ/feLe7M5SaGVz//m1f7wJx8FFBjFujTtxG6gQNok0dAnXF+QgSnbgfRwOVpfIk
+         B/i6MmVeIWkRHByz0kwb7Xj7b+tnxluDhjzQbhAoDP5D445Zp9cOX42+4a7TGx8fFvXG
+         SbTW9CcXA0j4AwInxrywN40hRQnMHsO/inB5aJM0VNrpzshXhdbqa/b4ApqOajOn9BYp
+         nTLJkp2IqqZ+y65dlrANSyZsrF4XPuWDXqbaqn49KdRxN6hNNghFO4oZsI+VOlS4ewTk
+         rF/n9hlp86GYoY+dEkY6iwG0jb64mxu8drCe3jCq1y+YJZ4J4rC/xYXokdSVkfAPOHrB
+         eg6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=ws3xDmWAM6yboeXN1KDvG4lH4Cj9ukWxfaS0mjDB9TI=;
+        b=i6L9gcefs8OMPUDqFYqR7NEPiLYOxm09QeZrGF74LyX6lh+0w6Gi6hxPuYVqDS8sy4
+         Dqn1BOIJwy8G6KrMAANMK7V1ptPxba7nrCbhvEt1r8AzPl3e2R3tkIiCnKanoUPfxDyM
+         a/amQkROpV3+VUWK1JduQPqTzF6CJBjvudPuO9G0ovmHsx+dEyJqppNqQd6JIL4Vm2DG
+         +yy+phYJXSJdma+gk+WI22W9M4dZ67dLEThMg0wsf924X0z1GKxiwZgbQg2EQhdbrIdW
+         N1dFc8QezKrRTZA8d6d/BPEjY4jXVnE7xcOr4PWXfzaY6zONsFMYYq29fkQxDnK1aAj3
+         h2lw==
+X-Gm-Message-State: ACgBeo3yiZeer27fWDC2DA5JFOP5Mch4AeqEVTBghvVRyv4mpVNM9cVi
+        OpdZsFd7IGTlAFry5yr71nZVXA==
+X-Google-Smtp-Source: AA6agR7qeW+xM7yDL4T6bfOZz3EvFkzr5m3lpWkyVtIYGJrOIdftBw2e8h3zgyiOQ8uI8cpU2lr0JA==
+X-Received: by 2002:a05:651c:1990:b0:25f:ad63:490c with SMTP id bx16-20020a05651c199000b0025fad63490cmr4479688ljb.63.1660117673812;
+        Wed, 10 Aug 2022 00:47:53 -0700 (PDT)
+Received: from [192.168.1.39] ([83.146.140.105])
+        by smtp.gmail.com with ESMTPSA id l21-20020a19c215000000b0047f7722b73csm243780lfc.142.2022.08.10.00.47.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Aug 2022 00:47:53 -0700 (PDT)
+Message-ID: <b0b0fcda-e60c-fff5-7784-5dfbbf0141dc@linaro.org>
+Date:   Wed, 10 Aug 2022 10:47:52 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: VCBGkz3txGiPNIBiDJvPYbfkq9PSYiJb
-X-Proofpoint-ORIG-GUID: VCBGkz3txGiPNIBiDJvPYbfkq9PSYiJb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-10_03,2022-08-09_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0 bulkscore=0
- mlxlogscore=999 mlxscore=0 phishscore=0 impostorscore=0 clxscore=1015
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2208100022
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v2 2/2] ARM: msm8960: Add Samsung Galaxy Express support
+Content-Language: en-US
+To:     Rudraksha Gupta <guptarud@gmail.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, david@ixit.cz,
+        devicetree@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org
+References: <20220808234723.5184-2-guptarud@gmail.com>
+ <20220809000300.6384-1-guptarud@gmail.com>
+ <20220809000300.6384-2-guptarud@gmail.com>
+ <27f83048-ac75-97eb-c9f0-0829de30e1ad@linaro.org>
+ <479a6fa3-7214-2cca-14b0-b9b335146168@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <479a6fa3-7214-2cca-14b0-b9b335146168@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update QDSP6 out-of-reset timeout value to 1 second, as sometimes
-ADSP boot failing on SC7280 based platforms with existing value.
-Also add few micro seconds sleep after enabling boot core
-start register.
+On 10/08/2022 02:57, Rudraksha Gupta wrote:
+>  > OK, I'll abandon the review. This file is really not matching anything
+> 
+>  > in the upstream. Please start your work from a proper upstreamed, recent
+> 
+>  > board.
+> 
+> I based it off of qcom-msm8960-cdp.dts. If there is a dts that you would 
+> like
+> 
+> me to model off of, please link it to me. Otherwise, I will find another 
+> recent
+> 
+> dts and model off of that
+> 
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
----
-Changes since V1:
-	-- Fix typo error.
+From arm these look good:
+arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
+arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
 
- drivers/remoteproc/qcom_q6v5_adsp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-index b9cafe2..5d22cf2 100644
---- a/drivers/remoteproc/qcom_q6v5_adsp.c
-+++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-@@ -34,7 +34,7 @@
- /* time out value */
- #define ACK_TIMEOUT			1000
- #define ACK_TIMEOUT_US			1000000
--#define BOOT_FSM_TIMEOUT		10000
-+#define BOOT_FSM_TIMEOUT		1000000
- /* mask values */
- #define EVB_MASK			GENMASK(27, 4)
- /*QDSP6SS register offsets*/
-@@ -473,13 +473,14 @@ static int adsp_start(struct rproc *rproc)
- 
- 	/* De-assert QDSP6 stop core. QDSP6 will execute after out of reset */
- 	writel(LPASS_BOOT_CORE_START, adsp->qdsp6ss_base + CORE_START_REG);
-+	usleep_range(100, 110);
- 
- 	/* Trigger boot FSM to start QDSP6 */
- 	writel(LPASS_BOOT_CMD_START, adsp->qdsp6ss_base + BOOT_CMD_REG);
- 
- 	/* Wait for core to come out of reset */
- 	ret = readl_poll_timeout(adsp->qdsp6ss_base + BOOT_STATUS_REG,
--			val, (val & BIT(0)) != 0, 10, BOOT_FSM_TIMEOUT);
-+			val, (val & BIT(0)) != 0, 100, BOOT_FSM_TIMEOUT);
- 	if (ret) {
- 		dev_err(adsp->dev, "failed to bootup adsp\n");
- 		goto disable_adsp_clks;
--- 
-2.7.4
-
+Best regards,
+Krzysztof
