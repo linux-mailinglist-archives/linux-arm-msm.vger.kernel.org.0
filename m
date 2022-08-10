@@ -2,70 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC8AC58F3A7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 22:45:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21E9558F3B6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 23:03:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233409AbiHJUpT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Aug 2022 16:45:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33624 "EHLO
+        id S232990AbiHJVDQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Aug 2022 17:03:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233399AbiHJUpS (ORCPT
+        with ESMTP id S231838AbiHJVDP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Aug 2022 16:45:18 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7574512778
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 13:45:16 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id q6-20020a05683033c600b0061d2f64df5dso11375217ott.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 13:45:16 -0700 (PDT)
+        Wed, 10 Aug 2022 17:03:15 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B375B7A525
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 14:03:10 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id j5so13444537oih.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 14:03:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=dMcktl1QXrQAu4/lxweJmgGTRoL5J5XiIsn76k36QrA=;
-        b=jItK5DhkxS9JwW9BxVt6w130JsHuD7G3/9fdDOaLd7KFnb2va6uV6QUYEwkCM5mh/Q
-         MI0pY6eFOfJG37CwEj5huPQN8PbdHyptxwYvUZ66pUkqV0SUQNFrleGzqS3veUmwBRe7
-         /8jxVYn/XnEifJClw8L+dG+w7plF/pPDJCnnRQsCggqn25MoCIau+yVYb2vB13D8vHKR
-         e2tSdmmdP0CnE6hxaG0XFe0fCHJB7RBqSCNVVFKL5rHt2vT4igXP0RYrj3OTefudDhug
-         9KNcP7cEzEb9eCNcG0n/6U1IobXObM9sZo1HXNdykzX/4CADxpx+jWqWtW/ga2EZqNjg
-         +A8Q==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc;
+        bh=3O5723dkVhZLUhIPrwxrZWvj7oA/jyzk8I9qZDVTL9s=;
+        b=simohxoQtu2o0mF7GAUapceEMdlBm/ZteU9ZEx1NCu74LCmKyLKxoiEYpx/mK8QSNI
+         EMKhW02fYgjONjMXNZHNZVRp5FX31HDo0tpKvQxfGvoW01JbiTu/262P6/rd+tJphdd3
+         /cqpzHDJfbR6Y6y8eZsOwDux343ZpzZpdDoKyWYzxoRbuJyVfV/FxNb3pbZbmSmpGEYB
+         EjrjqyJQiLTDo6s1+9Vg18S+rPywF85VpldKkNfYg7372QUXdSn5+eYdSGl9QmhL8om3
+         8pgo3jS0He0cm01F+TW6MHfcb6LlcOzfFv9bx8qefd/yWa2l5Cd50qloMM+zg7Ro9cm9
+         lXaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=dMcktl1QXrQAu4/lxweJmgGTRoL5J5XiIsn76k36QrA=;
-        b=feOk3wE1EpyjCWH95S5Pns6jGLdxtStXRqDZa2a/LmfRALG/1wGDbptUa2lLEgGsmW
-         ELsPrc7H7PenkPJmzW0ktEQn2yTENivfhENgYw9p1lQ69FuRP8j4/pwveOtBDX9UMR2G
-         Fc+QiMCQzEYnolLmkC8yQnqcDzP3ARaEbYpkvjyus567KHO8DI9Z3QqsJIoeZhNiJ+Xx
-         tFLupHLzpKwIXfNeEBP2Xp52K+gumem0/vqTezx3AX7lAcFZhB4NSKxtBDMw/TMQVcNu
-         U83r6Z3QhlomL7jufGmqxpFqfZMkSObYJ9lurkixUE0RAWf7qxjlgzNYY2wjZnWqmp7Z
-         /1pQ==
-X-Gm-Message-State: ACgBeo1GbnkQZfAnmy+1yItcsOf+UE4tSQNl85C425xBJJRHD/W2n/TT
-        dboT4XXzzFvm8PZSc5mSsvgnew==
-X-Google-Smtp-Source: AA6agR5qnj51lBYmtlv62UVEk/P8fwZKAXmcs/gkZnrofJrOCcC8VPx2S+L/RUq/faJKOTZUYGwdNg==
-X-Received: by 2002:a9d:4d13:0:b0:636:bdd9:b57b with SMTP id n19-20020a9d4d13000000b00636bdd9b57bmr8751953otf.26.1660164315819;
-        Wed, 10 Aug 2022 13:45:15 -0700 (PDT)
-Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id f12-20020a056870548c00b000f2455e26acsm3968218oan.48.2022.08.10.13.45.14
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=3O5723dkVhZLUhIPrwxrZWvj7oA/jyzk8I9qZDVTL9s=;
+        b=CATWD/XjRcZXg5DhJKFI+M2ufiWdqaJj8/qGPD63r66ypyE7AYJhSnEfXpOwlIS4lu
+         g6D8WUB90/QanId8JS30TSyF2FmrapRHREKpwKf5OIeGH0QmhZUlTeItSK40T6fozqMv
+         HjmbVK5okmLYXt7KGsxiKC6HQFWVPtePF5O1BTMs5FJUtR3qakvflTwsjiV+MgAE7XP/
+         3J8Ez+vXDjpBVdzsIML08ZMs1hDM4JAjz15S5dKwoaU/wlR0ckcToFCRmLvPJpvSeoMH
+         UorV0uH6xfOgkOXL8CJq4l2YqHoZeg3tJBKsl4zffhYpGgOOev+TFuxYW93UOQUdYAgC
+         3amw==
+X-Gm-Message-State: ACgBeo1HNj9490HB+L11romOCUtrgKenkaVMPXne91k3Gdhrpiporgbl
+        RMN42q01gb6Jq42n3h+onFQSxg==
+X-Google-Smtp-Source: AA6agR6gFO6aPJuT1MXGa56aIiXlTPvkZsdZGG3diWvM7M/mpkZcJ4iVm/xVXebRJA5pXxJ3uaFbyw==
+X-Received: by 2002:aca:ad0c:0:b0:342:f3e2:32a9 with SMTP id w12-20020acaad0c000000b00342f3e232a9mr2220993oie.261.1660165390059;
+        Wed, 10 Aug 2022 14:03:10 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id w10-20020a056871060a00b0010bf07976c9sm3951726oan.41.2022.08.10.14.03.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Aug 2022 13:45:15 -0700 (PDT)
+        Wed, 10 Aug 2022 14:03:09 -0700 (PDT)
+Date:   Wed, 10 Aug 2022 14:05:46 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     David Heidelberg <david@ixit.cz>
+Cc:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc:     linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 2/2] usb: typec: mux: Introduce GPIO-based SBU mux
-Date:   Wed, 10 Aug 2022 13:47:50 -0700
-Message-Id: <20220810204750.3672362-3-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220810204750.3672362-1-bjorn.andersson@linaro.org>
-References: <20220810204750.3672362-1-bjorn.andersson@linaro.org>
+        Robert Marko <robimarko@gmail.com>,
+        Das Srinagesh <quic_gurus@quicinc.com>,
+        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5] dt-bindings: firmware: convert Qualcomm SCM binding
+ to the yaml
+Message-ID: <YvQdqsOutzYs+Ulb@ripper>
+References: <20220708090431.30437-1-david@ixit.cz>
+ <20220711225705.GA422079-robh@kernel.org>
+ <b228bc62-c307-0662-3a6e-e3408c328178@ixit.cz>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b228bc62-c307-0662-3a6e-e3408c328178@ixit.cz>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,226 +78,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-A design found in various Qualcomm-based boards is to use a USB switch,
-controlled through a pair of GPIO lines to connect, disconnect and
-switch the orientation of the SBU lines in USB Type-C applications.
+On Fri 22 Jul 14:34 PDT 2022, David Heidelberg wrote:
 
-This introduces a generic driver, which implements the typec_switch and
-typec_mux interfaces to perform these operations.
+> On 12/07/2022 00:57, Rob Herring wrote:
+> > On Fri, Jul 08, 2022 at 11:04:31AM +0200, David Heidelberg wrote:
+> > > Convert Qualcomm SCM firmware binding to the yaml format.
+> > > 
+> > > This commit also:
+> > >   - adds qcom,scm-mdm9607 into list which has only core clock
+> > >   - adds qcom,scm-sm6125, qcom,scm-ipq6018
+> > >   - #reset-cells, because the property is already used
+> > > 
+> > > Signed-off-by: David Heidelberg <david@ixit.cz>
+> > > --
+> > Should be '---' in order to be removed automatically when applying.
+> typo, sorry.
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/usb/typec/mux/Kconfig        |   6 +
- drivers/usb/typec/mux/Makefile       |   1 +
- drivers/usb/typec/mux/gpio-sbu-mux.c | 171 +++++++++++++++++++++++++++
- 3 files changed, 178 insertions(+)
- create mode 100644 drivers/usb/typec/mux/gpio-sbu-mux.c
+No worries, I fixed it up as I applied the patch.
 
-diff --git a/drivers/usb/typec/mux/Kconfig b/drivers/usb/typec/mux/Kconfig
-index 5eb2c17d72c1..c46fa4f9d3df 100644
---- a/drivers/usb/typec/mux/Kconfig
-+++ b/drivers/usb/typec/mux/Kconfig
-@@ -12,6 +12,12 @@ config TYPEC_MUX_FSA4480
- 	  common USB Type-C connector.
- 	  If compiled as a module, the module will be named fsa4480.
- 
-+config TYPEC_MUX_GPIO_SBU
-+	tristate "Generic GPIO based SBU mux for USB Type-C applications"
-+	help
-+	  Say Y or M if your system uses a GPIO based mux for managing the
-+	  connected state and the swapping of the SBU lines in a Type-C port.
-+
- config TYPEC_MUX_PI3USB30532
- 	tristate "Pericom PI3USB30532 Type-C cross switch driver"
- 	depends on I2C
-diff --git a/drivers/usb/typec/mux/Makefile b/drivers/usb/typec/mux/Makefile
-index e52a56c16bfb..dda67e19b58b 100644
---- a/drivers/usb/typec/mux/Makefile
-+++ b/drivers/usb/typec/mux/Makefile
-@@ -1,5 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0
- 
- obj-$(CONFIG_TYPEC_MUX_FSA4480)		+= fsa4480.o
-+obj-$(CONFIG_TYPEC_MUX_GPIO_SBU)	+= gpio-sbu-mux.o
- obj-$(CONFIG_TYPEC_MUX_PI3USB30532)	+= pi3usb30532.o
- obj-$(CONFIG_TYPEC_MUX_INTEL_PMC)	+= intel_pmc_mux.o
-diff --git a/drivers/usb/typec/mux/gpio-sbu-mux.c b/drivers/usb/typec/mux/gpio-sbu-mux.c
-new file mode 100644
-index 000000000000..35f7bd3029a9
---- /dev/null
-+++ b/drivers/usb/typec/mux/gpio-sbu-mux.c
-@@ -0,0 +1,171 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (C) 2022 Linaro Ltd.
-+ */
-+
-+#include <linux/bits.h>
-+#include <linux/i2c.h>
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/mutex.h>
-+#include <linux/gpio/consumer.h>
-+#include <linux/platform_device.h>
-+#include <linux/regmap.h>
-+#include <linux/usb/typec_dp.h>
-+#include <linux/usb/typec_mux.h>
-+
-+struct gpio_sbu_mux {
-+	struct gpio_desc *enable_gpio;
-+	struct gpio_desc *select_gpio;
-+
-+	struct typec_switch_dev *sw;
-+	struct typec_mux_dev *mux;
-+
-+	struct mutex lock; /* protect enabled and swapped */
-+	bool enabled;
-+	bool swapped;
-+};
-+
-+static int gpio_sbu_switch_set(struct typec_switch_dev *sw,
-+			       enum typec_orientation orientation)
-+{
-+	struct gpio_sbu_mux *sbu_mux = typec_switch_get_drvdata(sw);
-+	bool enabled;
-+	bool swapped;
-+
-+	mutex_lock(&sbu_mux->lock);
-+
-+	enabled = sbu_mux->enabled;
-+
-+	switch (orientation) {
-+	case TYPEC_ORIENTATION_NONE:
-+		enabled = false;
-+		break;
-+	case TYPEC_ORIENTATION_NORMAL:
-+		swapped = false;
-+		break;
-+	case TYPEC_ORIENTATION_REVERSE:
-+		swapped = true;
-+		break;
-+	}
-+
-+	if (enabled != sbu_mux->enabled)
-+		gpiod_set_value(sbu_mux->enable_gpio, enabled);
-+
-+	if (swapped != sbu_mux->swapped)
-+		gpiod_set_value(sbu_mux->select_gpio, swapped);
-+
-+	sbu_mux->enabled = enabled;
-+	sbu_mux->swapped = swapped;
-+
-+	mutex_unlock(&sbu_mux->lock);
-+
-+	return 0;
-+}
-+
-+static int gpio_sbu_mux_set(struct typec_mux_dev *mux,
-+			    struct typec_mux_state *state)
-+{
-+	struct gpio_sbu_mux *sbu_mux = typec_mux_get_drvdata(mux);
-+
-+	mutex_lock(&sbu_mux->lock);
-+
-+	switch (state->mode) {
-+	case TYPEC_STATE_SAFE:
-+	case TYPEC_STATE_USB:
-+		sbu_mux->enabled = false;
-+		break;
-+	case TYPEC_DP_STATE_C:
-+	case TYPEC_DP_STATE_D:
-+	case TYPEC_DP_STATE_E:
-+		sbu_mux->enabled = true;
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	gpiod_set_value(sbu_mux->enable_gpio, sbu_mux->enabled);
-+
-+	mutex_unlock(&sbu_mux->lock);
-+
-+	return 0;
-+}
-+
-+static int gpio_sbu_mux_probe(struct platform_device *pdev)
-+{
-+	struct typec_switch_desc sw_desc = { };
-+	struct typec_mux_desc mux_desc = { };
-+	struct device *dev = &pdev->dev;
-+	struct gpio_sbu_mux *sbu_mux;
-+
-+	sbu_mux = devm_kzalloc(dev, sizeof(*sbu_mux), GFP_KERNEL);
-+	if (!sbu_mux)
-+		return -ENOMEM;
-+
-+	mutex_init(&sbu_mux->lock);
-+
-+	sbu_mux->enable_gpio = devm_gpiod_get(dev, "enable", GPIOD_OUT_LOW);
-+	if (IS_ERR(sbu_mux->enable_gpio))
-+		return dev_err_probe(dev, PTR_ERR(sbu_mux->enable_gpio),
-+				     "unable to acquire enable gpio\n");
-+
-+	sbu_mux->select_gpio = devm_gpiod_get(dev, "select", GPIOD_OUT_LOW);
-+	if (IS_ERR(sbu_mux->select_gpio))
-+		return dev_err_probe(dev, PTR_ERR(sbu_mux->select_gpio),
-+				     "unable to acquire select gpio\n");
-+
-+	sw_desc.drvdata = sbu_mux;
-+	sw_desc.fwnode = dev_fwnode(dev);
-+	sw_desc.set = gpio_sbu_switch_set;
-+
-+	sbu_mux->sw = typec_switch_register(dev, &sw_desc);
-+	if (IS_ERR(sbu_mux->sw))
-+		return dev_err_probe(dev, PTR_ERR(sbu_mux->sw),
-+				     "failed to register typec switch\n");
-+
-+	mux_desc.drvdata = sbu_mux;
-+	mux_desc.fwnode = dev_fwnode(dev);
-+	mux_desc.set = gpio_sbu_mux_set;
-+
-+	sbu_mux->mux = typec_mux_register(dev, &mux_desc);
-+	if (IS_ERR(sbu_mux->mux)) {
-+		typec_switch_unregister(sbu_mux->sw);
-+		return dev_err_probe(dev, PTR_ERR(sbu_mux->mux),
-+				     "failed to register typec mux\n");
-+	}
-+
-+	platform_set_drvdata(pdev, sbu_mux);
-+
-+	return 0;
-+}
-+
-+static int gpio_sbu_mux_remove(struct platform_device *pdev)
-+{
-+	struct gpio_sbu_mux *sbu_mux = platform_get_drvdata(pdev);
-+
-+	gpiod_set_value(sbu_mux->enable_gpio, 0);
-+
-+	typec_mux_unregister(sbu_mux->mux);
-+	typec_switch_unregister(sbu_mux->sw);
-+
-+	return 0;
-+}
-+
-+static const struct of_device_id gpio_sbu_mux_match[] = {
-+	{ .compatible = "gpio-sbu-mux", },
-+	{}
-+};
-+MODULE_DEVICE_TABLE(of, gpio_sbu_mux_match);
-+
-+static struct platform_driver gpio_sbu_mux_driver = {
-+	.probe = gpio_sbu_mux_probe,
-+	.remove = gpio_sbu_mux_remove,
-+	.driver = {
-+		.name = "gpio_sbu_mux",
-+		.of_match_table = gpio_sbu_mux_match,
-+	},
-+};
-+module_platform_driver(gpio_sbu_mux_driver);
-+
-+MODULE_DESCRIPTION("GPIO based SBU mux driver");
-+MODULE_LICENSE("GPL");
--- 
-2.35.1
+Thanks for fixing up yet another binding David!
 
+Regards,
+Bjorn
+
+> > 
+> > > v5:
+> > >   - add qcom,scm-sdx65 from new commit to txt binding
+> > >   - add freshly merged qcom,scm-sc8280xp
+> > >   - add interconnects
+> > >   - add accidentally removed # from #include directive
+> > >   - move mdm9607 to 3 clocks (thx @Guru)
+> > >   - fix compatible string in example
+> > > v4:
+> > >   - added clocks minItems and maxItems
+> > >   - removed quotes from $id and $schema
+> > >   - adjusted description of TCSR HW block
+> > > v3:
+> > >   - add preceding patches for ARM and arm64 adding missing compatible strings
+> > >   - extended with missing compatible strings
+> > >   - added two additional maintainers, see https://lkml.org/lkml/2022/6/23/1969
+> > > v2:
+> > >   - changed maintainer to Bjorn
+> > >   - document #reset-cells
+> > > 
+> > >   .../devicetree/bindings/firmware/qcom,scm.txt |  61 --------
+> > >   .../bindings/firmware/qcom,scm.yaml           | 147 ++++++++++++++++++
+> > >   2 files changed, 147 insertions(+), 61 deletions(-)
+> > >   delete mode 100644 Documentation/devicetree/bindings/firmware/qcom,scm.txt
+> > >   create mode 100644 Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> > Doesn't apply for me, so I'm assuming this will go via QCom tree.
+> if you want to merge it, I can rebase it against your tree?
+> > 
+> > Reviewed-by: Rob Herring <robh@kernel.org>
+> 
+> -- 
+> David Heidelberg
+> Consultant Software Engineer
+> 
+> Matrix: @okias:matrix.org
+> 
