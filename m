@@ -2,59 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C5BD458EF04
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 17:11:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 816C358EF63
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Aug 2022 17:24:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232411AbiHJPLk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Aug 2022 11:11:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54528 "EHLO
+        id S233276AbiHJPYc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Aug 2022 11:24:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232387AbiHJPLj (ORCPT
+        with ESMTP id S233437AbiHJPXx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Aug 2022 11:11:39 -0400
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 840186555E;
-        Wed, 10 Aug 2022 08:11:38 -0700 (PDT)
-Received: by mail-io1-f51.google.com with SMTP id v185so12351366ioe.11;
-        Wed, 10 Aug 2022 08:11:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=message-id:date:subject:references:in-reply-to:cc:to:from
-         :x-gm-message-state:from:to:cc;
-        bh=VdGy62arhSt+BL4EouUN4IOHP2gTgnK0/wSx3k0+9GQ=;
-        b=p37LXXtLjMmIAU65imJU+wvg6/LUkO86YE89axN8BOwgPRTamgDuZl6PptzZ75cZIw
-         RijsKK4+zwCMTAR9Jesc81TptEB3ScbH7OxFD8X1Ja7qxcPAa6w0X9GFcLZyIzG5AvXK
-         4MoAVHocMX5EAF5kHOjx55dbDEoxnumfL0Bjtujx6rKvTc55ewAZ37DzrKdyWp7uWB4v
-         Y+HyW7QYVipqmnCP4gFfBQLj3mbSPRz1e3Y+wOwGp0/P8rTb7L7q/njtSG69Z78OPzEX
-         LnAeiAyBPxscaIeUtbyW4s2EhGntNCvJi377S5W++5NRtyXKbSrHNqM9wA89JAnuMWQF
-         zdGw==
-X-Gm-Message-State: ACgBeo0qIJod+uWvEc4Y5W99mjYgq2xTf+5bC0pv/0Y0RXtCGwxZAty2
-        M/4pNjix1FfFZ4ieS0n2NmVipX2g0g==
-X-Google-Smtp-Source: AA6agR7WvN3Kq0NUIrMMMSYd3sVfG//5Whijw3XcGTtSkmrFdqmuuuPSGfS3vF6YdeztcytZilJZnQ==
-X-Received: by 2002:a05:6638:380c:b0:342:ceb9:7af2 with SMTP id i12-20020a056638380c00b00342ceb97af2mr9653346jav.227.1660144297690;
-        Wed, 10 Aug 2022 08:11:37 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id bs27-20020a056638451b00b0033f51f165e3sm7487923jab.140.2022.08.10.08.11.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Aug 2022 08:11:37 -0700 (PDT)
-Received: (nullmailer pid 4155387 invoked by uid 1000);
-        Wed, 10 Aug 2022 15:11:36 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-pm@vger.kernel.org, Sebastian Reichel <sre@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
+        Wed, 10 Aug 2022 11:23:53 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8419649B66;
+        Wed, 10 Aug 2022 08:23:51 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 35260B81CF2;
+        Wed, 10 Aug 2022 15:23:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA8EC433D6;
+        Wed, 10 Aug 2022 15:23:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1660145028;
+        bh=mmcvq0IvE4uO5WYMgBDaxxrgQXyvkI0OYgYpgNtf0KE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=WXPjS6Z/AYYSRkJLGptjvgYpDpOnrBDbou1MwP3hOfrHC9Am4ufWcWtNB8mIQ5aXt
+         uFHtZGrttwerW1nyvUBRnjcsCEIuhoHuG/y949CqZyMBxaboSBcuanlivqlxFMx4sl
+         yU5kY9BnxlGXeydAXwsccxqHkhhN+rh+e9u0iMRZotNY0YCiv+ifFEj0nWa3/03g14
+         wzp4bSYWI+HZqdqk1W12apuQdQz5uH5uZYDH9HjSwjmMV015dI2FG5d+PEtFhU/tmg
+         /DJ2bg3wl3hW1uzAx+2gp4flgwz/wxhADEtbvTI4Hn5ZIa5u1kLI8lhM8zl9bxpwDu
+         QyvKhnYlBJAEg==
+Date:   Wed, 10 Aug 2022 16:23:43 +0100
+From:   Lee Jones <lee@kernel.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Lee Jones <lee.jones@linaro.org>, David Heidelberg <david@ixit.cz>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Caleb Connolly <caleb@connolly.tech>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        ~okias/devicetree@lists.sr.ht,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-In-Reply-To: <20220810030500.2793882-2-bjorn.andersson@linaro.org>
-References: <20220810030500.2793882-1-bjorn.andersson@linaro.org> <20220810030500.2793882-2-bjorn.andersson@linaro.org>
-Subject: Re: [PATCH 1/2] dt-bindings: power: supply: Add Lenovo Yoga C630 EC
-Date:   Wed, 10 Aug 2022 09:11:36 -0600
-Message-Id: <1660144296.239515.4155386.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v3] dt-bindings: mfd: convert to yaml Qualcomm SPMI PMIC
+Message-ID: <YvPNf9qL+zdXEyK+@google.com>
+References: <20220626191630.176835-1-david@ixit.cz>
+ <20220809235625.GA2775377-robh@kernel.org>
+ <YvOPKKw60F4qEKM6@google.com>
+ <CAL_JsqL54yLFApJHZodEPUc4MucFg=0qMXr=koiprJB8z4dY-w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAL_JsqL54yLFApJHZodEPUc4MucFg=0qMXr=koiprJB8z4dY-w@mail.gmail.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -62,40 +66,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 09 Aug 2022 22:04:59 -0500, Bjorn Andersson wrote:
-> Add binding for the Embedded Controller found in the Qualcomm
-> Snapdragon-based Lenovo Yoga C630.
+On Wed, 10 Aug 2022, Rob Herring wrote:
+
+> On Wed, Aug 10, 2022 at 4:57 AM Lee Jones <lee.jones@linaro.org> wrote:
+> >
+> > On Tue, 09 Aug 2022, Rob Herring wrote:
+> >
+> > > On Sun, 26 Jun 2022 21:16:30 +0200, David Heidelberg wrote:
+> > > > Convert Qualcomm SPMI PMIC binding to yaml format.
+> > > >
+> > > > Additional changes:
+> > > >  - filled many missing compatibles
+> > > >
+> > > > Co-developed-by: Caleb Connolly <caleb@connolly.tech>
+> > > > Signed-off-by: David Heidelberg <david@ixit.cz>
+> > > > ---
+> > > > v3:
+> > > >  - added subnodes, there are two not converted to YAML yet, but it works
+> > > >  - now it prints milion directly unrelated warning to this binding
+> > > >    (it's related to the included subnodes bindings, can be merged,
+> > > >     but it'll generate more warnings and preferably anyone can takeover
+> > > >     from here)
+> > > >  - add qcom,pmx65
+> > > >
+> > > > v2:
+> > > >  - changed author to myself, kept Caleb as co-author
+> > > >  - moved nodename to properties
+> > > >  - add nodenames for pm* with deprecated property
+> > > >  - add ^$ to pattern properties
+> > > >  - dropped interrupt-names property
+> > > >  - added reg prop. to the nodes which have register in nodename
+> > > >  - added compatible pmx55
+> > > > Signed-off-by: David Heidelberg <david@ixit.cz>
+> > > > ---
+> > > >  .../bindings/mfd/qcom,spmi-pmic.txt           |  94 ---------
+> > > >  .../bindings/mfd/qcom,spmi-pmic.yaml          | 191 ++++++++++++++++++
+> > > >  2 files changed, 191 insertions(+), 94 deletions(-)
+> > > >  delete mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
+> > > >  create mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> > > >
+> > >
+> > > As this hasn't been picked up, I applied it. Thanks!
+> >
+> > I'd prefer to take it via MFD if it's all the same to you.
+> >
+> > In case there are additional fix-ups required during the next cycle.
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  .../power/supply/lenovo,yoga-c630-ec.yaml     | 88 +++++++++++++++++++
->  1 file changed, 88 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/power/supply/lenovo,yoga-c630-ec.yaml
-> 
+> I'm going to send it to Linus this week for rc1 so that won't be an issue.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Works for me then, thanks.
 
-yamllint warnings/errors:
+Acked-by: Lee Jones <lee@kernel.org>
 
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/power/supply/lenovo,yoga-c630-ec.example.dtb: embedded-controller@70: connector@1:ports: 'port@0' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/power/supply/lenovo,yoga-c630-ec.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/power/supply/lenovo,yoga-c630-ec.example.dtb: connector@1: ports: 'port@0' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/connector/usb-connector.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+-- 
+Lee Jones [李琼斯]
