@@ -2,62 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 88A5B58F8A4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 09:56:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 293BC58F8C2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 10:05:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234154AbiHKH4S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Aug 2022 03:56:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34096 "EHLO
+        id S234307AbiHKIFH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Aug 2022 04:05:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234237AbiHKH4L (ORCPT
+        with ESMTP id S234075AbiHKIFG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Aug 2022 03:56:11 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADD611AD9F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Aug 2022 00:56:09 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id y23so18466052ljh.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Aug 2022 00:56:09 -0700 (PDT)
+        Thu, 11 Aug 2022 04:05:06 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0003D883D4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Aug 2022 01:05:03 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id z6so17077462lfu.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Aug 2022 01:05:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=HGD+mIOoUzZZibF46I+q3hJDknL0evsBnB4j8896RDE=;
-        b=w2Ve8pp7kpZ5uxP6kONzTfBLYo+GLlwLTI7YboNcnwSUyzMvCwh29zN6fAO49uGDiN
-         2VkGvu5lb5NoOGvCo9WLrxVNL2kkhkZIqJy4urwI/xgg+7eImhMqGsWALOoMnzCuQr5a
-         bKphNe9iQ97fbwjNLqIGNqLFqimYiYA4/dLFxdeNGB77EkbPI0c/rV9Hivs6Z4wDlomk
-         mQ/HBLn/W6xohgtVK02g79ptUnDbrLrzhBlbmIFRD9MiGsm31GZQ1IOFu1mw95/Nafxo
-         H+2XTOYXnTJd9XCIgwRairgOHXj4qxGE/iMLiBsmwycAmo1lOFjZ/OQyThUyS/wqO6Gi
-         L1Vw==
+        bh=AWObm1t2SGsfX+EOzuUn4SeYctPOHns23Pie8FOr12w=;
+        b=blQsdmvcfi8aabm0W+4Bgxbof6mNYs6NonqMhJPZ1aVJaqcsFhXMdZFZDyiII01Fhf
+         x9SHadRxyjNFE6LHkQukeYi/PX+T/LeY29ukbibda1AWyUU0JolhqKes7iKm6crF8upp
+         PjVSelSX7gWdWVdY0E/fsOGQZv12TmTl0F0n04rlQS7j160OcGljnSOY0O6hsfmWLYNU
+         erUQklKIcGEFmbm9uSYCv7VuYJBAX7vbCUJzTehyFcxuXxX4lfsmNtLHHZwkqSDtoRU4
+         bFh+tOND5apR5OsJm2vyhaqZz8bRcXZMncjdCXcWwNp59SYUWZFKcpRUCvltmUjvXpVx
+         jqOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=HGD+mIOoUzZZibF46I+q3hJDknL0evsBnB4j8896RDE=;
-        b=Ov7wQe4PauB2ibnLBJPQQYK47KXnf24cPVDJ+MS7ry60PvJDIizFjplgX8RilWB9ZU
-         8KBqiPR1obLX0a3bwRgi4p3gxlAPpA+0UXQ3Nv+bCUnqAP2Uxj01ZznKAnmJF7xNpSrc
-         QHzVEXg6I0msXnPQeNnPEDKql9GPFwNvvs8RDrWmnA2GUfw+IZyNj+QWMksrTZQ7hxMN
-         rSHQjM2wocNmIe6OLpPL1XkOSEuoHFwrIeBtOdAibq0dXY0VeRlkzoAU3+CjUTkEq4a9
-         5CderkpL71JkUTshh85khO2hAuFuV0czgmHqpqnhyatNnbWBMWOx+B5nGOJjm31fMqUo
-         paAQ==
-X-Gm-Message-State: ACgBeo224VeO4rJf+KFbsxRVUtPtVErtMXRAL5nbhnFQOi/dhqyjc3k/
-        ss44KhH4qDcW0nAkxKITZlf0PQ==
-X-Google-Smtp-Source: AA6agR4c8fIm9+sSNAAoQ/CG7qvl6RSg1/y9svFJ1Yzku00jo7ICQImd2/4B1MH6UMreW6bzwNBm1A==
-X-Received: by 2002:a05:651c:241:b0:25e:65bd:3a8a with SMTP id x1-20020a05651c024100b0025e65bd3a8amr10308517ljn.206.1660204567994;
-        Thu, 11 Aug 2022 00:56:07 -0700 (PDT)
+        bh=AWObm1t2SGsfX+EOzuUn4SeYctPOHns23Pie8FOr12w=;
+        b=EcukXlZjCZQo9yARiD3zufA/m0YX9Z9dTWGfJiBZ55qhAnr1K3oqDJPb144VcbbgBJ
+         uGlRISWYKS4fsosvJawnrBUpchceBJDk/mAnjJeepW/4QfwSPmV3J1DaQfOWHs3+y1wc
+         BIfq1qc3Z3fSi/80wqXYIUMTm7NjfQ1paDiihw3OfzYPMoJiA7kMTyPX8TFpWRVKBQ0A
+         kfdKHI+BUr/+Hqh9dtZEcSY5MOG8okhQ34urIKK967IDexjFmt1FdXeMFto0Y8rjUpbB
+         KEyblr9WK8Y2VAP10kxRiVdJBjgbBiNmDM0yGzVxRidw4LxUdUap0eXZ1hdfXJdtGL/h
+         hGWQ==
+X-Gm-Message-State: ACgBeo0seRcPCYe+5bRwyK4TDHTVhXZepFXPYwUruTL8bZwYAE1ziQCm
+        hZ0e/2doELJpK/iK8PTd5cdLsg==
+X-Google-Smtp-Source: AA6agR7A6T7SL1WDl9JlKh+6jE8mNB65VeBjyl40+g28JZzZxZZVG575FetC+Nlr08Mgmdi51/8NDQ==
+X-Received: by 2002:a05:6512:c13:b0:48b:3b30:637d with SMTP id z19-20020a0565120c1300b0048b3b30637dmr9499019lfu.447.1660205100855;
+        Thu, 11 Aug 2022 01:05:00 -0700 (PDT)
 Received: from [192.168.1.39] ([83.146.140.105])
-        by smtp.gmail.com with ESMTPSA id j2-20020a056512398200b0048b008844b8sm607407lfu.270.2022.08.11.00.56.06
+        by smtp.gmail.com with ESMTPSA id y8-20020a2e95c8000000b0025d47a29734sm721935ljh.47.2022.08.11.01.04.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Aug 2022 00:56:07 -0700 (PDT)
-Message-ID: <db9b74f9-1f65-5b88-1c81-0a3fd6dcf9a6@linaro.org>
-Date:   Thu, 11 Aug 2022 10:56:06 +0300
+        Thu, 11 Aug 2022 01:05:00 -0700 (PDT)
+Message-ID: <74afb676-4a85-7a8e-f7ea-20d8a0967d7d@linaro.org>
+Date:   Thu, 11 Aug 2022 11:04:59 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.12.0
 Subject: Re: [PATCH 1/3] dt-bindings: display/msm: Add binding for SC8280XP
  MDSS
 Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -70,13 +71,13 @@ Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20220811040121.3775613-1-bjorn.andersson@linaro.org>
  <20220811040121.3775613-2-bjorn.andersson@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220811040121.3775613-2-bjorn.andersson@linaro.org>
+ <db9b74f9-1f65-5b88-1c81-0a3fd6dcf9a6@linaro.org>
+In-Reply-To: <db9b74f9-1f65-5b88-1c81-0a3fd6dcf9a6@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,132 +85,135 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/08/2022 07:01, Bjorn Andersson wrote:
-> Add binding for the display subsystem and display processing unit in the
-> Qualcomm SC8280XP platform.
+On 11/08/2022 10:56, Krzysztof Kozlowski wrote:
+> On 11/08/2022 07:01, Bjorn Andersson wrote:
+>> Add binding for the display subsystem and display processing unit in the
+>> Qualcomm SC8280XP platform.
+>>
+>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> ---
+>>  .../bindings/display/msm/dpu-sc8280xp.yaml    | 284 ++++++++++++++++++
+>>  1 file changed, 284 insertions(+)
+>>  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sc8280xp.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sc8280xp.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sc8280xp.yaml
+>> new file mode 100644
+>> index 000000000000..6c25943e639c
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/display/msm/dpu-sc8280xp.yaml
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  .../bindings/display/msm/dpu-sc8280xp.yaml    | 284 ++++++++++++++++++
->  1 file changed, 284 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sc8280xp.yaml
+> qcom prefix is needed (also when file is in msm subdir)
 > 
-> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sc8280xp.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sc8280xp.yaml
-> new file mode 100644
-> index 000000000000..6c25943e639c
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/dpu-sc8280xp.yaml
+> The file name should be based on compatible, so "qcom,sc8280xp-mdss.yaml"
+> 
+>> @@ -0,0 +1,284 @@
+>> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/display/msm/dpu-sc8280xp.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Display Processing Unit for SC8280XP
+>> +
+>> +maintainers:
+>> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+>> +
+>> +description:
+>> +  Device tree bindings for MSM Mobile Display Subsystem (MDSS) that encapsulates
+>> +  sub-blocks like DPU display controller, DSI and DP interfaces etc. Device tree
+>> +  bindings of MDSS and DPU are mentioned for SC8280XP.
+> 
+> s/Device tree bindings//
+> so just:
+> 
+> SC8280XP MSM Mobile Display Subsystem (MDSS) that encapsulates
+> sub-blocks like DPU display controller, DSI and DP interfaces etc.
+> 
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,sc8280xp-mdss
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  reg-names:
+>> +    const: mdss
+> 
+> You do not need reg names for one item, especially if the name is kind
+> of obvious... unless you re-use existing driver which needs it? Then
+> maybe let's change the driver to take first element?
 
-qcom prefix is needed (also when file is in msm subdir)
+OK, I see the driver expects this. It seems it is legacy from
+87729e2a7871 ("drm/msm: unify MDSS drivers") times. So it could be
+changed to grab first element always (older MDSS with three reg items
+still has mdss_phys at first item).
 
-The file name should be based on compatible, so "qcom,sc8280xp-mdss.yaml"
+> 
+>> +
+>> +  power-domains:
+>> +    maxItems: 1
+>> +
+>> +  clocks:
+>> +    items:
+>> +      - description: Display AHB clock from gcc
+>> +      - description: Display AHB clock from dispcc
+>> +      - description: Display core clock
+>> +
+>> +  clock-names:
+>> +    items:
+>> +      - const: iface
+>> +      - const: ahb
+>> +      - const: core
+>> +
+>> +  interrupts:
+>> +    maxItems: 1
+>> +
+>> +  interrupt-controller: true
+>> +
+>> +  "#address-cells": true
+>> +
+>> +  "#size-cells": true
+> 
+> I see other DPU bindings also specify both as "true". Why not a fixed
+> number (const)?
+> 
+>> +
+>> +  "#interrupt-cells":
+>> +    const: 1
+>> +
+>> +  iommus:
+>> +    items:
+>> +      - description: Phandle to apps_smmu node with SID mask for Hard-Fail port0
+>> +
+>> +  ranges: true
+>> +
+>> +  interconnects:
+>> +    minItems: 2
+> 
+> No need for minItems in such case.
+> 
+>> +    maxItems: 2
+>> +
+>> +  interconnect-names:
+>> +    items:
+>> +      - const: mdp0-mem
+>> +      - const: mdp1-mem
+>> +
+>> +  resets:
+>> +    items:
+>> +      - description: MDSS_CORE reset
+>> +
+>> +patternProperties:
+>> +  "^display-controller@[0-9a-f]+$":
+>> +    type: object
+>> +    description: Node containing the properties of DPU.
+> 
+> additionalProperties:false on this level
+> 
+> which will point to missing properties (e.g. opp-table)
 
-> @@ -0,0 +1,284 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/msm/dpu-sc8280xp.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Display Processing Unit for SC8280XP
-> +
-> +maintainers:
-> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> +
-> +description:
-> +  Device tree bindings for MSM Mobile Display Subsystem (MDSS) that encapsulates
-> +  sub-blocks like DPU display controller, DSI and DP interfaces etc. Device tree
-> +  bindings of MDSS and DPU are mentioned for SC8280XP.
-
-s/Device tree bindings//
-so just:
-
-SC8280XP MSM Mobile Display Subsystem (MDSS) that encapsulates
-sub-blocks like DPU display controller, DSI and DP interfaces etc.
-
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sc8280xp-mdss
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  reg-names:
-> +    const: mdss
-
-You do not need reg names for one item, especially if the name is kind
-of obvious... unless you re-use existing driver which needs it? Then
-maybe let's change the driver to take first element?
-
-> +
-> +  power-domains:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    items:
-> +      - description: Display AHB clock from gcc
-> +      - description: Display AHB clock from dispcc
-> +      - description: Display core clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: iface
-> +      - const: ahb
-> +      - const: core
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  interrupt-controller: true
-> +
-> +  "#address-cells": true
-> +
-> +  "#size-cells": true
-
-I see other DPU bindings also specify both as "true". Why not a fixed
-number (const)?
-
-> +
-> +  "#interrupt-cells":
-> +    const: 1
-> +
-> +  iommus:
-> +    items:
-> +      - description: Phandle to apps_smmu node with SID mask for Hard-Fail port0
-> +
-> +  ranges: true
-> +
-> +  interconnects:
-> +    minItems: 2
-
-No need for minItems in such case.
-
-> +    maxItems: 2
-> +
-> +  interconnect-names:
-> +    items:
-> +      - const: mdp0-mem
-> +      - const: mdp1-mem
-> +
-> +  resets:
-> +    items:
-> +      - description: MDSS_CORE reset
-> +
-> +patternProperties:
-> +  "^display-controller@[0-9a-f]+$":
-> +    type: object
-> +    description: Node containing the properties of DPU.
-
-additionalProperties:false on this level
-
-which will point to missing properties (e.g. opp-table)
-
-> +
-> +    properties:
-> +      compatible:
-> +        const: qcom,sc8280xp-dpu
-> +
+I'll fix existing bindings which have similar issue.
 
 
 Best regards,
