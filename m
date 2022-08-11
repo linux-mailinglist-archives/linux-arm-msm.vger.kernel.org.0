@@ -2,149 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED01758FBB5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 13:57:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33A4E58FBFA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 14:14:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234363AbiHKL5W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Aug 2022 07:57:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33220 "EHLO
+        id S234945AbiHKMO4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Aug 2022 08:14:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235088AbiHKL5Q (ORCPT
+        with ESMTP id S229591AbiHKMOz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Aug 2022 07:57:16 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEAE69674B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Aug 2022 04:57:15 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id gj1so17517680pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Aug 2022 04:57:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:from:to:cc;
-        bh=1PjdQiIv1kMsJkwFJMue4HRjmUNUZJ9LU6vCJsWYrUU=;
-        b=KU5q7OXMByi0n6kinxUo7WG4OyyXjQ68+HYKFQiLpLY83Q/SB6XyETN35FvaSWTKRy
-         T92Uh0WCytiioADd1sUB3/dXdAMjcfRPehHQWGYsse2fODcflVrx/rnpDhCbVKmY0Bi2
-         DyJdOFZHFuHNqzktyVeHf6Vf6RI1EPu5UthikeQ4o8TM/Jz23/sXHdC2SCHhLZ0YWE9Z
-         VAng1v+/b8P9V6MrdpnOeLWGOW+b9WHXxjmxoOKjSffTre0nnRY2wvxiZk9MUz5vKiuZ
-         d4C4qXyzoqP3SPVsPGSOI5HfkMp6qDErzPhBtlHg5Z3PNSn3a/B4VN5+42xkVYuMsn1n
-         3C7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=1PjdQiIv1kMsJkwFJMue4HRjmUNUZJ9LU6vCJsWYrUU=;
-        b=yziNN60UxnhQU0VkoIkdh9MBX3zfOyxK+vgG8JdtqxnfPWDhMOXT8tqbLgrKBUziy5
-         MKQ5NBr5McPeQsKLRZ+Fk1WUdzM3V1pXnMojR2+8vTZ8Fh2MBNUXqCXYV29wWZCGE69C
-         6nShA1E3tSse/lQW3cx9J1cRTLgSlpP4hrgKpT5BYfHx04R0dWLfzS+W4fp8CHbvKQwL
-         bAGaKw1bw+dWRcJ6qBrHUPuLNNpPfQk7f0o9YGHnwNlbFbvaK6iLOv6JiD/8+2H7fuhk
-         p7EHwleLCa5ND5nHtaw8nQsrQHkiMaK7rpCFpqpjsa9CREpVNYkollTfrAs5AK4QiF8X
-         YdHA==
-X-Gm-Message-State: ACgBeo3LxzQDgvQdKQrgXVMRPw3Hmbd6Q9qFUGBBjbXcmejGj2jlkrhW
-        BpyaX9xnqyAUnx60FGWnWDgt
-X-Google-Smtp-Source: AA6agR5gsam2Zx07NhcqQ8mrnHK0T8ZQKpGEl+RI0VMVLtLQpwRMwMyBFLPHonHLMR5FwQJCRUobLw==
-X-Received: by 2002:a17:903:2d1:b0:171:3773:b95 with SMTP id s17-20020a17090302d100b0017137730b95mr6719088plk.173.1660219035283;
-        Thu, 11 Aug 2022 04:57:15 -0700 (PDT)
-Received: from workstation ([59.92.103.103])
-        by smtp.gmail.com with ESMTPSA id w2-20020a62c702000000b0052f0a404fa7sm3975871pfg.146.2022.08.11.04.57.12
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 11 Aug 2022 04:57:14 -0700 (PDT)
-Date:   Thu, 11 Aug 2022 17:27:11 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Borislav Petkov <bp@alien8.de>
-Cc:     bjorn.andersson@linaro.org, mchehab@kernel.org,
-        james.morse@arm.com, rric@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-edac@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] Fix crash when using Qcom LLCC/EDAC drivers
-Message-ID: <20220811115711.GD29799@workstation>
-References: <20220811100924.79505-1-manivannan.sadhasivam@linaro.org>
- <YvTehUOIqJGqXgXY@zn.tnic>
- <YvTfqg0q/8kIMY91@zn.tnic>
- <20220811112032.GB29799@workstation>
- <YvTo8tE3DaHifrSp@zn.tnic>
- <20220811115334.GC29799@workstation>
+        Thu, 11 Aug 2022 08:14:55 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CC7394EC0;
+        Thu, 11 Aug 2022 05:14:54 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 38D75B82065;
+        Thu, 11 Aug 2022 12:14:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2238AC433D6;
+        Thu, 11 Aug 2022 12:14:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1660220091;
+        bh=RsSEfgBid7+M152WD5DK7Qcyfd/tAFwT6LFK6hzX6ck=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=OsE8pog2Yng6es7jml4aXW4m7as0lYLs90bF9iKr+1R+psn00dTtkS12cIFz3cCh2
+         xywJ0+YXw40p1pQCpfQpn0DpPOc+h09alagM/gbti7pqbFWRD3KSWY2TabB4/5sj0v
+         GB6b6GfyVNtdjdMfG2/lo0N99QHKir2sRU6HcA546YUbutfQM0/LKnf+uA/7D3VkJW
+         82AUQYOOU5kEr2+IFgIljT+vAX3rZNPj9eDA0MSnJArmmwWwczVPWjNhnhqstXc5pn
+         StJZWXUuNzdoLZ/ZTjDchC5T2pw0jWUvKH/pKdKnCiGdTsFXYSSo+BbGzdbdR9XHmd
+         gP1sWiE9CLgdA==
+Date:   Thu, 11 Aug 2022 14:14:47 +0200
+From:   Wolfram Sang <wsa@kernel.org>
+To:     Robin Reckmann <robin.reckmann@googlemail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
+        Robin Reckmann <robin.reckmann@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org
+Subject: Re: [PATCH] i2c: qcom-geni: Fix GPI DMA buffer sync-back
+Message-ID: <YvTyt4nmOZqQYSCa@shikoro>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+        Robin Reckmann <robin.reckmann@googlemail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
+        Robin Reckmann <robin.reckmann@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org
+References: <20220807140455.409417-1-robin.reckmann@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="bWT5sNRrWvbSSOGt"
 Content-Disposition: inline
-In-Reply-To: <20220811115334.GC29799@workstation>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <20220807140455.409417-1-robin.reckmann@gmail.com>
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Clipped the bouncing email addresses...
 
-On Thu, Aug 11, 2022 at 05:23:34PM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Aug 11, 2022 at 01:33:06PM +0200, Borislav Petkov wrote:
-> > On Thu, Aug 11, 2022 at 04:50:32PM +0530, Manivannan Sadhasivam wrote:
-> > > I know get_maintainer.pl :) But the problem is, Qualcomm recently
-> > > switched their email domain from codeaurora.org to quicinc.com.
-> > 
-> > Great:
-> > 
-> > $ git grep codeaurora.org MAINTAINERS | wc -l
-> > 5
-> > 
-> 
-> Yep! Most of the active developers have already changed their domains in
-> MAINTAINERS file. But the left ones are either not actively maintained
-> (yeah bad) or the maintainers have left Qualcomm.
-> 
-> > ;-\
-> > 
-> > > So even if I use the maintainers codeaurora domain now, they will
-> > > bounce.
-> > 
-> > Hmm, so the mails I sent with codeaurora on Cc didn't bounce back - I
-> > got only the quicinc bounces. That doesn't mean that codeaurora actually
-> > gets delivered...
-> > 
-> 
-> Not sure why. It was supposed to bounce. But could be that Qualcomm IT
-> decided to not bounce anymore since they have got enough complaints from
-> developers ;)
-> 
+--bWT5sNRrWvbSSOGt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Okay, seems to be bouncing for me:
+On Sun, Aug 07, 2022 at 11:04:54PM +0900, Robin Reckmann wrote:
+> Fix i2c transfers using GPI DMA mode for all message types that do not set
+> the I2C_M_DMA_SAFE flag (e.g. SMBus "read byte").
+>=20
+> In this case a bounce buffer is returned by i2c_get_dma_safe_msg_buf(),
+> and it has to synced back to the message after the transfer is done.
+>=20
+> Add missing assignment of dma buffer in geni_i2c_gpi().
+>=20
+> Set xferred in i2c_put_dma_safe_msg_buf() to true in case of no error to
+> ensure the sync-back of this dma buffer to the message.
+>=20
+> Signed-off-by: Robin Reckmann <robin.reckmann@gmail.com>
 
-The response from the remote server was:
-585 5.1.1 <ckadabi@codeaurora.org>: Recipient address rejected: undeliverable address: No such user here.
-585 5.1.1 <vnkgutta@codeaurora.org>: Recipient address rejected: undeliverable address: No such user here.
+Applied to for-current, thanks!
 
-Thanks,
-Mani
 
-> > > For that reason, I used their quicinc domain addresses. But since they
-> > > are bouncing, it looks like the maintainers left Qualcomm :/
-> > 
-> > Hmm, is there some way to get in touch with those folks?
-> > 
-> 
-> I don't think so. I checked in the internal Qualcomm database and
-> confirmed that I couldn't find the maintainers names there.
-> 
-> > Or whoever is taking over those drivers?
-> > 
-> 
-> LLCC is maintained by Bjorn (CCed) since it falls under soc/qcom. But I'm
-> not sure about EDAC. I think we should mark it as not maintainted until we
-> find a volunteer.
-> 
-> Bjorn, thoughts?
-> 
-> Thanks,
-> Mani
-> 
-> > Thx.
-> > 
-> > -- 
-> > Regards/Gruss,
-> >     Boris.
-> > 
-> > https://people.kernel.org/tglx/notes-about-netiquette
+--bWT5sNRrWvbSSOGt
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmL08rcACgkQFA3kzBSg
+Kbb4PQ/7BUKwYjOpQITlLf26s6hZcBGyYf17OjfwZTI3mATFsdX3AaDRh18mDEl5
+8MhL3B7c9cy5AL7iuPQOI+K7rpyg/djLLPJ6C994uE/mvy/Uek8ReLBt/4Pry5xR
+0u/f60/w9sooP86L3Y0d02eGMXJR5DwZTh+l8LdpKIA63WYrCYqGD/jXArbQN/5I
+snQaD9zsnUVx94wj9v5YW7JX3/JEfiI5/hMKJRlwnn3tdPnzk/y7i0ppby8RLH0E
+Pg2RMV46tTUVo+YP2565464cQjf39DIQdjcWIiaxVs8s5pkvBa5pfDecV5eAWY83
+21hEWuHKbwJdGnsxiKGoa3K94fBjrUNB7dhoyoY0GsWh5JfxeirmnjmrjCYP/0FP
+50nWMa7jjwmWjVgS/HWjU3DTpHDAncpogPdxjQoCuZwqWA4YjSoEqbQEb2pB+yER
+ejRbrqsoDrzHJ3gvqIzGraQYDLp880KZTHZ+UbJkwxd0iisok2ISJaMmV8cRELos
+P9WuOLtUtoA8MhAImGi7gL+N9DTmw3oc5N51y83ij6+CUZTiHYIaKX18yaNC2qic
+/UpKqrKyarvt0at33rwt3j9M/nRw9vY2gr0YLEpc2Tsi4AuxPjsaGTWUG7Kw4hH3
+PuWIC3YJn3cBP5ORPeIbuDG6/Z2glVhY5xqlMLuG1QygGfR0C74=
+=B6wR
+-----END PGP SIGNATURE-----
+
+--bWT5sNRrWvbSSOGt--
