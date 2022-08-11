@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 85ADC58F520
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 02:16:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47DC158F52A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 02:17:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233269AbiHKAQA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Aug 2022 20:16:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35276 "EHLO
+        id S233468AbiHKARg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Aug 2022 20:17:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233215AbiHKAPy (ORCPT
+        with ESMTP id S233443AbiHKARe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Aug 2022 20:15:54 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6B6B65670
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 17:15:40 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id a14-20020a0568300b8e00b0061c4e3eb52aso11706161otv.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 17:15:40 -0700 (PDT)
+        Wed, 10 Aug 2022 20:17:34 -0400
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3713B8FD5B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 17:17:33 -0700 (PDT)
+Received: by mail-oi1-x236.google.com with SMTP id u9so19594768oiv.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 17:17:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=to:subject:message-id:date:user-agent:from:references:in-reply-to
          :mime-version:from:to:cc;
-        bh=rH4tJJVaEKiEVSX/7gEAY/BKJ/vg9HsTOqIZEj5Pmh4=;
-        b=h0aj7RgQ934e0ORmtu9pIYkIT6Z+gcdEaZXquy67TLMV6fKF1doh6+IH+Ih+3hFrDz
-         TELVjZEBzRbJUq8tPbTEQA/LVyDrWQBexnyLeZg0MEVz2nP0yNhbckOc9pbQBxyEnWme
-         aFHtmSlIXxlJYxB7QNAGnuAzmmCzDwd6wCrQE=
+        bh=EX3bVclIGOJBNN3kaIwMF8d9L76zR4WsXSoGU82tx4Q=;
+        b=Qych/knHnNXGKR2RfvhnaH6NJcqX1D8kLFdg98P+Pc+BJgn3Xs1kGY1kcHUJVQZFNI
+         ZQAaDnuSiZ+XNCRlpKRyNyJdG+q8qNVbspcFcidSTOC5vplZgYy4hmdJlkSEd9TR5BaO
+         L+DNQhBv34hgmFEbEp/m0Z2+Dz8NSNwiWv8yU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=to:subject:message-id:date:user-agent:from:references:in-reply-to
          :mime-version:x-gm-message-state:from:to:cc;
-        bh=rH4tJJVaEKiEVSX/7gEAY/BKJ/vg9HsTOqIZEj5Pmh4=;
-        b=t0crXeWT3XuE8dJYTSYvak4hGPCzSmPWcSYgji8f9O9VygGY0KV2xMitksz0f+VjUm
-         1V6Vj5Cc39DhpixkF24dS4PiPyNzPtlILKt+Uycn2CRsfsXjyJbmJVAfpX71ojPJ7oxY
-         KPDlYsFTknCQpFIcwBYkp3Z1YAKzK4JIrzu+2bj/37N2d+NlP/dYdoMn+Ap1e7O+CGtS
-         hjw8qrXJOM8bgO9fQ3a4swPuGIui/g77O5llXVAimfY7K+scnyNhUCE9fWxn5bdHsrvn
-         58ftNMMtyVo7oWPkf5y3e7KyRQbb9O3lrcJC1hAcd13RHwR6x7IpAO+NGKGyAa8E0KAE
-         fS1Q==
-X-Gm-Message-State: ACgBeo07ugFkPmh8eo7i/o0Y1Svbxt1/Ax2lAO2ZJ77x+zpHZUoTnPAz
-        B/IERw5CE1RNf20C23S3eTNTl734rbnQ3PdU61ddKw==
-X-Google-Smtp-Source: AA6agR5BtDf4XxrUrg0Gk1lYiHMkGfXr1/IVnw2zv2k57Qwoaw08dnBtupoZEjg0MmKn5KxR5W5npRRcFJ+VX9QGae4=
-X-Received: by 2002:a05:6830:2645:b0:61c:b7cd:bde3 with SMTP id
- f5-20020a056830264500b0061cb7cdbde3mr11142467otu.73.1660176940236; Wed, 10
- Aug 2022 17:15:40 -0700 (PDT)
+        bh=EX3bVclIGOJBNN3kaIwMF8d9L76zR4WsXSoGU82tx4Q=;
+        b=Yak+pyvNz/4o6nDLbm/ja/rCVhFJJtkCiKD9v3fZOgZv5BFRLq02dcn8ftMBQVwJp9
+         BhUbB5NLskGlV9fA4KdNdeeot38AMlshSazeVar8cGwBbDQq57hnc9rL47XflyNbvy/M
+         pP7/+bwod3iori7jzrHCqtmaZngRn1kWVW4JtZKhXLyUmNPa8gjlexKjBdzy9cRm/Z8g
+         HslVHXkJLoMlBDEUNcYRpg2PKM0uPfzo2XEDmETiVX6V3wUUyz5jVTyCMRCEg5Kjfi6d
+         TrQH9Yui+D3dcH5c3rTvo4qrJwHujJHz3ImWkqxZzEEfnbbYnhy4uYtKNqEidJQFs4ha
+         FXxA==
+X-Gm-Message-State: ACgBeo3QYp2cpfC9gXRWTaOvXmdZJPAjG6E8mlzU9/cVSDq4zg5RS78F
+        xFK8pDhw/FjseC7en+vvHfjaNk4WrAHjOxTBYhGw0Q==
+X-Google-Smtp-Source: AA6agR7x6T+qgCbnVB685QHwpNlUcxE7GoxSGKeORrKeDT+eh0cnqawvcvvFAUbMZk3Wf2PjS4DnA58135CCQxKtjXw=
+X-Received: by 2002:a05:6808:1389:b0:33a:bd16:c4e4 with SMTP id
+ c9-20020a056808138900b0033abd16c4e4mr2323919oiw.0.1660177052568; Wed, 10 Aug
+ 2022 17:17:32 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 10 Aug 2022 19:15:39 -0500
+ HTTPREST; Wed, 10 Aug 2022 19:17:32 -0500
 MIME-Version: 1.0
-In-Reply-To: <1660117558-21829-5-git-send-email-quic_srivasam@quicinc.com>
-References: <1660117558-21829-1-git-send-email-quic_srivasam@quicinc.com> <1660117558-21829-5-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <1660117558-21829-4-git-send-email-quic_srivasam@quicinc.com>
+References: <1660117558-21829-1-git-send-email-quic_srivasam@quicinc.com> <1660117558-21829-4-git-send-email-quic_srivasam@quicinc.com>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Wed, 10 Aug 2022 19:15:39 -0500
-Message-ID: <CAE-0n52=OzOG7qCXivVbsfJMdNCZJgJNSX3-3CeYqbW9tV3qqQ@mail.gmail.com>
-Subject: Re: [PATCH v3 4/8] remoteproc: qcom: Add compatible name for SC7280 ADSP
+Date:   Wed, 10 Aug 2022 19:17:32 -0500
+Message-ID: <CAE-0n51a1fUx-JnfgWeyx7JRMW0mWC0QquaA2ex=WhuR1H7esA@mail.gmail.com>
+Subject: Re: [PATCH v3 3/8] remoteproc: qcom: Add flag in adsp private data structure
 To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         agross@kernel.org, bgoswami@quicinc.com,
         bjorn.andersson@linaro.org, broonie@kernel.org,
@@ -71,11 +71,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivasa Rao Mandadapu (2022-08-10 00:45:54)
-> @@ -741,6 +757,7 @@ static const struct of_device_id adsp_of_match[] = {
->         { .compatible = "qcom,qcs404-cdsp-pil", .data = &cdsp_resource_init },
->         { .compatible = "qcom,sc7280-wpss-pil", .data = &wpss_resource_init },
->         { .compatible = "qcom,sdm845-adsp-pil", .data = &adsp_resource_init },
-> +       { .compatible = "qcom,sc7280-adsp-pil", .data = &adsp_sc7280_resource_init },
+Quoting Srinivasa Rao Mandadapu (2022-08-10 00:45:53)
+> Add flag in qcom_adsp private data structure and initialize
+> it to distinguish ADSP and WPSS modules.
+>
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> ---
+> Changes since V2:
+>         -- Add is_adsp_sb_needed flag instead of is_wpss.
+>
+>  drivers/remoteproc/qcom_q6v5_adsp.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
+> index 2f3b9f5..d18ec74 100644
+> --- a/drivers/remoteproc/qcom_q6v5_adsp.c
+> +++ b/drivers/remoteproc/qcom_q6v5_adsp.c
+> @@ -62,6 +62,7 @@ struct adsp_pil_data {
+>         const char *sysmon_name;
+>         int ssctl_id;
+>         bool is_wpss;
+> +       bool is_adsp_sb_needed;
 
-Please keep this sorted on compatible string.
+What does 'sb' mean? Self boot? Can you just write it out? And maybe
+drop 'is_' prefix because if (is_*) and if (something_needed) reads the
+same.
