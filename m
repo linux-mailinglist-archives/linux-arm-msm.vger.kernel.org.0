@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1C18590213
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 18:05:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB4FD590307
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 18:21:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237016AbiHKQDi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Aug 2022 12:03:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60724 "EHLO
+        id S237047AbiHKQVP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Aug 2022 12:21:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237011AbiHKQDM (ORCPT
+        with ESMTP id S237663AbiHKQUE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Aug 2022 12:03:12 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA182785A8;
-        Thu, 11 Aug 2022 08:50:19 -0700 (PDT)
+        Thu, 11 Aug 2022 12:20:04 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8973E9C50B;
+        Thu, 11 Aug 2022 09:01:57 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 7DD5FCE224D;
-        Thu, 11 Aug 2022 15:49:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54DF8C433C1;
-        Thu, 11 Aug 2022 15:49:39 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 41DB8B82166;
+        Thu, 11 Aug 2022 16:01:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B46AC433D7;
+        Thu, 11 Aug 2022 16:01:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1660232980;
-        bh=MAiaC/5yBcdIJnS4EwGQVV4M3oiWPn1vOI6l1WzdSog=;
+        s=k20201202; t=1660233715;
+        bh=5FJntoiGAy4FKurYXXyOYgeeCYPluPQ7jBivwhv82Vk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=e0tDevSPU9uLn9bgjHiRVdBc2lHd0lOrKuGrr319QuI5qwTumKDWqWH5eHov1JZW1
-         7Q2atpu96PkMjLDA3UQj8eGc/2t6JSy1uFAYc9aj9dYOfeklrF9yksCyLzWJfJHXXT
-         h+cH8XIvlhIRBqGflyxptyB85B/UGUoj9Y/uNwDbmlTETuKRi2I4MdQIwn6Mdfwx4/
-         H2poT0lZYqAp5rUfYUzbsEnLovYhQHLIsnn3eiB35Y7LFn5tGp/PgYQrZBjnEtasV2
-         BFEWuby7tjpfv+RNx6pYk6IRRkuoYnly/Crl89Br47elrDtmEvVHNizeFOTVs51oWM
-         Zu05NZFf6bUhw==
+        b=IRPnX1+8fIBudYbPaa4sHaQj2GuLevfqGoNATnAc6FW5R8W5wvwfySvCDtU1cFYXO
+         uWlxtYZB29DdJA3emN/7DDT13QmM4rIQ8aVfKZPzZWFJEFq6Weng5w8v769+oJdSqi
+         oEKhlMduuaGXn3qzsmcrS2cC0EDOtC6/GHqgAy4dhfjF26PVlxKwDZR5u42Q1V6oI+
+         PUyVDMRZW20iBcYQXQV0yemvpD99wUKQoLYdvy2MKuYbyMkM91KDI4dzeSzdIKwfls
+         6uQp7pWNeQhIBsdxOWDAvxBxlRnQhHiqypTciceDwoPrYfSORFj15rZEm9p+7HBS3K
+         T9inrvWR7yBfg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Rob Clark <robdclark@chromium.org>,
@@ -39,12 +39,12 @@ Cc:     Rob Clark <robdclark@chromium.org>,
         quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
         airlied@linux.ie, daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.18 56/93] drm/msm/gem: Drop obj lock in msm_gem_free_object()
-Date:   Thu, 11 Aug 2022 11:41:50 -0400
-Message-Id: <20220811154237.1531313-56-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 46/69] drm/msm/gem: Drop obj lock in msm_gem_free_object()
+Date:   Thu, 11 Aug 2022 11:55:55 -0400
+Message-Id: <20220811155632.1536867-46-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220811154237.1531313-1-sashal@kernel.org>
-References: <20220811154237.1531313-1-sashal@kernel.org>
+In-Reply-To: <20220811155632.1536867-1-sashal@kernel.org>
+References: <20220811155632.1536867-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -80,10 +80,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  2 files changed, 13 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index a4f61972667b..59d5f327047e 100644
+index d280dd64744d..0d84bdd4a0a8 100644
 --- a/drivers/gpu/drm/msm/msm_gem.c
 +++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -991,8 +991,6 @@ void msm_gem_free_object(struct drm_gem_object *obj)
+@@ -1017,8 +1017,6 @@ void msm_gem_free_object(struct drm_gem_object *obj)
  	list_del(&msm_obj->mm_list);
  	mutex_unlock(&priv->mm_lock);
  
@@ -92,7 +92,7 @@ index a4f61972667b..59d5f327047e 100644
  	/* object should not be on active list: */
  	GEM_WARN_ON(is_active(msm_obj));
  
-@@ -1008,17 +1006,11 @@ void msm_gem_free_object(struct drm_gem_object *obj)
+@@ -1034,17 +1032,11 @@ void msm_gem_free_object(struct drm_gem_object *obj)
  
  		put_iova_vmas(obj);
  
@@ -111,10 +111,10 @@ index a4f61972667b..59d5f327047e 100644
  
  	drm_gem_object_release(obj);
 diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index af612add5264..f62855134660 100644
+index e39a8e7ad843..fdd9b1a08009 100644
 --- a/drivers/gpu/drm/msm/msm_gem.h
 +++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -196,7 +196,19 @@ msm_gem_unlock(struct drm_gem_object *obj)
+@@ -193,7 +193,19 @@ msm_gem_unlock(struct drm_gem_object *obj)
  static inline bool
  msm_gem_is_locked(struct drm_gem_object *obj)
  {
