@@ -2,45 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A095459084B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 23:47:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 170E6590896
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Aug 2022 00:06:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235544AbiHKVrO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Aug 2022 17:47:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54416 "EHLO
+        id S235896AbiHKWGI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Aug 2022 18:06:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235683AbiHKVrN (ORCPT
+        with ESMTP id S236369AbiHKWGG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Aug 2022 17:47:13 -0400
+        Thu, 11 Aug 2022 18:06:06 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 787999F181;
-        Thu, 11 Aug 2022 14:47:12 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27BLMAHE017478;
-        Thu, 11 Aug 2022 21:47:03 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8DF4248CA;
+        Thu, 11 Aug 2022 15:06:03 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27BM1q8L012558;
+        Thu, 11 Aug 2022 22:05:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
  subject : date : message-id : in-reply-to : references : mime-version :
  content-transfer-encoding : content-type; s=qcppdkim1;
- bh=X6bnYtAwKK3BzrQ1nYVOyYM037plDtvb+7W7kA/VJHQ=;
- b=MKxwsrX0kCvNVr/PIkTkEB1AexMZYT0XM/DcIR0AjODZRTcF0O8UUHEBNAStLtui5agw
- 1prX2RKx8d7I266xnaNb2MVc/FBETHfcsTQeJkatDZTwXaBt604FAGb6MqTcmj2DsqWV
- lGsaU9vS/5XKlMmmgyA6r1FRYrw4E6HNZh5DfFrraUl3rM43EQtlFkg0zdXxp1fnr94h
- 1IYJRHrLZhP8fYxH03lsp6UJv2+keIoLqlzZGjhepjDDlQsCUEiu6LZjqileF4A6XNMj
- eCTmi7k6E8v+YZSAQmPrrD3fU61T0tdYoiy69/JwMG0PXik/+FLfXDlq0uB77nobfBRg jg== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3hv95ywwdx-1
+ bh=CBqQhmy5q8Ih5/yMHtszBKU42svrecCMR3Zi5a9CEqs=;
+ b=YdXUFqM6hKJeaDKeZlh0xEaJHPW9tK1QvnTM9nVstx/56Y+CI0JxEAgqlXT/sRguOcl3
+ 464Inu/PcajygM1jFwfC4Uc6gIFqc7PA9CvneG4jFTohwa0R0XPYP5cstSUOFpZvvj98
+ 28To6VgFLTinWxDf1NWoxG3yFQvIAUCgpNqRaFllIGmTkvfq7lGTJNyku7gQB5LmTp/U
+ eFltoydmCyLQ0Kgf2pa5o8Hhz9JAm4BMmR1mcPhUg9z6thR7k6kCUuYTgCxcTt1v2QgG
+ EAxNLCvjw/0OAeJ00O6ckydX4bzMXxpkLXRdGJTGCA7h0M22l3iIko5qf5+n6ETd8vQl uw== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3hvh25vjdf-3
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 11 Aug 2022 21:47:03 +0000
+        Thu, 11 Aug 2022 22:05:54 +0000
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27BLg2pQ022660
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27BLfwVb011414
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 11 Aug 2022 21:42:02 GMT
+        Thu, 11 Aug 2022 21:41:58 GMT
 Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
  nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 11 Aug 2022 14:42:01 -0700
+ 15.2.986.22; Thu, 11 Aug 2022 14:41:57 -0700
 From:   Elliot Berman <quic_eberman@quicinc.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        "Marc Zyngier" <maz@kernel.org>
 CC:     Elliot Berman <quic_eberman@quicinc.com>,
         Murali Nalajala <quic_mnalajal@quicinc.com>,
         Trilok Soni <quic_tsoni@quicinc.com>,
@@ -50,18 +53,16 @@ CC:     Elliot Berman <quic_eberman@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         <linux-arm-kernel@lists.infradead.org>,
         "Mark Rutland" <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        "Marc Zyngier" <maz@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
         Jonathan Corbet <corbet@lwn.net>,
         Will Deacon <will@kernel.org>,
         Catalin Marinas <catalin.marinas@arm.com>,
         <devicetree@vger.kernel.org>, <linux-doc@vger.kernel.org>,
         <linux-arm-msm@vger.kernel.org>
-Subject: [PATCH v3 12/12] tty: gunyah: Add tty console driver for RM Console Serivces
-Date:   Thu, 11 Aug 2022 14:41:07 -0700
-Message-ID: <20220811214107.1074343-13-quic_eberman@quicinc.com>
+Subject: [PATCH v3 05/12] virt: gunyah: Add hypercalls to identify Gunyah
+Date:   Thu, 11 Aug 2022 14:41:00 -0700
+Message-ID: <20220811214107.1074343-6-quic_eberman@quicinc.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20220811214107.1074343-1-quic_eberman@quicinc.com>
 References: <20220811214107.1074343-1-quic_eberman@quicinc.com>
@@ -73,16 +74,16 @@ X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: b2ekl1-TrUdHCXLjbSlxQU9LY-YpsgU7
-X-Proofpoint-GUID: b2ekl1-TrUdHCXLjbSlxQU9LY-YpsgU7
+X-Proofpoint-GUID: px05yBckFTcPvlodJQ7zfZj9dzqxXa6v
+X-Proofpoint-ORIG-GUID: px05yBckFTcPvlodJQ7zfZj9dzqxXa6v
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
  definitions=2022-08-11_13,2022-08-11_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 clxscore=1015 adultscore=0 bulkscore=0 impostorscore=0
- suspectscore=0 mlxlogscore=999 priorityscore=1501 spamscore=0 mlxscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2208110065
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 spamscore=0
+ phishscore=0 priorityscore=1501 lowpriorityscore=0 malwarescore=0
+ suspectscore=0 mlxscore=0 mlxlogscore=999 impostorscore=0 clxscore=1015
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2208110066
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
@@ -93,479 +94,217 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Gunyah provides a console for each VM using the VM console resource
-manager APIs. This driver allows console data from other
-VMs to be accessed via a TTY device and exports a console device to dump
-Linux's own logs to our console.
+Add hypercalls to identify when Linux is running a virtual machine under
+Gunyah.
+
+There are two calls to help identify Gunyah:
+
+1. gh_hypercall_get_uid() returns a UID when running under a Gunyah
+   hypervisor.
+2. gh_hypercall_hyp_identify() returns build information and a set of
+   feature flags that are supported by Gunyah.
 
 Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 ---
- MAINTAINERS              |   1 +
- drivers/tty/Kconfig      |   9 +
- drivers/tty/Makefile     |   1 +
- drivers/tty/gunyah_tty.c | 410 +++++++++++++++++++++++++++++++++++++++
- 4 files changed, 421 insertions(+)
- create mode 100644 drivers/tty/gunyah_tty.c
+ MAINTAINERS                   |  2 +
+ arch/arm64/Kbuild             |  1 +
+ arch/arm64/gunyah/Makefile    |  2 +
+ arch/arm64/gunyah/hypercall.c | 71 +++++++++++++++++++++++++++++++++++
+ drivers/virt/Kconfig          |  2 +
+ drivers/virt/gunyah/Kconfig   | 13 +++++++
+ include/asm-generic/gunyah.h  | 36 ++++++++++++++++++
+ 7 files changed, 127 insertions(+)
+ create mode 100644 arch/arm64/gunyah/Makefile
+ create mode 100644 arch/arm64/gunyah/hypercall.c
+ create mode 100644 drivers/virt/gunyah/Kconfig
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index fca47b571711..f0050e197e79 100644
+index 14030c8ffe8a..f5d5ebb62701 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -8743,6 +8743,7 @@ F:	Documentation/ABI/testing/sysfs-hypervisor-gunyah
+@@ -8741,6 +8741,8 @@ L:	linux-arm-msm@vger.kernel.org
+ S:	Supported
  F:	Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
  F:	Documentation/virt/gunyah/
- F:	arch/arm64/gunyah/
-+F:	drivers/tty/gunyah_tty.c
- F:	drivers/virt/gunyah/
++F:	arch/arm64/gunyah/
++F:	drivers/virt/gunyah/
  F:	include/asm-generic/gunyah.h
- F:	include/linux/gunyah*.h
-diff --git a/drivers/tty/Kconfig b/drivers/tty/Kconfig
-index cc30ff93e2e4..7061cc14a814 100644
---- a/drivers/tty/Kconfig
-+++ b/drivers/tty/Kconfig
-@@ -380,6 +380,15 @@ config RPMSG_TTY
- 	  To compile this driver as a module, choose M here: the module will be
- 	  called rpmsg_tty.
  
-+
-+config GUNYAH_CONSOLE
-+	tristate "Gunyah Consoles"
-+	depends on GUNYAH
-+	help
-+	  This enables support for console output using Gunyah's Resource Manager RPC.
-+	  This is normally used when a secondary VM which does not have exclusive access
-+	  to a real or virtualized serial device and virtio-console is unavailable.
-+
- endif # TTY
+ HABANALABS PCI DRIVER
+diff --git a/arch/arm64/Kbuild b/arch/arm64/Kbuild
+index 5bfbf7d79c99..fbcde0d5cec8 100644
+--- a/arch/arm64/Kbuild
++++ b/arch/arm64/Kbuild
+@@ -4,6 +4,7 @@ obj-$(CONFIG_KVM)	+= kvm/
+ obj-$(CONFIG_XEN)	+= xen/
+ obj-$(subst m,y,$(CONFIG_HYPERV))	+= hyperv/
+ obj-$(CONFIG_CRYPTO)	+= crypto/
++obj-$(CONFIG_GUNYAH)	+= gunyah/
  
- source "drivers/tty/serdev/Kconfig"
-diff --git a/drivers/tty/Makefile b/drivers/tty/Makefile
-index 07aca5184a55..d183fbfd835b 100644
---- a/drivers/tty/Makefile
-+++ b/drivers/tty/Makefile
-@@ -27,5 +27,6 @@ obj-$(CONFIG_GOLDFISH_TTY)	+= goldfish.o
- obj-$(CONFIG_MIPS_EJTAG_FDC_TTY) += mips_ejtag_fdc.o
- obj-$(CONFIG_VCC)		+= vcc.o
- obj-$(CONFIG_RPMSG_TTY)		+= rpmsg_tty.o
-+obj-$(CONFIG_GUNYAH_CONSOLE)	+= gunyah_tty.o
- 
- obj-y += ipwireless/
-diff --git a/drivers/tty/gunyah_tty.c b/drivers/tty/gunyah_tty.c
+ # for cleaning
+ subdir- += boot
+diff --git a/arch/arm64/gunyah/Makefile b/arch/arm64/gunyah/Makefile
 new file mode 100644
-index 000000000000..024f3570bab3
+index 000000000000..f71a9533c266
 --- /dev/null
-+++ b/drivers/tty/gunyah_tty.c
-@@ -0,0 +1,410 @@
++++ b/arch/arm64/gunyah/Makefile
+@@ -0,0 +1,2 @@
++obj-$(CONFIG_GUNYAH) += gunyah_hypercall.o
++gunyah_hypercall-y += hypercall.o
+diff --git a/arch/arm64/gunyah/hypercall.c b/arch/arm64/gunyah/hypercall.c
+new file mode 100644
+index 000000000000..5b08c9d80de0
+--- /dev/null
++++ b/arch/arm64/gunyah/hypercall.c
+@@ -0,0 +1,71 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/*
 + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
 + */
 +
-+#define pr_fmt(fmt) "gh_rsc_mgr_console: " fmt
-+
-+#include <linux/gunyah_rsc_mgr.h>
-+#include <linux/auxiliary_bus.h>
-+#include <linux/workqueue.h>
-+#include <linux/spinlock.h>
-+#include <linux/tty_flip.h>
-+#include <linux/console.h>
++#include <linux/arm-smccc.h>
 +#include <linux/module.h>
-+#include <linux/kfifo.h>
-+#include <linux/kref.h>
-+#include <linux/slab.h>
-+#include <linux/tty.h>
-+#include <linux/of.h>
++#include <asm-generic/gunyah.h>
 +
-+/*
-+ * The Linux TTY code does not support dynamic addition of tty derived devices so we need to know
-+ * how many tty devices we might need when space is allocated for the tty device. Since VMs might be
-+ * added/removed dynamically, we need to make sure we have enough allocated.
++#define GH_CALL_TYPE_PLATFORM_CALL		0
++#define GH_CALL_TYPE_HYPERCALL			2
++#define GH_CALL_TYPE_SERVICE			3
++#define GH_CALL_TYPE_SHIFT			14
++#define GH_CALL_FUNCTION_NUM_MASK		0x3fff
++
++#define GH_SERVICE(fn)		ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL, ARM_SMCCC_SMC_32, \
++						   ARM_SMCCC_OWNER_VENDOR_HYP, \
++						   (GH_CALL_TYPE_SERVICE << GH_CALL_TYPE_SHIFT) \
++							| ((fn) & GH_CALL_FUNCTION_NUM_MASK))
++
++#define GH_HYPERCALL_CALL_UID			GH_SERVICE(0x3f01)
++
++#define GH_HYPERCALL(fn)	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL, ARM_SMCCC_SMC_64, \
++						   ARM_SMCCC_OWNER_VENDOR_HYP, \
++						   (GH_CALL_TYPE_HYPERCALL << GH_CALL_TYPE_SHIFT) \
++							| ((fn) & GH_CALL_FUNCTION_NUM_MASK))
++
++#define GH_HYPERCALL_HYP_IDENTIFY		GH_HYPERCALL(0x0000)
++
++/**
++ * gh_hypercall_get_uid() - Returns a UID when running under a Gunyah hypervisor.
++ * @uid: An array of 4 u32's (u32 uid[4];)
++ *
++ * The UID will be either QC_HYP_UID or GUNYAH_UID defined in include/asm-generic/gunyah.h.
++ * QC_HYP_UID is returned on platforms using Qualcomm's version of Gunyah.
++ * GUNYAH_UID is returned on platforms using open source version of Gunyah.
++ * If the uid is not one of the above two UIDs, then it is assumed that the hypervisor or firmware
++ * is not Gunyah.
 + */
-+#define RSC_MGR_TTY_ADAPTERS		16
-+
-+/* # of payload bytes that can fit in a 1-fragment CONSOLE_WRITE message */
-+#define RM_CONS_WRITE_MSG_SIZE	((1 * (GH_MSGQ_MAX_MSG_SIZE - 8)) - 4)
-+
-+struct rm_cons_port {
-+	struct tty_port port;
-+	u16 vmid;
-+	bool open;
-+	unsigned int index;
-+
-+	DECLARE_KFIFO(put_fifo, char, 1024);
-+	spinlock_t fifo_lock;
-+	struct work_struct put_work;
-+
-+	struct rm_cons_data *cons_data;
-+};
-+
-+struct rm_cons_data {
-+	struct tty_driver *tty_driver;
-+	struct device *dev;
-+
-+	spinlock_t ports_lock;
-+	struct rm_cons_port *ports[RSC_MGR_TTY_ADAPTERS];
-+
-+	struct notifier_block rsc_mgr_notif;
-+	struct console console;
-+};
-+
-+static void put_work_fn(struct work_struct *ws)
++void gh_hypercall_get_uid(u32 *uid)
 +{
-+	char buf[RM_CONS_WRITE_MSG_SIZE];
-+	int count, ret;
-+	struct rm_cons_port *port = container_of(ws, struct rm_cons_port, put_work);
++	struct arm_smccc_res res;
 +
-+	while (!kfifo_is_empty(&port->put_fifo)) {
-+		count = kfifo_out_spinlocked(&port->put_fifo, buf, sizeof(buf), &port->fifo_lock);
-+		if (count <= 0)
-+			continue;
++	arm_smccc_1_1_hvc(GH_HYPERCALL_CALL_UID, &res);
 +
-+		ret = gh_rm_console_write(port->vmid, buf, count);
-+		if (ret) {
-+			pr_warn_once("failed to send characters: %d\n", ret);
-+			break;
-+		}
-+	}
++	uid[0] = res.a0;
++	uid[1] = res.a1;
++	uid[2] = res.a2;
++	uid[3] = res.a3;
 +}
++EXPORT_SYMBOL_GPL(gh_hypercall_get_uid);
 +
-+static int rsc_mgr_console_notif(struct notifier_block *nb, unsigned long cmd, void *data)
++/**
++ * gh_hypercall_hyp_identify() - Returns build information and feature flags supported by Gunyah.
++ * @hyp_identify: filled by the hypercall with the API info and feature flags.
++ */
++void gh_hypercall_hyp_identify(struct gh_hypercall_hyp_identify_resp *hyp_identity)
 +{
-+	int count, i;
-+	struct rm_cons_port *rm_port;
-+	struct tty_port *tty_port = NULL;
-+	struct rm_cons_data *cons_data = container_of(nb, struct rm_cons_data, rsc_mgr_notif);
-+	const struct gh_rm_notification *notif = data;
-+	struct gh_rm_notif_vm_console_chars const * const msg = notif->buff;
++	struct arm_smccc_res res;
 +
-+	if (cmd != GH_RM_NOTIF_VM_CONSOLE_CHARS ||
-+		notif->size < sizeof(*msg))
-+		return NOTIFY_DONE;
++	arm_smccc_1_1_hvc(GH_HYPERCALL_HYP_IDENTIFY, &res);
 +
-+	spin_lock(&cons_data->ports_lock);
-+	for (i = 0; i < RSC_MGR_TTY_ADAPTERS; i++) {
-+		if (!cons_data->ports[i])
-+			continue;
-+		if (cons_data->ports[i]->vmid == msg->vmid) {
-+			rm_port = cons_data->ports[i];
-+			break;
-+		}
-+	}
-+	if (rm_port)
-+		tty_port = tty_port_get(&rm_port->port);
-+	spin_unlock(&cons_data->ports_lock);
-+
-+	if (!rm_port)
-+		pr_warn("Received unexpected console characters for VMID %u\n", msg->vmid);
-+	if (!tty_port)
-+		return NOTIFY_DONE;
-+
-+	count = tty_buffer_request_room(tty_port, msg->num_bytes);
-+	tty_insert_flip_string(tty_port, msg->bytes, count);
-+	tty_flip_buffer_push(tty_port);
-+
-+	tty_port_put(tty_port);
-+	return NOTIFY_OK;
++	hyp_identity->api_info = res.a0;
++	hyp_identity->flags[0] = res.a1;
++	hyp_identity->flags[1] = res.a2;
++	hyp_identity->flags[2] = res.a3;
 +}
-+
-+static ssize_t vmid_show(struct device *dev, struct device_attribute *attr, char *buf)
-+{
-+	struct rm_cons_port *rm_port = dev_get_drvdata(dev);
-+
-+	if (rm_port->vmid == GH_VMID_SELF)
-+		return sysfs_emit(buf, "self\n");
-+
-+	return sysfs_emit(buf, "%u\n", rm_port->vmid);
-+}
-+
-+static DEVICE_ATTR_RO(vmid);
-+
-+static struct attribute *rsc_mgr_tty_dev_attrs[] = {
-+	&dev_attr_vmid.attr,
-+	NULL
-+};
-+
-+static const struct attribute_group rsc_mgr_tty_dev_attr_group = {
-+	.attrs = rsc_mgr_tty_dev_attrs,
-+};
-+
-+static const struct attribute_group *rsc_mgr_tty_dev_attr_groups[] = {
-+	&rsc_mgr_tty_dev_attr_group,
-+	NULL
-+};
-+
-+static int rsc_mgr_tty_open(struct tty_struct *tty, struct file *filp)
-+{
-+	int ret;
-+	struct rm_cons_port *rm_port = dev_get_drvdata(tty->dev);
-+
-+	if (!rm_port->open) {
-+		ret = gh_rm_console_open(rm_port->vmid);
-+		if (ret) {
-+			pr_err("Failed to open RM console for vmid %x: %d\n", rm_port->vmid, ret);
-+			return ret;
-+		}
-+		rm_port->open = true;
-+	}
-+
-+	return tty_port_open(&rm_port->port, tty, filp);
-+}
-+
-+static void rsc_mgr_tty_close(struct tty_struct *tty, struct file *filp)
-+{
-+	int ret;
-+	struct rm_cons_port *rm_port = dev_get_drvdata(tty->dev);
-+
-+	if (rm_port->open) {
-+		if (rm_port->vmid != GH_VMID_SELF) {
-+			ret = gh_rm_console_close(rm_port->vmid);
-+			if (ret)
-+				pr_warn("Failed to close RM console for vmid %d: %d\n",
-+					rm_port->vmid, ret);
-+		}
-+		rm_port->open = false;
-+
-+		tty_port_close(&rm_port->port, tty, filp);
-+	}
-+
-+}
-+
-+static int rsc_mgr_tty_write(struct tty_struct *tty, const unsigned char *buf, int count)
-+{
-+	struct rm_cons_port *rm_port = dev_get_drvdata(tty->dev);
-+	int ret;
-+
-+	ret = kfifo_in_spinlocked(&rm_port->put_fifo, buf, count, &rm_port->fifo_lock);
-+	if (ret > 0)
-+		schedule_work(&rm_port->put_work);
-+
-+	return ret;
-+}
-+
-+static unsigned int rsc_mgr_mgr_tty_write_room(struct tty_struct *tty)
-+{
-+	struct rm_cons_port *rm_port = dev_get_drvdata(tty->dev);
-+
-+	return kfifo_avail(&rm_port->put_fifo);
-+}
-+
-+static void rsc_mgr_console_write(struct console *co, const char *buf, unsigned count)
-+{
-+	struct rm_cons_port *rm_port = co->data;
-+	int ret;
-+
-+	ret = kfifo_in_spinlocked(&rm_port->put_fifo, buf, count, &rm_port->fifo_lock);
-+	if (ret > 0)
-+		schedule_work(&rm_port->put_work);
-+}
-+
-+static struct tty_driver *rsc_mgr_console_device(struct console *co, int *index)
-+{
-+	struct rm_cons_port *rm_port = co->data;
-+
-+	*index = rm_port->index;
-+	return rm_port->port.tty->driver;
-+}
-+
-+static int rsc_mgr_console_setup(struct console *co, char *unused)
-+{
-+	int ret;
-+	struct rm_cons_port *rm_port = co->data;
-+
-+	if (!rm_port->open) {
-+		ret = gh_rm_console_open(rm_port->vmid);
-+		if (ret) {
-+			pr_err("Failed to open RM console for vmid %x: %d\n", rm_port->vmid, ret);
-+			return ret;
-+		}
-+		rm_port->open = true;
-+	}
-+
-+	return 0;
-+}
-+
-+static int rsc_mgr_console_exit(struct console *co)
-+{
-+	int ret;
-+	struct rm_cons_port *rm_port = co->data;
-+
-+	if (rm_port->open) {
-+		ret = gh_rm_console_close(rm_port->vmid);
-+		if (ret) {
-+			pr_err("Failed to close RM console for vmid %x: %d\n", rm_port->vmid, ret);
-+			return ret;
-+		}
-+		rm_port->open = false;
-+	}
-+
-+	return 0;
-+}
-+
-+static const struct tty_operations rsc_mgr_tty_ops = {
-+	.open = rsc_mgr_tty_open,
-+	.close = rsc_mgr_tty_close,
-+	.write = rsc_mgr_tty_write,
-+	.write_room = rsc_mgr_mgr_tty_write_room,
-+};
-+
-+static void rsc_mgr_port_destruct(struct tty_port *port)
-+{
-+	struct rm_cons_port *rm_port = container_of(port, struct rm_cons_port, port);
-+	struct rm_cons_data *cons_data = rm_port->cons_data;
-+
-+	spin_lock(&cons_data->ports_lock);
-+	WARN_ON(cons_data->ports[rm_port->index] != rm_port);
-+	cons_data->ports[rm_port->index] = NULL;
-+	spin_unlock(&cons_data->ports_lock);
-+	kfree(rm_port);
-+}
-+
-+static const struct tty_port_operations rsc_mgr_port_ops = {
-+	.destruct = rsc_mgr_port_destruct,
-+};
-+
-+static struct rm_cons_port *rsc_mgr_port_create(struct rm_cons_data *cons_data, u16 vmid)
-+{
-+	struct rm_cons_port *rm_port;
-+	struct device *ttydev;
-+	unsigned int index;
-+	int ret;
-+
-+	rm_port = kzalloc(sizeof(*rm_port), GFP_KERNEL);
-+	rm_port->vmid = vmid;
-+	INIT_KFIFO(rm_port->put_fifo);
-+	spin_lock_init(&rm_port->fifo_lock);
-+	INIT_WORK(&rm_port->put_work, put_work_fn);
-+	tty_port_init(&rm_port->port);
-+	rm_port->port.ops = &rsc_mgr_port_ops;
-+
-+	spin_lock(&cons_data->ports_lock);
-+	for (index = 0; index < RSC_MGR_TTY_ADAPTERS; index++) {
-+		if (!cons_data->ports[index]) {
-+			cons_data->ports[index] = rm_port;
-+			rm_port->index = index;
-+			break;
-+		}
-+	}
-+	spin_unlock(&cons_data->ports_lock);
-+	if (index >= RSC_MGR_TTY_ADAPTERS) {
-+		ret = -ENOSPC;
-+		goto err_put_port;
-+	}
-+
-+	ttydev = tty_port_register_device_attr(&rm_port->port, cons_data->tty_driver, index,
-+					      cons_data->dev, rm_port, rsc_mgr_tty_dev_attr_groups);
-+	if (IS_ERR(ttydev)) {
-+		ret = PTR_ERR(ttydev);
-+		goto err_put_port;
-+	}
-+
-+	return rm_port;
-+err_put_port:
-+	tty_port_put(&rm_port->port);
-+	return ERR_PTR(ret);
-+}
-+
-+static int rsc_mgr_console_probe(struct auxiliary_device *auxdev,
-+	const struct auxiliary_device_id *aux_dev_id)
-+{
-+	struct rm_cons_data *cons_data;
-+	struct rm_cons_port *rm_port;
-+	int ret;
-+	u16 vmid;
-+
-+	cons_data = devm_kzalloc(&auxdev->dev, sizeof(*cons_data), GFP_KERNEL);
-+	if (!cons_data)
-+		return -ENOMEM;
-+	dev_set_drvdata(&auxdev->dev, cons_data);
-+	cons_data->dev = &auxdev->dev;
-+
-+	cons_data->tty_driver = tty_alloc_driver(RSC_MGR_TTY_ADAPTERS,
-+						 TTY_DRIVER_REAL_RAW | TTY_DRIVER_DYNAMIC_DEV);
-+	if (IS_ERR(cons_data->tty_driver))
-+		return PTR_ERR(cons_data->tty_driver);
-+
-+	cons_data->tty_driver->driver_name = "gh";
-+	cons_data->tty_driver->name = "ttyGH";
-+	cons_data->tty_driver->type = TTY_DRIVER_TYPE_SYSTEM;
-+	cons_data->tty_driver->init_termios = tty_std_termios;
-+	tty_set_operations(cons_data->tty_driver, &rsc_mgr_tty_ops);
-+
-+	ret = tty_register_driver(cons_data->tty_driver);
-+	if (ret) {
-+		dev_err(&auxdev->dev, "Could not register tty driver: %d\n", ret);
-+		goto err_put_tty;
-+	}
-+
-+	spin_lock_init(&cons_data->ports_lock);
-+
-+	cons_data->rsc_mgr_notif.notifier_call = rsc_mgr_console_notif;
-+	ret = gh_rm_register_notifier(&cons_data->rsc_mgr_notif);
-+	if (ret) {
-+		dev_err(&auxdev->dev, "Could not register for resource manager notifications: %d\n",
-+			ret);
-+		goto err_put_tty;
-+	}
-+
-+	rm_port = rsc_mgr_port_create(cons_data, GH_VMID_SELF);
-+	if (IS_ERR(rm_port)) {
-+		ret = PTR_ERR(rm_port);
-+		dev_err(&auxdev->dev, "Could not create own console: %d\n", ret);
-+		goto err_unreg_notif;
-+	}
-+
-+	strncpy(cons_data->console.name, "ttyGH", sizeof(cons_data->console.name));
-+	cons_data->console.write = rsc_mgr_console_write;
-+	cons_data->console.device = rsc_mgr_console_device;
-+	cons_data->console.setup = rsc_mgr_console_setup;
-+	cons_data->console.exit = rsc_mgr_console_exit;
-+	cons_data->console.index = rm_port->index;
-+	cons_data->console.data = rm_port;
-+	register_console(&cons_data->console);
-+
-+	ret = gh_rm_get_vmid(&vmid);
-+	if (!ret) {
-+		rm_port = rsc_mgr_port_create(cons_data, vmid);
-+		if (IS_ERR(rm_port))
-+			dev_warn(&auxdev->dev, "Could not create loop-back console: %ld\n",
-+				PTR_ERR(rm_port));
-+	} else {
-+		dev_warn(&auxdev->dev, "Failed to get this VM's VMID: %d. Not creating loop-back console\n",
-+			 ret);
-+	}
-+
-+	return 0;
-+err_unreg_notif:
-+	gh_rm_unregister_notifier(&cons_data->rsc_mgr_notif);
-+err_put_tty:
-+	tty_driver_kref_put(cons_data->tty_driver);
-+	return ret;
-+}
-+
-+static void rsc_mgr_console_remove(struct auxiliary_device *auxdev)
-+{
-+	struct rm_cons_data *cons_data = dev_get_drvdata(&auxdev->dev);
-+
-+	unregister_console(&cons_data->console);
-+	gh_rm_unregister_notifier(&cons_data->rsc_mgr_notif);
-+	tty_driver_kref_put(cons_data->tty_driver);
-+}
-+
-+static struct auxiliary_device_id rsc_mgr_console_ids[] = {
-+	{ .name = "gunyah_rsc_mgr.console" },
-+	{}
-+};
-+MODULE_DEVICE_TABLE(auxiliary, rsc_mgr_console_ids);
-+
-+static struct auxiliary_driver rsc_mgr_console_drv = {
-+	.probe = rsc_mgr_console_probe,
-+	.remove = rsc_mgr_console_remove,
-+	.id_table = rsc_mgr_console_ids,
-+};
-+module_auxiliary_driver(rsc_mgr_console_drv);
++EXPORT_SYMBOL_GPL(gh_hypercall_hyp_identify);
 +
 +MODULE_LICENSE("GPL");
-+MODULE_DESCRIPTION("Gunyah Console");
++MODULE_DESCRIPTION("Gunyah Hypervisor Hypercalls");
+diff --git a/drivers/virt/Kconfig b/drivers/virt/Kconfig
+index 87ef258cec64..1c346f798ace 100644
+--- a/drivers/virt/Kconfig
++++ b/drivers/virt/Kconfig
+@@ -48,6 +48,8 @@ source "drivers/virt/nitro_enclaves/Kconfig"
+ 
+ source "drivers/virt/acrn/Kconfig"
+ 
++source "drivers/virt/gunyah/Kconfig"
++
+ source "drivers/virt/coco/efi_secret/Kconfig"
+ 
+ source "drivers/virt/coco/sev-guest/Kconfig"
+diff --git a/drivers/virt/gunyah/Kconfig b/drivers/virt/gunyah/Kconfig
+new file mode 100644
+index 000000000000..c1a621aaefc6
+--- /dev/null
++++ b/drivers/virt/gunyah/Kconfig
+@@ -0,0 +1,13 @@
++# SPDX-License-Identifier: GPL-2.0-only
++
++config GUNYAH
++	tristate "Gunyah Virtualization drivers"
++	depends on ARM64
++	select AUXILIARY_BUS
++	help
++	  The Gunyah drivers are the helper interfaces that runs in a guest VM
++	  such as basic inter-VM IPC and signaling mechanism,s and higher level
++	  services such as memory/device sharing, IRQ sharing, and so on.
++
++	  Say Y/M here to enable the drivers needed to interact in a Gunyah
++	  virtual environment.
+diff --git a/include/asm-generic/gunyah.h b/include/asm-generic/gunyah.h
+index 64a02dd3b5ad..86eb59e203ef 100644
+--- a/include/asm-generic/gunyah.h
++++ b/include/asm-generic/gunyah.h
+@@ -71,4 +71,40 @@ static inline int gh_remap_error(int gh_error)
+ 	}
+ }
+ 
++#define QC_HYP_UID0 0x19bd54bd
++#define QC_HYP_UID1 0x0b37571b
++#define QC_HYP_UID2 0x946f609b
++#define QC_HYP_UID3 0x54539de6
++
++#define GUNYAH_UID0 0x673d5f14
++#define GUNYAH_UID1 0x9265ce36
++#define GUNYAH_UID2 0xa4535fdb
++#define GUNYAH_UID3 0xc1d58fcd
++
++#define gh_uid_matches(prefix, uid)	\
++	((uid)[0] == prefix ## _UID0 && (uid)[1] == prefix ## _UID1 && \
++	 (uid)[2] == prefix ## _UID2 && (uid)[3] == prefix ## _UID3)
++
++#define GH_API_INFO_API_VERSION(x)	(((x) >> 0) & 0x3fff)
++#define GH_API_INFO_BIG_ENDIAN(x)	(((x) >> 14) & 1)
++#define GH_API_INFO_IS_64BIT(x)		(((x) >> 15) & 1)
++#define GH_API_INFO_VARIANT(x)		(((x) >> 56) & 0xff)
++
++#define GH_IDENTIFY_PARTITION_CSPACE(flags)	(((flags)[0] >> 0) & 1)
++#define GH_IDENTIFY_DOORBELL(flags)		(((flags)[0] >> 1) & 1)
++#define GH_IDENTIFY_MSGQUEUE(flags)		(((flags)[0] >> 2) & 1)
++#define GH_IDENTIFY_VIC(flags)			(((flags)[0] >> 3) & 1)
++#define GH_IDENTIFY_VPM(flags)			(((flags)[0] >> 4) & 1)
++#define GH_IDENTIFY_VCPU(flags)			(((flags)[0] >> 5) & 1)
++#define GH_IDENTIFY_MEMEXTENT(flags)		(((flags)[0] >> 6) & 1)
++#define GH_IDENTIFY_TRACE_CTRL(flags)		(((flags)[0] >> 7) & 1)
++
++struct gh_hypercall_hyp_identify_resp {
++	u64 api_info;
++	u64 flags[3];
++};
++
++void gh_hypercall_get_uid(u32 *uid);
++void gh_hypercall_hyp_identify(struct gh_hypercall_hyp_identify_resp *hyp_identity);
++
+ #endif
 -- 
 2.25.1
 
