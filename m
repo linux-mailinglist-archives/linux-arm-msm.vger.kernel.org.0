@@ -2,48 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 170E6590896
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Aug 2022 00:06:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCFEC590892
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Aug 2022 00:06:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235896AbiHKWGI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Aug 2022 18:06:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45964 "EHLO
+        id S236374AbiHKWGJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Aug 2022 18:06:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236369AbiHKWGG (ORCPT
+        with ESMTP id S236384AbiHKWGH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Aug 2022 18:06:06 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8DF4248CA;
-        Thu, 11 Aug 2022 15:06:03 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27BM1q8L012558;
+        Thu, 11 Aug 2022 18:06:07 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9BD326110;
+        Thu, 11 Aug 2022 15:06:04 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27BM0p6n003581;
         Thu, 11 Aug 2022 22:05:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
  subject : date : message-id : in-reply-to : references : mime-version :
  content-transfer-encoding : content-type; s=qcppdkim1;
- bh=CBqQhmy5q8Ih5/yMHtszBKU42svrecCMR3Zi5a9CEqs=;
- b=YdXUFqM6hKJeaDKeZlh0xEaJHPW9tK1QvnTM9nVstx/56Y+CI0JxEAgqlXT/sRguOcl3
- 464Inu/PcajygM1jFwfC4Uc6gIFqc7PA9CvneG4jFTohwa0R0XPYP5cstSUOFpZvvj98
- 28To6VgFLTinWxDf1NWoxG3yFQvIAUCgpNqRaFllIGmTkvfq7lGTJNyku7gQB5LmTp/U
- eFltoydmCyLQ0Kgf2pa5o8Hhz9JAm4BMmR1mcPhUg9z6thR7k6kCUuYTgCxcTt1v2QgG
- EAxNLCvjw/0OAeJ00O6ckydX4bzMXxpkLXRdGJTGCA7h0M22l3iIko5qf5+n6ETd8vQl uw== 
+ bh=k6Y1DW7nSaYoDaBPAG/5W8MlSEp7Am9DjSvPqKO/Qbo=;
+ b=pEVomlPG8L+RjFK7nrTCFMTa5xelEtAP16zqOppm7HiwSURc1v6XUCf9vIGgYDktLVDp
+ hxwAlAmKv10bdU5mix+mYfCwyPB6ZNbRsAHPI+8bTcL5WDP9UMf2FGzEhez962UZ4CqN
+ TCxEb0El/7I4N8CPZXfrPeNknDNbuwg83gP4l/Q5Girwq6gWTdKKND2vMY8iOYb3mG8b
+ mZtgX6PBHjFvV/jqKlJBJfX8L+mUa+BMxd2acl7tKXCGjmi5jBcekViBVeAds0l0vaiL
+ 4rsNyMAzwhhgQ/wdyAStFL5UZxq/bjGpLscHdvloNPgX+6/msxxnGWI2/cdQPj+vCzp8 LQ== 
 Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3hvh25vjdf-3
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3hvsaak2s7-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
         Thu, 11 Aug 2022 22:05:54 +0000
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27BLfwVb011414
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27BLg1w1011445
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 11 Aug 2022 21:41:58 GMT
+        Thu, 11 Aug 2022 21:42:01 GMT
 Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
  nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 11 Aug 2022 14:41:57 -0700
+ 15.2.986.22; Thu, 11 Aug 2022 14:42:00 -0700
 From:   Elliot Berman <quic_eberman@quicinc.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        "Marc Zyngier" <maz@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 CC:     Elliot Berman <quic_eberman@quicinc.com>,
         Murali Nalajala <quic_mnalajal@quicinc.com>,
         Trilok Soni <quic_tsoni@quicinc.com>,
@@ -53,16 +50,18 @@ CC:     Elliot Berman <quic_eberman@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         <linux-arm-kernel@lists.infradead.org>,
         "Mark Rutland" <mark.rutland@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        "Marc Zyngier" <maz@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
         Jonathan Corbet <corbet@lwn.net>,
         Will Deacon <will@kernel.org>,
         Catalin Marinas <catalin.marinas@arm.com>,
         <devicetree@vger.kernel.org>, <linux-doc@vger.kernel.org>,
         <linux-arm-msm@vger.kernel.org>
-Subject: [PATCH v3 05/12] virt: gunyah: Add hypercalls to identify Gunyah
-Date:   Thu, 11 Aug 2022 14:41:00 -0700
-Message-ID: <20220811214107.1074343-6-quic_eberman@quicinc.com>
+Subject: [PATCH v3 10/12] gunyah: rsc_mgr: Add RPC for console services
+Date:   Thu, 11 Aug 2022 14:41:05 -0700
+Message-ID: <20220811214107.1074343-11-quic_eberman@quicinc.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20220811214107.1074343-1-quic_eberman@quicinc.com>
 References: <20220811214107.1074343-1-quic_eberman@quicinc.com>
@@ -74,235 +73,268 @@ X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: px05yBckFTcPvlodJQ7zfZj9dzqxXa6v
-X-Proofpoint-ORIG-GUID: px05yBckFTcPvlodJQ7zfZj9dzqxXa6v
+X-Proofpoint-ORIG-GUID: oi2f4XGWHrbIDN6MtcS-omvml8XHmobN
+X-Proofpoint-GUID: oi2f4XGWHrbIDN6MtcS-omvml8XHmobN
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
  definitions=2022-08-11_13,2022-08-11_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 spamscore=0
- phishscore=0 priorityscore=1501 lowpriorityscore=0 malwarescore=0
- suspectscore=0 mlxscore=0 mlxlogscore=999 impostorscore=0 clxscore=1015
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ malwarescore=0 spamscore=0 bulkscore=0 mlxlogscore=807 adultscore=0
+ phishscore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2207270000 definitions=main-2208110066
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add hypercalls to identify when Linux is running a virtual machine under
-Gunyah.
+Gunyah resource manager defines a simple API for virtual machine log
+sharing with the console service. A VM's own log can be opened by using
+GH_VMID_SELF. Another VM's log can be accessed via its VMID. Once
+opened, characters can be written to the log with a write command.
+Characters are received with resource manager notifications (using ID
+GH_RM_NOTIF_VM_CONSOLE_CHARS).
 
-There are two calls to help identify Gunyah:
-
-1. gh_hypercall_get_uid() returns a UID when running under a Gunyah
-   hypervisor.
-2. gh_hypercall_hyp_identify() returns build information and a set of
-   feature flags that are supported by Gunyah.
+These high level rpc calls are kept in
+drivers/virt/gunyah/rsc_mgr_rpc.c. Future RPC calls, e.g. to launch a VM
+will also be maintained in this file.
 
 Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 ---
- MAINTAINERS                   |  2 +
- arch/arm64/Kbuild             |  1 +
- arch/arm64/gunyah/Makefile    |  2 +
- arch/arm64/gunyah/hypercall.c | 71 +++++++++++++++++++++++++++++++++++
- drivers/virt/Kconfig          |  2 +
- drivers/virt/gunyah/Kconfig   | 13 +++++++
- include/asm-generic/gunyah.h  | 36 ++++++++++++++++++
- 7 files changed, 127 insertions(+)
- create mode 100644 arch/arm64/gunyah/Makefile
- create mode 100644 arch/arm64/gunyah/hypercall.c
- create mode 100644 drivers/virt/gunyah/Kconfig
+ drivers/virt/gunyah/Makefile      |   2 +-
+ drivers/virt/gunyah/rsc_mgr.h     |  22 +++++
+ drivers/virt/gunyah/rsc_mgr_rpc.c | 151 ++++++++++++++++++++++++++++++
+ include/linux/gunyah_rsc_mgr.h    |  16 ++++
+ 4 files changed, 190 insertions(+), 1 deletion(-)
+ create mode 100644 drivers/virt/gunyah/rsc_mgr_rpc.c
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 14030c8ffe8a..f5d5ebb62701 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -8741,6 +8741,8 @@ L:	linux-arm-msm@vger.kernel.org
- S:	Supported
- F:	Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
- F:	Documentation/virt/gunyah/
-+F:	arch/arm64/gunyah/
-+F:	drivers/virt/gunyah/
- F:	include/asm-generic/gunyah.h
+diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
+index c97ad382f640..7eae745cea08 100644
+--- a/drivers/virt/gunyah/Makefile
++++ b/drivers/virt/gunyah/Makefile
+@@ -1,3 +1,3 @@
+ gunyah-y += sysfs.o msgq.o
+-gunyah_rsc_mgr-y += rsc_mgr.o
++gunyah_rsc_mgr-y += rsc_mgr.o rsc_mgr_rpc.o
+ obj-$(CONFIG_GUNYAH) += gunyah.o gunyah_rsc_mgr.o
+diff --git a/drivers/virt/gunyah/rsc_mgr.h b/drivers/virt/gunyah/rsc_mgr.h
+index e4f2499267bf..deb884979209 100644
+--- a/drivers/virt/gunyah/rsc_mgr.h
++++ b/drivers/virt/gunyah/rsc_mgr.h
+@@ -28,6 +28,28 @@
+ #define GH_RM_ERROR_IRQ_INUSE		0x10
+ #define GH_RM_ERROR_IRQ_RELEASED	0x11
  
- HABANALABS PCI DRIVER
-diff --git a/arch/arm64/Kbuild b/arch/arm64/Kbuild
-index 5bfbf7d79c99..fbcde0d5cec8 100644
---- a/arch/arm64/Kbuild
-+++ b/arch/arm64/Kbuild
-@@ -4,6 +4,7 @@ obj-$(CONFIG_KVM)	+= kvm/
- obj-$(CONFIG_XEN)	+= xen/
- obj-$(subst m,y,$(CONFIG_HYPERV))	+= hyperv/
- obj-$(CONFIG_CRYPTO)	+= crypto/
-+obj-$(CONFIG_GUNYAH)	+= gunyah/
++/* Message IDs: VM Management */
++#define GH_RM_RPC_VM_GET_VMID			0x56000024
++
++/* Message IDs: VM Services */
++#define GH_RM_RPC_VM_CONSOLE_OPEN_ID		0x56000081
++#define GH_RM_RPC_VM_CONSOLE_CLOSE_ID		0x56000082
++#define GH_RM_RPC_VM_CONSOLE_WRITE_ID		0x56000083
++#define GH_RM_RPC_VM_CONSOLE_FLUSH_ID		0x56000084
++
++/* Call: CONSOLE_OPEN, CONSOLE_CLOSE, CONSOLE_FLUSH */
++struct gh_vm_console_common_req {
++	u16 vmid;
++	u16 reserved0;
++} __packed;
++
++/* Call: CONSOLE_WRITE */
++struct gh_vm_console_write_req {
++	u16 vmid;
++	u16 num_bytes;
++	u8 data[0];
++} __packed;
++
+ int gh_rm_call(u32 message_id, void *req_buff, size_t req_buff_size,
+ 		void **resp_buf, size_t *resp_buff_size);
  
- # for cleaning
- subdir- += boot
-diff --git a/arch/arm64/gunyah/Makefile b/arch/arm64/gunyah/Makefile
+diff --git a/drivers/virt/gunyah/rsc_mgr_rpc.c b/drivers/virt/gunyah/rsc_mgr_rpc.c
 new file mode 100644
-index 000000000000..f71a9533c266
+index 000000000000..042a9d95c70a
 --- /dev/null
-+++ b/arch/arm64/gunyah/Makefile
-@@ -0,0 +1,2 @@
-+obj-$(CONFIG_GUNYAH) += gunyah_hypercall.o
-+gunyah_hypercall-y += hypercall.o
-diff --git a/arch/arm64/gunyah/hypercall.c b/arch/arm64/gunyah/hypercall.c
-new file mode 100644
-index 000000000000..5b08c9d80de0
---- /dev/null
-+++ b/arch/arm64/gunyah/hypercall.c
-@@ -0,0 +1,71 @@
++++ b/drivers/virt/gunyah/rsc_mgr_rpc.c
+@@ -0,0 +1,151 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/*
 + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
 + */
 +
-+#include <linux/arm-smccc.h>
-+#include <linux/module.h>
-+#include <asm-generic/gunyah.h>
++#define pr_fmt(fmt) "gh_rsc_mgr: " fmt
 +
-+#define GH_CALL_TYPE_PLATFORM_CALL		0
-+#define GH_CALL_TYPE_HYPERCALL			2
-+#define GH_CALL_TYPE_SERVICE			3
-+#define GH_CALL_TYPE_SHIFT			14
-+#define GH_CALL_FUNCTION_NUM_MASK		0x3fff
++#include <linux/slab.h>
++#include <linux/types.h>
++#include <linux/printk.h>
++#include <linux/gunyah_rsc_mgr.h>
 +
-+#define GH_SERVICE(fn)		ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL, ARM_SMCCC_SMC_32, \
-+						   ARM_SMCCC_OWNER_VENDOR_HYP, \
-+						   (GH_CALL_TYPE_SERVICE << GH_CALL_TYPE_SHIFT) \
-+							| ((fn) & GH_CALL_FUNCTION_NUM_MASK))
-+
-+#define GH_HYPERCALL_CALL_UID			GH_SERVICE(0x3f01)
-+
-+#define GH_HYPERCALL(fn)	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL, ARM_SMCCC_SMC_64, \
-+						   ARM_SMCCC_OWNER_VENDOR_HYP, \
-+						   (GH_CALL_TYPE_HYPERCALL << GH_CALL_TYPE_SHIFT) \
-+							| ((fn) & GH_CALL_FUNCTION_NUM_MASK))
-+
-+#define GH_HYPERCALL_HYP_IDENTIFY		GH_HYPERCALL(0x0000)
++#include "rsc_mgr.h"
 +
 +/**
-+ * gh_hypercall_get_uid() - Returns a UID when running under a Gunyah hypervisor.
-+ * @uid: An array of 4 u32's (u32 uid[4];)
-+ *
-+ * The UID will be either QC_HYP_UID or GUNYAH_UID defined in include/asm-generic/gunyah.h.
-+ * QC_HYP_UID is returned on platforms using Qualcomm's version of Gunyah.
-+ * GUNYAH_UID is returned on platforms using open source version of Gunyah.
-+ * If the uid is not one of the above two UIDs, then it is assumed that the hypervisor or firmware
-+ * is not Gunyah.
++ * gh_rm_get_vmid: Retrieve VMID of this virtual machine
++ * @vmid: Filled with the VMID of this VM
 + */
-+void gh_hypercall_get_uid(u32 *uid)
++int gh_rm_get_vmid(u16 *vmid)
 +{
-+	struct arm_smccc_res res;
++	void *resp;
++	size_t resp_size;
++	int ret;
++	int payload = 0;
 +
-+	arm_smccc_1_1_hvc(GH_HYPERCALL_CALL_UID, &res);
++	ret = gh_rm_call(GH_RM_RPC_VM_GET_VMID, &payload, sizeof(payload), &resp, &resp_size);
++	if (ret)
++		return ret;
 +
-+	uid[0] = res.a0;
-+	uid[1] = res.a1;
-+	uid[2] = res.a2;
-+	uid[3] = res.a3;
++	if (resp_size != sizeof(*vmid))
++		return -EIO;
++	*vmid = *(u16 *)resp;
++	kfree(resp);
++
++	return ret;
 +}
-+EXPORT_SYMBOL_GPL(gh_hypercall_get_uid);
 +
 +/**
-+ * gh_hypercall_hyp_identify() - Returns build information and feature flags supported by Gunyah.
-+ * @hyp_identify: filled by the hypercall with the API info and feature flags.
++ * gh_rm_console_open: Open a console with a VM
++ * @vmid: VMID of the other vmid whose console to open. If VMID is GH_VMID_SELF, the
++ *        console associated with this VM is opened.
 + */
-+void gh_hypercall_hyp_identify(struct gh_hypercall_hyp_identify_resp *hyp_identity)
++int gh_rm_console_open(u16 vmid)
 +{
-+	struct arm_smccc_res res;
++	void *resp;
++	struct gh_vm_console_common_req req_payload = {0};
++	size_t resp_size;
++	int ret;
 +
-+	arm_smccc_1_1_hvc(GH_HYPERCALL_HYP_IDENTIFY, &res);
++	req_payload.vmid = vmid;
 +
-+	hyp_identity->api_info = res.a0;
-+	hyp_identity->flags[0] = res.a1;
-+	hyp_identity->flags[1] = res.a2;
-+	hyp_identity->flags[2] = res.a3;
++	ret = gh_rm_call(GH_RM_RPC_VM_CONSOLE_OPEN_ID,
++			  &req_payload, sizeof(req_payload),
++			  &resp, &resp_size);
++	kfree(resp);
++
++	if (!ret && resp_size)
++		pr_warn("Received unexpected payload for CONSOLE_OPEN: %lu\n", resp_size);
++
++	return ret;
 +}
-+EXPORT_SYMBOL_GPL(gh_hypercall_hyp_identify);
++EXPORT_SYMBOL_GPL(gh_rm_console_open);
 +
-+MODULE_LICENSE("GPL");
-+MODULE_DESCRIPTION("Gunyah Hypervisor Hypercalls");
-diff --git a/drivers/virt/Kconfig b/drivers/virt/Kconfig
-index 87ef258cec64..1c346f798ace 100644
---- a/drivers/virt/Kconfig
-+++ b/drivers/virt/Kconfig
-@@ -48,6 +48,8 @@ source "drivers/virt/nitro_enclaves/Kconfig"
++/**
++ * gh_rm_console_close: Close a console with a VM
++ * @vmid: The vmid of the vm whose console to close.
++ */
++int gh_rm_console_close(u16 vmid)
++{
++	void *resp;
++	struct gh_vm_console_common_req req_payload = {0};
++	size_t resp_size;
++	int ret;
++
++	req_payload.vmid = vmid;
++
++	ret = gh_rm_call(GH_RM_RPC_VM_CONSOLE_CLOSE_ID,
++			  &req_payload, sizeof(req_payload),
++			  &resp, &resp_size);
++	kfree(resp);
++
++	if (!ret && resp_size)
++		pr_warn("Received unexpected payload for CONSOLE_CLOSE: %lu\n", resp_size);
++
++	return ret;
++}
++EXPORT_SYMBOL_GPL(gh_rm_console_close);
++
++/**
++ * gh_rm_console_write: Write to a VM's console
++ * @vmid: The vmid of the vm whose console to write to.
++ * @buf: Buffer to write to the VM's console
++ * @size: Size of the buffer
++ */
++int gh_rm_console_write(u16 vmid, const char *buf, size_t size)
++{
++	void *resp;
++	struct gh_vm_console_write_req *req_payload;
++	size_t resp_size;
++	int ret = 0;
++	size_t req_payload_size = sizeof(*req_payload) + size;
++
++	if (size < 1 || size > (U32_MAX - sizeof(*req_payload)))
++		return -EINVAL;
++
++	req_payload = kzalloc(req_payload_size, GFP_KERNEL);
++
++	if (!req_payload)
++		return -ENOMEM;
++
++	req_payload->vmid = vmid;
++	req_payload->num_bytes = size;
++	memcpy(req_payload->data, buf, size);
++
++	ret = gh_rm_call(GH_RM_RPC_VM_CONSOLE_WRITE_ID,
++		   req_payload, req_payload_size,
++		   &resp, &resp_size);
++	kfree(req_payload);
++	kfree(resp);
++
++	if (!ret && resp_size)
++		pr_warn("Received unexpected payload for CONSOLE_WRITE: %lu\n", resp_size);
++
++	return ret;
++}
++EXPORT_SYMBOL_GPL(gh_rm_console_write);
++
++/**
++ * gh_rm_console_flush: Flush a console with a VM
++ * @vmid: The vmid of the vm whose console to flush
++ */
++int gh_rm_console_flush(u16 vmid)
++{
++	void *resp;
++	struct gh_vm_console_common_req req_payload = {0};
++	size_t resp_size;
++	int ret;
++
++	req_payload.vmid = vmid;
++
++	ret = gh_rm_call(GH_RM_RPC_VM_CONSOLE_FLUSH_ID,
++			  &req_payload, sizeof(req_payload),
++			  &resp, &resp_size);
++	kfree(resp);
++
++	if (!ret && resp_size)
++		pr_warn("Received unexpected payload for CONSOLE_FLUSH: %lu\n", resp_size);
++
++	return ret;
++}
++EXPORT_SYMBOL_GPL(gh_rm_console_flush);
+diff --git a/include/linux/gunyah_rsc_mgr.h b/include/linux/gunyah_rsc_mgr.h
+index b3b37225b7fb..f831ca921c26 100644
+--- a/include/linux/gunyah_rsc_mgr.h
++++ b/include/linux/gunyah_rsc_mgr.h
+@@ -23,4 +23,20 @@ struct gh_rm_notification {
+ int gh_rm_register_notifier(struct notifier_block *nb);
+ int gh_rm_unregister_notifier(struct notifier_block *nb);
  
- source "drivers/virt/acrn/Kconfig"
- 
-+source "drivers/virt/gunyah/Kconfig"
++/* Notification type Message IDs */
++#define GH_RM_NOTIF_VM_CONSOLE_CHARS	0x56100080
 +
- source "drivers/virt/coco/efi_secret/Kconfig"
- 
- source "drivers/virt/coco/sev-guest/Kconfig"
-diff --git a/drivers/virt/gunyah/Kconfig b/drivers/virt/gunyah/Kconfig
-new file mode 100644
-index 000000000000..c1a621aaefc6
---- /dev/null
-+++ b/drivers/virt/gunyah/Kconfig
-@@ -0,0 +1,13 @@
-+# SPDX-License-Identifier: GPL-2.0-only
++struct gh_rm_notif_vm_console_chars {
++	u16 vmid;
++	u16 num_bytes;
++	u8 bytes[0];
++} __packed;
 +
-+config GUNYAH
-+	tristate "Gunyah Virtualization drivers"
-+	depends on ARM64
-+	select AUXILIARY_BUS
-+	help
-+	  The Gunyah drivers are the helper interfaces that runs in a guest VM
-+	  such as basic inter-VM IPC and signaling mechanism,s and higher level
-+	  services such as memory/device sharing, IRQ sharing, and so on.
-+
-+	  Say Y/M here to enable the drivers needed to interact in a Gunyah
-+	  virtual environment.
-diff --git a/include/asm-generic/gunyah.h b/include/asm-generic/gunyah.h
-index 64a02dd3b5ad..86eb59e203ef 100644
---- a/include/asm-generic/gunyah.h
-+++ b/include/asm-generic/gunyah.h
-@@ -71,4 +71,40 @@ static inline int gh_remap_error(int gh_error)
- 	}
- }
- 
-+#define QC_HYP_UID0 0x19bd54bd
-+#define QC_HYP_UID1 0x0b37571b
-+#define QC_HYP_UID2 0x946f609b
-+#define QC_HYP_UID3 0x54539de6
-+
-+#define GUNYAH_UID0 0x673d5f14
-+#define GUNYAH_UID1 0x9265ce36
-+#define GUNYAH_UID2 0xa4535fdb
-+#define GUNYAH_UID3 0xc1d58fcd
-+
-+#define gh_uid_matches(prefix, uid)	\
-+	((uid)[0] == prefix ## _UID0 && (uid)[1] == prefix ## _UID1 && \
-+	 (uid)[2] == prefix ## _UID2 && (uid)[3] == prefix ## _UID3)
-+
-+#define GH_API_INFO_API_VERSION(x)	(((x) >> 0) & 0x3fff)
-+#define GH_API_INFO_BIG_ENDIAN(x)	(((x) >> 14) & 1)
-+#define GH_API_INFO_IS_64BIT(x)		(((x) >> 15) & 1)
-+#define GH_API_INFO_VARIANT(x)		(((x) >> 56) & 0xff)
-+
-+#define GH_IDENTIFY_PARTITION_CSPACE(flags)	(((flags)[0] >> 0) & 1)
-+#define GH_IDENTIFY_DOORBELL(flags)		(((flags)[0] >> 1) & 1)
-+#define GH_IDENTIFY_MSGQUEUE(flags)		(((flags)[0] >> 2) & 1)
-+#define GH_IDENTIFY_VIC(flags)			(((flags)[0] >> 3) & 1)
-+#define GH_IDENTIFY_VPM(flags)			(((flags)[0] >> 4) & 1)
-+#define GH_IDENTIFY_VCPU(flags)			(((flags)[0] >> 5) & 1)
-+#define GH_IDENTIFY_MEMEXTENT(flags)		(((flags)[0] >> 6) & 1)
-+#define GH_IDENTIFY_TRACE_CTRL(flags)		(((flags)[0] >> 7) & 1)
-+
-+struct gh_hypercall_hyp_identify_resp {
-+	u64 api_info;
-+	u64 flags[3];
-+};
-+
-+void gh_hypercall_get_uid(u32 *uid);
-+void gh_hypercall_hyp_identify(struct gh_hypercall_hyp_identify_resp *hyp_identity);
++/* RPC Calls */
++int gh_rm_get_vmid(u16 *vmid);
++int gh_rm_console_open(u16 vmid);
++int gh_rm_console_close(u16 vmid);
++int gh_rm_console_write(u16 vmid, const char *buf, size_t size);
++int gh_rm_console_flush(u16 vmid);
 +
  #endif
 -- 
