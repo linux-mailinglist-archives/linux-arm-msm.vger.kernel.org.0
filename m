@@ -2,424 +2,273 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D257658FA7B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 12:10:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3E0C58FABE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 12:35:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234996AbiHKKJ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Aug 2022 06:09:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46350 "EHLO
+        id S234070AbiHKKfb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Aug 2022 06:35:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234491AbiHKKJu (ORCPT
+        with ESMTP id S233931AbiHKKfa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Aug 2022 06:09:50 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 256AEAE233
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Aug 2022 03:09:45 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id w14so16532164plp.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Aug 2022 03:09:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=ZUIJNubm1YFy+Fr3W8YleD6wWCQLhDtOJm9t8MCvUKg=;
-        b=btqzcFs1NWW2iNyyyuTc82/vWlWUn4ex6tAFAgPh+QLgdlMjJgh0W1Y6uT7zUpFi4u
-         u/AxzHm5cboe/W3FzREtfLr14ePTROtzDlhPAEr29tB/sf+S3I/yizUG2S0snkekebKU
-         TYufIHH/Wwv2BHNTHui/7xGz6yjpAW8K42Q+QPy3DaVCwAKdyWH2tVAQoCTJPq5ljuSn
-         vvW0kRmjwt/f/EMBlSoE4bZuoKrVYOtV3XNMifOM9aNmCXcQcofJJWPkZyiShyPv2tLr
-         YRcKZ5nueUVo8Be8S11kkTjeqkNKim/BmTM3Vb+OUikUVtnJuBG/1hsFIy1xOZMP1f1d
-         146A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=ZUIJNubm1YFy+Fr3W8YleD6wWCQLhDtOJm9t8MCvUKg=;
-        b=rJ5X3M7H967bXql2KSyh6V78o+3RsSjsW63IUfRRR6o43BCv+TIiMBg4eF04sw1a3R
-         N6Iy7ooRIAnzB1UmZIOFyG20Zbl+orjoWeCGwLwwXuZE1S+ix2UDkSQr/kXphJUGsI6J
-         CFyHY/QuLnlXXvSA3zqbOdgx+ov6SFf+dRgoXIDGJnRNmTjXQtj+1qCqynk+bxBrna+j
-         W7JO3Nda+Hdw1lrpCFvDZmH15eJZM2AemSHC3o4InUihO0jU8qQJitmn4eLEw2e5knub
-         VVnnpIkND5I2APA21wMWYhVY8pZGPXjpLpoyk6CtIq7BUEZqR28z9LXpraSIETOMBuBF
-         sbnw==
-X-Gm-Message-State: ACgBeo3v1ELpuz5KIGMyGWcGXju9IlrH6S5WpCe/owKm1oWjA2wCLgpU
-        qDr8OAqKmX3/1ZFT8cBW5slW
-X-Google-Smtp-Source: AA6agR6yH8f8Wltf1MiPbwI9awCDq+qghqNdxLGsnYm54Dmbi7ghO1R44tzny/akQUSkC318S9e0Sw==
-X-Received: by 2002:a17:902:6b0c:b0:171:325a:364e with SMTP id o12-20020a1709026b0c00b00171325a364emr8002660plk.150.1660212584184;
-        Thu, 11 Aug 2022 03:09:44 -0700 (PDT)
-Received: from localhost.localdomain ([59.92.103.103])
-        by smtp.gmail.com with ESMTPSA id 1-20020a621501000000b0052b9351737fsm3714839pfv.92.2022.08.11.03.09.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Aug 2022 03:09:43 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     bjorn.andersson@linaro.org, ckadabi@quicinc.com,
-        vnkgutta@quicinc.com, bp@alien8.de, mchehab@kernel.org
-Cc:     james.morse@arm.com, rric@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-edac@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 2/2] EDAC/qcom: Get rid of hardcoded register offsets
-Date:   Thu, 11 Aug 2022 15:39:24 +0530
-Message-Id: <20220811100924.79505-3-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220811100924.79505-1-manivannan.sadhasivam@linaro.org>
-References: <20220811100924.79505-1-manivannan.sadhasivam@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        Thu, 11 Aug 2022 06:35:30 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68F9B26AD7;
+        Thu, 11 Aug 2022 03:35:29 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27B7um7t008941;
+        Thu, 11 Aug 2022 10:35:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references; s=qcppdkim1;
+ bh=sJmwoWJdyH94Hft/N6niNsaDqqw+f822cVnLfxeyonM=;
+ b=o1sTFgjgpiXdiSZt5Ayq2+daSp3gCzaAgz9bdXhBtkACW7ZC3cgX1fPGvVP+8Icg+csy
+ xHG8ErpHYdC1jkiz6HgGTjokoRFcK4UyLM29aRrYNiLKipi1MneuMGs7t+tuBlJO2rZk
+ o2hKENQEaXvaJhKyhws2VuxDNop7P/ij6Qt9LHZWr+CyzMKbgZsavN0GGJyGzBDmhHk6
+ boB2yZ4vx5h5mggv5rLZtMcT9SxQAWDwNmY2WdmaCcWR1JAFZrOSUTIxomlNbmnv4DpQ
+ 9dK3ZeTSLfTC9AFUJfFZedWjY9iQd6ZVWpqVfgc5I19y/XGPKjnWrkuTHgG9xhxfmfpQ Nw== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3hvh25tfwv-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 11 Aug 2022 10:35:15 +0000
+Received: from pps.filterd (NASANPPMTA01.qualcomm.com [127.0.0.1])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 27BAXb7t021435;
+        Thu, 11 Aug 2022 10:35:14 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by NASANPPMTA01.qualcomm.com (PPS) with ESMTPS id 3hshckskhf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Thu, 11 Aug 2022 10:35:14 +0000
+Received: from NASANPPMTA01.qualcomm.com (NASANPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 27BAW9Yv019796;
+        Thu, 11 Aug 2022 10:35:13 GMT
+Received: from stor-presley.qualcomm.com (stor-presley.qualcomm.com [192.168.140.85])
+        by NASANPPMTA01.qualcomm.com (PPS) with ESMTP id 27BAZDLu023821;
+        Thu, 11 Aug 2022 10:35:13 +0000
+Received: by stor-presley.qualcomm.com (Postfix, from userid 359480)
+        id 7320F22752; Thu, 11 Aug 2022 03:35:13 -0700 (PDT)
+From:   Can Guo <quic_cang@quicinc.com>
+To:     quic_asutoshd@quicinc.com, quic_nguyenb@quicinc.com,
+        quic_xiaosenh@quicinc.com, stanley.chu@mediatek.com,
+        adrian.hunter@intel.com, bvanassche@acm.org, beanhuo@micron.com,
+        avri.altman@wdc.com, mani@kernel.org, linux-scsi@vger.kernel.org,
+        kernel-team@android.com, quic_cang@quicinc.com
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [RFC PATCH v2 2/2] scsi: ufs-qcom: Add MCQ support
+Date:   Thu, 11 Aug 2022 03:33:04 -0700
+Message-Id: <1660213984-37793-3-git-send-email-quic_cang@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1660213984-37793-1-git-send-email-quic_cang@quicinc.com>
+References: <1660213984-37793-1-git-send-email-quic_cang@quicinc.com>
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: nuV-Gpnb1tNzBa42ykar5-x7th82x1iL
+X-Proofpoint-ORIG-GUID: nuV-Gpnb1tNzBa42ykar5-x7th82x1iL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-11_05,2022-08-11_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 spamscore=0
+ phishscore=0 priorityscore=1501 lowpriorityscore=0 malwarescore=0
+ suspectscore=0 mlxscore=0 mlxlogscore=999 impostorscore=0 clxscore=1011
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2208110030
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The LLCC EDAC register offsets varies between each SoC. Hardcoding the
-register offsets won't work and will often result in crash due to
-accessing the wrong locations.
+Use ESI and define Runtime and Operation definitions for MCQ.
 
-Hence, get the register offsets from the LLCC driver matching the
-individual SoCs.
-
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Co-developed-by: Asutosh Das <quic_asutoshd@quicinc.com>
+Signed-off-by: Can Guo <quic_cang@quicinc.com>
+Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
 ---
- drivers/edac/qcom_edac.c           | 112 ++++++++++++++---------------
- include/linux/soc/qcom/llcc-qcom.h |  35 +++++++--
- 2 files changed, 83 insertions(+), 64 deletions(-)
+ drivers/ufs/host/ufs-qcom.c | 125 ++++++++++++++++++++++++++++++++++++++++++++
+ drivers/ufs/host/ufs-qcom.h |   4 ++
+ 2 files changed, 129 insertions(+)
 
-diff --git a/drivers/edac/qcom_edac.c b/drivers/edac/qcom_edac.c
-index 97a27e42dd61..500360cc5258 100644
---- a/drivers/edac/qcom_edac.c
-+++ b/drivers/edac/qcom_edac.c
-@@ -21,30 +21,9 @@
- #define TRP_SYN_REG_CNT                 6
- #define DRP_SYN_REG_CNT                 8
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 473fad8..1e25d8d 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -25,6 +25,8 @@
+ #define UFS_QCOM_DEFAULT_DBG_PRINT_EN	\
+ 	(UFS_QCOM_DBG_PRINT_REGS_EN | UFS_QCOM_DBG_PRINT_TEST_BUS_EN)
  
--#define LLCC_COMMON_STATUS0             0x0003000c
- #define LLCC_LB_CNT_MASK                GENMASK(31, 28)
- #define LLCC_LB_CNT_SHIFT               28
- 
--/* Single & double bit syndrome register offsets */
--#define TRP_ECC_SB_ERR_SYN0             0x0002304c
--#define TRP_ECC_DB_ERR_SYN0             0x00020370
--#define DRP_ECC_SB_ERR_SYN0             0x0004204c
--#define DRP_ECC_DB_ERR_SYN0             0x00042070
--
--/* Error register offsets */
--#define TRP_ECC_ERROR_STATUS1           0x00020348
--#define TRP_ECC_ERROR_STATUS0           0x00020344
--#define DRP_ECC_ERROR_STATUS1           0x00042048
--#define DRP_ECC_ERROR_STATUS0           0x00042044
--
--/* TRP, DRP interrupt register offsets */
--#define DRP_INTERRUPT_STATUS            0x00041000
--#define TRP_INTERRUPT_0_STATUS          0x00020480
--#define DRP_INTERRUPT_CLEAR             0x00041008
--#define DRP_ECC_ERROR_CNTR_CLEAR        0x00040004
--#define TRP_INTERRUPT_0_CLEAR           0x00020484
--#define TRP_ECC_ERROR_CNTR_CLEAR        0x00020440
--
- /* Mask and shift macros */
- #define ECC_DB_ERR_COUNT_MASK           GENMASK(4, 0)
- #define ECC_DB_ERR_WAYS_MASK            GENMASK(31, 16)
-@@ -60,15 +39,6 @@
- #define DRP_TRP_INT_CLEAR               GENMASK(1, 0)
- #define DRP_TRP_CNT_CLEAR               GENMASK(1, 0)
- 
--/* Config registers offsets*/
--#define DRP_ECC_ERROR_CFG               0x00040000
--
--/* Tag RAM, Data RAM interrupt register offsets */
--#define CMN_INTERRUPT_0_ENABLE          0x0003001c
--#define CMN_INTERRUPT_2_ENABLE          0x0003003c
--#define TRP_INTERRUPT_0_ENABLE          0x00020488
--#define DRP_INTERRUPT_ENABLE            0x0004100c
--
- #define SB_ERROR_THRESHOLD              0x1
- #define SB_ERROR_THRESHOLD_SHIFT        24
- #define SB_DB_TRP_INTERRUPT_ENABLE      0x3
-@@ -86,9 +56,6 @@ enum {
- static const struct llcc_edac_reg_data edac_reg_data[] = {
- 	[LLCC_DRAM_CE] = {
- 		.name = "DRAM Single-bit",
--		.synd_reg = DRP_ECC_SB_ERR_SYN0,
--		.count_status_reg = DRP_ECC_ERROR_STATUS1,
--		.ways_status_reg = DRP_ECC_ERROR_STATUS0,
- 		.reg_cnt = DRP_SYN_REG_CNT,
- 		.count_mask = ECC_SB_ERR_COUNT_MASK,
- 		.ways_mask = ECC_SB_ERR_WAYS_MASK,
-@@ -96,9 +63,6 @@ static const struct llcc_edac_reg_data edac_reg_data[] = {
- 	},
- 	[LLCC_DRAM_UE] = {
- 		.name = "DRAM Double-bit",
--		.synd_reg = DRP_ECC_DB_ERR_SYN0,
--		.count_status_reg = DRP_ECC_ERROR_STATUS1,
--		.ways_status_reg = DRP_ECC_ERROR_STATUS0,
- 		.reg_cnt = DRP_SYN_REG_CNT,
- 		.count_mask = ECC_DB_ERR_COUNT_MASK,
- 		.ways_mask = ECC_DB_ERR_WAYS_MASK,
-@@ -106,9 +70,6 @@ static const struct llcc_edac_reg_data edac_reg_data[] = {
- 	},
- 	[LLCC_TRAM_CE] = {
- 		.name = "TRAM Single-bit",
--		.synd_reg = TRP_ECC_SB_ERR_SYN0,
--		.count_status_reg = TRP_ECC_ERROR_STATUS1,
--		.ways_status_reg = TRP_ECC_ERROR_STATUS0,
- 		.reg_cnt = TRP_SYN_REG_CNT,
- 		.count_mask = ECC_SB_ERR_COUNT_MASK,
- 		.ways_mask = ECC_SB_ERR_WAYS_MASK,
-@@ -116,9 +77,6 @@ static const struct llcc_edac_reg_data edac_reg_data[] = {
- 	},
- 	[LLCC_TRAM_UE] = {
- 		.name = "TRAM Double-bit",
--		.synd_reg = TRP_ECC_DB_ERR_SYN0,
--		.count_status_reg = TRP_ECC_ERROR_STATUS1,
--		.ways_status_reg = TRP_ECC_ERROR_STATUS0,
- 		.reg_cnt = TRP_SYN_REG_CNT,
- 		.count_mask = ECC_DB_ERR_COUNT_MASK,
- 		.ways_mask = ECC_DB_ERR_WAYS_MASK,
-@@ -126,7 +84,7 @@ static const struct llcc_edac_reg_data edac_reg_data[] = {
- 	},
- };
- 
--static int qcom_llcc_core_setup(struct regmap *llcc_bcast_regmap)
-+static int qcom_llcc_core_setup(struct llcc_drv_data *drv, struct regmap *llcc_bcast_regmap)
- {
- 	u32 sb_err_threshold;
- 	int ret;
-@@ -135,31 +93,31 @@ static int qcom_llcc_core_setup(struct regmap *llcc_bcast_regmap)
- 	 * Configure interrupt enable registers such that Tag, Data RAM related
- 	 * interrupts are propagated to interrupt controller for servicing
- 	 */
--	ret = regmap_update_bits(llcc_bcast_regmap, CMN_INTERRUPT_2_ENABLE,
-+	ret = regmap_update_bits(llcc_bcast_regmap, drv->edac_reg->cmn_interrupt_2_enable,
- 				 TRP0_INTERRUPT_ENABLE,
- 				 TRP0_INTERRUPT_ENABLE);
- 	if (ret)
- 		return ret;
- 
--	ret = regmap_update_bits(llcc_bcast_regmap, TRP_INTERRUPT_0_ENABLE,
-+	ret = regmap_update_bits(llcc_bcast_regmap, drv->edac_reg->trp_interrupt_0_enable,
- 				 SB_DB_TRP_INTERRUPT_ENABLE,
- 				 SB_DB_TRP_INTERRUPT_ENABLE);
- 	if (ret)
- 		return ret;
- 
- 	sb_err_threshold = (SB_ERROR_THRESHOLD << SB_ERROR_THRESHOLD_SHIFT);
--	ret = regmap_write(llcc_bcast_regmap, DRP_ECC_ERROR_CFG,
-+	ret = regmap_write(llcc_bcast_regmap, drv->edac_reg->drp_ecc_error_cfg,
- 			   sb_err_threshold);
- 	if (ret)
- 		return ret;
- 
--	ret = regmap_update_bits(llcc_bcast_regmap, CMN_INTERRUPT_2_ENABLE,
-+	ret = regmap_update_bits(llcc_bcast_regmap, drv->edac_reg->cmn_interrupt_2_enable,
- 				 DRP0_INTERRUPT_ENABLE,
- 				 DRP0_INTERRUPT_ENABLE);
- 	if (ret)
- 		return ret;
- 
--	ret = regmap_write(llcc_bcast_regmap, DRP_INTERRUPT_ENABLE,
-+	ret = regmap_write(llcc_bcast_regmap, drv->edac_reg->drp_interrupt_enable,
- 			   SB_DB_DRP_INTERRUPT_ENABLE);
- 	return ret;
- }
-@@ -173,24 +131,24 @@ qcom_llcc_clear_error_status(int err_type, struct llcc_drv_data *drv)
- 	switch (err_type) {
- 	case LLCC_DRAM_CE:
- 	case LLCC_DRAM_UE:
--		ret = regmap_write(drv->bcast_regmap, DRP_INTERRUPT_CLEAR,
-+		ret = regmap_write(drv->bcast_regmap, drv->edac_reg->drp_interrupt_clear,
- 				   DRP_TRP_INT_CLEAR);
- 		if (ret)
- 			return ret;
- 
--		ret = regmap_write(drv->bcast_regmap, DRP_ECC_ERROR_CNTR_CLEAR,
-+		ret = regmap_write(drv->bcast_regmap, drv->edac_reg->drp_ecc_error_cntr_clear,
- 				   DRP_TRP_CNT_CLEAR);
- 		if (ret)
- 			return ret;
- 		break;
- 	case LLCC_TRAM_CE:
- 	case LLCC_TRAM_UE:
--		ret = regmap_write(drv->bcast_regmap, TRP_INTERRUPT_0_CLEAR,
-+		ret = regmap_write(drv->bcast_regmap, drv->edac_reg->trp_interrupt_0_clear,
- 				   DRP_TRP_INT_CLEAR);
- 		if (ret)
- 			return ret;
- 
--		ret = regmap_write(drv->bcast_regmap, TRP_ECC_ERROR_CNTR_CLEAR,
-+		ret = regmap_write(drv->bcast_regmap, drv->edac_reg->trp_ecc_error_cntr_clear,
- 				   DRP_TRP_CNT_CLEAR);
- 		if (ret)
- 			return ret;
-@@ -203,16 +161,54 @@ qcom_llcc_clear_error_status(int err_type, struct llcc_drv_data *drv)
- 	return ret;
- }
- 
-+struct qcom_llcc_syn_regs {
-+	u32 synd_reg;
-+	u32 count_status_reg;
-+	u32 ways_status_reg;
-+};
++#define	MAX_SUPP_MAC	63
 +
-+static void get_reg_offsets(struct llcc_drv_data *drv, int err_type,
-+			    struct qcom_llcc_syn_regs *syn_regs)
+ enum {
+ 	TSTBUS_UAWM,
+ 	TSTBUS_UARM,
+@@ -1424,6 +1426,125 @@ static void ufs_qcom_config_scaling_param(struct ufs_hba *hba,
+ }
+ #endif
+ 
++static int ufs_qcom_get_outstanding_cqs(struct ufs_hba *hba,
++					unsigned long *ocqs)
 +{
-+	const struct llcc_edac_reg *edac_reg = drv->edac_reg;
-+
-+	switch (err_type) {
-+	case LLCC_DRAM_CE:
-+		syn_regs->synd_reg = edac_reg->drp_ecc_sb_err_syn0;
-+		syn_regs->count_status_reg = edac_reg->drp_ecc_error_status1;
-+		syn_regs->ways_status_reg = edac_reg->drp_ecc_error_status0;
-+		break;
-+	case LLCC_DRAM_UE:
-+		syn_regs->synd_reg = edac_reg->drp_ecc_db_err_syn0;
-+		syn_regs->count_status_reg = edac_reg->drp_ecc_error_status1;
-+		syn_regs->ways_status_reg = edac_reg->drp_ecc_error_status0;
-+		break;
-+	case LLCC_TRAM_CE:
-+		syn_regs->synd_reg = edac_reg->trp_ecc_sb_err_syn0;
-+		syn_regs->count_status_reg = edac_reg->trp_ecc_error_status1;
-+		syn_regs->ways_status_reg = edac_reg->trp_ecc_error_status0;
-+		break;
-+	case LLCC_TRAM_UE:
-+		syn_regs->synd_reg = edac_reg->trp_ecc_db_err_syn0;
-+		syn_regs->count_status_reg = edac_reg->trp_ecc_error_status1;
-+		syn_regs->ways_status_reg = edac_reg->trp_ecc_error_status0;
-+		break;
-+	}
++	return -EINVAL;
 +}
 +
- /* Dump Syndrome registers data for Tag RAM, Data RAM bit errors*/
- static int
- dump_syn_reg_values(struct llcc_drv_data *drv, u32 bank, int err_type)
- {
- 	struct llcc_edac_reg_data reg_data = edac_reg_data[err_type];
-+	struct qcom_llcc_syn_regs regs = { };
- 	int err_cnt, err_ways, ret, i;
- 	u32 synd_reg, synd_val;
- 
-+	get_reg_offsets(drv, err_type, &regs);
++static int ufs_qcom_config_mcq_rop(struct ufs_hba *hba)
++{
++	struct ufshcd_mcq_rop_info_t *rop;
++	struct ufshcd_res_info_t *mem_res, *sqdao_res;
++	int i;
 +
- 	for (i = 0; i < reg_data.reg_cnt; i++) {
--		synd_reg = reg_data.synd_reg + (i * 4);
-+		synd_reg = regs.synd_reg + (i * 4);
- 		ret = regmap_read(drv->regmap, drv->offsets[bank] + synd_reg,
- 				  &synd_val);
- 		if (ret)
-@@ -223,7 +219,7 @@ dump_syn_reg_values(struct llcc_drv_data *drv, u32 bank, int err_type)
- 	}
- 
- 	ret = regmap_read(drv->regmap,
--			  drv->offsets[bank] + reg_data.count_status_reg,
-+			  drv->offsets[bank] + regs.count_status_reg,
- 			  &err_cnt);
- 	if (ret)
- 		goto clear;
-@@ -234,7 +230,7 @@ dump_syn_reg_values(struct llcc_drv_data *drv, u32 bank, int err_type)
- 		    reg_data.name, err_cnt);
- 
- 	ret = regmap_read(drv->regmap,
--			  drv->offsets[bank] + reg_data.ways_status_reg,
-+			  drv->offsets[bank] + regs.ways_status_reg,
- 			  &err_ways);
- 	if (ret)
- 		goto clear;
-@@ -297,7 +293,7 @@ llcc_ecc_irq_handler(int irq, void *edev_ctl)
- 	/* Iterate over the banks and look for Tag RAM or Data RAM errors */
- 	for (i = 0; i < drv->num_banks; i++) {
- 		ret = regmap_read(drv->regmap,
--				  drv->offsets[i] + DRP_INTERRUPT_STATUS,
-+				  drv->offsets[i] + drv->edac_reg->drp_interrupt_status,
- 				  &drp_error);
- 
- 		if (!ret && (drp_error & SB_ECC_ERROR)) {
-@@ -313,7 +309,7 @@ llcc_ecc_irq_handler(int irq, void *edev_ctl)
- 			irq_rc = IRQ_HANDLED;
- 
- 		ret = regmap_read(drv->regmap,
--				  drv->offsets[i] + TRP_INTERRUPT_0_STATUS,
-+				  drv->offsets[i] + drv->edac_reg->trp_interrupt_0_status,
- 				  &trp_error);
- 
- 		if (!ret && (trp_error & SB_ECC_ERROR)) {
-@@ -340,7 +336,7 @@ static int qcom_llcc_edac_probe(struct platform_device *pdev)
- 	int ecc_irq;
- 	int rc;
- 
--	rc = qcom_llcc_core_setup(llcc_driv_data->bcast_regmap);
-+	rc = qcom_llcc_core_setup(llcc_driv_data, llcc_driv_data->bcast_regmap);
- 	if (rc)
- 		return rc;
- 
-diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
-index 0bc21ee58fac..a36ed7ffcb28 100644
---- a/include/linux/soc/qcom/llcc-qcom.h
-+++ b/include/linux/soc/qcom/llcc-qcom.h
-@@ -55,9 +55,6 @@ struct llcc_slice_desc {
- /**
-  * struct llcc_edac_reg_data - llcc edac registers data for each error type
-  * @name: Name of the error
-- * @synd_reg: Syndrome register address
-- * @count_status_reg: Status register address to read the error count
-- * @ways_status_reg: Status register address to read the error ways
-  * @reg_cnt: Number of registers
-  * @count_mask: Mask value to get the error count
-  * @ways_mask: Mask value to get the error ways
-@@ -66,9 +63,6 @@ struct llcc_slice_desc {
-  */
- struct llcc_edac_reg_data {
- 	char *name;
--	u64 synd_reg;
--	u64 count_status_reg;
--	u64 ways_status_reg;
- 	u32 reg_cnt;
- 	u32 count_mask;
- 	u32 ways_mask;
-@@ -76,6 +70,34 @@ struct llcc_edac_reg_data {
- 	u8  ways_shift;
++	mem_res = &hba->res[RES_MEM];
++	sqdao_res = &hba->res[RES_MCQ_SQD];
++
++	if (!mem_res->base || !sqdao_res->base)
++		return -EINVAL;
++
++	for (i = 0; i < ROP_MAX; i++) {
++		rop = &hba->mcq_rop[i];
++		rop->offset = sqdao_res->resource->start -
++			      mem_res->resource->start + 0x40 * i;
++		rop->stride = 0x100;
++		rop->base = sqdao_res->base + 0x40 * i;
++	}
++
++	return 0;
++}
++
++#ifdef CONFIG_GENERIC_MSI_IRQ_DOMAIN
++static void ufs_qcom_write_msi_msg(struct msi_desc *desc, struct msi_msg *msg)
++{
++	struct device *dev = msi_desc_to_dev(desc);
++	struct ufs_hba *hba = dev_get_drvdata(dev);
++
++	ufshcd_mcq_config_esi(hba, msg);
++}
++
++static irqreturn_t ufs_qcom_mcq_esi_handler(int irq, void *__hba)
++{
++	struct ufs_hba *hba = __hba;
++	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
++	u32 event_id = irq - host->esi_base;
++	struct ufs_hw_queue *hwq = &hba->uhq[event_id];
++
++	ufshcd_mcq_poll_cqe_nolock(hba, hwq);
++
++	return IRQ_HANDLED;
++}
++
++static int ufs_qcom_config_mcq_esi(struct ufs_hba *hba)
++{
++	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
++	struct msi_desc *desc;
++	struct msi_desc *failed_desc = NULL;
++	u32 reg;
++	int nr_irqs, ret;
++
++	/*
++	 * 1. We only handle CQs as of now.
++	 * 2. Poll queues do not need ESI.
++	 */
++	nr_irqs = hba->nr_hw_queues - hba->nr_queues[HCTX_TYPE_POLL];
++	ret = platform_msi_domain_alloc_irqs(hba->dev, nr_irqs,
++					     ufs_qcom_write_msi_msg);
++	if (ret)
++		goto out;
++
++	msi_for_each_desc(desc, hba->dev, MSI_DESC_ALL) {
++		if (!desc->msi_index)
++			host->esi_base = desc->irq;
++
++		ret = devm_request_irq(hba->dev, desc->irq,
++				       ufs_qcom_mcq_esi_handler,
++				       0, "qcom-mcq-esi", hba);
++		if (ret) {
++			dev_err(hba->dev, "%s: Fail to request IRQ for %d, err = %d\n",
++				__func__, desc->irq, ret);
++			failed_desc = desc;
++			break;
++		}
++	}
++
++	if (ret) {
++		/* Rewind */
++		msi_for_each_desc(desc, hba->dev, MSI_DESC_ALL) {
++			if (desc == failed_desc)
++				break;
++			devm_free_irq(hba->dev, desc->irq, hba);
++		}
++	} else {
++		if (host->hw_ver.major == 6 && host->hw_ver.minor == 0 &&
++		    host->hw_ver.step == 0) {
++			reg = ufshcd_readl(hba, REG_UFS_CFG3);
++			reg |= 0x1F000;
++			ufshcd_writel(hba, reg, REG_UFS_CFG3);
++			reg = ufshcd_readl(hba, REG_UFS_CFG3);
++		}
++		ufshcd_mcq_enable_esi(hba);
++	}
++
++out:
++	if (ret)
++		dev_warn(hba->dev, "Failed to request Platform MSI %d\n", ret);
++	return ret;
++}
++
++#else
++static int ufs_qcom_config_mcq_esi(struct ufs_hba *hba)
++{
++	return -EOPNOTSUPP;
++}
++#endif
++
++static int ufs_qcom_get_hba_mac(struct ufs_hba *hba)
++{
++	return MAX_SUPP_MAC;
++}
++
+ /*
+  * struct ufs_hba_qcom_vops - UFS QCOM specific variant operations
+  *
+@@ -1447,6 +1568,10 @@ static const struct ufs_hba_variant_ops ufs_hba_qcom_vops = {
+ 	.device_reset		= ufs_qcom_device_reset,
+ 	.config_scaling_param = ufs_qcom_config_scaling_param,
+ 	.program_key		= ufs_qcom_ice_program_key,
++	.get_outstanding_cqs	= ufs_qcom_get_outstanding_cqs,
++	.config_mcq_rop		= ufs_qcom_config_mcq_rop,
++	.config_mcq_esi		= ufs_qcom_config_mcq_esi,
++	.get_hba_mac		= ufs_qcom_get_hba_mac,
  };
  
-+struct llcc_edac_reg {
-+	/* LLCC TRP registers */
-+	u32 trp_ecc_error_status0;
-+	u32 trp_ecc_error_status1;
-+	u32 trp_ecc_sb_err_syn0;
-+	u32 trp_ecc_db_err_syn0;
-+	u32 trp_ecc_error_cntr_clear;
-+	u32 trp_interrupt_0_status;
-+	u32 trp_interrupt_0_clear;
-+	u32 trp_interrupt_0_enable;
-+
-+	/* LLCC Common registers */
-+	u32 cmn_status0;
-+	u32 cmn_interrupt_0_enable;
-+	u32 cmn_interrupt_2_enable;
-+
-+	/* LLCC DRP registers */
-+	u32 drp_ecc_error_cfg;
-+	u32 drp_ecc_error_cntr_clear;
-+	u32 drp_interrupt_status;
-+	u32 drp_interrupt_clear;
-+	u32 drp_interrupt_enable;
-+	u32 drp_ecc_error_status0;
-+	u32 drp_ecc_error_status1;
-+	u32 drp_ecc_sb_err_syn0;
-+	u32 drp_ecc_db_err_syn0;
-+};
-+
  /**
-  * struct llcc_drv_data - Data associated with the llcc driver
-  * @regmap: regmap associated with the llcc device
-@@ -94,6 +116,7 @@ struct llcc_drv_data {
- 	struct regmap *regmap;
- 	struct regmap *bcast_regmap;
- 	const struct llcc_slice_config *cfg;
-+	const struct llcc_edac_reg *edac_reg;
- 	struct mutex lock;
- 	u32 cfg_size;
- 	u32 max_slices;
+diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
+index 44466a3..17c052e 100644
+--- a/drivers/ufs/host/ufs-qcom.h
++++ b/drivers/ufs/host/ufs-qcom.h
+@@ -53,6 +53,8 @@ enum {
+ 	 * added in HW Version 3.0.0
+ 	 */
+ 	UFS_AH8_CFG				= 0xFC,
++
++	REG_UFS_CFG3				= 0x271C,
+ };
+ 
+ /* QCOM UFS host controller vendor specific debug registers */
+@@ -221,6 +223,8 @@ struct ufs_qcom_host {
+ 	struct reset_controller_dev rcdev;
+ 
+ 	struct gpio_desc *device_reset;
++
++	int esi_base;
+ };
+ 
+ static inline u32
 -- 
-2.25.1
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
