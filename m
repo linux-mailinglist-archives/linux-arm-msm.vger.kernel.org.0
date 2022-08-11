@@ -2,71 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A78CC58F6F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 06:28:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 576E558F6E5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 06:26:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233902AbiHKE2R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Aug 2022 00:28:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33428 "EHLO
+        id S233777AbiHKE0W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Aug 2022 00:26:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233882AbiHKE2Q (ORCPT
+        with ESMTP id S233585AbiHKE0U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Aug 2022 00:28:16 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C92E3DBCD
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 21:28:15 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id a89so21511621edf.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 21:28:15 -0700 (PDT)
+        Thu, 11 Aug 2022 00:26:20 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87B3919010
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 21:26:19 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id p132so20065165oif.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 21:26:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=qutPgoHsh0aNCJy6BIy763iqIP4xzHSujrtPjVld1S4=;
-        b=JC58/VnqGkEFxA8QdfMx6um+WZA77XEzMoUJ8+lZrQ9UY1GhAHWxQfnmx0PT/vTx1p
-         YfAWwam3u+Xi+jpc/dPrSDdWgEMGFHb45OePgxBtTK+oA6lizgEDgE2F3z7LINwj4sUd
-         ZhOuDWhqGrzhYtzFvUfIPsAw0BE6ErZU0ApqQ5cKSsiYuh1fB1AP3Db7sFYrrmuPhSsd
-         HfcabtG5aZDGqED+MioGWEJ4B+3LhdWYzAV8Yo7hZ8AF8Atj8zuBa83ttJJuk904cC+I
-         4FHX++Pnq4Xd42iIaJaIy+NMZebZKIU5Y2guizRdFAJPNQg6XXS2zzZ7B5O4jx7UqWzY
-         NA0A==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=H1D2I5F6jEY4Yho4Ry80Q/V7w8am8kAH/C1aUroh9io=;
+        b=q8DxvR0+uMAaBPlHZlPA5S7nLlH2th+z7nIkuuh8u59GZidpQQW3qi56H+zUMkl4Bi
+         3Wr8LJAwi+l61nM+KyUTMM+gTU1c+s2elv6Ba1DZ6olExnsY+7n0o0gPvrNrTaWajpJ4
+         ZEbZ8pdev0J1vIFoEWv5hYQiN/hBphBLe3IADnwu4zNe2mGtpL2GjQwV514prWn5Esxy
+         he7CXdVgyjfSBl0Cd1BOIC+DO/Hb+O1cArHJeJ5X5a53fJf073zQCz7kNaCQD/eWuf+5
+         fNlOeIP84liinkTgYun5gV8DPSnhbnO9g8OaxNU98bobsV+P0VwZzQ55FdBxSQKoS2b0
+         A6aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=qutPgoHsh0aNCJy6BIy763iqIP4xzHSujrtPjVld1S4=;
-        b=hU11Lq1JFkuVWcUXDobrZF1JT6kTgQSok0Jf+i6Lxp186pmo0TEG1HkeeJPpagQKGo
-         q9c+TjH8oTy4UJhxUVkul8IuVli5XR9wrsVRHBwl+KlbIRE5fYR/FXpFjG4GZFEC3Vvn
-         i99ooWe62wDPYS8uYolD5JB4pdSVF3Qvbj6tF1sOnJCnSqHP8p75qsakz76dya22M0dO
-         9WOFZ5GuOAs1q+V92M/AUFgeB8bnsbVFfBFgzePsn59pxEYX+3oU3KdCuGwP/zIZrZra
-         ubhQeBuYrGlkKTd6lItmvX3zub83RO4sJGSNzT60Qb9QaXGi004/y+ZPVskuVeSRDkzw
-         xJrA==
-X-Gm-Message-State: ACgBeo28ZeteST5S8LkC7+P7q0MVckPxdaIYDE+YGNhR+MBqbbpuhVQk
-        O2RtfWdxg3KMbZ4z7wUuDMxMMGs9OMmaljZoC3qWDIn0M1/j8L83
-X-Google-Smtp-Source: AA6agR5OCSm/LTkv0sym9nG7SAwBRmVM5H24o1M2VJPyeC3mXlp7Brw8D/MXOG8y0RYzCQi6N+I/5Lj2WwdI7nok9mg=
-X-Received: by 2002:a05:6402:449a:b0:442:c81c:b938 with SMTP id
- er26-20020a056402449a00b00442c81cb938mr5079087edb.289.1660192093537; Wed, 10
- Aug 2022 21:28:13 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220811040121.3775613-1-bjorn.andersson@linaro.org> <20220811040121.3775613-4-bjorn.andersson@linaro.org>
-In-Reply-To: <20220811040121.3775613-4-bjorn.andersson@linaro.org>
-From:   Steev Klimaszewski <steev@kali.org>
-Date:   Wed, 10 Aug 2022 23:28:02 -0500
-Message-ID: <CAKXuJqhWn8bcG3x-xvyJ5-1kGXBVqCEuG31aHNidCqKA81NSqQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] drm/msm/dpu: Introduce SC8280XP
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=H1D2I5F6jEY4Yho4Ry80Q/V7w8am8kAH/C1aUroh9io=;
+        b=Se4ZIPDnEMfhiXMOIRCvggWnqUMpXErIwvahmnEVI6UaawBHu0WH0li1xWz8YHdj3u
+         nJbWlY+D59ZWJu4jKMWSFOJkfVoFxiktBHu0Kjh5UCWRHnXk/ie+ZKZ363+2KhX9jt76
+         Kva6FlNtMWcnmy0x3pMG0pSGP/pmJoobZL/I1WUH6Tabj1O6vRo5Sy7oVAy/QUrGvTte
+         zmQMCgHe88mEUeqR+sbSKGDauPLQ7l0J51xtkI2OjQkSiDGcGaJ0Kyr49R1tRkr3I4DO
+         YJRM4jO57TdGaK1oTEAE+uumncrlEzkjXEzT6edgmjMxE9ue4eHZzCL2scesBfEnl4F/
+         pqOw==
+X-Gm-Message-State: ACgBeo0zenrWVjwVfiRkeq5zNMJLHpDhHfK0gD7hSLs1vJaK52445cwL
+        QdNRs+mpNc+lHV9O9Jos0eljrA==
+X-Google-Smtp-Source: AA6agR5vjFsODD7MmgxqVSNhUlWvgAy0IeZt4SYblC9qgNSbGpfnjRNLN6bgQipCk/Zph+plR9vfbQ==
+X-Received: by 2002:a05:6808:d4d:b0:33b:6ae:bd06 with SMTP id w13-20020a0568080d4d00b0033b06aebd06mr2687110oik.183.1660191978945;
+        Wed, 10 Aug 2022 21:26:18 -0700 (PDT)
+Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id l17-20020a9d7351000000b006370c0e5be0sm1009517otk.48.2022.08.10.21.26.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Aug 2022 21:26:18 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Taniya Das <tdas@codeaurora.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 0/2] clk: qcom: Add SC8280XP GPU clock controller
+Date:   Wed, 10 Aug 2022 21:28:53 -0700
+Message-Id: <20220811042855.3867774-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,72 +75,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+What the subject says.
 
+Bjorn Andersson (2):
+  dt-bindings: clock: Add Qualcomm SC8280XP GPU binding
+  clk: qcom: Add SC8280XP GPU clock controller
 
-On Wed, Aug 10, 2022 at 10:58 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> The Qualcomm SC8280XP platform contains DPU version 8.0.0, has 9
-> interfaces, 2 DSI controllers and 4 DisplayPort controllers. Extend the
-> necessary definitions and describe the DPU in the SC8280XP.
->
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->
-> Note that MSM_DP_CONTROLLER_3 is also defined in the DP series and as such a
-> trivial conflict will occur when merging the latter of the two series.
->
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 211 ++++++++++++++++++
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   1 +
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c |  18 ++
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |   3 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |   2 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   1 +
->  drivers/gpu/drm/msm/msm_drv.h                 |   1 +
->  drivers/gpu/drm/msm/msm_mdss.c                |   2 +
->  8 files changed, 239 insertions(+)
->
-<snip>
->
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index b3689a2d27d7..5978c6e26a1e 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -55,6 +55,7 @@ enum msm_dp_controller {
->         MSM_DP_CONTROLLER_0,
->         MSM_DP_CONTROLLER_1,
->         MSM_DP_CONTROLLER_2,
-> +       MSM_DP_CONTROLLER_3,
->         MSM_DP_CONTROLLER_COUNT,
->  };
->
-This seems to also be part of
-https://lore.kernel.org/r/20220810040745.3582985-6-bjorn.andersson@linaro.org
-(but only th msm_drv.h hunk
+ .../devicetree/bindings/clock/qcom,gpucc.yaml |   2 +
+ drivers/clk/qcom/Kconfig                      |   8 +
+ drivers/clk/qcom/Makefile                     |   1 +
+ drivers/clk/qcom/gpucc-sc8280xp.c             | 460 ++++++++++++++++++
+ .../dt-bindings/clock/qcom,gpucc-sc8280xp.h   |  35 ++
+ 5 files changed, 506 insertions(+)
+ create mode 100644 drivers/clk/qcom/gpucc-sc8280xp.c
+ create mode 100644 include/dt-bindings/clock/qcom,gpucc-sc8280xp.h
 
->
-> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-> index e13c5c12b775..7c391fab6263 100644
-> --- a/drivers/gpu/drm/msm/msm_mdss.c
-> +++ b/drivers/gpu/drm/msm/msm_mdss.c
-> @@ -208,6 +208,7 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
->                 writel_relaxed(0x420, msm_mdss->mmio + UBWC_STATIC);
->                 break;
->         case DPU_HW_VER_600:
-> +       case DPU_HW_VER_800:
->                 /* TODO: 0x102e for LP_DDR4 */
->                 writel_relaxed(0x103e, msm_mdss->mmio + UBWC_STATIC);
->                 writel_relaxed(2, msm_mdss->mmio + UBWC_CTRL_2);
-> @@ -445,6 +446,7 @@ static const struct of_device_id mdss_dt_match[] = {
->         { .compatible = "qcom,sc7180-mdss" },
->         { .compatible = "qcom,sc7280-mdss" },
->         { .compatible = "qcom,sc8180x-mdss" },
-> +       { .compatible = "qcom,sc8280xp-mdss" },
->         { .compatible = "qcom,sm8150-mdss" },
->         { .compatible = "qcom,sm8250-mdss" },
->         {}
-> --
-> 2.35.1
->
--- steev
+-- 
+2.35.1
+
