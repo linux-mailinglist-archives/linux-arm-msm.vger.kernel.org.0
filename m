@@ -2,87 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BDEC58F85D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 09:30:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 88A5B58F8A4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 09:56:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234382AbiHKHaR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Aug 2022 03:30:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35124 "EHLO
+        id S234154AbiHKH4S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Aug 2022 03:56:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234386AbiHKH3z (ORCPT
+        with ESMTP id S234237AbiHKH4L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Aug 2022 03:29:55 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B374923FF;
-        Thu, 11 Aug 2022 00:29:53 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27B7MBou019139;
-        Thu, 11 Aug 2022 07:29:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=BJGCRmyYQPJGbgLAMygRFr672dkJN7Q+xPPqyqu4g8w=;
- b=NnOzCRBwUkGgo/fj2qVd7xrxv3Vh9wGDU8fNQuZhIfXX9XekUeDD3yTWiNUSS/vi17di
- x1jsT0aculT6QP6qlDhsMFNaJOaRbhWHiG2xCOdT2i/0WIsGJDRXDMwlzxlEkMuWD3jT
- hAQoyYnuXJteHn1lkvR5Rdn2CrBXaDQ/J07zO0xlcx4T3SZLEZuATWfdiEXJePWxRQPm
- ZyIY2K+pHsMd8lXhyz2ac3oFamACDe66MDAjOTGyyPfcJHEmgYAKTvJvxAI0gjeluSMI
- OrNXonm8ln9F9z9Qtt81Z+wvTuLs2VrkNV1yIUwFhbiWowU0asrEXBmN67LOZod7tIPS QA== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3hvsaaghu2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 11 Aug 2022 07:29:09 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.47.97.222])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27B7T7Zw024814
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 11 Aug 2022 07:29:08 GMT
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 11 Aug 2022 00:29:07 -0700
-Received: from [10.216.37.224] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 11 Aug
- 2022 00:29:02 -0700
-Message-ID: <9e8f79c8-466a-91b1-63b6-38c99022e735@quicinc.com>
-Date:   Thu, 11 Aug 2022 12:58:58 +0530
+        Thu, 11 Aug 2022 03:56:11 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADD611AD9F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Aug 2022 00:56:09 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id y23so18466052ljh.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Aug 2022 00:56:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=HGD+mIOoUzZZibF46I+q3hJDknL0evsBnB4j8896RDE=;
+        b=w2Ve8pp7kpZ5uxP6kONzTfBLYo+GLlwLTI7YboNcnwSUyzMvCwh29zN6fAO49uGDiN
+         2VkGvu5lb5NoOGvCo9WLrxVNL2kkhkZIqJy4urwI/xgg+7eImhMqGsWALOoMnzCuQr5a
+         bKphNe9iQ97fbwjNLqIGNqLFqimYiYA4/dLFxdeNGB77EkbPI0c/rV9Hivs6Z4wDlomk
+         mQ/HBLn/W6xohgtVK02g79ptUnDbrLrzhBlbmIFRD9MiGsm31GZQ1IOFu1mw95/Nafxo
+         H+2XTOYXnTJd9XCIgwRairgOHXj4qxGE/iMLiBsmwycAmo1lOFjZ/OQyThUyS/wqO6Gi
+         L1Vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=HGD+mIOoUzZZibF46I+q3hJDknL0evsBnB4j8896RDE=;
+        b=Ov7wQe4PauB2ibnLBJPQQYK47KXnf24cPVDJ+MS7ry60PvJDIizFjplgX8RilWB9ZU
+         8KBqiPR1obLX0a3bwRgi4p3gxlAPpA+0UXQ3Nv+bCUnqAP2Uxj01ZznKAnmJF7xNpSrc
+         QHzVEXg6I0msXnPQeNnPEDKql9GPFwNvvs8RDrWmnA2GUfw+IZyNj+QWMksrTZQ7hxMN
+         rSHQjM2wocNmIe6OLpPL1XkOSEuoHFwrIeBtOdAibq0dXY0VeRlkzoAU3+CjUTkEq4a9
+         5CderkpL71JkUTshh85khO2hAuFuV0czgmHqpqnhyatNnbWBMWOx+B5nGOJjm31fMqUo
+         paAQ==
+X-Gm-Message-State: ACgBeo224VeO4rJf+KFbsxRVUtPtVErtMXRAL5nbhnFQOi/dhqyjc3k/
+        ss44KhH4qDcW0nAkxKITZlf0PQ==
+X-Google-Smtp-Source: AA6agR4c8fIm9+sSNAAoQ/CG7qvl6RSg1/y9svFJ1Yzku00jo7ICQImd2/4B1MH6UMreW6bzwNBm1A==
+X-Received: by 2002:a05:651c:241:b0:25e:65bd:3a8a with SMTP id x1-20020a05651c024100b0025e65bd3a8amr10308517ljn.206.1660204567994;
+        Thu, 11 Aug 2022 00:56:07 -0700 (PDT)
+Received: from [192.168.1.39] ([83.146.140.105])
+        by smtp.gmail.com with ESMTPSA id j2-20020a056512398200b0048b008844b8sm607407lfu.270.2022.08.11.00.56.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 Aug 2022 00:56:07 -0700 (PDT)
+Message-ID: <db9b74f9-1f65-5b88-1c81-0a3fd6dcf9a6@linaro.org>
+Date:   Thu, 11 Aug 2022 10:56:06 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 1/8] dt-bindings: remoteproc: qcom: adsp: Make ADSP pil
- loader as generic
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH 1/3] dt-bindings: display/msm: Add binding for SC8280XP
+ MDSS
 Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-CC:     <linux-remoteproc@vger.kernel.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <quic_plai@quicinc.com>,
-        <bgoswami@quicinc.com>, <perex@perex.cz>, <tiwai@suse.com>,
-        <srinivas.kandagatla@linaro.org>, <quic_rohkumar@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
-        <devicetree@vger.kernel.org>
-References: <1659611751-7928-1-git-send-email-quic_srivasam@quicinc.com>
- <1659611751-7928-2-git-send-email-quic_srivasam@quicinc.com>
- <20220809183636.GA2158474-robh@kernel.org>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-In-Reply-To: <20220809183636.GA2158474-robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220811040121.3775613-1-bjorn.andersson@linaro.org>
+ <20220811040121.3775613-2-bjorn.andersson@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220811040121.3775613-2-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: VmOfpVif20bhFYcJLEp--zzOua1HooPC
-X-Proofpoint-GUID: VmOfpVif20bhFYcJLEp--zzOua1HooPC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-11_03,2022-08-10_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- malwarescore=0 spamscore=0 bulkscore=0 mlxlogscore=986 adultscore=0
- phishscore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2208110019
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -93,29 +84,133 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 11/08/2022 07:01, Bjorn Andersson wrote:
+> Add binding for the display subsystem and display processing unit in the
+> Qualcomm SC8280XP platform.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  .../bindings/display/msm/dpu-sc8280xp.yaml    | 284 ++++++++++++++++++
+>  1 file changed, 284 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sc8280xp.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sc8280xp.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sc8280xp.yaml
+> new file mode 100644
+> index 000000000000..6c25943e639c
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/msm/dpu-sc8280xp.yaml
 
-On 8/10/2022 12:06 AM, Rob Herring wrote:
-Thanks for Your time Rob!!!
-> On Thu, Aug 04, 2022 at 04:45:44PM +0530, Srinivasa Rao Mandadapu wrote:
->> Rename sdm845 adsp pil bindings to generic name, for using same binings
->> file for subsequent SoCs.
->>
->> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
->> ---
->>   .../bindings/remoteproc/qcom,lpass-adsp-pil.yaml   | 160 +++++++++++++++++++++
->>   .../bindings/remoteproc/qcom,sdm845-adsp-pil.yaml  | 160 ---------------------
->>   2 files changed, 160 insertions(+), 160 deletions(-)
->>   create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,lpass-adsp-pil.yaml
->>   delete mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sdm845-adsp-pil.yaml
-> Please use the git-format-patch -M option so I'm not reviewing the whole
-> doc again. You also can (and should) change your git config to default
-> to this.
+qcom prefix is needed (also when file is in msm subdir)
 
-Actually here Common dt bindings for SDM845 and SC7280 is not working, 
-as it has conflicts with clock headers.
+The file name should be based on compatible, so "qcom,sc8280xp-mdss.yaml"
 
-I Would like to revert this patch and create new dt bindings file for 
-SC7280 platform.
+> @@ -0,0 +1,284 @@
+> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/msm/dpu-sc8280xp.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Display Processing Unit for SC8280XP
+> +
+> +maintainers:
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> +
+> +description:
+> +  Device tree bindings for MSM Mobile Display Subsystem (MDSS) that encapsulates
+> +  sub-blocks like DPU display controller, DSI and DP interfaces etc. Device tree
+> +  bindings of MDSS and DPU are mentioned for SC8280XP.
 
->
-> Rob
+s/Device tree bindings//
+so just:
+
+SC8280XP MSM Mobile Display Subsystem (MDSS) that encapsulates
+sub-blocks like DPU display controller, DSI and DP interfaces etc.
+
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sc8280xp-mdss
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  reg-names:
+> +    const: mdss
+
+You do not need reg names for one item, especially if the name is kind
+of obvious... unless you re-use existing driver which needs it? Then
+maybe let's change the driver to take first element?
+
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    items:
+> +      - description: Display AHB clock from gcc
+> +      - description: Display AHB clock from dispcc
+> +      - description: Display core clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: iface
+> +      - const: ahb
+> +      - const: core
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  interrupt-controller: true
+> +
+> +  "#address-cells": true
+> +
+> +  "#size-cells": true
+
+I see other DPU bindings also specify both as "true". Why not a fixed
+number (const)?
+
+> +
+> +  "#interrupt-cells":
+> +    const: 1
+> +
+> +  iommus:
+> +    items:
+> +      - description: Phandle to apps_smmu node with SID mask for Hard-Fail port0
+> +
+> +  ranges: true
+> +
+> +  interconnects:
+> +    minItems: 2
+
+No need for minItems in such case.
+
+> +    maxItems: 2
+> +
+> +  interconnect-names:
+> +    items:
+> +      - const: mdp0-mem
+> +      - const: mdp1-mem
+> +
+> +  resets:
+> +    items:
+> +      - description: MDSS_CORE reset
+> +
+> +patternProperties:
+> +  "^display-controller@[0-9a-f]+$":
+> +    type: object
+> +    description: Node containing the properties of DPU.
+
+additionalProperties:false on this level
+
+which will point to missing properties (e.g. opp-table)
+
+> +
+> +    properties:
+> +      compatible:
+> +        const: qcom,sc8280xp-dpu
+> +
+
+
+Best regards,
+Krzysztof
