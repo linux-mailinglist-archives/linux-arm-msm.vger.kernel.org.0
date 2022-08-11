@@ -2,71 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16E6258F6FC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 06:36:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C312F58F758
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 07:44:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233504AbiHKEg3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Aug 2022 00:36:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38236 "EHLO
+        id S231336AbiHKFoZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Aug 2022 01:44:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230463AbiHKEg2 (ORCPT
+        with ESMTP id S229786AbiHKFoZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Aug 2022 00:36:28 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEA70491EB
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 21:36:25 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id fy5so645603ejc.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Aug 2022 21:36:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=wbQAeMQOJ4LfSIWECGQFyUhqjfpSoLI8AfopCaQiJEU=;
-        b=G2Svss+8NtmivkCOl4Bh6T8tY5W084Z2nlXQ31QrJ6LZyKPy2WaINasfEgMBwOxRtb
-         7SFYLbAM+NhjMLdjquQr1/Y6LIZQlP1j/aI+enQPlzLAy7k2QQwB2Q4wDbANkwZGvwOF
-         fsSaXcGgaqc3LSOwBeGoMAMPlhKHKQDl1a6THh7/kek/2AHn0ylR3zV9K61bQ6ecRJ4k
-         WRqJvY6Gnkv+aXANNFxwpWbxaPy1atzV5pOKxDyXdGqv7bqwbyKSCkWyecybU/VTaHoe
-         A3sTBV9vizJ7LfPXsEkOI25uvnog+uhUhnof911XHQB9wHkikqAfkLgsCBIXfiUI2lpr
-         bD6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=wbQAeMQOJ4LfSIWECGQFyUhqjfpSoLI8AfopCaQiJEU=;
-        b=bc1cHVbWeXAu38z/n/jD5sjxLqhWG6dwm2OcTYkMjAT1+FLFqYs+gt1fn7gv8w7m+d
-         Z0i15aASDA13Bsv7hgbMm/V6oaBJ/ZO5oVEfz1UuJNC567q1CWS4VAAOmTm9xWxPAHCm
-         Ul5lVVa64sz8j8XnTUnTqorXQrCR2SUCn/bnHdKTy6QItYxZkCY1jqbOoi3suYfHQ06O
-         MLy819JhIqJAjoxlpS4DOY9HeP0SA4eJkzDBHL/z1sqhSuzYp7yHlOUO0E+212PHkXBt
-         CtkFSYluTnz6wTy59UvNEEh8wS6jMnNLcAgG0RmdKz/lVnpiORlWt4drUOcV7XyvEr3w
-         lImg==
-X-Gm-Message-State: ACgBeo3WfZNASH3T6PQpVffSeen0RIGQ5Rcm+vMLkP1ro7rwWfHwWl4R
-        2IrLsgNji9c7g3WUoucnMsdpNkPxrThwdrCpbAtsWw==
-X-Google-Smtp-Source: AA6agR7nmtkC3H2rGXWkVc5MPJ5csNAZDDyaJhdrIQp6wcJA9xfLEfa8hMO5cs2oGCS5/++TiKn6sJspoXwqiADL1Aw=
-X-Received: by 2002:a17:907:929:b0:731:3bb6:d454 with SMTP id
- au9-20020a170907092900b007313bb6d454mr14771971ejc.96.1660192584299; Wed, 10
- Aug 2022 21:36:24 -0700 (PDT)
+        Thu, 11 Aug 2022 01:44:25 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61EE365563;
+        Wed, 10 Aug 2022 22:44:24 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27B50DK7032662;
+        Thu, 11 Aug 2022 05:44:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=wEm4dm+jxVyusbWT26U78kyH3JylDzuoETX3tsmRvb8=;
+ b=bCyjNd0rPWWy5jGZsv85PT0dX2LLzjkz3683OMVNEszjNYUJ36DIec4Ult7Vj04j65qk
+ PAD13KdtB6xMZQFqwqDWH/+7eY71KESrL4Yy5w/lGdxRYgAgza6+MP8Y08tNPwmgV/mJ
+ REoYv80CwgqrryxRPW2OY4EWO40MsZBwRqzI8moRNxQ9COSJSJnuPidFaWDj86RBcptI
+ NuS1+bfMQitDzASD1Q8veMAlTckoyov4nrdPIObKW8fLBfUZbxst4jLq7l/Fwr5tiGoI
+ 8x3oJrcu9w+WHamBj/EC5/tt5XUCDlpNlR7YCOtm+9rHwNZS0m452rbwkNQus50ZaD8e ow== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3hvh2a1r68-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 11 Aug 2022 05:44:11 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.47.97.222])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27B5i5eb003619
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 11 Aug 2022 05:44:05 GMT
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 10 Aug 2022 22:44:04 -0700
+Received: from [10.216.31.107] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 10 Aug
+ 2022 22:44:00 -0700
+Message-ID: <456915bf-b7ff-efaa-72aa-62fd05344270@quicinc.com>
+Date:   Thu, 11 Aug 2022 11:13:57 +0530
 MIME-Version: 1.0
-References: <20220811040121.3775613-1-bjorn.andersson@linaro.org>
- <20220811040121.3775613-4-bjorn.andersson@linaro.org> <CAKXuJqhWn8bcG3x-xvyJ5-1kGXBVqCEuG31aHNidCqKA81NSqQ@mail.gmail.com>
-In-Reply-To: <CAKXuJqhWn8bcG3x-xvyJ5-1kGXBVqCEuG31aHNidCqKA81NSqQ@mail.gmail.com>
-From:   Steev Klimaszewski <steev@kali.org>
-Date:   Wed, 10 Aug 2022 23:36:13 -0500
-Message-ID: <CAKXuJqiTQxwBdT+ZDkOuRy3+s+XTjWevJr=7+wZN7HKsy6EGbA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] drm/msm/dpu: Introduce SC8280XP
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v2 4/5] firmware: qcom: scm: Add wait-queue helper
+ functions
+Content-Language: en-US
+To:     Guru Das Srinagesh <quic_gurus@quicinc.com>
+CC:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "David Heidelberg" <david@ixit.cz>,
+        Robert Marko <robimarko@gmail.com>,
+        "Elliot Berman" <quic_eberman@quicinc.com>
+References: <1658529438-9234-1-git-send-email-quic_gurus@quicinc.com>
+ <1658529438-9234-5-git-send-email-quic_gurus@quicinc.com>
+ <1f284b9c-257b-a127-55c0-e6cc8c07a9eb@quicinc.com>
+ <20220811030022.GA18104@quicinc.com>
+From:   Rajendra Nayak <quic_rjendra@quicinc.com>
+In-Reply-To: <20220811030022.GA18104@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: d3pspb0udKWEJJy4XUg4zyLZopqT6m1u
+X-Proofpoint-ORIG-GUID: d3pspb0udKWEJJy4XUg4zyLZopqT6m1u
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-11_03,2022-08-10_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ lowpriorityscore=0 suspectscore=0 spamscore=0 phishscore=0 mlxlogscore=491
+ clxscore=1011 malwarescore=0 bulkscore=0 adultscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2207270000
+ definitions=main-2208110015
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,77 +92,111 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 10, 2022 at 11:28 PM Steev Klimaszewski <steev@kali.org> wrote:
->
-> Hi Bjorn,
->
->
-> On Wed, Aug 10, 2022 at 10:58 PM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > The Qualcomm SC8280XP platform contains DPU version 8.0.0, has 9
-> > interfaces, 2 DSI controllers and 4 DisplayPort controllers. Extend the
-> > necessary definitions and describe the DPU in the SC8280XP.
-> >
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> >
-> > Note that MSM_DP_CONTROLLER_3 is also defined in the DP series and as such a
-> > trivial conflict will occur when merging the latter of the two series.
-> >
-> >  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 211 ++++++++++++++++++
-> >  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   1 +
-> >  .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c |  18 ++
-> >  .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |   3 +
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |   2 +
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   1 +
-> >  drivers/gpu/drm/msm/msm_drv.h                 |   1 +
-> >  drivers/gpu/drm/msm/msm_mdss.c                |   2 +
-> >  8 files changed, 239 insertions(+)
-> >
-> <snip>
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> > index b3689a2d27d7..5978c6e26a1e 100644
-> > --- a/drivers/gpu/drm/msm/msm_drv.h
-> > +++ b/drivers/gpu/drm/msm/msm_drv.h
-> > @@ -55,6 +55,7 @@ enum msm_dp_controller {
-> >         MSM_DP_CONTROLLER_0,
-> >         MSM_DP_CONTROLLER_1,
-> >         MSM_DP_CONTROLLER_2,
-> > +       MSM_DP_CONTROLLER_3,
-> >         MSM_DP_CONTROLLER_COUNT,
-> >  };
-> >
-> This seems to also be part of
-> https://lore.kernel.org/r/20220810040745.3582985-6-bjorn.andersson@linaro.org
-> (but only th msm_drv.h hunk
-Sorry, wrong copy buffer - it's part of this patchset -
-https://lore.kernel.org/all/20220810035013.3582848-4-bjorn.andersson@linaro.org/
 
->
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-> > index e13c5c12b775..7c391fab6263 100644
-> > --- a/drivers/gpu/drm/msm/msm_mdss.c
-> > +++ b/drivers/gpu/drm/msm/msm_mdss.c
-> > @@ -208,6 +208,7 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
-> >                 writel_relaxed(0x420, msm_mdss->mmio + UBWC_STATIC);
-> >                 break;
-> >         case DPU_HW_VER_600:
-> > +       case DPU_HW_VER_800:
-> >                 /* TODO: 0x102e for LP_DDR4 */
-> >                 writel_relaxed(0x103e, msm_mdss->mmio + UBWC_STATIC);
-> >                 writel_relaxed(2, msm_mdss->mmio + UBWC_CTRL_2);
-> > @@ -445,6 +446,7 @@ static const struct of_device_id mdss_dt_match[] = {
-> >         { .compatible = "qcom,sc7180-mdss" },
-> >         { .compatible = "qcom,sc7280-mdss" },
-> >         { .compatible = "qcom,sc8180x-mdss" },
-> > +       { .compatible = "qcom,sc8280xp-mdss" },
-> >         { .compatible = "qcom,sm8150-mdss" },
-> >         { .compatible = "qcom,sm8250-mdss" },
-> >         {}
-> > --
-> > 2.35.1
-> >
-> -- steev
+On 8/11/2022 8:30 AM, Guru Das Srinagesh wrote:
+> Hey Rajendra,
+> 
+> Sorry for the delay in response. Needed to clarify with internal team members
+
+no worries,
+
+> on these questions before responding.
+> 
+> On Aug 02 2022 17:07, Rajendra Nayak wrote:
+>>
+>> On 7/23/2022 4:07 AM, Guru Das Srinagesh wrote:
+>>> When the firmware (FW) supports multiple requests per VM, and the VM
+>>> also supports it via the `allow-multi-call` device tree flag, the
+>>> floodgates are thrown open for them to all reach the firmware at the
+>>> same time.
+> 
+> [...]
+> 
+>>>    2) SCM_WAITQ_WAKE:
+>>>
+>>>    	When an SCM call receives this return value instead of success
+>>>    	or error, FW wishes to signal HLOS to wake up a (different)
+>>>    	previously sleeping call.
+>>>
+>>>    	FW tells HLOS which call to wake up via the additional return
+>>>    	values `wq_ctx`, `smc_call_ctx` and `flags`. The first two have
+>>>    	already been explained above.
+>>>
+>>>    	`flags` can be either WAKE_ONE or WAKE_ALL. Meaning, wake either
+>>>    	one, or all, of the SCM calls that HLOS is associating with the
+>>>    	given `wq_ctx`.
+>>>
+>>> A sleeping SCM call can be woken up by either an interrupt that FW
+>>> raises, or via a SCM_WAITQ_WAKE return value for a new SCM call.
+>>
+>> Do you know why the FW was not designed to always use an interrupt?
+>> That would have made the handling of this in kernel a lot less complicated.
+> 
+> Because:
+> 
+> 1. Our firmware in TrustZone cannot raise interrupts on its own - it needs the
+> hypervisor to do that.
+> 
+> 2. Thus, in platforms where there is no hypervisor, there is no interrupt
+> possible - only SMC_WAITQ_WAKE.
+> 
+> Therefore, relying only on an interrupt would render the driver unable to
+> support platforms without a hypervisor, which we didn't want to do.
+
+Thanks Guru for the clarification, however what problem are we really solving
+with this on platforms _without_ a hypervisor?
+
+Your cover letter said
+'The problem this feature is fixing is as follows. In a scenario where there is
+a VM in addition to HLOS (and an underlying hypervisor):'
+
+So I assumed this was primarily for platforms _with_ a VM/Hypervisor?
+
+I understand that even with just the HLOS and no VM, if we can get these requests
+processed concurrently it still adds value, but eventually Trustzone will
+still process these requests sequentially right?
+
+>>> The handshake mechanism that HLOS uses to talk to FW about wait-queue
+>>> operations involves three new SMC calls. These are:
+>>>
+> 
+> [...]
+> 
+>>> +static void scm_irq_work(struct work_struct *work)
+>>> +{
+>>> +	int ret;
+>>> +	u32 wq_ctx, flags, more_pending = 0;
+>>> +	struct completion *wq_to_wake;
+>>> +	struct qcom_scm_waitq *w = container_of(work, struct qcom_scm_waitq, scm_irq_work);
+>>> +	struct qcom_scm *scm = container_of(w, struct qcom_scm, waitq);
+>>> +
+>>> +	do {
+>>> +		ret = scm_get_wq_ctx(&wq_ctx, &flags, &more_pending);
+>>> +		if (ret) {
+>>> +			pr_err("GET_WQ_CTX SMC call failed: %d\n", ret);
+>>> +			return;
+>>> +		}
+>>> +
+>>> +		wq_to_wake = qcom_scm_lookup_wq(scm, wq_ctx);
+>>> +		if (IS_ERR_OR_NULL(wq_to_wake)) {
+>>> +			pr_err("No waitqueue found for wq_ctx %d: %ld\n",
+>>> +					wq_ctx, PTR_ERR(wq_to_wake));
+>>> +			return;
+>>
+>> What happens if at this point 'more_pending' was true? will the FW raise
+>> another interrupt?
+> 
+> Hmm. At this point, the interrupt handler is early-exiting without waking up a
+> sleeping call via the flag_handler() because firmware has goofed up and given
+> it an invalid wq_ctx. We have bigger problems than `more_pending` being true.
+> 
+>>
+>>> +		}
+>>> +
+>>> +		scm_waitq_flag_handler(wq_to_wake, flags);
+>>> +	} while (more_pending);
+>>> +}
+> 
+> Thank you.
+> 
+> Guru Das.
