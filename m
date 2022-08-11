@@ -2,81 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DFC2F58F957
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 10:44:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 961D858F9BE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 11:08:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234662AbiHKIn5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Aug 2022 04:43:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49014 "EHLO
+        id S234471AbiHKJIt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Aug 2022 05:08:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234667AbiHKIn4 (ORCPT
+        with ESMTP id S234078AbiHKJIs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Aug 2022 04:43:56 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8165D90C73
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Aug 2022 01:43:44 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id f20so24600574lfc.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Aug 2022 01:43:44 -0700 (PDT)
+        Thu, 11 Aug 2022 05:08:48 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1729F8E9B6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Aug 2022 02:08:47 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id j3so11492635ljo.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Aug 2022 02:08:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=ooM7y6v9J6zgXgg6OqlmVWX6M0IPHPI6lI2ab0c9pDA=;
-        b=d4tvCxgrvq0CXKar5cnmPvhPR5M9QrNQCbiuAr0vViRXBOQvDWi5Hgfk45hiB7Sh3+
-         YDNN5v4Qw/iogPERl3ywwvSQaR/jBFtNNKUujqIGW/q7jBrvLhSYK1xa83prb9SC5khx
-         UQNcQWM5cAXyS3nX93hC2PSqhNma4LrF9szVkjQKzYwGvM3OrBaJIDrWTzV9LpghS3E6
-         b1B9M7lyGXZBd5sljALlvj0Pq+XgKZMqqkHpUQ0gQMbcLmYKyovpg5fc7knns2nOTnoq
-         d4IDsNbw7M8rOnGMSOHtHh+ozfYAoKLcZ3L3zRaAPNh2JKb8g5cYsgIxkP+S29uyZId8
-         OmEg==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=8aSxfgZmzS7jY0Wm/91weUN86D1g6cOcN/ECGe85/Mw=;
+        b=VJi6eQu2X/Hg0BkM8imHTSLscImoh2e6jRLRcfHyZx8Ws7DKUpfQWbcjDsaYVkxBwZ
+         DEhyAI27+iFIF2Y48nNZJryt+F335Ec2ANB9KJJ3ciqTDJv6vhDfktuGXPQ2piZOjZEP
+         ezsMy3XHN5iSIyDfrY4XjZGyycovioa8mdhHum7VnUvDcdvAOdqJxfUooZlZh7/ZLKbV
+         pk/TBXSfqUya963g/la+KLxWg1ngdoBcFQtC35RHfokFBr+NL3vmXkcHvI4pi8TAKZFN
+         dOw+LqpH/r7bjq5PuiwBS5Ymeyvm9ed98Z0Lv3+GdX/ZA6Qd5B9Z7sZYpZ09Jjm70aKh
+         8QOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=ooM7y6v9J6zgXgg6OqlmVWX6M0IPHPI6lI2ab0c9pDA=;
-        b=weEYngev9cYLAsKCVWI7FJLrbsCXUgB70SvLxkXMV23vrM1/EafOlqCBQaAG4vdnQJ
-         Vpe/IhQ/rXq9g3RhSN/jhZWLYaHyir82Sknj+1acNUBGGHU2rN/TvY9CKNS+1JUv+4cj
-         3J1mJP6X6eAsrVKLIxRP+A0TngxIggFCdczPtdemxv1ohIfhVvrUGeYYMuQweOIzeDXB
-         SqiJ3+kjZMz8XEckDac0oIbPXzbz9PhT8uhWPMLFs8FSI0vEhAz0jNjTC4QEKnHRCQmo
-         hFvhf9ti6eG3yxGQ98rYR9zRLZI5gR9n/NWV9isE45+Ih9NQwdggqTNJ+lD5JvkQ/JkR
-         Ui2A==
-X-Gm-Message-State: ACgBeo20FmBQHSsN/KR9bldwWJHXh25G/9uv8bZZq6eqRgtKMPgOk1vW
-        6pvUICEDDj/AYoD9Gk+qsk07QQ==
-X-Google-Smtp-Source: AA6agR5mO3DiFZ3t4Lgk1NnmeQ8cSRVtzF9qwzrrk5oLi5kRvefXVkYodaLJf5t1o/M2ohExFwDVIA==
-X-Received: by 2002:a05:6512:108f:b0:48b:a169:d291 with SMTP id j15-20020a056512108f00b0048ba169d291mr8339394lfg.198.1660207422686;
-        Thu, 11 Aug 2022 01:43:42 -0700 (PDT)
-Received: from localhost.localdomain ([83.146.140.105])
-        by smtp.gmail.com with ESMTPSA id f4-20020a056512360400b0048af379957asm631077lfs.72.2022.08.11.01.43.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Aug 2022 01:43:42 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Del Regno <angelogioacchino.delregno@somainline.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 5/5] dt-bindings: display/msm: dpu-sdm845: add missing DPU opp-table
-Date:   Thu, 11 Aug 2022 11:43:31 +0300
-Message-Id: <20220811084331.83715-6-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220811084331.83715-1-krzysztof.kozlowski@linaro.org>
-References: <20220811084331.83715-1-krzysztof.kozlowski@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=8aSxfgZmzS7jY0Wm/91weUN86D1g6cOcN/ECGe85/Mw=;
+        b=C5Vg7A4k0CoYIEoMh5WLrELD2SDmzCSwTvqPXVcxBc9BbLjB8ksCPKoDNRv4r4Xklp
+         0FsRw5EBPZaZzXVGoBFhKSl3YAboNcQ13P6Ykrj5QgDOpK5CKFJoOuDt5pNSg5o2kAPv
+         xK/pn9X5xhaeSczgStwDJ3pvsq7mprlbknflLNePouDgW+mBpOHJ28033Pa+lkfmO2ly
+         Rg7TNbTnEfJwTZNrjppFCYdbivBdyBwoG48dDeAcXaUXZmtUA6J3a/1sCWAPClu0txUR
+         4SEqYtgbSzT8rtSp8WKirPJur+K3630U3KdTBoTnZUVWD89IMN9TGZJglpoAs2QnnyGx
+         BGMQ==
+X-Gm-Message-State: ACgBeo17te6DgFEZtecUIp5PGxd2NjDkGJUKCYymWEpNKd7q9dT673U5
+        JV6KvHLeEc5kYqgUI+Om84vD+w==
+X-Google-Smtp-Source: AA6agR63X2/DgUWMlPAH/IH8NaEBpjkuL0URYpm8GnHi1XArMqSkvElKF31N5dtQhFvHz3JN7oLraQ==
+X-Received: by 2002:a2e:a593:0:b0:25f:e6ac:c28e with SMTP id m19-20020a2ea593000000b0025fe6acc28emr5496200ljp.485.1660208925348;
+        Thu, 11 Aug 2022 02:08:45 -0700 (PDT)
+Received: from [192.168.1.39] ([83.146.140.105])
+        by smtp.gmail.com with ESMTPSA id u5-20020ac25185000000b0048b3768d2ecsm634751lfi.174.2022.08.11.02.08.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 Aug 2022 02:08:44 -0700 (PDT)
+Message-ID: <38ef15b3-382c-12b2-0a34-900208ac3638@linaro.org>
+Date:   Thu, 11 Aug 2022 12:08:43 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH 1/2] dt-bindings: clock: Add Qualcomm SC8280XP display
+ clock bindings
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220811041211.3825786-1-bjorn.andersson@linaro.org>
+ <20220811041211.3825786-2-bjorn.andersson@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220811041211.3825786-2-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,44 +83,96 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The 'display-controller' child (DPU) of Display SubSystem (MDSS) uses
-opp-table, so reference it which allows restricting DPU schema to fixed
-list of properties.
+On 11/08/2022 07:12, Bjorn Andersson wrote:
+> The Qualcomm SC8280XP platform has two display clock controllers, add a
+> binding for these.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  .../bindings/clock/qcom,dispcc-sc8280xp.yaml  |  98 +++++++++++++++++
+>  .../dt-bindings/clock/qcom,dispcc-sc8280xp.h  | 100 ++++++++++++++++++
+>  2 files changed, 198 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,dispcc-sc8280xp.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,dispcc-sc8280xp.h
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sc8280xp.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sc8280xp.yaml
+> new file mode 100644
+> index 000000000000..98e5dfd53f76
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sc8280xp.yaml
+> @@ -0,0 +1,98 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,dispcc-sc8280xp.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Display Clock & Reset Controller Binding for SC8280XP
+> +
+> +maintainers:
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> +
+> +description: |
+> +  Qualcomm display clock control module which supports the clocks, resets and
+> +  power domains for the two MDSS instances on SC8280XP.
+> +
+> +  See also:
+> +    include/dt-bindings/clock/qcom,dispcc-sc8280xp.h
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,sc8280x-dispcc0
+> +      - qcom,sc8280x-dispcc1
 
-Fixes: 3d7a0dd8f39b ("dt-bindings: msm: disp: add yaml schemas for DPU bindings")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+These are two independent and different devices, right? Driver seems to
+confirm this which would justify using indexes in compatible.
 
----
+> +
+> +  clocks:
+> +    items:
+> +      - description: AHB interface clock,
+> +      - description: SoC CXO clock
+> +      - description: SoC sleep clock
+> +      - description: DisplayPort 0 link clock
+> +      - description: DisplayPort 0 VCO div clock
+> +      - description: DisplayPort 1 link clock
+> +      - description: DisplayPort 1 VCO div clock
+> +      - description: DisplayPort 2 link clock
+> +      - description: DisplayPort 2 VCO div clock
+> +      - description: DisplayPort 3 link clock
+> +      - description: DisplayPort 3 VCO div clock
+> +      - description: DSI 0 PLL byte clock
+> +      - description: DSI 0 PLL DSI clock
+> +      - description: DSI 1 PLL byte clock
+> +      - description: DSI 1 PLL DSI clock
+> +
+> +  '#clock-cells':
+> +    const: 1
+> +
+> +  '#reset-cells':
+> +    const: 1
+> +
+> +  '#power-domain-cells':
+> +    const: 1
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  power-domains:
+> +    description:
+> +      A phandle and PM domain specifier for the MMCX power domain.
+> +    maxItems: 1
 
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
----
- Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml | 3 +++
- 1 file changed, 3 insertions(+)
+Three lines can be shorter:
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
-index 2bb8896beffc..aa99201dae3f 100644
---- a/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
-@@ -65,6 +65,7 @@ patternProperties:
-   "^display-controller@[0-9a-f]+$":
-     type: object
-     description: Node containing the properties of DPU.
-+    additionalProperties: false
- 
-     properties:
-       compatible:
-@@ -102,6 +103,8 @@ patternProperties:
-         maxItems: 1
- 
-       operating-points-v2: true
-+      opp-table: true
-+
-       ports:
-         $ref: /schemas/graph.yaml#/properties/ports
-         description: |
--- 
-2.34.1
+items:
+ - description: MMCX power domain
 
+With above:
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+
+Best regards,
+Krzysztof
