@@ -2,43 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 63781590842
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 23:47:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57D18590866
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 23:57:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235075AbiHKVrG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Aug 2022 17:47:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54334 "EHLO
+        id S236169AbiHKV4I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Aug 2022 17:56:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234651AbiHKVrF (ORCPT
+        with ESMTP id S236086AbiHKV4E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Aug 2022 17:47:05 -0400
+        Thu, 11 Aug 2022 17:56:04 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06FCD9F0FD;
-        Thu, 11 Aug 2022 14:47:05 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27BLKChi023450;
-        Thu, 11 Aug 2022 21:46:58 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D34B67CBF;
+        Thu, 11 Aug 2022 14:56:03 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27BLkYSm017425;
+        Thu, 11 Aug 2022 21:55:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
  subject : date : message-id : in-reply-to : references : mime-version :
  content-transfer-encoding : content-type; s=qcppdkim1;
- bh=Bt5IKdc6sx9DBbknsrYGhPOTLdiZ/BkfArAJmWOfag8=;
- b=gA15n7JLcWD2gzLgZVZqdgrF4fKQW6QbgT2l5hSeU0yDrh1tnO8hFrhhfHupxsCn0PmA
- T6UVWedmiTm/wAxkHNjn21FRMgKNvgoR/28SHlvUT01KO0yOOqE8E9MDngizQtGpo0o3
- u1FCDVGEXpMxvPBlDSv/TxaE4SmQ2adrbO/d2MQOMp0F4zRps8QWhS8sXYjILgtYsi4O
- PZNYtnPRH32c+DBPnexr8JymI0gQ5ZlIfbt+KR/OEbkaz5UF1J+sWCx4eJ5zx8iPvful
- +lQ3h95DiUNAIPPEoV4V56Rw2N6Rrx0Nbz6fJTJQ0syr5Kt3Gga9AIFlDqMZUHPWqyQb VA== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3huwqg7px2-1
+ bh=o32zkpwWp2BJgilgcohYN9jdVJI5EyHrbrja1y46rII=;
+ b=L89/jB7iMggjOdpPzsFuSbsnir/rN7KauAfCr/r+BkmW5pXvfG3dbVw9kiUiVqlgT+H7
+ hjx8s8ubWKc7UquxaT3Y5l4GJ+r2vs9B4qamg3aOTjXXEZTJ5CIj7GklIZKa3tnCmZ7D
+ 8Dy4lOn7dK5C0abWAeqpXlgLt+Q3RDYtgCb0ZN8nA7ivo3QS+dDhARsCFU+woaIDwgvk
+ V72p2knWMQVMwEejJln/JNM1f3KZonLfcue4wfH+NXTfPwqtsoz7R5H7ytKRmoHzKine
+ orLQbbxzW+Tkk6lXD6U+o4Uf0DwKeKPQ+y1a1HRHm1NQ8y4VuKGqfIwpuR1mtpn2JL/+ AA== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3hv95ywwyv-2
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 11 Aug 2022 21:46:58 +0000
+        Thu, 11 Aug 2022 21:55:55 +0000
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27BLfv5x011405
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27BLfxwD018010
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 11 Aug 2022 21:41:57 GMT
+        Thu, 11 Aug 2022 21:41:59 GMT
 Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
  nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 11 Aug 2022 14:41:56 -0700
+ 15.2.986.22; Thu, 11 Aug 2022 14:41:57 -0700
 From:   Elliot Berman <quic_eberman@quicinc.com>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 CC:     Elliot Berman <quic_eberman@quicinc.com>,
@@ -59,9 +59,9 @@ CC:     Elliot Berman <quic_eberman@quicinc.com>,
         Catalin Marinas <catalin.marinas@arm.com>,
         <devicetree@vger.kernel.org>, <linux-doc@vger.kernel.org>,
         <linux-arm-msm@vger.kernel.org>
-Subject: [PATCH v3 04/12] gunyah: Common types and error codes for Gunyah hypercalls
-Date:   Thu, 11 Aug 2022 14:40:59 -0700
-Message-ID: <20220811214107.1074343-5-quic_eberman@quicinc.com>
+Subject: [PATCH v3 06/12] virt: gunyah: Add sysfs nodes
+Date:   Thu, 11 Aug 2022 14:41:01 -0700
+Message-ID: <20220811214107.1074343-7-quic_eberman@quicinc.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20220811214107.1074343-1-quic_eberman@quicinc.com>
 References: <20220811214107.1074343-1-quic_eberman@quicinc.com>
@@ -73,16 +73,16 @@ X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: tLidNcqCe3Zpd0XiMVg4cGGuYHDza88Z
-X-Proofpoint-GUID: tLidNcqCe3Zpd0XiMVg4cGGuYHDza88Z
+X-Proofpoint-ORIG-GUID: ICSVZdz8PXV-Pzra8Pl6HqA7xOWDyZcn
+X-Proofpoint-GUID: ICSVZdz8PXV-Pzra8Pl6HqA7xOWDyZcn
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
  definitions=2022-08-11_13,2022-08-11_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
- phishscore=0 priorityscore=1501 mlxscore=0 spamscore=0 mlxlogscore=895
- malwarescore=0 adultscore=0 impostorscore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2208110065
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ malwarescore=0 clxscore=1015 adultscore=0 bulkscore=0 impostorscore=0
+ suspectscore=0 mlxlogscore=999 priorityscore=1501 spamscore=0 mlxscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2208110066
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
@@ -93,108 +93,175 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add architecture-independent standard error codes, types, and macros for
-Gunyah hypercalls.
+Add /sys/hypervisor support when detecting that Linux is running in a
+Gunyah environment. Export the version of Gunyah which is reported via
+the hyp_identify hypercall.
 
 Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 ---
- MAINTAINERS                  |  1 +
- include/asm-generic/gunyah.h | 74 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 75 insertions(+)
- create mode 100644 include/asm-generic/gunyah.h
+ .../ABI/testing/sysfs-hypervisor-gunyah       | 23 +++++
+ MAINTAINERS                                   |  1 +
+ drivers/virt/Makefile                         |  1 +
+ drivers/virt/gunyah/Makefile                  |  2 +
+ drivers/virt/gunyah/sysfs.c                   | 87 +++++++++++++++++++
+ 5 files changed, 114 insertions(+)
+ create mode 100644 Documentation/ABI/testing/sysfs-hypervisor-gunyah
+ create mode 100644 drivers/virt/gunyah/Makefile
+ create mode 100644 drivers/virt/gunyah/sysfs.c
 
+diff --git a/Documentation/ABI/testing/sysfs-hypervisor-gunyah b/Documentation/ABI/testing/sysfs-hypervisor-gunyah
+new file mode 100644
+index 000000000000..219465783a9e
+--- /dev/null
++++ b/Documentation/ABI/testing/sysfs-hypervisor-gunyah
+@@ -0,0 +1,23 @@
++What:		/sys/hypervisor/type
++Date:		August 2022
++KernelVersion:	6.0
++Contact:	linux-arm-msm@vger.kernel.org
++Description:	If running under Gunyah:
++		Type of hypervisor:
++		"gunyah": Gunyah hypervisor
++
++What:		/sys/hypervisor/gunyah/api
++Date:		August 2022
++KernelVersion:	6.0
++Contact:	linux-arm-msm@vger.kernel.org
++Description:	If running under Gunyah:
++		The Gunyah API version.
++
++What:		/sys/hypervisor/gunyah/variant
++Date:		August 2022
++KernelVersion:	6.0
++Contact:	linux-arm-msm@vger.kernel.org
++Description:	If running under Gunyah:
++		The Gunyah variant (build) version.
++		The open source build of Gunyah will report "81".
++		The Qualcomm build of Gunyah will report "72".
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 77bb7833d561..14030c8ffe8a 100644
+index f5d5ebb62701..c774bbcdb348 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -8741,6 +8741,7 @@ L:	linux-arm-msm@vger.kernel.org
+@@ -8739,6 +8739,7 @@ M:	Elliot Berman <quic_eberman@quicinc.com>
+ M:	Murali Nalajala <quic_mnalajal@quicinc.com>
+ L:	linux-arm-msm@vger.kernel.org
  S:	Supported
++F:	Documentation/ABI/testing/sysfs-hypervisor-gunyah
  F:	Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
  F:	Documentation/virt/gunyah/
-+F:	include/asm-generic/gunyah.h
+ F:	arch/arm64/gunyah/
+diff --git a/drivers/virt/Makefile b/drivers/virt/Makefile
+index 093674e05c40..5cd759f60122 100644
+--- a/drivers/virt/Makefile
++++ b/drivers/virt/Makefile
+@@ -9,5 +9,6 @@ obj-y				+= vboxguest/
  
- HABANALABS PCI DRIVER
- M:	Oded Gabbay <ogabbay@kernel.org>
-diff --git a/include/asm-generic/gunyah.h b/include/asm-generic/gunyah.h
+ obj-$(CONFIG_NITRO_ENCLAVES)	+= nitro_enclaves/
+ obj-$(CONFIG_ACRN_HSM)		+= acrn/
++obj-$(CONFIG_GUNYAH)		+= gunyah/
+ obj-$(CONFIG_EFI_SECRET)	+= coco/efi_secret/
+ obj-$(CONFIG_SEV_GUEST)		+= coco/sev-guest/
+diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
 new file mode 100644
-index 000000000000..64a02dd3b5ad
+index 000000000000..e15f16c17142
 --- /dev/null
-+++ b/include/asm-generic/gunyah.h
-@@ -0,0 +1,74 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
++++ b/drivers/virt/gunyah/Makefile
+@@ -0,0 +1,2 @@
++gunyah-y += sysfs.o
++obj-$(CONFIG_GUNYAH) += gunyah.o
+diff --git a/drivers/virt/gunyah/sysfs.c b/drivers/virt/gunyah/sysfs.c
+new file mode 100644
+index 000000000000..9de700fdbfcb
+--- /dev/null
++++ b/drivers/virt/gunyah/sysfs.c
+@@ -0,0 +1,87 @@
++// SPDX-License-Identifier: GPL-2.0-only
 +/*
 + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
 + */
 +
-+#ifndef _ASM_GUNYAH_H
-+#define _ASM_GUNYAH_H
++#define pr_fmt(fmt) "gunyah: " fmt
 +
-+#include <linux/types.h>
-+#include <linux/errno.h>
++#include <linux/kobject.h>
++#include <linux/module.h>
++#include <linux/printk.h>
++#include <linux/init.h>
++#include <asm-generic/gunyah.h>
 +
-+/* Common Gunyah macros */
-+#define GH_CAPID_INVAL	U64_MAX
-+#define GH_VMID_ROOT_VM	0xff
++static struct gh_hypercall_hyp_identify_resp gunyah_api;
 +
-+#define GH_ERROR_OK			0
-+
-+#define GH_ERROR_UNIMPLEMENTED		-1
-+#define GH_ERROR_RETRY			-2
-+
-+#define GH_ERROR_ARG_INVAL		1
-+#define GH_ERROR_ARG_SIZE		2
-+#define GH_ERROR_ARG_ALIGN		3
-+
-+#define GH_ERROR_NOMEM			10
-+
-+#define GH_ERROR_ADDR_OVFL		20
-+#define GH_ERROR_ADDR_UNFL		21
-+#define GH_ERROR_ADDR_INVAL		22
-+
-+#define GH_ERROR_DENIED			30
-+#define GH_ERROR_BUSY			31
-+#define GH_ERROR_IDLE			32
-+
-+#define GH_ERROR_IRQ_BOUND		40
-+#define GH_ERROR_IRQ_UNBOUND		41
-+
-+#define GH_ERROR_CSPACE_CAP_NULL	50
-+#define GH_ERROR_CSPACE_CAP_REVOKED	51
-+#define GH_ERROR_CSPACE_WRONG_OBJ_TYPE	52
-+#define GH_ERROR_CSPACE_INSUF_RIGHTS	53
-+#define GH_ERROR_CSPACE_FULL		54
-+
-+#define GH_ERROR_MSGQUEUE_EMPTY		60
-+#define GH_ERROR_MSGQUEUE_FULL		61
-+
-+static inline int gh_remap_error(int gh_error)
++static ssize_t type_show(struct kobject *kobj, struct kobj_attribute *attr, char *buffer)
 +{
-+	switch (gh_error) {
-+	case GH_ERROR_OK:
-+		return 0;
-+	case GH_ERROR_NOMEM:
-+		return -ENOMEM;
-+	case GH_ERROR_DENIED:
-+	case GH_ERROR_CSPACE_CAP_NULL:
-+	case GH_ERROR_CSPACE_CAP_REVOKED:
-+	case GH_ERROR_CSPACE_WRONG_OBJ_TYPE:
-+	case GH_ERROR_CSPACE_INSUF_RIGHTS:
-+	case GH_ERROR_CSPACE_FULL:
-+		return -EACCES;
-+	case GH_ERROR_BUSY:
-+	case GH_ERROR_IDLE:
-+		return -EBUSY;
-+	case GH_ERROR_IRQ_BOUND:
-+	case GH_ERROR_IRQ_UNBOUND:
-+	case GH_ERROR_MSGQUEUE_FULL:
-+	case GH_ERROR_MSGQUEUE_EMPTY:
-+		return -EPERM;
-+	default:
-+		return -EINVAL;
-+	}
++	return sysfs_emit(buffer, "gunyah\n");
 +}
++static struct kobj_attribute type_attr = __ATTR_RO(type);
 +
-+#endif
++static ssize_t api_show(struct kobject *kobj, struct kobj_attribute *attr, char *buffer)
++{
++	return sysfs_emit(buffer, "%d\n", (int)GH_API_INFO_API_VERSION(gunyah_api.api_info));
++}
++static struct kobj_attribute api_attr = __ATTR_RO(api);
++
++static ssize_t variant_show(struct kobject *kobj, struct kobj_attribute *attr, char *buffer)
++{
++	return sysfs_emit(buffer, "%d\n", (int)GH_API_INFO_VARIANT(gunyah_api.api_info));
++}
++static struct kobj_attribute variant_attr = __ATTR_RO(variant);
++
++static struct attribute *gunyah_attrs[] = {
++	&api_attr.attr,
++	&variant_attr.attr,
++	NULL
++};
++
++static const struct attribute_group gunyah_group = {
++	.name = "gunyah",
++	.attrs = gunyah_attrs,
++};
++
++static int __init gunyah_init(void)
++{
++	int ret;
++	u32 uid[4];
++
++	gh_hypercall_get_uid(uid);
++
++	if (!(gh_uid_matches(GUNYAH, uid) || gh_uid_matches(QC_HYP, uid)))
++		return 0;
++
++	gh_hypercall_hyp_identify(&gunyah_api);
++
++	if (GH_API_INFO_API_VERSION(gunyah_api.api_info) != 1) {
++		pr_warn("Unrecognized gunyah version: %llu. Currently supported: 1\n",
++			GH_API_INFO_API_VERSION(gunyah_api.api_info));
++		return 0;
++	}
++
++	pr_notice("Running under Gunyah hypervisor %llx/v%lld\n",
++		  GH_API_INFO_VARIANT(gunyah_api.api_info),
++		  GH_API_INFO_API_VERSION(gunyah_api.api_info));
++
++	ret = sysfs_create_file(hypervisor_kobj, &type_attr.attr);
++	if (ret)
++		return ret;
++
++	ret = sysfs_create_group(hypervisor_kobj, &gunyah_group);
++	if (ret)
++		sysfs_remove_file(hypervisor_kobj, &type_attr.attr);
++
++	return ret;
++}
++module_init(gunyah_init);
++
++static void __exit gunyah_exit(void)
++{
++	sysfs_remove_group(hypervisor_kobj, &gunyah_group);
++	sysfs_remove_file(hypervisor_kobj, &type_attr.attr);
++}
++module_exit(gunyah_exit);
++
++MODULE_LICENSE("GPL");
++MODULE_DESCRIPTION("Gunyah Hypervisor Driver");
 -- 
 2.25.1
 
