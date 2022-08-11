@@ -2,186 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E6E158FB1A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 13:11:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A55358FAE2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Aug 2022 12:48:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233534AbiHKLLB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Aug 2022 07:11:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42670 "EHLO
+        id S234669AbiHKKst (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Aug 2022 06:48:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234705AbiHKLK7 (ORCPT
+        with ESMTP id S234671AbiHKKss (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Aug 2022 07:10:59 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DDDF6D9D2;
-        Thu, 11 Aug 2022 04:10:57 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27B5j6Sw007479;
-        Thu, 11 Aug 2022 11:10:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=2674oZnW8cIAdGGYcRjAh9jRe1rHnEv6Ok9YFjEqHFs=;
- b=ZwZ4Btl5R0j/a+Lm0cbaXYflrYWeMNf2SPeJTEtuqeKo3hsSJssZk4FoQrhcGgbXSr4i
- 4mxaS+w2NyuJFx/D6eFu6hu/QRY/GYPZgKjWnZO4vmEkoFQhD85FITTApRI0gBiTJeVj
- xbx7TFsP+ajKJEYFiGzA7xOLX69xUw/v9cchMWYAGlOmPrYlXKFFsgX7iBnkKeQMsE8I
- zQZHcEbPjx9KPsbBbxwzpKvtoy3bNSMPR4sD+fjb70NpLgMMdphPHhXtb2+f0Eex2/QG
- TLkIW2TIocTI1DjxgvSXHjD2/rwQaZ7AmBKPFHlc/JaCML4GJj1c8qHKbcz6w/mvpK9R Jw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3huwqg5rth-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 11 Aug 2022 11:10:54 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27BAhpQG020277
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 11 Aug 2022 10:43:51 GMT
-Received: from [10.50.48.10] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 11 Aug
- 2022 03:43:47 -0700
-Message-ID: <4f76baa7-afca-b902-a024-c3f916bef753@quicinc.com>
-Date:   Thu, 11 Aug 2022 16:13:43 +0530
+        Thu, 11 Aug 2022 06:48:48 -0400
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42186923F0;
+        Thu, 11 Aug 2022 03:48:47 -0700 (PDT)
+Received: from zn.tnic (p200300ea971b9854329c23fffea6a903.dip0.t-ipconnect.de [IPv6:2003:ea:971b:9854:329c:23ff:fea6:a903])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id A13B31EC058B;
+        Thu, 11 Aug 2022 12:48:41 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+        t=1660214921;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+        bh=Px8FbXoDYvlrBTtaaPsRT4RF6cnPoiy7gTqsL4QIX7E=;
+        b=kH9bQBxOxy4bxtNA71odBU9IxcRDMl2s/wckhf2LEQBSeXK5IYJ+51Aw3iYB5A1Gom/Bo8
+        GndAFPGIN+F0Kw8gMzR/dk1RdApWOLYRz8HyUeHRYJg6gwzIX7Gg2Lf4xvipGnd97GBVKh
+        FzG//ipxAv+8FTC4wE5qvG5A4iWmnUM=
+Date:   Thu, 11 Aug 2022 12:48:37 +0200
+From:   Borislav Petkov <bp@alien8.de>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     bjorn.andersson@linaro.org, ckadabi@quicinc.com,
+        vnkgutta@quicinc.com, mchehab@kernel.org, james.morse@arm.com,
+        rric@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-edac@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Channagoud Kadabi <ckadabi@codeaurora.org>,
+        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>
+Subject: Re: [PATCH 0/2] Fix crash when using Qcom LLCC/EDAC drivers
+Message-ID: <YvTehUOIqJGqXgXY@zn.tnic>
+References: <20220811100924.79505-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH V7 1/5] dt-bindings: clock: Add "qcom,adsp-pil-mode"
- property
-Content-Language: en-US
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     Rob Herring <robh@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-References: <1658910477-6494-1-git-send-email-quic_c_skakit@quicinc.com>
- <1658910477-6494-2-git-send-email-quic_c_skakit@quicinc.com>
- <YvLPdVv2/7pJLeru@baldur>
-From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
-In-Reply-To: <YvLPdVv2/7pJLeru@baldur>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ZZpssgsGpOmnm78PSxYQCioxPMhLVY86
-X-Proofpoint-GUID: ZZpssgsGpOmnm78PSxYQCioxPMhLVY86
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-11_05,2022-08-11_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
- phishscore=0 priorityscore=1501 mlxscore=0 spamscore=0 mlxlogscore=999
- malwarescore=0 adultscore=0 impostorscore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2208110033
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220811100924.79505-1-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Aug 11, 2022 at 03:39:22PM +0530, Manivannan Sadhasivam wrote:
+> Hello,
+> 
+> This series fixes the crash seen on the Qualcomm SM8450 chipset with the
+> LLCC/EDAC drivers. The problem was due to the Qcom EDAC driver using the
+> fixed LLCC register offsets for detecting the LLCC errors.
 
-On 8/10/2022 2:49 AM, Bjorn Andersson wrote:
-> On Wed 27 Jul 03:27 CDT 2022, Satya Priya wrote:
->
->> The LPASS Peripheral loader clocks would be used to bring
->> LPASS out of reset, when this property is present.
->>
-> Can you please elaborate on what you mean here?
->
-> When this property is set you assume that remoteproc is used to boot the
-> LPASS and therefor some clocks should be handled differently?
+I see you've CCed the QCOM maintainers using different email addresses:
 
+$ ./scripts/get_maintainer.pl -f drivers/edac/qcom_edac.c
+Channagoud Kadabi <ckadabi@codeaurora.org> (maintainer:EDAC-QCOM)
+Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org> (maintainer:EDAC-QCOM)
 
-Yes, you are right, I'll add this to the description.
+Does MAINTAINERS need updating?
 
+-- 
+Regards/Gruss,
+    Boris.
 
-> This needs to be written in a way that someone outside of your project
-> can understand the purpose.
->
->> This is a cleanup done to handle overlap of regmap of
->> lpasscc and lpass_aon blocks. As a part of this, remove
->> the "cc" regmap from lpasscc node.
->>
-> "regmap" is an implementation detail, the binding change should describe
-> the changes to the representation of the hardware description.
-
-
-Okay I'll remove the last part from description while re-posting.
-
-
-> Thanks,
-> Bjorn
->
->> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
->> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
->> Reviewed-by: Rob Herring <robh@kernel.org>
->> Reviewed-by: Stephen Boyd <sboyd@kernel.org>
->> ---
->>   Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml   | 6 ++----
->>   .../devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml         | 7 +++++++
->>   2 files changed, 9 insertions(+), 4 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
->> index 47028d7..633887d 100644
->> --- a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
->> +++ b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
->> @@ -36,13 +36,11 @@ properties:
->>       items:
->>         - description: LPASS qdsp6ss register
->>         - description: LPASS top-cc register
->> -      - description: LPASS cc register
->>   
->>     reg-names:
->>       items:
->>         - const: qdsp6ss
->>         - const: top_cc
->> -      - const: cc
->>   
->>   required:
->>     - compatible
->> @@ -59,8 +57,8 @@ examples:
->>       #include <dt-bindings/clock/qcom,lpass-sc7280.h>
->>       clock-controller@3000000 {
->>         compatible = "qcom,sc7280-lpasscc";
->> -      reg = <0x03000000 0x40>, <0x03c04000 0x4>, <0x03389000 0x24>;
->> -      reg-names = "qdsp6ss", "top_cc", "cc";
->> +      reg = <0x03000000 0x40>, <0x03c04000 0x4>;
->> +      reg-names = "qdsp6ss", "top_cc";
->>         clocks = <&gcc GCC_CFG_NOC_LPASS_CLK>;
->>         clock-names = "iface";
->>         #clock-cells = <1>;
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
->> index bad9135..5ccfb24 100644
->> --- a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
->> +++ b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
->> @@ -41,6 +41,12 @@ properties:
->>     reg:
->>       maxItems: 1
->>   
->> +  qcom,adsp-pil-mode:
->> +    description:
->> +      Indicates if the LPASS would be brought out of reset using
->> +      peripheral loader.
->> +    type: boolean
->> +
->>   required:
->>     - compatible
->>     - reg
->> @@ -165,6 +171,7 @@ examples:
->>         clocks = <&rpmhcc RPMH_CXO_CLK>, <&rpmhcc RPMH_CXO_CLK_A>,
->>                  <&lpasscore LPASS_CORE_CC_CORE_CLK>;
->>         clock-names = "bi_tcxo", "bi_tcxo_ao","iface";
->> +      qcom,adsp-pil-mode;
->>         #clock-cells = <1>;
->>         #power-domain-cells = <1>;
->>       };
->> -- 
->> 2.7.4
->>
+https://people.kernel.org/tglx/notes-about-netiquette
