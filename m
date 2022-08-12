@@ -2,141 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 24CD9591436
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Aug 2022 18:49:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CF4E59145D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Aug 2022 18:55:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238908AbiHLQtx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Aug 2022 12:49:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48790 "EHLO
+        id S236257AbiHLQzt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Aug 2022 12:55:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238997AbiHLQtx (ORCPT
+        with ESMTP id S238897AbiHLQzj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Aug 2022 12:49:53 -0400
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8F83B0299
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Aug 2022 09:49:51 -0700 (PDT)
-Received: by mail-pg1-x52b.google.com with SMTP id 12so1259464pga.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Aug 2022 09:49:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc;
-        bh=F1sGXxLyV8yZhMF0HGv63B4Yk94UCJ5cdqcFyQqs35g=;
-        b=YkDXZGhYjBZnCjqw61M71vpc3nq0nvkQJb0J76cx90/JgpLR23cnE+mOIlobD2sTdG
-         bImyhQehYAbZ13F0qBoqKQOFGRfXjrdC/KeHOwDXZN30UWB6Ys+wKyZnhYiKlFOpQykp
-         WG527xZchWivYn1TSSigcpfZnbNwvzuG98kNA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=F1sGXxLyV8yZhMF0HGv63B4Yk94UCJ5cdqcFyQqs35g=;
-        b=RQrqyUJov7JSaK27t23D6nGS1CInmXcyuzPbebWxC7e+ka6jtthOmaUiuJnX2THsbN
-         A6fIocExRg//8SNBZMccqNbitugG3sGuyhdoU1noVO1FKIzrG+w2ccbxVZtgf8VzRWyS
-         A4P+yZWzq6PCQtWK5i1Z1si9LRYNz1I+QeW/MDbHJuv065tQs99vjLdPnGwKvZb4KQh2
-         sojBUUBNmSt9psfa7YUPREGyKL2MMjANs2LL9DPqVRPHJXie1uRQTPeTWSHjlO9ILwWh
-         u/be3esS3y5g+W+MLwUJVh6EM2UyHKkKRMVqpMD1ma7df/5jLKTN7E9Sl+YTcNNPVFPC
-         k21g==
-X-Gm-Message-State: ACgBeo1KZ42z1s1KZ/PRQGMG8FOu3mz0k/RH+wIjo5tGwCHFLwvY07zt
-        blkYKSEJblDiNxU20EGVBXyOjQ==
-X-Google-Smtp-Source: AA6agR4MAaTfR/7slAeE/Q2Qx/bMu0WArrZ6BMSbgPGjQTEQGvF+79EeS8pcgwDHUC52BimkMm0zrw==
-X-Received: by 2002:a65:6384:0:b0:41c:5f9b:881c with SMTP id h4-20020a656384000000b0041c5f9b881cmr3765584pgv.513.1660322991241;
-        Fri, 12 Aug 2022 09:49:51 -0700 (PDT)
-Received: from localhost ([2620:15c:11a:202:a762:bd03:acfc:583b])
-        by smtp.gmail.com with UTF8SMTPSA id s19-20020a170903201300b001712e1ea269sm1966566pla.3.2022.08.12.09.49.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Aug 2022 09:49:50 -0700 (PDT)
-Date:   Fri, 12 Aug 2022 09:49:48 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Luca Weiss <luca.weiss@fairphone.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
+        Fri, 12 Aug 2022 12:55:39 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4050A65654;
+        Fri, 12 Aug 2022 09:55:38 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27C9Co0Y020599;
+        Fri, 12 Aug 2022 16:55:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=t310YLd67tLsjHRetcgbaAikt91hXVDCnh9v5VN5pyA=;
+ b=EtW8+QhwS7dmORe8MNdpTLDpQ4mjbWQp/nRe3nqyhCb0pSiD1lqO4TCMSHepRqo0zFVO
+ uXywomIL0aK4cSTfi2/MN52kF81HuP0dxFbeluETBrwaTbt5zI7NhnZMk13Fbs2dqETt
+ 0Ye0gvsJYsSJwtiAfa5VKq84Ah9wEtJgoggRzx23b3qmq165UiQqzMizgsywo5BAdhz/
+ +8JKVrIpV87gNzIqh/mksbsgQoQKowhBanJmvlcbduJDjqjkoyDd+/GxgUx06A4zqYvG
+ MyEIJERpy01vupdi/cmyHqG9m0Xmc//bgobe50mD5lYfHoKmvvaMDAFGqBWyA4oESheL XA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3hwh7cj522-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 12 Aug 2022 16:55:31 +0000
+Received: from pps.filterd (NALASPPMTA04.qualcomm.com [127.0.0.1])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 27CGtUpT031698;
+        Fri, 12 Aug 2022 16:55:30 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by NALASPPMTA04.qualcomm.com (PPS) with ESMTPS id 3hvd90gwmh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 12 Aug 2022 16:55:30 +0000
+Received: from NALASPPMTA04.qualcomm.com (NALASPPMTA04.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 27CGtTdb031693;
+        Fri, 12 Aug 2022 16:55:29 GMT
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (PPS) with ESMTPS id 27CGtTKR031692
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 12 Aug 2022 16:55:29 +0000
+Received: from hu-ppareek-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 12 Aug 2022 09:55:26 -0700
+From:   Parikshit Pareek <quic_ppareek@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: pm6350: add temp sensor and thermal
- zone config
-Message-ID: <YvaErMmLIQaDolKR@google.com>
-References: <20220812114421.1195044-1-luca.weiss@fairphone.com>
- <81ae6a31-1f37-a677-f8f8-2340e37d3a63@linaro.org>
- <CM43WTWNP8MM.3145TGVN4208B@otso>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Andrew Halaney <ahalaney@redhat.com>,
+        Parikshit Pareek <quic_ppareek@quicinc.com>
+Subject: [PATCH v3 0/3] arm64: dts: qcom: add dts for sa8540p-ride board
+Date:   Fri, 12 Aug 2022 22:24:50 +0530
+Message-ID: <20220812165453.11608-1-quic_ppareek@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CM43WTWNP8MM.3145TGVN4208B@otso>
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: KCpGhEnRDfCja8gnoedMyy_SEU3Q0u5t
+X-Proofpoint-ORIG-GUID: KCpGhEnRDfCja8gnoedMyy_SEU3Q0u5t
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-12_10,2022-08-11_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ priorityscore=1501 impostorscore=0 suspectscore=0 phishscore=0
+ adultscore=0 malwarescore=0 spamscore=0 clxscore=1015 mlxscore=0
+ mlxlogscore=623 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2207270000 definitions=main-2208120045
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 12, 2022 at 04:06:47PM +0200, Luca Weiss wrote:
-> Hi Krzysztof,
-> 
-> +CC Matthias Kaehlcke (author of patch mentioned further below)
-> 
-> On Fri Aug 12, 2022 at 3:36 PM CEST, Krzysztof Kozlowski wrote:
-> > On 12/08/2022 14:44, Luca Weiss wrote:
-> > > Add temp-alarm device tree node and a default configuration for the
-> > > corresponding thermal zone for this PMIC. Temperatures are based on
-> > > downstream values.
-> > > 
-> > > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > > ---
-> > > With this config I'm getting this in dmesg, not sure if it's a warning
-> > > that should be solved or just an informative warning.
-> > > 
-> > > [    0.268256] spmi-temp-alarm c440000.spmi:pmic@0:temp-alarm@2400: No ADC is configured and critical temperature is above the maximum stage 2 threshold of 140 C! Configuring stage 2 shutdown at 140 C.
-> > > 
-> > > As far as I can tell, based on downstream dts this PMIC doesn't have an
-> > > ADC.
+This series introduces the Qualcom sa8540p-ride automotive development
+board, also called as Qdrive-3 board.
 
-I don't seem to have access to the datasheet, in any case that the ADC isn't
-configured in the downstream dts doesn't necessarily mean the PMIC doesn't
-have one. The PM6150 has one, and it is probably relatively close to the
-PM6350.
+Changes in v3:
+ - Added Acked-by tag (Krzysztof)
+ - Renamed dtsi to sa8540p-adp.dtsi (John)
+ - Removed copyright from sa8295-adp.dts and sa8295-adp.dtsi(John)
+ - Added cover letter
 
-> > You configure 145 and driver believes 140 is the limit, so it seems
-> > warning should be addressed.
-> 
-> Hm...
-> 
-> >
-> > From where did you get 145 degrees as limit? Downstream DTS?
-> 
-> Yes, downstream dts[0].
-> 
-> From what I can see in the downstream driver, it always disabled this
-> "software override of stage 2 and 3 shutdowns"[1]
-> 
-> In mainline only since f1599f9e4cd6 ("thermal: qcom-spmi: Use PMIC
-> thermal stage 2 for critical trip points") this check exists, which is
-> not part of downstream (wasn't in 4.19 yet), where this software
-> override tries to get enabled so that thermal core can handle this.
-> 
-> Any suggestion what I can do here? Maybe looking at msm-5.4 sources (and
-> associated dts) might reveal something..?
+Apologies for breaking the thread in previous version(v2).
+References to previous version(v2)  patches:
+ - https://lore.kernel.org/linux-arm-msm/20220722142515.18592-1-quic_ppareek@quicinc.com/
+ - https://lore.kernel.org/linux-arm-msm/20220722143232.7903-1-quic_ppareek@quicinc.com/
+ - https://lore.kernel.org/linux-arm-msm/20220722143711.17563-1-quic_ppareek@quicinc.com/
 
-I wouldn't necessarily consider QC downstream code as a reliable source of
-truth ...
 
-> Maybe newer SoCs/PMICs have a different config?
+Parikshit Pareek (3):
+  dt-bindings: arm: qcom: Document additional sa8540p device
+  arm64: dts: qcom: sa8295p: move common nodes to dtsi
+  arm64: dts: qcom: introduce sa8540p-ride dts
 
-Commit aa92b3310c55 ("thermal/drivers/qcom-spmi-temp-alarm: Add support
-for GEN2 rev 1 PMIC peripherals") added support for gen2 PMICs, which
-actually have lower thresholds than gen1. From the log it seems that the
-PM6350 is identified as gen1 device (max stage 2 threshold = 140 degC).
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/sa8295p-adp.dts      | 377 +----------------
+ arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts |  15 +
+ arch/arm64/boot/dts/qcom/sa8540p-adp.dtsi     | 384 ++++++++++++++++++
+ 5 files changed, 402 insertions(+), 376 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sa8540p-adp.dtsi
 
-It seems setting the limit to 140 degC or one of the other stage 2
-thresholds would be a reasonable course of action. stage 2 is the
-threshold at which the PMIC is so hot that the system should shut
-down, and 140 degC is the highest of the stage 2 thresholds. Even
-if it was possible, what would be gained from setting the trip
-point 5 degC higher?
+-- 
+2.17.1
+
