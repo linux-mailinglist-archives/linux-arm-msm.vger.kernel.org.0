@@ -2,263 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 51906590B93
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Aug 2022 07:40:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 99ECB590B8A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Aug 2022 07:36:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233404AbiHLFkc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Aug 2022 01:40:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46820 "EHLO
+        id S236989AbiHLFf4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Aug 2022 01:35:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231627AbiHLFkb (ORCPT
+        with ESMTP id S236918AbiHLFfs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Aug 2022 01:40:31 -0400
-X-Greylist: delayed 450 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 11 Aug 2022 22:40:30 PDT
-Received: from smtp.smtpout.orange.fr (smtp-21.smtpout.orange.fr [80.12.242.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 940BD5FA4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Aug 2022 22:40:30 -0700 (PDT)
-Received: from [192.168.1.18] ([90.11.190.129])
-        by smtp.orange.fr with ESMTPA
-        id MNHyo5KHrKOP1MNHzoioqr; Fri, 12 Aug 2022 07:32:59 +0200
-X-ME-Helo: [192.168.1.18]
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Fri, 12 Aug 2022 07:32:59 +0200
-X-ME-IP: 90.11.190.129
-Message-ID: <080f3e2b-af7b-0ac0-1716-a33da73290e4@wanadoo.fr>
-Date:   Fri, 12 Aug 2022 07:32:54 +0200
+        Fri, 12 Aug 2022 01:35:48 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44BFE760EB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Aug 2022 22:35:47 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id f28so62484pfk.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Aug 2022 22:35:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc;
+        bh=JGnD3l9t4SkK48ITST5G9Acthlp2sOgptI0b4WEHZr4=;
+        b=HvbTScr18fV1zTYfyM7LcIPhZVpK4f8i4MOC2xIoldmIw9qLjWgrjvzmXHFyREPFLX
+         eCr27APqcbRFW2lMknyaje3WlCld4GgahZYAFFkbHptL0JqXMhHG6hUXupvYk46RCJz+
+         pPyKo6beBZFHgeXPLiElikFL23Pb7hnJwJETEA14sAbfm+ujtgCA/dqU8+keHRsk6yfE
+         XqAUkSzwBdp5cgzlXAEgsS54VBKbZ5gX6MfnXb87d5OirO1Mm55DU+9twmgpMwgOLzIC
+         vgW64hEsEHZFJ7BwKgjQByQp9/EY4gM2pImBDrSKw82tcswI8HaT/qwYnCvHujSOvibT
+         oKPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc;
+        bh=JGnD3l9t4SkK48ITST5G9Acthlp2sOgptI0b4WEHZr4=;
+        b=VlGny35YZNaZovZ0vgMKNvFoCYuwjU2q3SFsCgBiXtZne9+WWK6JMDdEFj16SWYS+7
+         V1/ZthPRDYgBgekhw5Nb0MpPVGDzjHCHRGhSpgGJKNFc33qVFXDmVf5+dirLrik0nPk8
+         FGSpzR5DEUxVJOftyyentyhCeFqFAVLTD563ECMgocF0waS51mJbSGsZObooq2KerBAY
+         D2QLizGf8Q8bN9eY6dL4LC2bxNZpC2/xaPPX6K4lFus85f2jXP76lT2W2TJTsJ8FjpyQ
+         71ijSRdl62zGZ4SPH5Paak23eNgyE4Esy7jbnt/T+qugc6DFCnM2cYegazp2tMxfo64Y
+         9rPw==
+X-Gm-Message-State: ACgBeo1SM9plIqqBzn5cibpDLOr8hP21aQ5I5ZVQ6Tdb/AAV54XkzaEJ
+        f7EfpQptVue/IE4mB5tDtc3S
+X-Google-Smtp-Source: AA6agR6QKykT59/PsxCYm9H7RCEKDXN+emk2X2xl3Y+/vwPcq7Shj96oy/11FSIXJdyQo6aenYxg1g==
+X-Received: by 2002:a05:6a00:1a49:b0:52d:4ad7:3bea with SMTP id h9-20020a056a001a4900b0052d4ad73beamr2168009pfv.66.1660282546657;
+        Thu, 11 Aug 2022 22:35:46 -0700 (PDT)
+Received: from thinkpad ([59.92.103.103])
+        by smtp.gmail.com with ESMTPSA id d7-20020a170903230700b0016efc27ca98sm672477plh.169.2022.08.11.22.35.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Aug 2022 22:35:46 -0700 (PDT)
+Date:   Fri, 12 Aug 2022 11:05:40 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Trilok Soni <quic_tsoni@quicinc.com>
+Cc:     Borislav Petkov <bp@alien8.de>, bjorn.andersson@linaro.org,
+        mchehab@kernel.org, james.morse@arm.com, rric@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-edac@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] Fix crash when using Qcom LLCC/EDAC drivers
+Message-ID: <20220812053540.GA4956@thinkpad>
+References: <20220811100924.79505-1-manivannan.sadhasivam@linaro.org>
+ <YvTehUOIqJGqXgXY@zn.tnic>
+ <YvTfqg0q/8kIMY91@zn.tnic>
+ <20220811112032.GB29799@workstation>
+ <YvTo8tE3DaHifrSp@zn.tnic>
+ <20220811115334.GC29799@workstation>
+ <20220811115711.GD29799@workstation>
+ <343d1491-49a0-ea38-1b65-dc2bdfb4726d@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v3 7/8] remoteproc: qcom: Add support for memory sandbox
-Content-Language: fr
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        linux-remoteproc@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
-        bgoswami@quicinc.com, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, quic_rohkumar@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org,
-        devicetree@vger.kernel.org
-References: <1660117558-21829-1-git-send-email-quic_srivasam@quicinc.com>
- <1660117558-21829-8-git-send-email-quic_srivasam@quicinc.com>
-From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-In-Reply-To: <1660117558-21829-8-git-send-email-quic_srivasam@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+In-Reply-To: <343d1491-49a0-ea38-1b65-dc2bdfb4726d@quicinc.com>
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le 10/08/2022 à 09:45, Srinivasa Rao Mandadapu a écrit :
-> Update pil driver with SMMU mapping for allowing authorised
-> memory access to ADSP firmware, by reading required memory
-> regions either from device tree file or from resource table
-> embedded in ADSP binary header.
+On Thu, Aug 11, 2022 at 09:08:14AM -0700, Trilok Soni wrote:
+> Hello Mani,
+> 
+> On 8/11/2022 4:57 AM, Manivannan Sadhasivam wrote:
+> > Clipped the bouncing email addresses...
+> > 
+> > On Thu, Aug 11, 2022 at 05:23:34PM +0530, Manivannan Sadhasivam wrote:
+> > > On Thu, Aug 11, 2022 at 01:33:06PM +0200, Borislav Petkov wrote:
+> > > > On Thu, Aug 11, 2022 at 04:50:32PM +0530, Manivannan Sadhasivam wrote:
+> > > > > I know get_maintainer.pl :) But the problem is, Qualcomm recently
+> > > > > switched their email domain from codeaurora.org to quicinc.com.
+> > > > 
+> > > > Great:
+> > > > 
+> > > > $ git grep codeaurora.org MAINTAINERS | wc -l
+> > > > 5
+> > > > 
+> > > 
+> > > Yep! Most of the active developers have already changed their domains in
+> > > MAINTAINERS file. But the left ones are either not actively maintained
+> > > (yeah bad) or the maintainers have left Qualcomm.
+> > > 
+> > > > ;-\
+> > > > 
+> > > > > So even if I use the maintainers codeaurora domain now, they will
+> > > > > bounce.
+> > > > 
+> > > > Hmm, so the mails I sent with codeaurora on Cc didn't bounce back - I
+> > > > got only the quicinc bounces. That doesn't mean that codeaurora actually
+> > > > gets delivered...
+> > > > 
+> > > 
+> > > Not sure why. It was supposed to bounce. But could be that Qualcomm IT
+> > > decided to not bounce anymore since they have got enough complaints from
+> > > developers ;)
+> > > 
+> > 
+> > Okay, seems to be bouncing for me:
+> > 
+> > The response from the remote server was:
+> > 585 5.1.1 <ckadabi@codeaurora.org>: Recipient address rejected: undeliverable address: No such user here.
+> > 585 5.1.1 <vnkgutta@codeaurora.org>: Recipient address rejected: undeliverable address: No such user here.
+> 
+> It is ok if someone from Linaro team becomes the maintainer for this driver.
 > 
 
-Hi,
+Thanks Trilok for the confirmation! I'll add myself as the maintainer.
 
-comments below about error handling paths that look incomplete to me.
+Thanks,
+Mani
 
-Just my 2c.
+> ---Trilok Soni
 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> ---
-> Changes since V2:
-> 	-- Replace platform_bus_type with adsp->dev->bus.
-> 	-- Use API of_parse_phandle_with_args() instead of of_parse_phandle_with_fixed_args().
-> 	-- Replace adsp->is_wpss with adsp->is_adsp.
-> 	-- Update error handling in adsp_start().
-> 
->   drivers/remoteproc/qcom_q6v5_adsp.c | 107 +++++++++++++++++++++++++++++++++++-
->   1 file changed, 105 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-> index f2945bf..b9cafe2 100644
-> --- a/drivers/remoteproc/qcom_q6v5_adsp.c
-> +++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-> @@ -9,6 +9,7 @@
->   #include <linux/firmware.h>
->   #include <linux/interrupt.h>
->   #include <linux/io.h>
-> +#include <linux/iommu.h>
->   #include <linux/iopoll.h>
->   #include <linux/kernel.h>
->   #include <linux/mfd/syscon.h>
-> @@ -48,6 +49,8 @@
->   #define LPASS_PWR_ON_REG		0x10
->   #define LPASS_HALTREQ_REG		0x0
->   
-> +#define SID_MASK_DEFAULT        0xF
-> +
->   #define QDSP6SS_XO_CBCR		0x38
->   #define QDSP6SS_CORE_CBCR	0x20
->   #define QDSP6SS_SLEEP_CBCR	0x3c
-> @@ -78,7 +81,7 @@ struct adsp_pil_data {
->   struct qcom_adsp {
->   	struct device *dev;
->   	struct rproc *rproc;
-> -
-> +	struct iommu_domain *iommu_dom;
->   	struct qcom_q6v5 q6v5;
->   
->   	struct clk *xo;
-> @@ -333,6 +336,94 @@ static int adsp_load(struct rproc *rproc, const struct firmware *fw)
->   	return 0;
->   }
->   
-> +static int adsp_map_smmu(struct qcom_adsp *adsp, struct rproc *rproc)
-> +{
-> +	struct of_phandle_args args;
-> +	struct fw_rsc_devmem *rsc_fw;
-> +	struct fw_rsc_hdr *hdr;
-> +	const __be32 *prop;
-> +	long long sid;
-> +	unsigned long mem_phys;
-> +	unsigned long iova;
-> +	unsigned int mem_size;
-> +	unsigned int flag;
-> +	unsigned int len;
-> +	int access_level;
-> +	int offset;
-> +	int ret;
-> +	int rc;
-> +	int i;
-> +
-> +	rc = of_parse_phandle_with_args(adsp->dev->of_node, "iommus", "#iommu-cells", 0, &args);
-> +	if (rc < 0)
-> +		sid = -1;
-> +	else
-> +		sid = args.args[0] & SID_MASK_DEFAULT;
-> +
-> +	adsp->iommu_dom = iommu_domain_alloc(adsp->dev->bus);
-> +	if (!adsp->iommu_dom) {
-> +		dev_err(adsp->dev, "failed to allocate iommu domain\n");
-> +		return -ENOMEM;
-> +	}
-> +
-> +	ret = iommu_attach_device(adsp->iommu_dom, adsp->dev);
-> +	if (ret) {
-> +		dev_err(adsp->dev, "could not attach device ret = %d\n", ret);
-
-iommu_domain_free() or error handling path (see below)?
-
-> +		return -EBUSY;
-> +	}
-> +
-> +	/* Add SID configuration for ADSP Firmware to SMMU */
-> +	adsp->mem_phys =  adsp->mem_phys | (sid << 32);
-> +
-> +	ret = iommu_map(adsp->iommu_dom, adsp->mem_phys, adsp->mem_phys,
-> +			adsp->mem_size,	IOMMU_READ | IOMMU_WRITE);
-> +	if (ret) {
-> +		dev_err(adsp->dev, "Unable to map ADSP Physical Memory\n");
-
-iommu_domain_free() or error handling path (see below)?
-
-> +		return ret;
-> +	}
-> +
-> +	prop = of_get_property(adsp->dev->of_node, "qcom,adsp-memory-regions", &len);
-> +	if (prop) {
-> +		len /= sizeof(__be32);
-> +		for (i = 0; i < len; i++) {
-> +			iova = be32_to_cpu(prop[i++]);
-> +			mem_phys = be32_to_cpu(prop[i++]);
-> +			mem_size = be32_to_cpu(prop[i++]);
-> +			access_level = be32_to_cpu(prop[i]);
-> +
-> +			if (access_level)
-> +				flag = IOMMU_READ | IOMMU_WRITE;
-> +			else
-> +				flag = IOMMU_READ;
-> +
-> +			ret = iommu_map(adsp->iommu_dom, iova, mem_phys, mem_size, flag);
-> +			if (ret) {
-> +				dev_err(adsp->dev, "failed to map addr = %p mem_size = %x\n",
-> +						&(mem_phys), mem_size);
-> +				return ret;
-
-Should there be an error handling path to undo iommu_domain_alloc() and 
-iommu_map() above.
-Same for iommu_map() already done in the loop.
-
-> +			}
-> +		}
-> +	} else {
-> +		if (!rproc->table_ptr)
-> +			return 0;
-> +
-> +		for (i = 0; i < rproc->table_ptr->num; i++) {
-> +			offset = rproc->table_ptr->offset[i];
-> +			hdr = (void *)rproc->table_ptr + offset;
-> +			rsc_fw = (struct fw_rsc_devmem *)hdr + sizeof(*hdr);
-> +
-> +			ret = iommu_map(rproc->domain, rsc_fw->da, rsc_fw->pa,
-> +						rsc_fw->len, rsc_fw->flags);
-> +			if (ret) {
-> +				pr_err("%s; unable to map adsp memory address\n", __func__);
-> +				return ret;
-
-Same comment.
-
-> +			}
-> +		}
-> +	}
-> +	return 0;
-> +}
-> +
-> +
->   static int adsp_start(struct rproc *rproc)
->   {
->   	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
-> @@ -343,9 +434,16 @@ static int adsp_start(struct rproc *rproc)
->   	if (ret)
->   		return ret;
->   
-> +	if (adsp->is_adsp_sb_needed) {
-> +		ret = adsp_map_smmu(adsp, rproc);
-> +		if (ret) {
-> +			dev_err(adsp->dev, "ADSP smmu mapping failed\n");
-> +			goto disable_irqs;
-> +		}
-> +	}
->   	ret = clk_prepare_enable(adsp->xo);
->   	if (ret)
-> -		goto disable_irqs;
-> +		goto adsp_smmu_unmap;
->   
->   	ret = qcom_rproc_pds_enable(adsp, adsp->proxy_pds,
->   				    adsp->proxy_pd_count);
-> @@ -401,6 +499,11 @@ static int adsp_start(struct rproc *rproc)
->   	qcom_rproc_pds_disable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
->   disable_xo_clk:
->   	clk_disable_unprepare(adsp->xo);
-> +adsp_smmu_unmap:
-> +	if (adsp->is_adsp_sb_needed) {
-> +		iommu_unmap(adsp->iommu_dom, adsp->mem_phys, adsp->mem_size);
-> +		iommu_domain_free(adsp->iommu_dom);
-
-Hi,
-
-Do the iommu_map() in the for loops of adsp_map_smmu() also need some 
-iommu_unmap() here?
-
-Maybe introducing a adsp_unmap_smmu() would simplify the release of 
-resources.
-
-Does the same resource release makes sense in adsp_stop() or somewhere else?
-
-CJ
-
-
-> +	}
->   disable_irqs:
->   	qcom_q6v5_unprepare(&adsp->q6v5);
->   
-
+-- 
+மணிவண்ணன் சதாசிவம்
