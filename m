@@ -2,208 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DABF590D52
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Aug 2022 10:25:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C375C590D5B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Aug 2022 10:28:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237337AbiHLIZY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Aug 2022 04:25:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36186 "EHLO
+        id S237402AbiHLI2J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Aug 2022 04:28:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230033AbiHLIZY (ORCPT
+        with ESMTP id S237099AbiHLI2F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Aug 2022 04:25:24 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0A1AFD1E;
-        Fri, 12 Aug 2022 01:25:22 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id h21-20020a17090aa89500b001f31a61b91dso7696167pjq.4;
-        Fri, 12 Aug 2022 01:25:22 -0700 (PDT)
+        Fri, 12 Aug 2022 04:28:05 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30A73A7A84
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Aug 2022 01:28:03 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id a7so824208ejp.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Aug 2022 01:28:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc;
-        bh=K5e31EfZ0bAJpIVl6ZgewRG0lk3GwGASk2Ee4EmX+pk=;
-        b=PYK73lqvR1AkLT10nQIUykyVaiWlBLBn7bpLtxJHDzuKauvirrTaO1ZFyKOGLVI43f
-         IXy1D5JFE99EJPTxugjnEY1ytdV9Fd9Fhorm5zoWgwk8pDjUC98q02V4EeI75i7+lY3Z
-         0zi9IOQmUXRaQYiYOIAeszoHDARzi2yaMaPxrzpiEdtU38x6v0TU13wA1x5N1vb87Bm5
-         JrO50MfBgeD+tz8hqYbCQ+sev7siy4zm1d6Ox4X2b9MKN7PelON0ezKAIiYUF98wUiMp
-         bCjYeLwDIifZFFnuqsyr+rAj+hVBCdYJJpvXiAyPWDuVp+MotiIthMsGHM3QJQmoS0mM
-         Qt/w==
+        d=fairphone.com; s=fair;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=FOvtKT4GDRSWWmANlZuaQLQU83jeOYXI0TRQUgDdg10=;
+        b=Tzp3P++LcNmw9+TC/IRERwMx+Wks2NcyvmSodUphcN5+yg8kiJYHvJa+nyNSqODj5B
+         pn6vRDYHiIZWVAUCHqQ5S8M3mYM5fYHQEedpLxxlVNGW14j6pWeYsm3QPF8Ned07/YgU
+         9Fl/A5dSI08PQBsTowvNtH0O8b0Y7sv7Ta2GXySWEullzj0YVGoA77yU3t4y81BwANH1
+         bp7wB+JFIKoAPLocuMEfW9INgK0TWW9+ozYnXEh7PEC3cn2rfajFmMHvV3/04YKpkbGT
+         s5RxBc2p17GcJQimnoLLnTBfzQaa33qqED0UrvCS+D/NJkpLR/MYiDDmmHI8GDNJdai3
+         oSQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=K5e31EfZ0bAJpIVl6ZgewRG0lk3GwGASk2Ee4EmX+pk=;
-        b=EnrYiO/EANJFirNC2YEr1E4CgGCGKuvCvYjKKaI5TtQLiCa+UdPxAz08Rwmux69ml+
-         ED3y9SGZJBzJsL8CaPfyM+6ceyKuKBe50YM3a5xUqVwRZ7jIpOK39nBWGmvCzNQzFK7z
-         ouVTZK1c6mrBgsFXSy1Z3mmTqXI247VbacK7fa2WmKFsOyMLc4y1rzJVjzqFN7NoHAuk
-         zipTG/7JYvq86aCjdHIZXfO4Sz75odWuulKra3nE5LLgqOHOvTvW6tTVG3HF9tt8z2o7
-         L+eLyQIipHpYnKCw5mnMo1HZKXcew36DJ93mfXU/o/2FnIhkFYDPQwS9v4gSzqDQ/6gj
-         YdOQ==
-X-Gm-Message-State: ACgBeo1qD9YGqE8vtzbSVEGdbQ0aV59nop1LMCrCvJN/GOSLuKhiLO0/
-        bhIA7+/U7fo1RmANBrDCro4OYqTMENvqBw==
-X-Google-Smtp-Source: AA6agR6efLj2VyPg6cDCWFw49gG9JTd8iUbSs1/i0QYJYchWchpdEP8EXSW0zcOu/oif7ygrLKYR3Q==
-X-Received: by 2002:a17:902:ec8f:b0:16e:d8d8:c2ef with SMTP id x15-20020a170902ec8f00b0016ed8d8c2efmr3147211plg.62.1660292722259;
-        Fri, 12 Aug 2022 01:25:22 -0700 (PDT)
-Received: from debian.me (subs09b-223-255-225-237.three.co.id. [223.255.225.237])
-        by smtp.gmail.com with ESMTPSA id l6-20020a170903244600b0016db441edd7sm1098566pls.40.2022.08.12.01.25.21
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=FOvtKT4GDRSWWmANlZuaQLQU83jeOYXI0TRQUgDdg10=;
+        b=DE6AKMj0bXkd+SmBDbi41c0JOCWm5bxI+Y6LOfgnQwKKlLSFI2dQPx34U/XfdnrUuR
+         bqlTx7X6qL2EMZaIfoA1FoM7EVexbrtgd1K84ByWo/mP7WHPpObQkxir4DTD0PInL87f
+         I6r6oAopiQVikO0a1cdWgCYmUMDLhWK7zTtr4ntnMSYO95whnU2dHOG2H9aFU1zdUnUM
+         /aR4MEwRZv+08KAE7BstOCGs5E76sdvCI08IibKz6q4vQlLa8jtuwCXNwuindvp2Qv29
+         wDNT5297Scs6J66t1Wcds3zPoxR7u4mwXey9FzOn2Q39NZDYN91Ed9McC7EmU/UL6LOS
+         fDIA==
+X-Gm-Message-State: ACgBeo0JWLKczaZ4M2PmU+x/5i8XNEViPDfBa2pyVH+e67vrp/YLdKjG
+        vojsq22fDlzRqO0Nfl8eUjEO11YVcQEnug==
+X-Google-Smtp-Source: AA6agR6sMdNeGSxXxvk8uOhNb7/vmNsY06X9b9K9lidIhxQRJXDPodrM5jukgmEgLZ9ll1swk90yqQ==
+X-Received: by 2002:a17:907:270d:b0:730:6082:eb62 with SMTP id w13-20020a170907270d00b007306082eb62mr1914257ejk.95.1660292881538;
+        Fri, 12 Aug 2022 01:28:01 -0700 (PDT)
+Received: from otso.arnhem.chello.nl (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id y6-20020a056402134600b0043cf1c6bb10sm971326edw.25.2022.08.12.01.28.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Aug 2022 01:25:21 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-        id AB966103BBF; Fri, 12 Aug 2022 15:25:17 +0700 (WIB)
-Date:   Fri, 12 Aug 2022 15:25:17 +0700
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     Elliot Berman <quic_eberman@quicinc.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-doc@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 02/12] docs: gunyah: Introduce Gunyah Hypervisor
-Message-ID: <YvYObTVhZsr0B2vS@debian.me>
-References: <20220811214107.1074343-1-quic_eberman@quicinc.com>
- <20220811214107.1074343-3-quic_eberman@quicinc.com>
+        Fri, 12 Aug 2022 01:28:01 -0700 (PDT)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        devicetree@vger.kernel.org, dmaengine@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-kernel@vger.kernel.org, Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 0/3] Add GPI DMA support for SM6350
+Date:   Fri, 12 Aug 2022 10:27:18 +0200
+Message-Id: <20220812082721.1125759-1-luca.weiss@fairphone.com>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="J0DeUdYoLvLWrWZu"
-Content-Disposition: inline
-In-Reply-To: <20220811214107.1074343-3-quic_eberman@quicinc.com>
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series hooks up GPI DMA support for the SM6350 I2C.
 
---J0DeUdYoLvLWrWZu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+It has been tested using himax,hxcommon driver that I forward-ported
+from the original vendor kernel on fairphone-fp4 - previously I have
+used i2c-gpio bitbang in my tree.
 
-On Thu, Aug 11, 2022 at 02:40:57PM -0700, Elliot Berman wrote:
-> +Gunyah provides these following features.
-> +
-> +- Scheduling:
-> +  A scheduler for virtual CPUs (vCPUs) on physical CPUs and enables time=
--sharing
-> +  of the CPUs. Gunyah supports two models of scheduling:
-> +    1. "Behind the back" scheduling in which Gunyah hypervisor schedules=
- vCPUS on its own
-> +    2. "Proxy" scheduling in which a delegated VM can donate part of one=
- of its vCPU slice
-> +       to another VM's vCPU via a hypercall.
-> +- Memory Management:
-> +  APIs handling memory, abstracted as objects, limiting direct use of ph=
-ysical
-> +  addresses. Memory ownership and usage tracking of all memory under its=
- control.
-> +  Memory partitioning between VMs is a fundamental security feature.
-> +- Interrupt Virtualization:
-> +  Uses CPU hardware interrupt virtualization capabilities. Interrupts ar=
-e handled
-> +  in the hypervisor and routed to the assigned VM.
-> +- Inter-VM Communication:
-> +  There are several different mechanisms provided for communicating betw=
-een VMs.
-> +- Virtual platform:
-> +  Architectural devices such as interrupt controllers and CPU timers are=
- directly provided
-> +  by the hypervisor as well as core virtual platform devices and system =
-APIs such as ARM PSCI.
-> +- Device Virtualization:
-> +  Para-virtualization of devices is supported using inter-VM communicati=
-on.
+This also requires the fix from Robin[0] that has already been
+accepted into linux-next, otherwise I2C communication fails to work.
 
-htmldocs build produces a new warning:
+[0] https://lore.kernel.org/linux-arm-msm/20220807140455.409417-1-robin.reckmann@gmail.com/
 
-Documentation/virt/gunyah/index.rst:25: WARNING: Unexpected indentation.
+Luca Weiss (3):
+  dt-bindings: dmaengine: qcom: gpi: add compatible for SM6350
+  dmaengine: qcom: gpi: Add SM6350 support
+  arm64: dts: qcom: sm6350: Add GPI DMA nodes
 
-I have applied the fixup for lists above:
+ .../devicetree/bindings/dma/qcom,gpi.yaml     |  1 +
+ arch/arm64/boot/dts/qcom/sm6350.dtsi          | 59 +++++++++++++++++++
+ drivers/dma/qcom/gpi.c                        |  1 +
+ 3 files changed, 61 insertions(+)
 
----- >8 ----
+-- 
+2.37.1
 
-diff --git a/Documentation/virt/gunyah/index.rst b/Documentation/virt/gunya=
-h/index.rst
-index 780ff958a83b8c..c55e02f17ca318 100644
---- a/Documentation/virt/gunyah/index.rst
-+++ b/Documentation/virt/gunyah/index.rst
-@@ -20,24 +20,36 @@ https://github.com/quic/gunyah-hypervisor.
- Gunyah provides these following features.
-=20
- - Scheduling:
-+
-   A scheduler for virtual CPUs (vCPUs) on physical CPUs and enables time-s=
-haring
-   of the CPUs. Gunyah supports two models of scheduling:
-+
-     1. "Behind the back" scheduling in which Gunyah hypervisor schedules v=
-CPUS on its own
-     2. "Proxy" scheduling in which a delegated VM can donate part of one o=
-f its vCPU slice
-        to another VM's vCPU via a hypercall.
-+
- - Memory Management:
-+
-   APIs handling memory, abstracted as objects, limiting direct use of phys=
-ical
-   addresses. Memory ownership and usage tracking of all memory under its c=
-ontrol.
-   Memory partitioning between VMs is a fundamental security feature.
-+
- - Interrupt Virtualization:
-+
-   Uses CPU hardware interrupt virtualization capabilities. Interrupts are =
-handled
-   in the hypervisor and routed to the assigned VM.
-+
- - Inter-VM Communication:
-+
-   There are several different mechanisms provided for communicating betwee=
-n VMs.
-+
- - Virtual platform:
-+
-   Architectural devices such as interrupt controllers and CPU timers are d=
-irectly provided
-   by the hypervisor as well as core virtual platform devices and system AP=
-Is such as ARM PSCI.
-+
- - Device Virtualization:
-+
-   Para-virtualization of devices is supported using inter-VM communication.
-=20
- Architectures supported
-
-Thanks.
-
---=20
-An old man doll... just what I always wanted! - Clara
-
---J0DeUdYoLvLWrWZu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCYvYOZgAKCRD2uYlJVVFO
-o9M1AP9qGMXeysAQQdpRja+bHC5MnwCoQfI19sffZXmLAIeTDgEArdMnYX6idzkJ
-Z5H5X80sKhQ98VuWt7B7HXRY3JM4YgQ=
-=AycK
------END PGP SIGNATURE-----
-
---J0DeUdYoLvLWrWZu--
