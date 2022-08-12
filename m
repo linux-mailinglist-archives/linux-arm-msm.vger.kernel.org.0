@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D292D590F0D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Aug 2022 12:17:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63E7C590F10
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Aug 2022 12:17:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238313AbiHLKRd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Aug 2022 06:17:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44648 "EHLO
+        id S238316AbiHLKRp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Aug 2022 06:17:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238307AbiHLKRa (ORCPT
+        with ESMTP id S238326AbiHLKRm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Aug 2022 06:17:30 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2FDAAB4D6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Aug 2022 03:17:28 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id u3so720716lfk.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Aug 2022 03:17:28 -0700 (PDT)
+        Fri, 12 Aug 2022 06:17:42 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68724AB4EB
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Aug 2022 03:17:40 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id d14so697724lfl.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Aug 2022 03:17:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=qm3oHgt5B13dIjYKK6eUU/A8/VtmFj0ol7g7oapz5+M=;
-        b=aOencBwV+DRKMGzaTWY9nQs7BhWYTejYgu5UodVpEblmBJNb5EYZhiRiB4RxisO3t/
-         DqI5RFBHIqiaA2CxhMx8BOzLfxU3R5RryOtugh9oV5bVEy7DASKRA9JnNdP5jyYQegaQ
-         2TYYCvHtqqXBNugUXhAliD5AeKb304UoXaSadntpjPYB5nB9awlWLYUcqJH07kDyRw0L
-         PBSF1QudtVJ66W6zwMs9H+VN9uA0H9NgMqXviwFRf0/d4Uo/LXUxfZbuU9XPl0hBP6+r
-         QKGrfgct0FLxBPKcRgflHVRddQ9NHdmGqChqvDJ2bLOi2OVIim+VtKIOWzzb1yL3jQkC
-         BO5w==
+        bh=wrTNOhesfXnWUGmcgplYqSMMtykEUHclxdrOZJyijsY=;
+        b=s/Wszsa9xWXXcb+E3yXMPOgdfqMtB8bVbq5jYzNgpIztkttS3wvUEHj7YKyC7FcWAq
+         8c9I4Aozt6yFX7Rwinjm7binvK+YeLJO7NSvwIxBCcymdC1JNBWTySC7CRCYQb8JTPz8
+         1JcyE13+9aG3xIb2SNW8TjEHjH5tydYCuloqoF9i1dWNz/PRQfsOgAnXhREpfFbKrKwH
+         66FrqBKB5N7TsuDcxTSSPvQNlenDPPho3tOOZvtrqPpU+tPRylbCta2dcPFIpBHgJp40
+         Uzit6PAnPVD/GL902ny1+z4PH8+II/suve7lk7Rw2OvdWyIfSGyKD8JwUjGUyjL7bZ3T
+         ie2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=qm3oHgt5B13dIjYKK6eUU/A8/VtmFj0ol7g7oapz5+M=;
-        b=1dan2VjwBR/gzViSyH43aMXlNAy2wiJaB1UcZ8dcBRJFeSGLRp3UhznJXaEhAHn7xI
-         OB6MbqDJLo+Kk+/y1/ikz5B0TNiH5osf5gH3KOw4+35io1YcEYU6lUtL2NZBgT6JPVkA
-         iWFFUuezpf5lQD0mwOm7g3FwrXKn2N8uMp7am6DndltGy7baL5gFY7QltXstLBJpWPQL
-         3sm4/oTgbCQjTFagd2C+WlH1i1WBJeU7zFr33ccOUYiC8wGFExIKgSHluVYjKhOdGFIN
-         EkKD3ahen0s9JCb+HnwddTvGVUC05JcGqlwq6dS3UGi0daHvadiySZqGMF+F1L2gdz13
-         sStw==
-X-Gm-Message-State: ACgBeo3FL5ydv9acf+OR0q05NvYDww2P59PnliYJB3oj55t6ivaUAEER
-        FHF4dc76YKjW+yYPqaTwdIPjKw==
-X-Google-Smtp-Source: AA6agR67Uf6uHs6jnfE+zi/DcgB5VjCC8K0ChXMUtLdanDW6TqBgzyBms8UJvqdyIX+xw1vvIVOLdA==
-X-Received: by 2002:a19:c506:0:b0:48a:ee19:a820 with SMTP id w6-20020a19c506000000b0048aee19a820mr1168029lfe.38.1660299446952;
-        Fri, 12 Aug 2022 03:17:26 -0700 (PDT)
+        bh=wrTNOhesfXnWUGmcgplYqSMMtykEUHclxdrOZJyijsY=;
+        b=bsVKikyA4xndUjCL4H1ior0AcQK7NxOIHP3SmDQ2fetVeGk0C3DOAcjfCXAVy9mxH/
+         NxL9/XurMEbUbtSteHA5bkIwjqpua5OD6bHEKMIAHd9WF4bnL0j1DnxRAU0FcVy5uoQa
+         2jLq06AY2v5VqoljPDRKwkrsNEZPIxxsftH03AivrzK1MNjJeeKGpeMkHbCoQB+Xk4HU
+         Mgtqsdh3Z1PkD68NhDgKi3M2avgUZ4GTBhsJ0PM+jRCZHjiN5H6fx2dYOKwlz5xu9qWz
+         T+uHh0GJAlfkk7PTVkuf1qOJedRJTWeFAteIt/36fBL8D5B2uZBoiBkuFcyeagawtpZ/
+         i2kg==
+X-Gm-Message-State: ACgBeo0X+W1iTZ9+TNpCi/gjvVKSM4WUIlQe6RCFHeN5Cj3/xqMha0mn
+        8xIVI2v4W9YRGEUcsLqr1Arcuw==
+X-Google-Smtp-Source: AA6agR5BNSl5cct0PJlpU5JzfIRjElsKmgAm7DP+dSxTjRkUa/3Mb3cy3BcfHdJQvAsCl+y9aP6Prg==
+X-Received: by 2002:a05:6512:1291:b0:48a:fe0b:cd8 with SMTP id u17-20020a056512129100b0048afe0b0cd8mr1026853lfs.440.1660299458634;
+        Fri, 12 Aug 2022 03:17:38 -0700 (PDT)
 Received: from [192.168.1.39] ([83.146.140.105])
-        by smtp.gmail.com with ESMTPSA id a20-20020ac25e74000000b0048cc076a03dsm160597lfr.237.2022.08.12.03.17.23
+        by smtp.gmail.com with ESMTPSA id k21-20020a2ea275000000b0025e5a65afbbsm304844ljm.120.2022.08.12.03.17.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Aug 2022 03:17:26 -0700 (PDT)
-Message-ID: <2ebd89b5-1c12-d833-4303-099c9db94ccd@linaro.org>
-Date:   Fri, 12 Aug 2022 13:17:21 +0300
+        Fri, 12 Aug 2022 03:17:37 -0700 (PDT)
+Message-ID: <509a75ce-0451-215f-e3ce-acfaeefd26c4@linaro.org>
+Date:   Fri, 12 Aug 2022 13:17:33 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.12.0
-Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sdm845: Add the RPMh stats node
+Subject: Re: [PATCH v2 1/4] arm64: dts: qcom: sdm845: Reduce reg size for
+ aoss_qmp
 Content-Language: en-US
 To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -64,9 +65,8 @@ To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 References: <20220812101240.1869605-1-abel.vesa@linaro.org>
- <20220812101240.1869605-3-abel.vesa@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220812101240.1869605-3-abel.vesa@linaro.org>
+In-Reply-To: <20220812101240.1869605-1-abel.vesa@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -80,14 +80,14 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 12/08/2022 13:12, Abel Vesa wrote:
-> SDM845 is a special case compared to the other platforms that use RPMh
-> stats, since it only has 2 stats (aosd and cxsd), while the others have
-> a 3rd one (ddr).
-> 
-> So lets add the node but with a SDM845 dedicated compatible to make
-> the driver aware of the different stats config.
+> Like on the other platforms that provide RPMh stats, on SDM845, the
+> aoss_qmp reg size needs to be reduced to its actual size of 0x400,
+> otherwise it will overlap with the RPMh stats reg base, node that will
+> be added later on.
 > 
 > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+> 
 
 
 Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
