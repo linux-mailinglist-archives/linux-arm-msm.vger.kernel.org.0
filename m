@@ -2,132 +2,263 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDD6C5908D0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Aug 2022 00:58:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51906590B93
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Aug 2022 07:40:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236490AbiHKW6I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Aug 2022 18:58:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59138 "EHLO
+        id S233404AbiHLFkc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Aug 2022 01:40:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231131AbiHKW6H (ORCPT
+        with ESMTP id S231627AbiHLFkb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Aug 2022 18:58:07 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 326499F0D5;
-        Thu, 11 Aug 2022 15:58:05 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27BMchoS031684;
-        Thu, 11 Aug 2022 22:57:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=xVaFdP9YnOOfriV34XRVwBTP9uPK6xLsJxnZttySgp0=;
- b=oeu/aKkxLtUQvQYQ4o6jisW4HurkfJfdS4RXweNCuHISSsQ+TyENYQja+nQexZNTuw2U
- g4cSbe2fAU+B9wSz3Yju2CAMAf3WofmUmgQdf7r8vuAPlHNzbWYvcFtXSazDOmbEKPai
- lVG9TYMqxtn2H2eT4OquJj45SvMezCElxckdgfNuzW5+LBI2aR4Us47HfMbWpfukIHI1
- TxQt3Q6O/PhMMv2YG7el3MP1a5qeW+R331kyow0pwHUsyX8R3oY9hFZnynmP7uz7z4Yq
- t50m7RWKlj1cB4QM31zVSuerAkFJrGDnVxbbWbR5UTnfBFtkBIMYcqh5rtAk6UbW1Jn8 sw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3hwa8d02eu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 11 Aug 2022 22:57:58 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27BMvvwe010071
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 11 Aug 2022 22:57:57 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 11 Aug 2022 15:57:56 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
-        <airlied@linux.ie>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
-CC:     <quic_aravindh@quicinc.com>, <quic_khsieh@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v5] drm/msm/dp: delete DP_RECOVERED_CLOCK_OUT_EN to fix tps4
-Date:   Thu, 11 Aug 2022 15:57:50 -0700
-Message-ID: <1660258670-4200-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Fri, 12 Aug 2022 01:40:31 -0400
+X-Greylist: delayed 450 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 11 Aug 2022 22:40:30 PDT
+Received: from smtp.smtpout.orange.fr (smtp-21.smtpout.orange.fr [80.12.242.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 940BD5FA4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Aug 2022 22:40:30 -0700 (PDT)
+Received: from [192.168.1.18] ([90.11.190.129])
+        by smtp.orange.fr with ESMTPA
+        id MNHyo5KHrKOP1MNHzoioqr; Fri, 12 Aug 2022 07:32:59 +0200
+X-ME-Helo: [192.168.1.18]
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Fri, 12 Aug 2022 07:32:59 +0200
+X-ME-IP: 90.11.190.129
+Message-ID: <080f3e2b-af7b-0ac0-1716-a33da73290e4@wanadoo.fr>
+Date:   Fri, 12 Aug 2022 07:32:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: dIXcJ7UY6pmG2FEuyfMM6U03V8WOqLSA
-X-Proofpoint-ORIG-GUID: dIXcJ7UY6pmG2FEuyfMM6U03V8WOqLSA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-11_14,2022-08-11_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 spamscore=0
- priorityscore=1501 mlxscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0
- impostorscore=0 suspectscore=0 malwarescore=0 clxscore=1015 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2207270000
- definitions=main-2208110068
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v3 7/8] remoteproc: qcom: Add support for memory sandbox
+Content-Language: fr
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        linux-remoteproc@vger.kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
+        bgoswami@quicinc.com, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, quic_rohkumar@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, judyhsiao@chromium.org,
+        devicetree@vger.kernel.org
+References: <1660117558-21829-1-git-send-email-quic_srivasam@quicinc.com>
+ <1660117558-21829-8-git-send-email-quic_srivasam@quicinc.com>
+From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+In-Reply-To: <1660117558-21829-8-git-send-email-quic_srivasam@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Data Symbols scrambled is required for tps4 at link training 2.
-Therefore SCRAMBLING_DISABLE bit should not be set for tps4 to
-work.
+Le 10/08/2022 à 09:45, Srinivasa Rao Mandadapu a écrit :
+> Update pil driver with SMMU mapping for allowing authorised
+> memory access to ADSP firmware, by reading required memory
+> regions either from device tree file or from resource table
+> embedded in ADSP binary header.
+> 
 
-RECOVERED_CLOCK_OUT_EN is for enable simple EYE test for jitter
-measurement with minimal equipment for embedded applications purpose
-and is not required to be set during normal operation. Current
-implementation always have RECOVERED_CLOCK_OUT_EN bit set which
-cause SCRAMBLING_DISABLE bit wrongly set at tps4 which prevent
-tps4 from working.
+Hi,
 
-This patch delete setting RECOVERED_CLOCK_OUT_EN to fix
-SCRAMBLING_DISABLE be wrongly set at tps4.
+comments below about error handling paths that look incomplete to me.
 
-Changes in v2:
--- fix Fixes tag
+Just my 2c.
 
-Changes in v3:
--- revise commit text
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> ---
+> Changes since V2:
+> 	-- Replace platform_bus_type with adsp->dev->bus.
+> 	-- Use API of_parse_phandle_with_args() instead of of_parse_phandle_with_fixed_args().
+> 	-- Replace adsp->is_wpss with adsp->is_adsp.
+> 	-- Update error handling in adsp_start().
+> 
+>   drivers/remoteproc/qcom_q6v5_adsp.c | 107 +++++++++++++++++++++++++++++++++++-
+>   1 file changed, 105 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
+> index f2945bf..b9cafe2 100644
+> --- a/drivers/remoteproc/qcom_q6v5_adsp.c
+> +++ b/drivers/remoteproc/qcom_q6v5_adsp.c
+> @@ -9,6 +9,7 @@
+>   #include <linux/firmware.h>
+>   #include <linux/interrupt.h>
+>   #include <linux/io.h>
+> +#include <linux/iommu.h>
+>   #include <linux/iopoll.h>
+>   #include <linux/kernel.h>
+>   #include <linux/mfd/syscon.h>
+> @@ -48,6 +49,8 @@
+>   #define LPASS_PWR_ON_REG		0x10
+>   #define LPASS_HALTREQ_REG		0x0
+>   
+> +#define SID_MASK_DEFAULT        0xF
+> +
+>   #define QDSP6SS_XO_CBCR		0x38
+>   #define QDSP6SS_CORE_CBCR	0x20
+>   #define QDSP6SS_SLEEP_CBCR	0x3c
+> @@ -78,7 +81,7 @@ struct adsp_pil_data {
+>   struct qcom_adsp {
+>   	struct device *dev;
+>   	struct rproc *rproc;
+> -
+> +	struct iommu_domain *iommu_dom;
+>   	struct qcom_q6v5 q6v5;
+>   
+>   	struct clk *xo;
+> @@ -333,6 +336,94 @@ static int adsp_load(struct rproc *rproc, const struct firmware *fw)
+>   	return 0;
+>   }
+>   
+> +static int adsp_map_smmu(struct qcom_adsp *adsp, struct rproc *rproc)
+> +{
+> +	struct of_phandle_args args;
+> +	struct fw_rsc_devmem *rsc_fw;
+> +	struct fw_rsc_hdr *hdr;
+> +	const __be32 *prop;
+> +	long long sid;
+> +	unsigned long mem_phys;
+> +	unsigned long iova;
+> +	unsigned int mem_size;
+> +	unsigned int flag;
+> +	unsigned int len;
+> +	int access_level;
+> +	int offset;
+> +	int ret;
+> +	int rc;
+> +	int i;
+> +
+> +	rc = of_parse_phandle_with_args(adsp->dev->of_node, "iommus", "#iommu-cells", 0, &args);
+> +	if (rc < 0)
+> +		sid = -1;
+> +	else
+> +		sid = args.args[0] & SID_MASK_DEFAULT;
+> +
+> +	adsp->iommu_dom = iommu_domain_alloc(adsp->dev->bus);
+> +	if (!adsp->iommu_dom) {
+> +		dev_err(adsp->dev, "failed to allocate iommu domain\n");
+> +		return -ENOMEM;
+> +	}
+> +
+> +	ret = iommu_attach_device(adsp->iommu_dom, adsp->dev);
+> +	if (ret) {
+> +		dev_err(adsp->dev, "could not attach device ret = %d\n", ret);
 
-Changes in v4:
--- fix commit text newline
+iommu_domain_free() or error handling path (see below)?
 
-Changes in v5:
--- fix commit text line over 75 chars
+> +		return -EBUSY;
+> +	}
+> +
+> +	/* Add SID configuration for ADSP Firmware to SMMU */
+> +	adsp->mem_phys =  adsp->mem_phys | (sid << 32);
+> +
+> +	ret = iommu_map(adsp->iommu_dom, adsp->mem_phys, adsp->mem_phys,
+> +			adsp->mem_size,	IOMMU_READ | IOMMU_WRITE);
+> +	if (ret) {
+> +		dev_err(adsp->dev, "Unable to map ADSP Physical Memory\n");
 
-Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+iommu_domain_free() or error handling path (see below)?
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/dp/dp_ctrl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> +		return ret;
+> +	}
+> +
+> +	prop = of_get_property(adsp->dev->of_node, "qcom,adsp-memory-regions", &len);
+> +	if (prop) {
+> +		len /= sizeof(__be32);
+> +		for (i = 0; i < len; i++) {
+> +			iova = be32_to_cpu(prop[i++]);
+> +			mem_phys = be32_to_cpu(prop[i++]);
+> +			mem_size = be32_to_cpu(prop[i++]);
+> +			access_level = be32_to_cpu(prop[i]);
+> +
+> +			if (access_level)
+> +				flag = IOMMU_READ | IOMMU_WRITE;
+> +			else
+> +				flag = IOMMU_READ;
+> +
+> +			ret = iommu_map(adsp->iommu_dom, iova, mem_phys, mem_size, flag);
+> +			if (ret) {
+> +				dev_err(adsp->dev, "failed to map addr = %p mem_size = %x\n",
+> +						&(mem_phys), mem_size);
+> +				return ret;
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index ab6aa13..013ca02 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1214,7 +1214,7 @@ static int dp_ctrl_link_train_2(struct dp_ctrl_private *ctrl,
- 	if (ret)
- 		return ret;
- 
--	dp_ctrl_train_pattern_set(ctrl, pattern | DP_RECOVERED_CLOCK_OUT_EN);
-+	dp_ctrl_train_pattern_set(ctrl, pattern);
- 
- 	for (tries = 0; tries <= maximum_retries; tries++) {
- 		drm_dp_link_train_channel_eq_delay(ctrl->aux, ctrl->panel->dpcd);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Should there be an error handling path to undo iommu_domain_alloc() and 
+iommu_map() above.
+Same for iommu_map() already done in the loop.
+
+> +			}
+> +		}
+> +	} else {
+> +		if (!rproc->table_ptr)
+> +			return 0;
+> +
+> +		for (i = 0; i < rproc->table_ptr->num; i++) {
+> +			offset = rproc->table_ptr->offset[i];
+> +			hdr = (void *)rproc->table_ptr + offset;
+> +			rsc_fw = (struct fw_rsc_devmem *)hdr + sizeof(*hdr);
+> +
+> +			ret = iommu_map(rproc->domain, rsc_fw->da, rsc_fw->pa,
+> +						rsc_fw->len, rsc_fw->flags);
+> +			if (ret) {
+> +				pr_err("%s; unable to map adsp memory address\n", __func__);
+> +				return ret;
+
+Same comment.
+
+> +			}
+> +		}
+> +	}
+> +	return 0;
+> +}
+> +
+> +
+>   static int adsp_start(struct rproc *rproc)
+>   {
+>   	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
+> @@ -343,9 +434,16 @@ static int adsp_start(struct rproc *rproc)
+>   	if (ret)
+>   		return ret;
+>   
+> +	if (adsp->is_adsp_sb_needed) {
+> +		ret = adsp_map_smmu(adsp, rproc);
+> +		if (ret) {
+> +			dev_err(adsp->dev, "ADSP smmu mapping failed\n");
+> +			goto disable_irqs;
+> +		}
+> +	}
+>   	ret = clk_prepare_enable(adsp->xo);
+>   	if (ret)
+> -		goto disable_irqs;
+> +		goto adsp_smmu_unmap;
+>   
+>   	ret = qcom_rproc_pds_enable(adsp, adsp->proxy_pds,
+>   				    adsp->proxy_pd_count);
+> @@ -401,6 +499,11 @@ static int adsp_start(struct rproc *rproc)
+>   	qcom_rproc_pds_disable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
+>   disable_xo_clk:
+>   	clk_disable_unprepare(adsp->xo);
+> +adsp_smmu_unmap:
+> +	if (adsp->is_adsp_sb_needed) {
+> +		iommu_unmap(adsp->iommu_dom, adsp->mem_phys, adsp->mem_size);
+> +		iommu_domain_free(adsp->iommu_dom);
+
+Hi,
+
+Do the iommu_map() in the for loops of adsp_map_smmu() also need some 
+iommu_unmap() here?
+
+Maybe introducing a adsp_unmap_smmu() would simplify the release of 
+resources.
+
+Does the same resource release makes sense in adsp_stop() or somewhere else?
+
+CJ
+
+
+> +	}
+>   disable_irqs:
+>   	qcom_q6v5_unprepare(&adsp->q6v5);
+>   
 
