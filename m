@@ -2,167 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A50B359101C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Aug 2022 13:34:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF81259104C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Aug 2022 13:46:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234940AbiHLLeJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Aug 2022 07:34:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38626 "EHLO
+        id S238054AbiHLLqF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Aug 2022 07:46:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231627AbiHLLeI (ORCPT
+        with ESMTP id S238152AbiHLLp7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Aug 2022 07:34:08 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59990AE9F3;
-        Fri, 12 Aug 2022 04:34:07 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id i14so1546105ejg.6;
-        Fri, 12 Aug 2022 04:34:07 -0700 (PDT)
+        Fri, 12 Aug 2022 07:45:59 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EA03785AD
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Aug 2022 04:45:56 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id o22so1001245edc.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Aug 2022 04:45:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=2maBmCwKBmigg6muaEXXhf/Ng5GHmKY483ELQvBK7bw=;
-        b=WzmVA6wJmViKgJcjJ28fwTes4+4nkLVN3Mx6n7aAByQjaF1kqlO8c/DkZzzNbQ5PMJ
-         Q6QRifhtEywKPW0BRycraqPgJbNNV4Fkr0BDi9NwSjofj+/eExHcmIHXfmWBqj8nEM+V
-         SJ6yUML0yO8yFd9lLsoNczBtQtybcTMT4WUr1ptuUKBS3/Rda9YC3hjAtXIBeNWzrfQv
-         8awekeP8HdFvSg9RwEt6hfJjxWj4IHX4MucvbIt4QDscDPd/6Xe/c8eYLuCx5yo9ewIX
-         pCKNLJxEdZn4+tUGCfNxm+c1cgbj7a+b8mhWZ+qT9Wu2+c+9oyIWqC1lkYhae0HgqZSg
-         TC0Q==
+        d=fairphone.com; s=fair;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=lBY6DQi6FykxVe21cRnJ3K9NDKKdbB0Pl4sf77sX8eE=;
+        b=hEjR4hhlo09U+rFvOaIUyy1fST0RdqNFtl4gqoQoLH7cX9018o1ZLrGoxSdqvulzwc
+         yCkU5kjdI7TQKtFX/dWR97FqQfBZBCGsDZV3ymV3KS6Wdl3mtTPtOe4FIhGmrUs78bsS
+         4IKSdKq6/PWQLMU1iklyaC4KtAfXqVhJWuNJt6JBY0nQBvVvVztEz7ecmYX6jv/YImKJ
+         txazqCGko8mu5u6GYyTWOG1tRRhrduXZ/C7/K1u8I6GQBulDc+GQkv6b91tA/VpRJqnc
+         Qt8U5+rXndNdAtBtitQECwFcNteFLxeZZ3CSD+6oDnj24C1SXgwJ0yaNt6L+EL17aAw7
+         MPmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=2maBmCwKBmigg6muaEXXhf/Ng5GHmKY483ELQvBK7bw=;
-        b=HtOTqfpVgGZB0YfPVKTRsiZ3gcNHF4Z69p5FoBOpfGT1Za4F7mRswRcFAlihpMctKv
-         a0Egsq7l/MMAxN2+NpzDJ/3VUSzbfLtecxRW3oAspfsd2UHEdmUXXjH4A3xwG57YORit
-         JvOyAWHstK5mICRDXnREStJIhPACjUFI1qrPO3oEamMQExT1UWSWfDNBcgtf+gLQ/1su
-         u2t6yjNFPkYH+O+o9bKzb44WzemHWWvgRSPCjJ3/BzgtQDuyMMKmcx0UARWieUExpjZa
-         Tcw2hms5QIfXzjiEizX140yGbnC5gdQzgPz3Ej5ncZUK4u17T8bEFAowcT5an+HOJepB
-         zfYw==
-X-Gm-Message-State: ACgBeo2iKt3GI50L7GhgfyhNgjYElW6Hu8z6SAghtY5HNuoN+UJY/yTz
-        10DGu+0Hy8c6PaP4+PkWQZA=
-X-Google-Smtp-Source: AA6agR7yLrz2JyTe8JHAoaW31lDloNP6q9ah/gkL0Xj0JLrU44S+nATJXnQ7Xvnv8KPuB3tTB73pJw==
-X-Received: by 2002:a17:906:eeca:b0:730:6880:c397 with SMTP id wu10-20020a170906eeca00b007306880c397mr2352637ejb.593.1660304045907;
-        Fri, 12 Aug 2022 04:34:05 -0700 (PDT)
-Received: from [192.168.178.21] (p57b0bd9f.dip0.t-ipconnect.de. [87.176.189.159])
-        by smtp.gmail.com with ESMTPSA id jj23-20020a170907985700b0073151ce7726sm696022ejc.100.2022.08.12.04.34.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Aug 2022 04:34:05 -0700 (PDT)
-Message-ID: <93484389-1f79-b364-700f-60769fc5f8a5@gmail.com>
-Date:   Fri, 12 Aug 2022 13:34:02 +0200
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=lBY6DQi6FykxVe21cRnJ3K9NDKKdbB0Pl4sf77sX8eE=;
+        b=uFC9Ta58xZeIesTnU7uNGCLfMDj5r5R7p/4FuJ6cgIhqbFJpBIScEgRp6Mb7ZHMExM
+         Ftj7bEjEQMrstZNvFY3W2V1oj/YWUD89Dp0b3EmD8PDMydAYg7+DmvGm+X6/Jzfw2n/0
+         PWBmlIbHNEzslzdbTfR0Yga709fy+B4G8x6duCSzwc7u717jfNx0Ix0uMQF3J/m+/xS0
+         /pXGGdtkczEpxD0/3KOoytZzpUjmkQMCE0g4bfJ331TKRCNNr2t3idZEfAjybouJcnN4
+         LGQ95P+YbiGO1XRlu4lARuxtYtN/4wFBdKXxJxIctYV9vpWsWNGTmF+b60mvWprrWq13
+         c5Jg==
+X-Gm-Message-State: ACgBeo1azGiOFPyJUqtejpkM8My7JPuBZaqt/3sfaZ48OrxpiIrLYVuz
+        5fTWZ4iWOOH47377xru9zL2VhtjtC6ojpg==
+X-Google-Smtp-Source: AA6agR7kE5n5oNGAukxfrM9RV45DiF3xaT+dMFX9yohTJ4tmofsIEqX4YuoTfA86E2m/C0i03+thdw==
+X-Received: by 2002:a05:6402:5024:b0:440:e4ad:f7b6 with SMTP id p36-20020a056402502400b00440e4adf7b6mr3318507eda.358.1660304754897;
+        Fri, 12 Aug 2022 04:45:54 -0700 (PDT)
+Received: from otso.arnhem.chello.nl (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id jx27-20020a170907761b00b0072b55713daesm720790ejc.56.2022.08.12.04.45.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Aug 2022 04:45:54 -0700 (PDT)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: pm6350: add temp sensor and thermal zone config
+Date:   Fri, 12 Aug 2022 13:44:22 +0200
+Message-Id: <20220812114421.1195044-1-luca.weiss@fairphone.com>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [Linaro-mm-sig] [PATCH v2 3/5] dma-buf: Move all dma-bufs to
- dynamic locking specification
-Content-Language: en-US
-To:     Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Dmitry Osipenko <digetx@gmail.com>,
-        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
-        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        kernel@collabora.com, virtualization@lists.linux-foundation.org,
-        spice-devel@lists.freedesktop.org, linux-rdma@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, David Airlie <airlied@linux.ie>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Gurchetan Singh <gurchetansingh@chromium.org>,
-        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Daniel Almeida <daniel.almeida@collabora.com>,
-        Gert Wollny <gert.wollny@collabora.com>,
-        Gustavo Padovan <gustavo.padovan@collabora.com>,
-        Daniel Stone <daniel@fooishbar.org>,
-        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Rob Clark <robdclark@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        =?UTF-8?Q?Thomas_Hellstr=c3=b6m?= <thomas_os@shipmail.org>
-References: <20220725151839.31622-1-dmitry.osipenko@collabora.com>
- <20220725151839.31622-4-dmitry.osipenko@collabora.com>
- <6c8bded9-1809-608f-749a-5ee28b852d32@gmail.com>
- <562fbacf-3673-ff3c-23a1-124284b4456c@collabora.com>
- <87724722-b9f3-a016-c25c-4b0415f2c37f@amd.com>
- <0863cafa-c252-e194-3d23-ef640941e36e@collabora.com>
-From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <ckoenig.leichtzumerken@gmail.com>
-In-Reply-To: <0863cafa-c252-e194-3d23-ef640941e36e@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add temp-alarm device tree node and a default configuration for the
+corresponding thermal zone for this PMIC. Temperatures are based on
+downstream values.
 
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+With this config I'm getting this in dmesg, not sure if it's a warning
+that should be solved or just an informative warning.
 
-Am 10.08.22 um 20:53 schrieb Dmitry Osipenko:
-> On 8/10/22 21:25, Christian König wrote:
->> Am 10.08.22 um 19:49 schrieb Dmitry Osipenko:
->>> On 8/10/22 14:30, Christian König wrote:
->>>> Am 25.07.22 um 17:18 schrieb Dmitry Osipenko:
->>>>> This patch moves the non-dynamic dma-buf users over to the dynamic
->>>>> locking specification. The strict locking convention prevents deadlock
->>>>> situation for dma-buf importers and exporters.
->>>>>
->>>>> Previously the "unlocked" versions of the dma-buf API functions weren't
->>>>> taking the reservation lock and this patch makes them to take the lock.
->>>>>
->>>>> Intel and AMD GPU drivers already were mapping imported dma-bufs under
->>>>> the held lock, hence the "locked" variant of the functions are added
->>>>> for them and the drivers are updated to use the "locked" versions.
->>>> In general "Yes, please", but that won't be that easy.
->>>>
->>>> You not only need to change amdgpu and i915, but all drivers
->>>> implementing the map_dma_buf(), unmap_dma_buf() callbacks.
->>>>
->>>> Auditing all that code is a huge bunch of work.
->>> Hm, neither of drivers take the resv lock in map_dma_buf/unmap_dma_buf.
->>> It's easy to audit them all and I did it. So either I'm missing
->>> something or it doesn't take much time to check them all. Am I really
->>> missing something?
->> Ok, so this is only changing map/unmap now?
-> It also vmap/vunmap and attach/detach: In the previous patch I added the
-> _unlocked postfix to the func names and in this patch I made them all to
-> actually take the lock.
+[    0.268256] spmi-temp-alarm c440000.spmi:pmic@0:temp-alarm@2400: No ADC is configured and critical temperature is above the maximum stage 2 threshold of 140 C! Configuring stage 2 shutdown at 140 C.
 
+As far as I can tell, based on downstream dts this PMIC doesn't have an
+ADC.
 
-Take your patch "[PATCH v2 2/5] drm/gem: Take reservation lock for 
-vmap/vunmap operations" as a blueprint on how to approach it.
+ arch/arm64/boot/dts/qcom/pm6350.dtsi | 38 ++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
-E.g. one callback at a time and then document the result in the end.
-
-Regards,
-Christian.
-
->
->> In this case please separate this from the documentation change.
-> I'll factor out the doc in the v3.
->
->> I would also drop the _locked postfix from the function name, just
->> having _unlocked on all functions which are supposed to be called with
->> the lock held should be sufficient.
-> Noted for the v3.
->
->> Thanks for looking into this,
->> Christian.
-> Thank you for the review.
->
+diff --git a/arch/arm64/boot/dts/qcom/pm6350.dtsi b/arch/arm64/boot/dts/qcom/pm6350.dtsi
+index c5d85064562b..1d24189680ea 100644
+--- a/arch/arm64/boot/dts/qcom/pm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm6350.dtsi
+@@ -5,6 +5,37 @@
+ 
+ #include <dt-bindings/spmi/spmi.h>
+ 
++/ {
++	thermal-zones {
++		pm6350-thermal {
++			polling-delay-passive = <100>;
++			polling-delay = <0>;
++
++			thermal-sensors = <&pm6350_temp>;
++
++			trips {
++				trip0 {
++					temperature = <95000>;
++					hysteresis = <0>;
++					type = "passive";
++				};
++
++				trip1 {
++					temperature = <115000>;
++					hysteresis = <0>;
++					type = "hot";
++				};
++
++				trip2 {
++					temperature = <145000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
++	};
++};
++
+ &spmi_bus {
+ 	pmic@0 {
+ 		compatible = "qcom,pm6350", "qcom,spmi-pmic";
+@@ -35,6 +66,13 @@ pm6350_resin: resin {
+ 			};
+ 		};
+ 
++		pm6350_temp: temp-alarm@2400 {
++			compatible = "qcom,spmi-temp-alarm";
++			reg = <0x2400>;
++			interrupts = <0x0 0x24 0x0 IRQ_TYPE_EDGE_BOTH>;
++			#thermal-sensor-cells = <0>;
++		};
++
+ 		pm6350_gpios: gpios@c000 {
+ 			compatible = "qcom,pm6350-gpio";
+ 			reg = <0xc000>;
+-- 
+2.37.1
 
