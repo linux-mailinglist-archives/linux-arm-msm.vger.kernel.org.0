@@ -2,69 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3BFF5919BC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Aug 2022 12:04:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 41285591A0C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Aug 2022 13:50:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238792AbiHMKEV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 Aug 2022 06:04:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54120 "EHLO
+        id S238791AbiHMLua (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 Aug 2022 07:50:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238659AbiHMKET (ORCPT
+        with ESMTP id S239407AbiHMLu2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 Aug 2022 06:04:19 -0400
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18696B1C8;
-        Sat, 13 Aug 2022 03:04:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1660385059; x=1691921059;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Sx0SSML7cg2bVL2w/xbWJw6733DiD1Fcno0ewbF4vbI=;
-  b=HxHW4T15KDruGk11FntwhvcI9X6tu8+T5C7BmLcQA3KUs7E5ooS4yyAb
-   ei6L1hVDf8le7IwPp9tvioWeIj1DYMVU/zgfhsLiLv3Wis0dQ0YIowmWJ
-   1cfexE5C6STIyGSo65JrqpAKs85zyv3qFeMWAK9TpHSs0SeI4NbXeUWlu
-   +iTMs1ftEKgSs3urUzLb+omtJWsBdOneeGHzWl5HOIZxkbbtCqOgMHmNy
-   x/vKzXDBhjW/mbUrI/gEoHY6+zHlsdJYBol1rg90dO//ni9V44sxXmLfa
-   /e7TImLDG302MybA9ahnM75/ULi3uy5Kk1XUVen9kvXw91XFPELxIkREg
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10437"; a="289312154"
-X-IronPort-AV: E=Sophos;i="5.93,233,1654585200"; 
-   d="scan'208";a="289312154"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2022 03:04:18 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.93,233,1654585200"; 
-   d="scan'208";a="851807988"
-Received: from lkp-server02.sh.intel.com (HELO 8745164cafc7) ([10.239.97.151])
-  by fmsmga006.fm.intel.com with ESMTP; 13 Aug 2022 03:04:14 -0700
-Received: from kbuild by 8745164cafc7 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1oMo06-0001YP-0p;
-        Sat, 13 Aug 2022 10:04:14 +0000
-Date:   Sat, 13 Aug 2022 18:03:23 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        linux-remoteproc@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
-        bgoswami@quicinc.com, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, quic_rohkumar@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org,
-        devicetree@vger.kernel.org
-Cc:     kbuild-all@lists.01.org,
-        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: Re: [PATCH v4 6/7] remoteproc: qcom: Add support for memory sandbox
-Message-ID: <202208131734.HEn8peGd-lkp@intel.com>
-References: <1660308466-410-7-git-send-email-quic_srivasam@quicinc.com>
+        Sat, 13 Aug 2022 07:50:28 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 901DD20F64
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Aug 2022 04:50:24 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id k17so1680721wmr.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Aug 2022 04:50:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=rySRLwiiIOrtSpvOJyTmWSaKJJa5oryDquhv9YZj+6o=;
+        b=YY2Jve7dPmBhnAAPknKHb75GYBe6TgB4NpBMCo7lsOxsvFBCkxz8lDcxWStY5d47Jv
+         JP031NuvuBuaA95125eUkzukVIhphwd9IBcuuJlWoUxaJdI7zgqkMFR7yBfAZnCZfKg7
+         X8ckr7JGKp0pvL9HU6UkL2rQSEaO6nxktBfeR/9r17vlYD8ntimnDfxZsHETZz7/cLbo
+         l275B+eBqhsYsTRxCKqd1YgWQzUJqQF/X87a3p4gbZHSJ3UCYK/192171gan4M5iUwkm
+         /fC8Asy0SerA+PA/uZsRVAk4/m2sSJaY7iF5AAKNh/Ap9mIhBDJUudbKN0hwI6v+Jwic
+         suUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=rySRLwiiIOrtSpvOJyTmWSaKJJa5oryDquhv9YZj+6o=;
+        b=Mea/uhnyUAbS25CZeUwT/eMImD1gWtSq0j3NvOL6hztIxpkT/RlzR6+OuPQw8Dvqhq
+         jfD67CibzRR6ifv7Ya3TjcqsWGpI8kUHQQQsIidwqqlBvao4Yx/REqx0+Be5D648vM9/
+         OhyxrhIpZMPmTMcTEDYdE2WNl/AqqdWlN5MQnUrfvUfu+VdiKG1PpvvxymC024sBHEQh
+         Juu4RE0PgvcFu9zZguEopGMQFHNGYmzv8TaTp9DmXitN5eJixT0INtOF4UHk19j9XIX6
+         RLHFHu1dSu26ZXugLHw3lpvMBZ8tsvoOWipF2kR6Jfjs2/qlCgH/B55/kV4r1wy0mDd4
+         9+Ig==
+X-Gm-Message-State: ACgBeo1oAK+NoIJPj/DSteqU+nj7J6PPV4CsIJNtsOqBC3VDWAD44eCJ
+        JtikLE0j/3YV7xIGqppMEEhpWPP2l0r2t5ov12Q=
+X-Google-Smtp-Source: AA6agR74gWIK4vbRB/zahVpfeJTmJjAaYd5j3yvMfKvXYOe/Z/7mJsBMh41qu6MV1qncnZnLUJsIKQ==
+X-Received: by 2002:a7b:ce05:0:b0:3a5:c069:25b3 with SMTP id m5-20020a7bce05000000b003a5c06925b3mr5293928wmc.87.1660391422858;
+        Sat, 13 Aug 2022 04:50:22 -0700 (PDT)
+Received: from otso.. (mobiledyn-62-240-134-27.mrsn.at. [62.240.134.27])
+        by smtp.gmail.com with ESMTPSA id h8-20020a05600c350800b003a325bd8517sm3656092wmq.5.2022.08.13.04.50.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 13 Aug 2022 04:50:22 -0700 (PDT)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+To:     linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] mfd: qcom-spmi-pmic: Add more PMIC SUBTYPE IDs
+Date:   Sat, 13 Aug 2022 13:48:06 +0200
+Message-Id: <20220813114806.102466-1-luca.weiss@fairphone.com>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1660308466-410-7-git-send-email-quic_srivasam@quicinc.com>
-X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,66 +73,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Srinivasa,
+Add more IDs that are found in the downstream msm-4.19 kernel under the
+path include/linux/qpnp/qpnp-revid.h.
 
-Thank you for the patch! Perhaps something to improve:
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+I've noticed that some hex numbers in this list have uppercase letters,
+some have lower case ones.
+If wanted I can add a patch converting all to either upper- or lower
+case. Anyone have a preference here?
 
-[auto build test WARNING on remoteproc/rproc-next]
-[also build test WARNING on linus/master v5.19 next-20220812]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+ include/soc/qcom/qcom-spmi-pmic.h | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Srinivasa-Rao-Mandadapu/Update-ADSP-pil-loader-for-SC7280-platform/20220812-205239
-base:   git://git.kernel.org/pub/scm/linux/kernel/git/remoteproc/linux.git rproc-next
-config: arm-allyesconfig (https://download.01.org/0day-ci/archive/20220813/202208131734.HEn8peGd-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/1d330f9a7446932416d55d93ebba00e3d16bbef9
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Srinivasa-Rao-Mandadapu/Update-ADSP-pil-loader-for-SC7280-platform/20220812-205239
-        git checkout 1d330f9a7446932416d55d93ebba00e3d16bbef9
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash drivers/remoteproc/
-
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
-
-All warnings (new ones prefixed by >>):
-
-   drivers/remoteproc/qcom_q6v5_adsp.c: In function 'adsp_of_unmap_smmu':
->> drivers/remoteproc/qcom_q6v5_adsp.c:343:13: warning: variable 'access_level' set but not used [-Wunused-but-set-variable]
-     343 |         int access_level;
-         |             ^~~~~~~~~~~~
->> drivers/remoteproc/qcom_q6v5_adsp.c:340:23: warning: variable 'mem_phys' set but not used [-Wunused-but-set-variable]
-     340 |         unsigned long mem_phys;
-         |                       ^~~~~~~~
-
-
-vim +/access_level +343 drivers/remoteproc/qcom_q6v5_adsp.c
-
-   337	
-   338	static void adsp_of_unmap_smmu(struct iommu_domain *iommu_dom, const __be32 *prop, int len)
-   339	{
- > 340		unsigned long mem_phys;
-   341		unsigned long iova;
-   342		unsigned int mem_size;
- > 343		int access_level;
-   344		int i;
-   345	
-   346		for (i = 0; i < len; i++) {
-   347			iova = be32_to_cpu(prop[i++]);
-   348			mem_phys = be32_to_cpu(prop[i++]);
-   349			mem_size = be32_to_cpu(prop[i++]);
-   350			access_level = be32_to_cpu(prop[i]);
-   351			iommu_unmap(iommu_dom, iova, mem_size);
-   352		}
-   353	}
-   354	
-
+diff --git a/include/soc/qcom/qcom-spmi-pmic.h b/include/soc/qcom/qcom-spmi-pmic.h
+index 72398ff44719..bcb8e95d5dab 100644
+--- a/include/soc/qcom/qcom-spmi-pmic.h
++++ b/include/soc/qcom/qcom-spmi-pmic.h
+@@ -26,18 +26,32 @@
+ #define PM8901_SUBTYPE		0x0f
+ #define PM8950_SUBTYPE		0x10
+ #define PMI8950_SUBTYPE		0x11
++#define PMK8001_SUBTYPE		0x12
++#define PMI8996_SUBTYPE		0x13
+ #define PM8998_SUBTYPE		0x14
+ #define PMI8998_SUBTYPE		0x15
++#define SMB1381_SUBTYPE		0x17
+ #define PM8005_SUBTYPE		0x18
+ #define PM660L_SUBTYPE		0x1A
+ #define PM660_SUBTYPE		0x1B
++#define SMB1355_SUBTYPE		0x1C
+ #define PM8150_SUBTYPE		0x1E
+ #define PM8150L_SUBTYPE		0x1f
+ #define PM8150B_SUBTYPE		0x20
+ #define PMK8002_SUBTYPE		0x21
++#define SMB1390_SUBTYPE		0x23
+ #define PM8009_SUBTYPE		0x24
++#define PMI632_SUBTYPE		0x25
+ #define PM8150C_SUBTYPE		0x26
++#define PM6150_SUBTYPE		0x28
+ #define SMB2351_SUBTYPE		0x29
++#define PM8008_SUBTYPE		0x2C
++#define PM6125_SUBTYPE		0x2D
++#define PM7250B_SUBTYPE		0x2E
++#define PMK8350_SUBTYPE		0x2F
++#define PMR735B_SUBTYPE		0x34
++#define PM6350_SUBTYPE		0x36
++#define PM2250_SUBTYPE		0x37
+ 
+ #define PMI8998_FAB_ID_SMIC	0x11
+ #define PMI8998_FAB_ID_GF	0x30
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.37.1
+
