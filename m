@@ -2,49 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A41435922D6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Aug 2022 17:53:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E77D35923FB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Aug 2022 18:27:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242096AbiHNPwh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 14 Aug 2022 11:52:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39862 "EHLO
+        id S241453AbiHNQ0q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 14 Aug 2022 12:26:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242041AbiHNPvF (ORCPT
+        with ESMTP id S242257AbiHNQZb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 14 Aug 2022 11:51:05 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E60C51A81E;
-        Sun, 14 Aug 2022 08:36:44 -0700 (PDT)
+        Sun, 14 Aug 2022 12:25:31 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E57F4EBF;
+        Sun, 14 Aug 2022 09:23:13 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 33FEE60DBC;
-        Sun, 14 Aug 2022 15:36:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85099C433D6;
-        Sun, 14 Aug 2022 15:36:42 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 31D58B80B3F;
+        Sun, 14 Aug 2022 16:23:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 847E8C43144;
+        Sun, 14 Aug 2022 16:23:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1660491403;
-        bh=qpMce4X14YaBqpkXmmNkQSu120Ovx78wfAHgf+sshmU=;
+        s=k20201202; t=1660494190;
+        bh=jCB3yocuDnO1L80aYS568njTv1ha44rBP6GelQkIIuk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=UhWu/BGG/Gz/y2W8gnHywjyZPMOAUFfgyuucBpHLRksomM0OFAspBJ9IWJu2zCER5
-         KMvIaLTEJ30ma3ppnkDNVKOaNsMnXDG5TZBHvEsx2Db3kBpX+UqaVKUrvomVqlQF88
-         06qy9zLiF5KfQYPQbh//yTVy26l9JugJjRdqX8C9tMflAM7Xc9cod0uqD4x/X4l2wx
-         pyTL9SVTjF2jt/QGSTmJSdVxOjId7mnU1/UoLQVj7qwfm9vWKFSeSGU1/XSvteNhvE
-         +NaJck3ZmOhReIBXm66eHAa1PCCBjJOVqtw/Qiu4jsQgIkAehAbA7Kd/OjhnUNCzBj
-         wA13ZeW17aEgg==
+        b=U7PJCClSCG9FGv0TelgfwQmDKOQ+w7QX3kFuExlndDWgKWew6XFiQaFieIF9B/8pZ
+         Pre+9QVm4EWuPo15TpdwMbN8mA/3hbprLajcaHJB3KF2srMqFv4ybPz7YBOGybyEIR
+         dHYS5dqQcTe5fncx8WlqOcTlOUcXBEf77k6Ls6rAHYUG1+7fJDksjjDwn/lcfpIU7A
+         ogQHhKoXSwDp0uVhpSB+ITTj3evTA85Rrebo99mhwXzgpxMO7MBirVF7/rvQ3bmk8Z
+         sRggfNrMFp9wyQp47+yKnwQAvSWYgH8ftfXGHqjl2ylTrGwpqPZjye9T4nuWUE9XHV
+         D4g6GXcGN5AKA==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Linux Kernel Functional Testing <lkft@linaro.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
         Sasha Levin <sashal@kernel.org>, agross@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 4/9] clk: qcom: ipq8074: dont disable gcc_sleep_clk_src
-Date:   Sun, 14 Aug 2022 11:36:31 -0400
-Message-Id: <20220814153637.2380406-4-sashal@kernel.org>
+        bjorn.andersson@linaro.org, mchehab@kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.19 44/48] venus: pm_helpers: Fix warning in OPP during probe
+Date:   Sun, 14 Aug 2022 12:19:37 -0400
+Message-Id: <20220814161943.2394452-44-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220814153637.2380406-1-sashal@kernel.org>
-References: <20220814153637.2380406-1-sashal@kernel.org>
+In-Reply-To: <20220814161943.2394452-1-sashal@kernel.org>
+References: <20220814161943.2394452-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -59,83 +60,117 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Robert Marko <robimarko@gmail.com>
+From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 
-[ Upstream commit 1bf7305e79aab095196131bdc87a97796e0e3fac ]
+[ Upstream commit 1d95af02f23031c2e1cca7607c514b86ce85bc6e ]
 
-Once the usb sleep clocks are disabled, clock framework is trying to
-disable the sleep clock source also.
+Fix the following WARN triggered during Venus driver probe on
+5.19.0-rc8-next-20220728:
 
-However, it seems that it cannot be disabled and trying to do so produces:
-[  245.436390] ------------[ cut here ]------------
-[  245.441233] gcc_sleep_clk_src status stuck at 'on'
-[  245.441254] WARNING: CPU: 2 PID: 223 at clk_branch_wait+0x130/0x140
-[  245.450435] Modules linked in: xhci_plat_hcd xhci_hcd dwc3 dwc3_qcom leds_gpio
-[  245.456601] CPU: 2 PID: 223 Comm: sh Not tainted 5.18.0-rc4 #215
-[  245.463889] Hardware name: Xiaomi AX9000 (DT)
-[  245.470050] pstate: 204000c5 (nzCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  245.474307] pc : clk_branch_wait+0x130/0x140
-[  245.481073] lr : clk_branch_wait+0x130/0x140
-[  245.485588] sp : ffffffc009f2bad0
-[  245.489838] x29: ffffffc009f2bad0 x28: ffffff8003e6c800 x27: 0000000000000000
-[  245.493057] x26: 0000000000000000 x25: 0000000000000000 x24: ffffff800226ef20
-[  245.500175] x23: ffffffc0089ff550 x22: 0000000000000000 x21: ffffffc008476ad0
-[  245.507294] x20: 0000000000000000 x19: ffffffc00965ac70 x18: fffffffffffc51a7
-[  245.514413] x17: 68702e3030303837 x16: 3a6d726f6674616c x15: ffffffc089f2b777
-[  245.521531] x14: ffffffc0095c9d18 x13: 0000000000000129 x12: 0000000000000129
-[  245.528649] x11: 00000000ffffffea x10: ffffffc009621d18 x9 : 0000000000000001
-[  245.535767] x8 : 0000000000000001 x7 : 0000000000017fe8 x6 : 0000000000000001
-[  245.542885] x5 : ffffff803fdca6d8 x4 : 0000000000000000 x3 : 0000000000000027
-[  245.550002] x2 : 0000000000000027 x1 : 0000000000000023 x0 : 0000000000000026
-[  245.557122] Call trace:
-[  245.564229]  clk_branch_wait+0x130/0x140
-[  245.566490]  clk_branch2_disable+0x2c/0x40
-[  245.570656]  clk_core_disable+0x60/0xb0
-[  245.574561]  clk_core_disable+0x68/0xb0
-[  245.578293]  clk_disable+0x30/0x50
-[  245.582113]  dwc3_qcom_remove+0x60/0xc0 [dwc3_qcom]
-[  245.585588]  platform_remove+0x28/0x60
-[  245.590361]  device_remove+0x4c/0x80
-[  245.594179]  device_release_driver_internal+0x1dc/0x230
-[  245.597914]  device_driver_detach+0x18/0x30
-[  245.602861]  unbind_store+0xec/0x110
-[  245.607027]  drv_attr_store+0x24/0x40
-[  245.610847]  sysfs_kf_write+0x44/0x60
-[  245.614405]  kernfs_fop_write_iter+0x128/0x1c0
-[  245.618052]  new_sync_write+0xc0/0x130
-[  245.622391]  vfs_write+0x1d4/0x2a0
-[  245.626123]  ksys_write+0x58/0xe0
-[  245.629508]  __arm64_sys_write+0x1c/0x30
-[  245.632895]  invoke_syscall.constprop.0+0x5c/0x110
-[  245.636890]  do_el0_svc+0xa0/0x150
-[  245.641488]  el0_svc+0x18/0x60
-[  245.644872]  el0t_64_sync_handler+0xa4/0x130
-[  245.647914]  el0t_64_sync+0x174/0x178
-[  245.652340] ---[ end trace 0000000000000000 ]---
+ WARNING: CPU: 7 PID: 339 at drivers/opp/core.c:2471 dev_pm_opp_set_config+0x49c/0x610
+ Modules linked in: qcom_spmi_adc5 rtc_pm8xxx qcom_spmi_adc_tm5 leds_qcom_lpg led_class_multicolor
+  qcom_pon qcom_vadc_common venus_core(+) qcom_spmi_temp_alarm v4l2_mem2mem videobuf2_v4l2 msm(+)
+  videobuf2_common crct10dif_ce spi_geni_qcom snd_soc_sm8250 i2c_qcom_geni gpu_sched
+  snd_soc_qcom_common videodev qcom_q6v5_pas soundwire_qcom drm_dp_aux_bus qcom_stats
+  drm_display_helper qcom_pil_info soundwire_bus snd_soc_lpass_va_macro mc qcom_q6v5
+  phy_qcom_snps_femto_v2 qcom_rng snd_soc_lpass_macro_common snd_soc_lpass_wsa_macro
+  lpass_gfm_sm8250 slimbus qcom_sysmon qcom_common qcom_glink_smem qmi_helpers
+  qcom_wdt mdt_loader socinfo icc_osm_l3 display_connector
+  drm_kms_helper qnoc_sm8250 drm fuse ip_tables x_tables ipv6
+ CPU: 7 PID: 339 Comm: systemd-udevd Not tainted 5.19.0-rc8-next-20220728 #4
+ Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
+ pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : dev_pm_opp_set_config+0x49c/0x610
+ lr : dev_pm_opp_set_config+0x58/0x610
+ sp : ffff8000093c3710
+ x29: ffff8000093c3710 x28: ffffbca3959d82b8 x27: ffff8000093c3d00
+ x26: ffffbca3959d8e08 x25: ffff4396cac98118 x24: ffff4396c0e24810
+ x23: ffff4396c4272c40 x22: ffff4396c0e24810 x21: ffff8000093c3810
+ x20: ffff4396cac36800 x19: ffff4396cac96800 x18: 0000000000000000
+ x17: 0000000000000003 x16: ffffbca3f4edf198 x15: 0000001cba64a858
+ x14: 0000000000000180 x13: 000000000000017e x12: 0000000000000000
+ x11: 0000000000000002 x10: 0000000000000a60 x9 : ffff8000093c35c0
+ x8 : ffff4396c4273700 x7 : ffff43983efca6c0 x6 : ffff43983efca640
+ x5 : 00000000410fd0d0 x4 : ffff4396c4272c40 x3 : ffffbca3f5d1e008
+ x2 : 0000000000000000 x1 : ffff4396c2421600 x0 : ffff4396cac96860
+ Call trace:
+  dev_pm_opp_set_config+0x49c/0x610
+  devm_pm_opp_set_config+0x18/0x70
+  vcodec_domains_get+0xb8/0x1638 [venus_core]
+  core_get_v4+0x1d8/0x218 [venus_core]
+  venus_probe+0xf4/0x468 [venus_core]
+  platform_probe+0x68/0xd8
+  really_probe+0xbc/0x2a8
+  __driver_probe_device+0x78/0xe0
+  driver_probe_device+0x3c/0xf0
+  __driver_attach+0x70/0x120
+  bus_for_each_dev+0x70/0xc0
+  driver_attach+0x24/0x30
+  bus_add_driver+0x150/0x200
+  driver_register+0x64/0x120
+  __platform_driver_register+0x28/0x38
+  qcom_venus_driver_init+0x24/0x1000 [venus_core]
+  do_one_initcall+0x54/0x1c8
+  do_init_module+0x44/0x1d0
+  load_module+0x16c8/0x1aa0
+  __do_sys_finit_module+0xbc/0x110
+  __arm64_sys_finit_module+0x20/0x30
+  invoke_syscall+0x44/0x108
+  el0_svc_common.constprop.0+0xcc/0xf0
+  do_el0_svc+0x2c/0xb8
+  el0_svc+0x2c/0x88
+  el0t_64_sync_handler+0xb8/0xc0
+  el0t_64_sync+0x18c/0x190
+  qcom-venus: probe of aa00000.video-codec failed with error -16
 
-So, add CLK_IS_CRITICAL flag to the clock so that the kernel won't try
-to disable the sleep clock.
+The fix is re-ordering the code related to OPP core. The OPP core
+expects all configuration options to be provided before the OPP
+table is added.
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Link: https://lore.kernel.org/r/20220515210048.483898-10-robimarko@gmail.com
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Suggested-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-ipq8074.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/qcom/venus/pm_helpers.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-ipq8074.c b/drivers/clk/qcom/gcc-ipq8074.c
-index 0f735d37690f..97a951990103 100644
---- a/drivers/clk/qcom/gcc-ipq8074.c
-+++ b/drivers/clk/qcom/gcc-ipq8074.c
-@@ -139,6 +139,7 @@ static struct clk_branch gcc_sleep_clk_src = {
- 			},
- 			.num_parents = 1,
- 			.ops = &clk_branch2_ops,
-+			.flags = CLK_IS_CRITICAL,
- 		},
- 	},
- };
+diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+index cb48c5ff3dee..c93d2906e4c7 100644
+--- a/drivers/media/platform/qcom/venus/pm_helpers.c
++++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+@@ -875,7 +875,7 @@ static int vcodec_domains_get(struct venus_core *core)
+ 	}
+ 
+ skip_pmdomains:
+-	if (!core->has_opp_table)
++	if (!core->res->opp_pmdomain)
+ 		return 0;
+ 
+ 	/* Attach the power domain for setting performance state */
+@@ -1007,6 +1007,10 @@ static int core_get_v4(struct venus_core *core)
+ 	if (ret)
+ 		return ret;
+ 
++	ret = vcodec_domains_get(core);
++	if (ret)
++		return ret;
++
+ 	if (core->res->opp_pmdomain) {
+ 		ret = devm_pm_opp_of_add_table(dev);
+ 		if (!ret) {
+@@ -1017,10 +1021,6 @@ static int core_get_v4(struct venus_core *core)
+ 		}
+ 	}
+ 
+-	ret = vcodec_domains_get(core);
+-	if (ret)
+-		return ret;
+-
+ 	return 0;
+ }
+ 
 -- 
 2.35.1
 
