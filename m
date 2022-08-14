@@ -2,101 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BAC3B591FDC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Aug 2022 15:13:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F4CC592097
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Aug 2022 17:29:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231324AbiHNNNz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 14 Aug 2022 09:13:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43766 "EHLO
+        id S240393AbiHNP3O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 14 Aug 2022 11:29:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229634AbiHNNNy (ORCPT
+        with ESMTP id S240182AbiHNP2q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 14 Aug 2022 09:13:54 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BA9310FEE;
-        Sun, 14 Aug 2022 06:13:52 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id gp7so4889172pjb.4;
-        Sun, 14 Aug 2022 06:13:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:subject:cc:to:from:from:to:cc;
-        bh=fGiLdsou0tZYmT4+zIed2ZYLs4AlYvI3OzZQVfmavwc=;
-        b=X1lEK3uFD84c6GDeRXOQttvfrQ0tWvRd4WfHp1QTHLg0xIbZPpv2hhmDUJ7sYTf4Fe
-         gsxpamKzt9Md74IPQpW2gfLOl0TN2jpOIjy6ZnJPk3AonNyT+CBqeB95goBih5/2cjiI
-         YtHcR8/ZqdI6QqTpzfrPIJS3p4+WZxCW8fXsM2yIOSsVnp/ogs1WurksOb/CfzN/00UB
-         rXMSOgCBywgH8sIgqo+8r1tl3xkmlsLtJGvme9KvwOuVBBsdLLFAsqU/GqSdHW18mppE
-         lrhJsMxrFzb8Zt+i4kZCMnxmiklAMIsGgIwdV/igLId8Fi1xHLiY1dpw4jh5npK/YUyQ
-         rhmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=fGiLdsou0tZYmT4+zIed2ZYLs4AlYvI3OzZQVfmavwc=;
-        b=aLqnCepZVKAlf3++v3/CIsIC/RZu6pYewyyB0fXvFarzDOWgUxOliBc7X3wvxZb8T1
-         Mh6og0e5w5GetmlgxR3y/RGeT4avjnu1HRmrGIUJ95nopypuwtvUFJiHYUlnavcefH6y
-         y1GtMyZnFF88jatoszIaqj03SUCzqPoP9BkXKrtF+upWfTeX7y0ay4iYkUFXgUO6GpVj
-         WTXUaZ2MqDoCZYz6I//MvDV6nRMN5vSxqvwoiZp2XnPJoGIC9h6ET+tZXkg2xIy/yPvb
-         sWEZD6T5sBwxhUVGRmnUY4LgdvPZmy9pR2NCXyR+XKJD0x1oA2y1UAY8Q6saBnsCy7wX
-         YtmA==
-X-Gm-Message-State: ACgBeo0KjA13I+z8Egt6G3OCaaaUVZ3SsYJzRBMmpdG7OsSy6EYyUTnq
-        sAgHeOWkskl2OaR2K+OZdN0=
-X-Google-Smtp-Source: AA6agR56XymXCOBcunnS9iI0VLrdpJ5JeEHde8WRADkXS81AKHnFnWEQGiPhfm+UOR3byye5XCHAxQ==
-X-Received: by 2002:a17:902:e80d:b0:16e:f7bf:34a7 with SMTP id u13-20020a170902e80d00b0016ef7bf34a7mr12565939plg.112.1660482831758;
-        Sun, 14 Aug 2022 06:13:51 -0700 (PDT)
-Received: from localhost.localdomain ([182.160.5.243])
-        by smtp.gmail.com with ESMTPSA id x10-20020a170902ec8a00b0016cf195eb16sm5381359plg.185.2022.08.14.06.13.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Aug 2022 06:13:51 -0700 (PDT)
-From:   Tuo Cao <91tuocao@gmail.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, vkoul@kernel.org
-Cc:     konrad.dybcio@somainline.org, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        91tuocao@gmail.com
-Subject: [PATCH] dmaengine: qcom: gpi: move read_lock_bh to read_lock in tasklet
-Date:   Sun, 14 Aug 2022 21:13:23 +0800
-Message-Id: <20220814131323.7029-1-91tuocao@gmail.com>
-X-Mailer: git-send-email 2.17.1
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Sun, 14 Aug 2022 11:28:46 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74CC6B842;
+        Sun, 14 Aug 2022 08:28:45 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id F2C0860C14;
+        Sun, 14 Aug 2022 15:28:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595E3C433B5;
+        Sun, 14 Aug 2022 15:28:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1660490924;
+        bh=/0+jimdYwUCJN42zHCwjCqChS2Ubs8v0UBsiMm24SKs=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=E/SXvsl0o0z3AB57In3ObvZyK5fZvM2FA3xXQuNl12hxoGfDMaENqF2zzeltr0Tsz
+         sMwXvNIaDAMqQVCF7K01JIfC23LMxd/Ch2fb8w7FCz/GMJZQ0mP21EubgIPrKKTGVE
+         nedd0UIhhF1S0YOh9J7wtkVtmg5GCa9ddtx8oHRJN+b+g1l5fP3iz12QdwREGqX36e
+         gFkNHkNH4/cu/eP8hCs2H4IQQeE7FagLdXdewEIpogM9Q+8QsEXQwpv65raBeAXjCt
+         3OOzNbTYvR5NwWRpNUPjwua9Vhzxe0InoqTsVIPprzISte4tJCn2C+SL7TVd3KMkA/
+         IOMrvizMxZPBw==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Robert Marko <robimarko@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sasha Levin <sashal@kernel.org>, agross@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.19 25/64] clk: qcom: ipq8074: dont disable gcc_sleep_clk_src
+Date:   Sun, 14 Aug 2022 11:23:58 -0400
+Message-Id: <20220814152437.2374207-25-sashal@kernel.org>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220814152437.2374207-1-sashal@kernel.org>
+References: <20220814152437.2374207-1-sashal@kernel.org>
+MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-it is unnecessary to call read_lock_bh in a tasklet.
+From: Robert Marko <robimarko@gmail.com>
 
-Signed-off-by: Tuo Cao <91tuocao@gmail.com>
+[ Upstream commit 1bf7305e79aab095196131bdc87a97796e0e3fac ]
+
+Once the usb sleep clocks are disabled, clock framework is trying to
+disable the sleep clock source also.
+
+However, it seems that it cannot be disabled and trying to do so produces:
+[  245.436390] ------------[ cut here ]------------
+[  245.441233] gcc_sleep_clk_src status stuck at 'on'
+[  245.441254] WARNING: CPU: 2 PID: 223 at clk_branch_wait+0x130/0x140
+[  245.450435] Modules linked in: xhci_plat_hcd xhci_hcd dwc3 dwc3_qcom leds_gpio
+[  245.456601] CPU: 2 PID: 223 Comm: sh Not tainted 5.18.0-rc4 #215
+[  245.463889] Hardware name: Xiaomi AX9000 (DT)
+[  245.470050] pstate: 204000c5 (nzCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[  245.474307] pc : clk_branch_wait+0x130/0x140
+[  245.481073] lr : clk_branch_wait+0x130/0x140
+[  245.485588] sp : ffffffc009f2bad0
+[  245.489838] x29: ffffffc009f2bad0 x28: ffffff8003e6c800 x27: 0000000000000000
+[  245.493057] x26: 0000000000000000 x25: 0000000000000000 x24: ffffff800226ef20
+[  245.500175] x23: ffffffc0089ff550 x22: 0000000000000000 x21: ffffffc008476ad0
+[  245.507294] x20: 0000000000000000 x19: ffffffc00965ac70 x18: fffffffffffc51a7
+[  245.514413] x17: 68702e3030303837 x16: 3a6d726f6674616c x15: ffffffc089f2b777
+[  245.521531] x14: ffffffc0095c9d18 x13: 0000000000000129 x12: 0000000000000129
+[  245.528649] x11: 00000000ffffffea x10: ffffffc009621d18 x9 : 0000000000000001
+[  245.535767] x8 : 0000000000000001 x7 : 0000000000017fe8 x6 : 0000000000000001
+[  245.542885] x5 : ffffff803fdca6d8 x4 : 0000000000000000 x3 : 0000000000000027
+[  245.550002] x2 : 0000000000000027 x1 : 0000000000000023 x0 : 0000000000000026
+[  245.557122] Call trace:
+[  245.564229]  clk_branch_wait+0x130/0x140
+[  245.566490]  clk_branch2_disable+0x2c/0x40
+[  245.570656]  clk_core_disable+0x60/0xb0
+[  245.574561]  clk_core_disable+0x68/0xb0
+[  245.578293]  clk_disable+0x30/0x50
+[  245.582113]  dwc3_qcom_remove+0x60/0xc0 [dwc3_qcom]
+[  245.585588]  platform_remove+0x28/0x60
+[  245.590361]  device_remove+0x4c/0x80
+[  245.594179]  device_release_driver_internal+0x1dc/0x230
+[  245.597914]  device_driver_detach+0x18/0x30
+[  245.602861]  unbind_store+0xec/0x110
+[  245.607027]  drv_attr_store+0x24/0x40
+[  245.610847]  sysfs_kf_write+0x44/0x60
+[  245.614405]  kernfs_fop_write_iter+0x128/0x1c0
+[  245.618052]  new_sync_write+0xc0/0x130
+[  245.622391]  vfs_write+0x1d4/0x2a0
+[  245.626123]  ksys_write+0x58/0xe0
+[  245.629508]  __arm64_sys_write+0x1c/0x30
+[  245.632895]  invoke_syscall.constprop.0+0x5c/0x110
+[  245.636890]  do_el0_svc+0xa0/0x150
+[  245.641488]  el0_svc+0x18/0x60
+[  245.644872]  el0t_64_sync_handler+0xa4/0x130
+[  245.647914]  el0t_64_sync+0x174/0x178
+[  245.652340] ---[ end trace 0000000000000000 ]---
+
+So, add CLK_IS_CRITICAL flag to the clock so that the kernel won't try
+to disable the sleep clock.
+
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Link: https://lore.kernel.org/r/20220515210048.483898-10-robimarko@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/qcom/gpi.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/clk/qcom/gcc-ipq8074.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-index 8f0c9c4e2efd..236005f7dd30 100644
---- a/drivers/dma/qcom/gpi.c
-+++ b/drivers/dma/qcom/gpi.c
-@@ -1150,9 +1150,9 @@ static void gpi_ev_tasklet(unsigned long data)
- {
- 	struct gpii *gpii = (struct gpii *)data;
- 
--	read_lock_bh(&gpii->pm_lock);
-+	read_lock(&gpii->pm_lock);
- 	if (!REG_ACCESS_VALID(gpii->pm_state)) {
--		read_unlock_bh(&gpii->pm_lock);
-+		read_unlock(&gpii->pm_lock);
- 		dev_err(gpii->gpi_dev->dev, "not processing any events, pm_state:%s\n",
- 			TO_GPI_PM_STR(gpii->pm_state));
- 		return;
-@@ -1163,7 +1163,7 @@ static void gpi_ev_tasklet(unsigned long data)
- 
- 	/* enable IEOB, switching back to interrupts */
- 	gpi_config_interrupts(gpii, MASK_IEOB_SETTINGS, 1);
--	read_unlock_bh(&gpii->pm_lock);
-+	read_unlock(&gpii->pm_lock);
- }
- 
- /* marks all pending events for the channel as stale */
+diff --git a/drivers/clk/qcom/gcc-ipq8074.c b/drivers/clk/qcom/gcc-ipq8074.c
+index 541016db3c4b..6bdf65a6e33d 100644
+--- a/drivers/clk/qcom/gcc-ipq8074.c
++++ b/drivers/clk/qcom/gcc-ipq8074.c
+@@ -662,6 +662,7 @@ static struct clk_branch gcc_sleep_clk_src = {
+ 			},
+ 			.num_parents = 1,
+ 			.ops = &clk_branch2_ops,
++			.flags = CLK_IS_CRITICAL,
+ 		},
+ 	},
+ };
 -- 
-2.17.1
+2.35.1
 
