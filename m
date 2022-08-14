@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A25E5922CE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Aug 2022 17:53:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A41435922D6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Aug 2022 17:53:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242073AbiHNPwd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 14 Aug 2022 11:52:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40478 "EHLO
+        id S242096AbiHNPwh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 14 Aug 2022 11:52:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242005AbiHNPux (ORCPT
+        with ESMTP id S242041AbiHNPvF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 14 Aug 2022 11:50:53 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B7E518B2B;
-        Sun, 14 Aug 2022 08:36:23 -0700 (PDT)
+        Sun, 14 Aug 2022 11:51:05 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E60C51A81E;
+        Sun, 14 Aug 2022 08:36:44 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 87BAD60C92;
-        Sun, 14 Aug 2022 15:36:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0B60C43470;
-        Sun, 14 Aug 2022 15:36:20 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 33FEE60DBC;
+        Sun, 14 Aug 2022 15:36:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85099C433D6;
+        Sun, 14 Aug 2022 15:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1660491381;
-        bh=TPY6boGZ9LimDUB8G4GXrgYk+mHqEWmGJZWSctSXiZY=;
+        s=k20201202; t=1660491403;
+        bh=qpMce4X14YaBqpkXmmNkQSu120Ovx78wfAHgf+sshmU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=iKwUNXXvBrvzOgVUd2OH7xgh/+kf4IvJU8XzzoLLUioPFgSjnL6dKUaMSxD27LBVq
-         x+tleBlb3FnH/5omQtM9g8w/hB4AT1VJa+XHJbE88szPWMnepsKFi+AMbVIgxm5epj
-         cjzMoScbeL8d/m2DdyX41HKjjGcGvj/6zq0cVDk+5vZJVOWikYKQUEgnBSafzguQPz
-         UeLNK7pz8/Hlq82G/A2DEujBd9PlIXlZOdsxaav8y9YuR1iOzFy3XYr167L6rwXB2g
-         e5+i8i7rPA4NRsQ2tmDSf6RloJUnK7M5Hi2aCDTHDnyIO0FkoOZsWdzkoULr+Y/Qaq
-         tNZdom3rM48mA==
+        b=UhWu/BGG/Gz/y2W8gnHywjyZPMOAUFfgyuucBpHLRksomM0OFAspBJ9IWJu2zCER5
+         KMvIaLTEJ30ma3ppnkDNVKOaNsMnXDG5TZBHvEsx2Db3kBpX+UqaVKUrvomVqlQF88
+         06qy9zLiF5KfQYPQbh//yTVy26l9JugJjRdqX8C9tMflAM7Xc9cod0uqD4x/X4l2wx
+         pyTL9SVTjF2jt/QGSTmJSdVxOjId7mnU1/UoLQVj7qwfm9vWKFSeSGU1/XSvteNhvE
+         +NaJck3ZmOhReIBXm66eHAa1PCCBjJOVqtw/Qiu4jsQgIkAehAbA7Kd/OjhnUNCzBj
+         wA13ZeW17aEgg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Robert Marko <robimarko@gmail.com>,
@@ -39,12 +39,12 @@ Cc:     Robert Marko <robimarko@gmail.com>,
         Sasha Levin <sashal@kernel.org>, agross@kernel.org,
         mturquette@baylibre.com, sboyd@kernel.org,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 06/13] clk: qcom: ipq8074: dont disable gcc_sleep_clk_src
-Date:   Sun, 14 Aug 2022 11:36:03 -0400
-Message-Id: <20220814153610.2380234-6-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 4/9] clk: qcom: ipq8074: dont disable gcc_sleep_clk_src
+Date:   Sun, 14 Aug 2022 11:36:31 -0400
+Message-Id: <20220814153637.2380406-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220814153610.2380234-1-sashal@kernel.org>
-References: <20220814153610.2380234-1-sashal@kernel.org>
+In-Reply-To: <20220814153637.2380406-1-sashal@kernel.org>
+References: <20220814153637.2380406-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -125,10 +125,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/clk/qcom/gcc-ipq8074.c b/drivers/clk/qcom/gcc-ipq8074.c
-index 708c486a6e96..90b53356d38b 100644
+index 0f735d37690f..97a951990103 100644
 --- a/drivers/clk/qcom/gcc-ipq8074.c
 +++ b/drivers/clk/qcom/gcc-ipq8074.c
-@@ -675,6 +675,7 @@ static struct clk_branch gcc_sleep_clk_src = {
+@@ -139,6 +139,7 @@ static struct clk_branch gcc_sleep_clk_src = {
  			},
  			.num_parents = 1,
  			.ops = &clk_branch2_ops,
