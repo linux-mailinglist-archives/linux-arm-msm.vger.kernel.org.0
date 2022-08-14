@@ -2,46 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ACCB8592263
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Aug 2022 17:47:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E354592264
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Aug 2022 17:47:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241536AbiHNPrX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 14 Aug 2022 11:47:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54986 "EHLO
+        id S241505AbiHNPrY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 14 Aug 2022 11:47:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241871AbiHNPqc (ORCPT
+        with ESMTP id S241887AbiHNPqf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 14 Aug 2022 11:46:32 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56A68DF85;
-        Sun, 14 Aug 2022 08:34:58 -0700 (PDT)
+        Sun, 14 Aug 2022 11:46:35 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 040F327CC0;
+        Sun, 14 Aug 2022 08:35:01 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 085C460DDE;
-        Sun, 14 Aug 2022 15:34:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C1A2C433C1;
-        Sun, 14 Aug 2022 15:34:55 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8086760DE6;
+        Sun, 14 Aug 2022 15:35:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF77C43140;
+        Sun, 14 Aug 2022 15:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1660491296;
-        bh=/0+jimdYwUCJN42zHCwjCqChS2Ubs8v0UBsiMm24SKs=;
+        s=k20201202; t=1660491300;
+        bh=z24/BARLJ//SDqxiofAV43yx4a8PcW9v68+Ar14AMV8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=tQySBpRzToczPq3ZvNvwVtTIl+P/3Ed8FBIcEC/nmMz4rycdE3FZ1Be+vH/a/jYCX
-         ufVolo6I2LrsJVBkonFMsfKovCWpNLlxYJRhKvFf9JCO1T+/CR7ghFLxpIcPJKB5vv
-         +eg+vSsLCFYif48aqxnZu10v/EEu/nA9Y3qK2VKrRBgdWfJsj9tY72y3e6ylh+Fhzu
-         LQsucFmkZCsOCg8HwcnkkeeokPMYAbLzXrpFTUDP2qhoMh3a4wF1gaOHJjxKx08u+p
-         aEaDNBlYDW2JjWXdJGcS6SvLFQHZh96tCRXJ8maStvMD1JyClv/l7gp4MIBh3xakCm
-         xs77Bqx2ppTJQ==
+        b=NMISJmH1bRsczmpIYSmp4R/x0SoxKgXOqFPNpugLhX9I9pqBsCHQoo2/kQGjjJGob
+         +W1XJAwayB6hm5T/AoOpi+d9x+xRgeCDXV/kQGNMZhtIoZ015oA2n2Tnpt3aquHvoT
+         uwmHX2QU3flYzQNINryu/q7NxK3osQnsg6bL4IE9RoFpTx3eEWjYiSze6LOLqx8Zd4
+         M1e4uCRWyWV6qli0vonRaVRBUOQHeCznH5njYyCs6Hz26v073zowbUQOlRi0Sw+TLj
+         WGS4osTcG+wkMKKZzkzN3sMBr0Rhp6TgnRBSv07aG5ANZcGa1bVWqL8TXaN9UO61z3
+         UrB0G84Mi1T7g==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>,
+Cc:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Sasha Levin <sashal@kernel.org>, agross@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 12/31] clk: qcom: ipq8074: dont disable gcc_sleep_clk_src
-Date:   Sun, 14 Aug 2022 11:34:12 -0400
-Message-Id: <20220814153431.2379231-12-sashal@kernel.org>
+        mturquette@baylibre.com, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.10 15/31] clk: qcom: clk-alpha-pll: fix clk_trion_pll_configure description
+Date:   Sun, 14 Aug 2022 11:34:15 -0400
+Message-Id: <20220814153431.2379231-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220814153431.2379231-1-sashal@kernel.org>
 References: <20220814153431.2379231-1-sashal@kernel.org>
@@ -59,83 +60,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Robert Marko <robimarko@gmail.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit 1bf7305e79aab095196131bdc87a97796e0e3fac ]
+[ Upstream commit 94bed9bb05c7850ff5d80b87cc29004901f37956 ]
 
-Once the usb sleep clocks are disabled, clock framework is trying to
-disable the sleep clock source also.
+After merging lucid and trion pll functions in commit 0b01489475c6
+("clk: qcom: clk-alpha-pll: same regs and ops for trion and lucid")
+the function clk_trion_pll_configure() is left with an old description
+header, which results in a W=2 compile time warning, fix it.
 
-However, it seems that it cannot be disabled and trying to do so produces:
-[  245.436390] ------------[ cut here ]------------
-[  245.441233] gcc_sleep_clk_src status stuck at 'on'
-[  245.441254] WARNING: CPU: 2 PID: 223 at clk_branch_wait+0x130/0x140
-[  245.450435] Modules linked in: xhci_plat_hcd xhci_hcd dwc3 dwc3_qcom leds_gpio
-[  245.456601] CPU: 2 PID: 223 Comm: sh Not tainted 5.18.0-rc4 #215
-[  245.463889] Hardware name: Xiaomi AX9000 (DT)
-[  245.470050] pstate: 204000c5 (nzCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  245.474307] pc : clk_branch_wait+0x130/0x140
-[  245.481073] lr : clk_branch_wait+0x130/0x140
-[  245.485588] sp : ffffffc009f2bad0
-[  245.489838] x29: ffffffc009f2bad0 x28: ffffff8003e6c800 x27: 0000000000000000
-[  245.493057] x26: 0000000000000000 x25: 0000000000000000 x24: ffffff800226ef20
-[  245.500175] x23: ffffffc0089ff550 x22: 0000000000000000 x21: ffffffc008476ad0
-[  245.507294] x20: 0000000000000000 x19: ffffffc00965ac70 x18: fffffffffffc51a7
-[  245.514413] x17: 68702e3030303837 x16: 3a6d726f6674616c x15: ffffffc089f2b777
-[  245.521531] x14: ffffffc0095c9d18 x13: 0000000000000129 x12: 0000000000000129
-[  245.528649] x11: 00000000ffffffea x10: ffffffc009621d18 x9 : 0000000000000001
-[  245.535767] x8 : 0000000000000001 x7 : 0000000000017fe8 x6 : 0000000000000001
-[  245.542885] x5 : ffffff803fdca6d8 x4 : 0000000000000000 x3 : 0000000000000027
-[  245.550002] x2 : 0000000000000027 x1 : 0000000000000023 x0 : 0000000000000026
-[  245.557122] Call trace:
-[  245.564229]  clk_branch_wait+0x130/0x140
-[  245.566490]  clk_branch2_disable+0x2c/0x40
-[  245.570656]  clk_core_disable+0x60/0xb0
-[  245.574561]  clk_core_disable+0x68/0xb0
-[  245.578293]  clk_disable+0x30/0x50
-[  245.582113]  dwc3_qcom_remove+0x60/0xc0 [dwc3_qcom]
-[  245.585588]  platform_remove+0x28/0x60
-[  245.590361]  device_remove+0x4c/0x80
-[  245.594179]  device_release_driver_internal+0x1dc/0x230
-[  245.597914]  device_driver_detach+0x18/0x30
-[  245.602861]  unbind_store+0xec/0x110
-[  245.607027]  drv_attr_store+0x24/0x40
-[  245.610847]  sysfs_kf_write+0x44/0x60
-[  245.614405]  kernfs_fop_write_iter+0x128/0x1c0
-[  245.618052]  new_sync_write+0xc0/0x130
-[  245.622391]  vfs_write+0x1d4/0x2a0
-[  245.626123]  ksys_write+0x58/0xe0
-[  245.629508]  __arm64_sys_write+0x1c/0x30
-[  245.632895]  invoke_syscall.constprop.0+0x5c/0x110
-[  245.636890]  do_el0_svc+0xa0/0x150
-[  245.641488]  el0_svc+0x18/0x60
-[  245.644872]  el0t_64_sync_handler+0xa4/0x130
-[  245.647914]  el0t_64_sync+0x174/0x178
-[  245.652340] ---[ end trace 0000000000000000 ]---
-
-So, add CLK_IS_CRITICAL flag to the clock so that the kernel won't try
-to disable the sleep clock.
-
-Signed-off-by: Robert Marko <robimarko@gmail.com>
+Acked-by: Stephen Boyd <sboyd@kernel.org>
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Link: https://lore.kernel.org/r/20220515210048.483898-10-robimarko@gmail.com
+Link: https://lore.kernel.org/r/20220701062711.2757855-1-vladimir.zapolskiy@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-ipq8074.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/qcom/clk-alpha-pll.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-ipq8074.c b/drivers/clk/qcom/gcc-ipq8074.c
-index 541016db3c4b..6bdf65a6e33d 100644
---- a/drivers/clk/qcom/gcc-ipq8074.c
-+++ b/drivers/clk/qcom/gcc-ipq8074.c
-@@ -662,6 +662,7 @@ static struct clk_branch gcc_sleep_clk_src = {
- 			},
- 			.num_parents = 1,
- 			.ops = &clk_branch2_ops,
-+			.flags = CLK_IS_CRITICAL,
- 		},
- 	},
- };
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index 1a571c04a76c..cf265ab035ea 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -1379,7 +1379,7 @@ const struct clk_ops clk_alpha_pll_postdiv_fabia_ops = {
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_fabia_ops);
+ 
+ /**
+- * clk_lucid_pll_configure - configure the lucid pll
++ * clk_trion_pll_configure - configure the trion pll
+  *
+  * @pll: clk alpha pll
+  * @regmap: register map
 -- 
 2.35.1
 
