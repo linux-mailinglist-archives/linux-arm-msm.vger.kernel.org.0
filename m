@@ -2,175 +2,285 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 49A095924C6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Aug 2022 18:36:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7487F592656
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Aug 2022 22:41:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242854AbiHNQfj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 14 Aug 2022 12:35:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52260 "EHLO
+        id S232046AbiHNUfn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 14 Aug 2022 16:35:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242731AbiHNQeN (ORCPT
+        with ESMTP id S231945AbiHNUfm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 14 Aug 2022 12:34:13 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1F002FFD6;
-        Sun, 14 Aug 2022 09:27:34 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id E7A37CE0B5E;
-        Sun, 14 Aug 2022 16:27:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 361D0C433D6;
-        Sun, 14 Aug 2022 16:27:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1660494451;
-        bh=OVXPhBDlAN+6wBq/lN4PTOu1yqd5ybIqomdkt/gXbqA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=JNpkWmsKxhCuADfNeA+WcHz8eY0n9QABbqOLuO2oToRKBWf0pyU5sHBclmh7Bfkjs
-         rIWkllefYmT3WA8nD5VkzbynrDaCpj/VTPSyOs42qy1x8hPCCz2AdT7BX2duq/Lf3B
-         xGUz0FB+2zR0rqYcOBJTrW7A/YJcYTopsv+zcX6BbMbO57riT+ddJLnm9KKPhTKECB
-         FiUyNU2z79xlRdqqhscbsIS1z1kWPAFAIUs4fYLeLdElwKwJZR91GHcBi948V+tz7A
-         oX249SSlIvCgA3HSKPrDc9USeuYbCCUPNGWWDKaIWKy7U2xXKJN6j++gkllEz2gQ7P
-         HAnS0GkVl4GaA==
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Linux Kernel Functional Testing <lkft@linaro.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, mchehab@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 26/28] venus: pm_helpers: Fix warning in OPP during probe
-Date:   Sun, 14 Aug 2022 12:26:06 -0400
-Message-Id: <20220814162610.2397644-26-sashal@kernel.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220814162610.2397644-1-sashal@kernel.org>
-References: <20220814162610.2397644-1-sashal@kernel.org>
+        Sun, 14 Aug 2022 16:35:42 -0400
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52E06DFA1;
+        Sun, 14 Aug 2022 13:35:41 -0700 (PDT)
+Received: by mail-ot1-f44.google.com with SMTP id h9-20020a9d5549000000b0063727299bb4so4287978oti.9;
+        Sun, 14 Aug 2022 13:35:41 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=1yzME1DKBmKpfgIqUmDwlH/CXThIbhy6bKBF4WvclaI=;
+        b=6o1KA4Oc2nq2VZ4/Gfy67mNNGhmfx/Ux2W9dqoyx6iwQ9nXybi4hI2Cm86XJ2Gx4A0
+         g2nZoB6gqwwvuavm7hKNjD/B2uky85w2XfaLS2Tkmwelq4PbhBFNlMnQDMFa3W91G8x8
+         bZMUtmkrCgdExMvjt5yG6m8rLkoRwDMRtjXm5f74HAGGr+Ph2FJgnbg9BBbi+JliTvHP
+         Cg0QnjaDkIH4auvYo8q9RNs7xovldSOrFXJU5koQgAmFvFDX5GnXnZfEoRXarL8rqJ05
+         znBaL8RvuemRr8vmizsV9SyKib9P5TcrEMOI/fRhJLMEg2kBXXUYryrjci/iTa+sfFX0
+         GgPQ==
+X-Gm-Message-State: ACgBeo1crZDxh0wWkBtrCv6opsyFz0JttyxaQMWRGaxdDi/C8XfF8agO
+        S5kfD96kIcAQvuWXDbN/nAO+G9zM8A==
+X-Google-Smtp-Source: AA6agR7ybtZm2twC7AfEyUwsGD73uEy7PzXKYvjaxXY933LzdSWHnEX0L30Kig5wfM5Cny9cHKCd1g==
+X-Received: by 2002:a05:6830:1450:b0:636:f7fe:e47b with SMTP id w16-20020a056830145000b00636f7fee47bmr5098197otp.156.1660509340519;
+        Sun, 14 Aug 2022 13:35:40 -0700 (PDT)
+Received: from robh.at.kernel.org ([172.58.176.57])
+        by smtp.gmail.com with ESMTPSA id j3-20020a056830014300b0063725d33561sm1724376otp.73.2022.08.14.13.35.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 14 Aug 2022 13:35:40 -0700 (PDT)
+Received: (nullmailer pid 664149 invoked by uid 1000);
+        Sun, 14 Aug 2022 20:35:30 -0000
+Date:   Sun, 14 Aug 2022 14:35:30 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     linux-remoteproc@vger.kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, quic_plai@quicinc.com, bgoswami@quicinc.com,
+        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
+        quic_rohkumar@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v4 1/7] dt-bindings: remoteproc: qcom: Add SC7280 ADSP
+ support
+Message-ID: <20220814203530.GA640885-robh@kernel.org>
+References: <1660308466-410-1-git-send-email-quic_srivasam@quicinc.com>
+ <1660308466-410-2-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1660308466-410-2-git-send-email-quic_srivasam@quicinc.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+On Fri, Aug 12, 2022 at 06:17:40PM +0530, Srinivasa Rao Mandadapu wrote:
+> Add ADSP PIL loading support for SC7280 SoCs.
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> ---
+>  .../bindings/remoteproc/qcom,sc7280-adsp-pil.yaml  | 189 +++++++++++++++++++++
+>  1 file changed, 189 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
+> new file mode 100644
+> index 0000000..e656cc8
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
+> @@ -0,0 +1,189 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/remoteproc/qcom,sc7280-adsp-pil.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SC7280 ADSP Peripheral Image Loader
+> +
+> +maintainers:
+> +  - Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> +
+> +description:
+> +  This document defines the binding for a component that loads and boots firmware
+> +  on the Qualcomm Technology Inc. ADSP.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,sc7280-adsp-pil
+> +
+> +  reg:
+> +    minItems: 1
+> +    items:
+> +      - description: qdsp6ss register
+> +      - description: efuse q6ss register
+> +
+> +  interrupts:
+> +    items:
+> +      - description: Watchdog interrupt
+> +      - description: Fatal interrupt
+> +      - description: Ready interrupt
+> +      - description: Handover interrupt
+> +      - description: Stop acknowledge interrupt
+> +      - description: Shutdown acknowledge interrupt
+> +
+> +  interrupt-names:
+> +    items:
+> +      - const: wdog
+> +      - const: fatal
+> +      - const: ready
+> +      - const: handover
+> +      - const: stop-ack
+> +      - const: shutdown-ack
+> +
+> +  clocks:
+> +    items:
+> +      - description: XO clock
+> +      - description: GCC CFG NOC LPASS clock
+> +      - description: LPASS AHBS AON clock
+> +      - description: LPASS AHBM AON clock
+> +      - description: QDSP XO clock
+> +      - description: Q6SP6SS SLEEP clock
+> +      - description: Q6SP6SS CORE clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: xo
+> +      - const: gcc_cfg_noc_lpass
+> +      - const: lpass_ahbs_aon_cbcr
+> +      - const: lpass_ahbm_aon_cbcr
+> +      - const: qdsp6ss_xo
+> +      - const: qdsp6ss_sleep
+> +      - const: qdsp6ss_core
+> +
+> +  power-domains:
+> +    items:
+> +      - description: LCX power domain
+> +
+> +  resets:
+> +    items:
+> +      - description: PDC AUDIO SYNC RESET
+> +      - description: CC LPASS restart
+> +
+> +  reset-names:
+> +    items:
+> +      - const: pdc_sync
+> +      - const: cc_lpass
+> +
+> +  memory-region:
+> +    maxItems: 1
+> +    description: Reference to the reserved-memory for the Hexagon core
+> +
+> +  qcom,adsp-memory-regions:
+> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
+> +    description:
+> +      Each entry consists of 4 integers and represents the
+> +      list of memory regions accessed by ADSP firmware.
+> +    items:
+> +      items:
+> +        - description: |
+> +            "iova reg" indicates the address of virtual memory region.
+> +        - description: |
+> +            "physical reg" indicates the address of phyical memory region.
+> +        - description: |
+> +            "size" indicates the offset memory region.
+> +        - description: |
+> +            "access level" indicates the read, read and write access levels.
+> +          minimum: 0
+> +          maximum: 1
+> +
+> +  qcom,halt-regs:
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> +    description:
+> +      Phandle reference to a syscon representing TCSR followed by the
+> +      three offsets within syscon for q6, modem and nc halt registers.
 
-[ Upstream commit 1d95af02f23031c2e1cca7607c514b86ce85bc6e ]
+items: 
+  - items:
+      - description: phandle to TCSR
+      - description: offset to q6 halt registers
+      - ...
 
-Fix the following WARN triggered during Venus driver probe on
-5.19.0-rc8-next-20220728:
-
- WARNING: CPU: 7 PID: 339 at drivers/opp/core.c:2471 dev_pm_opp_set_config+0x49c/0x610
- Modules linked in: qcom_spmi_adc5 rtc_pm8xxx qcom_spmi_adc_tm5 leds_qcom_lpg led_class_multicolor
-  qcom_pon qcom_vadc_common venus_core(+) qcom_spmi_temp_alarm v4l2_mem2mem videobuf2_v4l2 msm(+)
-  videobuf2_common crct10dif_ce spi_geni_qcom snd_soc_sm8250 i2c_qcom_geni gpu_sched
-  snd_soc_qcom_common videodev qcom_q6v5_pas soundwire_qcom drm_dp_aux_bus qcom_stats
-  drm_display_helper qcom_pil_info soundwire_bus snd_soc_lpass_va_macro mc qcom_q6v5
-  phy_qcom_snps_femto_v2 qcom_rng snd_soc_lpass_macro_common snd_soc_lpass_wsa_macro
-  lpass_gfm_sm8250 slimbus qcom_sysmon qcom_common qcom_glink_smem qmi_helpers
-  qcom_wdt mdt_loader socinfo icc_osm_l3 display_connector
-  drm_kms_helper qnoc_sm8250 drm fuse ip_tables x_tables ipv6
- CPU: 7 PID: 339 Comm: systemd-udevd Not tainted 5.19.0-rc8-next-20220728 #4
- Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
- pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : dev_pm_opp_set_config+0x49c/0x610
- lr : dev_pm_opp_set_config+0x58/0x610
- sp : ffff8000093c3710
- x29: ffff8000093c3710 x28: ffffbca3959d82b8 x27: ffff8000093c3d00
- x26: ffffbca3959d8e08 x25: ffff4396cac98118 x24: ffff4396c0e24810
- x23: ffff4396c4272c40 x22: ffff4396c0e24810 x21: ffff8000093c3810
- x20: ffff4396cac36800 x19: ffff4396cac96800 x18: 0000000000000000
- x17: 0000000000000003 x16: ffffbca3f4edf198 x15: 0000001cba64a858
- x14: 0000000000000180 x13: 000000000000017e x12: 0000000000000000
- x11: 0000000000000002 x10: 0000000000000a60 x9 : ffff8000093c35c0
- x8 : ffff4396c4273700 x7 : ffff43983efca6c0 x6 : ffff43983efca640
- x5 : 00000000410fd0d0 x4 : ffff4396c4272c40 x3 : ffffbca3f5d1e008
- x2 : 0000000000000000 x1 : ffff4396c2421600 x0 : ffff4396cac96860
- Call trace:
-  dev_pm_opp_set_config+0x49c/0x610
-  devm_pm_opp_set_config+0x18/0x70
-  vcodec_domains_get+0xb8/0x1638 [venus_core]
-  core_get_v4+0x1d8/0x218 [venus_core]
-  venus_probe+0xf4/0x468 [venus_core]
-  platform_probe+0x68/0xd8
-  really_probe+0xbc/0x2a8
-  __driver_probe_device+0x78/0xe0
-  driver_probe_device+0x3c/0xf0
-  __driver_attach+0x70/0x120
-  bus_for_each_dev+0x70/0xc0
-  driver_attach+0x24/0x30
-  bus_add_driver+0x150/0x200
-  driver_register+0x64/0x120
-  __platform_driver_register+0x28/0x38
-  qcom_venus_driver_init+0x24/0x1000 [venus_core]
-  do_one_initcall+0x54/0x1c8
-  do_init_module+0x44/0x1d0
-  load_module+0x16c8/0x1aa0
-  __do_sys_finit_module+0xbc/0x110
-  __arm64_sys_finit_module+0x20/0x30
-  invoke_syscall+0x44/0x108
-  el0_svc_common.constprop.0+0xcc/0xf0
-  do_el0_svc+0x2c/0xb8
-  el0_svc+0x2c/0x88
-  el0t_64_sync_handler+0xb8/0xc0
-  el0t_64_sync+0x18c/0x190
-  qcom-venus: probe of aa00000.video-codec failed with error -16
-
-The fix is re-ordering the code related to OPP core. The OPP core
-expects all configuration options to be provided before the OPP
-table is added.
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Suggested-by: Viresh Kumar <viresh.kumar@linaro.org>
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/media/platform/qcom/venus/pm_helpers.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index a591dd315ebc..03fc82cb3fea 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.c
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -875,7 +875,7 @@ static int vcodec_domains_get(struct venus_core *core)
- 	}
- 
- skip_pmdomains:
--	if (!core->has_opp_table)
-+	if (!core->res->opp_pmdomain)
- 		return 0;
- 
- 	/* Attach the power domain for setting performance state */
-@@ -1007,6 +1007,10 @@ static int core_get_v4(struct venus_core *core)
- 	if (ret)
- 		return ret;
- 
-+	ret = vcodec_domains_get(core);
-+	if (ret)
-+		return ret;
-+
- 	if (core->res->opp_pmdomain) {
- 		ret = devm_pm_opp_of_add_table(dev);
- 		if (!ret) {
-@@ -1017,10 +1021,6 @@ static int core_get_v4(struct venus_core *core)
- 		}
- 	}
- 
--	ret = vcodec_domains_get(core);
--	if (ret)
--		return ret;
--
- 	return 0;
- }
- 
--- 
-2.35.1
-
+> +
+> +  qcom,smem-states:
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> +    description: States used by the AP to signal the Hexagon core
+> +    items:
+> +      - description: Stop the modem
+> +
+> +  qcom,smem-state-names:
+> +    $ref: /schemas/types.yaml#/definitions/string
+> +    description: The names of the state bits used for SMP2P output
+> +    items:
+> +      - const: stop
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - interrupt-names
+> +  - clocks
+> +  - clock-names
+> +  - power-domains
+> +  - resets
+> +  - reset-names
+> +  - qcom,halt-regs
+> +  - memory-region
+> +  - qcom,smem-states
+> +  - qcom,smem-state-names
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/clock/qcom,rpmh.h>
+> +    #include <dt-bindings/clock/qcom,gcc-sc7280.h>
+> +    #include <dt-bindings/clock/qcom,lpass-sc7280.h>
+> +    #include <dt-bindings/reset/qcom,sdm845-aoss.h>
+> +    #include <dt-bindings/reset/qcom,sdm845-pdc.h>
+> +    #include <dt-bindings/power/qcom-rpmpd.h>
+> +
+> +    remoteproc@3000000 {
+> +        compatible = "qcom,sc7280-adsp-pil";
+> +        reg = <0x03000000 0x5000>,
+> +              <0x355B000 0x10>;
+> +
+> +        interrupts-extended = <&pdc 162 IRQ_TYPE_EDGE_RISING>,
+> +                <&adsp_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+> +                <&adsp_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
+> +                <&adsp_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
+> +                <&adsp_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
+> +                <&adsp_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
+> +
+> +        interrupt-names = "wdog", "fatal", "ready",
+> +                "handover", "stop-ack", "shutdown-ack";
+> +
+> +        clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +                 <&gcc GCC_CFG_NOC_LPASS_CLK>,
+> +                 <&lpasscc LPASS_Q6SS_AHBM_CLK>,
+> +                 <&lpasscc LPASS_Q6SS_AHBS_CLK>,
+> +                 <&lpasscc LPASS_QDSP6SS_XO_CLK>,
+> +                 <&lpasscc LPASS_QDSP6SS_SLEEP_CLK>,
+> +                 <&lpasscc LPASS_QDSP6SS_CORE_CLK>;
+> +        clock-names = "xo", "gcc_cfg_noc_lpass",
+> +                "lpass_ahbs_aon_cbcr",
+> +                "lpass_ahbm_aon_cbcr", "qdsp6ss_xo",
+> +                "qdsp6ss_sleep", "qdsp6ss_core";
+> +
+> +        power-domains = <&rpmhpd SC7280_LCX>;
+> +
+> +        resets = <&pdc_reset PDC_AUDIO_SYNC_RESET>,
+> +                 <&aoss_reset AOSS_CC_LPASS_RESTART>;
+> +        reset-names = "pdc_sync", "cc_lpass";
+> +
+> +        qcom,halt-regs = <&tcsr_mutex 0x23000 0x25000 0x28000 0x33000>;
+> +
+> +        memory-region = <&adsp_mem>;
+> +
+> +        qcom,smem-states = <&adsp_smp2p_out 0>;
+> +        qcom,smem-state-names = "stop";
+> +
+> +        qcom,adsp-memory-regions = <0x00100000 0x00100000 0x4000 0>,
+> +                                   <0x00113000 0x00113000 0x1000 0>,
+> +                                   <0x00117000 0x00117000 0x2000 1>;
+> +    };
+> -- 
+> 2.7.4
+> 
+> 
