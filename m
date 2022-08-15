@@ -2,130 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4700D594D9F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Aug 2022 03:34:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40DCF594D41
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Aug 2022 03:34:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353069AbiHPAYo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Aug 2022 20:24:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49290 "EHLO
+        id S244601AbiHPBZV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Aug 2022 21:25:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357467AbiHPAWm (ORCPT
+        with ESMTP id S244647AbiHPBZC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Aug 2022 20:22:42 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6215D2925
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Aug 2022 13:34:18 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id k26so15433674ejx.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Aug 2022 13:34:18 -0700 (PDT)
+        Mon, 15 Aug 2022 21:25:02 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A40F1CB178;
+        Mon, 15 Aug 2022 14:14:49 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id ch17-20020a17090af41100b001fa74771f61so194676pjb.0;
+        Mon, 15 Aug 2022 14:14:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=C2DX2ca7bHN7SVtPDmCU8rhrYCWb6kGjMw+dl7PYH3A=;
-        b=hBACRnEVlwPILbpIJWVmIwveirPxlpdBfR/nHLiPxMxIUdcRR6EAYvzRjiNsZSTIqe
-         EKMBej1tT9tMClvM85IaoFsx4zKzd5QKDbLhmZJXXY5xrvbyRivn1sayE0tizFQxR+iw
-         5VDLZyWU7aU/qOlYcaULn4JLb7Du1vYQXcro+/hd19NcbkrIyZiJ6QWhqHgaaqxWpu6e
-         R6Axd7mtl++ln5Q7wRB8kPuvPpsHbr1YpajycZ5kXhJf4FI02Ma2vhU2CKUYHSi4Cji7
-         s+V9aRuhG+EZUmlLiShYVMrvERqw9/5i4tCKAM1kvK6Mzk3XwiKFBiTMWSdR2oGGPjH5
-         kFiQ==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=X3Fu4ehStrUEKyTXt+fee6+Wug+zWXwk64af5B5Ru/4=;
+        b=HaCbD+HDElK/diS+4llLWSlfdYQZ9dhgsMPOP1KRoiDFm0npey1Bqa9/oVRvRlmMgD
+         9RnEx1/9LjeYmmhxwgvIEhTBuv/80m4RTRXqZ2NIIN7342CVBG8pwf7idUapDTtycmNC
+         iMjnjJVXDV1snHkG/s2ykjGrlToed+buswZ10/XVNE93crGX5U9glQ6siCgMZ7wGgSuO
+         +o7Swelyq6Wsr2Wm1lPPhQ7IpyEtlJVwBkiHzC/t4LsipXNSWJ8+cy3EurJuTBTncRBj
+         Tka2ijvbVuiN0O8CfMRv1Db/cGVXkTPRKshz1b5h3QxyqHl1VVMQxzSG1uEXUGNLd60Y
+         eLqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=C2DX2ca7bHN7SVtPDmCU8rhrYCWb6kGjMw+dl7PYH3A=;
-        b=JBMAwLI1DEUhwZlTNXijK5mleKJzBwyRu9UfBt1U4r4SNsyjyU4BSPlmyVm2TSJvbR
-         BdXH5wnlddUHU/qHD5uIQpaspoapvGm9HkRqudjsqs0wLjjvkSn/G5GFHz5bu6J6qF1J
-         9DvgMkPcAao8bHXlaPeXv+G9L5o0IvljJEVvCreKripsTASQybmm1IPpslICYknRkv3m
-         Oo23JCrDn3dWRgOPxZl+/LSHVsus94MwIrdbzJKFy4/Z1Z1sdP2iBsYc+kSyHA+moR2D
-         DpLst3PLhuzsUYWxfaiYf0YGWILGKDiJSbYvlU7yzs8ClXlOQ3VQuVMvROxXoxHjcOGQ
-         xELQ==
-X-Gm-Message-State: ACgBeo2tIPaXvUhKf0x8LbtyeU9ZvUf7Skh9qnI8u7VKuA/QuhxTLe5f
-        56O47dm92HJ3ybQbz0PQ2bcFgQ==
-X-Google-Smtp-Source: AA6agR7GNkEDMG/2BojsZC5Ae1/tzQEup1Sm4EksXxmcjFQ+R52Il66N9sHCn7PsuWSJ9BB50VVezQ==
-X-Received: by 2002:a17:907:2c47:b0:730:8bbb:69a8 with SMTP id hf7-20020a1709072c4700b007308bbb69a8mr11810673ejc.38.1660595649083;
-        Mon, 15 Aug 2022 13:34:09 -0700 (PDT)
-Received: from [192.168.0.12] (cpc76482-cwma10-2-0-cust629.7-3.cable.virginm.net. [86.14.22.118])
-        by smtp.gmail.com with ESMTPSA id u19-20020a05640207d300b0043bb8023caesm7129729edy.62.2022.08.15.13.34.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Aug 2022 13:34:08 -0700 (PDT)
-Message-ID: <e6821eef-4fcb-97b1-24be-e2bb62b99039@linaro.org>
-Date:   Mon, 15 Aug 2022 21:34:07 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=X3Fu4ehStrUEKyTXt+fee6+Wug+zWXwk64af5B5Ru/4=;
+        b=bphC2vrKWBdIEXY1RkOZkRBrovzsBFFRKfdzxS9CMfX0gzEMQIqx5gawrn2S4Rzh/+
+         De2wYLfYerU1H8mePZci82uHNVFZgmo7NgXch9hZ87KU3ELSMW7F9YXdVLd/f39Z6IOf
+         jQVyqXkjPI0dPjIauIoVEcP7nkHQ+BYf+VcLqiB9J2uPbDGnZdiqBfAFKLmwUUZM/Tih
+         XCP1B7w9pQb3ODaUUil/y98cb7pUaoAvWCrIWUm/gvv6wIeVLNdbY6fNpNpvnGX2LJYG
+         V49CrZ0F71pZtZ3CgrQBdfSTRRTAms1+untfo8uUtP8ygwnnJZEPJcsVPaOjoLHQ48wm
+         vIuw==
+X-Gm-Message-State: ACgBeo2NwRLb4X3d3U4CuF1byvzX2DSgIjgt9iFyPM/cTd8/VItQjuMj
+        YtpPF0bDuMBTnqXpZvLIc50=
+X-Google-Smtp-Source: AA6agR44865ylIMa+b8PphQX9njk4C+gUcPVunj5mJCRWKVNX7lX7QczSovUoJeBOAsy56Hbx/SlLQ==
+X-Received: by 2002:a17:903:120a:b0:172:5a63:7442 with SMTP id l10-20020a170903120a00b001725a637442mr13083405plh.55.1660598088926;
+        Mon, 15 Aug 2022 14:14:48 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
+        by smtp.gmail.com with ESMTPSA id a24-20020a63d418000000b004277f43b736sm3569439pgh.92.2022.08.15.14.14.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Aug 2022 14:14:47 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        Rob Clark <robdclark@chromium.org>,
+        =?UTF-8?q?J=C3=A9r=C3=B4me=20Pouiller?= 
+        <jerome.pouiller@silabs.com>,
+        linaro-mm-sig@lists.linaro.org (moderated list:DMA BUFFER SHARING
+        FRAMEWORK),
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-kernel@vger.kernel.org (open list),
+        linux-media@vger.kernel.org (open list:DMA BUFFER SHARING FRAMEWORK),
+        Sean Paul <sean@poorly.run>
+Subject: [PATCH v2 0/3] dma-buf: map-info support
+Date:   Mon, 15 Aug 2022 14:15:11 -0700
+Message-Id: <20220815211516.3169470-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sdm845: Add the RPMh stats node
-Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Maulik Shah <quic_mkshah@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <20220812101240.1869605-1-abel.vesa@linaro.org>
- <T2Uz7zs4Ht58lYc5zWg1VBY0ju6bVaSKa9y3RhBQWDDHmPXBHbAxI2J34jSeY0BFQy2y4JtFn3nQS0Lz4xI5jw==@protonmail.internalid>
- <20220812101240.1869605-3-abel.vesa@linaro.org>
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20220812101240.1869605-3-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Rob Clark <robdclark@chromium.org>
 
+See 1/3 for motivation.
 
-On 12/08/2022 11:12, Abel Vesa wrote:
-> SDM845 is a special case compared to the other platforms that use RPMh
-> stats, since it only has 2 stats (aosd and cxsd), while the others have
-> a 3rd one (ddr).
-> 
-> So lets add the node but with a SDM845 dedicated compatible to make
-> the driver aware of the different stats config.
-Hi,
+Rob Clark (3):
+  dma-buf: Add ioctl to query mmap coherency/cache info
+  drm/prime: Wire up mmap_info support
+  drm/msm/prime: Add mmap_info support
 
-I gave this a go on the OnePlus 6, I noticed the driver is also meant to read 
-the stats for remote procs via smem, however this seems to fail for me - it 
-can't find any of the SMEM items even if I probe the driver manually after 
-ensuring remoteprocs have booted. Is this an unsupported feature on SDM845?
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
-> 
-> Changed qcom,rpmh-stats-sdm845 to qcom,sdm845-rpmh-stats, as suggested
-> by Krzysztof.
-> 
->   arch/arm64/boot/dts/qcom/sdm845.dtsi | 5 +++++
->   1 file changed, 5 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index 5bea96a9ce06..67fe08b837be 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -4851,6 +4851,11 @@ ebi_cdev: ebi {
->   			};
->   		};
-> 
-> +		sram@c3f0000 {
-> +			compatible = "qcom,sdm845-rpmh-stats";
-> +			reg = <0 0x0c3f0000 0 0x400>;
-> +		};
-> +
->   		spmi_bus: spmi@c440000 {
->   			compatible = "qcom,spmi-pmic-arb";
->   			reg = <0 0x0c440000 0 0x1100>,
-> --
-> 2.34.1
-> 
+ drivers/dma-buf/dma-buf.c     | 63 ++++++++++++++++++++++++++------
+ drivers/gpu/drm/drm_prime.c   |  3 ++
+ drivers/gpu/drm/msm/msm_gem.c | 12 +++++++
+ include/drm/drm_gem.h         | 11 ++++++
+ include/linux/dma-buf.h       | 11 ++++++
+ include/uapi/linux/dma-buf.h  | 68 +++++++++++++++++++++++++++++++++++
+ 6 files changed, 158 insertions(+), 10 deletions(-)
 
 -- 
-Kind Regards,
-Caleb (they/he)
+2.36.1
+
