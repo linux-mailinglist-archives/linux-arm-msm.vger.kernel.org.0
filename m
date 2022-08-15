@@ -2,109 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B6BB559449E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Aug 2022 00:59:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4700D594D9F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Aug 2022 03:34:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346057AbiHOWsQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Aug 2022 18:48:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60166 "EHLO
+        id S1353069AbiHPAYo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Aug 2022 20:24:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351953AbiHOWr0 (ORCPT
+        with ESMTP id S1357467AbiHPAWm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Aug 2022 18:47:26 -0400
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08DCB7CA80;
-        Mon, 15 Aug 2022 12:53:07 -0700 (PDT)
-Received: from mail-ej1-f49.google.com ([209.85.218.49]) by
- mrelayeu.kundenserver.de (mreue009 [213.165.67.97]) with ESMTPSA (Nemesis) id
- 1MHX3R-1oAjqK2fAn-00DUqU; Mon, 15 Aug 2022 21:53:05 +0200
-Received: by mail-ej1-f49.google.com with SMTP id fy5so15281306ejc.3;
-        Mon, 15 Aug 2022 12:53:05 -0700 (PDT)
-X-Gm-Message-State: ACgBeo3FDZbrwxr+P6RTQR7oI6Eu8fyBLfefJFRHtGsq02+vND0bY1z1
-        MXl7QtLKOjLFU8VHqwImuUN9gp/eO0NXuU2XXy8=
-X-Google-Smtp-Source: AA6agR6WukBGcfTJVUl5CIbKuxExURcZy41XrLH6cR4WZu9dKLWxqz0LIbjhFDRnvnzwIquLGWfm92gIJBXogAGXdQo=
-X-Received: by 2002:a17:907:7609:b0:730:d70a:1efc with SMTP id
- jx9-20020a170907760900b00730d70a1efcmr11372637ejc.766.1660593185195; Mon, 15
- Aug 2022 12:53:05 -0700 (PDT)
+        Mon, 15 Aug 2022 20:22:42 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6215D2925
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Aug 2022 13:34:18 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id k26so15433674ejx.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Aug 2022 13:34:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=C2DX2ca7bHN7SVtPDmCU8rhrYCWb6kGjMw+dl7PYH3A=;
+        b=hBACRnEVlwPILbpIJWVmIwveirPxlpdBfR/nHLiPxMxIUdcRR6EAYvzRjiNsZSTIqe
+         EKMBej1tT9tMClvM85IaoFsx4zKzd5QKDbLhmZJXXY5xrvbyRivn1sayE0tizFQxR+iw
+         5VDLZyWU7aU/qOlYcaULn4JLb7Du1vYQXcro+/hd19NcbkrIyZiJ6QWhqHgaaqxWpu6e
+         R6Axd7mtl++ln5Q7wRB8kPuvPpsHbr1YpajycZ5kXhJf4FI02Ma2vhU2CKUYHSi4Cji7
+         s+V9aRuhG+EZUmlLiShYVMrvERqw9/5i4tCKAM1kvK6Mzk3XwiKFBiTMWSdR2oGGPjH5
+         kFiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=C2DX2ca7bHN7SVtPDmCU8rhrYCWb6kGjMw+dl7PYH3A=;
+        b=JBMAwLI1DEUhwZlTNXijK5mleKJzBwyRu9UfBt1U4r4SNsyjyU4BSPlmyVm2TSJvbR
+         BdXH5wnlddUHU/qHD5uIQpaspoapvGm9HkRqudjsqs0wLjjvkSn/G5GFHz5bu6J6qF1J
+         9DvgMkPcAao8bHXlaPeXv+G9L5o0IvljJEVvCreKripsTASQybmm1IPpslICYknRkv3m
+         Oo23JCrDn3dWRgOPxZl+/LSHVsus94MwIrdbzJKFy4/Z1Z1sdP2iBsYc+kSyHA+moR2D
+         DpLst3PLhuzsUYWxfaiYf0YGWILGKDiJSbYvlU7yzs8ClXlOQ3VQuVMvROxXoxHjcOGQ
+         xELQ==
+X-Gm-Message-State: ACgBeo2tIPaXvUhKf0x8LbtyeU9ZvUf7Skh9qnI8u7VKuA/QuhxTLe5f
+        56O47dm92HJ3ybQbz0PQ2bcFgQ==
+X-Google-Smtp-Source: AA6agR7GNkEDMG/2BojsZC5Ae1/tzQEup1Sm4EksXxmcjFQ+R52Il66N9sHCn7PsuWSJ9BB50VVezQ==
+X-Received: by 2002:a17:907:2c47:b0:730:8bbb:69a8 with SMTP id hf7-20020a1709072c4700b007308bbb69a8mr11810673ejc.38.1660595649083;
+        Mon, 15 Aug 2022 13:34:09 -0700 (PDT)
+Received: from [192.168.0.12] (cpc76482-cwma10-2-0-cust629.7-3.cable.virginm.net. [86.14.22.118])
+        by smtp.gmail.com with ESMTPSA id u19-20020a05640207d300b0043bb8023caesm7129729edy.62.2022.08.15.13.34.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Aug 2022 13:34:08 -0700 (PDT)
+Message-ID: <e6821eef-4fcb-97b1-24be-e2bb62b99039@linaro.org>
+Date:   Mon, 15 Aug 2022 21:34:07 +0100
 MIME-Version: 1.0
-References: <20220712164235.40293-1-f.fainelli@gmail.com> <CAK8P3a2QrYbWOqV+CG-W0ZkzW6ORgw8R6Dv-L3o2ZAtJs-B3Kw@mail.gmail.com>
- <0131e1d6-09c0-31a4-5b9d-0e2fc49d61ac@linaro.org> <CAMuHMdWDDY_72y3WYt401hG122xg1s7_VRCG9Vyhhkzco-nBYw@mail.gmail.com>
- <fb4f4444-20c2-0e35-bb83-79a419ec87a7@gmail.com> <f4adf05b-d3da-a692-3bd8-0b4d705e0dc2@gmail.com>
-In-Reply-To: <f4adf05b-d3da-a692-3bd8-0b4d705e0dc2@gmail.com>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Mon, 15 Aug 2022 21:52:49 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a0R7tL0+saXK-+pHUfT=ZsmOVr6LEecn40e+OSUtZAWLw@mail.gmail.com>
-Message-ID: <CAK8P3a0R7tL0+saXK-+pHUfT=ZsmOVr6LEecn40e+OSUtZAWLw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: Kconfig.platforms: Re-organized Broadcom menu
-To:     Florian Fainelli <f.fainelli@gmail.com>
-Cc:     Geert Uytterhoeven <geert@linux-m68k.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sdm845: Add the RPMh stats node
+Content-Language: en-US
+To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        SoC Team <soc@kernel.org>,
-        bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
-        william.zhang@broadcom.com, anand.gore@broadcom.com,
-        Olof Johansson <olof@lixom.net>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Shawn Guo <shawnguo@kernel.org>, Li Yang <leoyang.li@nxp.com>,
-        Wei Xu <xuwei5@hisilicon.com>, Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        "moderated list:ARM/Mediatek SoC..." 
-        <linux-mediatek@lists.infradead.org>,
-        Microchip Linux Driver Support <UNGLinuxDriver@microchip.com>,
-        Matthias Brugger <mbrugger@suse.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        "moderated list:ARM/SAMSUNG EXYNOS ARM ARCHITECTURES" 
-        <linux-samsung-soc@vger.kernel.org>,
-        Dinh Nguyen <dinguyen@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:ugSImgNDs+bBr8tqtz1zw5ugu6oS3SbtUVHJtkpFXarEZWB2esW
- MLW3S/IX0RMFzdnEzo5IFGD2uAp20mssNXfWrjAgrGWeZNyG0Hvkhe0g4Tm6GNe6waNf25b
- wD4eMsoGrun+Ljtt2TKmVKCe640FIHLHD6uOjVgdpP5SG7pXHoJfefygORUGIHS29PYWFri
- cuOrlR4aeHlDmJfyq5L5w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:KNUfWNSn3cs=:Rj6+A1Mw0k58kVlqW1V8YX
- Efvk/6+MkQk3dD45yZ+X0SvFYjJqrd4tqTVDje0vLj2CjdYzAPFjEUoU2CE9D635uHgaBjpyx
- dYwHJjE9s+nb/aHovb7vUNXeHHDgizeTvlqFFjRW9oRmPskOXUjMwHc5c+bU1dncXL0hg+ozz
- unHTwt+PazFk907xeWZ6/LvpOWE08xBSaPLpLqVLZYzvBvF67pAFhYAM5MMtRGvnwR/yUSDfB
- c9fnSQ7oMj+tfe4p5wrsvqRCYlhMhbpC7ADX21/CZXdONfgCyb7TpzR7+GUGsaLTSv5H/iq7S
- zau7ljmb3itZN5M/Qj8xfQ27QQNefGOBEME6L7BL4rnH8dtdRa37OgPj4fGzyIkyio1s/z3gB
- Siv7Bbwbwen9SPexFKcjY4E3soGq4nnthM0YpZrlx7hyG9gz8kBKtgXvPKk6t/a4+fJsIF6hv
- dEXFdq1NdGSbXjiDIZgLRaEEt/sO3KCJ8mW5ODdyDjyUFkqArBjmFNJ4A+U8HJdFJmaXMgIp2
- 4IaP3eO+ed6w7mwvWZWoi7y/oz1Oxq5yAquTKpDmH6qVcI6J8Yg8H2La11BTiyVXrFu86CVtx
- LyGCUHEFtfcLsJIaUgeJ9Q3aiZkJdviA2Bj73BurlQ3w5MOiXEItoYUMY/NkG+VifrM3OyX2X
- cmh1FGUtMJSDnoaoU7QjRwRd5+9zWBF5xSVl4xb2R28O5ikCXjTqovsy5Ood63UpxH/DqZtFu
- Um6QisCdpyYLVjJe/mmUU0w7wNwiSRFAYqOctwref8srZAAvHs6M51kenxruLhLxkYAM/6ywb
- oaWh3vQMiNxvCTsNIHNZOHViaIxdlxKO8n6KquRFmHXc2/Pk/933pSrOoR/ppIiWp5HuSWyBv
- tdI+Uw0ZI2uhYCIyVoeA==
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Maulik Shah <quic_mkshah@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <20220812101240.1869605-1-abel.vesa@linaro.org>
+ <T2Uz7zs4Ht58lYc5zWg1VBY0ju6bVaSKa9y3RhBQWDDHmPXBHbAxI2J34jSeY0BFQy2y4JtFn3nQS0Lz4xI5jw==@protonmail.internalid>
+ <20220812101240.1869605-3-abel.vesa@linaro.org>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <20220812101240.1869605-3-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 15, 2022 at 7:15 PM Florian Fainelli <f.fainelli@gmail.com> wrote:
-> On 7/13/22 15:05, Florian Fainelli wrote:
-> > On 7/13/22 02:17, Geert Uytterhoeven wrote:
-> >
-> > The itch that I wanted to calm was that ARCH_BRCMSTB was after the other
-> > Broadcom platforms separated by ARCH_BERLIN. if you prefer a pair of
-> > KConfig comments to delineate them and flatten the platform selection,
-> > that works for me, too.
->
-> There are 2 Marvell-based platforms (Berlin and mvebu) as well as two
-> NXP-based platforms (MXC and S32), would it be better to also group them
-> under an ARCH_MARVELL and ARCH_NXP menuconfig symbol the same way this
-> patch does it for Broadcom-based SoCs?
 
-Berlin is now Synaptics after Marvell sold them the business unit, so that one
-should probably stay separate. For NXP, there is also Layerscape. I
-agree it would
-be nice to group the three NXP together.
 
-        Arnd
+On 12/08/2022 11:12, Abel Vesa wrote:
+> SDM845 is a special case compared to the other platforms that use RPMh
+> stats, since it only has 2 stats (aosd and cxsd), while the others have
+> a 3rd one (ddr).
+> 
+> So lets add the node but with a SDM845 dedicated compatible to make
+> the driver aware of the different stats config.
+Hi,
+
+I gave this a go on the OnePlus 6, I noticed the driver is also meant to read 
+the stats for remote procs via smem, however this seems to fail for me - it 
+can't find any of the SMEM items even if I probe the driver manually after 
+ensuring remoteprocs have booted. Is this an unsupported feature on SDM845?
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+> 
+> Changed qcom,rpmh-stats-sdm845 to qcom,sdm845-rpmh-stats, as suggested
+> by Krzysztof.
+> 
+>   arch/arm64/boot/dts/qcom/sdm845.dtsi | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index 5bea96a9ce06..67fe08b837be 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -4851,6 +4851,11 @@ ebi_cdev: ebi {
+>   			};
+>   		};
+> 
+> +		sram@c3f0000 {
+> +			compatible = "qcom,sdm845-rpmh-stats";
+> +			reg = <0 0x0c3f0000 0 0x400>;
+> +		};
+> +
+>   		spmi_bus: spmi@c440000 {
+>   			compatible = "qcom,spmi-pmic-arb";
+>   			reg = <0 0x0c440000 0 0x1100>,
+> --
+> 2.34.1
+> 
+
+-- 
+Kind Regards,
+Caleb (they/he)
