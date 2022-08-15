@@ -2,126 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 12F7959269E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Aug 2022 23:26:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01422592898
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Aug 2022 06:18:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240762AbiHNV0d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 14 Aug 2022 17:26:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37842 "EHLO
+        id S230431AbiHOESP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Aug 2022 00:18:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236100AbiHNV0U (ORCPT
+        with ESMTP id S229460AbiHOESO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 14 Aug 2022 17:26:20 -0400
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E349E4F;
-        Sun, 14 Aug 2022 14:25:23 -0700 (PDT)
-Received: by mail-pl1-f178.google.com with SMTP id o3so4950552ple.5;
-        Sun, 14 Aug 2022 14:25:23 -0700 (PDT)
+        Mon, 15 Aug 2022 00:18:14 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 053C863C1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Aug 2022 21:18:13 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id d16so5453715pll.11
+        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Aug 2022 21:18:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=E+SbdWKle26nrNTvjrwjORRMK5B3fUHqQoLgOh5gagc=;
+        b=YCiOrOI4t57JroaK+DvgxUd40PqFb566csy0KZpoHxIAjL/vPPk6J1m/YLVAQJgafF
+         MBc/BEm1UbTvtrczItUPUi4//hLIjk/GfM4ooAEfFoZVAo14khCxzIa/7Xg2+FZDNVLe
+         Wc5wsr2o66GeVKuXZe7WjOqecyDFXKE0pAno4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=Qo7JqMyBl98Dfi1GLWq2+D40THRpPwUbZg2FaTyray4=;
-        b=p0vQAsG3/dy/JTUKA7ZNpWVmPrDj+J4Oy5ecuw/4lKSYdN1oBl3aH938q9KQQoHidr
-         yt6rIafB7uMuk+hn/5F+6NQ0ePQz1+HMVh0DkG/8RFWrln+wZiCWUK3LkFidFC+PXiJy
-         qk8vedt9FX4l2nq+Tpwz11tlabmIJZCG3m4L+QxZHlFJPOVrvi47cTSVYnAxTmSTeOGZ
-         bFA5VD8kU7dcDxfnJKrXOL77LW179iHYfYxDcOalMhR+prOIhGR0KsH5viHJXtI4bnFE
-         hHXTUlrM7HlZeOHFWUu748R8YdqRn6QdIvkw5Fg1sFpfqKnkfxtdSFYHjWqMtNP4gr4Q
-         AOmw==
-X-Gm-Message-State: ACgBeo2ik6SnWuOBdH7MwEZ6TCxmIXna0miJhRL8dMfVJJIy6H7lgeoE
-        67FPMp/5yWou+E+wTjlmtJZzlZlzmg==
-X-Google-Smtp-Source: AA6agR6CPtGSg5LrG2ATwGoXMf1RpAO/eKlw9Rdknyh9z164drqoQsdZs5vV+g2HhnZkK+fhVMn1Kw==
-X-Received: by 2002:a17:90a:8808:b0:1f7:4bd3:3760 with SMTP id s8-20020a17090a880800b001f74bd33760mr15279401pjn.170.1660512322794;
-        Sun, 14 Aug 2022 14:25:22 -0700 (PDT)
-Received: from robh.at.kernel.org ([2607:fb90:282b:ad51:2025:80dc:3a15:a2de])
-        by smtp.gmail.com with ESMTPSA id a6-20020a170902710600b0016ed20eacd2sm5730887pll.150.2022.08.14.14.25.19
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=E+SbdWKle26nrNTvjrwjORRMK5B3fUHqQoLgOh5gagc=;
+        b=4Oy+trQU+yLn3qctm6LJ05FtaMQb6JJspMKTXwYCgzVEsmju4H7Qw2DGSf7fRRRcb7
+         s6kSNid/ANdmHdYegdkfgNt8AvnPYUg3nEi/qgzrQBpx6qKQKrSt9k6XYCwTmqz1tWYJ
+         1XJahDL8FxDrjCZhpVtvuiHH7Scajl7GXoiSYhnlHG+/634JBQMGTt8Oc/Qjn08cTml8
+         /ZuUCI/QtWfMM2jvn7VcJ7IwOqMzE8riDwadbvd+OVwScE79b+ZMZ7+47iJmxwIeS08s
+         S6Wi/BhKLPyU2gkJVt6Pzn1HahugmnnHNi/uytZyljHq4nj5EmQrgte63/kKLIHvY1sR
+         4CYw==
+X-Gm-Message-State: ACgBeo0Awe2vCAmL9Hn37YEqeH0Nlbng7cwgGQfNXe/6X+0cXoIDf2bJ
+        sjQdD3/ZA87b2dEuw5dqlGtQV7siVDvJQw==
+X-Google-Smtp-Source: AA6agR6GXAxP7HE9fOcv7/Zk0pGt69h2rxMcVW4JHZ34d0rGzZis2n5ZicCc9p418kS+2Tm2EbU2Cw==
+X-Received: by 2002:a17:90b:3807:b0:1f4:ecf7:5987 with SMTP id mq7-20020a17090b380700b001f4ecf75987mr15932324pjb.13.1660537092524;
+        Sun, 14 Aug 2022 21:18:12 -0700 (PDT)
+Received: from judyhsiao0523.c.googlers.com.com (21.160.199.104.bc.googleusercontent.com. [104.199.160.21])
+        by smtp.gmail.com with ESMTPSA id 6-20020a170902c20600b0016d2d0ce376sm6114433pll.215.2022.08.14.21.18.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Aug 2022 14:25:22 -0700 (PDT)
-Received: (nullmailer pid 736117 invoked by uid 1000);
-        Sun, 14 Aug 2022 21:25:17 -0000
-Date:   Sun, 14 Aug 2022 15:25:17 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Del Regno <angelogioacchino.delregno@somainline.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/5] dt-bindings: display/msm: dpu-msm8998: add missing
- DPU opp-table
-Message-ID: <20220814212517.GA716652-robh@kernel.org>
-References: <20220811084331.83715-1-krzysztof.kozlowski@linaro.org>
- <20220811084331.83715-2-krzysztof.kozlowski@linaro.org>
+        Sun, 14 Aug 2022 21:18:11 -0700 (PDT)
+From:   Judy Hsiao <judyhsiao@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        dianders@chromium.org, mka@chromium.org, cychiang@google.com,
+        judyhsiao@google.com, swboyd@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Judy Hsiao <judyhsiao@chromium.org>,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v1] arm64: dts: qcom: sc7280: Use "PP1800_L2C" as the DMIC power source.
+Date:   Mon, 15 Aug 2022 04:18:04 +0000
+Message-Id: <20220815041804.583181-1-judyhsiao@chromium.org>
+X-Mailer: git-send-email 2.37.1.595.g718a3a8f04-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220811084331.83715-2-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 11, 2022 at 11:43:27AM +0300, Krzysztof Kozlowski wrote:
-> The 'display-controller' child (DPU) of Display SubSystem (MDSS) uses
-> opp-table, so reference it which allows restricting DPU schema to fixed
-> list of properties.
-> 
-> Fixes: 6e986a8f1cf1 ("dt-bindings: display: msm: Add binding for msm8998 dpu")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Sean Paul <sean@poorly.run>
-> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/display/msm/dpu-msm8998.yaml | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-msm8998.yaml b/Documentation/devicetree/bindings/display/msm/dpu-msm8998.yaml
-> index 2df64afb76e6..7ed438bc7dce 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dpu-msm8998.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/dpu-msm8998.yaml
-> @@ -62,6 +62,7 @@ patternProperties:
->    "^display-controller@[0-9a-f]+$":
->      type: object
->      description: Node containing the properties of DPU.
-> +    additionalProperties: false
->  
->      properties:
->        compatible:
-> @@ -105,6 +106,8 @@ patternProperties:
->          maxItems: 1
->  
->        operating-points-v2: true
-> +      opp-table: true
+Use "PP1800_L2C" as the DMIC power source.
 
-type: object
+Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
+---
+This patch depends on:
+arm64: dts: qcom: sc7280: Add herobrine-villager-r1. [1]
 
-Otherwise, 'opp-table;' would be accepted.
+[1]
+https://patchwork.kernel.org/patch/12926099/
 
-> +
->        ports:
->          $ref: /schemas/graph.yaml#/properties/ports
->          description: |
-> -- 
-> 2.34.1
-> 
-> 
+
+ .../dts/qcom/sc7280-herobrine-villager-r1.dts | 28 +++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
+index c03b3ae4de50..983defa7c76d 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
+@@ -12,3 +12,31 @@ / {
+ 	model = "Google Villager (rev1+)";
+ 	compatible = "google,villager", "qcom,sc7280";
+ };
++
++&lpass_va_macro {
++	vdd-micb-supply = <&pp1800_l2c>;
++};
++
++&sound {
++	audio-routing =
++			"IN1_HPHL", "HPHL_OUT",
++			"IN2_HPHR", "HPHR_OUT",
++			"AMIC1", "MIC BIAS1",
++			"AMIC2", "MIC BIAS2",
++			"VA DMIC0", "vdd-micb",
++			"VA DMIC1", "vdd-micb",
++			"VA DMIC2", "vdd-micb",
++			"VA DMIC3", "vdd-micb",
++			"TX SWR_ADC0", "ADC1_OUTPUT",
++			"TX SWR_ADC1", "ADC2_OUTPUT",
++			"TX SWR_ADC2", "ADC3_OUTPUT",
++			"TX SWR_DMIC0", "DMIC1_OUTPUT",
++			"TX SWR_DMIC1", "DMIC2_OUTPUT",
++			"TX SWR_DMIC2", "DMIC3_OUTPUT",
++			"TX SWR_DMIC3", "DMIC4_OUTPUT",
++			"TX SWR_DMIC4", "DMIC5_OUTPUT",
++			"TX SWR_DMIC5", "DMIC6_OUTPUT",
++			"TX SWR_DMIC6", "DMIC7_OUTPUT",
++			"TX SWR_DMIC7", "DMIC8_OUTPUT";
++
++};
+-- 
+2.31.0
+
