@@ -2,71 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FF155933D5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Aug 2022 19:08:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17BD25933DF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Aug 2022 19:11:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230351AbiHORIS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Aug 2022 13:08:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57330 "EHLO
+        id S231904AbiHORLR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Aug 2022 13:11:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229921AbiHORIR (ORCPT
+        with ESMTP id S230434AbiHORLR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Aug 2022 13:08:17 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC0C92611A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Aug 2022 10:08:16 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id a14-20020a0568300b8e00b0061c4e3eb52aso5853392otv.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Aug 2022 10:08:16 -0700 (PDT)
+        Mon, 15 Aug 2022 13:11:17 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC0D01C10D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Aug 2022 10:11:15 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id bk13-20020a056830368d00b0063723999f31so5844236otb.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Aug 2022 10:11:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
-         :from:references:in-reply-to:mime-version:from:to:cc;
-        bh=w5mvqeDCehc7GaKrA3r1nsUFJqaSzpg+13M7sA6ODP4=;
-        b=EXo9TqZYcqeI62mYaP39HnHFE1Jgu2Gp4yw1YH7g4irL+MqYlSooTegqxrGX/1fPdS
-         i7LTVrfmDVZjkoYfavZW6Z5yTUIjGmyuJuTYhLnaTSHQ1Bj0oFKEAXVOWBn2QmHIhso5
-         TbJZq75FEa02PtPcpEJJB/M1x7jEHhwEKyvBk=
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc;
+        bh=fYHATjMloKIHDZRJFW62hZu0N9hKCcy6QlPPx8j2Wsw=;
+        b=QpOrqpXkiohYH9sRsFq4JuVLY6o2HbkfIIjXY0wIMTaR7v1EI3uKidRzI4UcnoMKsB
+         hqL5XJzeyPYwN9+ToEm9rTDfyuJ4oFaiSM6au2gHhAnG3jng7TE5xRp0U4VTaZhF/G3G
+         0HTs8uCKnY9MVaBSPpuAhxk3f/Cic7bvdZAzE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
-         :from:references:in-reply-to:mime-version:x-gm-message-state:from:to
-         :cc;
-        bh=w5mvqeDCehc7GaKrA3r1nsUFJqaSzpg+13M7sA6ODP4=;
-        b=1K/HwD4IZwCEir+GZTEsZkJ0c2qUbsaDy/fqtZHeDMYqF4DM0fJaXuXV0xThl4luhF
-         9n5olrsLaK1HcL5MeOUzDhWl/znkF27GlvRy1MZjQbQaBBUqsDOhhRpNrZs9oeKNY6Ef
-         wev2uM4Pl/VaHK6HE9CYOkks5EPVMMpjxuWo6nyUt0CmM5Gmj+oG2M5uOwpjLDPaGFnH
-         rrQT13nAE1+f02L1UXq0qO2MCJ3XJhWQ89ftkugte9L7G3fjImEJy3YwWSQjAcyIr+aq
-         FI6Vzjo7DfXogkNvVwEEYh/e7e1AaeS7HSurMJopv/V76fwfM/lVi7BCX/9WmcFpDA6I
-         fAsw==
-X-Gm-Message-State: ACgBeo13diLi36slwN4W7ef7LKIOEy+NXFyQFC6KT2X63rBnY34dQ0T0
-        MAKoJHu6OV4HRZhL6Z5c0ghZQoO6rLNRQfDa1Dyveg==
-X-Google-Smtp-Source: AA6agR49gUW9vuHC0Dzoy8S1A7T61B09e5tua3NyVPTV7sd0acqlwzykUCsQVgv29H+kCTLbcY+y6r4riaOarGM+ysQ=
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc;
+        bh=fYHATjMloKIHDZRJFW62hZu0N9hKCcy6QlPPx8j2Wsw=;
+        b=yFneBbzdopbbRj5+pS3RseS+fqb65kP1+OU3wgsWGUVtwQCMvP6jPtgWCrSiQOBQZF
+         04hhJ4blNHOHQCSJnG+zSddPLQTNfv2miWvxXa40VYh2ebpIvxEQB6/IweGQ/HryI6Yx
+         COVUxfWqBU50FwXc5rnqYbB8KGjcSg0NruYNKw5sdfAHhM7stOsCz1fPH8ReWxACnRUv
+         22QAZ6gdM4RYAP87iZRdpi7Epj0HAmuJD7q7PxJU8Tpgzez0hSretoH7ZabvcZ7MxTgX
+         ajOPFjaCLtP4x14kv+bFw/04MOlUItJrsK7nSoF8JRxoqphoj0g63dKUCwxjYXbAmf4J
+         obNg==
+X-Gm-Message-State: ACgBeo1Nsn6im/VaAxBTC9MkJudDLYWAslr3VG3sayfu3Med4FMJQaX0
+        agHv+eFesn/ckhOAa8YedT1D5kXMSzFGmal7DJ5omA==
+X-Google-Smtp-Source: AA6agR5x05CXrLqAbvUNICaEmR9ND1oRovJs4sWatPKcE/0sJGZyA2A8wHJQoct/2ED/eNkQUa0l1ok3po+Ds1xEZPU=
 X-Received: by 2002:a9d:738c:0:b0:638:9962:8cb6 with SMTP id
- j12-20020a9d738c000000b0063899628cb6mr2917548otk.73.1660583296069; Mon, 15
- Aug 2022 10:08:16 -0700 (PDT)
+ j12-20020a9d738c000000b0063899628cb6mr2921869otk.73.1660583474974; Mon, 15
+ Aug 2022 10:11:14 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 15 Aug 2022 12:08:15 -0500
+ HTTPREST; Mon, 15 Aug 2022 12:11:14 -0500
 MIME-Version: 1.0
-In-Reply-To: <1e792f49-febf-43bf-d828-8ecf99cbeba3@quicinc.com>
-References: <1660159551-13828-1-git-send-email-quic_khsieh@quicinc.com>
- <CAE-0n533SUb3Bg=pR8Fhwo-M5qLWiti4nzLR-rSGVAsrXgEYNQ@mail.gmail.com>
- <dbda8bce-2890-e5e3-4052-073a52eb06a6@quicinc.com> <CAE-0n51NyrP8CikcK_3wj4EEsurmmSZ4RY3pLhJJmkY2_8wNZw@mail.gmail.com>
- <0641a116-5b58-4305-bf2d-f53dcb747276@quicinc.com> <1e792f49-febf-43bf-d828-8ecf99cbeba3@quicinc.com>
+In-Reply-To: <20220815041804.583181-1-judyhsiao@chromium.org>
+References: <20220815041804.583181-1-judyhsiao@chromium.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Mon, 15 Aug 2022 12:08:15 -0500
-Message-ID: <CAE-0n50QXiJs=k78Tmd7om28MgWChypwC8LPRzF2jx_qB5+0FQ@mail.gmail.com>
-Subject: Re: [PATCH v3] drm/msm/dp: check hpd_state before push idle pattern
- at dp_bridge_disable()
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dianders@chromium.org, dmitry.baryshkov@linaro.org,
-        robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org
-Cc:     quic_aravindh@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Date:   Mon, 15 Aug 2022 12:11:14 -0500
+Message-ID: <CAE-0n52NxrXkdck+cFtK4FC_F_D_xEbSuw-=LUKOKoqXi1gQFw@mail.gmail.com>
+Subject: Re: [PATCH v1] arm64: dts: qcom: sc7280: Use "PP1800_L2C" as the DMIC
+ power source.
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Judy Hsiao <judyhsiao@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        dianders@chromium.org, mka@chromium.org, cychiang@google.com,
+        judyhsiao@google.com, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -77,81 +73,65 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2022-08-11 08:20:01)
->
-> On 8/10/2022 6:00 PM, Abhinav Kumar wrote:
-> >
-> > Even then, you do have a valid point. DRM framework should not have
-> > caused the disable path to happen without an enable.
-> >
-> > I went through the stack mentioned in the issue.
-> >
-> > Lets see this part of the stack:
-> >
-> > dp_ctrl_push_idle+0x40/0x88
-> > =C2=A0dp_bridge_disable+0x24/0x30
-> > =C2=A0drm_atomic_bridge_chain_disable+0x90/0xbc
-> > =C2=A0drm_atomic_helper_commit_modeset_disables+0x198/0x444
-> > =C2=A0msm_atomic_commit_tail+0x1d0/0x374
-> >
-> > In drm_atomic_helper_commit_modeset_disables(), we call
-> > disable_outputs().
-> >
-> > AFAICT, this is the only place which has a protection to not call the
-> > disable() flow if it was not enabled here:
-> >
-> > https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/=
-drm_atomic_helper.c#L1063
-> >
-> >
-> > But that function is only checking crtc_state->active. Thats set by
-> > the usermode:
-> >
-> > https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/=
-drm_atomic_uapi.c#L407
-> >
-> >
-> > Now, if usermode sets that to true and then crashed it can bypass this
-> > check and we will crash in the location kuogee is trying to fix.
+Quoting Judy Hsiao (2022-08-14 21:18:04)
+> Use "PP1800_L2C" as the DMIC power source.
 
-That seems bad, no? We don't want userspace to be able to crash and then
-be able to call the disable path when enable never succeeded.
-
-> >
-> > From the issue mentioned in
-> > https://gitlab.freedesktop.org/drm/msm/-/issues/17, the reporter did
-> > mention the usermode crashed.
-> >
-> > So this is my tentative analysis of whats happening here.
-> >
-> > Ideally yes, we should have been protected by the location mentioned
-> > above in disable_outputs() but looks to me due to the above hypothesis
-> > its getting bypassed.
-
-Can you fix the problem there? Not fixing it means that every driver out
-there has to develop the same "fix", when it could be fixed in the core
-one time.
-
-Ideally drivers are simple. They configure the hardware for what the
-function pointer is asking for. State management and things like that
-should be pushed into the core framework so that we don't have to
-duplicate that multiple times.
-
-> >
-> > Thanks
-> >
-> > Abhinav
-> >
-> >
-> Ii sound likes that there is a hole either at user space or drm.
->
-> But that should not cause dp_bridge_disable() at dp driver to crash.
-
-Agreed.
+Why? Is it fixing sound on villager? Or supporting sound on villager?
+Was the power source wrong before?
 
 >
-> Therefore it is properly to check hdp_state condition at
-> dp_bridge_disable() to prevent it from crashing.
->
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 
-Disagree. Userspace shouldn't be able to get drm into a wedged state.
+Is Srinivasa the author? There should either be a From up above or a
+Co-developed-by tag here.
+
+> Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
+> ---
+> This patch depends on:
+> arm64: dts: qcom: sc7280: Add herobrine-villager-r1. [1]
+>
+> [1]
+> https://patchwork.kernel.org/patch/12926099/
+>
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
+> index c03b3ae4de50..983defa7c76d 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
+> @@ -12,3 +12,31 @@ / {
+>         model = "Google Villager (rev1+)";
+>         compatible = "google,villager", "qcom,sc7280";
+>  };
+> +
+> +&lpass_va_macro {
+> +       vdd-micb-supply = <&pp1800_l2c>;
+> +};
+
+This is the subject of the patch.
+
+> +
+> +&sound {
+> +       audio-routing =
+> +                       "IN1_HPHL", "HPHL_OUT",
+> +                       "IN2_HPHR", "HPHR_OUT",
+> +                       "AMIC1", "MIC BIAS1",
+> +                       "AMIC2", "MIC BIAS2",
+> +                       "VA DMIC0", "vdd-micb",
+> +                       "VA DMIC1", "vdd-micb",
+> +                       "VA DMIC2", "vdd-micb",
+> +                       "VA DMIC3", "vdd-micb",
+> +                       "TX SWR_ADC0", "ADC1_OUTPUT",
+> +                       "TX SWR_ADC1", "ADC2_OUTPUT",
+> +                       "TX SWR_ADC2", "ADC3_OUTPUT",
+> +                       "TX SWR_DMIC0", "DMIC1_OUTPUT",
+> +                       "TX SWR_DMIC1", "DMIC2_OUTPUT",
+> +                       "TX SWR_DMIC2", "DMIC3_OUTPUT",
+> +                       "TX SWR_DMIC3", "DMIC4_OUTPUT",
+> +                       "TX SWR_DMIC4", "DMIC5_OUTPUT",
+> +                       "TX SWR_DMIC5", "DMIC6_OUTPUT",
+> +                       "TX SWR_DMIC6", "DMIC7_OUTPUT",
+> +                       "TX SWR_DMIC7", "DMIC8_OUTPUT";
+> +
+> +};
+
+This part is not described.
