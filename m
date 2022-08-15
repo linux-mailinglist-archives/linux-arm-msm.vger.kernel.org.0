@@ -2,337 +2,249 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 707AF5929A8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Aug 2022 08:37:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C46ED592C84
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Aug 2022 12:51:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231705AbiHOGhS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Aug 2022 02:37:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38942 "EHLO
+        id S242012AbiHOJa1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Aug 2022 05:30:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231328AbiHOGhP (ORCPT
+        with ESMTP id S230431AbiHOJa0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Aug 2022 02:37:15 -0400
-Received: from smtp.smtpout.orange.fr (smtp08.smtpout.orange.fr [80.12.242.130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D6B41ADB7
-        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Aug 2022 23:37:11 -0700 (PDT)
-Received: from [192.168.1.18] ([90.11.190.129])
-        by smtp.orange.fr with ESMTPA
-        id NTilozE1IUoLVNTilo20hb; Mon, 15 Aug 2022 08:37:08 +0200
-X-ME-Helo: [192.168.1.18]
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Mon, 15 Aug 2022 08:37:08 +0200
-X-ME-IP: 90.11.190.129
-Message-ID: <6d551cf9-94b4-653b-122a-938ee5504150@wanadoo.fr>
-Date:   Mon, 15 Aug 2022 08:37:06 +0200
+        Mon, 15 Aug 2022 05:30:26 -0400
+Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFE85292;
+        Mon, 15 Aug 2022 02:30:23 -0700 (PDT)
+Received: from canpemm500009.china.huawei.com (unknown [172.30.72.55])
+        by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4M5pny1d6zz1M8w3;
+        Mon, 15 Aug 2022 17:27:02 +0800 (CST)
+Received: from localhost.localdomain (10.67.164.66) by
+ canpemm500009.china.huawei.com (7.192.105.203) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.24; Mon, 15 Aug 2022 17:30:20 +0800
+From:   Yicong Yang <yangyicong@huawei.com>
+To:     <will@kernel.org>, <mark.rutland@arm.com>, <Frank.li@nxp.com>,
+        <shawnguo@kernel.org>, <s.hauer@pengutronix.de>
+CC:     <kernel@pengutronix.de>, <festevam@gmail.com>, <linux-imx@nxp.com>,
+        <zhangshaokun@hisilicon.com>, <agross@kernel.org>,
+        <bjorn.andersson@linaro.org>, <konrad.dybcio@somainline.org>,
+        <khuong@os.amperecomputing.com>, <john.garry@huawei.com>,
+        <jonathan.cameron@huawei.com>, <yangyicong@hisilicon.com>,
+        <gregkh@linuxfoundation.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH] drivers/perf: Change WARN_ON() to dev_err() on irq_set_affinity() failure
+Date:   Mon, 15 Aug 2022 17:28:15 +0800
+Message-ID: <20220815092815.11597-1-yangyicong@huawei.com>
+X-Mailer: git-send-email 2.31.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v4 6/7] remoteproc: qcom: Add support for memory sandbox
-Content-Language: en-US
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-References: <1660308466-410-1-git-send-email-quic_srivasam@quicinc.com>
- <1660308466-410-7-git-send-email-quic_srivasam@quicinc.com>
-From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc:     agross@kernel.org, bgoswami@quicinc.com,
-        bjorn.andersson@linaro.org, broonie@kernel.org,
-        devicetree@vger.kernel.org, judyhsiao@chromium.org,
-        lgirdwood@gmail.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        perex@perex.cz, quic_plai@quicinc.com, quic_rohkumar@quicinc.com,
-        robh+dt@kernel.org, srinivas.kandagatla@linaro.org,
-        swboyd@chromium.org, tiwai@suse.com
-In-Reply-To: <1660308466-410-7-git-send-email-quic_srivasam@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.67.164.66]
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ canpemm500009.china.huawei.com (7.192.105.203)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le 12/08/2022 à 14:47, Srinivasa Rao Mandadapu a écrit :
-> Update pil driver with SMMU mapping for allowing authorised
-> memory access to ADSP firmware, by reading required memory
-> regions either from device tree file or from resource table
-> embedded in ADSP binary header.
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam-jfJNa2p1gH1BDgjK7y7TUQ@public.gmane.org>
-> ---
-> Changes since V3:
-> 	-- Rename is_adsp_sb_needed to adsp_sandbox_needed.
-> 	-- Add smmu unmapping in error case and in adsp stop.
-> Changes since V2:
-> 	-- Replace platform_bus_type with adsp->dev->bus.
-> 	-- Use API of_parse_phandle_with_args() instead of of_parse_phandle_with_fixed_args().
-> 	-- Replace adsp->is_wpss with adsp->is_adsp.
-> 	-- Update error handling in adsp_start().
-> 
->   drivers/remoteproc/qcom_q6v5_adsp.c | 172 +++++++++++++++++++++++++++++++++++-
->   1 file changed, 170 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-> index b0a63a0..ca45d2c 100644
-> --- a/drivers/remoteproc/qcom_q6v5_adsp.c
-> +++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-> @@ -9,6 +9,7 @@
->   #include <linux/firmware.h>
->   #include <linux/interrupt.h>
->   #include <linux/io.h>
-> +#include <linux/iommu.h>
->   #include <linux/iopoll.h>
->   #include <linux/kernel.h>
->   #include <linux/mfd/syscon.h>
-> @@ -48,6 +49,8 @@
->   #define LPASS_PWR_ON_REG		0x10
->   #define LPASS_HALTREQ_REG		0x0
->   
-> +#define SID_MASK_DEFAULT        0xF
-> +
->   #define QDSP6SS_XO_CBCR		0x38
->   #define QDSP6SS_CORE_CBCR	0x20
->   #define QDSP6SS_SLEEP_CBCR	0x3c
-> @@ -78,7 +81,7 @@ struct adsp_pil_data {
->   struct qcom_adsp {
->   	struct device *dev;
->   	struct rproc *rproc;
-> -
-> +	struct iommu_domain *iommu_dom;
->   	struct qcom_q6v5 q6v5;
->   
->   	struct clk *xo;
-> @@ -333,6 +336,155 @@ static int adsp_load(struct rproc *rproc, const struct firmware *fw)
->   	return 0;
->   }
->   
-> +static void adsp_of_unmap_smmu(struct iommu_domain *iommu_dom, const __be32 *prop, int len)
-> +{
-> +	unsigned long mem_phys;
-> +	unsigned long iova;
-> +	unsigned int mem_size;
-> +	int access_level;
-> +	int i;
-> +
-> +	for (i = 0; i < len; i++) {
-> +		iova = be32_to_cpu(prop[i++]);
-> +		mem_phys = be32_to_cpu(prop[i++]);
-> +		mem_size = be32_to_cpu(prop[i++]);
-> +		access_level = be32_to_cpu(prop[i]);
-> +		iommu_unmap(iommu_dom, iova, mem_size);
-> +	}
-> +}
-> +
-> +static void adsp_rproc_unmap_smmu(struct rproc *rproc, int len)
-> +{
-> +	struct fw_rsc_devmem *rsc_fw;
-> +	struct fw_rsc_hdr *hdr;
-> +	int offset;
-> +	int i;
-> +
-> +	for (i = 0; i < len; i++) {
-> +		offset = rproc->table_ptr->offset[i];
-> +		hdr = (void *)rproc->table_ptr + offset;
-> +		rsc_fw = (struct fw_rsc_devmem *)hdr + sizeof(*hdr);
-> +
-> +		iommu_unmap(rproc->domain, rsc_fw->da, rsc_fw->len);
-> +	}
-> +}
-> +
-> +static void adsp_unmap_smmu(struct rproc *rproc)
-> +{
+From: Yicong Yang <yangyicong@hisilicon.com>
 
-When I proposed a adsp_unmap_smmu() function, the idea was to undo 
-everything that is donne by adsp_map_smmu().
-iommu_domain_alloc() and iommu_map(adsp->iommu_dom, ..) are not undone here.
+The WARN_ON() on irq_set_affinity() failure is misused according to the [1]
+and may crash people's box unintentionally. This may also be redundant since
+in the failure case we may also trigger the WARN and dump the stack in the
+perf core[2] for a second time.
 
-If this make sense, it would improve the semantic, simplify the 
-'adsp_smmu_unmap' label in adsp_start() and avoid what looks like a leak 
-to me in adsp_stop().
+So change the WARN_ON() to dev_err() to just print the failure message.
 
+[1] https://github.com/torvalds/linux/blob/master/include/asm-generic/bug.h#L74
+[2] https://github.com/torvalds/linux/blob/master/kernel/events/core.c#L313
 
-> +	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
-> +	const __be32 *prop;
-> +	unsigned int len;
-> +
-> +	prop = of_get_property(adsp->dev->of_node, "qcom,adsp-memory-regions", &len);
-> +	if (prop) {
+Suggested-by: Greg KH <gregkh@linuxfoundation.org>
+[https://lore.kernel.org/lkml/YuOi3i0XHV++z1YI@kroah.com/]
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+---
+ drivers/perf/arm-ccn.c                   | 5 +++--
+ drivers/perf/arm_dmc620_pmu.c            | 3 ++-
+ drivers/perf/arm_smmuv3_pmu.c            | 6 ++++--
+ drivers/perf/fsl_imx8_ddr_perf.c         | 3 ++-
+ drivers/perf/hisilicon/hisi_pcie_pmu.c   | 6 ++++--
+ drivers/perf/hisilicon/hisi_uncore_pmu.c | 6 ++++--
+ drivers/perf/qcom_l2_pmu.c               | 8 ++++++--
+ drivers/perf/xgene_pmu.c                 | 6 ++++--
+ 8 files changed, 29 insertions(+), 14 deletions(-)
 
-In the allocation path, you have a "len /= sizeof(__be32);" which is not 
-here. Is it needed?
-
-You call adsp_unmap_smmu() from the error handling path of 
-adsp_map_smmu(). If needed, maybe it should be part of adsp_of_unmap_smmu()?
-
-> +		adsp_of_unmap_smmu(adsp->iommu_dom, prop, len);
-> +	} else {
-> +		if (rproc->table_ptr)
-> +			adsp_rproc_unmap_smmu(rproc, rproc->table_ptr->num);
-> +	}
-> +}
-> +
-> +static int adsp_map_smmu(struct qcom_adsp *adsp, struct rproc *rproc)
-> +{
-> +	struct of_phandle_args args;
-> +	struct fw_rsc_devmem *rsc_fw;
-> +	struct fw_rsc_hdr *hdr;
-> +	const __be32 *prop;
-> +	long long sid;
-> +	unsigned long mem_phys;
-> +	unsigned long iova;
-> +	unsigned int mem_size;
-> +	unsigned int flag;
-> +	unsigned int len;
-> +	int access_level;
-> +	int offset;
-> +	int ret;
-> +	int rc;
-
-Are ret and rc both needed?
-
-> +	int i;
-> +
-> +	rc = of_parse_phandle_with_args(adsp->dev->of_node, "iommus", "#iommu-cells", 0, &args);
-> +	if (rc < 0)
-> +		sid = -1;
-> +	else
-> +		sid = args.args[0] & SID_MASK_DEFAULT;
-> +
-> +	adsp->iommu_dom = iommu_domain_alloc(adsp->dev->bus);
-> +	if (!adsp->iommu_dom) {
-> +		dev_err(adsp->dev, "failed to allocate iommu domain\n");
-> +		ret = -ENOMEM;
-> +		goto domain_free;
-> +	}
-> +
-> +	ret = iommu_attach_device(adsp->iommu_dom, adsp->dev);
-> +	if (ret) {
-> +		dev_err(adsp->dev, "could not attach device ret = %d\n", ret);
-> +		ret = -EBUSY;
-> +		goto detach_device;
-> +	}
-> +
-> +	/* Add SID configuration for ADSP Firmware to SMMU */
-> +	adsp->mem_phys =  adsp->mem_phys | (sid << 32);
-> +
-> +	ret = iommu_map(adsp->iommu_dom, adsp->mem_phys, adsp->mem_phys,
-> +			adsp->mem_size,	IOMMU_READ | IOMMU_WRITE);
-> +	if (ret) {
-> +		dev_err(adsp->dev, "Unable to map ADSP Physical Memory\n");
-> +		goto sid_unmap;
-> +	}
-> +
-> +	prop = of_get_property(adsp->dev->of_node, "qcom,adsp-memory-regions", &len);
-> +	if (prop) {
-> +		len /= sizeof(__be32);
-> +		for (i = 0; i < len; i++) {
-> +			iova = be32_to_cpu(prop[i++]);
-> +			mem_phys = be32_to_cpu(prop[i++]);
-> +			mem_size = be32_to_cpu(prop[i++]);
-> +			access_level = be32_to_cpu(prop[i]);
-> +
-> +			if (access_level)
-> +				flag = IOMMU_READ | IOMMU_WRITE;
-> +			else
-> +				flag = IOMMU_READ;
-> +
-> +			ret = iommu_map(adsp->iommu_dom, iova, mem_phys, mem_size, flag);
-> +			if (ret) {
-> +				dev_err(adsp->dev, "failed to map addr = %p mem_size = %x\n",
-> +						&(mem_phys), mem_size);
-> +				goto smmu_unmap;
-> +			}
-> +		}
-> +	} else {
-> +		if (!rproc->table_ptr)
-> +			goto sid_unmap;
-> +
-> +		for (i = 0; i < rproc->table_ptr->num; i++) {
-> +			offset = rproc->table_ptr->offset[i];
-> +			hdr = (void *)rproc->table_ptr + offset;
-> +			rsc_fw = (struct fw_rsc_devmem *)hdr + sizeof(*hdr);
-> +
-> +			ret = iommu_map(rproc->domain, rsc_fw->da, rsc_fw->pa,
-> +						rsc_fw->len, rsc_fw->flags);
-> +			if (ret) {
-> +				pr_err("%s; unable to map adsp memory address\n", __func__);
-> +				goto rproc_smmu_unmap;
-> +			}
-> +		}
-> +	}
-
-If you introduce a adsp_of_unmap_smmu() and adsp_rproc_unmap_smmu(), 
-would it make things more readable to have the same kind of functions 
-when allocating the resources?
-
-Symmetry often helps.
-
-> +	return 0;
-
-Add an empty new line here?
-
-> +rproc_smmu_unmap:
-> +	adsp_rproc_unmap_smmu(rproc, i);
-> +	goto sid_unmap;
-> +smmu_unmap:
-> +	adsp_of_unmap_smmu(adsp->iommu_dom, prop, i);
-> +sid_unmap:
-> +	iommu_unmap(adsp->iommu_dom, adsp->mem_phys, adsp->mem_size);
-> +detach_device:
-> +	iommu_domain_free(adsp->iommu_dom);
-> +domain_free:
-> +	return ret;
-> +}
-> +
-> +
->   static int adsp_start(struct rproc *rproc)
->   {
->   	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
-> @@ -343,9 +495,16 @@ static int adsp_start(struct rproc *rproc)
->   	if (ret)
->   		return ret;
->   
-> +	if (adsp->adsp_sandbox_needed) {
-> +		ret = adsp_map_smmu(adsp, rproc);
-> +		if (ret) {
-> +			dev_err(adsp->dev, "ADSP smmu mapping failed\n");
-> +			goto disable_irqs;
-> +		}
-> +	}
->   	ret = clk_prepare_enable(adsp->xo);
->   	if (ret)
-> -		goto disable_irqs;
-> +		goto adsp_smmu_unmap;
->   
->   	ret = qcom_rproc_pds_enable(adsp, adsp->proxy_pds,
->   				    adsp->proxy_pd_count);
-> @@ -401,6 +560,12 @@ static int adsp_start(struct rproc *rproc)
->   	qcom_rproc_pds_disable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
->   disable_xo_clk:
->   	clk_disable_unprepare(adsp->xo);
-> +adsp_smmu_unmap:
-> +	if (adsp->adsp_sandbox_needed) {
-> +		iommu_unmap(adsp->iommu_dom, adsp->mem_phys, adsp->mem_size);
-> +		adsp_unmap_smmu(rproc);
-> +		iommu_domain_free(adsp->iommu_dom);
-> +	}
->   disable_irqs:
->   	qcom_q6v5_unprepare(&adsp->q6v5);
->   
-> @@ -429,6 +594,9 @@ static int adsp_stop(struct rproc *rproc)
->   	if (ret)
->   		dev_err(adsp->dev, "failed to shutdown: %d\n", ret);
->   
-> +	if (adsp->adsp_sandbox_needed)
-> +		adsp_unmap_smmu(rproc);
-
-No need to call iommu_unmap() and iommu_domain_free() here?
-(this is the same comment as the one in adsp_rproc_unmap_smmu(). This is 
-just a blind guess based on symmetry of the code.)
-
-> +
->   	handover = qcom_q6v5_unprepare(&adsp->q6v5);
->   	if (handover)
->   		qcom_adsp_pil_handover(&adsp->q6v5);
+diff --git a/drivers/perf/arm-ccn.c b/drivers/perf/arm-ccn.c
+index 728d13d8e98a..83abd909ba49 100644
+--- a/drivers/perf/arm-ccn.c
++++ b/drivers/perf/arm-ccn.c
+@@ -1210,8 +1210,9 @@ static int arm_ccn_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
+ 		return 0;
+ 	perf_pmu_migrate_context(&dt->pmu, cpu, target);
+ 	dt->cpu = target;
+-	if (ccn->irq)
+-		WARN_ON(irq_set_affinity(ccn->irq, cpumask_of(dt->cpu)));
++	if (ccn->irq && irq_set_affinity(ccn->irq, cpumask_of(dt->cpu)))
++		dev_err(ccn->dev, "Failed to set interrupt affinity\n");
++
+ 	return 0;
+ }
+ 
+diff --git a/drivers/perf/arm_dmc620_pmu.c b/drivers/perf/arm_dmc620_pmu.c
+index 280a6ae3e27c..b59d3d9eb779 100644
+--- a/drivers/perf/arm_dmc620_pmu.c
++++ b/drivers/perf/arm_dmc620_pmu.c
+@@ -621,7 +621,8 @@ static int dmc620_pmu_cpu_teardown(unsigned int cpu,
+ 		perf_pmu_migrate_context(&dmc620_pmu->pmu, irq->cpu, target);
+ 	mutex_unlock(&dmc620_pmu_irqs_lock);
+ 
+-	WARN_ON(irq_set_affinity(irq->irq_num, cpumask_of(target)));
++	if (irq_set_affinity(irq->irq_num, cpumask_of(target)))
++		dev_err(dmc620_pmu->pmu.dev, "Failed to set interrupt affinity\n");
+ 	irq->cpu = target;
+ 
+ 	return 0;
+diff --git a/drivers/perf/arm_smmuv3_pmu.c b/drivers/perf/arm_smmuv3_pmu.c
+index 00d4c45a8017..05e1b3e274d7 100644
+--- a/drivers/perf/arm_smmuv3_pmu.c
++++ b/drivers/perf/arm_smmuv3_pmu.c
+@@ -646,7 +646,8 @@ static int smmu_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
+ 
+ 	perf_pmu_migrate_context(&smmu_pmu->pmu, cpu, target);
+ 	smmu_pmu->on_cpu = target;
+-	WARN_ON(irq_set_affinity(smmu_pmu->irq, cpumask_of(target)));
++	if (irq_set_affinity(smmu_pmu->irq, cpumask_of(target)))
++		dev_err(smmu_pmu->dev, "Failed to set interrupt affinity\n");
+ 
+ 	return 0;
+ }
+@@ -892,7 +893,8 @@ static int smmu_pmu_probe(struct platform_device *pdev)
+ 
+ 	/* Pick one CPU to be the preferred one to use */
+ 	smmu_pmu->on_cpu = raw_smp_processor_id();
+-	WARN_ON(irq_set_affinity(smmu_pmu->irq, cpumask_of(smmu_pmu->on_cpu)));
++	if (irq_set_affinity(smmu_pmu->irq, cpumask_of(smmu_pmu->on_cpu)))
++		dev_err(dev, "Failed to set interrupt affinity\n");
+ 
+ 	err = cpuhp_state_add_instance_nocalls(cpuhp_state_num,
+ 					       &smmu_pmu->node);
+diff --git a/drivers/perf/fsl_imx8_ddr_perf.c b/drivers/perf/fsl_imx8_ddr_perf.c
+index 8e058e08fe81..c44192e2d9db 100644
+--- a/drivers/perf/fsl_imx8_ddr_perf.c
++++ b/drivers/perf/fsl_imx8_ddr_perf.c
+@@ -671,7 +671,8 @@ static int ddr_perf_offline_cpu(unsigned int cpu, struct hlist_node *node)
+ 	perf_pmu_migrate_context(&pmu->pmu, cpu, target);
+ 	pmu->cpu = target;
+ 
+-	WARN_ON(irq_set_affinity(pmu->irq, cpumask_of(pmu->cpu)));
++	if (irq_set_affinity(pmu->irq, cpumask_of(pmu->cpu)))
++		dev_err(pmu->dev, "Failed to set interrupt affinity\n");
+ 
+ 	return 0;
+ }
+diff --git a/drivers/perf/hisilicon/hisi_pcie_pmu.c b/drivers/perf/hisilicon/hisi_pcie_pmu.c
+index 21771708597d..90aed9e51396 100644
+--- a/drivers/perf/hisilicon/hisi_pcie_pmu.c
++++ b/drivers/perf/hisilicon/hisi_pcie_pmu.c
+@@ -655,7 +655,8 @@ static int hisi_pcie_pmu_online_cpu(unsigned int cpu, struct hlist_node *node)
+ 
+ 	if (pcie_pmu->on_cpu == -1) {
+ 		pcie_pmu->on_cpu = cpu;
+-		WARN_ON(irq_set_affinity(pcie_pmu->irq, cpumask_of(cpu)));
++		if (irq_set_affinity(pcie_pmu->irq, cpumask_of(cpu)))
++			pci_err(pcie_pmu->pdev, "Failed to set interrupt affinity\n");
+ 	}
+ 
+ 	return 0;
+@@ -681,7 +682,8 @@ static int hisi_pcie_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
+ 	perf_pmu_migrate_context(&pcie_pmu->pmu, cpu, target);
+ 	/* Use this CPU for event counting */
+ 	pcie_pmu->on_cpu = target;
+-	WARN_ON(irq_set_affinity(pcie_pmu->irq, cpumask_of(target)));
++	if (irq_set_affinity(pcie_pmu->irq, cpumask_of(target)))
++		pci_err(pcie_pmu->pdev, "Failed to set interrupt affinity\n");
+ 
+ 	return 0;
+ }
+diff --git a/drivers/perf/hisilicon/hisi_uncore_pmu.c b/drivers/perf/hisilicon/hisi_uncore_pmu.c
+index fbc8a93d5eac..74397b5ec889 100644
+--- a/drivers/perf/hisilicon/hisi_uncore_pmu.c
++++ b/drivers/perf/hisilicon/hisi_uncore_pmu.c
+@@ -492,7 +492,8 @@ int hisi_uncore_pmu_online_cpu(unsigned int cpu, struct hlist_node *node)
+ 	hisi_pmu->on_cpu = cpu;
+ 
+ 	/* Overflow interrupt also should use the same CPU */
+-	WARN_ON(irq_set_affinity(hisi_pmu->irq, cpumask_of(cpu)));
++	if (irq_set_affinity(hisi_pmu->irq, cpumask_of(cpu)))
++		dev_err(hisi_pmu->dev, "Failed to set interrupt affinity\n");
+ 
+ 	return 0;
+ }
+@@ -525,7 +526,8 @@ int hisi_uncore_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
+ 	perf_pmu_migrate_context(&hisi_pmu->pmu, cpu, target);
+ 	/* Use this CPU for event counting */
+ 	hisi_pmu->on_cpu = target;
+-	WARN_ON(irq_set_affinity(hisi_pmu->irq, cpumask_of(target)));
++	if (irq_set_affinity(hisi_pmu->irq, cpumask_of(target)))
++		dev_err(hisi_pmu->dev, "Failed to set interrupt affinity\n");
+ 
+ 	return 0;
+ }
+diff --git a/drivers/perf/qcom_l2_pmu.c b/drivers/perf/qcom_l2_pmu.c
+index 30234c261b05..c6fe01c7e637 100644
+--- a/drivers/perf/qcom_l2_pmu.c
++++ b/drivers/perf/qcom_l2_pmu.c
+@@ -793,7 +793,9 @@ static int l2cache_pmu_online_cpu(unsigned int cpu, struct hlist_node *node)
+ 	cpumask_set_cpu(cpu, &l2cache_pmu->cpumask);
+ 	cluster_pmu_reset();
+ 
+-	WARN_ON(irq_set_affinity(cluster->irq, cpumask_of(cpu)));
++	if (irq_set_affinity(cluster->irq, cpumask_of(cpu)))
++		dev_err(&l2cache_pmu->pdev->dev,
++			"Failed to set interrupt affinity\n");
+ 	enable_irq(cluster->irq);
+ 
+ 	return 0;
+@@ -831,7 +833,9 @@ static int l2cache_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
+ 	perf_pmu_migrate_context(&l2cache_pmu->pmu, cpu, target);
+ 	cluster->on_cpu = target;
+ 	cpumask_set_cpu(target, &l2cache_pmu->cpumask);
+-	WARN_ON(irq_set_affinity(cluster->irq, cpumask_of(target)));
++	if (irq_set_affinity(cluster->irq, cpumask_of(target)))
++		dev_err(&l2cache_pmu->pdev->dev,
++			"Failed to set interrupt affinity\n");
+ 
+ 	return 0;
+ }
+diff --git a/drivers/perf/xgene_pmu.c b/drivers/perf/xgene_pmu.c
+index 0c32dffc7ede..f31e678fdb69 100644
+--- a/drivers/perf/xgene_pmu.c
++++ b/drivers/perf/xgene_pmu.c
+@@ -1790,7 +1790,8 @@ static int xgene_pmu_online_cpu(unsigned int cpu, struct hlist_node *node)
+ 		cpumask_set_cpu(cpu, &xgene_pmu->cpu);
+ 
+ 	/* Overflow interrupt also should use the same CPU */
+-	WARN_ON(irq_set_affinity(xgene_pmu->irq, &xgene_pmu->cpu));
++	if (irq_set_affinity(xgene_pmu->irq, &xgene_pmu->cpu))
++		dev_err(xgene_pmu->dev, "Failed to set interrupt affinity\n");
+ 
+ 	return 0;
+ }
+@@ -1823,7 +1824,8 @@ static int xgene_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
+ 
+ 	cpumask_set_cpu(target, &xgene_pmu->cpu);
+ 	/* Overflow interrupt also should use the same CPU */
+-	WARN_ON(irq_set_affinity(xgene_pmu->irq, &xgene_pmu->cpu));
++	if (irq_set_affinity(xgene_pmu->irq, &xgene_pmu->cpu))
++		dev_err(xgene_pmu->dev, "Failed to set interrupt affinity\n");
+ 
+ 	return 0;
+ }
+-- 
+2.24.0
 
