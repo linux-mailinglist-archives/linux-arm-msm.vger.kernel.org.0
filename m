@@ -2,78 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 18CAA5961B5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Aug 2022 20:00:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47F905961C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Aug 2022 20:03:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236480AbiHPSAQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Aug 2022 14:00:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58326 "EHLO
+        id S236027AbiHPSCd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Aug 2022 14:02:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236512AbiHPSAP (ORCPT
+        with ESMTP id S236848AbiHPSCF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Aug 2022 14:00:15 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57E7D832F2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Aug 2022 11:00:10 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id bx38so11265982ljb.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Aug 2022 11:00:10 -0700 (PDT)
+        Tue, 16 Aug 2022 14:02:05 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AE70832F2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Aug 2022 11:02:02 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id n4so13506132wrp.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Aug 2022 11:02:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=jb2YCmtzStrf7oPaQDp5CORzVrMt6QsLXaku2/2alHw=;
-        b=TXGV7d4y/nyORgZvCClAmPDsHxHFE+Iw8br/AFi3XE91TMuUOyIfAsfhM61WMj9Qa1
-         I5zjtH0mBDtQeb0BVqCUdQ7o1uVZ61a8PvW+pTtTWMKTAq70/VliLez+g6a49Z40Hq5S
-         kHoJ/f5XsvRKX1z98aaH8gGCQhyOw9hlnxJc0AQcGq5msKiUqW88Vs0QebsvNrke0gzY
-         m6zIWXZ6M1XPkk5XX71u7GBk7S2r6jmzLfdHPg2OTulpRufdap6UqtSWZuWnCO+pCYQa
-         kJ+wFqoefxVAXXGZyeMJZ3BCJIlpXrnKtbRUqGx7vZbdWnH9UsB48TfbcnbIidY7GduP
-         /E5A==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=9taDxJULIelMqQsxjJdBGUHZxSA7P+lFOG0ZHS90BWQ=;
+        b=i1j/yGNW/OaexzL0RCaLrhFKZK82IHiNdEpDv3e7ITBmfkWUqza9Lq9ZY1dg1Daq5e
+         /6S1r8k4hCyJv4RGuySjH1p1j9EheZ+c8ihsxgLy1ep9kw8Fcx9tIrKoFv810Mh3gPaO
+         ynvyGpKOlXqMqWGD8o+4vhhNCTzKeabJKQte+cxgfRb1WPpAkH5pPshHVPiNGnvIhTkp
+         vYu+q7YYNP9wmLNKx6i+CP9wYKbG0eqwT+EAM1tK4OoeWdv65yZB0OVT8VyKfAuw+v+o
+         fJEeTpd/DpOm5LttY86T5fPdANWOnkQ3buY+PHWoVLp9TY7XgmN6ueSqVIP5freLca/M
+         wRRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=jb2YCmtzStrf7oPaQDp5CORzVrMt6QsLXaku2/2alHw=;
-        b=6g0e8BWv8i0Ulp0BgPr5k38lbWdsP7XNK59Tf8Wm5BsNrid+zvrbC4Q2hQiayJcqby
-         yHz1GBo+6kj7Bt9u+LBOGaBIyP+rfteU00AknAoaMPD+qqbIHmCyZOTq25bAushgUFmJ
-         xLqdBNsR59g2i1t1AA7u6srJxTT9B39l3LT+K3JI+xw77VCqhkM1vzD2dKfcgVLpfunP
-         wCBo2n0yxf1KZ/uZT+I9pmYeEA/N69UGiFoLDmcUKoTCTogiQG95apjq/kRbZ/0XymQK
-         gn/uPm+XQia6bE/u5yXf0JzXx1vA7d+n3Y+fYvFkDNcd00TKVPKY4Em543ZHpFPAoYFI
-         /ObA==
-X-Gm-Message-State: ACgBeo2tnBkAv5fOH4tX9glUIbkrKeB71FHgqEuPETelhfA0jBZx3nIi
-        m7QrB0I0oLQHQUAeN3nmSO0I9w==
-X-Google-Smtp-Source: AA6agR49/8LpwUjHkR0YA8dRHfC2fMxyKVR0zEGU/v61rAa06vW2HgPTJv99wXh3/r33rKkoJL73Iw==
-X-Received: by 2002:a05:651c:2003:b0:25e:5c53:8915 with SMTP id s3-20020a05651c200300b0025e5c538915mr7330297ljo.88.1660672808624;
-        Tue, 16 Aug 2022 11:00:08 -0700 (PDT)
-Received: from ?IPV6:2001:14bb:ae:539c:633f:dc22:d8ba:e2cf? (d15l5445-7tvqvr3c58-4.rev.dnainternet.fi. [2001:14bb:ae:539c:633f:dc22:d8ba:e2cf])
-        by smtp.gmail.com with ESMTPSA id a9-20020a05651c010900b0025e2c6b15e6sm1870773ljb.72.2022.08.16.11.00.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Aug 2022 11:00:07 -0700 (PDT)
-Message-ID: <3f755d24-969b-1804-7979-880a9fe10cba@linaro.org>
-Date:   Tue, 16 Aug 2022 21:00:04 +0300
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=9taDxJULIelMqQsxjJdBGUHZxSA7P+lFOG0ZHS90BWQ=;
+        b=U/EWVU1mjP9Kve5uOdCuKc/TyLggqTPumV2flISEsMO/J3LK5ln67y0Mpau7eMQpvH
+         YfYGiQjgh2yeSXXimXsnTxjCzyJFk1zQ9U20j3CfstxT+YOlXTueRRgyqd/NZ7QzhUdm
+         CeAJ1Z2849ptdGEjfluemQpTTIIpRnxUZ66AFItng8neuEwSGGYKBTtLZP26pQTrTs2/
+         vhs/FIuV4xeu7QPfueJjduY4/266vGXZoeGPp/0CTQTfa8uFsKpT1l/TVwIfVs9EQ9Z6
+         XEOocwYlASHmKYg6aY/zIsRTgSQtNTVf2409MVZjJVItlMEjqJbNumcO054yizgHECZ7
+         HFrA==
+X-Gm-Message-State: ACgBeo2vT8sR7DZRYDPYjGesziIQyyqrw1IHqBnsqC1OM9UlAAgaP8B7
+        9omjTwmlEJDzPfv/WjZLd2+pvw==
+X-Google-Smtp-Source: AA6agR41LIZaaFSqv4A9rwWezva1UDpU7Ziq2uFdF5F/ZoumQh7Wqcz2ypMp/V2M0+u6LtFHscWdDg==
+X-Received: by 2002:a5d:6d0b:0:b0:222:955a:8774 with SMTP id e11-20020a5d6d0b000000b00222955a8774mr11798320wrq.129.1660672920757;
+        Tue, 16 Aug 2022 11:02:00 -0700 (PDT)
+Received: from srini-hackbox.lan (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.gmail.com with ESMTPSA id p185-20020a1c29c2000000b003a4f1385f0asm14383253wmp.24.2022.08.16.11.01.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Aug 2022 11:02:00 -0700 (PDT)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        linus.walleij@linaro.org
+Cc:     konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, srinivas.kandagatla@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/2] pinctrl: add support for SM8450 LPASS LPI pinctrl
+Date:   Tue, 16 Aug 2022 19:01:55 +0100
+Message-Id: <20220816180157.6711-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [RFC PATCH 02/14] drm/qaic: Add uapi and core driver file
-Content-Language: en-US
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>, airlied@linux.ie,
-        daniel@ffwll.ch, maarten.lankhorst@linux.intel.com,
-        mripard@kernel.org, tzimmermann@suse.de
-Cc:     quic_carlv@quicinc.com, quic_ajitpals@quicinc.com,
-        quic_pkanojiy@quicinc.com, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1660588956-24027-1-git-send-email-quic_jhugo@quicinc.com>
- <1660588956-24027-3-git-send-email-quic_jhugo@quicinc.com>
- <10ad6023-703d-65cf-6b00-2caa658c49e9@linaro.org>
- <e9786447-edd4-90e0-25a9-b35e96adbfc2@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <e9786447-edd4-90e0-25a9-b35e96adbfc2@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,151 +71,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/08/2022 20:47, Jeffrey Hugo wrote:
->>> +static int qaic_pci_probe(struct pci_dev *pdev,
->>> +			  const struct pci_device_id *id)
->>> +{
->>> +	int ret;
->>> +	int i;
->>> +	int mhi_irq;
->>> +	struct qaic_device *qdev;
->>> +
->>> +	qdev = kzalloc(sizeof(*qdev), GFP_KERNEL);
->>> +	if (!qdev) {
->>
->> return -ENOMEM;
-> 
-> So, no centralized exit per the coding style?  Ok.
+This patchset adds pinctrl driver to support pin configuration for LPASS
+(Low Power Audio SubSystem) LPI (Low Power Island) pinctrl on SM8450.
+    
+This IP is an additional pin control block for Audio Pins on top the
+existing SoC Top level pin-controller.
+    
+Tested this on SM8450 MTP
 
-Centralized exit except for cases where it is simply return.
+Thanks,
+Srini
 
-> 
->>
->>> +		ret = -ENOMEM;
->>> +		goto qdev_fail;
->>> +	}
->>> +
->>> +	if (id->device == PCI_DEV_AIC100) {
->>> +		qdev->num_dbc = 16;
->>> +		qdev->dbc = kcalloc(qdev->num_dbc, sizeof(*qdev->dbc),
->>> +				    GFP_KERNEL);
->>
->> Why not devm?
-> 
-> We were having issues with devm and the PCI stuff.  Looking at this 
-> again, I think we can apply that here.
-> 
->>
->>> +		if (!qdev->dbc) {
->>> +			ret = -ENOMEM;
->>> +			goto device_id_fail;
->>> +		}
->>> +	} else {
->>> +		pci_dbg(pdev, "%s: No matching device found for device id %d\n",
->>> +			__func__, id->device);
->>
->> How this can happen?
-> 
-> Badly functioning hardware.  That hardware has been removed from 
-> circulation.  Given that this is an init path and not performance 
-> critical, having this handle the scenario in a sane way instead of 
-> having the driver blow up in a weird way much later on makes me feel better.
+Changes since v1:
+	- no code changes only minor fixes to bindings as suggested by Rob
 
-How badly functioning hardware can bind and then report some different
-ID? If it reports different ID, it cannot bind...
+Srinivas Kandagatla (2):
+  dt-bindings: pinctrl: qcom: Add sm8450 lpass lpi pinctrl bindings
+  pinctrl: qcom: Add sm8450 lpass lpi pinctrl driver
 
-(...)
+ .../qcom,sm8450-lpass-lpi-pinctrl.yaml        | 136 ++++++++++
+ drivers/pinctrl/qcom/Kconfig                  |   9 +
+ drivers/pinctrl/qcom/Makefile                 |   1 +
+ .../pinctrl/qcom/pinctrl-sm8450-lpass-lpi.c   | 240 ++++++++++++++++++
+ 4 files changed, 386 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8450-lpass-lpi-pinctrl.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-sm8450-lpass-lpi.c
 
->>> +static int __init qaic_init(void)
->>> +{
->>> +	int ret;
->>> +
->>> +	if (datapath_polling) {
->>> +		poll_datapath = true;
->>> +		pr_info("qaic: driver initializing in datapath polling mode\n");
->>
->> No pr() in normal path of init/exit.
-> 
-> This is not the normal path.  datapath_polling is a module parameter. 
-> This is something the user can enable, and so it would be good to have 
-> the user informed that the option took effect.
+-- 
+2.21.0
 
-No, not really. User always can check via sysfs and there is no point in
-polluting dmesg on module load. It might be printed (if someone has such
-modprobe setting) on every system, even without the actual device.
-
-> 
->>
->>> +	}
->>> +
->>> +	qaic_logging_register();
->>> +
->>> +	ret = mhi_driver_register(&qaic_mhi_driver);
->>> +	if (ret) {
->>> +		pr_debug("qaic: mhi_driver_register failed %d\n", ret);
->>> +		goto free_class;
->>> +	}
->>> +
->>> +	ret = pci_register_driver(&qaic_pci_driver);
->>> +
->>
->> No need for such blank lines.
-> 
-> Agreed.
-> 
->>
->>> +	if (ret) {
->>> +		pr_debug("qaic: pci_register_driver failed %d\n", ret);
->>> +		goto free_mhi;
->>> +	}
->>> +
->>> +	qaic_telemetry_register();
->>> +	qaic_ras_register();
->>> +	qaic_ssr_register();
->>> +	goto out;
->>
->> return 0.
-> 
-> Ok.
-> 
->>
->>> +
->>> +free_mhi:
->>> +	mhi_driver_unregister(&qaic_mhi_driver);
->>> +free_class:
->>> +out:
->>> +	if (ret)
->>> +		qaic_logging_unregister();
->>> +
->>> +	return ret;
->>> +}
->>> +
->>> +static void __exit qaic_exit(void)
->>> +{
->>> +	pr_debug("qaic: exit\n");
->>
->> No pr() in normal path of init/exit.
-> 
-> Sure.
-> 
->>
->>> +	link_up = true;
->>
->> This is confusing...
-> 
-> Will add a comment.  This ties into MHI, and how it can tear down in two 
-> different ways, usually based on the link state.
-
-Shouldn't this be link_up=false?
-
-> 
-> In this case, we are doing a clean tear down where the link is still up, 
-> and so we should have MHI do the extra tear down that leaves the device 
-> in a good state, in the event the driver gets added again.
-> 
->>
-
-
-
-Best regards,
-Krzysztof
