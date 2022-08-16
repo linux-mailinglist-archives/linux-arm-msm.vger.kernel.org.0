@@ -2,71 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34362595A26
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Aug 2022 13:31:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 604AE595A3F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Aug 2022 13:35:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234367AbiHPLbI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Aug 2022 07:31:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40268 "EHLO
+        id S234152AbiHPLe0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Aug 2022 07:34:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235420AbiHPLal (ORCPT
+        with ESMTP id S234594AbiHPLd6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Aug 2022 07:30:41 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82862B776A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Aug 2022 03:48:58 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id x9so10098933ljj.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Aug 2022 03:48:58 -0700 (PDT)
+        Tue, 16 Aug 2022 07:33:58 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 030B14D80F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Aug 2022 03:55:49 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id a4so426113wrq.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Aug 2022 03:55:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=yoruPDP1aiC8RJyOCtcGULTlufmmra/L6wgFn2dsg08=;
-        b=fhL+EfuDsWrS2ZG1mSw1173qJBqJqRRo9W1DGIoot06s4TT0WXttNkuz8Vqb4ja4W9
-         uhEBfYIZhciRIx8GdTMYYhaF+6sFWE38sEymJWA9fkq6USVStMdCAOyjNhEE87/3hhG2
-         JC0ZxMVVcTSw2bO4CJPzFsgq61m7cg+7FlV+kGiSIy60e6YdtDwM1+Vay3BT1Qn/oGxU
-         71UezoByD0zfQTZbvAQhe9VQmlGHE1UiwQV5UNXEmKJRQ/wxhs5QwS/ucd6bVjStQeoA
-         hWrj2Gv4ONh9RXAi7SKnii9gZsMEOVFKLksjQlGroO0MAeDHGy2OU9Qs5v0FUddjinAv
-         51YQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=UwGclAPKpRElqSb0slB3YI1UbidqkoclQLHrUzSqvlg=;
+        b=l/hcMAVKaPG6eBpWzxcJ+D86RTu1F1RNf1z1FDxlWs52NFbQP78T5n2830h/+N96dw
+         rtTdIPTYo6N/902CMQLhwYGKpo7c2qhfPOPc0aTMyVcwk2T+XCKBFIuuG5coJiZW9qFF
+         8+R05ypD4TX2lz0gcnosZTsZmSP2fU2/GE5BYN6T45Ja019z2tBMuNba+cm0a+6cruLV
+         j2+kcbTzCPHkLOKshZaT1cDHabbz9AGW04mdroXDxwxchbTrSsJWpcaVoh8YzHJQ3y0S
+         8ideVfspHwWwqN8E25VX+m3E5Ge4qUTBDtR05n/9FbfveAho27nIQlg8yZIHK2sB8Ldd
+         S2eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=yoruPDP1aiC8RJyOCtcGULTlufmmra/L6wgFn2dsg08=;
-        b=y73Y52O2IEwz1xAiF7Dlawn4QgePOs9vfNiUWaAGDS2m9qWyyEAGaPPvYipkZ4C0iW
-         VkUebIVPw6hzMg6Z8TKTxSHZgdQulea+dkXeVuz6la2GTgjcSWZwnqoQs2LQvyklgEVm
-         szvJbG9cTCKdxx7jtzWw5kzxxsuyFhV/lnDj8Z+ysSL8avt4zH+HXoC3TbzuGVGz0VSe
-         3zOo27QWuU9TM3VG8Ivckq25HrTISuX/qvIa9eNqLdrUWrL6Hkd8XiJLdY5v4DEjD+ls
-         qjH+xBdvQy9EUGobEz23NPort4OTEr7zXDfRamOY/nfs01ghP4hM8jkQNqv4bUOD3Fjy
-         BYWg==
-X-Gm-Message-State: ACgBeo3A+wcjwyVod25BGK8/U2Ygsyfk6MJtMsGYZ/76EMgUxRCkMSvQ
-        OLs53UadCq7Au9MTCIBXcn/19G2Ro6ZHxy/74QumLw==
-X-Google-Smtp-Source: AA6agR7IKXoNDqsYjdqUQzU9TxaA3kcaID6PPPNJxCEIsf3C2nU3K89i4coNmYBs2BKyJ3DKNO/zNCBzcmPJ0n/qb7g=
-X-Received: by 2002:a2e:8885:0:b0:25e:bf9b:2de2 with SMTP id
- k5-20020a2e8885000000b0025ebf9b2de2mr6653312lji.367.1660646936615; Tue, 16
- Aug 2022 03:48:56 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=UwGclAPKpRElqSb0slB3YI1UbidqkoclQLHrUzSqvlg=;
+        b=NqsVBoYvHdSWfoDK2/em0hEXXav4O49t9Vzh116XuZQ0SyoAL0wvAPTLtWlzx++vLY
+         pQKDzfcJTa2wmtEI3ipcB2zLZOQnOJLJRt6WUHdZUqYD1+kBw0Hw/AqEkIvOsaTUjCTy
+         PkziTStzvFLB0+j+TbAlP+3I5ZqE7w1k7pDMODQ6ymRUSKyklywGhRgxLYWR1YMHI3/q
+         fgSVIVYI/0HfjVHq7lhg+uvoegRMue8Gqcg5DWM9vun31wBR7czCTVoAijBFKt9eLHIl
+         iExKodqz7Rankes/2WBU13uOeUSqEG40CPtNO3xQbK++4pGbmR49v1cRAkx0+mqYlf02
+         dtlQ==
+X-Gm-Message-State: ACgBeo2Ue6ozZz3mqNbc7clwrgBQefIKNQypNjF2pyEgszGjejW4To75
+        rsBEnyUu36aKytN8aMqjGH2PChSIenBXXA==
+X-Google-Smtp-Source: AA6agR7ORNMHdMKLRnaII7L2dXayQffVP+aZiQzPFLcwMcmQl3BOgRIrdp/Bqn4+pG6d67LysnHONQ==
+X-Received: by 2002:a5d:638b:0:b0:220:6e1a:8794 with SMTP id p11-20020a5d638b000000b002206e1a8794mr11440308wru.193.1660647347544;
+        Tue, 16 Aug 2022 03:55:47 -0700 (PDT)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id k2-20020a7bc402000000b003a32297598csm12362799wmi.43.2022.08.16.03.55.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Aug 2022 03:55:46 -0700 (PDT)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: [PATCH] misc: fastrpc: Use USER_PD define in fastrpc_get_info_from_dsp
+Date:   Tue, 16 Aug 2022 13:55:28 +0300
+Message-Id: <20220816105528.3222763-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20220720110246.762939-1-abel.vesa@linaro.org> <CAPDyKFoh8UV=QC6RhOkc=FSvoeqF_UiWp97h0Qp8dniB=sS+8A@mail.gmail.com>
- <YuA0luCtQ1J+ExBi@linaro.org> <CAPDyKFo4tryzYQK=q6aPGxocmoq=duC2B1RMh1QoV_maVCApjA@mail.gmail.com>
- <20220729094646.xqlhfjzxo3gk4n27@linaro.org> <CAPDyKFoEzvD1PRGEc4NQmAGnewZtxyW226vWRWndAijSn=fbNw@mail.gmail.com>
- <YvZ13R9st43MHBKJ@linaro.org>
-In-Reply-To: <YvZ13R9st43MHBKJ@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 16 Aug 2022 12:48:20 +0200
-Message-ID: <CAPDyKFoaTu4nGa-hdjd98ngE7RQ0yhFi8PpUt-HBkW7Srf-=Tg@mail.gmail.com>
-Subject: Re: [RFC] PM: domains: Reverse the order of performance and enabling ops
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Dmitry Osipenko <digetx@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Kevin Hilman <khilman@kernel.org>,
-        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -77,122 +71,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[...]
+There are defines for each type of protection domain now.
+Use the USER_PD instead of magic value in fastrpc_get_info_from_dsp.
 
-> > >
-> > > When the last active consumer suspends (in our case here, device A), ->power_off
-> > > will be called first disabling the PD, then the ->set_performance will
-> > > 'release' that lowest perf level the device A requested but will not
-> > > call to FW since the PD is already disabled. This would make
-> > > sure there are not two calls with two different levels to the FW.
-> >
-> > I understand what you want to achieve, but I think the ->power_off()
-> > scenario may be a bit more tricky.
-> >
-> > For example, it would be perfectly fine for genpd to keep the PM
-> > domain powered-on, even when the device A gets runtime suspended (a
-> > genpd governor may prevent it). In other words, we may end up not
-> > getting the ->power_off() callback invoked at all, even if there are
-> > no runtime resumed devices in the PM domain.
-> >
-> > Could this lead to problems on the provider side, when trying to take
-> > into account the different combinations of sequences?
->
-> Correct me if I'm wrong, but even if a genpd governor would prevent
-> the power_off to be called, if we do the reversal, since the power
-> domain is not off, the provider would lower the performance state and
-> that's it. The responsability falls on the provider, but so does with
-> the current order of the calls.
->
-> So I don't see how this could lead to problems compared to the current
-> order of the calls.
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: Amol Maheshwari <amahesh@qti.qualcomm.com>
+---
+ drivers/misc/fastrpc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Alright, I agree, it shouldn't really matter then.
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index 93ebd174d848..8895ca593911 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1515,7 +1515,7 @@ static int fastrpc_get_info_from_dsp(struct fastrpc_user *fl, uint32_t *dsp_attr
+ 	args[1].ptr = (u64)(uintptr_t)&dsp_attr_buf[1];
+ 	args[1].length = dsp_attr_buf_len;
+ 	args[1].fd = -1;
+-	fl->pd = 1;
++	fl->pd = USER_PD;
+ 
+ 	return fastrpc_internal_invoke(fl, true, FASTRPC_DSP_UTILITIES_HANDLE,
+ 				       FASTRPC_SCALARS(0, 1, 1), args);
+-- 
+2.34.1
 
->
-> Maybe I missunderstood your point, so please correct me if I'm getting
-> this wrong.
->
-> >
-> > >
-> > > Now, most of this depends on the provider's way of doing things.
-> > > But in order to allow the provider to do what is described above, it
-> > > needs to know about the perf level before it is asked to power on a PD.
-> > > Same applies to powering off.
-> > >
-> > > > >
-> > > > > I think it makes more sense for the ->set_performance in this case to act as a
-> > > > > way to tell the provider that a specific device has yeilded its voltage level
-> > > > > request. That way the provider can drop the voltage to the minimum requested by
-> > > > > the active consumers of that PD.
-> > > >
-> > > > The genpd provider can know if the PM domain is powered on or off,
-> > > > when the ->set_performance_state() callback is invoked. If it's
-> > > > powered off, it may then decide to "cache" the request for the
-> > > > performance level request, until it gets powered on.
-> > >
-> > > But the ->set_performance is called only after ->power_on, so the PD
-> > > will always be on when ->set_performance checks. And this is what my
-> > > patch is trying to change actually.
-> > >
-> > > >
-> > > > Although, I don't see how a genpd provider should be able to cache a
-> > > > performance state request, when the PM domain is already powered on
-> > > > (which is what you propose, if I understand correctly), that simply
-> > > > doesn't work for the other scenarios.
-> > >
-> > > I explained this above. The provider will need to check if the PD is on
-> > > and only write to FW if it is. Otherwise it will cache the value for
-> > > when the power_on is called.
-> >
-> > As indicated above, it looks to me that you may need to check a
-> > combination of things at the provider side. Is relying on whether
-> > genpd is on/off to decide when to apply or cache a performance state,
-> > really sufficient? I could certainly be wrong though.
->
-> I don't think there is any change from this point of view, when compared
-> to the current order. Even with the current order, the provider would
-> either cache the performance state if the power domain is off, or would
-> apply it if the power domain is on.
-
-For the Qcom case, I don't think it's that simple on the genpd provider side.
-
-With the changes you propose in the $subject patch, I think there are
-two specific scenarios when the genpd can be powered off and when the
-->set_performance_state() callback can get called. These scenarios can
-just rely on whether the genpd is powered off or not, to make the best
-decision. See more below.
-
-*) In genpd_runtime_resume() we make sure to *raise* the performance
-state prior to power on the PM domain, if the PM domain is powered
-off, of course. In this way the ->set_performance_state() callback may
-be invoked when the genpd is powered off, to *raise* the performance
-state.
-
-**) In genpd_runtime_suspend() we may power off the PM domain, before
-invoking the ->set_performance_state() callback to *lower* the
-performance state.
-
-In other words, just checking whether the genpd is powered off, to
-decide to cache/postpone the call to the FW to set a new performance
-state, would mean that we may end up running in a higher performance
-state than actually needed, right?
-
-Perhaps if we would check if the performance state is lowered (or set
-to zero) too, that should improve the situation, right?
-
->
-> >
-> > Perhaps if you can provide a corresponding patch for the genpd
-> > provider side too, that can help to convince me.
->
-> The qcom-rpmhpd actually does that even now. On set_performance, it caches
-> the performance state (corner) if the power domain is disabled, and it
-> applies (aggregates the corner) if the power domain is enabled.
-
-Okay, good!
-
-As stated above, this sounds like it can be improved then, right?
-
-Kind regards
-Uffe
