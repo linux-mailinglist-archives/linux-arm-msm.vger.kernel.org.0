@@ -2,254 +2,229 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E779B595BBE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Aug 2022 14:23:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB0F5595C38
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Aug 2022 14:47:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232694AbiHPMXd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Aug 2022 08:23:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60408 "EHLO
+        id S235539AbiHPMrK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Aug 2022 08:47:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232494AbiHPMXc (ORCPT
+        with ESMTP id S235543AbiHPMqu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Aug 2022 08:23:32 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2925C3ECD9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Aug 2022 05:23:29 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id r83-20020a1c4456000000b003a5cb389944so5382472wma.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Aug 2022 05:23:29 -0700 (PDT)
+        Tue, 16 Aug 2022 08:46:50 -0400
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F9BF96755;
+        Tue, 16 Aug 2022 05:45:19 -0700 (PDT)
+Received: by mail-qk1-x730.google.com with SMTP id n21so7974823qkk.3;
+        Tue, 16 Aug 2022 05:45:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc;
-        bh=vbopr3rJvN0NVVeeKaAGJIhJ9kW8zjdQsJTIzrNLIbM=;
-        b=FFKboseAQFPmJoFy4woEkPABSIuHoYnoQhCfRnNUhmvBLHeXtRgVPKSNSYs9R2comL
-         2qupdzjl3gpgv3tdjZCJ3eAlO1HO3F51MghhgStIepnjV/ar2OYRd9ESMLY2gt98oFyO
-         E/3TIgr84X9V3jus9ekyftpVCmwg1rg8nupCgkg3KX4IYxjMv9zW5HsIB4b49MIdERnM
-         Cv8Z3Wqzr21NvoEMqb/nqR9yQo8lHVHiYeVF/xSZewvr5Q4RO74O6ui98+LYh4vwz9px
-         gSEhXWy7Crg/Fcxp2Xf310eijK1YvRKl2kXizx37rmKgJKr/m+vhUpBInwuEtd99rRmX
-         ZhNQ==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc;
+        bh=njAgXoeN0q74J/t5k+W3cZytsvg61wczGG4TqtpRL6Y=;
+        b=ivQsqAixASfGTTKVqpfwwPTx0IdAp2EKUY9VklxJCSR2w/HSeYVJeVGfpuwvkkCAP4
+         0WLHtdGLi7ARZs1Jm0JkLD+JY+alxbMXCNUDbrYGfpGlPVX2N50jb9LyZ+iE0pTdkyvn
+         a7+ktKxW7QR4VIe8GW1dYSUyDD1xnQJGFWO32UfI7lZILvZfPLiPK0NbqFzYKbcXl1ib
+         dLvge1zTFApDxQ/dhz3pnwXh9NXoH8zhNdruSdKzy0Jxha5SeE66gsFAyZLYW5YSTERO
+         grFcP5v/j4iwBNKI0ERF1z3tuFlTWmu/TybZNPtHrl5avz/NN8PoNYAlLq2F3+a2rbjv
+         j0/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=vbopr3rJvN0NVVeeKaAGJIhJ9kW8zjdQsJTIzrNLIbM=;
-        b=gflhHWQJpkWXTulyAq13aukOCfSAydaED1vdvG3b/b+75Lew7mZaUa0bkCIcJrWmR7
-         EBP0POUBm/EDqDJPvbCy/z8Jq5ZxFokSABidnvmx2JPDyT+oSai2eM1nGqBfmtYu1tEP
-         a3kcKPfbtTNCltoOQiq9w/Y+dXDZVVvYax/oxlxNLKJs/ZNPtlgmKuayfKsSuROcaxeW
-         kyK6Sfpfm7i1K4hBiO3eAYQ3IAwVzlCqWnzy6PewIH/+jZa/ksHBILVxgTshKu97660u
-         TZG/3CqaKKQAv/HTG0zd7IdciqsPzFV9b2QdvMBFsd8DtpTnh31G7apKDCcmBRUMyD7t
-         LZ6Q==
-X-Gm-Message-State: ACgBeo2jD+sv1ebOTkpw2ZR05+DrX5CbyaH6gH/2yL+7wRhnKJLKfwTK
-        hdinOd4DB9ct3JpUNEEFyciKNg==
-X-Google-Smtp-Source: AA6agR5krhoEulLrmrgU/jXU6lVD1HTXUAa2hZrxN8NG2DRJrOYihPU6fpUHCjVnPd2ao00B4TKtQQ==
-X-Received: by 2002:a05:600c:384c:b0:3a3:744d:8dd2 with SMTP id s12-20020a05600c384c00b003a3744d8dd2mr19513540wmr.117.1660652607627;
-        Tue, 16 Aug 2022 05:23:27 -0700 (PDT)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id m21-20020a05600c4f5500b003a4eea0aa48sm1501482wmq.0.2022.08.16.05.23.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Aug 2022 05:23:26 -0700 (PDT)
-Date:   Tue, 16 Aug 2022 15:23:24 +0300
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Dmitry Osipenko <digetx@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Kevin Hilman <khilman@kernel.org>,
-        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [RFC] PM: domains: Reverse the order of performance and enabling
- ops
-Message-ID: <YvuMPJPsqPIO0tYy@linaro.org>
-References: <20220720110246.762939-1-abel.vesa@linaro.org>
- <CAPDyKFoh8UV=QC6RhOkc=FSvoeqF_UiWp97h0Qp8dniB=sS+8A@mail.gmail.com>
- <YuA0luCtQ1J+ExBi@linaro.org>
- <CAPDyKFo4tryzYQK=q6aPGxocmoq=duC2B1RMh1QoV_maVCApjA@mail.gmail.com>
- <20220729094646.xqlhfjzxo3gk4n27@linaro.org>
- <CAPDyKFoEzvD1PRGEc4NQmAGnewZtxyW226vWRWndAijSn=fbNw@mail.gmail.com>
- <YvZ13R9st43MHBKJ@linaro.org>
- <CAPDyKFoaTu4nGa-hdjd98ngE7RQ0yhFi8PpUt-HBkW7Srf-=Tg@mail.gmail.com>
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
+        bh=njAgXoeN0q74J/t5k+W3cZytsvg61wczGG4TqtpRL6Y=;
+        b=nLXJmDLnDtWgYF8qbWqz6Qd/v13G4UUCMp3Ypy7cNq5MSE9M5QNQP6z19mZQOEbrxz
+         33ijUv6PC9Qp/Qm5U2fRFr1gchc3NG2zKFhXNpOu8LdfEpNOdDc/8nT21gCGGn3BlFvc
+         7FkXkKYyWX79frbqw3t571IzY+6BKvd/mSI41qL5gGrCoAhlgo1jnXV0ssvVfB1p5h7j
+         fpgEmD1J/5QtWS/A08Jh9+IddUEla8oUxVkAGZDabEzOKF7cMXPjaHAtMFNAwyhTk2VU
+         hrIao4ltuYIDRbwmKo+bvG6Gzz/d9HTW6b5Ogj6MhY61K8tApxkdNQcQyq4m+BfLlwiX
+         ovZA==
+X-Gm-Message-State: ACgBeo0R+gth52Y5u+WwAhGE89zNmwgOIWY8JjewSDUIaODF4SxyP+fu
+        aS/4jIv7FlWZlgYGLE+U45kIaj7sR3hP1l7SdCw=
+X-Google-Smtp-Source: AA6agR4TYBgQ15J+DOcaVsDz/M4pT2ebGDHkXb6zul3WJjesJGQMsC1/NKvJf5zU/8gjSE/t9NQAVz6vogt/akuLBAI=
+X-Received: by 2002:a05:620a:2901:b0:6bb:692b:1991 with SMTP id
+ m1-20020a05620a290100b006bb692b1991mr1243555qkp.522.1660653918387; Tue, 16
+ Aug 2022 05:45:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFoaTu4nGa-hdjd98ngE7RQ0yhFi8PpUt-HBkW7Srf-=Tg@mail.gmail.com>
+References: <20220624195112.894916-1-robimarko@gmail.com> <87edyq1ujr.wl-maz@kernel.org>
+ <20220712124445.GC21746@workstation> <87czea1i2f.wl-maz@kernel.org>
+ <CAOX2RU5RX+H=omuKGye2fBy9dOFmfC9HC_3pekeGMxDJuReCUw@mail.gmail.com>
+ <d8912a0d811b5eb924b8c4136b099f72@kernel.org> <CAOX2RU4MpyEQ0RtcrZ07VXRbB+SWWU=1zWfYUXhQFtvh=MCiDw@mail.gmail.com>
+ <20220719074751.GA25065@thinkpad>
+In-Reply-To: <20220719074751.GA25065@thinkpad>
+From:   Robert Marko <robimarko@gmail.com>
+Date:   Tue, 16 Aug 2022 14:45:07 +0200
+Message-ID: <CAOX2RU525OYLBb+Nek==84KA4a42ZTz89tgdMcgBCu=K8VzL9Q@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: spmi-gpio: make the irqchip immutable
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Marc Zyngier <maz@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-gpio@vger.kernel.org,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22-08-16 12:48:20, Ulf Hansson wrote:
-> [...]
-> 
-> > > >
-> > > > When the last active consumer suspends (in our case here, device A), ->power_off
-> > > > will be called first disabling the PD, then the ->set_performance will
-> > > > 'release' that lowest perf level the device A requested but will not
-> > > > call to FW since the PD is already disabled. This would make
-> > > > sure there are not two calls with two different levels to the FW.
+On Tue, 19 Jul 2022 at 09:47, Manivannan Sadhasivam
+<manivannan.sadhasivam@linaro.org> wrote:
+>
+> On Wed, Jul 13, 2022 at 02:33:32PM +0200, Robert Marko wrote:
+> > On Wed, 13 Jul 2022 at 13:47, Marc Zyngier <maz@kernel.org> wrote:
 > > >
-> > > I understand what you want to achieve, but I think the ->power_off()
-> > > scenario may be a bit more tricky.
+> > > On 2022-07-13 12:08, Robert Marko wrote:
+> > > > On Tue, 12 Jul 2022 at 17:12, Marc Zyngier <maz@kernel.org> wrote:
+> > > >>
+> > > >> On Tue, 12 Jul 2022 13:44:45 +0100,
+> > > >> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
+> > > >> >
+> > > >> > On Tue, Jul 12, 2022 at 11:42:32AM +0100, Marc Zyngier wrote:
+> > > >> > > On Fri, 24 Jun 2022 20:51:12 +0100,
+> > > >> > > Robert Marko <robimarko@gmail.com> wrote:
+> > > >> > > >
+> > > >> > > > Commit 6c846d026d49 ("gpio: Don't fiddle with irqchips marke=
+d as
+> > > >> > > > immutable") added a warning to indicate if the gpiolib is al=
+tering the
+> > > >> > > > internals of irqchips.
+> > > >> > > >
+> > > >> > > > Following this change the following warning is now observed =
+for the SPMI
+> > > >> > > > PMIC pinctrl driver:
+> > > >> > > > gpio gpiochip1: (200f000.spmi:pmic@0:gpio@c000): not an immu=
+table chip, please consider fixing it!
+> > > >> > > >
+> > > >> > > > Fix this by making the irqchip in the SPMI PMIC pinctrl driv=
+er immutable.
+> > > >> > > >
+> > > >> > > > Signed-off-by: Robert Marko <robimarko@gmail.com>
+> > > >> > > > ---
+> > > >> > > >  drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 22 ++++++++++++-=
+---------
+> > > >> > > >  1 file changed, 12 insertions(+), 10 deletions(-)
+> > > >> > > >
+> > > >> > > > diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/driv=
+ers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> > > >> > > > index c3255b0bece4..406ee0933d0b 100644
+> > > >> > > > --- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> > > >> > > > +++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> > > >> > > > @@ -171,7 +171,6 @@ struct pmic_gpio_state {
+> > > >> > > >   struct regmap   *map;
+> > > >> > > >   struct pinctrl_dev *ctrl;
+> > > >> > > >   struct gpio_chip chip;
+> > > >> > > > - struct irq_chip irq;
+> > > >> > > >   u8 usid;
+> > > >> > > >   u8 pid_base;
+> > > >> > > >  };
+> > > >> > > > @@ -988,6 +987,17 @@ static void *pmic_gpio_populate_parent_=
+fwspec(struct gpio_chip *chip,
+> > > >> > > >   return fwspec;
+> > > >> > > >  }
+> > > >> > > >
+> > > >> > > > +static const struct irq_chip spmi_gpio_irq_chip =3D {
+> > > >> > > > + .name           =3D "spmi-gpio",
+> > > >> > > > + .irq_ack        =3D irq_chip_ack_parent,
+> > > >> > > > + .irq_mask       =3D irq_chip_mask_parent,
+> > > >> > > > + .irq_unmask     =3D irq_chip_unmask_parent,
+> > > >> > >
+> > > >> > > No, this is wrong. Please look at the documentation to see how=
+ you
+> > > >> > > must now directly call into the gpiolib helpers for these two
+> > > >> > > callbacks.
+> > > >> > >
+> > > >> >
+> > > >> > IIUC, you are referring to gpiochip_disable_irq() and
+> > > >> > gpiochip_enable_irq() APIs.
+> > > >>
+> > > >> I am indeed.
+> > > >>
+> > > >> > These APIs are supposed to let the gpiolib know about that the I=
+RQ
+> > > >> > usage of these GPIOs. But for the case of hierarchial IRQ domain=
+,
+> > > >> > isn't the parent is going to do that?
+> > > >>
+> > > >> Why would it? The parent has no clue about what sits above it. In =
+a
+> > > >> hierarchical configuration, each level is responsible for its own
+> > > >> level, and the GPIO layer should be responsible for its own
+> > > >> management.
+> > > >>
+> > > >> > Please correct me if I'm wrong.
+> > > >>
+> > > >> I'm afraid you are, and this patch is a fairly obvious change in
+> > > >> behaviour, as the callbacks you mention above are not called anymo=
+re,
+> > > >> while they were before.
+> > > >>
+> > > >> If they are not necessary (for reasons I can't fathom), then this
+> > > >> should be clearly explained.
+> > > >
+> > > > Hi Marc,
+> > > > I will look at IRQ GPIO docs, but in this case, then we have more
+> > > > conversions that
+> > > > are not correct.
 > > >
-> > > For example, it would be perfectly fine for genpd to keep the PM
-> > > domain powered-on, even when the device A gets runtime suspended (a
-> > > genpd governor may prevent it). In other words, we may end up not
-> > > getting the ->power_off() callback invoked at all, even if there are
-> > > no runtime resumed devices in the PM domain.
-> > >
-> > > Could this lead to problems on the provider side, when trying to take
-> > > into account the different combinations of sequences?
+> > > Then please point them out.
 > >
-> > Correct me if I'm wrong, but even if a genpd governor would prevent
-> > the power_off to be called, if we do the reversal, since the power
-> > domain is not off, the provider would lower the performance state and
-> > that's it. The responsability falls on the provider, but so does with
-> > the current order of the calls.
+> > Oh, now I get the issue, I was misunderstanding it completely.
+> > gpiochip_enable_irq and gpiochip_disable_irq are not being called
+> > at all.
 > >
-> > So I don't see how this could lead to problems compared to the current
-> > order of the calls.
-> 
-> Alright, I agree, it shouldn't really matter then.
-> 
+> > However, I dont see them being called before the conversion as well.
+> > I am not really familiar with the PMIC IRQ-s, looked like an easy conve=
+rsion
+> > to get rid of the warning.
 > >
-> > Maybe I missunderstood your point, so please correct me if I'm getting
-> > this wrong.
+> > Manivannan can you shed some light on this?
 > >
-> > >
-> > > >
-> > > > Now, most of this depends on the provider's way of doing things.
-> > > > But in order to allow the provider to do what is described above, it
-> > > > needs to know about the perf level before it is asked to power on a PD.
-> > > > Same applies to powering off.
-> > > >
-> > > > > >
-> > > > > > I think it makes more sense for the ->set_performance in this case to act as a
-> > > > > > way to tell the provider that a specific device has yeilded its voltage level
-> > > > > > request. That way the provider can drop the voltage to the minimum requested by
-> > > > > > the active consumers of that PD.
-> > > > >
-> > > > > The genpd provider can know if the PM domain is powered on or off,
-> > > > > when the ->set_performance_state() callback is invoked. If it's
-> > > > > powered off, it may then decide to "cache" the request for the
-> > > > > performance level request, until it gets powered on.
-> > > >
-> > > > But the ->set_performance is called only after ->power_on, so the PD
-> > > > will always be on when ->set_performance checks. And this is what my
-> > > > patch is trying to change actually.
-> > > >
-> > > > >
-> > > > > Although, I don't see how a genpd provider should be able to cache a
-> > > > > performance state request, when the PM domain is already powered on
-> > > > > (which is what you propose, if I understand correctly), that simply
-> > > > > doesn't work for the other scenarios.
-> > > >
-> > > > I explained this above. The provider will need to check if the PD is on
-> > > > and only write to FW if it is. Otherwise it will cache the value for
-> > > > when the power_on is called.
-> > >
-> > > As indicated above, it looks to me that you may need to check a
-> > > combination of things at the provider side. Is relying on whether
-> > > genpd is on/off to decide when to apply or cache a performance state,
-> > > really sufficient? I could certainly be wrong though.
+>
+> I hope you got the answer by now. When I looked into the conversion I saw=
+ that
+> there were missing calls to gpiochip_{enable/disable}_irq APIs. But at th=
+at
+> time I blindly assumed (yeah very bad of myself) that the parent irqchip =
+will
+> handle that :(
+>
+> Anyway, you should call these helpers from the mask/unmask callbacks as a=
+ part
+> of the conversion patch. Let me know if you are onto it or not!
+
+Hi, I completely missed your reply.
+Currently, I am pretty swamped with other work so I dont know when
+will I be able
+to look into this again.
+
+Regards,
+Robert
+>
+> Thanks,
+> Mani
+>
+> > Regards,
+> > Robert
 > >
-> > I don't think there is any change from this point of view, when compared
-> > to the current order. Even with the current order, the provider would
-> > either cache the performance state if the power domain is off, or would
-> > apply it if the power domain is on.
-> 
-> For the Qcom case, I don't think it's that simple on the genpd provider side.
-> 
-> With the changes you propose in the $subject patch, I think there are
-> two specific scenarios when the genpd can be powered off and when the
-> ->set_performance_state() callback can get called. These scenarios can
-> just rely on whether the genpd is powered off or not, to make the best
-> decision. See more below.
-> 
-> *) In genpd_runtime_resume() we make sure to *raise* the performance
-> state prior to power on the PM domain, if the PM domain is powered
-> off, of course. In this way the ->set_performance_state() callback may
-> be invoked when the genpd is powered off, to *raise* the performance
-> state.
-
-I'm not sure I understand the issue with this one. Please note that the
-genpd will not decide whether to call the ->set_performance_state() or
-not. The change I propose here is to _always_ call ->set_performance_state()
-before calling ->power_on(). There is no condition there.
-
-Since the provider will always get the call to ->set_performance_state(),
-and based on the state of the genpd (powered on or not), it will either
-call to FW or will cache the value for when the next ->power_on() call is
-done.
-
-> 
-> **) In genpd_runtime_suspend() we may power off the PM domain, before
-> invoking the ->set_performance_state() callback to *lower* the
-> performance state.
-
-Yeah, this is so that it would not undervolt the consumer.
-In some cases, an undevolt, on some platforms, could actually result in a
-consumer's HW FSM hang.
-
-And it really doesn't make sense to drop the voltage right before powering
-off the genpd. Instead, it makes sense to let the provider know that a
-specific perf state is not voted for by a consumer anymore, only after the genpd
-is powered off.
-
-Now, that being said, there is the case where a consumer drops its vote
-for a specific perf state, but since there is another consumer using
-that genpd, it doesn't power down. So that could result in undervolt
-too, but if there is a know such issue on a platform, the responsability
-to handle that would fall on the provider, and there are ways to do
-that.
-
-I hope I'm not complicating the problem we're trying to solve here even
-more by adding more scenarios.
-
-> 
-> In other words, just checking whether the genpd is powered off, to
-> decide to cache/postpone the call to the FW to set a new performance
-> state, would mean that we may end up running in a higher performance
-> state than actually needed, right?
-
-Assuming I understood your comment right, in the first scenario you mentioned,
-the actual point when a specific performance state is actually started is on
-->power_on(), not on ->set_performance(). As you said, the genpd is off,
-so between ->set_performance() and the ->power_on() calls, the
-performance state is still 0 (genpd disabled).
-
-> 
-> Perhaps if we would check if the performance state is lowered (or set
-> to zero) too, that should improve the situation, right?
-> 
-
-Unless I wrong in the statements I made above, I don't see a need for such a
-check.
-
-Or maybe I missed your point.
-
+> >
+> >
+> >
 > >
 > > >
-> > > Perhaps if you can provide a corresponding patch for the genpd
-> > > provider side too, that can help to convince me.
-> >
-> > The qcom-rpmhpd actually does that even now. On set_performance, it caches
-> > the performance state (corner) if the power domain is disabled, and it
-> > applies (aggregates the corner) if the power domain is enabled.
-> 
-> Okay, good!
-> 
-> As stated above, this sounds like it can be improved then, right?
-> 
-
-I would certainly say so.
-
-> Kind regards
-> Uffe
+> > >          M.
+> > > --
+> > > Jazz is not dead. It just smells funny...
+>
+> --
+> =E0=AE=AE=E0=AE=A3=E0=AE=BF=E0=AE=B5=E0=AE=A3=E0=AF=8D=E0=AE=A3=E0=AE=A9=
+=E0=AF=8D =E0=AE=9A=E0=AE=A4=E0=AE=BE=E0=AE=9A=E0=AE=BF=E0=AE=B5=E0=AE=AE=
+=E0=AF=8D
