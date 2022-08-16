@@ -2,92 +2,267 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EEBB595F0A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Aug 2022 17:30:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 764CE595F19
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Aug 2022 17:33:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229833AbiHPPa5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Aug 2022 11:30:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45594 "EHLO
+        id S235465AbiHPPdF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Aug 2022 11:33:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231453AbiHPPal (ORCPT
+        with ESMTP id S235534AbiHPPc5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Aug 2022 11:30:41 -0400
-Received: from laurent.telenet-ops.be (laurent.telenet-ops.be [IPv6:2a02:1800:110:4::f00:19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECA8B3DF0F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Aug 2022 08:30:38 -0700 (PDT)
-Received: from ramsan.of.borg ([84.195.186.194])
-        by laurent.telenet-ops.be with bizsmtp
-        id 8FWa2800N4C55Sk01FWbhq; Tue, 16 Aug 2022 17:30:36 +0200
-Received: from rox.of.borg ([192.168.97.57])
-        by ramsan.of.borg with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <geert@linux-m68k.org>)
-        id 1oNyWY-001MHx-F8; Tue, 16 Aug 2022 17:30:34 +0200
-Received: from geert by rox.of.borg with local (Exim 4.93)
-        (envelope-from <geert@linux-m68k.org>)
-        id 1oNyWY-00GwNh-3k; Tue, 16 Aug 2022 17:30:34 +0200
-From:   Geert Uytterhoeven <geert+renesas@glider.be>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Slark Xiao <slark_xiao@163.com>
+        Tue, 16 Aug 2022 11:32:57 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D301A4BD03
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Aug 2022 08:32:55 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id n7so1865176wrv.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Aug 2022 08:32:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc;
+        bh=3ladZqrQ7hNXeMbMYQUqvYEHlbnDirnZuxEqx51rn3k=;
+        b=e8vzu7PeBAdXQ6hugx5wz3E3xcqvRq28DlomHp8jfJkPAEpsBgPoXI1xpbFHaQldMI
+         8gFyvKYLgXuDC3xGwdVIeAEWq8l4Hooexm8c1zD3F1S7DhTtCjDcOWr/EzCwF0v07g/o
+         CbaORHWZ6LO0NGLDNh9TPemDhdVcDvmKngMDz9oTjxOYtjIp2yQQbHzra2ueoU85FOB7
+         H+KG0YrLKy3crgf9B7zKgjeDei8hCgC+BMJLi+u7y1cias+4IDektykh7UGMqgcuGF2i
+         2IyS+sqhmTFXR3FHIv4liTLXxFO/MX68nq9yIxfSgW8dD4SNS7evif9dTp/2aw3D1i2j
+         of0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=3ladZqrQ7hNXeMbMYQUqvYEHlbnDirnZuxEqx51rn3k=;
+        b=xXyMfx3KuNZGM/5GPwO1FazpsNtsFwvZ5zJzpRpnxkkdk7d6GFtGJJ3VEYJZNDKhfq
+         77Y7zzRgAiUiH+Dd5V61T6ozoj99VT8Zv93Z/Zg7E+C8Pv4JlU8KAoxaaSzzp7Wv91lo
+         r5fM530qZLYMxsNv2JgHkoOvX+P8Lv6pFVYiOZYzSYZlFdNk0I9k+ZwKNtHHYmA/N8gl
+         Ctz06vW5R8mIaMnCoE4/6V/rwJPT9gjj9CIEvnresfEVN1PvWqgLfeBxCkDuHVwwSJCX
+         31kAQIKqYxFDodoxPxx1yisriNUp0P+5m1mcXRUy+VQOPL+qSuBI2DjsKDjayxHv7bFF
+         BvDQ==
+X-Gm-Message-State: ACgBeo2xAGq0hYtu1YWlQFygzZBWmzDQndAp3c/gdbFI7uIkpFO92oEB
+        TkGi4iYQHRt1ucCrGRn9VZ3TbQ==
+X-Google-Smtp-Source: AA6agR7WnOpx6lbbKXS0hGEuz9TJ/O7NMQdTx0mIHN6ef6AgzxJdcpTQQRMe8Jkwbuzf6vloQMoz1g==
+X-Received: by 2002:a5d:47a4:0:b0:220:600d:2b0f with SMTP id 4-20020a5d47a4000000b00220600d2b0fmr12148608wrb.407.1660663974377;
+        Tue, 16 Aug 2022 08:32:54 -0700 (PDT)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id m31-20020a05600c3b1f00b003a6077384ecsm2938495wms.31.2022.08.16.08.32.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Aug 2022 08:32:53 -0700 (PDT)
+Date:   Tue, 16 Aug 2022 18:32:51 +0300
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Caleb Connolly <caleb.connolly@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        =?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH] dt-bindings: Fix incorrect "the the" corrections
-Date:   Tue, 16 Aug 2022 17:30:33 +0200
-Message-Id: <edc5763d90054df7977ae24976e80533c7a1bff9.1660663653.git.geert+renesas@glider.be>
-X-Mailer: git-send-email 2.25.1
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sdm845: Add the RPMh stats node
+Message-ID: <Yvu4o1bFdKLfvaiL@linaro.org>
+References: <20220812101240.1869605-1-abel.vesa@linaro.org>
+ <T2Uz7zs4Ht58lYc5zWg1VBY0ju6bVaSKa9y3RhBQWDDHmPXBHbAxI2J34jSeY0BFQy2y4JtFn3nQS0Lz4xI5jw==@protonmail.internalid>
+ <20220812101240.1869605-3-abel.vesa@linaro.org>
+ <e6821eef-4fcb-97b1-24be-e2bb62b99039@linaro.org>
+ <Yvtx2aK1Uu51hTPM@linaro.org>
+ <b34b2fa6-7dbf-e4d3-9833-57efd42f9137@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b34b2fa6-7dbf-e4d3-9833-57efd42f9137@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Lots of double occurrences of "the" were replaced by single occurrences,
-but some of them should become "to the" instead.
+On 22-08-16 14:50:50, Caleb Connolly wrote:
+> 
+> 
+> On 16/08/2022 11:30, Abel Vesa wrote:
+> > On 22-08-15 21:34:07, Caleb Connolly wrote:
+> > > 
+> > > 
+> > > On 12/08/2022 11:12, Abel Vesa wrote:
+> > > > SDM845 is a special case compared to the other platforms that use RPMh
+> > > > stats, since it only has 2 stats (aosd and cxsd), while the others have
+> > > > a 3rd one (ddr).
+> > > > 
+> > > > So lets add the node but with a SDM845 dedicated compatible to make
+> > > > the driver aware of the different stats config.
+> > > Hi,
+> > > 
+> > > I gave this a go on the OnePlus 6, I noticed the driver is also meant to
+> > > read the stats for remote procs via smem, however this seems to fail for me
+> > > - it can't find any of the SMEM items even if I probe the driver manually
+> > > after ensuring remoteprocs have booted. Is this an unsupported feature on
+> > > SDM845?
+> > 
+> > Thanks for giving it a test.
+> > 
+> > Actually, you need to probe the qcom_stats after the remoteprocs have
+> > booted.
+> 
+> Hi, thanks for getting back to me. I did try this as mentioned above but I
+> think I must have been doing something wrong as I get different behaviour
+> now:
+> 
+> 
+> enchilada:/ # cat /sys/class/remoteproc/remoteproc*/state
+> 
+> running
+> 
+> running
+> 
+> running
+> 
+> running
+> 
+> enchilada:/ # ls /d/qcom_stats/
+> aosd  cxsd
+> enchilada:/ # rmmod qcom_stats
+> enchilada:/ # insmod /data/qcom_stats.ko
+> enchilada:/ # ls /d/qcom_stats/
+> adsp  aosd  cdsp  cxsd  modem  slpi
 
-Fixes: 12e5bde18d7f6ca4 ("dt-bindings: Fix typo in comment")
+Well, I run on upstream MTP, which has less enabled in devicetree.
 
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
----
- Documentation/devicetree/bindings/net/qcom-emac.txt         | 2 +-
- Documentation/devicetree/bindings/thermal/rcar-thermal.yaml | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> 
+> 
+> Weirdly, despite it succeeding it prints the following in dmesg with logging
+> added to qcom_create_subsystem_stat_files() [1]:
+> 
+> [  156.540307] Couldn't get smem object 'wpss' (item: 605, pid: 13): -2
+> [  156.546899] Couldn't get smem object 'gpu' (item: 609, pid: 0): -2
+> [  156.553260] Couldn't get smem object 'display' (item: 610, pid: 0): -2
+> [  156.559957] Couldn't get smem object 'adsp_island' (item: 613, pid: 2): -2
+> [  156.567007] Couldn't get smem object 'slpi_island' (item: 613, pid: 3): -2
 
-diff --git a/Documentation/devicetree/bindings/net/qcom-emac.txt b/Documentation/devicetree/bindings/net/qcom-emac.txt
-index e6cb2291471c4c11..7ae8aa14863454d2 100644
---- a/Documentation/devicetree/bindings/net/qcom-emac.txt
-+++ b/Documentation/devicetree/bindings/net/qcom-emac.txt
-@@ -14,7 +14,7 @@ MAC node:
- - mac-address : The 6-byte MAC address. If present, it is the default
- 	MAC address.
- - internal-phy : phandle to the internal PHY node
--- phy-handle : phandle the external PHY node
-+- phy-handle : phandle to the external PHY node
- 
- Internal PHY node:
- - compatible : Should be "qcom,fsm9900-emac-sgmii" or "qcom,qdf2432-emac-sgmii".
-diff --git a/Documentation/devicetree/bindings/thermal/rcar-thermal.yaml b/Documentation/devicetree/bindings/thermal/rcar-thermal.yaml
-index 00dcbdd361442981..119998d10ff41836 100644
---- a/Documentation/devicetree/bindings/thermal/rcar-thermal.yaml
-+++ b/Documentation/devicetree/bindings/thermal/rcar-thermal.yaml
-@@ -42,7 +42,7 @@ properties:
-     description:
-       Address ranges of the thermal registers. If more then one range is given
-       the first one must be the common registers followed by each sensor
--      according the datasheet.
-+      according to the datasheet.
-     minItems: 1
-     maxItems: 4
- 
--- 
-2.25.1
+See my comment below your related changes.
 
+> > 
+> > Doing so, you'll end up having the following:
+> > adsp  aosd  cdsp  cxsd
+> 
+> I seem to get a few more, I have some out of tree patches enabling the SLPI,
+> and iirc the db845c doesn't have a full modem firmware. If these look good
+> to you I'd appreciate it if you add my Tested-by.
+
+Looks OK to me.
+
+> 
+> enchilada:/ # for x in /d/qcom_stats/*; do echo $x; cat $x; done
+> /d/qcom_stats/adsp
+> Count: 48
+> Last Entered At: 1199663157
+> Last Exited At: 1524359015
+> Accumulated Duration: 793060082
+> /d/qcom_stats/aosd
+> Count: 0
+> Last Entered At: 0
+> Last Exited At: 0
+> Accumulated Duration: 0
+> /d/qcom_stats/cdsp
+> Count: 35
+> Last Entered At: 1194818037
+> Last Exited At: 1194769648
+> Accumulated Duration: 3223580811
+> /d/qcom_stats/cxsd
+> Count: 0
+> Last Entered At: 0
+> Last Exited At: 0
+> Accumulated Duration: 0
+> /d/qcom_stats/modem
+> Count: 49
+> Last Entered At: 3687081003
+> Last Exited At: 3686727026
+> Accumulated Duration: 2915592136
+> /d/qcom_stats/slpi
+> Count: 53
+> Last Entered At: 3120905905
+> Last Exited At: 3120894535
+> Accumulated Duration: 3218969498
+> 
+> Am I right in thinking the aosd and cxsd being all 0 is probably a similar
+> issue to the one reported by Stephen in [2]?
+
+Might be, I'm not sure. I'll have closer a look.
+
+> 
+> 
+> [1]:
+> 
+> diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
+> index 121ea409fafc..56cfb20d3683 100644
+> --- a/drivers/soc/qcom/qcom_stats.c
+> +++ b/drivers/soc/qcom/qcom_stats.c
+> @@ -178,8 +178,12 @@ static void qcom_create_subsystem_stat_files(struct dentry *root,
+> 
+>         for (i = 0; i < ARRAY_SIZE(subsystems); i++) {
+>                 stat = qcom_smem_get(subsystems[i].pid, subsystems[i].smem_item, NULL);
+> -               if (IS_ERR(stat))
+
+Basically, the error here means the subsystem is not available right at
+this moment. We could probably return EPROBE_DEFER here, but it really
+depends on each platform's devicetree what remoteprocs they have
+enabled or not. So I guess the safest thing to to is to just skip
+quietly the ones that haven't probed yet.
+
+> +               if (IS_ERR(stat)) {
+> +                       pr_info("Couldn't get smem object '%s' (item: %d, pid: %d): %ld\n",
+> +                               subsystems[i].name, subsystems[i].smem_item, subsystems[i].pid,
+> +                               PTR_ERR(stat));
+>                         continue;
+> +               }
+> 
+>                 debugfs_create_file(subsystems[i].name, 0400, root, (void *)&subsystems[i],
+>                                     &qcom_subsystem_sleep_stats_fops);
+> 
+> 
+> 
+> [2]: https://lore.kernel.org/linux-arm-msm/20220628201340.3981860-1-swboyd@chromium.org/
+> > 
+> > > > 
+> > > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> 
+> Tested-by: Caleb Connolly <caleb.connolly@linaro.org>
+> > > > ---
+> > > > 
+> > > > Changed qcom,rpmh-stats-sdm845 to qcom,sdm845-rpmh-stats, as suggested
+> > > > by Krzysztof.
+> > > > 
+> > > >    arch/arm64/boot/dts/qcom/sdm845.dtsi | 5 +++++
+> > > >    1 file changed, 5 insertions(+)
+> > > > 
+> > > > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > > index 5bea96a9ce06..67fe08b837be 100644
+> > > > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > > > @@ -4851,6 +4851,11 @@ ebi_cdev: ebi {
+> > > >    			};
+> > > >    		};
+> > > > 
+> > > > +		sram@c3f0000 {
+> > > > +			compatible = "qcom,sdm845-rpmh-stats";
+> > > > +			reg = <0 0x0c3f0000 0 0x400>;
+> > > > +		};
+> > > > +
+> > > >    		spmi_bus: spmi@c440000 {
+> > > >    			compatible = "qcom,spmi-pmic-arb";
+> > > >    			reg = <0 0x0c440000 0 0x1100>,
+> > > > --
+> > > > 2.34.1
+> > > > 
+> > > 
+> > > -- 
+> > > Kind Regards,
+> > > Caleb (they/he)
+> 
+> -- 
+> Kind Regards,
+> Caleb (they/he)
