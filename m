@@ -2,78 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A877595933
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Aug 2022 13:02:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA8B4595925
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Aug 2022 13:01:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234012AbiHPLCG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Aug 2022 07:02:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60642 "EHLO
+        id S233108AbiHPLAr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Aug 2022 07:00:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233926AbiHPLBa (ORCPT
+        with ESMTP id S234938AbiHPLAQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Aug 2022 07:01:30 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E369AD8E28;
-        Tue, 16 Aug 2022 03:10:48 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27G8FuSr012453;
-        Tue, 16 Aug 2022 10:10:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=twB6Jx5/ys7RTnGH4YLfZT4z73HlzicFD69QuXLhYSw=;
- b=ihlZAYHWwPPfyGZkKWj5OLosu/QXT8x9UIZETJIaN7P/PHHZiW0p0HgVrtMaOGB/7J2b
- v8PP6pb8Lq8VR+OlTy9SuglWXqizr0/nBT07b9NeRQJyPxgWKhcLxQbyho8zb4K/4lQ0
- eW1LFftq+a9rBlzMMZB9oXkqVyg3rtXSEhULrQ6hNO+Xz9gTYBEmgKI2EbEJoT4s76Nt
- Lj3M+FdbxVENF5OSqn8esNedfQ587ybcS1OFOkWM9YCfY7AxUDE6ONkx9kDFFXIkg9u1
- i+/6eHO4C14eKta5/xe09wn7Xv2Klm8srd6iVFK0G1DYpO8kCfBlZd7YPqKjArc3cGOU wg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3hyw582d4v-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 Aug 2022 10:10:45 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27GAAiil023916
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 Aug 2022 10:10:44 GMT
-Received: from c-skakit-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 16 Aug 2022 03:10:40 -0700
-From:   Satya Priya <quic_c_skakit@quicinc.com>
-To:     Rob Herring <robh@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_tdas@quicinc.com>, <quic_c_skakit@quicinc.com>,
-        <linux-clk@vger.kernel.org>
-Subject: [RESEND PATCH V7 5/5] clk: qcom: lpass: Add support for resets & external mclk for SC7280
-Date:   Tue, 16 Aug 2022 15:40:04 +0530
-Message-ID: <1660644604-6592-6-git-send-email-quic_c_skakit@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1660644604-6592-1-git-send-email-quic_c_skakit@quicinc.com>
-References: <1660644604-6592-1-git-send-email-quic_c_skakit@quicinc.com>
+        Tue, 16 Aug 2022 07:00:16 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 4417139B92;
+        Tue, 16 Aug 2022 03:26:37 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C67B0113E;
+        Tue, 16 Aug 2022 03:26:37 -0700 (PDT)
+Received: from FVFF77S0Q05N (unknown [10.57.44.6])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 178F93F70D;
+        Tue, 16 Aug 2022 03:26:33 -0700 (PDT)
+Date:   Tue, 16 Aug 2022 11:26:28 +0100
+From:   Mark Rutland <mark.rutland@arm.com>
+To:     Yicong Yang <yangyicong@huawei.com>
+Cc:     yangyicong@hisilicon.com, will@kernel.org, Frank.li@nxp.com,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+        festevam@gmail.com, linux-imx@nxp.com, zhangshaokun@hisilicon.com,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        konrad.dybcio@somainline.org, khuong@os.amperecomputing.com,
+        john.garry@huawei.com, jonathan.cameron@huawei.com,
+        gregkh@linuxfoundation.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] drivers/perf: Change WARN_ON() to dev_err() on
+ irq_set_affinity() failure
+Message-ID: <Yvtw1DAhYBgsuTTV@FVFF77S0Q05N>
+References: <20220815092815.11597-1-yangyicong@huawei.com>
+ <YvotEZigh0+I/RIb@FVFF77S0Q05N>
+ <2e0c3a14-d308-dfd2-debe-8a52a3db47cc@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 2OAHxpOkvUNGt0S2Y3aNQQNYypKSwqCB
-X-Proofpoint-GUID: 2OAHxpOkvUNGt0S2Y3aNQQNYypKSwqCB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-16_07,2022-08-16_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 adultscore=0 phishscore=0 mlxlogscore=999
- suspectscore=0 lowpriorityscore=0 mlxscore=0 bulkscore=0 spamscore=0
- impostorscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2207270000 definitions=main-2208160039
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2e0c3a14-d308-dfd2-debe-8a52a3db47cc@huawei.com>
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,136 +51,257 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Taniya Das <quic_tdas@quicinc.com>
+On Tue, Aug 16, 2022 at 03:37:29PM +0800, Yicong Yang wrote:
+> On 2022/8/15 19:25, Mark Rutland wrote:
+> > On Mon, Aug 15, 2022 at 05:28:15PM +0800, Yicong Yang wrote:
+> >> From: Yicong Yang <yangyicong@hisilicon.com>
+> >>
+> >> The WARN_ON() on irq_set_affinity() failure is misused according to the [1]
+> >> and may crash people's box unintentionally. This may also be redundant since
+> >> in the failure case we may also trigger the WARN and dump the stack in the
+> >> perf core[2] for a second time.
+> > 
+> > In what way do you think are these misused? I can't immediately see what you
+> > think applies from [1].
+> 
+> As commented by irq_set_affinity() it "Fails if cpumask does not contain an online
+>  CPU" 
 
-The clock gating control for TX/RX/WSA core bus clocks would be required
-to be reset(moved from hardware control) from audio core driver. Thus
-add the support for the reset clocks.
+In all of the cases below we've chosen an online CPU. So the only way this can
+happen is if there is a bug in the code, in which case a WARN_ON() is
+appropriate. Also, there are *other* reasons irq_set_affinity() can fail.
 
-Update the lpass_aon_cc_main_rcg_clk_src ops to park the RCG at XO after
-disable as this clock signal is used by hardware to turn ON memories in
-LPASS. Also add the external mclk to interface external MI2S.
+> which means we passed an invalid input, I think which violiates the "Do not
+> use these macros when checking for invalid external inputs".
 
-Fixes: a9dd26639d05 ("clk: qcom: lpass: Add support for LPASS clock controller for SC7280")
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/clk/qcom/lpassaudiocc-sc7280.c | 22 +++++++++++++++++++++-
- drivers/clk/qcom/lpasscorecc-sc7280.c  | 33 +++++++++++++++++++++++++++++++++
- 2 files changed, 54 insertions(+), 1 deletion(-)
+There is no external input here. The chosen CPU didn't come from userspace or
+an external source; we chose it ourselves based on kernel internal data (e.g.
+cpu_online_mask).
 
-diff --git a/drivers/clk/qcom/lpassaudiocc-sc7280.c b/drivers/clk/qcom/lpassaudiocc-sc7280.c
-index 6067328..063e036 100644
---- a/drivers/clk/qcom/lpassaudiocc-sc7280.c
-+++ b/drivers/clk/qcom/lpassaudiocc-sc7280.c
-@@ -23,6 +23,7 @@
- #include "clk-regmap-mux.h"
- #include "common.h"
- #include "gdsc.h"
-+#include "reset.h"
- 
- enum {
- 	P_BI_TCXO,
-@@ -248,7 +249,7 @@ static struct clk_rcg2 lpass_aon_cc_main_rcg_clk_src = {
- 		.parent_data = lpass_aon_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(lpass_aon_cc_parent_data_0),
- 		.flags = CLK_OPS_PARENT_ENABLE,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -703,6 +704,18 @@ static const struct qcom_cc_desc lpass_audio_cc_sc7280_desc = {
- 	.num_clks = ARRAY_SIZE(lpass_audio_cc_sc7280_clocks),
- };
- 
-+static const struct qcom_reset_map lpass_audio_cc_sc7280_resets[] = {
-+	[LPASS_AUDIO_SWR_RX_CGCR] =  { 0xa0, 1 },
-+	[LPASS_AUDIO_SWR_TX_CGCR] =  { 0xa8, 1 },
-+	[LPASS_AUDIO_SWR_WSA_CGCR] = { 0xb0, 1 },
-+};
-+
-+static const struct qcom_cc_desc lpass_audio_cc_reset_sc7280_desc = {
-+	.config = &lpass_audio_cc_sc7280_regmap_config,
-+	.resets = lpass_audio_cc_sc7280_resets,
-+	.num_resets = ARRAY_SIZE(lpass_audio_cc_sc7280_resets),
-+};
-+
- static const struct of_device_id lpass_audio_cc_sc7280_match_table[] = {
- 	{ .compatible = "qcom,sc7280-lpassaudiocc" },
- 	{ }
-@@ -779,6 +792,13 @@ static int lpass_audio_cc_sc7280_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
-+	ret = qcom_cc_probe_by_index(pdev, 1, &lpass_audio_cc_reset_sc7280_desc);
-+	if (ret) {
-+		dev_err(&pdev->dev, "Failed to register LPASS AUDIO CC Resets\n");
-+		pm_runtime_disable(&pdev->dev);
-+		return ret;
-+	}
-+
- 	pm_runtime_mark_last_busy(&pdev->dev);
- 	pm_runtime_put_autosuspend(&pdev->dev);
- 	pm_runtime_put_sync(&pdev->dev);
-diff --git a/drivers/clk/qcom/lpasscorecc-sc7280.c b/drivers/clk/qcom/lpasscorecc-sc7280.c
-index 1f1f1bd..6ad19b0 100644
---- a/drivers/clk/qcom/lpasscorecc-sc7280.c
-+++ b/drivers/clk/qcom/lpasscorecc-sc7280.c
-@@ -190,6 +190,19 @@ static struct clk_rcg2 lpass_core_cc_ext_if1_clk_src = {
- 	},
- };
- 
-+static struct clk_rcg2 lpass_core_cc_ext_mclk0_clk_src = {
-+	.cmd_rcgr = 0x20000,
-+	.mnd_width = 8,
-+	.hid_width = 5,
-+	.parent_map = lpass_core_cc_parent_map_0,
-+	.freq_tbl = ftbl_lpass_core_cc_ext_if0_clk_src,
-+	.clkr.hw.init = &(const struct clk_init_data){
-+		.name = "lpass_core_cc_ext_mclk0_clk_src",
-+		.parent_data = lpass_core_cc_parent_data_0,
-+		.num_parents = ARRAY_SIZE(lpass_core_cc_parent_data_0),
-+		.ops = &clk_rcg2_ops,
-+	},
-+};
- 
- static struct clk_branch lpass_core_cc_core_clk = {
- 	.halt_reg = 0x1f000,
-@@ -283,6 +296,24 @@ static struct clk_branch lpass_core_cc_lpm_mem0_core_clk = {
- 	},
- };
- 
-+static struct clk_branch lpass_core_cc_ext_mclk0_clk = {
-+	.halt_reg = 0x20014,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x20014,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(const struct clk_init_data){
-+			.name = "lpass_core_cc_ext_mclk0_clk",
-+			.parent_hws = (const struct clk_hw*[]){
-+				&lpass_core_cc_ext_mclk0_clk_src.clkr.hw,
-+			},
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch lpass_core_cc_sysnoc_mport_core_clk = {
- 	.halt_reg = 0x23000,
- 	.halt_check = BRANCH_HALT_VOTED,
-@@ -326,6 +357,8 @@ static struct clk_regmap *lpass_core_cc_sc7280_clocks[] = {
- 	[LPASS_CORE_CC_LPM_CORE_CLK] = &lpass_core_cc_lpm_core_clk.clkr,
- 	[LPASS_CORE_CC_LPM_MEM0_CORE_CLK] = &lpass_core_cc_lpm_mem0_core_clk.clkr,
- 	[LPASS_CORE_CC_SYSNOC_MPORT_CORE_CLK] = &lpass_core_cc_sysnoc_mport_core_clk.clkr,
-+	[LPASS_CORE_CC_EXT_MCLK0_CLK] = &lpass_core_cc_ext_mclk0_clk.clkr,
-+	[LPASS_CORE_CC_EXT_MCLK0_CLK_SRC] = &lpass_core_cc_ext_mclk0_clk_src.clkr,
- };
- 
- static struct regmap_config lpass_core_cc_sc7280_regmap_config = {
--- 
-2.7.4
+So that does not apply here.
 
+> > In perf we rely upon interrupt affinity to enforce serialization in a few
+> > places, so if we fail to set the interrupt affinity there are a number of
+> > things which could go wrong (e.g. memory corruption, and all the fun that could
+> > result from that). We use WARN_ON() to catch that early.
+> 
+> If we'd like to catch this failure information early maybe a dev_err() should be
+> enough to indicate this.
+
+I don't see why it is necessary to change to dev_err().
+
+> > I can't immediately see how [2] is relevant, since that's in the context of an
+> > IPI handler, and this patch affects the affinity of the PMU HW IRQ handler.
+> 
+> I think it's relevant (please correct me) as when I debug another pmu driver using
+> MSI interrupt[*], I found I'll trigger the WARN() in [2] if the interrupt is not
+> bind to the CPU which start trace. So I think it's required to handle the interrupt
+> on the same CPU start the trace otherwise the "context" is mismatched.
+
+Sorry, I had confused event_function_local() with event_function().
+
+I still think we want to keep the WARN_ON() here since before we get to
+event_function_local() we may do other things in the IRQ handler.
+
+Thanks,
+Mark.
+
+> 
+> [*] https://lore.kernel.org/lkml/20220721130116.43366-3-yangyicong@huawei.com/
+> 
+> Thanks.
+> 
+> > Thanks,
+> > Mark.
+> > 
+> >>
+> >> So change the WARN_ON() to dev_err() to just print the failure message.
+> >>
+> >> [1] https://github.com/torvalds/linux/blob/master/include/asm-generic/bug.h#L74
+> >> [2] https://github.com/torvalds/linux/blob/master/kernel/events/core.c#L313
+> >>
+> >> Suggested-by: Greg KH <gregkh@linuxfoundation.org>
+> >> [https://lore.kernel.org/lkml/YuOi3i0XHV++z1YI@kroah.com/]
+> >> Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+> >> ---
+> >>  drivers/perf/arm-ccn.c                   | 5 +++--
+> >>  drivers/perf/arm_dmc620_pmu.c            | 3 ++-
+> >>  drivers/perf/arm_smmuv3_pmu.c            | 6 ++++--
+> >>  drivers/perf/fsl_imx8_ddr_perf.c         | 3 ++-
+> >>  drivers/perf/hisilicon/hisi_pcie_pmu.c   | 6 ++++--
+> >>  drivers/perf/hisilicon/hisi_uncore_pmu.c | 6 ++++--
+> >>  drivers/perf/qcom_l2_pmu.c               | 8 ++++++--
+> >>  drivers/perf/xgene_pmu.c                 | 6 ++++--
+> >>  8 files changed, 29 insertions(+), 14 deletions(-)
+> >>
+> >> diff --git a/drivers/perf/arm-ccn.c b/drivers/perf/arm-ccn.c
+> >> index 728d13d8e98a..83abd909ba49 100644
+> >> --- a/drivers/perf/arm-ccn.c
+> >> +++ b/drivers/perf/arm-ccn.c
+> >> @@ -1210,8 +1210,9 @@ static int arm_ccn_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
+> >>  		return 0;
+> >>  	perf_pmu_migrate_context(&dt->pmu, cpu, target);
+> >>  	dt->cpu = target;
+> >> -	if (ccn->irq)
+> >> -		WARN_ON(irq_set_affinity(ccn->irq, cpumask_of(dt->cpu)));
+> >> +	if (ccn->irq && irq_set_affinity(ccn->irq, cpumask_of(dt->cpu)))
+> >> +		dev_err(ccn->dev, "Failed to set interrupt affinity\n");
+> >> +
+> >>  	return 0;
+> >>  }
+> >>  
+> >> diff --git a/drivers/perf/arm_dmc620_pmu.c b/drivers/perf/arm_dmc620_pmu.c
+> >> index 280a6ae3e27c..b59d3d9eb779 100644
+> >> --- a/drivers/perf/arm_dmc620_pmu.c
+> >> +++ b/drivers/perf/arm_dmc620_pmu.c
+> >> @@ -621,7 +621,8 @@ static int dmc620_pmu_cpu_teardown(unsigned int cpu,
+> >>  		perf_pmu_migrate_context(&dmc620_pmu->pmu, irq->cpu, target);
+> >>  	mutex_unlock(&dmc620_pmu_irqs_lock);
+> >>  
+> >> -	WARN_ON(irq_set_affinity(irq->irq_num, cpumask_of(target)));
+> >> +	if (irq_set_affinity(irq->irq_num, cpumask_of(target)))
+> >> +		dev_err(dmc620_pmu->pmu.dev, "Failed to set interrupt affinity\n");
+> >>  	irq->cpu = target;
+> >>  
+> >>  	return 0;
+> >> diff --git a/drivers/perf/arm_smmuv3_pmu.c b/drivers/perf/arm_smmuv3_pmu.c
+> >> index 00d4c45a8017..05e1b3e274d7 100644
+> >> --- a/drivers/perf/arm_smmuv3_pmu.c
+> >> +++ b/drivers/perf/arm_smmuv3_pmu.c
+> >> @@ -646,7 +646,8 @@ static int smmu_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
+> >>  
+> >>  	perf_pmu_migrate_context(&smmu_pmu->pmu, cpu, target);
+> >>  	smmu_pmu->on_cpu = target;
+> >> -	WARN_ON(irq_set_affinity(smmu_pmu->irq, cpumask_of(target)));
+> >> +	if (irq_set_affinity(smmu_pmu->irq, cpumask_of(target)))
+> >> +		dev_err(smmu_pmu->dev, "Failed to set interrupt affinity\n");
+> >>  
+> >>  	return 0;
+> >>  }
+> >> @@ -892,7 +893,8 @@ static int smmu_pmu_probe(struct platform_device *pdev)
+> >>  
+> >>  	/* Pick one CPU to be the preferred one to use */
+> >>  	smmu_pmu->on_cpu = raw_smp_processor_id();
+> >> -	WARN_ON(irq_set_affinity(smmu_pmu->irq, cpumask_of(smmu_pmu->on_cpu)));
+> >> +	if (irq_set_affinity(smmu_pmu->irq, cpumask_of(smmu_pmu->on_cpu)))
+> >> +		dev_err(dev, "Failed to set interrupt affinity\n");
+> >>  
+> >>  	err = cpuhp_state_add_instance_nocalls(cpuhp_state_num,
+> >>  					       &smmu_pmu->node);
+> >> diff --git a/drivers/perf/fsl_imx8_ddr_perf.c b/drivers/perf/fsl_imx8_ddr_perf.c
+> >> index 8e058e08fe81..c44192e2d9db 100644
+> >> --- a/drivers/perf/fsl_imx8_ddr_perf.c
+> >> +++ b/drivers/perf/fsl_imx8_ddr_perf.c
+> >> @@ -671,7 +671,8 @@ static int ddr_perf_offline_cpu(unsigned int cpu, struct hlist_node *node)
+> >>  	perf_pmu_migrate_context(&pmu->pmu, cpu, target);
+> >>  	pmu->cpu = target;
+> >>  
+> >> -	WARN_ON(irq_set_affinity(pmu->irq, cpumask_of(pmu->cpu)));
+> >> +	if (irq_set_affinity(pmu->irq, cpumask_of(pmu->cpu)))
+> >> +		dev_err(pmu->dev, "Failed to set interrupt affinity\n");
+> >>  
+> >>  	return 0;
+> >>  }
+> >> diff --git a/drivers/perf/hisilicon/hisi_pcie_pmu.c b/drivers/perf/hisilicon/hisi_pcie_pmu.c
+> >> index 21771708597d..90aed9e51396 100644
+> >> --- a/drivers/perf/hisilicon/hisi_pcie_pmu.c
+> >> +++ b/drivers/perf/hisilicon/hisi_pcie_pmu.c
+> >> @@ -655,7 +655,8 @@ static int hisi_pcie_pmu_online_cpu(unsigned int cpu, struct hlist_node *node)
+> >>  
+> >>  	if (pcie_pmu->on_cpu == -1) {
+> >>  		pcie_pmu->on_cpu = cpu;
+> >> -		WARN_ON(irq_set_affinity(pcie_pmu->irq, cpumask_of(cpu)));
+> >> +		if (irq_set_affinity(pcie_pmu->irq, cpumask_of(cpu)))
+> >> +			pci_err(pcie_pmu->pdev, "Failed to set interrupt affinity\n");
+> >>  	}
+> >>  
+> >>  	return 0;
+> >> @@ -681,7 +682,8 @@ static int hisi_pcie_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
+> >>  	perf_pmu_migrate_context(&pcie_pmu->pmu, cpu, target);
+> >>  	/* Use this CPU for event counting */
+> >>  	pcie_pmu->on_cpu = target;
+> >> -	WARN_ON(irq_set_affinity(pcie_pmu->irq, cpumask_of(target)));
+> >> +	if (irq_set_affinity(pcie_pmu->irq, cpumask_of(target)))
+> >> +		pci_err(pcie_pmu->pdev, "Failed to set interrupt affinity\n");
+> >>  
+> >>  	return 0;
+> >>  }
+> >> diff --git a/drivers/perf/hisilicon/hisi_uncore_pmu.c b/drivers/perf/hisilicon/hisi_uncore_pmu.c
+> >> index fbc8a93d5eac..74397b5ec889 100644
+> >> --- a/drivers/perf/hisilicon/hisi_uncore_pmu.c
+> >> +++ b/drivers/perf/hisilicon/hisi_uncore_pmu.c
+> >> @@ -492,7 +492,8 @@ int hisi_uncore_pmu_online_cpu(unsigned int cpu, struct hlist_node *node)
+> >>  	hisi_pmu->on_cpu = cpu;
+> >>  
+> >>  	/* Overflow interrupt also should use the same CPU */
+> >> -	WARN_ON(irq_set_affinity(hisi_pmu->irq, cpumask_of(cpu)));
+> >> +	if (irq_set_affinity(hisi_pmu->irq, cpumask_of(cpu)))
+> >> +		dev_err(hisi_pmu->dev, "Failed to set interrupt affinity\n");
+> >>  
+> >>  	return 0;
+> >>  }
+> >> @@ -525,7 +526,8 @@ int hisi_uncore_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
+> >>  	perf_pmu_migrate_context(&hisi_pmu->pmu, cpu, target);
+> >>  	/* Use this CPU for event counting */
+> >>  	hisi_pmu->on_cpu = target;
+> >> -	WARN_ON(irq_set_affinity(hisi_pmu->irq, cpumask_of(target)));
+> >> +	if (irq_set_affinity(hisi_pmu->irq, cpumask_of(target)))
+> >> +		dev_err(hisi_pmu->dev, "Failed to set interrupt affinity\n");
+> >>  
+> >>  	return 0;
+> >>  }
+> >> diff --git a/drivers/perf/qcom_l2_pmu.c b/drivers/perf/qcom_l2_pmu.c
+> >> index 30234c261b05..c6fe01c7e637 100644
+> >> --- a/drivers/perf/qcom_l2_pmu.c
+> >> +++ b/drivers/perf/qcom_l2_pmu.c
+> >> @@ -793,7 +793,9 @@ static int l2cache_pmu_online_cpu(unsigned int cpu, struct hlist_node *node)
+> >>  	cpumask_set_cpu(cpu, &l2cache_pmu->cpumask);
+> >>  	cluster_pmu_reset();
+> >>  
+> >> -	WARN_ON(irq_set_affinity(cluster->irq, cpumask_of(cpu)));
+> >> +	if (irq_set_affinity(cluster->irq, cpumask_of(cpu)))
+> >> +		dev_err(&l2cache_pmu->pdev->dev,
+> >> +			"Failed to set interrupt affinity\n");
+> >>  	enable_irq(cluster->irq);
+> >>  
+> >>  	return 0;
+> >> @@ -831,7 +833,9 @@ static int l2cache_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
+> >>  	perf_pmu_migrate_context(&l2cache_pmu->pmu, cpu, target);
+> >>  	cluster->on_cpu = target;
+> >>  	cpumask_set_cpu(target, &l2cache_pmu->cpumask);
+> >> -	WARN_ON(irq_set_affinity(cluster->irq, cpumask_of(target)));
+> >> +	if (irq_set_affinity(cluster->irq, cpumask_of(target)))
+> >> +		dev_err(&l2cache_pmu->pdev->dev,
+> >> +			"Failed to set interrupt affinity\n");
+> >>  
+> >>  	return 0;
+> >>  }
+> >> diff --git a/drivers/perf/xgene_pmu.c b/drivers/perf/xgene_pmu.c
+> >> index 0c32dffc7ede..f31e678fdb69 100644
+> >> --- a/drivers/perf/xgene_pmu.c
+> >> +++ b/drivers/perf/xgene_pmu.c
+> >> @@ -1790,7 +1790,8 @@ static int xgene_pmu_online_cpu(unsigned int cpu, struct hlist_node *node)
+> >>  		cpumask_set_cpu(cpu, &xgene_pmu->cpu);
+> >>  
+> >>  	/* Overflow interrupt also should use the same CPU */
+> >> -	WARN_ON(irq_set_affinity(xgene_pmu->irq, &xgene_pmu->cpu));
+> >> +	if (irq_set_affinity(xgene_pmu->irq, &xgene_pmu->cpu))
+> >> +		dev_err(xgene_pmu->dev, "Failed to set interrupt affinity\n");
+> >>  
+> >>  	return 0;
+> >>  }
+> >> @@ -1823,7 +1824,8 @@ static int xgene_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
+> >>  
+> >>  	cpumask_set_cpu(target, &xgene_pmu->cpu);
+> >>  	/* Overflow interrupt also should use the same CPU */
+> >> -	WARN_ON(irq_set_affinity(xgene_pmu->irq, &xgene_pmu->cpu));
+> >> +	if (irq_set_affinity(xgene_pmu->irq, &xgene_pmu->cpu))
+> >> +		dev_err(xgene_pmu->dev, "Failed to set interrupt affinity\n");
+> >>  
+> >>  	return 0;
+> >>  }
+> >> -- 
+> >> 2.24.0
+> >>
+> > .
+> > 
