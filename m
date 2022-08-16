@@ -2,81 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EFB0F595DBF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Aug 2022 15:51:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1FD8595E94
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Aug 2022 16:51:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234609AbiHPNvB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Aug 2022 09:51:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52242 "EHLO
+        id S235971AbiHPOvE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Aug 2022 10:51:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235785AbiHPNuz (ORCPT
+        with ESMTP id S229607AbiHPOvC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Aug 2022 09:50:55 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80FC1A1D50
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Aug 2022 06:50:53 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id j26so3031715wms.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Aug 2022 06:50:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=9LJBpIo0+SZSSb+h19vRrs4FS+ALmCyNcdSZjAMWnnU=;
-        b=uG81MiHOkTX3xbhyR0HXE1/6snjgxsPTqzo2PJsn3LIUJ70O5hgmkiAjnwl7ah/vBw
-         cNNsouDNVBA1AOO1jgln0yTZ/1h7NVTgOSJ6c01qkZfJf/W+mjLKt1VVs4WhRsy4LGPp
-         muGfkOClFeyQvLTSz/SEqjvcIiLMBR7pRa8uBLqVd3BNGyvVFWOixrSm6B67Rvdrfunr
-         CfKQS9JNSveXyWzYqNU3EVpEEdULlGTIhkKPfo379bbtxnEXYT+GBUNWAZBe62JwAJTQ
-         hBU4yxF8HGL0W/zHnl3GQbYju+3e4olQ2ixzr40ZGabYiuXtdJIKRX+W5EiXh2zXPVV2
-         njdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=9LJBpIo0+SZSSb+h19vRrs4FS+ALmCyNcdSZjAMWnnU=;
-        b=TeikQTLcijUYdXOB/9USUrrVdj/6jvMJ1DfDRhOCVdEg4IQF6w6EqqHfAI7ida2s1Q
-         jpQllSqDEQ8Q4XAgqCTzBwXwUlzBleg2Qg57MHGgUABa/76wtLW+kEDSH3EpeyRHfb8F
-         hnBNl9X6h3leQtf3b75pOoXbXy89h62fP49KGoLSWOZzKLqKi0OOTtF7QwMTcUY+35Vp
-         j72greMwffGhXJULSWB3BvDEpkLMSTAEubSDgYq+zcu218U3fPO+sTLYs+pir7ZQvFab
-         WBV1LH+7YoxUM3UR3arx12Z7iYT6WamxWwAT1wFrhjB51xiWgU8E62tIyn4348wlT27f
-         ZkJg==
-X-Gm-Message-State: ACgBeo2sTVzdy0g5WWd2ZQMP6Pmq/eKIroWkPb8mizuAX8UHLqoZt/um
-        Lq5nlrQ0V70jymlVc+EkbMEpBw==
-X-Google-Smtp-Source: AA6agR5tssHuRnKgToto8PwA2NfWmIXwAZFjcgWsLI8g0vnP6ItXMOwY2BKuji4CeuOq5DfrTobmDA==
-X-Received: by 2002:a05:600c:430c:b0:3a6:26e:88e8 with SMTP id p12-20020a05600c430c00b003a6026e88e8mr3360740wme.48.1660657852032;
-        Tue, 16 Aug 2022 06:50:52 -0700 (PDT)
-Received: from [192.168.0.12] (cpc76482-cwma10-2-0-cust629.7-3.cable.virginm.net. [86.14.22.118])
-        by smtp.gmail.com with ESMTPSA id c5-20020adffb05000000b0021e4f595590sm10391715wrr.28.2022.08.16.06.50.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Aug 2022 06:50:51 -0700 (PDT)
-Message-ID: <b34b2fa6-7dbf-e4d3-9833-57efd42f9137@linaro.org>
-Date:   Tue, 16 Aug 2022 14:50:50 +0100
+        Tue, 16 Aug 2022 10:51:02 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7CCE4D4E1;
+        Tue, 16 Aug 2022 07:51:00 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27GB0Hus032057;
+        Tue, 16 Aug 2022 14:50:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=FVmxu4Kpgh/PEz4lvaHtDQ+ONJaDkADmoBabIh6f9Xk=;
+ b=BdoAvu97dstuMW5cD0MVOuainuxwZRkcrjwxk2G8xHhjYD8eTqRmwlWB5vhe+CzZppVr
+ cxY6+dPSGhm/iq9GzOwBiIaAuIfiT/vFxk3CPzaVVIIWkgJOtc8wBcosVpJUzTmg1ecn
+ 3KJdK9PjF+U3xhks7mVDTdeIbeG9giMd6m3s+CyjJ1YG1eFl2theSKBwFVHIkDfveX58
+ hxAMTRP/YrOPbyouwI2LuJsCBa9e09A0MdYAbke2kJfRHpSf0udtog6GsTDpjXMAGPyM
+ Ytt1maBYO5IPWadsiiLYRGPkhki2iqijVTeia+DU3y+UgtXHHEu7jJ1PD0dhMxHWCPPM 6A== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j05ev1mb7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 16 Aug 2022 14:50:52 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.47.97.222])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27GEoqL9019177
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 16 Aug 2022 14:50:52 GMT
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 16 Aug 2022 07:50:51 -0700
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 16 Aug
+ 2022 07:50:50 -0700
+Message-ID: <3981919c-1e48-8249-c09d-1c8ded3f3fc7@quicinc.com>
+Date:   Tue, 16 Aug 2022 08:50:49 -0600
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sdm845: Add the RPMh stats node
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [RFC PATCH 01/14] drm/qaic: Add documentation for AIC100
+ accelerator driver
 Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Maulik Shah <quic_mkshah@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <20220812101240.1869605-1-abel.vesa@linaro.org>
- <T2Uz7zs4Ht58lYc5zWg1VBY0ju6bVaSKa9y3RhBQWDDHmPXBHbAxI2J34jSeY0BFQy2y4JtFn3nQS0Lz4xI5jw==@protonmail.internalid>
- <20220812101240.1869605-3-abel.vesa@linaro.org>
- <e6821eef-4fcb-97b1-24be-e2bb62b99039@linaro.org>
- <Yvtx2aK1Uu51hTPM@linaro.org>
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <Yvtx2aK1Uu51hTPM@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <airlied@linux.ie>, <daniel@ffwll.ch>,
+        <maarten.lankhorst@linux.intel.com>, <mripard@kernel.org>,
+        <tzimmermann@suse.de>
+CC:     <quic_carlv@quicinc.com>, <quic_ajitpals@quicinc.com>,
+        <quic_pkanojiy@quicinc.com>, <dri-devel@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1660588956-24027-1-git-send-email-quic_jhugo@quicinc.com>
+ <1660588956-24027-2-git-send-email-quic_jhugo@quicinc.com>
+ <a9c71f3b-0c7b-ee8f-d350-0ab453018558@linaro.org>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <a9c71f3b-0c7b-ee8f-d350-0ab453018558@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: E3qxsNLRgCkD31k514xqDxc7I7dpqr1p
+X-Proofpoint-GUID: E3qxsNLRgCkD31k514xqDxc7I7dpqr1p
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-16_08,2022-08-16_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 spamscore=0
+ phishscore=0 malwarescore=0 suspectscore=0 bulkscore=0 mlxlogscore=563
+ adultscore=0 impostorscore=0 lowpriorityscore=0 mlxscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2208160056
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,167 +90,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 16/08/2022 11:30, Abel Vesa wrote:
-> On 22-08-15 21:34:07, Caleb Connolly wrote:
->>
->>
->> On 12/08/2022 11:12, Abel Vesa wrote:
->>> SDM845 is a special case compared to the other platforms that use RPMh
->>> stats, since it only has 2 stats (aosd and cxsd), while the others have
->>> a 3rd one (ddr).
->>>
->>> So lets add the node but with a SDM845 dedicated compatible to make
->>> the driver aware of the different stats config.
->> Hi,
->>
->> I gave this a go on the OnePlus 6, I noticed the driver is also meant to
->> read the stats for remote procs via smem, however this seems to fail for me
->> - it can't find any of the SMEM items even if I probe the driver manually
->> after ensuring remoteprocs have booted. Is this an unsupported feature on
->> SDM845?
+On 8/16/2022 4:55 AM, Krzysztof Kozlowski wrote:
+> On 15/08/2022 21:42, Jeffrey Hugo wrote:
+>> Add documentation covering both the QAIC driver, and the device that it
+>> drives.
 > 
-> Thanks for giving it a test.
+> Thank you for your patch. There is something to discuss/improve.
 > 
-> Actually, you need to probe the qcom_stats after the remoteprocs have
-> booted.
-
-Hi, thanks for getting back to me. I did try this as mentioned above but I think I must have been 
-doing something wrong as I get different behaviour now:
-
-
-enchilada:/ # cat /sys/class/remoteproc/remoteproc*/state
-
-running
-
-running
-
-running
-
-running
-
-enchilada:/ # ls /d/qcom_stats/
-aosd  cxsd
-enchilada:/ # rmmod qcom_stats
-enchilada:/ # insmod /data/qcom_stats.ko
-enchilada:/ # ls /d/qcom_stats/
-adsp  aosd  cdsp  cxsd  modem  slpi
-
-
-
-Weirdly, despite it succeeding it prints the following in dmesg with logging added to 
-qcom_create_subsystem_stat_files() [1]:
-
-[  156.540307] Couldn't get smem object 'wpss' (item: 605, pid: 13): -2
-[  156.546899] Couldn't get smem object 'gpu' (item: 609, pid: 0): -2
-[  156.553260] Couldn't get smem object 'display' (item: 610, pid: 0): -2
-[  156.559957] Couldn't get smem object 'adsp_island' (item: 613, pid: 2): -2
-[  156.567007] Couldn't get smem object 'slpi_island' (item: 613, pid: 3): -2
 > 
-> Doing so, you'll end up having the following:
-> adsp  aosd  cdsp  cxsd
-
-I seem to get a few more, I have some out of tree patches enabling the SLPI, and iirc the db845c 
-doesn't have a full modem firmware. If these look good to you I'd appreciate it if you add my Tested-by.
-
-enchilada:/ # for x in /d/qcom_stats/*; do echo $x; cat $x; done
-/d/qcom_stats/adsp
-Count: 48
-Last Entered At: 1199663157
-Last Exited At: 1524359015
-Accumulated Duration: 793060082
-/d/qcom_stats/aosd
-Count: 0
-Last Entered At: 0
-Last Exited At: 0
-Accumulated Duration: 0
-/d/qcom_stats/cdsp
-Count: 35
-Last Entered At: 1194818037
-Last Exited At: 1194769648
-Accumulated Duration: 3223580811
-/d/qcom_stats/cxsd
-Count: 0
-Last Entered At: 0
-Last Exited At: 0
-Accumulated Duration: 0
-/d/qcom_stats/modem
-Count: 49
-Last Entered At: 3687081003
-Last Exited At: 3686727026
-Accumulated Duration: 2915592136
-/d/qcom_stats/slpi
-Count: 53
-Last Entered At: 3120905905
-Last Exited At: 3120894535
-Accumulated Duration: 3218969498
-
-Am I right in thinking the aosd and cxsd being all 0 is probably a similar issue to the one reported 
-by Stephen in [2]?
-
-
-[1]:
-
-diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
-index 121ea409fafc..56cfb20d3683 100644
---- a/drivers/soc/qcom/qcom_stats.c
-+++ b/drivers/soc/qcom/qcom_stats.c
-@@ -178,8 +178,12 @@ static void qcom_create_subsystem_stat_files(struct dentry *root,
-
-         for (i = 0; i < ARRAY_SIZE(subsystems); i++) {
-                 stat = qcom_smem_get(subsystems[i].pid, subsystems[i].smem_item, NULL);
--               if (IS_ERR(stat))
-+               if (IS_ERR(stat)) {
-+                       pr_info("Couldn't get smem object '%s' (item: %d, pid: %d): %ld\n",
-+                               subsystems[i].name, subsystems[i].smem_item, subsystems[i].pid,
-+                               PTR_ERR(stat));
-                         continue;
-+               }
-
-                 debugfs_create_file(subsystems[i].name, 0400, root, (void *)&subsystems[i],
-                                     &qcom_subsystem_sleep_stats_fops);
-
-
-
-[2]: https://lore.kernel.org/linux-arm-msm/20220628201340.3981860-1-swboyd@chromium.org/
-> 
->>>
->>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-
-Tested-by: Caleb Connolly <caleb.connolly@linaro.org>
->>> ---
->>>
->>> Changed qcom,rpmh-stats-sdm845 to qcom,sdm845-rpmh-stats, as suggested
->>> by Krzysztof.
->>>
->>>    arch/arm64/boot/dts/qcom/sdm845.dtsi | 5 +++++
->>>    1 file changed, 5 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->>> index 5bea96a9ce06..67fe08b837be 100644
->>> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->>> @@ -4851,6 +4851,11 @@ ebi_cdev: ebi {
->>>    			};
->>>    		};
->>>
->>> +		sram@c3f0000 {
->>> +			compatible = "qcom,sdm845-rpmh-stats";
->>> +			reg = <0 0x0c3f0000 0 0x400>;
->>> +		};
->>> +
->>>    		spmi_bus: spmi@c440000 {
->>>    			compatible = "qcom,spmi-pmic-arb";
->>>    			reg = <0 0x0c440000 0 0x1100>,
->>> --
->>> 2.34.1
->>>
 >>
->> -- 
->> Kind Regards,
->> Caleb (they/he)
+>> Change-Id: Iee519cc0a276249c4e8684507d27ae2c33e29aeb
+> 
+> You need to drop all such non-standard tags. 
 
--- 
-Kind Regards,
-Caleb (they/he)
+Noted.
+
