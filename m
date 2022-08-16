@@ -2,256 +2,280 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1C24595C41
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Aug 2022 14:49:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E2A2595C95
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Aug 2022 15:01:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232801AbiHPMtx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Aug 2022 08:49:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55500 "EHLO
+        id S231953AbiHPNAF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Aug 2022 09:00:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233870AbiHPMti (ORCPT
+        with ESMTP id S229842AbiHPM7b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Aug 2022 08:49:38 -0400
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02CD075CCC;
-        Tue, 16 Aug 2022 05:49:07 -0700 (PDT)
-Received: by mail-qk1-x731.google.com with SMTP id i24so7958936qkg.13;
-        Tue, 16 Aug 2022 05:49:07 -0700 (PDT)
+        Tue, 16 Aug 2022 08:59:31 -0400
+Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26241B2D93
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Aug 2022 05:58:53 -0700 (PDT)
+Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-32194238c77so148400337b3.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Aug 2022 05:58:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc;
-        bh=zTE3vSGffjLJL9SJl1g+w5PaNK8MI9gWtgUj+ChkYjM=;
-        b=Lrt3mzJVMzYaaaU3g9Xp2bqgK93uiGwOmDvf+T3AnSJEAmdDLFqMOdCO9aOJXiOXpE
-         3xpfGVUmU5Xtw1IjFtmlOcikerBjDEsdnaRZPAy/UrfWLkLs3R9QMoiKLhQfnx0Xz3JV
-         vVqtwHhsPjApuIIqFVO6IumY32S3eBbRpMzcohvPi2dyXsXMIlxyTucQrZvswA6ZNVjS
-         6H11tmwUUlYLiiKyFLD2c/4SQo5gSREA1LU0mTcWv5/tvWMsOdBck5CA+nK2dllDzKXx
-         A3e5edOK+9cC33+axh1zRO1B/7GXzpHANiPI5nXyh5CI1OWHjyOtf/cQ6Pmjr65tRM0b
-         htzw==
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=+APQErezRUUuYStoYBWySEt+3xQfH5a4Q9eEyloCdO4=;
+        b=x9KuSNkerI+YBEaGzHZaxyQOFaaIhzC2hmxvIzKzaouiPT+YK/IzNMAYIZm4fk8ZIz
+         KJTaqm48f+h/6j6WO0/ZX5Yueu4KND2Q4toY6g9zv/VawjxSYddeZY092w9iGpCnd2oS
+         5mmVo2B8eyaPhysGyIcStOE9xhUybTw7xGR8I5wt/2KYijQrq1+WUeAKy2aCNFbpODmn
+         xWaJpIxSt/5dpXQYkqzb+SpHFwLil9isYYoj3oR16P1aLjE42kg5z5UPEmIPDOjPGKnz
+         6U4T2coYJlFYhTfD7aEIEJ/pNyhyRG5kIJhawk5NDEndu8YV0YDxq0A55DxGmqS4gx7M
+         tXoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
-        bh=zTE3vSGffjLJL9SJl1g+w5PaNK8MI9gWtgUj+ChkYjM=;
-        b=vacpoL9SxkZXg/DTXqgJZd2rchCV72vNrCv02BwWJl2hLOb05oGS76vhyT84Lao+FV
-         ttZ/DbMXM0R7dFv/Eu1+N1Ttx9/VP6/KApTU4uli73j2hNJrMgRX3bqJg3U6yon9SOCb
-         kaBMiNt82vn6jgHZPU+8zW61jTFgvsiIZ4KG+AyLc68aGlqIyWooUzstvV08cfluMYLf
-         y7hdTDi+MacrGXxcfty8Jnr3VK+j4DTFTk/5/E2I0XI2J36+Qb6VRHQa6F0rkugiB14H
-         JRyOqlNciyJSJYapyGNw/Gr2XBus3PQ/ek+VuSIkBdih65UiacY3xXca+adXY2xDXPzZ
-         QEHw==
-X-Gm-Message-State: ACgBeo1QaWUsUQe6WSDQCq/aI4WdO9m6Vb2C4WOCKIwxc1khvWwzVdPy
-        7hFVnIftSClNFBxcYNPLDQJirLHU99FZXyK3WlM=
-X-Google-Smtp-Source: AA6agR6BQXKA5uhaxl3xSfY3OeXKEI42340fyGfkVgFGIMtq4QLVrrmDZiAKeRaPxKvnSMokb9AktnFfq/9hd3v2AqA=
-X-Received: by 2002:ae9:e30f:0:b0:6bb:868:c7d8 with SMTP id
- v15-20020ae9e30f000000b006bb0868c7d8mr8914857qkf.25.1660654146978; Tue, 16
- Aug 2022 05:49:06 -0700 (PDT)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=+APQErezRUUuYStoYBWySEt+3xQfH5a4Q9eEyloCdO4=;
+        b=Q/bME3Uf7O1DCfWDoecVeMp6Dxgz1yuNWdKU7D1fMbChO336w/MN1QTy01HtjHFWTz
+         9ZZshYN9yhRK4ksT4a21vJQGO0xaFrtZlHFF4He2Vk05V188PrK2VpNd/8lGdIArb6EU
+         S8vQSRywMSNfT0vXJx0aJrVIHd0JWtXiJ+0Nmq+MY58cVha1T2HtxKpsBb4kUXeiN4Y2
+         uaSV7n9wy8YSVf5pVenyv3k4hUasBBnSatks3id3c8dl0k2FnHJYekV5XBnTbGQlUZbo
+         7hOlMqP9gfV8qNP3Qhj6L4knryANXauKzwoYUBfDlD22hcVkvnXlfy6I0SdTyr/2+no1
+         T5oQ==
+X-Gm-Message-State: ACgBeo1q13oXwJwtH09GTY92VUXxbNaOJKAoN53IuMDVQGx93KOzwh1V
+        GtiGcKM4nvOhCBCRrRzQnlUNup+F3+dEXOflxAlhRQ==
+X-Google-Smtp-Source: AA6agR4bFaX1jNBrHlmDiDERjLQUfuKqNK4/8sdZ6mHGzjqdQD862rW8hycDmUmJCJ/71dKdH/tropAgISbUudHzrlU=
+X-Received: by 2002:a81:502:0:b0:32f:dcc4:146e with SMTP id
+ 2-20020a810502000000b0032fdcc4146emr10207096ywf.316.1660654732311; Tue, 16
+ Aug 2022 05:58:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220714101451.198211-1-robimarko@gmail.com> <20220714101451.198211-2-robimarko@gmail.com>
- <0861a79e-f2b0-143e-b09e-9b088a4568a7@linaro.org>
-In-Reply-To: <0861a79e-f2b0-143e-b09e-9b088a4568a7@linaro.org>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Tue, 16 Aug 2022 14:48:56 +0200
-Message-ID: <CAOX2RU4-sanm0ABdPZmvVjqn=K7tdAu9vGijg4HreY6LCevJfA@mail.gmail.com>
-Subject: Re: [PATCH v6 2/5] drivers: thermal: tsens: Add support for combined interrupt
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, amitk@kernel.org,
-        thara.gopinath@gmail.com, rafael@kernel.org, rui.zhang@intel.com,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220726173824.1166873-1-dianders@chromium.org> <20220726103631.v2.4.Ie85f68215ada39f502a96dcb8a1f3ad977e3f68a@changeid>
+In-Reply-To: <20220726103631.v2.4.Ie85f68215ada39f502a96dcb8a1f3ad977e3f68a@changeid>
+From:   Yongqin Liu <yongqin.liu@linaro.org>
+Date:   Tue, 16 Aug 2022 20:58:41 +0800
+Message-ID: <CAMSo37XsawRxTnJriLUAwJAj0+ZzpACtMiR_3V7H1H9WXg3T_Q@mail.gmail.com>
+Subject: Re: [PATCH v2 4/7] regulator: core: Allow specifying an initial load
+ w/ the bulk API
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-kernel@vger.kernel.org,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        John Stultz <jstultz@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 20 Jul 2022 at 12:28, Daniel Lezcano <daniel.lezcano@linaro.org> wr=
-ote:
->
->
-> Hi,
->
-> On 14/07/2022 12:14, Robert Marko wrote:
-> > Despite using tsens v2.3 IP, IPQ8074 and IPQ6018 only have one IRQ for
-> > signaling both up/low and critical trips.
-> >
-> > Signed-off-by: Robert Marko <robimarko@gmail.com>
->
-> Bjorn, are these changes ok for you ?
+HI, Douglas
 
-It would be great for these to get merged, I have been using them
-for couple of months now.
+With this change, I get one kernel panic with my hikey960
+android-mainline based Android build,
+if it's reverted, then the build could boot to the home screen successfully.
+From the log information I shared here, not sure if you have any idea
+what I could do to have the hikey960
+build work with this change,
 
-Regards,
-Robert
+The kernel panic is something like this, for details, please check the
+log here: http://ix.io/47Lq
+
+[   10.738042][  T193] adv7511 1-0039: error 0000000000000000: Failed
+to get supply 'v1p2'
+[   10.748457][  T194] apexd: Found pre-installed APEX
+/system/apex/com.android.os.statsd.apex
+[   10.752908][   T67] Unable to handle kernel read from unreadable
+memory at virtual address 000000000000004c
+[   10.753116][    T8] Unable to handle kernel read from unreadable
+memory at virtual address 0000000000000078
+[   10.753130][    T8] Mem abort info:
+[   10.753135][    T8]   ESR = 0x0000000096000005
+[   10.753142][    T8]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   10.753152][    T8]   SET = 0, FnV = 0
+[   10.753159][    T8]   EA = 0, S1PTW = 0
+[   10.753166][    T8]   FSC = 0x05: level 1 translation fault
+[   10.753174][    T8] Data abort info:
+[   10.753179][    T8]   ISV = 0, ISS = 0x00000005
+[   10.753184][    T8]   CM = 0, WnR = 0
+[   10.753192][    T8] user pgtable: 4k pages, 39-bit VAs, pgdp=0000000003098000
+[   10.753204][    T8] [0000000000000078] pgd=0000000000000000,
+p4d=0000000000000000, pud=0000000000000000
+[   10.753232][    T8] Internal error: Oops: 96000005 [#1] PREEMPT SMP
+[   10.753245][    T8] Modules linked in: adv7511(E+) tcpci_rt1711h(E)
+hci_uart(E) btqca(E) btbcm(E) cpufreq_dt(E) hi3660_i2s(E)
+hisi_hikey_usb(E) hi6421_pmic_core(E) syscon_reboot_mode(E)
+reboot_mode(E) hi3660_mailbox(E) dw_mmc_k3(E) hisi_thermal(E)
+dw_mmc_pltfm(E) dw_mmc(E) kirin_drm(E) snd_soc_simple_card(E)
+snd_soc_simple_card_utils(E) spi_pl022(E) kirin_dsi(E)
+phy_hi3660_usb3(E) i2c_designware_platform(E) drm_cma_helper(E)
+i2c_designware_core(E) mali_kbase(OE) k3dma(E) cma_heap(E)
+system_heap(E)
+[   10.753436][    T8] CPU: 2 PID: 8 Comm: kworker/u16:0 Tainted: G
+       OE      5.19.0-mainline-03487-g86d047950300-dirty #1
+[   10.753454][    T8] Hardware name: HiKey960 (DT)
+[   10.753463][    T8] Workqueue: events_unbound async_run_entry_fn
+[   10.753497][    T8] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT
+-SSBS BTYPE=--)
+[   10.753516][    T8] pc : regulator_bulk_enable_async+0x3c/0x98
+[   10.753540][    T8] lr : async_run_entry_fn+0x30/0xf8
+[   10.753559][    T8] sp : ffffffc009ed3d20
+[   10.753567][    T8] x29: ffffffc009ed3d40 x28: 0000000000000402
+x27: ffffff801ad99828
+[   10.753592][    T8] x26: ffffff803217b010 x25: 0000000000000002
+x24: ffffff8003385da8
+[   10.753617][    T8] x23: ffffff8003385da0 x22: ffffff801ad94805
+x21: ffffff8003385da0
+[   10.753642][    T8] x20: 0000000000000000 x19: ffffff8003143d20
+x18: ffffffc008075028
+[   10.753667][    T8] x17: 000000040044ffff x16: 0000000000000001
+x15: 0000000000000010
+[   10.753691][    T8] x14: 0000000000000000 x13: 0000000000000f58
+x12: 0000000082355555
+[   10.753715][    T8] x11: 00006acfbfa2f400 x10: 0000000000000016 x9
+: 00ffffffffffffff
+[   10.753740][    T8] x8 : da9ecda1b63b0500 x7 : 0000000000008080 x6
+: 0000000000000000
+[   10.753764][    T8] x5 : 0000000000000001 x4 : 0000646e756f626e x3
+: ffffff801ad99828
+[   10.753788][    T8] x2 : ffffff8003385da8 x1 : ffffffc009ed3d20 x0
+: ffffff8003143d20
+[   10.753812][    T8] Call trace:
+[   10.753818][    T8]  regulator_bulk_enable_async+0x3c/0x98
+[   10.753839][    T8]  async_run_entry_fn+0x30/0xf8
+[   10.753859][    T8]  process_one_work+0x1d0/0x404
+[   10.753879][    T8]  worker_thread+0x25c/0x43c
+[   10.753897][    T8]  kthread+0xf0/0x2c0
+[   10.753912][    T8]  ret_from_fork+0x10/0x20
+[   10.753940][    T8] Code: f81f83a8 f9400814 a900ffff f90003ff (f9403e95)
+[   10.753950][    T8] ---[ end trace 0000000000000000 ]---
+[   10.760621][  T194] apexd: Found pre-installed APEX
+/system/apex/com.android.permission.capex
+[   10.767672][   T67] Mem abort info:
+[   10.779658][  T194] apexd: Found pre-installed APEX
+/system/apex/com.android.art.capex
+[   10.783690][   T67]   ESR = 0x0000000096000005
+[   10.792424][  T194] apexd: Found pre-installed APEX
+/system/apex/com.android.scheduling.capex
+[   10.794713][    T8] Kernel panic - not syncing: Oops: Fatal exception
+[   10.794723][    T8] SMP: stopping secondary CPUs
+[   10.798141][    T8] Kernel Offset: 0x70000 from 0xffffffc008000000
+[   10.798150][    T8] PHYS_OFFSET: 0x0
+[   10.798156][    T8] CPU features: 0x0000,00649020,00001086
+[   10.798167][    T8] Memory Limit: none
+
+Thanks,
+Yongqin Liu
+
+On Wed, 27 Jul 2022 at 01:39, Douglas Anderson <dianders@chromium.org> wrote:
 >
-> > ---
-> > Changes in v6:
-> > * Check critical IRQ handler return, simplify up/low return
-> > ---
-> >   drivers/thermal/qcom/tsens-8960.c |  1 +
-> >   drivers/thermal/qcom/tsens-v0_1.c |  1 +
-> >   drivers/thermal/qcom/tsens-v1.c   |  1 +
-> >   drivers/thermal/qcom/tsens-v2.c   |  1 +
-> >   drivers/thermal/qcom/tsens.c      | 38 ++++++++++++++++++++++++++----=
--
-> >   drivers/thermal/qcom/tsens.h      |  2 ++
-> >   6 files changed, 38 insertions(+), 6 deletions(-)
-> >
-> > diff --git a/drivers/thermal/qcom/tsens-8960.c b/drivers/thermal/qcom/t=
-sens-8960.c
-> > index 67c1748cdf73..ee584e5b07e5 100644
-> > --- a/drivers/thermal/qcom/tsens-8960.c
-> > +++ b/drivers/thermal/qcom/tsens-8960.c
-> > @@ -269,6 +269,7 @@ static const struct tsens_ops ops_8960 =3D {
-> >   static struct tsens_features tsens_8960_feat =3D {
-> >       .ver_major      =3D VER_0,
-> >       .crit_int       =3D 0,
-> > +     .combo_int      =3D 0,
-> >       .adc            =3D 1,
-> >       .srot_split     =3D 0,
-> >       .max_sensors    =3D 11,
-> > diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/t=
-sens-v0_1.c
-> > index f136cb350238..6effb822bf3c 100644
-> > --- a/drivers/thermal/qcom/tsens-v0_1.c
-> > +++ b/drivers/thermal/qcom/tsens-v0_1.c
-> > @@ -539,6 +539,7 @@ static int calibrate_9607(struct tsens_priv *priv)
-> >   static struct tsens_features tsens_v0_1_feat =3D {
-> >       .ver_major      =3D VER_0_1,
-> >       .crit_int       =3D 0,
-> > +     .combo_int      =3D 0,
-> >       .adc            =3D 1,
-> >       .srot_split     =3D 1,
-> >       .max_sensors    =3D 11,
-> > diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tse=
-ns-v1.c
-> > index 573e261ccca7..a4f561a6e582 100644
-> > --- a/drivers/thermal/qcom/tsens-v1.c
-> > +++ b/drivers/thermal/qcom/tsens-v1.c
-> > @@ -302,6 +302,7 @@ static int calibrate_8976(struct tsens_priv *priv)
-> >   static struct tsens_features tsens_v1_feat =3D {
-> >       .ver_major      =3D VER_1_X,
-> >       .crit_int       =3D 0,
-> > +     .combo_int      =3D 0,
-> >       .adc            =3D 1,
-> >       .srot_split     =3D 1,
-> >       .max_sensors    =3D 11,
-> > diff --git a/drivers/thermal/qcom/tsens-v2.c b/drivers/thermal/qcom/tse=
-ns-v2.c
-> > index b293ed32174b..129cdb247381 100644
-> > --- a/drivers/thermal/qcom/tsens-v2.c
-> > +++ b/drivers/thermal/qcom/tsens-v2.c
-> > @@ -31,6 +31,7 @@
-> >   static struct tsens_features tsens_v2_feat =3D {
-> >       .ver_major      =3D VER_2_X,
-> >       .crit_int       =3D 1,
-> > +     .combo_int      =3D 0,
-> >       .adc            =3D 0,
-> >       .srot_split     =3D 1,
-> >       .max_sensors    =3D 16,
-> > diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.=
-c
-> > index 7963ee33bf75..5c7f9ec6ab1c 100644
-> > --- a/drivers/thermal/qcom/tsens.c
-> > +++ b/drivers/thermal/qcom/tsens.c
-> > @@ -532,6 +532,27 @@ static irqreturn_t tsens_irq_thread(int irq, void =
-*data)
-> >       return IRQ_HANDLED;
-> >   }
-> >
-> > +/**
-> > + * tsens_combined_irq_thread - Threaded interrupt handler for combined=
- interrupts
-> > + * @irq: irq number
-> > + * @data: tsens controller private data
-> > + *
-> > + * Handle the combined interrupt as if it were 2 separate interrupts, =
-so call the
-> > + * critical handler first and then the up/low one.
-> > + *
-> > + * Return: IRQ_HANDLED
-> > + */
-> > +static irqreturn_t tsens_combined_irq_thread(int irq, void *data)
-> > +{
-> > +     irqreturn_t ret;
-> > +
-> > +     ret =3D tsens_critical_irq_thread(irq, data);
-> > +     if (ret !=3D IRQ_HANDLED)
-> > +             return ret;
-> > +
-> > +     return tsens_irq_thread(irq, data);
-> > +}
-> > +
-> >   static int tsens_set_trips(void *_sensor, int low, int high)
-> >   {
-> >       struct tsens_sensor *s =3D _sensor;
-> > @@ -1083,13 +1104,18 @@ static int tsens_register(struct tsens_priv *pr=
-iv)
-> >                                  tsens_mC_to_hw(priv->sensor, 0));
-> >       }
-> >
-> > -     ret =3D tsens_register_irq(priv, "uplow", tsens_irq_thread);
-> > -     if (ret < 0)
-> > -             return ret;
-> > +     if (priv->feat->combo_int) {
-> > +             ret =3D tsens_register_irq(priv, "combined",
-> > +                                      tsens_combined_irq_thread);
-> > +     } else {
-> > +             ret =3D tsens_register_irq(priv, "uplow", tsens_irq_threa=
-d);
-> > +             if (ret < 0)
-> > +                     return ret;
-> >
-> > -     if (priv->feat->crit_int)
-> > -             ret =3D tsens_register_irq(priv, "critical",
-> > -                                      tsens_critical_irq_thread);
-> > +             if (priv->feat->crit_int)
-> > +                     ret =3D tsens_register_irq(priv, "critical",
-> > +                                              tsens_critical_irq_threa=
-d);
-> > +     }
-> >
-> >       return ret;
-> >   }
-> > diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.=
-h
-> > index 1471a2c00f15..4614177944d6 100644
-> > --- a/drivers/thermal/qcom/tsens.h
-> > +++ b/drivers/thermal/qcom/tsens.h
-> > @@ -495,6 +495,7 @@ enum regfield_ids {
-> >    * struct tsens_features - Features supported by the IP
-> >    * @ver_major: Major number of IP version
-> >    * @crit_int: does the IP support critical interrupts?
-> > + * @combo_int: does the IP use one IRQ for up, low and critical thresh=
-olds?
-> >    * @adc:      do the sensors only output adc code (instead of tempera=
-ture)?
-> >    * @srot_split: does the IP neatly splits the register space into SRO=
-T and TM,
-> >    *              with SROT only being available to secure boot firmwar=
-e?
-> > @@ -504,6 +505,7 @@ enum regfield_ids {
-> >   struct tsens_features {
-> >       unsigned int ver_major;
-> >       unsigned int crit_int:1;
-> > +     unsigned int combo_int:1;
-> >       unsigned int adc:1;
-> >       unsigned int srot_split:1;
-> >       unsigned int has_watchdog:1;
+> There are a number of drivers that follow a pattern that looks like
+> this:
+> 1. Use the regulator bulk API to get a bunch of regulators.
+> 2. Set the load on each of the regulators to use whenever the
+>    regulators are enabled.
 >
+> Let's make this easier by just allowing the drivers to pass the load
+> in.
 >
+> As part of this change we need to move the error printing in
+> regulator_bulk_get() around; let's switch to the new dev_err_probe()
+> to simplify it.
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+>
+> Changes in v2:
+> - ("Allow specifying an initial load w/ the bulk API") new for v2.
+>
+>  drivers/regulator/core.c           | 20 ++++++++++++--------
+>  include/linux/regulator/consumer.h | 12 ++++++++----
+>  2 files changed, 20 insertions(+), 12 deletions(-)
+>
+> diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+> index 1e54a833f2cf..17c476fc8adb 100644
+> --- a/drivers/regulator/core.c
+> +++ b/drivers/regulator/core.c
+> @@ -4783,22 +4783,26 @@ int regulator_bulk_get(struct device *dev, int num_consumers,
+>                 consumers[i].consumer = regulator_get(dev,
+>                                                       consumers[i].supply);
+>                 if (IS_ERR(consumers[i].consumer)) {
+> -                       ret = PTR_ERR(consumers[i].consumer);
+>                         consumers[i].consumer = NULL;
+> +                       ret = dev_err_probe(dev, PTR_ERR(consumers[i].consumer),
+> +                                           "Failed to get supply '%s'",
+> +                                           consumers[i].supply);
+>                         goto err;
+>                 }
+> +
+> +               if (consumers[i].init_load_uA > 0) {
+> +                       ret = regulator_set_load(consumers[i].consumer,
+> +                                                consumers[i].init_load_uA);
+> +                       if (ret) {
+> +                               i++;
+> +                               goto err;
+> +                       }
+> +               }
+>         }
+>
+>         return 0;
+>
+>  err:
+> -       if (ret != -EPROBE_DEFER)
+> -               dev_err(dev, "Failed to get supply '%s': %pe\n",
+> -                       consumers[i].supply, ERR_PTR(ret));
+> -       else
+> -               dev_dbg(dev, "Failed to get supply '%s', deferring\n",
+> -                       consumers[i].supply);
+> -
+>         while (--i >= 0)
+>                 regulator_put(consumers[i].consumer);
+>
+> diff --git a/include/linux/regulator/consumer.h b/include/linux/regulator/consumer.h
+> index bbf6590a6dec..5779f4466e62 100644
+> --- a/include/linux/regulator/consumer.h
+> +++ b/include/linux/regulator/consumer.h
+> @@ -171,10 +171,13 @@ struct regulator;
+>  /**
+>   * struct regulator_bulk_data - Data used for bulk regulator operations.
+>   *
+> - * @supply:   The name of the supply.  Initialised by the user before
+> - *            using the bulk regulator APIs.
+> - * @consumer: The regulator consumer for the supply.  This will be managed
+> - *            by the bulk API.
+> + * @supply:       The name of the supply.  Initialised by the user before
+> + *                using the bulk regulator APIs.
+> + * @init_load_uA: After getting the regulator, regulator_set_load() will be
+> + *                called with this load.  Initialised by the user before
+> + *                using the bulk regulator APIs.
+> + * @consumer:     The regulator consumer for the supply.  This will be managed
+> + *                by the bulk API.
+>   *
+>   * The regulator APIs provide a series of regulator_bulk_() API calls as
+>   * a convenience to consumers which require multiple supplies.  This
+> @@ -182,6 +185,7 @@ struct regulator;
+>   */
+>  struct regulator_bulk_data {
+>         const char *supply;
+> +       int init_load_uA;
+>         struct regulator *consumer;
+>
+>         /* private: Internal use */
 > --
-> <http://www.linaro.org/> Linaro.org =E2=94=82 Open source software for AR=
-M SoCs
+> 2.37.1.359.gd136c6c3e2-goog
 >
-> Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-> <http://twitter.com/#!/linaroorg> Twitter |
-> <http://www.linaro.org/linaro-blog/> Blog
+
+
+-- 
+Best Regards,
+Yongqin Liu
+---------------------------------------------------------------
+#mailing list
+linaro-android@lists.linaro.org
+http://lists.linaro.org/mailman/listinfo/linaro-android
