@@ -2,70 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AC815961EA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Aug 2022 20:06:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9241759624F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Aug 2022 20:23:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236874AbiHPSGV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Aug 2022 14:06:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36498 "EHLO
+        id S235680AbiHPSXI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Aug 2022 14:23:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236877AbiHPSF5 (ORCPT
+        with ESMTP id S232654AbiHPSXH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Aug 2022 14:05:57 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2F008306E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Aug 2022 11:05:50 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id r16so4328421wrm.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Aug 2022 11:05:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=0EH8YWXVhTja6VpUXkV3+tSqJXohPTyBO2pCckBiRnA=;
-        b=fj2M3QSqqwYqeKK+cbj3jmlhXz/7U0GnLppjNgpN462ATe6J0L01q3/aYaOG05AAqx
-         W8k3FYJ6rrPcEPFxCrKp6JXWOwmAZwNUlubPYjaxmXWd0h4kgaHOu1fKOMUPsOJA6UWV
-         AllVRaDmahJ6AT7mkOAA6TTIwS17IXpl4bcGvnOtYNJ6xQ5LnTrUKOBUpk9imvP8xZv3
-         nQTuduC9l+b1dskQbwfQ3jupMQyLFAsfOTXNP5+htC09qGM8LPjNrPRN055J70gunwGc
-         /JF0EMiLfhCgssS9LIlwV+w1+P+TeJI7JZ82QAtwD5OPtkaIZA33wEt++rrfGdr+rppC
-         lswg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=0EH8YWXVhTja6VpUXkV3+tSqJXohPTyBO2pCckBiRnA=;
-        b=r9da7eBFg83qCfj3Uw0zqZSLLw8gAMrtCbcdwViEGfQJGnFdo2OTzh5lglC6TtEBly
-         aHia0WDFMqvruv8S+WonHF+Bgmj0tZw/wF66bkTbNGczOMNVLBDHITJiFb60OxGp+y+Z
-         nqvQFaqNS8D3CN6ppm2mW5SNvHDg59qH2CFYL6V8sqWj0/0hR+UiGn5RZjwYbuIMC7TH
-         dmd39DaIEObqu5oLu6bXyRjdYUGB79bwdw2+ycYxZRjAwIj46vIDzbJ2WHjob4MI3E1i
-         puzL5rjlHLp4b8v9gNUm/8UGM7/2IhpBNVqdSlbLo52hoXvAbDWG9l6Z1g7J2swRnvYl
-         mX7w==
-X-Gm-Message-State: ACgBeo2oNTd5IxgHYzLWaf1/qQDPTS0SR46uVxVF8GMZL6OC8Oaxz+ht
-        j8mPI0n6Hio4ETBsLKEtooQlDA==
-X-Google-Smtp-Source: AA6agR6Dj0iRrCOX6UFAkwT8WTLRmR93saZYaWMvVCyAn/pzi+L3oO/2DbBYoyiYdtLGaG7ALmQSFw==
-X-Received: by 2002:a05:6000:1548:b0:223:141:8a06 with SMTP id 8-20020a056000154800b0022301418a06mr12208908wry.153.1660673149373;
-        Tue, 16 Aug 2022 11:05:49 -0700 (PDT)
-Received: from srini-hackbox.lan (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.gmail.com with ESMTPSA id e14-20020a05600c4e4e00b003a31ca9dfb6sm17510062wmq.32.2022.08.16.11.05.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Aug 2022 11:05:48 -0700 (PDT)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        linus.walleij@linaro.org
-Cc:     konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, srinivas.kandagatla@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] pinctrl: qcom: Add sc8280xp lpass lpi pinctrl driver
-Date:   Tue, 16 Aug 2022 19:05:38 +0100
-Message-Id: <20220816180538.9039-3-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20220816180538.9039-1-srinivas.kandagatla@linaro.org>
-References: <20220816180538.9039-1-srinivas.kandagatla@linaro.org>
+        Tue, 16 Aug 2022 14:23:07 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83D732EF;
+        Tue, 16 Aug 2022 11:23:05 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27GGI109003238;
+        Tue, 16 Aug 2022 18:22:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=9S/LZTffhDxdOfWJTMU6GPQavACA5Tpw4RnHCBoPrHk=;
+ b=QytVJYlQ1hm1qjbuhi4oZjv9CxRMFjyzH9yibWuzzhlg6qFvICljFHcgNw6zQv17iqv2
+ FWXmDuzEgz1KEci0rGg1GPuMUqXVQe/Gql8qNNa2zOwOAsDePTgO1ewQ5tsujDelSr+P
+ LTqdBY0Ye9oSR+9tjPWVLKfM2jxdBS5pAhhp9F8rif91jFZd2T+ndHQeJ2o3ZqfGOwsy
+ tAPzDVurQxiCAR2VlSfJhwxD5idBqog+5QFpcm1kpj+rbi1ntZNRLFLUL3yCJCbwl1Vu
+ ow+hj5/oJhm+dc8GXEQngJ6voCqhaYCXBneNIyv4ayXxpy1cPWLsn18seepAVN/kVPg0 uw== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j08rs9t3b-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 16 Aug 2022 18:22:56 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.47.97.222])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27GIMuEe029053
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 16 Aug 2022 18:22:56 GMT
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 16 Aug 2022 11:22:55 -0700
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 16 Aug
+ 2022 11:22:54 -0700
+Message-ID: <9eba0937-b4cb-4c62-e339-8ff33aebdbde@quicinc.com>
+Date:   Tue, 16 Aug 2022 12:22:54 -0600
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [RFC PATCH 02/14] drm/qaic: Add uapi and core driver file
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <airlied@linux.ie>, <daniel@ffwll.ch>,
+        <maarten.lankhorst@linux.intel.com>, <mripard@kernel.org>,
+        <tzimmermann@suse.de>
+CC:     <quic_carlv@quicinc.com>, <quic_ajitpals@quicinc.com>,
+        <quic_pkanojiy@quicinc.com>, <dri-devel@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1660588956-24027-1-git-send-email-quic_jhugo@quicinc.com>
+ <1660588956-24027-3-git-send-email-quic_jhugo@quicinc.com>
+ <10ad6023-703d-65cf-6b00-2caa658c49e9@linaro.org>
+ <e9786447-edd4-90e0-25a9-b35e96adbfc2@quicinc.com>
+ <3f755d24-969b-1804-7979-880a9fe10cba@linaro.org>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <3f755d24-969b-1804-7979-880a9fe10cba@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: gJ4X4EjZUHW8cV9-y8VU18mtp_avKkJB
+X-Proofpoint-GUID: gJ4X4EjZUHW8cV9-y8VU18mtp_avKkJB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-16_08,2022-08-16_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
+ mlxlogscore=999 mlxscore=0 suspectscore=0 malwarescore=0
+ lowpriorityscore=0 priorityscore=1501 spamscore=0 clxscore=1015
+ bulkscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2207270000 definitions=main-2208160068
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,276 +91,169 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add pinctrl driver to support pin configuration for LPASS
-(Low Power Audio SubSystem) LPI (Low Power Island) pinctrl
-on SC8280XP.
+On 8/16/2022 12:00 PM, Krzysztof Kozlowski wrote:
+> On 16/08/2022 20:47, Jeffrey Hugo wrote:
+>>>> +static int qaic_pci_probe(struct pci_dev *pdev,
+>>>> +			  const struct pci_device_id *id)
+>>>> +{
+>>>> +	int ret;
+>>>> +	int i;
+>>>> +	int mhi_irq;
+>>>> +	struct qaic_device *qdev;
+>>>> +
+>>>> +	qdev = kzalloc(sizeof(*qdev), GFP_KERNEL);
+>>>> +	if (!qdev) {
+>>>
+>>> return -ENOMEM;
+>>
+>> So, no centralized exit per the coding style?  Ok.
+> 
+> Centralized exit except for cases where it is simply return. >
+>>
+>>>
+>>>> +		ret = -ENOMEM;
+>>>> +		goto qdev_fail;
+>>>> +	}
+>>>> +
+>>>> +	if (id->device == PCI_DEV_AIC100) {
+>>>> +		qdev->num_dbc = 16;
+>>>> +		qdev->dbc = kcalloc(qdev->num_dbc, sizeof(*qdev->dbc),
+>>>> +				    GFP_KERNEL);
+>>>
+>>> Why not devm?
+>>
+>> We were having issues with devm and the PCI stuff.  Looking at this
+>> again, I think we can apply that here.
+>>
+>>>
+>>>> +		if (!qdev->dbc) {
+>>>> +			ret = -ENOMEM;
+>>>> +			goto device_id_fail;
+>>>> +		}
+>>>> +	} else {
+>>>> +		pci_dbg(pdev, "%s: No matching device found for device id %d\n",
+>>>> +			__func__, id->device);
+>>>
+>>> How this can happen?
+>>
+>> Badly functioning hardware.  That hardware has been removed from
+>> circulation.  Given that this is an init path and not performance
+>> critical, having this handle the scenario in a sane way instead of
+>> having the driver blow up in a weird way much later on makes me feel better.
+> 
+> How badly functioning hardware can bind and then report some different
+> ID? If it reports different ID, it cannot bind...
 
-This IP is an additional pin control block for Audio Pins on top the
-existing SoC Top level pin-controller.
+It was one of those issues that was painful enough that I still remember 
+it occurring, but long ago enough that I don't remember the specifics.
 
-Hardware setup looks like:
+I don't think I'll be able to recreate the issue to re-debug it, so I'll 
+just remove this.
 
-    TLMM GPIO[189 - 207] --> LPASS LPI GPIO [0 - 18]
+>>>> +static int __init qaic_init(void)
+>>>> +{
+>>>> +	int ret;
+>>>> +
+>>>> +	if (datapath_polling) {
+>>>> +		poll_datapath = true;
+>>>> +		pr_info("qaic: driver initializing in datapath polling mode\n");
+>>>
+>>> No pr() in normal path of init/exit.
+>>
+>> This is not the normal path.  datapath_polling is a module parameter.
+>> This is something the user can enable, and so it would be good to have
+>> the user informed that the option took effect.
+> 
+> No, not really. User always can check via sysfs and there is no point in
+> polluting dmesg on module load. It might be printed (if someone has such
+> modprobe setting) on every system, even without the actual device.
 
-This pin controller has some similarities compared to Top level
-msm SoC Pin controller like 'each pin belongs to a single group'
-and so on. However this one is intended to control only audio
-pins in particular, which can not be configured/touched by the
-Top level SoC pin controller except setting them as gpios.
-Apart from this, slew rate is also available in this block for
-certain pins which are connected to SLIMbus or SoundWire Bus.
+So, I guess this is limited to platform devices?
+I see GIC, IOMMU, and PCI doing the same
+I guess, will remove.
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- drivers/pinctrl/qcom/Kconfig                  |   9 +
- drivers/pinctrl/qcom/Makefile                 |   1 +
- .../pinctrl/qcom/pinctrl-sc8280xp-lpass-lpi.c | 207 ++++++++++++++++++
- 3 files changed, 217 insertions(+)
- create mode 100644 drivers/pinctrl/qcom/pinctrl-sc8280xp-lpass-lpi.c
+> 
+>>
+>>>
+>>>> +	}
+>>>> +
+>>>> +	qaic_logging_register();
+>>>> +
+>>>> +	ret = mhi_driver_register(&qaic_mhi_driver);
+>>>> +	if (ret) {
+>>>> +		pr_debug("qaic: mhi_driver_register failed %d\n", ret);
+>>>> +		goto free_class;
+>>>> +	}
+>>>> +
+>>>> +	ret = pci_register_driver(&qaic_pci_driver);
+>>>> +
+>>>
+>>> No need for such blank lines.
+>>
+>> Agreed.
+>>
+>>>
+>>>> +	if (ret) {
+>>>> +		pr_debug("qaic: pci_register_driver failed %d\n", ret);
+>>>> +		goto free_mhi;
+>>>> +	}
+>>>> +
+>>>> +	qaic_telemetry_register();
+>>>> +	qaic_ras_register();
+>>>> +	qaic_ssr_register();
+>>>> +	goto out;
+>>>
+>>> return 0.
+>>
+>> Ok.
+>>
+>>>
+>>>> +
+>>>> +free_mhi:
+>>>> +	mhi_driver_unregister(&qaic_mhi_driver);
+>>>> +free_class:
+>>>> +out:
+>>>> +	if (ret)
+>>>> +		qaic_logging_unregister();
+>>>> +
+>>>> +	return ret;
+>>>> +}
+>>>> +
+>>>> +static void __exit qaic_exit(void)
+>>>> +{
+>>>> +	pr_debug("qaic: exit\n");
+>>>
+>>> No pr() in normal path of init/exit.
+>>
+>> Sure.
+>>
+>>>
+>>>> +	link_up = true;
+>>>
+>>> This is confusing...
+>>
+>> Will add a comment.  This ties into MHI, and how it can tear down in two
+>> different ways, usually based on the link state.
+> 
+> Shouldn't this be link_up=false?
 
-diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-index 35e59f940ddb..2961b5eb8e10 100644
---- a/drivers/pinctrl/qcom/Kconfig
-+++ b/drivers/pinctrl/qcom/Kconfig
-@@ -399,6 +399,15 @@ config PINCTRL_SM8450_LPASS_LPI
- 	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
- 	  (Low Power Island) found on the Qualcomm Technologies Inc SM8450 platform.
- 
-+config PINCTRL_SC8280XP_LPASS_LPI
-+	tristate "Qualcomm Technologies Inc SC8280XP LPASS LPI pin controller driver"
-+	depends on GPIOLIB
-+	depends on PINCTRL_LPASS_LPI
-+	help
-+	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
-+	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
-+	  (Low Power Island) found on the Qualcomm Technologies Inc SC8280XP platform.
-+
- config PINCTRL_LPASS_LPI
- 	tristate "Qualcomm Technologies Inc LPASS LPI pin controller driver"
- 	select PINMUX
-diff --git a/drivers/pinctrl/qcom/Makefile b/drivers/pinctrl/qcom/Makefile
-index 06e4cddbca68..8269a1db8794 100644
---- a/drivers/pinctrl/qcom/Makefile
-+++ b/drivers/pinctrl/qcom/Makefile
-@@ -46,4 +46,5 @@ obj-$(CONFIG_PINCTRL_SM8250_LPASS_LPI) += pinctrl-sm8250-lpass-lpi.o
- obj-$(CONFIG_PINCTRL_SM8350) += pinctrl-sm8350.o
- obj-$(CONFIG_PINCTRL_SM8450) += pinctrl-sm8450.o
- obj-$(CONFIG_PINCTRL_SM8450_LPASS_LPI) += pinctrl-sm8450-lpass-lpi.o
-+obj-$(CONFIG_PINCTRL_SC8280XP_LPASS_LPI) += pinctrl-sc8280xp-lpass-lpi.o
- obj-$(CONFIG_PINCTRL_LPASS_LPI) += pinctrl-lpass-lpi.o
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc8280xp-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sc8280xp-lpass-lpi.c
-new file mode 100644
-index 000000000000..4b9c0beac32e
---- /dev/null
-+++ b/drivers/pinctrl/qcom/pinctrl-sc8280xp-lpass-lpi.c
-@@ -0,0 +1,207 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2022 Linaro Ltd.
-+ */
-+
-+#include <linux/gpio/driver.h>
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+
-+#include "pinctrl-lpass-lpi.h"
-+
-+enum lpass_lpi_functions {
-+	LPI_MUX_dmic1_clk,
-+	LPI_MUX_dmic1_data,
-+	LPI_MUX_dmic2_clk,
-+	LPI_MUX_dmic2_data,
-+	LPI_MUX_dmic3_clk,
-+	LPI_MUX_dmic3_data,
-+	LPI_MUX_dmic4_clk,
-+	LPI_MUX_dmic4_data,
-+	LPI_MUX_i2s1_clk,
-+	LPI_MUX_i2s1_data,
-+	LPI_MUX_i2s1_ws,
-+	LPI_MUX_i2s2_clk,
-+	LPI_MUX_i2s2_data,
-+	LPI_MUX_i2s2_ws,
-+	LPI_MUX_i2s3_clk,
-+	LPI_MUX_i2s3_data,
-+	LPI_MUX_i2s3_ws,
-+	LPI_MUX_qua_mi2s_data,
-+	LPI_MUX_qua_mi2s_sclk,
-+	LPI_MUX_qua_mi2s_ws,
-+	LPI_MUX_swr_rx_clk,
-+	LPI_MUX_swr_rx_data,
-+	LPI_MUX_swr_tx_clk,
-+	LPI_MUX_swr_tx_data,
-+	LPI_MUX_wsa_swr_clk,
-+	LPI_MUX_wsa_swr_data,
-+	LPI_MUX_wsa2_swr_clk,
-+	LPI_MUX_wsa2_swr_data,
-+	LPI_MUX_ext_mclk1_a,
-+	LPI_MUX_ext_mclk1_b,
-+	LPI_MUX_ext_mclk1_c,
-+	LPI_MUX_gpio,
-+	LPI_MUX__,
-+};
-+
-+static int gpio0_pins[] = { 0 };
-+static int gpio1_pins[] = { 1 };
-+static int gpio2_pins[] = { 2 };
-+static int gpio3_pins[] = { 3 };
-+static int gpio4_pins[] = { 4 };
-+static int gpio5_pins[] = { 5 };
-+static int gpio6_pins[] = { 6 };
-+static int gpio7_pins[] = { 7 };
-+static int gpio8_pins[] = { 8 };
-+static int gpio9_pins[] = { 9 };
-+static int gpio10_pins[] = { 10 };
-+static int gpio11_pins[] = { 11 };
-+static int gpio12_pins[] = { 12 };
-+static int gpio13_pins[] = { 13 };
-+static int gpio14_pins[] = { 14 };
-+static int gpio15_pins[] = { 15 };
-+static int gpio16_pins[] = { 16 };
-+static int gpio17_pins[] = { 17 };
-+static int gpio18_pins[] = { 18 };
-+
-+static const struct pinctrl_pin_desc sc8280xp_lpi_pins[] = {
-+	PINCTRL_PIN(0, "gpio0"),
-+	PINCTRL_PIN(1, "gpio1"),
-+	PINCTRL_PIN(2, "gpio2"),
-+	PINCTRL_PIN(3, "gpio3"),
-+	PINCTRL_PIN(4, "gpio4"),
-+	PINCTRL_PIN(5, "gpio5"),
-+	PINCTRL_PIN(6, "gpio6"),
-+	PINCTRL_PIN(7, "gpio7"),
-+	PINCTRL_PIN(8, "gpio8"),
-+	PINCTRL_PIN(9, "gpio9"),
-+	PINCTRL_PIN(10, "gpio10"),
-+	PINCTRL_PIN(11, "gpio11"),
-+	PINCTRL_PIN(12, "gpio12"),
-+	PINCTRL_PIN(13, "gpio13"),
-+	PINCTRL_PIN(14, "gpio14"),
-+	PINCTRL_PIN(15, "gpio15"),
-+	PINCTRL_PIN(16, "gpio16"),
-+	PINCTRL_PIN(17, "gpio17"),
-+	PINCTRL_PIN(18, "gpio18"),
-+};
-+
-+static const char * const swr_tx_clk_groups[] = { "gpio0" };
-+static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio14" };
-+static const char * const swr_rx_clk_groups[] = { "gpio3" };
-+static const char * const swr_rx_data_groups[] = { "gpio4", "gpio5" };
-+static const char * const dmic1_clk_groups[] = { "gpio6" };
-+static const char * const dmic1_data_groups[] = { "gpio7" };
-+static const char * const dmic2_clk_groups[] = { "gpio8" };
-+static const char * const dmic2_data_groups[] = { "gpio9" };
-+static const char * const dmic4_clk_groups[] = { "gpio17" };
-+static const char * const dmic4_data_groups[] = { "gpio18" };
-+static const char * const i2s2_clk_groups[] = { "gpio10" };
-+static const char * const i2s2_ws_groups[] = { "gpio11" };
-+static const char * const dmic3_clk_groups[] = { "gpio12" };
-+static const char * const dmic3_data_groups[] = { "gpio13" };
-+static const char * const qua_mi2s_sclk_groups[] = { "gpio0" };
-+static const char * const qua_mi2s_ws_groups[] = { "gpio1" };
-+static const char * const qua_mi2s_data_groups[] = { "gpio2", "gpio3", "gpio4", "gpio5" };
-+static const char * const i2s1_clk_groups[] = { "gpio6" };
-+static const char * const i2s1_ws_groups[] = { "gpio7" };
-+static const char * const i2s1_data_groups[] = { "gpio8", "gpio9" };
-+static const char * const wsa_swr_clk_groups[] = { "gpio10" };
-+static const char * const wsa_swr_data_groups[] = { "gpio11" };
-+static const char * const wsa2_swr_clk_groups[] = { "gpio15" };
-+static const char * const wsa2_swr_data_groups[] = { "gpio16" };
-+static const char * const i2s2_data_groups[] = { "gpio15", "gpio16" };
-+static const char * const i2s3_clk_groups[] = { "gpio12"};
-+static const char * const i2s3_ws_groups[] = { "gpio13"};
-+static const char * const i2s3_data_groups[] = { "gpio17", "gpio18"};
-+static const char * const ext_mclk1_c_groups[] = { "gpio5" };
-+static const char * const ext_mclk1_b_groups[] = { "gpio9" };
-+static const char * const ext_mclk1_a_groups[] = { "gpio13" };
-+
-+static const struct lpi_pingroup sc8280xp_groups[] = {
-+	LPI_PINGROUP(0, 0, swr_tx_clk, qua_mi2s_sclk, _, _),
-+	LPI_PINGROUP(1, 2, swr_tx_data, qua_mi2s_ws, _, _),
-+	LPI_PINGROUP(2, 4, swr_tx_data, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(3, 8, swr_rx_clk, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(4, 10, swr_rx_data, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(5, 12, swr_rx_data, ext_mclk1_c, qua_mi2s_data, _),
-+	LPI_PINGROUP(6, LPI_NO_SLEW, dmic1_clk, i2s1_clk, _,  _),
-+	LPI_PINGROUP(7, LPI_NO_SLEW, dmic1_data, i2s1_ws, _, _),
-+	LPI_PINGROUP(8, LPI_NO_SLEW, dmic2_clk, i2s1_data, _, _),
-+	LPI_PINGROUP(9, LPI_NO_SLEW, dmic2_data, i2s1_data, ext_mclk1_b, _),
-+	LPI_PINGROUP(10, 16, i2s2_clk, wsa_swr_clk, _, _),
-+	LPI_PINGROUP(11, 18, i2s2_ws, wsa_swr_data, _, _),
-+	LPI_PINGROUP(12, LPI_NO_SLEW, dmic3_clk, i2s3_clk, _, _),
-+	LPI_PINGROUP(13, LPI_NO_SLEW, dmic3_data, i2s3_ws, ext_mclk1_a, _),
-+	LPI_PINGROUP(14, 6, swr_tx_data, _, _, _),
-+	LPI_PINGROUP(15, 20, i2s2_data, wsa2_swr_clk, _, _),
-+	LPI_PINGROUP(16, 22, i2s2_data, wsa2_swr_data, _, _),
-+	LPI_PINGROUP(17, LPI_NO_SLEW, dmic4_clk, i2s3_data, _, _),
-+	LPI_PINGROUP(18, LPI_NO_SLEW, dmic4_data, i2s3_data, _, _),
-+};
-+
-+static const struct lpi_function sc8280xp_functions[] = {
-+	LPI_FUNCTION(dmic1_clk),
-+	LPI_FUNCTION(dmic1_data),
-+	LPI_FUNCTION(dmic2_clk),
-+	LPI_FUNCTION(dmic2_data),
-+	LPI_FUNCTION(dmic3_clk),
-+	LPI_FUNCTION(dmic3_data),
-+	LPI_FUNCTION(dmic4_clk),
-+	LPI_FUNCTION(dmic4_data),
-+	LPI_FUNCTION(i2s1_clk),
-+	LPI_FUNCTION(i2s1_data),
-+	LPI_FUNCTION(i2s1_ws),
-+	LPI_FUNCTION(i2s2_clk),
-+	LPI_FUNCTION(i2s2_data),
-+	LPI_FUNCTION(i2s2_ws),
-+	LPI_FUNCTION(i2s3_clk),
-+	LPI_FUNCTION(i2s3_data),
-+	LPI_FUNCTION(i2s3_ws),
-+	LPI_FUNCTION(qua_mi2s_data),
-+	LPI_FUNCTION(qua_mi2s_sclk),
-+	LPI_FUNCTION(qua_mi2s_ws),
-+	LPI_FUNCTION(swr_rx_clk),
-+	LPI_FUNCTION(swr_rx_data),
-+	LPI_FUNCTION(swr_tx_clk),
-+	LPI_FUNCTION(swr_tx_data),
-+	LPI_FUNCTION(wsa_swr_clk),
-+	LPI_FUNCTION(wsa_swr_data),
-+	LPI_FUNCTION(wsa2_swr_clk),
-+	LPI_FUNCTION(wsa2_swr_data),
-+	LPI_FUNCTION(ext_mclk1_a),
-+	LPI_FUNCTION(ext_mclk1_b),
-+	LPI_FUNCTION(ext_mclk1_c),
-+};
-+
-+static const struct lpi_pinctrl_variant_data sc8280xp_lpi_data = {
-+	.pins = sc8280xp_lpi_pins,
-+	.npins = ARRAY_SIZE(sc8280xp_lpi_pins),
-+	.groups = sc8280xp_groups,
-+	.ngroups = ARRAY_SIZE(sc8280xp_groups),
-+	.functions = sc8280xp_functions,
-+	.nfunctions = ARRAY_SIZE(sc8280xp_functions),
-+};
-+
-+static const struct of_device_id lpi_pinctrl_of_match[] = {
-+	{
-+	       .compatible = "qcom,sc8280xp-lpass-lpi-pinctrl",
-+	       .data = &sc8280xp_lpi_data,
-+	},
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
-+
-+static struct platform_driver lpi_pinctrl_driver = {
-+	.driver = {
-+		   .name = "qcom-sc8280xp-lpass-lpi-pinctrl",
-+		   .of_match_table = lpi_pinctrl_of_match,
-+	},
-+	.probe = lpi_pinctrl_probe,
-+	.remove = lpi_pinctrl_remove,
-+};
-+
-+module_platform_driver(lpi_pinctrl_driver);
-+MODULE_DESCRIPTION("QTI SC8280XP LPI GPIO pin control driver");
-+MODULE_LICENSE("GPL");
--- 
-2.21.0
+No.  module_exit() will be triggered on rmmod.  exit() will unregister 
+the driver, which will cause qaic_pci_remove() to be called.  remove() 
+calls qaic_mhi_free_controller() which uses the link state.
+
+However, a hotplug event will also trigger qaic_pci_remove().
+
+rmmod - link is up
+hotplug - link is down
+
+>> In this case, we are doing a clean tear down where the link is still up,
+>> and so we should have MHI do the extra tear down that leaves the device
+>> in a good state, in the event the driver gets added again.
+>>
+>>>
+> 
+> 
+> 
+> Best regards,
+> Krzysztof
 
