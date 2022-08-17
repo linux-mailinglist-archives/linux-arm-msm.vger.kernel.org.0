@@ -2,97 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 789D5597498
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Aug 2022 18:59:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC975597852
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Aug 2022 23:00:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241141AbiHQQzD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Aug 2022 12:55:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60472 "EHLO
+        id S242216AbiHQU67 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Aug 2022 16:58:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241128AbiHQQzB (ORCPT
+        with ESMTP id S242130AbiHQU6U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Aug 2022 12:55:01 -0400
-Received: from baptiste.telenet-ops.be (baptiste.telenet-ops.be [IPv6:2a02:1800:120:4::f00:13])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70A5174E04
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Aug 2022 09:54:59 -0700 (PDT)
-Received: from ramsan.of.borg ([84.195.186.194])
-        by baptiste.telenet-ops.be with bizsmtp
-        id 8gut2800Q4C55Sk01gutjl; Wed, 17 Aug 2022 18:54:57 +0200
-Received: from rox.of.borg ([192.168.97.57])
-        by ramsan.of.borg with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <geert@linux-m68k.org>)
-        id 1oOMJg-001VWQ-Sq; Wed, 17 Aug 2022 18:54:52 +0200
-Received: from geert by rox.of.borg with local (Exim 4.93)
-        (envelope-from <geert@linux-m68k.org>)
-        id 1oOMJg-0035oh-Hb; Wed, 17 Aug 2022 18:54:52 +0200
-From:   Geert Uytterhoeven <geert+renesas@glider.be>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Slark Xiao <slark_xiao@163.com>,
-        Jakub Kicinski <kuba@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        =?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH v2] dt-bindings: Fix incorrect "the the" corrections
-Date:   Wed, 17 Aug 2022 18:54:51 +0200
-Message-Id: <c5743c0a1a24b3a8893797b52fed88b99e56b04b.1660755148.git.geert+renesas@glider.be>
-X-Mailer: git-send-email 2.25.1
+        Wed, 17 Aug 2022 16:58:20 -0400
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [5.144.164.164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92D45AB1A7;
+        Wed, 17 Aug 2022 13:57:57 -0700 (PDT)
+Received: from [192.168.1.101] (abxi168.neoplus.adsl.tpnet.pl [83.9.2.168])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id CCB1D1F635;
+        Wed, 17 Aug 2022 22:57:53 +0200 (CEST)
+Message-ID: <fd1492fa-4244-b283-d2a6-b4ffac7d53d6@somainline.org>
+Date:   Wed, 17 Aug 2022 22:57:51 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [RFT PATCH v2 02/14] arm64: dts: qcom: msm8996: split TCSR halt
+ regs out of mutex
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220817130342.568396-1-krzysztof.kozlowski@linaro.org>
+ <20220817130342.568396-3-krzysztof.kozlowski@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20220817130342.568396-3-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Lots of double occurrences of "the" were replaced by single occurrences,
-but some of them should become "to the" instead.
 
-Fixes: 12e5bde18d7f6ca4 ("dt-bindings: Fix typo in comment")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
----
-v2:
-  - Drop blank line between Fixes and SoB tags.
----
- Documentation/devicetree/bindings/net/qcom-emac.txt         | 2 +-
- Documentation/devicetree/bindings/thermal/rcar-thermal.yaml | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/net/qcom-emac.txt b/Documentation/devicetree/bindings/net/qcom-emac.txt
-index e6cb2291471c4c11..7ae8aa14863454d2 100644
---- a/Documentation/devicetree/bindings/net/qcom-emac.txt
-+++ b/Documentation/devicetree/bindings/net/qcom-emac.txt
-@@ -14,7 +14,7 @@ MAC node:
- - mac-address : The 6-byte MAC address. If present, it is the default
- 	MAC address.
- - internal-phy : phandle to the internal PHY node
--- phy-handle : phandle the external PHY node
-+- phy-handle : phandle to the external PHY node
- 
- Internal PHY node:
- - compatible : Should be "qcom,fsm9900-emac-sgmii" or "qcom,qdf2432-emac-sgmii".
-diff --git a/Documentation/devicetree/bindings/thermal/rcar-thermal.yaml b/Documentation/devicetree/bindings/thermal/rcar-thermal.yaml
-index 00dcbdd361442981..119998d10ff41836 100644
---- a/Documentation/devicetree/bindings/thermal/rcar-thermal.yaml
-+++ b/Documentation/devicetree/bindings/thermal/rcar-thermal.yaml
-@@ -42,7 +42,7 @@ properties:
-     description:
-       Address ranges of the thermal registers. If more then one range is given
-       the first one must be the common registers followed by each sensor
--      according the datasheet.
-+      according to the datasheet.
-     minItems: 1
-     maxItems: 4
- 
--- 
-2.25.1
+On 17.08.2022 15:03, Krzysztof Kozlowski wrote:
+> The TCSR halt regs are next to TCSR mutex, so before converting the TCSR
+> mutex into device with address space, we need to split the halt regs to
+> its own syscon device.  This also describes more accurately the devices
+> and their IO address space.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+Not tested on a device, but looks good to the eye:
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 
+On a note, are they really named TCSR_1 and TCSR_2 in the docs?
+Qualcomm is usually more exquisite in their naming :P
+
+Konrad
+>  arch/arm64/boot/dts/qcom/msm8996.dtsi | 13 +++++++++----
+>  1 file changed, 9 insertions(+), 4 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> index 742eac4ce9b3..3411ced96db6 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> @@ -359,7 +359,7 @@ opp-2150400000 {
+>  	firmware {
+>  		scm {
+>  			compatible = "qcom,scm-msm8996", "qcom,scm";
+> -			qcom,dload-mode = <&tcsr 0x13000>;
+> +			qcom,dload-mode = <&tcsr_2 0x13000>;
+>  		};
+>  	};
+>  
+> @@ -840,10 +840,15 @@ pnoc: interconnect@5c0000 {
+>  
+>  		tcsr_mutex_regs: syscon@740000 {
+>  			compatible = "syscon";
+> -			reg = <0x00740000 0x40000>;
+> +			reg = <0x00740000 0x20000>;
+>  		};
+>  
+> -		tcsr: syscon@7a0000 {
+> +		tcsr_1: sycon@760000 {
+> +			compatible = "qcom,tcsr-msm8996", "syscon";
+> +			reg = <0x00760000 0x20000>;
+> +		};
+> +
+> +		tcsr_2: syscon@7a0000 {
+>  			compatible = "qcom,tcsr-msm8996", "syscon";
+>  			reg = <0x007a0000 0x18000>;
+>  		};
+> @@ -2413,7 +2418,7 @@ mss_pil: remoteproc@2080000 {
+>  			qcom,smem-states = <&mpss_smp2p_out 0>;
+>  			qcom,smem-state-names = "stop";
+>  
+> -			qcom,halt-regs = <&tcsr_mutex_regs 0x23000 0x25000 0x24000>;
+> +			qcom,halt-regs = <&tcsr_1 0x3000 0x5000 0x4000>;
+>  
+>  			status = "disabled";
+>  
