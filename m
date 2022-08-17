@@ -2,107 +2,215 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D2A3596A75
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Aug 2022 09:37:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6507E596BC0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Aug 2022 10:58:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230415AbiHQHdl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Aug 2022 03:33:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43086 "EHLO
+        id S232259AbiHQI5u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Aug 2022 04:57:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231252AbiHQHd1 (ORCPT
+        with ESMTP id S230216AbiHQI5r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Aug 2022 03:33:27 -0400
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F332356DD;
-        Wed, 17 Aug 2022 00:33:26 -0700 (PDT)
-Received: by mail-qv1-f44.google.com with SMTP id b2so582394qvp.1;
-        Wed, 17 Aug 2022 00:33:26 -0700 (PDT)
+        Wed, 17 Aug 2022 04:57:47 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14DF38035D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Aug 2022 01:57:46 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id r16so6211160wrm.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Aug 2022 01:57:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=b0Hbu1BABi8Xh8b3bvkqzLWTDHQ7JLqil1MsktXkomc=;
+        b=H1rBkQzh9tCamdDvX5WJuSKYyliKjdA7gLziAw+J6QBIcwTgLqgRoWkR22Jd2qb7T5
+         UmPOZrVilaLP73T/OJRsQMK5piwYfLIHdiIT/Z4acOw794l4EVKoLhuHjLlvDkKPSxNI
+         /eo3MCpYoLdgjAT4VQncss0H1K50GzmPHPkeDMTCO2ZC62193OU0RlSIW2eAtzxE+H9P
+         XthKg3tC0PAZrTpbnlz3cOIA9DVy8ieiUV+ookr1xvDxqHjP43XJFTulS6ilZMobitqb
+         rePaXGJDyohQXWnqr+ta4OVLRzOCIdUt39XdQnkbxUqus2xS3uuugT6PKF11afCK0Y3d
+         NFIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=SPq3Q4TPbLE7lPoozTYrDmUtlAuvRfPohoVUSyc0jcM=;
-        b=qNt41EECGChDDokode44BNhe2byNhOf7y+zMhrT6f6y0YEpHbwoZYWsXQHIwO5y3ZM
-         utGBEUz8TKR7Kf7BaNu++Pu5yFidOqFahhl3H8Mugn5U8eHJmjV0kZLJGB9G5YfFuVhu
-         ipSawDmtt4TBmTgSkPBzBfjHprJO0xkA2Pn7LOeg9kYZFUzkGNWqdAHMAzub2XR/LfGo
-         vjoFaglWlayfOn51iy84j4anq2BNYSx6bHl2jUtsMh7CN96qBZPCKurHzCWCMdeg9lHZ
-         cJieyktUtSc/dn72I7KjIqoq+qKpcVyuTT74vjfmUnwoymXuZpi1Np2Dni9aTy3mgVec
-         DZdg==
-X-Gm-Message-State: ACgBeo0YAsPVkd5gR66QmQrDuvdOnRYbzdfIil5SLLFKwtDQg0iziZt2
-        Fs+TZT8WdgE/S8CYofRwJ9NpM3e2MQWvzg==
-X-Google-Smtp-Source: AA6agR7kSI0FdlF5xw4jeTQ13xoInjFreM3MvNt7hVz9toyT07EesM5JidkthmoT1u9aTVrarMsbFA==
-X-Received: by 2002:a0c:9d09:0:b0:496:a686:2c2e with SMTP id m9-20020a0c9d09000000b00496a6862c2emr1600657qvf.61.1660721605525;
-        Wed, 17 Aug 2022 00:33:25 -0700 (PDT)
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com. [209.85.128.173])
-        by smtp.gmail.com with ESMTPSA id i17-20020a05620a405100b006b9c6d590fasm14481536qko.61.2022.08.17.00.33.24
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=b0Hbu1BABi8Xh8b3bvkqzLWTDHQ7JLqil1MsktXkomc=;
+        b=N5p3B6J+kWyA7eQDYZyj8QWsPf1jsIYHGZ9StdV40K0NXes2OQynCLqMNEL5c6nOuZ
+         HhFy9biaps6VBv/j814xRpqIpdbn8EIjaCzNhorCjNEVpbdrpIC6v4Z/NxBeM4Czes7L
+         73Z4cj3tRbx5IlcX/zVxIM6qCYEV/94aiHFIM1bT/soFv+eA6bOZDBTlMJD3E3QoCCAB
+         Q1mYTWa16HhpFK9d2aNbk3wkfyecgMuSp4R4SOoBPjQF8XGHCQId+AxBcyv1HpbO3qz7
+         ZyLDIVhnd7Eb6ExoDOf2qbpo9C0ncqUQArPVXl5jzYPZFIss49gpYBIsrf4BvRGFIJLH
+         vzoQ==
+X-Gm-Message-State: ACgBeo1L4My7iCECWy+vsj/Pku7cI1+FcZKlv9noQy3BULEMiaOdtLSa
+        K6XF66LwjDtHXfsIiQky1tsQdQ==
+X-Google-Smtp-Source: AA6agR6zSKE5SCy82IA9kzf8IZHR+bNgzhRgAvsv0F/4nTwzno5ASm/Orou2N5D+SI2pwvFqbD/7EA==
+X-Received: by 2002:a05:6000:82:b0:225:21ff:a389 with SMTP id m2-20020a056000008200b0022521ffa389mr1652992wrx.22.1660726664564;
+        Wed, 17 Aug 2022 01:57:44 -0700 (PDT)
+Received: from [192.168.86.238] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.googlemail.com with ESMTPSA id g9-20020a5d64e9000000b0021badf3cb26sm16861988wri.63.2022.08.17.01.57.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Aug 2022 00:33:24 -0700 (PDT)
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-324ec5a9e97so210106227b3.7;
-        Wed, 17 Aug 2022 00:33:24 -0700 (PDT)
-X-Received: by 2002:a25:880f:0:b0:67c:2727:7e3c with SMTP id
- c15-20020a25880f000000b0067c27277e3cmr18637000ybl.36.1660721604426; Wed, 17
- Aug 2022 00:33:24 -0700 (PDT)
+        Wed, 17 Aug 2022 01:57:44 -0700 (PDT)
+Message-ID: <44887e94-d3a6-12cb-01c5-d61e067ab791@linaro.org>
+Date:   Wed, 17 Aug 2022 09:57:42 +0100
 MIME-Version: 1.0
-References: <edc5763d90054df7977ae24976e80533c7a1bff9.1660663653.git.geert+renesas@glider.be>
- <20220816112522.05aac832@kernel.org>
-In-Reply-To: <20220816112522.05aac832@kernel.org>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Wed, 17 Aug 2022 09:33:12 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdU=xtnPCAd8SF+MyeFNHfsVE17++CcsBtDA3veZ0wo74w@mail.gmail.com>
-Message-ID: <CAMuHMdU=xtnPCAd8SF+MyeFNHfsVE17++CcsBtDA3veZ0wo74w@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: Fix incorrect "the the" corrections
-To:     Jakub Kicinski <kuba@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Slark Xiao <slark_xiao@163.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        =?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        netdev <netdev@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add sc8280xp lpass lpi
+ pinctrl bindings
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        linus.walleij@linaro.org
+Cc:     konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220816180538.9039-1-srinivas.kandagatla@linaro.org>
+ <20220816180538.9039-2-srinivas.kandagatla@linaro.org>
+ <6c283634-70b3-200f-a346-28eb4c428d39@linaro.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <6c283634-70b3-200f-a346-28eb4c428d39@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jakub,
+Thanks Krzysztof,
 
-On Tue, Aug 16, 2022 at 8:25 PM Jakub Kicinski <kuba@kernel.org> wrote:
-> On Tue, 16 Aug 2022 17:30:33 +0200 Geert Uytterhoeven wrote:
-> > Lots of double occurrences of "the" were replaced by single occurrences,
-> > but some of them should become "to the" instead.
-> >
-> > Fixes: 12e5bde18d7f6ca4 ("dt-bindings: Fix typo in comment")
->
-> No empty lines between tags.
+On 17/08/2022 07:05, Krzysztof Kozlowski wrote:
+> On 16/08/2022 21:05, Srinivas Kandagatla wrote:
+>> Add device tree binding Documentation details for Qualcomm SC8280XP
+>> LPASS(Low Power Audio Sub System) LPI(Low Power Island) pinctrl driver.
+>>
+>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> 
+> Thank you for your patch. There is something to discuss/improve.
+> 
+>> +  gpio-ranges:
+>> +    maxItems: 1
+>> +
+>> +#PIN CONFIGURATION NODES
+>> +patternProperties:
+>> +  '-pins$':
+>> +    type: object
+>> +    description:
+>> +      Pinctrl node's client devices use subnodes for desired pin configuration.
+>> +      Client device subnodes use below standard properties.
+>> +    $ref: "/schemas/pinctrl/pincfg-node.yaml"
+> 
+> Drop the quotes
+Will do that.
+.
+> 
+>> +
+>> +    properties:
+>> +      pins:
+>> +        description:
+>> +          List of gpio pins affected by the properties specified in this
+>> +          subnode.
+>> +        items:
+>> +          pattern: "^gpio([0-1]|[0-8]])$"
+> 
+> error in pattern - double ]. If you have 19 GPIOs, this should be
+> probably: ^gpio([0-9]|1[0-8])$
+> 
+that is true..I did overlook  '|'
 
-Ooops, thanks. Shall I resend?
+>> +
+>> +      function:
+>> +        enum: [ swr_tx_clk, swr_tx_data, swr_rx_clk, swr_rx_data,
+>> +                dmic1_clk, dmic1_data, dmic2_clk, dmic2_data, dmic4_clk,
+>> +                dmic4_data, i2s2_clk, i2s2_ws, dmic3_clk, dmic3_data,
+>> +                qua_mi2s_sclk, qua_mi2s_ws, qua_mi2s_data, i2s1_clk, i2s1_ws,
+>> +                i2s1_data, wsa_swr_clk, wsa_swr_data, wsa2_swr_clk,
+>> +                wsa2_swr_data, i2s2_data, i2s3_clk, i2s3_ws, i2s3_data,
+>> +                ext_mclk1_c, ext_mclk1_b, ext_mclk1_a ]
+>> +
+> 
+> Skip blank line (confuses with a new property).
+> 
+okay
 
-> > Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
->
-> > Documentation/devicetree/bindings/net/qcom-emac.txt         | 2 +-
-> > Documentation/devicetree/bindings/thermal/rcar-thermal.yaml | 2 +-
->
-> Who takes it then? :S
-
-The tree that took 12e5bde18d7f6ca4, i.e. the DT tree?
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+>> +        description:
+>> +          Specify the alternative function to be configured for the specified
+>> +          pins.
+>> +
+>> +      drive-strength:
+>> +        enum: [2, 4, 6, 8, 10, 12, 14, 16]
+>> +        default: 2
+>> +        description:
+>> +          Selects the drive strength for the specified pins, in mA.
+>> +
+>> +      slew-rate:
+>> +        enum: [0, 1, 2, 3]
+>> +        default: 0
+>> +        description: |
+>> +          0: No adjustments
+>> +          1: Higher Slew rate (faster edges)
+>> +          2: Lower Slew rate (slower edges)
+>> +          3: Reserved (No adjustments)
+>> +
+>> +      bias-pull-down: true
+>> +
+>> +      bias-pull-up: true
+>> +
+>> +      bias-disable: true
+>> +
+>> +      output-high: true
+>> +
+>> +      output-low: true
+>> +
+>> +    required:
+>> +      - pins
+>> +      - function
+>> +
+>> +    additionalProperties: false
+>> +
+>> +allOf:
+>> +  - $ref: "pinctrl.yaml#"
+> 
+> Drop the quotes.
+> 
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - clocks
+>> +  - clock-names
+>> +  - gpio-controller
+>> +  - '#gpio-cells'
+>> +  - gpio-ranges
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/sound/qcom,q6afe.h>
+>> +    lpi_tlmm: pinctrl@33c0000 {
+> 
+> Drop the label, not used anywhere here.
+> 
+makes sense, I will address all the comments and post next version.
+thanks,
+srini
+>> +        compatible = "qcom,sc8280xp-lpass-lpi-pinctrl";
+>> +        reg = <0x33c0000 0x20000>,
+>> +              <0x3550000 0x10000>;
+>> +        clocks = <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+>> +                 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+>> +        clock-names = "core", "audio";
+>> +        gpio-controller;
+>> +        #gpio-cells = <2>;
+>> +        gpio-ranges = <&lpi_tlmm 0 0 18>;
+>> +    };
+> 
+> 
+> Best regards,
+> Krzysztof
