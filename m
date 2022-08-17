@@ -2,53 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 28B43596F90
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Aug 2022 15:19:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68DCC596FF6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Aug 2022 15:40:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239126AbiHQNO5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Aug 2022 09:14:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43834 "EHLO
+        id S239375AbiHQNhI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Aug 2022 09:37:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239770AbiHQNOs (ORCPT
+        with ESMTP id S230494AbiHQNhI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Aug 2022 09:14:48 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C823051A19
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Aug 2022 06:14:39 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id l21so13536400ljj.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Aug 2022 06:14:39 -0700 (PDT)
+        Wed, 17 Aug 2022 09:37:08 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05148100D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Aug 2022 06:37:06 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id l10so13580993lje.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Aug 2022 06:37:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=Yb2tg6NLcz0SjyT+zhbpZCCAWG7Bnyw4PloKDdxoVAU=;
-        b=StgnaHhGCg7OOpqTG13+gQqRFOCLdTRA/VCywEDqg9kMIxRkqhIjEL6/unZNraETkB
-         OY78slefTO6VmDzp97WDvD8kTArUqhb1NLsuK7dpIINzEiwMK1YWNK9g8TqUfbVweYMm
-         FIgJ0b+KVQtMsadPvgTAwA26rnWXysiwVIdai5xvQ4DdVGOA3ClgjDb5I0IEcgQ+Gv1U
-         pyhxFEJkeL2O6+cfBaxxXSVEhe4+VnOd7U8+etGNUDTddXn7jHg1/sKyJW5B3MseCKzD
-         NP8IjoOxxroQY3Y1ne8qNUgojmtamVj7SkkIGcdYG36ye/FMasRKQE/ytP2+enkQueNs
-         RdtQ==
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=7wB3WWnOJH5yuxAoHFYLtWoRmPg9G9xcBhK/2UoVZfI=;
+        b=xXejSYFkVQQPaT21jQcaiaCEYyx8NLJIlNPkmEacpQZItRPOOuhAC7ymN0WR1vkz3P
+         lRga27OItHaG3lyvIsO+lrU4eAMw0xoOYtusP5jECJjh5k1sX60F2fJvlsf/3IASU+a2
+         R6OTNJTpyBN1adJiqxOz0KI21UMK7Sxbh34aLk62kiSwvruhGSoTseUrBWANqCAlLfPb
+         Z96dxbYk/Mp/R6gcyaEWn/DrKWeokkZWJYI2HY7qs4iml4d5/TMqnzeose0WXZFOcwqU
+         agX6FYRVdbeQnrt26S06ZCbVOlmxVhoNUv8iZ59L/kUxF7WjVV1zSRWXhHjU2BbGRARN
+         B56A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=Yb2tg6NLcz0SjyT+zhbpZCCAWG7Bnyw4PloKDdxoVAU=;
-        b=xGnFAtkst3r1nvyL0CsPBsuJbnrtHn1hhJrUbwCoudAP1XN/0McyTkxUKI6H7pK/Br
-         5IPHD4WsWu2ZDpZ5tGeYgdEVPNpKRxMFVogRMeXeMfzaDoLtaWa1d9sKZYNO9wWZA7fX
-         5YUsnAue2Jf6bomlywIEpQonLVdLY+JndInVWUT/5FaGFSTOvpqVGihZsEkR6yjdBoyV
-         vlxAXznnqnFNiGutKvLdcGDhdJm5GumI2LTDyG575nWlAja94EGIKWd68GzX3aYcaz9x
-         K9HdWbTmwVD747hKCCTIu6disgvtGSYg63pOBnmWUnPSN+Z4baDPhUzxgkXCWC/hqmS2
-         GmWQ==
-X-Gm-Message-State: ACgBeo0v3Lor0E3PDFKg0dp/oWIBSCnOaG+wjCvmt8/9N8wfCFt1QHZO
-        adA3RF2hCltpdD/lnMRmxqY8ZQ==
-X-Google-Smtp-Source: AA6agR4Jr9dVJN0cBFc7EFaxXfsdQSVgqEaGe2HDLtNEJ6H2epeCLVj35rKOvxNYeo5RnnOoO2U2wg==
-X-Received: by 2002:a05:651c:10d2:b0:25e:5a65:9026 with SMTP id l18-20020a05651c10d200b0025e5a659026mr8217403ljn.193.1660742079394;
-        Wed, 17 Aug 2022 06:14:39 -0700 (PDT)
-Received: from krzk-bin.. (d15l54h48cw7vbh-qr4-4.rev.dnainternet.fi. [2001:14bb:ae:539c:1b1c:14b7:109b:ed76])
-        by smtp.gmail.com with ESMTPSA id k1-20020a2ea261000000b0026182f31aa0sm1411307ljm.1.2022.08.17.06.14.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Aug 2022 06:14:38 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=7wB3WWnOJH5yuxAoHFYLtWoRmPg9G9xcBhK/2UoVZfI=;
+        b=dI+EswCYRkJxuk5zhU0t5aSaQzmUSdNyKPStqKSiHHn+8aH5XdjxD69Gq4pofrHSO4
+         2mLoi7PxSS5/ymO8fP/FesOdWUQA16jCjUA9DpP7emFyUTgcuyByuAM0dybb0CPyBpUj
+         dw3MWc2OmFEnudPxdc7sgLsYRKLDYygTAkL4tjjQTy/jKrqdyuZmBJS+L+XHekQLRCO3
+         asQUWMMXsmsb0sT/STaY1lAGE0DhfWCF86Cr6a7UO8IeLpzjIY81fADcu3Rs7lCurTkb
+         V77xCuzIhDMhFvo76hmuctMZ5OGaOiHaB+UQrpprMfFKTjQcbmgOBThbeD+2hsBTAhn6
+         7BIw==
+X-Gm-Message-State: ACgBeo2qjB20aH0jYkSx9AHq3WfMzzYh5LtF7HXFyMlHMrXmSAEAQgM2
+        Ub67eGr+R2aoRULDfL1e1fPeRQ==
+X-Google-Smtp-Source: AA6agR7Rhj0IHgbG6Qt6mM337jJUY3soy+LsdDxzQJ+Udmh/ha83Sbwdt7PpyntTLEzl1YRGEA87VA==
+X-Received: by 2002:a2e:a28d:0:b0:25e:66ea:637b with SMTP id k13-20020a2ea28d000000b0025e66ea637bmr7561623lja.24.1660743424389;
+        Wed, 17 Aug 2022 06:37:04 -0700 (PDT)
+Received: from ?IPV6:2001:14bb:ae:539c:1b1c:14b7:109b:ed76? (d15l54h48cw7vbh-qr4-4.rev.dnainternet.fi. [2001:14bb:ae:539c:1b1c:14b7:109b:ed76])
+        by smtp.gmail.com with ESMTPSA id u10-20020a05651220ca00b0048b0bf9f4bfsm1692055lfr.140.2022.08.17.06.37.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Aug 2022 06:37:03 -0700 (PDT)
+Message-ID: <1069b35f-c6a2-47a7-f8fe-c4b720685844@linaro.org>
+Date:   Wed, 17 Aug 2022 16:37:02 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [RFT PATCH 03/12] dt-bindings: mfd: qcom,tcsr: add MSM8974
+Content-Language: en-US
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
@@ -59,70 +67,41 @@ To:     Andy Gross <agross@kernel.org>,
         Lee Jones <lee@kernel.org>, Vinod Koul <vkoul@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [RFT PATCH 12/12] ARM: dts: qcom: msm8226: switch TCSR mutex to MMIO
-Date:   Wed, 17 Aug 2022 16:14:15 +0300
-Message-Id: <20220817131415.714340-13-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220817131415.714340-1-krzysztof.kozlowski@linaro.org>
 References: <20220817131415.714340-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+ <20220817131415.714340-4-krzysztof.kozlowski@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220817131415.714340-4-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The TCSR mutex bindings allow device to be described only with address
-space (so it uses MMIO, not syscon regmap).  This seems reasonable as
-TCSR mutex is actually a dedicated IO address space and it also fixes DT
-schema checks:
+On 17/08/2022 16:14, Krzysztof Kozlowski wrote:
+> Document new MSM8974 TCSR compatible.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+> index e1c4936a0352..e7383dcad83b 100644
+> --- a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+> @@ -18,6 +18,7 @@ properties:
+>      oneOf:
+>        - items:
+>            - enum:
+> +              - qcom,msm8974-tcsr
 
-  qcom-msm8226-samsung-s3ve3g.dtb: hwlock: 'reg' is a required property
-  qcom-msm8226-samsung-s3ve3g.dtb: hwlock: 'syscon' does not match any of the regexes: 'pinctrl-[0-9]+'
+There is already qcom,tcsr-msm8974 so the patch can be dropped.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm/boot/dts/qcom-msm8226.dtsi | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
-
-diff --git a/arch/arm/boot/dts/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom-msm8226.dtsi
-index 0b5effdb269a..efb5d1edc3a8 100644
---- a/arch/arm/boot/dts/qcom-msm8226.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8226.dtsi
-@@ -44,13 +44,6 @@ scm {
- 		};
- 	};
- 
--	tcsr_mutex: hwlock {
--		compatible = "qcom,tcsr-mutex";
--		syscon = <&tcsr_mutex_block 0 0x80>;
--
--		#hwlock-cells = <1>;
--	};
--
- 	reserved-memory {
- 		#address-cells = <1>;
- 		#size-cells = <1>;
-@@ -508,9 +501,10 @@ rpm_msg_ram: memory@fc428000 {
- 			reg = <0xfc428000 0x4000>;
- 		};
- 
--		tcsr_mutex_block: syscon@fd484000 {
--			compatible = "syscon";
--			reg = <0xfd484000 0x2000>;
-+		tcsr_mutex: hwlock@fd484000 {
-+			compatible = "qcom,msm8226-tcsr-mutex", "qcom,tcsr-mutex";
-+			reg = <0xfd484000 0x1000>;
-+			#hwlock-cells = <1>;
- 		};
- 	};
- 
--- 
-2.34.1
-
+Best regards,
+Krzysztof
