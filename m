@@ -2,64 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FFC9598482
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 15:44:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C40B4598494
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 15:47:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245268AbiHRNnW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Aug 2022 09:43:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49046 "EHLO
+        id S242325AbiHRNqr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Aug 2022 09:46:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245181AbiHRNnE (ORCPT
+        with ESMTP id S233053AbiHRNqq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Aug 2022 09:43:04 -0400
-Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7220785FD4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 06:42:10 -0700 (PDT)
-Received: by mail-qt1-x82a.google.com with SMTP id e28so1111341qts.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 06:42:10 -0700 (PDT)
+        Thu, 18 Aug 2022 09:46:46 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC915B56C1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 06:46:44 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id v7-20020a1cac07000000b003a6062a4f81so2623297wme.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 06:46:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc;
-        bh=fEl5/MZkqTMXgHOWXV9A2H8cNKuuMZWcnutD4sufu6s=;
-        b=ht8Gx8e2Ikbg0xL5tTN9yUSBAnaJAa9W+z/ivanBDORHCh4gJXk+iF7rZkapcUDT97
-         cCmTExnGDOR9IyskxbtWp08xaDh3dXDI7lw1zQ16mvB58eixGo3bnK3wmWUnIyTG3mva
-         dR0MOIH3M+4e60hYD3I23ne5WHqUAlfnrkrWBr/UYhBj/YG38gSvDtoT02LIqlVHXFT9
-         dgB13Ynn/hKXojCTppcehXAS8KXH/jdUdZBkG3rZGwTczQtTx2ZbC7RSxznJoDhPcw39
-         GoIx8Oad3MeL0EhBMfmiGLoupUgz999ABEz+WE1VR5atJcn7BGnfuQpJGhBvNDKDkEJh
-         Fkyw==
+        bh=9Ds9SCyWv8tIHrUgmAXNfm5+EVXzQeANVhipst31cuo=;
+        b=tvrEW8/AFy1sphi52sXodEZD6wK9GmoWGc+ximO7cDQvzygeAaMtzKMn2ziNYCiTAW
+         UK9NR0jh+gK8Odieb+jUppFmQgp4fq40x4jb4KQG9ziYLy6dcS6pQwW3CLOAdHRD6pj4
+         4J+ExVTNOdwIH1Pe/lYa7q5N90EuGJdhZVXEdCplaB7umGhSeEqOAekqEpbiTqky5xEj
+         opvnIwdmJZkpnIYgshi7L8c0o+KGDDOZ11x4Tx6ko3eX2GzKWrhlL+R5LHAbbXa6RJyg
+         X3AKIiF9eyBTuUavO1EHAF/365xQPu9Sr5T1vBSY2oQPyGuxyLOIXb+m16isyzVnQ6KD
+         +LGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc;
-        bh=fEl5/MZkqTMXgHOWXV9A2H8cNKuuMZWcnutD4sufu6s=;
-        b=rFux3azsVlyq/5xpNJEKshbHWnATpqOOsgtXCgf7sly1uzdTt9tfRlxTtdFNkW2sp2
-         uQG9Jq9bRb/cTyctUQCDkb8iJ66aPoLhvgpVJFVijS0afhzFCok/6rk7CA6SlJsUTuzt
-         QR3wf0BBdmdkRYm1h5ViZfTCHPLLnFFAB3Oi/wqT/VxP8GXI3dq0Iy8B/R6QGfFD5UyB
-         P+kFhHvxkMMcXxyqi1KfIAjoY4d1zodjbZa+/s/EznwioyTvEEnZqM0aQ0ukJxMhoNTS
-         CTEukaOQiTyrC6Xif3gzxLxdYivUd6yxO2oPyeDQTg3lVfXxvNSvIvXjHO4E58vYtuJq
-         tnXg==
-X-Gm-Message-State: ACgBeo0CYXjm4FN2BPQHl9tbqj0/Hxic4JgDleAdlZojbW2RDzwdFPvV
-        BrIWiNOxpj6THY/C3qyYuBfLHg==
-X-Google-Smtp-Source: AA6agR4jTgrZJP0jHnhpoEcJLuhZqFp9nVJLbFrYqbcB6Yo9V3tEpfH7+LK6oECe9AWPfVpNq4DZyQ==
-X-Received: by 2002:a05:622a:44c:b0:343:7b8e:2cb with SMTP id o12-20020a05622a044c00b003437b8e02cbmr2527312qtx.617.1660830129554;
-        Thu, 18 Aug 2022 06:42:09 -0700 (PDT)
-Received: from localhost.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id bm30-20020a05620a199e00b006bb11f9a859sm1493430qkb.122.2022.08.18.06.42.08
+        bh=9Ds9SCyWv8tIHrUgmAXNfm5+EVXzQeANVhipst31cuo=;
+        b=zZhvav6dcvL6zShSxQ/NiH2iKfaE+G4xCAvVztJOyFQUnWct3Gsh/OJzbHHGtTVTLs
+         vIpkr932TSd0jpquN1Pzr9W6DLsdnYJ8lB1t5FghDZcZZPdNXd0OWME2di6TETMN1dqu
+         N0PWKaCgQbOs1dkh3/cb4xk1xLCHFhP35itH+Hxa06jybHDiwNf9lZnPl3T8p8mfQzaO
+         NTERFS6jnoWEAfKunJfD/yda+1/rCHPy6EgIIi+tb4CeCzbXujD0ogPcb2FQxP/fs85r
+         kuIbdWHPn+cVdM7vHSWIrqaOMPGEjmMt8FmGlzYA4ws+JnILEpgH2IopiobBPJnEXXSD
+         YFyw==
+X-Gm-Message-State: ACgBeo0p45O7Qz7L7+Oxorigi6JFPL7g5OzuwQzNRjE9SBDAixUBmc1M
+        9U5LtRYcQdUQUHce+sTD0XHg1w==
+X-Google-Smtp-Source: AA6agR6Khq9CsT5T42xFf9oRrqQfOqFWWEfHyu70AyJ9wlCf9tg/6xeEEvxs4pqI2+lWO8ozK6D0Ig==
+X-Received: by 2002:a1c:7708:0:b0:3a5:5543:cec4 with SMTP id t8-20020a1c7708000000b003a55543cec4mr5270398wmi.47.1660830403389;
+        Thu, 18 Aug 2022 06:46:43 -0700 (PDT)
+Received: from srini-hackbox.lan (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.gmail.com with ESMTPSA id v5-20020a5d6785000000b0021e47fb24a2sm1454549wru.19.2022.08.18.06.46.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Aug 2022 06:42:09 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     mka@chromium.org, evgreen@chromium.org, bjorn.andersson@linaro.org,
-        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-        elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net] net: ipa: don't assume SMEM is page-aligned
-Date:   Thu, 18 Aug 2022 08:42:05 -0500
-Message-Id: <20220818134206.567618-1-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Thu, 18 Aug 2022 06:46:42 -0700 (PDT)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     broonie@kernel.org
+Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        perex@perex.cz, tiwai@suse.com,
+        pierre-louis.bossart@linux.intel.com,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 0/6] ASoC: codecs: lpass: add support fro sm8450 and sc8280xp
+Date:   Thu, 18 Aug 2022 14:46:13 +0100
+Message-Id: <20220818134619.3432-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -72,39 +72,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In ipa_smem_init(), a Qualcomm SMEM region is allocated (if needed)
-and then its virtual address is fetched using qcom_smem_get().  The
-physical address associated with that region is also fetched.
+THis patchset adds support for SM8450 and SC8280XP SoC.
 
-The physical address is adjusted so that it is page-aligned, and an
-attempt is made to update the size of the region to compensate for
-any non-zero adjustment.
+Tested SmartSpeakers and Headset on SM8450 MTP and
+Lenovo Thinkpad X13s.
 
-But that adjustment isn't done properly.  The physical address is
-aligned twice, and as a result the size is never actually adjusted.
+THanks,
+Srini
 
-Fix this by *not* aligning the "addr" local variable, and instead
-making the "phys" local variable be the adjusted "addr" value.
+Srinivas Kandagatla (6):
+  ASoC: qcom: dt-bindings: add sm8450 and sc8280xp compatibles
+  ASoC: codecs: wsa-macro: add support for sm8450 and sc8280xp
+  ASoC: codecs: tx-macro: add support for sm8450 and sc8280xp
+  ASoC: codecs: rx-macro: add support for sm8450 and sc8280xp
+  ASoC: codecs: va-macro: clear the frame sync counter before enabling
+  ASoC: codecs: tx-macro: add support for sm8450 and sc8280xp
 
-Fixes: a0036bb413d5b ("net: ipa: define SMEM memory region for IPA")
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- drivers/net/ipa/ipa_mem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../bindings/sound/qcom,lpass-rx-macro.yaml   |  2 +
+ .../bindings/sound/qcom,lpass-tx-macro.yaml   |  2 +
+ .../bindings/sound/qcom,lpass-va-macro.yaml   |  2 +
+ .../bindings/sound/qcom,lpass-wsa-macro.yaml  |  2 +
+ sound/soc/codecs/lpass-rx-macro.c             |  2 +
+ sound/soc/codecs/lpass-tx-macro.c             |  2 +
+ sound/soc/codecs/lpass-va-macro.c             | 72 +++++++++++++++++--
+ sound/soc/codecs/lpass-wsa-macro.c            |  2 +
+ 8 files changed, 82 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ipa/ipa_mem.c b/drivers/net/ipa/ipa_mem.c
-index 1e9eae208e44f..53a1dbeaffa6d 100644
---- a/drivers/net/ipa/ipa_mem.c
-+++ b/drivers/net/ipa/ipa_mem.c
-@@ -568,7 +568,7 @@ static int ipa_smem_init(struct ipa *ipa, u32 item, size_t size)
- 	}
- 
- 	/* Align the address down and the size up to a page boundary */
--	addr = qcom_smem_virt_to_phys(virt) & PAGE_MASK;
-+	addr = qcom_smem_virt_to_phys(virt);
- 	phys = addr & PAGE_MASK;
- 	size = PAGE_ALIGN(size + addr - phys);
- 	iova = phys;	/* We just want a direct mapping */
 -- 
-2.34.1
+2.21.0
 
