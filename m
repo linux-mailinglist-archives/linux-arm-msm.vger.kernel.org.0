@@ -2,90 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DADA59885D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 18:09:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A7781598A18
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 19:20:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245474AbiHRQGs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Aug 2022 12:06:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48258 "EHLO
+        id S1344854AbiHRRPd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Aug 2022 13:15:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245752AbiHRQGo (ORCPT
+        with ESMTP id S1345423AbiHRRPS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Aug 2022 12:06:44 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C9D8BC12C;
-        Thu, 18 Aug 2022 09:06:43 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27IFrR4d009879;
-        Thu, 18 Aug 2022 16:06:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=sjDjAQnJv+oym65id1D4iYi4CjbwvuRwU/uJHJdLZVc=;
- b=Pp+/ajHMJpqLwx3kzQ0CV1LK0jYw1wuPEau1YEW6OcPIIsjdBHth51liaZ767qwm4Fay
- ALCySy+FnAKeUi/ydw9qtr90nS1ZqIJlAJvIUOj28nM80NrxENGHBOxaKAl31369s3Vp
- LR9bk9NwKEkS12W0dhY9FtHlSr1sn3G1hBkoDLJuZIkyVsYtXZT2yvf+c3rlSRF02wh8
- rs6oyEWoN33ZS8cym6b/mQ1N8JWuyxVTORGxecsRhXm62q2F3oxcVsqS3Q4BYZFAXN5I
- CndVSE5D6CRtVicZXkks94CpqX6YQtEg+BJR96B8tIRAfnY3VZ58NDOSCoqHpY5bO61U yA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j0wynp68n-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 18 Aug 2022 16:06:33 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27IG6W8K024383
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 18 Aug 2022 16:06:32 GMT
-Received: from [10.111.166.229] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 18 Aug
- 2022 09:06:29 -0700
-Message-ID: <5d2bd7db-801a-838e-1e47-2cbb9cfe445f@quicinc.com>
-Date:   Thu, 18 Aug 2022 09:06:26 -0700
+        Thu, 18 Aug 2022 13:15:18 -0400
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6E5CD599C;
+        Thu, 18 Aug 2022 10:08:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1660842480; x=1692378480;
+  h=date:from:to:cc:subject:message-id:mime-version:
+   content-transfer-encoding;
+  bh=OajO0ASt/ZPv6TOpBQulZOiOmqVfbqj+iY4/9LI5ksU=;
+  b=GH1a5+AkKAeUgxj9lRpPUJzPN8oyhgug2JngcdqF6j/TYCkhjSuLmZBR
+   nIuJCM7LaRtRwy5B5SxfAdXjGTZo6NJIbRTj3LZAGkvDJlhi6rIUYPS8h
+   4la8t3U4epNKDnBBQymvTsA96erbsjil5LV1dnqkaIIom/0IvziJY7En3
+   Cu7BRNIzAzY4mvQVPGG0bQHWUG08Ee3oIA1GJlmp0LwJUW1XzAj0Lw+HC
+   /GZ9wNfgCtxgXiqSvVqHUnF/GnlsZodNDyuHha0lUN2pkUNEs/7MreVj5
+   Jai4pZLy5uo3M9RK4TeRqsPRq9E12oZe8wr5ZLc00zBqYhJx+2QuLvxNN
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10443"; a="272591125"
+X-IronPort-AV: E=Sophos;i="5.93,247,1654585200"; 
+   d="scan'208";a="272591125"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Aug 2022 10:08:00 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.93,247,1654585200"; 
+   d="scan'208";a="935889250"
+Received: from lkp-server01.sh.intel.com (HELO 44b6dac04a33) ([10.239.97.150])
+  by fmsmga005.fm.intel.com with ESMTP; 18 Aug 2022 10:07:58 -0700
+Received: from kbuild by 44b6dac04a33 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1oOizt-0000JJ-1F;
+        Thu, 18 Aug 2022 17:07:57 +0000
+Date:   Fri, 19 Aug 2022 01:07:05 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Andrew Morton <akpm@linux-foundation.org>
+Cc:     platform-driver-x86@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org,
+        Linux Memory Management List <linux-mm@kvack.org>
+Subject: [linux-next:master] BUILD REGRESSION
+ 5b6a4bf680d61b1dd26629840f848d0df8983c62
+Message-ID: <62fe71b9.HTupW2Bu5CHrCfQc%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v3] drm/msm/dp: check hpd_state before push idle pattern
- at dp_bridge_disable()
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>, <agross@kernel.org>,
-        <airlied@linux.ie>, <bjorn.andersson@linaro.org>,
-        <daniel@ffwll.ch>, <dianders@chromium.org>,
-        <dmitry.baryshkov@linaro.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <vkoul@kernel.org>
-CC:     <quic_aravindh@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1660159551-13828-1-git-send-email-quic_khsieh@quicinc.com>
- <CAE-0n533SUb3Bg=pR8Fhwo-M5qLWiti4nzLR-rSGVAsrXgEYNQ@mail.gmail.com>
- <dbda8bce-2890-e5e3-4052-073a52eb06a6@quicinc.com>
- <CAE-0n51NyrP8CikcK_3wj4EEsurmmSZ4RY3pLhJJmkY2_8wNZw@mail.gmail.com>
- <0641a116-5b58-4305-bf2d-f53dcb747276@quicinc.com>
- <1e792f49-febf-43bf-d828-8ecf99cbeba3@quicinc.com>
- <CAE-0n50QXiJs=k78Tmd7om28MgWChypwC8LPRzF2jx_qB5+0FQ@mail.gmail.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAE-0n50QXiJs=k78Tmd7om28MgWChypwC8LPRzF2jx_qB5+0FQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: YDa1b5-Qnmed3qS8RnJmromVm4v5x4LQ
-X-Proofpoint-GUID: YDa1b5-Qnmed3qS8RnJmromVm4v5x4LQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-18_12,2022-08-18_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- phishscore=0 adultscore=0 spamscore=0 malwarescore=0 clxscore=1015
- impostorscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
- mlxlogscore=999 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2208180059
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -93,92 +66,154 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
+branch HEAD: 5b6a4bf680d61b1dd26629840f848d0df8983c62  Add linux-next specific files for 20220818
 
-On 8/15/2022 10:08 AM, Stephen Boyd wrote:
-> Quoting Kuogee Hsieh (2022-08-11 08:20:01)
->>
->> On 8/10/2022 6:00 PM, Abhinav Kumar wrote:
->>>
->>> Even then, you do have a valid point. DRM framework should not have
->>> caused the disable path to happen without an enable.
->>>
->>> I went through the stack mentioned in the issue.
->>>
->>> Lets see this part of the stack:
->>>
->>> dp_ctrl_push_idle+0x40/0x88
->>>   dp_bridge_disable+0x24/0x30
->>>   drm_atomic_bridge_chain_disable+0x90/0xbc
->>>   drm_atomic_helper_commit_modeset_disables+0x198/0x444
->>>   msm_atomic_commit_tail+0x1d0/0x374
->>>
->>> In drm_atomic_helper_commit_modeset_disables(), we call
->>> disable_outputs().
->>>
->>> AFAICT, this is the only place which has a protection to not call the
->>> disable() flow if it was not enabled here:
->>>
->>> https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/drm_atomic_helper.c#L1063
->>>
->>>
->>> But that function is only checking crtc_state->active. Thats set by
->>> the usermode:
->>>
->>> https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/drm_atomic_uapi.c#L407
->>>
->>>
->>> Now, if usermode sets that to true and then crashed it can bypass this
->>> check and we will crash in the location kuogee is trying to fix.
-> 
-> That seems bad, no? We don't want userspace to be able to crash and then
-> be able to call the disable path when enable never succeeded.
-> 
->>>
->>>  From the issue mentioned in
->>> https://gitlab.freedesktop.org/drm/msm/-/issues/17, the reporter did
->>> mention the usermode crashed.
->>>
->>> So this is my tentative analysis of whats happening here.
->>>
->>> Ideally yes, we should have been protected by the location mentioned
->>> above in disable_outputs() but looks to me due to the above hypothesis
->>> its getting bypassed.
-> 
-> Can you fix the problem there? Not fixing it means that every driver out
-> there has to develop the same "fix", when it could be fixed in the core
-> one time.
-> 
+Error/Warning: (recently discovered and may have been fixed)
 
-As per discussion on IRC with Rob, we have pushed another fix for this 
-issue 
-https://lore.kernel.org/all/1660759314-28088-1-git-send-email-quic_khsieh@quicinc.com/.
+drivers/base/regmap/regmap-mmio.c:231:17: error: implicit declaration of function 'writesq'; did you mean 'writeq'? [-Werror=implicit-function-declaration]
+drivers/base/regmap/regmap-mmio.c:231:17: error: implicit declaration of function 'writesq'; did you mean 'writesl'? [-Werror=implicit-function-declaration]
+drivers/base/regmap/regmap-mmio.c:368:17: error: implicit declaration of function 'readsq'; did you mean 'readq'? [-Werror=implicit-function-declaration]
+drivers/base/regmap/regmap-mmio.c:368:17: error: implicit declaration of function 'readsq'; did you mean 'readsl'? [-Werror=implicit-function-declaration]
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_plane.c:1046:5: warning: no previous prototype for 'fill_dc_scaling_info' [-Wmissing-prototypes]
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_plane.c:1222:6: warning: no previous prototype for 'handle_cursor_update' [-Wmissing-prototypes]
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_plane.c:152:6: warning: no previous prototype for 'modifier_has_dcc' [-Wmissing-prototypes]
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_plane.c:1576:5: warning: no previous prototype for 'amdgpu_dm_plane_init' [-Wmissing-prototypes]
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_plane.c:157:10: warning: no previous prototype for 'modifier_gfx9_swizzle_mode' [-Wmissing-prototypes]
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_plane.c:752:5: warning: no previous prototype for 'fill_plane_buffer_attributes' [-Wmissing-prototypes]
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_plane.c:83:31: warning: no previous prototype for 'amd_get_format_info' [-Wmissing-prototypes]
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_plane.c:88:6: warning: no previous prototype for 'fill_blending_from_plane_state' [-Wmissing-prototypes]
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_plane.c:992:5: warning: no previous prototype for 'dm_plane_helper_check_state' [-Wmissing-prototypes]
+drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c:905:28: warning: variable 'top' set but not used [-Wunused-but-set-variable]
+drivers/platform/mellanox/mlxreg-lc.c:866 mlxreg_lc_probe() warn: passing zero to 'PTR_ERR'
 
-So, we can drop this one in favor of the other.
+Error/Warning ids grouped by kconfigs:
 
-Thanks
+gcc_recent_errors
+|-- alpha-allmodconfig
+|   |-- drivers-base-regmap-regmap-mmio.c:error:implicit-declaration-of-function-readsq
+|   `-- drivers-base-regmap-regmap-mmio.c:error:implicit-declaration-of-function-writesq
+|-- alpha-allyesconfig
+|   |-- drivers-base-regmap-regmap-mmio.c:error:implicit-declaration-of-function-readsq
+|   |-- drivers-base-regmap-regmap-mmio.c:error:implicit-declaration-of-function-writesq
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-amd_get_format_info
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-amdgpu_dm_plane_init
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-dm_plane_helper_check_state
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-fill_blending_from_plane_state
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-fill_dc_scaling_info
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-fill_plane_buffer_attributes
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-handle_cursor_update
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-modifier_gfx9_swizzle_mode
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-modifier_has_dcc
+|   `-- drivers-gpu-drm-msm-disp-dpu1-dpu_kms.c:warning:variable-top-set-but-not-used
+|-- alpha-buildonly-randconfig-r002-20220818
+|   |-- drivers-base-regmap-regmap-mmio.c:error:implicit-declaration-of-function-readsq
+|   `-- drivers-base-regmap-regmap-mmio.c:error:implicit-declaration-of-function-writesq
+|-- alpha-randconfig-r024-20220818
+|   |-- drivers-base-regmap-regmap-mmio.c:error:implicit-declaration-of-function-readsq
+|   |-- drivers-base-regmap-regmap-mmio.c:error:implicit-declaration-of-function-writesq
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-amd_get_format_info
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-amdgpu_dm_plane_init
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-dm_plane_helper_check_state
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-fill_blending_from_plane_state
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-fill_dc_scaling_info
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-fill_plane_buffer_attributes
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-handle_cursor_update
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-modifier_gfx9_swizzle_mode
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-modifier_has_dcc
+|-- alpha-randconfig-r031-20220818
+|   |-- drivers-base-regmap-regmap-mmio.c:error:implicit-declaration-of-function-readsq
+|   `-- drivers-base-regmap-regmap-mmio.c:error:implicit-declaration-of-function-writesq
+|-- arc-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-amd_get_format_info
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-amdgpu_dm_plane_init
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-dm_plane_helper_check_state
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-fill_blending_from_plane_state
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-fill_dc_scaling_info
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-fill_plane_buffer_attributes
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-handle_cursor_update
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-modifier_gfx9_swizzle_mode
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-modifier_has_dcc
+|   `-- drivers-gpu-drm-msm-disp-dpu1-dpu_kms.c:warning:variable-top-set-but-not-used
+|-- arm-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-amd_get_format_info
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-amdgpu_dm_plane_init
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-dm_plane_helper_check_state
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm_plane.c:warning:no-previous-prototype-for-fill_blending_from_plane_state
 
-Abhinav
-> Ideally drivers are simple. They configure the hardware for what the
-> function pointer is asking for. State management and things like that
-> should be pushed into the core framework so that we don't have to
-> duplicate that multiple times.
-> 
->>>
->>> Thanks
->>>
->>> Abhinav
->>>
->>>
->> Ii sound likes that there is a hole either at user space or drm.
->>
->> But that should not cause dp_bridge_disable() at dp driver to crash.
-> 
-> Agreed.
-> 
->>
->> Therefore it is properly to check hdp_state condition at
->> dp_bridge_disable() to prevent it from crashing.
->>
-> 
-> Disagree. Userspace shouldn't be able to get drm into a wedged state.
+elapsed time: 725m
+
+configs tested: 64
+configs skipped: 2
+
+gcc tested configs:
+x86_64                        randconfig-a011
+um                             i386_defconfig
+x86_64                        randconfig-a013
+um                           x86_64_defconfig
+x86_64                              defconfig
+x86_64                        randconfig-a015
+arm                                 defconfig
+i386                                defconfig
+x86_64                          rhel-8.3-func
+i386                          randconfig-a001
+arc                  randconfig-r043-20220818
+i386                          randconfig-a003
+x86_64                         rhel-8.3-kunit
+riscv                randconfig-r042-20220818
+powerpc                           allnoconfig
+x86_64                    rhel-8.3-kselftests
+s390                 randconfig-r044-20220818
+x86_64                           rhel-8.3-kvm
+mips                             allyesconfig
+i386                          randconfig-a014
+arc                               allnoconfig
+x86_64                        randconfig-a002
+m68k                             allmodconfig
+ia64                             allmodconfig
+powerpc                          allmodconfig
+i386                          randconfig-a005
+x86_64                               rhel-8.3
+alpha                             allnoconfig
+x86_64                           rhel-8.3-syz
+riscv                             allnoconfig
+i386                             allyesconfig
+arc                              allyesconfig
+csky                              allnoconfig
+i386                          randconfig-a012
+arm64                            allyesconfig
+sh                               allmodconfig
+i386                          randconfig-a016
+alpha                            allyesconfig
+x86_64                           allyesconfig
+arm                              allyesconfig
+x86_64                        randconfig-a004
+m68k                             allyesconfig
+x86_64                        randconfig-a006
+powerpc                      cm5200_defconfig
+arm                             pxa_defconfig
+powerpc                      ppc40x_defconfig
+powerpc                      mgcoge_defconfig
+
+clang tested configs:
+x86_64                        randconfig-a012
+x86_64                        randconfig-a016
+x86_64                        randconfig-a014
+hexagon              randconfig-r041-20220818
+hexagon              randconfig-r045-20220818
+i386                          randconfig-a002
+i386                          randconfig-a004
+i386                          randconfig-a013
+i386                          randconfig-a011
+x86_64                        randconfig-a001
+x86_64                        randconfig-a003
+i386                          randconfig-a006
+i386                          randconfig-a015
+x86_64                        randconfig-a005
+x86_64                          rhel-8.3-rust
+mips                        maltaup_defconfig
+mips                     loongson1c_defconfig
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
