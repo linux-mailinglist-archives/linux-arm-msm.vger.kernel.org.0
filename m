@@ -2,295 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF0FB598510
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 16:00:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C43185985A4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 16:23:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245542AbiHRN7G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Aug 2022 09:59:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36586 "EHLO
+        id S245064AbiHROW3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Aug 2022 10:22:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245545AbiHRN6m (ORCPT
+        with ESMTP id S243887AbiHROW3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Aug 2022 09:58:42 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 707DB27FE1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 06:58:35 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id ay12so874893wmb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 06:58:34 -0700 (PDT)
+        Thu, 18 Aug 2022 10:22:29 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D30F9AFAF7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 07:22:27 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id s11-20020a1cf20b000000b003a52a0945e8so1018613wmc.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 07:22:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=Gcq/MNox46vkVaOFbJDKt3RUNde615bJ744Z+6gObTw=;
-        b=vibrq/2fUjIPeQmnS8Wbkek4U1KafGvM4qnOqHHMjx4LGO4buuVGkR99I6+2aZ64cd
-         A6RlbZqaJuxcDWYUAo4Bfem+tcPTb3Ujpf9havVi3NF3ce47CEU6kSwzqBLDvEplVOhk
-         8v44EFu5Lwh1pXKCSrbD8jUpRS4s3HpKRCMKYDutEo36/TVLLWTzxSwjON0Yt6bjy6rv
-         x/rONf+/NTsLBvBwrK5F8+XVC1zvvA7O7QJ0zx9Xjc4ZrHDeOFdRlFk0DFnfmMdXTqbm
-         Kg82D8W49a4YEhCwqt/wYS9rtZSUuGgBq+piNOfLosmC92UX8DW83Bnhyr06qRdtUYWf
-         Sciw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=aIyech5h/+UXGvGLsMrbDOfgSWvv8J2d6bGJqyRKLIs=;
+        b=O9v21FbbSfqHPvVquF/flI5r+QPmlmjFivxMpnAQKTKf/tlVK4A8HkVHCo76oD0Du6
+         +nzZhpGwvPhccFE1y3N4NVu0heVFDjMRNWA/H03f+zJtu8Wd4b2DI9D1Jbeuwgs+6Akh
+         1Cvva9kQlwjAgQFTyk74mpaddNLHNbSUnFQ4z/xfgRr+uP7iXZy5EckH7p2W6Rw2JGjL
+         uaAsUDDxsA0tloBc+Cip81Yl4qczuIQgXrh5V/E5wRyHuhKtKhLRts4kO8SbjFaFVJUt
+         Q6gEP6FXEvIH0VUwv72sHRzK5JDpiQa4c9hZwSNjIj3vAYZZvnBgkbIMeZat59kfNdIV
+         DDMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=Gcq/MNox46vkVaOFbJDKt3RUNde615bJ744Z+6gObTw=;
-        b=VpyqGgCQYgEqzP+wvu9a0beHONoQdfp6NQxFnX1+/Ofouy5xAsImH0HJaNiy8VpcTr
-         nxgqoF+YONYhjJM5/EqAAqqaina44xRl9enZ4qUzl7Bxq7291bh/WEH/a2AwrBklJKrO
-         9pJcH0rrRHwxecJn7Qx1LIvROPMmf5OxOza/t8DYExdsuj50oMCy3XweZQjPzkuFijhN
-         EtA5DYlb5BeHrY+VH28/ZIuAZCDKRBeVb9C83j45VzxGpkQtU6f4KjcIf1FTev0s5D+G
-         2njc0PFn1HVmD9nAiivzqF4eA9RKzgmTPGvr54sPAjqzQMRWxaklJh0NLDRXm25OQ2Pq
-         NC9Q==
-X-Gm-Message-State: ACgBeo0Fg+cYaz7++n+WFNQ75w6WSqpFpK/pfBC8EFIATq7s8Ogu5Ouf
-        DIKaCg46fcghDtxSdJRliUCfjw==
-X-Google-Smtp-Source: AA6agR5HZvb+LPA0TRoJ4TB+2kKBbHlhPtSE0eJcSYtCLA+B+YFQ7wuqrn3u92SMEyiK36J/aC0aiA==
-X-Received: by 2002:a05:600c:358f:b0:3a6:145:3500 with SMTP id p15-20020a05600c358f00b003a601453500mr2090836wmq.64.1660831113185;
-        Thu, 18 Aug 2022 06:58:33 -0700 (PDT)
-Received: from srini-hackbox.lan (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.gmail.com with ESMTPSA id l24-20020a1c7918000000b003a5ca627333sm5335937wme.8.2022.08.18.06.58.32
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=aIyech5h/+UXGvGLsMrbDOfgSWvv8J2d6bGJqyRKLIs=;
+        b=SbvyJ7f46Huz2HDh2wsANk0SZQ0u5d2m+btt5D8O1k+WY9MwyDhtkymdyIk82WjT8Q
+         gUFzIdjOGQzAcxvXkl9+i+E4I+cs4VTxy3qm2zWEwTD34HYYHew4NvYIjXcBYGcJHkJ4
+         /7WCM0aEm3TJ52NIQ0ZkiX8bxvHBySGEoVcmUmNeOQYJo65yNRrK7LNlJAZXpgcmFtud
+         mbrMbeHMArQPwR1cZJj3D6eLbUsTZqjFdylpzroBuJprzKV95WpARo+NLwUZDi8ELDha
+         rIT3wvEDSLyrquSVJHV1ST2tsqpeGiHSYJQm/w25XzsMvthLpd3uL9Xs0mc1VSuqJr1J
+         1kRg==
+X-Gm-Message-State: ACgBeo1W75T0yJeA53pQmNS/5o/Zr/lxsn5kGRDRC3NxcE8C8YG95lqz
+        lhtJ8Cq2heTOSx8eOR+06s24IHFUW3m/45lb
+X-Google-Smtp-Source: AA6agR67lNyCP6PU22sf32+TiEHnPS75sfs2dClSXmIvi0DyXi1vN8TTIy5FUefyOu3N8LHeF1OOnw==
+X-Received: by 2002:a05:600c:4d15:b0:3a5:b3fe:75dd with SMTP id u21-20020a05600c4d1500b003a5b3fe75ddmr5384209wmp.116.1660832546392;
+        Thu, 18 Aug 2022 07:22:26 -0700 (PDT)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id l23-20020a05600c1d1700b003a61306d79dsm2767184wms.41.2022.08.18.07.22.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Aug 2022 06:58:32 -0700 (PDT)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     broonie@kernel.org
-Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        perex@perex.cz, tiwai@suse.com,
-        pierre-louis.bossart@linux.intel.com,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 3/3] ASoC: qcom: add machine driver for sc8280xp
-Date:   Thu, 18 Aug 2022 14:58:17 +0100
-Message-Id: <20220818135817.10142-4-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20220818135817.10142-1-srinivas.kandagatla@linaro.org>
-References: <20220818135817.10142-1-srinivas.kandagatla@linaro.org>
+        Thu, 18 Aug 2022 07:22:25 -0700 (PDT)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     Caleb Connolly <caleb.connolly@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: [RFC 1/2] soc: qcom_stats: Add state container
+Date:   Thu, 18 Aug 2022 17:22:14 +0300
+Message-Id: <20220818142215.2282365-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add machine driver for sc8280xp SoC.
+In order to allow the dynamic creation of debugfs subsystem entries,
+the notifier and the notifier_block need to be stored in a per-subsystem
+fashion. For that we need some kind of state container, so add it and group
+everything related to the probing device into it.
 
-This intial supports only includes WSA883x Speakers and WCD938x based headset.
-
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- sound/soc/qcom/Kconfig    |  11 +++
- sound/soc/qcom/Makefile   |   2 +
- sound/soc/qcom/sc8280xp.c | 157 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 170 insertions(+)
- create mode 100644 sound/soc/qcom/sc8280xp.c
+ drivers/soc/qcom/qcom_stats.c | 39 +++++++++++++++++++++++++++--------
+ 1 file changed, 30 insertions(+), 9 deletions(-)
 
-diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
-index 750653404ba3..d0e59e07b1fc 100644
---- a/sound/soc/qcom/Kconfig
-+++ b/sound/soc/qcom/Kconfig
-@@ -173,6 +173,17 @@ config SND_SOC_SM8250
- 	  SM8250 SoC-based systems.
- 	  Say Y if you want to use audio device on this SoCs.
+diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
+index d6bfd1bbdc2a..fa30540b6583 100644
+--- a/drivers/soc/qcom/qcom_stats.c
++++ b/drivers/soc/qcom/qcom_stats.c
+@@ -68,6 +68,13 @@ struct appended_stats {
+ 	u32 reserved[3];
+ };
  
-+config SND_SOC_SC8280XP
-+	tristate "SoC Machine driver for SC8280XP boards"
-+	depends on QCOM_APR && SOUNDWIRE
-+	depends on COMMON_CLK
-+	select SND_SOC_QDSP6
-+	select SND_SOC_QCOM_COMMON
-+	help
-+	  To add support for audio on Qualcomm Technologies Inc.
-+	  SC8280XP SoC-based systems.
-+	  Say Y if you want to use audio device on this SoCs.
-+
- config SND_SOC_SC7180
- 	tristate "SoC Machine driver for SC7180 boards"
- 	depends on I2C && GPIOLIB
-diff --git a/sound/soc/qcom/Makefile b/sound/soc/qcom/Makefile
-index 8b7b876899a8..8b97172cf990 100644
---- a/sound/soc/qcom/Makefile
-+++ b/sound/soc/qcom/Makefile
-@@ -26,6 +26,7 @@ snd-soc-sc7180-objs := sc7180.o
- snd-soc-sc7280-objs := sc7280.o
- snd-soc-sdm845-objs := sdm845.o
- snd-soc-sm8250-objs := sm8250.o
-+snd-soc-sc8280xp-objs := sc8280xp.o
- snd-soc-qcom-common-objs := common.o
- 
- obj-$(CONFIG_SND_SOC_STORM) += snd-soc-storm.o
-@@ -33,6 +34,7 @@ obj-$(CONFIG_SND_SOC_APQ8016_SBC) += snd-soc-apq8016-sbc.o
- obj-$(CONFIG_SND_SOC_MSM8996) += snd-soc-apq8096.o
- obj-$(CONFIG_SND_SOC_SC7180) += snd-soc-sc7180.o
- obj-$(CONFIG_SND_SOC_SC7280) += snd-soc-sc7280.o
-+obj-$(CONFIG_SND_SOC_SC8280XP) += snd-soc-sc8280xp.o
- obj-$(CONFIG_SND_SOC_SDM845) += snd-soc-sdm845.o
- obj-$(CONFIG_SND_SOC_SM8250) += snd-soc-sm8250.o
- obj-$(CONFIG_SND_SOC_QCOM_COMMON) += snd-soc-qcom-common.o
-diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
-new file mode 100644
-index 000000000000..ade44ad7c585
---- /dev/null
-+++ b/sound/soc/qcom/sc8280xp.c
-@@ -0,0 +1,157 @@
-+// SPDX-License-Identifier: GPL-2.0
-+// Copyright (c) 2022, Linaro Limited
-+
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+#include <linux/of_device.h>
-+#include <sound/soc.h>
-+#include <sound/soc-dapm.h>
-+#include <sound/pcm.h>
-+#include <linux/soundwire/sdw.h>
-+#include <sound/jack.h>
-+#include <linux/input-event-codes.h>
-+#include "qdsp6/q6afe.h"
-+#include "common.h"
-+
-+#define DRIVER_NAME		"sc8280xp"
-+
-+struct sc8280xp_snd_data {
-+	bool stream_prepared[AFE_PORT_MAX];
-+	struct snd_soc_card *card;
-+	struct sdw_stream_runtime *sruntime[AFE_PORT_MAX];
-+	struct snd_soc_jack jack;
-+	bool jack_setup;
++struct qcom_stats_priv {
++	struct device dev;
++	struct stats_data *data;
++	struct dentry *root;
++	const struct stats_config *config;
 +};
 +
-+static int sc8280xp_snd_init(struct snd_soc_pcm_runtime *rtd)
-+{
-+	struct sc8280xp_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
+ static void qcom_print_stats(struct seq_file *s, const struct sleep_stats *stat)
+ {
+ 	u64 accumulated = stat->accumulated;
+@@ -121,10 +128,13 @@ static int qcom_soc_sleep_stats_show(struct seq_file *s, void *unused)
+ DEFINE_SHOW_ATTRIBUTE(qcom_soc_sleep_stats);
+ DEFINE_SHOW_ATTRIBUTE(qcom_subsystem_sleep_stats);
+ 
+-static void qcom_create_soc_sleep_stat_files(struct dentry *root, void __iomem *reg,
+-					     struct stats_data *d,
+-					     const struct stats_config *config)
++static void qcom_create_soc_sleep_stat_files(struct qcom_stats_priv *stats,
++						void __iomem *reg)
+ {
++	struct dentry *root = stats->root;
++	struct stats_data *d = stats->data;
++	const struct stats_config *config = stats->config;
 +
-+	return qcom_snd_wcd_jack_setup(rtd, &data->jack, &data->jack_setup);
-+}
-+
-+static int sc8280xp_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
-+				     struct snd_pcm_hw_params *params)
-+{
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct snd_interval *rate = hw_param_interval(params,
-+					SNDRV_PCM_HW_PARAM_RATE);
-+	struct snd_interval *channels = hw_param_interval(params,
-+					SNDRV_PCM_HW_PARAM_CHANNELS);
-+
-+	rate->min = rate->max = 48000;
-+	channels->min = 2;
-+	channels->max = 2;
-+	switch (cpu_dai->id) {
-+	case TX_CODEC_DMA_TX_0:
-+	case TX_CODEC_DMA_TX_1:
-+	case TX_CODEC_DMA_TX_2:
-+	case TX_CODEC_DMA_TX_3:
-+		channels->min = 1;
-+		break;
-+	default:
-+		break;
-+	}
-+
-+
-+	return 0;
-+}
-+
-+static int sc8280xp_snd_hw_params(struct snd_pcm_substream *substream,
-+				struct snd_pcm_hw_params *params)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct sc8280xp_snd_data *pdata = snd_soc_card_get_drvdata(rtd->card);
-+
-+	return qcom_snd_sdw_hw_params(substream, params, &pdata->sruntime[cpu_dai->id]);
-+}
-+
-+static int sc8280xp_snd_prepare(struct snd_pcm_substream *substream)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct sc8280xp_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
-+	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
-+
-+	return qcom_snd_sdw_prepare(substream, sruntime,
-+				    &data->stream_prepared[cpu_dai->id]);
-+}
-+
-+static int sc8280xp_snd_hw_free(struct snd_pcm_substream *substream)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct sc8280xp_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
-+
-+	return qcom_snd_sdw_hw_free(substream, sruntime,
-+				    &data->stream_prepared[cpu_dai->id]);
-+}
-+
-+static const struct snd_soc_ops sc8280xp_be_ops = {
-+	.hw_params = sc8280xp_snd_hw_params,
-+	.hw_free = sc8280xp_snd_hw_free,
-+	.prepare = sc8280xp_snd_prepare,
-+};
-+
-+static void sc8280xp_add_be_ops(struct snd_soc_card *card)
-+{
-+	struct snd_soc_dai_link *link;
-+	int i;
-+
-+	for_each_card_prelinks(card, i, link) {
-+		if (link->no_pcm == 1) {
-+			link->init = sc8280xp_snd_init;
-+			link->be_hw_params_fixup = sc8280xp_be_hw_params_fixup;
-+			link->ops = &sc8280xp_be_ops;
-+		}
-+	}
-+}
-+
-+static int sc8280xp_platform_probe(struct platform_device *pdev)
-+{
-+	struct snd_soc_card *card;
-+	struct sc8280xp_snd_data *data;
-+	struct device *dev = &pdev->dev;
-+	int ret;
-+
-+	card = devm_kzalloc(dev, sizeof(*card), GFP_KERNEL);
-+	if (!card)
-+		return -ENOMEM;
-+	card->owner = THIS_MODULE;
-+	/* Allocate the private data */
-+	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
-+	if (!data)
+ 	char stat_type[sizeof(u32) + 1] = {0};
+ 	size_t stats_offset = config->stats_offset;
+ 	u32 offset = 0, type;
+@@ -167,10 +177,11 @@ static void qcom_create_soc_sleep_stat_files(struct dentry *root, void __iomem *
+ 	}
+ }
+ 
+-static void qcom_create_subsystem_stat_files(struct dentry *root,
+-					     const struct stats_config *config)
++static void qcom_create_subsystem_stat_files(struct qcom_stats_priv *stats)
+ {
+ 	const struct sleep_stats *stat;
++	const struct stats_config *config = stats->config;
++	struct dentry *root = stats->root;
+ 	int i;
+ 
+ 	if (!config->subsystem_stats_in_smem)
+@@ -188,12 +199,17 @@ static void qcom_create_subsystem_stat_files(struct dentry *root,
+ 
+ static int qcom_stats_probe(struct platform_device *pdev)
+ {
++	struct qcom_stats_priv *stats = NULL;
+ 	void __iomem *reg;
+ 	struct dentry *root;
+ 	const struct stats_config *config;
+ 	struct stats_data *d;
+ 	int i;
+ 
++	stats = devm_kzalloc(&pdev->dev, sizeof(*stats), GFP_KERNEL);
++	if (!stats)
 +		return -ENOMEM;
 +
-+	card->dev = dev;
-+	dev_set_drvdata(dev, card);
-+	snd_soc_card_set_drvdata(card, data);
-+	ret = qcom_snd_parse_of(card);
-+	if (ret)
-+		return ret;
+ 	config = device_get_match_data(&pdev->dev);
+ 	if (!config)
+ 		return -ENODEV;
+@@ -212,17 +228,22 @@ static int qcom_stats_probe(struct platform_device *pdev)
+ 
+ 	root = debugfs_create_dir("qcom_stats", NULL);
+ 
+-	qcom_create_subsystem_stat_files(root, config);
+-	qcom_create_soc_sleep_stat_files(root, reg, d, config);
++	stats->config = config;
++	stats->data = d;
++	stats->root = root;
 +
-+	card->driver_name = DRIVER_NAME;
-+	sc8280xp_add_be_ops(card);
-+	return devm_snd_soc_register_card(dev, card);
-+}
-+
-+static const struct of_device_id snd_sc8280xp_dt_match[] = {
-+	{.compatible = "qcom,sc8280xp-sndcard",},
-+	{}
-+};
-+
-+MODULE_DEVICE_TABLE(of, snd_sc8280xp_dt_match);
-+
-+static struct platform_driver snd_sc8280xp_driver = {
-+	.probe  = sc8280xp_platform_probe,
-+	.driver = {
-+		.name = "snd-sc8280xp",
-+		.of_match_table = snd_sc8280xp_dt_match,
-+	},
-+};
-+module_platform_driver(snd_sc8280xp_driver);
-+MODULE_AUTHOR("Srinivas Kandagatla <srinivas.kandagatla@linaro.org");
-+MODULE_DESCRIPTION("SC8280XP ASoC Machine Driver");
-+MODULE_LICENSE("GPL v2");
++	qcom_create_subsystem_stat_files(stats);
++	qcom_create_soc_sleep_stat_files(stats, reg);
+ 
+-	platform_set_drvdata(pdev, root);
++	platform_set_drvdata(pdev, stats);
+ 
+ 	return 0;
+ }
+ 
+ static int qcom_stats_remove(struct platform_device *pdev)
+ {
+-	struct dentry *root = platform_get_drvdata(pdev);
++	struct qcom_stats_priv *stats = platform_get_drvdata(pdev);
++	struct dentry *root = stats->root;
+ 
+ 	debugfs_remove_recursive(root);
+ 
 -- 
-2.21.0
+2.34.1
 
