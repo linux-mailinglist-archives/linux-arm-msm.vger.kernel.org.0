@@ -2,89 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1355A598B2E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 20:31:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C9B6598BFA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 20:48:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345467AbiHRSa3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Aug 2022 14:30:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45084 "EHLO
+        id S232313AbiHRSrG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Aug 2022 14:47:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345488AbiHRSaW (ORCPT
+        with ESMTP id S1345537AbiHRSqr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Aug 2022 14:30:22 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52342B5A73;
-        Thu, 18 Aug 2022 11:30:20 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 10ED7B82370;
-        Thu, 18 Aug 2022 18:30:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B707AC433B5;
-        Thu, 18 Aug 2022 18:30:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1660847417;
-        bh=0tcBwhvU3IwbrGMz2RXkuGs7v8beKzHJW6W7ZezoMqE=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=VyzWQ4W7Zxq4YYDdLa1ZMFGldOAczo3Z92T0pE6Wk37y+NUFm/wtT6At4YbpfPEFa
-         XZ0UQPKD3qePJ4TpiJr/TsDeLYocZtqMxd46/xEcpsSPvjYIa+Z7Vz3e/YZvg7XG69
-         D0RWOPhHBAxQxJmgKXXgdbhQwWSKYtMriZCAt3DTd8tleePyPY0kuIJybPJaW04A25
-         Twqba6D8KRryriGSBlqyLrS/xD2P0AYQEPpt+8xM4OJ64diZf8YeQspki3muPnVZKG
-         IZTFe2Mt+NaM1kWYf9P7udiulll/+HDBHIdmghTvh3+U/+QB5BpHzOL5WwPojROrB7
-         V9iQ8r6XBuBRw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 9A75EE2A058;
-        Thu, 18 Aug 2022 18:30:17 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Thu, 18 Aug 2022 14:46:47 -0400
+Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFE902B26E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 11:46:22 -0700 (PDT)
+Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-11c59785966so2774969fac.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 11:46:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc;
+        bh=6Z6uEqxwpDOfnuK+UVMCWoACLsRd2/9qi+DqixTXtxw=;
+        b=iVNTuDR5I+ytb+s4rAAhFaglQPC3WfvEqoAhtAff0x1FWbwybR8rgiCGh1lXQLM8kI
+         KA+gO4pHbgJLaAbzCOqNwjqfY+6rbvRJYG0GnzxKJWr3uPzs3Flw6P3u4MrwObvicT7H
+         2SH5Noomu406flNjt6iXBe45b7cMnNAAlSB6U=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc;
+        bh=6Z6uEqxwpDOfnuK+UVMCWoACLsRd2/9qi+DqixTXtxw=;
+        b=ftc/mTtfw1ldQ6pfsyCXU3nDNZ3S1RN3MtlGmXI5gi967Pbqy2edmrSjq9KHMX90Be
+         XFo8HdKIQhD4dgpdmLu5pmoXd541bLz2Wl7XazF1dwgBiw0MhQdi2B7fkh9xlEhGkDUW
+         GDEIScB08dvVMV9EdJxeU4UEPC6TUMrTIZrApSPc6x4Fto3VFibx8Aw4R28+JH0XMdPE
+         WUkkZHP8bTxZf2WbqVlor4FoN7l/Yus3LqeGr93I06coSsUHLrGHc2bHSOZxp/SFoa+b
+         6bh8XjFAKqUVmla2fSy41Lrptu8TRZ+3NjlyKFtRBBCGRH1QXHu9LhjGUWhjpLnMyodA
+         oVaA==
+X-Gm-Message-State: ACgBeo2BPlpv765gxWUeOga1O6KIKrwfZ2PjyI38RdlXYtkATYpX4dkS
+        sEmsGWekinEGASTHo+llwTjTq1PTBaqwOJJGWeINuA==
+X-Google-Smtp-Source: AA6agR4dMbyjRV88dk8t32ajw/6ITJWQfxQNrPR5mCJrsf6fvga0+ETZsEHDFqqJyHIpfwU9aAQ+qWzTCRrcGVWZTg4=
+X-Received: by 2002:a05:6870:e408:b0:11c:37ad:773a with SMTP id
+ n8-20020a056870e40800b0011c37ad773amr2042704oag.44.1660848382277; Thu, 18 Aug
+ 2022 11:46:22 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 18 Aug 2022 13:46:21 -0500
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2] dt-bindings: Fix incorrect "the the" corrections
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <166084741762.25395.6372912472329150051.git-patchwork-notify@kernel.org>
-Date:   Thu, 18 Aug 2022 18:30:17 +0000
-References: <c5743c0a1a24b3a8893797b52fed88b99e56b04b.1660755148.git.geert+renesas@glider.be>
-In-Reply-To: <c5743c0a1a24b3a8893797b52fed88b99e56b04b.1660755148.git.geert+renesas@glider.be>
-To:     Geert Uytterhoeven <geert+renesas@glider.be>
-Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        slark_xiao@163.com, kuba@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, niklas.soderlund@ragnatech.se,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org, netdev@vger.kernel.org,
+In-Reply-To: <20220818084216.1.I5c2b6fea19c4c0dec67fd4931f03df8e5ccaca95@changeid>
+References: <20220818084216.1.I5c2b6fea19c4c0dec67fd4931f03df8e5ccaca95@changeid>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Thu, 18 Aug 2022 13:46:21 -0500
+Message-ID: <CAE-0n52GzxXEsToWzfU1TMuASuC6TKK7NXxYbBQWxNmM74FxZA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Add sleep state for alc5682 codec
+To:     "Joseph S. Barrera III" <joebar@chromium.org>,
+        linux-arm-msm@vger.kernel.org
+Cc:     Alexandru Stan <amstan@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Judy Hsiao <judyhsiao@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
+Quoting Joseph S. Barrera III (2022-08-18 08:42:19)
+> Add sleep state to acl5682. In default, gpio28 (HP_IRQ) is bias-pull-up.
+> To save power, in the new sleep state, gpio28 is bias-disable.
+>
+> sleeping, /sys/kernel/debug/gpio shows gpio28 as "no pull". When codec
 
-This patch was applied to netdev/net.git (master)
-by Jakub Kicinski <kuba@kernel.org>:
+Is something missing? The sentence starts with 'sleeping'.
 
-On Wed, 17 Aug 2022 18:54:51 +0200 you wrote:
-> Lots of double occurrences of "the" were replaced by single occurrences,
-> but some of them should become "to the" instead.
-> 
-> Fixes: 12e5bde18d7f6ca4 ("dt-bindings: Fix typo in comment")
-> Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+> is awake (microphone plugged in and in use), it shows gpio28 as "pull up".
+>
+> Signed-off-by: Joseph S. Barrera III <joebar@chromium.org>
 > ---
-> v2:
->   - Drop blank line between Fixes and SoB tags.
-> 
-> [...]
+>
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 15 ++++++++++++++-
+>  1 file changed, 14 insertions(+), 1 deletion(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> index b5f534db135a..94dd6c34d997 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> @@ -755,8 +755,9 @@ hp_i2c: &i2c9 {
+>         alc5682: codec@1a {
+>                 compatible = "realtek,rt5682i";
+>                 reg = <0x1a>;
+> -               pinctrl-names = "default";
+> +               pinctrl-names = "default", "sleep";
+>                 pinctrl-0 = <&hp_irq>;
+> +               pinctrl-1 = <&hp_sleep>;
+>
+>                 #sound-dai-cells = <1>;
+>
+> @@ -1336,6 +1337,18 @@ pinconf {
+>                 };
+>         };
+>
+> +       hp_sleep: hp-sleep {
+> +               pinmux {
+> +                       pins = "gpio28";
+> +                       function = "gpio";
+> +               };
+> +
+> +               pinconf {
+> +                       pins = "gpio28";
+> +                       bias-disable;
+> +               };
 
-Here is the summary with links:
-  - [v2] dt-bindings: Fix incorrect "the the" corrections
-    https://git.kernel.org/netdev/net/c/8aa48ade7db4
+Does removing the bias cause an irq to trigger? I'm worried that this
+change may cause a spurious irq upon entering or exiting sleep, maybe
+both actually. The irq is double edged so we really want it to stay
+stable at one level whenever the gpio interrupt hardware is sensing the
+line.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+From what I can tell the pin is powered by AVDD-supply and I can't tell
+if that is ever powered off while the driver is probed. Probably not? If
+the power to the pin on the codec is never turned off then there isn't a
+power leak from what I can tell.
