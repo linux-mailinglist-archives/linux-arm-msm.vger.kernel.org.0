@@ -2,120 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C693598DD3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 22:24:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 530C8598E21
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 22:37:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346018AbiHRUYU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Aug 2022 16:24:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37436 "EHLO
+        id S1346114AbiHRUfA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Aug 2022 16:35:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346025AbiHRUYD (ORCPT
+        with ESMTP id S1345574AbiHRUe4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Aug 2022 16:24:03 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F396712A8F;
-        Thu, 18 Aug 2022 13:23:18 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27IFseMc015415;
-        Thu, 18 Aug 2022 20:23:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=7/Dlb7opb1zHeDvNOlDvqLTNKaGONEslYGnrJDLSevg=;
- b=bFKMVOwFLzkM2VSQVIyo81skadGLII1c+trgYqoqskbbT+3d73k80Oy9rWtEPbacp+IK
- zwhsw7scYm4xzN43dR2bit1V1p7Kq30TPtfS+AcBUj3G9/Ge2OKta1HsKflheHQkIfKY
- eE6t2iLLiPqznBIM74qUdHPTaJi6h9LY5opd/q8MQa3CI0gxRMOhAYpSVvWUhYRQtdLa
- rWaoz9qqlcsSa45Je6PQsy4nevQAaTzCHP7PKbQlyucvATbsfYzZh2ef9nwujTmk15mP
- V2n2JYlLOVHxoyPUAAh3bZyv3HoTVDqfIJ3VXA5W/VY/eI+gv/AR2X8O4q3EJiBd4LXL SA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j1d803f61-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 18 Aug 2022 20:23:11 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27IKNAQe023554
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 18 Aug 2022 20:23:10 GMT
-Received: from hyd-lnxbld559.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Thu, 18 Aug 2022 13:23:04 -0700
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-To:     freedreno <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>
-CC:     Jordan Crouse <jordan@cosmicpenguin.net>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Douglas Anderson <dianders@chromium.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        "Abhinav Kumar" <quic_abhinavk@quicinc.com>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>, Sean Paul <sean@poorly.run>,
-        Wang Qing <wangqing@vivo.com>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v5 7/7] drm/msm/a6xx: Handle GMU prepare-slumber hfi failure
-Date:   Fri, 19 Aug 2022 01:52:15 +0530
-Message-ID: <20220819015030.v5.7.I54815c7c36b80d4725cd054e536365250454452f@changeid>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1660854135-1667-1-git-send-email-quic_akhilpo@quicinc.com>
-References: <1660854135-1667-1-git-send-email-quic_akhilpo@quicinc.com>
+        Thu, 18 Aug 2022 16:34:56 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F0CAC888B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 13:34:55 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id t5so3291289edc.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 13:34:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=2hDqEKcdmlYS+rmxMoV7evAJDeqAhao6y+38M8d8WAw=;
+        b=JmjuAiUEh8LDFy22IDRUpw9ZDS42dlK7Mq1k8lu9nRgQ6JsQ5jjykvqGPtpZF8+ShW
+         cKfizZF4FHBZ2y1NhmQwtx84tp+fPWsDRigx0GmT5jv9eAYEds53keBKYdHiyj6wUDkm
+         Dn5cUN82C37nyUdf4CFexaOv2B6CfP4Ot+w3c=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=2hDqEKcdmlYS+rmxMoV7evAJDeqAhao6y+38M8d8WAw=;
+        b=MZ0P3IneogktB5I7FMFMVz9+eEHGGW8rTMGNVLyJG8EjTuEa8Cl2uyrL7x0gN3GL32
+         SeAIhqwCqxDD5b9qfVKjOaAiiJhx8Zw8GhZyiErSZqreKUBKVrfYqSXVv02ehRIbJ82B
+         aqiCeR4I0qPrhvPFjq+lidrD73HJ/K8ZRMLkEZfHMs8rW5octec5zhm6ZqYltjLq8zac
+         OtBTmRfi2KeNa7hXGGRJuvepMdin4oU5DNZ3rwu5BWIqKqVFo0/uOIowgt9BNJ5vd4KG
+         sa6+SkDOVtkAZUV/XnCoG1VutixY0wosvuocZbI3fCYSYpJpLhtLRGoLtqeK5GKe5WLo
+         H0kQ==
+X-Gm-Message-State: ACgBeo1maPqh5IHYfP9pQG/Hglx56wwhzGU0QxXJFt8IYyUD0s1Adc6l
+        LoXCCaHrIZWQQgleGJSwjzw5Ycx9p9ZIaTTE
+X-Google-Smtp-Source: AA6agR7UOlTOL7H9j8EILRgNLxAN+pI8XCIvRDPKEhewqpkqNYnR8V84waQE7PKnCioFUEmUhbkEVg==
+X-Received: by 2002:aa7:cb92:0:b0:443:98d6:20da with SMTP id r18-20020aa7cb92000000b0044398d620damr3485937edt.399.1660854893318;
+        Thu, 18 Aug 2022 13:34:53 -0700 (PDT)
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com. [209.85.221.47])
+        by smtp.gmail.com with ESMTPSA id k13-20020a170906128d00b006f3ef214ddesm1286404ejb.68.2022.08.18.13.34.52
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Aug 2022 13:34:52 -0700 (PDT)
+Received: by mail-wr1-f47.google.com with SMTP id k16so2975025wrx.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 13:34:52 -0700 (PDT)
+X-Received: by 2002:a05:6000:1541:b0:222:cf65:18d7 with SMTP id
+ 1-20020a056000154100b00222cf6518d7mr2401685wry.659.1660854892286; Thu, 18 Aug
+ 2022 13:34:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 7-UNUdfGEDKs2BOZkGLE4qVK8kNlPcmt
-X-Proofpoint-ORIG-GUID: 7-UNUdfGEDKs2BOZkGLE4qVK8kNlPcmt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-18_14,2022-08-18_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- malwarescore=0 bulkscore=0 priorityscore=1501 impostorscore=0
- mlxlogscore=862 mlxscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2208180074
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+References: <20220818084216.1.I5c2b6fea19c4c0dec67fd4931f03df8e5ccaca95@changeid>
+ <CAE-0n52GzxXEsToWzfU1TMuASuC6TKK7NXxYbBQWxNmM74FxZA@mail.gmail.com>
+In-Reply-To: <CAE-0n52GzxXEsToWzfU1TMuASuC6TKK7NXxYbBQWxNmM74FxZA@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 18 Aug 2022 13:34:39 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WNuqtpnCr2Zn0z_L1OCiwD8dNzhDxvhfHYuYVmciPbuQ@mail.gmail.com>
+Message-ID: <CAD=FV=WNuqtpnCr2Zn0z_L1OCiwD8dNzhDxvhfHYuYVmciPbuQ@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Add sleep state for alc5682 codec
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     "Joseph S. Barrera III" <joebar@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Alexandru Stan <amstan@chromium.org>,
+        Judy Hsiao <judyhsiao@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When prepare-slumber hfi fails, we should follow a6xx_gmu_force_off()
-sequence.
+Hi,
 
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
----
+On Thu, Aug 18, 2022 at 11:46 AM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Joseph S. Barrera III (2022-08-18 08:42:19)
+> > Add sleep state to acl5682. In default, gpio28 (HP_IRQ) is bias-pull-up.
+> > To save power, in the new sleep state, gpio28 is bias-disable.
+> >
+> > sleeping, /sys/kernel/debug/gpio shows gpio28 as "no pull". When codec
+>
+> Is something missing? The sentence starts with 'sleeping'.
+>
+> > is awake (microphone plugged in and in use), it shows gpio28 as "pull up".
+> >
+> > Signed-off-by: Joseph S. Barrera III <joebar@chromium.org>
+> > ---
+> >
+> >  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 15 ++++++++++++++-
+> >  1 file changed, 14 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> > index b5f534db135a..94dd6c34d997 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> > @@ -755,8 +755,9 @@ hp_i2c: &i2c9 {
+> >         alc5682: codec@1a {
+> >                 compatible = "realtek,rt5682i";
+> >                 reg = <0x1a>;
+> > -               pinctrl-names = "default";
+> > +               pinctrl-names = "default", "sleep";
+> >                 pinctrl-0 = <&hp_irq>;
+> > +               pinctrl-1 = <&hp_sleep>;
+> >
+> >                 #sound-dai-cells = <1>;
+> >
+> > @@ -1336,6 +1337,18 @@ pinconf {
+> >                 };
+> >         };
+> >
+> > +       hp_sleep: hp-sleep {
+> > +               pinmux {
+> > +                       pins = "gpio28";
+> > +                       function = "gpio";
+> > +               };
+> > +
+> > +               pinconf {
+> > +                       pins = "gpio28";
+> > +                       bias-disable;
+> > +               };
+>
+> Does removing the bias cause an irq to trigger? I'm worried that this
+> change may cause a spurious irq upon entering or exiting sleep, maybe
+> both actually. The irq is double edged so we really want it to stay
+> stable at one level whenever the gpio interrupt hardware is sensing the
+> line.
+>
+> From what I can tell the pin is powered by AVDD-supply
 
-(no changes since v1)
+Officially DBVDD I think, but (at least on the trogdor hardware) they
+are the same rail.
 
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+> and I can't tell
+> if that is ever powered off while the driver is probed. Probably not?
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index db05942..3d00ef9 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -1082,7 +1082,11 @@ static void a6xx_gmu_shutdown(struct a6xx_gmu *gmu)
- 		a6xx_bus_clear_pending_transactions(adreno_gpu);
- 
- 		/* tell the GMU we want to slumber */
--		a6xx_gmu_notify_slumber(gmu);
-+		ret = a6xx_gmu_notify_slumber(gmu);
-+		if (ret) {
-+			a6xx_gmu_force_off(gmu);
-+			return;
-+		}
- 
- 		ret = gmu_poll_timeout(gmu,
- 			REG_A6XX_GPU_GMU_AO_GPU_CX_BUSY_STATUS, val,
--- 
-2.7.4
+It doesn't seem to be. The driver I'm looking at turns on all the
+regulators at probe time and never turns them off.
 
+> If
+> the power to the pin on the codec is never turned off then there isn't a
+> power leak from what I can tell.
+
+I tend to agree with Stephen's analysis. We actually need to keep the
+pullup enabled unless we are actually turning power off to the codec,
+which we don't seem to be doing.
+
+I guess I'm a little surprised that we don't even seem to turn any of
+this codec's regulators off in S3. That seems like it would be drawing
+power that we don't want. Maybe the "low power" mode of the codec is
+low enough and we need to avoid powering it off to avoid pops / hisses
+in S3 or something? If that's true, this might be one of those places
+where the "LPM" of the regulators might actually be useful...
+
+
+-Doug
