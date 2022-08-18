@@ -2,667 +2,236 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5953D597DE7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 07:11:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C38DD597E55
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 08:02:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240652AbiHRFJz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Aug 2022 01:09:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35212 "EHLO
+        id S243468AbiHRGBf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Aug 2022 02:01:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239419AbiHRFJy (ORCPT
+        with ESMTP id S243455AbiHRGBe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Aug 2022 01:09:54 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AE6BA1D7A;
-        Wed, 17 Aug 2022 22:09:49 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id a22so504196edj.5;
-        Wed, 17 Aug 2022 22:09:49 -0700 (PDT)
+        Thu, 18 Aug 2022 02:01:34 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B450082FA6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Aug 2022 23:01:31 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id n4so492599wrp.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Aug 2022 23:01:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc;
-        bh=AtaRktMmJ7O+rOok05J5XkZ+x3nDvmU7DTZ4t9d6fcU=;
-        b=EzsXlF2zbP+/5rsez3j7JzQw+dKBkv6iRiIY3baE+bnDtEatCdw+5CHvvoHto6vtfJ
-         Pd6fP1bORJyKOCXLTxmNJynt52Eo4ps2bQiXHtoltDmpKoxvZZ1fdFLS0W5JziETEB66
-         iJprltJBHJJb9aK58Jk4SceoJ0GHFbHKuJssoiv0sF6s3D1yowLoFyDdiAyl6RdKIBgr
-         Rzl84twyfGHGHv+4GfvgVcAugvBSyl5AsCaOthvMZLX6yyGGsy5sb5vX2j1350/gs+ea
-         BuxzYbSIU4mHFyD3aeofIRe+ObHx+fUs1dYwEuiqZiUO4othG2tkz7LuQFLL+IPuk2Mk
-         qI2Q==
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc;
+        bh=bZty3y2darx5s7m8eOWVGV+bKL3GxP3dVhk/MBA5fWU=;
+        b=f+orhQX9Aqm2vt86cAoz3fiZf50H35jqr/TNHqkMa0UF3dukyQrgs61PyJg9OBc0K2
+         fAc9jEui95sT2PJMyw+Yb8O7evo/Ey1XnGjWwUf70sAkvmieksb2OPLCfi5XUWvPA84X
+         geM4Rt5xnkFgxRaORd6pyt5qA20/A63EsKQMcmAbj6t/6DGisbDELa9Am2u9El99gH8M
+         ckXBnp79uq3NwQmOUOUIkZXtntavZu5tuAbynf2kFLbAlBLnHn+qYsVEcOLVnI43xAnv
+         lF9GGCYgx0yePaR/UsQu5OV4ITk07wiZP7+XJueTckNSZOgQdj4kDKaIdWYqPeuSd9zZ
+         hLXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc;
-        bh=AtaRktMmJ7O+rOok05J5XkZ+x3nDvmU7DTZ4t9d6fcU=;
-        b=hyIxx5Bnc/+sfkwNzl+MT+fhY3tBwwSXNZjChs0y/TIa6POGgD3E389r72qhlHTWrS
-         1MLaAN2ddHSYYCS2EtrKijVVZGI8QF4kypDNZGzOFx4JxRL4/eq0BG6fJhJa2kImzgGg
-         jnuQwEdHioVCY8UWzqAlPYgd2I4RI0nxgE90cmcngN/gfaSVkUgbEA8QlIXNspCmQXP3
-         Ps0358JMaUUwyXZ1WTRhi9dQhYqgpwDCfaiajEOE3P/q5vjZtfRZJhlzSdtrpBgZfnXE
-         J+YG1s5uks559e5zGfzWBKTK0Gb7tYUr/JsHHIxZ2V5oIaEYKuaI4Um4NvG9FxwGvP5e
-         acdg==
-X-Gm-Message-State: ACgBeo1q/gX8Aa0LIfWvRdzGeqC3AZYmyWlTKSnWtLujCVFz14qxUmUu
-        jU+8ZE0ABrFatziAufWxK8s=
-X-Google-Smtp-Source: AA6agR68cAh7Fz4amKyoAAYSlkTg3vqofJ7Dk+922HdmaM5HfTmcEELrGEKVF5RMs6RZqg1pmX57Lw==
-X-Received: by 2002:a05:6402:518b:b0:43e:70be:97cd with SMTP id q11-20020a056402518b00b0043e70be97cdmr948775edd.388.1660799387420;
-        Wed, 17 Aug 2022 22:09:47 -0700 (PDT)
-Received: from localhost.lan (ip-194-187-74-233.konfederacka.maverick.com.pl. [194.187.74.233])
-        by smtp.gmail.com with ESMTPSA id b2-20020aa7dc02000000b0043a7c24a669sm434898edu.91.2022.08.17.22.09.46
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=bZty3y2darx5s7m8eOWVGV+bKL3GxP3dVhk/MBA5fWU=;
+        b=NIdYEoaYC4eiqzMQXRHAxwq7PNhg7TW9f1VLsiilirY0b6kp6yqBfIcMfH3FDBLCt2
+         BfS1aXWj9BHRisZfdROK3ZAiiYWbo/0oSZCYQ4Jtb8b0ClREgSu5fSDdeq786tYbCpGr
+         KtrnJbXQE5C0QPJJsDzkKw6tAPcqzzTuYS+B2G1M8gIvQ66I0P0Q6S6qP8RS3LoGy0q7
+         fjIrwkwvt1+/b/QzHd5evFxLMwxH7Xow4ffrY25TMD83eVrRpXvuq6Nbwr436MOJ9XC1
+         eeaeOGH8tvjgeg/p9qMQA4nYr2X96Xt4VEFYu/bAhksZ7nzxtYjhB0HrpUYufa1BxGmf
+         AvBw==
+X-Gm-Message-State: ACgBeo1TmxCBiaiJurFvB59MQcVU5+Tkd22lKsQzvtxGS19EAc0viLDd
+        R0g6rHjLd11Rc50H4zHQVqSAmw==
+X-Google-Smtp-Source: AA6agR7Xs87Dr0m2dsNGP8woPhz8tse750xuLe9TeNweuVK7GcLyu4MnOAU99SNrItyaik7Axun68A==
+X-Received: by 2002:a5d:5a0f:0:b0:220:5930:dc65 with SMTP id bq15-20020a5d5a0f000000b002205930dc65mr598687wrb.229.1660802490217;
+        Wed, 17 Aug 2022 23:01:30 -0700 (PDT)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id q14-20020adff94e000000b00225232c03fdsm514173wrr.27.2022.08.17.23.01.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Aug 2022 22:09:46 -0700 (PDT)
-From:   =?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <zajec5@gmail.com>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, asahi@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-doc@vger.kernel.org,
-        =?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>
-Subject: [PATCH] nvmem: sort config symbols alphabetically
-Date:   Thu, 18 Aug 2022 07:09:00 +0200
-Message-Id: <20220818050900.30062-1-zajec5@gmail.com>
-X-Mailer: git-send-email 2.34.1
+        Wed, 17 Aug 2022 23:01:29 -0700 (PDT)
+Date:   Thu, 18 Aug 2022 09:01:28 +0300
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Caleb Connolly <caleb.connolly@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sdm845: Add the RPMh stats node
+Message-ID: <Yv3VuDvvpyNziZEq@linaro.org>
+References: <20220812101240.1869605-1-abel.vesa@linaro.org>
+ <T2Uz7zs4Ht58lYc5zWg1VBY0ju6bVaSKa9y3RhBQWDDHmPXBHbAxI2J34jSeY0BFQy2y4JtFn3nQS0Lz4xI5jw==@protonmail.internalid>
+ <20220812101240.1869605-3-abel.vesa@linaro.org>
+ <e6821eef-4fcb-97b1-24be-e2bb62b99039@linaro.org>
+ <Yvtx2aK1Uu51hTPM@linaro.org>
+ <b34b2fa6-7dbf-e4d3-9833-57efd42f9137@linaro.org>
+ <Yvu4o1bFdKLfvaiL@linaro.org>
+ <Yv2aK52MzRPUIztr@baldur>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        SUSPICIOUS_RECIPS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yv2aK52MzRPUIztr@baldur>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rafał Miłecki <rafal@milecki.pl>
+On 22-08-17 20:47:23, Bjorn Andersson wrote:
+> On Tue 16 Aug 10:32 CDT 2022, Abel Vesa wrote:
+> 
+> > On 22-08-16 14:50:50, Caleb Connolly wrote:
+> > > 
+> > > 
+> > > On 16/08/2022 11:30, Abel Vesa wrote:
+> > > > On 22-08-15 21:34:07, Caleb Connolly wrote:
+> > > > > 
+> > > > > 
+> > > > > On 12/08/2022 11:12, Abel Vesa wrote:
+> > > > > > SDM845 is a special case compared to the other platforms that use RPMh
+> > > > > > stats, since it only has 2 stats (aosd and cxsd), while the others have
+> > > > > > a 3rd one (ddr).
+> > > > > > 
+> > > > > > So lets add the node but with a SDM845 dedicated compatible to make
+> > > > > > the driver aware of the different stats config.
+> > > > > Hi,
+> > > > > 
+> > > > > I gave this a go on the OnePlus 6, I noticed the driver is also meant to
+> > > > > read the stats for remote procs via smem, however this seems to fail for me
+> > > > > - it can't find any of the SMEM items even if I probe the driver manually
+> > > > > after ensuring remoteprocs have booted. Is this an unsupported feature on
+> > > > > SDM845?
+> > > > 
+> > > > Thanks for giving it a test.
+> > > > 
+> > > > Actually, you need to probe the qcom_stats after the remoteprocs have
+> > > > booted.
+> > > 
+> > > Hi, thanks for getting back to me. I did try this as mentioned above but I
+> > > think I must have been doing something wrong as I get different behaviour
+> > > now:
+> > > 
+> > > 
+> > > enchilada:/ # cat /sys/class/remoteproc/remoteproc*/state
+> > > 
+> > > running
+> > > 
+> > > running
+> > > 
+> > > running
+> > > 
+> > > running
+> > > 
+> > > enchilada:/ # ls /d/qcom_stats/
+> > > aosd  cxsd
+> > > enchilada:/ # rmmod qcom_stats
+> > > enchilada:/ # insmod /data/qcom_stats.ko
+> > > enchilada:/ # ls /d/qcom_stats/
+> > > adsp  aosd  cdsp  cxsd  modem  slpi
+> > 
+> > Well, I run on upstream MTP, which has less enabled in devicetree.
+> > 
+> > > 
+> > > 
+> > > 
+> > > Weirdly, despite it succeeding it prints the following in dmesg with logging
+> > > added to qcom_create_subsystem_stat_files() [1]:
+> > > 
+> > > [  156.540307] Couldn't get smem object 'wpss' (item: 605, pid: 13): -2
+> > > [  156.546899] Couldn't get smem object 'gpu' (item: 609, pid: 0): -2
+> > > [  156.553260] Couldn't get smem object 'display' (item: 610, pid: 0): -2
+> > > [  156.559957] Couldn't get smem object 'adsp_island' (item: 613, pid: 2): -2
+> > > [  156.567007] Couldn't get smem object 'slpi_island' (item: 613, pid: 3): -2
+> > 
+> > See my comment below your related changes.
+> > 
+> > > > 
+> > > > Doing so, you'll end up having the following:
+> > > > adsp  aosd  cdsp  cxsd
+> > > 
+> > > I seem to get a few more, I have some out of tree patches enabling the SLPI,
+> > > and iirc the db845c doesn't have a full modem firmware. If these look good
+> > > to you I'd appreciate it if you add my Tested-by.
+> > 
+> > Looks OK to me.
+> > 
+> > > 
+> > > enchilada:/ # for x in /d/qcom_stats/*; do echo $x; cat $x; done
+> > > /d/qcom_stats/adsp
+> > > Count: 48
+> > > Last Entered At: 1199663157
+> > > Last Exited At: 1524359015
+> > > Accumulated Duration: 793060082
+> > > /d/qcom_stats/aosd
+> > > Count: 0
+> > > Last Entered At: 0
+> > > Last Exited At: 0
+> > > Accumulated Duration: 0
+> > > /d/qcom_stats/cdsp
+> > > Count: 35
+> > > Last Entered At: 1194818037
+> > > Last Exited At: 1194769648
+> > > Accumulated Duration: 3223580811
+> > > /d/qcom_stats/cxsd
+> > > Count: 0
+> > > Last Entered At: 0
+> > > Last Exited At: 0
+> > > Accumulated Duration: 0
+> > > /d/qcom_stats/modem
+> > > Count: 49
+> > > Last Entered At: 3687081003
+> > > Last Exited At: 3686727026
+> > > Accumulated Duration: 2915592136
+> > > /d/qcom_stats/slpi
+> > > Count: 53
+> > > Last Entered At: 3120905905
+> > > Last Exited At: 3120894535
+> > > Accumulated Duration: 3218969498
+> > > 
+> > > Am I right in thinking the aosd and cxsd being all 0 is probably a similar
+> > > issue to the one reported by Stephen in [2]?
+> > 
+> > Might be, I'm not sure. I'll have closer a look.
+> > 
+> > > 
+> > > 
+> > > [1]:
+> > > 
+> > > diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
+> > > index 121ea409fafc..56cfb20d3683 100644
+> > > --- a/drivers/soc/qcom/qcom_stats.c
+> > > +++ b/drivers/soc/qcom/qcom_stats.c
+> > > @@ -178,8 +178,12 @@ static void qcom_create_subsystem_stat_files(struct dentry *root,
+> > > 
+> > >         for (i = 0; i < ARRAY_SIZE(subsystems); i++) {
+> > >                 stat = qcom_smem_get(subsystems[i].pid, subsystems[i].smem_item, NULL);
+> > > -               if (IS_ERR(stat))
+> > 
+> > Basically, the error here means the subsystem is not available right at
+> > this moment. We could probably return EPROBE_DEFER here, but it really
+> > depends on each platform's devicetree what remoteprocs they have
+> > enabled or not. So I guess the safest thing to to is to just skip
+> > quietly the ones that haven't probed yet.
+> > 
+> 
+> Not only does the/each remoteproc driver need to probe, we actually need
+> to wait for them to boot in order to register their parts.
+> 
+> Perhaps we can use qcom_register_ssr_notifier() to dynamically register
+> these at some later time. This does however seem like a reasonable thing
+> to improve upon in a follow up series.
 
-1. Match what most subsystems do
-2. Simplify maintenance a bit
-3. Reduce amount of conflicts for new drivers patches
+Sounds like a good idea. Will give it a try and sent a patch a soon as I
+have something working.
 
-While at it unify indent level in Makefile.
+Thanks,
+Abel
 
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
----
- drivers/nvmem/Kconfig  | 342 +++++++++++++++++++++--------------------
- drivers/nvmem/Makefile | 120 +++++++--------
- 2 files changed, 232 insertions(+), 230 deletions(-)
-
-diff --git a/drivers/nvmem/Kconfig b/drivers/nvmem/Kconfig
-index bab8a29c9861..cb4036f81a25 100644
---- a/drivers/nvmem/Kconfig
-+++ b/drivers/nvmem/Kconfig
-@@ -21,6 +21,90 @@ config NVMEM_SYSFS
- 	 This interface is mostly used by userspace applications to
- 	 read/write directly into nvmem.
- 
-+# Devices
-+
-+config JZ4780_EFUSE
-+	tristate "JZ4780 EFUSE Memory Support"
-+	depends on MACH_INGENIC || COMPILE_TEST
-+	depends on HAS_IOMEM
-+	depends on OF
-+	select REGMAP_MMIO
-+	help
-+	  Say Y here to include support for JZ4780 efuse memory found on
-+	  all JZ4780 SoC based devices.
-+	  To compile this driver as a module, choose M here: the module
-+	  will be called nvmem_jz4780_efuse.
-+
-+config MESON_EFUSE
-+	tristate "Amlogic Meson GX eFuse Support"
-+	depends on (ARCH_MESON || COMPILE_TEST) && MESON_SM
-+	help
-+	  This is a driver to retrieve specific values from the eFuse found on
-+	  the Amlogic Meson GX SoCs.
-+
-+	  This driver can also be built as a module. If so, the module
-+	  will be called nvmem_meson_efuse.
-+
-+config MESON_MX_EFUSE
-+	tristate "Amlogic Meson6/Meson8/Meson8b eFuse Support"
-+	depends on ARCH_MESON || COMPILE_TEST
-+	help
-+	  This is a driver to retrieve specific values from the eFuse found on
-+	  the Amlogic Meson6, Meson8 and Meson8b SoCs.
-+
-+	  This driver can also be built as a module. If so, the module
-+	  will be called nvmem_meson_mx_efuse.
-+
-+config MICROCHIP_OTPC
-+	tristate "Microchip OTPC support"
-+	depends on ARCH_AT91 || COMPILE_TEST
-+	help
-+	  This driver enable the OTP controller available on Microchip SAMA7G5
-+	  SoCs. It controlls the access to the OTP memory connected to it.
-+
-+config MTK_EFUSE
-+	tristate "Mediatek SoCs EFUSE support"
-+	depends on ARCH_MEDIATEK || COMPILE_TEST
-+	depends on HAS_IOMEM
-+	help
-+	  This is a driver to access hardware related data like sensor
-+	  calibration, HDMI impedance etc.
-+
-+	  This driver can also be built as a module. If so, the module
-+	  will be called efuse-mtk.
-+
-+config NVMEM_APPLE_EFUSES
-+	tristate "Apple eFuse support"
-+	depends on ARCH_APPLE || COMPILE_TEST
-+	default ARCH_APPLE
-+	help
-+	  Say y here to enable support for reading eFuses on Apple SoCs
-+	  such as the M1. These are e.g. used to store factory programmed
-+	  calibration data required for the PCIe or the USB-C PHY.
-+
-+	  This driver can also be built as a module. If so, the module will
-+	  be called nvmem-apple-efuses.
-+
-+config NVMEM_BCM_OCOTP
-+	tristate "Broadcom On-Chip OTP Controller support"
-+	depends on ARCH_BCM_IPROC || COMPILE_TEST
-+	depends on HAS_IOMEM
-+	default ARCH_BCM_IPROC
-+	help
-+	  Say y here to enable read/write access to the Broadcom OTP
-+	  controller.
-+
-+	  This driver can also be built as a module. If so, the module
-+	  will be called nvmem-bcm-ocotp.
-+
-+config NVMEM_BRCM_NVRAM
-+	tristate "Broadcom's NVRAM support"
-+	depends on ARCH_BCM_5301X || COMPILE_TEST
-+	depends on HAS_IOMEM
-+	help
-+	  This driver provides support for Broadcom's NVRAM that can be accessed
-+	  using I/O mapping.
-+
- config NVMEM_IMX_IIM
- 	tristate "i.MX IC Identification Module support"
- 	depends on ARCH_MXC || COMPILE_TEST
-@@ -52,17 +136,18 @@ config NVMEM_IMX_OCOTP_SCU
- 	  This is a driver for the SCU On-Chip OTP Controller (OCOTP)
- 	  available on i.MX8 SoCs.
- 
--config JZ4780_EFUSE
--	tristate "JZ4780 EFUSE Memory Support"
--	depends on MACH_INGENIC || COMPILE_TEST
-+config NVMEM_LAYERSCAPE_SFP
-+	tristate "Layerscape SFP (Security Fuse Processor) support"
-+	depends on ARCH_LAYERSCAPE || COMPILE_TEST
- 	depends on HAS_IOMEM
--	depends on OF
- 	select REGMAP_MMIO
- 	help
--	  Say Y here to include support for JZ4780 efuse memory found on
--	  all JZ4780 SoC based devices.
--	  To compile this driver as a module, choose M here: the module
--	  will be called nvmem_jz4780_efuse.
-+	  This driver provides support to read the eFuses on Freescale
-+	  Layerscape SoC's. For example, the vendor provides a per part
-+	  unique ID there.
-+
-+	  This driver can also be built as a module. If so, the module
-+	  will be called layerscape-sfp.
- 
- config NVMEM_LPC18XX_EEPROM
- 	tristate "NXP LPC18XX EEPROM Memory Support"
-@@ -96,24 +181,6 @@ config NVMEM_MXS_OCOTP
- 	  This driver can also be built as a module. If so, the module
- 	  will be called nvmem-mxs-ocotp.
- 
--config MTK_EFUSE
--	tristate "Mediatek SoCs EFUSE support"
--	depends on ARCH_MEDIATEK || COMPILE_TEST
--	depends on HAS_IOMEM
--	help
--	  This is a driver to access hardware related data like sensor
--	  calibration, HDMI impedance etc.
--
--	  This driver can also be built as a module. If so, the module
--	  will be called efuse-mtk.
--
--config MICROCHIP_OTPC
--	tristate "Microchip OTPC support"
--	depends on ARCH_AT91 || COMPILE_TEST
--	help
--	  This driver enable the OTP controller available on Microchip SAMA7G5
--	  SoCs. It controlls the access to the OTP memory connected to it.
--
- config NVMEM_NINTENDO_OTP
- 	tristate "Nintendo Wii and Wii U OTP Support"
- 	depends on WII || COMPILE_TEST
-@@ -126,16 +193,25 @@ config NVMEM_NINTENDO_OTP
- 	  This driver can also be built as a module. If so, the module
- 	  will be called nvmem-nintendo-otp.
- 
--config QCOM_QFPROM
--	tristate "QCOM QFPROM Support"
--	depends on ARCH_QCOM || COMPILE_TEST
-+config NVMEM_RMEM
-+	tristate "Reserved Memory Based Driver Support"
- 	depends on HAS_IOMEM
- 	help
--	  Say y here to enable QFPROM support. The QFPROM provides access
--	  functions for QFPROM data to rest of the drivers via nvmem interface.
-+	  This driver maps reserved memory into an nvmem device. It might be
-+	  useful to expose information left by firmware in memory.
- 
- 	  This driver can also be built as a module. If so, the module
--	  will be called nvmem_qfprom.
-+	  will be called nvmem-rmem.
-+
-+config NVMEM_SNVS_LPGPR
-+	tristate "Support for Low Power General Purpose Register"
-+	depends on ARCH_MXC || COMPILE_TEST
-+	help
-+	  This is a driver for Low Power General Purpose Register (LPGPR) available on
-+	  i.MX6 and i.MX7 SoCs in Secure Non-Volatile Storage (SNVS) of this chip.
-+
-+	  This driver can also be built as a module. If so, the module
-+	  will be called nvmem-snvs-lpgpr.
- 
- config NVMEM_SPMI_SDAM
- 	tristate "SPMI SDAM Support"
-@@ -145,40 +221,6 @@ config NVMEM_SPMI_SDAM
- 	  Qualcomm Technologies, Inc. PMICs. It provides the clients
- 	  an interface to read/write to the SDAM module's shared memory.
- 
--config ROCKCHIP_EFUSE
--	tristate "Rockchip eFuse Support"
--	depends on ARCH_ROCKCHIP || COMPILE_TEST
--	depends on HAS_IOMEM
--	help
--	  This is a simple drive to dump specified values of Rockchip SoC
--	  from eFuse, such as cpu-leakage.
--
--	  This driver can also be built as a module. If so, the module
--	  will be called nvmem_rockchip_efuse.
--
--config ROCKCHIP_OTP
--	tristate "Rockchip OTP controller support"
--	depends on ARCH_ROCKCHIP || COMPILE_TEST
--	depends on HAS_IOMEM
--	help
--	  This is a simple drive to dump specified values of Rockchip SoC
--	  from otp, such as cpu-leakage.
--
--	  This driver can also be built as a module. If so, the module
--	  will be called nvmem_rockchip_otp.
--
--config NVMEM_BCM_OCOTP
--	tristate "Broadcom On-Chip OTP Controller support"
--	depends on ARCH_BCM_IPROC || COMPILE_TEST
--	depends on HAS_IOMEM
--	default ARCH_BCM_IPROC
--	help
--	  Say y here to enable read/write access to the Broadcom OTP
--	  controller.
--
--	  This driver can also be built as a module. If so, the module
--	  will be called nvmem-bcm-ocotp.
--
- config NVMEM_STM32_ROMEM
- 	tristate "STMicroelectronics STM32 factory-programmed memory support"
- 	depends on ARCH_STM32 || COMPILE_TEST
-@@ -189,6 +231,18 @@ config NVMEM_STM32_ROMEM
- 	  This driver can also be built as a module. If so, the module
- 	  will be called nvmem-stm32-romem.
- 
-+config NVMEM_SUNPLUS_OCOTP
-+	tristate "Sunplus SoC OTP support"
-+	depends on SOC_SP7021 || COMPILE_TEST
-+	depends on HAS_IOMEM
-+	help
-+	  This is a driver for the On-chip OTP controller (OCOTP) available
-+	  on Sunplus SoCs. It provides access to 128 bytes of one-time
-+	  programmable eFuse.
-+
-+	  This driver can also be built as a module. If so, the module
-+	  will be called nvmem-sunplus-ocotp.
-+
- config NVMEM_SUNXI_SID
- 	tristate "Allwinner SoCs SID support"
- 	depends on ARCH_SUNXI
-@@ -199,16 +253,18 @@ config NVMEM_SUNXI_SID
- 	  This driver can also be built as a module. If so, the module
- 	  will be called nvmem_sunxi_sid.
- 
--config UNIPHIER_EFUSE
--	tristate "UniPhier SoCs eFuse support"
--	depends on ARCH_UNIPHIER || COMPILE_TEST
--	depends on HAS_IOMEM
-+config NVMEM_U_BOOT_ENV
-+	tristate "U-Boot environment variables support"
-+	depends on OF && MTD
-+	select CRC32
- 	help
--	  This is a simple driver to dump specified values of UniPhier SoC
--	  from eFuse.
-+	  U-Boot stores its setup as environment variables. This driver adds
-+	  support for verifying & exporting such data. It also exposes variables
-+	  as NVMEM cells so they can be referenced by other drivers.
- 
--	  This driver can also be built as a module. If so, the module
--	  will be called nvmem-uniphier-efuse.
-+	  Currently this drivers works only with env variables on top of MTD.
-+
-+	  If compiled as module it will be called nvmem_u-boot-env.
- 
- config NVMEM_VF610_OCOTP
- 	tristate "VF610 SoC OCOTP support"
-@@ -221,35 +277,26 @@ config NVMEM_VF610_OCOTP
- 	  This driver can also be build as a module. If so, the module will
- 	  be called nvmem-vf610-ocotp.
- 
--config MESON_EFUSE
--	tristate "Amlogic Meson GX eFuse Support"
--	depends on (ARCH_MESON || COMPILE_TEST) && MESON_SM
--	help
--	  This is a driver to retrieve specific values from the eFuse found on
--	  the Amlogic Meson GX SoCs.
--
--	  This driver can also be built as a module. If so, the module
--	  will be called nvmem_meson_efuse.
--
--config MESON_MX_EFUSE
--	tristate "Amlogic Meson6/Meson8/Meson8b eFuse Support"
--	depends on ARCH_MESON || COMPILE_TEST
-+config NVMEM_ZYNQMP
-+	bool "Xilinx ZYNQMP SoC nvmem firmware support"
-+	depends on ARCH_ZYNQMP
- 	help
--	  This is a driver to retrieve specific values from the eFuse found on
--	  the Amlogic Meson6, Meson8 and Meson8b SoCs.
-+	  This is a driver to access hardware related data like
-+	  soc revision, IDCODE... etc by using the firmware
-+	  interface.
- 
--	  This driver can also be built as a module. If so, the module
--	  will be called nvmem_meson_mx_efuse.
-+	  If sure, say yes. If unsure, say no.
- 
--config NVMEM_SNVS_LPGPR
--	tristate "Support for Low Power General Purpose Register"
--	depends on ARCH_MXC || COMPILE_TEST
-+config QCOM_QFPROM
-+	tristate "QCOM QFPROM Support"
-+	depends on ARCH_QCOM || COMPILE_TEST
-+	depends on HAS_IOMEM
- 	help
--	  This is a driver for Low Power General Purpose Register (LPGPR) available on
--	  i.MX6 and i.MX7 SoCs in Secure Non-Volatile Storage (SNVS) of this chip.
-+	  Say y here to enable QFPROM support. The QFPROM provides access
-+	  functions for QFPROM data to rest of the drivers via nvmem interface.
- 
- 	  This driver can also be built as a module. If so, the module
--	  will be called nvmem-snvs-lpgpr.
-+	  will be called nvmem_qfprom.
- 
- config RAVE_SP_EEPROM
- 	tristate "Rave SP EEPROM Support"
-@@ -257,6 +304,28 @@ config RAVE_SP_EEPROM
- 	help
- 	  Say y here to enable Rave SP EEPROM support.
- 
-+config ROCKCHIP_EFUSE
-+	tristate "Rockchip eFuse Support"
-+	depends on ARCH_ROCKCHIP || COMPILE_TEST
-+	depends on HAS_IOMEM
-+	help
-+	  This is a simple drive to dump specified values of Rockchip SoC
-+	  from eFuse, such as cpu-leakage.
-+
-+	  This driver can also be built as a module. If so, the module
-+	  will be called nvmem_rockchip_efuse.
-+
-+config ROCKCHIP_OTP
-+	tristate "Rockchip OTP controller support"
-+	depends on ARCH_ROCKCHIP || COMPILE_TEST
-+	depends on HAS_IOMEM
-+	help
-+	  This is a simple drive to dump specified values of Rockchip SoC
-+	  from otp, such as cpu-leakage.
-+
-+	  This driver can also be built as a module. If so, the module
-+	  will be called nvmem_rockchip_otp.
-+
- config SC27XX_EFUSE
- 	tristate "Spreadtrum SC27XX eFuse Support"
- 	depends on MFD_SC27XX_PMIC || COMPILE_TEST
-@@ -268,16 +337,6 @@ config SC27XX_EFUSE
- 	  This driver can also be built as a module. If so, the module
- 	  will be called nvmem-sc27xx-efuse.
- 
--config NVMEM_ZYNQMP
--	bool "Xilinx ZYNQMP SoC nvmem firmware support"
--	depends on ARCH_ZYNQMP
--	help
--	  This is a driver to access hardware related data like
--	  soc revision, IDCODE... etc by using the firmware
--	  interface.
--
--	  If sure, say yes. If unsure, say no.
--
- config SPRD_EFUSE
- 	tristate "Spreadtrum SoC eFuse Support"
- 	depends on ARCH_SPRD || COMPILE_TEST
-@@ -289,72 +348,15 @@ config SPRD_EFUSE
- 	  This driver can also be built as a module. If so, the module
- 	  will be called nvmem-sprd-efuse.
- 
--config NVMEM_RMEM
--	tristate "Reserved Memory Based Driver Support"
--	depends on HAS_IOMEM
--	help
--	  This driver maps reserved memory into an nvmem device. It might be
--	  useful to expose information left by firmware in memory.
--
--	  This driver can also be built as a module. If so, the module
--	  will be called nvmem-rmem.
--
--config NVMEM_BRCM_NVRAM
--	tristate "Broadcom's NVRAM support"
--	depends on ARCH_BCM_5301X || COMPILE_TEST
--	depends on HAS_IOMEM
--	help
--	  This driver provides support for Broadcom's NVRAM that can be accessed
--	  using I/O mapping.
--
--config NVMEM_LAYERSCAPE_SFP
--	tristate "Layerscape SFP (Security Fuse Processor) support"
--	depends on ARCH_LAYERSCAPE || COMPILE_TEST
--	depends on HAS_IOMEM
--	select REGMAP_MMIO
--	help
--	  This driver provides support to read the eFuses on Freescale
--	  Layerscape SoC's. For example, the vendor provides a per part
--	  unique ID there.
--
--	  This driver can also be built as a module. If so, the module
--	  will be called layerscape-sfp.
--
--config NVMEM_SUNPLUS_OCOTP
--	tristate "Sunplus SoC OTP support"
--	depends on SOC_SP7021 || COMPILE_TEST
-+config UNIPHIER_EFUSE
-+	tristate "UniPhier SoCs eFuse support"
-+	depends on ARCH_UNIPHIER || COMPILE_TEST
- 	depends on HAS_IOMEM
- 	help
--	  This is a driver for the On-chip OTP controller (OCOTP) available
--	  on Sunplus SoCs. It provides access to 128 bytes of one-time
--	  programmable eFuse.
-+	  This is a simple driver to dump specified values of UniPhier SoC
-+	  from eFuse.
- 
- 	  This driver can also be built as a module. If so, the module
--	  will be called nvmem-sunplus-ocotp.
--
--config NVMEM_APPLE_EFUSES
--	tristate "Apple eFuse support"
--	depends on ARCH_APPLE || COMPILE_TEST
--	default ARCH_APPLE
--	help
--	  Say y here to enable support for reading eFuses on Apple SoCs
--	  such as the M1. These are e.g. used to store factory programmed
--	  calibration data required for the PCIe or the USB-C PHY.
--
--	  This driver can also be built as a module. If so, the module will
--	  be called nvmem-apple-efuses.
--
--config NVMEM_U_BOOT_ENV
--	tristate "U-Boot environment variables support"
--	depends on OF && MTD
--	select CRC32
--	help
--	  U-Boot stores its setup as environment variables. This driver adds
--	  support for verifying & exporting such data. It also exposes variables
--	  as NVMEM cells so they can be referenced by other drivers.
--
--	  Currently this drivers works only with env variables on top of MTD.
--
--	  If compiled as module it will be called nvmem_u-boot-env.
-+	  will be called nvmem-uniphier-efuse.
- 
- endif
-diff --git a/drivers/nvmem/Makefile b/drivers/nvmem/Makefile
-index 399f9972d45b..53a6ca1d0e01 100644
---- a/drivers/nvmem/Makefile
-+++ b/drivers/nvmem/Makefile
-@@ -7,67 +7,67 @@ obj-$(CONFIG_NVMEM)		+= nvmem_core.o
- nvmem_core-y			:= core.o
- 
- # Devices
--obj-$(CONFIG_NVMEM_BCM_OCOTP)	+= nvmem-bcm-ocotp.o
--nvmem-bcm-ocotp-y		:= bcm-ocotp.o
--obj-$(CONFIG_NVMEM_IMX_IIM)	+= nvmem-imx-iim.o
--nvmem-imx-iim-y			:= imx-iim.o
--obj-$(CONFIG_NVMEM_IMX_OCOTP)	+= nvmem-imx-ocotp.o
--nvmem-imx-ocotp-y		:= imx-ocotp.o
--obj-$(CONFIG_NVMEM_IMX_OCOTP_SCU)	+= nvmem-imx-ocotp-scu.o
--nvmem-imx-ocotp-scu-y		:= imx-ocotp-scu.o
- obj-$(CONFIG_JZ4780_EFUSE)		+= nvmem_jz4780_efuse.o
--nvmem_jz4780_efuse-y		:= jz4780-efuse.o
-+nvmem_jz4780_efuse-y			:= jz4780-efuse.o
-+obj-$(CONFIG_MESON_EFUSE)		+= nvmem_meson_efuse.o
-+nvmem_meson_efuse-y			:= meson-efuse.o
-+obj-$(CONFIG_MESON_MX_EFUSE)		+= nvmem_meson_mx_efuse.o
-+nvmem_meson_mx_efuse-y			:= meson-mx-efuse.o
-+obj-$(CONFIG_MICROCHIP_OTPC)		+= nvmem-microchip-otpc.o
-+nvmem-microchip-otpc-y			:= microchip-otpc.o
-+obj-$(CONFIG_MTK_EFUSE)			+= nvmem_mtk-efuse.o
-+nvmem_mtk-efuse-y			:= mtk-efuse.o
-+obj-$(CONFIG_NVMEM_APPLE_EFUSES)	+= nvmem-apple-efuses.o
-+nvmem-apple-efuses-y 			:= apple-efuses.o
-+obj-$(CONFIG_NVMEM_BCM_OCOTP)		+= nvmem-bcm-ocotp.o
-+nvmem-bcm-ocotp-y			:= bcm-ocotp.o
-+obj-$(CONFIG_NVMEM_BRCM_NVRAM)		+= nvmem_brcm_nvram.o
-+nvmem_brcm_nvram-y			:= brcm_nvram.o
-+obj-$(CONFIG_NVMEM_IMX_IIM)		+= nvmem-imx-iim.o
-+nvmem-imx-iim-y				:= imx-iim.o
-+obj-$(CONFIG_NVMEM_IMX_OCOTP)		+= nvmem-imx-ocotp.o
-+nvmem-imx-ocotp-y			:= imx-ocotp.o
-+obj-$(CONFIG_NVMEM_IMX_OCOTP_SCU)	+= nvmem-imx-ocotp-scu.o
-+nvmem-imx-ocotp-scu-y			:= imx-ocotp-scu.o
-+obj-$(CONFIG_NVMEM_LAYERSCAPE_SFP)	+= nvmem-layerscape-sfp.o
-+nvmem-layerscape-sfp-y			:= layerscape-sfp.o
- obj-$(CONFIG_NVMEM_LPC18XX_EEPROM)	+= nvmem_lpc18xx_eeprom.o
--nvmem_lpc18xx_eeprom-y	:= lpc18xx_eeprom.o
--obj-$(CONFIG_NVMEM_LPC18XX_OTP)	+= nvmem_lpc18xx_otp.o
--nvmem_lpc18xx_otp-y		:= lpc18xx_otp.o
--obj-$(CONFIG_NVMEM_MXS_OCOTP)	+= nvmem-mxs-ocotp.o
--nvmem-mxs-ocotp-y		:= mxs-ocotp.o
-+nvmem_lpc18xx_eeprom-y			:= lpc18xx_eeprom.o
-+obj-$(CONFIG_NVMEM_LPC18XX_OTP)		+= nvmem_lpc18xx_otp.o
-+nvmem_lpc18xx_otp-y			:= lpc18xx_otp.o
-+obj-$(CONFIG_NVMEM_MXS_OCOTP)		+= nvmem-mxs-ocotp.o
-+nvmem-mxs-ocotp-y			:= mxs-ocotp.o
- obj-$(CONFIG_NVMEM_NINTENDO_OTP)	+= nvmem-nintendo-otp.o
--nvmem-nintendo-otp-y		:= nintendo-otp.o
--obj-$(CONFIG_MTK_EFUSE)		+= nvmem_mtk-efuse.o
--nvmem_mtk-efuse-y		:= mtk-efuse.o
--obj-$(CONFIG_QCOM_QFPROM)	+= nvmem_qfprom.o
--nvmem_qfprom-y			:= qfprom.o
--obj-$(CONFIG_NVMEM_SPMI_SDAM)	+= nvmem_qcom-spmi-sdam.o
--nvmem_qcom-spmi-sdam-y		+= qcom-spmi-sdam.o
--obj-$(CONFIG_ROCKCHIP_EFUSE)	+= nvmem_rockchip_efuse.o
--nvmem_rockchip_efuse-y		:= rockchip-efuse.o
--obj-$(CONFIG_ROCKCHIP_OTP)	+= nvmem-rockchip-otp.o
--nvmem-rockchip-otp-y		:= rockchip-otp.o
--obj-$(CONFIG_NVMEM_SUNXI_SID)	+= nvmem_sunxi_sid.o
--nvmem_stm32_romem-y 		:= stm32-romem.o
--obj-$(CONFIG_NVMEM_STM32_ROMEM) += nvmem_stm32_romem.o
--nvmem_sunxi_sid-y		:= sunxi_sid.o
--obj-$(CONFIG_UNIPHIER_EFUSE)	+= nvmem-uniphier-efuse.o
--nvmem-uniphier-efuse-y		:= uniphier-efuse.o
--obj-$(CONFIG_NVMEM_VF610_OCOTP)	+= nvmem-vf610-ocotp.o
--nvmem-vf610-ocotp-y		:= vf610-ocotp.o
--obj-$(CONFIG_MESON_EFUSE)	+= nvmem_meson_efuse.o
--nvmem_meson_efuse-y		:= meson-efuse.o
--obj-$(CONFIG_MESON_MX_EFUSE)	+= nvmem_meson_mx_efuse.o
--nvmem_meson_mx_efuse-y		:= meson-mx-efuse.o
--obj-$(CONFIG_NVMEM_SNVS_LPGPR)	+= nvmem_snvs_lpgpr.o
--nvmem_snvs_lpgpr-y		:= snvs_lpgpr.o
--obj-$(CONFIG_RAVE_SP_EEPROM)	+= nvmem-rave-sp-eeprom.o
--nvmem-rave-sp-eeprom-y		:= rave-sp-eeprom.o
--obj-$(CONFIG_SC27XX_EFUSE)	+= nvmem-sc27xx-efuse.o
--nvmem-sc27xx-efuse-y		:= sc27xx-efuse.o
--obj-$(CONFIG_NVMEM_ZYNQMP)	+= nvmem_zynqmp_nvmem.o
--nvmem_zynqmp_nvmem-y		:= zynqmp_nvmem.o
--obj-$(CONFIG_SPRD_EFUSE)	+= nvmem_sprd_efuse.o
--nvmem_sprd_efuse-y		:= sprd-efuse.o
--obj-$(CONFIG_NVMEM_RMEM) 	+= nvmem-rmem.o
--nvmem-rmem-y			:= rmem.o
--obj-$(CONFIG_NVMEM_BRCM_NVRAM)	+= nvmem_brcm_nvram.o
--nvmem_brcm_nvram-y		:= brcm_nvram.o
--obj-$(CONFIG_NVMEM_LAYERSCAPE_SFP)	+= nvmem-layerscape-sfp.o
--nvmem-layerscape-sfp-y		:= layerscape-sfp.o
-+nvmem-nintendo-otp-y			:= nintendo-otp.o
-+obj-$(CONFIG_NVMEM_RMEM) 		+= nvmem-rmem.o
-+nvmem-rmem-y				:= rmem.o
-+obj-$(CONFIG_NVMEM_SNVS_LPGPR)		+= nvmem_snvs_lpgpr.o
-+nvmem_snvs_lpgpr-y			:= snvs_lpgpr.o
-+obj-$(CONFIG_NVMEM_SPMI_SDAM)		+= nvmem_qcom-spmi-sdam.o
-+nvmem_qcom-spmi-sdam-y			+= qcom-spmi-sdam.o
-+obj-$(CONFIG_NVMEM_STM32_ROMEM) 	+= nvmem_stm32_romem.o
-+nvmem_stm32_romem-y 			:= stm32-romem.o
- obj-$(CONFIG_NVMEM_SUNPLUS_OCOTP)	+= nvmem_sunplus_ocotp.o
--nvmem_sunplus_ocotp-y		:= sunplus-ocotp.o
--obj-$(CONFIG_NVMEM_APPLE_EFUSES)	+= nvmem-apple-efuses.o
--nvmem-apple-efuses-y 		:= apple-efuses.o
--obj-$(CONFIG_MICROCHIP_OTPC)	+= nvmem-microchip-otpc.o
--nvmem-microchip-otpc-y		:= microchip-otpc.o
--obj-$(CONFIG_NVMEM_U_BOOT_ENV)	+= nvmem_u-boot-env.o
--nvmem_u-boot-env-y		:= u-boot-env.o
-+nvmem_sunplus_ocotp-y			:= sunplus-ocotp.o
-+obj-$(CONFIG_NVMEM_SUNXI_SID)		+= nvmem_sunxi_sid.o
-+nvmem_sunxi_sid-y			:= sunxi_sid.o
-+obj-$(CONFIG_NVMEM_U_BOOT_ENV)		+= nvmem_u-boot-env.o
-+nvmem_u-boot-env-y			:= u-boot-env.o
-+obj-$(CONFIG_NVMEM_VF610_OCOTP)		+= nvmem-vf610-ocotp.o
-+nvmem-vf610-ocotp-y			:= vf610-ocotp.o
-+obj-$(CONFIG_NVMEM_ZYNQMP)		+= nvmem_zynqmp_nvmem.o
-+nvmem_zynqmp_nvmem-y			:= zynqmp_nvmem.o
-+obj-$(CONFIG_QCOM_QFPROM)		+= nvmem_qfprom.o
-+nvmem_qfprom-y				:= qfprom.o
-+obj-$(CONFIG_RAVE_SP_EEPROM)		+= nvmem-rave-sp-eeprom.o
-+nvmem-rave-sp-eeprom-y			:= rave-sp-eeprom.o
-+obj-$(CONFIG_ROCKCHIP_EFUSE)		+= nvmem_rockchip_efuse.o
-+nvmem_rockchip_efuse-y			:= rockchip-efuse.o
-+obj-$(CONFIG_ROCKCHIP_OTP)		+= nvmem-rockchip-otp.o
-+nvmem-rockchip-otp-y			:= rockchip-otp.o
-+obj-$(CONFIG_SC27XX_EFUSE)		+= nvmem-sc27xx-efuse.o
-+nvmem-sc27xx-efuse-y			:= sc27xx-efuse.o
-+obj-$(CONFIG_SPRD_EFUSE)		+= nvmem_sprd_efuse.o
-+nvmem_sprd_efuse-y			:= sprd-efuse.o
-+obj-$(CONFIG_UNIPHIER_EFUSE)		+= nvmem-uniphier-efuse.o
-+nvmem-uniphier-efuse-y			:= uniphier-efuse.o
--- 
-2.34.1
-
+> 
+> Regards,
+> Bjorn
