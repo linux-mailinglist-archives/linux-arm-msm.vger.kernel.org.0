@@ -2,227 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 182495985A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 16:23:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 86201598746
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 17:21:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245726AbiHROWb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Aug 2022 10:22:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45194 "EHLO
+        id S244793AbiHRPUR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Aug 2022 11:20:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245708AbiHROWa (ORCPT
+        with ESMTP id S238644AbiHRPUP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Aug 2022 10:22:30 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A1AFB07FA
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 07:22:29 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id v7-20020a1cac07000000b003a6062a4f81so2674744wme.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 07:22:29 -0700 (PDT)
+        Thu, 18 Aug 2022 11:20:15 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2FB25A8BC;
+        Thu, 18 Aug 2022 08:20:14 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id w15so2044817ljw.1;
+        Thu, 18 Aug 2022 08:20:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=0C4aHcXgWxy6PpVtW7d+ycoPUGyQqm944VNk/U4/NEU=;
-        b=PsXnrzMhLsWDUil+KFa5V4r3P1L/3E4kZ0cSF50jUartlrp/clGytZsubYHebiRMe1
-         91d4VpZ5GJpPHS+QJPjgNfHXpDtBKEvp7q7/+EdVGK8blNPjCaX1MI8rBokTQn/kfc0i
-         /wGf6lIYlaev2k+xgLi8m7pt5pRz60fstTfUIvZ6Q32mQnVzMJDf6KoM28BTgUMrkL6w
-         R8IDTMA48lnVrtppWC7EcoJyiRw/kHK4bFJ7ttng9Zi0rcnsi3/djv3n6nC4WPC+aVWw
-         G/Uxz+YsncMQsaXUsCvouJnw7UX8lbfV5G8nG1armO5wlo+t/JJMdeYKjey4ySk/WXnn
-         kcZQ==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=b9wCYvC96JPicNbrqKnkOA8G+Rw2Lk6t7ci0InegnBs=;
+        b=eekMHeORo01AxqyAJmifyPy7LLjzUm83uw/itOrs67RfjfH7QrdRVTR3m1N5ekMwSS
+         2akfXp+REPa4dUrwg0/ERTkVaeOGXeQwM1KMrUw6A3lEwrujVz+OS77hRAhgN6fz1HXp
+         qLP+Y64sYfenjyWATHsmb8++jm04xgfqpRgjaMiJZ99qSKCe7sRWHLz1lWzsE+ou4rpb
+         VQ5ZonXuJjIDOxey5hZ3rNFgSl0DnTUPElO24V38nVsOZBVaR3EMD1kChRRw1YjdoYzL
+         osGCU/PlWe1biLbpynLNV7axwBRIkOLNydPFkYkc5k60w8tIUzKSs1ZOHUgJWyjCLEcI
+         orTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=0C4aHcXgWxy6PpVtW7d+ycoPUGyQqm944VNk/U4/NEU=;
-        b=0t3Mablqbmf716rdHc+b/hyH9odCvrcVWidkwy1QE2kNQb1MtgiHfSJ1OpryVI3N9J
-         oQwlf6glF8rrgNpcK8LR9+ByxsftMQkHuj77efVYLy+utnXFDmZxHBEQYzm8u7MS/LPd
-         WMjsO99zBLLIbf5te7mx4erCGwIzxT0gUnLtP11aRDnIEXogKYqSIxlNNiOleqnhQPyo
-         TTLNUiYJupfSDMj60InRo0CqK4Hy8TJFJVv3cghphUNf2MhrWvW/78JGq62GJPyBkYC2
-         ijhe4s7lkmdoR4nixJLbnhbVb/iBLGf1jyjHeM39P2boL9wZQft1hX7PcbOxTgElYFoM
-         SGQA==
-X-Gm-Message-State: ACgBeo1QHjFFI5M5Ji0B9rXdp/1lDbVP31cw8bo/PSNNWGc5WnOfJMeq
-        qYWHVrAP/clbw/KxlGe8+lNgkg==
-X-Google-Smtp-Source: AA6agR44P7ilTfUquQEX1o5MpBOZ1OuPn3FU8J3+aJ/By+VOYXtcqgjwm8k+Jy6ZDhRPTwoDaZvPEg==
-X-Received: by 2002:a7b:cb55:0:b0:3a5:41a:829c with SMTP id v21-20020a7bcb55000000b003a5041a829cmr5362465wmj.153.1660832547859;
-        Thu, 18 Aug 2022 07:22:27 -0700 (PDT)
-Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id l23-20020a05600c1d1700b003a61306d79dsm2767184wms.41.2022.08.18.07.22.26
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=b9wCYvC96JPicNbrqKnkOA8G+Rw2Lk6t7ci0InegnBs=;
+        b=HDOzRdi8hG+levFtm4j0FNJgeVZC3TrkQUaTK9eP+PRVK8GHlOW9f4jMg48Sb8lCHF
+         rjXd/9hq2II81iO7z1TQvWqCqzm3j6JUwuDU4bIs9oha+6e48uJUqF24w+mUsiZxXWxS
+         Fn+a49IT45sC3lghRjZQQevDN9jqDhDksf4xB7LSNWRDzMWaGQPN70xvMj7szk3h7wiR
+         5XYHA7UQqaGIavaFordpiT3KDjBIhu5HPXYA+TG4HYVhKcDQc28CdXWflkdkMupI1Cyc
+         1i4+acwY4k2ez6t2fN9iqbjNzpCkunRFo5zxJc7wmTrPWSHWP0IiiphjnMILgCHWIzxo
+         ziHw==
+X-Gm-Message-State: ACgBeo23uUDjRXCwLj3cAPAdnIO3Peq0bUrUKSLtb4T7pF++zs0SuFpG
+        jwkYnwQSTV4GDz9nC34mMK/GpPfWJHw=
+X-Google-Smtp-Source: AA6agR4jX84I9P/Z2FshKJ5Sdge2u7OGIq29s+E4Xql2l8JMuKu0kVvsPkfeyjLLBfPyIC5TT+Bi6w==
+X-Received: by 2002:a05:651c:50e:b0:25f:f52b:3c91 with SMTP id o14-20020a05651c050e00b0025ff52b3c91mr1106680ljp.391.1660836013072;
+        Thu, 18 Aug 2022 08:20:13 -0700 (PDT)
+Received: from localhost.localdomain (admv234.neoplus.adsl.tpnet.pl. [79.185.51.234])
+        by smtp.gmail.com with ESMTPSA id p8-20020a2eba08000000b0025df5f38da8sm263859lja.119.2022.08.18.08.20.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Aug 2022 07:22:27 -0700 (PDT)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Thu, 18 Aug 2022 08:20:12 -0700 (PDT)
+From:   Adam Skladowski <a39.skl@gmail.com>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Adam Skladowski <a39.skl@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Caleb Connolly <caleb.connolly@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: [RFC 2/2] soc: qcom_stats: Add dynamic debugfs entries for subsystems
-Date:   Thu, 18 Aug 2022 17:22:15 +0300
-Message-Id: <20220818142215.2282365-2-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220818142215.2282365-1-abel.vesa@linaro.org>
-References: <20220818142215.2282365-1-abel.vesa@linaro.org>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 0/2] Add DISPCC driver for SM6115
+Date:   Thu, 18 Aug 2022 17:18:19 +0200
+Message-Id: <20220818151850.19917-1-a39.skl@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Register per-subsystem notifier using qcom_register_ssr_notifier().
-This will allow the order of between the remoteprocs actually starting and
-qcom_stats driver probing to become more relaxed.
+This patch series introduce support for SM6115 display clock controller,
+this driver is based on QCM2290 one.
 
-When the notifier callback gets called, depending on whether the remoteproc is
-starting up or shutting down, either create or remove the related debugfs
-entry. Also, in order to make sure we're not missing an already started
-remoteproc, after the notifier has been set up, we go though the subsystems
-list and try to create the entry for it, as it was doing before, but this time
-we store the dentry to use it later on for removal, if necessary.
+Adam Skladowski (2):
+  dt-bindings: clock: add QCOM SM6115 display clock bindings
+  clk: qcom: Add display clock controller driver for SM6115
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/soc/qcom/qcom_stats.c | 77 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 75 insertions(+), 2 deletions(-)
+ .../bindings/clock/qcom,dispcc-sm6115.yaml    |  88 +++
+ drivers/clk/qcom/Kconfig                      |   9 +
+ drivers/clk/qcom/Makefile                     |   1 +
+ drivers/clk/qcom/dispcc-sm6115.c              | 615 ++++++++++++++++++
+ .../dt-bindings/clock/qcom,dispcc-sm6115.h    |  36 +
+ 5 files changed, 749 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,dispcc-sm6115.yaml
+ create mode 100644 drivers/clk/qcom/dispcc-sm6115.c
+ create mode 100644 include/dt-bindings/clock/qcom,dispcc-sm6115.h
 
-diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
-index fa30540b6583..baaa820c9a77 100644
---- a/drivers/soc/qcom/qcom_stats.c
-+++ b/drivers/soc/qcom/qcom_stats.c
-@@ -7,8 +7,10 @@
- #include <linux/device.h>
- #include <linux/io.h>
- #include <linux/module.h>
-+#include <linux/notifier.h>
- #include <linux/of.h>
- #include <linux/platform_device.h>
-+#include <linux/remoteproc/qcom_rproc.h>
- #include <linux/seq_file.h>
- 
- #include <linux/soc/qcom/smem.h>
-@@ -68,11 +70,20 @@ struct appended_stats {
- 	u32 reserved[3];
- };
- 
-+struct subsystem_priv {
-+	const struct subsystem_data *subsystem;
-+	struct dentry *root;
-+	struct dentry *dentry;
-+	struct notifier_block nb;
-+	void *notifier;
-+};
-+
- struct qcom_stats_priv {
- 	struct device dev;
- 	struct stats_data *data;
- 	struct dentry *root;
- 	const struct stats_config *config;
-+	struct subsystem_priv ss_priv[ARRAY_SIZE(subsystems)];
- };
- 
- static void qcom_print_stats(struct seq_file *s, const struct sleep_stats *stat)
-@@ -177,6 +188,57 @@ static void qcom_create_soc_sleep_stat_files(struct qcom_stats_priv *stats,
- 	}
- }
- 
-+static int qcom_stats_subsys_ssr_notify(struct notifier_block *nb,
-+				    unsigned long action,
-+				    void *data)
-+{
-+	struct subsystem_priv *ss_priv = container_of(nb, struct subsystem_priv, nb);
-+
-+	switch (action) {
-+	case QCOM_SSR_AFTER_POWERUP:
-+		ss_priv->dentry = debugfs_create_file(ss_priv->subsystem->name, 0400, ss_priv->root,
-+							(void *)ss_priv->subsystem,
-+							&qcom_subsystem_sleep_stats_fops);
-+		break;
-+	case QCOM_SSR_BEFORE_SHUTDOWN:
-+		debugfs_remove(ss_priv->dentry);
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	return NOTIFY_OK;
-+}
-+
-+static void qcom_register_subsystem_notifiers(struct qcom_stats_priv *stats)
-+{
-+	struct device *dev = &stats->dev;
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(subsystems); i++) {
-+		const struct subsystem_data *subsystem = &subsystems[i];
-+		struct subsystem_priv *ss_priv = &stats->ss_priv[i];
-+
-+		ss_priv->subsystem = subsystem;
-+		ss_priv->root = stats->root;
-+		ss_priv->nb.notifier_call = qcom_stats_subsys_ssr_notify;
-+		ss_priv->notifier = qcom_register_ssr_notifier(subsystem->name, &ss_priv->nb);
-+		if (IS_ERR(ss_priv->notifier))
-+			dev_err(dev, "failed to register ssr notifier for %s (%ld)",
-+				subsystem->name, PTR_ERR(ss_priv->notifier));
-+	}
-+}
-+
-+static void qcom_unregister_subsystem_notifiers(struct qcom_stats_priv *stats)
-+{
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(subsystems); i++)
-+		if (stats->ss_priv[i].notifier)
-+			qcom_unregister_ssr_notifier(stats->ss_priv[i].notifier,
-+							&stats->ss_priv[i].nb);
-+}
-+
- static void qcom_create_subsystem_stat_files(struct qcom_stats_priv *stats)
- {
- 	const struct sleep_stats *stat;
-@@ -188,12 +250,20 @@ static void qcom_create_subsystem_stat_files(struct qcom_stats_priv *stats)
- 		return;
- 
- 	for (i = 0; i < ARRAY_SIZE(subsystems); i++) {
-+		struct subsystem_priv *ss_priv = &stats->ss_priv[i];
-+
- 		stat = qcom_smem_get(subsystems[i].pid, subsystems[i].smem_item, NULL);
- 		if (IS_ERR(stat))
- 			continue;
- 
--		debugfs_create_file(subsystems[i].name, 0400, root, (void *)&subsystems[i],
--				    &qcom_subsystem_sleep_stats_fops);
-+		/*
-+		 * At this point some subsystems have already started
-+		 * and so we already missed the startup notification,
-+		 * so let's create the entry post-startup.
-+		 */
-+		ss_priv->dentry = debugfs_create_file(&subsystems[i]->name, 0400, root,
-+							(void *)&subsystems[i],
-+							&qcom_subsystem_sleep_stats_fops);
- 	}
- }
- 
-@@ -232,6 +302,7 @@ static int qcom_stats_probe(struct platform_device *pdev)
- 	stats->data = d;
- 	stats->root = root;
- 
-+	qcom_register_subsystem_notifiers(stats);
- 	qcom_create_subsystem_stat_files(stats);
- 	qcom_create_soc_sleep_stat_files(stats, reg);
- 
-@@ -245,6 +316,8 @@ static int qcom_stats_remove(struct platform_device *pdev)
- 	struct qcom_stats_priv *stats = platform_get_drvdata(pdev);
- 	struct dentry *root = stats->root;
- 
-+	qcom_unregister_subsystem_notifiers(stats);
-+
- 	debugfs_remove_recursive(root);
- 
- 	return 0;
 -- 
-2.34.1
+2.25.1
 
