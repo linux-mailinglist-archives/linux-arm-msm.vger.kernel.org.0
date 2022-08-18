@@ -2,80 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E399598F96
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 23:33:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D166598FA4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 23:37:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242000AbiHRVbe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Aug 2022 17:31:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45936 "EHLO
+        id S239324AbiHRVeG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Aug 2022 17:34:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344275AbiHRVbd (ORCPT
+        with ESMTP id S232083AbiHRVeF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Aug 2022 17:31:33 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBEBFDD7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 14:31:31 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id t5so3440677edc.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 14:31:31 -0700 (PDT)
+        Thu, 18 Aug 2022 17:34:05 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABDC986729
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 14:34:04 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id kb8so5579338ejc.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 14:34:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc;
-        bh=WtOE4rfhF66ne01EBVrR7ZUIyy4xQlFOqom1OJOeD+M=;
-        b=SaC7ba1CjNgoZw9KWatwWIypAr4NqaW9BwLesRw6skKKu816G9b58HArxq6Oitstp2
-         nnKplFcQcS9MGVfxpa8Q+lFgUr9XSJbTvAGmAva+NILo/fg2ZuDOfPQZWTUJpP4e0Nfy
-         bpxcgt3SIJahWl7LAdH7CeZy/k7DNcq8ZFwFU=
+        bh=qErRFIQ0nHVnmKdsLBSakvXDlQR0goAZInCyznmckxY=;
+        b=hn7koqt0JXqitWaXAGRzTAAniDctUWCyarxNwwp0EBoRHiVHG2Z8guogWJs3qdpLxM
+         sLC4QzABjP6CVSwvyA2aTXNBT3wYYecTtJy3D2wo/pb8fEjaHShM3tJj1Pj1pW70lTL9
+         diCnHQTdiwzzzyzVdV2SmaYpPJuGyKUjY310Y=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc;
-        bh=WtOE4rfhF66ne01EBVrR7ZUIyy4xQlFOqom1OJOeD+M=;
-        b=JRNuw2EB6twpfvxxr85cxvdWjWQ7I+Y9TsvEqnWohLWiJxhKlGA+ANfQ6UR+yu7/s6
-         vdbzAejSctb5eEPQp32B4ieHDsaDbLWUKPnA/7+n0MLOxglQIw+zW5N2hcNYFXIzuVKQ
-         KM6cJCuue94fBPGq16Exs235TUT4uzvtuf3EzQFCoApBiTk0Z2OUNW2WsEWFzII8T1fR
-         SgEQzwqLted3Mjl2TRhgV12e87d843acroFRqw80R4gt4HSmlVWmkRw/HjpJYD3tGkkC
-         MlNv+LR3dT13EnG8tQ95lw0Ydr8EybkOsIzJBQUnVLDHzaVoT1HeRC2ZHcxesA6d1bca
-         TFpA==
-X-Gm-Message-State: ACgBeo2vUxB6yH4vNvNZA5xFX0XkXGem8O0QSWNY8Z8IiCOIuVjSr7v0
-        k4C/hE7xqvvbJOScu+NW1GOD3s7lhZDXBgAV
-X-Google-Smtp-Source: AA6agR4FH4+A7vmB3XxPauzaSAagu30xNVUiXjDAxEj3sgRvlGS8TgbMZvU5UZ0bGw7FqgGpSEKPrA==
-X-Received: by 2002:a05:6402:f17:b0:43e:4700:f63e with SMTP id i23-20020a0564020f1700b0043e4700f63emr3673740eda.190.1660858290169;
-        Thu, 18 Aug 2022 14:31:30 -0700 (PDT)
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com. [209.85.221.45])
-        by smtp.gmail.com with ESMTPSA id q3-20020a1709064cc300b0072abb95eaa4sm1331232ejt.215.2022.08.18.14.31.28
+        bh=qErRFIQ0nHVnmKdsLBSakvXDlQR0goAZInCyznmckxY=;
+        b=SdRqb5Zfie+SGbSVPPH+BwWhr8s1tZFofkVaWYbLhQSG3C6qoxsKCc6YeP9HtOgtg5
+         W33qf56pAPHahzS8dJXILSqpgVl+BIi1SIi98eCukS5500Xku8+6O+b9KX/G0WxZQIX9
+         dNH5EAITJp6OWSSUERvoQXvD/18JybWd91JBKyu8Kt9V9bPW4J0yQbh/PG4zEFDhuUye
+         emwGjyO0+U+lcIwptej1pwmJQ9MLxjMWopPO8at33fmFgZFZ6upvdgWaCwLX6Q5h2Rui
+         +ca9mPXZMj5T9WDgjF8SRKvBa1OC5shPFOFrSnspowJaEAs5guiHaygy2AB6hvsXES/j
+         IzuQ==
+X-Gm-Message-State: ACgBeo2TZT3uA9CnFI8AzIXqV3ADsmjcySK7ifkBDqZg2jGbr7qcGPY8
+        5UIcJKcZOrWxmnoOKe8N9RMgqMHPbfXGwiW/
+X-Google-Smtp-Source: AA6agR4nEIyy5YWN3CAJyNlMJTqf0wo15SBotaPuyxR74YLFnYc+zGSqHN/Uvsd7yOcFLFpool9Nug==
+X-Received: by 2002:a17:907:7205:b0:739:1735:8b9a with SMTP id dr5-20020a170907720500b0073917358b9amr2923912ejc.244.1660858443050;
+        Thu, 18 Aug 2022 14:34:03 -0700 (PDT)
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com. [209.85.128.50])
+        by smtp.gmail.com with ESMTPSA id h17-20020a056402095100b0044629b54b00sm724615edz.46.2022.08.18.14.34.01
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Aug 2022 14:31:29 -0700 (PDT)
-Received: by mail-wr1-f45.google.com with SMTP id n4so3105422wrp.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 14:31:28 -0700 (PDT)
-X-Received: by 2002:a05:6000:1541:b0:222:cf65:18d7 with SMTP id
- 1-20020a056000154100b00222cf6518d7mr2475897wry.659.1660858288014; Thu, 18 Aug
- 2022 14:31:28 -0700 (PDT)
+        Thu, 18 Aug 2022 14:34:01 -0700 (PDT)
+Received: by mail-wm1-f50.google.com with SMTP id bd26-20020a05600c1f1a00b003a5e82a6474so1589040wmb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 14:34:01 -0700 (PDT)
+X-Received: by 2002:a05:600c:5114:b0:3a6:1ab9:5b3d with SMTP id
+ o20-20020a05600c511400b003a61ab95b3dmr2859717wms.93.1660858441222; Thu, 18
+ Aug 2022 14:34:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220722093238.v24.1.I7a1a6448d50bdd38e6082204a9818c59cc7a9bfd@changeid>
-In-Reply-To: <20220722093238.v24.1.I7a1a6448d50bdd38e6082204a9818c59cc7a9bfd@changeid>
+References: <20220816093644.764259-1-judyhsiao@chromium.org>
+In-Reply-To: <20220816093644.764259-1-judyhsiao@chromium.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 18 Aug 2022 14:31:15 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WkiNZQ0G9MivhA2TwG09wkyPX2AD5T9cMBJeSKWhddvA@mail.gmail.com>
-Message-ID: <CAD=FV=WkiNZQ0G9MivhA2TwG09wkyPX2AD5T9cMBJeSKWhddvA@mail.gmail.com>
-Subject: Re: [PATCH v24 1/2] arm64: dts: qcom: sc7180-trogdor: Add nodes for
- onboard USB hub
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+Date:   Thu, 18 Aug 2022 14:33:47 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XLsBcbrjb0DwG+Yhia_hk4kcKT2S0_vMT=k3cWxh=NRg@mail.gmail.com>
+Message-ID: <CAD=FV=XLsBcbrjb0DwG+Yhia_hk4kcKT2S0_vMT=k3cWxh=NRg@mail.gmail.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Use "PP1800_L2C" as the DMIC
+ power source.
+To:     Judy Hsiao <judyhsiao@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Jimmy Cheng-Yi Chiang <cychiang@google.com>,
+        Judy Hsiao <judyhsiao@google.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
         <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -84,103 +87,71 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Fri, Jul 22, 2022 at 9:32 AM Matthias Kaehlcke <mka@chromium.org> wrote:
+On Tue, Aug 16, 2022 at 2:36 AM Judy Hsiao <judyhsiao@chromium.org> wrote:
 >
-> Add nodes for the onboard USB hub on trogdor devices. Remove the
-> 'always-on' property from the hub regulator, since the regulator
-> is now managed by the onboard_usb_hub driver.
+> Use "PP1800_L2C" as the DMIC power source to match the hardware
+> schematic.
+> It fixes the DMIC no sound issue of villager-r1.
 >
-> For anyone using trogdor-based devices on Linux, it should be
-> noted that this requires "CONFIG_USB_ONBOARD_HUB=y".
 >
-> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> Co-developed-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
 > ---
-> This series depends on 3a6bf4a08142 ("usb: core: hub: Create platform
-> devices for onboard hubs in hub_probe()") which landed in -next [1].
+> Changes since V1:
+>     -- Update the commit message.
 >
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git/commit/?h=usb-next&id=3a6bf4a08142826698121bef16b244dcf50a6431
 >
-> Changes in v24:
-> - renamed 'companion-hub' to 'peer-hub' according to the change
->   in the binding
+> This patch depends on:
+> arm64: dts: qcom: sc7280: Add herobrine-villager-r1. [1]
 >
-> Changes in v23:
-> - added note about enabling CONFIG_USB_ONBOARD_HUB to the commit
->   message
+> [1]
+> https://patchwork.kernel.org/patch/12926099/
 >
-> Changes in v22:
-> - none
 >
-> Changes in v21:
-> - patch dropped from onboard_usb_hub series
+>  .../dts/qcom/sc7280-herobrine-villager-r1.dts | 28 +++++++++++++++++++
+>  1 file changed, 28 insertions(+)
 >
-> Changes in v20:
-> - renamed hub labels to 'usb_hub_2/3_x'
-> - added comment for 'regulator-boot-on' of 'pp3300_hub'
-> - added 'Reviewed-by' tags from Stephen and Doug
->
-> Changes in v19:
-> - none
->
-> Changes in v18:
-> - also adjust config for pompom rev1
->
-> Changes in v17:
-> - none
->
-> Changes in v16:
-> - none
->
-> Changes in v15:
-> - none
->
-> Changes in v14:
-> - none
->
-> Changes in v13:
-> - none
->
-> Changes in v12:
-> - none
->
-> Changes in v11:
-> - rebased on qcom/arm64-for-5.14 (with the rest of the series)
->
-> Changes in v10:
-> - keep 'regulator-boot-on' property
-> - updated commit message
->
-> Changes in v9:
-> - none
->
-> Changes in v8:
-> - none
->
-> Changes in v7:
-> - rebased on qcom/arm64-for-5.13 (with the rest of the series)
->
-> Changes in v6:
-> - added 'companion-hub' entry to both USB devices
-> - added 'vdd-supply' also to hub@2
->
-> Changes in v5:
-> - patch added to the series
->
->  .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts | 19 ++++++++----------
->  .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts | 12 +++++------
->  .../dts/qcom/sc7180-trogdor-pompom-r1.dts     | 11 ++++------
->  .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts | 19 ++++++++----------
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 20 ++++++++++++++++++-
->  5 files changed, 44 insertions(+), 37 deletions(-)
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
+> index c03b3ae4de50..983defa7c76d 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
+> @@ -12,3 +12,31 @@ / {
+>         model = "Google Villager (rev1+)";
+>         compatible = "google,villager", "qcom,sc7280";
+>  };
+> +
+> +&lpass_va_macro {
+> +       vdd-micb-supply = <&pp1800_l2c>;
+> +};
+> +
+> +&sound {
+> +       audio-routing =
+> +                       "IN1_HPHL", "HPHL_OUT",
+> +                       "IN2_HPHR", "HPHR_OUT",
+> +                       "AMIC1", "MIC BIAS1",
+> +                       "AMIC2", "MIC BIAS2",
+> +                       "VA DMIC0", "vdd-micb",
+> +                       "VA DMIC1", "vdd-micb",
+> +                       "VA DMIC2", "vdd-micb",
+> +                       "VA DMIC3", "vdd-micb",
+> +                       "TX SWR_ADC0", "ADC1_OUTPUT",
+> +                       "TX SWR_ADC1", "ADC2_OUTPUT",
+> +                       "TX SWR_ADC2", "ADC3_OUTPUT",
+> +                       "TX SWR_DMIC0", "DMIC1_OUTPUT",
+> +                       "TX SWR_DMIC1", "DMIC2_OUTPUT",
+> +                       "TX SWR_DMIC2", "DMIC3_OUTPUT",
+> +                       "TX SWR_DMIC3", "DMIC4_OUTPUT",
+> +                       "TX SWR_DMIC4", "DMIC5_OUTPUT",
+> +                       "TX SWR_DMIC5", "DMIC6_OUTPUT",
+> +                       "TX SWR_DMIC6", "DMIC7_OUTPUT",
+> +                       "TX SWR_DMIC7", "DMIC8_OUTPUT";
 
-The driver changes have landed and stuck. They're in Linus's tree, so
-I think we're now ready to land these two patches! Hooray!
+In v1, Stephen pointed out that the subject and description of your
+patch talk about adjusting the supply. However, your patch _also_
+adjusts the audio routing.
 
-FWIW: I've continued my experiment of landing changes that I'm keeping
-track of in a github tree:
-
-https://github.com/dianders/kernel-staging/commits/qcom/arm64-staging
+It feels like the audio routing should be done in a separate patch and
+that patch.
 
 -Doug
