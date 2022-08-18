@@ -2,79 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 802AA598770
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 17:28:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BDF65987A6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 17:43:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344237AbiHRP15 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Aug 2022 11:27:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48702 "EHLO
+        id S1344040AbiHRPmi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Aug 2022 11:42:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242310AbiHRP1z (ORCPT
+        with ESMTP id S1344002AbiHRPmg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Aug 2022 11:27:55 -0400
-Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EA82C04F1;
-        Thu, 18 Aug 2022 08:27:53 -0700 (PDT)
-Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-11cb3c811d9so490390fac.1;
-        Thu, 18 Aug 2022 08:27:53 -0700 (PDT)
+        Thu, 18 Aug 2022 11:42:36 -0400
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72121BD1C0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 08:42:34 -0700 (PDT)
+Received: by mail-pg1-x52a.google.com with SMTP id 12so1594492pga.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 08:42:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=sHRh70H4OUvKCUuJJP8BBsSyMCn2NNdEL5xmssRDNTE=;
+        b=lHrRRqOOxZK10H8JwJArUrFeXTQ1EHIyqk98PjrUvxUAC43jYOqu9gwUuCWI956OPA
+         zrGMPAtXLF8gmEz9ddQHNEuaFPxAB3XnI4EGZuRoR7eQmH2suhdogQ1G2O5WMqE67sT4
+         S7iclpjIF7SFSHFEYuqghkKri79KBuxr5L9Ug=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=jzS/xxmqPClvxlGlF65JWerijpK7L30Co5ggvmlz4L4=;
-        b=KNxQd1VVwbwrgQcE56JVxitCFndqhn3DHlVPvUj9s0c6NnXNaesBKQPT0PDWTjfVT3
-         xMcT0unc0myLnUqznjkzOqwaQJF4D8gKO4ohKgrZeqlGxEyslcwZqR/nJDIXHUvDakEI
-         QET3B8hM+ZPveRZrZR09/YuKzfbret4TqCr054n4ne4/dEnGXk44wq9FLqieXI92C/RY
-         lykxaho6ltqTYCC7JgdAnB1UOCyZN2KqKmI+GNTMUlC3uCQ0iRmjV7EyayjY4jR8z/DK
-         R6ZZkbhGyVgyS18OhnhAuBZikvTKYJRyLBAm0X2V/UJ7yUZRviumoKPi826rsUlvIZbD
-         6Jaw==
-X-Gm-Message-State: ACgBeo2jOgF/blFp3J81FygfDGWnC2DH7jvfBvPmCzvMEdGTBtKDzhRu
-        tiXmYYcHO46CNPZ/un/m0UIGdQJhsg==
-X-Google-Smtp-Source: AA6agR79Xb5ppP36+flNqhbBpw6WE0dpQ+DboWk9JqdKE4sl0qtWg0nngMvhcYxqeytWgL0Uwk4EQQ==
-X-Received: by 2002:a05:6870:a99e:b0:11c:5025:d1d0 with SMTP id ep30-20020a056870a99e00b0011c5025d1d0mr3941523oab.222.1660836472292;
-        Thu, 18 Aug 2022 08:27:52 -0700 (PDT)
-Received: from robh.at.kernel.org ([2607:fb90:5fe0:b4f5:6e22:4704:df60:73a3])
-        by smtp.gmail.com with ESMTPSA id p18-20020a4ad452000000b0041ba304546csm367108oos.1.2022.08.18.08.27.49
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=sHRh70H4OUvKCUuJJP8BBsSyMCn2NNdEL5xmssRDNTE=;
+        b=jsVgYnhkAvj32nfUWYC8yQeLV3Uon1rdVFr395drhZi/PNROaHDlZGUMhbf3koqAtv
+         sl03g0PtHNZ4RZQjp1ToOCmbU/tKIWZx6BVVB+tA/9aXEepq68BP9Z7TymrX3t6hamco
+         /QtepwTrz6Pfty9M75hUA2nFMk93capeeobFwD0NOsfYJQ+CM1UwhYm5hQMkVwoUoqyI
+         PuctdDfzg/yz/VESAUTj3oMFQ+jr3VPG0AxvL0vt8J/mAaozOuqN4hMIH1Ck6EuJlyVX
+         ZO//kHfzFdpbGsMYSrqotBDrZUZxtv18I89wrEmHrqPvrYoGMf0u7zGxULv1AMoHPWel
+         cXHw==
+X-Gm-Message-State: ACgBeo2CJfvJPRCRrqwM13yyV/GOGT2bMEHgKJU1b2szhA4jSrpJ1nuC
+        RF96wp++WjfosOqEpxROVJSLQRcjzGFsdg==
+X-Google-Smtp-Source: AA6agR5/aQD3e/yKEWGTJULQTbWQi4dfd6y5K7ulk5wSdOGvAIxSoGD7zg7+p5TW8rdoa3T1PN7ybA==
+X-Received: by 2002:a05:6a00:17a8:b0:52e:6e3e:9ff with SMTP id s40-20020a056a0017a800b0052e6e3e09ffmr3547859pfg.42.1660837353707;
+        Thu, 18 Aug 2022 08:42:33 -0700 (PDT)
+Received: from localhost.localdomain ([107.126.92.34])
+        by smtp.gmail.com with ESMTPSA id r5-20020a63ce45000000b00429f6579d81sm1457177pgi.29.2022.08.18.08.42.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Aug 2022 08:27:52 -0700 (PDT)
-Received: (nullmailer pid 1900162 invoked by uid 1000);
-        Thu, 18 Aug 2022 15:27:47 -0000
-Date:   Thu, 18 Aug 2022 09:27:47 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        linus.walleij@linaro.org, konrad.dybcio@somainline.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        Thu, 18 Aug 2022 08:42:33 -0700 (PDT)
+From:   "Joseph S. Barrera III" <joebar@chromium.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Alexandru Stan <amstan@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Judy Hsiao <judyhsiao@chromium.org>,
+        "Joseph S. Barrera III" <joebar@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] dt-bindings: pinctrl: qcom: Add sm8450 lpass lpi
- pinctrl bindings
-Message-ID: <20220818152747.GN1829017-robh@kernel.org>
-References: <20220817113833.9625-1-srinivas.kandagatla@linaro.org>
- <20220817113833.9625-2-srinivas.kandagatla@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: sc7180: Add sleep state for alc5682 codec
+Date:   Thu, 18 Aug 2022 08:42:19 -0700
+Message-Id: <20220818084216.1.I5c2b6fea19c4c0dec67fd4931f03df8e5ccaca95@changeid>
+X-Mailer: git-send-email 2.31.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220817113833.9625-2-srinivas.kandagatla@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 17, 2022 at 12:38:32PM +0100, Srinivas Kandagatla wrote:
-> Add device tree binding Documentation details for Qualcomm SM8450
-> LPASS(Low Power Audio Sub System) LPI(Low Power Island) pinctrl driver.
-> 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> ---
->  .../qcom,sm8450-lpass-lpi-pinctrl.yaml        | 135 ++++++++++++++++++
->  1 file changed, 135 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8450-lpass-lpi-pinctrl.yaml
+Add sleep state to acl5682. In default, gpio28 (HP_IRQ) is bias-pull-up.
+To save power, in the new sleep state, gpio28 is bias-disable.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+sleeping, /sys/kernel/debug/gpio shows gpio28 as "no pull". When codec
+is awake (microphone plugged in and in use), it shows gpio28 as "pull up".
+
+Signed-off-by: Joseph S. Barrera III <joebar@chromium.org>
+---
+
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index b5f534db135a..94dd6c34d997 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -755,8 +755,9 @@ hp_i2c: &i2c9 {
+ 	alc5682: codec@1a {
+ 		compatible = "realtek,rt5682i";
+ 		reg = <0x1a>;
+-		pinctrl-names = "default";
++		pinctrl-names = "default", "sleep";
+ 		pinctrl-0 = <&hp_irq>;
++		pinctrl-1 = <&hp_sleep>;
+ 
+ 		#sound-dai-cells = <1>;
+ 
+@@ -1336,6 +1337,18 @@ pinconf {
+ 		};
+ 	};
+ 
++	hp_sleep: hp-sleep {
++		pinmux {
++			pins = "gpio28";
++			function = "gpio";
++		};
++
++		pinconf {
++			pins = "gpio28";
++			bias-disable;
++		};
++	};
++
+ 	pen_irq_l: pen-irq-l {
+ 		pinmux {
+ 			pins = "gpio21";
+-- 
+2.31.0
+
