@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 993E259849A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 15:47:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA2B359849E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 15:47:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245183AbiHRNqz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S244945AbiHRNqz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 18 Aug 2022 09:46:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33948 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242238AbiHRNqw (ORCPT
+        with ESMTP id S245192AbiHRNqy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Aug 2022 09:46:52 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E7D6B56E0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 06:46:51 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id n4so1785099wrp.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 06:46:51 -0700 (PDT)
+        Thu, 18 Aug 2022 09:46:54 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A283CB56D0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 06:46:52 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id k16so1785625wrx.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 06:46:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=6rZZaOHOvolmccYyL5qbkZM57p/vVPxvzfbkv6kGURE=;
-        b=st0tuLfjyZg4OwhWSH6GgD154EBVCs8begrdGXw66Y1wqcN6jG6vXa+K8NfbEtYg3I
-         cHMjVPOLJKyvx+O0D/84ISQ2yukD3qKOuE74+kLVOC64t9RnIhNEoBMcpxMtwRX4JzGY
-         RgNCqCYO8QYohBdJn2ZKNkg01259d9rfRkbKteUgMD+2F3lse3oF4uMV889ZVXG66QvZ
-         QwxTyNwRxY/hcFqwZsQK0jKA9+aAX6U8g8Qt+s3G3j4d6LVBFHJZmakmXaNFyF2YQMlx
-         WEnK9npc0xRahj/rWdMDKWHTw454VWiAvILMkxVkgmgjhJ7dGdAYFNjO+6wyr/uSCO/a
-         zFzg==
+        bh=b/Pll9h/rbDTnlPdrKXDdRGbrsm2wbSDn1R8q7pzFwE=;
+        b=osYG1JQUdqi39hrW3UKdYZot/b5GlS/WZkL0ijBh6UDSC0Oq+LT9Cnf3Tt+yMAHSiu
+         aS6p3Fpkm82ZPV8/qXtYxaIhoe0Injs/0v8w4hoCJpAmJJd4xoP+WymRELxMtUJqRHTX
+         vMEaiaFsb7ZLpEyadyzxW+Pr4H2NzPmGALeOPMfuMHaJVoVix8F09syzRU4or01aUzB2
+         Xm6aocxQ4lTTdy8X5Z4kOU4TFBRMfcwXuKEjrKpC+ac8TdVlgioK9CuFWkJOQ8/HAUAy
+         UdbFcX1EDQRu5VF7a4FH7K1eseDLlie6YagG0hIy1jXfOWz7yb70Z/9dS9W4bI8Z6Cf1
+         ZEyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=6rZZaOHOvolmccYyL5qbkZM57p/vVPxvzfbkv6kGURE=;
-        b=O5sw6RPqzF0+P4tKA/9hdVPAL8WB0IGseDbjbH+2dfdpK553UiXEiR6dLdX92TO0A7
-         P5pF82fxk16tcZjF0hr1y8TdZ9MkfysslbH7Lsh1iO/33Ebz/7erPs/1FWmij6tTPFim
-         Z2Jh3dhowHniD1Q98laSkJP7LbfaY3M7ZV9EYHVUKZ2czIXjgCN8DyuZ+u7/Vu41fu/U
-         2KauNEos5oozbiUXuMARbn5K1HLfFq1Pimq6loxhEBwC49MOKeKtVZBXZL5zlFzI8FPs
-         XJl7yi35di/TRHhvhC0vRmcemFuAfcyzwGQY6Yz0588V0BfU8z6Ol9iGVbM75uycUyFV
-         fsUg==
-X-Gm-Message-State: ACgBeo2wOHPiSd1oPnACE6DTZxH/V/jJlc1tuhPjKnWafap/EX0WElaM
-        D5us2bvN1PeKJjskaviN66fOiw==
-X-Google-Smtp-Source: AA6agR4xmEGJW0LUvkQoK3lSqIY/p6u2vP1m7hMR0AVYvVbe1XxwyKkiRlTRVtKQx5SY6c6WkmMJGQ==
-X-Received: by 2002:a5d:5a9a:0:b0:220:6309:5c87 with SMTP id bp26-20020a5d5a9a000000b0022063095c87mr1600521wrb.107.1660830410046;
-        Thu, 18 Aug 2022 06:46:50 -0700 (PDT)
+        bh=b/Pll9h/rbDTnlPdrKXDdRGbrsm2wbSDn1R8q7pzFwE=;
+        b=EDrAzmbsD+Thya4C2NG9sjfsTOlDHQmvbhSGy9+kD9xQjsrtjwW5q/aoBtCmkR46LP
+         iNZDkSJoMKvG/9Q0NQVrpR3iEzr8QDEWc6VQdt7IvxWxQYMxXbX+YMpzSfo3GmxEK+K0
+         eY/rvzVrWdPFMhZyYZwqC0nrFtpVbCDiifuucBRaUIQLGaoIjZymq7K7zTODg1BUDf/8
+         qGO2cUvxPWoRGZ6YiYJbAXR7bph+8TnFvuFN+7jD8VaHWiipqdz0t1Hux+NncziUG2jF
+         KOszB5N0mbc1glYPW+jFBTuBhpgCLdpX2iVViFFjocbIY4/1tF48KhrdtI5wqmdr+LL3
+         +YBg==
+X-Gm-Message-State: ACgBeo24CFY0gG6pEqjPXRs2HyYdrCxLC5k1jV2skwilqX54sFptlJFS
+        Ok1ev0nIbCa3v6fKYoJhCztdcA==
+X-Google-Smtp-Source: AA6agR4mKTbWNOxvNypUWCDM67c7OHImiNtBWKxHr0p0b+Nsifd/4YaR4BXj65tEQEZlybqS1+TBLQ==
+X-Received: by 2002:a05:6000:1548:b0:223:141:8a06 with SMTP id 8-20020a056000154800b0022301418a06mr1694399wry.153.1660830411206;
+        Thu, 18 Aug 2022 06:46:51 -0700 (PDT)
 Received: from srini-hackbox.lan (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.gmail.com with ESMTPSA id v5-20020a5d6785000000b0021e47fb24a2sm1454549wru.19.2022.08.18.06.46.48
+        by smtp.gmail.com with ESMTPSA id v5-20020a5d6785000000b0021e47fb24a2sm1454549wru.19.2022.08.18.06.46.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Aug 2022 06:46:49 -0700 (PDT)
+        Thu, 18 Aug 2022 06:46:50 -0700 (PDT)
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 To:     broonie@kernel.org
 Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
@@ -56,9 +56,9 @@ Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
         linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 5/6] ASoC: codecs: va-macro: clear the frame sync counter before enabling
-Date:   Thu, 18 Aug 2022 14:46:18 +0100
-Message-Id: <20220818134619.3432-6-srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6/6] ASoC: codecs: tx-macro: add support for sm8450 and sc8280xp
+Date:   Thu, 18 Aug 2022 14:46:19 +0100
+Message-Id: <20220818134619.3432-7-srinivas.kandagatla@linaro.org>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20220818134619.3432-1-srinivas.kandagatla@linaro.org>
 References: <20220818134619.3432-1-srinivas.kandagatla@linaro.org>
@@ -67,47 +67,152 @@ Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Clear the frame sync counter before enabling it.
+LPASS VA Macro now has soundwire master to deal with access to
+analog mic in low power island use cases.
+
+This is added after sc8280xp, add support for this.
+Along with this also add compatibles for sm8450 and sc8280xp.
 
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 ---
- sound/soc/codecs/lpass-va-macro.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/soc/codecs/lpass-va-macro.c | 64 ++++++++++++++++++++++++++++++-
+ 1 file changed, 62 insertions(+), 2 deletions(-)
 
 diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
-index 1ea10dc70748..a35f684053d2 100644
+index a35f684053d2..f8b0c8caa1db 100644
 --- a/sound/soc/codecs/lpass-va-macro.c
 +++ b/sound/soc/codecs/lpass-va-macro.c
-@@ -23,6 +23,7 @@
- #define CDC_VA_MCLK_CONTROL_EN			BIT(0)
- #define CDC_VA_CLK_RST_CTRL_FS_CNT_CONTROL	(0x0004)
+@@ -25,6 +25,10 @@
  #define CDC_VA_FS_CONTROL_EN			BIT(0)
-+#define CDC_VA_FS_COUNTER_CLR			BIT(1)
+ #define CDC_VA_FS_COUNTER_CLR			BIT(1)
  #define CDC_VA_CLK_RST_CTRL_SWR_CONTROL		(0x0008)
++#define CDC_VA_SWR_RESET_MASK		BIT(1)
++#define CDC_VA_SWR_RESET_ENABLE		BIT(1)
++#define CDC_VA_SWR_CLK_EN_MASK		BIT(0)
++#define CDC_VA_SWR_CLK_ENABLE		BIT(0)
  #define CDC_VA_TOP_CSR_TOP_CFG0			(0x0080)
  #define CDC_VA_FS_BROADCAST_EN			BIT(1)
-@@ -423,9 +424,12 @@ static int va_clk_rsc_fs_gen_request(struct va_macro *va, bool enable)
- 		regmap_update_bits(regmap, CDC_VA_CLK_RST_CTRL_MCLK_CONTROL,
- 				   CDC_VA_MCLK_CONTROL_EN,
- 				   CDC_VA_MCLK_CONTROL_EN);
--
-+		/* clear the fs counter */
-+		regmap_update_bits(regmap, CDC_VA_CLK_RST_CTRL_FS_CNT_CONTROL,
-+				   CDC_VA_FS_CONTROL_EN | CDC_VA_FS_COUNTER_CLR,
-+				   CDC_VA_FS_CONTROL_EN | CDC_VA_FS_COUNTER_CLR);
- 		regmap_update_bits(regmap, CDC_VA_CLK_RST_CTRL_FS_CNT_CONTROL,
--				   CDC_VA_FS_CONTROL_EN,
-+				   CDC_VA_FS_CONTROL_EN | CDC_VA_FS_COUNTER_CLR,
- 				   CDC_VA_FS_CONTROL_EN);
+ #define CDC_VA_TOP_CSR_DMIC0_CTL		(0x0084)
+@@ -66,6 +70,8 @@
+ #define CDC_VA_TOP_CSR_SWR_MIC_CTL0		(0x00D0)
+ #define CDC_VA_TOP_CSR_SWR_MIC_CTL1		(0x00D4)
+ #define CDC_VA_TOP_CSR_SWR_MIC_CTL2		(0x00D8)
++#define CDC_VA_SWR_MIC_CLK_SEL_0_1_MASK		(0xEE)
++#define CDC_VA_SWR_MIC_CLK_SEL_0_1_DIV1		(0xCC)
+ #define CDC_VA_TOP_CSR_SWR_CTRL			(0x00DC)
+ #define CDC_VA_INP_MUX_ADC_MUX0_CFG0		(0x0100)
+ #define CDC_VA_INP_MUX_ADC_MUX0_CFG1		(0x0104)
+@@ -194,6 +200,8 @@ struct va_macro {
+ 	unsigned long active_ch_mask[VA_MACRO_MAX_DAIS];
+ 	unsigned long active_ch_cnt[VA_MACRO_MAX_DAIS];
+ 	u16 dmic_clk_div;
++	bool has_swr_master;
++	bool reset_swr;
  
- 		regmap_update_bits(regmap, CDC_VA_TOP_CSR_TOP_CFG0,
+ 	int dec_mode[VA_MACRO_NUM_DECIMATORS];
+ 	struct regmap *regmap;
+@@ -325,6 +333,9 @@ static bool va_is_rw_register(struct device *dev, unsigned int reg)
+ 	case CDC_VA_TOP_CSR_DMIC2_CTL:
+ 	case CDC_VA_TOP_CSR_DMIC3_CTL:
+ 	case CDC_VA_TOP_CSR_DMIC_CFG:
++	case CDC_VA_TOP_CSR_SWR_MIC_CTL0:
++	case CDC_VA_TOP_CSR_SWR_MIC_CTL1:
++	case CDC_VA_TOP_CSR_SWR_MIC_CTL2:
+ 	case CDC_VA_TOP_CSR_DEBUG_BUS:
+ 	case CDC_VA_TOP_CSR_DEBUG_EN:
+ 	case CDC_VA_TOP_CSR_TX_I2S_CTL:
+@@ -1306,12 +1317,40 @@ static const struct snd_soc_component_driver va_macro_component_drv = {
+ 
+ static int fsgen_gate_enable(struct clk_hw *hw)
+ {
+-	return va_macro_mclk_enable(to_va_macro(hw), true);
++	struct va_macro *va = to_va_macro(hw);
++	struct regmap *regmap = va->regmap;
++	int ret;
++
++	ret = va_macro_mclk_enable(va, true);
++	if (!va->has_swr_master)
++		return ret;
++
++	if (va->reset_swr)
++		regmap_update_bits(regmap, CDC_VA_CLK_RST_CTRL_SWR_CONTROL,
++				   CDC_VA_SWR_RESET_MASK,
++				   CDC_VA_SWR_RESET_ENABLE);
++
++	regmap_update_bits(regmap, CDC_VA_CLK_RST_CTRL_SWR_CONTROL,
++			   CDC_VA_SWR_CLK_EN_MASK,
++			   CDC_VA_SWR_CLK_ENABLE);
++	if (va->reset_swr)
++		regmap_update_bits(regmap, CDC_VA_CLK_RST_CTRL_SWR_CONTROL,
++				   CDC_VA_SWR_RESET_MASK, 0x0);
++	va->reset_swr = false;
++
++	return ret;
+ }
+ 
+ static void fsgen_gate_disable(struct clk_hw *hw)
+ {
+-	va_macro_mclk_enable(to_va_macro(hw), false);
++	struct va_macro *va = to_va_macro(hw);
++	struct regmap *regmap = va->regmap;
++
++	if (va->has_swr_master)
++		regmap_update_bits(regmap, CDC_VA_CLK_RST_CTRL_SWR_CONTROL,
++			   CDC_VA_SWR_CLK_EN_MASK, 0x0);
++
++	va_macro_mclk_enable(va, false);
+ }
+ 
+ static int fsgen_gate_is_enabled(struct clk_hw *hw)
+@@ -1459,6 +1498,11 @@ static int va_macro_probe(struct platform_device *pdev)
+ 
+ 	dev_set_drvdata(dev, va);
+ 
++	if (of_device_is_compatible(dev->of_node, "qcom,sm8450-lpass-va-macro") ||
++		of_device_is_compatible(dev->of_node, "qcom,sc8280xp-lpass-va-macro")) {
++		va->has_swr_master = true;
++		va->reset_swr = true;
++	}
+ 	/* mclk rate */
+ 	clk_set_rate(va->mclk, 2 * VA_MACRO_MCLK_FREQ);
+ 
+@@ -1484,6 +1528,20 @@ static int va_macro_probe(struct platform_device *pdev)
+ 		goto err_clkout;
+ 	}
+ 
++	if (va->has_swr_master) {
++		/* Set default CLK div to 1 */
++		regmap_update_bits(va->regmap, CDC_VA_TOP_CSR_SWR_MIC_CTL0,
++				  CDC_VA_SWR_MIC_CLK_SEL_0_1_MASK,
++				  CDC_VA_SWR_MIC_CLK_SEL_0_1_DIV1);
++		regmap_update_bits(va->regmap, CDC_VA_TOP_CSR_SWR_MIC_CTL1,
++				  CDC_VA_SWR_MIC_CLK_SEL_0_1_MASK,
++				  CDC_VA_SWR_MIC_CLK_SEL_0_1_DIV1);
++		regmap_update_bits(va->regmap, CDC_VA_TOP_CSR_SWR_MIC_CTL2,
++				  CDC_VA_SWR_MIC_CLK_SEL_0_1_MASK,
++				  CDC_VA_SWR_MIC_CLK_SEL_0_1_DIV1);
++
++	}
++
+ 	ret = devm_snd_soc_register_component(dev, &va_macro_component_drv,
+ 					      va_macro_dais,
+ 					      ARRAY_SIZE(va_macro_dais));
+@@ -1560,6 +1618,8 @@ static const struct dev_pm_ops va_macro_pm_ops = {
+ static const struct of_device_id va_macro_dt_match[] = {
+ 	{ .compatible = "qcom,sc7280-lpass-va-macro" },
+ 	{ .compatible = "qcom,sm8250-lpass-va-macro" },
++	{ .compatible = "qcom,sm8450-lpass-va-macro" },
++	{ .compatible = "qcom,sc8280xp-lpass-va-macro" },
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(of, va_macro_dt_match);
 -- 
 2.21.0
 
