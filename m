@@ -2,62 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C7E859875F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 17:25:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B074959876C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 17:28:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344266AbiHRPYF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Aug 2022 11:24:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43412 "EHLO
+        id S1344301AbiHRP04 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Aug 2022 11:26:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344224AbiHRPYF (ORCPT
+        with ESMTP id S245405AbiHRP0z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Aug 2022 11:24:05 -0400
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C651B72AA;
-        Thu, 18 Aug 2022 08:24:04 -0700 (PDT)
-Received: by mail-oi1-f174.google.com with SMTP id u9so1854551oiv.12;
-        Thu, 18 Aug 2022 08:24:04 -0700 (PDT)
+        Thu, 18 Aug 2022 11:26:55 -0400
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CB8FBFE88;
+        Thu, 18 Aug 2022 08:26:55 -0700 (PDT)
+Received: by mail-oi1-f180.google.com with SMTP id w197so1887067oie.5;
+        Thu, 18 Aug 2022 08:26:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=gnwNt4bzr2qCnvr4ju2qpGV+gCVuK0IjgUJ83knjKEA=;
-        b=fE++v8k1R3dp4a4SaOAL9VdXGPSP2V4aEakKI8AF/4cwtGh06o0xgJxfvIuC7Q0P1v
-         Y6tbK9FAu3Sc6FWXX1WrFWWZ+2piizUxuWTgvhzIqeG684kzPnrMzc+YM6aCRnYL4Rl/
-         JcdoZqdeNllodfHIxc+1KylaAUQ8pBRtYzwJyxfVErfDpnPzPb2kozBEiVcAWnib4DrZ
-         +XJdI9d4ANIVxp7N7AcblaqOZ9WjVd58h3q65wvdHG+rx0ry+DdWcCgV96+BXIcjIp5D
-         vesKMS5ju2769I06iwriFVD72MAwLl6NRYkyyWKgDKY5Ak+v+7f/gyt4vUKBCAUkBltH
-         ecCw==
-X-Gm-Message-State: ACgBeo3fmR5t8cwp48u8WIqSv3K1xBFHH1LelT3I+a37qnrv0jPNL9K7
-        v+MXsFIQa1VKh3pxd+V9aQ==
-X-Google-Smtp-Source: AA6agR4bDZuxqokyMcKfa+YPkWiyULO1WtQ3vOZ6OL3mqwXVBlywPpvai3aUPwf49sLOze8PP+pkYA==
-X-Received: by 2002:a05:6808:1389:b0:345:fde:79eb with SMTP id c9-20020a056808138900b003450fde79ebmr1902862oiw.21.1660836243611;
-        Thu, 18 Aug 2022 08:24:03 -0700 (PDT)
+        bh=rbisoohMs3uPePAbaauwnn0BbSjctMh4z2DNTBqGzPQ=;
+        b=wpurvxFgaxi1v2Qa2k0jex7E0gRi0jh6SzSRXPiiE3y4HE1CCi5x/qgq6aznNd5bbI
+         75PUqHOYxf1NcapVkpknPYc7s7nE/3AmAGte/lW8/1OeMcoi3Xf7uXZ8ARHLAv1ff1Bm
+         9Me3o4roKHgDY7Q7hNdqu8crJnyBdQBMbRwBfDkNPM7rrWhzMYzjdP4WTnEnVWngjDFP
+         2zuJplgUWs/Nc0hF4NmT3hLgl15x0ULbnSPAq4Du9IqNa7IeW4rwKRD7hrpnenT4+ndq
+         qq3pMIz6jCh+N5aKH7oe/H9MApKqUjW+nigunLxlfcuc7fl93aG1mYSCKuYBGm7oG1ae
+         6FUA==
+X-Gm-Message-State: ACgBeo0klN3kyVGDwVCxOL1rj6XfOwGPyhkpnfbSJAuim3KVDQhEp85i
+        1FxgI5LNMys8Azz7ujI7fA==
+X-Google-Smtp-Source: AA6agR6nRlbimaon0C9gs4UjoLOSyrreNHuKdrI8XRsolBVK0h7tAf4Na97THJ2KUJwXo0Fkn3O8RQ==
+X-Received: by 2002:a05:6808:2009:b0:343:60b:6dec with SMTP id q9-20020a056808200900b00343060b6decmr1453407oiw.1.1660836414323;
+        Thu, 18 Aug 2022 08:26:54 -0700 (PDT)
 Received: from robh.at.kernel.org ([2607:fb90:5fe0:b4f5:6e22:4704:df60:73a3])
-        by smtp.gmail.com with ESMTPSA id p1-20020a544601000000b00344cc0c4606sm401342oip.58.2022.08.18.08.24.01
+        by smtp.gmail.com with ESMTPSA id 37-20020a9d0c28000000b00636c81d4109sm478058otr.46.2022.08.18.08.26.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Aug 2022 08:24:03 -0700 (PDT)
-Received: (nullmailer pid 1895136 invoked by uid 1000);
-        Thu, 18 Aug 2022 15:24:00 -0000
-Date:   Thu, 18 Aug 2022 09:24:00 -0600
+        Thu, 18 Aug 2022 08:26:53 -0700 (PDT)
+Received: (nullmailer pid 1898912 invoked by uid 1000);
+        Thu, 18 Aug 2022 15:26:51 -0000
+Date:   Thu, 18 Aug 2022 09:26:51 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     linux-remoteproc@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, quic_plai@quicinc.com, bgoswami@quicinc.com,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        quic_rohkumar@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v5 1/7] dt-bindings: remoteproc: qcom: Add SC7280 ADSP
- support
-Message-ID: <20220818152400.GL1829017-robh@kernel.org>
-References: <1660649034-4303-1-git-send-email-quic_srivasam@quicinc.com>
- <1660649034-4303-2-git-send-email-quic_srivasam@quicinc.com>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        linus.walleij@linaro.org, konrad.dybcio@somainline.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: Add sc8280xp lpass
+ lpi pinctrl bindings
+Message-ID: <20220818152651.GM1829017-robh@kernel.org>
+References: <20220817113747.9111-1-srinivas.kandagatla@linaro.org>
+ <20220817113747.9111-2-srinivas.kandagatla@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1660649034-4303-2-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <20220817113747.9111-2-srinivas.kandagatla@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -69,16 +67,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 16, 2022 at 04:53:48PM +0530, Srinivasa Rao Mandadapu wrote:
-> Add ADSP PIL loading support for SC7280 SoCs.
+On Wed, Aug 17, 2022 at 12:37:46PM +0100, Srinivas Kandagatla wrote:
+> Add device tree binding Documentation details for Qualcomm SC8280XP
+> LPASS(Low Power Audio Sub System) LPI(Low Power Island) pinctrl driver.
 > 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 > ---
-> Changes since V4:
-> 	-- Update halt registers description in dt bindings.
-> 
->  .../bindings/remoteproc/qcom,sc7280-adsp-pil.yaml  | 196 +++++++++++++++++++++
->  1 file changed, 196 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
+>  .../qcom,sc8280xp-lpass-lpi-pinctrl.yaml      | 133 ++++++++++++++++++
+>  1 file changed, 133 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-lpass-lpi-pinctrl.yaml
 
 Reviewed-by: Rob Herring <robh@kernel.org>
