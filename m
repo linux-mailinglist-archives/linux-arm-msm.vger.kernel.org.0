@@ -2,233 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 376C2598AD9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 20:04:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2A44598AE2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 20:11:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241570AbiHRSEj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Aug 2022 14:04:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38462 "EHLO
+        id S239465AbiHRSK3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Aug 2022 14:10:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240198AbiHRSEi (ORCPT
+        with ESMTP id S1345357AbiHRSK1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Aug 2022 14:04:38 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7813A61CC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 11:04:36 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id k6-20020a05600c1c8600b003a54ecc62f6so1338806wms.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 11:04:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc;
-        bh=GlpTqivy0tIzGkwP7ejOAS9UIgP5mpapG/8trM9+O8s=;
-        b=flz/+Chioex0V5uN0j7jxB1BCIqc7jyvF8jHUeSIQ2x884HLiWijSc2da85H8hVGdo
-         Q4lp6mTxxV8ZogvfT1Aezb8jJhmEbAwkH0STSBS1D+TxnocOZtqLe8ySx0mMrYQSpa47
-         /GyYmOMw/8eINm3Df319PEHMsn1l0VmeS1NOgoHUmcyyhx2Hj9zRjKMBxtq2ejs0pKkU
-         OGmKZh3pAzgWteDqXJtm1adhlXJJH03Rh04pbciP2nu5ldDwFSq8+L9iGgGPrdPaUkDp
-         IO2BJPTn4SHIHC8+676XiZQg/WABYpgb7U1Ug66lTHHE21ZcYSYAnKv13kSFeTcYGlKM
-         ABxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=GlpTqivy0tIzGkwP7ejOAS9UIgP5mpapG/8trM9+O8s=;
-        b=aaQrHQRqRxshdUi/rEq1cvlMbzL0b5qmxXYSe/i9mtY5/IWArjWsedCckutkgxYhZ2
-         EG/DIcSiFC4IpkLWQ9TL4tUcKEFYKVqL0Bpyor2JwUt0PQofhOMVZe9J/PZdMELun+oY
-         ycpBZIg8MfFtcrqpcwLsT8msQaaEloXDDq018AzSJHDfvqcvh+wK2vG6Qmsl3LCkynoE
-         4vHrMoLFP2RaI6mGw5CSGw6I8NZlHMBhbAGgD6G2ae/xbiVaSjuWETa1+tZl+X25mTJi
-         F7MyWMGbcivqqX8upkTCvPJLzc54kM0fv6aGhrVSfJ0uMwhJcTceaya5WvruzTQGTLX0
-         oong==
-X-Gm-Message-State: ACgBeo0NFMrPPxmVMZ9MSxu2XVLpXGGxyMtdnEQ85vng3shOePCUqUKu
-        yq4LCccKNu3+3ALftXH91em3Y6Wesb+/Ku6y
-X-Google-Smtp-Source: AA6agR5nwxqBrsO5buNoFzw4KTHCE5WRDDDX00NomWvkOTF3NeHI3vRmJEi25qV1Uyv9RjgIL4mKEA==
-X-Received: by 2002:a05:600c:35d4:b0:3a6:18ba:1585 with SMTP id r20-20020a05600c35d400b003a618ba1585mr5017823wmq.48.1660845875137;
-        Thu, 18 Aug 2022 11:04:35 -0700 (PDT)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id 8-20020a05600c024800b003a5537bb2besm2876217wmj.25.2022.08.18.11.04.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Aug 2022 11:04:34 -0700 (PDT)
-Date:   Thu, 18 Aug 2022 21:04:32 +0300
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Caleb Connolly <caleb.connolly@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [RFC 2/2] soc: qcom_stats: Add dynamic debugfs entries for
- subsystems
-Message-ID: <Yv5/MCC6c3lgud+v@linaro.org>
-References: <20220818142215.2282365-1-abel.vesa@linaro.org>
- <20220818142215.2282365-2-abel.vesa@linaro.org>
+        Thu, 18 Aug 2022 14:10:27 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E7ABC7414;
+        Thu, 18 Aug 2022 11:10:25 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27IFtRUT028077;
+        Thu, 18 Aug 2022 18:10:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=bzMSKCudT5xQQ+sG3R7xeFj5oBr01hBH/BA7ita4AoA=;
+ b=aOBmIQrOxjs/1lQLtehtRTZM9AWDI/yWWp9lhZHVjTO1v11TfbeaKiD2Xt1fz9gvnawX
+ 4PbwHiMzesjrkHhCCYJYlx20iSpE4H2w5AEjj/3RUzaPQ8b1U3n+24gcu0gNuLQnqJLE
+ PoPM15ehzM8i3+WbcDmR6ABxTunbG2gK7fBMIcfYrKEwyXL26AQG6X/KZmKScxPyPY8c
+ miBHodcVuygcPWrC34SgacATH3LCehQZ/k0ELy4nPmPW5thLHYGVwOOPNuZhlmD8hoDA
+ F0BV/lh3DTX89husqp2XuFL3ZCtG8G41hGLOmD3NquyLD/AIBOichl/1KykFWwg4sYy1 SQ== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j0w7hpugy-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 18 Aug 2022 18:10:10 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27IIA9qn031139
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 18 Aug 2022 18:10:09 GMT
+Received: from [10.110.31.143] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 18 Aug
+ 2022 11:10:08 -0700
+Message-ID: <6f97be13-e5d3-9f8b-d731-599d9d13671d@quicinc.com>
+Date:   Thu, 18 Aug 2022 11:10:07 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220818142215.2282365-2-abel.vesa@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v2 00/11] Drivers for gunyah hypervisor
+Content-Language: en-US
+To:     Jassi Brar <jassisinghbrar@gmail.com>
+CC:     Robin Murphy <robin.murphy@arm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        "Marc Zyngier" <maz@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        <devicetree@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20220801211240.597859-1-quic_eberman@quicinc.com>
+ <50230652-c1ae-4ce2-907c-9bdc6b827f8e@linaro.org>
+ <62073cb8-0211-3b49-11cb-aceea6df0845@quicinc.com>
+ <a71bea49-130f-61d8-2692-23ab9a8fe939@arm.com>
+ <36303c20-5d30-2edd-0863-0cad804e3f8f@quicinc.com>
+ <CABb+yY3MESqeZveYg5e18PWTLNcg82r4AtaRYJh-9c==mysw7w@mail.gmail.com>
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <CABb+yY3MESqeZveYg5e18PWTLNcg82r4AtaRYJh-9c==mysw7w@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: oK5vP0Ye4islboBcNBNbOLFC3mlofYag
+X-Proofpoint-GUID: oK5vP0Ye4islboBcNBNbOLFC3mlofYag
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-18_13,2022-08-18_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
+ mlxlogscore=550 suspectscore=0 spamscore=0 impostorscore=0 adultscore=0
+ malwarescore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2208180065
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22-08-18 17:22:15, Abel Vesa wrote:
-> Register per-subsystem notifier using qcom_register_ssr_notifier().
-> This will allow the order of between the remoteprocs actually starting and
-> qcom_stats driver probing to become more relaxed.
-> 
-> When the notifier callback gets called, depending on whether the remoteproc is
-> starting up or shutting down, either create or remove the related debugfs
-> entry. Also, in order to make sure we're not missing an already started
-> remoteproc, after the notifier has been set up, we go though the subsystems
-> list and try to create the entry for it, as it was doing before, but this time
-> we store the dentry to use it later on for removal, if necessary.
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->  drivers/soc/qcom/qcom_stats.c | 77 ++++++++++++++++++++++++++++++++++-
->  1 file changed, 75 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
-> index fa30540b6583..baaa820c9a77 100644
-> --- a/drivers/soc/qcom/qcom_stats.c
-> +++ b/drivers/soc/qcom/qcom_stats.c
-> @@ -7,8 +7,10 @@
->  #include <linux/device.h>
->  #include <linux/io.h>
->  #include <linux/module.h>
-> +#include <linux/notifier.h>
->  #include <linux/of.h>
->  #include <linux/platform_device.h>
-> +#include <linux/remoteproc/qcom_rproc.h>
->  #include <linux/seq_file.h>
->  
->  #include <linux/soc/qcom/smem.h>
-> @@ -68,11 +70,20 @@ struct appended_stats {
->  	u32 reserved[3];
->  };
->  
-> +struct subsystem_priv {
-> +	const struct subsystem_data *subsystem;
-> +	struct dentry *root;
-> +	struct dentry *dentry;
-> +	struct notifier_block nb;
-> +	void *notifier;
-> +};
-> +
->  struct qcom_stats_priv {
->  	struct device dev;
->  	struct stats_data *data;
->  	struct dentry *root;
->  	const struct stats_config *config;
-> +	struct subsystem_priv ss_priv[ARRAY_SIZE(subsystems)];
->  };
->  
->  static void qcom_print_stats(struct seq_file *s, const struct sleep_stats *stat)
-> @@ -177,6 +188,57 @@ static void qcom_create_soc_sleep_stat_files(struct qcom_stats_priv *stats,
->  	}
->  }
->  
-> +static int qcom_stats_subsys_ssr_notify(struct notifier_block *nb,
-> +				    unsigned long action,
-> +				    void *data)
-> +{
-> +	struct subsystem_priv *ss_priv = container_of(nb, struct subsystem_priv, nb);
-> +
-> +	switch (action) {
-> +	case QCOM_SSR_AFTER_POWERUP:
-> +		ss_priv->dentry = debugfs_create_file(ss_priv->subsystem->name, 0400, ss_priv->root,
-> +							(void *)ss_priv->subsystem,
-> +							&qcom_subsystem_sleep_stats_fops);
-> +		break;
-> +	case QCOM_SSR_BEFORE_SHUTDOWN:
-> +		debugfs_remove(ss_priv->dentry);
-> +		break;
-> +	default:
-> +		break;
-> +	}
-> +
-> +	return NOTIFY_OK;
-> +}
-> +
-> +static void qcom_register_subsystem_notifiers(struct qcom_stats_priv *stats)
-> +{
-> +	struct device *dev = &stats->dev;
-> +	int i;
-> +
-> +	for (i = 0; i < ARRAY_SIZE(subsystems); i++) {
-> +		const struct subsystem_data *subsystem = &subsystems[i];
-> +		struct subsystem_priv *ss_priv = &stats->ss_priv[i];
-> +
-> +		ss_priv->subsystem = subsystem;
-> +		ss_priv->root = stats->root;
-> +		ss_priv->nb.notifier_call = qcom_stats_subsys_ssr_notify;
-> +		ss_priv->notifier = qcom_register_ssr_notifier(subsystem->name, &ss_priv->nb);
-> +		if (IS_ERR(ss_priv->notifier))
-> +			dev_err(dev, "failed to register ssr notifier for %s (%ld)",
-> +				subsystem->name, PTR_ERR(ss_priv->notifier));
-> +	}
-> +}
-> +
-> +static void qcom_unregister_subsystem_notifiers(struct qcom_stats_priv *stats)
-> +{
-> +	int i;
-> +
-> +	for (i = 0; i < ARRAY_SIZE(subsystems); i++)
-> +		if (stats->ss_priv[i].notifier)
-> +			qcom_unregister_ssr_notifier(stats->ss_priv[i].notifier,
-> +							&stats->ss_priv[i].nb);
-> +}
-> +
->  static void qcom_create_subsystem_stat_files(struct qcom_stats_priv *stats)
->  {
->  	const struct sleep_stats *stat;
-> @@ -188,12 +250,20 @@ static void qcom_create_subsystem_stat_files(struct qcom_stats_priv *stats)
->  		return;
->  
->  	for (i = 0; i < ARRAY_SIZE(subsystems); i++) {
-> +		struct subsystem_priv *ss_priv = &stats->ss_priv[i];
-> +
->  		stat = qcom_smem_get(subsystems[i].pid, subsystems[i].smem_item, NULL);
->  		if (IS_ERR(stat))
->  			continue;
->  
-> -		debugfs_create_file(subsystems[i].name, 0400, root, (void *)&subsystems[i],
-> -				    &qcom_subsystem_sleep_stats_fops);
-> +		/*
-> +		 * At this point some subsystems have already started
-> +		 * and so we already missed the startup notification,
-> +		 * so let's create the entry post-startup.
-> +		 */
-> +		ss_priv->dentry = debugfs_create_file(&subsystems[i]->name, 0400, root,
 
-Please do not apply. There is a build issue here. Should be: subsystems[i].name
 
-> +							(void *)&subsystems[i],
-> +							&qcom_subsystem_sleep_stats_fops);
->  	}
->  }
->  
-> @@ -232,6 +302,7 @@ static int qcom_stats_probe(struct platform_device *pdev)
->  	stats->data = d;
->  	stats->root = root;
->  
-> +	qcom_register_subsystem_notifiers(stats);
->  	qcom_create_subsystem_stat_files(stats);
->  	qcom_create_soc_sleep_stat_files(stats, reg);
->  
-> @@ -245,6 +316,8 @@ static int qcom_stats_remove(struct platform_device *pdev)
->  	struct qcom_stats_priv *stats = platform_get_drvdata(pdev);
->  	struct dentry *root = stats->root;
->  
-> +	qcom_unregister_subsystem_notifiers(stats);
-> +
->  	debugfs_remove_recursive(root);
->  
->  	return 0;
-> -- 
-> 2.34.1
+On 8/9/2022 9:12 PM, Jassi Brar wrote:
+> On Tue, Aug 9, 2022 at 7:07 PM Elliot Berman <quic_eberman@quicinc.com> wrote:
 > 
+> I haven't read the complete history of Gunyah yet, but from a quick
+> look it uses the hvc/smc instruction as the "physical link" between
+> entities (?).    zynqmp-ipi-mailbox.c is one driver that uses smc in
+> such a manner. And I know there are some platforms that don't call
+> hvc/smc under mailbox api and I don't blame them.
+> 
+> Let me educate myself with the background and get back.... unless you
+> want to summarize a usecase that you doubt is supported.
+> 
+
+Hi Jassi,
+
+Did you have chance to evaluate? I have given a summary in this mail, 
+especially the last paragraph:
+
+https://lore.kernel.org/all/36303c20-5d30-2edd-0863-0cad804e3f8f@quicinc.com/
+
+
+Thanks,
+Elliot
