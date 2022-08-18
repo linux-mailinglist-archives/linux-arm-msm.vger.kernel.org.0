@@ -2,65 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C01F0599031
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 00:09:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C848599061
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 00:20:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243146AbiHRWI6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Aug 2022 18:08:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49824 "EHLO
+        id S241621AbiHRWSW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Aug 2022 18:18:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244178AbiHRWI5 (ORCPT
+        with ESMTP id S241085AbiHRWSV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Aug 2022 18:08:57 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF8B410FE9;
-        Thu, 18 Aug 2022 15:08:55 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id a7so5728268ejp.2;
-        Thu, 18 Aug 2022 15:08:55 -0700 (PDT)
+        Thu, 18 Aug 2022 18:18:21 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8D202CDDE;
+        Thu, 18 Aug 2022 15:18:19 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id j21so335201ejs.0;
+        Thu, 18 Aug 2022 15:18:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=ZIJeFXxpXvhra3Imr6kp9MXtkhBnprCLsQHefLWwGpM=;
-        b=f5YuzZmLUFfxsTxaI9fSfqx7E3tJU1HbL4utvcA3T6UdYCdrAwwxq5hIUgY6iwiq3N
-         VdK+vZvaNmFh49kFB+RfE2R/VPoJOkI3PKbQzEGI3/+5oEw5tKzKaORheHhUyyZnZdff
-         c2D0Huniyfkqb1LWUhQbvLKko4JjmGbL7BM9dcDTF7xvDPKQAdJjdHgMj9LuJWQTq8K3
-         CD4pq5JSkU33h1ALjlRCBClAXMhFllBwC2q0Yzlde/s6vR8vF3JpiFILG1eZl4l2wz6w
-         xDIGtyCEp2sw1ivHacSjDMTZaCGDVHlGXmVaqklJ/x246A8PG/lVuFBE+O/4PPHCA1DZ
-         E4yQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=xnTJw9peaanO9bpfnpkWaFIO93QzJllU7e4KFWjN4UM=;
+        b=jDuEd75sJEshQT8ppy93ER+pccWlVxGnzW2rN5fleCnftQWLBj3USAsf+/MaiyzrZ7
+         yiXvwCzLMrJo7GMpwcYB8oSrAbxlA5BeukuUerdkma7tg64/Fk28uMXIQ0e9AF6NGGzs
+         mvfSyLrqA5gj3ndjQeY2u24qtmPoP2yZHWuIhfHhIPBimLMz8OaVi8CTKH19nzMXHhP9
+         qlxid9IwvMTt0YEnxZrSmrJd/8fa2IVhlJwtVJShrV/LhIX8MNEDqLtB8P1HKdmFoHr0
+         NWIDG05viofNI3A7zKSVsqNeQZ1EGW7/KrFKExFIsHb0FCPMZhT7m6TwxUw4QRHGANVO
+         zyKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=ZIJeFXxpXvhra3Imr6kp9MXtkhBnprCLsQHefLWwGpM=;
-        b=2iHKTc6azBmpnXLzrjy1R88XGj/ppDq2M/YTzc/jw1Ta81UnQXafacj53YFMKu2vNL
-         ewzWlTR8lo25SIeVN4Go+VCGVRbWnARWMcHi8hgDN10m7gkBXTBcKAekjhEF2/75vE3e
-         Dnq+ERAdq03BHYir7STIOQZFNQH/sLMFySMc9K5xW+63WTUNA96mG45JM4PEB5efz84m
-         BvgLELHd1XCUx+kTkyaFFgo5GXrujQFzUlwvt02bk46dpzXqSUVhkhO391yZe/PlBUYU
-         Ifueoj0Zrq2EvJzDcr+gBoZcXV6muFKAkGa113my6rn4wV5gqcig48r6kQfjh/PgahLy
-         gM7w==
-X-Gm-Message-State: ACgBeo1wGZ9UYwxbLD5iK/Hrl2NWOnvhjPDbrVQ8QHZjZ/2dkXjIAY0d
-        ZM+UIDA500S5Aw9xH5IgO50=
-X-Google-Smtp-Source: AA6agR4jXYts5DjO6aD6gjTRki35xZjl1p1gkwyuq41ait55RMTJVuUbEh4oMKU1D7mQ3wZNmLigUw==
-X-Received: by 2002:a17:906:4fc3:b0:72e:eab4:d9d7 with SMTP id i3-20020a1709064fc300b0072eeab4d9d7mr2939775ejw.599.1660860534383;
-        Thu, 18 Aug 2022 15:08:54 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=xnTJw9peaanO9bpfnpkWaFIO93QzJllU7e4KFWjN4UM=;
+        b=4OG6F1hzERHSp5bMIyBCGzih6zPHyjXfrJsYi4r6I5CK3+k35ayFbTwqW9tu5Xy/PM
+         UVPhyVJFtum5eiw0YPj02S4wVc+1/5PtxQ1+1nfvPTEdavgueGYJ1WmS4sBg/Nyi0nA/
+         l5wYryJ9FOhOsxNIxr4/owhR+HjJb5ta/tPYwE3jBHX9SQ9eD412UddNyitstEojHxCY
+         PE+4YA1lXowNQJh899sizUN5AYKGD4Vkg5QT1eDqoTaX+vheaxIPlEc+VLLEAu+s4fc3
+         r+1GllXLeth2C38aXfKxOWCbB4mGt5I3fUGtRvbjdyXTZ83DGLckddZfoaDMfUoh0PC5
+         J7KQ==
+X-Gm-Message-State: ACgBeo0B9bE1xszTvcmHSDHvh49xHbtB0Oi/rbtMO7MkMxyJTX4nL9oz
+        imrMPe40FQgrJQ9HriboTZs=
+X-Google-Smtp-Source: AA6agR5YPBSpZL/TaFItfmYZ9gZ3irXfyw8Ewko/wP+9OKDgHkHJn048gCU8EH3oM2u4hfgfQY5vIg==
+X-Received: by 2002:a17:906:dc89:b0:731:67eb:b60b with SMTP id cs9-20020a170906dc8900b0073167ebb60bmr3016985ejc.614.1660861098296;
+        Thu, 18 Aug 2022 15:18:18 -0700 (PDT)
 Received: from fedora.robimarko.hr (cpe-94-253-165-74.zg.cable.xnet.hr. [94.253.165.74])
-        by smtp.googlemail.com with ESMTPSA id j9-20020a17090643c900b00730b61d8a5esm1385022ejn.61.2022.08.18.15.08.53
+        by smtp.googlemail.com with ESMTPSA id t19-20020a1709060c5300b00731747c3107sm1378315ejf.73.2022.08.18.15.18.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Aug 2022 15:08:54 -0700 (PDT)
+        Thu, 18 Aug 2022 15:18:17 -0700 (PDT)
 From:   Robert Marko <robimarko@gmail.com>
 To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, jassisinghbrar@gmail.com,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        dmitry.baryshkov@linaro.org
+        konrad.dybcio@somainline.org, lee@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, jic23@kernel.org,
+        lars@metafoo.de, sboyd@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-iio@vger.kernel.org
 Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH v9 4/4] arm64: dts: qcom: ipq8074: add clocks to APCS
-Date:   Fri, 19 Aug 2022 00:08:49 +0200
-Message-Id: <20220818220849.339732-4-robimarko@gmail.com>
+Subject: [PATCH v8 1/5] dt-bindings: mfd: qcom-spmi-pmic: add support for PMP8074
+Date:   Fri, 19 Aug 2022 00:18:11 +0200
+Message-Id: <20220818221815.346233-1-robimarko@gmail.com>
 X-Mailer: git-send-email 2.37.2
-In-Reply-To: <20220818220849.339732-1-robimarko@gmail.com>
-References: <20220818220849.339732-1-robimarko@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -73,32 +72,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-APCS now has support for providing the APSS clocks as the child device
-for IPQ8074.
-
-So, add the A53 PLL and XO clocks in order to use APCS as the CPU
-clocksource for APSS scaling.
+Document compatible for the PMP8074 PMIC.
 
 Signed-off-by: Robert Marko <robimarko@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Changes in v8:
+* Add to dtschema now that its available instead
+* Drop ACK as we are dealing with dtschema now
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index bace14b742a1..7d4ff7d8a239 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -704,8 +704,9 @@ watchdog: watchdog@b017000 {
- 		apcs_glb: mailbox@b111000 {
- 			compatible = "qcom,ipq8074-apcs-apps-global";
- 			reg = <0x0b111000 0x1000>;
--
- 			#clock-cells = <1>;
-+			clocks = <&a53pll>, <&xo>;
-+			clock-names = "pll", "xo";
- 			#mbox-cells = <1>;
- 		};
- 
+Changes in v7:
+* Fixup commit description
+---
+ Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+index 65cbc6dee545..a05ae172fccc 100644
+--- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+@@ -66,6 +66,7 @@ properties:
+           - qcom,pmi8998
+           - qcom,pmk8350
+           - qcom,pmm8155au
++          - qcom,pmp8074
+           - qcom,pmr735a
+           - qcom,pmr735b
+           - qcom,pms405
 -- 
 2.37.2
 
