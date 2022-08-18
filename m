@@ -2,97 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4644B5990B9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 00:50:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E94395990C2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 00:54:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343970AbiHRWth (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Aug 2022 18:49:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47196 "EHLO
+        id S235824AbiHRWyV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Aug 2022 18:54:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244007AbiHRWtg (ORCPT
+        with ESMTP id S233969AbiHRWyV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Aug 2022 18:49:36 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 355659C2E8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 15:49:34 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id v7-20020a1cac07000000b003a6062a4f81so3294744wme.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 15:49:34 -0700 (PDT)
+        Thu, 18 Aug 2022 18:54:21 -0400
+Received: from mail-oa1-x31.google.com (mail-oa1-x31.google.com [IPv6:2001:4860:4864:20::31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10DDF760F0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 15:54:19 -0700 (PDT)
+Received: by mail-oa1-x31.google.com with SMTP id 586e51a60fabf-11cab7d7e0fso2259976fac.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 15:54:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=WS/7M4qigEgSFyEcNtvzA2XGi2bMcWlBEIjk1MmYqr4=;
-        b=Q76ULt79+EFp0itWqg1ibcn0C5tVCpA1KDRTI0TqA2dXR02p4nFJl+Eh/tG5Dam60j
-         blCN6+6JuyaRhv9h9P8so2bRp34XGhuSgYUQ8xle1q711SdUO+nVUYA0N52FciH1gXad
-         392vFQT0M++tAnAc1z3i0ilIDa8vE2ayHUqtT+eWJnUKIEIZ6MVCqhZ+1xDLa0OeDcjg
-         RtyUh8qQTN9yrfBoQwOF38FzGKJx2RR5cvrsKFAB7a7pDYFyL47O/dK+++T8BXHQv9zb
-         okuDX2zrTNvv0dGjeEaJJO7RY2ywcVEYehVunFmbwag1M26ju17JrrzU/1+LD2XvtqLP
-         EB3g==
+        bh=V8Ue00WUQE3U/abecOIN4Qtb7gfDP0rkPIbdBTWRwKQ=;
+        b=TwC/KmwuHZWq4vw/UCux05XfIrbrGDXwdMGDtZHF4kMpe8Ke5Odq9Yl4FYDcTImdAV
+         0TZQccZwS9lsMLVPJeYTKTmnNL07QV9+aRIU/IUAER6aOyRguS2I+Hm9IH1KMEt8mHRQ
+         Z+C+vt5il7+iiirucudMNeMmgYDEvTFU/DDaI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=WS/7M4qigEgSFyEcNtvzA2XGi2bMcWlBEIjk1MmYqr4=;
-        b=gQBKOR4+gwpJ894rUhsgARIXUYn+c4q3NV0ugWVXgIgh4tmfxsJccMT1yDk/V2zm7Q
-         3VUxoNA3ssb0LQDDQXHFLzemaqhSDTaImtFFYzBeX6dUwoPkD893T+6iQEchRQE2fF1N
-         glQlod8qKT91PrgrmIkDX5KAAlPuvEw0zL24t9v7Vro6ntnbC5EK+OnihSrtrb3K9f2f
-         zY2z2IOz7vXPyWdI0gzpm71QUdJDSj6MuuFE22tcz/vQD3I0a5qOqKT07B1n+UWgg6bR
-         HJhhHbAk6XogguEpCfQpLlw9OeSB767SfKAVFWkaCq+jJ3IaFbmn9hP8ENz31SImMm6N
-         ie7A==
-X-Gm-Message-State: ACgBeo01//mxhFfwtWI8FZEjpi71MPLaXVB9W6+guU1ID7dQfNXn3Unm
-        13s3ERwDAdVxjLuh5EQZBHv/wQ==
-X-Google-Smtp-Source: AA6agR7yxGwU0mISx7a7Km/4QORcX10CeVo+OXbE7XxLkIXTz3sz+ZoUnTMNYncmtGO7TUfYpLrvUw==
-X-Received: by 2002:a1c:19c2:0:b0:3a5:168e:a918 with SMTP id 185-20020a1c19c2000000b003a5168ea918mr6302555wmz.31.1660862972697;
-        Thu, 18 Aug 2022 15:49:32 -0700 (PDT)
-Received: from [192.168.42.181] ([37.171.128.13])
-        by smtp.googlemail.com with ESMTPSA id d24-20020adfa358000000b0021ea1bcc300sm2648163wrb.56.2022.08.18.15.49.30
+        bh=V8Ue00WUQE3U/abecOIN4Qtb7gfDP0rkPIbdBTWRwKQ=;
+        b=hARcHUGGK6otOzgWIWrNTx9RhaNTBZsj2ApxCAkb3l1pRDWILdcgp2+niDYDuwejrv
+         hi1WZ3a7jibXWrZ95Pp5qqybIo6K9E+6e9PgrHc10CUaa7CWCdUCWWbNrbZ4WvOfpvPb
+         YSqyOEqshklMkSpJ0zg7o/UWivrSAqi8V5kObzfxFbkuvZKLV4st5B/GL8nlAu4gFKU2
+         2EH/VIk7JsDq+Lw7S9ryPjBnujJoyGsVOJNHSONsZBfovMuz5UwvHzxBOgViLnQqYqVl
+         r/vLnuv7H/43WAcAmmvI4iWwa3HXJ3GFPmQjsWu5cdzOdDErN1X/isa15Ft1W47LNztL
+         eTBA==
+X-Gm-Message-State: ACgBeo2GtsB//uhKY1/pwFV8DWioH54ocQtGwcYlKl7tQbtY29EJ4hXI
+        YgN97/A/2TfyyuENJ9WifAyNkg==
+X-Google-Smtp-Source: AA6agR7/431Qf3zSUlYzmanWZ8TJjaMqfIqW1eRWqU0Z+3fKxSHUoFfKds3DJsf7AE/upFnBpgjIsg==
+X-Received: by 2002:a05:6870:3486:b0:10e:62b:159a with SMTP id n6-20020a056870348600b0010e062b159amr2595050oah.254.1660863258385;
+        Thu, 18 Aug 2022 15:54:18 -0700 (PDT)
+Received: from [172.20.10.6] ([166.205.92.241])
+        by smtp.gmail.com with ESMTPSA id r42-20020a056870e9aa00b0011ba344b4fasm140274oao.14.2022.08.18.15.54.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Aug 2022 15:49:32 -0700 (PDT)
-Message-ID: <1efe2f7d-05e2-6207-f4df-5b597d00c862@linaro.org>
-Date:   Fri, 19 Aug 2022 00:49:29 +0200
+        Thu, 18 Aug 2022 15:54:18 -0700 (PDT)
+Message-ID: <a96ca963-6131-f0e6-f43b-3413addae5f5@chromium.org>
+Date:   Thu, 18 Aug 2022 15:54:15 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH v7 2/5] drivers: thermal: tsens: Add support for combined
- interrupt
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Add sleep state for alc5682
+ codec
 Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, amitk@kernel.org,
-        thara.gopinath@gmail.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
-        rafael@kernel.org, rui.zhang@intel.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220818220245.338396-1-robimarko@gmail.com>
- <20220818220245.338396-2-robimarko@gmail.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <20220818220245.338396-2-robimarko@gmail.com>
+To:     Doug Anderson <dianders@chromium.org>,
+        Judy Hsiao <judyhsiao@chromium.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Alexandru Stan <amstan@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Mengqi Guo <mqg@chromium.org>
+References: <20220818084216.1.I5c2b6fea19c4c0dec67fd4931f03df8e5ccaca95@changeid>
+ <CAE-0n52GzxXEsToWzfU1TMuASuC6TKK7NXxYbBQWxNmM74FxZA@mail.gmail.com>
+ <CAD=FV=WNuqtpnCr2Zn0z_L1OCiwD8dNzhDxvhfHYuYVmciPbuQ@mail.gmail.com>
+ <60b5b49b-eb7a-c552-fcf1-3d3a360f8e25@chromium.org>
+ <CAD=FV=UkaiDSYvm7W1tnoty=3dnYTUaEmNcbP7=uEzniELt7QA@mail.gmail.com>
+From:   "Joseph S. Barrera III" <joebar@chromium.org>
+In-Reply-To: <CAD=FV=UkaiDSYvm7W1tnoty=3dnYTUaEmNcbP7=uEzniELt7QA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/08/2022 00:02, Robert Marko wrote:
-> Despite using tsens v2.3 IP, IPQ8074 and IPQ6018 only have one IRQ for
-> signaling both up/low and critical trips.
-> 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
+On 8/18/22 3:39 PM, Doug Anderson wrote:
+> Ah, searching through the ChromeOS bug tracker finds some hits. At
+> this point we should probably move the discussion off the lists and
+> bring it back to the lists when we have some results. Unfortunately
+> most of the bugs are not public and so having a discussion here is
+> just noise for most people CCed.
 
-I'll pick the patches 1-4 as soon as Bjorn gives its blessing for this one
-
-
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
++1, thanks Doug
