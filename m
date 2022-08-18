@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C51C459848B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 15:47:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 640ED59848D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 15:47:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244911AbiHRNqs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Aug 2022 09:46:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33840 "EHLO
+        id S245073AbiHRNqt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Aug 2022 09:46:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242423AbiHRNqr (ORCPT
+        with ESMTP id S244831AbiHRNqs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Aug 2022 09:46:47 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34115B56DE
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 06:46:46 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id m10-20020a05600c3b0a00b003a603fc3f81so976360wms.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 06:46:46 -0700 (PDT)
+        Thu, 18 Aug 2022 09:46:48 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64477B56C1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 06:46:47 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id d5so848096wms.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 06:46:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=7UEaK75XddAzmeSUUviQ6zd7mwl28xNsOo/h1M2gdWg=;
-        b=R3MeH3MPjWTZ8yZNP5rkWd1EAOC+J3UnYKnmXkE7zJo6j8BFvIyR/8vHQBIKVnICc6
-         WAfMtDxnpim7p2UvFjPaQBK6R4Dye1jZelXxJYlSJvD8XhD5eLlssZTDNaVfoYKxIT4k
-         8EjYXJLiSqOchMQH5hRyGXSS4HrHuuET01qrJ7U6y9Ok9QgM/G8GCxb7A6xjgrerlqZf
-         aQpPjE+HcQ39RmfR84OJqGrdVZJWYR6iP2vC1pGy5A7IpD939s1E13eyLeaRKEPX8a1x
-         H8lCgAnrVo1lvhAJDfmjHUVciin2kHyDBhYn+QW1DjDOpJ4lpNmmjpflqljieREN9SAa
-         Ktow==
+        bh=eiRe1B0ZIFE4lVaNWcauD4DXUe5vQu4l80JAQTe/0g8=;
+        b=QNTHiKcTznLn5qHU+rcEotfKidl83Mg8wMWxGKO8WxsTHmnt3LhAxLdEJexf993ii0
+         8axKucOALczyy8nPbONFTDwIhO3qVILywk9nBkOwkCVnZGjoKIwnvKIxjQWH6c3bbuOe
+         9ds0fN2oI/zLNMZnqQ2LyByEg1iOpgMqzfvIaMPMnobCOs70h7vkAq3ULJasWqEgdmIU
+         CVTrdQt5P/87pJ7WxRmrOWW5+V3cPvKYsKChN9XLTJenTelFq006k1lye2AR7UrL1p2w
+         ZDOhjHeiv8XttTAmt5UxG/DgZVvRKnom8SuF7v4/T8A3JEzE8rZmOx187tmuxLycVR4+
+         Dm8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=7UEaK75XddAzmeSUUviQ6zd7mwl28xNsOo/h1M2gdWg=;
-        b=7vZ1QKI+QGOryyPp9aY11UIPZlJ5ynnXh+WVRtbOf1drDnmQDTPC13abhH2ulryHyr
-         4LVnYMXFX5dplVY4pPMtX9pQmzB3hAQxHe5MgWhglNRBqD9bp5e/PV/N5+BXUF8zqqol
-         QROCOVb0+Mxzeb7XnU9rR0uw8hgbNGqwCNQVCndgX8/zS5v8OZg72f18PUQwqbQ3PdBm
-         6fZNd6gF9g/52jTdtkUclMtDt4K2zn9/Hzfpmk5EUZHs1DjDCRF3lheAp5Vnb7ZzzSJ4
-         TbcrqR3iJeWXVwV1I1TrfzJjzro+ZOIlD/EPweNKqay2h+4R8dF+HDYdMXQ7OJ6sffQb
-         sEMg==
-X-Gm-Message-State: ACgBeo1XSMw2RViqWOv2XfaOgTfkUusAANJ2SRLVWvDxiywlpXML5USV
-        7o0CP7X39MG1muQyTwEN4J029l+Sf/sVbA==
-X-Google-Smtp-Source: AA6agR7RPL+SW4zi+OqxoNudlkRplCeu1snCGdqEB6q/D+y5IlgI2cclSEcKFDMCWUpd8FX0VziOEA==
-X-Received: by 2002:a05:600c:1552:b0:3a5:b933:b629 with SMTP id f18-20020a05600c155200b003a5b933b629mr5122024wmg.200.1660830404663;
-        Thu, 18 Aug 2022 06:46:44 -0700 (PDT)
+        bh=eiRe1B0ZIFE4lVaNWcauD4DXUe5vQu4l80JAQTe/0g8=;
+        b=i//7Q7WFjSoEULYgwrq+gElDsz5Hb4S7n8a9Cze0O2K8NR/wL4IHmvxpYvFXTIToy1
+         7+7dnW80qaRieTfyD7AzYeptMYOnTc47C3jxkoocRhdNnuBCl56Z0koAu4sbO0nYKCj4
+         7KmbUjujrrThLOuWTYXO7FHLCkIauntfP8DweY096zxh40zcDc8IsDz++a2HC/89h+Up
+         VDjN9gSkM0/acDwK0N4JKHbMsSGid8L69f5TkNezJDlJTztOucg7vy7gGMq/6ue/yCyr
+         1jC5Sgb3eZ3rO56tctjDXIqY2eQZ++MODUKnIz0iNz64yH6prg2KNwqp/1ONUpBMMWYB
+         M87A==
+X-Gm-Message-State: ACgBeo1H+pzIUtfThJaSHdI4u1C3jhlj+0Z/8Qnwcl8DKRszxbFVnwpi
+        vBikDwOcS1XRm6pMSVYSpSIc6w==
+X-Google-Smtp-Source: AA6agR4Hop5Tuz+rKxdk6PKo3fj6arTtQUxSSOpAbsY3XJaCi5KcdZUkwgP/RmX2m7zqJCsUf2VjYA==
+X-Received: by 2002:a1c:2783:0:b0:3a2:fd82:bf46 with SMTP id n125-20020a1c2783000000b003a2fd82bf46mr5152932wmn.29.1660830405973;
+        Thu, 18 Aug 2022 06:46:45 -0700 (PDT)
 Received: from srini-hackbox.lan (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.gmail.com with ESMTPSA id v5-20020a5d6785000000b0021e47fb24a2sm1454549wru.19.2022.08.18.06.46.43
+        by smtp.gmail.com with ESMTPSA id v5-20020a5d6785000000b0021e47fb24a2sm1454549wru.19.2022.08.18.06.46.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Aug 2022 06:46:44 -0700 (PDT)
+        Thu, 18 Aug 2022 06:46:45 -0700 (PDT)
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 To:     broonie@kernel.org
 Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
@@ -56,9 +56,9 @@ Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
         linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 1/6] ASoC: qcom: dt-bindings: add sm8450 and sc8280xp compatibles
-Date:   Thu, 18 Aug 2022 14:46:14 +0100
-Message-Id: <20220818134619.3432-2-srinivas.kandagatla@linaro.org>
+Subject: [PATCH 2/6] ASoC: codecs: wsa-macro: add support for sm8450 and sc8280xp
+Date:   Thu, 18 Aug 2022 14:46:15 +0100
+Message-Id: <20220818134619.3432-3-srinivas.kandagatla@linaro.org>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20220818134619.3432-1-srinivas.kandagatla@linaro.org>
 References: <20220818134619.3432-1-srinivas.kandagatla@linaro.org>
@@ -74,69 +74,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch adds SM8450 and SC8280XP compatible entry for LPASS TX, RX, WSA
-and VA codec macros.
+Add compatible for sm8450 and sc8280xp.
 
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 ---
- .../devicetree/bindings/sound/qcom,lpass-rx-macro.yaml          | 2 ++
- .../devicetree/bindings/sound/qcom,lpass-tx-macro.yaml          | 2 ++
- .../devicetree/bindings/sound/qcom,lpass-va-macro.yaml          | 2 ++
- .../devicetree/bindings/sound/qcom,lpass-wsa-macro.yaml         | 2 ++
- 4 files changed, 8 insertions(+)
+ sound/soc/codecs/lpass-wsa-macro.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml
-index a6905bcf89d2..1de11e7f33bb 100644
---- a/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml
-@@ -14,6 +14,8 @@ properties:
-     enum:
-       - qcom,sc7280-lpass-rx-macro
-       - qcom,sm8250-lpass-rx-macro
-+      - qcom,sm8450-lpass-rx-macro
-+      - qcom,sc8280xp-lpass-rx-macro
- 
-   reg:
-     maxItems: 1
-diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml
-index 324595a62ae8..de8297b358e8 100644
---- a/Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml
-@@ -14,6 +14,8 @@ properties:
-     enum:
-       - qcom,sc7280-lpass-tx-macro
-       - qcom,sm8250-lpass-tx-macro
-+      - qcom,sm8450-lpass-tx-macro
-+      - qcom,sc8280xp-lpass-tx-macro
- 
-   reg:
-     maxItems: 1
-diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
-index 7b4cc84eda8c..9f473c08cb2e 100644
---- a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
-@@ -14,6 +14,8 @@ properties:
-     enum:
-       - qcom,sc7280-lpass-va-macro
-       - qcom,sm8250-lpass-va-macro
-+      - qcom,sm8450-lpass-va-macro
-+      - qcom,sc8280xp-lpass-va-macro
- 
-   reg:
-     maxItems: 1
-diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-wsa-macro.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-wsa-macro.yaml
-index 13cdb8a10687..4959ad658eac 100644
---- a/Documentation/devicetree/bindings/sound/qcom,lpass-wsa-macro.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,lpass-wsa-macro.yaml
-@@ -14,6 +14,8 @@ properties:
-     enum:
-       - qcom,sc7280-lpass-wsa-macro
-       - qcom,sm8250-lpass-wsa-macro
-+      - qcom,sm8450-lpass-wsa-macro
-+      - qcom,sc8280xp-lpass-wsa-macro
- 
-   reg:
-     maxItems: 1
+diff --git a/sound/soc/codecs/lpass-wsa-macro.c b/sound/soc/codecs/lpass-wsa-macro.c
+index 27da6c6c3c5a..f82c297ea3ab 100644
+--- a/sound/soc/codecs/lpass-wsa-macro.c
++++ b/sound/soc/codecs/lpass-wsa-macro.c
+@@ -2561,6 +2561,8 @@ static const struct dev_pm_ops wsa_macro_pm_ops = {
+ static const struct of_device_id wsa_macro_dt_match[] = {
+ 	{.compatible = "qcom,sc7280-lpass-wsa-macro"},
+ 	{.compatible = "qcom,sm8250-lpass-wsa-macro"},
++	{.compatible = "qcom,sm8450-lpass-wsa-macro"},
++	{.compatible = "qcom,sc8280xp-lpass-wsa-macro" },
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(of, wsa_macro_dt_match);
 -- 
 2.21.0
 
