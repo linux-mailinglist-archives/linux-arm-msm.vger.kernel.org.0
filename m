@@ -2,76 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C38DD597E55
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 08:02:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 809B4597E7E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 08:20:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243468AbiHRGBf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Aug 2022 02:01:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49252 "EHLO
+        id S240411AbiHRGRE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Aug 2022 02:17:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243455AbiHRGBe (ORCPT
+        with ESMTP id S232131AbiHRGRD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Aug 2022 02:01:34 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B450082FA6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Aug 2022 23:01:31 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id n4so492599wrp.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Aug 2022 23:01:31 -0700 (PDT)
+        Thu, 18 Aug 2022 02:17:03 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2052E94EC5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Aug 2022 23:17:01 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id v2so865929lfi.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Aug 2022 23:17:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc;
-        bh=bZty3y2darx5s7m8eOWVGV+bKL3GxP3dVhk/MBA5fWU=;
-        b=f+orhQX9Aqm2vt86cAoz3fiZf50H35jqr/TNHqkMa0UF3dukyQrgs61PyJg9OBc0K2
-         fAc9jEui95sT2PJMyw+Yb8O7evo/Ey1XnGjWwUf70sAkvmieksb2OPLCfi5XUWvPA84X
-         geM4Rt5xnkFgxRaORd6pyt5qA20/A63EsKQMcmAbj6t/6DGisbDELa9Am2u9El99gH8M
-         ckXBnp79uq3NwQmOUOUIkZXtntavZu5tuAbynf2kFLbAlBLnHn+qYsVEcOLVnI43xAnv
-         lF9GGCYgx0yePaR/UsQu5OV4ITk07wiZP7+XJueTckNSZOgQdj4kDKaIdWYqPeuSd9zZ
-         hLXg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=ho+Nb4Kl/C/aIXeakRLVlBshDy8+kHxnGlegszRANBE=;
+        b=HniK3cF6yOKlCinfqd4fC1nP8cvW8vbpSR3UViT4wbZGZ+6LjIgxfCjNomG6n1ZtcR
+         9u4t4zP68qB1w8AlQwsPu3IEL02mKJny/ZNe4+Cn9jRHhu3Cod0rrHTFy8Imt88ljjHD
+         IDe8wCELy7QoNBYlm6WGXrnIKcCikE52O6U2ekSh9YgnnHj+rMWaquhsREZo4sz5Jz/d
+         D0i9zICO4Up63mCL4Cv7pLb3lZclbtIJjsILnEP+19VBKos43BZZl29T1xbdCO1bB9o7
+         g1miJ0F7Qbgv1RnamzyjkIQ7m2xvOmxDjBIgPVZH8w7nNnmfbSCb5pbtu7BgU90Ld+hU
+         cluw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=bZty3y2darx5s7m8eOWVGV+bKL3GxP3dVhk/MBA5fWU=;
-        b=NIdYEoaYC4eiqzMQXRHAxwq7PNhg7TW9f1VLsiilirY0b6kp6yqBfIcMfH3FDBLCt2
-         BfS1aXWj9BHRisZfdROK3ZAiiYWbo/0oSZCYQ4Jtb8b0ClREgSu5fSDdeq786tYbCpGr
-         KtrnJbXQE5C0QPJJsDzkKw6tAPcqzzTuYS+B2G1M8gIvQ66I0P0Q6S6qP8RS3LoGy0q7
-         fjIrwkwvt1+/b/QzHd5evFxLMwxH7Xow4ffrY25TMD83eVrRpXvuq6Nbwr436MOJ9XC1
-         eeaeOGH8tvjgeg/p9qMQA4nYr2X96Xt4VEFYu/bAhksZ7nzxtYjhB0HrpUYufa1BxGmf
-         AvBw==
-X-Gm-Message-State: ACgBeo1TmxCBiaiJurFvB59MQcVU5+Tkd22lKsQzvtxGS19EAc0viLDd
-        R0g6rHjLd11Rc50H4zHQVqSAmw==
-X-Google-Smtp-Source: AA6agR7Xs87Dr0m2dsNGP8woPhz8tse750xuLe9TeNweuVK7GcLyu4MnOAU99SNrItyaik7Axun68A==
-X-Received: by 2002:a5d:5a0f:0:b0:220:5930:dc65 with SMTP id bq15-20020a5d5a0f000000b002205930dc65mr598687wrb.229.1660802490217;
-        Wed, 17 Aug 2022 23:01:30 -0700 (PDT)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id q14-20020adff94e000000b00225232c03fdsm514173wrr.27.2022.08.17.23.01.28
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=ho+Nb4Kl/C/aIXeakRLVlBshDy8+kHxnGlegszRANBE=;
+        b=GckMCJVgKYojfKBm/czl3qe+AQbvaqt7PXFDQajjk7/l0g0KYQ5kp9dT+0nAB72WbW
+         khbjfBdSDuVSX3eOpzv6nSjuoBXf0OSIHePnXE7/kMcg5lcrr2FvkKouVEOYlO2oD3QW
+         8LAE3YR8BumBDuwW3m3SHr31MdSePI76eLxHMlFZn9pADTt9qgtR3o6QwT+//Ip9KGnE
+         WXg6JEQ00fU2GRr/1NrM3bvTalwXIIKUB3ZfRetmR3IiZHnJofP+yfwL134yvy+ClFN4
+         wcLAaPdotvPjFdwuOIyvV+kombYGcuQB2OnhlBjDJl+RNx9NWSub1dtqLEmvqh+wCmKH
+         iCFg==
+X-Gm-Message-State: ACgBeo1b8nurNu6uwZl46HJvyrVRx3iz5biVRdpfTx6UPMYRBvL5X494
+        7GUH92Lq0Y/LaprRw7YsPunhrA==
+X-Google-Smtp-Source: AA6agR4Hie8Ptl9watzP9q3wSRaT1DJ6LQ5bGSYAymhnHao4U9kBrUHbr6CC3vfKu5GI47yddxEqpQ==
+X-Received: by 2002:a05:6512:3e07:b0:48b:131:616 with SMTP id i7-20020a0565123e0700b0048b01310616mr544949lfv.475.1660803419504;
+        Wed, 17 Aug 2022 23:16:59 -0700 (PDT)
+Received: from krzk-bin.. (d15l54bxv1k5c31plwt-4.rev.dnainternet.fi. [2001:14bb:ae:539c:671:aa32:2bd5:8994])
+        by smtp.gmail.com with ESMTPSA id k4-20020ac257c4000000b0047f71771969sm93282lfo.113.2022.08.17.23.16.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Aug 2022 23:01:29 -0700 (PDT)
-Date:   Thu, 18 Aug 2022 09:01:28 +0300
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Caleb Connolly <caleb.connolly@linaro.org>,
+        Wed, 17 Aug 2022 23:16:58 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Maulik Shah <quic_mkshah@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sdm845: Add the RPMh stats node
-Message-ID: <Yv3VuDvvpyNziZEq@linaro.org>
-References: <20220812101240.1869605-1-abel.vesa@linaro.org>
- <T2Uz7zs4Ht58lYc5zWg1VBY0ju6bVaSKa9y3RhBQWDDHmPXBHbAxI2J34jSeY0BFQy2y4JtFn3nQS0Lz4xI5jw==@protonmail.internalid>
- <20220812101240.1869605-3-abel.vesa@linaro.org>
- <e6821eef-4fcb-97b1-24be-e2bb62b99039@linaro.org>
- <Yvtx2aK1Uu51hTPM@linaro.org>
- <b34b2fa6-7dbf-e4d3-9833-57efd42f9137@linaro.org>
- <Yvu4o1bFdKLfvaiL@linaro.org>
- <Yv2aK52MzRPUIztr@baldur>
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Peng Fan <peng.fan@nxp.com>,
+        Jia-Wei Chang <jia-wei.chang@mediatek.com>,
+        Johnson Wang <johnson.wang@mediatek.com>,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2] dt-bindings: interconnect: restrict opp-table to objects
+Date:   Thu, 18 Aug 2022 09:16:53 +0300
+Message-Id: <20220818061653.9524-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Yv2aK52MzRPUIztr@baldur>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -82,156 +87,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22-08-17 20:47:23, Bjorn Andersson wrote:
-> On Tue 16 Aug 10:32 CDT 2022, Abel Vesa wrote:
-> 
-> > On 22-08-16 14:50:50, Caleb Connolly wrote:
-> > > 
-> > > 
-> > > On 16/08/2022 11:30, Abel Vesa wrote:
-> > > > On 22-08-15 21:34:07, Caleb Connolly wrote:
-> > > > > 
-> > > > > 
-> > > > > On 12/08/2022 11:12, Abel Vesa wrote:
-> > > > > > SDM845 is a special case compared to the other platforms that use RPMh
-> > > > > > stats, since it only has 2 stats (aosd and cxsd), while the others have
-> > > > > > a 3rd one (ddr).
-> > > > > > 
-> > > > > > So lets add the node but with a SDM845 dedicated compatible to make
-> > > > > > the driver aware of the different stats config.
-> > > > > Hi,
-> > > > > 
-> > > > > I gave this a go on the OnePlus 6, I noticed the driver is also meant to
-> > > > > read the stats for remote procs via smem, however this seems to fail for me
-> > > > > - it can't find any of the SMEM items even if I probe the driver manually
-> > > > > after ensuring remoteprocs have booted. Is this an unsupported feature on
-> > > > > SDM845?
-> > > > 
-> > > > Thanks for giving it a test.
-> > > > 
-> > > > Actually, you need to probe the qcom_stats after the remoteprocs have
-> > > > booted.
-> > > 
-> > > Hi, thanks for getting back to me. I did try this as mentioned above but I
-> > > think I must have been doing something wrong as I get different behaviour
-> > > now:
-> > > 
-> > > 
-> > > enchilada:/ # cat /sys/class/remoteproc/remoteproc*/state
-> > > 
-> > > running
-> > > 
-> > > running
-> > > 
-> > > running
-> > > 
-> > > running
-> > > 
-> > > enchilada:/ # ls /d/qcom_stats/
-> > > aosd  cxsd
-> > > enchilada:/ # rmmod qcom_stats
-> > > enchilada:/ # insmod /data/qcom_stats.ko
-> > > enchilada:/ # ls /d/qcom_stats/
-> > > adsp  aosd  cdsp  cxsd  modem  slpi
-> > 
-> > Well, I run on upstream MTP, which has less enabled in devicetree.
-> > 
-> > > 
-> > > 
-> > > 
-> > > Weirdly, despite it succeeding it prints the following in dmesg with logging
-> > > added to qcom_create_subsystem_stat_files() [1]:
-> > > 
-> > > [  156.540307] Couldn't get smem object 'wpss' (item: 605, pid: 13): -2
-> > > [  156.546899] Couldn't get smem object 'gpu' (item: 609, pid: 0): -2
-> > > [  156.553260] Couldn't get smem object 'display' (item: 610, pid: 0): -2
-> > > [  156.559957] Couldn't get smem object 'adsp_island' (item: 613, pid: 2): -2
-> > > [  156.567007] Couldn't get smem object 'slpi_island' (item: 613, pid: 3): -2
-> > 
-> > See my comment below your related changes.
-> > 
-> > > > 
-> > > > Doing so, you'll end up having the following:
-> > > > adsp  aosd  cdsp  cxsd
-> > > 
-> > > I seem to get a few more, I have some out of tree patches enabling the SLPI,
-> > > and iirc the db845c doesn't have a full modem firmware. If these look good
-> > > to you I'd appreciate it if you add my Tested-by.
-> > 
-> > Looks OK to me.
-> > 
-> > > 
-> > > enchilada:/ # for x in /d/qcom_stats/*; do echo $x; cat $x; done
-> > > /d/qcom_stats/adsp
-> > > Count: 48
-> > > Last Entered At: 1199663157
-> > > Last Exited At: 1524359015
-> > > Accumulated Duration: 793060082
-> > > /d/qcom_stats/aosd
-> > > Count: 0
-> > > Last Entered At: 0
-> > > Last Exited At: 0
-> > > Accumulated Duration: 0
-> > > /d/qcom_stats/cdsp
-> > > Count: 35
-> > > Last Entered At: 1194818037
-> > > Last Exited At: 1194769648
-> > > Accumulated Duration: 3223580811
-> > > /d/qcom_stats/cxsd
-> > > Count: 0
-> > > Last Entered At: 0
-> > > Last Exited At: 0
-> > > Accumulated Duration: 0
-> > > /d/qcom_stats/modem
-> > > Count: 49
-> > > Last Entered At: 3687081003
-> > > Last Exited At: 3686727026
-> > > Accumulated Duration: 2915592136
-> > > /d/qcom_stats/slpi
-> > > Count: 53
-> > > Last Entered At: 3120905905
-> > > Last Exited At: 3120894535
-> > > Accumulated Duration: 3218969498
-> > > 
-> > > Am I right in thinking the aosd and cxsd being all 0 is probably a similar
-> > > issue to the one reported by Stephen in [2]?
-> > 
-> > Might be, I'm not sure. I'll have closer a look.
-> > 
-> > > 
-> > > 
-> > > [1]:
-> > > 
-> > > diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
-> > > index 121ea409fafc..56cfb20d3683 100644
-> > > --- a/drivers/soc/qcom/qcom_stats.c
-> > > +++ b/drivers/soc/qcom/qcom_stats.c
-> > > @@ -178,8 +178,12 @@ static void qcom_create_subsystem_stat_files(struct dentry *root,
-> > > 
-> > >         for (i = 0; i < ARRAY_SIZE(subsystems); i++) {
-> > >                 stat = qcom_smem_get(subsystems[i].pid, subsystems[i].smem_item, NULL);
-> > > -               if (IS_ERR(stat))
-> > 
-> > Basically, the error here means the subsystem is not available right at
-> > this moment. We could probably return EPROBE_DEFER here, but it really
-> > depends on each platform's devicetree what remoteprocs they have
-> > enabled or not. So I guess the safest thing to to is to just skip
-> > quietly the ones that haven't probed yet.
-> > 
-> 
-> Not only does the/each remoteproc driver need to probe, we actually need
-> to wait for them to boot in order to register their parts.
-> 
-> Perhaps we can use qcom_register_ssr_notifier() to dynamically register
-> these at some later time. This does however seem like a reasonable thing
-> to improve upon in a follow up series.
+Simple 'opp-table:true' accepts a boolean property as opp-table, so
+restrict it to object to properly enforce real OPP table nodes.
 
-Sounds like a good idea. Will give it a try and sent a patch a soon as I
-have something working.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Thanks,
-Abel
+---
 
-> 
-> Regards,
-> Bjorn
+Changes since v1:
+1. Correct typo in msg.
+---
+ .../devicetree/bindings/interconnect/fsl,imx8m-noc.yaml        | 3 ++-
+ .../devicetree/bindings/interconnect/mediatek,cci.yaml         | 3 ++-
+ .../devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml   | 3 ++-
+ 3 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/interconnect/fsl,imx8m-noc.yaml b/Documentation/devicetree/bindings/interconnect/fsl,imx8m-noc.yaml
+index fa4f7685ab2b..f7a5e31c506e 100644
+--- a/Documentation/devicetree/bindings/interconnect/fsl,imx8m-noc.yaml
++++ b/Documentation/devicetree/bindings/interconnect/fsl,imx8m-noc.yaml
+@@ -47,7 +47,8 @@ properties:
+     maxItems: 1
+ 
+   operating-points-v2: true
+-  opp-table: true
++  opp-table:
++    type: object
+ 
+   fsl,ddrc:
+     $ref: "/schemas/types.yaml#/definitions/phandle"
+diff --git a/Documentation/devicetree/bindings/interconnect/mediatek,cci.yaml b/Documentation/devicetree/bindings/interconnect/mediatek,cci.yaml
+index 449c7c988229..58611ba2a0f4 100644
+--- a/Documentation/devicetree/bindings/interconnect/mediatek,cci.yaml
++++ b/Documentation/devicetree/bindings/interconnect/mediatek,cci.yaml
+@@ -36,7 +36,8 @@ properties:
+       - const: intermediate
+ 
+   operating-points-v2: true
+-  opp-table: true
++  opp-table:
++    type: object
+ 
+   proc-supply:
+     description:
+diff --git a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
+index c2e697f6e6cf..a4743386c4c1 100644
+--- a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
++++ b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
+@@ -35,7 +35,8 @@ properties:
+     maxItems: 1
+ 
+   operating-points-v2: true
+-  opp-table: true
++  opp-table:
++    type: object
+ 
+   reg:
+     # BWMON v4 (currently described) and BWMON v5 use one register address
+-- 
+2.34.1
+
