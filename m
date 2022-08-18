@@ -2,83 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 809B4597E7E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 08:20:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77093597EE0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 09:02:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240411AbiHRGRE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Aug 2022 02:17:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32824 "EHLO
+        id S243734AbiHRHCh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Aug 2022 03:02:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232131AbiHRGRD (ORCPT
+        with ESMTP id S243728AbiHRHCh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Aug 2022 02:17:03 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2052E94EC5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Aug 2022 23:17:01 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id v2so865929lfi.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Aug 2022 23:17:01 -0700 (PDT)
+        Thu, 18 Aug 2022 03:02:37 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE1DA86C1A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 00:02:33 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id x25so852876ljm.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 00:02:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc;
-        bh=ho+Nb4Kl/C/aIXeakRLVlBshDy8+kHxnGlegszRANBE=;
-        b=HniK3cF6yOKlCinfqd4fC1nP8cvW8vbpSR3UViT4wbZGZ+6LjIgxfCjNomG6n1ZtcR
-         9u4t4zP68qB1w8AlQwsPu3IEL02mKJny/ZNe4+Cn9jRHhu3Cod0rrHTFy8Imt88ljjHD
-         IDe8wCELy7QoNBYlm6WGXrnIKcCikE52O6U2ekSh9YgnnHj+rMWaquhsREZo4sz5Jz/d
-         D0i9zICO4Up63mCL4Cv7pLb3lZclbtIJjsILnEP+19VBKos43BZZl29T1xbdCO1bB9o7
-         g1miJ0F7Qbgv1RnamzyjkIQ7m2xvOmxDjBIgPVZH8w7nNnmfbSCb5pbtu7BgU90Ld+hU
-         cluw==
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=Ue7+dLTS9HtxTPrFYVqCFYSq/oTJauCpRZyChqde9i4=;
+        b=i0NkYkwb9axhr+B/PWooFtVIbh5+86wm/+fbgKl/dKuQA2D61nFTdV6OI+wEVniZeE
+         x238BpbsQ1x4a7RHM64nYIUjxzTp/7HF4SIKzMK6XQFHhtOGHDVmVBgdeD9cCIunGBHp
+         83w7KPlyM59kNFOIkViS1F5HaYY7koaX4sYPKlAHmEFvOq4CvkiXWc7LK2zIecbCJBv7
+         /SVxpM8i/clE+3+6D/yAi3lckJC36pmJTsMIEjvGJIiDDGstfNnmYnpziZTQP8QV9Fpu
+         CsQfKGmXNOJBFNy87Mq+pIFXPKbZbmlMP+GeGN4bgwDcx5yl+WOU3CgEFI7MqnqiyFkR
+         Yg0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc;
-        bh=ho+Nb4Kl/C/aIXeakRLVlBshDy8+kHxnGlegszRANBE=;
-        b=GckMCJVgKYojfKBm/czl3qe+AQbvaqt7PXFDQajjk7/l0g0KYQ5kp9dT+0nAB72WbW
-         khbjfBdSDuVSX3eOpzv6nSjuoBXf0OSIHePnXE7/kMcg5lcrr2FvkKouVEOYlO2oD3QW
-         8LAE3YR8BumBDuwW3m3SHr31MdSePI76eLxHMlFZn9pADTt9qgtR3o6QwT+//Ip9KGnE
-         WXg6JEQ00fU2GRr/1NrM3bvTalwXIIKUB3ZfRetmR3IiZHnJofP+yfwL134yvy+ClFN4
-         wcLAaPdotvPjFdwuOIyvV+kombYGcuQB2OnhlBjDJl+RNx9NWSub1dtqLEmvqh+wCmKH
-         iCFg==
-X-Gm-Message-State: ACgBeo1b8nurNu6uwZl46HJvyrVRx3iz5biVRdpfTx6UPMYRBvL5X494
-        7GUH92Lq0Y/LaprRw7YsPunhrA==
-X-Google-Smtp-Source: AA6agR4Hie8Ptl9watzP9q3wSRaT1DJ6LQ5bGSYAymhnHao4U9kBrUHbr6CC3vfKu5GI47yddxEqpQ==
-X-Received: by 2002:a05:6512:3e07:b0:48b:131:616 with SMTP id i7-20020a0565123e0700b0048b01310616mr544949lfv.475.1660803419504;
-        Wed, 17 Aug 2022 23:16:59 -0700 (PDT)
-Received: from krzk-bin.. (d15l54bxv1k5c31plwt-4.rev.dnainternet.fi. [2001:14bb:ae:539c:671:aa32:2bd5:8994])
-        by smtp.gmail.com with ESMTPSA id k4-20020ac257c4000000b0047f71771969sm93282lfo.113.2022.08.17.23.16.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Aug 2022 23:16:58 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=Ue7+dLTS9HtxTPrFYVqCFYSq/oTJauCpRZyChqde9i4=;
+        b=Vud6Tsw/aaK2ukVhL5U+cIRHkWhcB7wY7KflxF5q2kUYaqIAuPhI+I0F99/t92TOb5
+         OtkizPuvfps5LD+QcGM7FbVCxtmlk+EUK6snsMGfB49D3qwp/LU1CJVTzFH15qQF5T20
+         htkaBMsVDypfseYg4K6jISqEsa2359bhv1dqC3u4eB5mv4UKA4zqhZtEO161M2AfRypL
+         w2dhyKgIgQZyCCWqHC3TjPn3OGo7DxTBaOca3dJ6wjmAy0U2rDMqX3AcRNB3XhHqqfXp
+         W0d4Yy9qMBi6IDgX7XPymPyX9Y3+7wssvg6HRdesjYdpJxUEwzqX3r8nqO4eRNGH/1ph
+         gT7A==
+X-Gm-Message-State: ACgBeo3PrX3G7O8VS0zKuXbMtthamOwm51ZRlyipXIVV5U5/m1UiTKPk
+        iyfkzFUENYrSRa3W95NKeLNe5w==
+X-Google-Smtp-Source: AA6agR47H/AvKjCxlUoA9J8rhI+zKwWJcqe09u39XlOJFuSv7PI5ijvh+4mTedgjzI2slrvSuUI1zA==
+X-Received: by 2002:a05:651c:543:b0:25f:dbbb:9cd4 with SMTP id q3-20020a05651c054300b0025fdbbb9cd4mr453724ljp.495.1660806152102;
+        Thu, 18 Aug 2022 00:02:32 -0700 (PDT)
+Received: from ?IPV6:2001:14bb:ae:539c:53ab:2635:d4f2:d6d5? (d15l54z9nf469l8226z-4.rev.dnainternet.fi. [2001:14bb:ae:539c:53ab:2635:d4f2:d6d5])
+        by smtp.gmail.com with ESMTPSA id c22-20020a056512325600b0048b998be041sm98016lfr.309.2022.08.18.00.02.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Aug 2022 00:02:31 -0700 (PDT)
+Message-ID: <2823e662-55a1-0d9f-e95d-40d6f3b93723@linaro.org>
+Date:   Thu, 18 Aug 2022 10:02:29 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [RFT PATCH v2 02/14] arm64: dts: qcom: msm8996: split TCSR halt
+ regs out of mutex
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Peng Fan <peng.fan@nxp.com>,
-        Jia-Wei Chang <jia-wei.chang@mediatek.com>,
-        Johnson Wang <johnson.wang@mediatek.com>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2] dt-bindings: interconnect: restrict opp-table to objects
-Date:   Thu, 18 Aug 2022 09:16:53 +0300
-Message-Id: <20220818061653.9524-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220817130342.568396-1-krzysztof.kozlowski@linaro.org>
+ <20220817130342.568396-3-krzysztof.kozlowski@linaro.org>
+ <fd1492fa-4244-b283-d2a6-b4ffac7d53d6@somainline.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <fd1492fa-4244-b283-d2a6-b4ffac7d53d6@somainline.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,63 +82,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Simple 'opp-table:true' accepts a boolean property as opp-table, so
-restrict it to object to properly enforce real OPP table nodes.
+On 17/08/2022 23:57, Konrad Dybcio wrote:
+> 
+> 
+> On 17.08.2022 15:03, Krzysztof Kozlowski wrote:
+>> The TCSR halt regs are next to TCSR mutex, so before converting the TCSR
+>> mutex into device with address space, we need to split the halt regs to
+>> its own syscon device.  This also describes more accurately the devices
+>> and their IO address space.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+> Not tested on a device, but looks good to the eye:
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> 
+> On a note, are they really named TCSR_1 and TCSR_2 in the docs?
+> Qualcomm is usually more exquisite in their naming :P
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+This is not entirely separate address space, therefore it does not have
+a separate name. The address space name is still TCSR_MUTEX which
+consists of actual MUTEX regs, halt regs and bunch of others. The second
+one 0x7a0000 (where label I renamed to tcsr_2) is called TCSR_REGS.
 
----
+This applies to other patches as well, so maybe you prefer to have
+labels matching the spec? The first would be tcsr_mutex_regs, although
+it is not entirely correct, because it does not include now the TCSR
+mutex regs...
 
-Changes since v1:
-1. Correct typo in msg.
----
- .../devicetree/bindings/interconnect/fsl,imx8m-noc.yaml        | 3 ++-
- .../devicetree/bindings/interconnect/mediatek,cci.yaml         | 3 ++-
- .../devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml   | 3 ++-
- 3 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/interconnect/fsl,imx8m-noc.yaml b/Documentation/devicetree/bindings/interconnect/fsl,imx8m-noc.yaml
-index fa4f7685ab2b..f7a5e31c506e 100644
---- a/Documentation/devicetree/bindings/interconnect/fsl,imx8m-noc.yaml
-+++ b/Documentation/devicetree/bindings/interconnect/fsl,imx8m-noc.yaml
-@@ -47,7 +47,8 @@ properties:
-     maxItems: 1
- 
-   operating-points-v2: true
--  opp-table: true
-+  opp-table:
-+    type: object
- 
-   fsl,ddrc:
-     $ref: "/schemas/types.yaml#/definitions/phandle"
-diff --git a/Documentation/devicetree/bindings/interconnect/mediatek,cci.yaml b/Documentation/devicetree/bindings/interconnect/mediatek,cci.yaml
-index 449c7c988229..58611ba2a0f4 100644
---- a/Documentation/devicetree/bindings/interconnect/mediatek,cci.yaml
-+++ b/Documentation/devicetree/bindings/interconnect/mediatek,cci.yaml
-@@ -36,7 +36,8 @@ properties:
-       - const: intermediate
- 
-   operating-points-v2: true
--  opp-table: true
-+  opp-table:
-+    type: object
- 
-   proc-supply:
-     description:
-diff --git a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
-index c2e697f6e6cf..a4743386c4c1 100644
---- a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
-+++ b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
-@@ -35,7 +35,8 @@ properties:
-     maxItems: 1
- 
-   operating-points-v2: true
--  opp-table: true
-+  opp-table:
-+    type: object
- 
-   reg:
-     # BWMON v4 (currently described) and BWMON v5 use one register address
--- 
-2.34.1
 
+Best regards,
+Krzysztof
