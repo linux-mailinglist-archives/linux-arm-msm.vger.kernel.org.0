@@ -2,73 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D2D6597FA0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 09:58:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1C4C597FC3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Aug 2022 10:06:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243970AbiHRHzx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Aug 2022 03:55:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46382 "EHLO
+        id S244057AbiHRIFb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Aug 2022 04:05:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243928AbiHRHzw (ORCPT
+        with ESMTP id S244017AbiHRIFT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Aug 2022 03:55:52 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC1CA7FE46
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 00:55:50 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id x25so955233ljm.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 00:55:50 -0700 (PDT)
+        Thu, 18 Aug 2022 04:05:19 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 393D76B8FC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 01:05:18 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id e15so1194128lfs.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 01:05:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=dawxEcQT0OhFPG9l9jRrsFoKv486Saz+4v6DaJSObPA=;
-        b=EmOrw6T67t6JXnuPoMeZH07x7nMOn5ucQd9RoTd9bOMFEKuUgtrZta0s5paZoxZ9Je
-         qHtrH+AQmv/+uh0Wkvu4yEo4vvvOhgYGeHDj6dINWfirYLVZvHjh4oBwWWXujjwuYK7W
-         IyhV+YsFaoube+2i/I3eRX+qjTCQ5pbINij6ehzTR/F46fRZT2POawSEQhx7Cxmj6Qkw
-         91lOK8BpeWpSNFUMzUazcGLXvoQxnH6SbpqvDnkgNqU7QlKfX3AMqye8CvLEhFYY5qpp
-         E9/CCwT5A937l9YPLB1sVhzaCcRscQjVwFgdybaMnE6WtPfNFNxYOFNPZxSEiRU3tyK+
-         gUbQ==
+        bh=gfZ6MsoFE5jfEV37UdOoYOaar2s4GNvRAwl/M63/AlI=;
+        b=rQMuU2eWLhIM2a+DQocFMdsW206Zcmqv+rKhQZt78H44OXhXo4oH57q6ZzfkW5iQzc
+         UojmU46AxmoaNGK6L2iL3pdUapy2Vk4DZrlhHvzPAjzvXB56FksFaDzTlAKZhIOJUWqh
+         MnoGok23tPObs/uTcHZoPRXuj2AOMBudfJ4zV/LMfEjrLBT3ixeQqRuzH6VSNRxLtU6I
+         5qQtpDm1jX5dQoJHobwSSHKmebkQfrFngswDfBbsM5+nIsmnYeP1k+qmHP0t4eW4RknC
+         7uOFFJvCCJJDJDQoU5eNUgKDFhc8RiNktfStUVjMEsVs/EbLKOxt/N2VyGsrSvcYIGJw
+         tJ3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=dawxEcQT0OhFPG9l9jRrsFoKv486Saz+4v6DaJSObPA=;
-        b=c7FUq5sMCkNFSXbkOREJC5QlL0AvyoQI03h2HtzZXit4gBrpXSoWn0XPQLPwGQP6/V
-         P1eQ7iIMrCY3p7TnILJWMsQPUgJARHmAlc9rj+x3oz2HAs0jcZI3lS6iADcYrtAyV2gw
-         zKaaaw9CSVrSsdN8uGFgS9ER1H1L0WsFhHD1M4vtrpW815Rf8UnPF+n4ImZj6WTTQTcX
-         bkqakyMAchiNLPeZPScL+6YKD3giK9zA9U5vjSLDs9O6zwoR1LIXAFpWACgEUm7KySbV
-         Ph8duGkUGbR9k7Kea0WbhFKGxGWesjMMfBLjyXyqth/H1eiC+3aROW1wPXBPE0xL+VnW
-         E4qA==
-X-Gm-Message-State: ACgBeo21Y5ySyjHLvzbxcF6QIW32pLWdAlYvqscsofDA6muldMd5HL9+
-        dvIXEistIlJz0X5Og7ualbJKrw==
-X-Google-Smtp-Source: AA6agR5VQUbfnby25Lc9unAu/HapmYL6K0oRaQ5+TLbZmOxeBd1NTB+IoxnuUO/L553aVNdK54dOwA==
-X-Received: by 2002:a2e:bc12:0:b0:25e:59e7:8def with SMTP id b18-20020a2ebc12000000b0025e59e78defmr563029ljf.249.1660809349142;
-        Thu, 18 Aug 2022 00:55:49 -0700 (PDT)
+        bh=gfZ6MsoFE5jfEV37UdOoYOaar2s4GNvRAwl/M63/AlI=;
+        b=mUzpKxyrp0/hqiFRj+KIzZig6oCnG2a2FcXn2BKLFsMYBiw9giZrLRRdwRSWbSkHcV
+         EV05UaEFqY4PoYQUB87NUBJKYMY6meBPP+cPDWoT+4PpNqgJoGJWCkz9GMbnaFe0FqbK
+         yUiGPIwkIsbsRCc+72cc9VDu0vedlzlhgP3BJIF+GhTs5/GnMEoanFRseJhFVDf5TWUE
+         bjXhKvpLBfbnWQn+g9JqHrqrsj4DQaoBl6DUILY1C7kidosmsUi1UfwQOQxW9bVfFU3U
+         rOThm16ur8m5euu85CGDPZkJV5xyAu9cCoUc+T4BHwjPLDKQIjRCPRdcE69Uy1dwewnK
+         ZQug==
+X-Gm-Message-State: ACgBeo0CzahA5fJku/ey1O2oppqrp9e97D3Tt5h19spUlAm0oZwWT1Rm
+        2UHws6y8Q3fBBru/1ya20LwyTw==
+X-Google-Smtp-Source: AA6agR4MY5zLrsvPl+gMCyCecVO9jEL8G+mcnFJIwfzsMgLHb8ic2PChW5wYutO7CRXiGU4QAXL47w==
+X-Received: by 2002:a05:6512:10c3:b0:491:d857:f35e with SMTP id k3-20020a05651210c300b00491d857f35emr554119lfg.102.1660809916496;
+        Thu, 18 Aug 2022 01:05:16 -0700 (PDT)
 Received: from ?IPV6:2001:14bb:ae:539c:53ab:2635:d4f2:d6d5? (d15l54z9nf469l8226z-4.rev.dnainternet.fi. [2001:14bb:ae:539c:53ab:2635:d4f2:d6d5])
-        by smtp.gmail.com with ESMTPSA id u18-20020a056512129200b0048afa870525sm127379lfs.65.2022.08.18.00.55.47
+        by smtp.gmail.com with ESMTPSA id y27-20020ac255bb000000b0048b17ecee71sm121441lfg.302.2022.08.18.01.05.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Aug 2022 00:55:48 -0700 (PDT)
-Message-ID: <88393f56-69b5-65d8-9acd-373e069c750f@linaro.org>
-Date:   Thu, 18 Aug 2022 10:55:47 +0300
+        Thu, 18 Aug 2022 01:05:15 -0700 (PDT)
+Message-ID: <685783e3-9636-e512-7810-1f87ac5d9328@linaro.org>
+Date:   Thu, 18 Aug 2022 11:05:14 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.12.0
-Subject: Re: [PATCH 1/4] dt-bindings: soc: qcom: Introduce PMIC GLINK binding
+Subject: Re: [PATCH 2/4] soc: qcom: pmic_glink: Introduce base PMIC GLINK
+ driver
 Content-Language: en-US
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sebastian Reichel <sre@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
 References: <20220818031512.319310-1-bjorn.andersson@linaro.org>
- <20220818031512.319310-2-bjorn.andersson@linaro.org>
+ <20220818031512.319310-3-bjorn.andersson@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220818031512.319310-2-bjorn.andersson@linaro.org>
+In-Reply-To: <20220818031512.319310-3-bjorn.andersson@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,19 +83,66 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 18/08/2022 06:15, Bjorn Andersson wrote:
-> The PMIC GLINK service, running on a coprocessor on some modern Qualcomm
-> platforms and implement USB Type-C handling and battery management.
-> This binding describes the component in the OS used to communicate with
-> the firmware and connect it's resources to those described in the
-> Devicetree, particularly the USB Type-C controllers relationship with
-> USB and DisplayPort components.
+> The PMIC GLINK service runs on one of the co-processors of some modern
+> Qualcomm platforms and implements USB-C and battery managements. It uses
+> a message based protocol over GLINK for communication with the OS, hence
+> the name.
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  .../bindings/soc/qcom/qcom,pmic-glink.yaml    | 98 +++++++++++++++++++
+> The driver implemented provides the rpmsg device for communication and
+> uses auxilirary bus to spawn off individual devices in respsective
 
+typos:
+auxiliary
+respective
+> subsystem. The auxilirary devices are spawned off from a
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+auxiliary
+
+> platform_device, so that the drm_bridge is available early, to allow the
+> DisplayPort driver to probe even before the remoteproc has spun up.
+> 
+
+(...)
+
+> +
+> +static int pmic_glink_init(void)
+> +{
+> +	platform_driver_register(&pmic_glink_driver);
+> +	register_rpmsg_driver(&pmic_glink_rpmsg_driver);
+> +
+> +	return 0;
+> +};
+> +module_init(pmic_glink_init);
+> +
+> +static void pmic_glink_exit(void)
+> +{
+> +	platform_driver_unregister(&pmic_glink_driver);
+> +	unregister_rpmsg_driver(&pmic_glink_rpmsg_driver);
+
+Shouldn't this be in reversed order of init()? So first unregister
+rpmsg, then platform driver.
+
+> +};
+> +module_exit(pmic_glink_exit);
+> +
+> +MODULE_DESCRIPTION("Qualcomm PMIC GLINK driver");
+> +MODULE_LICENSE("GPL");
+> diff --git a/include/linux/soc/qcom/pmic_glink.h b/include/linux/soc/qcom/pmic_glink.h
+> new file mode 100644
+> index 000000000000..40470f8dfc1e
+> --- /dev/null
+> +++ b/include/linux/soc/qcom/pmic_glink.h
+> @@ -0,0 +1,32 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2022, Linaro Ltd
+> + */
+> +#ifndef __PMIC_GLINK_H__
+
+I propose more detailed guard:
+__SOC_QCOM_PMIC_GLINK_H__
+
+> +#define __PMIC_GLINK_H__
 
 
 Best regards,
