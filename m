@@ -2,69 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C02D599D77
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 16:28:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BCB759A41B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 20:05:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348980AbiHSOXa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Aug 2022 10:23:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51824 "EHLO
+        id S1354458AbiHSRWl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Aug 2022 13:22:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349063AbiHSOX2 (ORCPT
+        with ESMTP id S1350654AbiHSRWZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Aug 2022 10:23:28 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34DF4F6C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Aug 2022 07:23:25 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id w197so4926340oie.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Aug 2022 07:23:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc;
-        bh=GeLnTCDFozOnXarr5bsZrfQIyPlCPObES/tRUVDlMRc=;
-        b=IbwerQM0KnuUKiPyH/DPcbFtlKeEJfs0qV5K8pmupSDXM20bKdKC/7T6BZ0OI6q4zD
-         +A2SFVIeHsHe54HLk/oLFri82rFSZzybkEN5oRx1vhn26Bwf3Me43ddfkIcoWRz48Acq
-         ruxEFs+P/ctwTDRaiCMlCwa3y2gjDYcvz6AYbrpzoKiqdUpV2toNmiqLHSlra3iSdcPw
-         PC6a0yOmfdGgjCVc9Kpj0+uN90FFCdaClXunjqOtQHDMugV7QG7DUCjWVT2u+auhtqwC
-         d4g6hBzTjKvWXNAJJy0dlH1uplQ01IgKk/zKWvBXCEs9CS+olmJRuB7U3ZWnRAzX6Kzq
-         z/fQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc;
-        bh=GeLnTCDFozOnXarr5bsZrfQIyPlCPObES/tRUVDlMRc=;
-        b=teOuXX1QE0Q1bJzYTWv9dGZobw63yJkq760gFGhRlAjxdHBzY1Mxc+oMzoGGQM5OsK
-         egLp4plAxICKjqUIwhfagGhOC2/PnG/skGij1Aq0G9iv8PNV1OqsGMW72doJwtFkafF+
-         A3sKAYRUx9otEUR8i4YGGiFq2fZTNToqfh5yBBMWkZOdRQVb3szHas11czixfm96uHse
-         7QmQ2+dUHRrrw9DbGP8zUT+RwgtzgHbqj08iuh30zsXxMUXxnPUeJf80uX7VRkCrqlVq
-         1kb7O/RcFIljedcuehGaAkxej5uCrO6xZ9UBgz1tyn55hbMS1NoVDMcn+7//HltEmos2
-         s6Dw==
-X-Gm-Message-State: ACgBeo3187NjVC7iNA+dMVDBqsL73hnHBwkU+yXG42+4MyAXsM0Ud+G/
-        04jr5/xFvX4uED9GVaVaB6pGZA==
-X-Google-Smtp-Source: AA6agR7N4ZbVcrXI4TmUZ/vYDXKsf2Lwa4ZiSJrBA5m0Qsfe0WDJTWC8qV+uhj11vk4/fyxaSM0aVw==
-X-Received: by 2002:a05:6808:1412:b0:343:345:98ac with SMTP id w18-20020a056808141200b00343034598acmr3320053oiv.288.1660919004509;
-        Fri, 19 Aug 2022 07:23:24 -0700 (PDT)
-Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id l6-20020a056870f14600b000f2455e26acsm1303283oac.48.2022.08.19.07.23.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Aug 2022 07:23:23 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH] MAINTAINERS: Update Bjorn's email address
-Date:   Fri, 19 Aug 2022 07:25:49 -0700
-Message-Id: <20220819142549.1605081-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.35.1
+        Fri, 19 Aug 2022 13:22:25 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5AA21272DD;
+        Fri, 19 Aug 2022 09:41:31 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27JEhGlW003718;
+        Fri, 19 Aug 2022 16:41:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=XjtcvC/BI3XHYKOQCoPWoIynYxVZExJBSpyTyUaVomU=;
+ b=IZFsorwsJ8akAV6u4Ku19Z6aCnSVchJ1XCmmkEmnnfxrc6wFAKqkYhRoZ09RnpaX8+Tr
+ MY1vZSSB8sU2G8x+F/rcDkM8fxnd9AC5xvPzpg9JrN53dn7bBdIglapx8pk+x21yvivQ
+ njMQvx35mIrXnss7+iPN8htnhqzhm/HyZARggukhLOd1yzIRsFZr81mLh4DksTo2VU6z
+ ksrHbwH3BUA2Pos7w3O4skzUgSjVsv5XedHLZkE5h7Gx3oOLffbLgLv/ZVwOmL/k1Yrc
+ B4/hLh5utMG1xgOF45+SmPOiT9bSSf+zS+RkJs074K2Enm1JXijn/C+vLiria+2xgQmq TA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j21v523j2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 19 Aug 2022 16:41:03 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27JGf2PR008752
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 19 Aug 2022 16:41:02 GMT
+Received: from hyd-lnxbld559.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 19 Aug 2022 09:40:55 -0700
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+To:     freedreno <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Stephen Boyd" <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Douglas Anderson <dianders@chromium.org>,
+        <krzysztof.kozlowski@linaro.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        "Konrad Dybcio" <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <sboyd@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v4 0/6] clk/qcom: Support gdsc collapse polling using 'reset' interface
+Date:   Fri, 19 Aug 2022 22:10:39 +0530
+Message-ID: <1660927246-11327-1-git-send-email-quic_akhilpo@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: SfnWSdqgXmmjcyotKxFZkXGKn2nsaCnf
+X-Proofpoint-GUID: SfnWSdqgXmmjcyotKxFZkXGKn2nsaCnf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-19_08,2022-08-18_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 mlxscore=0 adultscore=0 bulkscore=0 impostorscore=0
+ malwarescore=0 spamscore=0 mlxlogscore=999 phishscore=0 suspectscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2208190060
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,87 +89,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update the email address for Bjorn's maintainer entries and fill in
-.mailmap accordingly.
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- .mailmap    |  3 +++
- MAINTAINERS | 12 ++++++------
- 2 files changed, 9 insertions(+), 6 deletions(-)
+Some clients like adreno gpu driver would like to ensure that its gdsc
+is collapsed at hardware during a gpu reset sequence. This is because it
+has a votable gdsc which could be ON due to a vote from another subsystem
+like tz, hyp etc or due to an internal hardware signal. To allow
+this, gpucc driver can expose an interface to the client driver using
+reset framework. Using this the client driver can trigger a polling within
+the gdsc driver.
 
-diff --git a/.mailmap b/.mailmap
-index 23241db2647f..521ecdb8aa67 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -71,6 +71,9 @@ Ben M Cahill <ben.m.cahill@intel.com>
- Ben Widawsky <bwidawsk@kernel.org> <ben@bwidawsk.net>
- Ben Widawsky <bwidawsk@kernel.org> <ben.widawsky@intel.com>
- Ben Widawsky <bwidawsk@kernel.org> <benjamin.widawsky@intel.com>
-+Bjorn Andersson <andersson@kernel.org> <bjorn@kryo.se>
-+Bjorn Andersson <andersson@kernel.org> <bjorn.andersson@linaro.org>
-+Bjorn Andersson <andersson@kernel.org> <bjorn.andersson@sonymobile.com>
- Björn Steinbrink <B.Steinbrink@gmx.de>
- Björn Töpel <bjorn@kernel.org> <bjorn.topel@gmail.com>
- Björn Töpel <bjorn@kernel.org> <bjorn.topel@intel.com>
-diff --git a/MAINTAINERS b/MAINTAINERS
-index f69a1c5212bd..766037b30806 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2579,7 +2579,7 @@ W:	http://www.armlinux.org.uk/
- 
- ARM/QUALCOMM SUPPORT
- M:	Andy Gross <agross@kernel.org>
--M:	Bjorn Andersson <bjorn.andersson@linaro.org>
-+M:	Bjorn Andersson <andersson@kernel.org>
- R:	Konrad Dybcio <konrad.dybcio@somainline.org>
- L:	linux-arm-msm@vger.kernel.org
- S:	Maintained
-@@ -8941,7 +8941,7 @@ F:	include/linux/hw_random.h
- 
- HARDWARE SPINLOCK CORE
- M:	Ohad Ben-Cohen <ohad@wizery.com>
--M:	Bjorn Andersson <bjorn.andersson@linaro.org>
-+M:	Bjorn Andersson <andersson@kernel.org>
- R:	Baolin Wang <baolin.wang7@gmail.com>
- L:	linux-remoteproc@vger.kernel.org
- S:	Maintained
-@@ -16134,7 +16134,7 @@ F:	drivers/gpio/gpio-sama5d2-piobu.c
- F:	drivers/pinctrl/pinctrl-at91*
- 
- PIN CONTROLLER - QUALCOMM
--M:	Bjorn Andersson <bjorn.andersson@linaro.org>
-+M:	Bjorn Andersson <andersson@kernel.org>
- L:	linux-arm-msm@vger.kernel.org
- S:	Maintained
- F:	Documentation/devicetree/bindings/pinctrl/qcom,*.txt
-@@ -16827,7 +16827,7 @@ F:	Documentation/devicetree/bindings/media/*camss*
- F:	drivers/media/platform/qcom/camss/
- 
- QUALCOMM CLOCK DRIVERS
--M:	Bjorn Andersson <bjorn.andersson@linaro.org>
-+M:	Bjorn Andersson <andersson@kernel.org>
- L:	linux-arm-msm@vger.kernel.org
- S:	Supported
- T:	git git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git
-@@ -17316,7 +17316,7 @@ S:	Supported
- F:	fs/reiserfs/
- 
- REMOTE PROCESSOR (REMOTEPROC) SUBSYSTEM
--M:	Bjorn Andersson <bjorn.andersson@linaro.org>
-+M:	Bjorn Andersson <andersson@kernel.org>
- M:	Mathieu Poirier <mathieu.poirier@linaro.org>
- L:	linux-remoteproc@vger.kernel.org
- S:	Maintained
-@@ -17329,7 +17329,7 @@ F:	include/linux/remoteproc.h
- F:	include/linux/remoteproc/
- 
- REMOTE PROCESSOR MESSAGING (RPMSG) SUBSYSTEM
--M:	Bjorn Andersson <bjorn.andersson@linaro.org>
-+M:	Bjorn Andersson <andersson@kernel.org>
- M:	Mathieu Poirier <mathieu.poirier@linaro.org>
- L:	linux-remoteproc@vger.kernel.org
- S:	Maintained
+This series is rebased on top of linus's master branch.
+
+Related discussion: https://patchwork.freedesktop.org/patch/493144/
+
+Changes in v4:
+- Update gpu dt-binding schema
+- Typo fix in commit text
+
+Changes in v3:
+- Use pointer to const for "struct qcom_reset_ops" in qcom_reset_map (Krzysztof)
+
+Changes in v2:
+- Return error when a particular custom reset op is not implemented. (Dmitry)
+
+Akhil P Oommen (6):
+  dt-bindings: clk: qcom: Support gpu cx gdsc reset
+  clk: qcom: Allow custom reset ops
+  clk: qcom: gdsc: Add a reset op to poll gdsc collapse
+  clk: qcom: gpucc-sc7280: Add cx collapse reset support
+  dt-bindings: drm/msm/gpu: Add optional resets
+  arm64: dts: qcom: sc7280: Add Reset support for gpu
+
+ .../devicetree/bindings/display/msm/gpu.yaml       |  7 ++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |  3 +++
+ drivers/clk/qcom/gdsc.c                            | 23 ++++++++++++++----
+ drivers/clk/qcom/gdsc.h                            |  7 ++++++
+ drivers/clk/qcom/gpucc-sc7280.c                    | 10 ++++++++
+ drivers/clk/qcom/reset.c                           | 27 ++++++++++++++++++++++
+ drivers/clk/qcom/reset.h                           |  8 +++++++
+ include/dt-bindings/clock/qcom,gpucc-sc7280.h      |  3 +++
+ 8 files changed, 84 insertions(+), 4 deletions(-)
+
 -- 
-2.35.1
+2.7.4
 
