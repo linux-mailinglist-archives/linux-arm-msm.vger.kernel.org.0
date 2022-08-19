@@ -2,161 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B704159A529
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 20:06:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9991259A488
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 20:05:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354703AbiHSRe5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Aug 2022 13:34:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36356 "EHLO
+        id S1351972AbiHSRwU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Aug 2022 13:52:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354518AbiHSReh (ORCPT
+        with ESMTP id S1352084AbiHSRvu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Aug 2022 13:34:37 -0400
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C95781537DD;
-        Fri, 19 Aug 2022 09:53:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1660927999; x=1692463999;
-  h=date:from:to:cc:subject:message-id:mime-version:
-   content-transfer-encoding;
-  bh=iOcJREqHTGsAdb5AEkq4hDue4vu5yHBzF6n06gYH86E=;
-  b=oG0MLBPWGCnJiSZs2l0sKFvmqVtlzhc/BfYiXj1BmACNKDJneZGJmUOw
-   +vMskoogoOXtaUKyIt0uDaG89TDDZY+cxaKIX7Tw9HxJuL9q+5VsoMXIo
-   CjBdkH+cFQqIsRnTAuDCaOKZ2CN8Lj6qwur4X8vBxzugibobYv7O2UfzZ
-   2G0z4qaXRb6ryZstuPdOZ3wlwX8CyyMEC/dCEIjU+ggt7j3/qt555eUtN
-   2+3DYtQ9o4s5CIr6i4yqbrhJ6nzbtFbkgU8JxgCQ3KKUHNdAdQYlFshxC
-   TKtzJorWWJecfD66hNCzJ6W38GlA4KMF0ucD+IAk3r5QJSDLmkAlOyAsF
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10444"; a="293053177"
-X-IronPort-AV: E=Sophos;i="5.93,248,1654585200"; 
-   d="scan'208";a="293053177"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Aug 2022 09:50:06 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.93,248,1654585200"; 
-   d="scan'208";a="936280065"
-Received: from lkp-server01.sh.intel.com (HELO 44b6dac04a33) ([10.239.97.150])
-  by fmsmga005.fm.intel.com with ESMTP; 19 Aug 2022 09:50:05 -0700
-Received: from kbuild by 44b6dac04a33 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1oP5C8-0001e9-1d;
-        Fri, 19 Aug 2022 16:50:04 +0000
-Date:   Sat, 20 Aug 2022 00:49:54 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Andrew Morton <akpm@linux-foundation.org>
-Cc:     linux-m68k@lists.linux-m68k.org, linux-hardening@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Linux Memory Management List <linux-mm@kvack.org>
-Subject: [linux-next:pending-fixes] BUILD SUCCESS WITH WARNING
- e68b4a7c00f99b319b84be8849addb8fddf9629b
-Message-ID: <62ffbf32.qqqMdIxDQRBJomQ+%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+        Fri, 19 Aug 2022 13:51:50 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A32E2C125
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Aug 2022 10:25:39 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id z20so6422423edb.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Aug 2022 10:25:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=qzkYwMAvtyCh+8EMy7xCsIla1LIY8R7DNTHAUz0os4I=;
+        b=m5eMFu3nPHM0b9xCXd42yvSzIy6NRnYZPewwOGO5BVMGgwKnDLOGfSFJDOIvU94kDL
+         I8mrTDyDsaDg0cF+Dz6llUdBkgKXT9/8uXQuWDSafDakxnvBnEkaj4yEHMr01PLb8BuL
+         5wk1BcBYzaPsFcEnW9qZJ1PgirWEPWk1qulXFs/eoulcGYsMpxoXxgBJsNwP1qYZDsy7
+         DrQs/pNeL9Q9iftvFr+mtFfdErPj4wUwEu4sSbIdz8TR+gvILK7xLTyg/m/MtX9O0Tjy
+         82cLDWBOIoZmPuZcMNmttdzYMs9IhrWe6EACiQPQNxHjiCdyVy8Dbf2fa+Y7ojJZoEur
+         3Gbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=qzkYwMAvtyCh+8EMy7xCsIla1LIY8R7DNTHAUz0os4I=;
+        b=q5Y0fQGTzAj0NMkPV6E4o4Z8Q5QJTdgz2uyAhW9FDZIoZT54QNirAKnh3MwhJbTjHa
+         EzLRl+m9Xr3g5wxVESaZLqzV6Fu8mrjO01MARQAnLBc2kyvyjOhcJ2DkMChxuPt/H3de
+         4aBMySUwuoNzzO69xwB5f/Ttmi6NbTJM3vCkoCgqQAS0sLtbGW0Z0MSxkdlApS0WD3CH
+         MfNbSqQwDpRRP+p/YyE+PVruvPicdpf6oCeLkZPUQ8yuxzEa0T5HiHp8yCXv9mR2BD9D
+         ap+e0IIwUY12MfUyridCtjRsj2HMzmwDPX1ThX5xO8jAw+kw0I4PrLk8vmavTL1EYLCv
+         7dIg==
+X-Gm-Message-State: ACgBeo3U/5FoFX6vyZxQGi8a5LV/TMYrYcAwMHEdPP7+NRQQgCiIkdIy
+        uwM9o/gKHiY79b1spW0ocZGfbaFBC7kN/Sgd1htUeA==
+X-Google-Smtp-Source: AA6agR4xeUfyO9PUiWAnoGFIOuh+WIOVeXWdawvtypKh9M5LE6JbKb1hr9u1STK+EEhPb7d+ysfeAamEXb6BOH+h1eE=
+X-Received: by 2002:a05:6402:50ce:b0:43d:559d:43f4 with SMTP id
+ h14-20020a05640250ce00b0043d559d43f4mr6697005edb.325.1660929937682; Fri, 19
+ Aug 2022 10:25:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_NONE,SUSPICIOUS_RECIPS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+References: <20220818035105.5510-1-steev@kali.org> <CAMi1Hd2uqbs7mmX+FbNxsnqxTCkBW1CbR3En5f+ov7XZ87qPrA@mail.gmail.com>
+In-Reply-To: <CAMi1Hd2uqbs7mmX+FbNxsnqxTCkBW1CbR3En5f+ov7XZ87qPrA@mail.gmail.com>
+From:   Steev Klimaszewski <steev@kali.org>
+Date:   Fri, 19 Aug 2022 12:25:26 -0500
+Message-ID: <CAKXuJqjnoZh1azpdAk-QbPQsOK6bLf-RCng1PgA+p6esQj0g7Q@mail.gmail.com>
+Subject: Re: [PATCH] soundwire: qcom: remove unneeded check
+To:     Amit Pundir <amit.pundir@linaro.org>
+Cc:     Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git pending-fixes
-branch HEAD: e68b4a7c00f99b319b84be8849addb8fddf9629b  Merge branch 'for-linux-next-fixes' of git://anongit.freedesktop.org/drm/drm-misc
+Oh perfect, I'm not sure how I missed that when I was searching.  This
+can be abandoned but it's nice to know I got the fix right :D
 
-Warning reports:
-
-https://lore.kernel.org/linux-mm/202208110453.zEneXTnn-lkp@intel.com
-
-Warning: (recently discovered and may have been fixed)
-
-arch/m68k/include/asm/string.h:64:25: warning: '__builtin_memcmp' specified bound 6 exceeds source size 0 [-Wstringop-overread]
-drivers/usb/dwc3/dwc3-qcom.c:313:25: warning: variable 'hcd' set but not used [-Wunused-but-set-variable]
-include/linux/fortify-string.h:44:33: warning: '__builtin_memcmp' specified bound 6 exceeds source size 0 [-Wstringop-overread]
-
-Warning ids grouped by kconfigs:
-
-gcc_recent_errors
-|-- m68k-allmodconfig
-|   `-- arch-m68k-include-asm-string.h:warning:__builtin_memcmp-specified-bound-exceeds-source-size
-|-- m68k-allyesconfig
-|   `-- arch-m68k-include-asm-string.h:warning:__builtin_memcmp-specified-bound-exceeds-source-size
-|-- mips-allyesconfig
-|   `-- include-linux-fortify-string.h:warning:__builtin_memcmp-specified-bound-exceeds-source-size
-`-- mips-randconfig-r014-20220819
-    `-- drivers-usb-dwc3-dwc3-qcom.c:warning:variable-hcd-set-but-not-used
-
-elapsed time: 728m
-
-configs tested: 58
-configs skipped: 2
-
-gcc tested configs:
-um                           x86_64_defconfig
-um                             i386_defconfig
-x86_64                              defconfig
-i386                                defconfig
-i386                          randconfig-a001
-i386                          randconfig-a003
-arm                                 defconfig
-arc                              allyesconfig
-i386                          randconfig-a005
-arc                  randconfig-r043-20220819
-alpha                            allyesconfig
-m68k                             allmodconfig
-ia64                             allmodconfig
-x86_64                               rhel-8.3
-x86_64                    rhel-8.3-kselftests
-m68k                             allyesconfig
-x86_64                          rhel-8.3-func
-x86_64                        randconfig-a004
-x86_64                        randconfig-a002
-x86_64                         rhel-8.3-kunit
-x86_64                        randconfig-a006
-x86_64                           allyesconfig
-x86_64                        randconfig-a013
-x86_64                        randconfig-a011
-x86_64                           rhel-8.3-syz
-i386                          randconfig-a014
-x86_64                           rhel-8.3-kvm
-powerpc                          allmodconfig
-i386                          randconfig-a012
-mips                             allyesconfig
-arm                              allyesconfig
-powerpc                           allnoconfig
-i386                          randconfig-a016
-sh                               allmodconfig
-arm64                            allyesconfig
-x86_64                        randconfig-a015
-i386                             allyesconfig
-csky                              allnoconfig
-arc                               allnoconfig
-alpha                             allnoconfig
-riscv                             allnoconfig
-
-clang tested configs:
-i386                          randconfig-a002
-i386                          randconfig-a004
-hexagon              randconfig-r041-20220819
-riscv                randconfig-r042-20220819
-hexagon              randconfig-r045-20220819
-i386                          randconfig-a006
-x86_64                        randconfig-a005
-x86_64                        randconfig-a001
-x86_64                        randconfig-a003
-s390                 randconfig-r044-20220819
-i386                          randconfig-a013
-x86_64                        randconfig-a012
-i386                          randconfig-a011
-x86_64                        randconfig-a014
-x86_64                        randconfig-a016
-i386                          randconfig-a015
-x86_64                          rhel-8.3-rust
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+On Fri, Aug 19, 2022 at 3:51 AM Amit Pundir <amit.pundir@linaro.org> wrote:
+>
+> Hi Steev,
+>
+> Thank you for looking into this crash. Srini submitted the same fix
+> earlier this week
+> https://www.spinics.net/lists/alsa-devel/msg146137.html
+>
+> Regards,
+> Amit Pundir
+>
+> On Thu, 18 Aug 2022 at 09:21, Steev Klimaszewski <steev@kali.org> wrote:
+> >
+> > commit 1fd0d85affe4d6 ("soundwire: qcom: Add flag for software clock gating check")
+> > added a flag for software clock gating check, however in commit
+> > 33ba01788889666 ("soundwire: qcom: Add support for controlling audio CGCR from HLOS")
+> > the same check was added without the flag, so we would still end up failing
+> > the software clock gating check.
+> >
+> > Originally reported by Amit Pundir on DB845c, I also saw it on the
+> > Lenovo Yoga C630, right before the splat, we would see
+> >
+> > qcom-soundwire wcd934x-soundwire.6.auto: Failed to get audio_cgcr reset required for soundwire-v1.6.0
+> >
+> > however, SDM845 has a soundwire-v1.3.0
+> >
+> > Since the flag was added in 1fd0d85affe, lets just remove this one.
+> >
+> > Fixes: 33ba01788889 ("soundwire: qcom: Add support for controlling audio CGCR from HLOS")
+> > Signed-off-by: Steev Klimaszewski <steev@kali.org>
+> > Reported-by: Amit Pundir <amit.pundir@linaro.org>
+> > ---
+> >  drivers/soundwire/qcom.c | 4 ----
+> >  1 file changed, 4 deletions(-)
+> >
+> > diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+> > index 709a7c1e0704..b621f7fb866f 100644
+> > --- a/drivers/soundwire/qcom.c
+> > +++ b/drivers/soundwire/qcom.c
+> > @@ -1355,10 +1355,6 @@ static int qcom_swrm_probe(struct platform_device *pdev)
+> >         ctrl->bus.compute_params = &qcom_swrm_compute_params;
+> >         ctrl->bus.clk_stop_timeout = 300;
+> >
+> > -       ctrl->audio_cgcr = devm_reset_control_get_exclusive(dev, "swr_audio_cgcr");
+> > -       if (IS_ERR(ctrl->audio_cgcr))
+> > -               dev_err(dev, "Failed to get audio_cgcr reset required for soundwire-v1.6.0\n");
+> > -
+> >         ret = qcom_swrm_get_port_config(ctrl);
+> >         if (ret)
+> >                 goto err_clk;
+> > --
+> > 2.35.1
+> >
