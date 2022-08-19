@@ -2,82 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 04319599BDF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 14:26:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C02D599D77
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 16:28:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348047AbiHSMVc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Aug 2022 08:21:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53614 "EHLO
+        id S1348980AbiHSOXa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Aug 2022 10:23:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348546AbiHSMVb (ORCPT
+        with ESMTP id S1349063AbiHSOX2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Aug 2022 08:21:31 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73F7310158F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Aug 2022 05:21:29 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id l21so4378540ljj.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Aug 2022 05:21:29 -0700 (PDT)
+        Fri, 19 Aug 2022 10:23:28 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34DF4F6C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Aug 2022 07:23:25 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id w197so4926340oie.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Aug 2022 07:23:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=Nu3VLDUqU+jU9Ulv1RKGhBZJe/ApM+TsuNJuzdtSY+M=;
-        b=icCaSFYl9TTYDLZjSUnfxcI0YMgzci2BRFPyleEvRJdU+T1TBi3QED1EcIV+5EUEF7
-         ZzCByTkLldBb3PcS4W0m4bNFBRWfn++1kIijqJw/O6lJS/IHoam6Hv2LH+bozhv/REGN
-         kTX09folP9hdjbJ0yisTi54ebfxFgeqwgttCYqbkxj4jLdVFv3GYRX2Jzu6mbWdB5+GF
-         vVbZkVsDKDd2G1cslwfnFm17c7APLx6ufQWu+Ei8KHWOyp4mCoTWdV5pvmU5265GnTeX
-         f6wLGlQZQ8IeNOG3Qz86cyJ5WBeRBt3b1RuR2v8ZJ72wA+5FapAMVLBz+tyMN0zYKcRe
-         6XcA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=GeLnTCDFozOnXarr5bsZrfQIyPlCPObES/tRUVDlMRc=;
+        b=IbwerQM0KnuUKiPyH/DPcbFtlKeEJfs0qV5K8pmupSDXM20bKdKC/7T6BZ0OI6q4zD
+         +A2SFVIeHsHe54HLk/oLFri82rFSZzybkEN5oRx1vhn26Bwf3Me43ddfkIcoWRz48Acq
+         ruxEFs+P/ctwTDRaiCMlCwa3y2gjDYcvz6AYbrpzoKiqdUpV2toNmiqLHSlra3iSdcPw
+         PC6a0yOmfdGgjCVc9Kpj0+uN90FFCdaClXunjqOtQHDMugV7QG7DUCjWVT2u+auhtqwC
+         d4g6hBzTjKvWXNAJJy0dlH1uplQ01IgKk/zKWvBXCEs9CS+olmJRuB7U3ZWnRAzX6Kzq
+         z/fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=Nu3VLDUqU+jU9Ulv1RKGhBZJe/ApM+TsuNJuzdtSY+M=;
-        b=VjqM3dhRcbHydjBqjszLCB+2aQOTEqZswnCrPNxD9PGwySr6X0kHyfiEg+St5kop2R
-         jRup91UxDcF3zzS+FQCej+jTKQZeBrtUZZJ5r+kGS2zldz3R8QVj7VHP3HDa9+BPkQOj
-         DLIutkWZZJihcFbPsUjf42VhHgEfrKKTjXiS0OA3vY1e2GQcaimBTDW6UR3XnFySROpx
-         Mdv0YeTysLYKgzHR9N8O9Db/Y+PXKBgFa/e6bFYWRueMJ9EpCDsW3LTEKKKR+Zt96ZVq
-         V1ZlK0wss35NJljh10swqaKKt5OMRQT+o51qQuMhCrBaFJmd6/0EvfXsz1FmCvIKul0T
-         Iz3Q==
-X-Gm-Message-State: ACgBeo2LQ8T7c6zJiSezIFSacRY17UNUw/0fCb74D2X0BXBc3FhTkOTM
-        WspLs+It4Nm3nJ9aF1aG/dIEBA==
-X-Google-Smtp-Source: AA6agR595KwMfyX0sVhhUEYlgdd7hbmxKDXxniItF7Yjp2Fh/BhRyNo1Zh0kLJkHkh4xFhiOIyc0zQ==
-X-Received: by 2002:a05:651c:516:b0:25f:f52b:3c86 with SMTP id o22-20020a05651c051600b0025ff52b3c86mr2111392ljp.523.1660911687788;
-        Fri, 19 Aug 2022 05:21:27 -0700 (PDT)
-Received: from ?IPV6:2001:14bb:ac:e5a8:ef73:73ed:75b3:8ed5? (d1xw6v77xrs23np8r6z-4.rev.dnainternet.fi. [2001:14bb:ac:e5a8:ef73:73ed:75b3:8ed5])
-        by smtp.gmail.com with ESMTPSA id t20-20020a2e8e74000000b0025e1ec74e25sm595362ljk.43.2022.08.19.05.21.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 Aug 2022 05:21:27 -0700 (PDT)
-Message-ID: <bccd3a79-faa2-e4c5-3783-25ffaea69d00@linaro.org>
-Date:   Fri, 19 Aug 2022 15:21:25 +0300
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=GeLnTCDFozOnXarr5bsZrfQIyPlCPObES/tRUVDlMRc=;
+        b=teOuXX1QE0Q1bJzYTWv9dGZobw63yJkq760gFGhRlAjxdHBzY1Mxc+oMzoGGQM5OsK
+         egLp4plAxICKjqUIwhfagGhOC2/PnG/skGij1Aq0G9iv8PNV1OqsGMW72doJwtFkafF+
+         A3sKAYRUx9otEUR8i4YGGiFq2fZTNToqfh5yBBMWkZOdRQVb3szHas11czixfm96uHse
+         7QmQ2+dUHRrrw9DbGP8zUT+RwgtzgHbqj08iuh30zsXxMUXxnPUeJf80uX7VRkCrqlVq
+         1kb7O/RcFIljedcuehGaAkxej5uCrO6xZ9UBgz1tyn55hbMS1NoVDMcn+7//HltEmos2
+         s6Dw==
+X-Gm-Message-State: ACgBeo3187NjVC7iNA+dMVDBqsL73hnHBwkU+yXG42+4MyAXsM0Ud+G/
+        04jr5/xFvX4uED9GVaVaB6pGZA==
+X-Google-Smtp-Source: AA6agR7N4ZbVcrXI4TmUZ/vYDXKsf2Lwa4ZiSJrBA5m0Qsfe0WDJTWC8qV+uhj11vk4/fyxaSM0aVw==
+X-Received: by 2002:a05:6808:1412:b0:343:345:98ac with SMTP id w18-20020a056808141200b00343034598acmr3320053oiv.288.1660919004509;
+        Fri, 19 Aug 2022 07:23:24 -0700 (PDT)
+Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id l6-20020a056870f14600b000f2455e26acsm1303283oac.48.2022.08.19.07.23.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Aug 2022 07:23:23 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH] MAINTAINERS: Update Bjorn's email address
+Date:   Fri, 19 Aug 2022 07:25:49 -0700
+Message-Id: <20220819142549.1605081-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH 1/2] dt-bindings: clock: add QCOM SM6115 display clock
- bindings
-Content-Language: en-US
-To:     Adam Skladowski <a39.skl@gmail.com>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220818151850.19917-1-a39.skl@gmail.com>
- <20220818151850.19917-2-a39.skl@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220818151850.19917-2-a39.skl@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -86,140 +72,87 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/08/2022 18:18, Adam Skladowski wrote:
-> Add device tree bindings for display clock controller for
-> Qualcomm Technology Inc's SM6115 SoC.
-> 
-> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
-> ---
->  .../bindings/clock/qcom,dispcc-sm6115.yaml    | 88 +++++++++++++++++++
->  .../dt-bindings/clock/qcom,dispcc-sm6115.h    | 36 ++++++++
->  2 files changed, 124 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,dispcc-sm6115.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,dispcc-sm6115.h
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6115.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6115.yaml
-> new file mode 100644
-> index 000000000000..2b9671112934
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6115.yaml
-> @@ -0,0 +1,88 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/clock/qcom,dispcc-sm6115.yaml#
+Update the email address for Bjorn's maintainer entries and fill in
+.mailmap accordingly.
 
-Filename based on compatible, so:
-qcom,sm6115-dispcc.yaml
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ .mailmap    |  3 +++
+ MAINTAINERS | 12 ++++++------
+ 2 files changed, 9 insertions(+), 6 deletions(-)
 
-I know it creates irregularity, but that's the naming convention for all.
+diff --git a/.mailmap b/.mailmap
+index 23241db2647f..521ecdb8aa67 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -71,6 +71,9 @@ Ben M Cahill <ben.m.cahill@intel.com>
+ Ben Widawsky <bwidawsk@kernel.org> <ben@bwidawsk.net>
+ Ben Widawsky <bwidawsk@kernel.org> <ben.widawsky@intel.com>
+ Ben Widawsky <bwidawsk@kernel.org> <benjamin.widawsky@intel.com>
++Bjorn Andersson <andersson@kernel.org> <bjorn@kryo.se>
++Bjorn Andersson <andersson@kernel.org> <bjorn.andersson@linaro.org>
++Bjorn Andersson <andersson@kernel.org> <bjorn.andersson@sonymobile.com>
+ Björn Steinbrink <B.Steinbrink@gmx.de>
+ Björn Töpel <bjorn@kernel.org> <bjorn.topel@gmail.com>
+ Björn Töpel <bjorn@kernel.org> <bjorn.topel@intel.com>
+diff --git a/MAINTAINERS b/MAINTAINERS
+index f69a1c5212bd..766037b30806 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2579,7 +2579,7 @@ W:	http://www.armlinux.org.uk/
+ 
+ ARM/QUALCOMM SUPPORT
+ M:	Andy Gross <agross@kernel.org>
+-M:	Bjorn Andersson <bjorn.andersson@linaro.org>
++M:	Bjorn Andersson <andersson@kernel.org>
+ R:	Konrad Dybcio <konrad.dybcio@somainline.org>
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
+@@ -8941,7 +8941,7 @@ F:	include/linux/hw_random.h
+ 
+ HARDWARE SPINLOCK CORE
+ M:	Ohad Ben-Cohen <ohad@wizery.com>
+-M:	Bjorn Andersson <bjorn.andersson@linaro.org>
++M:	Bjorn Andersson <andersson@kernel.org>
+ R:	Baolin Wang <baolin.wang7@gmail.com>
+ L:	linux-remoteproc@vger.kernel.org
+ S:	Maintained
+@@ -16134,7 +16134,7 @@ F:	drivers/gpio/gpio-sama5d2-piobu.c
+ F:	drivers/pinctrl/pinctrl-at91*
+ 
+ PIN CONTROLLER - QUALCOMM
+-M:	Bjorn Andersson <bjorn.andersson@linaro.org>
++M:	Bjorn Andersson <andersson@kernel.org>
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/devicetree/bindings/pinctrl/qcom,*.txt
+@@ -16827,7 +16827,7 @@ F:	Documentation/devicetree/bindings/media/*camss*
+ F:	drivers/media/platform/qcom/camss/
+ 
+ QUALCOMM CLOCK DRIVERS
+-M:	Bjorn Andersson <bjorn.andersson@linaro.org>
++M:	Bjorn Andersson <andersson@kernel.org>
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Supported
+ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git
+@@ -17316,7 +17316,7 @@ S:	Supported
+ F:	fs/reiserfs/
+ 
+ REMOTE PROCESSOR (REMOTEPROC) SUBSYSTEM
+-M:	Bjorn Andersson <bjorn.andersson@linaro.org>
++M:	Bjorn Andersson <andersson@kernel.org>
+ M:	Mathieu Poirier <mathieu.poirier@linaro.org>
+ L:	linux-remoteproc@vger.kernel.org
+ S:	Maintained
+@@ -17329,7 +17329,7 @@ F:	include/linux/remoteproc.h
+ F:	include/linux/remoteproc/
+ 
+ REMOTE PROCESSOR MESSAGING (RPMSG) SUBSYSTEM
+-M:	Bjorn Andersson <bjorn.andersson@linaro.org>
++M:	Bjorn Andersson <andersson@kernel.org>
+ M:	Mathieu Poirier <mathieu.poirier@linaro.org>
+ L:	linux-remoteproc@vger.kernel.org
+ S:	Maintained
+-- 
+2.35.1
 
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Display Clock Controller Binding for SM6115
-> +
-> +maintainers:
-> +  - Taniya Das <tdas@codeaurora.org>
-
-I don't think the email is correct. Please use Bjorn's (and optionally
-you can add yourself if you want to maintain this binding).
-
-> +
-> +description: |
-> +  Qualcomm display clock control module which supports the clocks and
-> +  power domains on SM6115.
-> +
-> +  See also:
-> +    dt-bindings/clock/qcom,dispcc-sm6115.h
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,sm6115-dispcc
-> +
-> +  clocks:
-> +    items:
-> +      - description: Board XO source
-> +      - description: Byte clock from DSI PHY0
-> +      - description: Pixel clock from DSI PHY0
-> +      - description: GPLL0 clock from GCC
-> +      - description: GPLL0 div clock from GCC
-> +      - description: Board sleep clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: bi_tcxo
-> +      - const: dsi0_phy_pll_out_byteclk
-> +      - const: dsi0_phy_pll_out_dsiclk
-> +      - const: gcc_disp_gpll0_clk_src
-> +      - const: gcc_disp_gpll0_div_clk_src
-> +      - const: sleep_clk
-> +
-> +  '#clock-cells':
-> +    const: 1
-> +
-> +  '#reset-cells':
-> +    const: 1
-> +
-> +  '#power-domain-cells':
-> +    const: 1
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - '#clock-cells'
-> +  - '#reset-cells'
-> +  - '#power-domain-cells'
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,rpmcc.h>
-> +    #include <dt-bindings/clock/qcom,gcc-sm6115.h>
-> +    clock-controller@5f00000 {
-> +      compatible = "qcom,sm6115-dispcc";
-> +      reg = <0x5f00000 0x20000>;
-> +      clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
-> +               <&dsi0_phy 0>,
-> +               <&dsi0_phy 1>,
-> +               <&gcc GCC_DISP_GPLL0_CLK_SRC>,
-> +               <&gcc GCC_DISP_GPLL0_DIV_CLK_SRC>,
-> +               <&sleep_clk>;
-> +      clock-names = "bi_tcxo",
-> +                    "dsi0_phy_pll_out_byteclk",
-> +                    "dsi0_phy_pll_out_dsiclk",
-> +                    "gcc_disp_gpll0_clk_src",
-> +                    "gcc_disp_gpll0_div_clk_src",
-> +                    "sleep_clk";
-> +      #clock-cells = <1>;
-> +      #reset-cells = <1>;
-> +      #power-domain-cells = <1>;
-> +    };
-> +...
-> diff --git a/include/dt-bindings/clock/qcom,dispcc-sm6115.h b/include/dt-bindings/clock/qcom,dispcc-sm6115.h
-> new file mode 100644
-> index 000000000000..d1a6c45b5029
-> --- /dev/null
-> +++ b/include/dt-bindings/clock/qcom,dispcc-sm6115.h
-
-Filename based on compatible.
-
-> @@ -0,0 +1,36 @@
-> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-> +/*
-> + * Copyright (c) 2022, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#ifndef _DT_BINDINGS_CLK_QCOM_DISP_CC_SM6115_H
-> +#define _DT_BINDINGS_CLK_QCOM_DISP_CC_SM6115_H
-> +
-
-
-Best regards,
-Krzysztof
