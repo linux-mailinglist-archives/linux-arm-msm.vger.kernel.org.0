@@ -2,104 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0412959A68C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 21:40:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0092859A6FF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 22:23:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351107AbiHSThZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Aug 2022 15:37:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37008 "EHLO
+        id S1351642AbiHSUNU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Aug 2022 16:13:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbiHSThZ (ORCPT
+        with ESMTP id S1351758AbiHSUNS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Aug 2022 15:37:25 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 754B3111C11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Aug 2022 12:37:24 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27JJHkJo032396;
-        Fri, 19 Aug 2022 19:37:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=Lrz+YB/LxPq4wRFMtpoO1VF54SwkxsM5I09mZCDtYng=;
- b=g0QdVgeKeAlcG9pv0k45Kg+2rA2U5uEulCgwof4gP3dGuZ7JBLf5iWHn4ILa0s503JdZ
- AC9/xU05ZqLX49VdWK3iGhAuRZo1hKhOT6jxpax05Kh0ISppaHDf1nst+CgOwVRUdnN7
- lH9cTUmSkVf3qTALlHCjbCvvLvK0nnILzRNsYmyOYkWyfU5eM12uOxtm60RM2KPnh1gQ
- 3Liu5hvh/CB4tLLg6PRhBErmogJ1Cbkz9ozFyO3JJ5ateyKwc/9JnXBYy0IsKosQ37Yf
- CgcbbT5JfVbVikyYFlktjmqtGzqw7Ii7kymxkmMeRqGn9NzNyoJqEEWSTroBvOn/X5iR JA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j26jaj3b8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 19 Aug 2022 19:37:19 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27JJbJ32001109
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 19 Aug 2022 19:37:19 GMT
-Received: from quicinc.com (10.49.16.6) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 19 Aug
- 2022 12:37:18 -0700
-From:   Jeff Johnson <quic_jjohnson@quicinc.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Hemant Kumar <quic_hemantk@quicinc.com>
-CC:     <linux-arm-msm@vger.kernel.org>, <mhi@lists.linux.dev>,
-        Jeff Johnson <quic_jjohnson@quicinc.com>
-Subject: [PATCH v2] mhi: make mhi_controller_config::event_cfg const
-Date:   Fri, 19 Aug 2022 12:37:02 -0700
-Message-ID: <20220819193702.24697-1-quic_jjohnson@quicinc.com>
-X-Mailer: git-send-email 2.37.0
+        Fri, 19 Aug 2022 16:13:18 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B93C614E;
+        Fri, 19 Aug 2022 13:13:15 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id v10so5462159ljh.9;
+        Fri, 19 Aug 2022 13:13:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=IcngjGV4zbZSOi+jrmaVhNkVii+NAIYV4colFiC23+E=;
+        b=OfzHVubGC+1Rb/Q9WXF+4lnZWDgHRWUVYsWb/iRlxABOUpe9xu4EJXuTFnhA2WD3dR
+         gyb1b5Im3UciVP6Hn1fd4ooggQQXaQ9fg15O18YaIgbQTCLWMZL7ABYXz0uBgzSZce1E
+         8NxIa3n7vKt7sH82PlWOXafKLWmHEONXOi743c6cwMaQ+b+++Uf9C+3pP5a0XTnIu8CD
+         fR5TI59FrfzZPJlk4mNRuVXFsjM/i8nGXLyhHJGzc0KhhLeioDzv60NNaXmv47TqX/qm
+         eijFduGtk/9D+G3sXNYVYV5HyzFdjBo0ZYRFLm1De2EiCDgSyzKcn+u8nlNhoUXQ49Qv
+         SkLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=IcngjGV4zbZSOi+jrmaVhNkVii+NAIYV4colFiC23+E=;
+        b=0O6T4gfW7adbLaae8ZPLgB/53v7RRqCrWroYcsgre4LjI+J6xeZpWnI4XxQFCt7kkm
+         FLWJpEbw8pAAQPZRwk4Pt4lVLupNWTPd+/N2yuyVnSDCARQ3gXWwLs1jD0RvMpiYifUl
+         z4KA/KElSYtUByGI3aio5y4pxY8k00LC/1kY52b/3+GEZwNex3p1tKMh/IFCYGZLtquf
+         JiRi4YNNXKjWc6r9ikXl4pOj7CZUWa/MvC3sCYqfbugtHjIGoOLi8+6U/4GQZuIRDMKN
+         EEXZGMFEpYwmjPSk4Ejx8qs89vyLF7sZl2+9mInn75yihAwDNkaAixxO+s1NLzh0ag3E
+         MBqQ==
+X-Gm-Message-State: ACgBeo1TSH8mBKraJtIWxSZSkVljqSAb8drmgq+NkL+erro3jKvw/c2R
+        Y5aWXN23R0y5lQjmjfmqn7dNyigZpIE=
+X-Google-Smtp-Source: AA6agR6MsxnDx/xQDuFezqzCmoeAapiezI9Y2xzEeTt6Sdc9D4VihW/YVyw15kGNZNkOuR2TApK8ew==
+X-Received: by 2002:a2e:940d:0:b0:261:c5c8:3403 with SMTP id i13-20020a2e940d000000b00261c5c83403mr76538ljh.86.1660939993307;
+        Fri, 19 Aug 2022 13:13:13 -0700 (PDT)
+Received: from localhost.localdomain (admv234.neoplus.adsl.tpnet.pl. [79.185.51.234])
+        by smtp.gmail.com with ESMTPSA id h25-20020ac250d9000000b004916f129729sm753895lfm.50.2022.08.19.13.13.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Aug 2022 13:13:12 -0700 (PDT)
+From:   Adam Skladowski <a39.skl@gmail.com>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Adam Skladowski <a39.skl@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/2] Add DISPCC driver for SM6115
+Date:   Fri, 19 Aug 2022 22:12:20 +0200
+Message-Id: <20220819201231.23474-1-a39.skl@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: __XJTcaxYzIrLvR9EkWXnrCBRLqP07SR
-X-Proofpoint-GUID: __XJTcaxYzIrLvR9EkWXnrCBRLqP07SR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-19_10,2022-08-18_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=945
- impostorscore=0 malwarescore=0 priorityscore=1501 mlxscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 suspectscore=0 bulkscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2207270000
- definitions=main-2208190073
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently the event_cfg pointer in struct mhi_controller_config is not
-defined as a const pointer. This prevents clients from registering a
-read-only configuration unless they use a typecast. Since the
-event_cfg should not be modified once registered, add the const
-qualifier to event_cfg. This is aligned with the definition of ch_cfg.
+This patch series introduce support for SM6115 display clock controller,
+this driver is based on QCM2290 one.
 
-Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
----
- include/linux/mhi.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Changes since v1
+================
+1. Changed bindings file names to Vendor,SoC-IP format.
+2. Changed include in dispcc-sm6115 to reflect name change of bindings.
 
-diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index a5441ad33c74..ada2f18af4d6 100644
---- a/include/linux/mhi.h
-+++ b/include/linux/mhi.h
-@@ -281,7 +281,7 @@ struct mhi_controller_config {
- 	u32 num_channels;
- 	const struct mhi_channel_config *ch_cfg;
- 	u32 num_events;
--	struct mhi_event_config *event_cfg;
-+	const struct mhi_event_config *event_cfg;
- 	bool use_bounce_buf;
- 	bool m2_no_db;
- };
+Adam Skladowski (2):
+  dt-bindings: clock: add QCOM SM6115 display clock bindings
+  clk: qcom: Add display clock controller driver for SM6115
+
+ .../bindings/clock/qcom,sm6115-dispcc.yaml    |  88 +++
+ drivers/clk/qcom/Kconfig                      |   9 +
+ drivers/clk/qcom/Makefile                     |   1 +
+ drivers/clk/qcom/dispcc-sm6115.c              | 615 ++++++++++++++++++
+ .../dt-bindings/clock/qcom,sm6115-dispcc.h    |  36 +
+ 5 files changed, 749 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm6115-dispcc.yaml
+ create mode 100644 drivers/clk/qcom/dispcc-sm6115.c
+ create mode 100644 include/dt-bindings/clock/qcom,sm6115-dispcc.h
+
 -- 
-2.37.0
+2.25.1
 
