@@ -2,82 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E0A6F5999B1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 12:21:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18D0B599A22
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 12:55:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347099AbiHSKOb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Aug 2022 06:14:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56252 "EHLO
+        id S1347181AbiHSKv2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Aug 2022 06:51:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229601AbiHSKOb (ORCPT
+        with ESMTP id S1346527AbiHSKv1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Aug 2022 06:14:31 -0400
-Received: from albert.telenet-ops.be (albert.telenet-ops.be [IPv6:2a02:1800:110:4::f00:1a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99EBBD7422
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Aug 2022 03:14:28 -0700 (PDT)
-Received: from ramsan.of.borg ([84.195.186.194])
-        by albert.telenet-ops.be with bizsmtp
-        id 9NER2800M4C55Sk06NERnL; Fri, 19 Aug 2022 12:14:26 +0200
-Received: from rox.of.borg ([192.168.97.57])
-        by ramsan.of.borg with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <geert@linux-m68k.org>)
-        id 1oOz1F-001j63-BQ; Fri, 19 Aug 2022 12:14:25 +0200
-Received: from geert by rox.of.borg with local (Exim 4.93)
-        (envelope-from <geert@linux-m68k.org>)
-        id 1oOz1E-004KVP-Rc; Fri, 19 Aug 2022 12:14:24 +0200
-From:   Geert Uytterhoeven <geert+renesas@glider.be>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Molly Sophia <mollysophia379@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH] [RFC] arm64: dts: qcom: sdm845-xiaomi-polaris: Fix sde_dsi_active pinctrl
-Date:   Fri, 19 Aug 2022 12:14:23 +0200
-Message-Id: <629afd26008c2b1ba5822799ea7ea5b5271895e8.1660903997.git.geert+renesas@glider.be>
-X-Mailer: git-send-email 2.25.1
+        Fri, 19 Aug 2022 06:51:27 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33956E2C7C;
+        Fri, 19 Aug 2022 03:51:21 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id E480AB8274C;
+        Fri, 19 Aug 2022 10:51:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AF97C433C1;
+        Fri, 19 Aug 2022 10:51:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1660906278;
+        bh=nX+wpzz52PCLNX9F8IQQbzAoFFoiLltf9HzoZBUYRKY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=SrJbrcLEcwKa9UR8OXzPh5NUxJ3JHEOlXPaY30ZTqwgKTOkhJvJQZ3/wIrP3/2Otw
+         Ibn4wAf+ODS51XgCfrZtcvltxNQBrzB7+584wMm/dt1lnmSUrEgeALIGfuKsC+CeEZ
+         Rth9ntgKmW1QDKOY++8xCRkaDue+ZRF+FEwpXYyNNwSiMn7qJTivpwdBSWtuKdXpA8
+         gaobfr/+mpOLp+FVKkM6kvLT0oL7mVGqhqbf1uLVhHq9x2x13yi+oFSzC1nt8cp/fH
+         Z23N1kvmBQ20Yq2xzSjUgjPU66ddzyTHmFArhHg4XLnUMpTjXVXAgy4cXlio1KIBfJ
+         wthpsFbfG3Dmw==
+Date:   Fri, 19 Aug 2022 11:51:12 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        perex@perex.cz, tiwai@suse.com,
+        pierre-louis.bossart@linux.intel.com,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] ASoC: qcom: sm8250: move some code to common
+Message-ID: <Yv9rIGE+GNEzzizz@sirena.org.uk>
+References: <20220818135817.10142-1-srinivas.kandagatla@linaro.org>
+ <20220818135817.10142-3-srinivas.kandagatla@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="jrntzq7HWj3xMCPD"
+Content-Disposition: inline
+In-Reply-To: <20220818135817.10142-3-srinivas.kandagatla@linaro.org>
+X-Cookie: Price does not include taxes.
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-"make dtbs_check" says:
 
-    bias-disable: boolean property with value b'\x00\x00\x00\x00'
+--jrntzq7HWj3xMCPD
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Fix this by dropping the offending value.
+On Thu, Aug 18, 2022 at 02:58:16PM +0100, Srinivas Kandagatla wrote:
 
-Fixes: be497abe19bf08fb ("arm64: dts: qcom: Add support for Xiaomi Mi Mix2s")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
----
-Marked RFC as I do not have the hardware or documentation.
-Perhaps the "bias-disable" property should be dropped instead?
----
- arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> +	}
+> +	*stream_prepared  = true;
+> +
+> +	return ret;
+> +}
+> +EXPORT_SYMBOL(qcom_snd_sdw_prepare);
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-index 7747081b98875aad..dba7c2693ff50073 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-@@ -617,7 +617,7 @@ sde_dsi_active: sde-dsi-active {
- 		pins = "gpio6", "gpio10";
- 		function = "gpio";
- 		drive-strength = <8>;
--		bias-disable = <0>;
-+		bias-disable;
- 	};
- 
- 	sde_dsi_suspend: sde-dsi-suspend {
--- 
-2.25.1
+The ASoC framework is all EXPORT_SYMBOL_GPL(), things that depend
+directly on it should be too.
 
+--jrntzq7HWj3xMCPD
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmL/ax8ACgkQJNaLcl1U
+h9Ax5gf8C1poXrMNlinxwQ+Bq6QSKD91O3BR4rTm8vj2gncSQp2y7+H4HY+T+tbP
+WGLHZHiGtb+fVqRFr2zzATokVvbJ9ceQ8N0T4be7Ggjd3tLcJcuuXM26BUwr3u4N
+0H6ocIUsZP7z949gOSW3V0d7CH6Z7gfBmVq9ytsXvyapjoMOlxPPc8OyL64NL/1o
+HkfoKIq43c2gvF6AWK06VBmGv8vaw0Sxy5DPIVoHlBeK44xmYNV91s8LMw2VqYiB
+nM2iNfQd4OC476R0bc+BG8NgJltT6j9c8KaaBh6tioASQmMm4uaMRoxAg1RhJcd/
+UvE/Novy91JE54HT1FvQxA6vhFKPpg==
+=HP4+
+-----END PGP SIGNATURE-----
+
+--jrntzq7HWj3xMCPD--
