@@ -2,97 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F7BB59A466
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 20:05:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0BBA59A5B9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 20:53:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354874AbiHSRuP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Aug 2022 13:50:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57274 "EHLO
+        id S1349973AbiHSSsA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Aug 2022 14:48:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351301AbiHSRt3 (ORCPT
+        with ESMTP id S1350000AbiHSSr6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Aug 2022 13:49:29 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6C557C32F;
-        Fri, 19 Aug 2022 10:20:20 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 6C3AFB82852;
-        Fri, 19 Aug 2022 17:20:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B2EC433D6;
-        Fri, 19 Aug 2022 17:20:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1660929618;
-        bh=pqfYAKcyggEoIGvq/LHNLs/YpU/JRraQ9n78keTDpNk=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=Y2EltIagHroUZbMf+CyAqnokaZoI983lqcAJO3KuyWlHrGajVQ6J5saQ4e/VCY5Bw
-         Bd/3+gzN9heMk2mlUteyp49dHgxtUz0uhkRMJ1NFoYl7j4TfCY8WFZ/dCj7AGEpH6B
-         sLH2QTzOLx6D2xra3Pjrfe21Mxn1xNkAErjaIeTh9jrjcVUJoKc9Tc8AuEdSaA/nw1
-         6YS53b6vd2bpmwSgtbLKJhsKAgaR3tDEHq3iHP66ZNbGjreKktn090wsA5RXJKOFBa
-         KK2UkNmajG0qnFu03YyrmMTWjKmkN5QjjIGJvfFLXArpjZ1E3N/XSNxFjAh1nbLSBB
-         UYsaF+97i+qsg==
-Date:   Fri, 19 Aug 2022 18:30:52 +0100
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Robert Marko <robimarko@gmail.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, lee@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, lars@metafoo.de,
-        sboyd@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-iio@vger.kernel.org,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: Re: [PATCH v8 3/5] iio: adc: qcom-spmi-adc5: add ADC5_VREF_VADC to
- rev2 ADC5
-Message-ID: <20220819183052.49cf14e9@jic23-huawei>
-In-Reply-To: <20220818221815.346233-3-robimarko@gmail.com>
-References: <20220818221815.346233-1-robimarko@gmail.com>
-        <20220818221815.346233-3-robimarko@gmail.com>
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.34; x86_64-pc-linux-gnu)
+        Fri, 19 Aug 2022 14:47:58 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 152CDDC5E9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Aug 2022 11:47:57 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27JFesiv030119;
+        Fri, 19 Aug 2022 18:47:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=tPxjgTnm3xmc4d65cwmOBIkIKOFlnv2fDaqylG+eJdE=;
+ b=C8FNP6h2JOPuobCGpssUFdPjQdg9xlgO9AO2YiSBbOdUq0pVCKjjsbOSjp0pDyI3xmid
+ cFncjmOcjTef6OQ3XmDpKTqulIwAh9a9WzTRzkzoBH6ZeenfFHSATDBvgZtUet/aTDtS
+ V5pIu+kkVQ3f6sIQYS1vOgkrd1dvE1K+HPqQ2XFPoFr0ebb72IlDirZzrYcK/CBrwt4+
+ Swys8gcx9td9d86uHmIq5mlnpXY8orSYgr8PSWFyW91fGxi4eUNCSd1T83ci/dXUow2M
+ 6O0X8o0+da1qrdWXCYZGOEegqVq0dbjCPqFar1OiSeJjWCtE/oz7ZCcPWpC0/3T7zkD2 Kw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j29w99ba1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 19 Aug 2022 18:47:53 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27JIgqFH010510
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 19 Aug 2022 18:42:52 GMT
+Received: from quicinc.com (10.49.16.6) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 19 Aug
+ 2022 11:42:52 -0700
+From:   Jeff Johnson <quic_jjohnson@quicinc.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Hemant Kumar <quic_hemantk@quicinc.com>
+CC:     <linux-arm-msm@vger.kernel.org>, <mhi@lists.linux.dev>,
+        Jeff Johnson <quic_jjohnson@quicinc.com>
+Subject: [PATCH] mhi: make mhi_controller_config::event_cfg const
+Date:   Fri, 19 Aug 2022 11:42:45 -0700
+Message-ID: <20220819184245.28035-1-quic_jjohnson@quicinc.com>
+X-Mailer: git-send-email 2.37.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: iVivuTwh6sdyscwE7g8Vnf4HmRpYhP-N
+X-Proofpoint-ORIG-GUID: iVivuTwh6sdyscwE7g8Vnf4HmRpYhP-N
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-19_10,2022-08-18_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 mlxlogscore=944 phishscore=0
+ suspectscore=0 clxscore=1011 mlxscore=0 spamscore=0 adultscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2208190069
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 19 Aug 2022 00:18:13 +0200
-Robert Marko <robimarko@gmail.com> wrote:
+Currently the event_cfg pointer in struct mhi_controller_config is not
+defined as a const pointer. This prevents clients from registering a
+read-only configuration unless they use a typecast. Since the
+event_cfg should not be modified once registered, add the const
+qualifier to event_cfg. This is aligned with the definition of ch_cfg.
+---
+ include/linux/mhi.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> Add support for ADC5_VREF_VADC channel to rev2 ADC5 channel list.
-> This channel measures the VADC reference LDO output.
-> 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
-I've changed my mind on this, mostly because we've reached a new
-cycle and I'd rather not see a v9 series + Lee is (I think)
-keen to only take stuff through MFD if there is a build time
-dependency.
-
-Applied this patch directly to the togreg branch of iio.git
-and pushed that out as testing for 0-day to play with it.
-> ---
->  drivers/iio/adc/qcom-spmi-adc5.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
-> index e96da2ef1964..821fee60a765 100644
-> --- a/drivers/iio/adc/qcom-spmi-adc5.c
-> +++ b/drivers/iio/adc/qcom-spmi-adc5.c
-> @@ -597,6 +597,8 @@ static const struct adc5_channels adc5_chans_rev2[ADC5_MAX_CHANNEL] = {
->  					SCALE_HW_CALIB_DEFAULT)
->  	[ADC5_1P25VREF]		= ADC5_CHAN_VOLT("vref_1p25", 0,
->  					SCALE_HW_CALIB_DEFAULT)
-> +	[ADC5_VREF_VADC]	= ADC5_CHAN_VOLT("vref_vadc", 0,
-> +					SCALE_HW_CALIB_DEFAULT)
->  	[ADC5_VPH_PWR]		= ADC5_CHAN_VOLT("vph_pwr", 1,
->  					SCALE_HW_CALIB_DEFAULT)
->  	[ADC5_VBAT_SNS]		= ADC5_CHAN_VOLT("vbat_sns", 1,
+diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+index a5441ad33c74..ada2f18af4d6 100644
+--- a/include/linux/mhi.h
++++ b/include/linux/mhi.h
+@@ -281,7 +281,7 @@ struct mhi_controller_config {
+ 	u32 num_channels;
+ 	const struct mhi_channel_config *ch_cfg;
+ 	u32 num_events;
+-	struct mhi_event_config *event_cfg;
++	const struct mhi_event_config *event_cfg;
+ 	bool use_bounce_buf;
+ 	bool m2_no_db;
+ };
+-- 
+2.37.0
 
