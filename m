@@ -2,70 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A705599330
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 04:51:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D3E15994AF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 07:43:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240614AbiHSCs3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Aug 2022 22:48:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51276 "EHLO
+        id S1346523AbiHSFkG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Aug 2022 01:40:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245256AbiHSCs2 (ORCPT
+        with ESMTP id S1346197AbiHSFkE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Aug 2022 22:48:28 -0400
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F2693ED59;
-        Thu, 18 Aug 2022 19:48:26 -0700 (PDT)
-Received: by mail-pj1-f44.google.com with SMTP id bf22so3392399pjb.4;
-        Thu, 18 Aug 2022 19:48:26 -0700 (PDT)
+        Fri, 19 Aug 2022 01:40:04 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ECDFDCFDA
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 22:40:02 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id g129so121696pfb.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 22:40:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=EU0Xpdjq4gzaluDqvt8ZL9f0MKE2Ug7x6hJlEuzy25o=;
+        b=q4TKVBG83qbSyPTszbB4aqGThUjTg4VCA8TG0lifPnwmoeJpzmxN02EwXm/URAULnX
+         685FFTeli+9sePzO5uMNh1f8wEFs3bL9Bf13qixko8qkfhquVwaVe0/d8eb9Umgl35iL
+         EMJEzUhrfm3UPBZfAoe/lT6g56rL8ukKYEXMnxcUsqKI+7Ncpdg5FHtsruV9ljflQ9Wp
+         nvKw/ZpOcuQ6Tzd6O5wGBopJIfqgteoukXz9wXIYb0Sg7kZyKj1+tK2Koy2vAzXcz4vK
+         CeTvEErv+s9rg/1EhdEkvCadezhC0zPjptVivPdutRDd6sDCQOLMcByIWqBbRx2fDS6i
+         +v+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=TFsMtRqG/TbJmGF6CHrOUDDBRGq4lB+/ETI2WErXxoU=;
-        b=nsxiwrPprxWmD2vOhGId7ykePw+j9uKhV5MNnF0OITx6NzCWxbsD4n072iyY0xMWXw
-         Zpr6um7jInwlRHV7rHxkBkl++cZ8PnHtQu8Fe6mD/RvYGeDi2nW27XxokM895q1I/Df9
-         7UGKGZ5pwJFMGjrBR35xn6XGncH8JgAgoyE/kWRfvmJs7JupTgMrND5bFBDQzwpIolDd
-         QnLgFvFewfd6ZIpzKFJSvELT3e5JGAIGiIg6bGMImM4nAolSe8BxolTpG5EzOdMEj9zC
-         Ji7EqLiTZsyVYUW0sycFGFbjL7AW0XhlSE/AkEJyUJKoohTUw/wggIKkielCVM98jOrZ
-         TcnA==
-X-Gm-Message-State: ACgBeo3qxR7FlnfTEVuSHltVV5yaucRHeQh41dgzXyVyv5NjSsL4rhJ2
-        2jKfyM5FnuyePV695b2oyCw=
-X-Google-Smtp-Source: AA6agR6nH+aI02CAs3v/v+DadbqfjnWgx1c9ghlbQDADl+OmcdjYwaLnAtOVZGr44+ZGDmy73jOJVg==
-X-Received: by 2002:a17:902:da8a:b0:16f:1aab:2226 with SMTP id j10-20020a170902da8a00b0016f1aab2226mr5323993plx.28.1660877305758;
-        Thu, 18 Aug 2022 19:48:25 -0700 (PDT)
-Received: from [192.168.3.217] ([98.51.102.78])
-        by smtp.gmail.com with ESMTPSA id ik23-20020a170902ab1700b00172a33c84a8sm2038593plb.251.2022.08.18.19.48.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Aug 2022 19:48:24 -0700 (PDT)
-Message-ID: <4ad8c00e-f752-dfb2-331e-8cdff02eaa05@acm.org>
-Date:   Thu, 18 Aug 2022 19:48:22 -0700
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=EU0Xpdjq4gzaluDqvt8ZL9f0MKE2Ug7x6hJlEuzy25o=;
+        b=2UHCw3ddaBaxU0kikbAwYqzbWp5XGUfFYuXn/vEPstLgq0sOjX5jZbmr9ANoPYJOLk
+         Voahn8tE5DyYesuXy+T/DCM8KEWhMcSourx5NoRdMqmIlsaDeUPtJP1QOI1snTTLrkEj
+         NiLj5uvUhJylAgFuhg81mc9tF061DD22BQfK4fQ5LaEvmex+ttJLGZqFZwb37IuhkrdK
+         djdfNfMCaC9LpEuizZ8u44Opo7RpZ48VRxVOxWZ/vtDOi8KOAc7X7BvUgIcJxzbM2RL3
+         sTvf9IXdrW3AClrw8jHXRzPrdL+6GmeViYMx7vcmAawK1rd2HKsPxEVwpjoZ5AjKYQuk
+         CVGQ==
+X-Gm-Message-State: ACgBeo3hiEfY2xqdXSmQLfDLAA1+p/hdtQ073GxCw4OZYqaWGJuY+leJ
+        o/wmLAoT5qO8nXNt2sy5lt9OkwnI/5lfdw==
+X-Google-Smtp-Source: AA6agR5rqHkJsevaWHqGKd15w/iKH002kBpV1qP/T8uNcF71eJMIX1DT1/jdedfMtw2NS/LvYRmcFg==
+X-Received: by 2002:a05:6a00:10cf:b0:528:48c3:79e0 with SMTP id d15-20020a056a0010cf00b0052848c379e0mr6224068pfu.18.1660887601337;
+        Thu, 18 Aug 2022 22:40:01 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1c5e:9cc1:8f6b:abdb:fb8f:1a1b])
+        by smtp.gmail.com with ESMTPSA id e28-20020a056a0000dc00b0053617cbe2d2sm233429pfj.168.2022.08.18.22.39.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Aug 2022 22:40:00 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     devicetree@vger.kernel.org, agross@kernel.org,
+        bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
+        Rob Herring <robh@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: Fix sm8150 fastrpc node - use correct iommu values
+Date:   Fri, 19 Aug 2022 11:09:45 +0530
+Message-Id: <20220819053945.4114430-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.1.2
-Subject: Re: [RFC PATCH v2 2/2] scsi: ufs-qcom: Add MCQ support
-Content-Language: en-US
-To:     Can Guo <quic_cang@quicinc.com>, quic_asutoshd@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
-        stanley.chu@mediatek.com, adrian.hunter@intel.com,
-        beanhuo@micron.com, avri.altman@wdc.com, mani@kernel.org,
-        linux-scsi@vger.kernel.org, kernel-team@android.com
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1660213984-37793-1-git-send-email-quic_cang@quicinc.com>
- <1660213984-37793-3-git-send-email-quic_cang@quicinc.com>
-From:   Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <1660213984-37793-3-git-send-email-quic_cang@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,51 +71,94 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/11/22 03:33, Can Guo wrote:
-> +static int ufs_qcom_get_outstanding_cqs(struct ufs_hba *hba,
-> +					unsigned long *ocqs)
-> +{
-> +	return -EINVAL;
-> +}
+Fix the 'memory access' relaetd crash seen while running Hexagon
+SDK example applications on the cdsp dsp available on sm8150 SoC
+based boards:
 
-Why does the get_outstanding_cqs vop exist since the only implementation 
-of that vop returns EINVAL?
+  qcom_q6v5_pas 8300000.remoteproc: fatal error received:
+    EX:kernel:0x0:frpck_0_0:0xf5:PC=0xc020ceb0
 
-> +static int ufs_qcom_config_mcq_rop(struct ufs_hba *hba)
-> +{
-> +	struct ufshcd_mcq_rop_info_t *rop;
-> +	struct ufshcd_res_info_t *mem_res, *sqdao_res;
-> +	int i;
-> +
-> +	mem_res = &hba->res[RES_MEM];
-> +	sqdao_res = &hba->res[RES_MCQ_SQD];
-> +
-> +	if (!mem_res->base || !sqdao_res->base)
-> +		return -EINVAL;
-> +
-> +	for (i = 0; i < ROP_MAX; i++) {
-> +		rop = &hba->mcq_rop[i];
-> +		rop->offset = sqdao_res->resource->start -
-> +			      mem_res->resource->start + 0x40 * i;
-> +		rop->stride = 0x100;
-> +		rop->base = sqdao_res->base + 0x40 * i;
-> +	}
-> +
-> +	return 0;
-> +}
+This crash is caused by incorrect IOMMU SID values being used
+in the fastrpc node.
 
-Is there anything in the above function that is specific to the Qualcomm 
-controller? If not, please move the above code into ufshcd.c.
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Rob Herring <robh@kernel.org>
+Suggested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 24 ++++++++----------------
+ 1 file changed, 8 insertions(+), 16 deletions(-)
 
-> +static int ufs_qcom_get_hba_mac(struct ufs_hba *hba)
-> +{
-> +	return MAX_SUPP_MAC;
-> +}
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 7d509ecd44da..916f12b799b7 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -3394,57 +3394,49 @@ fastrpc {
+ 					compute-cb@1 {
+ 						compatible = "qcom,fastrpc-compute-cb";
+ 						reg = <1>;
+-						iommus = <&apps_smmu 0x1401 0x2040>,
+-							 <&apps_smmu 0x1421 0x0>,
+-							 <&apps_smmu 0x2001 0x420>,
+-							 <&apps_smmu 0x2041 0x0>;
++						iommus = <&apps_smmu 0x1001 0x0460>;
+ 					};
+ 
+ 					compute-cb@2 {
+ 						compatible = "qcom,fastrpc-compute-cb";
+ 						reg = <2>;
+-						iommus = <&apps_smmu 0x2 0x3440>,
+-							 <&apps_smmu 0x22 0x3400>;
++						iommus = <&apps_smmu 0x1002 0x0460>;
+ 					};
+ 
+ 					compute-cb@3 {
+ 						compatible = "qcom,fastrpc-compute-cb";
+ 						reg = <3>;
+-						iommus = <&apps_smmu 0x3 0x3440>,
+-							 <&apps_smmu 0x1423 0x0>,
+-							 <&apps_smmu 0x2023 0x0>;
++						iommus = <&apps_smmu 0x1003 0x0460>;
+ 					};
+ 
+ 					compute-cb@4 {
+ 						compatible = "qcom,fastrpc-compute-cb";
+ 						reg = <4>;
+-						iommus = <&apps_smmu 0x4 0x3440>,
+-							 <&apps_smmu 0x24 0x3400>;
++						iommus = <&apps_smmu 0x1004 0x0460>;
+ 					};
+ 
+ 					compute-cb@5 {
+ 						compatible = "qcom,fastrpc-compute-cb";
+ 						reg = <5>;
+-						iommus = <&apps_smmu 0x5 0x3440>,
+-							 <&apps_smmu 0x25 0x3400>;
++						iommus = <&apps_smmu 0x1005 0x0460>;
+ 					};
+ 
+ 					compute-cb@6 {
+ 						compatible = "qcom,fastrpc-compute-cb";
+ 						reg = <6>;
+-						iommus = <&apps_smmu 0x6 0x3460>;
++						iommus = <&apps_smmu 0x1006 0x0460>;
+ 					};
+ 
+ 					compute-cb@7 {
+ 						compatible = "qcom,fastrpc-compute-cb";
+ 						reg = <7>;
+-						iommus = <&apps_smmu 0x7 0x3460>;
++						iommus = <&apps_smmu 0x1007 0x0460>;
+ 					};
+ 
+ 					compute-cb@8 {
+ 						compatible = "qcom,fastrpc-compute-cb";
+ 						reg = <8>;
+-						iommus = <&apps_smmu 0x8 0x3460>;
++						iommus = <&apps_smmu 0x1008 0x0460>;
+ 					};
+ 
+ 					/* note: secure cb9 in downstream */
+-- 
+2.35.3
 
-Since there is a register in the UFSHCI 4.0 specification from which the 
-maximum number of outstanding commands can be retrieved, why does the 
-get_hba_mac vop exist?
-
-Thanks,
-
-Bart.
