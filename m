@@ -2,83 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8663F59A709
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 22:32:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 656CC59A72F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 22:51:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350478AbiHSU1F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Aug 2022 16:27:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49818 "EHLO
+        id S1352084AbiHSUue (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Aug 2022 16:50:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349984AbiHSU1E (ORCPT
+        with ESMTP id S1351994AbiHSUuZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Aug 2022 16:27:04 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13ED210C819;
-        Fri, 19 Aug 2022 13:27:03 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27JJxaln029524;
-        Fri, 19 Aug 2022 20:26:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Se7PWaf/NhonQklUA1Pw/eCNIMlMR+Epgmia0lF7/Bc=;
- b=Gjmadpyp5c35hk/QTheLTmje7OTGlfGxVAkJtFVD6d10Kg6cBQqtJCKWAeuTQHrm4JoB
- /yCbFSuEtQ3xtNxIxjRyXRnuL+Z+n/iZ1WcZMzvVKHand7fwtmcXtXjEnZ3VH5VnkTrs
- 7FjfVtBCvqwP1L3yGtFuMR5dYKQ/i//0oiEgUVk6+jq+mry13UTkYl6Clz0fL0ytRavL
- 8uNuMz2O96Ml1/9B4h6g+6Ha9fyjyTjMeaNAczMGXXq6EW+0+0an05mXhQPLT0kcNbCr
- hcKLoQAKBzXMgr4Q2L5gLtnjxbS/T9X6ABUx3jn6FWSeknx10vsq/u3I5othU0oPCnai UQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j1wtcu7a3-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 19 Aug 2022 20:26:58 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27JKQvfN020785
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 19 Aug 2022 20:26:57 GMT
-Received: from [10.110.45.134] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 19 Aug
- 2022 13:26:57 -0700
-Message-ID: <f9853511-e64c-9daf-b4e3-e334035771a8@quicinc.com>
-Date:   Fri, 19 Aug 2022 13:26:53 -0700
+        Fri, 19 Aug 2022 16:50:25 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1098BD0775
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Aug 2022 13:49:50 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id c24so4554009pgg.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Aug 2022 13:49:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc;
+        bh=PPiqvueW9Mr9csrtspssYoA1WIlf7ZX7tJOeDyZQ9tM=;
+        b=d4KS4ML+RNRPOvg7UNyebEdVPo5fGPxid064KFuNlXVLSpF9hMYkFXTQjvSUsslu5k
+         Zvz/5iAHxFn//NdXt3Aris0JqbPxcNfezauhbYIbsSsv/m+nxXRMkiFwpFpuYMAOCyuQ
+         kWDN7If/J8DIFI21Fwa57T4ls25uer1S9Wk8Q=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc;
+        bh=PPiqvueW9Mr9csrtspssYoA1WIlf7ZX7tJOeDyZQ9tM=;
+        b=jiExMuSkctmcbin4bl5a4oaQYe8aoH0u0HUOvxSEn+8alynUu0y5d1xkz7CnqkYM3n
+         CJTXErsYP861DwFhxs0ymUpjhLc4nJAYwPqX1kgHtDs1gDyP49QeheQI5RTIunsCZzKE
+         WKEzmIVgkbwz0PTqyA72h3cJ7SFQMMP5XVyJLu4pnnONcssXHZ8rv/gD8gMPFtLdUBFC
+         pjRTyp5qjcpqlxyULwgYEm96AX+/wrjgo3RbGZ357+vJGghHhhJFNmC80H6onWvJdU5N
+         fo2woOeghpRcMLKM5IJDV3JGomwBJhtdNEiL1BrJ/ZE9nBTtO5Ex5DGkSorxkbJYVOHZ
+         4irA==
+X-Gm-Message-State: ACgBeo1RYx6wMFv0yLqYoi2xMfQQuKqUMJ69/u8m2mGsOoXIuKZ/JOPS
+        i0hiZYubq8BYUvvg/M7KNqr0B0wcErZDgqHAN0VoOw==
+X-Google-Smtp-Source: AA6agR7KU4/1crUAnBR6DlUKTnq77ERwkcpQDM3bl8Mebz7jky9KMRw9EJflpPgbZMi1DOrcz72WAs4V0LG8PaL2tME=
+X-Received: by 2002:a65:490e:0:b0:41c:5b91:e845 with SMTP id
+ p14-20020a65490e000000b0041c5b91e845mr7688094pgs.436.1660942189992; Fri, 19
+ Aug 2022 13:49:49 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 19 Aug 2022 13:49:49 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v4 2/2] power: reset: qcom-pon: add support for
- qcom,pmk8350-pon compatible string
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <corbet@lwn.net>, <sre@kernel.org>, <robh+dt@kernel.org>,
-        <agross@kernel.org>, <bjorn.andersson@linaro.org>
-CC:     <krzysztof.kozlowski+dt@linaro.org>, <vkoul@kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20220725191314.19456-1-quic_amelende@quicinc.com>
- <20220725191314.19456-3-quic_amelende@quicinc.com>
- <57f8d9c4-6f49-ad3d-fc82-7a0f66d1775a@linaro.org>
-From:   Anjelique Melendez <quic_amelende@quicinc.com>
-In-Reply-To: <57f8d9c4-6f49-ad3d-fc82-7a0f66d1775a@linaro.org>
+In-Reply-To: <CACeCKadP-AZ8OU4A=7CrwAz7yuLvMvjvAcw7K-FORFmkMvx7cA@mail.gmail.com>
+References: <20220810204750.3672362-1-bjorn.andersson@linaro.org>
+ <20220810204750.3672362-2-bjorn.andersson@linaro.org> <a13bce60-25b4-d075-d56a-d1283e91e3ba@linaro.org>
+ <20220814210104.GA690892-robh@kernel.org> <Yv1y9Wjp16CstJvK@baldur>
+ <CAE-0n53AjJ_G6yZoTALWpKvZUdF+8nFZ+TQh=Ch=8xgdMVqDkw@mail.gmail.com> <CACeCKadP-AZ8OU4A=7CrwAz7yuLvMvjvAcw7K-FORFmkMvx7cA@mail.gmail.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Fri, 19 Aug 2022 13:49:49 -0700
+Message-ID: <CAE-0n53C+D=9gdSXKsjr4KZVrb-gpeo_EyuX3DfNKp19FoicXA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: usb: Introduce GPIO-based SBU mux
+To:     Prashant Malani <pmalani@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Pin-yen Lin <treapking@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 8nomn0h_LjWmLOIKR9YLdc2CwMfp3JOT
-X-Proofpoint-GUID: 8nomn0h_LjWmLOIKR9YLdc2CwMfp3JOT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-19_12,2022-08-18_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- impostorscore=0 mlxscore=0 clxscore=1015 malwarescore=0 bulkscore=0
- spamscore=0 priorityscore=1501 mlxlogscore=999 adultscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2208190076
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,69 +76,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Quoting Prashant Malani (2022-08-19 13:14:25)
+> > This would do that for us, but when all four lanes are connected from
+> > the qmp phy directly to the connector we could just as easily have done
+> > it with one endpoint.
+> >
+> >         qmp_phy {
+> >                 ports {
+> >                         port@0 {
+> >                                 reg = <0>;
+> >                                 endpoint@0 {
+> >                                         reg = <0>;
+> >                                         remote-endpoint = <&usb_c_ss>;
+> >                                         data-lanes = <1 2 3 0>
+> >                                 };
+> >                         };
+> >                 };
+> >         };
+> >
+> > So should we explicitly have two endpoints in the usb-c-connector for
+> > the two pairs all the time, or should we represent that via data-lanes
+> > and only split up the connector's endpoint if we need to connect the
+> > usb-c-connector to two different endpoints?
+>
+> I like 2 endpoints to represent the usb-c-connector, but that doesn't seem
+> to be compatible (without introducing `data-lanes`, at least) with all
+> the various
+> combinations on the remote side, if that remote side is a DRM bridge with DP
+> output capability (like it6505 or anx7625).
+> That type of DRM bridge supports 1, 2 or 4 lane DP connections.
 
+Why can't the remote side that's a pure DP bridge (it6505) bundle
+however many lanes it wants into one endpoint? If it's a pure DP bridge
+we should design the bridge binding to have up to 4 endpoints, but
+sometimes 2 or 1 and then overlay data-lanes onto that binding so that
+we can tell the driver how to remap the lanes if it can. If the hardware
+can't support remapping lanes then data-lanes shouldn't be in the
+binding.
 
-On 7/26/2022 3:27 AM, Krzysztof Kozlowski wrote:
-> On 25/07/2022 21:13, Anjelique Melendez wrote:
->> Add support for the new "qcom,pmk8350-pon" comptaible string.
->>
->> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
->> ---
->>  drivers/power/reset/qcom-pon.c | 1 +
->>  1 file changed, 1 insertion(+)
->>
->> diff --git a/drivers/power/reset/qcom-pon.c b/drivers/power/reset/qcom-pon.c
->> index 4a688741a88a..16bc01738be9 100644
->> --- a/drivers/power/reset/qcom-pon.c
->> +++ b/drivers/power/reset/qcom-pon.c
->> @@ -82,6 +82,7 @@ static const struct of_device_id pm8916_pon_id_table[] = {
->>  	{ .compatible = "qcom,pm8916-pon", .data = (void *)GEN1_REASON_SHIFT },
->>  	{ .compatible = "qcom,pms405-pon", .data = (void *)GEN1_REASON_SHIFT },
->>  	{ .compatible = "qcom,pm8998-pon", .data = (void *)GEN2_REASON_SHIFT },
->> +	{ .compatible = "qcom,pmk8350-pon", .data = (void *)GEN2_REASON_SHIFT },
->>  	{ }
->>  };
->>  MODULE_DEVICE_TABLE(of, pm8916_pon_id_table);
-> 
-> This is now confusing. The new device has entirely different first and
-> second IO address spaces, but you do not code here any differences.
-> 
+>
+> So, how about 4 endpoints (1 for each SS lane) in the usb-c-connector port@1?
+> That should support every conceivable configuration and bridge/PHY hardware.
+> and also allows a way to specify any lane remapping (similar to what
+> "data lanes" does)
+> if that is required.
+> Then we are consistent with what an endpoint represents, regardless of whether
+> the DRM bridge has a DP panel (1,2 or 4 lane) or Type-C connector  (2
+> or 4 lane) on its output side.
 
-Based on previous responses to this patch series, it was decided that a new
-"qcom,pmk8350-pon" compatible string is needed to differentiate between gen1/gen2
-vs gen3 children pon devices. Currently the child handles obtaining the register
-address(es) from its parent's regmap in drivers/input/misc/pm8941-pwrkey.c
-(https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/input/misc/pm8941-pwrkey.c?h=v6.0-rc1#n287).
-The patch that handled that change can be found at
-https://lore.kernel.org/linux-arm-msm/20220422191239.6271-4-quic_amelende@quicinc.com/.
+I'd like to think in terms of the usb-c-connector, where the DP altmode
+doesn't support one lane of DP and USB is only carried across two SS
+lanes. Essentially, two SS lanes are always together, hence the idea
+that we should have two endpoints in the SS port@1. In the simple case
+above it seems we can get away with only one endpoint in the SS port@1
+which is probably fine? I just don't know how that is represented in the
+schema, but I suspect making another endpoint optional in the SS port@1
+is the way to go.
 
-This driver, as the parent, does not actually need any changes besides adding the
-new parent compatible string. Specifically this driver handles reboot mode support.
-Everything needed to handle reboot mode is in the first register and reboot mode
-is handled the same as a "qcom,pm8998-pon" parent. The split of the pon register
-in pmk8350 does not affect reboot mode. This is why before we added a new compatible
-string "qcom,pm8998-pon" still worked for gen3 children devices. Even though 2
-registers could be defined in the device tree, as a 2nd register is optional for gen3
-children devices,the fact that this driver uses of_property_read_u32() will ensure that
-the base address used for reboot mode comes from the first register.  
-
-I do understand that this can be confusing but since "qcom,pmk8350-pon" still needs the
-shift reason = 1 we could do
-
-        #define GEN1_REASON_SHIFT		2
-        #define GEN2_REASON_SHIFT		1	
-   +    #define GEN3_REASON_SHIFT		1
- 
-  	{ .compatible = "qcom,pm8916-pon", .data = (void *)GEN1_REASON_SHIFT },
-  	{ .compatible = "qcom,pms405-pon", .data = (void *)GEN1_REASON_SHIFT },
-  	{ .compatible = "qcom,pm8998-pon", .data = (void *)GEN2_REASON_SHIFT },
-   +	{ .compatible = "qcom,pmk8350-pon", .data = (void *)GEN3_REASON_SHIFT },
- 	{ }
-
-
-It would still have the exact same functionality but it may visually make more sense.
-
-
-Thanks,
-Anjelique
-
+Will there ever be a time when all 4 usb-c-connector remote-endpoint
+phandles point to endpoints that are child nodes of different ports
+(i.e. different qmp_phy nodes) with a 4 endpoint schema? I don't think
+that is possible, so 4 endpoints is flexible but also verbose. It also
+means we would have to walk the endpoints to figure out lane remapping,
+wheres we can simply find the endpoint in the DP bridge ports and look
+at data-lanes directly.
