@@ -2,83 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D95A7599565
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 08:40:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 460AA599573
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Aug 2022 08:47:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231991AbiHSGeo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Aug 2022 02:34:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54262 "EHLO
+        id S245442AbiHSGk7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Aug 2022 02:40:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346025AbiHSGen (ORCPT
+        with ESMTP id S241528AbiHSGk6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Aug 2022 02:34:43 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 448B71A835
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 23:34:42 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id y141so3522926pfb.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 23:34:42 -0700 (PDT)
+        Fri, 19 Aug 2022 02:40:58 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BEFADABB6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 23:40:56 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id x19so4919239lfq.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Aug 2022 23:40:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc;
-        bh=4OLuDfjKcOo1vMBTKXZ3hrMvywIQsdm2SXucSyDEwJ0=;
-        b=qIBBWdyc4Zgce24Pj7nTw/NYLTLvXN6i1Dp4zvVlMa6QTgwi3kdb+/mBK5Tz8NQhbi
-         XSa3Au07vX5LoOLydU6PTeTmPe5IE6UVDoHaoY59iEhH/+FzjLB8xKVw5kb2sb0+vryb
-         NKy4ByHcELlLotIBBiVVocMbkki9oZ2gBzfs0EH8aUyOOEL9CuYLXtZPYokUTMvEtgim
-         jyrn/CB0044oza7Jr+yzSqtj4IsJzmaQxiyoNQDl97WMRn10icvTVzaJZQn87HgzAbnR
-         L1Eltf4Cfij1qJHmYvs0cf/kj1GqiiIcBIYptDnOO3zBPw0UCv3F4bJiSOm/vMuPHqDg
-         D4uw==
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=GYmIScs4mfZnnjadeyNqjbuAo9aXiX5S9q/mWekMvwo=;
+        b=oePyxO4oEX6xk6fav01I5vbNrZmR0ZxjmvJxpzG7j/fhw5AQsmMivprlTFsvMNCNBv
+         Fr13vfWBVK8AyfWyS16INk1lTBeqG2aZKWXMKSGrNJ980Zh7R+kUtZTNLA7ETS2oXn/Z
+         ZWNnjxUqOEknJp/RlXLQ9MztayQFPXFoFQnZQARR19zgZY5BtxtWeS7Y6w5jjclNHbXA
+         +crZTAVzAeI+K/4vF7XgTTGPEwVPvTCpRAH8t2SGwobO6HUosJ/NMSHKV9Ikt0Ls9NPr
+         +uDa+7U1zcBhhDmKyEvuNbJfnukQQuc2Z2K1fV1NB3mKytyN+hlSkdD7T9UVBqzRBU2p
+         ESjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=4OLuDfjKcOo1vMBTKXZ3hrMvywIQsdm2SXucSyDEwJ0=;
-        b=rQEU3kCpyyswkTn2be6WCCcYnN7vWL7yohmJIBHeDeVi8yC34oTs6cUitvITmk++Hi
-         jR4NVXMAxj78UW24aud/MT+83GH8qZjEDpmcuoAGif5nKCAOOHbGwMK7PPR5wf384Qdb
-         1En+8AG9MmKPoI5gwROvwQjQ2vSRTG0MPv9yt6RXymwrtbI10BAX22SG4nDzhtmkShly
-         6v+5TKXnJMJC1TjusbS+toc/SDZQDNzAMtor34M4YBhRniu+1ftYQ+tPUpBWsAFsVJ0P
-         9UW3JALAuxw8U1LU3Ti9m52EF1WHWJZTZWkhoXxzBPH3voVg7yXDCw8AguI4AoHW6veT
-         /wAQ==
-X-Gm-Message-State: ACgBeo2USptinFJgrm3p9uCP2phaHOBFg0k5nyDQ7rI2UGRLeJq22n6V
-        1+MnzesnApG643BJP6XppQww
-X-Google-Smtp-Source: AA6agR53iYZO5eiuz8XH08JqN2NWzz4IwA61evU0H7MnN+3Vf1XfvYFNaf/JA7p6i55e95TstPIW4w==
-X-Received: by 2002:aa7:8096:0:b0:52d:d5f6:2ea6 with SMTP id v22-20020aa78096000000b0052dd5f62ea6mr6573057pff.0.1660890881699;
-        Thu, 18 Aug 2022 23:34:41 -0700 (PDT)
-Received: from thinkpad ([117.193.212.74])
-        by smtp.gmail.com with ESMTPSA id z16-20020a170903019000b001729bd62297sm2447929plg.3.2022.08.18.23.34.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Aug 2022 23:34:41 -0700 (PDT)
-Date:   Fri, 19 Aug 2022 12:04:33 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Robert Marko <robimarko@gmail.com>
-Cc:     Marc Zyngier <maz@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-gpio@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] pinctrl: qcom: spmi-gpio: make the irqchip immutable
-Message-ID: <20220819063433.GA215264@thinkpad>
-References: <20220624195112.894916-1-robimarko@gmail.com>
- <87edyq1ujr.wl-maz@kernel.org>
- <20220712124445.GC21746@workstation>
- <87czea1i2f.wl-maz@kernel.org>
- <CAOX2RU5RX+H=omuKGye2fBy9dOFmfC9HC_3pekeGMxDJuReCUw@mail.gmail.com>
- <d8912a0d811b5eb924b8c4136b099f72@kernel.org>
- <CAOX2RU4MpyEQ0RtcrZ07VXRbB+SWWU=1zWfYUXhQFtvh=MCiDw@mail.gmail.com>
- <20220719074751.GA25065@thinkpad>
- <CAOX2RU525OYLBb+Nek==84KA4a42ZTz89tgdMcgBCu=K8VzL9Q@mail.gmail.com>
+        bh=GYmIScs4mfZnnjadeyNqjbuAo9aXiX5S9q/mWekMvwo=;
+        b=RF+Wr7F3+jaNN2fFuvLSNQt/SgEybkxxRrAShMyHJfhsvNrRsXw/BpaJDVsFAA8QH2
+         QxP0zoT55Iz/9mqYHo1Fo/A2N/Psmjs1wfLZsRwrUPK4mll/iadeKEn+ZStNeuGnM3uM
+         sc2q4q1WU/fvnHU/7/XqW8PkQTC0yQXmhB1jTX6Po/VrtUCyRgEZXit7E/neBH3koI1O
+         pMaYb0nhu24TJhnrQsPIxvCEVIvG/GnaNlewLGQYwjUM/inEzL5VL4dC+0s6WORD1CsK
+         ubAupcal76ZW9wF7PQC0MlS5ukqbTer3gJFEQoUC7WR2taJMMg8zlrSEia6MGx46DIDv
+         onTQ==
+X-Gm-Message-State: ACgBeo228NnuiwAakKtjLo5xFkmer3nsvvMpdfUzSH9rmh4244KDgIlj
+        O/GeYcronJWm55ALcj/MPBrExQ==
+X-Google-Smtp-Source: AA6agR7TbniMzGwqPEfAjokSet4E3Ix7OoannQIA8Ey+MTO2YQhuDAuk8GmTtGzWzCEm4xbLb4qHGA==
+X-Received: by 2002:a05:6512:238c:b0:48b:132:8392 with SMTP id c12-20020a056512238c00b0048b01328392mr1877371lfv.658.1660891254460;
+        Thu, 18 Aug 2022 23:40:54 -0700 (PDT)
+Received: from ?IPV6:2001:14bb:ac:e5a8:ef73:73ed:75b3:8ed5? (d1xw6v77xrs23np8r6z-4.rev.dnainternet.fi. [2001:14bb:ac:e5a8:ef73:73ed:75b3:8ed5])
+        by smtp.gmail.com with ESMTPSA id m24-20020ac24298000000b0048d1101d0d6sm517427lfh.121.2022.08.18.23.40.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Aug 2022 23:40:54 -0700 (PDT)
+Message-ID: <360087ae-50d4-3902-13bd-4752ddc80865@linaro.org>
+Date:   Fri, 19 Aug 2022 09:40:52 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAOX2RU525OYLBb+Nek==84KA4a42ZTz89tgdMcgBCu=K8VzL9Q@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v8 1/5] dt-bindings: mfd: qcom-spmi-pmic: add support for
+ PMP8074
+Content-Language: en-US
+To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
+        lee@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, jic23@kernel.org,
+        lars@metafoo.de, sboyd@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-iio@vger.kernel.org
+References: <20220818221815.346233-1-robimarko@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220818221815.346233-1-robimarko@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,145 +80,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 16, 2022 at 02:45:07PM +0200, Robert Marko wrote:
-> On Tue, 19 Jul 2022 at 09:47, Manivannan Sadhasivam
-> <manivannan.sadhasivam@linaro.org> wrote:
-> >
-> > On Wed, Jul 13, 2022 at 02:33:32PM +0200, Robert Marko wrote:
-> > > On Wed, 13 Jul 2022 at 13:47, Marc Zyngier <maz@kernel.org> wrote:
-> > > >
-> > > > On 2022-07-13 12:08, Robert Marko wrote:
-> > > > > On Tue, 12 Jul 2022 at 17:12, Marc Zyngier <maz@kernel.org> wrote:
-> > > > >>
-> > > > >> On Tue, 12 Jul 2022 13:44:45 +0100,
-> > > > >> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
-> > > > >> >
-> > > > >> > On Tue, Jul 12, 2022 at 11:42:32AM +0100, Marc Zyngier wrote:
-> > > > >> > > On Fri, 24 Jun 2022 20:51:12 +0100,
-> > > > >> > > Robert Marko <robimarko@gmail.com> wrote:
-> > > > >> > > >
-> > > > >> > > > Commit 6c846d026d49 ("gpio: Don't fiddle with irqchips marked as
-> > > > >> > > > immutable") added a warning to indicate if the gpiolib is altering the
-> > > > >> > > > internals of irqchips.
-> > > > >> > > >
-> > > > >> > > > Following this change the following warning is now observed for the SPMI
-> > > > >> > > > PMIC pinctrl driver:
-> > > > >> > > > gpio gpiochip1: (200f000.spmi:pmic@0:gpio@c000): not an immutable chip, please consider fixing it!
-> > > > >> > > >
-> > > > >> > > > Fix this by making the irqchip in the SPMI PMIC pinctrl driver immutable.
-> > > > >> > > >
-> > > > >> > > > Signed-off-by: Robert Marko <robimarko@gmail.com>
-> > > > >> > > > ---
-> > > > >> > > >  drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 22 ++++++++++++----------
-> > > > >> > > >  1 file changed, 12 insertions(+), 10 deletions(-)
-> > > > >> > > >
-> > > > >> > > > diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> > > > >> > > > index c3255b0bece4..406ee0933d0b 100644
-> > > > >> > > > --- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> > > > >> > > > +++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> > > > >> > > > @@ -171,7 +171,6 @@ struct pmic_gpio_state {
-> > > > >> > > >   struct regmap   *map;
-> > > > >> > > >   struct pinctrl_dev *ctrl;
-> > > > >> > > >   struct gpio_chip chip;
-> > > > >> > > > - struct irq_chip irq;
-> > > > >> > > >   u8 usid;
-> > > > >> > > >   u8 pid_base;
-> > > > >> > > >  };
-> > > > >> > > > @@ -988,6 +987,17 @@ static void *pmic_gpio_populate_parent_fwspec(struct gpio_chip *chip,
-> > > > >> > > >   return fwspec;
-> > > > >> > > >  }
-> > > > >> > > >
-> > > > >> > > > +static const struct irq_chip spmi_gpio_irq_chip = {
-> > > > >> > > > + .name           = "spmi-gpio",
-> > > > >> > > > + .irq_ack        = irq_chip_ack_parent,
-> > > > >> > > > + .irq_mask       = irq_chip_mask_parent,
-> > > > >> > > > + .irq_unmask     = irq_chip_unmask_parent,
-> > > > >> > >
-> > > > >> > > No, this is wrong. Please look at the documentation to see how you
-> > > > >> > > must now directly call into the gpiolib helpers for these two
-> > > > >> > > callbacks.
-> > > > >> > >
-> > > > >> >
-> > > > >> > IIUC, you are referring to gpiochip_disable_irq() and
-> > > > >> > gpiochip_enable_irq() APIs.
-> > > > >>
-> > > > >> I am indeed.
-> > > > >>
-> > > > >> > These APIs are supposed to let the gpiolib know about that the IRQ
-> > > > >> > usage of these GPIOs. But for the case of hierarchial IRQ domain,
-> > > > >> > isn't the parent is going to do that?
-> > > > >>
-> > > > >> Why would it? The parent has no clue about what sits above it. In a
-> > > > >> hierarchical configuration, each level is responsible for its own
-> > > > >> level, and the GPIO layer should be responsible for its own
-> > > > >> management.
-> > > > >>
-> > > > >> > Please correct me if I'm wrong.
-> > > > >>
-> > > > >> I'm afraid you are, and this patch is a fairly obvious change in
-> > > > >> behaviour, as the callbacks you mention above are not called anymore,
-> > > > >> while they were before.
-> > > > >>
-> > > > >> If they are not necessary (for reasons I can't fathom), then this
-> > > > >> should be clearly explained.
-> > > > >
-> > > > > Hi Marc,
-> > > > > I will look at IRQ GPIO docs, but in this case, then we have more
-> > > > > conversions that
-> > > > > are not correct.
-> > > >
-> > > > Then please point them out.
-> > >
-> > > Oh, now I get the issue, I was misunderstanding it completely.
-> > > gpiochip_enable_irq and gpiochip_disable_irq are not being called
-> > > at all.
-> > >
-> > > However, I dont see them being called before the conversion as well.
-> > > I am not really familiar with the PMIC IRQ-s, looked like an easy conversion
-> > > to get rid of the warning.
-> > >
-> > > Manivannan can you shed some light on this?
-> > >
-> >
-> > I hope you got the answer by now. When I looked into the conversion I saw that
-> > there were missing calls to gpiochip_{enable/disable}_irq APIs. But at that
-> > time I blindly assumed (yeah very bad of myself) that the parent irqchip will
-> > handle that :(
-> >
-> > Anyway, you should call these helpers from the mask/unmask callbacks as a part
-> > of the conversion patch. Let me know if you are onto it or not!
+On 19/08/2022 01:18, Robert Marko wrote:
+> Document compatible for the PMP8074 PMIC.
 > 
-> Hi, I completely missed your reply.
-> Currently, I am pretty swamped with other work so I dont know when
-> will I be able
-> to look into this again.
-> 
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> ---
+> Changes in v8:
 
-No worries! I will handle it.
 
-Thanks,
-Mani
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-> Regards,
-> Robert
-> >
-> > Thanks,
-> > Mani
-> >
-> > > Regards,
-> > > Robert
-> > >
-> > >
-> > >
-> > >
-> > >
-> > > >
-> > > >          M.
-> > > > --
-> > > > Jazz is not dead. It just smells funny...
-> >
-> > --
-> > மணிவண்ணன் சதாசிவம்
 
--- 
-மணிவண்ணன் சதாசிவம்
+Best regards,
+Krzysztof
