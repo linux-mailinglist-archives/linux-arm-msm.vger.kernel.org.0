@@ -2,62 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 75FD859C0EC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Aug 2022 15:47:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D72B59C106
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Aug 2022 15:53:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234655AbiHVNrM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Aug 2022 09:47:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32912 "EHLO
+        id S235384AbiHVNxG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Aug 2022 09:53:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235257AbiHVNrJ (ORCPT
+        with ESMTP id S233537AbiHVNxF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Aug 2022 09:47:09 -0400
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C2CC2AC41;
-        Mon, 22 Aug 2022 06:47:08 -0700 (PDT)
-Received: by mail-pg1-x52b.google.com with SMTP id r69so9423080pgr.2;
-        Mon, 22 Aug 2022 06:47:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:subject:cc:to:from:from:to:cc;
-        bh=fGiLdsou0tZYmT4+zIed2ZYLs4AlYvI3OzZQVfmavwc=;
-        b=h+3b3qQoctgcRO/rt9ZE7PPQejWaX9kgO0V9vw8AlSyXw6gvGwQd88FsnnToDW6gLl
-         bQODfVTayiXVYqk/c0ApqsTcpeemy2BYNu10fMpVSLihofCBj1qjV1z1gH3/cl9hZKG2
-         QdFrPL9P/j+xRiBpELti3/MH0N4GmRFnFy1BoETlCCy5DIlcQLSH3DzNBuRRYu3zbzrn
-         DEDZIJVpsMW05ONzFdVEWP5640Mfcz4VtIqJcREgNd/R7L2XZNX4wd14Q+pUpgd9KkVT
-         e+rinr9ncoZ1Y9wHXMvcnOjYCIcO1T55KnsO6ZlKDiXw6xv4Jx+D+gIqdBd4NLCy8fyD
-         29Hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=fGiLdsou0tZYmT4+zIed2ZYLs4AlYvI3OzZQVfmavwc=;
-        b=5J4Qv1gcJoGnmRsIEgMeJqCtALeXgFEdtsVkRC1c/F4MrqxyWslAT6r8r/kzMt5d13
-         cdNzdwZc56sT0NK8qcpiKU+1keqwsm/2XAajgzMhyx4TpzqoUKql5EOgXXuBt2n85Sq+
-         EVv5AGawBWDXYyMxkDSCBMpCynC5h+cQtPlL+re24zIWYWPNDwK3++6TIpheLQPcZy7a
-         VZjLwbBvo8QdBdxvI9TpsR7SwwdUwbAr3HlSDGV3vOqd3slzyfT2kIf64L+WnBC33xf3
-         FR5IHwp0VJUvRP467HMm04k0nd4EKjOjgVXmsB89KZnbHxMwLWqn5pkJ9gDU5PqeZANv
-         Oi1w==
-X-Gm-Message-State: ACgBeo0UWlFiXtheRdODKOMf7nqlayQov/wbXCG6byolQmv/tix2+mh9
-        78hNPKQAoXvgHFHkfOwJn2pvlUX32ZfPCf3Xuvs=
-X-Google-Smtp-Source: AA6agR4rQ4qXDgbqgDtmWJ0VuGFJUjzEoext5q06uPBFpfl1lCQP9u1dNRYKF+XyaJy4o8EJsy4bUg==
-X-Received: by 2002:a65:6a0c:0:b0:429:7ade:490b with SMTP id m12-20020a656a0c000000b004297ade490bmr17105373pgu.621.1661176027666;
-        Mon, 22 Aug 2022 06:47:07 -0700 (PDT)
-Received: from localhost.localdomain ([182.160.5.243])
-        by smtp.gmail.com with ESMTPSA id d62-20020a623641000000b0052d2cd99490sm8696820pfa.5.2022.08.22.06.47.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Aug 2022 06:47:07 -0700 (PDT)
-From:   Tuo Cao <91tuocao@gmail.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, vkoul@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, 91tuocao@gmail.com
-Subject: [PATCH] dmaengine: qcom: gpi: move read_lock_bh to read_lock in tasklet
-Date:   Mon, 22 Aug 2022 21:46:31 +0800
-Message-Id: <20220822134631.16547-1-91tuocao@gmail.com>
-X-Mailer: git-send-email 2.17.1
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        Mon, 22 Aug 2022 09:53:05 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 1FCC1399D9;
+        Mon, 22 Aug 2022 06:53:04 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E704812FC;
+        Mon, 22 Aug 2022 06:53:06 -0700 (PDT)
+Received: from [10.57.15.77] (unknown [10.57.15.77])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E5E9A3F70D;
+        Mon, 22 Aug 2022 06:53:01 -0700 (PDT)
+Message-ID: <c8543ace-65cd-b8a8-499c-1b051867366b@arm.com>
+Date:   Mon, 22 Aug 2022 14:52:55 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH 4/5] drm/msm: Use separate ASID for each set of pgtables
+Content-Language: en-GB
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        Sean Paul <sean@poorly.run>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org, Will Deacon <will@kernel.org>,
+        "iommu@lists.linux.dev" <iommu@lists.linux.dev>
+References: <20220821181917.1188021-1-robdclark@gmail.com>
+ <20220821181917.1188021-5-robdclark@gmail.com>
+From:   Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <20220821181917.1188021-5-robdclark@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -65,38 +52,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-it is unnecessary to call read_lock_bh in a tasklet.
+On 2022-08-21 19:19, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> Optimize TLB invalidation by using different ASID for each set of
+> pgtables.  There can be scenarios where multiple processes end up
+> with the same ASID (such as >256 processes using the GPU), but this
+> is harmless, it will only result in some over-invalidation (but
+> less over-invalidation compared to using ASID=0 for all processes)
 
-Signed-off-by: Tuo Cao <91tuocao@gmail.com>
----
- drivers/dma/qcom/gpi.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Um, if you're still relying on the GPU doing an invalidate-all-by-ASID 
+whenever it switches a TTBR, then there's only ever one ASID live in the 
+TLBs at once, so it really doesn't matter whether its value stays the 
+same or changes. This seems like a whole chunk of complexity to achieve 
+nothing :/
 
-diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-index 8f0c9c4e2efd..236005f7dd30 100644
---- a/drivers/dma/qcom/gpi.c
-+++ b/drivers/dma/qcom/gpi.c
-@@ -1150,9 +1150,9 @@ static void gpi_ev_tasklet(unsigned long data)
- {
- 	struct gpii *gpii = (struct gpii *)data;
- 
--	read_lock_bh(&gpii->pm_lock);
-+	read_lock(&gpii->pm_lock);
- 	if (!REG_ACCESS_VALID(gpii->pm_state)) {
--		read_unlock_bh(&gpii->pm_lock);
-+		read_unlock(&gpii->pm_lock);
- 		dev_err(gpii->gpi_dev->dev, "not processing any events, pm_state:%s\n",
- 			TO_GPI_PM_STR(gpii->pm_state));
- 		return;
-@@ -1163,7 +1163,7 @@ static void gpi_ev_tasklet(unsigned long data)
- 
- 	/* enable IEOB, switching back to interrupts */
- 	gpi_config_interrupts(gpii, MASK_IEOB_SETTINGS, 1);
--	read_unlock_bh(&gpii->pm_lock);
-+	read_unlock(&gpii->pm_lock);
- }
- 
- /* marks all pending events for the channel as stale */
--- 
-2.17.1
+If you could actually use multiple ASIDs in a meaningful way to avoid 
+any invalidations, you'd need to do considerably more work to keep track 
+of reuse, and those races would probably be a lot less benign.
 
+Robin.
+
+.> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>   drivers/gpu/drm/msm/msm_iommu.c | 15 ++++++++++-----
+>   1 file changed, 10 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
+> index a54ed354578b..94c8c09980d1 100644
+> --- a/drivers/gpu/drm/msm/msm_iommu.c
+> +++ b/drivers/gpu/drm/msm/msm_iommu.c
+> @@ -33,6 +33,8 @@ static int msm_iommu_pagetable_unmap(struct msm_mmu *mmu, u64 iova,
+>   		size_t size)
+>   {
+>   	struct msm_iommu_pagetable *pagetable = to_pagetable(mmu);
+> +	struct adreno_smmu_priv *adreno_smmu =
+> +		dev_get_drvdata(pagetable->parent->dev);
+>   	struct io_pgtable_ops *ops = pagetable->pgtbl_ops;
+>   	size_t unmapped = 0;
+>   
+> @@ -43,7 +45,7 @@ static int msm_iommu_pagetable_unmap(struct msm_mmu *mmu, u64 iova,
+>   		size -= 4096;
+>   	}
+>   
+> -	iommu_flush_iotlb_all(to_msm_iommu(pagetable->parent)->domain);
+> +	adreno_smmu->tlb_inv_by_id(adreno_smmu->cookie, pagetable->asid);
+>   
+>   	return (unmapped == size) ? 0 : -EINVAL;
+>   }
+> @@ -147,6 +149,7 @@ static int msm_fault_handler(struct iommu_domain *domain, struct device *dev,
+>   
+>   struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent)
+>   {
+> +	static atomic_t asid = ATOMIC_INIT(1);
+>   	struct adreno_smmu_priv *adreno_smmu = dev_get_drvdata(parent->dev);
+>   	struct msm_iommu *iommu = to_msm_iommu(parent);
+>   	struct msm_iommu_pagetable *pagetable;
+> @@ -210,12 +213,14 @@ struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent)
+>   	pagetable->ttbr = ttbr0_cfg.arm_lpae_s1_cfg.ttbr;
+>   
+>   	/*
+> -	 * TODO we would like each set of page tables to have a unique ASID
+> -	 * to optimize TLB invalidation.  But iommu_flush_iotlb_all() will
+> -	 * end up flushing the ASID used for TTBR1 pagetables, which is not
+> -	 * what we want.  So for now just use the same ASID as TTBR1.
+> +	 * ASID 0 is used for kernel mapped buffers in TTBR1, which we
+> +	 * do not need to invalidate when unmapping from TTBR0 pgtables.
+> +	 * The hw ASID is at *least* 8b, but can be 16b.  We just assume
+> +	 * the worst:
+>   	 */
+>   	pagetable->asid = 0;
+> +	while (!pagetable->asid)
+> +		pagetable->asid = atomic_inc_return(&asid) & 0xff;
+>   
+>   	return &pagetable->base;
+>   }
