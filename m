@@ -2,91 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D36D359C83B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Aug 2022 21:13:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 288A659C83C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Aug 2022 21:13:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238335AbiHVTMq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Aug 2022 15:12:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33284 "EHLO
+        id S238255AbiHVTND (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Aug 2022 15:13:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238340AbiHVTMc (ORCPT
+        with ESMTP id S238258AbiHVTMm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Aug 2022 15:12:32 -0400
-Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC91B50192;
-        Mon, 22 Aug 2022 12:10:59 -0700 (PDT)
-Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-f2a4c51c45so14061074fac.9;
-        Mon, 22 Aug 2022 12:10:59 -0700 (PDT)
+        Mon, 22 Aug 2022 15:12:42 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5879551A10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Aug 2022 12:11:41 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id d8so4239451lfq.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Aug 2022 12:11:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=iMDkWm8TCfHT8OAB3OYo4HTW9w3Q76IKCWQmxSVeQpQ=;
+        b=dv1C1kBV3HwxnFUuzxtwuwq+g/+pxFAKNhm6bbtQkIuG6ymC+D2X27JIrkmMSn6PpY
+         G5WNxfRMk2JrEg0rMFpYXlG2vN4pbvuyGWo2ZECoAO12VqV2m3UHP/lzazBZHqYkzXgS
+         bO448cCNv0vkRNCo75AXz/fOR5NMmRUINCSEQGUeMznKqRAyOLG3Ry/ErOcxg12Dhp7T
+         wGdQqh0P5Jf8JFReBoxO/jJrum9rMq0PRjOOwDoMiGhw4tTPTaRLIjl9LbKleB1e01Rn
+         kXBaY9ZekMF32f+j++mt85Ahvblf9NzaU/tLI+cwHdCKd5FVXfIyr5j8lre58O5JtmVh
+         jRXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=RyQ2R2dv/3M8lzsIjXV0R+NCfbe4VzghtrRY+W8bSpw=;
-        b=NgASn6HwOi7Ul2finqIyuP+L6l7CvFEdLq1GEKX/jlp+4Oque+xqsoEG44nmMDdX6u
-         afl/cLtOu1ctBMjaIzELMoS9/TLnbpgWOoUJnDxmu7wqs9YgrqCb5mRpJh+50FC1D6Ad
-         Eoad+YvuNWq2zO6p1Jc/nfVJBz+zPgadz37aeCkUsCBqSEu++F6GTh3vEqSjYwc4Md2g
-         V+6V5/XKGvYUXnDdcG/hw6f9S1zRpz2Bw2h7698g4yV9ZjetVzlZEHu+4Sy8GwOki58I
-         ljAbrIsJXJT5WIIhwXCQy1WgceIskKv5oL93hTP5mR+hXBl7neL9am+f0Xz5OWlW2dQ8
-         Qijg==
-X-Gm-Message-State: ACgBeo0z8saK6DL5cXNczgQyuBB6I6UKzInwDb22LC4DGxgNPVAL37/l
-        VMluwo86M/ZVt7EZ3mhurA==
-X-Google-Smtp-Source: AA6agR5bA4WycmNTvTD2/U7R6fOagPZP//u9KeaYWrui4/55tDupOwumUUqlIU8jnWDyBbSuSIc46Q==
-X-Received: by 2002:a05:6870:1715:b0:11d:80d4:9972 with SMTP id h21-20020a056870171500b0011d80d49972mr1394577oae.52.1661195458566;
-        Mon, 22 Aug 2022 12:10:58 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id j23-20020a056808035700b003449ff2299esm2752348oie.4.2022.08.22.12.10.57
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=iMDkWm8TCfHT8OAB3OYo4HTW9w3Q76IKCWQmxSVeQpQ=;
+        b=7q+URVokbuhmAwHHWvX4GESc67apTWMYrp+/B1rWWr1rft8s+AcbMRqXtOIWHj7zR4
+         Ax5sDMLDuLOJpTJ1v8t54KvkH9xmnoc+s2ydFxwExije26cLoPZ+FHbaU5mw9y3lGPtB
+         SC4hIDRKp+I6FUnnEfCxk//p+/sDKg79WAgs862up0QuBvcyELxs3f3A0+62PY9J2QCG
+         77qrq8a/s7v9pYY16fXYN72j5RTJ+tn+gUqQOjdG2+Fk0k1qzcXrZkYItcThyZy+Zewo
+         n7IjKdiqLfSPNND0wyqFY7R4Hw5rYMwkKE2+Rbh//rlbREildLeQSiMOni1K/GPq50bR
+         dqxQ==
+X-Gm-Message-State: ACgBeo2JBHXGiB8Cg+dvHfEoS7xNDRP2bkKj+YHU0lgUyZZF7NQ5QP+8
+        FST5m0b7/KtymlMGDS0WTwHtVw==
+X-Google-Smtp-Source: AA6agR70vuKeOo3/CtRRcy/X8xj4wYkOtmS/jyu+Q6qlyjuX+3unBEUBymLpNpcfmWnefXqlX0oXKQ==
+X-Received: by 2002:a05:6512:3faa:b0:48a:f17a:579e with SMTP id x42-20020a0565123faa00b0048af17a579emr8136533lfa.30.1661195499573;
+        Mon, 22 Aug 2022 12:11:39 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id w18-20020a05651234d200b0048b193041easm2059691lfr.209.2022.08.22.12.11.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Aug 2022 12:10:58 -0700 (PDT)
-Received: (nullmailer pid 223613 invoked by uid 1000);
-        Mon, 22 Aug 2022 19:10:57 -0000
-Date:   Mon, 22 Aug 2022 14:10:57 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
-        devicetree@vger.kernel.org,
+        Mon, 22 Aug 2022 12:11:39 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        dri-devel@lists.freedesktop.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        krzysztof.kozlowski@linaro.org, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Subject: Re: [PATCH v4 5/6] dt-bindings: drm/msm/gpu: Add optional resets
-Message-ID: <20220822191057.GA223526-robh@kernel.org>
-References: <1660927246-11327-1-git-send-email-quic_akhilpo@quicinc.com>
- <20220819221017.v4.5.Ieffadd08a071a233213ced4406bf84bb5922ab9a@changeid>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH] arm64: dts: qcom: sm8250: move DSI opp table to the dsi0 node
+Date:   Mon, 22 Aug 2022 22:11:38 +0300
+Message-Id: <20220822191138.316912-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220819221017.v4.5.Ieffadd08a071a233213ced4406bf84bb5922ab9a@changeid>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 19 Aug 2022 22:10:44 +0530, Akhil P Oommen wrote:
-> Add an optional reference to GPUCC reset which can be used to ensure cx
-> gdsc collapse during gpu recovery.
-> 
-> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> ---
-> 
-> Changes in v4:
-> - New patch in v4
-> 
->  Documentation/devicetree/bindings/display/msm/gpu.yaml | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
+It makes no sense to have the OPP table for the DSI controllers in the
+DSI1 PHY node. Move it to more logical dsi0 device node.
 
-Acked-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 38 ++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index bc773e210023..5843e46a3164 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -3571,6 +3571,25 @@ dsi0_out: endpoint {
+ 						};
+ 					};
+ 				};
++
++				dsi_opp_table: opp-table {
++					compatible = "operating-points-v2";
++
++					opp-187500000 {
++						opp-hz = /bits/ 64 <187500000>;
++						required-opps = <&rpmhpd_opp_low_svs>;
++					};
++
++					opp-300000000 {
++						opp-hz = /bits/ 64 <300000000>;
++						required-opps = <&rpmhpd_opp_svs>;
++					};
++
++					opp-358000000 {
++						opp-hz = /bits/ 64 <358000000>;
++						required-opps = <&rpmhpd_opp_svs_l1>;
++					};
++				};
+ 			};
+ 
+ 			dsi0_phy: dsi-phy@ae94400 {
+@@ -3663,25 +3682,6 @@ dsi1_phy: dsi-phy@ae96400 {
+ 				clock-names = "iface", "ref";
+ 
+ 				status = "disabled";
+-
+-				dsi_opp_table: opp-table {
+-					compatible = "operating-points-v2";
+-
+-					opp-187500000 {
+-						opp-hz = /bits/ 64 <187500000>;
+-						required-opps = <&rpmhpd_opp_low_svs>;
+-					};
+-
+-					opp-300000000 {
+-						opp-hz = /bits/ 64 <300000000>;
+-						required-opps = <&rpmhpd_opp_svs>;
+-					};
+-
+-					opp-358000000 {
+-						opp-hz = /bits/ 64 <358000000>;
+-						required-opps = <&rpmhpd_opp_svs_l1>;
+-					};
+-				};
+ 			};
+ 		};
+ 
+-- 
+2.35.1
+
