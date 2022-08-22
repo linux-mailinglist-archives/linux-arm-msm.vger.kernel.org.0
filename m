@@ -2,85 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C006D59C592
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Aug 2022 19:58:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BAD6F59C5AC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Aug 2022 20:05:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237346AbiHVR6U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Aug 2022 13:58:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48118 "EHLO
+        id S236809AbiHVSEG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Aug 2022 14:04:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237349AbiHVR6P (ORCPT
+        with ESMTP id S236423AbiHVSD6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Aug 2022 13:58:15 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BAAFBC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Aug 2022 10:58:12 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id n24so9316158ljc.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Aug 2022 10:58:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=RWYLTrcCZlG0a48i/Axnj+NOJi6WNiY/wtEpP6R8Cso=;
-        b=IgzBtvwxsGxNvJP1J3AH+pEA/ILQB4DRAD0OvIowCQIEzs75ZSursWuP07tv1lF9A+
-         GTiNGTn2ZfXVUYh97diO2Bm/BeCZQ9BnpEilK0W2VqBWTAYiQeq7Cd9B+ykEClLE5Bhd
-         efXl41/ZYCy8D3D3+S25jCs43miYrUMjuRl6Z9hgsCHV4wyUCNF4i4tw5dS22y/LSb8o
-         nhKetgh0lYgMdLQJUL6Uou+mrL9/8S93q6rMcpA5MWnvmFDiOGVH8h5/spzoAm4rxOpm
-         y+L1EkfucwypJUniALZOLQRY56qoLbQjbE67KB1DiB3wp9luzFdvXSBAe2R8SWZns9+L
-         77yg==
+        Mon, 22 Aug 2022 14:03:58 -0400
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 594D02CC82;
+        Mon, 22 Aug 2022 11:03:58 -0700 (PDT)
+Received: by mail-oi1-f181.google.com with SMTP id p187so5835615oia.9;
+        Mon, 22 Aug 2022 11:03:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=RWYLTrcCZlG0a48i/Axnj+NOJi6WNiY/wtEpP6R8Cso=;
-        b=AAmCnaa2/+XlAUSO2SBAMY/TZ2XESZKlMmqWtyvPnThkWmlgdgrKZI3Dj7AiaOcpZp
-         8AyJTt8KAr8LMXc+8Rr9RIogspx7nRA/42qekoboJbwlZ24nUmqdlk3H40Ej5PPMrAyM
-         yGHUplKtbPA6ZBPsHcgjmXZ10HQlV3VhBYzov1ANWmYGpkWnRPnQ6sRJAVZ7aALWVnxM
-         UWLtntAjfiJA8y+CgXUmHAYXSxA1wb2Wfsua/h02ZDpUhZ+T9IRJa6JetTa0QgxnHz8P
-         FPgCbfWm6XcFArhNrVe9eHc1wmc4auicvUMVZR4AA3dhKbNh0gss2a0+SF76XdZVk8An
-         mgZg==
-X-Gm-Message-State: ACgBeo1J4pztJYtclxe37qdg+lUfISoFgLK1QXigzTR8aIXyemoepBGr
-        sK64WeqzsZz9kC/3gDmRWmEKRA==
-X-Google-Smtp-Source: AA6agR7dYWNWZi8FS8hwu9VcM99F98hvdjk2XGX0dbfCiTvE/xUerprDELcV2OpaaDuqxd7GvxCGOw==
-X-Received: by 2002:a05:651c:220a:b0:261:cab2:3fc1 with SMTP id y10-20020a05651c220a00b00261cab23fc1mr2509753ljq.284.1661191090934;
-        Mon, 22 Aug 2022 10:58:10 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id z13-20020a05651c022d00b0025e49aaae10sm1928628ljn.12.2022.08.22.10.58.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Aug 2022 10:58:10 -0700 (PDT)
-Message-ID: <a3a917b3-5dfc-761e-e5f6-5955c89db4a4@linaro.org>
-Date:   Mon, 22 Aug 2022 20:58:08 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.1.2
-Subject: Re: [PATCH 3/4] dt-bindings: display/msm/gmu: account for different
- GMU variants
-Content-Language: en-GB
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=esNtcNx3BW0ZYDyHJtcCsZAGZC+vRBsZkbC1+V6YdwA=;
+        b=TFjqIKk5GQjCmIwT98BjnxzTsJa2jL2miPnyMvgOZRiDk2Dw/tUwvn7MyDxY0DOoX8
+         E3LV34Db7jotsincJl31rTfsWJSdeTNBI8/0M32o3h3CacTnc8BsOfWTSWPguxJ6Y2kM
+         HiEDUuU/ma3Dqlgu2L2lLKlhwwmxOZxNeet1b5O8n5WFBt22UvcBm38IPXTLlRNvH+R3
+         KrQd2tB8SR6cDf4+cg1f6z2PW8ARmezgVfV+eEcAfjCEFGCnlG3eeLIk30Bnznc3GXyT
+         dKiWLd7gNn85Tjoy9VNvLT/7FaHaFSA10vfREt+yHGyts0TADSexb8acPa8m0lD+xhov
+         aSvw==
+X-Gm-Message-State: ACgBeo3t+nhBBRLbKDwbdterKT3eRJIDwfui3SxijovMCD7FR/2lymba
+        vEzHxeNAJvO5bF5AT7eA5Q==
+X-Google-Smtp-Source: AA6agR60bjoaWedKbnY/NS+tnW/H2Gz998DSgaZ40yNsNvcB/kC7hRFGHbUXBQym/1J5IOcu17Q8VQ==
+X-Received: by 2002:a05:6808:308e:b0:343:4b22:1a1e with SMTP id bl14-20020a056808308e00b003434b221a1emr9769893oib.102.1661191437571;
+        Mon, 22 Aug 2022 11:03:57 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id j4-20020a9d7384000000b0063711d42df5sm1656299otk.30.2022.08.22.11.03.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Aug 2022 11:03:57 -0700 (PDT)
+Received: (nullmailer pid 74561 invoked by uid 1000);
+        Mon, 22 Aug 2022 18:03:55 -0000
+Date:   Mon, 22 Aug 2022 13:03:55 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Kyungmin Park <kyungmin.park@samsung.com>,
+        Georgi Djakov <djakov@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        linux-kernel@vger.kernel.org,
+        Johnson Wang <johnson.wang@mediatek.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        NXP Linux Team <linux-imx@nxp.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Jia-Wei Chang <jia-wei.chang@mediatek.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Fabio Estevam <festevam@gmail.com>, linux-pm@vger.kernel.org,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20220706145222.1565238-1-dmitry.baryshkov@linaro.org>
- <20220706145222.1565238-4-dmitry.baryshkov@linaro.org>
- <7b504ecb-b05a-549e-e2ce-18c539f68655@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <7b504ecb-b05a-549e-e2ce-18c539f68655@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        linux-arm-kernel@lists.infradead.org,
+        MyungJoo Ham <myungjoo.ham@samsung.com>,
+        Peng Fan <peng.fan@nxp.com>,
+        linux-mediatek@lists.infradead.org, Shawn Guo <shawnguo@kernel.org>
+Subject: Re: [PATCH v2] dt-bindings: interconnect: restrict opp-table to
+ objects
+Message-ID: <20220822180355.GA74500-robh@kernel.org>
+References: <20220818061653.9524-1-krzysztof.kozlowski@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220818061653.9524-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,83 +82,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/07/2022 18:52, Krzysztof Kozlowski wrote:
-> On 06/07/2022 16:52, Dmitry Baryshkov wrote:
->> Make display/msm/gmu.yaml describe all existing GMU variants rather than
->> just the 630.2 (SDM845) version of it.
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   .../devicetree/bindings/display/msm/gmu.yaml  | 166 +++++++++++++++---
->>   1 file changed, 146 insertions(+), 20 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/display/msm/gmu.yaml b/Documentation/devicetree/bindings/display/msm/gmu.yaml
->> index fe55611d2603..67fdeeabae0c 100644
->> --- a/Documentation/devicetree/bindings/display/msm/gmu.yaml
->> +++ b/Documentation/devicetree/bindings/display/msm/gmu.yaml
->> @@ -20,35 +20,24 @@ description: |
->>   properties:
->>     compatible:
->>       items:
->> -      - enum:
->> -          - qcom,adreno-gmu-630.2
->> +      - pattern: '^qcom,adreno-gmu-6[0-9][0-9]\.[0-9]$'
->>         - const: qcom,adreno-gmu
->>   
->>     reg:
->> -    items:
->> -      - description: Core GMU registers
->> -      - description: GMU PDC registers
->> -      - description: GMU PDC sequence registers
->> +    minItems: 3
->> +    maxItems: 4
->>   
->>     reg-names:
->> -    items:
->> -      - const: gmu
->> -      - const: gmu_pdc
->> -      - const: gmu_pdc_seq
->> +    minItems: 3
->> +    maxItems: 4
->>   
->>     clocks:
->> -    items:
->> -      - description: GMU clock
->> -      - description: GPU CX clock
->> -      - description: GPU AXI clock
->> -      - description: GPU MEMNOC clock
->> +    minItems: 4
->> +    maxItems: 7
->>   
->>     clock-names:
->> -    items:
->> -      - const: gmu
->> -      - const: cxo
->> -      - const: axi
->> -      - const: memnoc
->> +    minItems: 4
->> +    maxItems: 7
->>   
->>     interrupts:
->>       items:
->> @@ -76,6 +65,9 @@ properties:
->>   
->>     operating-points-v2: true
->>   
->> +  opp-table:
->> +    type: object
+On Thu, 18 Aug 2022 09:16:53 +0300, Krzysztof Kozlowski wrote:
+> Simple 'opp-table:true' accepts a boolean property as opp-table, so
+> restrict it to object to properly enforce real OPP table nodes.
 > 
-> instead: opp-table:true
-
-Wouldn't this allow e.g. using just 'opp-table;' as a flag?
-
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
->> +
+> ---
 > 
-> Best regards,
-> Krzysztof
+> Changes since v1:
+> 1. Correct typo in msg.
+> ---
+>  .../devicetree/bindings/interconnect/fsl,imx8m-noc.yaml        | 3 ++-
+>  .../devicetree/bindings/interconnect/mediatek,cci.yaml         | 3 ++-
+>  .../devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml   | 3 ++-
+>  3 files changed, 6 insertions(+), 3 deletions(-)
+> 
 
--- 
-With best wishes
-Dmitry
-
+Applied, thanks!
