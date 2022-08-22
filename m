@@ -2,81 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 188B559C4DE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Aug 2022 19:17:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 858E159C4EB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Aug 2022 19:22:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237282AbiHVRQI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Aug 2022 13:16:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38702 "EHLO
+        id S237081AbiHVRWJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Aug 2022 13:22:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237325AbiHVRP6 (ORCPT
+        with ESMTP id S236878AbiHVRWI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Aug 2022 13:15:58 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 591121EAE1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Aug 2022 10:15:57 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id q18so10239006ljg.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Aug 2022 10:15:57 -0700 (PDT)
+        Mon, 22 Aug 2022 13:22:08 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 573A431DF4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Aug 2022 10:22:07 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id l23so219255lji.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Aug 2022 10:22:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=3B91h+yrTjwS7I4FUx77uKxPNz+E7GshMHnIapiZTc8=;
-        b=L9QS1hKwgWBMx6ma10ELOh9eQnoZAT8Szdd1iSgK+rhGHKoZ6Mtm7TdVEyday19ApG
-         R3x87oAm5OhNvqgvSNUuuRIalt/FEzvZraWsVRATJVhrk2zNUxrDG1DaPfqa1gnvRiET
-         GrjSk+xWXT3q1YI3kCSOaTd1UTyO1DACmUkCAqSUglcPKmJP1VWpzOVBZaafRTN020KX
-         qgfAE13dDMgRhUjuX7bsxL0AleLwvYnfTTynsdyZJ0GrQ26JoQvufwKvqsGlC2wbb9YA
-         nfXmXt03p+fYISvL3GLe/omMfhMvZoA6T2eo0unJ3CCi/WCwLifw7v7K7vddOmcEa/u+
-         O91Q==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=gV99h850BV8Dr0PlTOQumJqcQf34/H3P1jjF5nBzAOA=;
+        b=q1fnZE6pADu+MYiFWXjkuSN6QqzfRQqpOZfPheVPHjtSS7CIsK0cSwBkJMcjXbsW2c
+         jtgAzAXxhNI/xyQYHy8shBhCzUW5o4MRHuAC7Kql9r2CtCdjkCz6fZjUqcBeoPnzONOJ
+         JoRt6caVpUgRk2Lr59OGAG3Y5fHoKDibOE/4oTkzYQpcDRFziWOqMg6c+752RWOVu54H
+         PYpsQuDFTbpNPvitX3ATDlKZ1JrjSPeKpm0FSNUGzBNDJNCfmEKUupC06Div8OxxYw/G
+         rNyMyUki0pc4kDIY9tHzhCPasbBGZ+PVdCxNn4FrAcqNBhMeEIZKH0hDH3erom6k8zdh
+         rrkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=3B91h+yrTjwS7I4FUx77uKxPNz+E7GshMHnIapiZTc8=;
-        b=bGRf5ZG1v9e4VyagSb+jlxj7Tnufk+Wt54HCIteSob7R1ty4PJgn7ehR5yMvtkmZsk
-         VyIZpuPz9l7BnLUXMALhwqdItxRksEVl6kERfyRYFAFKqJcMEswic1i6/yGrpq8R2Mui
-         QTLEljh9JF2srBdEh/D8s8Qc5I4EJNhtY6KxKwPLMzexNPtUcF5TT7Lq0vqUq2pYK7Dc
-         +K7nLq8uisDSmPei3AWFayfaA1H6xLxRdxXKMcOWtseW+zZ610yPzWjLMk35ELRh2Csq
-         5JEaBbhaN64GT3WFjXLtiGd39hOcv2leszJVoI5uXyPF1U7z3rP6Kdy2zBvcHPrRio9p
-         S+FA==
-X-Gm-Message-State: ACgBeo1ruhmY9+mBknKN8Le4qMBfEEKn8+KiKPs3iISwTVzUkKZcFzTZ
-        GKmihlovmD5afehk22x7vxwUOQ==
-X-Google-Smtp-Source: AA6agR45NEMpbO0Z9AzrrsVon/LA0ZrvVtjVxutO5v+1o6P1YNcB95+XrUkQ2XHqrbFf16qxDUfE0w==
-X-Received: by 2002:a2e:3314:0:b0:261:d144:faa4 with SMTP id d20-20020a2e3314000000b00261d144faa4mr1232145ljc.208.1661188555755;
-        Mon, 22 Aug 2022 10:15:55 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id w9-20020a05651203c900b0048b0bf9f4bfsm2010195lfp.140.2022.08.22.10.15.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Aug 2022 10:15:55 -0700 (PDT)
-Message-ID: <f0016468-16f9-aca1-c362-805bfd141e57@linaro.org>
-Date:   Mon, 22 Aug 2022 20:15:54 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.1.2
-Subject: Re: [PATCH] drm/msm: De-open-code some CP_EVENT_WRITE
-Content-Language: en-GB
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Chia-I Wu <olvaffe@gmail.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20220821155441.1092134-1-robdclark@gmail.com>
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=gV99h850BV8Dr0PlTOQumJqcQf34/H3P1jjF5nBzAOA=;
+        b=uVCndwu/iVE95QYUzygAfoBlDosAFep9hv1Ne4m33VBAC8iOLMtsaTE21JALc1jEk+
+         kc0ccrEf311PQxFqKyHKY24zIbZWtTPgod3mcg9VcxFNE0WV6Xkb0MVen13E0qbSxH0C
+         U8rmVsekA2lw/Y3k88xongVBYxkL2cMoEIuHGCiRFQwhyvG2vrSFkJ//0TCsEL2OO+xf
+         m1pNA4B9I9kQUiTRXCgjHDnEOSTKx/ABLpIWMeChh2BFO6CT4avwaUcvL3HFPUqVhTHX
+         R2wdtl9AQd4Jel4We54MkQ0iPjSnzpYDz8N6+7NaFpt0Dar+tcPTB+XkpCwoyBwke7UJ
+         kwwQ==
+X-Gm-Message-State: ACgBeo2xD4qgLJjJdy3KD2QzyYOxKG980xdVMEDQkvR9zP8nsBguYwYA
+        o04TFRIZ1cVwFsBrkCBJEW6PYQ==
+X-Google-Smtp-Source: AA6agR76jtgZmVZm3TxRE8LqNNbVi7Ko7rJwmyuGxiGmlsfJr9ylxwz74DoU1WAA2XMDLTXIPrSGkw==
+X-Received: by 2002:a2e:a307:0:b0:261:ce0c:365f with SMTP id l7-20020a2ea307000000b00261ce0c365fmr1654327lje.288.1661188925728;
+        Mon, 22 Aug 2022 10:22:05 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id y16-20020a2e5450000000b00261cbe3bd83sm680794ljd.85.2022.08.22.10.22.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Aug 2022 10:22:05 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220821155441.1092134-1-robdclark@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm/dpu: drop unused variable from dpu_kms_mdp_snapshot()
+Date:   Mon, 22 Aug 2022 20:22:04 +0300
+Message-Id: <20220822172204.281045-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,14 +73,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/08/2022 18:54, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+Follow up the merge of address fields and drop the variable that became
+unused after the commit 9403f9a42c88 ("drm/msm/dpu: merge base_off with
+blk_off in struct dpu_hw_blk_reg_map").
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 9403f9a42c88 ("drm/msm/dpu: merge base_off with blk_off in struct dpu_hw_blk_reg_map")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 2 --
+ 1 file changed, 2 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index 008e1420e6e5..1e1f45409aba 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -902,12 +902,10 @@ static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_k
+ 	int i;
+ 	struct dpu_kms *dpu_kms;
+ 	const struct dpu_mdss_cfg *cat;
+-	struct dpu_hw_mdp *top;
+ 
+ 	dpu_kms = to_dpu_kms(kms);
+ 
+ 	cat = dpu_kms->catalog;
+-	top = dpu_kms->hw_mdp;
+ 
+ 	pm_runtime_get_sync(&dpu_kms->pdev->dev);
+ 
 -- 
-With best wishes
-Dmitry
+2.35.1
 
