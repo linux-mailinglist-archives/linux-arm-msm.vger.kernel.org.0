@@ -2,75 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BAD6F59C5AC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Aug 2022 20:05:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 887B359C613
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Aug 2022 20:25:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236809AbiHVSEG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Aug 2022 14:04:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54774 "EHLO
+        id S235310AbiHVSY0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Aug 2022 14:24:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236423AbiHVSD6 (ORCPT
+        with ESMTP id S237422AbiHVSYY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Aug 2022 14:03:58 -0400
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 594D02CC82;
-        Mon, 22 Aug 2022 11:03:58 -0700 (PDT)
-Received: by mail-oi1-f181.google.com with SMTP id p187so5835615oia.9;
-        Mon, 22 Aug 2022 11:03:58 -0700 (PDT)
+        Mon, 22 Aug 2022 14:24:24 -0400
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ABE6481D3;
+        Mon, 22 Aug 2022 11:24:20 -0700 (PDT)
+Received: by mail-oi1-f176.google.com with SMTP id u14so13212917oie.2;
+        Mon, 22 Aug 2022 11:24:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=esNtcNx3BW0ZYDyHJtcCsZAGZC+vRBsZkbC1+V6YdwA=;
-        b=TFjqIKk5GQjCmIwT98BjnxzTsJa2jL2miPnyMvgOZRiDk2Dw/tUwvn7MyDxY0DOoX8
-         E3LV34Db7jotsincJl31rTfsWJSdeTNBI8/0M32o3h3CacTnc8BsOfWTSWPguxJ6Y2kM
-         HiEDUuU/ma3Dqlgu2L2lLKlhwwmxOZxNeet1b5O8n5WFBt22UvcBm38IPXTLlRNvH+R3
-         KrQd2tB8SR6cDf4+cg1f6z2PW8ARmezgVfV+eEcAfjCEFGCnlG3eeLIk30Bnznc3GXyT
-         dKiWLd7gNn85Tjoy9VNvLT/7FaHaFSA10vfREt+yHGyts0TADSexb8acPa8m0lD+xhov
-         aSvw==
-X-Gm-Message-State: ACgBeo3t+nhBBRLbKDwbdterKT3eRJIDwfui3SxijovMCD7FR/2lymba
-        vEzHxeNAJvO5bF5AT7eA5Q==
-X-Google-Smtp-Source: AA6agR60bjoaWedKbnY/NS+tnW/H2Gz998DSgaZ40yNsNvcB/kC7hRFGHbUXBQym/1J5IOcu17Q8VQ==
-X-Received: by 2002:a05:6808:308e:b0:343:4b22:1a1e with SMTP id bl14-20020a056808308e00b003434b221a1emr9769893oib.102.1661191437571;
-        Mon, 22 Aug 2022 11:03:57 -0700 (PDT)
+        bh=kHHAGkcdDwIUojsw/Qh9mTAcNHVZ/83Lhyn//UEbyGE=;
+        b=KCM5lV6jh22OXLeWJuB2PF+QCC0TgTlKK3tnexJR1au8KWsichEDWaCgGAcFCNypyW
+         kXjuQYUUYyJJAWRTUDHD8gMnbvjz7KAhtnVgYlwWblmovisc9lM5nYimMJh8aIRbALUk
+         t78kFsAIAm/+ZYWUKzomcf9jBtjuppSb8eiNvjB459eBts2v2db+Wuzyn4ma/LNx5VbC
+         Y7SuDm0G56V/4aVvzl0Mj7e2kWzzII5g7Nu4bBfJBkYZUJKmmKCciSDhqR/NpO4ZkwNu
+         0qmnj1jmLNaPUKkk+hk0+pzZPUvJr9iP+Z8CohSlwgN2Xf64/Vcc4qdnA+ZpSeZeRJOa
+         okBg==
+X-Gm-Message-State: ACgBeo3SdrQGZWMmd2AzZBddFm+xglkb48wcrBNKXRCsnQZxun9D/u9y
+        5lEvcevkRGpkbyyYAOYT5g==
+X-Google-Smtp-Source: AA6agR4GcnCSOqfMPx7kKucGwdxFpONZqkYeDNNgwvLBMASnPewmx+dR5MZxR1QRtg6AOjnDW1mCwA==
+X-Received: by 2002:a05:6808:3a9:b0:343:4b14:ccce with SMTP id n9-20020a05680803a900b003434b14cccemr11840129oie.41.1661192659071;
+        Mon, 22 Aug 2022 11:24:19 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id j4-20020a9d7384000000b0063711d42df5sm1656299otk.30.2022.08.22.11.03.56
+        by smtp.gmail.com with ESMTPSA id t20-20020a9d5914000000b0061cbd18bd18sm3145285oth.45.2022.08.22.11.24.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Aug 2022 11:03:57 -0700 (PDT)
-Received: (nullmailer pid 74561 invoked by uid 1000);
-        Mon, 22 Aug 2022 18:03:55 -0000
-Date:   Mon, 22 Aug 2022 13:03:55 -0500
+        Mon, 22 Aug 2022 11:24:18 -0700 (PDT)
+Received: (nullmailer pid 109846 invoked by uid 1000);
+        Mon, 22 Aug 2022 18:24:18 -0000
+Date:   Mon, 22 Aug 2022 13:24:18 -0500
 From:   Rob Herring <robh@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Kyungmin Park <kyungmin.park@samsung.com>,
-        Georgi Djakov <djakov@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
+Cc:     Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>, Lee Jones <lee@kernel.org>,
         linux-kernel@vger.kernel.org,
-        Johnson Wang <johnson.wang@mediatek.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Jia-Wei Chang <jia-wei.chang@mediatek.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Fabio Estevam <festevam@gmail.com>, linux-pm@vger.kernel.org,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Peng Fan <peng.fan@nxp.com>,
-        linux-mediatek@lists.infradead.org, Shawn Guo <shawnguo@kernel.org>
-Subject: Re: [PATCH v2] dt-bindings: interconnect: restrict opp-table to
- objects
-Message-ID: <20220822180355.GA74500-robh@kernel.org>
-References: <20220818061653.9524-1-krzysztof.kozlowski@linaro.org>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [RFT PATCH v3 01/16] dt-bindings: mfd: qcom,tcsr: add several
+ devices
+Message-ID: <20220822182418.GA109764-robh@kernel.org>
+References: <20220819083209.50844-1-krzysztof.kozlowski@linaro.org>
+ <20220819083209.50844-2-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220818061653.9524-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220819083209.50844-2-krzysztof.kozlowski@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -82,21 +69,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 18 Aug 2022 09:16:53 +0300, Krzysztof Kozlowski wrote:
-> Simple 'opp-table:true' accepts a boolean property as opp-table, so
-> restrict it to object to properly enforce real OPP table nodes.
+On Fri, 19 Aug 2022 11:31:54 +0300, Krzysztof Kozlowski wrote:
+> Document existing (MSM8996, SC7280) and new compatibles for TCSR syscon
+> registers (QCS404, SC7180, SDM630, SDM845, SM8150, MSM8998).
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
 > ---
 > 
+> Changes since v2:
+> 1. Add more compatibles.
+> 
 > Changes since v1:
-> 1. Correct typo in msg.
+> 1. Correct order of compatibles.
 > ---
->  .../devicetree/bindings/interconnect/fsl,imx8m-noc.yaml        | 3 ++-
->  .../devicetree/bindings/interconnect/mediatek,cci.yaml         | 3 ++-
->  .../devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml   | 3 ++-
->  3 files changed, 6 insertions(+), 3 deletions(-)
+>  Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
 
-Applied, thanks!
+Acked-by: Rob Herring <robh@kernel.org>
