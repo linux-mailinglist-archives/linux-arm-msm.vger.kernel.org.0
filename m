@@ -2,68 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A20ED59B96D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Aug 2022 08:28:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 461F159B97B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Aug 2022 08:31:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232932AbiHVG2f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Aug 2022 02:28:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48456 "EHLO
+        id S230427AbiHVGbu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Aug 2022 02:31:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232167AbiHVG2c (ORCPT
+        with ESMTP id S230333AbiHVGbu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Aug 2022 02:28:32 -0400
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8699AB1CF
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Aug 2022 23:28:30 -0700 (PDT)
-Received: by mail-pg1-x52a.google.com with SMTP id s206so8565161pgs.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Aug 2022 23:28:30 -0700 (PDT)
+        Mon, 22 Aug 2022 02:31:50 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D430223BE4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Aug 2022 23:31:48 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id bd26-20020a05600c1f1a00b003a5e82a6474so5419371wmb.4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Aug 2022 23:31:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc;
-        bh=PcDenPoUpnF+drtTh3h8L6vpahAeoGzcCYL+iwlFunI=;
-        b=C7lYATOjrPaBu6YBVJ8qJyEl3eD27KqIp3CS4jpqRhlP3trORsKHkITrPdOSMqK0JW
-         Mz6bHexUc6wuoadedorDQuq2HN5+8NvRhC7q2/6Y82gtDxgs/IwbXd+zA7L5vTZqqX3E
-         TXGR5NBcs2pLJPvsyRS8CjT/Axv2HQow8pd2M=
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=HwNSsSM+b0+Bzmgnk1LQ0DCn3s+MY+LodqBIEQHZQHQ=;
+        b=Btoe59RfZ9kdNtJ05cG2BkVNurX3LbQ3ECiQ2X8mnVUsSmNgUR0hUm9g8roPQMk1Wm
+         xIxI9L4D4FAkIJR1iPkWhVACwghD7fFD1Ny9eXkQ+Nv9SbrF0FT523OQbS3xKCBS3e5R
+         39//OFFYNZ+5EXA+Y9ZwJ5H0KejeluJh13xLU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc;
-        bh=PcDenPoUpnF+drtTh3h8L6vpahAeoGzcCYL+iwlFunI=;
-        b=tWLhB/o64gkEkLcZVFjrmIX1GgIaflvLA3lYK9fMU9/GXDDSDwwmtoPYPnAe/6guBB
-         3YJZIl9uCmpUn1IOFGBKPDR30vVutIujzwIVbv/9FFE1QVKl5AGDNTj91uzo9em+NMXJ
-         lqdQetfkHWRDjSl0Z4/bFZjzELnpJZjju+BgzM8Zx+PTPqkcBthFwGDcoQUCJvuy2chz
-         4EdzAbdHN4qlwIwTHDxqIUItF/jQDNy50eepkm6w0JwDgYR8rwP4RWwlvXgB0kGd6SK5
-         ROC/AR2x5zS3v7nxna6GsBNoLXGNTLFqcIBcLmNWhkLrvzYQD+iPPutGWO+04kSSMevH
-         Z/Bg==
-X-Gm-Message-State: ACgBeo12ZWkOCb8yxgAzh2vOSxIiEpJJ0b6fIDmUEC6C4kdFFVkAALJv
-        kEqQIzoInkLavRxo6tVZdJQOgw==
-X-Google-Smtp-Source: AA6agR4b4i59AzYNKMWT0S4xmMpUBpYXXZy6M8msHGTA+UN2LML9aDcvIS7VN6qWvr5KBRoEOoo2pw==
-X-Received: by 2002:a05:6a00:ac4:b0:535:c08:2da7 with SMTP id c4-20020a056a000ac400b005350c082da7mr19492734pfl.69.1661149710070;
-        Sun, 21 Aug 2022 23:28:30 -0700 (PDT)
-Received: from judyhsiao0523.c.googlers.com.com (21.160.199.104.bc.googleusercontent.com. [104.199.160.21])
-        by smtp.gmail.com with ESMTPSA id d7-20020a170903230700b0016d338160d6sm7552251plh.155.2022.08.21.23.28.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Aug 2022 23:28:29 -0700 (PDT)
-From:   Judy Hsiao <judyhsiao@chromium.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        dianders@chromium.org, mka@chromium.org, cychiang@google.com,
-        judyhsiao@google.com, swboyd@chromium.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Judy Hsiao <judyhsiao@chromium.org>,
-        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [PATCH v3] arm64: dts: qcom: sc7280: Use "PP1800_L2C" as the DMIC power source.
-Date:   Mon, 22 Aug 2022 06:28:20 +0000
-Message-Id: <20220822062820.1684139-1-judyhsiao@chromium.org>
-X-Mailer: git-send-email 2.37.1.595.g718a3a8f04-goog
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=HwNSsSM+b0+Bzmgnk1LQ0DCn3s+MY+LodqBIEQHZQHQ=;
+        b=QMAdbms20Be+JbLcEZ2Ec9faKyD1IZ9xHeTQ/EFLNUfdODbGEpX5TDeJD+2/nyv5j/
+         dBJYH8WhlxUjQvI9GhTo7Av3gc0P9dzZYc0Ep4h7/6CPSvUT8N5K3gANikoOAquuqarK
+         RkX6V1M8e73gMHFVMERL1QsRVxIZzG5jXLkKAOSSIbxyAUt5SEaR/2shj9qwr8Wy+Pwd
+         47X4ToQo6EBQBG6y0yiBORQligIn9Iv+/dfvWbHQdumvridqBqIfFIOn/kgDIcjFrq7N
+         c8T3q02R/7v5Mx38/CirYkmYpSG6jfRKaqgthPJkZ/lDz2vo+KmAP8GKvBV1clw5/YBq
+         g5Fw==
+X-Gm-Message-State: ACgBeo1bFSwEKOU49o3zjxFCVv/trpC0WcLQMTqXIpa1kS8bkYfV/tXE
+        qcM66RP40fYPbE6//FnSPAExs12A2uEywtIRDI1mSg==
+X-Google-Smtp-Source: AA6agR7vS2KdEy4vpZoAR5969Ls5K/TxGuA6r2DrsXZ13Vh0OmiuFr9OC4AYyQZ96v0yeqhHzMx2GN6uv8ptldZlKtY=
+X-Received: by 2002:a05:600c:1f05:b0:3a5:c789:1d9c with SMTP id
+ bd5-20020a05600c1f0500b003a5c7891d9cmr14392668wmb.26.1661149908496; Sun, 21
+ Aug 2022 23:31:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220816093644.764259-1-judyhsiao@chromium.org> <CAD=FV=XLsBcbrjb0DwG+Yhia_hk4kcKT2S0_vMT=k3cWxh=NRg@mail.gmail.com>
+In-Reply-To: <CAD=FV=XLsBcbrjb0DwG+Yhia_hk4kcKT2S0_vMT=k3cWxh=NRg@mail.gmail.com>
+From:   Judy Hsiao <judyhsiao@chromium.org>
+Date:   Mon, 22 Aug 2022 14:31:37 +0800
+Message-ID: <CAJXt+b8uS_s3VOrRdPwYHx0mAtBCd=qOGQp2SWq_-EAt9nYRkw@mail.gmail.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Use "PP1800_L2C" as the DMIC
+ power source.
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Jimmy Cheng-Yi Chiang <cychiang@google.com>,
+        Judy Hsiao <judyhsiao@google.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,67 +75,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use "PP1800_L2C" as the DMIC power source to match the hardware
-schematic by:
-   1. Set MIC bias voltage regulator (vdd-micb-supply) to PP1800_L2C.
-   2. In audio-routing, set VA DMIC01~VA DMIC03 to use the vdd-micb-supply
-      setting.
+Hi,
+> In v1, Stephen pointed out that the subject and description of your
+> patch talk about adjusting the supply. However, your patch _also_
+> adjusts the audio routing.
+Thanks for your comment.
+The audio routing part change is to use the vdd-micb-supply regulator setting.
+And the vdd-micb-supply set the MIC power source as PP1800_L2C.
+ +                       "VA DMIC0", "vdd-micb",
+ +                       "VA DMIC1", "vdd-micb",
+ +                       "VA DMIC2", "vdd-micb",
+ +                       "VA DMIC3", "vdd-micb",
+Let me update the commit message again to make it more clear.
+Thanks!
 
-It fixes the DMIC no sound issue of villager-r1.
-
-Co-developed-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
----
-Changes since V2:
-    -- Update the commit message.
-Changes since V1:
-    -- Update the commit message.
-
-This patch depends on:
-arm64: dts: qcom: sc7280: Add herobrine-villager-r1. [1]
-
-[1] https://patchwork.kernel.org/patch/12926099/
-
-.../dts/qcom/sc7280-herobrine-villager-r1.dts | 28 +++++++++++++++++++
- 1 file changed, 28 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
-index c03b3ae4de50..983defa7c76d 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
-@@ -12,3 +12,31 @@ / {
- 	model = "Google Villager (rev1+)";
- 	compatible = "google,villager", "qcom,sc7280";
- };
-+
-+&lpass_va_macro {
-+	vdd-micb-supply = <&pp1800_l2c>;
-+};
-+
-+&sound {
-+	audio-routing =
-+			"IN1_HPHL", "HPHL_OUT",
-+			"IN2_HPHR", "HPHR_OUT",
-+			"AMIC1", "MIC BIAS1",
-+			"AMIC2", "MIC BIAS2",
-+			"VA DMIC0", "vdd-micb",
-+			"VA DMIC1", "vdd-micb",
-+			"VA DMIC2", "vdd-micb",
-+			"VA DMIC3", "vdd-micb",
-+			"TX SWR_ADC0", "ADC1_OUTPUT",
-+			"TX SWR_ADC1", "ADC2_OUTPUT",
-+			"TX SWR_ADC2", "ADC3_OUTPUT",
-+			"TX SWR_DMIC0", "DMIC1_OUTPUT",
-+			"TX SWR_DMIC1", "DMIC2_OUTPUT",
-+			"TX SWR_DMIC2", "DMIC3_OUTPUT",
-+			"TX SWR_DMIC3", "DMIC4_OUTPUT",
-+			"TX SWR_DMIC4", "DMIC5_OUTPUT",
-+			"TX SWR_DMIC5", "DMIC6_OUTPUT",
-+			"TX SWR_DMIC6", "DMIC7_OUTPUT",
-+			"TX SWR_DMIC7", "DMIC8_OUTPUT";
-+
-+};
--- 
-2.37.1.595.g718a3a8f04-goog
-
+> It feels like the audio routing should be done in a separate patch and
+> that patch.
+>
+> -Doug
