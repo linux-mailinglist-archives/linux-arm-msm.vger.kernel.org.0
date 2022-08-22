@@ -2,235 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C04D959C6F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Aug 2022 20:48:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CEF9F59C74E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Aug 2022 20:51:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237239AbiHVSrv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Aug 2022 14:47:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54726 "EHLO
+        id S235374AbiHVSvH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Aug 2022 14:51:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237662AbiHVSrc (ORCPT
+        with ESMTP id S237514AbiHVSus (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Aug 2022 14:47:32 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05D0A13D69;
-        Mon, 22 Aug 2022 11:47:10 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id x63-20020a17090a6c4500b001fabbf8debfso12242946pjj.4;
-        Mon, 22 Aug 2022 11:47:10 -0700 (PDT)
+        Mon, 22 Aug 2022 14:50:48 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F4FA4BD23
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Aug 2022 11:49:03 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id be9so8600267lfb.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Aug 2022 11:49:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc;
-        bh=hNJnoLv/5u03Gc3FZcUv6HW87BdWPdf/MJiQ6bgU6aY=;
-        b=Z5hQ4f1KZHVn6Rf56bcS2ztHd9S+0zc6FX/vOx0CCPu5n3DbqdZYPx7/o2zuHulWnM
-         Z6kx+u4iAQa7FlF8joSXLKfDW6tGYYATW9Ko68JT0aeppcUontfTKm2vzPKuqU/MgeZj
-         n4LGLPbTs6yu+n5Q6XhAbiU5EbmuUUIzlgIhKHMs7gd2gyHOgGZZhcGXqWRr4Rlbaguy
-         0ln7iT0Kwmp1/otcTXU76/SiwuyK5Jw0A0R1zdIo4nNDF2Kkor4XCz8y2/Sf1d9wbX8k
-         3lyOjdWmSa/JPRFPeFmUscPqQnkAckSQAvkZ+HYgysTVrqQ4xtacCDzFcb+g3X3KG2J9
-         3CFg==
+        bh=rsjsUi5j29pEEYwqLrOimHSSjS8I1Tzv9QAdiQT8qPo=;
+        b=LQGklJCGzJGKHdWBkted5ByOVqUVC7J0izLl28gYCPluIn7L0Ez6NyrkxwrK2a8q8p
+         Ktftb7A2PEroo6wEZIwBtcIIsxvDh2fMVcQv1waPpo0s1Jspg7npBdJLUG7y+h2MNCzN
+         1oYGU7Rmveduyu1Rx+gFlFujMnRVyItJxagzMVfJAZb+kfiqUkHKQnPYR9bV+VkGTg7O
+         3uFyHLmSr5XOsciaST3frULP/uFly4YD6sZd7ubkRkbfy5YX3IMBGsfC4I6Kn7Mq4KXl
+         KUzV/QFF3ngPfyhbg1vuYJ6yRdVo28JJWd9Hr0P57j3KRWL0j44wAaeMWCAHeNwB8mNU
+         mtsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc;
-        bh=hNJnoLv/5u03Gc3FZcUv6HW87BdWPdf/MJiQ6bgU6aY=;
-        b=qR3gBtzRQMFQCsvGm4PrIBUSiA79kpndFBC9Opj+Z3cSTHESgesIm2lfvHu6JfUplM
-         B7V7G0SPoReT9UyjXJw5++uH+iDz5WL56KaEa0Nn85q9pIMYISynG9z9O6g+JO29w3oK
-         8oDGzhXJnSKGk6R8bFLQeHVV/LAyJ6wNfqw4nMmU0N21wmgQKgRm/ktaZufzaWUW9mGx
-         LTiEwVrvfFGaqoLb23jTKp9yx3owxzLLDPov460tZ/VnmpyDwipCawBGAImzY3eTzgXp
-         fjTVMczG7Ox6clP/Fq3+wfgPhEw/IirBeqWk7usMgGo00hm8zQdZps1Zd39s7+7C+ps0
-         NKlA==
-X-Gm-Message-State: ACgBeo2Se/des24il0o/8aD7huJBDPJRas3np/P51bmpVv9kXAPLtO/Z
-        Xkd3mURC33vNCWXlw8N/KNU=
-X-Google-Smtp-Source: AA6agR46jPCWWebDm8SZ5Yrt/HRYcHDiSjarv2sCQh1INfDofeZ1UMWIAczIxOKgDWaprj82bfTc/w==
-X-Received: by 2002:a17:90a:cf89:b0:1fa:a98a:c61 with SMTP id i9-20020a17090acf8900b001faa98a0c61mr29779451pju.69.1661194024504;
-        Mon, 22 Aug 2022 11:47:04 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
-        by smtp.gmail.com with ESMTPSA id z18-20020aa79492000000b005367a03d56csm3459616pfk.104.2022.08.22.11.47.02
+        bh=rsjsUi5j29pEEYwqLrOimHSSjS8I1Tzv9QAdiQT8qPo=;
+        b=DJmFWNKiv5dp6etHj9F+e2fg81JZ5iZo4KuLGqBq7dhcgVWf611GtcmZBL7e0FhV3q
+         tfzWmYJ6VZNGSWo84zFnZmFolHd62PK/b/xBAJ41lEHtTxgS9IyRKZwp8MFj719wFj+r
+         cNtxppQjeDd5x8lpn39ngpYjfXRFI1PANsBB8Fn3V4Sga07zhmcFgrFTN8+Z8nqSxW61
+         OnjKMlr9Z23k/AYDEpJg9f1rSX10hcY/yk4qGzRxGclBjenvyD3dJJwOdeVGaVNkFkeC
+         s5VqSmg9ZxEwyBb9xM4vvvMKXMbtRDmDIySHXdb62bkEqPtTr7rA+HCwwvIqOiJ1oXZ5
+         6pJQ==
+X-Gm-Message-State: ACgBeo0+zyd0ph+Gvj+Dla6dcj6obknDsd4Wk+crzyam+pnQVzYcsAcN
+        9HHBaD00/KmMwuDd42Wfc4u2JQ==
+X-Google-Smtp-Source: AA6agR5DtSe4fBaOZwmnol1A/9xLdl1qZkv2nRAnVVepcoZn0MEJuGyfMi+XYztw6sZ5o48fs5c2NA==
+X-Received: by 2002:a19:5f4f:0:b0:492:e5d9:a0eb with SMTP id a15-20020a195f4f000000b00492e5d9a0ebmr1992808lfj.377.1661194141378;
+        Mon, 22 Aug 2022 11:49:01 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id w11-20020a05651c118b00b00261bc05c461sm1672599ljo.50.2022.08.22.11.49.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Aug 2022 11:47:03 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Robin Murphy <robin.murphy@arm.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
+        Mon, 22 Aug 2022 11:49:00 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/iommu: optimize map/unmap
-Date:   Mon, 22 Aug 2022 11:47:42 -0700
-Message-Id: <20220822184742.32076-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.37.2
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v3 0/3] dt-bindings: msm/dp: cleanup Qualcomm DP and eDP bidndings
+Date:   Mon, 22 Aug 2022 21:48:57 +0300
+Message-Id: <20220822184900.307160-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+Fix several issues with the DP and eDP bindings on the Qualcomm
+platforms. While we are at it, fix several small issues with platform
+files declaring these controllers.
 
-Using map_pages/unmap_pages cuts down on the # of pgtable walks needed
-in the process of finding where to insert/remove an entry.  The end
-result is ~5-10x faster than mapping a single page at a time.
+Changes since v2:
+ - Fixed commit message for the patch 1 to mention proper commit IDs.
+ - Dropped dts patches which were picked up by respective tree.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_iommu.c | 91 ++++++++++++++++++++++++++++-----
- 1 file changed, 79 insertions(+), 12 deletions(-)
+Changes since v1:
+ - Reordered patches to cleanup dts first, to remove warnings from DP
+   schema
+ - Split DP register blocks in sc7180.dtsi and sc7280.dtsi
+ - Cleaned up the p1 register block handling: marked it as required for DP
+   and absent for eDP controllers
+ - Dropped unused xo and ref clocks from sc7280-edp node, they belong to
+   eDP PHY.
 
-diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
-index a54ed354578b..0f3f60da3314 100644
---- a/drivers/gpu/drm/msm/msm_iommu.c
-+++ b/drivers/gpu/drm/msm/msm_iommu.c
-@@ -21,6 +21,7 @@ struct msm_iommu_pagetable {
- 	struct msm_mmu base;
- 	struct msm_mmu *parent;
- 	struct io_pgtable_ops *pgtbl_ops;
-+	unsigned long pgsize_bitmap;	/* Bitmap of page sizes in use */
- 	phys_addr_t ttbr;
- 	u32 asid;
- };
-@@ -29,23 +30,85 @@ static struct msm_iommu_pagetable *to_pagetable(struct msm_mmu *mmu)
- 	return container_of(mmu, struct msm_iommu_pagetable, base);
- }
- 
-+/* based on iommu_pgsize() in iommu.c: */
-+static size_t iommu_pgsize(struct msm_iommu_pagetable *pagetable,
-+			   unsigned long iova, phys_addr_t paddr,
-+			   size_t size, size_t *count)
-+{
-+	unsigned int pgsize_idx, pgsize_idx_next;
-+	unsigned long pgsizes;
-+	size_t offset, pgsize, pgsize_next;
-+	unsigned long addr_merge = paddr | iova;
-+
-+	/* Page sizes supported by the hardware and small enough for @size */
-+	pgsizes = pagetable->pgsize_bitmap & GENMASK(__fls(size), 0);
-+
-+	/* Constrain the page sizes further based on the maximum alignment */
-+	if (likely(addr_merge))
-+		pgsizes &= GENMASK(__ffs(addr_merge), 0);
-+
-+	/* Make sure we have at least one suitable page size */
-+	BUG_ON(!pgsizes);
-+
-+	/* Pick the biggest page size remaining */
-+	pgsize_idx = __fls(pgsizes);
-+	pgsize = BIT(pgsize_idx);
-+	if (!count)
-+		return pgsize;
-+
-+	/* Find the next biggest support page size, if it exists */
-+	pgsizes = pagetable->pgsize_bitmap & ~GENMASK(pgsize_idx, 0);
-+	if (!pgsizes)
-+		goto out_set_count;
-+
-+	pgsize_idx_next = __ffs(pgsizes);
-+	pgsize_next = BIT(pgsize_idx_next);
-+
-+	/*
-+	 * There's no point trying a bigger page size unless the virtual
-+	 * and physical addresses are similarly offset within the larger page.
-+	 */
-+	if ((iova ^ paddr) & (pgsize_next - 1))
-+		goto out_set_count;
-+
-+	/* Calculate the offset to the next page size alignment boundary */
-+	offset = pgsize_next - (addr_merge & (pgsize_next - 1));
-+
-+	/*
-+	 * If size is big enough to accommodate the larger page, reduce
-+	 * the number of smaller pages.
-+	 */
-+	if (offset + pgsize_next <= size)
-+		size = offset;
-+
-+out_set_count:
-+	*count = size >> pgsize_idx;
-+	return pgsize;
-+}
-+
- static int msm_iommu_pagetable_unmap(struct msm_mmu *mmu, u64 iova,
- 		size_t size)
- {
- 	struct msm_iommu_pagetable *pagetable = to_pagetable(mmu);
- 	struct io_pgtable_ops *ops = pagetable->pgtbl_ops;
--	size_t unmapped = 0;
- 
- 	/* Unmap the block one page at a time */
- 	while (size) {
--		unmapped += ops->unmap(ops, iova, 4096, NULL);
--		iova += 4096;
--		size -= 4096;
-+		size_t unmapped, pgsize, count;
-+
-+		pgsize = iommu_pgsize(pagetable, iova, iova, size, &count);
-+
-+		unmapped = ops->unmap_pages(ops, iova, pgsize, count, NULL);
-+		if (!unmapped)
-+			break;
-+
-+		iova += unmapped;
-+		size -= unmapped;
- 	}
- 
- 	iommu_flush_iotlb_all(to_msm_iommu(pagetable->parent)->domain);
- 
--	return (unmapped == size) ? 0 : -EINVAL;
-+	return (size == 0) ? 0 : -EINVAL;
- }
- 
- static int msm_iommu_pagetable_map(struct msm_mmu *mmu, u64 iova,
-@@ -54,7 +117,6 @@ static int msm_iommu_pagetable_map(struct msm_mmu *mmu, u64 iova,
- 	struct msm_iommu_pagetable *pagetable = to_pagetable(mmu);
- 	struct io_pgtable_ops *ops = pagetable->pgtbl_ops;
- 	struct scatterlist *sg;
--	size_t mapped = 0;
- 	u64 addr = iova;
- 	unsigned int i;
- 
-@@ -64,15 +126,19 @@ static int msm_iommu_pagetable_map(struct msm_mmu *mmu, u64 iova,
- 
- 		/* Map the block one page at a time */
- 		while (size) {
--			if (ops->map(ops, addr, phys, 4096, prot, GFP_KERNEL)) {
--				msm_iommu_pagetable_unmap(mmu, iova, mapped);
-+			size_t pgsize, count, mapped;
-+
-+			pgsize = iommu_pgsize(pagetable, addr, phys, size, &count);
-+
-+			if (ops->map_pages(ops, addr, phys, pgsize, count,
-+					   prot, GFP_KERNEL, &mapped)) {
-+				msm_iommu_pagetable_unmap(mmu, iova, addr - iova);
- 				return -EINVAL;
- 			}
- 
--			phys += 4096;
--			addr += 4096;
--			size -= 4096;
--			mapped += 4096;
-+			phys += mapped;
-+			addr += mapped;
-+			size -= mapped;
- 		}
- 	}
- 
-@@ -207,6 +273,7 @@ struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent)
- 
- 	/* Needed later for TLB flush */
- 	pagetable->parent = parent;
-+	pagetable->pgsize_bitmap = ttbr0_cfg.pgsize_bitmap;
- 	pagetable->ttbr = ttbr0_cfg.arm_lpae_s1_cfg.ttbr;
- 
- 	/*
+Dmitry Baryshkov (3):
+  dt-bindings: msm/dp: mark vdda supplies as deprecated
+  dt-bindings: msm/dp: add missing properties
+  dt-bindings: msm/dp: handle DP vs eDP difference
+
+ .../bindings/display/msm/dp-controller.yaml   | 47 ++++++++++++++++---
+ 1 file changed, 41 insertions(+), 6 deletions(-)
+
 -- 
-2.37.2
+2.35.1
 
