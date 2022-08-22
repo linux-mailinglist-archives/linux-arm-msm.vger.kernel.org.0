@@ -2,80 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BA4959BF15
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Aug 2022 13:59:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DE5DE59BF30
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Aug 2022 14:04:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234688AbiHVL7m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Aug 2022 07:59:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38198 "EHLO
+        id S234812AbiHVMDI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Aug 2022 08:03:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234837AbiHVL7h (ORCPT
+        with ESMTP id S234811AbiHVMDH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Aug 2022 07:59:37 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F04871F2C0;
-        Mon, 22 Aug 2022 04:59:36 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27MBiqwm009852;
-        Mon, 22 Aug 2022 11:59:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=uIwJ+Bk8F6uzVsRjs358UWzLQJT7nWg+K+T6V5EH3rE=;
- b=SM0sJcsTgeRfHnP7vHape1PwdqPcCBtvEKq8ocgicqwFoMLOxA56Uyu839f/zyX3u9PQ
- KecdHcK80SoMtiZjkzND3nxr5jP/IB4KeOQautCp71w1yHT2SJXWG3p/+kOccV/OPqSv
- zgGjcjsq6MPDCEGm4D7qMO3tYsd+gtBD7vbgdx0RIN2WqwfQag72N6VZPLB6oqbWcPeu
- qSffJT+E9Bn7XzeEnuf9INKJGK46uwdo/7kX6GZJ5GHT6AwBg28fp1lgqgcDtMrBfED1
- Giz1u8BVVVDfkPDjtEFdCoXZMWOg4yzego6IsSsvc804MtUP2+rHkWrB5Kb0bavodHCl Tg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j2vwp42r2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 22 Aug 2022 11:59:23 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27MBxMcJ030521
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 22 Aug 2022 11:59:22 GMT
-Received: from [10.50.23.205] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 22 Aug
- 2022 04:59:19 -0700
-Message-ID: <396e6b2e-11d1-a11d-206a-cfd69f6cd358@quicinc.com>
-Date:   Mon, 22 Aug 2022 17:29:13 +0530
+        Mon, 22 Aug 2022 08:03:07 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BAB637F88
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Aug 2022 05:03:06 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id bs25so12929815wrb.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Aug 2022 05:03:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=DPrB14M1uUCMZKdCLrPqh8TXi1rVgnZ+HKBbONm+778=;
+        b=ngGCUWRRHm4oNaymjTkDZZA+Xpo62kLIh9qt4d8/kTdSiXze9AI2c3g8OiZj5lbx0M
+         HH1wlCyC0TAnByIeDPOz8izGLI4tWKOfJHAzctXgAHKsy7hlwIBn32zRNKeuvqlD04KQ
+         vBKhZMrfE/FVMtO9is5quNixlvDQ5PkHI1shyrChz7t7PuMAL6RscnBzF0GnVUsTWalv
+         dDMiWRBqZZKMYFz1b/6E8MWbmDq2MAzcpqhiq0LbCrmmKZsdJDwa1gO2VYHdOxKGZZdO
+         Xczv9T7PQS8u/OEoWDR6IGOyzx506isGdiHyfKPswVylCwuLswYfn6gWca+88LhCK39b
+         Q8Mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=DPrB14M1uUCMZKdCLrPqh8TXi1rVgnZ+HKBbONm+778=;
+        b=vkwxFW5aWFcEEo22v2ts5iTyiegL5STSaQqwPk4+KU5Gz4HXYvAcsEy60uCJbWV4io
+         9L5NCri4Maej+ucYNjp1IE7P4zNNCUK1qOTOahyl3r2gOB5aKKrxT6+wVWYgoNL8v2zE
+         2BJvkGxsAfFn5qwXNMtY85LfH5OehU6nXDzHcyCdV6oEd2yjZ7US0OCqfmO1QcvrlKHV
+         z+U6GJ3h9SSzO/w9dkHm8ldGQkuV1xzmYwvx79yB+aXF/ynz9Z4S17D+l3tPX5h+/9mZ
+         sByMwTywvEDpNdRMQ1qH8lPjmN9mGr+MxtoNX0G6pvVPuizb+5alHExrDKiBJaER559l
+         SzzQ==
+X-Gm-Message-State: ACgBeo0cZWNCwYyGliQpvjPuy9oZNS1rmbcXCTlMexUqRpzllXbcYBEZ
+        7wE4O21wT6HqJV3JOL20BbJnjqgtZjSTzg==
+X-Google-Smtp-Source: AA6agR7T0PuEhZJabqtvj/ztCPXu039mnrYfBHOTD/Gt+7BOyOgcRD09ET1kFC2TkKIVPrhBNZf2Lg==
+X-Received: by 2002:a5d:434a:0:b0:21d:aa7e:b1bb with SMTP id u10-20020a5d434a000000b0021daa7eb1bbmr11214604wrr.619.1661169784861;
+        Mon, 22 Aug 2022 05:03:04 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id i26-20020a1c541a000000b003a64f684704sm7553673wmb.40.2022.08.22.05.03.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Aug 2022 05:03:04 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     bryan.odonoghue@linaro.org
+Subject: [PATCH] arm64: dts: qcom: pm8916: Fix pwm declaration
+Date:   Mon, 22 Aug 2022 13:03:00 +0100
+Message-Id: <20220822120300.2633790-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH v2 1/3] soc: qcom: llcc: Pass SoC specific EDAC register
- offsets to EDAC driver
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        <bjorn.andersson@linaro.org>, <bp@alien8.de>, <mchehab@kernel.org>
-CC:     <james.morse@arm.com>, <rric@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-edac@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_tsoni@quicinc.com>
-References: <20220812060602.7672-1-manivannan.sadhasivam@linaro.org>
- <20220812060602.7672-2-manivannan.sadhasivam@linaro.org>
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-In-Reply-To: <20220812060602.7672-2-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: sT-azsaa04ZTxOosqKzqStNCImk0ceA_
-X-Proofpoint-ORIG-GUID: sT-azsaa04ZTxOosqKzqStNCImk0ceA_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-22_06,2022-08-22_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- priorityscore=1501 suspectscore=0 spamscore=0 mlxscore=0 clxscore=1015
- mlxlogscore=999 lowpriorityscore=0 phishscore=0 bulkscore=0
- impostorscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2207270000 definitions=main-2208220050
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,48 +70,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mani,
+We need to define pwm@bc000 to stop dtbs_check from making the following
+complaint, text pruned.
 
-On 8/12/2022 11:36 AM, Manivannan Sadhasivam wrote:
-> The LLCC EDAC register offsets varies between each SoCs. Until now, the
-> EDAC driver used the hardcoded register offsets. But this caused crash
-> on SM8450 SoC where the register offsets has been changed.
->
-> So to avoid this crash and also to make it easy to accomodate changes for
-> new SoCs, let's pass the SoC specific register offsets to the EDAC driver.
->
-> Currently, two set of offsets are used. One is SM8450 specific and another
-> one is common to all SoCs.
->
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+pmic@1: 'pwm' does not match any of the regexes:  'pwm@[0-9a-f]+$'
 
-<snip> ...
+Fixes: e79a1385ab74 ("arm64: dts: qcom: Add LPG to pm8916, pm8994, pmi8994 and pmi8998")
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/pm8916.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->   static const struct qcom_llcc_config sm8350_cfg = {
-> @@ -309,6 +370,7 @@ static const struct qcom_llcc_config sm8350_cfg = {
->   	.size           = ARRAY_SIZE(sm8350_data),
->   	.need_llcc_cfg	= true,
->   	.reg_offset	= llcc_v1_2_reg_offset,
-> +	.edac_reg	= &common_edac_reg,
->   };
->   
->   static const struct qcom_llcc_config sm8450_cfg = {
-> @@ -316,6 +378,7 @@ static const struct qcom_llcc_config sm8450_cfg = {
->   	.size           = ARRAY_SIZE(sm8450_data),
->   	.need_llcc_cfg	= true,
->   	.reg_offset	= llcc_v21_reg_offset,
-> +	.edac_reg	= &sm8450_edac_reg,
->   };
->
+diff --git a/arch/arm64/boot/dts/qcom/pm8916.dtsi b/arch/arm64/boot/dts/qcom/pm8916.dtsi
+index 606c2a6d1f0fc..d6922379729cb 100644
+--- a/arch/arm64/boot/dts/qcom/pm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm8916.dtsi
+@@ -124,7 +124,7 @@ pm8916_1: pmic@1 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 
+-		pm8916_pwm: pwm {
++		pm8916_pwm: pwm@bc00 {
+ 			compatible = "qcom,pm8916-pwm";
+ 
+ 			#pwm-cells = <2>;
+-- 
+2.37.1
 
-Can we have LLCC version specific register offsets instead of SoC specific similar to reg_offset callbacks?
-For SM8450, it would be llcc_v21_edac_reg and for others llcc_v1_2_edac_reg instead of common_edac_reg.
-common_edac_reg is very general and is not exactly common for all, its just common for SoCs with same LLCC.
-
-Version based is more applicable as multiple SoCs might use same LLCC versions and would reduce SoC specific data
-which would be needed for every SoC in case some newer LLCC comes out. I know you could just call sm8450_edac_reg
-for lets say sm8550 or so on to reduce duplication but that won't look good.
-
-
-Thanks,
-Sai
