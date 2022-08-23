@@ -2,84 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDCD359E4DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 16:05:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4E5C59E60E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 17:33:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231395AbiHWOFr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Aug 2022 10:05:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44846 "EHLO
+        id S242197AbiHWPdn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Aug 2022 11:33:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242109AbiHWODd (ORCPT
+        with ESMTP id S242920AbiHWPdZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Aug 2022 10:03:33 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26D66247923
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 04:12:55 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id l8so1664611lfc.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 04:12:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=RyGB8PQO8ADQrO2JFjLIJii6hzK5vNZX03ZezGuypGs=;
-        b=oCfh6AI2QwLBOgQEi1W8eHyNhAH/PsXgbcycKMnCTV5RxfayaL3wtv4jIvSOvZZzE8
-         gzUXOExHburHxVgMSsMbHibLI1L2SnbkuVLjvD+bljZz7Sn6Mia3nJOyOn07BVOgDr2l
-         abxhLitpMAPOzrXk3jSQvcxgg7QwV8n5lW1lQqSbk8+a6T5oNh/sQQpbsuMaBSgrrI8A
-         bJ2jSdmA27l2XZwB1wTkNwf60Ej1NEZsOhpD4PpcvP1LSahuyUmZkYQ+Q6M13KC/36C/
-         o/KZNDD1g/R8rdQRYab4Ck4uov5qDnDC/psQAJognpFGI2eXoLgZ6Dd82cMKEbgDGmgv
-         HJQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=RyGB8PQO8ADQrO2JFjLIJii6hzK5vNZX03ZezGuypGs=;
-        b=3zhNQxqJQuEUjmbZ6/MzA4F9CpJwl3wNaXVfzMCPjCmVcHyzd0bA9Blhg2LV2kxyc4
-         V/IfYV9qHJkgYQowLMP/DTd5LBIhL3Oemtj4sMAPpxLTCWkCxhJvOE+PCMkxY3xguI5J
-         r1M6F2tASdqqJRzUDFUUBGA5yhT0N91fvo49IspI0Ld0ce0U6j6kTYqcTxmj9N7SSsRv
-         /xup2/sEiDxgMh+IB9WHKgbkPlwrDPqddg69v7C2ko3jIL+X/bOTbRIvn6n6xFb76uHa
-         Kqe7PN5/u474m7GFkZQ4LtmvzMOClqJ1qf7cPlfX7o+huRIhuAnosDzcgy/CKQMOOsyK
-         swQA==
-X-Gm-Message-State: ACgBeo3cJgY/awW2R2mnWK+uUHT+IGqeQBRjKj/TAW9F0u4MZZyamWlg
-        OncRUbW/76vd9wBiOIL6SlRiOg==
-X-Google-Smtp-Source: AA6agR431MJa34QlqrqboyJ2CF1O1nEgGRTLQBgHBhF/nzaTuInpM0Ee1WeB028VXCHqg7KXMU98oA==
-X-Received: by 2002:a19:654f:0:b0:492:f148:beb with SMTP id c15-20020a19654f000000b00492f1480bebmr1379997lfj.493.1661253109390;
-        Tue, 23 Aug 2022 04:11:49 -0700 (PDT)
-Received: from [192.168.0.11] (89-27-92-210.bb.dnainternet.fi. [89.27.92.210])
-        by smtp.gmail.com with ESMTPSA id r30-20020ac25c1e000000b00492f1b2ac0bsm511806lfp.101.2022.08.23.04.11.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Aug 2022 04:11:48 -0700 (PDT)
-Message-ID: <e8a02030-d114-fa4b-1978-15327501b7e9@linaro.org>
-Date:   Tue, 23 Aug 2022 14:11:47 +0300
+        Tue, 23 Aug 2022 11:33:25 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A70D0123E3E;
+        Tue, 23 Aug 2022 04:16:52 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id D9BF4B81CD8;
+        Tue, 23 Aug 2022 11:16:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 879E8C433C1;
+        Tue, 23 Aug 2022 11:16:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1661253396;
+        bh=Ep3tpjrrxWT1Qx2K5Gp8IwXhWLY5DWjXZ1k5FABJM54=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=XsYEIyPUFV/6I2LYR9H7uqGHswFY6tmplpVg9BWJIelsDapunuO6MpzkCl9ySNDs4
+         VQ7e5g/ncJ7t96b7FX6UNi6hMfTNExc3CeomJPAjt9VGEp0D0dOscF2WfayPrG5sDN
+         D0TrsR9CWqGUeX9oC5JL9JzOsPXiDlX9ki0kifGMykq+XLlGKN0aAwCqR3FOHT1Tfo
+         eBFe9Q8mRpSW9xkHxZE5gMJoQigOEdu6AkPY4186l6mUwGx2kVHLuGUC6Pj2jTYvwt
+         vkGeVzp/yO3Sj6gl4YNz+MtCfWMh6oSbZEnaTMUI7FmHHElvcKXrdPB8Q1Oa6QjI2t
+         HDUcDftk4lo/Q==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oQRtc-0002Il-GZ; Tue, 23 Aug 2022 13:16:36 +0200
+Date:   Tue, 23 Aug 2022 13:16:36 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH 2/2] clk: qcom: gcc-sc7280: Keep USB GDSC power domains
+ on when USB wakeup is enabled
+Message-ID: <YwS3FCOqIeajMEgz@hovoldconsulting.com>
+References: <20220822115246.1.I45235b7c40997bc2abf813e4722b4dcdd6aecf6b@changeid>
+ <20220822115246.2.If09027f73daa6e1ed95f5eab02326b543c67132e@changeid>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v4 5/6] dt-bindings: drm/msm/gpu: Add optional resets
-Content-Language: en-US
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1660927246-11327-1-git-send-email-quic_akhilpo@quicinc.com>
- <20220819221017.v4.5.Ieffadd08a071a233213ced4406bf84bb5922ab9a@changeid>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220819221017.v4.5.Ieffadd08a071a233213ced4406bf84bb5922ab9a@changeid>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220822115246.2.If09027f73daa6e1ed95f5eab02326b543c67132e@changeid>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,31 +67,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/08/2022 19:40, Akhil P Oommen wrote:
->  Documentation/devicetree/bindings/display/msm/gpu.yaml | 7 +++++++
->  1 file changed, 7 insertions(+)
+On Mon, Aug 22, 2022 at 11:53:11AM -0700, Matthias Kaehlcke wrote:
+> Set GENPD_FLAG_ACTIVE_WAKEUP for the USB GDSC power domains of SC7280.
 > 
-> diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Documentation/devicetree/bindings/display/msm/gpu.yaml
-> index 3397bc3..4576b31 100644
-> --- a/Documentation/devicetree/bindings/display/msm/gpu.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
-> @@ -109,6 +109,13 @@ properties:
->        For GMU attached devices a phandle to the GMU device that will
->        control the power for the GPU.
->  
-> +  resets:
-> +    maxItems: 1
-> +
-> +  reset-names:
-> +    items:
-> +      - const: cx_collapse
-> +
+> Suggested-by: Johan Hovold <johan+linaro@kernel.org>
+> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
+> 
+>  drivers/clk/qcom/gcc-sc7280.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/gcc-sc7280.c b/drivers/clk/qcom/gcc-sc7280.c
+> index 7ff64d4d5920..4ff855269467 100644
+> --- a/drivers/clk/qcom/gcc-sc7280.c
+> +++ b/drivers/clk/qcom/gcc-sc7280.c
+> @@ -3125,6 +3125,7 @@ static struct gdsc gcc_usb30_prim_gdsc = {
+>  	.gdscr = 0xf004,
+>  	.pd = {
+>  		.name = "gcc_usb30_prim_gdsc",
+> +		.flags = GENPD_FLAG_ACTIVE_WAKEUP,
 
-Just one blank line, not two. You can keep Rob's ack with that change.
+Have you verified that the power-domain doesn't need to remain on also
+when USB isn't used for wakeup?
 
->  required:
->    - compatible
+This is the case for sc8280xp and indicates that there are further
+missing pieces here (at least for that platform).
 
-
-Best regards,
-Krzysztof
+Johan
