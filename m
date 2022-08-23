@@ -2,55 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2406559E917
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 19:23:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C585759E91D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 19:23:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230474AbiHWRWT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Aug 2022 13:22:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48024 "EHLO
+        id S230369AbiHWRWR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Aug 2022 13:22:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237849AbiHWRUn (ORCPT
+        with ESMTP id S240773AbiHWRVM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Aug 2022 13:20:43 -0400
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2B2F48C85;
-        Tue, 23 Aug 2022 07:57:10 -0700 (PDT)
-Received: by mail-oi1-f170.google.com with SMTP id r124so767423oig.11;
-        Tue, 23 Aug 2022 07:57:10 -0700 (PDT)
+        Tue, 23 Aug 2022 13:21:12 -0400
+Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFE96EF007;
+        Tue, 23 Aug 2022 07:57:23 -0700 (PDT)
+Received: by mail-oi1-f182.google.com with SMTP id r10so10512001oie.1;
+        Tue, 23 Aug 2022 07:57:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc;
-        bh=4YuS4HI68dpdCocwhLeIeeGS4ftqZiziN5EXiO7crA0=;
-        b=tDyXzN1+v55nD7xSXwVFQB2PVhjT45q8RiCIieSqCyCPMm9SO7lDTD0F9J+VS1q1JW
-         uS2ox8ArzMTbGpd9OZaenxIIOK2XnYQrcoqhmqW2DQurAzryYtcTJje5HKd3PqU9NYcF
-         XewvG9xDo6wSmS1qjnMCFprVstb9B6VXKe+H0Sj4Zt+D459bfYyq05vZI97GJFgG4Npu
-         9qBEjRyfhIx1CbLqV42GjvA6NKwBifaseXUDdYtvPnLZM5lqOvMJoeJ1F8KXNogERnUx
-         oFZEQ4ymZRhDMNkw4VR08qHkA/aoiT+vWAx1D8dL9cNGd5BZtkO2R92WwWxHMnGyOrOp
-         fxGg==
-X-Gm-Message-State: ACgBeo20xpvEW6Tsc+7cNzpNWcKRqMcuRz0PnY8hFJpzGoykZ06sscB+
-        tlH4363jm4msIa8Dq2w9XQ==
-X-Google-Smtp-Source: AA6agR6aV+kVQQS+QoS0wLg0mn5D1XAbCDSdtcW45YblNWzO71PigaVr4fBZd/f7/NyH9C0q+MQ7AA==
-X-Received: by 2002:aca:a8c5:0:b0:343:8774:d82 with SMTP id r188-20020acaa8c5000000b0034387740d82mr1563122oie.249.1661266630078;
-        Tue, 23 Aug 2022 07:57:10 -0700 (PDT)
+        bh=HGZycrPUJ9tZL1J+2Q0/5E3o17nVGa6AdQi0WZbnIKs=;
+        b=19BqUrZ9LpzM1hlcrZEdm3JQWDvGXkgmMk6y/NabIS7DL4ha9ZIsIvJBMWTwfPjjhO
+         v7U1clGrzjpHZCuPJil9RbBDXrThDi+Yf2hMq5d3wxfvnxrNtvDV6QmBSfzE+qTJDGG5
+         RTX+udIHrLlYYt7e6bgfmBOipNJCfkGmcZjShuDIpWEB2ISkGqtsMbCLlsi9cy1pneeX
+         UEw8E0soHTNs8ys35/1jjJZj7eJKiHRQ1n420utQEmR8yYjikqzoFnm7CJKt30ze0Nd4
+         xZfXkd62mNXvOPlw9e1NTK1B7lZrHVCNBVildGCAQCr9SdGV0nUd7CgiyJXFr/CtcqdM
+         mkTg==
+X-Gm-Message-State: ACgBeo2j76zwvXZpQ6Qh1lmOrHA9q6vahX9bQB/rtAIZC24X0dHGQVN7
+        hkYbYYn77DHsBdSLZhaBdg==
+X-Google-Smtp-Source: AA6agR4QTEbRPz/oyZMlkPXRpRj5KOhcjVDz0Qv5pdtbi6Z5AhJie2GGjEV4aAHhi68H4rUZcb4+BQ==
+X-Received: by 2002:a05:6808:f8f:b0:344:c3d4:775e with SMTP id o15-20020a0568080f8f00b00344c3d4775emr1441641oiw.266.1661266643134;
+        Tue, 23 Aug 2022 07:57:23 -0700 (PDT)
 Received: from xps15.. (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.googlemail.com with ESMTPSA id t1-20020a056870600100b0011c65559b04sm3840637oaa.34.2022.08.23.07.57.08
+        by smtp.googlemail.com with ESMTPSA id t1-20020a056870600100b0011c65559b04sm3840637oaa.34.2022.08.23.07.57.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Aug 2022 07:57:09 -0700 (PDT)
+        Tue, 23 Aug 2022 07:57:22 -0700 (PDT)
 From:   Rob Herring <robh@kernel.org>
-To:     Eugen Hristev <eugen.hristev@microchip.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
+To:     Support Opensource <support.opensource@diasemi.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Javier Martinez Canillas <javier@dowhile0.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Del Regno <angelogioacchino.delregno@collabora.com>
-Cc:     linux-media@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH] media: dt-bindings: Add missing (unevaluated|additional)Properties on child nodes
-Date:   Tue, 23 Aug 2022 09:56:34 -0500
-Message-Id: <20220823145649.3118479-3-robh@kernel.org>
+        Adam Ward <Adam.Ward.opensource@diasemi.com>,
+        Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>,
+        Robert Marko <robimarko@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        ChiYuan Huang <cy_huang@richtek.com>,
+        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH] regulator: dt-bindings: Add missing (unevaluated|additional)Properties on child nodes
+Date:   Tue, 23 Aug 2022 09:56:38 -0500
+Message-Id: <20220823145649.3118479-7-robh@kernel.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -71,133 +80,148 @@ must have unevaluatedProperties or additionalProperties set to false
 
 Signed-off-by: Rob Herring <robh@kernel.org>
 ---
- Documentation/devicetree/bindings/media/microchip,csi2dc.yaml   | 2 ++
- Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml | 1 +
- Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml | 1 +
- Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml  | 1 +
- Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml  | 1 +
- Documentation/devicetree/bindings/media/qcom,sdm660-venus.yaml  | 1 +
- .../devicetree/bindings/media/qcom,sdm845-venus-v2.yaml         | 1 +
- Documentation/devicetree/bindings/media/qcom,sdm845-venus.yaml  | 1 +
- Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml  | 1 +
- 9 files changed, 10 insertions(+)
+ .../bindings/regulator/dlg,da9121.yaml           |  1 +
+ .../bindings/regulator/maxim,max77802.yaml       |  1 +
+ .../bindings/regulator/maxim,max8997.yaml        |  1 +
+ .../bindings/regulator/mt6315-regulator.yaml     |  1 +
+ .../bindings/regulator/qcom,spmi-regulator.yaml  |  1 +
+ .../regulator/qcom-labibb-regulator.yaml         | 16 ++++++++++++++++
+ .../regulator/richtek,rt4801-regulator.yaml      |  1 +
+ .../regulator/rohm,bd71815-regulator.yaml        |  1 +
+ 8 files changed, 23 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/media/microchip,csi2dc.yaml b/Documentation/devicetree/bindings/media/microchip,csi2dc.yaml
-index e8544fb2d034..b3a345fc6464 100644
---- a/Documentation/devicetree/bindings/media/microchip,csi2dc.yaml
-+++ b/Documentation/devicetree/bindings/media/microchip,csi2dc.yaml
-@@ -75,6 +75,7 @@ properties:
+diff --git a/Documentation/devicetree/bindings/regulator/dlg,da9121.yaml b/Documentation/devicetree/bindings/regulator/dlg,da9121.yaml
+index 24ace6e1e5ec..63e1161a87de 100644
+--- a/Documentation/devicetree/bindings/regulator/dlg,da9121.yaml
++++ b/Documentation/devicetree/bindings/regulator/dlg,da9121.yaml
+@@ -83,6 +83,7 @@ properties:
+ 
+   regulators:
+     type: object
++    additionalProperties: false
+     description: |
+       List of regulators provided by the device
+ 
+diff --git a/Documentation/devicetree/bindings/regulator/maxim,max77802.yaml b/Documentation/devicetree/bindings/regulator/maxim,max77802.yaml
+index 236348c4710c..71138c611b6c 100644
+--- a/Documentation/devicetree/bindings/regulator/maxim,max77802.yaml
++++ b/Documentation/devicetree/bindings/regulator/maxim,max77802.yaml
+@@ -79,6 +79,7 @@ patternProperties:
+     patternProperties:
+       regulator-state-(standby|mem|disk):
+         type: object
++        additionalProperties: true
+         properties:
+           regulator-mode: false
+ 
+diff --git a/Documentation/devicetree/bindings/regulator/maxim,max8997.yaml b/Documentation/devicetree/bindings/regulator/maxim,max8997.yaml
+index 4321f061a7f6..2b266ea43716 100644
+--- a/Documentation/devicetree/bindings/regulator/maxim,max8997.yaml
++++ b/Documentation/devicetree/bindings/regulator/maxim,max8997.yaml
+@@ -111,6 +111,7 @@ properties:
+ 
+   regulators:
+     type: object
++    additionalProperties: false
+     description:
+       List of child nodes that specify the regulators.
+ 
+diff --git a/Documentation/devicetree/bindings/regulator/mt6315-regulator.yaml b/Documentation/devicetree/bindings/regulator/mt6315-regulator.yaml
+index 37402c370fbb..364b58730be2 100644
+--- a/Documentation/devicetree/bindings/regulator/mt6315-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/mt6315-regulator.yaml
+@@ -29,6 +29,7 @@ properties:
+       "^vbuck[1-4]$":
+         type: object
+         $ref: "regulator.yaml#"
++        unevaluatedProperties: false
+ 
+         properties:
+           regulator-compatible:
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
+index 8b7c4af4b551..3266cd0c580f 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
+@@ -35,6 +35,7 @@ patternProperties:
+     description: List of regulators and its properties
+     type: object
+     $ref: regulator.yaml#
++    unevaluatedProperties: false
+ 
      properties:
-       port@0:
-         $ref: /schemas/graph.yaml#/$defs/port-base
-+        unevaluatedProperties: false
+       qcom,ocp-max-retries:
+diff --git a/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
+index 1ddc1efd19e2..f97b8083678f 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
+@@ -20,6 +20,7 @@ properties:
+ 
+   lab:
+     type: object
++    additionalProperties: false
+ 
+     properties:
+       qcom,soft-start-us:
+@@ -33,11 +34,19 @@ properties:
          description:
-           Input port node, single endpoint describing the input port.
+           Short-circuit and over-current interrupts for lab.
  
-@@ -103,6 +104,7 @@ properties:
++      interrupt-names:
++        minItems: 1
++        items:
++          - const: sc-err
++          - const: ocp
++
+     required:
+       - interrupts
++      - interrupt-names
  
-       port@1:
-         $ref: /schemas/graph.yaml#/$defs/port-base
-+        unevaluatedProperties: false
+   ibb:
+     type: object
++    additionalProperties: false
+ 
+     properties:
+       qcom,discharge-resistor-kohms:
+@@ -52,8 +61,15 @@ properties:
          description:
-           Output port node, single endpoint describing the output port.
+           Short-circuit and over-current interrupts for ibb.
  
-diff --git a/Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml b/Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml
-index 59ab16ad12f1..2abb7d21c0d1 100644
---- a/Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml
-@@ -68,6 +68,7 @@ properties:
++      interrupt-names:
++        minItems: 1
++        items:
++          - const: sc-err
++          - const: ocp
++
+     required:
+       - interrupts
++      - interrupt-names
  
-   video-firmware:
+ required:
+   - compatible
+diff --git a/Documentation/devicetree/bindings/regulator/richtek,rt4801-regulator.yaml b/Documentation/devicetree/bindings/regulator/richtek,rt4801-regulator.yaml
+index 091150c4e579..4a8a221bc902 100644
+--- a/Documentation/devicetree/bindings/regulator/richtek,rt4801-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/richtek,rt4801-regulator.yaml
+@@ -42,6 +42,7 @@ patternProperties:
+   "^DSV(P|N)$":
      type: object
-+    additionalProperties: false
+     $ref: regulator.yaml#
++    unevaluatedProperties: false
+     description:
+       Properties for single display bias regulator.
  
-     description: |
-       Firmware subnode is needed when the platform does not
-diff --git a/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml b/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml
-index 199f45217b4a..29d0cb6c6ebe 100644
---- a/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml
-@@ -95,6 +95,7 @@ properties:
+diff --git a/Documentation/devicetree/bindings/regulator/rohm,bd71815-regulator.yaml b/Documentation/devicetree/bindings/regulator/rohm,bd71815-regulator.yaml
+index 7d0adb74a396..d61e8675f067 100644
+--- a/Documentation/devicetree/bindings/regulator/rohm,bd71815-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/rohm,bd71815-regulator.yaml
+@@ -27,6 +27,7 @@ properties:
+     description:
+       properties for wled regulator
+     $ref: regulator.yaml#
++    unevaluatedProperties: false
  
-   video-firmware:
-     type: object
-+    additionalProperties: false
- 
-     description: |
-       Firmware subnode is needed when the platform does not
-diff --git a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
-index 90b4af2c9724..42ee3f06c6be 100644
---- a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
-@@ -86,6 +86,7 @@ properties:
- 
-   video-firmware:
-     type: object
-+    additionalProperties: false
- 
-     description: |
-       Firmware subnode is needed when the platform does not
-diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-index e2874683b4d5..cf361dd9de08 100644
---- a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-@@ -86,6 +86,7 @@ properties:
- 
-   video-firmware:
-     type: object
-+    additionalProperties: false
- 
-     description: |
-       Firmware subnode is needed when the platform does not
-diff --git a/Documentation/devicetree/bindings/media/qcom,sdm660-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sdm660-venus.yaml
-index 33da7d3cfd38..45e3f58f52bd 100644
---- a/Documentation/devicetree/bindings/media/qcom,sdm660-venus.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sdm660-venus.yaml
-@@ -104,6 +104,7 @@ properties:
- 
-   video-firmware:
-     type: object
-+    additionalProperties: false
- 
-     description: |
-       Firmware subnode is needed when the platform does not
-diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
-index 177bf81544b1..8edc8a2f43a5 100644
---- a/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
-@@ -81,6 +81,7 @@ properties:
- 
-   video-firmware:
-     type: object
-+    additionalProperties: false
- 
-     description: |
-       Firmware subnode is needed when the platform does not
-diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-venus.yaml
-index 680f37726fdf..57d503373efe 100644
---- a/Documentation/devicetree/bindings/media/qcom,sdm845-venus.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sdm845-venus.yaml
-@@ -96,6 +96,7 @@ properties:
- 
-   video-firmware:
-     type: object
-+    additionalProperties: false
- 
-     description: |
-       Firmware subnode is needed when the platform does not
-diff --git a/Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml
-index ebf8f3d866a5..4b7a12523dcf 100644
---- a/Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml
-@@ -92,6 +92,7 @@ properties:
- 
-   video-firmware:
-     type: object
-+    additionalProperties: false
- 
-     description: |
-       Firmware subnode is needed when the platform does not
+     properties:
+       regulator-name:
 -- 
 2.34.1
 
