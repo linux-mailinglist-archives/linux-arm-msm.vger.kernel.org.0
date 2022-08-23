@@ -2,240 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE89259EC5F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 21:32:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 328FE59EC60
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 21:33:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231229AbiHWTcN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Aug 2022 15:32:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51554 "EHLO
+        id S232251AbiHWTcy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Aug 2022 15:32:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231258AbiHWTbx (ORCPT
+        with ESMTP id S229868AbiHWTcb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Aug 2022 15:31:53 -0400
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA8F8501B4;
-        Tue, 23 Aug 2022 11:23:25 -0700 (PDT)
-Received: by mail-qk1-x733.google.com with SMTP id f4so10939612qkl.7;
-        Tue, 23 Aug 2022 11:23:25 -0700 (PDT)
+        Tue, 23 Aug 2022 15:32:31 -0400
+Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC3D4DF4E9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 11:24:41 -0700 (PDT)
+Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-333b049f231so402209127b3.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 11:24:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc;
-        bh=hl2ZhT5jYud6nqmuitdZrPDQAyGkFVueC+KbleXIJi0=;
-        b=JrIa1OFDqt41Da0UO3IcnulL7dkdWXnYr6hnZMzWYSbcrkSN7ou30SIEnzMbJrKsY6
-         u5CuHohXigZbEbyhpYK9JlS6swj+dpVrb1cli96GwuysoJtnaf2+65TX34uEdUsOtCoN
-         Fr6Njl3SuprVW+ahKp2U4qoTQ3hDUR702g2c1SyBlYjS9leEBj6OQiQj0QI40xwIp8pV
-         juISk+iYdvTEfJSIedYrRpGdJbMj8Zp6RupnPX6dBLSeTZSa1DM96OsTPNrOMaxdFA9J
-         8dbyE9d9W5uHSlC468z302NWFPX5zLLvxWhAtaTmnaK2pV/VKA28fCze7L4vEn2F+6jT
-         7DYQ==
+        bh=XtHnpqNsO1GqMrMs/hDiQG1cyMYMiBI2ato5C3wCzTY=;
+        b=ZKjjBYj1gBxAdyZVr4lWAsSGku+8GieBuHQ0OEl+X6QIkz2TOPeiJzxckGICnDAK6n
+         HQDdOGwtXOJmY2+WICC2VDh8zfUiHfdLpJC8lWSq7GxlkVvqWeAgjuHN4CFZcvp6aLOZ
+         khUt1UxKnVrjmLB7um48WbJx2FswKGDvb7Oe2zpjfVf9shqM7nucZZVk+DMnjbtAEIIu
+         yI/uwG1Y513oEBHTDMT3NV3d95LxaNIG/5QDAwtKNc7sKA2wBoKhbb+hb73rCvLoG64i
+         wc5mWc5YcuVubR46MgT47K/oMOGJQlY7a9xMpfU0Dwz4AIlp11JdSygsuDWpwwtdQjyk
+         uHdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc;
-        bh=hl2ZhT5jYud6nqmuitdZrPDQAyGkFVueC+KbleXIJi0=;
-        b=iwSt0Q1Z3B2nElEaomzGS0zsLBw9LmjEal8PNXk0akSMFaMLULx4gFZVi70w+9xDMB
-         Nu4gaWpml0i1DKUhjsu1BD/Iiw0yjuCbvH4ersHr8nJC4oBpyqlzI6YuMMybZuLbsxLF
-         bbzD0XITSVQGdWjwMv5ckZrsz5WJVAYCIDPeEYUOph23/P+q5azWZezb61riBMH0NvkB
-         xCoeYfzpdwO+RZwPffBEVrNL9/ljteeUPkAdl1yZF+aDDaucu2JhNQ9hkihshkUGuF6r
-         2O6XDAl+RsXv3wU8HT0JmllJvHHj3K+b/2uSg6qdpl8mr623M2s6i4aCq8JYCubagJlA
-         ublw==
-X-Gm-Message-State: ACgBeo0UzFEKZF5TuxFS7b5rPdA2diOO+KgHbXz+aNPl8VECl9MVY0uI
-        gyC2x2rmXQJQMX+wMgaqtDmiznFz0w5kd/GVwTQ=
-X-Google-Smtp-Source: AA6agR6uzuFu5gu6+eBn1q09mUSGCdjReoka/EFxwiWXrFCxt/cPbOLXqEiSJanMMVL/Mgl9gFFX4Aap050CjTsOfDM=
-X-Received: by 2002:a37:27c1:0:b0:6bb:41b5:2d89 with SMTP id
- n184-20020a3727c1000000b006bb41b52d89mr17033459qkn.679.1661279004133; Tue, 23
- Aug 2022 11:23:24 -0700 (PDT)
+        bh=XtHnpqNsO1GqMrMs/hDiQG1cyMYMiBI2ato5C3wCzTY=;
+        b=kIsoAd21T7ddaSzgUGBD8nWWsImXv2LOJ4CLJNIsG0NqIkv9R1ZhhCZipFpm8s4GYX
+         RKIJUtc8yOpxFe1TzMISmhyFfxq8w+x1pxkRKUQ/qIrye5U24vaf0bhS6vAqtJ6BdYCb
+         ibOyV7hh/qeJitSspYPlj8c09ho/IA9Vew2dM0z9xUTrPiq8GjUe1WtnEyYdbH0EXkAU
+         gA6SiG6Fdv2iXPGyLzbKZVVX28G5wrjEvsT2qn/Pg8JBcQMeOzxHX1nbabtSnMFaMu1S
+         8uUcn7rBH/iXLkUDQcmlLoMT7mS1MXsEF6uatSDMMPthkPhJq2ynODqdrRwrTIcyveOx
+         kUYA==
+X-Gm-Message-State: ACgBeo3KgxCyuflyhS5L3ejmnBIbg8WsUGxzVErSu/WuM9XmuazJZ+l2
+        iHEoAwqQ6cqRrXaNbQZuNABLqnRnURETx3EF8jZr4g==
+X-Google-Smtp-Source: AA6agR5pGU5afgAW1EmPG74/gUZ4nBuucS0dag+FVmm04t1k3abnSKIImoKbMJKXkhk9kD94wSV2vICNKg4sS6nDwjk=
+X-Received: by 2002:a0d:eb87:0:b0:338:d06b:e605 with SMTP id
+ u129-20020a0deb87000000b00338d06be605mr20055821ywe.316.1661279079937; Tue, 23
+ Aug 2022 11:24:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220823145649.3118479-7-robh@kernel.org>
-In-Reply-To: <20220823145649.3118479-7-robh@kernel.org>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Tue, 23 Aug 2022 20:23:13 +0200
-Message-ID: <CAOX2RU4u+v9EPAPoxZmL4iGAmt+VuuxNJW-_AE7TZaFHZBTaEA@mail.gmail.com>
-Subject: Re: [PATCH] regulator: dt-bindings: Add missing (unevaluated|additional)Properties
- on child nodes
-To:     Rob Herring <robh@kernel.org>
-Cc:     Support Opensource <support.opensource@diasemi.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
+References: <20220726173824.1166873-1-dianders@chromium.org>
+ <20220726103631.v2.4.Ie85f68215ada39f502a96dcb8a1f3ad977e3f68a@changeid>
+ <CAMSo37XsawRxTnJriLUAwJAj0+ZzpACtMiR_3V7H1H9WXg3T_Q@mail.gmail.com>
+ <CAD=FV=V5c0bCOCBvdnqVJ6Sa1XKeg+d7kTEL2Okh4GAL66MGiw@mail.gmail.com>
+ <CAMSo37Uve4qrAA81zrO9eOGc4y7vjg-OZ9L7m9xWM7UkQ6PzmQ@mail.gmail.com>
+ <CAMSo37U1uxUFkn4Jda5E+nDiz0wp8_ERbNa9BUgWttZ6dEssAg@mail.gmail.com> <CAD=FV=WNNAYtdoocp_ShyNBOBmqSSr79=x_2UKq+yfA+HiOo9w@mail.gmail.com>
+In-Reply-To: <CAD=FV=WNNAYtdoocp_ShyNBOBmqSSr79=x_2UKq+yfA+HiOo9w@mail.gmail.com>
+From:   Yongqin Liu <yongqin.liu@linaro.org>
+Date:   Wed, 24 Aug 2022 02:24:29 +0800
+Message-ID: <CAMSo37W47x-rFdNqJBJPW6TqCYC=K2fUS3FRPRCUg=t37a3u-Q@mail.gmail.com>
+Subject: Re: [PATCH v2 4/7] regulator: core: Allow specifying an initial load
+ w/ the bulk API
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Mark Brown <broonie@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Javier Martinez Canillas <javier@dowhile0.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Adam Ward <Adam.Ward.opensource@diasemi.com>,
-        Hsin-Hsiung Wang <hsin-hsiung.wang@mediatek.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        LKML <linux-kernel@vger.kernel.org>,
         Sumit Semwal <sumit.semwal@linaro.org>,
-        ChiYuan Huang <cy_huang@richtek.com>,
-        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
+        John Stultz <jstultz@google.com>,
+        Alistair Delva <alistair.delva@linaro.org>,
+        Todd Kjos <tkjos@google.com>, Steve Muckle <smuckle@google.com>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 23 Aug 2022 at 16:57, Rob Herring <robh@kernel.org> wrote:
->
-> In order to ensure only documented properties are present, node schemas
-> must have unevaluatedProperties or additionalProperties set to false
-> (typically).
->
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
->  .../bindings/regulator/dlg,da9121.yaml           |  1 +
->  .../bindings/regulator/maxim,max77802.yaml       |  1 +
->  .../bindings/regulator/maxim,max8997.yaml        |  1 +
->  .../bindings/regulator/mt6315-regulator.yaml     |  1 +
->  .../bindings/regulator/qcom,spmi-regulator.yaml  |  1 +
->  .../regulator/qcom-labibb-regulator.yaml         | 16 ++++++++++++++++
->  .../regulator/richtek,rt4801-regulator.yaml      |  1 +
->  .../regulator/rohm,bd71815-regulator.yaml        |  1 +
->  8 files changed, 23 insertions(+)
->
-> diff --git a/Documentation/devicetree/bindings/regulator/dlg,da9121.yaml b/Documentation/devicetree/bindings/regulator/dlg,da9121.yaml
-> index 24ace6e1e5ec..63e1161a87de 100644
-> --- a/Documentation/devicetree/bindings/regulator/dlg,da9121.yaml
-> +++ b/Documentation/devicetree/bindings/regulator/dlg,da9121.yaml
-> @@ -83,6 +83,7 @@ properties:
->
->    regulators:
->      type: object
-> +    additionalProperties: false
->      description: |
->        List of regulators provided by the device
->
-> diff --git a/Documentation/devicetree/bindings/regulator/maxim,max77802.yaml b/Documentation/devicetree/bindings/regulator/maxim,max77802.yaml
-> index 236348c4710c..71138c611b6c 100644
-> --- a/Documentation/devicetree/bindings/regulator/maxim,max77802.yaml
-> +++ b/Documentation/devicetree/bindings/regulator/maxim,max77802.yaml
-> @@ -79,6 +79,7 @@ patternProperties:
->      patternProperties:
->        regulator-state-(standby|mem|disk):
->          type: object
-> +        additionalProperties: true
->          properties:
->            regulator-mode: false
->
-> diff --git a/Documentation/devicetree/bindings/regulator/maxim,max8997.yaml b/Documentation/devicetree/bindings/regulator/maxim,max8997.yaml
-> index 4321f061a7f6..2b266ea43716 100644
-> --- a/Documentation/devicetree/bindings/regulator/maxim,max8997.yaml
-> +++ b/Documentation/devicetree/bindings/regulator/maxim,max8997.yaml
-> @@ -111,6 +111,7 @@ properties:
->
->    regulators:
->      type: object
-> +    additionalProperties: false
->      description:
->        List of child nodes that specify the regulators.
->
-> diff --git a/Documentation/devicetree/bindings/regulator/mt6315-regulator.yaml b/Documentation/devicetree/bindings/regulator/mt6315-regulator.yaml
-> index 37402c370fbb..364b58730be2 100644
-> --- a/Documentation/devicetree/bindings/regulator/mt6315-regulator.yaml
-> +++ b/Documentation/devicetree/bindings/regulator/mt6315-regulator.yaml
-> @@ -29,6 +29,7 @@ properties:
->        "^vbuck[1-4]$":
->          type: object
->          $ref: "regulator.yaml#"
-> +        unevaluatedProperties: false
->
->          properties:
->            regulator-compatible:
-> diff --git a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
-> index 8b7c4af4b551..3266cd0c580f 100644
-> --- a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
-> +++ b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
-> @@ -35,6 +35,7 @@ patternProperties:
->      description: List of regulators and its properties
->      type: object
->      $ref: regulator.yaml#
-> +    unevaluatedProperties: false
->
->      properties:
->        qcom,ocp-max-retries:
-> diff --git a/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
-> index 1ddc1efd19e2..f97b8083678f 100644
-> --- a/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
-> +++ b/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
-> @@ -20,6 +20,7 @@ properties:
->
->    lab:
->      type: object
-> +    additionalProperties: false
->
->      properties:
->        qcom,soft-start-us:
-> @@ -33,11 +34,19 @@ properties:
->          description:
->            Short-circuit and over-current interrupts for lab.
->
-> +      interrupt-names:
-> +        minItems: 1
-> +        items:
-> +          - const: sc-err
-> +          - const: ocp
-> +
->      required:
->        - interrupts
-> +      - interrupt-names
->
->    ibb:
->      type: object
-> +    additionalProperties: false
->
->      properties:
->        qcom,discharge-resistor-kohms:
-> @@ -52,8 +61,15 @@ properties:
->          description:
->            Short-circuit and over-current interrupts for ibb.
->
-> +      interrupt-names:
-> +        minItems: 1
-> +        items:
-> +          - const: sc-err
-> +          - const: ocp
-> +
->      required:
->        - interrupts
-> +      - interrupt-names
->
->  required:
->    - compatible
-> diff --git a/Documentation/devicetree/bindings/regulator/richtek,rt4801-regulator.yaml b/Documentation/devicetree/bindings/regulator/richtek,rt4801-regulator.yaml
-> index 091150c4e579..4a8a221bc902 100644
-> --- a/Documentation/devicetree/bindings/regulator/richtek,rt4801-regulator.yaml
-> +++ b/Documentation/devicetree/bindings/regulator/richtek,rt4801-regulator.yaml
-> @@ -42,6 +42,7 @@ patternProperties:
->    "^DSV(P|N)$":
->      type: object
->      $ref: regulator.yaml#
-> +    unevaluatedProperties: false
->      description:
->        Properties for single display bias regulator.
->
-> diff --git a/Documentation/devicetree/bindings/regulator/rohm,bd71815-regulator.yaml b/Documentation/devicetree/bindings/regulator/rohm,bd71815-regulator.yaml
-> index 7d0adb74a396..d61e8675f067 100644
-> --- a/Documentation/devicetree/bindings/regulator/rohm,bd71815-regulator.yaml
-> +++ b/Documentation/devicetree/bindings/regulator/rohm,bd71815-regulator.yaml
-> @@ -27,6 +27,7 @@ properties:
->      description:
->        properties for wled regulator
->      $ref: regulator.yaml#
-> +    unevaluatedProperties: false
->
->      properties:
->        regulator-name:
-> --
-> 2.34.1
+Hi, Douglas
 
-For qcom,spmi-regulator.yaml:
-Reviewed-by: Robert Marko <robimarko@gmail.com>
+On Tue, 23 Aug 2022 at 22:50, Doug Anderson <dianders@chromium.org> wrote:
 >
+> Hi,
+>
+> On Mon, Aug 22, 2022 at 11:23 PM Yongqin Liu <yongqin.liu@linaro.org> wrote:
+> >
+> > Hi, Douglas
+> >
+> > Just an update on the fix you pointed out previously here:
+> > > > [1] https://lore.kernel.org/r/20220809142738.1.I91625242f137c707bb345c51c80c5ecee02eeff3@changeid
+> >
+> > With it I could boot the hikey960 build to the home screen if it does
+> > not use the GKI kernel.
+> > but the problem will be reproduced if it uses the GKI kernel.
+> >
+> > And if this change is reverted, then it could boot with the GKI kernel as well.
+> >
+> > I am not sure what's the reason there, but there seems to be some
+> > difference with the fix above and the workaround of revert.
+> > Not sure if you have any idea about that.
+> >
+> > Regarding the GKI kernel(Android Generic Kernel Image)[2], it's built
+> > from the android-mainline tree(f51334eac4de) without any workaround.
+> > (Neither the revert, nor the fix applied), and the regulator modules
+> > used for the hikey960 build are hi6421v530-regulator.ko and
+> > hi655x-regulator.ko
+> >
+> > I am still not sure if it would work with the GKI kernel that has the
+> > fix that you pointed out in. the case that both the GKI kernel and
+> > vendor tree have the fix.
+> > Will update here when I have some results.
+
+Just checked, with the fix applied in the GKI kernel, the problem is
+not reproduced again.
+
+> > [2]: https://source.android.com/docs/core/architecture/kernel/generic-kernel-image?hl=en
+>
+> That's not too surprising. The broken patch is in the core kernel so
+> you need the fix in the core kernel.
+Sorry, I still do not get the point here.
+
+The GKI kernel is the same one, that does not have the revert and the
+fix applied.
+
+for the vendor tree(the ko files and dtb files are used)
+#1 built with this commit reverted.
+#2 built with the fix applied.
+
+#1 could boot with the GKI kernel, while #2 does not boot with the same error.
+What might cause the difference?
+
+> I think that means you'll have to
+> wait until `android-mainline` gets the fix. I don't work on Android,
+> so if there's some other route to get an expedited fix into
+> android-mainline I'm not aware of it.
+
+Thanks, I will wait for the fix to be merged into the android-mainline,
+before that I will use the revert workaround for the moment.
+
+-- 
+Best Regards,
+Yongqin Liu
+---------------------------------------------------------------
+#mailing list
+linaro-android@lists.linaro.org
+http://lists.linaro.org/mailman/listinfo/linaro-android
