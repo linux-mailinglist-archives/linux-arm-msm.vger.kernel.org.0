@@ -2,61 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A2B2159E600
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 17:29:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDCD359E4DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 16:05:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243010AbiHWP3E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Aug 2022 11:29:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53734 "EHLO
+        id S231395AbiHWOFr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Aug 2022 10:05:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242984AbiHWP2r (ORCPT
+        with ESMTP id S242109AbiHWODd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Aug 2022 11:28:47 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED683B6D4E;
-        Tue, 23 Aug 2022 04:10:48 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id EA515B81CD7;
-        Tue, 23 Aug 2022 11:09:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E3EDC433D6;
-        Tue, 23 Aug 2022 11:09:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661252974;
-        bh=UpEoL/7Dt4dHrMZYSGjJSXKxqA1hFx3KNHDWHtgrliQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=XTjGj4vRbWLLEGxGZ03VClIdP7C+R35uKFwlMeibUAhMbp54Ni0IRvL+5Zo1DGnWS
-         mDaCSiVKu+U6Ao4kE1ILd95fJr9hQkpnqg5Y71XJLja/6SHl0BAD+d00V6uA56OGYr
-         RHfZqHEMInlMJNHnxmtsILKLaiz8uDCqhGDO4O2MLJxHCBMykVEzXj8xgDf7r+XBOF
-         xESw7EcE3aoNa08cQNgVmYIvg1ih5Z6wST+HbY4aICW0nDtdoOOYY8s+kUJL+bFFnE
-         pyoAjiafC4n4ndQwL+AJr6MZfyrIp+rzSk6BDLThCoQW8+xncTcnN1UZlvQstj4alp
-         BpZI8nQaCkhpw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oQRmn-0002G1-Rh; Tue, 23 Aug 2022 13:09:34 +0200
-Date:   Tue, 23 Aug 2022 13:09:33 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] clk: gcc-sc8280xp: fix broken suspend
-Message-ID: <YwS1bWufBYE6buSy@hovoldconsulting.com>
-References: <20220805121250.10347-1-johan+linaro@kernel.org>
- <20220823021528.7291FC433D6@smtp.kernel.org>
+        Tue, 23 Aug 2022 10:03:33 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26D66247923
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 04:12:55 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id l8so1664611lfc.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 04:12:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=RyGB8PQO8ADQrO2JFjLIJii6hzK5vNZX03ZezGuypGs=;
+        b=oCfh6AI2QwLBOgQEi1W8eHyNhAH/PsXgbcycKMnCTV5RxfayaL3wtv4jIvSOvZZzE8
+         gzUXOExHburHxVgMSsMbHibLI1L2SnbkuVLjvD+bljZz7Sn6Mia3nJOyOn07BVOgDr2l
+         abxhLitpMAPOzrXk3jSQvcxgg7QwV8n5lW1lQqSbk8+a6T5oNh/sQQpbsuMaBSgrrI8A
+         bJ2jSdmA27l2XZwB1wTkNwf60Ej1NEZsOhpD4PpcvP1LSahuyUmZkYQ+Q6M13KC/36C/
+         o/KZNDD1g/R8rdQRYab4Ck4uov5qDnDC/psQAJognpFGI2eXoLgZ6Dd82cMKEbgDGmgv
+         HJQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=RyGB8PQO8ADQrO2JFjLIJii6hzK5vNZX03ZezGuypGs=;
+        b=3zhNQxqJQuEUjmbZ6/MzA4F9CpJwl3wNaXVfzMCPjCmVcHyzd0bA9Blhg2LV2kxyc4
+         V/IfYV9qHJkgYQowLMP/DTd5LBIhL3Oemtj4sMAPpxLTCWkCxhJvOE+PCMkxY3xguI5J
+         r1M6F2tASdqqJRzUDFUUBGA5yhT0N91fvo49IspI0Ld0ce0U6j6kTYqcTxmj9N7SSsRv
+         /xup2/sEiDxgMh+IB9WHKgbkPlwrDPqddg69v7C2ko3jIL+X/bOTbRIvn6n6xFb76uHa
+         Kqe7PN5/u474m7GFkZQ4LtmvzMOClqJ1qf7cPlfX7o+huRIhuAnosDzcgy/CKQMOOsyK
+         swQA==
+X-Gm-Message-State: ACgBeo3cJgY/awW2R2mnWK+uUHT+IGqeQBRjKj/TAW9F0u4MZZyamWlg
+        OncRUbW/76vd9wBiOIL6SlRiOg==
+X-Google-Smtp-Source: AA6agR431MJa34QlqrqboyJ2CF1O1nEgGRTLQBgHBhF/nzaTuInpM0Ee1WeB028VXCHqg7KXMU98oA==
+X-Received: by 2002:a19:654f:0:b0:492:f148:beb with SMTP id c15-20020a19654f000000b00492f1480bebmr1379997lfj.493.1661253109390;
+        Tue, 23 Aug 2022 04:11:49 -0700 (PDT)
+Received: from [192.168.0.11] (89-27-92-210.bb.dnainternet.fi. [89.27.92.210])
+        by smtp.gmail.com with ESMTPSA id r30-20020ac25c1e000000b00492f1b2ac0bsm511806lfp.101.2022.08.23.04.11.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Aug 2022 04:11:48 -0700 (PDT)
+Message-ID: <e8a02030-d114-fa4b-1978-15327501b7e9@linaro.org>
+Date:   Tue, 23 Aug 2022 14:11:47 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220823021528.7291FC433D6@smtp.kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v4 5/6] dt-bindings: drm/msm/gpu: Add optional resets
+Content-Language: en-US
+To:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1660927246-11327-1-git-send-email-quic_akhilpo@quicinc.com>
+ <20220819221017.v4.5.Ieffadd08a071a233213ced4406bf84bb5922ab9a@changeid>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220819221017.v4.5.Ieffadd08a071a233213ced4406bf84bb5922ab9a@changeid>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,43 +87,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 22, 2022 at 07:15:25PM -0700, Stephen Boyd wrote:
-> Quoting Johan Hovold (2022-08-05 05:12:48)
-> > The Qualcomm PCIe driver currently does not implement suspend at all so
-> > we need to mark the GDSCs as always-on to prevent genpd from disabling
-> > them.
-> > 
-> > Similarly, the Qualcomm dwc3 USB suspend implementation is also
-> > incomplete and the controller doesn't currently survive a suspend cycle
-> > unless the GDSC is kept on. Note that this has nothing to with whether
-> > wakeup is enabled or not (cf. [1]).
-> > 
-> > With these two workarounds, we have somewhat functional suspend on the
-> > SC8280XP reference design and Lenovo Thinkpad X13s until the missing
-> > driver support is in place (even USB remote wakeup works with [2]
-> > applied).
+On 19/08/2022 19:40, Akhil P Oommen wrote:
+>  Documentation/devicetree/bindings/display/msm/gpu.yaml | 7 +++++++
+>  1 file changed, 7 insertions(+)
 > 
-> Are these urgently needed for this release or does suspend not really
-> work yet on sc8280xp? I'm trying to understand if we need to apply
-> these to the fixes tree (in which case why isn't there a Fixes tag
-> targetting whatever commit broke suspend) or if they can wait for the
-> next release and come through clk-next.
+> diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Documentation/devicetree/bindings/display/msm/gpu.yaml
+> index 3397bc3..4576b31 100644
+> --- a/Documentation/devicetree/bindings/display/msm/gpu.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
+> @@ -109,6 +109,13 @@ properties:
+>        For GMU attached devices a phandle to the GMU device that will
+>        control the power for the GPU.
+>  
+> +  resets:
+> +    maxItems: 1
+> +
+> +  reset-names:
+> +    items:
+> +      - const: cx_collapse
+> +
 
-They are urgently needed as sc8280xp does not survive a suspend cycle
-without them (e.g. crashes on resume) and this is not something that
-users expect when closing the lid of their laptops.
+Just one blank line, not two. You can keep Rob's ack with that change.
 
-This is not a regression, but I guess I could have pointed to the commit
-adding the sc8280xp clock driver and GDSC power-domain definitions:
+>  required:
+>    - compatible
 
-Fixes: d65d005f9a6c ("clk: qcom: add sc8280xp GCC driver")
 
-As several Qualcomm drivers simply ignore system PM and, for example,
-leave clocks enabled during suspend, we also need to keep the
-power-domains enabled.
-
-I noticed that Bjorn applied these for 6.1, but I believe this is 6.0
-material (or at the least the USB one is as PCI support for sc8280xp is
-being added in 6.1).
-
-Johan
+Best regards,
+Krzysztof
