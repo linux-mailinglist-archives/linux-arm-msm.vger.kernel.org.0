@@ -2,66 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 77F6459E637
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 17:42:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A466159E521
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 16:33:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241499AbiHWPlu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Aug 2022 11:41:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36896 "EHLO
+        id S241050AbiHWOdB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Aug 2022 10:33:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241545AbiHWPlK (ORCPT
+        with ESMTP id S240968AbiHWOcr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Aug 2022 11:41:10 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 186C1760FC;
-        Tue, 23 Aug 2022 04:36:48 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id BB5E0B81CCF;
-        Tue, 23 Aug 2022 11:35:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FFB8C433D6;
-        Tue, 23 Aug 2022 11:35:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661254558;
-        bh=lrNGnTi7OrnogAjkHr5SAO67riv511ycxt2FHZbAVZw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=CtVawSmcELTO7GRiu4HkWLwofIZjcdKqhSOGEUNchQgbqdUh8kmXcNx4qh509zCqp
-         vDQYqkIR5sxaxfw18R2rC0QKm2fxGCqPTVcTE20GgjVStR/IsD1hjqR33c7diC/d6a
-         BEpkK257PLuu7ajgCm1hCE5rjYLXFkUv9V8L7Z9GZK5ARUImJ2bJsPCoM4GJA9pej4
-         +dDy0SQtFTXytRDsEX3RdOkaxeARTM33b8Niq00VtzkMlmje+9YB2KwIq56tM89XLv
-         YOv41TVBsMoRQsfdGjtifQ/szrgxwA6l5M/17Oduzr8LuMlvPtGJEwAolKRf2cFxpN
-         cMqGeEIQCaRpw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oQSCL-0002Q4-F8; Tue, 23 Aug 2022 13:35:58 +0200
-Date:   Tue, 23 Aug 2022 13:35:57 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>, andersson@kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
-        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280: move USB wakeup-source property
-Message-ID: <YwS7ndGJ5cgERJhz@hovoldconsulting.com>
-References: <20220802152642.2516-1-johan+linaro@kernel.org>
- <YwOBEhViD1iY14yL@hovoldconsulting.com>
- <YwQDuXXkgwPAu55D@google.com>
+        Tue, 23 Aug 2022 10:32:47 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7862E2B00D1;
+        Tue, 23 Aug 2022 04:48:32 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27NAg6ZD011060;
+        Tue, 23 Aug 2022 11:47:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=QSLYiHAsn23zUE198X1AV0Aoh53UYUwYj8qTH1l6vnc=;
+ b=d1r05Dn0U1KJpLJk/dqVHvU6S2QXH4yVC1EAWixGoHlzRq4AviChLAE+GBM3GwTfhcqY
+ 5ZQievIuK1WNScgU7c7toLaVXO5nKkJzPh4ypY3YK4N6MUZ9hTkSSl9TRKE+kCmrhrQF
+ llBGGSZhxVKOXKQcPc/aCHqv7Cv2pTzInHiH9ms40eVx4ClGbJ/Z/cHBhCkXziu7hVAJ
+ KfGwhlxVdBLJjZM84H4mL3367x1zSH4RhYp5XFzHNMJyrkWBF7ZIE5WUJIkanRMyCYtB
+ W56+3dmh+QA8VNkcoqsrVVE0c2RPocHyD0fE3uEGBOo1CRaLq98eO0HIphhcJ24320XT pw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j4t6xs8yj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 23 Aug 2022 11:47:32 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27NBlVkc032574
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 23 Aug 2022 11:47:31 GMT
+Received: from [10.216.14.158] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 23 Aug
+ 2022 04:47:28 -0700
+Message-ID: <4d3edb1f-d8a7-8335-78a7-fdfe7c7a8c20@quicinc.com>
+Date:   Tue, 23 Aug 2022 17:17:05 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YwQDuXXkgwPAu55D@google.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.0
+Subject: Re: [RFC 2/2] soc: qcom_stats: Add dynamic debugfs entries for
+ subsystems
+To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+CC:     Caleb Connolly <caleb.connolly@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <20220818142215.2282365-1-abel.vesa@linaro.org>
+ <20220818142215.2282365-2-abel.vesa@linaro.org>
+Content-Language: en-US
+From:   "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>
+In-Reply-To: <20220818142215.2282365-2-abel.vesa@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: jopR7pa8yf0QCVwdur7wVP-KpQgSMpcr
+X-Proofpoint-ORIG-GUID: jopR7pa8yf0QCVwdur7wVP-KpQgSMpcr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-23_04,2022-08-22_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ priorityscore=1501 phishscore=0 impostorscore=0 clxscore=1011
+ malwarescore=0 bulkscore=0 spamscore=0 suspectscore=0 adultscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2208230047
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -70,41 +84,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 22, 2022 at 03:31:21PM -0700, Matthias Kaehlcke wrote:
-> On Mon, Aug 22, 2022 at 03:13:54PM +0200, Johan Hovold wrote:
-> > On Tue, Aug 02, 2022 at 05:26:42PM +0200, Johan Hovold wrote:
-> > > Move the USB-controller wakeup-source property to the dwc3 glue node to
-> > > match the updated binding.
-> > > 
-> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > > ---
-> > > 
-> > > This one can be applied once the following series has been merged:
-> > > 
-> > > 	https://lore.kernel.org/all/20220802151404.1797-1-johan+linaro@kernel.org
-> > 
-> > The above series has now been merged (for 6.0):
-> > 
-> > 	https://lore.kernel.org/all/Yv56fFpuUsxCSxJ8@kroah.com/
-> > 
-> > so that this patch can be applied.
-> 
-> Please apply it together with "clk: qcom: gcc-sc7280: Keep USB GDSC power
-> domains on when USB wakeup is enabled" [1], otherwise USB wakeup won't work,
-> and worse, USB would be broken after returning from system suspend.
+Hi,
 
-If you really need [1] for wakeup to work then it's already broken as
-the hack added to 6.0-rc1 that kept the power domain on in suspend has
-been reverted.
+Thanks for the patch.
+> +static void qcom_register_subsystem_notifiers(struct qcom_stats_priv *stats)
+> +{
+> +	struct device *dev = &stats->dev;
+> +	int i;
+> +
+> +	for (i = 0; i < ARRAY_SIZE(subsystems); i++) {
+> +		const struct subsystem_data *subsystem = &subsystems[i];
+> +		struct subsystem_priv *ss_priv = &stats->ss_priv[i];
+> +
+> +		ss_priv->subsystem = subsystem;
+> +		ss_priv->root = stats->root;
+> +		ss_priv->nb.notifier_call = qcom_stats_subsys_ssr_notify;
+> +		ss_priv->notifier = qcom_register_ssr_notifier(subsystem->name, &ss_priv->nb);
 
-If [1] is also needed for USB to work after resume, we either have a
-bigger problem as I alluded to in my comment to [1] (and the PD needs to
-be always on) or this is due to the PHY no longer being powered down in
-suspend.
+The subsystem->name passed should match the subsystem name already 
+registered with SSR.
 
-Only in the latter case, does this patch need to be held of until [1]
-has been merged AFAICT.
+The names in below table don't match as of now. for e.g. modem uses mpss 
+name.
 
-Johan
+static const struct subsystem_data subsystems[] = {
+         { "modem", 605, 1 },
+         { "wpss", 605, 13 },
+         { "adsp", 606, 2 },
+         { "cdsp", 607, 5 },
+         { "slpi", 608, 3 },
+         { "gpu", 609, 0 },
+         { "display", 610, 0 },
+         { "adsp_island", 613, 2 },
+         { "slpi_island", 613, 3 },
+};
 
-> [1] https://patchwork.kernel.org/project/linux-arm-msm/patch/20220822115246.2.If09027f73daa6e1ed95f5eab02326b543c67132e@changeid/
+struct subsystem_data {
+         const char *name;
+         u32 smem_item;
+         u32 pid;
++      const char *ssr_name;
+};
+
+Can you add one more entry in above struct with the 'ssr_name' for 
+subsystem.
+
+For the adsp_island stat you can re-use the lpass subsystem notification 
+and create/destroy debugfs stats files for both adsp and adsp_island 
+stats, similarly for slpi_island stats comes from slpi.
+
+The gpu and display don't have any pil/ssr and hence same notification 
+won't work for them, however today both of these are unused, so you may 
+want to remove them from above table.
+
+Note that In downstream we have 'apps' stats as well in above for which 
+no registration with SSR is required. May be need to leave 'ssr_name' 
+uninitialized for apps/gpu/display and skip register for them.
+
+Thanks,
+Maulik
+
