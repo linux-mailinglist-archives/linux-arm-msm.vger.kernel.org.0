@@ -2,50 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DEDC859CDC1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 03:24:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F120559CDE4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 03:30:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238876AbiHWBVu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Aug 2022 21:21:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50700 "EHLO
+        id S239311AbiHWBaT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Aug 2022 21:30:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238940AbiHWBVl (ORCPT
+        with ESMTP id S239275AbiHWBaS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Aug 2022 21:21:41 -0400
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9F3158DDD;
-        Mon, 22 Aug 2022 18:21:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-        Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
-        Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-        bh=Yib1tk+uwz/RcC4uYtW/ZehxqivBIeHpfdomfZR8WQQ=; b=Hwmc5eF+dcSqI/qWoh+/bI3qK4
-        snGfaVELtegLLIrYkG+DjslkS8eru/V7DHly4E2V51WpHoCRUo+TRYaFH/tHBG1qOYx+20iY9Zfoi
-        lthhpH7qPHQTEmu5zCzr+HJGVPdyTIkSMU2RAlMCa3lZgL11Sb3k6pwj5eyGum1bBJPMIwCHKcTRE
-        FTztF53NNLVjok0KSk/WRUoyeSv4tosHEELS3OGyWfABGMgQe3oG3BYpEHhg+3mUOoSUmfEc4+IPz
-        drx6HjjAC4QSPxfR7OeX9QstbPJnAnYzC4EyksSk7CDKqFT6g20RVAIAhAEf+l6wMQjHXeH0oZohY
-        2oOb6KjA==;
-Received: from [2601:1c0:6280:3f0::a6b3]
-        by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-        id 1oQIbi-00HAmS-CV; Tue, 23 Aug 2022 01:21:30 +0000
-Message-ID: <0848eb00-5e32-3d2d-0c07-a1fd09164bd9@infradead.org>
-Date:   Mon, 22 Aug 2022 18:21:29 -0700
+        Mon, 22 Aug 2022 21:30:18 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 797785A173;
+        Mon, 22 Aug 2022 18:30:17 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 2DFA3B81A03;
+        Tue, 23 Aug 2022 01:30:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D5AAAC433D6;
+        Tue, 23 Aug 2022 01:30:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1661218214;
+        bh=HHXSTMZr4xr2sTTiYpzVKksEG/XyjauMOiNow2DWcHo=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=DnRU4Nq7TYgclcveo/IifXP9CEZFpmftUlAiEyRrglLEETWxXzHCooKicVOKB0373
+         /a0uIf6OU3dJTo4P1b8WH1xi9C/cg0xxfsaEUjdo/AM2SD0CGexOvlitPxQrTKjr8y
+         3yx1XTVQhSdiy26U36XmTRUP6t+ZlLB6V1aOmc0wJzEMTlOa1Jt1m53fjs5bFutpyX
+         HoF0teZwFckPpsFwXkqI6/MUb5DqVGDthmFxeGusf1TS6BpVmZ3jqfjeEzJjRQz6L9
+         bFfM5obshFvqOYRih5kJQt6YUGbZcHH3Fkz+Ji6h3Oop0hp+s5T26gMRtx4GgbmhEu
+         fPh2M/E1V5VJg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B7C80C4166E;
+        Tue, 23 Aug 2022 01:30:14 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.1.2
-Subject: Re: [PATCH -next] soc: qcom: Make QCOM_RPMPD depend on OF
-Content-Language: en-US
-To:     YueHaibing <yuehaibing@huawei.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220820113202.23940-1-yuehaibing@huawei.com>
-From:   Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <20220820113202.23940-1-yuehaibing@huawei.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net] net: ipa: don't assume SMEM is page-aligned
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <166121821474.29630.17318268860191872272.git-patchwork-notify@kernel.org>
+Date:   Tue, 23 Aug 2022 01:30:14 +0000
+References: <20220818134206.567618-1-elder@linaro.org>
+In-Reply-To: <20220818134206.567618-1-elder@linaro.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, mka@chromium.org, evgreen@chromium.org,
+        bjorn.andersson@linaro.org, quic_cpratapa@quicinc.com,
+        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
+        quic_subashab@quicinc.com, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -53,40 +62,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hello:
 
+This patch was applied to netdev/net.git (master)
+by Jakub Kicinski <kuba@kernel.org>:
 
-On 8/20/22 04:32, YueHaibing wrote:
-> WARNING: unmet direct dependencies detected for PM_GENERIC_DOMAINS_OF
->   Depends on [n]: PM_GENERIC_DOMAINS [=y] && OF [=n]
->   Selected by [m]:
->   - QCOM_RPMPD [=m] && PM [=y] && QCOM_SMD_RPM [=m]
+On Thu, 18 Aug 2022 08:42:05 -0500 you wrote:
+> In ipa_smem_init(), a Qualcomm SMEM region is allocated (if needed)
+> and then its virtual address is fetched using qcom_smem_get().  The
+> physical address associated with that region is also fetched.
 > 
-> PM_GENERIC_DOMAINS_OF depends on OF, so QCOM_RPMPD also depends on it.
+> The physical address is adjusted so that it is page-aligned, and an
+> attempt is made to update the size of the region to compensate for
+> any non-zero adjustment.
 > 
-> Fixes: 7d0221fb5912 ("soc/qcom: Make QCOM_RPMPD select PM_GENERIC_DOMAINS/_OF")
-> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+> [...]
 
-Works for me. Thanks.
+Here is the summary with links:
+  - [net] net: ipa: don't assume SMEM is page-aligned
+    https://git.kernel.org/netdev/net/c/b8d4380365c5
 
-Acked-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
-
-> ---
->  drivers/soc/qcom/Kconfig | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> index e0d7a5459562..024e420f1bb7 100644
-> --- a/drivers/soc/qcom/Kconfig
-> +++ b/drivers/soc/qcom/Kconfig
-> @@ -129,7 +129,7 @@ config QCOM_RPMHPD
->  
->  config QCOM_RPMPD
->  	tristate "Qualcomm RPM Power domain driver"
-> -	depends on PM
-> +	depends on PM && OF
->  	depends on QCOM_SMD_RPM
->  	select PM_GENERIC_DOMAINS
->  	select PM_GENERIC_DOMAINS_OF
-
+You are awesome, thank you!
 -- 
-~Randy
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
