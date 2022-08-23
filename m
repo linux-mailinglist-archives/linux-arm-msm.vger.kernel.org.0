@@ -2,72 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3169759ECE2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 21:51:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51DBD59ECED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 21:56:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232184AbiHWTvf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Aug 2022 15:51:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52956 "EHLO
+        id S231926AbiHWT4z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Aug 2022 15:56:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232622AbiHWTvE (ORCPT
+        with ESMTP id S232228AbiHWT4i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Aug 2022 15:51:04 -0400
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1703EE48
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 11:55:07 -0700 (PDT)
-Received: by mail-qk1-x731.google.com with SMTP id h27so11005667qkk.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 11:55:07 -0700 (PDT)
+        Tue, 23 Aug 2022 15:56:38 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37E4B883F8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 12:05:34 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id 202so13058011pgc.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 12:05:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=0og1NC2/HzAvVvbV76h98xTKlthNFgmiVfi+QQP1fKE=;
-        b=U0z64/twq5fRD8PYe86SWj5MOzpiyeXAojxyeZG0RaM1CXF41MQ7cPW/q9AnhX2dmh
-         K2Y6rdcknRckWMxeZtzuaO410aPqaOGK7MxxbKy3NKHXUAfIhIatbt9pe/+MkwZi9cIn
-         iavxD4ltIYascRH9D2WiBcTk4ZY1mW2Bd2Lio=
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc;
+        bh=Kdb8TxBwkoe3B83ftbWvI5bDuEon4/Ru3EI6rNbmWGQ=;
+        b=Z43eXf7sSp1pEmvfjoOW73lKT1LlllQnMFnv9B3dxhgO56wTdDsGRHhL+uMhTwxJxe
+         6hNMX3LPN8+gR924uesklbfSY7g4v3CrRBOEhPQPmQprz2riJgnmlZV6S1ItTsUk6p0f
+         Yai/xfjAr7wSQXab8eWRJEHot/0yLlRO3HyYU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=0og1NC2/HzAvVvbV76h98xTKlthNFgmiVfi+QQP1fKE=;
-        b=VVNEfu3qMIjNwiyqI4RcKRu2/X7KjMbRkRz4xi2mMRFCbNBoDP8kIaqyjdK8/OjnfD
-         AsgZ1rzKD+iQi+4g9kfAnOLyBzI32wG2ikQneCllgwgAyBbyHeOqzlc8mK295/MRt59E
-         1hSV8FlbkgDyYom3jyoAQ2SAGNUQhKSSzi9JF/UNeP1+PeUwWXEM7sVw9FCi3b7Dug3B
-         SQGNPWx2nczrT6M2zCjuKkoEgKNQpxOk1JY5uTpufDn4etz2vxxAihckMyyZ3glKEwEk
-         GYCPtUHHlJx5HWLx8a5fquxxAr/lgDmV2MIvJxBS3zswBK2rsHmcZM8yZERFgNbziupR
-         j4Yg==
-X-Gm-Message-State: ACgBeo3W4SUproctJnzIdQ9I7W5kqRegVFnDyUyiIO7v9WXvfuHHLABq
-        qiorDHoDFVAuYxkVvkVjRLbdA6tD4FTgC6CcWhHKgw==
-X-Google-Smtp-Source: AA6agR6NLbXWUWNv+sSduGg86IvYbjufKWNoFOftL8eY63TNbzBoCvYh91fB2EfAvaLFYG5z39FD6/3huPMVBknE62c=
-X-Received: by 2002:a05:620a:4553:b0:6bb:1dd0:e44c with SMTP id
- u19-20020a05620a455300b006bb1dd0e44cmr16944782qkp.543.1661280906190; Tue, 23
- Aug 2022 11:55:06 -0700 (PDT)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=Kdb8TxBwkoe3B83ftbWvI5bDuEon4/Ru3EI6rNbmWGQ=;
+        b=B3wlVM6qDTYjTlPxHkfIh/JWT9hM0k+ro+aPgBZVGBAn72Yijs9gkG8ao9SpLFPp8n
+         dIqb0KyEFIF8RkVNoc02jE1zHA9QnPHntITtU93NjXYoKiXk3IO0zU2hOM2Zy1bW+sil
+         WGW+lxDwh3ME4dBSzBDy33/95Z/2i9upQP3z2BVvQMBiemh7Q0wT0hJ3xLGs8uw5EQm0
+         dP0XFMVW0Bvc0wsFpzBlsARbGvqAApNBvtKnvN2hJl+FiFVy9DJpBwdCq9G50QREc5Ja
+         m8zD4jheiAs525DjqItDEChlu2BXWD42Gv5w6Qsshcmz1qY5cjS7s/b1xyTlt1PhGF1Z
+         thJw==
+X-Gm-Message-State: ACgBeo2b/4APDgacdbfGAb8clk4oSfC3jvlxDomAY5kK0P+LHSudDUNY
+        04TIIpYc+15Icd6CXGRaA68Q9Q==
+X-Google-Smtp-Source: AA6agR6IieQ04uStZ7vlgwdj4aRqXinsIAlMP+KbxaXdW2rId0+ARMMoqZr7isvwnxHsH3I//9epxw==
+X-Received: by 2002:a63:5418:0:b0:42a:d773:cbd6 with SMTP id i24-20020a635418000000b0042ad773cbd6mr5543100pgb.106.1661281533664;
+        Tue, 23 Aug 2022 12:05:33 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:fee6:a961:5d1d:553])
+        by smtp.gmail.com with UTF8SMTPSA id e3-20020a170902784300b00172de80fec4sm5824250pln.69.2022.08.23.12.05.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Aug 2022 12:05:33 -0700 (PDT)
+Date:   Tue, 23 Aug 2022 12:05:31 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH 1/2] clk: qcom: gcc-sc7180: Keep USB GDSC power domain on
+ when USB wakeup is enabled
+Message-ID: <YwUk+ymRUdwzBTnX@google.com>
+References: <20220822115246.1.I45235b7c40997bc2abf813e4722b4dcdd6aecf6b@changeid>
+ <20220822235207.A4D8EC433D6@smtp.kernel.org>
 MIME-Version: 1.0
-References: <20220810204750.3672362-1-bjorn.andersson@linaro.org>
- <20220810204750.3672362-2-bjorn.andersson@linaro.org> <a13bce60-25b4-d075-d56a-d1283e91e3ba@linaro.org>
- <20220814210104.GA690892-robh@kernel.org> <Yv1y9Wjp16CstJvK@baldur>
- <CAE-0n53AjJ_G6yZoTALWpKvZUdF+8nFZ+TQh=Ch=8xgdMVqDkw@mail.gmail.com>
- <CACeCKadP-AZ8OU4A=7CrwAz7yuLvMvjvAcw7K-FORFmkMvx7cA@mail.gmail.com>
- <YwAIGf59H9iKUhXF@builder.lan> <CACeCKadt3aoz8MZvy+tGHCxiHOPty4cLcG7AGS+oMEVnREt4sw@mail.gmail.com>
- <YwBei45gx4oVqSql@builder.lan>
-In-Reply-To: <YwBei45gx4oVqSql@builder.lan>
-From:   Prashant Malani <pmalani@chromium.org>
-Date:   Tue, 23 Aug 2022 11:54:53 -0700
-Message-ID: <CACeCKaewr92JcouMgyiL5rKdHf_dDmoWoyoW-U2snCNBkNijQg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: usb: Introduce GPIO-based SBU mux
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Pin-yen Lin <treapking@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220822235207.A4D8EC433D6@smtp.kernel.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,53 +77,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 19, 2022 at 9:09 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
->
-> We're talking about the static configuration here, where you describe
-> which component are connected together. We can not dynamically switch
-> the Devicetree representation around to match what the Type-C controller
-> negotiates.
+Hi Stephen,
 
-Yes, but we don't need to switch the device tree representation at all.
-The pin routing/connections from the connector (not the cable or the partner),
-to the muxing hardware (QMP phy or anx7625) remains fixed always
-The port driver tells what orientation the peripheral is connected with,
-and the muxing/orientation hardware routes the signals according to that.
+On Mon, Aug 22, 2022 at 04:52:05PM -0700, Stephen Boyd wrote:
+> Quoting Matthias Kaehlcke (2022-08-22 11:53:10)
+> > Set GENPD_FLAG_ACTIVE_WAKEUP for the USB GDSC power domain of SC7180.
+> 
+> Why? Does it fix something? Please add details to the commit text so we
+> know how urgent of a patch it is and why it is important.
 
->
-> But why do you need to express the relationship between these 2
-> components with > 1 link in the graph?
->
-> > The graph is static, since the hardware line routing between components
-> > doesn't change (e.g SSTX1 from the Type-C port is always routed to Pin
-> > X1,X2 on the switch hardware), but that is what the switch is for.
-> > Note that in this case, the expectation is that
-> > the switch driver only registers 1 switch (it can figure out that all
-> > 4 endpoints
-> > go to the same Type-C port).
-> >
->
-> Why do we need to express this with 4 endpoints and then implement code
-> to discover that the 4 endpoints points to the same remote? Why not just
-> describe the logical relationship between the two components in one
-> endpoint reference?
+Without it USB is broken after resume when the PHYs remain enabled
+during suspend.
 
-The issue I see is with the "supplier" side of that graph relationship
-(i.e the DRM bridge side).
-Since the bridge can be directly connected to a DP panel, the
-endpoints can (technically)
-represent a single DP lane. So, using 4 end-points for the
-usb-c-connector port@1 gives
-us something which is compatible with the bridge side endpoints too
-(regardless of what
-the bridge is connected to on the "output" side).
-Reading the discussion, I agree 4 lanes is over-specifying, and 2
-endpoints is probably
-enough (especially if we can use data-lanes on the bridge side
-to define the number of lanes if needed for DP panel connections).
+Johan just sent a patch [1] that always disables the PHYs (again)
+during system suspend, with that this series shouldn't be needed.
+It is possible that in the future we add a mechanism to keep the
+PHYs on depending on some config option (quick, kconfig, ...). If
+that happens we'll have to revisit this series, for now it
+shouldn't be needed assuming Johan's patch gets landed.
 
-BR,
-
--Prashant
+[1] https://patchwork.kernel.org/project/linux-usb/patch/20220823124047.14634-1-johan+linaro@kernel.org/
