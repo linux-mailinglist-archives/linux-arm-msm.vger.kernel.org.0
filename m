@@ -2,77 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F20F59ED67
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 22:37:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B2A459EE0A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 23:16:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230082AbiHWUg7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Aug 2022 16:36:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44022 "EHLO
+        id S230334AbiHWVP4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Aug 2022 17:15:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230050AbiHWUgf (ORCPT
+        with ESMTP id S231321AbiHWVPg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Aug 2022 16:36:35 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F97D261D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 13:19:01 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id w19so29655689ejc.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 13:19:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=l1iBTcJ+I4g1JTfLPRirKOb7WIUh6Sd18iAIN/V+zHQ=;
-        b=c8YudHngMrJ4MJ/hfh+NjYvkynkWBEcm198z3KwNDaSkrf1RxEwqATZXSwqBGDFOTT
-         hlQPvg5TesRDlRGUuREBGEinJDUhhl1SRcCV7VC9o4AYNQB37qJ+t2nQXkBvWmX+j4No
-         3cW0/JEE7YEr4J5wK93gzjyGDLNaFzJp88t0Y=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=l1iBTcJ+I4g1JTfLPRirKOb7WIUh6Sd18iAIN/V+zHQ=;
-        b=MgrPo+bsqNmFdTC/GP4UE7eEfcENu/8Pr3osODrojRBg4+pDKIRBsVuHbXptavNiIl
-         UMX9LdPJEjHRez7Uy1pYxqTsXRhbt/VhTC/DldY304HpW8eWdCHSnYwTxEKXmPcmuCBa
-         AIObts1YczGtIQ25Klaq7orXc8Sh9+ezCmJSQwqwTCrYQ5nl+F45h6DyXQI9pRvjZoW0
-         +pN+Qu3oaVJAuJJBxGT0g462Y2tRxMQJznMwO+VtPLlaDbTIniap8slmuIIsIwvzdJil
-         AmT9AcpVbVbzlWedTanZtb3mqEyw55zSy7xDF9sWUw+kf4nX8xIBmL4kMRvHminihbFF
-         4eZA==
-X-Gm-Message-State: ACgBeo2uXEISJ9ir/ZmPjggQMVbFtKz/v+E47J1Qi7cg7sDzBLTmmiYy
-        c50IOi29/7az+tSA9/FoZPaii1Ue/VY+QMXONFc=
-X-Google-Smtp-Source: AA6agR5e0QD0wkA18DdzBJTCarBJuxvA5XRuWKrNaTrb51LxAygY/KZlsZ7TJpper1RfLiU8u5tZNQ==
-X-Received: by 2002:a17:907:a069:b0:73d:70bc:3702 with SMTP id ia9-20020a170907a06900b0073d70bc3702mr822673ejc.109.1661285939424;
-        Tue, 23 Aug 2022 13:18:59 -0700 (PDT)
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com. [209.85.221.47])
-        by smtp.gmail.com with ESMTPSA id j16-20020a056402239000b00445f545e4besm1930082eda.59.2022.08.23.13.18.58
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Aug 2022 13:18:58 -0700 (PDT)
-Received: by mail-wr1-f47.google.com with SMTP id b5so14023891wrr.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 13:18:58 -0700 (PDT)
-X-Received: by 2002:adf:f90d:0:b0:20c:de32:4d35 with SMTP id
- b13-20020adff90d000000b0020cde324d35mr14338202wrr.583.1661285938285; Tue, 23
- Aug 2022 13:18:58 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220726102024.1.Icc838fe7bf0ef54a014ab2fee8af311654f5342a@changeid>
- <20220822193153.zn2oxljmd76awqot@halaneylaptop> <CAD=FV=V_V-M1fJmeWH_=wG4GB9GERL9ToAZTwAjX9i-6k6QkWA@mail.gmail.com>
- <YwTQ1i5s5cwowRss@sirena.org.uk>
-In-Reply-To: <YwTQ1i5s5cwowRss@sirena.org.uk>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 23 Aug 2022 13:18:43 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=V5VF-cwN7xiqz5HHPORrGGDPgVehC7zwQj2xfi0mi2Jw@mail.gmail.com>
-Message-ID: <CAD=FV=V5VF-cwN7xiqz5HHPORrGGDPgVehC7zwQj2xfi0mi2Jw@mail.gmail.com>
-Subject: Re: [PATCH] regulator: qcom-rpmh: Implement get_optimum_mode(), not set_load()
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Andrew Halaney <ahalaney@redhat.com>,
+        Tue, 23 Aug 2022 17:15:36 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85035110B;
+        Tue, 23 Aug 2022 14:15:35 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3DD63B81F3B;
+        Tue, 23 Aug 2022 21:15:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BD3C433C1;
+        Tue, 23 Aug 2022 21:15:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1661289333;
+        bh=ENj0h/OaTgIdV5SUrWyPWA3nYKs7CRWRwhzMPXuiZf8=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=mCY6k/QjFtBM0L+FAW7xOwTfxm8RXkpK+gPkTtoHv1QATQ883+u8pm/7j4YJAQn2J
+         bkgTwJPevp4u7tY4SWXCq/IjiuUuy4h2lRTb8cQLTETz2bXSr0da3mtfznohal+cx8
+         3ewKAVJSgRBf7dwpKth+YCcZs/4utBag2/fKTF4jlimS5UUO3ioB88/dcoHkIINLr/
+         UOFmNp2JBh/n621JhBoAW1Ki6GWzdWKzYiCKqudTNFkLjvoUy9NLRwcXjyZohwak3B
+         6ETRnr6tV4rwTP0WBA/bMbDHEjxdcTBbqsqUn0+dZWZVOLKBvyX+8Ywn+QoW0hzdJ+
+         Z8Kc/j5Vu/gXA==
+From:   Mark Brown <broonie@kernel.org>
+To:     Iskren Chernev <iskren.chernev@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Robert Marko <robimarko@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20220802221112.2280686-1-iskren.chernev@gmail.com>
+References: <20220802221112.2280686-1-iskren.chernev@gmail.com>
+Subject: Re: [PATCH v4 00/13] PM6125 regulator support
+Message-Id: <166128933023.1993124.17537668863029691140.b4-ty@kernel.org>
+Date:   Tue, 23 Aug 2022 22:15:30 +0100
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.10.0-dev-0c1df
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,30 +63,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Wed, 3 Aug 2022 01:10:59 +0300, Iskren Chernev wrote:
+> This patch series adds SPMI and SMD regulator support for the PM6125 found on
+> SM4250/SM6115 SoCs from QCom.
+> 
+> This code has been tested on:
+> * OnePlus Nord N100 (oneplus,billie2, SoC sm4250)
+> * Redmi 9T (redmi,lemon, SoC sm6115)
+> 
+> [...]
 
-On Tue, Aug 23, 2022 at 6:06 AM Mark Brown <broonie@kernel.org> wrote:
->
-> On Mon, Aug 22, 2022 at 01:13:55PM -0700, Doug Anderson wrote:
->
-> > I guess at this point I'll wait for Mark to give his suggestion for
-> > what to do. Options I'm aware of:
->
-> > a) ${SUBJECT} patch was written as a cleanup as per Mark's request and
-> > we could just revert it.
->
-> > b) We could make it so that failures to get the input/output voltages
-> > doesn't count as an error when going through the get_optimum_mode()
-> > path.
->
-> We could push the checks for a valid voltage down into the drivers, a
-> lot of things aren't particularly sensitive to the output voltage here
-> and are much more sensitive to the current draw.  Depending on people's
-> attitudes to DT stability for Qualcomm platforms we could also fix the
-> affected DTs as well, though that doesn't stop us handling this in the
-> core too.
+Applied to
 
-OK, patch posted with this approach. ("regulator: core: Require
-regulator drivers to check uV for get_optimum_mode()") [1]
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
-[1] https://lore.kernel.org/r/20220823131629.RFT.1.I137e6bef4f6d517be7b081be926059321102fd3d@changeid
+Thanks!
+
+[01/13] dt-bindings: regulator: qcom_spmi: Improve formatting of if-then blocks
+        commit: ac71792707226d1210127611bb622c0362cbff25
+[02/13] dt-bindings: regulator: qcom_spmi: Document PM6125 PMIC
+        commit: 5b2a085baaa15d04396889228f1e11d2cb86b916
+[03/13] dt-bindings: regulator: qcom_smd: Sort compatibles alphabetically
+        commit: 901421765ee1e5501c15a3b76ce926e0cc4967d4
+[04/13] dt-bindings: regulator: qcom_smd: Document PM6125 PMIC
+        commit: d95fe1788438cceab40af5f3f9e9fe15d8c07101
+[05/13] regulator: qcom_spmi: Add support for HFSMPS regulator type
+        commit: 2785025495b6bd630648f8304f8d932b0d0a9f2a
+[06/13] regulator: qcom_spmi: Add support for LDO_510 and FTSMPS
+        commit: 0d1cf568b4e0c65cb533fef2c116fb2883803c53
+[07/13] regulator: qcom_spmi: Sort pmics alphabetically (part 1)
+        commit: 046d7e3246ac028bfe583b4c3bed9530a80004c4
+[08/13] regulator: qcom_spmi: Sort pmics alphabetically (part 2)
+        commit: 9a2da0749ce37d4a74f7becf3b09bf2e0169145a
+[09/13] regulator: qcom_spmi: Add PM6125 PMIC support
+        commit: e62ef4a9f936326e702ef08ea3f65b62bd7d108b
+[10/13] regulator: qcom_smd: Sort pmics alphabetically (part 1)
+        commit: 8e584e84ae65ecc9ee90b187d4b7782dc881e4ad
+[11/13] regulator: qcom_smd: Sort pmics alphabetically (part 2)
+        commit: 13b3d00590243888563cb63b88538a4c60bce57b
+[12/13] regulator: qcom_smd: Sort pmics alphabetically (part 3)
+        commit: a39d0100572e188f00ff4d224af9694c7eb3eeb5
+[13/13] regulator: qcom_smd: Add PM6125 RPM regulators
+        commit: 95b5f3ef4c0cf553a97dd7ce7d6ef85415388011
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
