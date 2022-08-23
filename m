@@ -2,65 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 356EF59CEBD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 04:46:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3316A59CEC9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 04:50:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239273AbiHWCoC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Aug 2022 22:44:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41246 "EHLO
+        id S239741AbiHWCte (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Aug 2022 22:49:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238895AbiHWCoB (ORCPT
+        with ESMTP id S239736AbiHWCtd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Aug 2022 22:44:01 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22788326D9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Aug 2022 19:43:59 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id g129so8848407pfb.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Aug 2022 19:43:59 -0700 (PDT)
+        Mon, 22 Aug 2022 22:49:33 -0400
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E16364B0DE
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Aug 2022 19:49:31 -0700 (PDT)
+Received: by mail-oi1-x231.google.com with SMTP id n124so3598741oih.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Aug 2022 19:49:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc;
-        bh=PynmO5Jk7dMLlFmc4BJabIpYsmxogYHpegMgoaOMSq4=;
-        b=MabqGyxwHR/rSORTB7TeITLkNwTwRIAZ0fWVRA14qsIbhD91j0WkB+KTPJh+TjKtd2
-         Kfa/Xj/wbblHUFxT3lmhHujC6EqGMMnjAQ3hmAZxYdBihPag2jQXaLyIJcrSAKvbZUEx
-         3FHOEZdXgHO8p5RN4ENZM0QcmNDqOThrG57A0=
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc;
+        bh=qNngQwIQXJ31nVO4lcFbXBS0dtdD3bIEXPJhuwz1jyY=;
+        b=ed/MeZggT3Tgl5S6Ch2za6xd3hG1+DB5Jh1Ik/8ZhzjRor+5NFNkgPai5LcdFAjTCu
+         /RDw+AQFLP6dlhph/2Q4b4np9lJ+zPr6/pM/WwtOnGOqN4l8w0S0lbL70+UQ3m/Qvxcz
+         3cBO0FLuBQKM1OR/L0Ha2YxhAlFiJIq0d7CDE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc;
-        bh=PynmO5Jk7dMLlFmc4BJabIpYsmxogYHpegMgoaOMSq4=;
-        b=CZx3aoXAiJ7CYL/vLafNSbMP6yRDa/b7marAz+TumGEgAbxzbKLYNxJ+d6nGMO4+qv
-         ODXQaECIYWuPev/wgG3zUE/Hz4XkGzFhosfC+FkGwlNqIB0iX183xY3VeRDspk3p8nrw
-         1Hc24Cm7q1F2MnfuQCstVrLy98qQEi2mRTUqRrjPm/BPPlE5FH6q6TErGOVSdLf9XfSJ
-         3M4EH0fHjY2qMZJIIRlT8QkuDAYzhrvyXDut7xWLk9YLdKCIkWpFN3+0If9p2MCT64J5
-         Z6I1yas1HBbe/n13GYpeCfjqcnzVR1NcInS8/QrxQNpHwB0vJchgMM0qxN5xzP27Qvzo
-         svcw==
-X-Gm-Message-State: ACgBeo0ub5AHhP6UCl7EP6wkS6uHNmgZuSQffA9aROaFUnyBuoHU1JU8
-        78hTaM7I81ew61lxK/iocnVBYw==
-X-Google-Smtp-Source: AA6agR72B2tpzoHRr2X1icCS5N1hJfZlnCktZgRksrhuGPX7UJF1L2xySUvV0LfAKMWPy7NvsdM88Q==
-X-Received: by 2002:a62:be0e:0:b0:536:76fe:ee96 with SMTP id l14-20020a62be0e000000b0053676feee96mr8956523pff.44.1661222639316;
-        Mon, 22 Aug 2022 19:43:59 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:14dd:44db:a286:d093])
-        by smtp.gmail.com with ESMTPSA id b14-20020a170903228e00b001728eb339e2sm9140538plh.286.2022.08.22.19.43.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Aug 2022 19:43:58 -0700 (PDT)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>
-Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        kernel test robot <lkp@intel.com>
-Subject: [PATCH] drm/msm/dp: Silence inconsistent indent warning
-Date:   Mon, 22 Aug 2022 19:43:56 -0700
-Message-Id: <20220823024356.783318-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.37.1.595.g718a3a8f04-goog
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc;
+        bh=qNngQwIQXJ31nVO4lcFbXBS0dtdD3bIEXPJhuwz1jyY=;
+        b=wyg0W1jeUATuEpGMR+I2EOfuVOR5unaKeAZs1JGDnnkCM+g3z8ZUJ2rPfBhUOQq60/
+         /QG2+Nv8oyTNTLxLZp81E5BMP50nX1cm3r05IBECqsdv2z/PL1HvGHF0PaKIMy8oMXGD
+         FH+PTPQNQDY+HhybpEo8o0II+AqlMDH64JiTmKkesOM5pIj3n0PxNzUA7OlkeV+L0rOT
+         VgS3YSiq9dm4EpMC5rw90JTaPNuWKeNT/Oa7Az7skMG27t22SXGL/VJYFjd4SvBC3z0J
+         cR6tbhBYgp1mNb/Wj6XFUdY/0KyIBeKxMwytdnorYyJa87Ds7YgwUkvzpNS8WBYxAIGd
+         SKFw==
+X-Gm-Message-State: ACgBeo0EAn5PksetezoLBKKWeIipPwZ85c/wrwRyA9+HtHzyk7UkCJfl
+        L7LJOqm2XlCzyzJFT6QD88uQFSABgVvM+N22oUz2lw==
+X-Google-Smtp-Source: AA6agR7TugKjfk7bdpvfqUuZnmwya3w3fhgml1ierllg/GjSmAL4EasyLhRpgFVaxzln08C6FDLNfViffvTs7JNabVE=
+X-Received: by 2002:a05:6808:1142:b0:343:86a0:dedc with SMTP id
+ u2-20020a056808114200b0034386a0dedcmr503266oiu.44.1661222971274; Mon, 22 Aug
+ 2022 19:49:31 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 22 Aug 2022 21:49:30 -0500
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220822062820.1684139-1-judyhsiao@chromium.org>
+References: <20220822062820.1684139-1-judyhsiao@chromium.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Mon, 22 Aug 2022 21:49:30 -0500
+Message-ID: <CAE-0n52WadAt7F3e9smq5UiHpFAmDyqcz7O9YD2u-Lic0xwWWQ@mail.gmail.com>
+Subject: Re: [PATCH v3] arm64: dts: qcom: sc7280: Use "PP1800_L2C" as the DMIC
+ power source.
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Judy Hsiao <judyhsiao@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        dianders@chromium.org, mka@chromium.org, cychiang@google.com,
+        judyhsiao@google.com, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -71,37 +73,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Build robots complain
+Quoting Judy Hsiao (2022-08-21 23:28:20)
+> Use "PP1800_L2C" as the DMIC power source to match the hardware
+> schematic by:
+>    1. Set MIC bias voltage regulator (vdd-micb-supply) to PP1800_L2C.
+>    2. In audio-routing, set VA DMIC01~VA DMIC03 to use the vdd-micb-supply
+>       setting.
+>
+> It fixes the DMIC no sound issue of villager-r1.
+>
+> Co-developed-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
 
- smatch warnings:
- drivers/gpu/drm/msm/dp/dp_link.c:969 dp_link_process_link_status_update() warn: inconsistent indenting
-
-Fix it.
-
-Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Fixes: ea530388e64b ("drm/msm/dp: skip checking LINK_STATUS_UPDATED bit")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/gpu/drm/msm/dp/dp_link.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-index 36f0af02749f..1620110806cf 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.c
-+++ b/drivers/gpu/drm/msm/dp/dp_link.c
-@@ -965,8 +965,7 @@ static int dp_link_process_link_status_update(struct dp_link_private *link)
- 	if (channel_eq_done && clock_recovery_done)
- 		return -EINVAL;
- 
--
--       return 0;
-+	return 0;
- }
- 
- /**
-
-base-commit: 568035b01cfb107af8d2e4bd2fb9aea22cf5b868
--- 
-https://chromeos.dev
-
+Please remove the period from the end of the subject, and maybe make the
+subject something like "Fix audio on Villager" because it does more than
+set the power source.
