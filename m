@@ -2,129 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DE8C59E899
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 19:07:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CFC4E59E8BF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 19:15:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343774AbiHWRHM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Aug 2022 13:07:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46730 "EHLO
+        id S1343973AbiHWRJ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Aug 2022 13:09:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344367AbiHWRF2 (ORCPT
+        with ESMTP id S245155AbiHWRJf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Aug 2022 13:05:28 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31B7215140C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 06:34:22 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id z14-20020a7bc7ce000000b003a5db0388a8so701298wmk.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 06:34:22 -0700 (PDT)
+        Tue, 23 Aug 2022 13:09:35 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B3F78A1DD;
+        Tue, 23 Aug 2022 06:36:27 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id p9so12409992pfq.13;
+        Tue, 23 Aug 2022 06:36:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=hANLL+7DhnD0W2kb20ZNsZlp5AERIcfuD5mxO0wOYB4=;
-        b=yzxEu+Jv+OYdYdQfrSFNwEH0jqct2PWjFD92Bkn/bdmkaz9SHPg43Y2doExDDOACPr
-         b4blOpDhvo4K/f50VBpKSzIwFVszKdGaTsrgkj4fuLQ7gn5UHKSBGyIYkQRaDzxq0xju
-         LBumSEI9K65LYixBjKqyECw50JMgEzSQX9/Ck5qTZZI3NbbO7mV/SEGpNFGSUXPdm7Ac
-         s8f4FsLal+JNqzY9U1V3DxI758HvSUye6CORlw1BfTiYHWWKTmgQXjPN04LNbipf7HIz
-         9qaXvXmUWgAqEloEqpQv5IQ9HBJf0CYiV4YZBhhxJvaYFM8M8L0jWUvSx0auzUTOkN2j
-         KJ6w==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=qkCUHHEjfjSKRNQH08mkmAjUm96MxGOjYlwpNmfHX0U=;
+        b=qLjD8RrkXfDmKSsc6uvFpxxaOKcjFrlX4Ed+uag+3Zcut/RvJBrmAPkRQzyN2ThJDp
+         HogTfLUISfd4IGGr7WwQ4FfKIWDNBiyTGKDGukrQvhEwF/fMh8SGC0Wsdt+L6rmQz94M
+         XMphEOULUrmPEQTUtIz7qzhZpSNdsUDAxW8yo2/XsIHk6YEr8Ps7k9FTThxVaQEMBSnU
+         Q+my5qp/br8t3pPgXgMN2AFRE73097pMSUkx/iq8c3xru2nAQPkku6i+4ku6hmjcQbzF
+         6uuI9nJssK/+iKLSpWBlZTodGnB9dClR8ltHX+fTLzY4ARGl9rmgPEWceOFzJAdd3o51
+         ty7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=hANLL+7DhnD0W2kb20ZNsZlp5AERIcfuD5mxO0wOYB4=;
-        b=enzTaUFibQ0oz4MebC90OItwTKkJAEeFpPF8M6qx3hmGUk2HpL9tBS+C+LAHimjMrW
-         PW0hYvmameUn5sJnDqz7K4+LStAcHKWKSaHQ+gJVU9ChVd2E9qB/Xjx+0BtpV49xQVEm
-         K6mauBH0EwINAH2N3HPVnGS2C4kw9cO4GL1EgWXSaZkHi4EbqPuNJpwnHN5qmjY5yMdS
-         8qcSLUgz7sS8s4FTIRuYqrftLd+JKka7JGeS3tu8XCe66fRro6W6PccOaP/NxvHNXqgd
-         AnB5U0ZJ8EQz+Qqtp0rp0HSmq19qVeSbZp3pzR6hsG4qYg5qLrea9Y4v+2b2swYrXiOI
-         l8UQ==
-X-Gm-Message-State: ACgBeo00slVDzZUzAbUwuVM8izAg/0+gchYwXXyqQ+oSxvXbnSLn3VBb
-        27//sRO6Mkzg0dkQCScM20XWjQ==
-X-Google-Smtp-Source: AA6agR4fNPahujEXCLVbndBEEdaFeTvotTYaW9PcHl55BWOG4EBrlnaOzS5Uoc7EVqqQ6npmzvFUDQ==
-X-Received: by 2002:a05:600c:25ce:b0:3a5:a3b7:bbfe with SMTP id 14-20020a05600c25ce00b003a5a3b7bbfemr2336065wml.115.1661261660575;
-        Tue, 23 Aug 2022 06:34:20 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id ay15-20020a05600c1e0f00b003a604a29a34sm18510656wmb.35.2022.08.23.06.34.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Aug 2022 06:34:19 -0700 (PDT)
-Message-ID: <4e567599-90ba-c8bd-9774-1e34ae8f8ea3@linaro.org>
-Date:   Tue, 23 Aug 2022 14:34:17 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=qkCUHHEjfjSKRNQH08mkmAjUm96MxGOjYlwpNmfHX0U=;
+        b=j2dz7NUigDqfBmJ/raCF3JmWw8094BzWEWj07VlyidkIE0MX18ODfpQiXE3+LUYAkw
+         uI7lgYtcEonvUCONaln2gI3omk62J2EQ5FEU/Ot8hYZ7yTGGv7KXxI1wGRxoT1e/qB/b
+         ViRRj3KKQiw9/Q6PDxZ7Q5CNSYbE+8mwpjA3JJMTGjzK0QlleOQMdnuoHWd2QeOsuxyz
+         gIvgTAey65kgtqPO5S2RsRIlSR6hxr5qk/ClpN1BwvC2FJI1eU3q0mDTYLFQZJqP+c97
+         L64nWbxNaVk7k/ZuM5xUJdlVcqjqLq0C3OwaZSKwFQlFkScF5q6Yj8G2aG+GEVhP0vqD
+         Y+jA==
+X-Gm-Message-State: ACgBeo1U2XqDpG1txHUH3cqVE3Dnqigye2oEvZpXQ/Kosbzs2/M2AePf
+        Uk25D5iNI4sL13zZKLiKKW8=
+X-Google-Smtp-Source: AA6agR7efiQxwbLWixfzhjMKdtkgJvkshRWfVT7naWyUZWCL75aBLjGcDOpWiyrbZhAIN33BsfFWew==
+X-Received: by 2002:a05:6a00:b53:b0:537:7f7:63a7 with SMTP id p19-20020a056a000b5300b0053707f763a7mr2134388pfo.2.1661261786624;
+        Tue, 23 Aug 2022 06:36:26 -0700 (PDT)
+Received: from localhost.localdomain ([193.203.214.57])
+        by smtp.gmail.com with ESMTPSA id 203-20020a6215d4000000b005350ea966c7sm10812859pfv.154.2022.08.23.06.36.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Aug 2022 06:36:26 -0700 (PDT)
+From:   cgel.zte@gmail.com
+X-Google-Original-From: cui.jinpeng2@zte.com.cn
+To:     krzysztof.kozlowski@linaro.org
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        konrad.dybcio@somainline.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Jinpeng Cui <cui.jinpeng2@zte.com.cn>,
+        Zeal Robot <zealci@zte.com.cn>
+Subject: [PATCH linux-next] soc: qcom: icc-bwmon: remove redundant ret variable
+Date:   Tue, 23 Aug 2022 13:36:20 +0000
+Message-Id: <20220823133620.211902-1-cui.jinpeng2@zte.com.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH] arm64: dts: qcom: pm8916: Fix pwm declaration
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20220822120300.2633790-1-bryan.odonoghue@linaro.org>
- <9022126c-2cd7-44c9-28dc-338e36a3346d@linaro.org>
- <11e20195-1383-d1e3-4715-8a1f110ed344@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <11e20195-1383-d1e3-4715-8a1f110ed344@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/08/2022 13:23, Krzysztof Kozlowski wrote:
-> On 23/08/2022 15:12, Krzysztof Kozlowski wrote:
->> On 22/08/2022 15:03, Bryan O'Donoghue wrote:
->>> We need to define pwm@bc000 to stop dtbs_check from making the following
->>> complaint, text pruned.
->>>
->>> pmic@1: 'pwm' does not match any of the regexes:  'pwm@[0-9a-f]+$'
->>>
->>> Fixes: e79a1385ab74 ("arm64: dts: qcom: Add LPG to pm8916, pm8994, pmi8994 and pmi8998")
->>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>> ---
->>>   arch/arm64/boot/dts/qcom/pm8916.dtsi | 2 +-
->>>   1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/pm8916.dtsi b/arch/arm64/boot/dts/qcom/pm8916.dtsi
->>> index 606c2a6d1f0fc..d6922379729cb 100644
->>> --- a/arch/arm64/boot/dts/qcom/pm8916.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/pm8916.dtsi
->>> @@ -124,7 +124,7 @@ pm8916_1: pmic@1 {
->>>   		#address-cells = <1>;
->>>   		#size-cells = <0>;
->>>   
->>> -		pm8916_pwm: pwm {
->>> +		pm8916_pwm: pwm@bc00 {
->>>   			compatible = "qcom,pm8916-pwm";
->>
->> This does not look like proper fix.
->> 1. It requires a reg.
->> 2. reg is not allowed by pwm bindings.
->>
->> See also other wrong commit:
->> https://lore.kernel.org/all/20220719205058.1004942-1-bhupesh.sharma@linaro.org/
->>
-> 
-> and this:
-> https://lore.kernel.org/all/20220721195502.1525214-1-bhupesh.sharma@linaro.org/
-> 
-> 
-> Best regards,
-> Krzysztof
+From: Jinpeng Cui <cui.jinpeng2@zte.com.cn>
 
-Hmm OK.
+Return value from devm_regmap_field_bulk_alloc() directly
+instead of taking this in another redundant variable.
 
-So if I've understood this conversation properly instead of converting 
-"label: nodename" to "label: nodename@xxx" and adding reg, we would just 
-revert to "nodename {};"
-
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: Jinpeng Cui <cui.jinpeng2@zte.com.cn>
 ---
-bod
+ drivers/soc/qcom/icc-bwmon.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/soc/qcom/icc-bwmon.c b/drivers/soc/qcom/icc-bwmon.c
+index 47c2c3e7bb3f..9df47afb0d81 100644
+--- a/drivers/soc/qcom/icc-bwmon.c
++++ b/drivers/soc/qcom/icc-bwmon.c
+@@ -551,7 +551,6 @@ static int bwmon_init_regmap(struct platform_device *pdev,
+ 	struct device *dev = &pdev->dev;
+ 	void __iomem *base;
+ 	struct regmap *map;
+-	int ret;
+ 
+ 	base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(base))
+@@ -565,11 +564,10 @@ static int bwmon_init_regmap(struct platform_device *pdev,
+ 
+ 	BUILD_BUG_ON(ARRAY_SIZE(msm8998_bwmon_reg_fields) != F_NUM_FIELDS);
+ 	BUILD_BUG_ON(ARRAY_SIZE(sdm845_llcc_bwmon_reg_fields) != F_NUM_FIELDS);
+-	ret = devm_regmap_field_bulk_alloc(dev, map, bwmon->regs,
++
++	return devm_regmap_field_bulk_alloc(dev, map, bwmon->regs,
+ 					   bwmon->data->regmap_fields,
+ 					   F_NUM_FIELDS);
+-
+-	return ret;
+ }
+ 
+ static int bwmon_probe(struct platform_device *pdev)
+-- 
+2.25.1
+
