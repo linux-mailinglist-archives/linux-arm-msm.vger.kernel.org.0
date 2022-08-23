@@ -2,56 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A280E59E5C4
+	by mail.lfdr.de (Postfix) with ESMTP id EACEE59E5C5
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 17:14:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243452AbiHWPMf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Aug 2022 11:12:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37404 "EHLO
+        id S243621AbiHWPNK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Aug 2022 11:13:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241191AbiHWPMJ (ORCPT
+        with ESMTP id S243673AbiHWPMx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Aug 2022 11:12:09 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D95614359E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 03:22:16 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id v10so13049797ljh.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 03:22:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=kW7te9++6zj/2sA/1JFiFaJwC/VuRhhQ3+OUD8QzdyQ=;
-        b=N+3+nblwaKvranNQu5ZLkFEJVD0V8Kh5L1aCicV8oOG4puiJizV9xHY/vNdRlz/YCM
-         JD0EzOieszeOq1Ev/NFpfYlgnlK6Q1vWCk5MK2sEAD0SvuS2evY3mpagh+yDJIL3HuQK
-         1fDkSspBXg4AFXl9Jp5mD6W1pWHY+/k2SEhbvjj0aXFWSxGPQvj5i610itPmlpXif0il
-         qe+p/TmU75rvtSRUAybCkAXGRsUwALRO/hKj18XGoLgB31yMBvFTv6w+92VA3eRl6ix9
-         RvPGkGjgwWdaZPNV3KuoVHBpcqMxMB/3nmcH8mgmKSnlZlhK/gmVh9bpnINTkDzs7ReY
-         oUpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=kW7te9++6zj/2sA/1JFiFaJwC/VuRhhQ3+OUD8QzdyQ=;
-        b=mt7SoimNGX/WZxSg/fjFOaHBTX3jnlMyt4r+7O7aiihUkTZv7djBHvs9dtkUqslR5w
-         +gOhYux9NOrj8+6yVPzMouMCLn6I86kGnkB14MCwwvDYLWM93CfBNUqAxfGBLqlPexws
-         tTW2Oc9rz3WIcmKDmr3mXjFQzG2Zr0G71TrILZ5VEMiEVcitxUkFRoOE4jsYPRDeVB8/
-         a5Pm7uLfkAEh1waKYFRdn6FxbPX3xVTWYyQt5JRpnNEIWoiuJSFtcL8nCP3otHXOeuXE
-         bL8oInBvzCQH6Y0F+n7l5Jpg/yvdOmtOVtkK79VtCyP9QQwQCj3AWG9OyeJrsjY8S2Lx
-         IBCQ==
-X-Gm-Message-State: ACgBeo3AIZPDQpFGSgXNQVOgC6xJjG/jwJtzuyaDZo6JttBhggTukrfG
-        jp7IN3eAXZXPaLPyOYRd6jpaX1d4TXxc48eP
-X-Google-Smtp-Source: AA6agR4lvtDEQD5n2gZcVUqeIv4vFwxirf/UExZM2GSUkocuDpW/zvL/LU5ea/L5NBX6eKujEc1qpQ==
-X-Received: by 2002:a2e:b8d1:0:b0:261:caee:4049 with SMTP id s17-20020a2eb8d1000000b00261caee4049mr3186459ljp.405.1661250133956;
-        Tue, 23 Aug 2022 03:22:13 -0700 (PDT)
-Received: from [192.168.0.11] (89-27-92-210.bb.dnainternet.fi. [89.27.92.210])
-        by smtp.gmail.com with ESMTPSA id bg11-20020a05651c0b8b00b00261c6342636sm220772ljb.14.2022.08.23.03.22.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Aug 2022 03:22:13 -0700 (PDT)
-Message-ID: <e810c877-82a4-c9ef-5f63-c22c246cf340@linaro.org>
-Date:   Tue, 23 Aug 2022 13:22:12 +0300
+        Tue, 23 Aug 2022 11:12:53 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4775113D13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 03:22:42 -0700 (PDT)
+Received: from [192.168.1.101] (afbd223.neoplus.adsl.tpnet.pl [95.49.29.223])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 3C4D33F63E;
+        Tue, 23 Aug 2022 12:22:38 +0200 (CEST)
+Message-ID: <3eaa26a5-dde7-06e7-f47d-cb836fbd495d@somainline.org>
+Date:   Tue, 23 Aug 2022 12:22:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.12.0
@@ -61,36 +32,92 @@ Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         freedreno@lists.freedesktop.org
 References: <20220822191138.316912-1-dmitry.baryshkov@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 In-Reply-To: <20220822191138.316912-1-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/08/2022 22:11, Dmitry Baryshkov wrote:
+
+
+On 22.08.2022 21:11, Dmitry Baryshkov wrote:
 > It makes no sense to have the OPP table for the DSI controllers in the
 > DSI1 PHY node. Move it to more logical dsi0 device node.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 
+Konrad
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-
-Best regards,
-Krzysztof
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi | 38 ++++++++++++++--------------
+>  1 file changed, 19 insertions(+), 19 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> index bc773e210023..5843e46a3164 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> @@ -3571,6 +3571,25 @@ dsi0_out: endpoint {
+>  						};
+>  					};
+>  				};
+> +
+> +				dsi_opp_table: opp-table {
+> +					compatible = "operating-points-v2";
+> +
+> +					opp-187500000 {
+> +						opp-hz = /bits/ 64 <187500000>;
+> +						required-opps = <&rpmhpd_opp_low_svs>;
+> +					};
+> +
+> +					opp-300000000 {
+> +						opp-hz = /bits/ 64 <300000000>;
+> +						required-opps = <&rpmhpd_opp_svs>;
+> +					};
+> +
+> +					opp-358000000 {
+> +						opp-hz = /bits/ 64 <358000000>;
+> +						required-opps = <&rpmhpd_opp_svs_l1>;
+> +					};
+> +				};
+>  			};
+>  
+>  			dsi0_phy: dsi-phy@ae94400 {
+> @@ -3663,25 +3682,6 @@ dsi1_phy: dsi-phy@ae96400 {
+>  				clock-names = "iface", "ref";
+>  
+>  				status = "disabled";
+> -
+> -				dsi_opp_table: opp-table {
+> -					compatible = "operating-points-v2";
+> -
+> -					opp-187500000 {
+> -						opp-hz = /bits/ 64 <187500000>;
+> -						required-opps = <&rpmhpd_opp_low_svs>;
+> -					};
+> -
+> -					opp-300000000 {
+> -						opp-hz = /bits/ 64 <300000000>;
+> -						required-opps = <&rpmhpd_opp_svs>;
+> -					};
+> -
+> -					opp-358000000 {
+> -						opp-hz = /bits/ 64 <358000000>;
+> -						required-opps = <&rpmhpd_opp_svs_l1>;
+> -					};
+> -				};
+>  			};
+>  		};
+>  
