@@ -2,164 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8835C59E93A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 19:23:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 555C859E9CB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Aug 2022 19:39:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230484AbiHWRW6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Aug 2022 13:22:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42678 "EHLO
+        id S229962AbiHWRgO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Aug 2022 13:36:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243776AbiHWRVq (ORCPT
+        with ESMTP id S232142AbiHWRe4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Aug 2022 13:21:46 -0400
-Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C1D3AC256;
-        Tue, 23 Aug 2022 07:57:40 -0700 (PDT)
-Received: by mail-oo1-f50.google.com with SMTP id a1-20020a4ab101000000b0044acf001f83so2467329ooo.10;
-        Tue, 23 Aug 2022 07:57:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc;
-        bh=ooqlkbw3TE2NJhyebQ5cGozeHzUv+AJJEgZF4B67gIY=;
-        b=TNOXgnEyh2aDs7Wv8jIyawSY1lITrOYbPAjxbGVdcmLzs/acYuV3HJ1XQsic6Fcl7a
-         wf9i1aHddoJNqdAe9KqILI1cF724fyY2dvDzXGEfQKnZp/XswGNe3VRs8ZIsHj7UHQU1
-         6OA+/b1DrvDJhBHjEzsmzDlg9vFehbAyV391QbFkU1xuUQE+4nEFpN1/kqWFyvbZSSpF
-         d+6PmbmznA1GG/+Iu9DXAgj6F6CGCq80emXxtpyqd0YnEBO+HZ1RL7N/hW3ZlmOkX9eH
-         d5TB5erjJUlwlo9wV4NntTRyDGNjEec+mxHr7KhJRcoovd5geiUQWboPB8pk1hFaFrEv
-         9GsQ==
-X-Gm-Message-State: ACgBeo0kJ8vs4V5JKbQbio0nO3ZENmXdOeJ+j+oU06zJx0bHJnFn20te
-        b/p32inUeAy4YyRs4rQICA==
-X-Google-Smtp-Source: AA6agR5+a7sOjSPzaSgig28307qEt+b/EO4MrhzoXJrDqx7W1/FQV0jwLw+HKQCyDk3RmgEqKpT4Hw==
-X-Received: by 2002:a4a:e411:0:b0:442:c893:86b7 with SMTP id t17-20020a4ae411000000b00442c89386b7mr8088683oov.22.1661266659387;
-        Tue, 23 Aug 2022 07:57:39 -0700 (PDT)
-Received: from xps15.. (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.googlemail.com with ESMTPSA id t1-20020a056870600100b0011c65559b04sm3840637oaa.34.2022.08.23.07.57.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Aug 2022 07:57:38 -0700 (PDT)
-From:   Rob Herring <robh@kernel.org>
-To:     Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Tue, 23 Aug 2022 13:34:56 -0400
+Received: from mail-4323.proton.ch (mail-4323.proton.ch [185.70.43.23])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57D9E80345
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 08:15:31 -0700 (PDT)
+Date:   Tue, 23 Aug 2022 15:15:18 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
+        s=protonmail; t=1661267729; x=1661526929;
+        bh=/a5Sr9z4hKMkNQE2RiJnMU4myUih+AbOa22vER9x60Q=;
+        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
+         References:Feedback-ID:From:To:Cc:Date:Subject:Reply-To:
+         Feedback-ID:Message-ID;
+        b=oF0ZlcI3jQo3o5di1EQm3lYNC4ZqhwDt2qOck1QEd3v0d7RAxquP6nkgnHPYV2qdH
+         WCLhYGe7AasNrtjbOhAQ5T2eDUEuE8wivgsavw8lBv3oJx4G/En4bdzrv0l4DQ91z1
+         jRkymxY7CQP77zuG7VMoO5V3GzOsRFNQdl/aK/8Q=
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Amelie Delaunay <amelie.delaunay@foss.st.com>,
-        Wesley Cheng <quic_wcheng@quicinc.com>
-Cc:     Ray Jui <ray.jui@broadcom.com>,
-        Scott Branden <scott.branden@broadcom.com>,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH] dt-bindings: phy: Add missing (unevaluated|additional)Properties on child nodes
-Date:   Tue, 23 Aug 2022 09:56:45 -0500
-Message-Id: <20220823145649.3118479-14-robh@kernel.org>
-X-Mailer: git-send-email 2.34.1
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+From:   Caleb Connolly <caleb@connolly.tech>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Reply-To: Caleb Connolly <caleb@connolly.tech>
+Subject: Re: [PATCH] arm64: dts: qcom: sm8250: move DSI opp table to the dsi0 node
+Message-ID: <2af8e228-5334-d5fe-eee5-2067d84481dc@connolly.tech>
+In-Reply-To: <20220822191138.316912-1-dmitry.baryshkov@linaro.org>
+References: <20220822191138.316912-1-dmitry.baryshkov@linaro.org>
+Feedback-ID: 10753939:user:proton
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In order to ensure only documented properties are present, node schemas
-must have unevaluatedProperties or additionalProperties set to false
-(typically).
 
-Signed-off-by: Rob Herring <robh@kernel.org>
----
- .../devicetree/bindings/phy/brcm,cygnus-pcie-phy.yaml          | 1 +
- Documentation/devicetree/bindings/phy/phy-stm32-usbphyc.yaml   | 2 ++
- .../devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml          | 2 ++
- Documentation/devicetree/bindings/phy/ti,phy-j721e-wiz.yaml    | 3 +++
- 4 files changed, 8 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/phy/brcm,cygnus-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/brcm,cygnus-pcie-phy.yaml
-index 045699c65779..808e90b2465d 100644
---- a/Documentation/devicetree/bindings/phy/brcm,cygnus-pcie-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/brcm,cygnus-pcie-phy.yaml
-@@ -32,6 +32,7 @@ properties:
- patternProperties:
-   "^pcie-phy@[0-9]+$":
-     type: object
-+    additionalProperties: false
-     description: >
-       PCIe PHY child nodes
- 
-diff --git a/Documentation/devicetree/bindings/phy/phy-stm32-usbphyc.yaml b/Documentation/devicetree/bindings/phy/phy-stm32-usbphyc.yaml
-index dc287d428e49..801993813b18 100644
---- a/Documentation/devicetree/bindings/phy/phy-stm32-usbphyc.yaml
-+++ b/Documentation/devicetree/bindings/phy/phy-stm32-usbphyc.yaml
-@@ -77,6 +77,8 @@ patternProperties:
-       connector:
-         type: object
-         $ref: /schemas/connector/usb-connector.yaml
-+        unevaluatedProperties: false
-+
-         properties:
-           vbus-supply: true
- 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
-index b078009ed509..563e85c48c6a 100644
---- a/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
-@@ -81,6 +81,7 @@ properties:
- patternProperties:
-   "^usb3-phy@[0-9a-f]+$":
-     type: object
-+    additionalProperties: false
-     description:
-       The USB3 PHY.
- 
-@@ -121,6 +122,7 @@ patternProperties:
- 
-   "^dp-phy@[0-9a-f]+$":
-     type: object
-+    additionalProperties: false
-     description:
-       The DP PHY.
- 
-diff --git a/Documentation/devicetree/bindings/phy/ti,phy-j721e-wiz.yaml b/Documentation/devicetree/bindings/phy/ti,phy-j721e-wiz.yaml
-index dcd63908aeae..7c7c3e3e6346 100644
---- a/Documentation/devicetree/bindings/phy/ti,phy-j721e-wiz.yaml
-+++ b/Documentation/devicetree/bindings/phy/ti,phy-j721e-wiz.yaml
-@@ -79,6 +79,7 @@ properties:
- 
-   refclk-dig:
-     type: object
-+    additionalProperties: false
-     description: |
-       WIZ node should have subnode for refclk_dig to select the reference
-       clock source for the reference clock used in the PHY and PMA digital
-@@ -108,6 +109,7 @@ properties:
- patternProperties:
-   "^pll[0|1]-refclk$":
-     type: object
-+    additionalProperties: false
-     description: |
-       WIZ node should have subnodes for each of the PLLs present in
-       the SERDES.
-@@ -133,6 +135,7 @@ patternProperties:
- 
-   "^cmn-refclk1?-dig-div$":
-     type: object
-+    additionalProperties: false
-     description:
-       WIZ node should have subnodes for each of the PMA common refclock
-       provided by the SERDES.
--- 
-2.34.1
+On 22/08/2022 20:11, Dmitry Baryshkov wrote:
+> It makes no sense to have the OPP table for the DSI controllers in the
+> DSI1 PHY node. Move it to more logical dsi0 device node.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Reviewed-by: Caleb Connolly <caleb@connolly.tech>
+
+> ---
+>   arch/arm64/boot/dts/qcom/sm8250.dtsi | 38 ++++++++++++++--------------
+>   1 file changed, 19 insertions(+), 19 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/q=
+com/sm8250.dtsi
+> index bc773e210023..5843e46a3164 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> @@ -3571,6 +3571,25 @@ dsi0_out: endpoint {
+>   =09=09=09=09=09=09};
+>   =09=09=09=09=09};
+>   =09=09=09=09};
+> +
+> +=09=09=09=09dsi_opp_table: opp-table {
+> +=09=09=09=09=09compatible =3D "operating-points-v2";
+> +
+> +=09=09=09=09=09opp-187500000 {
+> +=09=09=09=09=09=09opp-hz =3D /bits/ 64 <187500000>;
+> +=09=09=09=09=09=09required-opps =3D <&rpmhpd_opp_low_svs>;
+> +=09=09=09=09=09};
+> +
+> +=09=09=09=09=09opp-300000000 {
+> +=09=09=09=09=09=09opp-hz =3D /bits/ 64 <300000000>;
+> +=09=09=09=09=09=09required-opps =3D <&rpmhpd_opp_svs>;
+> +=09=09=09=09=09};
+> +
+> +=09=09=09=09=09opp-358000000 {
+> +=09=09=09=09=09=09opp-hz =3D /bits/ 64 <358000000>;
+> +=09=09=09=09=09=09required-opps =3D <&rpmhpd_opp_svs_l1>;
+> +=09=09=09=09=09};
+> +=09=09=09=09};
+>   =09=09=09};
+>
+>   =09=09=09dsi0_phy: dsi-phy@ae94400 {
+> @@ -3663,25 +3682,6 @@ dsi1_phy: dsi-phy@ae96400 {
+>   =09=09=09=09clock-names =3D "iface", "ref";
+>
+>   =09=09=09=09status =3D "disabled";
+> -
+> -=09=09=09=09dsi_opp_table: opp-table {
+> -=09=09=09=09=09compatible =3D "operating-points-v2";
+> -
+> -=09=09=09=09=09opp-187500000 {
+> -=09=09=09=09=09=09opp-hz =3D /bits/ 64 <187500000>;
+> -=09=09=09=09=09=09required-opps =3D <&rpmhpd_opp_low_svs>;
+> -=09=09=09=09=09};
+> -
+> -=09=09=09=09=09opp-300000000 {
+> -=09=09=09=09=09=09opp-hz =3D /bits/ 64 <300000000>;
+> -=09=09=09=09=09=09required-opps =3D <&rpmhpd_opp_svs>;
+> -=09=09=09=09=09};
+> -
+> -=09=09=09=09=09opp-358000000 {
+> -=09=09=09=09=09=09opp-hz =3D /bits/ 64 <358000000>;
+> -=09=09=09=09=09=09required-opps =3D <&rpmhpd_opp_svs_l1>;
+> -=09=09=09=09=09};
+> -=09=09=09=09};
+>   =09=09=09};
+>   =09=09};
+>
+> --
+> 2.35.1
+>
+
+--
+Kind Regards,
+Caleb
 
