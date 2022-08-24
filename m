@@ -2,62 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DADC259F53B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Aug 2022 10:28:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DA7459F543
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Aug 2022 10:30:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235739AbiHXI1v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Aug 2022 04:27:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38744 "EHLO
+        id S232752AbiHXIaK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Aug 2022 04:30:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235729AbiHXI1r (ORCPT
+        with ESMTP id S229674AbiHXIaI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Aug 2022 04:27:47 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0426E93230;
-        Wed, 24 Aug 2022 01:27:44 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 3AC0CB8238E;
-        Wed, 24 Aug 2022 08:27:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C61C433B5;
-        Wed, 24 Aug 2022 08:27:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661329661;
-        bh=Cswsg5zwfQnIxDqhYpbvzbjzMba7/Q3SMHSTlIl4nr8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=rns/zYsL6l6/nzNgn6OPoDzXGQ9O4PkTAx4ahpmezNfDqJO5X2igsp3OWb0tBrUgL
-         od/SBuxqloB/0+k6Urdah49vznJ4jlaF2N1un/Vmv/dW6hpLveHekjs3OZ0vOjybsh
-         2lBgIS7aVUUfSARtNBrmNU2YUMqim/pgq/fTwmh0HxyLBN2gncoWfD3bjvag7iF/4+
-         WRbUtcdS9S8cgb7z2nfnIHDgObqFywt5sNHEUAus1Qu2RcGBDu0YXI9qRQj07cVa2S
-         7lKCYTdMROFIuwSV0YKqE4WBDL0gEGJuptFAYhF1V2/XnIh0yJTNkNFGOzG1f8wfC0
-         vU9YZHWbf+zbw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oQljk-0003G4-4G; Wed, 24 Aug 2022 10:27:44 +0200
-Date:   Wed, 24 Aug 2022 10:27:44 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] usb: dwc3: keep PHYs disabled during suspend
-Message-ID: <YwXhANZ8l6E9yQDe@hovoldconsulting.com>
-References: <20220823124047.14634-1-johan+linaro@kernel.org>
- <YwUdbkyL8GgvLQJA@google.com>
+        Wed, 24 Aug 2022 04:30:08 -0400
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AC43630B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Aug 2022 01:30:03 -0700 (PDT)
+Received: by mail-qv1-xf30.google.com with SMTP id l5so7558071qvs.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Aug 2022 01:30:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=lXgnOAXBrxxj2w0yjUYGD9COtuXV48cnV56Vy6CXruk=;
+        b=lvy293hWDNSAVPaTOH/yzVsEQSE22DilCvXvLbCQnDkosmtLJqQArIO9n2dYW7W//4
+         jJLj40wpAbMhwMAcIWaJe0YKnXGdc+yWJHlW4I/yHiw1als3KbdbgLeZuguyDGYIqQLt
+         ggk8a0oAtpkrBg6QmeM5+6Qxmn5qBVYPp0q/6yaVR9fy7fAK769JIP6h3LOodnkj00BW
+         d6oBX/oIJoShEHiVZjoAMlvumbW/3su/Kw0FfAHVp5gCi3MYOAY3uL3Xz7GDGoJZsRbo
+         RY+vmXP8mLjxShC50WTXRS0D743S2qa+N/6narY4Di2reXCj9aQnZKin5dr6/lN97NKs
+         4A8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=lXgnOAXBrxxj2w0yjUYGD9COtuXV48cnV56Vy6CXruk=;
+        b=eGm8+l/B1Fv0/1xz09zdxnW0BRwIU+TcLJ42B893pYMvf3wiKK24vRlD0KQju4Ohlo
+         nj4y5pryyYI9FyaHwD3kg9lKK3jZ5D2x92a5LiQpBFV7lQP4+T/dr42HeLh4nlKTv1R5
+         iFgU1VJcCoW6HNkJM3XFFlMGbm1P5KDs1nm9GQmgE9cLzPxokS5h1+wfDOs9Gr4DTfSX
+         zxD5jYRTxzG5WQHdHzaNH7+DYlIVGK7eqtn4oAaefkJMro1ylvyGcqKP4D+s9xuAaZMl
+         nzMkmit8KMiLTY7Q2/GIi6osaqf//ErCdOVSCLQFBjQ6Dyyn6E1uhWXISen7xwY8KFCY
+         92NQ==
+X-Gm-Message-State: ACgBeo3yNcAXBfFgfswOhEyJRdadm5HzRVNnK3HnbSUsmDgN/BYdGH8g
+        fFDhbOf0QpKKp92uIe8IpQ40QpMULQsT6N+sjyJ/rJyfTvg=
+X-Google-Smtp-Source: AA6agR4PFGlUmWrSndGaFBPWCzCuLvo3D0eA+iwqu92YSadl6GsFrlujyHWIhnsAWDk7vIoq4xgSDGc+CpmWiAxS1+I=
+X-Received: by 2002:a0c:a907:0:b0:496:cf4f:2426 with SMTP id
+ y7-20020a0ca907000000b00496cf4f2426mr15597412qva.119.1661329802772; Wed, 24
+ Aug 2022 01:30:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YwUdbkyL8GgvLQJA@google.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+References: <20220620213054.1872954-1-dmitry.baryshkov@linaro.org>
+ <20220620213054.1872954-2-dmitry.baryshkov@linaro.org> <251f0ce1-05cd-548e-9253-82adbc1038ce@quicinc.com>
+In-Reply-To: <251f0ce1-05cd-548e-9253-82adbc1038ce@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 24 Aug 2022 11:29:51 +0300
+Message-ID: <CAA8EJpogK9BbrSzgJp+Rb_Op2+JBFsTdQHxpTFz28c2biE8AUw@mail.gmail.com>
+Subject: Re: [PATCH v1 1/4] drm/msm/mdp5: stop overriding drvdata
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -66,89 +72,116 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 23, 2022 at 11:33:18AM -0700, Matthias Kaehlcke wrote:
-> Hi Johan,
-> 
-> On Tue, Aug 23, 2022 at 02:40:47PM +0200, Johan Hovold wrote:
-> > Commit 649f5c842ba3 ("usb: dwc3: core: Host wake up support from system
-> > suspend") started leaving the PHYs enabled during suspend for
-> > wakeup-capable controllers even though it turns out this had nothing to
-> > do with wakeup.
-> > 
-> > Rather, the wakeup capability flag was (ab-)used as a proxy to configure
-> > the suspend behaviour in an attempt to reduce power leakage on some
-> > platforms.
-> > 
-> > Stop abusing the wakeup configuration and restore the 5.19 behaviour of
-> > keeping the PHYs powered off during suspend. If needed, a dedicated
-> > mechanism for configuring the PHY power state during suspend can be
-> > added later.
-> > 
-> > Fixes: 649f5c842ba3 ("usb: dwc3: core: Host wake up support from system suspend")
-> > Link: https://lore.kernel.org/r/Yuv7AM/5jtO/pgcm@google.com
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+On Wed, 24 Aug 2022 at 04:25, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 6/20/2022 2:30 PM, Dmitry Baryshkov wrote:
+> > The rest of the code expects that master's device drvdata is the
+> > struct msm_drm_private instance. Do not override the mdp5's drvdata.
+> >
+> > Fixes: 6874f48bb8b0 ("drm/msm: make mdp5/dpu devices master components")
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+> Is this just for consistency across mdp5/dpu drivers?
+>
+> What issue was seen if mdp5's platform data is overwritten?
+
+I think there was a crash in mdp5_destroy, but I did not capture the
+log at the moment.
+
+As you can see, the mdp5_destroy() expects to get mdp5_kms pointer
+from the drvdata. However the msm_drv_probe sets the drvdata to
+msm_drm_private instance. Boom.
+
+>
 > > ---
-> >  drivers/usb/dwc3/core.c      | 4 ++--
-> >  drivers/usb/dwc3/dwc3-qcom.c | 1 -
-> >  2 files changed, 2 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-> > index 8c8e32651473..0cdb6be720e1 100644
-> > --- a/drivers/usb/dwc3/core.c
-> > +++ b/drivers/usb/dwc3/core.c
-> > @@ -1983,7 +1983,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
-> >  		dwc3_core_exit(dwc);
-> >  		break;
-> >  	case DWC3_GCTL_PRTCAP_HOST:
-> > -		if (!PMSG_IS_AUTO(msg) && !device_may_wakeup(dwc->dev)) {
-> > +		if (!PMSG_IS_AUTO(msg)) {
-> 
-> My assumption was that the PHYs need to be powered for wakeup to work, but
-> apparently that isn't the case, wakeup still works on sc7x80 with this part
-> of this patch.
+> >   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 19 +++++++++----------
+> >   1 file changed, 9 insertions(+), 10 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> > index c668a4b27cc6..daf5b5ca7233 100644
+> > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> > @@ -203,7 +203,7 @@ static int mdp5_set_split_display(struct msm_kms *kms,
+> >                                                         slave_encoder);
+> >   }
+> >
+> > -static void mdp5_destroy(struct platform_device *pdev);
+> > +static void mdp5_destroy(struct mdp5_kms *mdp5_kms);
+> >
+> >   static void mdp5_kms_destroy(struct msm_kms *kms)
+> >   {
+> > @@ -223,7 +223,7 @@ static void mdp5_kms_destroy(struct msm_kms *kms)
+> >       }
+> >
+> >       mdp_kms_destroy(&mdp5_kms->base);
+> > -     mdp5_destroy(mdp5_kms->pdev);
+> > +     mdp5_destroy(mdp5_kms);
+> >   }
+> >
+> >   #ifdef CONFIG_DEBUG_FS
+> > @@ -651,9 +651,8 @@ static int mdp5_kms_init(struct drm_device *dev)
+> >       return ret;
+> >   }
+> >
+> > -static void mdp5_destroy(struct platform_device *pdev)
+> > +static void mdp5_destroy(struct mdp5_kms *mdp5_kms)
+> >   {
+> > -     struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
+> >       int i;
+> >
+> >       if (mdp5_kms->ctlm)
+> > @@ -667,7 +666,7 @@ static void mdp5_destroy(struct platform_device *pdev)
+> >               kfree(mdp5_kms->intfs[i]);
+> >
+> >       if (mdp5_kms->rpm_enabled)
+> > -             pm_runtime_disable(&pdev->dev);
+> > +             pm_runtime_disable(&mdp5_kms->pdev->dev);
+> >
+> >       drm_atomic_private_obj_fini(&mdp5_kms->glob_state);
+> >       drm_modeset_lock_fini(&mdp5_kms->glob_state_lock);
+> > @@ -816,8 +815,6 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+> >               goto fail;
+> >       }
+> >
+> > -     platform_set_drvdata(pdev, mdp5_kms);
+> > -
+> >       spin_lock_init(&mdp5_kms->resource_lock);
+> >
+> >       mdp5_kms->dev = dev;
+> > @@ -915,7 +912,7 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+> >       return 0;
+> >   fail:
+> >       if (mdp5_kms)
+> > -             mdp5_destroy(pdev);
+> > +             mdp5_destroy(mdp5_kms);
+> >       return ret;
+> >   }
+> >
+> > @@ -975,7 +972,8 @@ static int mdp5_dev_remove(struct platform_device *pdev)
+> >   static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
+> >   {
+> >       struct platform_device *pdev = to_platform_device(dev);
+> > -     struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
+> > +     struct msm_drm_private *priv = platform_get_drvdata(pdev);
+> > +     struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
+> >
+> >       DBG("");
+> >
+> > @@ -985,7 +983,8 @@ static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
+> >   static __maybe_unused int mdp5_runtime_resume(struct device *dev)
+> >   {
+> >       struct platform_device *pdev = to_platform_device(dev);
+> > -     struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
+> > +     struct msm_drm_private *priv = platform_get_drvdata(pdev);
+> > +     struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
+> >
+> >       DBG("");
+> >
 
-Thanks for confirming.
 
-> >  			dwc3_core_exit(dwc);
-> >  			break;
-> >  		}
-> > @@ -2044,7 +2044,7 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
-> >  		spin_unlock_irqrestore(&dwc->lock, flags);
-> >  		break;
-> >  	case DWC3_GCTL_PRTCAP_HOST:
-> > -		if (!PMSG_IS_AUTO(msg) && !device_may_wakeup(dwc->dev)) {
-> > +		if (!PMSG_IS_AUTO(msg)) {
-> >  			ret = dwc3_core_init_for_resume(dwc);
-> >  			if (ret)
-> >  				return ret;
-> > diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> > index 9a94b1ab8f7a..9995395baa12 100644
-> > --- a/drivers/usb/dwc3/dwc3-qcom.c
-> > +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> > @@ -904,7 +904,6 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
-> >  
-> >  	wakeup_source = of_property_read_bool(dev->of_node, "wakeup-source");
-> >  	device_init_wakeup(&pdev->dev, wakeup_source);
-> > -	device_init_wakeup(&qcom->dwc3->dev, wakeup_source);
-> 
-> Surprisingly this part breaks wakeup on sc7x80, with the above removal
-> of the device_may_wakeup() checks it is not clear to me why wakeup needs
-> to be enabled for the core.
 
-I can't explain that behaviour either. This change doesn't affect the
-wakeup_path flag and genpd, and notably wakeup still works here with
-sc8280xp.
-
-Could it be some Chromium user-space issue in that it expects all
-devices on the wakeup path to be wakeup capable? Note that the
-xhci-plat driver (e.g. for the descendant xhci-hcd.1.auto device)
-unconditionally sets the wakeup-capable flag (but leaves it disabled by
-default).
-
-I guess we could do something similar for the dwc3 core device, but we'd
-need to figure out if and why that is at all needed first.
-
-Can you verify that the wakeup source (e.g. keyboard) you're using still
-has power/wakeup set to "enabled"?
-
-Johan
+-- 
+With best wishes
+Dmitry
