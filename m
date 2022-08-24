@@ -2,117 +2,267 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 17E2359F5A9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Aug 2022 10:49:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 164AB59F72D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Aug 2022 12:12:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236255AbiHXIse (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Aug 2022 04:48:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34598 "EHLO
+        id S234732AbiHXKMB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Aug 2022 06:12:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236163AbiHXIsP (ORCPT
+        with ESMTP id S230492AbiHXKMA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Aug 2022 04:48:15 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ABEA7AC00;
-        Wed, 24 Aug 2022 01:47:43 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 25F12617AE;
-        Wed, 24 Aug 2022 08:47:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78FF0C433D6;
-        Wed, 24 Aug 2022 08:47:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661330862;
-        bh=KsYrz7x6IcbX0pgtIwi510gAC8itg404yw0MYtsog74=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Y1M0khDi+IP4HCcNiZ09RpeBhBSSog68O8ucahvlGBkZvemyAPXzntTYDV4/LPl3l
-         ZkOPnxhflT6SNwsh/b5C6qsFvpoh0Z2tFNBesdyWWdJnVR2s3O1OcwSUAxBIKlLhxD
-         kGmpQOD427tZJwa3JpjmaGD8L45/ttt9tMNwK7W9aR0dL89OcNh1r08tiKzw94fGO3
-         1xCGDta2tFX+SyenXianEog0Zam0s3gJPjGvYVbiOD4/i7bhD+juUjv2BL4+SSX/L8
-         SEYJFX1yY4FMpyjyhF/gUbI8L5KLHg+SGb0QPLrNqBm1kMEGdv3nH6rI2SNDj3R4JS
-         dwJbRsEWOk5lg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oQm36-0004ZD-Cb; Wed, 24 Aug 2022 10:47:45 +0200
-Date:   Wed, 24 Aug 2022 10:47:44 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>,
+        Wed, 24 Aug 2022 06:12:00 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 713E732EDC;
+        Wed, 24 Aug 2022 03:11:58 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27O96nt8013470;
+        Wed, 24 Aug 2022 10:11:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=GmB42AaC1N1dcPtTfq569gVNQMlKUEOV7RVKMg/CtPA=;
+ b=auUAha0/vtKATwL/gENfMvWpftg5tmIKOV8j1PkKHU8W6b6hv0+fJJEl8QinZZE2K6vz
+ EFM7qgSKCdTGJZ0v2e8bBY8/euHmjGkGDhCGk7oyf0iM3BIHRRjPSZVRJRTZOWwTnCaA
+ Qa7oXZQThXUz9i6d4/F4tf0Ancr1hscOEuwUoshQe9vGcFTNNQsEnibyRV421Ca70LkQ
+ 8ZQJJjKtz7Ty2k472ZRiVviZ36pVnYznjGNuVDBUe1P63ROnB8B7n6wp9+s09fWHNfG8
+ EhBE4AZfyabL8Yl/byng5imXja+E/B7bFknE3gdlS29v7WiK8sthHuTQM5vN4sQDImcH pg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j52pjk29v-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 24 Aug 2022 10:11:42 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27OABfeh010665
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 24 Aug 2022 10:11:41 GMT
+Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 24 Aug
+ 2022 03:11:38 -0700
+Subject: Re: [PATCH v8 3/3] arm64: dts: qcom: Add LTE SKUs for sc7280-villager
+ family
+To:     Jimmy Chen <jinghung.chen3@hotmail.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>
+CC:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Douglas Anderson <dianders@chromium.org>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH 2/2] clk: qcom: gcc-sc7280: Keep USB GDSC power domains
- on when USB wakeup is enabled
-Message-ID: <YwXlsK3pjK/q1xwO@hovoldconsulting.com>
-References: <20220822115246.1.I45235b7c40997bc2abf813e4722b4dcdd6aecf6b@changeid>
- <20220822115246.2.If09027f73daa6e1ed95f5eab02326b543c67132e@changeid>
- <YwS3FCOqIeajMEgz@hovoldconsulting.com>
- <YwUDjaG6n95Ddij2@google.com>
+        Alan Huang <alan-huang@quanta.corp-partner.google.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+References: <20220726094549.263899-1-jinghung.chen3@hotmail.com>
+ <SG2PR03MB5006B0C3E57803E3B1E0EDBCCC949@SG2PR03MB5006.apcprd03.prod.outlook.com>
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+Message-ID: <93bf8a59-34e3-e461-35c9-4f0f344dee32@quicinc.com>
+Date:   Wed, 24 Aug 2022 15:41:35 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YwUDjaG6n95Ddij2@google.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <SG2PR03MB5006B0C3E57803E3B1E0EDBCCC949@SG2PR03MB5006.apcprd03.prod.outlook.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: FnSEZ3M8c3Hy0jcebAqCVKGKO_g0P19Z
+X-Proofpoint-GUID: FnSEZ3M8c3Hy0jcebAqCVKGKO_g0P19Z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-24_05,2022-08-22_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
+ priorityscore=1501 mlxscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0
+ suspectscore=0 adultscore=0 spamscore=0 malwarescore=0 mlxlogscore=999
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2208240039
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 23, 2022 at 09:42:53AM -0700, Matthias Kaehlcke wrote:
-> On Tue, Aug 23, 2022 at 01:16:36PM +0200, Johan Hovold wrote:
-> > On Mon, Aug 22, 2022 at 11:53:11AM -0700, Matthias Kaehlcke wrote:
-> > > Set GENPD_FLAG_ACTIVE_WAKEUP for the USB GDSC power domains of SC7280.
-> > > 
-> > > Suggested-by: Johan Hovold <johan+linaro@kernel.org>
-> > > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> > > ---
-> > > 
-> > >  drivers/clk/qcom/gcc-sc7280.c | 2 ++
-> > >  1 file changed, 2 insertions(+)
-> > > 
-> > > diff --git a/drivers/clk/qcom/gcc-sc7280.c b/drivers/clk/qcom/gcc-sc7280.c
-> > > index 7ff64d4d5920..4ff855269467 100644
-> > > --- a/drivers/clk/qcom/gcc-sc7280.c
-> > > +++ b/drivers/clk/qcom/gcc-sc7280.c
-> > > @@ -3125,6 +3125,7 @@ static struct gdsc gcc_usb30_prim_gdsc = {
-> > >  	.gdscr = 0xf004,
-> > >  	.pd = {
-> > >  		.name = "gcc_usb30_prim_gdsc",
-> > > +		.flags = GENPD_FLAG_ACTIVE_WAKEUP,
-> > 
-> > Have you verified that the power-domain doesn't need to remain on also
-> > when USB isn't used for wakeup?
+Hey Jimmy,
+
+Thanks for the patch.
+
+On 7/26/22 3:15 PM, Jimmy Chen wrote:
+> This adds LTE skus for villager device tree files.
 > 
-> So far I haven't observed issues with this on sc7180 and sc7280 when USB
-> wakeup is disabled.
-
-Ok, good.
-
-I would have assumed that it needed to stay always-on before the
-s/device_can_wakeup/device_may_wakeup/ change as before that the PHYs
-would be left on regardless of the (sysfs) wakeup setting.
-
-> > This is the case for sc8280xp and indicates that there are further
-> > missing pieces here (at least for that platform).
+> Signed-off-by: Jimmy Chen <jinghung.chen3@hotmail.com>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> ---
 > 
-> What are you observing on sc8280xp when wakeup is disabled?
+> (no changes since v6)
+> 
+> Changes in v6:
+> - Remove v5 accidentally added sc7280-herobrine-herobrine-r1-lte.dts
+> 
+> Changes in v5:
+> - Reorder '.dtb' in Makefile
+> - Put the "interconnects" line back
+> 
+> Changes in v4:
+> - Reorder 'status' last
+> 
+>   arch/arm64/boot/dts/qcom/Makefile               |  2 ++
+>   .../boot/dts/qcom/sc7280-chrome-common.dtsi     | 11 -----------
+>   .../boot/dts/qcom/sc7280-herobrine-crd.dts      |  1 +
+>   .../dts/qcom/sc7280-herobrine-herobrine-r1.dts  |  1 +
+>   .../boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi | 17 +++++++++++++++++
+>   .../qcom/sc7280-herobrine-villager-r0-lte.dts   | 14 ++++++++++++++
+>   .../qcom/sc7280-herobrine-villager-r1-lte.dts   | 14 ++++++++++++++
+>   arch/arm64/boot/dts/qcom/sc7280-idp.dts         |  1 +
+>   8 files changed, 50 insertions(+), 11 deletions(-)
+>   create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
+>   create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts
+>   create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 2c1605e00d349..24eacbf330880 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -103,7 +103,9 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1-lte.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-crd.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-herobrine-r1.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r0.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r0-lte.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r1.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r1-lte.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp2.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-crd-r3.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+> index cfe2741456a1a..25f31c81b2b74 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+> @@ -83,17 +83,6 @@ spi_flash: flash@0 {
+>   	};
+>   };
+>   
+> -/* Modem setup is different on Chrome setups than typical Qualcomm setup */
+> -&remoteproc_mpss {
+> -	status = "okay";
+> -	compatible = "qcom,sc7280-mss-pil";
+> -	iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
+> -	interconnects = <&mc_virt MASTER_LLCC 0 &mc_virt SLAVE_EBI1 0>;
+> -	memory-region = <&mba_mem>, <&mpss_mem>;
+> -	firmware-name = "qcom/sc7280-herobrine/modem/mba.mbn",
+> -			"qcom/sc7280-herobrine/modem/qdsp6sw.mbn";
+> -};
+> -
+>   &remoteproc_wpss {
+>   	status = "okay";
+>   	firmware-name = "ath11k/WCN6750/hw1.0/wpss.mdt";
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> index e9ca6c5d24a16..921eccfec39ae 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts
+> @@ -9,6 +9,7 @@
+>   
+>   #include "sc7280-herobrine.dtsi"
+>   #include "sc7280-herobrine-audio-wcd9385.dtsi"
+> +#include "sc7280-herobrine-lte-sku.dtsi"
+>   
+>   / {
+>   	model = "Qualcomm Technologies, Inc. sc7280 CRD platform (rev5+)";
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
+> index c1647a85a371a..c1a6719687252 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
+> @@ -8,6 +8,7 @@
+>   /dts-v1/;
+>   
+>   #include "sc7280-herobrine.dtsi"
+> +#include "sc7280-herobrine-lte-sku.dtsi"
+>   
+>   / {
+>   	model = "Google Herobrine (rev1+)";
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
+> new file mode 100644
+> index 0000000000000..a92eeccd2b2a9
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
+> @@ -0,0 +1,17 @@
+> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> +/*
+> + * Google Herobrine dts fragment for LTE SKUs
+> + *
+> + * Copyright 2022 Google LLC.
+> + */
+> +/* Modem setup is different on Chrome setups than typical Qualcomm setup */
+> +
+> +&remoteproc_mpss {
+> +	compatible = "qcom,sc7280-mss-pil";
+> +	iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
+> +	interconnects = <&mc_virt MASTER_LLCC 0 &mc_virt SLAVE_EBI1 0>;
+> +	memory-region = <&mba_mem>, <&mpss_mem>;
+> +	firmware-name = "qcom/sc7280-herobrine/modem/mba.mbn",
+> +			"qcom/sc7280-herobrine/modem/qdsp6sw.mbn";
+> +	status = "okay";
+> +};
 
-The wakeup setting doesn't seem to have anything to do with the genpd
-issues on sc8280xp and the controller doesn't resume properly regardless
-of whether the PHYs have been disabled or not during suspend unless the
-PD is left on.
+We shoud probably move the mpss_mem, mba_mem and rmtfs_mem here as
+well, that way we save an additional ~255M.
 
-Wakeup itself notably works either way.
+-Sibi
 
-Johan
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts
+> new file mode 100644
+> index 0000000000000..672cb78e3088f
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0-lte.dts
+> @@ -0,0 +1,14 @@
+> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> +/*
+> + * Google Villager board device tree source
+> + *
+> + * Copyright 2022 Google LLC.
+> + */
+> +
+> +#include "sc7280-herobrine-villager-r0.dts"
+> +#include "sc7280-herobrine-lte-sku.dtsi"
+> +
+> +/ {
+> +	model = "Google Villager (rev0) with LTE";
+> +	compatible = "google,villager-rev0-sku0", "qcom,sc7280";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
+> new file mode 100644
+> index 0000000000000..2f05a19cc388e
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
+> @@ -0,0 +1,14 @@
+> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> +/*
+> + * Google Villager board device tree source
+> + *
+> + * Copyright 2022 Google LLC.
+> + */
+> +
+> +#include "sc7280-herobrine-villager-r1.dts"
+> +#include "sc7280-herobrine-lte-sku.dtsi"
+> +
+> +/ {
+> +	model = "Google Villager (rev1+) with LTE";
+> +	compatible = "google,villager-sku0", "qcom,sc7280";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+> index 6d3ff80582ae9..fba7e938ce35a 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+> @@ -10,6 +10,7 @@
+>   #include <dt-bindings/iio/qcom,spmi-adc7-pmr735a.h>
+>   #include "sc7280-idp.dtsi"
+>   #include "pmr735a.dtsi"
+> +#include "sc7280-herobrine-lte-sku.dtsi"
+>   
+>   / {
+>   	model = "Qualcomm Technologies, Inc. sc7280 IDP SKU1 platform";
+> 
