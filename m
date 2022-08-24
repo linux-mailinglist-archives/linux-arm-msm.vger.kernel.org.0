@@ -2,183 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F123859F0D6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Aug 2022 03:25:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9848F59F107
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Aug 2022 03:34:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229732AbiHXBZP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Aug 2022 21:25:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40396 "EHLO
+        id S233719AbiHXBdv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Aug 2022 21:33:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232676AbiHXBZO (ORCPT
+        with ESMTP id S233620AbiHXBdt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Aug 2022 21:25:14 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 466082B60B
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 18:25:12 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27NNqEYl010733;
-        Wed, 24 Aug 2022 01:25:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=IzHXtqynfVwEe5eMwtZdRV4569xPU1BbuzTf2dKX8nI=;
- b=lQkrPKFI0IrNAw55l4MGIxQB2bJPm2KtMWv2/eyRo1EvxCzBmhPrNTJCQC9P5eUfuF+5
- MQwcbUtJuyWZLm972MBcSuNCeaGkqIFXEOL0Emjl9IO+i84G/pnsYF1mNMcjWWCsEFaP
- YH6ht+X8ca9L8OVgWYBIQLtwlH5vvCItuUv3MhEMatSGkDArp5/WCIk/IkAONNK46PG3
- 15jL/1sMmJNML4fyh1bA1yDdsxr5+YTbzGu3uMC9P7NUC1bTTdxFco14mgtE6YBK7npA
- pQM31OqeUavWiesUdtcOOumKGLAWCRz+fUNWZe8HvG807ymfcoFqICVSkJZgaT5O11ll GQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j52pjhede-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 24 Aug 2022 01:25:08 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27O1P7Gq003538
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 24 Aug 2022 01:25:07 GMT
-Received: from [10.111.161.24] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 23 Aug
- 2022 18:25:05 -0700
-Message-ID: <251f0ce1-05cd-548e-9253-82adbc1038ce@quicinc.com>
-Date:   Tue, 23 Aug 2022 18:25:03 -0700
+        Tue, 23 Aug 2022 21:33:49 -0400
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C75B8792E5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 18:33:46 -0700 (PDT)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-334dc616f86so424209807b3.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Aug 2022 18:33:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=15+zFGICN73u7PZkuVftuGFAaRqO2hNiuUPbcuB/iDw=;
+        b=ammrl+ffQIbxpXELKnFxaurs3Fbe2bx9R/IRI2+J5pQAM/wfjFh1aSFzyWG/E1RD5I
+         rshOZlmvK+Bt4a2MNbUFbSpkCeSrrxRT3zaVTQqLRUMz4elzDZb4CyvIvtQzq4jGwi+1
+         HBILJXTenmBL8ezDV/XzSltMyRVW8N5pGLVc6ZMhlIDEvl+mrwxpUc5n+db5z5Pfve4k
+         jWbqAzYB3Hyg5oa2ZHgXfW73ElDNxOwcp7mMt28pojnFNBEyD2+0HttoLOb68bdPn3gz
+         h+F5uqyOw5Q9oI+0N52Nr3XEpZ0TzyQMzlW05rWkdP3Hj3nW89n+8r+x6EjcJTcjYaCu
+         dSgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=15+zFGICN73u7PZkuVftuGFAaRqO2hNiuUPbcuB/iDw=;
+        b=lffzGNIfHGI0J24iPn0VLmGS4IA9Gjz7XjBUnVTAKwDpTTh6Aya8xb2toKpezXbPov
+         gk3m8X8tvez2i8jV4gDVtwJu1NiATj3QRKxaWdg7tGMDKlX+n9whQpmZ1uzMkWTR/gqV
+         zDncoWl1yZiV3wEitBf1uHAb0WZaW5OUILn8rTd7azZ2/nfxT5BoQzjklpAG9UoUXaUO
+         d/ZpW7f22KVpdGYGSZbr+8MnOAlH/lrW5UIjPmFEdgQ1Y5cVxNDkqewJKO6+PlgVcaiM
+         SAHwBDpB07mnhuYUJhuSWa6m+N7Pr8VkAcIcNaPD94hsBSfrK++Xz4UwFMnRKLMRWCpH
+         Fw+g==
+X-Gm-Message-State: ACgBeo32qD3yQTFkwtuCdSfdKcybDIO7GS8qCg+S/E+0zftQH1lYBe3y
+        U34/Z/qOin7zepiwS5Y0X+dNUYHtZoM2DYDvCju/pQ==
+X-Google-Smtp-Source: AA6agR5VUVZnLczkpHKFOKrnd+Tscg/SlOlcCZoOHfOkTvdY9LhPO1gaSJJ+tW/v5A56NSwT8mnZVrMApq5J4jdaQcY=
+X-Received: by 2002:a25:1546:0:b0:68f:8758:7348 with SMTP id
+ 67-20020a251546000000b0068f87587348mr24825887ybv.563.1661304824786; Tue, 23
+ Aug 2022 18:33:44 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v1 1/4] drm/msm/mdp5: stop overriding drvdata
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
+References: <20220701012647.2007122-1-saravanak@google.com> <YwS5J3effuHQJRZ5@kroah.com>
+In-Reply-To: <YwS5J3effuHQJRZ5@kroah.com>
+From:   Saravana Kannan <saravanak@google.com>
+Date:   Tue, 23 Aug 2022 18:33:07 -0700
+Message-ID: <CAGETcx8C_Hw588J_DsDELp2rS-UNnezpqqqvUixqGR7m2wDKaA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] Fix console probe delay when stdout-path isn't set
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Paul Mackerras <paulus@samba.org>,
+        Joel Stanley <joel@jms.id.au>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Al Cooper <alcooperx@gmail.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Tobias Klauser <tklauser@distanz.ch>,
+        Russell King <linux@armlinux.org.uk>,
+        Vineet Gupta <vgupta@kernel.org>,
+        Richard Genoud <richard.genoud@gmail.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Alexander Shiyan <shc_work@mail.ru>,
+        Baruch Siach <baruch@tkos.co.il>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Karol Gugala <kgugala@antmicro.com>,
+        Mateusz Holenko <mholenko@antmicro.com>,
+        Gabriel Somlo <gsomlo@gmail.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Taichi Sugaya <sugaya.taichi@socionext.com>,
+        Takao Orito <orito.takao@socionext.com>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20220620213054.1872954-1-dmitry.baryshkov@linaro.org>
- <20220620213054.1872954-2-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220620213054.1872954-2-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Qvd7WFTPvdJfuu5igI6rJ_GubrGwxNBM
-X-Proofpoint-GUID: Qvd7WFTPvdJfuu5igI6rJ_GubrGwxNBM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-23_10,2022-08-22_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 mlxscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0
- suspectscore=0 adultscore=0 spamscore=0 malwarescore=0 mlxlogscore=999
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2208240002
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        Pali Rohar <pali@kernel.org>,
+        Andreas Farber <afaerber@suse.de>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang7@gmail.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Hammer Hsieh <hammerh0314@gmail.com>,
+        Peter Korsgaard <jacmet@sunsite.dk>,
+        Timur Tabi <timur@kernel.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Rob Herring <robh@kernel.org>,
+        sascha hauer <sha@pengutronix.de>, peng fan <peng.fan@nxp.com>,
+        kevin hilman <khilman@kernel.org>,
+        ulf hansson <ulf.hansson@linaro.org>,
+        len brown <len.brown@intel.com>, pavel machek <pavel@ucw.cz>,
+        joerg roedel <joro@8bytes.org>, will deacon <will@kernel.org>,
+        andrew lunn <andrew@lunn.ch>,
+        heiner kallweit <hkallweit1@gmail.com>,
+        eric dumazet <edumazet@google.com>,
+        jakub kicinski <kuba@kernel.org>,
+        paolo abeni <pabeni@redhat.com>,
+        linus walleij <linus.walleij@linaro.org>,
+        hideaki yoshifuji <yoshfuji@linux-ipv6.org>,
+        david ahern <dsahern@kernel.org>, kernel-team@android.com,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        iommu@lists.linux-foundation.org, netdev@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-serial@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-aspeed@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org,
+        linux-snps-arc@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-actions@lists.infradead.org,
+        linux-unisoc@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        sparclinux@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Aug 23, 2022 at 4:25 AM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> On Thu, Jun 30, 2022 at 06:26:38PM -0700, Saravana Kannan wrote:
+> > These patches are on top of driver-core-next.
+> >
+> > Even if stdout-path isn't set in DT, this patch should take console
+> > probe times back to how they were before the deferred_probe_timeout
+> > clean up series[1].
+>
+> Now dropped from my queue due to lack of a response to other reviewer's
+> questions.
 
+Sorry, I somehow missed those emails. I'll respond later today/tomorrow.
 
-On 6/20/2022 2:30 PM, Dmitry Baryshkov wrote:
-> The rest of the code expects that master's device drvdata is the
-> struct msm_drm_private instance. Do not override the mdp5's drvdata.
-> 
-> Fixes: 6874f48bb8b0 ("drm/msm: make mdp5/dpu devices master components")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Is this just for consistency across mdp5/dpu drivers?
-
-What issue was seen if mdp5's platform data is overwritten?
-
-> ---
->   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 19 +++++++++----------
->   1 file changed, 9 insertions(+), 10 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> index c668a4b27cc6..daf5b5ca7233 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> @@ -203,7 +203,7 @@ static int mdp5_set_split_display(struct msm_kms *kms,
->   							  slave_encoder);
->   }
->   
-> -static void mdp5_destroy(struct platform_device *pdev);
-> +static void mdp5_destroy(struct mdp5_kms *mdp5_kms);
->   
->   static void mdp5_kms_destroy(struct msm_kms *kms)
->   {
-> @@ -223,7 +223,7 @@ static void mdp5_kms_destroy(struct msm_kms *kms)
->   	}
->   
->   	mdp_kms_destroy(&mdp5_kms->base);
-> -	mdp5_destroy(mdp5_kms->pdev);
-> +	mdp5_destroy(mdp5_kms);
->   }
->   
->   #ifdef CONFIG_DEBUG_FS
-> @@ -651,9 +651,8 @@ static int mdp5_kms_init(struct drm_device *dev)
->   	return ret;
->   }
->   
-> -static void mdp5_destroy(struct platform_device *pdev)
-> +static void mdp5_destroy(struct mdp5_kms *mdp5_kms)
->   {
-> -	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
->   	int i;
->   
->   	if (mdp5_kms->ctlm)
-> @@ -667,7 +666,7 @@ static void mdp5_destroy(struct platform_device *pdev)
->   		kfree(mdp5_kms->intfs[i]);
->   
->   	if (mdp5_kms->rpm_enabled)
-> -		pm_runtime_disable(&pdev->dev);
-> +		pm_runtime_disable(&mdp5_kms->pdev->dev);
->   
->   	drm_atomic_private_obj_fini(&mdp5_kms->glob_state);
->   	drm_modeset_lock_fini(&mdp5_kms->glob_state_lock);
-> @@ -816,8 +815,6 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
->   		goto fail;
->   	}
->   
-> -	platform_set_drvdata(pdev, mdp5_kms);
-> -
->   	spin_lock_init(&mdp5_kms->resource_lock);
->   
->   	mdp5_kms->dev = dev;
-> @@ -915,7 +912,7 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
->   	return 0;
->   fail:
->   	if (mdp5_kms)
-> -		mdp5_destroy(pdev);
-> +		mdp5_destroy(mdp5_kms);
->   	return ret;
->   }
->   
-> @@ -975,7 +972,8 @@ static int mdp5_dev_remove(struct platform_device *pdev)
->   static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
->   {
->   	struct platform_device *pdev = to_platform_device(dev);
-> -	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
-> +	struct msm_drm_private *priv = platform_get_drvdata(pdev);
-> +	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
->   
->   	DBG("");
->   
-> @@ -985,7 +983,8 @@ static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
->   static __maybe_unused int mdp5_runtime_resume(struct device *dev)
->   {
->   	struct platform_device *pdev = to_platform_device(dev);
-> -	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
-> +	struct msm_drm_private *priv = platform_get_drvdata(pdev);
-> +	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
->   
->   	DBG("");
->   
+-Saravana
