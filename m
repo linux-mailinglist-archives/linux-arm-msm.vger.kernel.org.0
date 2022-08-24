@@ -2,163 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2509D59FEC3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Aug 2022 17:49:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1816B59FFAF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Aug 2022 18:43:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230492AbiHXPth (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Aug 2022 11:49:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43328 "EHLO
+        id S238882AbiHXQnU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Aug 2022 12:43:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236868AbiHXPtg (ORCPT
+        with ESMTP id S239057AbiHXQly (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Aug 2022 11:49:36 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 247D061717;
-        Wed, 24 Aug 2022 08:49:35 -0700 (PDT)
-Received: from [192.168.2.145] (109-252-119-13.nat.spd-mgts.ru [109.252.119.13])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
-        (No client certificate requested)
-        (Authenticated sender: dmitry.osipenko)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 003536601DAD;
-        Wed, 24 Aug 2022 16:49:30 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1661356173;
-        bh=vOJMhTQ7HzZBp0ZZo9K4hrXQVabXIso7oNLwG6hsKLo=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=c6s4L7HIzhqXHIRjPO78mUx2njs0FTSDwh/if1G8GrYUXKIesr5TSuVpzCCXzCFaC
-         RQwFs9mzKIF/SoKOeW/iFsEtF2HNDrH0QYgFH8Bjb0EODV2gEnzbMJNa3D7Euz+aq1
-         ttSiIgN9lBknJRw6hrDsumfPw8z1mfE/u3dAN4OYGFY1SnY5ytLPSVBmnTh6lKyQde
-         YOUN/UNH4qT1TRrXxpbCLStfVkyl6+y4obXi9sfi44ZsbJWXBmSFG438Hbbw7Cm9FD
-         zamHCbpRiEHeEJEqGHwgMIgiFMUhzX7OjakAgX0Hfj9WgvOsPDRnfMMAi2GCcW6bPu
-         eS/kqb6U0BR1g==
-Message-ID: <25d6b7e7-bbcc-7613-42d1-13c2b9ab2937@collabora.com>
-Date:   Wed, 24 Aug 2022 18:49:28 +0300
+        Wed, 24 Aug 2022 12:41:54 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7B8A1571D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Aug 2022 09:41:52 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id pm13so8700451pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Aug 2022 09:41:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc;
+        bh=6UQFQzWIMsXO0TvDttsqfOV0v+YnUpw24yC7SfNzNmc=;
+        b=mYDsAVW1aU4k8MheXoibjYixBApob+/Ft5F8QdMk3X+LrTO6NuWOLhy3xipx/kwxyv
+         pW1fBs3gHKCNr9NF8WU8pt2/knAWGD+HwKoxBSMO+hu1oMgC4stVT4NFG06IXNvARd2+
+         xPuCa6Og0kJAKoVFkGfnyLuhgL9UApXPYo4sk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=6UQFQzWIMsXO0TvDttsqfOV0v+YnUpw24yC7SfNzNmc=;
+        b=8QK53TyvTFWlasD8t4exmpSLoOvN0cDu0GujpxZmWrN3VFQ6c3exSlECSb0MIPyj0w
+         QRRkd74gjYoFUW3B63tTYA/MUtzXp+k0bb3B2rKTdPD5+i6onZok3Ao+WleBw0fxBpOC
+         KNeIiYD+wMI2X50MP3lR1JiezIQE/sS8WAPlsCvO2tzpb5WWg+yrriupiOL9PtUods0I
+         kuemkxdsUAK2DmA8xKpnmmBzz5eS+Qv7rXSkD/fHLjHjPfGeGxRYwOEVKOQQmZImp6EU
+         NpWU6kkH2nN76r5abQ83Rb6So1fqMwtdwXerS0BotNTHmeladBOd7pG0sKu9V7sp1vgy
+         WRXA==
+X-Gm-Message-State: ACgBeo1MDjOXOn96+x1GCD0s27a5I0PVhm/jTYrynhsG3JTvgnhtJgQv
+        sQJxl2FsdWuL2xiuWTMfrU4TXA==
+X-Google-Smtp-Source: AA6agR4Ox2+16RSl4/g10D50pDnJ0eAEz01Nnp/jLZOFEVTkg4IYINoxfPssWRQvepPRPq9b5eTy2w==
+X-Received: by 2002:a17:902:e88c:b0:172:cf6c:2801 with SMTP id w12-20020a170902e88c00b00172cf6c2801mr21261555plg.114.1661359312427;
+        Wed, 24 Aug 2022 09:41:52 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:fba3:9861:f694:5325])
+        by smtp.gmail.com with UTF8SMTPSA id t15-20020a1709027fcf00b0016d5428f041sm12740625plb.199.2022.08.24.09.41.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Aug 2022 09:41:52 -0700 (PDT)
+Date:   Wed, 24 Aug 2022 09:41:49 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] usb: dwc3: keep PHYs disabled during suspend
+Message-ID: <YwZUzeCTw2BupuMm@google.com>
+References: <20220823124047.14634-1-johan+linaro@kernel.org>
+ <YwUdbkyL8GgvLQJA@google.com>
+ <YwXhANZ8l6E9yQDe@hovoldconsulting.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [Linaro-mm-sig] [PATCH v3 6/9] dma-buf: Move dma-buf attachment
- to dynamic locking specification
-Content-Language: en-US
-To:     =?UTF-8?Q?Christian_K=c3=b6nig?= <ckoenig.leichtzumerken@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Gurchetan Singh <gurchetansingh@chromium.org>,
-        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Daniel Almeida <daniel.almeida@collabora.com>,
-        Gert Wollny <gert.wollny@collabora.com>,
-        Gustavo Padovan <gustavo.padovan@collabora.com>,
-        Daniel Stone <daniel@fooishbar.org>,
-        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Rob Clark <robdclark@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        =?UTF-8?Q?Thomas_Hellstr=c3=b6m?= <thomas_os@shipmail.org>,
-        Qiang Yu <yuq825@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Dmitry Osipenko <digetx@gmail.com>,
-        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
-        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        kernel@collabora.com, virtualization@lists.linux-foundation.org,
-        linux-rdma@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        lima@lists.freedesktop.org
-References: <20220824102248.91964-1-dmitry.osipenko@collabora.com>
- <20220824102248.91964-7-dmitry.osipenko@collabora.com>
- <055c3c05-ac4c-430e-f2b9-08f000acf435@gmail.com>
-From:   Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <055c3c05-ac4c-430e-f2b9-08f000acf435@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YwXhANZ8l6E9yQDe@hovoldconsulting.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/24/22 18:24, Christian König wrote:
-> Am 24.08.22 um 12:22 schrieb Dmitry Osipenko:
->> Move dma-buf attachment API functions to the dynamic locking
->> specification.
->> The strict locking convention prevents deadlock situations for dma-buf
->> importers and exporters.
->>
->> Previously, the "unlocked" versions of the attachment API functions
->> weren't taking the reservation lock and this patch makes them to take
->> the lock.
->>
->> Intel and AMD GPU drivers already were mapping the attached dma-bufs
->> under
->> the held lock during attachment, hence these drivers are updated to use
->> the locked functions.
->>
->> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->> ---
->>   drivers/dma-buf/dma-buf.c                  | 115 ++++++++++++++-------
->>   drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c    |   4 +-
->>   drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c |   8 +-
->>   drivers/gpu/drm/i915/gem/i915_gem_object.c |  12 +++
->>   include/linux/dma-buf.h                    |  20 ++--
->>   5 files changed, 110 insertions(+), 49 deletions(-)
->>
->> diff --git a/drivers/dma-buf/dma-buf.c b/drivers/dma-buf/dma-buf.c
->> index 4556a12bd741..f2a5a122da4a 100644
->> --- a/drivers/dma-buf/dma-buf.c
->> +++ b/drivers/dma-buf/dma-buf.c
->> @@ -559,7 +559,7 @@ static struct file *dma_buf_getfile(struct dma_buf
->> *dmabuf, int flags)
->>    * 2. Userspace passes this file-descriptors to all drivers it wants
->> this buffer
->>    *    to share with: First the file descriptor is converted to a
->> &dma_buf using
->>    *    dma_buf_get(). Then the buffer is attached to the device using
->> - *    dma_buf_attach().
->> + *    dma_buf_attach_unlocked().
+On Wed, Aug 24, 2022 at 10:27:44AM +0200, Johan Hovold wrote:
+> On Tue, Aug 23, 2022 at 11:33:18AM -0700, Matthias Kaehlcke wrote:
+> > Hi Johan,
+> > 
+> > On Tue, Aug 23, 2022 at 02:40:47PM +0200, Johan Hovold wrote:
+> > > Commit 649f5c842ba3 ("usb: dwc3: core: Host wake up support from system
+> > > suspend") started leaving the PHYs enabled during suspend for
+> > > wakeup-capable controllers even though it turns out this had nothing to
+> > > do with wakeup.
+> > > 
+> > > Rather, the wakeup capability flag was (ab-)used as a proxy to configure
+> > > the suspend behaviour in an attempt to reduce power leakage on some
+> > > platforms.
+> > > 
+> > > Stop abusing the wakeup configuration and restore the 5.19 behaviour of
+> > > keeping the PHYs powered off during suspend. If needed, a dedicated
+> > > mechanism for configuring the PHY power state during suspend can be
+> > > added later.
+> > > 
+> > > Fixes: 649f5c842ba3 ("usb: dwc3: core: Host wake up support from system suspend")
+> > > Link: https://lore.kernel.org/r/Yuv7AM/5jtO/pgcm@google.com
+> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > > ---
+> > >  drivers/usb/dwc3/core.c      | 4 ++--
+> > >  drivers/usb/dwc3/dwc3-qcom.c | 1 -
+> > >  2 files changed, 2 insertions(+), 3 deletions(-)
+> > > 
+> > > diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> > > index 8c8e32651473..0cdb6be720e1 100644
+> > > --- a/drivers/usb/dwc3/core.c
+> > > +++ b/drivers/usb/dwc3/core.c
+> > > @@ -1983,7 +1983,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+> > >  		dwc3_core_exit(dwc);
+> > >  		break;
+> > >  	case DWC3_GCTL_PRTCAP_HOST:
+> > > -		if (!PMSG_IS_AUTO(msg) && !device_may_wakeup(dwc->dev)) {
+> > > +		if (!PMSG_IS_AUTO(msg)) {
+> > 
+> > My assumption was that the PHYs need to be powered for wakeup to work, but
+> > apparently that isn't the case, wakeup still works on sc7x80 with this part
+> > of this patch.
 > 
-> Now I get why this is confusing me so much.
+> Thanks for confirming.
 > 
-> The _unlocked postfix implies that there is another function which
-> should be called with the locks already held, but this is not the case
-> for attach/detach (because they always need to grab the lock themselves).
+> > >  			dwc3_core_exit(dwc);
+> > >  			break;
+> > >  		}
+> > > @@ -2044,7 +2044,7 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
+> > >  		spin_unlock_irqrestore(&dwc->lock, flags);
+> > >  		break;
+> > >  	case DWC3_GCTL_PRTCAP_HOST:
+> > > -		if (!PMSG_IS_AUTO(msg) && !device_may_wakeup(dwc->dev)) {
+> > > +		if (!PMSG_IS_AUTO(msg)) {
+> > >  			ret = dwc3_core_init_for_resume(dwc);
+> > >  			if (ret)
+> > >  				return ret;
+> > > diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> > > index 9a94b1ab8f7a..9995395baa12 100644
+> > > --- a/drivers/usb/dwc3/dwc3-qcom.c
+> > > +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> > > @@ -904,7 +904,6 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+> > >  
+> > >  	wakeup_source = of_property_read_bool(dev->of_node, "wakeup-source");
+> > >  	device_init_wakeup(&pdev->dev, wakeup_source);
+> > > -	device_init_wakeup(&qcom->dwc3->dev, wakeup_source);
+> > 
+> > Surprisingly this part breaks wakeup on sc7x80, with the above removal
+> > of the device_may_wakeup() checks it is not clear to me why wakeup needs
+> > to be enabled for the core.
+> 
+> I can't explain that behaviour either. This change doesn't affect the
+> wakeup_path flag and genpd, and notably wakeup still works here with
+> sc8280xp.
+> 
+> Could it be some Chromium user-space issue in that it expects all
+> devices on the wakeup path to be wakeup capable? Note that the
+> xhci-plat driver (e.g. for the descendant xhci-hcd.1.auto device)
+> unconditionally sets the wakeup-capable flag (but leaves it disabled by
+> default).
+> 
+> I guess we could do something similar for the dwc3 core device, but we'd
+> need to figure out if and why that is at all needed first.
+> 
+> Can you verify that the wakeup source (e.g. keyboard) you're using still
+> has power/wakeup set to "enabled"?
 
-That's correct. The attach/detach ops of exporter can take the lock
-(like i915 exporter does it), hence importer must not grab the lock
-around dma_buf_attach() invocation.
+I confirmed that the wakeup flag of the wakeup source is still enabled when
+the wakeup source suspends.
 
-> So I suggest to drop the _unlocked postfix for the attach/detach
-> functions. Another step would then be to unify attach/detach with
-> dynamic_attach/dynamic_detach when both have the same locking convention
-> anyway.
+It turns out the dwc3 core wakeup flags are evaluated by:
 
-It's not a problem to change the name, but it's unclear to me why we
-should do it. The _unlocked postfix tells importer that reservation must
-be unlocked and it must be unlocked in case of dma_buf_attach().
+	int usb_phy_roothub_suspend(struct device *controller_dev,
+	                            struct usb_phy_roothub *phy_roothub)
+	{
+		usb_phy_roothub_power_off(phy_roothub);
 
-Dropping the postfix will make dma_buf_attach() inconsistent with the
-rest of the _unlocked functions(?). Are you sure we need to rename it?
+		/* keep the PHYs initialized so the device can wake up the system */
+		if (device_may_wakeup(controller_dev))
+			return 0;
 
-> Sorry that this is going so much back and forth, it's really complicated
-> to keep all the stuff in my head at the moment :)
+		return usb_phy_roothub_exit(phy_roothub);
+	}
 
-Not a problem at all, I expected that it will take some time for this
-patchset to settle down.
-
--- 
-Best regards,
-Dmitry
+'controller_dev' is the dwc3 core. The root hub is un-initialized when wakeup is
+disabled. That causes wakeup to fail, and also happens to be the/one cause of
+the high power consumption of an onboard USB hub that I mentioned earlier in
+another thread.
