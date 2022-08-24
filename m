@@ -2,77 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B08885A0047
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Aug 2022 19:21:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E0EB5A0044
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Aug 2022 19:21:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240035AbiHXRUX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Aug 2022 13:20:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58526 "EHLO
+        id S233768AbiHXRU7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Aug 2022 13:20:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240076AbiHXRUU (ORCPT
+        with ESMTP id S234967AbiHXRU6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Aug 2022 13:20:20 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8ACE74DD1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Aug 2022 10:20:19 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id n124so9202297oih.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Aug 2022 10:20:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc;
-        bh=DVN+kvFqLv3mGTVIxFamxzUyeVLq+KBt3jBa97DqaoU=;
-        b=nnDk31vCn++BAX0ACZQufoWbrcwPKEk+tndItNgTkMek12/3f2xauugQZ0Awk4pZWR
-         +fxX0bmMzr4/HLuAejtjNsLcELQl7IUh6QZ/Lxfk2T+K3vx2vdHcIAyB3TnHrSZcMmT5
-         eXMPeRw6UlXCoRJT5O9S+lTtPoXegs8dNzjqE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc;
-        bh=DVN+kvFqLv3mGTVIxFamxzUyeVLq+KBt3jBa97DqaoU=;
-        b=c3KYjuub0ZTG580l7ARoPyzhrGsLYlv9645UC0Pkn5UVbY5ylB9tmiMiEXHlkErE96
-         XWQbWflSFVZlZCwTE84l6Zxiy8lllunJap5yxTTHg23TUYpHO+3E1UHNamNUmxpNiU1O
-         bzBBq+nT+c4NPv5DtRhDlkPy5MYQpX9s7mobYnGZyF9UZZdgGvPt0pJSjZrFmLSbiNFa
-         wpfsAZVGjd800tw0g+9kI5wU2WudJ4K96BXkZLQbSlQFLQLopvB0TrUoHLe2VqBMpD/4
-         UDTR36KyW4YOjnHHCOMj3U/DMwQW1CkWCYs/rWrXBKbOhqF8fy9NEfm/ZFvqh7YiTcp3
-         AZqQ==
-X-Gm-Message-State: ACgBeo2e1kRTXXucKEb5OootmrNktZ7/QkXk1mgctiNsvEsCq3cfA2fc
-        m5uHe6CHdwR1VlOurrleG5CkobcWWlhNRqwNkR1jWw==
-X-Google-Smtp-Source: AA6agR5PnC3mwI2SVPrcxba73qqYafzKnOOisZpg3cDUuE7oPrzR8QObFqc8sFV6WGYMv+qZDebB4x6n2Hc6qexU8Nc=
-X-Received: by 2002:a05:6808:1142:b0:343:86a0:dedc with SMTP id
- u2-20020a056808114200b0034386a0dedcmr96050oiu.44.1661361618193; Wed, 24 Aug
- 2022 10:20:18 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 24 Aug 2022 12:20:17 -0500
+        Wed, 24 Aug 2022 13:20:58 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92A5274DC6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Aug 2022 10:20:57 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27OF0ssx003838;
+        Wed, 24 Aug 2022 17:20:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Css+uKhVGF55AsE1CKgRMtzaiOxuek4xfE7Si47H1Ts=;
+ b=Zvh5mzm+odAxDQjp9X69oa76ufDWrVitxXfK9/8ZkMWPGD5voon5n45E0+Yz4ap1q8cx
+ 4XBwhMagID0Wjzj5JdS76krJxDU51zrGFqd51AL9yQNQLcRaJpZTiXE8af1xGTxvlsLd
+ An9pSDVVBA/ImGgzOEzLeJfZa5GvV/HjUlfc9sofMMnaPxJxC/o7WDv5mWH2Xqqrjkvl
+ hgUvNdkScSfnwGbsPRyQAIiTP1Q4sKKPLGJ4lb/LLE3SFV4IfDo9qpC46jPc9MvfhntT
+ CA8gI2vGv2cpRN8gM0QbO3TAa0exyVtPzA4S/FAWd9XUYExUSfWePzPZYiq3Acb9Owhi 5w== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j52pqm41n-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 24 Aug 2022 17:20:52 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27OHKpYh002470
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 24 Aug 2022 17:20:51 GMT
+Received: from [10.111.161.24] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 24 Aug
+ 2022 10:20:48 -0700
+Message-ID: <7bdfc4da-740b-9e4d-647c-a349b0bfa1f9@quicinc.com>
+Date:   Wed, 24 Aug 2022 10:20:46 -0700
 MIME-Version: 1.0
-In-Reply-To: <3d052733-3600-b6eb-baf3-d8806a150af3@quicinc.com>
-References: <1659526134-22978-1-git-send-email-quic_krichai@quicinc.com>
- <1659526134-22978-3-git-send-email-quic_krichai@quicinc.com>
- <CAE-0n500y-n+ZjasYQRAa3JgamQG1c+Aqn0YiX-i0L-w6C4dbQ@mail.gmail.com> <3d052733-3600-b6eb-baf3-d8806a150af3@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Wed, 24 Aug 2022 12:20:17 -0500
-Message-ID: <CAE-0n53oMnnn7rOPEiibc=XM52z9THDc9jYhe3x3C_AsLtmARQ@mail.gmail.com>
-Subject: Re: [PATCH v5 2/3] PCI: qcom: Restrict pci transactions after pci suspend
-To:     Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
-        helgaas@kernel.org
-Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mka@chromium.org,
-        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
-        dmitry.baryshkov@linaro.org, Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v1 1/4] drm/msm/mdp5: stop overriding drvdata
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20220620213054.1872954-1-dmitry.baryshkov@linaro.org>
+ <20220620213054.1872954-2-dmitry.baryshkov@linaro.org>
+ <251f0ce1-05cd-548e-9253-82adbc1038ce@quicinc.com>
+ <CAA8EJpogK9BbrSzgJp+Rb_Op2+JBFsTdQHxpTFz28c2biE8AUw@mail.gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJpogK9BbrSzgJp+Rb_Op2+JBFsTdQHxpTFz28c2biE8AUw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: vupg-SPU826OawGFh8qQza3Hc-xwYTiz
+X-Proofpoint-GUID: vupg-SPU826OawGFh8qQza3Hc-xwYTiz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-24_10,2022-08-22_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 bulkscore=0
+ phishscore=0 mlxlogscore=999 clxscore=1015 malwarescore=0
+ lowpriorityscore=0 impostorscore=0 suspectscore=0 spamscore=0 mlxscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2208240064
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,30 +87,127 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Krishna Chaitanya Chundru (2022-08-23 20:37:59)
->
-> On 8/9/2022 12:42 AM, Stephen Boyd wrote:
-> > Quoting Krishna chaitanya chundru (2022-08-03 04:28:53)
-> >> If the endpoint device state is D0 and irq's are not freed, then
-> >> kernel try to mask interrupts in system suspend path by writing
-> >> in to the vector table (for MSIX interrupts) and config space (for MSI's).
-> >>
-> >> These transactions are initiated in the pm suspend after pcie clocks got
-> >> disabled as part of platform driver pm  suspend call. Due to it, these
-> >> transactions are resulting in un-clocked access and eventually to crashes.
-> > Why are the platform driver pm suspend calls disabling clks that early?
-> > Can they disable clks in noirq phase, or even later, so that we don't
-> > have to check if the device is clocking in the irq poking functions?
-> > It's best to keep irq operations fast, so that irq control is fast given
-> > that these functions are called from irq flow handlers.
->
-> We are registering the pcie pm suspend ops as noirq ops only. And this
-> msix and config
->
-> access is coming at the later point of time that is reason we added that
-> check.
->
 
-What is accessing msix and config? Can you dump_stack() after noirq ops
-are called and figure out what is trying to access the bus when it is
-powered down?
+
+On 8/24/2022 1:29 AM, Dmitry Baryshkov wrote:
+> On Wed, 24 Aug 2022 at 04:25, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 6/20/2022 2:30 PM, Dmitry Baryshkov wrote:
+>>> The rest of the code expects that master's device drvdata is the
+>>> struct msm_drm_private instance. Do not override the mdp5's drvdata.
+>>>
+>>> Fixes: 6874f48bb8b0 ("drm/msm: make mdp5/dpu devices master components")
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>
+>> Is this just for consistency across mdp5/dpu drivers?
+>>
+>> What issue was seen if mdp5's platform data is overwritten?
+> 
+> I think there was a crash in mdp5_destroy, but I did not capture the
+> log at the moment.
+> 
+> As you can see, the mdp5_destroy() expects to get mdp5_kms pointer
+> from the drvdata. However the msm_drv_probe sets the drvdata to
+> msm_drm_private instance. Boom.
+
+Yes, I see that msm_drv_probe sets the drvdata to msm_drm_private.
+But I also see that mdp5_init then sets it to
+
+platform_set_drvdata(pdev, mdp5_kms);
+
+Does this not override it then?
+
+Also seems like the commit which introduced it is present since april, 
+this should have happened even earlier then right?
+
+> 
+>>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 19 +++++++++----------
+>>>    1 file changed, 9 insertions(+), 10 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+>>> index c668a4b27cc6..daf5b5ca7233 100644
+>>> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+>>> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+>>> @@ -203,7 +203,7 @@ static int mdp5_set_split_display(struct msm_kms *kms,
+>>>                                                          slave_encoder);
+>>>    }
+>>>
+>>> -static void mdp5_destroy(struct platform_device *pdev);
+>>> +static void mdp5_destroy(struct mdp5_kms *mdp5_kms);
+>>>
+>>>    static void mdp5_kms_destroy(struct msm_kms *kms)
+>>>    {
+>>> @@ -223,7 +223,7 @@ static void mdp5_kms_destroy(struct msm_kms *kms)
+>>>        }
+>>>
+>>>        mdp_kms_destroy(&mdp5_kms->base);
+>>> -     mdp5_destroy(mdp5_kms->pdev);
+>>> +     mdp5_destroy(mdp5_kms);
+>>>    }
+>>>
+>>>    #ifdef CONFIG_DEBUG_FS
+>>> @@ -651,9 +651,8 @@ static int mdp5_kms_init(struct drm_device *dev)
+>>>        return ret;
+>>>    }
+>>>
+>>> -static void mdp5_destroy(struct platform_device *pdev)
+>>> +static void mdp5_destroy(struct mdp5_kms *mdp5_kms)
+>>>    {
+>>> -     struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
+>>>        int i;
+>>>
+>>>        if (mdp5_kms->ctlm)
+>>> @@ -667,7 +666,7 @@ static void mdp5_destroy(struct platform_device *pdev)
+>>>                kfree(mdp5_kms->intfs[i]);
+>>>
+>>>        if (mdp5_kms->rpm_enabled)
+>>> -             pm_runtime_disable(&pdev->dev);
+>>> +             pm_runtime_disable(&mdp5_kms->pdev->dev);
+>>>
+>>>        drm_atomic_private_obj_fini(&mdp5_kms->glob_state);
+>>>        drm_modeset_lock_fini(&mdp5_kms->glob_state_lock);
+>>> @@ -816,8 +815,6 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+>>>                goto fail;
+>>>        }
+>>>
+>>> -     platform_set_drvdata(pdev, mdp5_kms);
+>>> -
+>>>        spin_lock_init(&mdp5_kms->resource_lock);
+>>>
+>>>        mdp5_kms->dev = dev;
+>>> @@ -915,7 +912,7 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+>>>        return 0;
+>>>    fail:
+>>>        if (mdp5_kms)
+>>> -             mdp5_destroy(pdev);
+>>> +             mdp5_destroy(mdp5_kms);
+>>>        return ret;
+>>>    }
+>>>
+>>> @@ -975,7 +972,8 @@ static int mdp5_dev_remove(struct platform_device *pdev)
+>>>    static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
+>>>    {
+>>>        struct platform_device *pdev = to_platform_device(dev);
+>>> -     struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
+>>> +     struct msm_drm_private *priv = platform_get_drvdata(pdev);
+>>> +     struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
+>>>
+>>>        DBG("");
+>>>
+>>> @@ -985,7 +983,8 @@ static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
+>>>    static __maybe_unused int mdp5_runtime_resume(struct device *dev)
+>>>    {
+>>>        struct platform_device *pdev = to_platform_device(dev);
+>>> -     struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
+>>> +     struct msm_drm_private *priv = platform_get_drvdata(pdev);
+>>> +     struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
+>>>
+>>>        DBG("");
+>>>
+> 
+> 
+> 
