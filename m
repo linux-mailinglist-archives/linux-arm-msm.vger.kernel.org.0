@@ -2,135 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 66C165A1BCB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Aug 2022 23:59:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B0C45A1C11
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 00:17:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244208AbiHYV7W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Aug 2022 17:59:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50024 "EHLO
+        id S233240AbiHYWRD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Aug 2022 18:17:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244215AbiHYV7V (ORCPT
+        with ESMTP id S229711AbiHYWRC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Aug 2022 17:59:21 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72713A6C1E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Aug 2022 14:59:15 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id q2so25669072edb.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Aug 2022 14:59:15 -0700 (PDT)
+        Thu, 25 Aug 2022 18:17:02 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 134703AE6C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Aug 2022 15:17:01 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id x23so18388pll.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Aug 2022 15:17:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=ZWZIyKcotrv3NEmO67KClX9EqNqs0MIDHUX0uHrtkjE=;
-        b=g8/rsxUneSNTvyAX/My2MOeR5KSLY9Rg/6OmuA3mo6wuxVL4yZk8GRe4P42gRuSGYY
-         5o/riDIc3W226S/XAgbuMlSnghvwTZQj9UIRcIL71AI+lwfaqe+0yd9ZMeDrBW+XReH0
-         HeG7kNZkWgj06gz6aqBW2Pg4+wFveT436fTg0=
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc;
+        bh=vBeKGRK+cVut8bnT/6A/lBEbRGscI4sDYwtvLgwZl6U=;
+        b=F2p4W6OpYD0wiVHVa4HW9N6SRDY4WeCbz0KXJ48rzzY498kDUBYTVxhaII6smH2bl7
+         pcIcQkWepEKfD5Kjjj3kYSawEceO4eGv+SGFZjIZ0JOoAIjgbJoaiiiekqXOFQ71QRRK
+         uHY1EooZ5DsTIyZdDCXnakFYtopCAu+rSEDVg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=ZWZIyKcotrv3NEmO67KClX9EqNqs0MIDHUX0uHrtkjE=;
-        b=ltpF7+u4kft5sn7SANKCHdB0W7vtdBO+GIXjFWROkTHtnJCBMorr3XqYsV3Hx54Tu9
-         bMLZXp6x3iJ6FS5iNUBKuNcLAti7TiTxKnJhRsqQmx0bMgl8b10NVH8io14v38jcyEKH
-         Zad2bPM0at78twEf3MOvhPjfNPzc+Q8BioBGbhf7/2IOH3/hor4xOmOiboz9E2AHoYcK
-         c1P6DCy4fcBeYf6VOBFyNm8LPUcXVwkgCXSurlX1qPpNj45iodxUu1P53Q0OHWIzVDkY
-         UirRu63W1FRsafPyqj18zOWLGN8locuYdp2yBS41ec7yyYqnG2hL0K5nU53oIDPZI4ur
-         pSSA==
-X-Gm-Message-State: ACgBeo1JmYH+aXCQNlurGR6oH1exb37O1xfbFLyU5tzZtIA16OGk6C/k
-        6x8Ry7CRsqOHOsQE5pC5RGs2p9/4zd8zA0mDaVc=
-X-Google-Smtp-Source: AA6agR6+obDujuKLRTF/ECD5C40GOOW7EuKJCd9Avuohp31LeuBKlEle3Ebumapb4d/sFVdji2ivUA==
-X-Received: by 2002:a05:6402:3553:b0:446:b76a:bb59 with SMTP id f19-20020a056402355300b00446b76abb59mr4670490edd.375.1661464753770;
-        Thu, 25 Aug 2022 14:59:13 -0700 (PDT)
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com. [209.85.128.44])
-        by smtp.gmail.com with ESMTPSA id p6-20020a17090653c600b0073d638a7a89sm132622ejo.99.2022.08.25.14.59.11
-        for <linux-arm-msm@vger.kernel.org>
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=vBeKGRK+cVut8bnT/6A/lBEbRGscI4sDYwtvLgwZl6U=;
+        b=2q3DIn7mi0Bjts8VYCE7cS/4t9HQGZEJ1rdX6kweMm5b9BAq8753F8VVxpdCIyZ+1D
+         DYNo/Z6/YXT0/ss8Gu9J1wceJ3At8/eN6uliWk+HozBdF9MfRd8bPhARwnNS1BVLLjyz
+         U7XbFkf6VD985Zav0L17izr9i+PO6o1eYMsWJBymbI+Yp0h8z3LQXlqGbuNs3bX9NA1X
+         /L2VB6hmAQ95FNFqLf6yZR3FD0HzlFSCkjkf/dDx0d6UoX/XnthTN0QSCVKKCKbEncG7
+         wD12DVquCSJYne+E5jamGNAPkGc/jW27+TzgY5cEqS1JFzPZ5QTS5VIC0PiZ0oNUoJb2
+         avkg==
+X-Gm-Message-State: ACgBeo1Z/k3VQFAj3a50cqAtZ2qzo++irKDZISn5meeTviJ69l+i5b/j
+        1o549rACxR0EzQdP9SsxHkCNPg==
+X-Google-Smtp-Source: AA6agR5G1m9x4dJMFRPTSXgA6jT+Mbg6vfutpOV+lyq4yqeuTtNPsN56w4DyMpOhxmehjU5CznzYcg==
+X-Received: by 2002:a17:90a:7805:b0:1fa:bdab:7d59 with SMTP id w5-20020a17090a780500b001fabdab7d59mr1141849pjk.37.1661465820535;
+        Thu, 25 Aug 2022 15:17:00 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:d529:f79d:2a1a:4e61])
+        by smtp.gmail.com with UTF8SMTPSA id w9-20020a17090a15c900b001fa9f86f20csm213319pjd.49.2022.08.25.15.16.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Aug 2022 14:59:11 -0700 (PDT)
-Received: by mail-wm1-f44.google.com with SMTP id h204-20020a1c21d5000000b003a5b467c3abso3412492wmh.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Aug 2022 14:59:11 -0700 (PDT)
-X-Received: by 2002:a05:600c:42c3:b0:3a6:431:91bf with SMTP id
- j3-20020a05600c42c300b003a6043191bfmr9014430wme.188.1661464751060; Thu, 25
- Aug 2022 14:59:11 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220825164205.4060647-1-dianders@chromium.org>
- <20220825094155.1.Id59c32b560c4662d8b3697de2bd494d08d654806@changeid> <20220825213053.5xxiljfjkhnpy53p@halaneylaptop>
-In-Reply-To: <20220825213053.5xxiljfjkhnpy53p@halaneylaptop>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 25 Aug 2022 14:58:58 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VPFvMoPvdYmdXAp+oEBDyNzuaTBNd=g4=+T=itiyVoAw@mail.gmail.com>
-Message-ID: <CAD=FV=VPFvMoPvdYmdXAp+oEBDyNzuaTBNd=g4=+T=itiyVoAw@mail.gmail.com>
-Subject: Re: [PATCH 1/7] arm64: dts: qcom: sa8155p-adp: Specify which LDO
- modes are allowed
-To:     Andrew Halaney <ahalaney@redhat.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Thu, 25 Aug 2022 15:17:00 -0700 (PDT)
+Date:   Thu, 25 Aug 2022 15:16:58 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH 2/2] clk: qcom: gcc-sc7280: Keep USB GDSC power domains
+ on when USB wakeup is enabled
+Message-ID: <Ywf02oIXEL8G/Heo@google.com>
+References: <20220822115246.1.I45235b7c40997bc2abf813e4722b4dcdd6aecf6b@changeid>
+ <20220822115246.2.If09027f73daa6e1ed95f5eab02326b543c67132e@changeid>
+ <YwS3FCOqIeajMEgz@hovoldconsulting.com>
+ <YwUDjaG6n95Ddij2@google.com>
+ <YwXlsK3pjK/q1xwO@hovoldconsulting.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YwXlsK3pjK/q1xwO@hovoldconsulting.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Wed, Aug 24, 2022 at 10:47:44AM +0200, Johan Hovold wrote:
+> On Tue, Aug 23, 2022 at 09:42:53AM -0700, Matthias Kaehlcke wrote:
+> > On Tue, Aug 23, 2022 at 01:16:36PM +0200, Johan Hovold wrote:
+> > > On Mon, Aug 22, 2022 at 11:53:11AM -0700, Matthias Kaehlcke wrote:
+> > > > Set GENPD_FLAG_ACTIVE_WAKEUP for the USB GDSC power domains of SC7280.
+> > > > 
+> > > > Suggested-by: Johan Hovold <johan+linaro@kernel.org>
+> > > > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> > > > ---
+> > > > 
+> > > >  drivers/clk/qcom/gcc-sc7280.c | 2 ++
+> > > >  1 file changed, 2 insertions(+)
+> > > > 
+> > > > diff --git a/drivers/clk/qcom/gcc-sc7280.c b/drivers/clk/qcom/gcc-sc7280.c
+> > > > index 7ff64d4d5920..4ff855269467 100644
+> > > > --- a/drivers/clk/qcom/gcc-sc7280.c
+> > > > +++ b/drivers/clk/qcom/gcc-sc7280.c
+> > > > @@ -3125,6 +3125,7 @@ static struct gdsc gcc_usb30_prim_gdsc = {
+> > > >  	.gdscr = 0xf004,
+> > > >  	.pd = {
+> > > >  		.name = "gcc_usb30_prim_gdsc",
+> > > > +		.flags = GENPD_FLAG_ACTIVE_WAKEUP,
+> > > 
+> > > Have you verified that the power-domain doesn't need to remain on also
+> > > when USB isn't used for wakeup?
+> > 
+> > So far I haven't observed issues with this on sc7180 and sc7280 when USB
+> > wakeup is disabled.
+> 
+> Ok, good.
+> 
+> I would have assumed that it needed to stay always-on before the
+> s/device_can_wakeup/device_may_wakeup/ change as before that the PHYs
+> would be left on regardless of the (sysfs) wakeup setting.
 
-On Thu, Aug 25, 2022 at 2:31 PM Andrew Halaney <ahalaney@redhat.com> wrote:
->
-> On Thu, Aug 25, 2022 at 09:41:59AM -0700, Douglas Anderson wrote:
-> > This board uses RPMH, specifies "regulator-allow-set-load" for LDOs,
-> > but doesn't specify any modes with "regulator-allowed-modes".
-> >
-> > Prior to commit efb0cb50c427 ("regulator: qcom-rpmh: Implement
-> > get_optimum_mode(), not set_load()") the above meant that we were able
-> > to set either LPM or HPM mode. After that commit (and fixes [1]) we'll
-> > be stuck at the initial mode. Discussion of this has resulted in the
-> > decision that the old dts files were wrong and should be fixed to
-> > fully restore old functionality.
-> >
-> > Let's re-enable the old functionality by fixing the dts.
-> >
-> > [1] https://lore.kernel.org/r/20220824142229.RFT.v2.2.I6f77860e5cd98bf5c67208fa9edda4a08847c304@changeid
-> >
-> > Fixes: 5b85e8f2225c ("arm64: dts: qcom: sa8155p-adp: Add base dts file")
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > ---
-> >
-> >  arch/arm64/boot/dts/qcom/sa8155p-adp.dts | 13 ++++++++++++-
-> >  1 file changed, 12 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-> > index ba547ca9fc6b..ddb9cb182152 100644
-> > --- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-> > @@ -43,7 +43,6 @@ vreg_s4a_1p8: smps4 {
-> >
-> >               regulator-always-on;
-> >               regulator-boot-on;
-> > -             regulator-allow-set-load;
->
-> I could see this deserving its own commit or a line in the commit
-> message, but not a big deal to me:
->
-> Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+That make sense, not sure why GENPD_FLAG_ACTIVE_WAKEUP works with wakeup
+disabled.
 
-Ah right. I mentioned it in the cover letter but forgot to mention it
-in this commit message.
+In any case setting the genpd flags directly in the gdsc descriptor doesn't
+seem to be the right thing to do. With GENPD_FLAG_ALWAYS_ON my sc7280 system
+stalls at boot. It boots when ALWAYS_ON is set in the gdsc flags, which ends
+up setting GENPD_FLAG_ALWAYS_ON of the genpd. I'll send a new version of this
+series which sets the correct flag.
 
-I'll assume that this isn't a big deal but if Bjorn wants a quick spin
-with this mentioned in the commit message (or broken into a separate
-commit) then I can do so. I'll wait for direction before spinning,
-though.
+> > > This is the case for sc8280xp and indicates that there are further
+> > > missing pieces here (at least for that platform).
+> > 
+> > What are you observing on sc8280xp when wakeup is disabled?
+> 
+> The wakeup setting doesn't seem to have anything to do with the genpd
+> issues on sc8280xp and the controller doesn't resume properly regardless
+> of whether the PHYs have been disabled or not during suspend unless the
+> PD is left on.
 
--Doug
+I'm essentially seeing the same. USB is hosed after resume unless the PD
+is left on.
+
+On Chrome OS we currently work around that with a version of commit
+d9be8d5c5b03 ("usb: dwc3: qcom: Keep power domain on to retain controller
+status") which was reverted upstream. I'm not sure whether USB worked after
+resume before we enabled wakeup support. I would have sworn it did, but we
+landed an old version of the wakeup patches a long time ago, so my
+memory might be failing me.
+
+I wonder what the status on other QC platforms is, from a quick grep it
+seems only msm8953 sets the USB gdsc to ALWAYS_ON.
