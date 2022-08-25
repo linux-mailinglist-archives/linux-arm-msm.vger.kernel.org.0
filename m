@@ -2,149 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA17A5A1974
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Aug 2022 21:22:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0235E5A198C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Aug 2022 21:32:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243468AbiHYTWX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Aug 2022 15:22:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34116 "EHLO
+        id S231931AbiHYTcR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Aug 2022 15:32:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243631AbiHYTWV (ORCPT
+        with ESMTP id S229462AbiHYTcR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Aug 2022 15:22:21 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92CDEBD131;
-        Thu, 25 Aug 2022 12:22:20 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27PHK5ZQ022330;
-        Thu, 25 Aug 2022 19:22:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=4OExE7/j1GF9DglWOSxq+7pg6RSVkS6FfZdQPfvxlJc=;
- b=kE/eEyMQYfb/ger5GqaTkpcF9UThEhUVT964mU0pxKxmZdFnXOgKyxx8jbwN150QSYpI
- Mzz3GIYSPc0e1W7I3O2IcMDhCL4Cg6z8JmCpekACWFwepWiG42kJRxB2z1gU6YkOL+sc
- 1rSOqlP346ST4LrzqbLWY3s/XJ2iNwRd9dyHcuwhuVZIGsVGjAu5UM4e/ilplJPgSEpf
- GYrURPf0Av1Yx59uP+prasamTsqREhFXRx35MTUm1Ke8vzIeGMswF9gi7bKCI07b/Frx
- BG75rqj8MidBKodkwmN4rdbtTT7ihdeKAXeufmDvHS/U/ayuUL+xaYAj6foHYMF/S7FR 2w== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j63v0jxt3-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 25 Aug 2022 19:22:05 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27PJM3Hn027595
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 25 Aug 2022 19:22:03 GMT
-Received: from quicinc.com (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 25 Aug
- 2022 12:22:03 -0700
-Date:   Thu, 25 Aug 2022 12:22:01 -0700
-From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
-To:     Rajendra Nayak <quic_rjendra@quicinc.com>
-CC:     Andy Gross <agross@kernel.org>,
+        Thu, 25 Aug 2022 15:32:17 -0400
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9ADFBAE232;
+        Thu, 25 Aug 2022 12:32:16 -0700 (PDT)
+Received: by mail-oi1-f173.google.com with SMTP id v125so24546488oie.0;
+        Thu, 25 Aug 2022 12:32:16 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=1jbLVYE4Xk4iZE8f+Sd1RkalFYsuUzAhPdP1wmfCPDc=;
+        b=Y6M6ygF7ecSwk4MgakI0PG4illdnNLVYkkRnulBuuc6RmzcGpeH7MZoyBsaZVVhIoA
+         D7LUZZP8ZuY6uyvTHGaGRLTjPNyROE5X1Y4I71Lp2PdriGwhbNFuArbhZv0b6p8HvBvZ
+         gndnJM0CT9jBizm5vWcI02jkxbLNIfgJUB1jvJSzFjP1XfohZi0NWcItSSQ+Rw6fUjVp
+         2vc+MhB13bJEqdyA4WTAWi3MkFRKkcZB16mbBlLmkSPAqKTklHmHe2/Hqwy0zxa4/ABO
+         oViCQQjzVpV3wqfPVKn3Y+r0XnXban6WJ/ZFiFZnfZ6T2vtkrr7Azr1LRVvMEu4/DHwX
+         Ls6A==
+X-Gm-Message-State: ACgBeo3IY+YqZh38ZR/h6NCyxPaDZw1dpx06pZaSkzu2tRVTQnEvtKxD
+        fHXK1P/R6gXTuRHgmYYBYg==
+X-Google-Smtp-Source: AA6agR7/iR9O/8wGyf5tijYk4nti9ywGqLBLmEsMFqUUJj5poDlpKbQ7qLM7f/3TMarb7QGoG1oHYw==
+X-Received: by 2002:a05:6808:1928:b0:345:3228:a797 with SMTP id bf40-20020a056808192800b003453228a797mr197156oib.125.1661455935918;
+        Thu, 25 Aug 2022 12:32:15 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id m12-20020a9d6acc000000b00636956b3080sm5711226otq.43.2022.08.25.12.32.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Aug 2022 12:32:15 -0700 (PDT)
+Received: (nullmailer pid 1546883 invoked by uid 1000);
+        Thu, 25 Aug 2022 19:32:14 -0000
+Date:   Thu, 25 Aug 2022 14:32:14 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "David Heidelberg" <david@ixit.cz>,
-        Robert Marko <robimarko@gmail.com>,
-        Elliot Berman <quic_eberman@quicinc.com>
-Subject: Re: [PATCH v2 4/5] firmware: qcom: scm: Add wait-queue helper
- functions
-Message-ID: <20220825192201.GA9699@quicinc.com>
-References: <1658529438-9234-1-git-send-email-quic_gurus@quicinc.com>
- <1658529438-9234-5-git-send-email-quic_gurus@quicinc.com>
- <1f284b9c-257b-a127-55c0-e6cc8c07a9eb@quicinc.com>
- <20220811030022.GA18104@quicinc.com>
- <456915bf-b7ff-efaa-72aa-62fd05344270@quicinc.com>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Sricharan R <sricharan@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,ipq6018: Fix example
+ 'gpio-ranges' size
+Message-ID: <20220825193214.GA1545391-robh@kernel.org>
+References: <20220809214556.2489822-1-robh@kernel.org>
+ <CACRpkdbSycBG6ZiXfEHLquiyAMu=et81LAaGZbj38bhAccCSkw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <456915bf-b7ff-efaa-72aa-62fd05344270@quicinc.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: UJT53_FmyfyTz6mG95JP9R66bjyHXtKp
-X-Proofpoint-ORIG-GUID: UJT53_FmyfyTz6mG95JP9R66bjyHXtKp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-25_08,2022-08-25_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- spamscore=0 clxscore=1011 malwarescore=0 mlxlogscore=550 adultscore=0
- phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 mlxscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2208250073
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <CACRpkdbSycBG6ZiXfEHLquiyAMu=et81LAaGZbj38bhAccCSkw@mail.gmail.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Aug 11 2022 11:13, Rajendra Nayak wrote:
+On Mon, Aug 22, 2022 at 01:07:48PM +0200, Linus Walleij wrote:
+> On Tue, Aug 9, 2022 at 11:46 PM Rob Herring <robh@kernel.org> wrote:
 > 
-> On 8/11/2022 8:30 AM, Guru Das Srinagesh wrote:
-> >On Aug 02 2022 17:07, Rajendra Nayak wrote:
-> >>
-> >>On 7/23/2022 4:07 AM, Guru Das Srinagesh wrote:
-> >>>When the firmware (FW) supports multiple requests per VM, and the VM
-> >>>also supports it via the `allow-multi-call` device tree flag, the
-> >>>floodgates are thrown open for them to all reach the firmware at the
-> >>>same time.
+> > 'gpio-ranges' entries have a fixed size of 1 phandle plus arg 3 cells.
+> > The qcom,ipq6018-pinctrl example is a cell short:
 > >
-> >[...]
+> > Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.example.dtb: pinctrl@1000000: gpio-ranges:0: [1, 0, 80] is too short
+> >         From schema: /usr/local/lib/python3.10/dist-packages/dtschema/schemas/gpio/gpio.yaml
 > >
-> >>>   2) SCM_WAITQ_WAKE:
-> >>>
-> >>>   	When an SCM call receives this return value instead of success
-> >>>   	or error, FW wishes to signal HLOS to wake up a (different)
-> >>>   	previously sleeping call.
-> >>>
-> >>>   	FW tells HLOS which call to wake up via the additional return
-> >>>   	values `wq_ctx`, `smc_call_ctx` and `flags`. The first two have
-> >>>   	already been explained above.
-> >>>
-> >>>   	`flags` can be either WAKE_ONE or WAKE_ALL. Meaning, wake either
-> >>>   	one, or all, of the SCM calls that HLOS is associating with the
-> >>>   	given `wq_ctx`.
-> >>>
-> >>>A sleeping SCM call can be woken up by either an interrupt that FW
-> >>>raises, or via a SCM_WAITQ_WAKE return value for a new SCM call.
-> >>
-> >>Do you know why the FW was not designed to always use an interrupt?
-> >>That would have made the handling of this in kernel a lot less complicated.
-> >
-> >Because:
-> >
-> >1. Our firmware in TrustZone cannot raise interrupts on its own - it needs the
-> >hypervisor to do that.
-> >
-> >2. Thus, in platforms where there is no hypervisor, there is no interrupt
-> >possible - only SMC_WAITQ_WAKE.
-> >
-> >Therefore, relying only on an interrupt would render the driver unable to
-> >support platforms without a hypervisor, which we didn't want to do.
+> > Signed-off-by: Rob Herring <robh@kernel.org>
+> > ---
+> > Please ack and I can send to Linus before rc1.
 > 
-> Thanks Guru for the clarification, however what problem are we really solving
-> with this on platforms _without_ a hypervisor?
+> Sorry for delay, was on vacation :/
+> Acked-by: Linus Walleij <linus.walleij@linaro.org>
 > 
-> Your cover letter said
-> 'The problem this feature is fixing is as follows. In a scenario where there is
-> a VM in addition to HLOS (and an underlying hypervisor):'
-> 
-> So I assumed this was primarily for platforms _with_ a VM/Hypervisor?
-> 
-> I understand that even with just the HLOS and no VM, if we can get these requests
-> processed concurrently it still adds value, but eventually Trustzone will
-> still process these requests sequentially right?
+> I think as binding maintainer you can just submit this kind of smaller stuff
+> without any subsystem consent, if you have it acked by Krzysztof, even more so.
 
-The Trustzone (TZ) firmware doesn't process all requests sequentially - there are a
-few that require a "callback" back to HLOS. In such cases, the original SCM
-call releases the TZ serialization lock, thereby allowing a new call to enter
-TZ. It is better to have requests sleep and wake via WAITQ_SLEEP and WAITQ_WAKE
-rather than the alternative - retrying an arbitrary amount of times via -EBUSY.
+Don't worry, I did. It is in rc1.
+
+Rob
