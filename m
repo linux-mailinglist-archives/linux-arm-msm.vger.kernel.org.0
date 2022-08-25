@@ -2,114 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E2165A08CF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Aug 2022 08:26:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28E775A08EA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Aug 2022 08:35:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235415AbiHYG0C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Aug 2022 02:26:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36508 "EHLO
+        id S230338AbiHYGfh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Aug 2022 02:35:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235392AbiHYG0B (ORCPT
+        with ESMTP id S235576AbiHYGfg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Aug 2022 02:26:01 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 392A79E685
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Aug 2022 23:26:00 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id d8so14528640lfq.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Aug 2022 23:26:00 -0700 (PDT)
+        Thu, 25 Aug 2022 02:35:36 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10404A0253
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Aug 2022 23:35:34 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id z6so26924698lfu.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Aug 2022 23:35:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=Z1nM8n9D4cKIWi39fJN2NwqcjbnvD6EFp1Fh0bxjzc4=;
-        b=hNvYAqJ2fMgVfTRnyfDWcky5oQJfdfYi+EdOJEgIcIKlbFGnhD+xji0eDdp3G4FiBV
-         li/WRRGtpXvSBfIY9h+kEDodO0Nuvnsjqolc9rmpHT2pT5w7CV9jO4mANXyYd0sYkCMQ
-         AGax0m2WPRn9KJ4tHlBY3rtMYpNYPldGdFTzojUDma+OXFM3bpp2NbA68S8BEAS+F/kT
-         ASp1W/5Zgtuwd4GTAfSf3p/ectWSNTqB40+jWtcZCdXqIryvnbDUl6KMNxc/CAzpWtKm
-         39qMJo5w6+kedsFKna1EV8Dwoa9fnBx8gkQljEdnVZpYy4fkw4qH5vur4bjXS26Uasr5
-         qGpg==
+        bh=EvKjZn6Jwen4vu3P72obwS4c6ve0NpMMiuM5nFUjsc4=;
+        b=hA4GPgaoc/uO4LTyPl6C3Xt+kHB33H1tgfQHneoEsl2dH6kJVkPkiVqziKkgko6psm
+         sykCnNuBjKSGW65OLNnTjZsc1gMvL8pxzST7G8ZaC26d1V9GnCb8gADMrX52Pg5WmWCC
+         MFk+i+s7g5Oj+JlpHgSvV2gIhBbpO8NKxa5qw7xPHWMlOMRk1AL6omhiRuXnNvaZnV7C
+         hzs9IqK1KglzKfqWlH1w0ETUDb9CENa5j95XHDtoTAK8Tdo/Y/REu5u5q9EduEq8Rjsd
+         lawoJlipNd21qz0GU9CDOlfVn2/cLAWisLJlvtML6nXytSjRYSh6PEQckm243xqW+hR8
+         iTUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=Z1nM8n9D4cKIWi39fJN2NwqcjbnvD6EFp1Fh0bxjzc4=;
-        b=5wqs6M8gtHkiBg+0UpZaVWmJk0oK1gZJJUzyqb+Z1oOMA6j2IzofTcfigLILo7psGt
-         sqmzBzmJlOqjWXwvazEDXszk/VYYGHOPvfPw9riL/MWaFdKKA8GDeLjuCZrKE7sN/KtW
-         A6nmvmkxTPReeHX2DcWV4N8Rvg2bQZTJqmwzevnZwsWZr5gmSud+XS+4uKXAnoe+K4hj
-         U16xg32EAtTug9HO5MH849Dw9X40V/0yHuLjw9VBUjq5EM4rZdK5X85K1ZUJXHCEhO1E
-         uExW6Js1Xmitq3Yo1uIxLs1fYXjZn2OsXfLJrdhGYu6mqdw4YMqM8WpXZsi4G8ADsdbk
-         6qFw==
-X-Gm-Message-State: ACgBeo0g5rGiPemKJyVH1Gx/5wJu76jtrnJ59TMe95w4JMozp9IMVDXB
-        D8phNC28FKa5Sv/m8lajDwU/LA==
-X-Google-Smtp-Source: AA6agR7dN0Oeo86So9OoOfr2zzWDWG3FwxukDfc3LUcA3VWZLlGdSlmuXbMu+QCVHLh7M7V+OcogvQ==
-X-Received: by 2002:a05:6512:a8e:b0:492:b3e5:adcd with SMTP id m14-20020a0565120a8e00b00492b3e5adcdmr674979lfu.374.1661408758612;
-        Wed, 24 Aug 2022 23:25:58 -0700 (PDT)
+        bh=EvKjZn6Jwen4vu3P72obwS4c6ve0NpMMiuM5nFUjsc4=;
+        b=wSULwsg+X7Y7BhNVslT/oOjcbKGqNyXN8bH5Y24YTJH9ifWXJDwrONNozG6auGwbfR
+         xfHtX5I72tX6JucvyFmnsYu9AzE+mlSov/CxlvFtPqKwTmJBKqMpGRJ4pwkofibeGGBJ
+         35e0BmDd05MPhoSQn9+r9lnPCDIB37Ua5Ps4QdaruoNte7jTqbpxOYPvnQ7/tHEvhWFf
+         VNIBYerpvVb/4HSlNkTjjjFUnQvIGNjkYfQPJ0Xwo59kSkCjp269gdxiwH8UJ/2iUHAu
+         T1QZ1YuMm2zMFTfRBC4D+EBpd8cjHcpDJoKoJo8q75Ol5pJA1jDCTeiaHNZK/veQuvTk
+         /g8g==
+X-Gm-Message-State: ACgBeo2Qe7uLdC35istOVbqAkDnDqCw6J388f7fGcDt1nJJlmWobOKTL
+        W1LVuMrIRZJNeQU7EQz9hFTXIQ==
+X-Google-Smtp-Source: AA6agR4MXfi9uA9HEyxEy5/qdbVPXms4C7TdYuwdEmdffkyYQy/oAl819Jf7A8eMC6blyL3NxEOxFA==
+X-Received: by 2002:a19:6a05:0:b0:492:f775:6f43 with SMTP id u5-20020a196a05000000b00492f7756f43mr638867lfu.10.1661409332398;
+        Wed, 24 Aug 2022 23:35:32 -0700 (PDT)
 Received: from [192.168.0.71] (82.131.98.15.cable.starman.ee. [82.131.98.15])
-        by smtp.gmail.com with ESMTPSA id s28-20020a056512203c00b0048a91266268sm311509lfs.232.2022.08.24.23.25.57
+        by smtp.gmail.com with ESMTPSA id k16-20020a05651c10b000b00260fdfdd23csm329602ljn.109.2022.08.24.23.35.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Aug 2022 23:25:58 -0700 (PDT)
-Message-ID: <84caccd4-1e28-b344-8e7d-67a6d5c974f2@linaro.org>
-Date:   Thu, 25 Aug 2022 09:25:57 +0300
+        Wed, 24 Aug 2022 23:35:31 -0700 (PDT)
+Message-ID: <3ea10afc-61f4-a5ac-aef9-16ddc6f845e6@linaro.org>
+Date:   Thu, 25 Aug 2022 09:35:29 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.12.0
-Subject: Re: [PATCH] dt-bindings: display: Add missing
- (unevaluated|additional)Properties on child nodes
+Subject: Re: [PATCH] ARM: configs: replace CONFIG_NO_HZ=y with
+ CONFIG_NO_HZ_IDLE=y
 Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>,
-        "James (Qian) Wang" <james.qian.wang@arm.com>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Mihail Atanassov <mihail.atanassov@arm.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, Inki Dae <inki.dae@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
+To:     Stefan Hansson <newbie13xd@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
         Alim Akhtar <alim.akhtar@samsung.com>,
-        Andre Przywara <andre.przywara@arm.com>
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
-        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Taichi Sugaya <sugaya.taichi@socionext.com>,
+        Takao Orito <orito.takao@socionext.com>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Aaro Koskinen <aaro.koskinen@iki.fi>,
+        Janusz Krzysztofik <jmkrzyszt@gmail.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
         linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-References: <20220823145649.3118479-11-robh@kernel.org>
+        linux-rpi-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-omap@vger.kernel.org,
+        linux-oxnas@groups.io, linux-arm-msm@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
+        linux-tegra@vger.kernel.org
+References: <20220822161018.16101-1-newbie13xd@gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220823145649.3118479-11-robh@kernel.org>
+In-Reply-To: <20220822161018.16101-1-newbie13xd@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/08/2022 17:56, Rob Herring wrote:
-> In order to ensure only documented properties are present, node schemas
-> must have unevaluatedProperties or additionalProperties set to false
-> (typically).
+On 22/08/2022 19:10, Stefan Hansson wrote:
+> According to https://www.kernel.org/doc/html/latest/timers/no_hz.html,
+> CONFIG_NO_HZ=y should be replaced by CONFIG_NO_HZ_IDLE=y for newer
+> kernels, so let's reflect that in the 32-bit ARM defconfigs.
 > 
-> Signed-off-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Stefan Hansson <newbie13xd@gmail.com>
 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> # Samsung
 
 Best regards,
 Krzysztof
