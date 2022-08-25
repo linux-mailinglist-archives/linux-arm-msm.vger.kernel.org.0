@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 63D2D5A0F94
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Aug 2022 13:51:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BB4C5A0FA7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Aug 2022 13:55:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241290AbiHYLvH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Aug 2022 07:51:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54378 "EHLO
+        id S240197AbiHYLzo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Aug 2022 07:55:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241214AbiHYLvG (ORCPT
+        with ESMTP id S235857AbiHYLzn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Aug 2022 07:51:06 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 686705FF75
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Aug 2022 04:51:04 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id n15so6794860lfe.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Aug 2022 04:51:04 -0700 (PDT)
+        Thu, 25 Aug 2022 07:55:43 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF7CEA2872
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Aug 2022 04:55:42 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id x24so1109946lji.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Aug 2022 04:55:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=QslpZXG7w6+Zu0cuJpcihO4wL0ZcP7qpvE0bMlNnn88=;
-        b=LimlF0C4WC4ny6FZr0Orj0k40ks11cTYtD5QO6JSOvOvUpPD6Tv8nuYA9QS41unyqI
-         0XMpNFV+o0pFIMKNO2PvGCJVjErilKa8Ag04mNQX1YsdE75zQRkjq+c3e31bJUP6G7Qc
-         pTsppBNUcnEnI4wqGFgVUDLx4ztOU3d/reKjqYDsWcQbNGjud8Wws64NEP2d2gkwR6IS
-         qnzTm/627wp16BwyEkoJPPAe42iKhoVzlzs6orQzwu+l20/0VUmk4XRM/TJ5DvuUPfxe
-         R/5bxx4a6QFN3EVbi3xGMdLw4HOo3hENHyQeuPrt+93o/IzoCqTYhXMtadmC0lT4V3rt
-         /EaA==
+        bh=6XKZfRQTbqgRZcANt6xELc2SVlUljiEWEfQE8Qx9J+8=;
+        b=Qqf/eZldqtrSxY+Imp6UQb0gxT52HRHcfkvEHvpCVlEEUx0bABCkhI5Hvn07yHr970
+         9O1i9/E74Y7k/gH4VzdlpLrv+Ux1Uq2HRIZKdWGlNX8tx/FSUy4N7jQ2gnh0FtBa0+9M
+         Mr98uzkTkMjZWF9QwkwxNgCu/omlrI90+2tBpOgf3zutgux+DG3HoUNAAEk2z04tfckB
+         oGNxAxuxM0m88qTgHjFll5yF32EOvSXwbRop+3MRbNazeGMyskV/tvIZlyqUf1klOdQj
+         LkYesc9VmoU0fgEzD1pF/ezlRP7TFOBi/5gIHUoA8ofCsX/5YZ5EEHuBAfJog1gVnvgL
+         GLzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=QslpZXG7w6+Zu0cuJpcihO4wL0ZcP7qpvE0bMlNnn88=;
-        b=wS1JVLrXH41QlieehqezH3fCRTl64xESUrbLA08Iys+niSyEwJIEwxhHDiZqA+0+sP
-         QMFBY/iAKBxgtztEucTEqveIyZcwAIlLEG7+1TcUnHfcRoLH3vU8Oaj+z2gnygbqTYWi
-         GkQS3nhycHd79iWWsbM6Ex+dT7CA/XRgv3cd8I397hWeGconoONHPUjoXFS699lY1ioS
-         ZnrL9XltoFfUrxMYnQD+uKM6ypEMGSG4ZLkKk5/S5PG+5Kok2Z8QTs9jXFlq6tQPP0cP
-         OSoc6tODrA78FAtrkmEHnNwFbtWe8ukM3su4dtcZoHdE5PGs0VlUGxyVqG5Qox1yIPdX
-         wwYw==
-X-Gm-Message-State: ACgBeo3gQmJQBhGINxrU9ZBed3QhrKz8p19eAvv5pA8UGqqbxxVHmT3/
-        fT8FbRUjj4SbhSWKB2lqAna+sg==
-X-Google-Smtp-Source: AA6agR7b6cEUO9K0Iijpg8ftzYlO5oAvjsgLr4FBxw+igjm+vGxsRNZiXOqbvoyl252nS7ROZq43VQ==
-X-Received: by 2002:a19:e04a:0:b0:492:f96f:85b7 with SMTP id g10-20020a19e04a000000b00492f96f85b7mr980042lfj.141.1661428262801;
-        Thu, 25 Aug 2022 04:51:02 -0700 (PDT)
+        bh=6XKZfRQTbqgRZcANt6xELc2SVlUljiEWEfQE8Qx9J+8=;
+        b=lOSMwJCZJUHCkH4Kelm7nDImz1nuoqH2mYQhuns0Lge3d1UkWQwOzB00WHmDP2PK9b
+         SROPzKh00kWYQu3NEhMKS6TUCyXe1PwSSBlawAFS1FiDBlXa2QdMiNGQ0B+C3Wk3Vnno
+         w8mY079EEzXLEY6NtYoJOu8VPV60B9xRtgLOG4SEQyNBTS5z+VFP7CL0qdgpoaVVUGJU
+         Y2Xwf5kQVwck+IVRXoU0DWdX/68HsVwjf5j6iuVDRf3md8vVRDWrp62MQjEqEWruSMRe
+         RVpuRMRWM+DDnjkmzKHqnO4sq4Cp43B7YYXRaHWVRNvtcUGb9GAB4xYVjR1xyCkQB4Tj
+         kwRg==
+X-Gm-Message-State: ACgBeo3pICzkpKTEnaikokezEPiV8Bp8CK1Ce5nvwI1DF/ubNV59B1Sv
+        obySdANYn791fmrP3kX3jEl9Bg==
+X-Google-Smtp-Source: AA6agR6iJRh4adLmym6DhicDyzYTJIpz7bsuJ8SQG/bWGZqpju0gBB68YyMlqiclDMC2VDp5to2LeQ==
+X-Received: by 2002:a05:651c:1025:b0:261:c071:c473 with SMTP id w5-20020a05651c102500b00261c071c473mr1002073ljm.71.1661428541105;
+        Thu, 25 Aug 2022 04:55:41 -0700 (PDT)
 Received: from [192.168.0.71] (82.131.98.15.cable.starman.ee. [82.131.98.15])
-        by smtp.gmail.com with ESMTPSA id s4-20020a056512314400b0048fdb3efa20sm455083lfi.185.2022.08.25.04.51.01
+        by smtp.gmail.com with ESMTPSA id r15-20020a056512102f00b0048b0176bac6sm464706lfr.93.2022.08.25.04.55.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Aug 2022 04:51:01 -0700 (PDT)
-Message-ID: <0048ccbe-e8dc-2ce8-a8a7-68a5ad4194ac@linaro.org>
-Date:   Thu, 25 Aug 2022 14:51:00 +0300
+        Thu, 25 Aug 2022 04:55:40 -0700 (PDT)
+Message-ID: <a0eb1fd7-4bc4-f62e-b61a-f02e388afda4@linaro.org>
+Date:   Thu, 25 Aug 2022 14:55:39 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
@@ -88,22 +88,70 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 25/08/2022 12:50, Dmitry Baryshkov wrote:
-> Split Mobile Display SubSystem (MDSS) root node bindings to the separate
-> yaml file. Changes to the existing (txt) schema:
->  - Added optional "vbif_nrt_phys" region used by msm8996
->  - Made "bus" and "vsync" clocks optional (they are not used by some
->    platforms)
->  - Added (optional) "core" clock added recently to the mdss driver
->  - Added optional resets property referencing MDSS reset
->  - Defined child nodes pointing to corresponding reference schema.
->  - Dropped the "lut" clock. It was added to the schema by mistake (it is
->    a part of mdp4 schema, not the mdss).
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
+(...)
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> +    minItems: 1
+> +    maxItems: 4
+> +
+> +  clock-names:
+> +    minItems: 1
+> +    maxItems: 4
+> +
+> +  "#address-cells":
+> +    const: 1
+> +
+> +  "#size-cells":
+> +    const: 1
+> +
+> +  ranges:
+> +    true
+> +
+> +  resets:
+> +    items:
+> +      - description: MDSS_CORE reset
+> +
+> +oneOf:
+> +  - properties:
+> +      clocks:
+> +        minItems: 3
+> +        maxItems: 4
+> +
+> +      clock-names:
+> +        minItems: 3
+> +        items:
+> +          - const: iface
+> +          - const: bus
+> +          - const: vsync
+> +          - const: core
+> +  - properties:
+> +      clocks:
+> +        minItems: 1
+> +        maxItems: 2
+> +
+> +      clock-names:
+> +        minItems: 1
+> +        items:
+> +          - const: iface
+> +          - const: core
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +  - interrupts
+> +  - interrupt-controller
+> +  - "#interrupt-cells"
+> +  - power-domains
+> +  - clocks
+> +  - clock-names
+> +  - "#address-cells"
+> +  - "#size-cells"
+> +  - ranges
+> +
+> +patternProperties:
 
+This goes after properties, not after required.
 
 Best regards,
 Krzysztof
