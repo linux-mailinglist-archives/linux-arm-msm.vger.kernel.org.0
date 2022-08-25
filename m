@@ -2,75 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 86E4E5A0D5D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Aug 2022 11:54:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 12F875A0D79
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Aug 2022 12:05:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240939AbiHYJyI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Aug 2022 05:54:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36240 "EHLO
+        id S240706AbiHYKFY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Aug 2022 06:05:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240986AbiHYJxp (ORCPT
+        with ESMTP id S240558AbiHYKFX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Aug 2022 05:53:45 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AD7CAE84F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Aug 2022 02:51:46 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id bx38so18866863ljb.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Aug 2022 02:51:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=DvaJK17gV4B+bl1ZbEWU+oqW67fAbVfCADxcKfyU+fo=;
-        b=jrMX2sKeb7fmWWgdwU0PRGp30JE12BX2p6j9usPnDrXjswJ4bzVW1QN3IlrPHB62Bi
-         +EFnKvG7IvmbLuwH4GiwE2lrxqWAUCT6nk1vVWJlPSGkwMh+CqVpZwkOw9MGxIyghOWG
-         c6I7mhb7EPuxMwtG2InqAxOCsfKCjOUpJ5v8uBazJEdiDtbVyrc22rrbpbVVazy1e9Pn
-         8RWOnSABSUWvSzKr8KqT/gD5zeUgri2Fx4v6K0YE7yrk3ICuVMgfSsMuCE23gku0kQWQ
-         HC6R1yJRJdZDWFOE49kEHMX+aI0ArOyaY0j+ucltO6vQjFr81G+RRj4zgJDJxc2othN1
-         48Lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=DvaJK17gV4B+bl1ZbEWU+oqW67fAbVfCADxcKfyU+fo=;
-        b=Alzotd/XySzDvLPTi1LvGc9lyx9y3y188tpm++N0756B1tp8/wxUfr5P/OR4mFQwAC
-         RVqJ6qczjbRHb+SlzMDkFqxA0chN0eKYRSWyNOsD4Ag0pRy2G/0JBPlA5R5sfVk3vcvz
-         cyTOtxP3M1syDS1nBjqz29RpY/HP2aWuulfohWG6N4fiWaIBeJKee59WHbkv4Ek8qLff
-         XQjd+kHQ6PBKP6xlYQ5Hr3YbjL3pB0bY5GRGbG5NEeNl25uwcV/2CDAHWiXpXwDHsBPk
-         BDZSvPyQlUUPv6yzBgk3Zjin36L7Nn/s4L3VH/IRQpxNxWJ7Is5bmNvWr/wq82r9iYPg
-         Qe6Q==
-X-Gm-Message-State: ACgBeo1KTIywGX+3JwwT+C+y5NTZreK6IwC/mzjlBMSuu7KTqP6TputA
-        EWTKgRfDzs8R+/scFqWL/x4qlw==
-X-Google-Smtp-Source: AA6agR6YfoBwsTqR20ybFZO3sNncqpFoke6wtT679ceGxCwxo1h5VJwbmkf3yMwRokjXS5wG7ZrvsA==
-X-Received: by 2002:a2e:84d7:0:b0:261:e692:511a with SMTP id q23-20020a2e84d7000000b00261e692511amr847690ljh.32.1661421074575;
-        Thu, 25 Aug 2022 02:51:14 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id h10-20020a056512220a00b00492cfecf1c0sm398502lfu.245.2022.08.25.02.51.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Aug 2022 02:51:14 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v4 10/10] dt-bindings: display/msm: add support for the display on SM8250
-Date:   Thu, 25 Aug 2022 12:51:03 +0300
-Message-Id: <20220825095103.624891-11-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220825095103.624891-1-dmitry.baryshkov@linaro.org>
-References: <20220825095103.624891-1-dmitry.baryshkov@linaro.org>
+        Thu, 25 Aug 2022 06:05:23 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55FB5A2866;
+        Thu, 25 Aug 2022 03:05:21 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27P6TPkt018605;
+        Thu, 25 Aug 2022 10:04:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=IM5cttMRYnn7UaAmvUeSHl9XOYihY8Ufu8esThp9cIA=;
+ b=ZJHFAaoEBeGZp24WeVkkjZJBm0rjdkdcLrnzKOXoc/J70CebPI9S6xqEZWoJGaJ6MWyA
+ AsKA/UHz4gBT2TEDn7FpOQ4+ieK3UQzbjhuyfgL+SfBi4i5Z0eCtM60ndSjzBfo7f3/X
+ TA+6DBPCFYnZ2gjJoYKhhZCzWjnYSJnyd3SwTYyFEKkntGPCapX3wdTwp+FQx+ewSrQJ
+ VtyQkXfLmJQvMj2eSm1cmWaGpASM5B+ZIvXrDEFGmKu/HHEw2Byj97CB/ndIXwP8K0cV
+ R4yhRMboZlxVLr1XO+UgkTe10gRYKt4BbRyZHYNrC1sYtDuh37m6SbabKk41X2rouvzk Vg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j63v0gnck-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 25 Aug 2022 10:04:38 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27PA4bnI015571
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 25 Aug 2022 10:04:37 GMT
+Received: from [10.216.5.174] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 25 Aug
+ 2022 03:04:32 -0700
+Message-ID: <df904bab-8c37-0797-1226-bc867178ed0b@quicinc.com>
+Date:   Thu, 25 Aug 2022 15:34:28 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [RESEND v5 6/7] remoteproc: qcom: Add support for memory sandbox
+Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
+        <bgoswami@quicinc.com>, <bjorn.andersson@linaro.org>,
+        <broonie@kernel.org>, <devicetree@vger.kernel.org>,
+        <judyhsiao@chromium.org>, <lgirdwood@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <perex@perex.cz>,
+        <quic_plai@quicinc.com>, <quic_rohkumar@quicinc.com>,
+        <robh+dt@kernel.org>, <srinivas.kandagatla@linaro.org>,
+        <tiwai@suse.com>
+References: <1661156523-22611-1-git-send-email-quic_srivasam@quicinc.com>
+ <1661156523-22611-7-git-send-email-quic_srivasam@quicinc.com>
+ <CAE-0n53G_nKUPDDZtH1i9=G9s9ATV=iTdpuFcU6y1oeKyc0B9w@mail.gmail.com>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <CAE-0n53G_nKUPDDZtH1i9=G9s9ATV=iTdpuFcU6y1oeKyc0B9w@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: KWE2AlnoWmbSc5Cn99Ble2yXb5oNwVrv
+X-Proofpoint-ORIG-GUID: KWE2AlnoWmbSc5Cn99Ble2yXb5oNwVrv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-25_05,2022-08-22_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 clxscore=1015 malwarescore=0 mlxlogscore=999 adultscore=0
+ phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2208250039
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,221 +88,270 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DPU schema and extend MDSS schema to describe MDSS and DPU blocks on
-Qualcomm SM8250 platform.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- .../bindings/display/msm/dpu-sm8250.yaml      | 123 ++++++++++++++++++
- .../devicetree/bindings/display/msm/mdss.yaml |  51 ++++++++
- 2 files changed, 174 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sm8250.yaml
+On 8/23/2022 8:55 AM, Stephen Boyd wrote:
+Thanks for your time and valuable suggestions!!!
+> Quoting Srinivasa Rao Mandadapu (2022-08-22 01:22:02)
+>> diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
+>> index b0a63a0..d01c97e 100644
+>> --- a/drivers/remoteproc/qcom_q6v5_adsp.c
+>> +++ b/drivers/remoteproc/qcom_q6v5_adsp.c
+>> @@ -333,6 +336,185 @@ static int adsp_load(struct rproc *rproc, const struct firmware *fw)
+>>          return 0;
+>>   }
+>>
+>> +static void adsp_of_unmap_smmu(struct iommu_domain *iommu_dom, const __be32 *prop, int len)
+>> +{
+>> +       unsigned long iova;
+>> +       unsigned int mem_size;
+>> +       int i;
+>> +
+>> +       len /= sizeof(__be32);
+>> +       for (i = 0; i < len; i++) {
+>> +               iova = be32_to_cpu(prop[i++]);
+>> +               /* Skip Physical address*/
+>> +               i++;
+>> +               mem_size = be32_to_cpu(prop[i++]);
+>> +               iommu_unmap(iommu_dom, iova, mem_size);
+>> +       }
+>> +}
+>> +
+>> +static void adsp_rproc_unmap_smmu(struct rproc *rproc, int len)
+>> +{
+>> +       struct fw_rsc_devmem *rsc_fw;
+>> +       struct fw_rsc_hdr *hdr;
+>> +       int offset;
+>> +       int i;
+>> +
+>> +       for (i = 0; i < len; i++) {
+>> +               offset = rproc->table_ptr->offset[i];
+>> +               hdr = (void *)rproc->table_ptr + offset;
+>> +               rsc_fw = (struct fw_rsc_devmem *)hdr + sizeof(*hdr);
+>> +
+>> +               iommu_unmap(rproc->domain, rsc_fw->da, rsc_fw->len);
+>> +       }
+>> +}
+>> +
+>> +static void adsp_unmap_smmu(struct rproc *rproc)
+>> +{
+>> +       struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
+>> +       const __be32 *prop;
+>> +       unsigned int len;
+>> +
+>> +       iommu_unmap(adsp->iommu_dom, adsp->mem_phys, adsp->mem_size);
+>> +
+>> +       prop = of_get_property(adsp->dev->of_node, "qcom,adsp-memory-regions", &len);
+>> +       if (prop) {
+>> +               adsp_of_unmap_smmu(adsp->iommu_dom, prop, len);
+>> +       } else {
+>> +               if (rproc->table_ptr)
+>> +                       adsp_rproc_unmap_smmu(rproc, rproc->table_ptr->num);
+>> +       }
+>> +
+>> +       iommu_domain_free(adsp->iommu_dom);
+>> +}
+>> +
+>> +static int adsp_of_map_smmu(struct iommu_domain *iommu_dom, const __be32 *prop, int len)
+>> +{
+>> +       unsigned long mem_phys;
+>> +       unsigned long iova;
+>> +       unsigned int mem_size;
+>> +       unsigned int flag;
+>> +       int access_level;
+>> +       int ret;
+>> +       int i;
+>> +
+>> +       len /= sizeof(__be32);
+>> +       for (i = 0; i < len; i++) {
+>> +               iova = be32_to_cpu(prop[i++]);
+>> +               mem_phys = be32_to_cpu(prop[i++]);
+>> +               mem_size = be32_to_cpu(prop[i++]);
+>> +               access_level = be32_to_cpu(prop[i]);
+>> +
+>> +               if (access_level)
+>> +                       flag = IOMMU_READ | IOMMU_WRITE;
+>> +               else
+>> +                       flag = IOMMU_READ;
+>> +
+>> +               ret = iommu_map(iommu_dom, iova, mem_phys, mem_size, flag);
+>> +               if (ret) {
+>> +                       pr_err("failed to map addr = %p mem_size = %x\n", &(mem_phys), mem_size);
+> Why can't this be dev_err()?
+Actually, dev pointer is not available here, hence used pr_err.
+>
+>> +                       goto of_smmu_unmap;
+>> +               }
+>> +       }
+>> +       return 0;
+>> +of_smmu_unmap:
+>> +       adsp_of_unmap_smmu(iommu_dom, prop, i);
+>> +       return ret;
+>> +}
+>> +
+>> +static int adsp_rproc_map_smmu(struct rproc *rproc, int len)
+>> +{
+>> +       struct fw_rsc_devmem *rsc_fw;
+> const?
+Okay. will update.
+>
+>> +       struct fw_rsc_hdr *hdr;
+> const?
+Okay. Will update.
+>
+>> +       int offset;
+>> +       int ret;
+>> +       int i;
+>> +
+>> +       if (!rproc->table_ptr)
+>> +               return 0;
+>> +
+>> +       for (i = 0; i < rproc->table_ptr->num; i++) {
+>> +               offset = rproc->table_ptr->offset[i];
+>> +               hdr = (void *)rproc->table_ptr + offset;
+>> +               rsc_fw = (struct fw_rsc_devmem *)hdr + sizeof(*hdr);
+>> +
+>> +               ret = iommu_map(rproc->domain, rsc_fw->da, rsc_fw->pa,
+>> +                                       rsc_fw->len, rsc_fw->flags);
+>> +               if (ret) {
+>> +                       pr_err("failed to map addr = %x mem_size = %x\n", rsc_fw->pa, rsc_fw->len);
+> Why can't this be dev_err()?
+Okay. Will change it.
+>
+>> +                       goto  rproc_smmu_unmap;
+>> +               }
+>> +       }
+>> +
+>> +       return 0;
+>> +
+>> +rproc_smmu_unmap:
+>> +       adsp_rproc_unmap_smmu(rproc, i);
+> Does i need to be incremented? And/or unmap should be done in reverse.
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sm8250.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sm8250.yaml
-new file mode 100644
-index 000000000000..26e71a0feb96
---- /dev/null
-+++ b/Documentation/devicetree/bindings/display/msm/dpu-sm8250.yaml
-@@ -0,0 +1,123 @@
-+# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/display/msm/dpu-sm8250.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm Display DPU dt properties for SM8250
-+
-+maintainers:
-+  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-+
-+description: |
-+  Device tree bindings for the DPU display controller for SM8250 target.
-+
-+properties:
-+  compatible:
-+    const: qcom,sm8250-dpu
-+
-+  reg:
-+    items:
-+      - description: Address offset and size for mdp register set
-+      - description: Address offset and size for vbif register set
-+
-+  reg-names:
-+    items:
-+      - const: mdp
-+      - const: vbif
-+
-+  clocks:
-+    items:
-+      - description: Display ahb clock
-+      - description: Display hf axi clock
-+      - description: Display core clock
-+      - description: Display vsync clock
-+
-+  clock-names:
-+    items:
-+      - const: iface
-+      - const: bus
-+      - const: core
-+      - const: vsync
-+
-+allOf:
-+  - $ref: "/schemas/display/msm/dpu-common.yaml#"
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,dispcc-sm8250.h>
-+    #include <dt-bindings/clock/qcom,gcc-sm8250.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/interconnect/qcom,sm8250.h>
-+    #include <dt-bindings/power/qcom-rpmpd.h>
-+
-+    mdss@ae00000 {
-+      #address-cells = <1>;
-+      #size-cells = <1>;
-+      compatible = "qcom,sm8250-mdss";
-+      reg = <0x0ae00000 0x1000>;
-+      reg-names = "mdss";
-+
-+      interconnects = <&mmss_noc MASTER_MDP_PORT0 &mc_virt SLAVE_EBI_CH0>,
-+                      <&mmss_noc MASTER_MDP_PORT1 &mc_virt SLAVE_EBI_CH0>;
-+      interconnect-names = "mdp0-mem", "mdp1-mem";
-+
-+      power-domains = <&dispcc MDSS_GDSC>;
-+
-+      clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+               <&gcc GCC_DISP_HF_AXI_CLK>,
-+               <&gcc GCC_DISP_SF_AXI_CLK>,
-+               <&dispcc DISP_CC_MDSS_MDP_CLK>;
-+      clock-names = "iface", "bus", "nrt_bus", "core";
-+
-+      interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
-+      interrupt-controller;
-+      #interrupt-cells = <1>;
-+
-+      iommus = <&apps_smmu 0x820 0x402>;
-+      ranges;
-+
-+      display-controller@ae01000 {
-+        compatible = "qcom,sm8250-dpu";
-+        reg = <0x0ae01000 0x8f000>,
-+              <0x0aeb0000 0x2008>;
-+        reg-names = "mdp", "vbif";
-+
-+        clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+                 <&gcc GCC_DISP_HF_AXI_CLK>,
-+                 <&dispcc DISP_CC_MDSS_MDP_CLK>,
-+                 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-+        clock-names = "iface", "bus", "core", "vsync";
-+
-+        assigned-clocks = <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-+        assigned-clock-rates = <19200000>;
-+
-+        operating-points-v2 = <&mdp_opp_table>;
-+        power-domains = <&rpmhpd SM8250_MMCX>;
-+
-+        interrupt-parent = <&mdss>;
-+        interrupts = <0>;
-+
-+        ports {
-+          #address-cells = <1>;
-+          #size-cells = <0>;
-+
-+          port@0 {
-+            reg = <0>;
-+            endpoint {
-+              remote-endpoint = <&dsi0_in>;
-+            };
-+          };
-+
-+          port@1 {
-+            reg = <1>;
-+            endpoint {
-+              remote-endpoint = <&dsi1_in>;
-+            };
-+          };
-+        };
-+      };
-+    };
-+...
-diff --git a/Documentation/devicetree/bindings/display/msm/mdss.yaml b/Documentation/devicetree/bindings/display/msm/mdss.yaml
-index 1b469893732a..57fa8dedc82b 100644
---- a/Documentation/devicetree/bindings/display/msm/mdss.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/mdss.yaml
-@@ -23,6 +23,7 @@ properties:
-       - qcom,sc7180-mdss
-       - qcom,sc7280-mdss
-       - qcom,sdm845-mdss
-+      - qcom,sm8250-mdss
- 
-   reg:
-     minItems: 1
-@@ -232,6 +233,30 @@ allOf:
-         iommus:
-           minItems: 2
- 
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: qcom,sm8250-mdss
-+    then:
-+      properties:
-+        clocks:
-+          items:
-+            - description: Display AHB clock
-+            - description: Display hf axi clock
-+            - description: Display sf axi clock
-+            - description: Display core clock
-+
-+        clock-names:
-+          items:
-+            - const: iface
-+            - const: bus
-+            - const: nrt_bus
-+            - const: core
-+
-+        iommus:
-+          minItems: 1
-+
-   - if:
-       properties:
-         compatible:
-@@ -441,6 +466,32 @@ allOf:
-               enum:
-                 - qcom,dsi-phy-10nm
- 
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: qcom,sm8250-mdss
-+    then:
-+      patternProperties:
-+        "^display-controller@[1-9a-f][0-9a-f]*$":
-+          type: object
-+          properties:
-+            compatible:
-+              const: qcom,sm8250-dpu
-+
-+        "^dsi@[1-9a-f][0-9a-f]*$":
-+          type: object
-+          properties:
-+            compatible:
-+              const: qcom,mdss-dsi-ctrl
-+
-+        "^dsi-phy@[1-9a-f][0-9a-f]*$":
-+          type: object
-+          properties:
-+            compatible:
-+              enum:
-+                - qcom,dsi-phy-7nm
-+
- required:
-   - compatible
-   - reg
--- 
-2.35.1
+Here i is the upper bound index in mapping failure case, hence it is 
+used as length. un-mapping is being done from starting till i value.
 
+Please correct me if I am missing some thing.
+
+>
+>> +       return ret;
+>> +}
+>> +
+>> +static int adsp_map_smmu(struct qcom_adsp *adsp, struct rproc *rproc)
+>> +{
+>> +       struct of_phandle_args args;
+>> +       const __be32 *prop;
+>> +       long long sid;
+>> +       unsigned int len;
+>> +       int ret;
+>> +
+>> +       ret = of_parse_phandle_with_args(adsp->dev->of_node, "iommus", "#iommu-cells", 0, &args);
+>> +       if (ret < 0)
+>> +               sid = -1;
+> Is it a good idea to set the sid to -1? Does that mean all stream IDs?
+It seems, if sid is -1 iomap fails, because of alignment issues. Any I 
+will update with return in this case.
+>
+>> +       else
+>> +               sid = args.args[0] & SID_MASK_DEFAULT;
+>> +
+>> +       adsp->iommu_dom = iommu_domain_alloc(adsp->dev->bus);
+>> +       if (!adsp->iommu_dom) {
+>> +               dev_err(adsp->dev, "failed to allocate iommu domain\n");
+>> +               ret = -ENOMEM;
+>> +               goto domain_free;
+>> +       }
+>> +
+>> +       ret = iommu_attach_device(adsp->iommu_dom, adsp->dev);
+>> +       if (ret) {
+>> +               dev_err(adsp->dev, "could not attach device ret = %d\n", ret);
+>> +               ret = -EBUSY;
+> Why do we overwrite the error value?
+It seems not required. Will remove it.
+>
+>> +               goto detach_device;
+>> +       }
+>> +
+>> +       /* Add SID configuration for ADSP Firmware to SMMU */
+>> +       adsp->mem_phys =  adsp->mem_phys | (sid << 32);
+>> +
+>> +       ret = iommu_map(adsp->iommu_dom, adsp->mem_phys, adsp->mem_phys,
+>> +                       adsp->mem_size, IOMMU_READ | IOMMU_WRITE);
+>> +       if (ret) {
+>> +               dev_err(adsp->dev, "Unable to map ADSP Physical Memory\n");
+>> +               goto sid_unmap;
+>> +       }
+>> +
+>> +       prop = of_get_property(adsp->dev->of_node, "qcom,adsp-memory-regions", &len);
+> I find it odd that we're encoding virtual addresses (iovas) into
+Actually from HLOS perspective, same IOVA and physical memory is being 
+used. Hence will remove virtual address field in DT.
+> devicetree. Presumably the physical address needs to be in DT as a
+> carveout, but after that I would think we're free to allocate the
+Will try to carveout the physical addresses and handle it accordingly. 
+If this method is ignored I don't think we need to mention in DT in anyway.
+> segments from the carveout however we see fit and then program that into
+> the SMMU. Maybe DT can be a suggestion, but otherwise can it be ignored?
+
+Yes, it seems it can be ignored. As it is the approach we did for 
+bringing up AudioReach solution, and used when ADSP binary is without 
+metadata section header info.
+
+Will check internally and update accordingly.
+
+Your opinion also helps please!!. Is it okay to keep it as backup option 
+with proper comment, such that this method can be used internally, with 
+raw ADSP binary in early stage bring-up scenarios?
+
+>
+>> +       if (prop) {
+>> +               ret = adsp_of_map_smmu(adsp->iommu_dom, prop, len);
+>> +               if (ret) {
+>> +                       dev_err(adsp->dev, "Unable to map memory regions accessed by ADSP\n");
+>> +                       goto sid_unmap;
+>> +               }
+>> +       } else {
+>> +               ret = adsp_rproc_map_smmu(rproc, len);
+>> +               if (ret) {
+>> +                       dev_err(adsp->dev, "Unable to map memory regions accessed by ADSP\n");
+> Maybe this should be a different string in case it is confused with the
+> above print of the same string.
+Okay. Will modify the string.
+>
+>> +                       goto sid_unmap;
+>> +               }
+>> +       }
+>> +       return 0;
+>> +
+>> +sid_unmap:
+>> +       iommu_unmap(adsp->iommu_dom, adsp->mem_phys, adsp->mem_size);
+>> +detach_device:
+>> +       iommu_domain_free(adsp->iommu_dom);
+>> +domain_free:
+>> +       return ret;
+>> +}
+>> +
+>> +
+>>   static int adsp_start(struct rproc *rproc)
+>>   {
+>>          struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
+>> @@ -343,9 +525,16 @@ static int adsp_start(struct rproc *rproc)
+>>          if (ret)
+>>                  return ret;
+>>
+>> +       if (adsp->adsp_sandbox_needed) {
+>> +               ret = adsp_map_smmu(adsp, rproc);
+>> +               if (ret) {
+>> +                       dev_err(adsp->dev, "ADSP smmu mapping failed\n");
+>> +                       goto disable_irqs;
+>> +               }
+>> +       }
+> Newline here please.
+Okay.
+>
+>>          ret = clk_prepare_enable(adsp->xo);
+>>          if (ret)
+>> -               goto disable_irqs;
+>> +               goto adsp_smmu_unmap;
+>>
+>>          ret = qcom_rproc_pds_enable(adsp, adsp->proxy_pds,
+>>                                      adsp->proxy_pd_count);
