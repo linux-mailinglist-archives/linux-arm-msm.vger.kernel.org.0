@@ -2,114 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE6B65A11A4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Aug 2022 15:13:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C4945A120F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Aug 2022 15:28:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242374AbiHYNNs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Aug 2022 09:13:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57610 "EHLO
+        id S241615AbiHYN1s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Aug 2022 09:27:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242393AbiHYNNo (ORCPT
+        with ESMTP id S242640AbiHYN1o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Aug 2022 09:13:44 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FDC1B24B2;
-        Thu, 25 Aug 2022 06:13:38 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A141A61B0B;
-        Thu, 25 Aug 2022 13:13:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B2BC433C1;
-        Thu, 25 Aug 2022 13:13:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661433217;
-        bh=IZW5T8bTR6zlpO6HLb6mRol+oyWLXS34Ih/Xhypaguk=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=kMCucpv40+yoTKei7Vb+5ENQbEIz+hcPGK5+mqkpGqnhBHKfMa3V8YY2uFQPHbuWA
-         UYm5vFaTmXEg5r2azsBJFoS2ZAo6UMzg2NLcwUQdDa2jxw092nxypn31yMlnfCNP3Q
-         Pw1nYRsAV8WsH8sKUMYu5zTf3EoenvbsAMcawH6vRF2RV+7XQaZnDr/PAj1uYvX/ZD
-         uFRxcL5YalTayWJpmSZGhfFBmwSgZEjhVLT+tTIGbXFmU4yA6r1yQqPtRQBrIa7vKb
-         RDl3I2thfA3TQSNF+TGkEMf6dEvtIU37m3GXu+YeCid5kTybU1/Tr8a3CAjdBb4/QR
-         cYj9FpbGADa1Q==
-Received: by mail-vs1-f41.google.com with SMTP id m66so20787188vsm.12;
-        Thu, 25 Aug 2022 06:13:37 -0700 (PDT)
-X-Gm-Message-State: ACgBeo2KUZUkTIvJjxXw2ILZ6V1eeJPQdMdsi+89HwYsYjq48cpwpgOl
-        vfW9fM+lrzBIdaO6KiwTv1k2Ymu0vdQtAI36sw==
-X-Google-Smtp-Source: AA6agR5HHV9M9yXhQz5Wv4Fn3tOpZtPr51oSEmjee6h8mCyA1xklEwT58PruXe9mpGP3Rkw2EvGjEX5bSYAZLj5ddgM=
-X-Received: by 2002:a67:c09c:0:b0:390:9073:1122 with SMTP id
- x28-20020a67c09c000000b0039090731122mr1350519vsi.85.1661433216073; Thu, 25
- Aug 2022 06:13:36 -0700 (PDT)
+        Thu, 25 Aug 2022 09:27:44 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44290AD98E;
+        Thu, 25 Aug 2022 06:27:42 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27PBLT7H020653;
+        Thu, 25 Aug 2022 13:27:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=KvYeiFfwD3KZEQv3gwW5SF2mESyYzWmyxXd2x9ii1/Y=;
+ b=a0lMObzE06xvmYISoTMrb8PwVlzzT0HxrLY3VCI8BdYQLxN0e4Vtdy16nhS8Fxcu1fcm
+ wj17jVpfiRxBcW8wd/C5mEY4yIVygPG0CuceOCEayMvxLwVh2LV7KscJZgF/SF5LxBZF
+ xrtdfXS46qFZ8eyaGM3XlLXkDtIP8TwYpI7IMm3E8K2ICaI0HHj/k77kybRPPAjDgowW
+ ewgJyGhTW8orls/mHdp91z7Ac3Htg0Q3O1m1RAU4upAb6uizsDyK32/t+olkE5d/Wzh7
+ X36YHL6IPjr2WKX3bfET+VCiZSKBuT99WPbBXAufo1wi4tDqXAb3xIRMqX7BJssDAQ/X 6Q== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j5xcuhy6y-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 25 Aug 2022 13:27:37 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27PDEOGw019448
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 25 Aug 2022 13:14:24 GMT
+Received: from [10.216.34.62] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 25 Aug
+ 2022 06:14:18 -0700
+Message-ID: <dc976f67-20ad-4b8a-f16b-1a080db15d27@quicinc.com>
+Date:   Thu, 25 Aug 2022 18:44:13 +0530
 MIME-Version: 1.0
-References: <20220823145649.3118479-10-robh@kernel.org> <1491c83f-cd75-4de3-ec26-86db4adb2ade@linaro.org>
-In-Reply-To: <1491c83f-cd75-4de3-ec26-86db4adb2ade@linaro.org>
-From:   Rob Herring <robh@kernel.org>
-Date:   Thu, 25 Aug 2022 08:13:24 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqJx1s5ez-ojP8ZK_MPBWuuLRyekjK1qhHd6Ezaimna8JQ@mail.gmail.com>
-Message-ID: <CAL_JsqJx1s5ez-ojP8ZK_MPBWuuLRyekjK1qhHd6Ezaimna8JQ@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: remoteproc: Add missing (unevaluated|additional)Properties
- on child nodes
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:REMOTE PROCESSOR (REMOTEPROC) SUBSYSTEM" 
-        <linux-remoteproc@vger.kernel.org>, devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v5 0/3] PCI: Restrict pci transactions after pci suspend
+Content-Language: en-US
+To:     Bjorn Helgaas <helgaas@kernel.org>
+CC:     <linux-pci@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <mka@chromium.org>,
+        <quic_vbadigan@quicinc.com>, <quic_hemantk@quicinc.com>,
+        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <manivannan.sadhasivam@linaro.org>,
+        <swboyd@chromium.org>, <dmitry.baryshkov@linaro.org>
+References: <20220824202949.GA2805069@bhelgaas>
+From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <20220824202949.GA2805069@bhelgaas>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Lz3kULzS5zM_UZBPUf2vQjECdk8RqvwB
+X-Proofpoint-ORIG-GUID: Lz3kULzS5zM_UZBPUf2vQjECdk8RqvwB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-25_05,2022-08-25_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ adultscore=0 malwarescore=0 suspectscore=0 mlxlogscore=999 impostorscore=0
+ spamscore=0 priorityscore=1501 lowpriorityscore=0 clxscore=1015 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2207270000
+ definitions=main-2208250051
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 25, 2022 at 3:23 AM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 23/08/2022 17:56, Rob Herring wrote:
-> > In order to ensure only documented properties are present, node schemas
-> > must have unevaluatedProperties or additionalProperties set to false
-> > (typically).
-> >
-> > Signed-off-by: Rob Herring <robh@kernel.org>
-> > ---
-> >  .../devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml      | 1 +
-> >  .../devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml      | 1 +
-> >  .../devicetree/bindings/remoteproc/qcom,sc7280-wpss-pil.yaml     | 1 +
-> >  3 files changed, 3 insertions(+)
-> >
-> > diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml
-> > index e76c861165dd..e4a7da8020f4 100644
-> > --- a/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml
-> > +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml
-> > @@ -140,6 +140,7 @@ properties:
-> >
-> >    glink-edge:
-> >      $ref: qcom,glink-edge.yaml#
-> > +    unevaluatedProperties: false
->
-> Is it actually needed? The qcom,glink-edge.yaml has
-> additionalProperties:false, so I expect it to complain if anything
-> appears here.
 
-Perhaps not, but I'm trying to come up with a meta-schema to check
-these though I'm not sure I can get to no warnings which is how I
-found all these cases. The main remaining warnings are bus child node
-pattern schemas which can perhaps be handled with
-'additionalProperties: true'. The rule I have says if properties or
-patternProperties is present then unevaluatedProperties or
-additionalProperties must be. To handle this case, I think we'd have
-to walk the $ref and check it.
+On 8/25/2022 1:59 AM, Bjorn Helgaas wrote:
+> On Wed, Aug 03, 2022 at 04:58:51PM +0530, Krishna chaitanya chundru wrote:
+>> If the endpoint device state is D0 and irq's are not freed, then
+>> kernel try to mask interrupts in system suspend path by writing in to
+>> the vector table (for MSIX interrupts) and config space (for MSI's).
+> If clocks are being turned off while the PCI core is still accessing
+> the device, I think that means qcom suspend is not implemented
+> correctly.
 
-Anyways, we can hold off on this one until when and if there's a
-meta-schema in place.
+we are registering the suspend and resume ops as NO_IRQ pm ops and in 
+those suspend ops we are disbaling clks there.
 
-Rob
+NO_IRQ ops is the last the pm ops that are getting called. But we are 
+getting pcie access nearly at end of the suspend and near cpu disable.
+
+The pcie access is nothing but the interrupts masks to endpoint to 
+disable the interrupts.
+
+>> These transactions are initiated in the pm suspend after pcie clocks got
+>> disabled as part of platform driver pm  suspend call. Due to it, these
+>> transactions are resulting in un-clocked access and eventually to crashes.
+>>
+>> So added a logic in qcom driver to restrict these unclocked access.
+>> And updated the logic to check the link state before masking
+>> or unmasking the interrupts.
+>>
+>> And some devices are taking time to settle the link in L1ss, so added a
+>> retry logic in the suspend ops.
+>>
+>> Krishna chaitanya chundru (3):
+>>    PCI: qcom: Add system PM support
+>>    PCI: qcom: Restrict pci transactions after pci suspend
+>>    PCI: qcom: Add retry logic for link to be stable in L1ss
+>>
+>>   drivers/pci/controller/dwc/pcie-designware-host.c |  14 ++-
+>>   drivers/pci/controller/dwc/pcie-qcom.c            | 117 +++++++++++++++++++++-
+>>   2 files changed, 127 insertions(+), 4 deletions(-)
+>>
+>> -- 
+>> 2.7.4
+>>
