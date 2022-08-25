@@ -2,162 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 57D165A19CD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Aug 2022 21:49:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48B765A1A12
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Aug 2022 22:11:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238259AbiHYTtA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Aug 2022 15:49:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45970 "EHLO
+        id S243294AbiHYULw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Aug 2022 16:11:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243313AbiHYTs6 (ORCPT
+        with ESMTP id S240732AbiHYULv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Aug 2022 15:48:58 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07D9B753AD;
-        Thu, 25 Aug 2022 12:48:57 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id n17so1278570wrm.4;
-        Thu, 25 Aug 2022 12:48:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=EEQaOMPMio1TV/1T2nsXijwtVuTW2Re2GSl+fTHb2hE=;
-        b=EOSwTGoA0nee7KFDbY0hqShMabo5lvAZLhzj+GVpXhf++Nzj9OmUn1OmWPoyWldHhh
-         dbnv+/P4Q5eGuNwR8TRpA5vnA71y/Ce1/+KcGBQ6tdxjU8neWPGCvfemSOgYsxBw8wWD
-         /r9CrCVNubmy7oRWc7HuFASont4/bo0USnvpHoPD4sH8l2EyTnNC/e/T0T/K21K+q93v
-         ZgCFsmmoNiygJD27wzIH2Y0gk2krAVmjCcEsgBCs8+912zcjpv5PrvliOdMBJuwshUXM
-         5AuVZDl8hY1dUgNxix/rwOXM95rTapj4RVl6B2/HXjH88mM8Vf/D4YhYMVe3E0VrWWyE
-         q9Hg==
+        Thu, 25 Aug 2022 16:11:51 -0400
+Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DC91B99DB;
+        Thu, 25 Aug 2022 13:11:51 -0700 (PDT)
+Received: by mail-ot1-f53.google.com with SMTP id d18-20020a9d72d2000000b0063934f06268so7905360otk.0;
+        Thu, 25 Aug 2022 13:11:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=EEQaOMPMio1TV/1T2nsXijwtVuTW2Re2GSl+fTHb2hE=;
-        b=j+pyGv0GL5IDSommsaBkXxuF6HWewVQJ/l01KChEAqZsxaucuJ/vgntbGyt+gum0Jf
-         KRsIxpi6nCst9okm+ZbiNov6kCaguQKPKwxp3QIHG/fTZ7DZKlFQpb77R7NKnqzN8nMT
-         5LFxbmN0ijwaupvtpf/Cbld4wYrucKisyyUXB93jPPOKM0uw4KvZPqXJIgltUZ8vljfQ
-         h6GMkjGqzLrfvruOf1qHCgTznojjRrk9zMcX2XEm9SjIX+VLbLE/BTPJdVcLmz0zVBcd
-         bujz55uFW3ck7zd++uNsZy74x4MV5j9KqkkFIEwcJkFrSlto6RQI2YnVVg9fXawrna2i
-         Ry0Q==
-X-Gm-Message-State: ACgBeo2cgwnl5/FdXOefNGxUBj2+AS18NOaq8VPcBdDXsNGz7KyQgc9s
-        Nr6PVJwMkfpX80QN04aEdVY=
-X-Google-Smtp-Source: AA6agR6a+jB85i972kXbhLkKKpllW7496fpWqVVpOsWOvIO65uvf0tz0QQyG4Bto1DkO00QbeWBtGA==
-X-Received: by 2002:a5d:514d:0:b0:225:3507:79e6 with SMTP id u13-20020a5d514d000000b00225350779e6mr3063920wrt.85.1661456935527;
-        Thu, 25 Aug 2022 12:48:55 -0700 (PDT)
-Received: from kista.localnet (82-149-1-172.dynamic.telemach.net. [82.149.1.172])
-        by smtp.gmail.com with ESMTPSA id f5-20020a5d4dc5000000b002235eb9d200sm120536wru.10.2022.08.25.12.48.53
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=Oj86uGkClNsnwE1dPgwe6HKsJXAs0gnD9U8fRVhpgYA=;
+        b=unLAfDLm6C+V8xfIZwP0BaEG+Q97YcQVTaRnRLsxM0k324GbI2WxirFEXwygFAW288
+         y8maztEC5P+MoaJU5+CFmLH0KvekY3NgM+6bM5ZncihRvNNm9GrsbK4/Tnd4TdYDpYTR
+         +Wz1WDmwANf5JJIaBe7BFiPGMj6o7dM7iCVlpuU/PAMg8WE9nAk8bdflKJk/tVyu3MH0
+         hmREpKgsGHvaKVHnxDO9cItbhtW3M8tBQK9yWF0kHkZaREtz0v2UxrMpDDbm7YwwaRii
+         W7lfXEB74CAGAujaSSoq1AnMi3O+9SGWI+MfuD8+Eo5QbPMAA72Z1bnsVpH7qU2aGMk5
+         BS0g==
+X-Gm-Message-State: ACgBeo2UIDeOdMYwXoLR7y3H2jvNh2TWv5okCoB5ujOD5czh5NCXYDJE
+        IqoGx6r083DO7xpNcM88bg==
+X-Google-Smtp-Source: AA6agR5hwcOt2GSmumZQPTU+DdvLWeb8FIdquxqTRq407DHgvOQFNI+9yln3wmNE7EjAWVfmy4sDkw==
+X-Received: by 2002:a05:6830:d7:b0:639:ac3:7a6 with SMTP id x23-20020a05683000d700b006390ac307a6mr276969oto.162.1661458310460;
+        Thu, 25 Aug 2022 13:11:50 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id y16-20020a056870429000b0010bf07976c9sm73446oah.41.2022.08.25.13.11.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Aug 2022 12:48:54 -0700 (PDT)
-From:   Jernej =?utf-8?B?xaBrcmFiZWM=?= <jernej.skrabec@gmail.com>
-To:     Russell King <linux@armlinux.org.uk>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Taichi Sugaya <sugaya.taichi@socionext.com>,
-        Takao Orito <orito.takao@socionext.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Aaro Koskinen <aaro.koskinen@iki.fi>,
-        Janusz Krzysztofik <jmkrzyszt@gmail.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 25 Aug 2022 13:11:49 -0700 (PDT)
+Received: (nullmailer pid 1610468 invoked by uid 1000);
+        Thu, 25 Aug 2022 20:11:48 -0000
+Date:   Thu, 25 Aug 2022 15:11:48 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-rpi-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-omap@vger.kernel.org,
-        linux-oxnas@groups.io, linux-arm-msm@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, arnd@arndb.de, olof@lixom.net,
-        soc@kernel.org, Stefan Hansson <newbie13xd@gmail.com>
-Cc:     Stefan Hansson <newbie13xd@gmail.com>
-Subject: Re: [RESEND PATCH] ARM: configs: replace CONFIG_NO_HZ=y with CONFIG_NO_HZ_IDLE=y
-Date:   Thu, 25 Aug 2022 21:48:52 +0200
-Message-ID: <2642863.mvXUDI8C0e@kista>
-In-Reply-To: <20220825162034.5901-1-newbie13xd@gmail.com>
-References: <20220825162034.5901-1-newbie13xd@gmail.com>
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v4 00/10] dt-bindings: display/msm: rework MDSS and DPU
+ bindings
+Message-ID: <20220825201148.GA1607980-robh@kernel.org>
+References: <20220825095103.624891-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220825095103.624891-1-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dne =C4=8Detrtek, 25. avgust 2022 ob 18:20:35 CEST je Stefan Hansson napisa=
-l(a):
-> According to https://www.kernel.org/doc/html/latest/timers/no_hz.html,
-> CONFIG_NO_HZ=3Dy should be replaced by CONFIG_NO_HZ_IDLE=3Dy for newer
-> kernels, so let's reflect that in the 32-bit ARM defconfigs.
->=20
-> Signed-off-by: Stefan Hansson <newbie13xd@gmail.com>
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> # Samsung
-> ---
->  arch/arm/configs/bcm2835_defconfig       | 2 +-
->  arch/arm/configs/cm_x300_defconfig       | 2 +-
->  arch/arm/configs/davinci_all_defconfig   | 2 +-
->  arch/arm/configs/dove_defconfig          | 2 +-
->  arch/arm/configs/exynos_defconfig        | 2 +-
->  arch/arm/configs/ezx_defconfig           | 2 +-
->  arch/arm/configs/hisi_defconfig          | 2 +-
->  arch/arm/configs/imx_v4_v5_defconfig     | 2 +-
->  arch/arm/configs/imx_v6_v7_defconfig     | 2 +-
->  arch/arm/configs/integrator_defconfig    | 2 +-
->  arch/arm/configs/lpc32xx_defconfig       | 2 +-
->  arch/arm/configs/magician_defconfig      | 2 +-
->  arch/arm/configs/milbeaut_m10v_defconfig | 2 +-
->  arch/arm/configs/moxart_defconfig        | 2 +-
->  arch/arm/configs/multi_v5_defconfig      | 2 +-
->  arch/arm/configs/multi_v7_defconfig      | 2 +-
->  arch/arm/configs/mv78xx0_defconfig       | 2 +-
->  arch/arm/configs/mvebu_v5_defconfig      | 2 +-
->  arch/arm/configs/mxs_defconfig           | 2 +-
->  arch/arm/configs/omap1_defconfig         | 2 +-
->  arch/arm/configs/omap2plus_defconfig     | 2 +-
->  arch/arm/configs/orion5x_defconfig       | 2 +-
->  arch/arm/configs/oxnas_v6_defconfig      | 2 +-
->  arch/arm/configs/pcm027_defconfig        | 2 +-
->  arch/arm/configs/pxa168_defconfig        | 2 +-
->  arch/arm/configs/pxa910_defconfig        | 2 +-
->  arch/arm/configs/pxa_defconfig           | 2 +-
->  arch/arm/configs/qcom_defconfig          | 2 +-
->  arch/arm/configs/s5pv210_defconfig       | 2 +-
->  arch/arm/configs/shmobile_defconfig      | 2 +-
->  arch/arm/configs/sunxi_defconfig         | 2 +-
+On Thu, Aug 25, 2022 at 12:50:53PM +0300, Dmitry Baryshkov wrote:
+> Create separate YAML schema for MDSS devicesd$ (both for MDP5 and DPU
+> devices). Cleanup DPU schema files, so that they do not contain schema
+> for both MDSS and DPU nodes. Apply misc small fixes to the DPU schema
+> afterwards.
+> 
+> Changes since v3:
+>  - Changed mdss->(dpu, dsi, etc.) relationship into the tight binding
+>    dependin on the mdss compatible string.
+>  - Added sm8250 dpu schema and added qcom,sm8250-mdss to mdss.yaml
 
-=46or sunxi:
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+My scripts tell me I reviewed these, but I don't really follow what's 
+changed.
 
-Best regards,
-Jernej
-
->  arch/arm/configs/tegra_defconfig         | 2 +-
->  arch/arm/configs/vt8500_v6_v7_defconfig  | 2 +-
->  arch/arm/configs/xcep_defconfig          | 2 +-
->  34 files changed, 34 insertions(+), 34 deletions(-)
-
-
-
+Rob
