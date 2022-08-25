@@ -2,158 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EB465A0BE4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Aug 2022 10:51:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 579065A0D4A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Aug 2022 11:53:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233647AbiHYIvu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Aug 2022 04:51:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37868 "EHLO
+        id S240995AbiHYJxp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Aug 2022 05:53:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232464AbiHYIvt (ORCPT
+        with ESMTP id S240398AbiHYJxY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Aug 2022 04:51:49 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 734ACA8302;
-        Thu, 25 Aug 2022 01:51:48 -0700 (PDT)
-Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 564422B3;
-        Thu, 25 Aug 2022 10:51:46 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1661417506;
-        bh=hqjjTfpHavt0j/vu7b/diKsDIw1QdqTc5yyTW7GYfo8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Z8pStjaw+wTHpUqjfkrNYv4yhEOMiZpey4BovUqFDdUKaiJRG3zr27mJb+3KOVnqv
-         SeSwIWuxOsniVY0CtkTuJBrvvODxoS4qbCjAnkQGfS00GuyUS1Limb9dDBRxhVsFoW
-         HVOrzfbF2aIEGVjQzg6fMImib3ZqHBM+/31mCM9o=
-Date:   Thu, 25 Aug 2022 11:51:40 +0300
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Rob Herring <robh@kernel.org>
-Cc:     "James (Qian) Wang" <james.qian.wang@arm.com>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Mihail Atanassov <mihail.atanassov@arm.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
+        Thu, 25 Aug 2022 05:53:24 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08918ABF3E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Aug 2022 02:51:09 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id bn9so11341266ljb.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Aug 2022 02:51:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=tpyf1AK+W21R0VaLwh8O8+lqzRdSfdFGGL30pitSVKM=;
+        b=J9KRyJrDgp3B5iFvG8wKhqBYQppPrdNLt0cdQBT9SR4/ZjFxDGnjp1AYqpwiluT47b
+         LMkAbILCXkKDgo8KIEXpt1XTHOOhyn0g0ON2vdbGTjD99tZVRwmun0bjaxoWJaFYvdxB
+         Arv9xQDXAxUSjUfsgeThbnn8tpX3+AGG8r3r0ehPCwBT39EboKCwUY/vdJMgAif2Gss2
+         oBKB0vnsqgc+IymkJlJsdUFrJ/QfJBBE7IP1MBXAZjLcFozvx9/8Xfj42eJ6POYGb6sJ
+         3cJ44/FJSy4mavYAaIQvOz9oONnm5a73z1D8IUDGweCIlKXC5ezMw8a/AvT1eDH49z/J
+         My3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=tpyf1AK+W21R0VaLwh8O8+lqzRdSfdFGGL30pitSVKM=;
+        b=nkIcUfK9WkO9C54DsqF2s0aMvTHwK80ouMEBrbKOkLuw11r339AMND5L0UnNml6f9U
+         K0s07R7MxibgsMTqdaed3bFTT8a0yZCOd5IxG4Kp9tLF0vdAPs8qoGsb28pYJcKZpFrz
+         vgMFsUSDArG3pRDccw4HqAU3RmDp3MccxeK39tbSKy8bmFo0ChTjOD+ViVv2WsEXhmI9
+         ifO9rbHN4KIENEUcUBnxfZ/Pq0Ak7QNpf6WTgcUFgsjIFfzUPc4B1eQ6ziscR1cKgXU2
+         1mE2OVRlQph/KDVQXm3mApjwK6E/nSL3tn8kk3LYjKLoBwBWpsxWxaQUNCynWBdwPsey
+         Qxng==
+X-Gm-Message-State: ACgBeo3fM1zjA3+OrxJ414JOuEmTQWW5b1TaA0joRBxDrbqCtuEKg9Y9
+        UZhRJalgE4YiDbI7RR8I5Qua8Q==
+X-Google-Smtp-Source: AA6agR74Tz9FPEsBsZZMiR9A+8UDim/mVuD9g6zKLM5gd+q0/nbi8JTdlx+L1gjtLTobGxLzqAHrqQ==
+X-Received: by 2002:a2e:9b59:0:b0:261:d61d:5f51 with SMTP id o25-20020a2e9b59000000b00261d61d5f51mr801415ljj.418.1661421065035;
+        Thu, 25 Aug 2022 02:51:05 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id h10-20020a056512220a00b00492cfecf1c0sm398502lfu.245.2022.08.25.02.51.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Aug 2022 02:51:04 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, Inki Dae <inki.dae@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Andre Przywara <andre.przywara@arm.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: display: Add missing
- (unevaluated|additional)Properties on child nodes
-Message-ID: <Ywc4HGS+7aq9Fbk1@pendragon.ideasonboard.com>
-References: <20220823145649.3118479-11-robh@kernel.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v4 00/10] dt-bindings: display/msm: rework MDSS and DPU bindings
+Date:   Thu, 25 Aug 2022 12:50:53 +0300
+Message-Id: <20220825095103.624891-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220823145649.3118479-11-robh@kernel.org>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+Create separate YAML schema for MDSS devicesd$ (both for MDP5 and DPU
+devices). Cleanup DPU schema files, so that they do not contain schema
+for both MDSS and DPU nodes. Apply misc small fixes to the DPU schema
+afterwards.
 
-Thank you for the patch.
+Changes since v3:
+ - Changed mdss->(dpu, dsi, etc.) relationship into the tight binding
+   dependin on the mdss compatible string.
+ - Added sm8250 dpu schema and added qcom,sm8250-mdss to mdss.yaml
 
-On Tue, Aug 23, 2022 at 09:56:42AM -0500, Rob Herring wrote:
-> In order to ensure only documented properties are present, node schemas
-> must have unevaluatedProperties or additionalProperties set to false
-> (typically).
-> 
-> Signed-off-by: Rob Herring <robh@kernel.org>
+Changes since v2:
+ - Added a patch to allow opp-table under the dpu* nodes.
+ - Removed the c&p issue which allowed the @0 nodes under the MDSS
+   device node.
 
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Changes since v1:
+ - Renamed DPU device nodes from mdp@ to display-controller@
+ - Described removal of mistakenly mentioned "lut" clock
+ - Switched mdss.yaml to use $ref instead of fixing compatible strings
+ - Dropped mdp-opp-table description (renamed by Krzysztof in his
+   patchset)
+ - Reworked DPU's ports definitions. Dropped description of individual
+   ports, left only /ports $ref and description in dpu-common.yaml.
 
-> ---
->  Documentation/devicetree/bindings/display/arm,komeda.yaml        | 1 +
->  Documentation/devicetree/bindings/display/bridge/lvds-codec.yaml | 1 +
->  Documentation/devicetree/bindings/display/msm/gpu.yaml           | 1 +
->  .../bindings/display/samsung/samsung,exynos7-decon.yaml          | 1 +
->  .../devicetree/bindings/display/samsung/samsung,fimd.yaml        | 1 +
->  5 files changed, 5 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/display/arm,komeda.yaml b/Documentation/devicetree/bindings/display/arm,komeda.yaml
-> index 9f4aade97f10..3ad3eef89ca8 100644
-> --- a/Documentation/devicetree/bindings/display/arm,komeda.yaml
-> +++ b/Documentation/devicetree/bindings/display/arm,komeda.yaml
-> @@ -58,6 +58,7 @@ properties:
->  patternProperties:
->    '^pipeline@[01]$':
->      type: object
-> +    additionalProperties: false
->      description:
->        clocks
->  
-> diff --git a/Documentation/devicetree/bindings/display/bridge/lvds-codec.yaml b/Documentation/devicetree/bindings/display/bridge/lvds-codec.yaml
-> index 3a8614e0f627..84aafcbf0919 100644
-> --- a/Documentation/devicetree/bindings/display/bridge/lvds-codec.yaml
-> +++ b/Documentation/devicetree/bindings/display/bridge/lvds-codec.yaml
-> @@ -51,6 +51,7 @@ properties:
->      properties:
->        port@0:
->          $ref: /schemas/graph.yaml#/$defs/port-base
-> +        unevaluatedProperties: false
->          description: |
->            For LVDS encoders, port 0 is the parallel input
->            For LVDS decoders, port 0 is the LVDS input
-> diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Documentation/devicetree/bindings/display/msm/gpu.yaml
-> index 3397bc31d087..0179c816fa6d 100644
-> --- a/Documentation/devicetree/bindings/display/msm/gpu.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
-> @@ -81,6 +81,7 @@ properties:
->  
->    zap-shader:
->      type: object
-> +    additionalProperties: false
->      description: |
->        For a5xx and a6xx devices this node contains a memory-region that
->        points to reserved memory to store the zap shader that can be used to
-> diff --git a/Documentation/devicetree/bindings/display/samsung/samsung,exynos7-decon.yaml b/Documentation/devicetree/bindings/display/samsung/samsung,exynos7-decon.yaml
-> index 969bd8c563a5..dec1c9058876 100644
-> --- a/Documentation/devicetree/bindings/display/samsung/samsung,exynos7-decon.yaml
-> +++ b/Documentation/devicetree/bindings/display/samsung/samsung,exynos7-decon.yaml
-> @@ -37,6 +37,7 @@ properties:
->  
->    i80-if-timings:
->      type: object
-> +    additionalProperties: false
->      description: timing configuration for lcd i80 interface support
->      properties:
->        cs-setup:
-> diff --git a/Documentation/devicetree/bindings/display/samsung/samsung,fimd.yaml b/Documentation/devicetree/bindings/display/samsung/samsung,fimd.yaml
-> index 5d5cc220f78a..7593938601bb 100644
-> --- a/Documentation/devicetree/bindings/display/samsung/samsung,fimd.yaml
-> +++ b/Documentation/devicetree/bindings/display/samsung/samsung,fimd.yaml
-> @@ -40,6 +40,7 @@ properties:
->  
->    i80-if-timings:
->      type: object
-> +    additionalProperties: false
->      description: |
->        Timing configuration for lcd i80 interface support.
->        The parameters are defined as::
+Dmitry Baryshkov (10):
+  dt-bindings: display/msm: split qcom,mdss bindings
+  dt-bindings: display/msm: move qcom,sdm845-mdss schema to mdss.yaml
+  dt-bindings: display/msm: move qcom,sc7180-mdss schema to mdss.yaml
+  dt-bindings: display/msm: move qcom,sc7280-mdss schema to mdss.yaml
+  dt-bindings: display/msm: move qcom,qcm2290-mdss schema to mdss.yaml
+  dt-bindings: display/msm: move qcom,msm8998-mdss schema to mdss.yaml
+  dt-bindings: display/mdm: add gcc-bus clock to dpu-smd845
+  dt-bindings: display/msm: move common DPU properties to
+    dpu-common.yaml
+  dt-bindings: display/msm/dpu-common: add opp-table property
+  dt-bindings: display/msm: add support for the display on SM8250
+
+ .../bindings/display/msm/dpu-common.yaml      |  45 ++
+ .../bindings/display/msm/dpu-msm8998.yaml     | 139 +---
+ .../bindings/display/msm/dpu-qcm2290.yaml     | 143 +----
+ .../bindings/display/msm/dpu-sc7180.yaml      | 148 +----
+ .../bindings/display/msm/dpu-sc7280.yaml      | 147 +----
+ .../bindings/display/msm/dpu-sdm845.yaml      | 139 +---
+ .../bindings/display/msm/dpu-sm8250.yaml      | 123 ++++
+ .../devicetree/bindings/display/msm/mdp5.txt  |  30 +-
+ .../devicetree/bindings/display/msm/mdss.yaml | 591 ++++++++++++++++++
+ 9 files changed, 861 insertions(+), 644 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-common.yaml
+ create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sm8250.yaml
+ create mode 100644 Documentation/devicetree/bindings/display/msm/mdss.yaml
 
 -- 
-Regards,
+2.35.1
 
-Laurent Pinchart
