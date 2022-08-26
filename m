@@ -2,59 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 107C45A200C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 06:57:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3F945A20C4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 08:19:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235983AbiHZE4r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Aug 2022 00:56:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46078 "EHLO
+        id S244964AbiHZGT1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Aug 2022 02:19:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232163AbiHZE4q (ORCPT
+        with ESMTP id S244960AbiHZGTZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Aug 2022 00:56:46 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A351C9A9EB;
-        Thu, 25 Aug 2022 21:56:45 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3F4D0614CC;
-        Fri, 26 Aug 2022 04:56:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13BA1C433D6;
-        Fri, 26 Aug 2022 04:56:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661489804;
-        bh=b+RI5o5YmlV7YRcmNodCky267Qbp9qGWKb/djtyTr9c=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=O8dMCOkiJ9+1adaxVvCI57NYV6wTFuDAeUni9Yq2MvC9OqpXw+XQgW2U3PPN3j932
-         a8GYAIdcPzqmZix6WwmN1GX4WQhUY69UKWRU7Elphidac1fuTk/wEb9LLyXZ1nutdt
-         bjW1SdQLyyaqyFqHjQciftd6YKPLYjjC217N+5PGPYRoc2NaL5RK5mH9PTJEdJpufY
-         1sze9Taxeln4Lf/rI3mGr4YyCt760DIxjcGFpFdqS4tsDQBqtFZQ8+RJNO5qFcduD9
-         K2HUh6pBrX3PTD+hHCmPRhV1EQY2DlgHbw44IMV4T4T280r+zYu3uIy+lIIrN1rDvv
-         fidonidW8OFwA==
-Date:   Fri, 26 Aug 2022 10:26:39 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        Mark Brown <broonie@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 7/7] arm64: dts: qcom: sm8350-hdk: Specify which LDO
- modes are allowed
-Message-ID: <YwhSh3Toswds25Gi@matsya>
-References: <20220825164205.4060647-1-dianders@chromium.org>
- <20220825094155.7.I6799be85cf36d3b494f803cba767a569080624f5@changeid>
+        Fri, 26 Aug 2022 02:19:25 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7047BC0E74
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Aug 2022 23:19:22 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id q7so741069lfu.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Aug 2022 23:19:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=IWS8JKWz75o/tyFJVlcO0u3nY2nMGgxlstXU+vNhUYY=;
+        b=PTOX4eZo3au7x2ua0rwkqeVyPaYl1sms+TYrAkEO5uQdVHn8e43gb7K/YH3QOioTIT
+         vYZ4ipsviVMQDruLeDkFaj3ZyVUxZc+V8J37aJiYlOp/xWqeoyhAhclnZP/rZsBlsehH
+         qQRBefEbYs0HQP9vl7vLqXmzGbtlk+UOZ2iJ6QPRel0Ii5cbKJt2+5u1UB8nSqaA6Z99
+         4R56+Y6xfFowmnvg7whmI7ggQTioviUFGaeONEP8IglZW+j8TlTEkXxl9RGMVuHUh7e9
+         I1R+KnAj+nxgDbFVWjbDznUlcPnyXVgu5DrFs01AuRlXoa3Pjf9NtOpdp6UD/0J8LeQt
+         fYzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=IWS8JKWz75o/tyFJVlcO0u3nY2nMGgxlstXU+vNhUYY=;
+        b=AZQbGcPvfD5O9TM5NhVjWK+JVvE6or7m3oPUpfwPYVvPtU87Us5qMzKnH6N3gMomDK
+         nUM6A0xCi55dojNeMK95bxRHaG0F9KBlOA3SR35spCZ9FambybIC6VtuvfZs3Blyqet0
+         nQByxRX22/+b43ECvx9PYHCN2vQU0hKv1QBD76vOkVkKgHE4dTrMp5R5lcs9QjdsigYg
+         f8Q57pkmV9IE4HRt6YaMy4wRxTdL/BfwiY6Pwr4n9IPpE4W7XeQY+RpYjKeMrzGNAMaB
+         QLubcqdGSYzA1Echr0jGmi5MQRtwcbw8L+uR1yDfDV2gh8+KJUbSBt3OUcreyKvVjQLI
+         SgQw==
+X-Gm-Message-State: ACgBeo3uw9Y3NKTxbE8Y7hCXxbeLPkBxSUSQG5TCeF5wx6KmlPt+YODn
+        9rwUeCn3Z3NfPiPxvw0rkVzKng==
+X-Google-Smtp-Source: AA6agR4EGgyGn1ent3TwSlY5F52Gh3VviAOmzGSwXgW4lFYhiNuN7BSGLZIdYaDikQzy1JSZqF+/TQ==
+X-Received: by 2002:a19:7714:0:b0:492:df83:8a0b with SMTP id s20-20020a197714000000b00492df838a0bmr1882594lfc.104.1661494760801;
+        Thu, 25 Aug 2022 23:19:20 -0700 (PDT)
+Received: from [192.168.0.71] (82.131.98.15.cable.starman.ee. [82.131.98.15])
+        by smtp.gmail.com with ESMTPSA id c26-20020a05651200da00b0048b1d92991asm240700lfp.303.2022.08.25.23.19.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Aug 2022 23:19:18 -0700 (PDT)
+Message-ID: <15a997b2-966b-3a6f-aa75-3a21b268351d@linaro.org>
+Date:   Fri, 26 Aug 2022 09:19:16 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220825094155.7.I6799be85cf36d3b494f803cba767a569080624f5@changeid>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH] dt-bindings: remoteproc: Add missing
+ (unevaluated|additional)Properties on child nodes
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:REMOTE PROCESSOR (REMOTEPROC) SUBSYSTEM" 
+        <linux-remoteproc@vger.kernel.org>, devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+References: <20220823145649.3118479-10-robh@kernel.org>
+ <1491c83f-cd75-4de3-ec26-86db4adb2ade@linaro.org>
+ <CAL_JsqJx1s5ez-ojP8ZK_MPBWuuLRyekjK1qhHd6Ezaimna8JQ@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAL_JsqJx1s5ez-ojP8ZK_MPBWuuLRyekjK1qhHd6Ezaimna8JQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -62,20 +86,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25-08-22, 09:42, Douglas Anderson wrote:
-> This board uses RPMH, specifies "regulator-allow-set-load" for LDOs,
-> but doesn't specify any modes with "regulator-allowed-modes".
+On 25/08/2022 16:13, Rob Herring wrote:
+> On Thu, Aug 25, 2022 at 3:23 AM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>> On 23/08/2022 17:56, Rob Herring wrote:
+>>> In order to ensure only documented properties are present, node schemas
+>>> must have unevaluatedProperties or additionalProperties set to false
+>>> (typically).
+>>>
+>>> Signed-off-by: Rob Herring <robh@kernel.org>
+>>> ---
+>>>  .../devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml      | 1 +
+>>>  .../devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml      | 1 +
+>>>  .../devicetree/bindings/remoteproc/qcom,sc7280-wpss-pil.yaml     | 1 +
+>>>  3 files changed, 3 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml
+>>> index e76c861165dd..e4a7da8020f4 100644
+>>> --- a/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml
+>>> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml
+>>> @@ -140,6 +140,7 @@ properties:
+>>>
+>>>    glink-edge:
+>>>      $ref: qcom,glink-edge.yaml#
+>>> +    unevaluatedProperties: false
+>>
+>> Is it actually needed? The qcom,glink-edge.yaml has
+>> additionalProperties:false, so I expect it to complain if anything
+>> appears here.
 > 
-> Prior to commit efb0cb50c427 ("regulator: qcom-rpmh: Implement
-> get_optimum_mode(), not set_load()") the above meant that we were able
-> to set either LPM or HPM mode. After that commit (and fixes [1]) we'll
-> be stuck at the initial mode. Discussion of this has resulted in the
-> decision that the old dts files were wrong and should be fixed to
-> fully restore old functionality.
+> Perhaps not, but I'm trying to come up with a meta-schema to check
+> these though I'm not sure I can get to no warnings which is how I
+> found all these cases. The main remaining warnings are bus child node
+> pattern schemas which can perhaps be handled with
+> 'additionalProperties: true'. The rule I have says if properties or
+> patternProperties is present then unevaluatedProperties or
+> additionalProperties must be. To handle this case, I think we'd have
+> to walk the $ref and check it.
 > 
-> Let's re-enable the old functionality by fixing the dts.
+> Anyways, we can hold off on this one until when and if there's a
+> meta-schema in place.
 
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
+For me adding unevaluatedProp:false everywhere with $ref is okay and it
+makes the code easier to read - no need to dive into referenced schema
+to remember if it allows or does not allow additional properties. It is
+also a safer choice if referenced schema forgot to set additionalProp:false.
 
--- 
-~Vinod
+However if referenced schema has additionalProp:false, then
+unevaluatedProp:false here is redundant and question is whether the
+redundancy is worth additional readability/obviousness.
+
+To me, unevaluatedProp:false here would during review save time - no
+need to jump into referenced schema to check what is there. If we make
+it a rule / coding convention, then I am in.
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
