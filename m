@@ -2,205 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A9275A1C65
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 00:31:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DBC305A1E13
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 03:22:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244469AbiHYWb2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Aug 2022 18:31:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44724 "EHLO
+        id S244222AbiHZBWH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Aug 2022 21:22:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244439AbiHYWb1 (ORCPT
+        with ESMTP id S242730AbiHZBWF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Aug 2022 18:31:27 -0400
-Received: from esa4.hgst.iphmx.com (esa4.hgst.iphmx.com [216.71.154.42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 678ECB8A5F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Aug 2022 15:31:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
-  t=1661466685; x=1693002685;
-  h=message-id:date:mime-version:subject:to:references:from:
-   in-reply-to:content-transfer-encoding;
-  bh=pXWRUr7yy74YSO6PolHsHDXM3uM60SKPSfU0sqhXVlw=;
-  b=Yf9/Pne6aTwx27UTP6hucrCasFvT348ITLvezBKTZXP6ewc3FmK7NBfC
-   KfKuZIQkMvPuO9cbK/Aw/ZfZMMIQE7CCpG2PwOSKpxWNT45Fo7/2kSKBi
-   WZf6HpeMdWC02MH94z/yuGSzzYYpWZ2fhsukq13pCC0RDd8ue/x5VC1Vu
-   KTPJKGFs2nf2HcGrPIUO3Pm5eHdT4Kd5ms/Jye1p41372PwUrmEhJvGhf
-   7FN3RtHR9JeNpmIyAcBzkFW8/b3sLDLtnFTXI+7wXp0DmmKCxe9MFqNTe
-   Sb/z93HrD9uVJ2ZuiuAMx5nW+QR8wpv3V4ikawhBHf1204FDk5QHWh+38
-   w==;
-X-IronPort-AV: E=Sophos;i="5.93,264,1654531200"; 
-   d="scan'208";a="208130140"
-Received: from h199-255-45-15.hgst.com (HELO uls-op-cesaep02.wdc.com) ([199.255.45.15])
-  by ob1.hgst.iphmx.com with ESMTP; 26 Aug 2022 06:31:23 +0800
-IronPort-SDR: ZBHl45IzX35rLN0GlhTcOuiyTduaOlCOEXXqQCw90nFdGrNr32ktapC8/OHnjSpVyzRVnm/A3k
- UcaIH9gZzqmXHNEHXAxvdJqM3f+/d2Tt8tn0dDF7JKQhcTt6PAe3mX7sCG7vqxWpbRBAWiLHJO
- 9jCePC3g3o0E0ay1cX1kOdlSUkfuOg2SMC9posozNnWBVCkTMMoqqDPp6PY0uLih8J2iY4l4Nr
- kUYweaT0cFYKO+1ySNNUaLOu4uqvDkIJVp+lXUJif954cuV8Cbgf+Om0VxNMWPNKtaXecpK9YE
- nB793bC6abDMMSXJbCK22Axs
-Received: from uls-op-cesaip02.wdc.com ([10.248.3.37])
-  by uls-op-cesaep02.wdc.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 25 Aug 2022 14:46:37 -0700
-IronPort-SDR: f+UXQNmgMGr3E9gELXZP+jN1AvckW6NhEVof5uGafE3ccJEKlJ44McDE/MINOj8f/lolstflHz
- 8OV1psO0kSkzWy1muLixPK1LIcieZ5OeXCBzKhicfkSb+AskR/0Djf2slchekupUVsG4P0Py1U
- aDHU9+YwfzUgHcV+d9qXdf+drk67tDhqTLdXHD7FDmRF01AhSiF0fOGpHazMHUUXu4EQSdzGv/
- RTLWGzHTQset5kI0kDyN63v9FPn/vEICdafB19v8eE9dKkIGURHvZyeoqnHr2/+SvvAvEtOd9Q
- V1o=
-WDCIronportException: Internal
-Received: from usg-ed-osssrv.wdc.com ([10.3.10.180])
-  by uls-op-cesaip02.wdc.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 25 Aug 2022 15:31:23 -0700
-Received: from usg-ed-osssrv.wdc.com (usg-ed-osssrv.wdc.com [127.0.0.1])
-        by usg-ed-osssrv.wdc.com (Postfix) with ESMTP id 4MDHkM28xZz1Rws0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Aug 2022 15:31:23 -0700 (PDT)
-Authentication-Results: usg-ed-osssrv.wdc.com (amavisd-new); dkim=pass
-        reason="pass (just generated, assumed good)"
-        header.d=opensource.wdc.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=
-        opensource.wdc.com; h=content-transfer-encoding:content-type
-        :in-reply-to:organization:from:references:to:content-language
-        :subject:user-agent:mime-version:date:message-id; s=dkim; t=
-        1661466681; x=1664058682; bh=pXWRUr7yy74YSO6PolHsHDXM3uM60SKPSfU
-        0sqhXVlw=; b=bs/C01DpSm3y99zfADta/EthQ0tnE45DG9SWbg/EKXntkf/Onpa
-        1tCL/1GLcZs/agWIOytQNn8zqOXW4RIH751La5HhWXzW/q2Ipjf9HS4rNbbjGhnj
-        FSRnqRBDxAE6lZF5i0RmDTiOjNl68JiExZM5EW/EQDq4RAo3Ic5pjbtmhtG92nOi
-        xLZUBvhR+Er+QvEaUmcYewWO+neNs/UxEsv94PGb+uYb/oxK1d6amo3Rzt59nmei
-        9f3DAqYO4IOesDyzoER3xilqsE1Zg0vvw21MdhEjBxU3GjLsJWFmZ+zIOfrb/ZYe
-        ViaqAJUVZg/Fne/AdrKPbzYjV5IHvjiquNw==
-X-Virus-Scanned: amavisd-new at usg-ed-osssrv.wdc.com
-Received: from usg-ed-osssrv.wdc.com ([127.0.0.1])
-        by usg-ed-osssrv.wdc.com (usg-ed-osssrv.wdc.com [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id W6hKNjwNRcyR for <linux-arm-msm@vger.kernel.org>;
-        Thu, 25 Aug 2022 15:31:21 -0700 (PDT)
-Received: from [10.225.163.46] (unknown [10.225.163.46])
-        by usg-ed-osssrv.wdc.com (Postfix) with ESMTPSA id 4MDHk850sGz1RtVk;
-        Thu, 25 Aug 2022 15:31:12 -0700 (PDT)
-Message-ID: <bb0728d1-20fd-8b6d-5d42-a0c76b6d3e4b@opensource.wdc.com>
-Date:   Fri, 26 Aug 2022 07:31:11 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH 2/5] dt-bindings: ata: drop minItems equal to maxItems
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
+        Thu, 25 Aug 2022 21:22:05 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A939DC6E81
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Aug 2022 18:22:03 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id 142so164832pfu.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Aug 2022 18:22:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=xYTu/skGP38f1q1Dy1/xZQnsGWW6M+Lwk/V98c8nDu8=;
+        b=JpF/+LgYMZNVlZzZkRsCU4B8eY4IAOMRYjG+0+dOUsTnzvH+xpvG8RkdRizvPNEVR/
+         0rS2ucyTxq9BKlqt16xAymDVrA63ezwAzCtsvzi7jvyYXnpEkrQSOigH+W+drEVQ7dAW
+         yF3n8St7jBCp0pZ5Ne2HeBzF8y65aAsGd4atY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=xYTu/skGP38f1q1Dy1/xZQnsGWW6M+Lwk/V98c8nDu8=;
+        b=sHVgRZRKAecV6/qr95qH6P/Ot6KuTc6uA/o1uud7WnyslfE+9eoLlwzO9fbzT1ThSy
+         vJsS3ErLLoB3ZCdslFjeAVGCp42ddALXWQCZ5otrpGSYEirVlK7Wn8jtiSw5WD8yDdTh
+         kOBIiWlHqhwegM5B/NlADJedvVeL5d/90AjrWIXfVAufdMEgpE9X+VKrpJZkfVjYnyHl
+         t6vHfgp5h29a3Ceb+27t36ReS+okZy+1Q76c++s/BUc8in+mCZld2fW83hZLsAXqWSId
+         UhdNVrfksuRGeegA7RaM8HdJsDpev2nf5fa/exrezq4r5I2RquCkLA/nLF06myQzXy/0
+         9OpA==
+X-Gm-Message-State: ACgBeo3SFtonpbVGkqmfFwhfgvXzObxSsTqq1re7bKHEIAUcK95SB9Bd
+        WNdeJ+teuQspwdzleoQkP9o8Dg==
+X-Google-Smtp-Source: AA6agR4Z/EoRmqFd1BdKNTESfOYrPjKNqvkrv1ei2EB6fomnI4F/yHLbtdbye+ABKOdFbrSXghBapA==
+X-Received: by 2002:a63:4c3:0:b0:42b:5150:fcfa with SMTP id 186-20020a6304c3000000b0042b5150fcfamr1407615pge.210.1661476923185;
+        Thu, 25 Aug 2022 18:22:03 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:d529:f79d:2a1a:4e61])
+        by smtp.gmail.com with UTF8SMTPSA id t9-20020a17090a1c8900b001f8aee0d826sm354685pjt.53.2022.08.25.18.22.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Aug 2022 18:22:02 -0700 (PDT)
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Tomasz Figa <tomasz.figa@gmail.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, Inki Dae <inki.dae@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Andre Przywara <andre.przywara@arm.com>,
-        Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Marek Vasut <marex@denx.de>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-ide@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-crypto@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org
-References: <20220825113334.196908-1-krzysztof.kozlowski@linaro.org>
- <20220825113334.196908-2-krzysztof.kozlowski@linaro.org>
-From:   Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Organization: Western Digital Research
-In-Reply-To: <20220825113334.196908-2-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>, linux-clk@vger.kernel.org,
+        Krishna Kurapati <quic_kriskura@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: [PATCH v2 1/2] clk: qcom: gcc-sc7180: Keep the USB GDSC always on
+Date:   Thu, 25 Aug 2022 18:21:58 -0700
+Message-Id: <20220825182152.v2.1.I45235b7c40997bc2abf813e4722b4dcdd6aecf6b@changeid>
+X-Mailer: git-send-email 2.37.2.672.g94769d06f0-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/25/22 20:33, Krzysztof Kozlowski wrote:
-> minItems, if missing, are implicitly equal to maxItems, so drop
-> redundant piece to reduce size of code.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+When the GDSC is disabled during system suspend USB is broken on
+sc7180 when the system resumes. Mark the GDSC as always on to
+make sure USB still works after system suspend.
 
-Acked-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+---
+I'm not entirely sure that this is the correct solution. What makes
+me doubt is that only msm8953 sets ALWAYS_ON for the USB GDSC. Is USB
+broken after suspend on all the other QC platforms?
 
-> ---
->  Documentation/devicetree/bindings/ata/brcm,sata-brcm.yaml       | 1 -
->  .../devicetree/bindings/ata/cortina,gemini-sata-bridge.yaml     | 2 --
->  Documentation/devicetree/bindings/ata/sata_highbank.yaml        | 1 -
->  3 files changed, 4 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/ata/brcm,sata-brcm.yaml b/Documentation/devicetree/bindings/ata/brcm,sata-brcm.yaml
-> index 235a93ac86b0..3766cc80cb17 100644
-> --- a/Documentation/devicetree/bindings/ata/brcm,sata-brcm.yaml
-> +++ b/Documentation/devicetree/bindings/ata/brcm,sata-brcm.yaml
-> @@ -30,7 +30,6 @@ properties:
->            - const: brcm,bcm-nsp-ahci
->  
->    reg:
-> -    minItems: 2
->      maxItems: 2
->  
->    reg-names:
-> diff --git a/Documentation/devicetree/bindings/ata/cortina,gemini-sata-bridge.yaml b/Documentation/devicetree/bindings/ata/cortina,gemini-sata-bridge.yaml
-> index 21a90975593b..529093666508 100644
-> --- a/Documentation/devicetree/bindings/ata/cortina,gemini-sata-bridge.yaml
-> +++ b/Documentation/devicetree/bindings/ata/cortina,gemini-sata-bridge.yaml
-> @@ -22,7 +22,6 @@ properties:
->      maxItems: 1
->  
->    resets:
-> -    minItems: 2
->      maxItems: 2
->      description: phandles to the reset lines for both SATA bridges
->  
-> @@ -32,7 +31,6 @@ properties:
->        - const: sata1
->  
->    clocks:
-> -    minItems: 2
->      maxItems: 2
->      description: phandles to the compulsory peripheral clocks
->  
-> diff --git a/Documentation/devicetree/bindings/ata/sata_highbank.yaml b/Documentation/devicetree/bindings/ata/sata_highbank.yaml
-> index 49679b58041c..f23f26a8f21c 100644
-> --- a/Documentation/devicetree/bindings/ata/sata_highbank.yaml
-> +++ b/Documentation/devicetree/bindings/ata/sata_highbank.yaml
-> @@ -52,7 +52,6 @@ properties:
->      minItems: 1
->      maxItems: 8
->      items:
-> -      minItems: 2
->        maxItems: 2
->  
->    calxeda,tx-atten:
+Changes in v2:
+- set the flags of the GDSC not of the GDSC power domain
+- updated commit message
 
+ drivers/clk/qcom/gcc-sc7180.c | 1 +
+ 1 file changed, 1 insertion(+)
 
+diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
+index c2ea09945c47..c0d7509a782e 100644
+--- a/drivers/clk/qcom/gcc-sc7180.c
++++ b/drivers/clk/qcom/gcc-sc7180.c
+@@ -2225,6 +2225,7 @@ static struct gdsc usb30_prim_gdsc = {
+ 		.name = "usb30_prim_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.flags = ALWAYS_ON,
+ };
+ 
+ static struct gdsc hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc = {
 -- 
-Damien Le Moal
-Western Digital Research
+2.37.2.672.g94769d06f0-goog
+
