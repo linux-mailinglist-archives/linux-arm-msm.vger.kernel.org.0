@@ -2,123 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F4145A25A9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 12:16:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51A115A25D4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 12:27:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245295AbiHZKPF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Aug 2022 06:15:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44050 "EHLO
+        id S245618AbiHZK1Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Aug 2022 06:27:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343514AbiHZKPA (ORCPT
+        with ESMTP id S245312AbiHZK1O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Aug 2022 06:15:00 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF7182A97C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 03:14:56 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id m5so1402643lfj.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 03:14:56 -0700 (PDT)
+        Fri, 26 Aug 2022 06:27:14 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D4E1CD53A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 03:27:14 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id g19so1189536pfb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 03:27:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=nBDls8p7zWKgMsdae7qsDU8nms79A1faHjvYu7tARvE=;
-        b=piJ7BEpevaGNdTfb+iohBsjVd8y6wP7fyx2scpDUXdludX6+pLspOYMOnspr5RJUmE
-         OIh1n/nMbN506hH3wRUECtpn215qzlyev8PAdv9fkUrfkWN8RbOIkAAv7iCnj/GpRewr
-         6b8p81mVhXkt+JAB6KBcurlZ+unI6qZhm+lUuSOQ1aVLUbncBRWCYQHGm7l3rhjuEEDJ
-         RjWZPIryyeV1a9Ua7OflgMFcrcgLy0YL1gskTh695mZRAbIF7D/CS172snBeNCYvtNLW
-         KiLBOlEow99lBrYt00L0fYGxGF8kqOX5BJxf2PcQjnNJbHR8CkNz3o+2HAoT3HYzO0fA
-         RAjw==
+        d=ecs-corp-partner-google-com.20210112.gappssmtp.com; s=20210112;
+        h=message-id:date:subject:cc:to:from:from:to:cc;
+        bh=fO7KL3cm/qIPOC8UecVFXzf3EKkcw+jqA4gikcKM8lI=;
+        b=K2BTt0VcJ4sYcngEjxV7pnzwQwmizrXBFjeez1wbX5TycUbJKWh7gh5HfvT0COwabF
+         XfLDDbzF/Ntzp3YkSYEexF+YHaI7ufrdkPBTNXZES5E4UXD3nDBROaKqw003GOTS3EqO
+         BajDAtofubaai5gGoe20665Nh+mFhr+jTK0JohFB0lHcoLPuZz7TxFTlokaTl/XKJcfK
+         fX4zE9fLMElNDOWBUu2cAC4RwsZgYN3aIqGsuigH/D/ptgdXNUgvD5Ll7SfNtCZx9m3o
+         IwzVqhXrAYA+qImN4jVszsgjbnZH+/u95iiUR7dGpDvQYBVJdDcoNdJU+fPOg8Rca6yQ
+         62ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=nBDls8p7zWKgMsdae7qsDU8nms79A1faHjvYu7tARvE=;
-        b=KKIT8zIa2IlVY0TSaet2nz04VhMWFKbXIB+mhsKJcHxVaAhKbCRsbF5BmQNai0+3vF
-         gs9RNEwymHR2qPeCq4/U1ah+aaJyQb10h5pPwOK71/E953qF0d++41hKo81IfwNDvIru
-         7R3+iD6uum/Idn5vC1oBTsKCXw/xOjBbDsU0IxhD+ewFC+FPPrwTRa85s+kUb5tcfBr5
-         IyiqNYYhikNfNSKa2iA3Fw8bM/Oof4iw6ipOWokNdhtPF0AQDnwWGugp+33mN8UZ7qQ8
-         oCj7qtLejGElXdI+OAISPuiQAaFb36+Bn0dT+L8HO/vYMf0iG3nrLEnD9ZgEAuuipAG4
-         Hjog==
-X-Gm-Message-State: ACgBeo0Ci+Zmk7t2zfGnzeTPJ21skIBJiuo0bkeHaRG78Ds76m7M6iQx
-        I+zetsEpqPDqsx6JC7lEgHF7GA==
-X-Google-Smtp-Source: AA6agR7caUbLwyQSa715SFZUEGY9QFvmhTYs0wWUx3epIqtDxGXY7MC1nfcBGHa9KKFMrtkkLdDXyw==
-X-Received: by 2002:a19:915c:0:b0:492:f06d:b3b1 with SMTP id y28-20020a19915c000000b00492f06db3b1mr2554374lfj.1.1661508894364;
-        Fri, 26 Aug 2022 03:14:54 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id y7-20020a05651c106700b0025e42f8e771sm414675ljm.34.2022.08.26.03.14.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Aug 2022 03:14:53 -0700 (PDT)
-Message-ID: <ad2db009-8660-db05-60d9-fea61a5cde26@linaro.org>
-Date:   Fri, 26 Aug 2022 13:14:53 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.1.2
-Subject: Re: [PATCH v3] drm/msm/dp: correct 1.62G link rate at
- dp_catalog_ctrl_config_msa()
-Content-Language: en-GB
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
-        agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1661372150-3764-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1661372150-3764-1-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
+        bh=fO7KL3cm/qIPOC8UecVFXzf3EKkcw+jqA4gikcKM8lI=;
+        b=SmWJfOSAIVpORPHW/6/SK72jNdEb6Ibih2fj2zd1LZQ++n9lzZuDQKnaU8MI9y68Gp
+         fuS1imzQIut03UyXbJnAnGdfE7mm3zRq/TxEuSpAiGj3KNSN5fAg1xeb4V8xr+EK+3KJ
+         Uw56yU83g9nui7+B2pg9HimtEoAnPV+oSy99q7cB/vXk1L8zdUqE9Nfxc8GWvZnWDKw/
+         uH0stwpG/pMEcipQGNwByWi02JMGwZ77qq29aWxwuJBv+qhYG4bD31SMoQIgQMFnmuul
+         ImKFTLEBorIfZDq0YSASdMoeozFcSSjffSY1Br+tYNpGiwghz61dHM2Q+GKahPwRZafu
+         wvaA==
+X-Gm-Message-State: ACgBeo37ywYRX+htWir9eBc72LRJMJVZJ1lLMj1Wywf/LkwXFYlXPMOf
+        N2+kCtrbVnX6ofJ9FVWJEgjKPQ==
+X-Google-Smtp-Source: AA6agR6zcJ3+LpttCrblYmJEF7TpFa9w6DSDtPCB/iNYo6AC188ibR46pgLmWOaT9w/GHqiKAHhNrA==
+X-Received: by 2002:aa7:8096:0:b0:52d:d5f6:2ea6 with SMTP id v22-20020aa78096000000b0052dd5f62ea6mr3410295pff.0.1661509633472;
+        Fri, 26 Aug 2022 03:27:13 -0700 (PDT)
+Received: from localhost.localdomain ([103.150.184.130])
+        by smtp.gmail.com with ESMTPSA id d11-20020a62f80b000000b0053624c50d74sm1333866pfh.126.2022.08.26.03.27.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Aug 2022 03:27:13 -0700 (PDT)
+From:   Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>
+To:     LKML <linux-kernel@vger.kernel.org>
+Cc:     Bob Moragues <moragues@chromium.org>,
+        Henry Sun <henrysun@google.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH 1/2] dt-bindings: arm: qcom: Document additional skus for sc7180 pazquel360
+Date:   Fri, 26 Aug 2022 10:26:07 +0000
+Message-Id: <20220826102513.1.If97ef7a7d84bcc2cf20e0479b3e00c4a8fb5a2fd@changeid>
+X-Mailer: git-send-email 2.17.1
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/08/2022 23:15, Kuogee Hsieh wrote:
-> At current implementation there is an extra 0 at 1.62G link rate which cause
-> no correct pixel_div selected for 1.62G link rate to calculate mvid and nvid.
-> This patch delete the extra 0 to have mvid and nvid be calculated correctly.
-> 
-> Changes in v2:
-> -- fix Fixes tag's text
-> 
-> Changes in v3:
-> -- fix misspelling of "Reviewed-by"
-> 
-> Fixes: 937f941ca06f  ("drm/msm/dp: Use qmp phy for DP PLL and PHY")
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> 
+pazquel360 is an extension project based on pazquel.
+We create 3 sku on pazquel360:
+   sku 20 for LTE with physical SIM _and_ eSIM and WiFi
+   sku 21 for WiFi only
+   sku 22 for LTE with only a physical SIM
+ Both sku20 and sku22 are LTE SKUs.
+ One has the eSIM stuffed and one doesn't.
+ There is a single shared device tree for the two.
 
-No extra empty lines between the tags please. I'll correct this manually 
-while applying.
+Signed-off-by: Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>
 
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/dp/dp_catalog.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> index 7257515..676279d 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> @@ -431,7 +431,7 @@ void dp_catalog_ctrl_config_msa(struct dp_catalog *dp_catalog,
->   
->   	if (rate == link_rate_hbr3)
->   		pixel_div = 6;
-> -	else if (rate == 1620000 || rate == 270000)
-> +	else if (rate == 162000 || rate == 270000)
->   		pixel_div = 2;
->   	else if (rate == link_rate_hbr2)
->   		pixel_div = 4;
+---
 
+ Documentation/devicetree/bindings/arm/qcom.yaml | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index fb1d00bcc847..851cf5edb582 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -459,6 +459,17 @@ properties:
+           - const: google,pazquel-sku2
+           - const: qcom,sc7180
+ 
++      - description: Google Pazquel360 with LTE (newest rev)
++        items:
++          - const: google,pazquel-sku22
++          - const: google,pazquel-sku20
++          - const: qcom,sc7180
++
++      - description: Google Pazquel360 with WiFi (newest rev)
++        items:
++          - const: google,pazquel-sku21
++          - const: qcom,sc7180
++
+       - description: Sharp Dynabook Chromebook C1 (rev1)
+         items:
+           - const: google,pompom-rev1
 -- 
-With best wishes
-Dmitry
+2.17.1
 
