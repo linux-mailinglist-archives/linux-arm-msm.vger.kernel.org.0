@@ -2,81 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 153185A28AB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 15:34:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D511B5A291B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 16:09:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343846AbiHZNeB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Aug 2022 09:34:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58448 "EHLO
+        id S1344375AbiHZOJM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Aug 2022 10:09:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232027AbiHZNeA (ORCPT
+        with ESMTP id S1344389AbiHZOJK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Aug 2022 09:34:00 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 249BCDC5DB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 06:33:59 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id l3so1587256plb.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 06:33:59 -0700 (PDT)
+        Fri, 26 Aug 2022 10:09:10 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5519BC3F4C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 07:09:06 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id z25so2160791lfr.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 07:09:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc;
-        bh=rWHO5zmUF7bZRGY8k3CrPBg15/SbyMngXXzYsL3BysI=;
-        b=BVtuM9mKurY9NgLyr5DBTUimx39q+/B6q8hWHrCMcR7ZPHUmKpdIxVzhYTB0Izkrmb
-         Yo+ht1MDnEe3k4E3rztZ/bdCo5yve76+yjrZZi9XR3KXDi6cio1xflou0lnxCtP1jzKP
-         AxB1M6MFuUQqOZ7I8KAFFpBwvfZ+5bPVGofPw=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=/jvB3Zk9Ur35ndfTH3ClegVJp3L5YsswZJHu0HBwLYs=;
+        b=jQx3CjsoG4/KqyBTEu7I7zus+LfGm5o2i5DJwYB8PEnBnlqdKMQzoZvzit0d6HbeH0
+         792OCLK+089fkSLzsDQuf2cforIA6vpukpmf76nehp/qDWBuiYMLjsmWpN7WNH5AxDdU
+         qpnOWvv9wKrOoyONFNZu8kA2YQFNeacvY52jZO1JOzAfRuPnJ64iqc/6Bj7UjCoJT6WC
+         zyeDGn0/ILk/Tj/GtHLoIKMB53JY16zqhRiRyTuqu7Y39WVoUVn4D7QLzoexl5+rPLhO
+         uOcCOqIghY4npZvkgBcYBxMGS4rUzVeEnIKhbPm0++/HPXlt1SnjdlVgM4xqrUkhK7kO
+         o9iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=rWHO5zmUF7bZRGY8k3CrPBg15/SbyMngXXzYsL3BysI=;
-        b=uSbkaRkYWVd5r/VFomZW6l9h9vkmQxClBXsX0irBUqlX+SWKYnErgdo/qwM+aiiz4O
-         os2NwuPW9AgPvBcdxzQNh5tGNs7Byza17vHGYz8/jNkbLOpSPcMSpV70DwewZ++Bx43Y
-         rzah79FewaKsStjeH1H2R0JTlbCqhPhycpABSYXk9vb9KyzoTCKnfnWkqwkk9U4xcj7H
-         Tb8UFSnJAcBSJYUHQTH270y6Bv2l77i5mA/2ZZU/JWXTELPEmeQoSX/QE838AFwgbD3W
-         bsdLbkdQgIzDd3vtViVYphV9xkagwA9OuviMOp2nONxbRVmZq2hS0momkyjgETNv76UM
-         Vq3w==
-X-Gm-Message-State: ACgBeo0wgN3cLeCmBPHkcaQp3pbWDc0qMlYVwaTIvenBgRB82V1OUiPf
-        NixpBW9xa6SPd5yPysh4BsJy2xMSSAfWKQ==
-X-Google-Smtp-Source: AA6agR5Qd66kzZf/KIFbuWJgshdCyJXTni5AcvbARZ8KIRGS5zRC1A4KOawa1wvaCECwIXC0ycsH1g==
-X-Received: by 2002:a17:902:f54e:b0:173:3c4d:2be4 with SMTP id h14-20020a170902f54e00b001733c4d2be4mr3793540plf.71.1661520838697;
-        Fri, 26 Aug 2022 06:33:58 -0700 (PDT)
-Received: from localhost ([2620:15c:11a:202:2a3c:773f:ac25:a127])
-        by smtp.gmail.com with UTF8SMTPSA id x196-20020a6286cd000000b00536816c0d4asm1757215pfd.147.2022.08.26.06.33.57
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=/jvB3Zk9Ur35ndfTH3ClegVJp3L5YsswZJHu0HBwLYs=;
+        b=CYR77DxL8yJdEigxnGC+Vud/g5VizlJv6bfIe1P3U9NEWQYvcVQoVAWSuHhri7n6jG
+         4zgLg9m0+U8g+hcj4ZSNcsZX9KEskVyAwoGYrkxvUO0W1bY/ivQytm/HX4gchNXIq4tS
+         PulaqQ8psh9WftVVAuoO3q47dhzSVPwnKGIXNNTpdzaANOPxOxVOUnxfJ+Tu8/DmblQS
+         Q4IXvLHXYugVnqHQEnnxbU+E0uhamAScGu+3+ZnkugbOUCR4Niwz00shsZKY720npJ55
+         G4bFt7IwytU/C7rYJsyBUJUNTaTInxJBBJ4ch5nB9exxt5MwptoPsPUeUQX9Z1DZVJ/l
+         fdpg==
+X-Gm-Message-State: ACgBeo3cm4QdfYWxIF48pyh+LtRU7mJG0AFbEKoQWZjtMfJpitDxfUeR
+        C71mmqUukMivb/de4oGfIUaJ8A==
+X-Google-Smtp-Source: AA6agR7HiAAjmQ+OSdNfaAHoyknzoyrjx3MUmL1Ng+Vf6qRLQP4g75Bp3THQvj6bRqHPWOxdn6lnQw==
+X-Received: by 2002:a05:6512:68d:b0:492:ec42:1dd2 with SMTP id t13-20020a056512068d00b00492ec421dd2mr2597519lfe.55.1661522944058;
+        Fri, 26 Aug 2022 07:09:04 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id s10-20020a19ad4a000000b00492c017de43sm390763lfd.127.2022.08.26.07.09.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Aug 2022 06:33:58 -0700 (PDT)
-Date:   Fri, 26 Aug 2022 06:33:56 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH 2/2] clk: qcom: gcc-sc7280: Keep USB GDSC power domains
- on when USB wakeup is enabled
-Message-ID: <YwjLxODQhuftOY2W@google.com>
-References: <20220822115246.2.If09027f73daa6e1ed95f5eab02326b543c67132e@changeid>
- <YwS3FCOqIeajMEgz@hovoldconsulting.com>
- <YwUDjaG6n95Ddij2@google.com>
- <YwXlsK3pjK/q1xwO@hovoldconsulting.com>
- <Ywf02oIXEL8G/Heo@google.com>
- <YwjFD9uHnSxoZHvT@google.com>
- <YwjGpSXOscDwbvQH@hovoldconsulting.com>
- <YwjIadKu0Wv2+VDk@google.com>
- <YwjJlRE1qRskZi/y@google.com>
- <YwjKG83tmRT0Y6sj@hovoldconsulting.com>
+        Fri, 26 Aug 2022 07:09:03 -0700 (PDT)
+Message-ID: <37834264-f6a0-fe71-e4c6-2edca9475d5a@linaro.org>
+Date:   Fri, 26 Aug 2022 17:09:02 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YwjKG83tmRT0Y6sj@hovoldconsulting.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.1.2
+Subject: Re: [v1 2/2] drm/msm/disp/dpu1: enable crtc color management based on
+ encoder topology
+Content-Language: en-GB
+To:     Kalyan Thota <kalyant@qti.qualcomm.com>,
+        "Kalyan Thota (QUIC)" <quic_kalyant@quicinc.com>,
+        "robdclark@gmail.com" <robdclark@gmail.com>
+Cc:     "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "dianders@chromium.org" <dianders@chromium.org>,
+        "swboyd@chromium.org" <swboyd@chromium.org>,
+        "Vinod Polimera (QUIC)" <quic_vpolimer@quicinc.com>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>
+References: <1655802387-15275-1-git-send-email-quic_kalyant@quicinc.com>
+ <1655802387-15275-2-git-send-email-quic_kalyant@quicinc.com>
+ <CAA8EJponMDAXDAZ9zpkYEZvONDAztuXhjwZ6y7rgo1HtQOMtfQ@mail.gmail.com>
+ <BN0PR02MB81426CB90870085223C308A496B99@BN0PR02MB8142.namprd02.prod.outlook.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <BN0PR02MB81426CB90870085223C308A496B99@BN0PR02MB8142.namprd02.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,41 +88,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 26, 2022 at 03:26:51PM +0200, Johan Hovold wrote:
-> On Fri, Aug 26, 2022 at 06:24:37AM -0700, Matthias Kaehlcke wrote:
-> > On Fri, Aug 26, 2022 at 06:19:37AM -0700, Matthias Kaehlcke wrote:
-> > > On Fri, Aug 26, 2022 at 03:12:05PM +0200, Johan Hovold wrote:
-> > > > On Fri, Aug 26, 2022 at 06:05:19AM -0700, Matthias Kaehlcke wrote:
-> > > > > On Thu, Aug 25, 2022 at 03:16:58PM -0700, Matthias Kaehlcke wrote:
-> > > > > > On Wed, Aug 24, 2022 at 10:47:44AM +0200, Johan Hovold wrote:
-> > > > 
-> > > > > > > The wakeup setting doesn't seem to have anything to do with the genpd
-> > > > > > > issues on sc8280xp and the controller doesn't resume properly regardless
-> > > > > > > of whether the PHYs have been disabled or not during suspend unless the
-> > > > > > > PD is left on.
-> > > > > > 
-> > > > > > I'm essentially seeing the same. USB is hosed after resume unless the PD
-> > > > > > is left on.
-> > > > > > 
-> > > > > > On Chrome OS we currently work around that with a version of commit
-> > > > > > d9be8d5c5b03 ("usb: dwc3: qcom: Keep power domain on to retain controller
-> > > > > > status") which was reverted upstream. I'm not sure whether USB worked after
-> > > > > > resume before we enabled wakeup support. I would have sworn it did, but we
-> > > > > > landed an old version of the wakeup patches a long time ago, so my
-> > > > > > memory might be failing me.
-> > > > > 
-> > > > > I need to remind myself that keeping the GDSC on is only needed when the PHYs
-> > > > > are kept on. The PHYs were always off before wakeup support was added, which
-> > > > > is why USB wasn't broken after suspend in the pre-wakeup days.
-> > > > 
-> > > > Ok, so to be clear: if you disable wakeup with my patches applied so
-> > > > that the PD is actually turned off, USB still resumes with only
-> > > > GENPD_FLAG_ACTIVE_WAKEUP set?
-> > 
-> > Actually without GENPD_FLAG_ACTIVE_WAKEUP
+On 27/06/2022 14:56, Kalyan Thota wrote:
+> Thanks for the comments, Dmitry. I haven't noticed mode->hdisplay being used. My idea was to run thru the topology and tie up the encoders with dspp to the CRTCs.
+> Since mode is available only in the commit, we cannot use the dpu_encoder_get_topology during initialization sequence.
 > 
-> Sure, that only comes into play with wakeup enabled. I assume you still
-> need it for USB wakeup to work?
+> The requirement here is that when we initialize the crtc, we need to enable drm_crtc_enable_color_mgmt only for the crtcs that support it. As I understand from Rob, chrome framework will check for the enablement in order to exercise the feature.
+> 
+> Do you have any ideas on how to handle this requirement ? Since we will reserve the dspp's only when a commit is issued, I guess it will be too late to enable color management by then.
 
-Yes, for USB wakeup to work either setting the above genpd flag or (better)
-the ALWAYS_ON flag of the GDSC is needed.
+I have been thinking about this for quite a while.
+
+Basically I fear you have two options:
+- Register the color management for all CRTCs. In dpu_rm_reserve() check 
+for the ctm, allocate LMs taking the available DSPPs into account. Fail 
+the atomic_check() if there are no available LMs with required 
+capabilities. Additional bonus point for moving LM/DSPP resource 
+allocation from dpu_encoder into dpu_crtc.
+
+- Register CRTCs and it's colormanagement properties according to exact 
+available hardware. Let the userspace composer select the CRTC for the 
+connector basing on the availability of the CTM support.
+
+I'd vote strongly against any attempt to put the policy ('e.g. enable 
+CTM only for the eDP and first DSI display') into the kernel, because we 
+can not predict the actual usecases the user needs. It well might be 
+that the user of the laptop will work with DP displays only and thus 
+require color management for DP.
+
+> 
+> @robdclark@gmail.com
+> Is it okay, if we disable color management for all the crtcs during initialization and enable it when we have dspps available during modeset. Can we framework code query for the property before issuing a commit for the frame after modeset ?
+> 
+
+-- 
+With best wishes
+Dmitry
+
