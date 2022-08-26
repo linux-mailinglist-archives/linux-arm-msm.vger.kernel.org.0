@@ -2,72 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC6105A2566
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 12:06:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C094F5A258C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 12:11:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343597AbiHZKGt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Aug 2022 06:06:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51334 "EHLO
+        id S245283AbiHZKLE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Aug 2022 06:11:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245452AbiHZKGW (ORCPT
+        with ESMTP id S237428AbiHZKLC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Aug 2022 06:06:22 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D0708E0CE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 03:05:04 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id bq23so1353211lfb.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 03:05:04 -0700 (PDT)
+        Fri, 26 Aug 2022 06:11:02 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70472AC250
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 03:10:57 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id l8so1356348lfc.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 03:10:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=KzbOceaNTdDVnBmlwaML66Ag3gKl0lXdyJPKSYlfMfo=;
-        b=q8eihlZNapUVxFRiEU7EF/LhPsaz08qpV4fS8UH0p1tLfCsASqzJK4ypoixw0h/ez4
-         6CbzJZjfGhPUqbHSpQRiDIJB8GL9CW4LQ9rhDaySA5C3rKbjesmGRlKZZGdpL1dHr4wk
-         I5DCiPc7BjD/AnmMdsmpgv1bK2A3gfaIxeEIayc5QCybaFZHgCslg8K3X8Qo+lBUjELW
-         KghkIm4r/LbqnSdq2kXDtYmIlYQgTNNL1nNWOp3pL4RZuggBCGYsfnrivqnV8IoQQ0vr
-         clpfazGqs60ASVHKOPHj5Gut9iyLthfuMtsm3eOYpIjzLb5GELVJEkyZvYDTSsImlrAR
-         QBmw==
+        bh=zBsaAPXHP/WINN92NN7t+ecJR0ITtEiUOYhWSRxDrOo=;
+        b=ZUeoL8+bFhmGyi/2xXx0UdI4XZSmxqCoQ/yHxfiLH/DU9QQGvq9wEZGUVjYwgMXwKi
+         26HcnUPfHIWYzIKhYqQoZx90f3H0nrZfVGP/eqKhMhYGWJD04pqDRjmwvRzRM6h1tcaE
+         LRVVaFFo/wx3mmsFyOheVWHkOmEb2o1C4IziuaZBI94AH62n4M11qRSK7FOIrfQIzNf5
+         vThpod+1K9nDrs5ER0gKpQtabrijnomOc8918irJfKNNhsd2DNxbrg/VkjLVjWgoWFMf
+         kj7VPv/e9UqGXTgGWpvzn4orocfJ1/AjcFV9M5WeSnycQn0CMeGRZYnXfyhfkU9f+5aT
+         EtmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=KzbOceaNTdDVnBmlwaML66Ag3gKl0lXdyJPKSYlfMfo=;
-        b=Ir9+cxrhiJpBKnFaj3CGDV4JmM0VGE5p4JDNr+4U1j8rrWnxLvZbCwU7uV3jfqQxQs
-         P/9e96u0HRixnkWeEI7ISE2Ti2rjrNIZjTUf4Uw8GyycJMwqCH65XhO/OLMagAQO3PzL
-         EvXsdk14zvU5mlDB5FJgF0b+iWI+KGbz10MbOkNnfU5XXgfmbtxyJ9mgb3892vBUJG93
-         aEOpw5ie1+vCJYbrjzL8vBRkkXvGqSckYdcjugboJyR/HYcQq3/HK4iQYIF9F998r9YJ
-         MIkWHng812lY5rXwsKkZQNKNNm4TqjDPOk/+rDDmFiRekEiiOqm1hcvpmQykiaVjx2dA
-         z47Q==
-X-Gm-Message-State: ACgBeo05rb2Uw/6Zy53BkoUozS8+ZOOme3y1FfyMAOxXDeyzeELmkbyr
-        qYinYfuBDuL3lFZgoNzFF/ITNA==
-X-Google-Smtp-Source: AA6agR7XBftW2NwzU7hLIQQlu/k8toww0vgW9/YoDFtF97R9hU26kKpJdaP34/aFNMlrNfNooKaMIw==
-X-Received: by 2002:a05:6512:234c:b0:492:d9fd:da59 with SMTP id p12-20020a056512234c00b00492d9fdda59mr2174078lfu.63.1661508302738;
-        Fri, 26 Aug 2022 03:05:02 -0700 (PDT)
+        bh=zBsaAPXHP/WINN92NN7t+ecJR0ITtEiUOYhWSRxDrOo=;
+        b=5jlIK8dRe2bmWqimdPjWGSBrFXX8GJNs6YkfUdbyfmgh+wGU1UP8HxmBpnXRFPg91P
+         J2ovvV8pi+4DKIyU6DzrGoI44mKFB1CbNz+mLYOi0bRzCu6TkIcqSPFO9eqimD0GP5fX
+         wz8MmpKuFloDWnIBU3qY3ccOj/+nuPLky5zvGkF2pX/1OzrHjOCGV+Ht5TRiaocDOfod
+         /J/EAHzCUI5SYwF20OsiCkBEFMFq9iy9YxqYuKi0dqaUSqCabFJoyaqxu9oiplLRvAJP
+         5+tdSj8Siz9LJ/ynKlkPlySTUVoq1cCSWgWFLaeaxZjaC4ra7joYYHGYfvD+uBxWsiip
+         j5ng==
+X-Gm-Message-State: ACgBeo1k/UWiTYTDinQVdtYrw57TY7EZk06JP5CJLKgeI0R9J0e4sYH6
+        apPYJmy5WRbvhO5A67Zm92NRvA==
+X-Google-Smtp-Source: AA6agR5Ibvjx4/X46gslkNdnrORZcJxR+lxt0sY3ESbw+/23dXGNcAwyX3sJKgTU+5hglvPmE7IBFg==
+X-Received: by 2002:a05:6512:2248:b0:48a:f8f9:3745 with SMTP id i8-20020a056512224800b0048af8f93745mr2137147lfu.256.1661508655644;
+        Fri, 26 Aug 2022 03:10:55 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id j28-20020a056512029c00b0048b17852938sm329074lfp.162.2022.08.26.03.05.01
+        by smtp.gmail.com with ESMTPSA id s15-20020a056512314f00b0047f7419de4asm330732lfi.180.2022.08.26.03.10.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Aug 2022 03:05:02 -0700 (PDT)
-Message-ID: <ca972ced-b4f7-2eb4-0381-095cedf5f356@linaro.org>
-Date:   Fri, 26 Aug 2022 13:05:01 +0300
+        Fri, 26 Aug 2022 03:10:55 -0700 (PDT)
+Message-ID: <47e1460f-e775-d1cb-f622-ccac3044ff86@linaro.org>
+Date:   Fri, 26 Aug 2022 13:10:54 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.1.2
-Subject: Re: [PATCH] msm/adreno: fix repeated words in comments
+Subject: Re: [PATCH] dt-bindings: display: Add missing
+ (unevaluated|additional)Properties on child nodes
 Content-Language: en-GB
-To:     Dan Carpenter <dan.carpenter@oracle.com>
-Cc:     wangjianli <wangjianli@cdjrlc.com>, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, wangqing@vivo.com, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20220724073650.16460-1-wangjianli@cdjrlc.com>
- <0e16e719-4eb2-bfb3-6b77-88d5314757a1@linaro.org>
- <20220826095311.GG2030@kadam>
+To:     Rob Herring <robh@kernel.org>,
+        "James (Qian) Wang" <james.qian.wang@arm.com>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Mihail Atanassov <mihail.atanassov@arm.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, Inki Dae <inki.dae@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Andre Przywara <andre.przywara@arm.com>
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
+        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org
+References: <20220823145649.3118479-11-robh@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220826095311.GG2030@kadam>
+In-Reply-To: <20220823145649.3118479-11-robh@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -80,20 +99,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/08/2022 12:53, Dan Carpenter wrote:
-> On Fri, Aug 26, 2022 at 12:45:09PM +0300, Dmitry Baryshkov wrote:
->> On 24/07/2022 10:36, wangjianli wrote:
->>>    Delete the redundant word 'in'.
->>
->> Could you please:
->> - adjust the commit subject to follow the rest of commit messages,
->> - drop the extra whitespace at the beginning of the commit message,
->> - add a correct Fixes tag.
+On 23/08/2022 17:56, Rob Herring wrote:
+> In order to ensure only documented properties are present, node schemas
+> must have unevaluatedProperties or additionalProperties set to false
+> (typically).
 > 
-> This doesn't fix a bug so the fixes tag is inappropriate.
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+>   Documentation/devicetree/bindings/display/arm,komeda.yaml        | 1 +
+>   Documentation/devicetree/bindings/display/bridge/lvds-codec.yaml | 1 +
+>   Documentation/devicetree/bindings/display/msm/gpu.yaml           | 1 +
 
-Well, it fixes a typo, but I see your point. Let's not insist on Fixes 
-for the comment fixes.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # msm
+
+>   .../bindings/display/samsung/samsung,exynos7-decon.yaml          | 1 +
+>   .../devicetree/bindings/display/samsung/samsung,fimd.yaml        | 1 +
+>   5 files changed, 5 insertions(+)
 
 
 -- 
