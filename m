@@ -2,62 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D3C565A2A2C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 16:57:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A079B5A2AF0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 17:19:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242390AbiHZO5n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Aug 2022 10:57:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45484 "EHLO
+        id S244354AbiHZPSs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Aug 2022 11:18:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237347AbiHZO5i (ORCPT
+        with ESMTP id S1344143AbiHZPS3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Aug 2022 10:57:38 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F6CFD9D53
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 07:57:38 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id c16-20020a17090aa61000b001fb3286d9f7so7691733pjq.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 07:57:38 -0700 (PDT)
+        Fri, 26 Aug 2022 11:18:29 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CAF0E190B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 08:12:19 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id 76so1829960pfy.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 08:12:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc;
-        bh=49FbH9fhwp8y/uszTeozlNisIKriGJI0rkU4Q43uXpk=;
-        b=lc87Iq6suxcr08Rewus/FQpCAwb7n6XxXBZs7iuUofU3aOT0hivPtFRxbQ1No/xGTe
-         sJJMfxEhRo/8act27XOdB3lrqDmnmtB8916iQFEW4I1SVa+N4kTFLOAw84KFj91obeMP
-         8zQl5TNsA3uvR/xK7tJg1VWfg9vnO2Ie1weEk=
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc;
+        bh=H5aKhL0H5aovfWEQe3Yl5wVuG9Fmcah6YUsPGQ5/tTo=;
+        b=ObkFWLkU/W6NS0S5cvTChiL+vaXssKRwVhvY3/BYrQfY1cdJLyW0tnc0OQwYCn1F69
+         YiUJh5Q+5PGyeraq4IXMbPladtjkb4SaQHupeleX75BfSFJoPwgfvGs5Q05+MwmMrbZY
+         lmcsLF2kpusabWR1QDZcwTMGPazOwTFykhkns=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc;
-        bh=49FbH9fhwp8y/uszTeozlNisIKriGJI0rkU4Q43uXpk=;
-        b=mRbofYE1vxXLQbSjEoDg/LpfCjpXnWEcfMtqSG5Agnv46to0X4qS5OZcn5MJNhcts6
-         CGvXpI6c6/vT2LceRtulh7Ol0/vTPMoyZdRhIUy5LBpKAdoCYCV+mEswJX/0LHjr5L51
-         locz1InZ+ABC6atMUhk2i4DYEXv8Y86SG3BlB24eNSXnLAes8SjjjoPZdlEcRSRfLW6t
-         1zpYAfumr2bYBS4TZzYzjbN/8MmBWYb9jIP9GfQbvkp4yZUWWF/IYWq3JNDzMLOL052b
-         ZJ7D5+Rja6nYUlaA0qK22OxSXSMxFdAiYKuT2PnglsDfSp9UCZi6LPFnztHu3pBVaQdc
-         C+dQ==
-X-Gm-Message-State: ACgBeo1bLYcOKvPUnDWQCMG2crWSAoMP1Ewi2upV6KBPxIkyU6IJKB/R
-        91FVD1d2g17DiEJTJ2UvlFajnA==
-X-Google-Smtp-Source: AA6agR7/oFcLGBxOHbL2cxiQkAY9FoRDjgfEWFuS13wB9RAwOs3kWQfgwlgEmwiJ6ARdcOIc2/wWhA==
-X-Received: by 2002:a17:90a:55:b0:1f7:4513:8cac with SMTP id 21-20020a17090a005500b001f745138cacmr4626092pjb.93.1661525857343;
-        Fri, 26 Aug 2022 07:57:37 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:7487:fdf0:5cfa:b7ab])
-        by smtp.gmail.com with ESMTPSA id w61-20020a17090a6bc300b001facb7bc1adsm1768424pjj.26.2022.08.26.07.57.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Aug 2022 07:57:36 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, mka@chromium.org,
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=H5aKhL0H5aovfWEQe3Yl5wVuG9Fmcah6YUsPGQ5/tTo=;
+        b=iPcJgHkmrZpL36zXcHw+dWoUN3pfk1JawCmlJZgURXjQ6P5eInUEvWYJa6s2x/50Zf
+         TUFNhyShfn3CbZFTxz3djZnVq7pE/V+1bq+15VM/ZQRbb8zBpoZ1rGB7mv3W6ht/hJOM
+         URTxbLFduVwFF+l5OFPDUabcY2WO5sa4WzF3HlmeXt5KfKgbsBPpmx7EF24Y5HxHOs6v
+         tQnz6AFXgIIoAO7TH1m+KlhiVqukiXeeEcztWlosRt77WYe5n3a8ZV9KdXpoesGAyC/G
+         alu0VwHlJaaFjjV9OlUBs/FHB4DxFvXhANXxOP2sbcy7JsvCT54kbiKmLiDENZfCA1tM
+         +dQA==
+X-Gm-Message-State: ACgBeo1CBDqvw0D8oUutwB8YaheYhF4uyeLt7HIcYko2Jd1/kMxM9JOL
+        DNocP6m1F+qv8kAxZOmnF/kE6NROesoJ3g==
+X-Google-Smtp-Source: AA6agR7+xrt0m5384+Ccc3VHL1pRSo4cUOcjmLxWOcQNAaTWUYuHpPMJVTEy9kJsVx50j1aSAMZBjA==
+X-Received: by 2002:a05:6a00:1a89:b0:536:5dca:a673 with SMTP id e9-20020a056a001a8900b005365dcaa673mr4311507pfv.71.1661526732189;
+        Fri, 26 Aug 2022 08:12:12 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:87ff:bd4c:214b:f283])
+        by smtp.gmail.com with UTF8SMTPSA id z1-20020a17090a014100b001f1694dafb1sm1789508pje.44.2022.08.26.08.12.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 26 Aug 2022 08:12:11 -0700 (PDT)
+Date:   Fri, 26 Aug 2022 08:12:09 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-clk@vger.kernel.org,
+        Krishna Kurapati <quic_kriskura@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         Douglas Anderson <dianders@chromium.org>,
-        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: [PATCH] opp: Expose voltage info in debugfs for OPPs w/out explicit regulators
-Date:   Fri, 26 Aug 2022 07:56:59 -0700
-Message-Id: <20220826075655.1.I2e4958048f30c3b44a01e31519092f7d3c9204e4@changeid>
-X-Mailer: git-send-email 2.37.2.672.g94769d06f0-goog
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH v2 2/2] clk: qcom: gcc-sc7280: Keep the USB GDSCs always
+ on
+Message-ID: <YwjiyV3yeL7D1mQK@google.com>
+References: <20220825182152.v2.1.I45235b7c40997bc2abf813e4722b4dcdd6aecf6b@changeid>
+ <20220825182152.v2.2.If09027f73daa6e1ed95f5eab02326b543c67132e@changeid>
+ <YwhzVlTZLMCAbZi7@hovoldconsulting.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YwhzVlTZLMCAbZi7@hovoldconsulting.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -68,53 +79,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On some cpufreq drivers we know the voltage associated with each
-operating point but there is no explicit Linux "regulator" present. An
-example is "qcom-cpufreq-hw.c". There the voltage is managed
-automatically by the hardware but we still associate it with the OPP
-table so we can do energy calculations for EAS.
+On Fri, Aug 26, 2022 at 09:16:38AM +0200, Johan Hovold wrote:
+> On Thu, Aug 25, 2022 at 06:21:59PM -0700, Matthias Kaehlcke wrote:
+> > When the GDSC is disabled during system suspend USB is broken on
+> > sc7280 when the system resumes. Mark the GDSC as always on to
+> > make sure USB still works after system suspend.
+> > 
+> > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> > ---
+> > 
+> > Changes in v2:
+> > - set the flags of the GDSC not of the GDSC power domain
+> > - updated commit message
+> > 
+> >  drivers/clk/qcom/gcc-sc7280.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/clk/qcom/gcc-sc7280.c b/drivers/clk/qcom/gcc-sc7280.c
+> > index 7ff64d4d5920..adef68d2cb0b 100644
+> > --- a/drivers/clk/qcom/gcc-sc7280.c
+> > +++ b/drivers/clk/qcom/gcc-sc7280.c
+> 
+> Perhaps you can add a comment here about why this is needed similar to
+> what I did for sc8280xp:
+> 
+> 	https://lore.kernel.org/all/20220805121250.10347-3-johan+linaro@kernel.org/
 
-The OPP framework handles this in general. In _opp_allocate() it can
-be seen that we always allocate space for one supply even if
-"regulator_count" is 0.
+From Bjorn's comment on the sc7180 patch it seems it's not an dwc3
+implementation issue. IIUC the GDSCs should have a retention state
+that would be used during suspend.
 
-Let's handle this properly in debugfs.
+> > @@ -3127,7 +3127,7 @@ static struct gdsc gcc_usb30_prim_gdsc = {
+> >  		.name = "gcc_usb30_prim_gdsc",
+> >  	},
+> >  	.pwrsts = PWRSTS_OFF_ON,
+> > -	.flags = VOTABLE,
+> > +	.flags = VOTABLE | ALWAYS_ON,
+> >  };
+> >  
+> >  static struct gdsc gcc_usb30_sec_gdsc = {
+> 
+> Look good otherwise. For both patches:
+> 
+> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 
-NOTE: as a side effect of this a whole bunch of OPPs in the system may
-get supply-related files exposed in debugfs that are mostly useless
-(they'll just contain 0). I'd expect this to be OK but it's moderately
-annoying. It seems better than trying to dynamically create debugfs
-directories when the voltages are non-zero or adding extra complexity
-in the code giving a hint to the OPP framework that voltages should be
-exposed.
-
-After this patch, on a sc7180-trogdor class device I can see voltages
-for the CPU OPPs under /sys/kernel/debug/opp.
-
-Fixes: dfbe4678d709 ("PM / OPP: Add infrastructure to manage multiple regulators")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-
- drivers/opp/debugfs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/opp/debugfs.c b/drivers/opp/debugfs.c
-index 96a30a032c5f..65234da41063 100644
---- a/drivers/opp/debugfs.c
-+++ b/drivers/opp/debugfs.c
-@@ -96,10 +96,11 @@ static void opp_debug_create_supplies(struct dev_pm_opp *opp,
- 				      struct opp_table *opp_table,
- 				      struct dentry *pdentry)
- {
-+	int supply_count = max(opp_table->regulator_count, 1);
- 	struct dentry *d;
- 	int i;
- 
--	for (i = 0; i < opp_table->regulator_count; i++) {
-+	for (i = 0; i < supply_count; i++) {
- 		char name[15];
- 
- 		snprintf(name, sizeof(name), "supply-%d", i);
--- 
-2.37.2.672.g94769d06f0-goog
-
+Thanks!
