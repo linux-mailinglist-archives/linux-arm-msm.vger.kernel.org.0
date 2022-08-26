@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 419455A2E26
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 20:19:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F8FB5A2E56
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 20:22:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235523AbiHZSTi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Aug 2022 14:19:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54634 "EHLO
+        id S1344927AbiHZSTm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Aug 2022 14:19:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242827AbiHZSTg (ORCPT
+        with ESMTP id S237300AbiHZSTl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Aug 2022 14:19:36 -0400
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BFB0E2C5D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 11:19:35 -0700 (PDT)
-Received: by mail-pg1-x52b.google.com with SMTP id s206so2071005pgs.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 11:19:35 -0700 (PDT)
+        Fri, 26 Aug 2022 14:19:41 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14731E340A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 11:19:40 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id t129so2276304pfb.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 11:19:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc;
-        bh=rcABYEF+X05lTkf1vCRtoGVctLnQghu4RYAK8IcZhIE=;
-        b=L5MwBYt21+ofglYFFC6r3rcvDFB1cS2ZJunNikgx5awnPR94AzTmwty0Z+ZRroKo9K
-         rnZPq7W9GvU2zpUVpnRa7b0fUTRaaK998pLLcaZBNLhCuFm3Elmx9VNI9O2LGGsvGk1F
-         Dn6fBK7Ws+1ZcwtirlcFaXcFAL3UCoV363kAjs92NTTkcr/L3QivxUZHs8rrGwfVN7Yn
-         JRl9q1N9Qh0SD+5wpXk3Jyo/NPQOzb9dqeuJSOwbZF3hQGPRg0M5AukCjmNxyU/O4rgr
-         qNVjFFk8ohQq/zo6zJD77m09L9NE/6NAZXyiGqcCBe/2wD2voNQrQRTps1lZ0U/VZNTm
-         /jBg==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc;
+        bh=gbwg87hG3tf6Wqw8hsoPn0QdO74QME7etMAVFms+/pw=;
+        b=Jly6DP49pyKeLASqCaK5BiOAB4lrGaTYYF/8olCn3cs/vVYJxt9+JU1/zfs5QNCtwr
+         df6jZMWaT53I6jX9LpiYA00yGd/tQK+mcMhSOLpTIVjMCXzyhGnZ/lEVETKa6XZUviCD
+         7d4416DUgu0Yx4F80EcGrAKAJukpzYfLYqylG6cbAQixctnWo1LaWFG/lBAkYMSmjF4K
+         bVP3c5KDPgQk1eNnKDGgfHEJDJLfgMdHodHISTOITHEqWJ0BIwrmVAgKN6Pylilp5Dm6
+         ycReQn2zg/I+mUfZRPVQ+PQED/QsDLkAYWi7n10p9b2ik8qdDNhiiaojgaKwMIHWLirt
+         9PWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc;
-        bh=rcABYEF+X05lTkf1vCRtoGVctLnQghu4RYAK8IcZhIE=;
-        b=KRYsGrH9ozEFyjBFT8MO9afjRle9o20gkQpbBo4Oryd+IjKVNzakWeI6QFFqxMJHHB
-         besJrmd351Rz9iKU7q03eTj8DERukTdFFst2po1zc/RY06HZuiik3OOoXX4z76suqG31
-         kwxfCY4/sHI1AEVHoxP2t7QmUY1K3vy2avrK62U/sCPdFWCTSs3bnlgyJR4Nsj4YZbeE
-         fQzqBaJ+bYx8ymoJEP93fGpvSRHbYtS133424DtWWsii/ruCmXq4k5hAuQTBKbSUXK/x
-         4PMysyLVR/WietvM73rrgbj9RWHxxGCgPBnaT1br+sZd5YUDKWybRqOhCVeMPgcxZRzf
-         8SqQ==
-X-Gm-Message-State: ACgBeo3EGydVAn3HjH4dOU+7MZq6/lpHgIRuOIinLvN98ewLAE82kbcm
-        wsmOTj92dxEH6p3SLFPbznU+
-X-Google-Smtp-Source: AA6agR5SIKVYXr6MKYnRycMvBY+Jm95emDpYcLsMNcP2o3dM/UE8N//22a3eUnNhpVPA4OO5Pxy3YA==
-X-Received: by 2002:a05:6a00:98a:b0:536:4469:12e6 with SMTP id u10-20020a056a00098a00b00536446912e6mr5108862pfg.9.1661537974604;
-        Fri, 26 Aug 2022 11:19:34 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
+        bh=gbwg87hG3tf6Wqw8hsoPn0QdO74QME7etMAVFms+/pw=;
+        b=yC6ds2B+9jwEeJ8j9do+uyPre82HcRiO8eZ+9GEY1xGGshny1lOVtdTYywymFOzSHS
+         aSuukWuiSSI+VAQnX8rD6DORNgD/H/4FD1Ms0VAqzIMMR4IlcayDM8+FwWcw6/Al9HLV
+         PUHFT5+h1ybgRQJSfk13Oini3OdRH/A9axZ06r47Qwl6rf+xnO5RvE67DTNd77oNfgYi
+         ys2qVPqH5RkQkH+tSYCAkH79tuUBdQAaEDQ7oSTLAxDGEkrVQ2nU1cb8RUOPtIEzkRfN
+         xBQbsDpp2Ha+igSxWJh4/VKQxdSbX+t3lV7C4Q2C4iIIefbE7kikewi/fiKZFNbwyc9B
+         aQOw==
+X-Gm-Message-State: ACgBeo1os/N7on0nRVaNnGmv11RU2zoVKOX19FBSUqiRFq48XMKNEde2
+        LeomJeiM2UY+yfuzlDLj+5A8
+X-Google-Smtp-Source: AA6agR40j8SV28Ne+ZkHO4w/7kgMZqwg4r8Ed6oPweYWQvTh4EsuC8NnuAboU7hv1QgKy9S1WBJd6Q==
+X-Received: by 2002:a05:6a00:1826:b0:537:b261:3e4d with SMTP id y38-20020a056a00182600b00537b2613e4dmr5058792pfa.65.1661537979604;
+        Fri, 26 Aug 2022 11:19:39 -0700 (PDT)
 Received: from localhost.localdomain ([117.193.214.147])
-        by smtp.gmail.com with ESMTPSA id s5-20020a170902b18500b00173368e9dedsm1881868plr.252.2022.08.26.11.19.29
+        by smtp.gmail.com with ESMTPSA id s5-20020a170902b18500b00173368e9dedsm1881868plr.252.2022.08.26.11.19.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Aug 2022 11:19:34 -0700 (PDT)
+        Fri, 26 Aug 2022 11:19:39 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     lpieralisi@kernel.org, robh@kernel.org, andersson@kernel.org
 Cc:     kw@linux.com, bhelgaas@google.com, linux-pci@vger.kernel.org,
@@ -56,10 +56,12 @@ Cc:     kw@linux.com, bhelgaas@google.com, linux-pci@vger.kernel.org,
         krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
         dmitry.baryshkov@linaro.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 00/11] Improvements to the Qcom PCIe Endpoint driver
-Date:   Fri, 26 Aug 2022 23:49:12 +0530
-Message-Id: <20220826181923.251564-1-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 01/11] PCI: qcom-ep: Add kernel-doc for qcom_pcie_ep structure
+Date:   Fri, 26 Aug 2022 23:49:13 +0530
+Message-Id: <20220826181923.251564-2-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20220826181923.251564-1-manivannan.sadhasivam@linaro.org>
+References: <20220826181923.251564-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -72,34 +74,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+Add kernel-doc for qcom_pcie_ep structure.
 
-This series contains improvements to the Qualcomm PCIe Endpoint controller
-driver. The major improvements are the addition of SM8450 SoC support and
-debugfs interface for exposing link transition counts.
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ drivers/pci/controller/dwc/pcie-qcom-ep.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-This series has been tested on SM8450 based dev board.
-
-Thanks,
-Mani
-
-Manivannan Sadhasivam (11):
-  PCI: qcom-ep: Add kernel-doc for qcom_pcie_ep structure
-  PCI: qcom-ep: Do not use hardcoded clks in driver
-  PCI: qcom-ep: Make use of the cached dev pointer
-  PCI: qcom-ep: Add eDMA support
-  PCI: qcom-ep: Disable IRQs during driver remove
-  PCI: qcom-ep: Add debugfs support for expose link transition counts
-  dt-bindings: PCI: qcom-ep: Make PERST separation optional
-  PCI: qcom-ep: Make PERST separation optional
-  dt-bindings: PCI: qcom-ep: Define clocks per platform
-  dt-bindings: PCI: qcom-ep: Add support for SM8450 SoC
-  PCI: qcom-ep: Add support for SM8450 SoC
-
- .../devicetree/bindings/pci/qcom,pcie-ep.yaml |  70 ++++++---
- drivers/pci/controller/dwc/pcie-qcom-ep.c     | 140 ++++++++++++++----
- 2 files changed, 159 insertions(+), 51 deletions(-)
-
+diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+index 9f92d53da81a..27b7c9710b5f 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
++++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+@@ -140,6 +140,23 @@ static struct clk_bulk_data qcom_pcie_ep_clks[] = {
+ 	{ .id = "slave_q2a" },
+ };
+ 
++/**
++ * struct qcom_pcie_ep - Qualcomm PCIe Endpoint Controller
++ * @pci: Designware PCIe controller struct
++ * @parf: Qualcomm PCIe specific PARF register base
++ * @elbi: Designware PCIe specific ELBI register base
++ * @perst_map: PERST regmap
++ * @mmio_res: MMIO region resource
++ * @core_reset: PCIe Endpoint core reset
++ * @reset: PERST# GPIO
++ * @wake: WAKE# GPIO
++ * @phy: PHY controller block
++ * @perst_en: Flag for PERST enable
++ * @perst_sep_en: Flag for PERST separation enable
++ * @link_status: PCIe Link status
++ * @global_irq: Qualcomm PCIe specific Global IRQ
++ * @perst_irq: PERST# IRQ
++ */
+ struct qcom_pcie_ep {
+ 	struct dw_pcie pci;
+ 
 -- 
 2.25.1
 
