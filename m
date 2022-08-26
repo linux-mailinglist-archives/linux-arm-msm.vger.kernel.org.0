@@ -2,103 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E48305A2DFA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 20:08:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 419455A2E26
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 20:19:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244087AbiHZSIr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Aug 2022 14:08:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38662 "EHLO
+        id S235523AbiHZSTi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Aug 2022 14:19:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230151AbiHZSIq (ORCPT
+        with ESMTP id S242827AbiHZSTg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Aug 2022 14:08:46 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C9B6192BB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 11:08:45 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id l5-20020a05683004a500b0063707ff8244so1502671otd.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 11:08:45 -0700 (PDT)
+        Fri, 26 Aug 2022 14:19:36 -0400
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BFB0E2C5D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 11:19:35 -0700 (PDT)
+Received: by mail-pg1-x52b.google.com with SMTP id s206so2071005pgs.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 11:19:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc;
-        bh=CppDCJwy+pfEiyfqdA6WVXDmtoQK9zZP2tsICyNNVEI=;
-        b=WcpwYf06HlBBYhu1jCwEnSlaeCtDD4JcNogXLv536HCUQ3n8SvF/CVfVSux27Zi1ye
-         OpXtUIBQ21q1V+qG8E7umV2AntflsEY9ab1lsThMByh7/f0/opzsKRl2Jf+LV75oMXGD
-         X5AZZ58yNTqRMfOzD9T6sCkrezZ2IZrPgNJWU=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=rcABYEF+X05lTkf1vCRtoGVctLnQghu4RYAK8IcZhIE=;
+        b=L5MwBYt21+ofglYFFC6r3rcvDFB1cS2ZJunNikgx5awnPR94AzTmwty0Z+ZRroKo9K
+         rnZPq7W9GvU2zpUVpnRa7b0fUTRaaK998pLLcaZBNLhCuFm3Elmx9VNI9O2LGGsvGk1F
+         Dn6fBK7Ws+1ZcwtirlcFaXcFAL3UCoV363kAjs92NTTkcr/L3QivxUZHs8rrGwfVN7Yn
+         JRl9q1N9Qh0SD+5wpXk3Jyo/NPQOzb9dqeuJSOwbZF3hQGPRg0M5AukCjmNxyU/O4rgr
+         qNVjFFk8ohQq/zo6zJD77m09L9NE/6NAZXyiGqcCBe/2wD2voNQrQRTps1lZ0U/VZNTm
+         /jBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc;
-        bh=CppDCJwy+pfEiyfqdA6WVXDmtoQK9zZP2tsICyNNVEI=;
-        b=pqRa6+CVAs+L7PEKtpLQtz+lI8Bd72o+4nDxqRgovsCct2HhypE7412KVoTG08QYn+
-         0rpc1k17Y0t04p1rNrz+IPOdhi/uRdygmQMt23Ed657koPIa7ENLlTpBQgCb949ZlUWH
-         mhRunDKslRXR10NWMX/8FbcKjXVuCix5NL2RwG2WRAGBcykHjQ+2WH5PjvFHJMGS7Lzu
-         5xLzy4XYSmJiZhgrJc3Gi8LkFG7LXdFcsSnaVJiWlwF9AAuh7Xq3MqVjes2HKFO89+th
-         vKSDmvaG96UKKrbAcgPfT8iylU+LYQjf/VnzQDKY1pNJRV+53NykWE6reNvWw1PmefE6
-         H1cA==
-X-Gm-Message-State: ACgBeo17XbTtYZ7/hLI9ez40KWeT1ZL8MA0ICdtmdGBh/jBuucHpCwYG
-        0/qwbsDUKGmJmwbYLw2kVkTWeVQrO1ruUJOVshDk2Q==
-X-Google-Smtp-Source: AA6agR4OYCRv3RliIFEMCZX/FFk7+UtuEH6UFx2i07S0YUDQ71aNSZY9yYdxDpVAk/Ize79lNJgrkD6Ks9ttmzX0DWI=
-X-Received: by 2002:a9d:53cb:0:b0:637:1ddc:615c with SMTP id
- i11-20020a9d53cb000000b006371ddc615cmr1908132oth.3.1661537324727; Fri, 26 Aug
- 2022 11:08:44 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 26 Aug 2022 13:08:44 -0500
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=rcABYEF+X05lTkf1vCRtoGVctLnQghu4RYAK8IcZhIE=;
+        b=KRYsGrH9ozEFyjBFT8MO9afjRle9o20gkQpbBo4Oryd+IjKVNzakWeI6QFFqxMJHHB
+         besJrmd351Rz9iKU7q03eTj8DERukTdFFst2po1zc/RY06HZuiik3OOoXX4z76suqG31
+         kwxfCY4/sHI1AEVHoxP2t7QmUY1K3vy2avrK62U/sCPdFWCTSs3bnlgyJR4Nsj4YZbeE
+         fQzqBaJ+bYx8ymoJEP93fGpvSRHbYtS133424DtWWsii/ruCmXq4k5hAuQTBKbSUXK/x
+         4PMysyLVR/WietvM73rrgbj9RWHxxGCgPBnaT1br+sZd5YUDKWybRqOhCVeMPgcxZRzf
+         8SqQ==
+X-Gm-Message-State: ACgBeo3EGydVAn3HjH4dOU+7MZq6/lpHgIRuOIinLvN98ewLAE82kbcm
+        wsmOTj92dxEH6p3SLFPbznU+
+X-Google-Smtp-Source: AA6agR5SIKVYXr6MKYnRycMvBY+Jm95emDpYcLsMNcP2o3dM/UE8N//22a3eUnNhpVPA4OO5Pxy3YA==
+X-Received: by 2002:a05:6a00:98a:b0:536:4469:12e6 with SMTP id u10-20020a056a00098a00b00536446912e6mr5108862pfg.9.1661537974604;
+        Fri, 26 Aug 2022 11:19:34 -0700 (PDT)
+Received: from localhost.localdomain ([117.193.214.147])
+        by smtp.gmail.com with ESMTPSA id s5-20020a170902b18500b00173368e9dedsm1881868plr.252.2022.08.26.11.19.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Aug 2022 11:19:34 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     lpieralisi@kernel.org, robh@kernel.org, andersson@kernel.org
+Cc:     kw@linux.com, bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
+        dmitry.baryshkov@linaro.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 00/11] Improvements to the Qcom PCIe Endpoint driver
+Date:   Fri, 26 Aug 2022 23:49:12 +0530
+Message-Id: <20220826181923.251564-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <20220826065621.2255795-1-judyhsiao@chromium.org>
-References: <20220826065621.2255795-1-judyhsiao@chromium.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Fri, 26 Aug 2022 13:08:44 -0500
-Message-ID: <CAE-0n51WNeMy5gEEQ9XpR1k2g=jSiknNkwJLz-bQbMN115JSxg@mail.gmail.com>
-Subject: Re: [PATCH v4] arm64: dts: qcom: sc7280: Fix Dmic no sound on villager-r1
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Judy Hsiao <judyhsiao@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        dianders@chromium.org, mka@chromium.org, cychiang@google.com,
-        judyhsiao@google.com, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Judy Hsiao (2022-08-25 23:56:21)
-> Fix the DMIC no sound issue of villager-r1 by using "PP1800_L2C" as the
-> DMIC power source to match the hardware schematic.
->
-> This patch:
->    1. set vdd-micb-supply to PP1800_L2C as the MIC Bias voltage regulator.
->    2. In audio-routing, set VA DMIC01~VA DMIC03 to use the vdd-micb-supply
->       setting.
->
-> Co-developed-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
+Hello,
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+This series contains improvements to the Qualcomm PCIe Endpoint controller
+driver. The major improvements are the addition of SM8450 SoC support and
+debugfs interface for exposing link transition counts.
 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
-> index c03b3ae4de50..fd202a8f6a33 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
-> @@ -12,3 +12,30 @@ / {
->         model = "Google Villager (rev1+)";
->         compatible = "google,villager", "qcom,sc7280";
->  };
-> +
-> +&lpass_va_macro {
-> +       vdd-micb-supply = <&pp1800_l2c>;
-> +};
+This series has been tested on SM8450 based dev board.
 
-I wonder if we'll want to move this to some common "lpass audio" mixin
-dtsi file, but we can do that later.
+Thanks,
+Mani
+
+Manivannan Sadhasivam (11):
+  PCI: qcom-ep: Add kernel-doc for qcom_pcie_ep structure
+  PCI: qcom-ep: Do not use hardcoded clks in driver
+  PCI: qcom-ep: Make use of the cached dev pointer
+  PCI: qcom-ep: Add eDMA support
+  PCI: qcom-ep: Disable IRQs during driver remove
+  PCI: qcom-ep: Add debugfs support for expose link transition counts
+  dt-bindings: PCI: qcom-ep: Make PERST separation optional
+  PCI: qcom-ep: Make PERST separation optional
+  dt-bindings: PCI: qcom-ep: Define clocks per platform
+  dt-bindings: PCI: qcom-ep: Add support for SM8450 SoC
+  PCI: qcom-ep: Add support for SM8450 SoC
+
+ .../devicetree/bindings/pci/qcom,pcie-ep.yaml |  70 ++++++---
+ drivers/pci/controller/dwc/pcie-qcom-ep.c     | 140 ++++++++++++++----
+ 2 files changed, 159 insertions(+), 51 deletions(-)
+
+-- 
+2.25.1
+
