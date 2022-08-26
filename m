@@ -2,109 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 925F35A2192
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 09:16:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1DA25A21D5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 09:28:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236985AbiHZHQf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Aug 2022 03:16:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45986 "EHLO
+        id S245010AbiHZH2a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Aug 2022 03:28:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244493AbiHZHQd (ORCPT
+        with ESMTP id S245172AbiHZH22 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Aug 2022 03:16:33 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D80587688;
-        Fri, 26 Aug 2022 00:16:31 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AD26B61CC3;
-        Fri, 26 Aug 2022 07:16:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09F75C433C1;
-        Fri, 26 Aug 2022 07:16:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661498190;
-        bh=wqk1HzXb2rBovh/rKpl4Yg9KEE+WbiP1hgGfqq5MXss=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=eVJrRYxISVuTY3gzomQfPWUtggymAdcCxg6rwKwbVorTkbRqw1o9eeupvktWZ7nff
-         1jPNWAUuQnH2NyN21SeSNDa/gXMvuDUPkHgxubXZzsekGyCz7L6ZBTKTmL83TLaKso
-         JmcUYh9cKrHMx2jJGHTLyL0W6jfErD4zzjlfeamj/n7BuhxgX6QL7IU4rJ8JY0eqPQ
-         CkvBfeLNxDeMaxeMq0xSUQtvMQuzMuvfE4W1lLsG9DEwtzOq1i3ah5QzAubkbpeqbK
-         tFFMBeEIDJu1Zk0E2anNPQRqiIKshhkqP0e2nRSFF/lH89TVa4q9UUhQ7TsrkFT/TZ
-         LFlMB+9TnV46A==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oRTa2-0000qb-31; Fri, 26 Aug 2022 09:16:38 +0200
-Date:   Fri, 26 Aug 2022 09:16:38 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-clk@vger.kernel.org,
-        Krishna Kurapati <quic_kriskura@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH v2 2/2] clk: qcom: gcc-sc7280: Keep the USB GDSCs always
- on
-Message-ID: <YwhzVlTZLMCAbZi7@hovoldconsulting.com>
-References: <20220825182152.v2.1.I45235b7c40997bc2abf813e4722b4dcdd6aecf6b@changeid>
- <20220825182152.v2.2.If09027f73daa6e1ed95f5eab02326b543c67132e@changeid>
+        Fri, 26 Aug 2022 03:28:28 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08A8B81B2E
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 00:28:28 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id jm11so869740plb.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 00:28:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=jTAWiNo/omAtLMeXfYZgyB0/HAK6wszJreXqF/7S7wI=;
+        b=Mw00zfqC4T6VEtu20Rp2a+r5W186flt11PrO5MBPkuC9AKIvsEodr58v8llZfl2bcB
+         Ez9huPudWeNGj1CXK90QSezqvUwejBlxia2MO7ZEg5tFc+yPyKNrrXnPZZ372asAA06o
+         qfcOuFH2a7wCvxa5H78Y829Xlz7lftna7JXGqQR1Y/r94x3tJGTa+FODRpHCXoTl4Ek/
+         K/V3SgnxNr/TvRxmw5h/oddjS6JWNn5H27l78eLbhfs2O29FwgFMHQHHXc/yFamb+qrf
+         lT9q249MRU9opuU9/j5QUiUUIlInjxdJWSibgsrbYstcKCAeQX98M6a25iRJV999JWGq
+         0l4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=jTAWiNo/omAtLMeXfYZgyB0/HAK6wszJreXqF/7S7wI=;
+        b=2HrByKKtqCO6zEXO7GnpTwRwGSX7cer2JZVGWjL07NATYbPJQrpQBiWFIdtmi5diUM
+         Qf1bB36zAPfZy9ja+DX/Te4Yp8Hm2Z1lmaeOHVy9zWU5JPZftpOqF3haieQLk9jpLGmO
+         TxLHeMopLX1lhPkF3vSRAcEooGlzo3Z0lGg+txdiartzlDcCMF5FApzV3XBlkGNMayQ5
+         jPyojrgZqPX8lkJM6/tAe9pzd4vxtOLBT/S5v38OhIvVgJ3VrFZb8vQtxwmRMCh7AQqY
+         bKY8KRIDslwoax7Qv4PDlJ1hEWCFHqOeF8mloRSMuSx6HssIe44CvVnExTzUi6MO9hpt
+         jHMQ==
+X-Gm-Message-State: ACgBeo3ckNRD1Hk0rGOGlYkcGQD+Ka+QdVlMkZMo+1nzYNjshieKam+j
+        BtGlxjNN5Sevm2Pqq6nngaw=
+X-Google-Smtp-Source: AA6agR4deiMjaahtMRHx2xJWavsJbeXhXn9hPdI2v0yMOGZpprcfeXeHoJiPulIpm1tqBOm1x4+G7A==
+X-Received: by 2002:a17:902:db05:b0:172:f759:f989 with SMTP id m5-20020a170902db0500b00172f759f989mr2660471plx.58.1661498907566;
+        Fri, 26 Aug 2022 00:28:27 -0700 (PDT)
+Received: from localhost.localdomain ([193.203.214.57])
+        by smtp.gmail.com with ESMTPSA id d6-20020a17090a3b0600b001fae01779c8sm941014pjc.7.2022.08.26.00.28.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Aug 2022 00:28:27 -0700 (PDT)
+From:   cgel.zte@gmail.com
+X-Google-Original-From: ye.xingchen@zte.com.cn
+To:     robdclark@gmail.com
+Cc:     quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
+        sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
+        swboyd@chromium.org, laurent.pinchart@ideasonboard.com,
+        vkoul@kernel.org, dianders@chromium.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        ye xingchen <ye.xingchen@zte.com.cn>,
+        Zeal Robot <zealci@zte.com.cn>
+Subject: [PATCH linux-next] drm/msm/dsi: Remove the unneeded result variable
+Date:   Fri, 26 Aug 2022 07:28:21 +0000
+Message-Id: <20220826072821.253150-1-ye.xingchen@zte.com.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220825182152.v2.2.If09027f73daa6e1ed95f5eab02326b543c67132e@changeid>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 25, 2022 at 06:21:59PM -0700, Matthias Kaehlcke wrote:
-> When the GDSC is disabled during system suspend USB is broken on
-> sc7280 when the system resumes. Mark the GDSC as always on to
-> make sure USB still works after system suspend.
-> 
-> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
-> 
-> Changes in v2:
-> - set the flags of the GDSC not of the GDSC power domain
-> - updated commit message
-> 
->  drivers/clk/qcom/gcc-sc7280.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/clk/qcom/gcc-sc7280.c b/drivers/clk/qcom/gcc-sc7280.c
-> index 7ff64d4d5920..adef68d2cb0b 100644
-> --- a/drivers/clk/qcom/gcc-sc7280.c
-> +++ b/drivers/clk/qcom/gcc-sc7280.c
+From: ye xingchen <ye.xingchen@zte.com.cn>
 
-Perhaps you can add a comment here about why this is needed similar to
-what I did for sc8280xp:
+Return the value msm_dsi_phy_enable() directly instead of storing it in
+another redundant variable.
 
-	https://lore.kernel.org/all/20220805121250.10347-3-johan+linaro@kernel.org/
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: ye xingchen <ye.xingchen@zte.com.cn>
+---
+ drivers/gpu/drm/msm/dsi/dsi_manager.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-> @@ -3127,7 +3127,7 @@ static struct gdsc gcc_usb30_prim_gdsc = {
->  		.name = "gcc_usb30_prim_gdsc",
->  	},
->  	.pwrsts = PWRSTS_OFF_ON,
-> -	.flags = VOTABLE,
-> +	.flags = VOTABLE | ALWAYS_ON,
->  };
->  
->  static struct gdsc gcc_usb30_sec_gdsc = {
-
-Look good otherwise. For both patches:
-
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-
-Johan
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+index cb84d185d73a..0b516a04945f 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+@@ -141,14 +141,11 @@ static int enable_phy(struct msm_dsi *msm_dsi,
+ 		      struct msm_dsi_phy_shared_timings *shared_timings)
+ {
+ 	struct msm_dsi_phy_clk_request clk_req;
+-	int ret;
+ 	bool is_bonded_dsi = IS_BONDED_DSI();
+ 
+ 	msm_dsi_host_get_phy_clk_req(msm_dsi->host, &clk_req, is_bonded_dsi);
+ 
+-	ret = msm_dsi_phy_enable(msm_dsi->phy, &clk_req, shared_timings);
+-
+-	return ret;
++	return msm_dsi_phy_enable(msm_dsi->phy, &clk_req, shared_timings);
+ }
+ 
+ static int
+-- 
+2.25.1
