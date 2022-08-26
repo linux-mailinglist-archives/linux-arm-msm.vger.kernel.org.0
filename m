@@ -2,73 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 39D465A2599
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 12:13:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F4145A25A9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 12:16:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245194AbiHZKMX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Aug 2022 06:12:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41062 "EHLO
+        id S245295AbiHZKPF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Aug 2022 06:15:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbiHZKMW (ORCPT
+        with ESMTP id S1343514AbiHZKPA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Aug 2022 06:12:22 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1F58AD9A5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 03:12:20 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id z25so1397124lfr.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 03:12:20 -0700 (PDT)
+        Fri, 26 Aug 2022 06:15:00 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF7182A97C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 03:14:56 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id m5so1402643lfj.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 03:14:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=Qvdys5dN+I9LUJHbK/6/No5KAdnIwq9CjmDCgjRtEK4=;
-        b=qIIieiaXoC5YiikqGgeEJZ3Tej8dv40luO2+mNsojGpHrOqCMligsPfkpU0/dmBSav
-         a2r7l9eXfPiJrTPymQcPszvHOfTscqbaU4NDP0Sw8oY9X+e8NHUCJCx1VmzFv+yGFGcy
-         zppzzUrkE4x02ADCI4FBHNkZSSiDS+FIOS1jme/7jgzR0/7xdRSrFp/JnODlqiFY7Rs0
-         jB9G3J9TSyAgYAgZFxAIe1sPsah/yJB1Pzgln7YiS5U6MMPcX49vpmE9CVel3rRm790o
-         DP0w0bDy2ByNdMnyj4mYjFIhqBXlLI5hCQNCO+VbwGzB6lEAXuR1Vp6oeSQDPJj0tu5s
-         IO2Q==
+        bh=nBDls8p7zWKgMsdae7qsDU8nms79A1faHjvYu7tARvE=;
+        b=piJ7BEpevaGNdTfb+iohBsjVd8y6wP7fyx2scpDUXdludX6+pLspOYMOnspr5RJUmE
+         OIh1n/nMbN506hH3wRUECtpn215qzlyev8PAdv9fkUrfkWN8RbOIkAAv7iCnj/GpRewr
+         6b8p81mVhXkt+JAB6KBcurlZ+unI6qZhm+lUuSOQ1aVLUbncBRWCYQHGm7l3rhjuEEDJ
+         RjWZPIryyeV1a9Ua7OflgMFcrcgLy0YL1gskTh695mZRAbIF7D/CS172snBeNCYvtNLW
+         KiLBOlEow99lBrYt00L0fYGxGF8kqOX5BJxf2PcQjnNJbHR8CkNz3o+2HAoT3HYzO0fA
+         RAjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=Qvdys5dN+I9LUJHbK/6/No5KAdnIwq9CjmDCgjRtEK4=;
-        b=e8H7xVUJQYNXd0A5KH3yNWWOb2OQ2gzReE8BCELEXmebDXP+KHoiyTnCs6PL+xWpDk
-         4/CVUc9AZoAgSr+oBt1nmhodGaFNt7K7dU7cBr201RJBcGWFKcknEeizHASgzJywXmw5
-         KONJc3m/PX3Fm+w7ikXJKyYFrzqGlnS4mmX/OaqXLQMg4ILNMkHAG0fZuiuKC7851uVG
-         Kc2+C7humeNC9E4ogCt0GzuVOVnk9VS5uFobhGlPTuSZ+jA7TPbAJ2zAZxxXLukhVlwB
-         K0UqyvDWqJ3C3rohhWYHKjp/a1b5kdlLrRSGTgjPUchebIgUfbSJOHisr+V0sWLaUgle
-         sl0A==
-X-Gm-Message-State: ACgBeo2uwvQSPwhJrzIv0+1nMkZFJqilLYKiXrYaUPoRZ5hs5eDBqB9W
-        +1yvWAa1FGyNoaGbwtV0xOj69g==
-X-Google-Smtp-Source: AA6agR6Ltpi7l0Rgxs/vwz5K1n21dO7YyWaBFrO/NCQdw9rAlL17n3agYbkSNTrnrYz0RdTIQw71kg==
-X-Received: by 2002:a05:6512:304c:b0:492:cd69:6cb8 with SMTP id b12-20020a056512304c00b00492cd696cb8mr2547841lfb.551.1661508739349;
-        Fri, 26 Aug 2022 03:12:19 -0700 (PDT)
+        bh=nBDls8p7zWKgMsdae7qsDU8nms79A1faHjvYu7tARvE=;
+        b=KKIT8zIa2IlVY0TSaet2nz04VhMWFKbXIB+mhsKJcHxVaAhKbCRsbF5BmQNai0+3vF
+         gs9RNEwymHR2qPeCq4/U1ah+aaJyQb10h5pPwOK71/E953qF0d++41hKo81IfwNDvIru
+         7R3+iD6uum/Idn5vC1oBTsKCXw/xOjBbDsU0IxhD+ewFC+FPPrwTRa85s+kUb5tcfBr5
+         IyiqNYYhikNfNSKa2iA3Fw8bM/Oof4iw6ipOWokNdhtPF0AQDnwWGugp+33mN8UZ7qQ8
+         oCj7qtLejGElXdI+OAISPuiQAaFb36+Bn0dT+L8HO/vYMf0iG3nrLEnD9ZgEAuuipAG4
+         Hjog==
+X-Gm-Message-State: ACgBeo0Ci+Zmk7t2zfGnzeTPJ21skIBJiuo0bkeHaRG78Ds76m7M6iQx
+        I+zetsEpqPDqsx6JC7lEgHF7GA==
+X-Google-Smtp-Source: AA6agR7caUbLwyQSa715SFZUEGY9QFvmhTYs0wWUx3epIqtDxGXY7MC1nfcBGHa9KKFMrtkkLdDXyw==
+X-Received: by 2002:a19:915c:0:b0:492:f06d:b3b1 with SMTP id y28-20020a19915c000000b00492f06db3b1mr2554374lfj.1.1661508894364;
+        Fri, 26 Aug 2022 03:14:54 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id c5-20020ac25f65000000b00492c627cab5sm323446lfc.254.2022.08.26.03.12.18
+        by smtp.gmail.com with ESMTPSA id y7-20020a05651c106700b0025e42f8e771sm414675ljm.34.2022.08.26.03.14.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Aug 2022 03:12:18 -0700 (PDT)
-Message-ID: <941ddc17-87d3-aa3c-e6bb-46ecf4a7dfca@linaro.org>
-Date:   Fri, 26 Aug 2022 13:12:18 +0300
+        Fri, 26 Aug 2022 03:14:53 -0700 (PDT)
+Message-ID: <ad2db009-8660-db05-60d9-fea61a5cde26@linaro.org>
+Date:   Fri, 26 Aug 2022 13:14:53 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.1.2
-Subject: Re: [PATCH -next] drm/msm/adreno: Switch to memdup_user_nul() helper
+Subject: Re: [PATCH v3] drm/msm/dp: correct 1.62G link rate at
+ dp_catalog_ctrl_config_msa()
 Content-Language: en-GB
-To:     Yang Yingliang <yangyingliang@huawei.com>,
-        linux-kernel@vger.kernel.org, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
-Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com
-References: <20220826084524.2217022-1-yangyingliang@huawei.com>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
+        agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1661372150-3764-1-git-send-email-quic_khsieh@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220826084524.2217022-1-yangyingliang@huawei.com>
+In-Reply-To: <1661372150-3764-1-git-send-email-quic_khsieh@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,43 +80,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/08/2022 11:45, Yang Yingliang wrote:
-> Use memdup_user_nul() helper instead of open-coding to
-> simplify the code.
+On 24/08/2022 23:15, Kuogee Hsieh wrote:
+> At current implementation there is an extra 0 at 1.62G link rate which cause
+> no correct pixel_div selected for 1.62G link rate to calculate mvid and nvid.
+> This patch delete the extra 0 to have mvid and nvid be calculated correctly.
 > 
-> Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+> Changes in v2:
+> -- fix Fixes tag's text
+> 
+> Changes in v3:
+> -- fix misspelling of "Reviewed-by"
+> 
+> Fixes: 937f941ca06f  ("drm/msm/dp: Use qmp phy for DP PLL and PHY")
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+No extra empty lines between the tags please. I'll correct this manually 
+while applying.
 
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/adreno/adreno_gpu.c | 14 +++-----------
->   1 file changed, 3 insertions(+), 11 deletions(-)
+>   drivers/gpu/drm/msm/dp/dp_catalog.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> index 382fb7f9e497..50b33e14237b 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> @@ -339,17 +339,9 @@ int adreno_set_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
->   	case MSM_PARAM_CMDLINE: {
->   		char *str, **paramp;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> index 7257515..676279d 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> @@ -431,7 +431,7 @@ void dp_catalog_ctrl_config_msa(struct dp_catalog *dp_catalog,
 >   
-> -		str = kmalloc(len + 1, GFP_KERNEL);
-> -		if (!str)
-> -			return -ENOMEM;
-> -
-> -		if (copy_from_user(str, u64_to_user_ptr(value), len)) {
-> -			kfree(str);
-> -			return -EFAULT;
-> -		}
-> -
-> -		/* Ensure string is null terminated: */
-> -		str[len] = '\0';
-> +		str = memdup_user_nul(u64_to_user_ptr(value), len);
-> +		if (IS_ERR(str))
-> +			return PTR_ERR(str);
->   
->   		if (param == MSM_PARAM_COMM) {
->   			paramp = &ctx->comm;
+>   	if (rate == link_rate_hbr3)
+>   		pixel_div = 6;
+> -	else if (rate == 1620000 || rate == 270000)
+> +	else if (rate == 162000 || rate == 270000)
+>   		pixel_div = 2;
+>   	else if (rate == link_rate_hbr2)
+>   		pixel_div = 4;
 
 -- 
 With best wishes
