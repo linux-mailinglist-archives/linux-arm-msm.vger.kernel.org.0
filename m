@@ -2,84 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79A145A2950
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 16:25:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3C565A2A2C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Aug 2022 16:57:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229481AbiHZOZS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Aug 2022 10:25:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40900 "EHLO
+        id S242390AbiHZO5n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Aug 2022 10:57:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240957AbiHZOZP (ORCPT
+        with ESMTP id S237347AbiHZO5i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Aug 2022 10:25:15 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65D33193E3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 07:25:13 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id z25so2220041lfr.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 07:25:13 -0700 (PDT)
+        Fri, 26 Aug 2022 10:57:38 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F6CFD9D53
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 07:57:38 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id c16-20020a17090aa61000b001fb3286d9f7so7691733pjq.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 07:57:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=06T9wTlCHBAEXY2GEb3qtwxCsT7B2RAGjEVPlOQCqks=;
-        b=ZwE10iRG6CbbaA/6sykl/gq+h+IcnIMa5gJPDRkX0gHTE4GrnN6lsCgA/VqoB9fauZ
-         EVxr4jMb3a+Jl9Q9Na57YjR0rlWC7QVjC7PncqtYGqV1ZeVkTuOTPQdmqezjHE4qh1hE
-         aIy8iWkcPMJQBcnzQaoAFVj1WS0IrjBHinOo5jD0HnMIZA4TUMu1nCCtBNHqNIZKiMCT
-         Cy+fwM/H00QTIFa2yIRv+zxStjTIYyDJ5lRLb9z7qGhaS6b5zE2uc0PUP18MLzKtgeTt
-         pbGu88qICKMttQjFO1MXEX7nK740RIpeymtSzVUwJngqAgkhrYGFdBnh01LsMvq15vWD
-         l4zA==
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=49FbH9fhwp8y/uszTeozlNisIKriGJI0rkU4Q43uXpk=;
+        b=lc87Iq6suxcr08Rewus/FQpCAwb7n6XxXBZs7iuUofU3aOT0hivPtFRxbQ1No/xGTe
+         sJJMfxEhRo/8act27XOdB3lrqDmnmtB8916iQFEW4I1SVa+N4kTFLOAw84KFj91obeMP
+         8zQl5TNsA3uvR/xK7tJg1VWfg9vnO2Ie1weEk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=06T9wTlCHBAEXY2GEb3qtwxCsT7B2RAGjEVPlOQCqks=;
-        b=h2j49waK2BTKEr8/IuWdTfoYMpsC1s+OM59HgObUpqTr5GRr1f/lSnTfouqTbdXSHC
-         lix25EGeQgjGO7BdYB/N8ize9ZQwW3Fubp3voOMY8+rNawP2XkIi/+ZJtTT/3ayG04QM
-         LxBEArVWDSNVVOOlsi/FuKkni39oH1XO4t3uW38FujZJooROQxCAEgK3PSUQ0WrS3EYk
-         UiLrfwMbaiDcNkaeY7IZJsOTUPh3Zjze+NCdoSVv2zFX+c1Qr1mHP0BIvMv7RU+gEd9q
-         09kSoDDH30phoMZXclFrD2mwp+5zktUAKisKvA8o+jCz/4oMZ0VVO6n3uDep8mi8klGw
-         D/nA==
-X-Gm-Message-State: ACgBeo0PdytFLH2FDqHjqd9VARzSdawKoXcjODPjZWHD3GTXJtU6DoSV
-        X9+QwGBT+5kWnblyu4bTfEShRQ==
-X-Google-Smtp-Source: AA6agR5dy+Gw8ohowBYNiJa6W/b7Gi3/F4l2mDhs2M3US0iGXtl48LOKo978070UI5a03H4IhoIFMQ==
-X-Received: by 2002:a05:6512:1096:b0:492:ca89:a38d with SMTP id j22-20020a056512109600b00492ca89a38dmr2868202lfg.152.1661523911767;
-        Fri, 26 Aug 2022 07:25:11 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id q14-20020ac246ee000000b0048ad80a6d07sm391894lfo.170.2022.08.26.07.25.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Aug 2022 07:25:11 -0700 (PDT)
-Message-ID: <6474b61e-69d8-dbcb-f638-7729ec3dee31@linaro.org>
-Date:   Fri, 26 Aug 2022 17:25:10 +0300
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=49FbH9fhwp8y/uszTeozlNisIKriGJI0rkU4Q43uXpk=;
+        b=mRbofYE1vxXLQbSjEoDg/LpfCjpXnWEcfMtqSG5Agnv46to0X4qS5OZcn5MJNhcts6
+         CGvXpI6c6/vT2LceRtulh7Ol0/vTPMoyZdRhIUy5LBpKAdoCYCV+mEswJX/0LHjr5L51
+         locz1InZ+ABC6atMUhk2i4DYEXv8Y86SG3BlB24eNSXnLAes8SjjjoPZdlEcRSRfLW6t
+         1zpYAfumr2bYBS4TZzYzjbN/8MmBWYb9jIP9GfQbvkp4yZUWWF/IYWq3JNDzMLOL052b
+         ZJ7D5+Rja6nYUlaA0qK22OxSXSMxFdAiYKuT2PnglsDfSp9UCZi6LPFnztHu3pBVaQdc
+         C+dQ==
+X-Gm-Message-State: ACgBeo1bLYcOKvPUnDWQCMG2crWSAoMP1Ewi2upV6KBPxIkyU6IJKB/R
+        91FVD1d2g17DiEJTJ2UvlFajnA==
+X-Google-Smtp-Source: AA6agR7/oFcLGBxOHbL2cxiQkAY9FoRDjgfEWFuS13wB9RAwOs3kWQfgwlgEmwiJ6ARdcOIc2/wWhA==
+X-Received: by 2002:a17:90a:55:b0:1f7:4513:8cac with SMTP id 21-20020a17090a005500b001f745138cacmr4626092pjb.93.1661525857343;
+        Fri, 26 Aug 2022 07:57:37 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:7487:fdf0:5cfa:b7ab])
+        by smtp.gmail.com with ESMTPSA id w61-20020a17090a6bc300b001facb7bc1adsm1768424pjj.26.2022.08.26.07.57.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Aug 2022 07:57:36 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, mka@chromium.org,
+        Douglas Anderson <dianders@chromium.org>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: [PATCH] opp: Expose voltage info in debugfs for OPPs w/out explicit regulators
+Date:   Fri, 26 Aug 2022 07:56:59 -0700
+Message-Id: <20220826075655.1.I2e4958048f30c3b44a01e31519092f7d3c9204e4@changeid>
+X-Mailer: git-send-email 2.37.2.672.g94769d06f0-goog
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.1.2
-Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: msm8996: add #clock-cells and XO
- clock to the HDMI PHY node
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>, linux-phy@lists.infradead.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20220704161148.814510-1-dmitry.baryshkov@linaro.org>
- <20220704161148.814510-4-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220704161148.814510-4-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -88,43 +68,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/07/2022 19:11, Dmitry Baryshkov wrote:
-> Add #clock-cells property to the HDMI PHY device node to let other nodes
-> resolve the hdmipll clock. While we are at it, also add the XO clock to
-> the device node.
-> 
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On some cpufreq drivers we know the voltage associated with each
+operating point but there is no explicit Linux "regulator" present. An
+example is "qcom-cpufreq-hw.c". There the voltage is managed
+automatically by the hardware but we still associate it with the OPP
+table so we can do energy calculations for EAS.
 
-Bjorn, I'm picking the patches 1,2 into msm-next. Could you please pick 
-this patch into your dts-for-6.1?
+The OPP framework handles this in general. In _opp_allocate() it can
+be seen that we always allocate space for one supply even if
+"regulator_count" is 0.
 
-> ---
->   arch/arm64/boot/dts/qcom/msm8996.dtsi | 8 ++++++--
->   1 file changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> index 25d6b26fab60..b72385ffecc6 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> @@ -1049,9 +1049,13 @@ hdmi_phy: hdmi-phy@9a0600 {
->   					    "hdmi_phy";
->   
->   				clocks = <&mmcc MDSS_AHB_CLK>,
-> -					 <&gcc GCC_HDMI_CLKREF_CLK>;
-> +					 <&gcc GCC_HDMI_CLKREF_CLK>,
-> +					 <&xo_board>;
->   				clock-names = "iface",
-> -					      "ref";
-> +					      "ref",
-> +					      "xo";
-> +
-> +				#clock-cells = <0>;
->   
->   				status = "disabled";
->   			};
+Let's handle this properly in debugfs.
 
+NOTE: as a side effect of this a whole bunch of OPPs in the system may
+get supply-related files exposed in debugfs that are mostly useless
+(they'll just contain 0). I'd expect this to be OK but it's moderately
+annoying. It seems better than trying to dynamically create debugfs
+directories when the voltages are non-zero or adding extra complexity
+in the code giving a hint to the OPP framework that voltages should be
+exposed.
+
+After this patch, on a sc7180-trogdor class device I can see voltages
+for the CPU OPPs under /sys/kernel/debug/opp.
+
+Fixes: dfbe4678d709 ("PM / OPP: Add infrastructure to manage multiple regulators")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+
+ drivers/opp/debugfs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/opp/debugfs.c b/drivers/opp/debugfs.c
+index 96a30a032c5f..65234da41063 100644
+--- a/drivers/opp/debugfs.c
++++ b/drivers/opp/debugfs.c
+@@ -96,10 +96,11 @@ static void opp_debug_create_supplies(struct dev_pm_opp *opp,
+ 				      struct opp_table *opp_table,
+ 				      struct dentry *pdentry)
+ {
++	int supply_count = max(opp_table->regulator_count, 1);
+ 	struct dentry *d;
+ 	int i;
+ 
+-	for (i = 0; i < opp_table->regulator_count; i++) {
++	for (i = 0; i < supply_count; i++) {
+ 		char name[15];
+ 
+ 		snprintf(name, sizeof(name), "supply-%d", i);
 -- 
-With best wishes
-Dmitry
+2.37.2.672.g94769d06f0-goog
 
