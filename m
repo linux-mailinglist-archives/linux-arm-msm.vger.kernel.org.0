@@ -2,140 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EECD5A3835
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Aug 2022 16:55:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5EDE15A383A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Aug 2022 16:56:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230006AbiH0OzH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 27 Aug 2022 10:55:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49962 "EHLO
+        id S232613AbiH0O4r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 27 Aug 2022 10:56:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233180AbiH0OzG (ORCPT
+        with ESMTP id S230494AbiH0O4p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 27 Aug 2022 10:55:06 -0400
-Received: from mail-oa1-x2c.google.com (mail-oa1-x2c.google.com [IPv6:2001:4860:4864:20::2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B34312A91
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Aug 2022 07:55:01 -0700 (PDT)
-Received: by mail-oa1-x2c.google.com with SMTP id 586e51a60fabf-f2a4c51c45so5590063fac.9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Aug 2022 07:55:01 -0700 (PDT)
+        Sat, 27 Aug 2022 10:56:45 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B78602AC6C
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Aug 2022 07:56:44 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id k17so2201515wmr.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Aug 2022 07:56:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc;
-        bh=71oNbZSndhwYBZLMwuwcdKtHK8hICgbu4SkrdHGyvgo=;
-        b=VADkVaDFrfYfyMS5L6QaKumo8bJEIvIM3jOmOQwSQOYp5l6C7f5otO4udiSpuiSdST
-         pplgFeKgaGXOGOlRRqCyIbGjFaKkQsk0yA1mr6efbvmUjQYxKhYVUjRRHa2+TQkOP1vB
-         0gu6GpACZTFUcACSKTopz8EqquwyYcktukvrOZf+RcwBOoSnTxa11wrASpMzGpKmQA7S
-         XQaHk7GBY92UPjaoE+xX/z8Zi9I9TWGsmYUORxIgdFAdx5/55xO8+530rpvtUzKoY4Ze
-         EoBAgUkshuvmafEqNRl9JSAzvRp3HKm4PnuaGszW0gmMv8KXSvjijaXtJr4KewhD9Vya
-         ppQw==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=d59BHP8LjgiC/vFkOq9u6rHRr1lJVrcf1fthrMbrMYs=;
+        b=neU8EnMDrTYjUFIcdHT5iDjGC8iG+LPIASVNb40+7ik5/ohDQ7Snwg4/WpXjlw8iSM
+         VmDee08hiYpQTwFF284ruhbj4M8dzWCKUeflE8WK47YZPZUwbNYtrcEoOOQkOGAyqTqf
+         TRdljnovoCKAflxVdCPbi7Dyr8Cv7Zf4G8V5lwG9G08/88gPaeKIF6JklFaUjJNbQNT0
+         YioekLdiF8CTwBuHFYoGPIeS6PJZ3bMq3ag9Lbs/9wRATPFSjActJu3kxbHLkunYinrS
+         tJgn3f/dbJmaQrM2fXI4JG3N3hFDUrf7fckHBt6j0HS1i45s5P8msIUqDnghhrV4XDu9
+         oEcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc;
-        bh=71oNbZSndhwYBZLMwuwcdKtHK8hICgbu4SkrdHGyvgo=;
-        b=MG8gX4d8UBpVbEpwNS78nE72cMH8c00eFDml/abpEnw/yPx9/nTtpBaixhiCIaZlyU
-         uqJmhjO7rPgbbJ5IqmbrZtbxp+yVpUSBF39ipWVJRdNR3clk65q1IHT19vS58qmeyUcv
-         zO6MZD56tu/0t3gNLcwP4Hy7vXI5PTw3g925suwqNGsCtmlr6tKy0KZJt+AkWE9LVKYQ
-         /JdUNCk+wmhXCKcyADEky6IUHmU4tsdP7U0RfzFUOSb7Y3YhxW4ULFtAQ40CHHc4XOLg
-         H1ELB5KJUZkByiJb81p+BbgmyXDNlCRKzLkGI3+18h7m+pjct3MalS317IFGBiE4HfBD
-         RQpw==
-X-Gm-Message-State: ACgBeo2JxLIFvMQwCGCzNmva92mZsa0ONgj5Z8r39BOGZ+VSdqEaDfcM
-        K4wipPfevr1GsTzu5WhHjx8d11st+cg6lsIDZTI=
-X-Google-Smtp-Source: AA6agR5p7lBN/SwHjcKbGWMaSSJ2WyTAkbH2cPGyeYXe1G8vUyraBERGrhqhlzU2aEDBsi3Nx/YMQiaGWNNTzDyNs2c=
-X-Received: by 2002:a05:6870:b692:b0:11d:482f:3642 with SMTP id
- cy18-20020a056870b69200b0011d482f3642mr4125585oab.38.1661612100391; Sat, 27
- Aug 2022 07:55:00 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=d59BHP8LjgiC/vFkOq9u6rHRr1lJVrcf1fthrMbrMYs=;
+        b=wr6sYOf3bsVrPIkipTQxPuwC+72Bz5yrf2z4I14DS6IMqa3So1gQWSXnudU6aDGrnd
+         WIGEuxfLg8Wd1YtkHvcsDs8a4pBBhdBia+gBU7shjHjswd4FqOM9NPXNM4FeEyzOT12b
+         3KduTZHcu2eQD6anMQt1G2r1TObcpAdeCh3sxyzhVY4mtvVQbzZK2PYMOOTfrrT1uNoL
+         HCSl+MN/91C7neNnkNIIiJ4w56FStPn47eJlKpPzHjjtZBimF7aUA9SXYfr1EhCF4g8S
+         q4jAzoA0ULAk0weSwBKMdhrU3XRZiAIpBIjwK1hAkS1AesuH0jyXFHDnZK7ftQkbRXFf
+         ps5g==
+X-Gm-Message-State: ACgBeo3VyV6CQXJvCp6WKzcfpbPBKIz74NTGPnPkL5rzP2HkP/BjfTq2
+        xFbhXs/V0LUBJP/IHwF+4xSQNQ==
+X-Google-Smtp-Source: AA6agR51rl8snFyBc7RwDbRYCHlGF2RaKPKu2H7JXXon4/CUz5EGu37aeFu8jtDIyMHW5eRM+/UXMg==
+X-Received: by 2002:a05:600c:4f85:b0:3a6:243d:3b7d with SMTP id n5-20020a05600c4f8500b003a6243d3b7dmr2520932wmq.84.1661612203223;
+        Sat, 27 Aug 2022 07:56:43 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id m186-20020a1c26c3000000b003a5e7435190sm3407395wmm.32.2022.08.27.07.56.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 27 Aug 2022 07:56:42 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     bryan.odonoghue@linaro.org
+Subject: [PATCH v3 0/2] arm64: dts: qcom: pwm: Drop PWM reg dependency
+Date:   Sat, 27 Aug 2022 15:56:38 +0100
+Message-Id: <20220827145640.3530878-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Sat, 27 Aug 2022 07:55:36 -0700
-Message-ID: <CAF6AEGtuY=jd44itwTkLXVqhnoKgY0BswPTrxDTxCiPG3WbmLA@mail.gmail.com>
-Subject: [pull] drm/msm: drm-msm-fixes-2022-08-27 for v6.0
-To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-(one more time without forgetting dri-devel this time)
+V3:
+- Splits dtsi and yaml
+- Uses Krzysztof's suggested commit log in the yaml
 
-Hi Dave,
+V2:
+The accompanying patch removes reg = <> and pwm@reg from the yaml and dtsi.
+This follows on from discussions between Bupesh, Dmitry, Bjorn, Krzysztof and myself.
 
-A few fixes for the v6.0 cycle.  I meant to send this a bit earlier
-but ended up at the bottom of other rabbit holes.  Summary below (and
-in tag msg)
+https://lore.kernel.org/all/20220719205058.1004942-1-bhupesh.sharma@linaro.org/
+https://lore.kernel.org/all/20220721195502.1525214-1-bhupesh.sharma@linaro.org/
+https://lore.kernel.org/all/20220822120300.2633790-1-bryan.odonoghue@linaro.org/
 
-The following changes since commit cb77085b1f0a86ef9dfba86b5f3ed6c3340c2ea3:
+The previous discussion tended towards either removing pwm@reg and reg = <> or
+extending out the yaml to support multiple reg declarations for PWM compatible.
 
-  drm/msm/dpu: Fix for non-visible planes (2022-07-08 08:10:58 -0700)
+This patch does the former. I've left node: label in place, dropped both pwm@reg
+and reg = <> I kept "label: nodename" though because it looked more like what we
+already have for rpm regulators.
 
-are available in the Git repository at:
+Per our previous discussion I've modified the yaml and dtsi in one go.
 
-  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-fixes-2022-08-27
+Bryan O'Donoghue (2):
+  dt-bindings: spmi: Drop PWM reg dependency
+  arm64: dts: qcom: pm8350c: Drop PWM reg declaration
 
-for you to fetch changes up to 174974d8463b77c2b4065e98513adb204e64de7d:
+ Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 8 ++++----
+ arch/arm64/boot/dts/qcom/pm8350c.dtsi                     | 3 +--
+ 2 files changed, 5 insertions(+), 6 deletions(-)
 
-  drm/msm/rd: Fix FIFO-full deadlock (2022-08-15 10:19:53 -0700)
+-- 
+2.37.1
 
-----------------------------------------------------------------
-Fixes for v6.0
-
-- Fix for inconsistent indenting in function msm_dsi_dphy_timing_calc_v3.
-  This fixes a smatch warning reported by kbot
-- Fix to make eDP the first connector in the connected list. This was
-  mainly done to address a screen corruption issue we were seeing on
-  sc7280 boards which have eDP as the primary display. The corruption
-  itself is from usermode but we decided to fix it this way because
-  things work correct with the primary display as the first one for
-  usermode
-- Fix to populate intf_cfg correctly before calling reset_intf_cfg().
-  Without this, the display pipeline is not torn down correctly for
-  writeback
-- Specify the correct number of DSI regulators for SDM660. It should
-  have been 1 but 2 was mentioned
-- Specify the correct number of DSI regulators for MSM8996. It should
-  have been 3 but 2 was mentioned
-- Fix for removing DP_RECOVERED_CLOCK_OUT_EN bit for tps4 link training
-  for DP. This was causing link training failures and hence no display
-  for a specific DP to HDMI cable on chromebooks
-- Fix probe-deferral crash in gpu devfreq
-- Fix gpu debugfs deadlock
-
-----------------------------------------------------------------
-Abhinav Kumar (1):
-      drm/msm/dpu: populate wb or intf before reset_intf_cfg
-
-Bjorn Andersson (1):
-      drm/msm/gpu: Drop qos request if devm_devfreq_add_device() fails
-
-Douglas Anderson (2):
-      drm/msm/dsi: Fix number of regulators for msm8996_dsi_cfg
-      drm/msm/dsi: Fix number of regulators for SDM660
-
-Kuogee Hsieh (2):
-      drm/msm/dp: make eDP panel as the first connected connector
-      drm/msm/dp: delete DP_RECOVERED_CLOCK_OUT_EN to fix tps4
-
-Rob Clark (1):
-      drm/msm/rd: Fix FIFO-full deadlock
-
-sunliming (1):
-      drm/msm/dsi: fix the inconsistent indenting
-
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 6 ++++++
- drivers/gpu/drm/msm/dp/dp_ctrl.c            | 2 +-
- drivers/gpu/drm/msm/dsi/dsi_cfg.c           | 4 ++--
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c       | 2 +-
- drivers/gpu/drm/msm/msm_drv.c               | 2 ++
- drivers/gpu/drm/msm/msm_gpu_devfreq.c       | 2 ++
- drivers/gpu/drm/msm/msm_rd.c                | 3 +++
- 7 files changed, 17 insertions(+), 4 deletions(-)
