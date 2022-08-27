@@ -2,63 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 984595A333A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Aug 2022 02:49:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2D605A3655
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Aug 2022 11:31:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233981AbiH0AtG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Aug 2022 20:49:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45150 "EHLO
+        id S234063AbiH0JbT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 27 Aug 2022 05:31:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231784AbiH0AtF (ORCPT
+        with ESMTP id S232147AbiH0JbR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Aug 2022 20:49:05 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FA3CEA339
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 17:49:04 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id f4so2781866pgc.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Aug 2022 17:49:04 -0700 (PDT)
+        Sat, 27 Aug 2022 05:31:17 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F282182771
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Aug 2022 02:31:14 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id z6so4870128lfu.9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Aug 2022 02:31:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc;
-        bh=97zZ08Utl6HARnTvGZcj5Kpy48/dl3mZFonKGspCb6I=;
-        b=HA9yAAoleCjowV5YLuTXR7dgCp/RWxiop4nJUvuJ12gtW6IHgIsQp+4AZT9z96nG9+
-         Ot4q/4vAg0a5FughnQQ/mnp/8ipCGNhv64yUejNAwG7JJl87b6Oz+PWF7UP1Pub8pva0
-         23I/W26sQG4N9k+fiVmoV3Im8gX5638Gwi21s=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=5+tRsHHFtIYtEhRxkDNtf2U4lHNbX9lSZYaEEg4PydM=;
+        b=Gi8PUcyXTSmlMbVRETv1LJq3ymkcoTm9baot4bjs4PL7z7YF/rCeORhvyXC489Kprz
+         AfT+zGYWDR5bZthID+qTc4HFO5om7t2NE+ubE1pGlP6QYZ0karOz4zvvOsLtPEuyPCn7
+         O978JHSWbrXzYLcUni4fIQF0iz2FtS/jW/Pa9Atj96eDUBFDBKv0JxzOjOor5XqE7xgC
+         8UOkQyCuOLlNz26/FAmLN9qQj8NOfWQMyNWeba6dD+7Osd2KO8Hfme+PWwmXSktLcC4f
+         PeEVua/v8nhg8ZPgZ7Qda3T7cBvlA39p+8pCUIMVpbwbgME3Jg2pv49T1UfKwQ73UsWo
+         86Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc;
-        bh=97zZ08Utl6HARnTvGZcj5Kpy48/dl3mZFonKGspCb6I=;
-        b=c5f5AD/5vLyHj7qw6l31TCDWrh+zySbOAjx5ViZLafC0xthUdOfwi9oWxP41dLQCMp
-         S4WrtO5vn4wsk1b/+fbdukV86Pu1iYhSJMpvbER7u33Be5toNR707PECsZY0tdoiaKNE
-         owPEG52AHMzOH4sWf1GkdSWmCK/cGY/FNOsQ17FJKcbqa6X2FGW2ebGttetzNGKQVFQJ
-         k46mRbgsQaOF5lbBhOKJwFrAAIKzeAZO3iiiKUq+1TIUekvNhcsirVbDz8zet4+n9Wg5
-         UkhqgUx3SCzzHDzI5FcnncNy8jc1HLw2KvcLuv0PH/4LbLLxwP17vvDksiMQQTg4iWNJ
-         Bw1g==
-X-Gm-Message-State: ACgBeo0pttcDwKrPq9IDt7qFyv8Hfq20cnxKKOKezXvHs1wFYFh86AQK
-        QOt8aYUhY8tXlVqVlMWG8CpqrQ==
-X-Google-Smtp-Source: AA6agR49bSDIhKd84+MMDwGyg4jTeGcSAp1B7s/VdMYbgVRXKFMixBFV+Xhl1fa2VkE/f2ieM7yKng==
-X-Received: by 2002:a05:6a00:22c8:b0:537:275e:e483 with SMTP id f8-20020a056a0022c800b00537275ee483mr6298686pfj.54.1661561343582;
-        Fri, 26 Aug 2022 17:49:03 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:4e6f:7e52:9ad5:809f])
-        by smtp.gmail.com with ESMTPSA id z10-20020a62d10a000000b00537d0ed05ecsm1842969pfg.216.2022.08.26.17.49.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Aug 2022 17:49:02 -0700 (PDT)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH] arm64: dts: qcom: sc7180-trogdor: Keep pm6150_adc enabled for TZ
-Date:   Fri, 26 Aug 2022 17:49:00 -0700
-Message-Id: <20220827004901.511543-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.37.2.672.g94769d06f0-goog
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=5+tRsHHFtIYtEhRxkDNtf2U4lHNbX9lSZYaEEg4PydM=;
+        b=fr9PcydK0VrgBOT5vM++r1ibNe7J6kuT9OLSAxazX/Lmk8zJdJCDM1MHThRjuEYtRz
+         n5zqgi+AxDOUwR8bT0WY/nPwtlAKOnjcxuJxHMJmkPgvSFuNte/LhG18JHrfE3sU4pmW
+         1gvHzdvt6i8VctupkW7xHs5p+iXiIXU0Lgqv5nSdjx5sSVaZRKNxoJRIOo9BCp0SRcnX
+         m800QsMfF8RAwtSyNUx2X9kHvLnbUvXvxr4OhAo9kkwgsUpk+dB8yXtdWqw5DCOgEqHK
+         B44hnneRiLJ6pCtMoHYSpx9MthWb/H65SQLYfDHEbJSYU3GkkwCcEZ1AciOHn1dxM0RK
+         8vJA==
+X-Gm-Message-State: ACgBeo24ES9RSiwriswZZ97nzdNhv2jeOZRVHYpsve22bgKcCRw9+Lhk
+        2lPRq4kUpu1FLn8yGQuj2XTeAg==
+X-Google-Smtp-Source: AA6agR7qqC2eQCM1x4pzhwMiF1ifFxSB9CvlDk/+rtzCjkzVYtMtC8P18Wt7CaFtjNbZ/KuH1CaruQ==
+X-Received: by 2002:a05:6512:1687:b0:492:db5e:7768 with SMTP id bu7-20020a056512168700b00492db5e7768mr3750470lfb.118.1661592673212;
+        Sat, 27 Aug 2022 02:31:13 -0700 (PDT)
+Received: from [192.168.0.71] (82.131.98.15.cable.starman.ee. [82.131.98.15])
+        by smtp.gmail.com with ESMTPSA id d5-20020ac24c85000000b0048b0526070fsm626416lfl.71.2022.08.27.02.31.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 27 Aug 2022 02:31:12 -0700 (PDT)
+Message-ID: <15d7c1a8-18b6-e2a7-e4c1-1cdad6f3604f@linaro.org>
+Date:   Sat, 27 Aug 2022 12:31:09 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v2 1/1] arm64: dts: qcom: pwm: Drop PWM reg dependency
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220826123547.3392457-1-bryan.odonoghue@linaro.org>
+ <20220826123547.3392457-2-bryan.odonoghue@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220826123547.3392457-2-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,50 +77,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There's still a thermal zone using pm6150_adc in the pm6150.dtsi file,
-pm6150_thermal. It's not super obvious because it indirectly uses the
-adc through an iio channel in pm6150_temp. Let's keep this enabled on
-lazor and coachz so that reading the temperature of the pm6150_thermal
-zone continues to work. Otherwise we get -EINVAL when reading the zone,
-and I suspect the PMIC temperature trip doesn't work properly so we
-don't shutdown when the PMIC overheats.
+On 26/08/2022 15:35, Bryan O'Donoghue wrote:
+> Drop the reg dependency from the qcom PWM description.
+> 
+> The PWM driver doesn't depend on the reg so we should drop the dependency
+> and remove the pwm@reg from the nodename.
 
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Fixes: b8d1e3d33487 ("arm64: dts: qcom: sc7180-trogdor: Delete ADC config for unused thermistors")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts | 2 --
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi    | 2 --
- 2 files changed, 4 deletions(-)
+Driver is not really a sufficient reason. Based on
+https://lore.kernel.org/all/CAA8EJppGS38aP7gyd1c3kNgraAVJDoqUef2cDfZpu2aL_iwW0g@mail.gmail.com/
+reason could be:
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
-index 8290d036044a..edfcd47e1a00 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
-@@ -24,8 +24,6 @@ &charger_thermal {
- };
- 
- &pm6150_adc {
--	status = "disabled";
--
- 	/delete-node/ skin-temp-thermistor@4e;
- 	/delete-node/ charger-thermistor@4f;
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-index 2cf7d5212c61..002663d752da 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-@@ -55,8 +55,6 @@ &panel {
- };
- 
- &pm6150_adc {
--	status = "disabled";
--
- 	/delete-node/ charger-thermistor@4f;
- };
- 
+The PWM node is not a separate device and is expected to be part of
+parent SPMI PMIC node, thus it obtains the address space from the
+parent. One IO address in "reg" is also not correct description because
+LPG block maps to several regions.
 
-base-commit: 568035b01cfb107af8d2e4bd2fb9aea22cf5b868
--- 
-https://chromeos.dev
+> 
+> Fixes: e79a1385ab74 ("arm64: dts: qcom: Add LPG to pm8916, pm8994, pmi8994 and pmi8998")
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 8 ++++----
+>  arch/arm64/boot/dts/qcom/pm8350c.dtsi                     | 3 +--
 
+Patches should be split. One patchset, but two patches.
+
+>  2 files changed, 5 insertions(+), 6 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> index 65cbc6dee545e..2a5bafe0660a0 100644
+> --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> @@ -92,6 +92,10 @@ properties:
+>      type: object
+>      $ref: /schemas/regulator/regulator.yaml#
+>  
+
+Best regards,
+Krzysztof
