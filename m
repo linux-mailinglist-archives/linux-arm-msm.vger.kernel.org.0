@@ -2,55 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C50F75A3832
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Aug 2022 16:53:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EECD5A3835
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Aug 2022 16:55:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233269AbiH0Ow6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 27 Aug 2022 10:52:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48542 "EHLO
+        id S230006AbiH0OzH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 27 Aug 2022 10:55:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233187AbiH0Owx (ORCPT
+        with ESMTP id S233180AbiH0OzG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 27 Aug 2022 10:52:53 -0400
-Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F3D023BF1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Aug 2022 07:52:52 -0700 (PDT)
-Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-11d2dcc31dbso5599704fac.7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Aug 2022 07:52:52 -0700 (PDT)
+        Sat, 27 Aug 2022 10:55:06 -0400
+Received: from mail-oa1-x2c.google.com (mail-oa1-x2c.google.com [IPv6:2001:4860:4864:20::2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B34312A91
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Aug 2022 07:55:01 -0700 (PDT)
+Received: by mail-oa1-x2c.google.com with SMTP id 586e51a60fabf-f2a4c51c45so5590063fac.9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Aug 2022 07:55:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:mime-version:from:to:cc;
-        bh=ENmTEz2sdDhPaUZ1YuMYFzj0qZyorVVrht0Q7zVdl5A=;
-        b=fakL+gb4E+NtO3ziLxu6HuOpkO2QrjQpPe1EVZfpWbzH1HcwGI68uVScTaQT3nVfot
-         te93JwTHEON9VLtXHqfmz4mbAzimgcNYXt+qnZOEQXAEcgyIcdDAqrq6Ea50SXBOQZIX
-         wa4pahhhhrQNV4zWXd1keaPg2JRUa8JaFHD+ESqFAavwRQnm5yabmSk+kkVUORI/gut8
-         7fRBJ6ozmmGUvbpAwJlREqcsTo//MN4QYq0vy7xp4TUFqUfDs6UgnjwC5Lnj8uYNa3Wi
-         F1wBbsQI/XLBHM3dPLX9Cx0Cyxk34imk2OaV4cT+jTQHW5YXUnGGpW4vKUW+80NJCTsa
-         kufw==
+        bh=71oNbZSndhwYBZLMwuwcdKtHK8hICgbu4SkrdHGyvgo=;
+        b=VADkVaDFrfYfyMS5L6QaKumo8bJEIvIM3jOmOQwSQOYp5l6C7f5otO4udiSpuiSdST
+         pplgFeKgaGXOGOlRRqCyIbGjFaKkQsk0yA1mr6efbvmUjQYxKhYVUjRRHa2+TQkOP1vB
+         0gu6GpACZTFUcACSKTopz8EqquwyYcktukvrOZf+RcwBOoSnTxa11wrASpMzGpKmQA7S
+         XQaHk7GBY92UPjaoE+xX/z8Zi9I9TWGsmYUORxIgdFAdx5/55xO8+530rpvtUzKoY4Ze
+         EoBAgUkshuvmafEqNRl9JSAzvRp3HKm4PnuaGszW0gmMv8KXSvjijaXtJr4KewhD9Vya
+         ppQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
          :from:to:cc;
-        bh=ENmTEz2sdDhPaUZ1YuMYFzj0qZyorVVrht0Q7zVdl5A=;
-        b=0Uchf+2CXw+N7RJKZzZ77EaOPYrzgUFV54mB+8CgNE8JjjDxtGrPVQ2dMjPR+zAkfv
-         QLatBb3GkJIZj5StGPprTSM4JE7f92DNh4MLxDEmDJMOzz/x7s2JUPSY700DN6CsX8pz
-         OAlbgOfUHhBvqsu8TZKvNrhc0FYotxNvpQoOfwRXkBM3H6n+LwWK03CfrJpdRhEOpych
-         eZn5lG6NI8SWUTLfHl//zX9tzRR+1STzLIPPhlcBAOQLZBU4qsTuh9NW/lXj6rBvCr0P
-         WfNWhYy/cr1icdkqBUU0RMmiy/oGc0VxtiFA7uiDj4joxpQeFfbmWfgouy4ljN0EAwDO
-         Wiaw==
-X-Gm-Message-State: ACgBeo3ivpEUN6yG0SqnGNWpgatVt2QNBxrD5QmsPsV2MEHvj/HaZERo
-        vyk9RAAOCUICRG3ZRxGbwugU8aKEyfMRCnV5trdKA+pLUQU=
-X-Google-Smtp-Source: AA6agR6xFP1IuWf9MCarhROFl12ZJ69qAgM3HKlcNhwJmBXJWgSZZ8VoaeuW7OLYEGjbjMsVVrUAevhz2rw83amLtDE=
-X-Received: by 2002:a05:6871:825:b0:11e:8862:d5f5 with SMTP id
- q37-20020a056871082500b0011e8862d5f5mr2679762oap.183.1661611971709; Sat, 27
- Aug 2022 07:52:51 -0700 (PDT)
+        bh=71oNbZSndhwYBZLMwuwcdKtHK8hICgbu4SkrdHGyvgo=;
+        b=MG8gX4d8UBpVbEpwNS78nE72cMH8c00eFDml/abpEnw/yPx9/nTtpBaixhiCIaZlyU
+         uqJmhjO7rPgbbJ5IqmbrZtbxp+yVpUSBF39ipWVJRdNR3clk65q1IHT19vS58qmeyUcv
+         zO6MZD56tu/0t3gNLcwP4Hy7vXI5PTw3g925suwqNGsCtmlr6tKy0KZJt+AkWE9LVKYQ
+         /JdUNCk+wmhXCKcyADEky6IUHmU4tsdP7U0RfzFUOSb7Y3YhxW4ULFtAQ40CHHc4XOLg
+         H1ELB5KJUZkByiJb81p+BbgmyXDNlCRKzLkGI3+18h7m+pjct3MalS317IFGBiE4HfBD
+         RQpw==
+X-Gm-Message-State: ACgBeo2JxLIFvMQwCGCzNmva92mZsa0ONgj5Z8r39BOGZ+VSdqEaDfcM
+        K4wipPfevr1GsTzu5WhHjx8d11st+cg6lsIDZTI=
+X-Google-Smtp-Source: AA6agR5p7lBN/SwHjcKbGWMaSSJ2WyTAkbH2cPGyeYXe1G8vUyraBERGrhqhlzU2aEDBsi3Nx/YMQiaGWNNTzDyNs2c=
+X-Received: by 2002:a05:6870:b692:b0:11d:482f:3642 with SMTP id
+ cy18-20020a056870b69200b0011d482f3642mr4125585oab.38.1661612100391; Sat, 27
+ Aug 2022 07:55:00 -0700 (PDT)
 MIME-Version: 1.0
 From:   Rob Clark <robdclark@gmail.com>
-Date:   Sat, 27 Aug 2022 07:53:27 -0700
-Message-ID: <CAF6AEGvwuAN2ekr4o-RybqSnUSmJm_Watu4kBztnddE9brqmiA@mail.gmail.com>
+Date:   Sat, 27 Aug 2022 07:55:36 -0700
+Message-ID: <CAF6AEGtuY=jd44itwTkLXVqhnoKgY0BswPTrxDTxCiPG3WbmLA@mail.gmail.com>
 Subject: [pull] drm/msm: drm-msm-fixes-2022-08-27 for v6.0
 To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -64,6 +65,8 @@ X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
+
+(one more time without forgetting dri-devel this time)
 
 Hi Dave,
 
