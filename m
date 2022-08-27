@@ -2,115 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C2D605A3655
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Aug 2022 11:31:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC5735A37DD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Aug 2022 15:19:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234063AbiH0JbT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 27 Aug 2022 05:31:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50004 "EHLO
+        id S229995AbiH0NTj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 27 Aug 2022 09:19:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232147AbiH0JbR (ORCPT
+        with ESMTP id S229677AbiH0NTi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 27 Aug 2022 05:31:17 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F282182771
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Aug 2022 02:31:14 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id z6so4870128lfu.9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Aug 2022 02:31:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=5+tRsHHFtIYtEhRxkDNtf2U4lHNbX9lSZYaEEg4PydM=;
-        b=Gi8PUcyXTSmlMbVRETv1LJq3ymkcoTm9baot4bjs4PL7z7YF/rCeORhvyXC489Kprz
-         AfT+zGYWDR5bZthID+qTc4HFO5om7t2NE+ubE1pGlP6QYZ0karOz4zvvOsLtPEuyPCn7
-         O978JHSWbrXzYLcUni4fIQF0iz2FtS/jW/Pa9Atj96eDUBFDBKv0JxzOjOor5XqE7xgC
-         8UOkQyCuOLlNz26/FAmLN9qQj8NOfWQMyNWeba6dD+7Osd2KO8Hfme+PWwmXSktLcC4f
-         PeEVua/v8nhg8ZPgZ7Qda3T7cBvlA39p+8pCUIMVpbwbgME3Jg2pv49T1UfKwQ73UsWo
-         86Qg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=5+tRsHHFtIYtEhRxkDNtf2U4lHNbX9lSZYaEEg4PydM=;
-        b=fr9PcydK0VrgBOT5vM++r1ibNe7J6kuT9OLSAxazX/Lmk8zJdJCDM1MHThRjuEYtRz
-         n5zqgi+AxDOUwR8bT0WY/nPwtlAKOnjcxuJxHMJmkPgvSFuNte/LhG18JHrfE3sU4pmW
-         1gvHzdvt6i8VctupkW7xHs5p+iXiIXU0Lgqv5nSdjx5sSVaZRKNxoJRIOo9BCp0SRcnX
-         m800QsMfF8RAwtSyNUx2X9kHvLnbUvXvxr4OhAo9kkwgsUpk+dB8yXtdWqw5DCOgEqHK
-         B44hnneRiLJ6pCtMoHYSpx9MthWb/H65SQLYfDHEbJSYU3GkkwCcEZ1AciOHn1dxM0RK
-         8vJA==
-X-Gm-Message-State: ACgBeo24ES9RSiwriswZZ97nzdNhv2jeOZRVHYpsve22bgKcCRw9+Lhk
-        2lPRq4kUpu1FLn8yGQuj2XTeAg==
-X-Google-Smtp-Source: AA6agR7qqC2eQCM1x4pzhwMiF1ifFxSB9CvlDk/+rtzCjkzVYtMtC8P18Wt7CaFtjNbZ/KuH1CaruQ==
-X-Received: by 2002:a05:6512:1687:b0:492:db5e:7768 with SMTP id bu7-20020a056512168700b00492db5e7768mr3750470lfb.118.1661592673212;
-        Sat, 27 Aug 2022 02:31:13 -0700 (PDT)
-Received: from [192.168.0.71] (82.131.98.15.cable.starman.ee. [82.131.98.15])
-        by smtp.gmail.com with ESMTPSA id d5-20020ac24c85000000b0048b0526070fsm626416lfl.71.2022.08.27.02.31.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 27 Aug 2022 02:31:12 -0700 (PDT)
-Message-ID: <15d7c1a8-18b6-e2a7-e4c1-1cdad6f3604f@linaro.org>
-Date:   Sat, 27 Aug 2022 12:31:09 +0300
+        Sat, 27 Aug 2022 09:19:38 -0400
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37B587198A;
+        Sat, 27 Aug 2022 06:19:37 -0700 (PDT)
+Received: from dggpemm500022.china.huawei.com (unknown [172.30.72.55])
+        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4MFHJc4yxCzkWV9;
+        Sat, 27 Aug 2022 21:16:00 +0800 (CST)
+Received: from dggpemm500002.china.huawei.com (7.185.36.229) by
+ dggpemm500022.china.huawei.com (7.185.36.162) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.24; Sat, 27 Aug 2022 21:19:35 +0800
+Received: from [10.174.178.247] (10.174.178.247) by
+ dggpemm500002.china.huawei.com (7.185.36.229) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.24; Sat, 27 Aug 2022 21:19:34 +0800
+Subject: Re: [PATCH v2 5/5] ACPI: Drop parent field from struct acpi_device
+To:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Linux ACPI <linux-acpi@vger.kernel.org>
+CC:     LKML <linux-kernel@vger.kernel.org>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        "K. Y. Srinivasan" <kys@microsoft.com>,
+        Haiyang Zhang <haiyangz@microsoft.com>,
+        Stephen Hemminger <sthemmin@microsoft.com>,
+        Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
+        Mark Brown <broonie@kernel.org>,
+        "Andreas Noever" <andreas.noever@gmail.com>,
+        Michael Jamet <michael.jamet@intel.com>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Yehezkel Bernat <YehezkelShB@gmail.com>,
+        <linux-hyperv@vger.kernel.org>, <linux-spi@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, "Will Deacon" <will@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Konrad Dybcio" <konrad.dybcio@somainline.org>
+References: <12036348.O9o76ZdvQC@kreacher> <2196460.iZASKD2KPV@kreacher>
+ <5857822.lOV4Wx5bFT@kreacher>
+From:   Hanjun Guo <guohanjun@huawei.com>
+Message-ID: <a0cab176-3c3a-707a-02c3-74ffc1b4926e@huawei.com>
+Date:   Sat, 27 Aug 2022 21:19:33 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH v2 1/1] arm64: dts: qcom: pwm: Drop PWM reg dependency
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220826123547.3392457-1-bryan.odonoghue@linaro.org>
- <20220826123547.3392457-2-bryan.odonoghue@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220826123547.3392457-2-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <5857822.lOV4Wx5bFT@kreacher>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Originating-IP: [10.174.178.247]
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ dggpemm500002.china.huawei.com (7.185.36.229)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/08/2022 15:35, Bryan O'Donoghue wrote:
-> Drop the reg dependency from the qcom PWM description.
-> 
-> The PWM driver doesn't depend on the reg so we should drop the dependency
-> and remove the pwm@reg from the nodename.
+Hi Rafael,
 
-Driver is not really a sufficient reason. Based on
-https://lore.kernel.org/all/CAA8EJppGS38aP7gyd1c3kNgraAVJDoqUef2cDfZpu2aL_iwW0g@mail.gmail.com/
-reason could be:
+On 2022/8/25 0:59, Rafael J. Wysocki wrote:
+> Index: linux-pm/include/acpi/acpi_bus.h
+> ===================================================================
+> --- linux-pm.orig/include/acpi/acpi_bus.h
+> +++ linux-pm/include/acpi/acpi_bus.h
+> @@ -365,7 +365,6 @@ struct acpi_device {
+>   	int device_type;
+>   	acpi_handle handle;		/* no handle for fixed hardware */
+>   	struct fwnode_handle fwnode;
+> -	struct acpi_device *parent;
+>   	struct list_head wakeup_list;
+>   	struct list_head del_list;
+>   	struct acpi_device_status status;
+> @@ -458,6 +457,14 @@ static inline void *acpi_driver_data(str
+>   #define to_acpi_device(d)	container_of(d, struct acpi_device, dev)
+>   #define to_acpi_driver(d)	container_of(d, struct acpi_driver, drv)
+>   
+> +static inline struct acpi_device *acpi_dev_parent(struct acpi_device *adev)
+> +{
+> +	if (adev->dev.parent)
+> +		return to_acpi_device(adev->dev.parent);
+> +
+> +	return NULL;
+> +}
+> +
+>   static inline void acpi_set_device_status(struct acpi_device *adev, u32 sta)
+>   {
+>   	*((u32 *)&adev->status) = sta;
+> @@ -478,6 +485,7 @@ void acpi_initialize_hp_context(struct a
+>   /* acpi_device.dev.bus == &acpi_bus_type */
+>   extern struct bus_type acpi_bus_type;
+>   
+> +struct acpi_device *acpi_dev_parent(struct acpi_device *adev);
 
-The PWM node is not a separate device and is expected to be part of
-parent SPMI PMIC node, thus it obtains the address space from the
-parent. One IO address in "reg" is also not correct description because
-LPG block maps to several regions.
+We have a static inline function above, is it duplicated here?
+Or did I miss some use cases?
 
-> 
-> Fixes: e79a1385ab74 ("arm64: dts: qcom: Add LPG to pm8916, pm8994, pmi8994 and pmi8998")
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 8 ++++----
->  arch/arm64/boot/dts/qcom/pm8350c.dtsi                     | 3 +--
-
-Patches should be split. One patchset, but two patches.
-
->  2 files changed, 5 insertions(+), 6 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-> index 65cbc6dee545e..2a5bafe0660a0 100644
-> --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-> @@ -92,6 +92,10 @@ properties:
->      type: object
->      $ref: /schemas/regulator/regulator.yaml#
->  
-
-Best regards,
-Krzysztof
+Thanks
+Hanjun
