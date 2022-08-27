@@ -2,71 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC5735A37DD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Aug 2022 15:19:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C50F75A3832
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Aug 2022 16:53:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229995AbiH0NTj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 27 Aug 2022 09:19:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57600 "EHLO
+        id S233269AbiH0Ow6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 27 Aug 2022 10:52:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229677AbiH0NTi (ORCPT
+        with ESMTP id S233187AbiH0Owx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 27 Aug 2022 09:19:38 -0400
-Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37B587198A;
-        Sat, 27 Aug 2022 06:19:37 -0700 (PDT)
-Received: from dggpemm500022.china.huawei.com (unknown [172.30.72.55])
-        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4MFHJc4yxCzkWV9;
-        Sat, 27 Aug 2022 21:16:00 +0800 (CST)
-Received: from dggpemm500002.china.huawei.com (7.185.36.229) by
- dggpemm500022.china.huawei.com (7.185.36.162) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Sat, 27 Aug 2022 21:19:35 +0800
-Received: from [10.174.178.247] (10.174.178.247) by
- dggpemm500002.china.huawei.com (7.185.36.229) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Sat, 27 Aug 2022 21:19:34 +0800
-Subject: Re: [PATCH v2 5/5] ACPI: Drop parent field from struct acpi_device
-To:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux ACPI <linux-acpi@vger.kernel.org>
-CC:     LKML <linux-kernel@vger.kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        "K. Y. Srinivasan" <kys@microsoft.com>,
-        Haiyang Zhang <haiyangz@microsoft.com>,
-        Stephen Hemminger <sthemmin@microsoft.com>,
-        Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
-        Mark Brown <broonie@kernel.org>,
-        "Andreas Noever" <andreas.noever@gmail.com>,
-        Michael Jamet <michael.jamet@intel.com>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        Yehezkel Bernat <YehezkelShB@gmail.com>,
-        <linux-hyperv@vger.kernel.org>, <linux-spi@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, "Will Deacon" <will@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Konrad Dybcio" <konrad.dybcio@somainline.org>
-References: <12036348.O9o76ZdvQC@kreacher> <2196460.iZASKD2KPV@kreacher>
- <5857822.lOV4Wx5bFT@kreacher>
-From:   Hanjun Guo <guohanjun@huawei.com>
-Message-ID: <a0cab176-3c3a-707a-02c3-74ffc1b4926e@huawei.com>
-Date:   Sat, 27 Aug 2022 21:19:33 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+        Sat, 27 Aug 2022 10:52:53 -0400
+Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F3D023BF1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Aug 2022 07:52:52 -0700 (PDT)
+Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-11d2dcc31dbso5599704fac.7
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Aug 2022 07:52:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc;
+        bh=ENmTEz2sdDhPaUZ1YuMYFzj0qZyorVVrht0Q7zVdl5A=;
+        b=fakL+gb4E+NtO3ziLxu6HuOpkO2QrjQpPe1EVZfpWbzH1HcwGI68uVScTaQT3nVfot
+         te93JwTHEON9VLtXHqfmz4mbAzimgcNYXt+qnZOEQXAEcgyIcdDAqrq6Ea50SXBOQZIX
+         wa4pahhhhrQNV4zWXd1keaPg2JRUa8JaFHD+ESqFAavwRQnm5yabmSk+kkVUORI/gut8
+         7fRBJ6ozmmGUvbpAwJlREqcsTo//MN4QYq0vy7xp4TUFqUfDs6UgnjwC5Lnj8uYNa3Wi
+         F1wBbsQI/XLBHM3dPLX9Cx0Cyxk34imk2OaV4cT+jTQHW5YXUnGGpW4vKUW+80NJCTsa
+         kufw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc;
+        bh=ENmTEz2sdDhPaUZ1YuMYFzj0qZyorVVrht0Q7zVdl5A=;
+        b=0Uchf+2CXw+N7RJKZzZ77EaOPYrzgUFV54mB+8CgNE8JjjDxtGrPVQ2dMjPR+zAkfv
+         QLatBb3GkJIZj5StGPprTSM4JE7f92DNh4MLxDEmDJMOzz/x7s2JUPSY700DN6CsX8pz
+         OAlbgOfUHhBvqsu8TZKvNrhc0FYotxNvpQoOfwRXkBM3H6n+LwWK03CfrJpdRhEOpych
+         eZn5lG6NI8SWUTLfHl//zX9tzRR+1STzLIPPhlcBAOQLZBU4qsTuh9NW/lXj6rBvCr0P
+         WfNWhYy/cr1icdkqBUU0RMmiy/oGc0VxtiFA7uiDj4joxpQeFfbmWfgouy4ljN0EAwDO
+         Wiaw==
+X-Gm-Message-State: ACgBeo3ivpEUN6yG0SqnGNWpgatVt2QNBxrD5QmsPsV2MEHvj/HaZERo
+        vyk9RAAOCUICRG3ZRxGbwugU8aKEyfMRCnV5trdKA+pLUQU=
+X-Google-Smtp-Source: AA6agR6xFP1IuWf9MCarhROFl12ZJ69qAgM3HKlcNhwJmBXJWgSZZ8VoaeuW7OLYEGjbjMsVVrUAevhz2rw83amLtDE=
+X-Received: by 2002:a05:6871:825:b0:11e:8862:d5f5 with SMTP id
+ q37-20020a056871082500b0011e8862d5f5mr2679762oap.183.1661611971709; Sat, 27
+ Aug 2022 07:52:51 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <5857822.lOV4Wx5bFT@kreacher>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.174.178.247]
-X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
- dggpemm500002.china.huawei.com (7.185.36.229)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Sat, 27 Aug 2022 07:53:27 -0700
+Message-ID: <CAF6AEGvwuAN2ekr4o-RybqSnUSmJm_Watu4kBztnddE9brqmiA@mail.gmail.com>
+Subject: [pull] drm/msm: drm-msm-fixes-2022-08-27 for v6.0
+To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,44 +65,74 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rafael,
+Hi Dave,
 
-On 2022/8/25 0:59, Rafael J. Wysocki wrote:
-> Index: linux-pm/include/acpi/acpi_bus.h
-> ===================================================================
-> --- linux-pm.orig/include/acpi/acpi_bus.h
-> +++ linux-pm/include/acpi/acpi_bus.h
-> @@ -365,7 +365,6 @@ struct acpi_device {
->   	int device_type;
->   	acpi_handle handle;		/* no handle for fixed hardware */
->   	struct fwnode_handle fwnode;
-> -	struct acpi_device *parent;
->   	struct list_head wakeup_list;
->   	struct list_head del_list;
->   	struct acpi_device_status status;
-> @@ -458,6 +457,14 @@ static inline void *acpi_driver_data(str
->   #define to_acpi_device(d)	container_of(d, struct acpi_device, dev)
->   #define to_acpi_driver(d)	container_of(d, struct acpi_driver, drv)
->   
-> +static inline struct acpi_device *acpi_dev_parent(struct acpi_device *adev)
-> +{
-> +	if (adev->dev.parent)
-> +		return to_acpi_device(adev->dev.parent);
-> +
-> +	return NULL;
-> +}
-> +
->   static inline void acpi_set_device_status(struct acpi_device *adev, u32 sta)
->   {
->   	*((u32 *)&adev->status) = sta;
-> @@ -478,6 +485,7 @@ void acpi_initialize_hp_context(struct a
->   /* acpi_device.dev.bus == &acpi_bus_type */
->   extern struct bus_type acpi_bus_type;
->   
-> +struct acpi_device *acpi_dev_parent(struct acpi_device *adev);
+A few fixes for the v6.0 cycle.  I meant to send this a bit earlier
+but ended up at the bottom of other rabbit holes.  Summary below (and
+in tag msg)
 
-We have a static inline function above, is it duplicated here?
-Or did I miss some use cases?
+The following changes since commit cb77085b1f0a86ef9dfba86b5f3ed6c3340c2ea3:
 
-Thanks
-Hanjun
+  drm/msm/dpu: Fix for non-visible planes (2022-07-08 08:10:58 -0700)
+
+are available in the Git repository at:
+
+  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-fixes-2022-08-27
+
+for you to fetch changes up to 174974d8463b77c2b4065e98513adb204e64de7d:
+
+  drm/msm/rd: Fix FIFO-full deadlock (2022-08-15 10:19:53 -0700)
+
+----------------------------------------------------------------
+Fixes for v6.0
+
+- Fix for inconsistent indenting in function msm_dsi_dphy_timing_calc_v3.
+  This fixes a smatch warning reported by kbot
+- Fix to make eDP the first connector in the connected list. This was
+  mainly done to address a screen corruption issue we were seeing on
+  sc7280 boards which have eDP as the primary display. The corruption
+  itself is from usermode but we decided to fix it this way because
+  things work correct with the primary display as the first one for
+  usermode
+- Fix to populate intf_cfg correctly before calling reset_intf_cfg().
+  Without this, the display pipeline is not torn down correctly for
+  writeback
+- Specify the correct number of DSI regulators for SDM660. It should
+  have been 1 but 2 was mentioned
+- Specify the correct number of DSI regulators for MSM8996. It should
+  have been 3 but 2 was mentioned
+- Fix for removing DP_RECOVERED_CLOCK_OUT_EN bit for tps4 link training
+  for DP. This was causing link training failures and hence no display
+  for a specific DP to HDMI cable on chromebooks
+- Fix probe-deferral crash in gpu devfreq
+- Fix gpu debugfs deadlock
+
+----------------------------------------------------------------
+Abhinav Kumar (1):
+      drm/msm/dpu: populate wb or intf before reset_intf_cfg
+
+Bjorn Andersson (1):
+      drm/msm/gpu: Drop qos request if devm_devfreq_add_device() fails
+
+Douglas Anderson (2):
+      drm/msm/dsi: Fix number of regulators for msm8996_dsi_cfg
+      drm/msm/dsi: Fix number of regulators for SDM660
+
+Kuogee Hsieh (2):
+      drm/msm/dp: make eDP panel as the first connected connector
+      drm/msm/dp: delete DP_RECOVERED_CLOCK_OUT_EN to fix tps4
+
+Rob Clark (1):
+      drm/msm/rd: Fix FIFO-full deadlock
+
+sunliming (1):
+      drm/msm/dsi: fix the inconsistent indenting
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 6 ++++++
+ drivers/gpu/drm/msm/dp/dp_ctrl.c            | 2 +-
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c           | 4 ++--
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c       | 2 +-
+ drivers/gpu/drm/msm/msm_drv.c               | 2 ++
+ drivers/gpu/drm/msm/msm_gpu_devfreq.c       | 2 ++
+ drivers/gpu/drm/msm/msm_rd.c                | 3 +++
+ 7 files changed, 17 insertions(+), 4 deletions(-)
