@@ -2,122 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A2AA75A3F7D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Aug 2022 21:41:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DF885A3FB6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Aug 2022 22:57:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229601AbiH1Tlc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 28 Aug 2022 15:41:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52382 "EHLO
+        id S230025AbiH1U5k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 28 Aug 2022 16:57:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229507AbiH1Tlb (ORCPT
+        with ESMTP id S229648AbiH1U5f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 28 Aug 2022 15:41:31 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53B9A2F02C;
-        Sun, 28 Aug 2022 12:41:30 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27SJTraI012220;
-        Sun, 28 Aug 2022 19:41:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=+6jySjGEpiVcyt6aKqewR2JyBNAPP6BNhhqo2TqCsTY=;
- b=YzMbRXYTT62QFwgvm8Ehf33JH0WypGE9vHyKSON8XJVZU/b7gucwEXLSwtvrPteT0Sly
- z2HLhHW+jU/VUJtXY1g6XIew1NSFbPlA8zs3N3h5P50oL0lvZ0NxJmW7q1WQINNSndz1
- 3GpSGxNybGWvy4qacYUoLsjyN5d+guxvbk3lUNzGT8o7MZZJXuQVKJor4lusjLzYWlid
- rV6Ky87Sd+52T9AA4jbb3zHX/NQ01ik2DU+t1P/BCBoW72VtjKT8d0guBMxmgTte1PiA
- 2b7Fgx8N11GhpdUsop8+Zzd8gfxg6ffimD0tbJ2wh49OQ5WkQQTTJmXmQpPhipfjldb/ 5w== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j7a9ekuhb-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 28 Aug 2022 19:41:22 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27SJfLTh014475
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 28 Aug 2022 19:41:21 GMT
-Received: from hyd-lnxbld559.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Sun, 28 Aug 2022 12:41:17 -0700
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-To:     freedreno <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        "OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Rob Clark <robdclark@gmail.com>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>
-CC:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+        Sun, 28 Aug 2022 16:57:35 -0400
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DF4530F4B;
+        Sun, 28 Aug 2022 13:57:32 -0700 (PDT)
+Received: by mail-io1-xd2f.google.com with SMTP id 10so5172218iou.2;
+        Sun, 28 Aug 2022 13:57:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=mC6gBj0kuKVX2cf4bAsxRZgtAWFeJDMdJEm3tu/7KE0=;
+        b=T0fmWP96TcARxU5ZFjM7lFdHzW89Psc3kO7UC2oX8G5q4OBprGJlGx+gGXdPZ/wkts
+         v6sbtR146h3BAhGS+pJgskLcv20KW/b7YLIbI8b6BpwK3ClfOQo4X1pDW8vEy2h/0T+H
+         XWEhAhx/I7af53VtAP4SivnEvz9f/9WWJZq01VR0dmtxybtBBEVjO9GpENg08SnGWalJ
+         /NH+tLza1adfvOw7Wj55GY0uHnK5u5uurjEYcGdBF72cfVhN1Ag9suAfhfZE86bwF9Ks
+         g//GK/9MBKN0ZB+BSjlp/d2Tm2cvcxii9112ibW4owH68tkpFVonBLjp0geC7YZwbkNv
+         4mNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=mC6gBj0kuKVX2cf4bAsxRZgtAWFeJDMdJEm3tu/7KE0=;
+        b=kTjWd42MSykTpBguE0uyEmfPTHpLeFQ/xVZv1phMDFG82tSJXWEhoSDSSCb3ob48qQ
+         NIlrwHcqA5/pdwg0zUh++WNy2sBux4qwz3P7DUjaayC7P1GVYI/pcFGWaOsCZwXVvXk6
+         wTb6ADLsq9FjQmL3UWgar9lWiBW4iMZwPeJ/9vl64/inTyW/gRB0SET3SsOfL9XT3WXy
+         1nm+uXHxdSnL7ALs6M4BDas+hD6La0QYs6b4A+deUkA9cELzLEZVVlUc5ACr/jaHXo0o
+         CH2/acmi88PG/5GJcZVrWHh+vLjGrZCU48nzJubFpITY0WaNMI70Xt8J76Lky8B3xMOo
+         4ccw==
+X-Gm-Message-State: ACgBeo1tcMSi34oJq8rn1bsJciTroEjvGbEtwuyPoEIdumyipT3t9o7E
+        im3h0rlIIVc27qbuCYT0LSI=
+X-Google-Smtp-Source: AA6agR6OO+f6eE3ZKSSjmUojO8RtfbWgx8DaB8WYlp3Dx1ldjtQ//0oSwZmHxWqjfUCx/WFJwFzd2w==
+X-Received: by 2002:a05:6638:2105:b0:34a:694:4fa4 with SMTP id n5-20020a056638210500b0034a06944fa4mr9332943jaj.116.1661720251715;
+        Sun, 28 Aug 2022 13:57:31 -0700 (PDT)
+Received: from fedora.. ([2604:2d80:4d8e:a000:6063:7cd5:2f24:16a6])
+        by smtp.gmail.com with ESMTPSA id k7-20020a02c767000000b00349be1ef390sm3572404jao.121.2022.08.28.13.57.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 28 Aug 2022 13:57:31 -0700 (PDT)
+From:   Joel Selvaraj <joelselvaraj.oss@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH] arm64: dts: qcom: sc7280: Update gpu opp table
-Date:   Mon, 29 Aug 2022 01:10:55 +0530
-Message-ID: <20220829011035.1.Ie3564662150e038571b7e2779cac7229191cf3bf@changeid>
-X-Mailer: git-send-email 2.7.4
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Joel Selvaraj <joelselvaraj.oss@gmail.com>
+Subject: [PATCH v4 0/4] Add support for Xiaomi Poco F1 EBBG variant
+Date:   Sun, 28 Aug 2022 15:57:19 -0500
+Message-Id: <20220828205723.20834-1-joelselvaraj.oss@gmail.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: i1U4dt8QkwNrLXbm3Qn5Sx0retzMZ2cV
-X-Proofpoint-ORIG-GUID: i1U4dt8QkwNrLXbm3Qn5Sx0retzMZ2cV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-28_13,2022-08-25_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- suspectscore=0 adultscore=0 malwarescore=0 clxscore=1015 mlxlogscore=999
- impostorscore=0 phishscore=0 priorityscore=1501 spamscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2207270000
- definitions=main-2208280082
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On the lite sku where GPU Fmax is 550Mhz, voting for a slightly higher
-bandwidth at the highest gpu opp helps to improve "Manhattan offscreen"
-score by 10%. Update the gpu opp table such that this is applicable only
-on SKUs which has 550Mhz as GPU Fmax.
+Changes in v4:
+--------------
+- Update board's compatible and model property to distinguish between the
+two variants. (Suggested by Krzysztof Kozlowski and Marijn Suijten)
+- Update the dt-bindings as per the new compatible values.
+(Fix checkpatch.pl script warnings)
 
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
----
-
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 13d7f26..5a16592 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2352,11 +2352,19 @@
- 					opp-supported-hw = <0x03>;
- 				};
+Changes in v3:
+--------------
+- Approach suggested by Marijn Suijten and Krzysztof Kozlowski to make
+git handle renames more appropriately and to avoid moving large chunks of
+code. Helps with reviewing the patch.
  
--				opp-550000000 {
-+				/* Only applicable for SKUs which has 550Mhz as Fmax */
-+				opp-550000000-0 {
-+					opp-hz = /bits/ 64 <550000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-+					opp-peak-kBps = <8368000>;
-+					opp-supported-hw = <0x01>;
-+				};
-+
-+				opp-550000000-1 {
- 					opp-hz = /bits/ 64 <550000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
- 					opp-peak-kBps = <6832000>;
--					opp-supported-hw = <0x03>;
-+					opp-supported-hw = <0x02>;
- 				};
- 
- 				opp-608000000 {
+Changes in v2:
+--------------
+- Fix issue with builds breaking across multiple commits making git bisect
+harder to find where the rename has happened.
+
+There are two variants of Xiaomi Poco F1.
+- Tianma variant with NOVATEK NT36672A panel + touchscreen manufactured
+  by Tianma
+- EBBG variant with Focaltech FT8719 panel + touchscreen manufactured
+  by EBBG
+
+The current sdm845-xiaomi-beryllium.dts represents Tianma panel variant.
+
+To add support for the EBBG variant:
+------------------------------------
+- Rename sdm845-xiaomi-beryllium.dts to sdm845-xiaomi-beryllium-common.dtsi
+- Generalize the display panel node by assigning label, removing
+compatible property and renaming the panel endpoints to be generic.
+- Create a dts for the Tianma variant called
+sdm845-xiaomi-beryllium-tianma.dts which will inherit the common dtsi and
+set the compatible property for the respective display panel.
+- Adjust the Makefile since the sdm845-xiaomi-beryllium.dts is now called
+sdm845-xiaomi-beryllium-tianma.dts for the tianma variant.
+- Create sdm845-xiaomi-beryllium-ebbg.dts for the EBBG variant which will
+inherit the common dtsi and set the compatible property for the respective
+display panel.
+
+Note:
+-----
+Both the panels are already upstreamed and the split is based on them.
+There were patches earlier for both the touchscreens, but they are not
+accepted in upstream yet. Once they are accepted, we will add them to
+respective variants.
+
+Joel Selvaraj (4):
+  dt-bindings: arm: qcom: update beryllium compatible property
+  arm64: dts: qcom: split beryllium dts into common dtsi and tianma dts
+  dt-bindings: arm: qcom: Add Xiaomi Poco F1 EBBG variant bindings
+  arm64: dts: qcom: sdm845-xiaomi-beryllium-ebbg: introduce Xiaomi Poco
+    F1 EBBG variant
+
+ Documentation/devicetree/bindings/arm/qcom.yaml   |  3 ++-
+ arch/arm64/boot/dts/qcom/Makefile                 |  3 ++-
+ ...um.dts => sdm845-xiaomi-beryllium-common.dtsi} | 11 +++++------
+ .../dts/qcom/sdm845-xiaomi-beryllium-ebbg.dts     | 15 +++++++++++++++
+ .../dts/qcom/sdm845-xiaomi-beryllium-tianma.dts   | 15 +++++++++++++++
+ 5 files changed, 39 insertions(+), 8 deletions(-)
+ rename arch/arm64/boot/dts/qcom/{sdm845-xiaomi-beryllium.dts => sdm845-xiaomi-beryllium-common.dtsi} (98%)
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-ebbg.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
+
 -- 
-2.7.4
+2.37.2
 
