@@ -2,83 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C6BEE5A3A19
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Aug 2022 23:35:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B8CC5A3C48
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Aug 2022 08:42:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229553AbiH0VfM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 27 Aug 2022 17:35:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36092 "EHLO
+        id S231879AbiH1GmX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 28 Aug 2022 02:42:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbiH0VfK (ORCPT
+        with ESMTP id S229527AbiH1GmW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 27 Aug 2022 17:35:10 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34C7E4BD1B
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Aug 2022 14:35:08 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27RLHM2w011783;
-        Sat, 27 Aug 2022 21:35:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Di7OsPcBjNWqFHC5uizMcoPP0R7q15sIlxaS/f6xIG0=;
- b=PsHmuszQU9muJGpDgw/i1BNWWWi7dsODRVKbR2kpVF8q/7/ttTEGsLjl8NZ8UC7MuUQg
- AFQ+F1xE0kJ5xyVdRugBROMGg8uDDwWaAqppElfD7hQreJIcYPhJOjOxsiPK/go6QkGr
- 0TI8wKCD+T0hZHcPm9e+IjDxKNegX6ARHqbJSUe7r1x9TSinhIyfQBOW/GuALbkXuUCz
- O5JmQWYDdUUysQ1REhdqi/8VJ99rbzllxMPknS5JAAJHcBBFXgcZparzFaaAUjpqaNSL
- +9n1SJmJA9I9J479VhG9T9yyn1XY/aNZX3NQTbkQX9GvgpQkvGRL/HWmqEWHsMWwXIqh Gw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j7c1qhe59-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 27 Aug 2022 21:35:01 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27RLZ0fe018335
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 27 Aug 2022 21:35:00 GMT
-Received: from [10.38.245.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Sat, 27 Aug
- 2022 14:34:58 -0700
-Message-ID: <a938b3fc-c7da-bf83-3029-b6724e1d83f6@quicinc.com>
-Date:   Sat, 27 Aug 2022 14:34:56 -0700
+        Sun, 28 Aug 2022 02:42:22 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9247852810
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Aug 2022 23:42:21 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id z25so7192683lfr.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Aug 2022 23:42:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=7Z2MVTrx+8XosRuc2Y0DzRfrNKrAHd0V8sNT4/qug8U=;
+        b=bC/WvUz9U4twqm4fiBe6atLcph822ki9/Z1BrbgAubum7g5pc3U3FgO/4Dr+qe5a5W
+         ogxdI2RbgqBCHMQAB32yB/H2tfrrcQjhFXAPIC8rO8pDSD8l6PSZv7wv63Pupy7vWxoQ
+         d9AdHpGiE559iUnr3NZ6tbgnzv2Nj2gDYmjqPwnNSYLAwYKrzhvmsPs+o5Qx+f2cAINo
+         g/xNZ4nWw9ZNnJb3JqSHJKw1uFnLtH881xJ9/NP0PhHXiGa0p786jgNZ5tRLoWzlp+ZD
+         cXFkKQlttZ+2ksO+6iiVpat5kL25yoe3Snlc+2N3Txvj8FVJIMLLlRg6H0FqkP38FHGE
+         G33w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=7Z2MVTrx+8XosRuc2Y0DzRfrNKrAHd0V8sNT4/qug8U=;
+        b=4h2m1O6To6PnivZ7m5LI8sh/Ph2Zp3JBx020rKJt9C2ogyclClM8dfsHvQzgC5seHw
+         VmvwVJ4T9qqbbSDO31BUjp5URVtQ3fBVPFgKvO8m9lvwj+D1/CbqHyavKBwFx2Ho7lrn
+         PtVFyT9lb7sczxNM0kZIOGv22FbCRrD6ztxQhiuvPtySp2NAKdn45fMt1Na+40VbCaO1
+         BgaKjVqQOSIkgaJdQHeUqCapVlHa8bNVJ1R7xa0Nbe5JESNSVBqyqc2CLCnVEhB7cEl0
+         RqjzU4SgZlP2m1ExSEYmouRK63HNFCn4tW6smE422NcynI6Lj6q71dey/BqRJ/dALUk1
+         ObRA==
+X-Gm-Message-State: ACgBeo3U/teY2PA2ntyWBT7WNZauPl9OXxSZRvMismNObnW9txHkyuuA
+        iIIyvvPlZVdeaLC/+5W5UNMZlA==
+X-Google-Smtp-Source: AA6agR6aO9eEAmoEQbJ9QOzlR7kpGXMXhNDCfgaUE8PDhtLnwFXs0cteoPWquQon+NFPXbIuNYhBOQ==
+X-Received: by 2002:a05:6512:3f06:b0:492:f6b6:ad8b with SMTP id y6-20020a0565123f0600b00492f6b6ad8bmr4517470lfa.544.1661668939899;
+        Sat, 27 Aug 2022 23:42:19 -0700 (PDT)
+Received: from [192.168.0.71] (82.131.98.15.cable.starman.ee. [82.131.98.15])
+        by smtp.gmail.com with ESMTPSA id u15-20020ac2518f000000b00492d064e8f8sm861537lfi.263.2022.08.27.23.42.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 27 Aug 2022 23:42:19 -0700 (PDT)
+Message-ID: <7da2d069-1f42-5e4c-385d-0218b9e97173@linaro.org>
+Date:   Sun, 28 Aug 2022 09:42:18 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [Freedreno] [PATCH v2.5] drm/msm/dsi: switch to DRM_PANEL_BRIDGE
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v3 1/2] dt-bindings: spmi: Drop PWM reg dependency
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     David Airlie <airlied@linux.ie>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>,
-        <freedreno@lists.freedesktop.org>
-References: <0abf1924-485b-8f1c-c8c8-d14dcccc3a27@quicinc.com>
- <20220712132258.671263-1-dmitry.baryshkov@linaro.org>
- <99c1a222-5311-acff-6658-c09d41bd0013@quicinc.com>
- <91f48744-a6fe-d448-4962-9a0d733f752d@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <91f48744-a6fe-d448-4962-9a0d733f752d@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 48IOygwfkSnkP-95ridkVjoQRRjpB6gL
-X-Proofpoint-GUID: 48IOygwfkSnkP-95ridkVjoQRRjpB6gL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-27_10,2022-08-25_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
- phishscore=0 mlxscore=0 suspectscore=0 malwarescore=0 bulkscore=0
- adultscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2208270081
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220827145640.3530878-1-bryan.odonoghue@linaro.org>
+ <20220827145640.3530878-2-bryan.odonoghue@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220827145640.3530878-2-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,182 +77,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 27/08/2022 17:56, Bryan O'Donoghue wrote:
+> The PWM node is not a separate device and is expected to be part of parent
+> SPMI PMIC node, thus it obtains the address space from the parent. One IO
+> address in "reg" is also not correct description because LPG block maps to
+> several regions.
+> 
+> Fixes: 3f5117be9584 ("dt-bindings: mfd: convert to yaml Qualcomm SPMI PMIC")
+> Suggested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 
-On 8/22/2022 10:53 AM, Dmitry Baryshkov wrote:
-> On 15/07/2022 00:54, Abhinav Kumar wrote:
->>
->>
->> On 7/12/2022 6:22 AM, Dmitry Baryshkov wrote:
->>> Currently the DSI driver has two separate paths: one if the next device
->>> in a chain is a bridge and another one if the panel is connected
->>> directly to the DSI host. Simplify the code path by using panel-bridge
->>> driver (already selected in Kconfig) and dropping support for
->>> handling the panel directly.
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>
->>> I'm not sending this as a separate patchset (I'd like to sort out mdp5
->>> first), but more of a preview of changes related to
->>> msm_dsi_manager_ext_bridge_init().
->>>
->>> ---
->>>   drivers/gpu/drm/msm/dsi/dsi.c         |  35 +---
->>>   drivers/gpu/drm/msm/dsi/dsi.h         |  16 +-
->>>   drivers/gpu/drm/msm/dsi/dsi_host.c    |  25 ---
->>>   drivers/gpu/drm/msm/dsi/dsi_manager.c | 283 +++-----------------------
->>>   4 files changed, 36 insertions(+), 323 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/dsi/dsi.c 
->>> b/drivers/gpu/drm/msm/dsi/dsi.c
->>> index 1625328fa430..4edb9167e600 100644
->>> --- a/drivers/gpu/drm/msm/dsi/dsi.c
->>> +++ b/drivers/gpu/drm/msm/dsi/dsi.c
->>> @@ -6,14 +6,6 @@
->>>   #include "dsi.h"
->>>   #include "dsi_cfg.h"
->>> -struct drm_encoder *msm_dsi_get_encoder(struct msm_dsi *msm_dsi)
->>> -{
->>> -    if (!msm_dsi || !msm_dsi_device_connected(msm_dsi))
->>> -        return NULL;
->>> -
->>> -    return msm_dsi->encoder;
->>> -}
->>> -
->>>   bool msm_dsi_is_cmd_mode(struct msm_dsi *msm_dsi)
->>>   {
->>>       unsigned long host_flags = 
->>> msm_dsi_host_get_mode_flags(msm_dsi->host);
->>> @@ -220,7 +212,6 @@ int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, 
->>> struct drm_device *dev,
->>>                struct drm_encoder *encoder)
->>>   {
->>>       struct msm_drm_private *priv;
->>> -    struct drm_bridge *ext_bridge;
->>>       int ret;
->>>       if (WARN_ON(!encoder) || WARN_ON(!msm_dsi) || WARN_ON(!dev))
->>> @@ -254,26 +245,10 @@ int msm_dsi_modeset_init(struct msm_dsi 
->>> *msm_dsi, struct drm_device *dev,
->>>           goto fail;
->>>       }
->>> -    /*
->>> -     * check if the dsi encoder output is connected to a panel or an
->>> -     * external bridge. We create a connector only if we're 
->>> connected to a
->>> -     * drm_panel device. When we're connected to an external bridge, we
->>> -     * assume that the drm_bridge driver will create the connector 
->>> itself.
->>> -     */
->>> -    ext_bridge = msm_dsi_host_get_bridge(msm_dsi->host);
->>> -
->>> -    if (ext_bridge)
->>> -        msm_dsi->connector =
->>> -            msm_dsi_manager_ext_bridge_init(msm_dsi->id);
->>> -    else
->>> -        msm_dsi->connector =
->>> -            msm_dsi_manager_connector_init(msm_dsi->id);
->>> -
->>> -    if (IS_ERR(msm_dsi->connector)) {
->>> -        ret = PTR_ERR(msm_dsi->connector);
->>> +    ret = msm_dsi_manager_ext_bridge_init(msm_dsi->id);
->>> +    if (ret) {
->>>           DRM_DEV_ERROR(dev->dev,
->>>               "failed to create dsi connector: %d\n", ret);
->>> -        msm_dsi->connector = NULL;
->>>           goto fail;
->>>       }
->>> @@ -287,12 +262,6 @@ int msm_dsi_modeset_init(struct msm_dsi 
->>> *msm_dsi, struct drm_device *dev,
->>>           msm_dsi->bridge = NULL;
->>>       }
->>> -    /* don't destroy connector if we didn't make it */
->>> -    if (msm_dsi->connector && !msm_dsi->external_bridge)
->>> -        msm_dsi->connector->funcs->destroy(msm_dsi->connector);
->>> -
->>> -    msm_dsi->connector = NULL;
->>
->>  From what i can see all the usages of msm_dsi->connector are removed 
->> after this change. So can we drop that?
-> 
-> The connector field is dropped from the msm_dsi struct. If you are 
-> asking about the msm_dsi_modeset_init(), we can not drop it since we 
-> require the DRM device with GEM being initialized in order to allocate 
-> DSI DMA buffer. We can think about moving DMA buffer allocation towards 
-> the usage point, however this is definitely a separate commit.
-> 
-> [skipped]
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Yes, got it.
-> 
->>> *msm_dsi_manager_ext_bridge_init(u8 id)
->>>       ret = drm_bridge_attach(encoder, ext_bridge, int_bridge,
->>>               DRM_BRIDGE_ATTACH_NO_CONNECTOR);
->>>       if (ret == -EINVAL) {
->>> -        struct drm_connector *connector;
->>> -        struct list_head *connector_list;
->>> -
->>> -        /* link the internal dsi bridge to the external bridge */
->>> -        drm_bridge_attach(encoder, ext_bridge, int_bridge, 0);
->>> -
->>>           /*
->>> -         * we need the drm_connector created by the external bridge
->>> -         * driver (or someone else) to feed it to our driver's
->>> -         * priv->connector[] list, mainly for msm_fbdev_init()
->>> +         * link the internal dsi bridge to the external bridge,
->>> +         * connector is created by the next bridge.
->>>            */
->>> -        connector_list = &dev->mode_config.connector_list;
->>> +        ret = drm_bridge_attach(encoder, ext_bridge, int_bridge, 0);
->>> +        if (ret < 0)
->>> +            return ret;
->>> +    } else {
->>> +        struct drm_connector *connector;
->>> -        list_for_each_entry(connector, connector_list, head) {
->>> -            if (drm_connector_has_possible_encoder(connector, encoder))
->>> -                return connector;
->>> +        /* We are in charge of the connector, create one now. */
->>> +        connector = drm_bridge_connector_init(dev, encoder);
->>> +        if (IS_ERR(connector)) {
->>> +            DRM_ERROR("Unable to create bridge connector\n");
->>> +            return PTR_ERR(connector);
->>>           }
->>
->> Ok, I understood now. We create the connector using 
->> drm_bridge_connector_init() only when the brige doesnt create one 
->> already.
->>
->> In both cases since now we are leaving the hpd handling to the next 
->> bridge, like I was suggesting, the dsi_hpd_worker() etc can be dropped 
->> now. Because anyway without setting the DRM_CONNECTOR_POLL_HPD, event 
->> will not be sent to usermode.
-> 
-> I've submitted https://patchwork.freedesktop.org/series/107564/ as a 
-> separate change.
-> 
-Thanks for pushing this change, I have R-bed that too.
 
-For this one, now I can
-
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-
->>
->>> -        return ERR_PTR(-ENODEV);
->>> -    }
->>> -
->>> -    connector = drm_bridge_connector_init(dev, encoder);
->>> -    if (IS_ERR(connector)) {
->>> -        DRM_ERROR("Unable to create bridge connector\n");
->>> -        return ERR_CAST(connector);
->>> +        ret = drm_connector_attach_encoder(connector, encoder);
->>> +        if (ret < 0)
->>> +            return ret;
->>>       }
->>> -    drm_connector_attach_encoder(connector, encoder);
->>> +    /* The pipeline is ready, ping encoders if necessary */
->>> +    msm_dsi_manager_set_split_display(id);
->>> -    return connector;
->>> +    return 0;
->>>   }
->>>   void msm_dsi_manager_bridge_destroy(struct drm_bridge *bridge)
-> 
+Best regards,
+Krzysztof
