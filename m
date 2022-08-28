@@ -2,158 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D7235A3E53
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Aug 2022 17:20:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A09D5A3F56
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Aug 2022 21:22:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229851AbiH1PUb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 28 Aug 2022 11:20:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50670 "EHLO
+        id S229701AbiH1TWN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 28 Aug 2022 15:22:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229483AbiH1PUa (ORCPT
+        with ESMTP id S229977AbiH1TWK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 28 Aug 2022 11:20:30 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45071A1BB
-        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Aug 2022 08:20:28 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id z6so8083880lfu.9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Aug 2022 08:20:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=vWIOQpau8zQvC+oLMoO5r2Km1y79obld+jCRMXEUpCM=;
-        b=xT1o18rUcGpZ3RG16y1ykyDsE+uYyBezJ/Yhy2Pmt4LyzuVcJTQ2P+LFPyfrTkF2xh
-         y/bgkHMP6OjtslrEWRI/ME7PAMkXHeRyVTm219hm/cU/3JrH9FQ8cmdJ+/MZe3N5etHX
-         3tus2lT9cr2R/lraI2GbcDAIe/TyIFLa9gvkBEyv0uls207JxPDyVn0FZCwyMwG6ugPe
-         /hL3TO9JZPlTVp+YAsPx4cndE8NqL4duxyWttnruKBBZ8S5cfgRDREqaMM50sSqFeXXK
-         7sDTO6x1TKobNlAxz0fsM2SvD6HdshpqZz+qgpKehUxtU9sHf9yH85Iy078Tl3N8bOvE
-         AKNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=vWIOQpau8zQvC+oLMoO5r2Km1y79obld+jCRMXEUpCM=;
-        b=14gHBG7zMoQCiPEKYhF4iFNxcdGhy/gz0gz59XIXzmg3zN9RzRm6Bpvu48K9NDPXtS
-         3eDpiXegUglCMkebDFQ+9nIzwJIEM6M9knCM9oUNOaAlWdjiihOP0pVQEBwVlXLD14kb
-         7Ce/mrVVrJbaYx1ZPTAhQKMvjIsciyRrTVfa8aZSMbn53CZ3EQdxzJ0x79RBZ3ylJVJ+
-         c7NiOp4jfZRqnK73Karqz9JXfiSVONg1QXBlUsQtXmHf0xB29UwoFotVdXjXnO9zFgVR
-         ioxFgL/rRBb8Hb/yfriWNmvCrY9OWA9UUR2p0C+BwsJ/xm7vKF822dBqm8Asgj24wHAR
-         f/DA==
-X-Gm-Message-State: ACgBeo1l259EI0AIxsfzarRZ4yNzfV9+OrWi4EMA4mVUYXq7qdxm/wpa
-        ClejD47YcYqJcjfDzUnN3Tp00g==
-X-Google-Smtp-Source: AA6agR7ao95Gd2XL1wwjOZr62Pf1iHe0P8rgzdfClnLgH62TbMoV2cQubN9/jy6g3IMS28JGptP+tg==
-X-Received: by 2002:a05:6512:32b6:b0:494:6ab2:b997 with SMTP id q22-20020a05651232b600b004946ab2b997mr772250lfe.193.1661700026700;
-        Sun, 28 Aug 2022 08:20:26 -0700 (PDT)
-Received: from [192.168.0.71] (82.131.98.15.cable.starman.ee. [82.131.98.15])
-        by smtp.gmail.com with ESMTPSA id v28-20020ac25b1c000000b00492d09aed44sm971777lfn.195.2022.08.28.08.20.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 28 Aug 2022 08:20:25 -0700 (PDT)
-Message-ID: <b188b3fe-cc35-f902-b316-0c1632893e9d@linaro.org>
-Date:   Sun, 28 Aug 2022 18:20:21 +0300
+        Sun, 28 Aug 2022 15:22:10 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E431B248EE;
+        Sun, 28 Aug 2022 12:22:06 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27SJKtPn008995;
+        Sun, 28 Aug 2022 19:21:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=sDjRq8TtTtOhhdLNcU6fwDRQqh6Cf4gWnhHDwyUoa78=;
+ b=bg3Lrxj5COkokA0UNDOef+YLeepRPt/QwPZ2GIWO9WKQJxHdi8RzoDsDeZbYCw7ToMSr
+ 9a6vW/K6f+pxhZHgCF+Mqb/oB+1N4yMP3kXHIQ8v2Q4A6GyNiYzBVeI0KUCImEUllTrg
+ QN1rEerD+LH89WCLt8U5jXJk1wK5kndNPLtkHEaz1Bw5x3PQvosuFCluQ9wxs3kpVwDY
+ Big6BmzYwLTADdAnXjY8EMOTaTqmwzUsCkfp9RX3exMPE1thy2s3ijeII03cfAuwWlEC
+ 2xgdUr76SehKwfg1w+YCLY9NqsWIp2HM3EOA1QScalUK8VYrtJfi0HED7kpwzdKwgxf2 og== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j7cjf2m84-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 28 Aug 2022 19:21:46 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27SJLjtt031198
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 28 Aug 2022 19:21:45 GMT
+Received: from hyd-lnxbld559.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Sun, 28 Aug 2022 12:21:38 -0700
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+To:     freedreno <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Stephen Boyd" <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <krzysztof.kozlowski@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        "Abhinav Kumar" <quic_abhinavk@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        "Daniel Vetter" <daniel@ffwll.ch>, David Airlie <airlied@linux.ie>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <sboyd@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v5 0/6] clk/qcom: Support gdsc collapse polling using 'reset' interface
+Date:   Mon, 29 Aug 2022 00:51:13 +0530
+Message-ID: <1661714479-28981-1-git-send-email-quic_akhilpo@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH 09/11] dt-bindings: PCI: qcom-ep: Define clocks per
- platform
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        lpieralisi@kernel.org, robh@kernel.org, andersson@kernel.org
-Cc:     kw@linux.com, bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
-        dmitry.baryshkov@linaro.org
-References: <20220826181923.251564-1-manivannan.sadhasivam@linaro.org>
- <20220826181923.251564-10-manivannan.sadhasivam@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220826181923.251564-10-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: mc4o8glu7q703h3L4d1-ddhZaMgHzsFL
+X-Proofpoint-ORIG-GUID: mc4o8glu7q703h3L4d1-ddhZaMgHzsFL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-28_12,2022-08-25_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
+ priorityscore=1501 mlxlogscore=999 phishscore=0 lowpriorityscore=0
+ bulkscore=0 suspectscore=0 adultscore=0 malwarescore=0 spamscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2208280080
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/08/2022 21:19, Manivannan Sadhasivam wrote:
-> In preparation of adding the bindings for future SoCs, let's define the
-> clocks per platform.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  .../devicetree/bindings/pci/qcom,pcie-ep.yaml | 46 +++++++++++--------
->  1 file changed, 27 insertions(+), 19 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> index b728ede3f09f..83a2cfc63bc1 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> @@ -9,9 +9,6 @@ title: Qualcomm PCIe Endpoint Controller binding
->  maintainers:
->    - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->  
-> -allOf:
-> -  - $ref: "pci-ep.yaml#"
-> -
->  properties:
->    compatible:
->      const: qcom,sdx55-pcie-ep
-> @@ -35,24 +32,12 @@ properties:
->        - const: mmio
->  
->    clocks:
-> -    items:
-> -      - description: PCIe Auxiliary clock
-> -      - description: PCIe CFG AHB clock
-> -      - description: PCIe Master AXI clock
-> -      - description: PCIe Slave AXI clock
-> -      - description: PCIe Slave Q2A AXI clock
-> -      - description: PCIe Sleep clock
-> -      - description: PCIe Reference clock
-> +    minItems: 7
-> +    maxItems: 7
->  
->    clock-names:
-> -    items:
-> -      - const: aux
-> -      - const: cfg
-> -      - const: bus_master
-> -      - const: bus_slave
-> -      - const: slave_q2a
-> -      - const: sleep
-> -      - const: ref
-> +    minItems: 7
-> +    maxItems: 7
->  
->    qcom,perst-regs:
->      description: Reference to a syscon representing TCSR followed by the two
-> @@ -112,6 +97,29 @@ required:
->    - reset-names
->    - power-domains
->  
-> +allOf:
-> +  - $ref: "pci-ep.yaml#"
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,sdx55-pcie-ep
-> +    then:
-> +      properties:
-> +        clocks:
-> +          minItems: 7
-> +          maxItems: 7
 
-One more thing - the previous way of describing items is more readable
-instead of names followed by a comment, so I propose to keep it. This
-applies also to patch 10.
+Some clients like adreno gpu driver would like to ensure that its gdsc
+is collapsed at hardware during a gpu reset sequence. This is because it
+has a votable gdsc which could be ON due to a vote from another subsystem
+like tz, hyp etc or due to an internal hardware signal. To allow
+this, gpucc driver can expose an interface to the client driver using
+reset framework. Using this the client driver can trigger a polling within
+the gdsc driver.
 
-Best regards,
-Krzysztof
+This series is rebased on top of linus's master branch.
+
+Related discussion: https://patchwork.freedesktop.org/patch/493144/
+
+Changes in v5:
+- Nit: Remove a duplicate blank line (Krzysztof)
+
+Changes in v4:
+- Update gpu dt-binding schema
+- Typo fix in commit text
+
+Changes in v3:
+- Use pointer to const for "struct qcom_reset_ops" in qcom_reset_map (Krzysztof)
+
+Changes in v2:
+- Return error when a particular custom reset op is not implemented. (Dmitry)
+
+Akhil P Oommen (6):
+  dt-bindings: clk: qcom: Support gpu cx gdsc reset
+  clk: qcom: Allow custom reset ops
+  clk: qcom: gdsc: Add a reset op to poll gdsc collapse
+  clk: qcom: gpucc-sc7280: Add cx collapse reset support
+  dt-bindings: drm/msm/gpu: Add optional resets
+  arm64: dts: qcom: sc7280: Add Reset support for gpu
+
+ .../devicetree/bindings/display/msm/gpu.yaml       |  6 +++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |  3 +++
+ drivers/clk/qcom/gdsc.c                            | 23 ++++++++++++++----
+ drivers/clk/qcom/gdsc.h                            |  7 ++++++
+ drivers/clk/qcom/gpucc-sc7280.c                    | 10 ++++++++
+ drivers/clk/qcom/reset.c                           | 27 ++++++++++++++++++++++
+ drivers/clk/qcom/reset.h                           |  8 +++++++
+ include/dt-bindings/clock/qcom,gpucc-sc7280.h      |  3 +++
+ 8 files changed, 83 insertions(+), 4 deletions(-)
+
+-- 
+2.7.4
+
