@@ -2,47 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 639CF5A57D3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 01:47:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 34FB05A57D5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 01:47:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229777AbiH2Xqg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Aug 2022 19:46:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34644 "EHLO
+        id S229717AbiH2Xqb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Aug 2022 19:46:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229651AbiH2Xqa (ORCPT
+        with ESMTP id S229655AbiH2XqY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Aug 2022 19:46:30 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 125E699275;
-        Mon, 29 Aug 2022 16:46:24 -0700 (PDT)
+        Mon, 29 Aug 2022 19:46:24 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E17E98588;
+        Mon, 29 Aug 2022 16:46:23 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id ED7D6CE16CF;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A752C61388;
         Mon, 29 Aug 2022 23:46:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD7EDC433C1;
-        Mon, 29 Aug 2022 23:46:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 752EDC433D7;
+        Mon, 29 Aug 2022 23:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661816781;
-        bh=4ZaELrMBK58SC+pH3H3x8zk8Iwfn8L+wtlnGDw4Gjno=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=MZqE6cquW4uQq+qS454R+AeE3B19tLdPpufishZOsvJdhYE8YkaGt3+pB6KyiAuLJ
-         WJnegcsdpI58jZOcmydpLlufdP+rQaKJ+bdkLN7qxlFbw2S/bpfPjUYfWSU2TcIsz/
-         HOXxcw4/+5gpLAi7Gs/qd99hqUeVGKpBU6BhrU/jcHmzJKTSbSUZ2Dp5TVEzuAISLc
-         V6BcLN9dHLhg+uhhPxWxTY9h3ibGIYmanR4Bo6Vi+WceDD3lctxEKxfSdDce6ToP45
-         7Uzaple5hvv0KHEVeRFK6zlCV73PKh4ZbcYFlNWPQE6MLzTSClm/VRSSiBmWdxWuvn
-         IQD+y4rVhpSHA==
+        s=k20201202; t=1661816782;
+        bh=QVaf2ue7rS2/KW2MEYsbOa8mov9wyGulpZZV3uEQCMo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=udwLe6vzml7QcPwXO2cIuPXu5XRo5PE55iGm+k3x0SnchoGhpn+wIDZopvjd0cXCy
+         sBCZpWQH5qJyCcqjoi8HzmqHAbmAL6E3JvhbfIs1+4Szdm0p6Qfuk61lF+xolJl2jE
+         YKXxhDodUMqib3MzvdK614DhaB21gFXWIbRmsr7P/1POmHKwbgb46Fth74s+NtXn3p
+         CLbtxkch72OrdrcHhjEsJPo9ND1rUlOax46YJPHEBge/EzxkQQfhctxox7uvbuQBlr
+         Pf3h1f5pLygOf8cLPHHQLrFwuqWGg4bPY10J93gAzZVgggM80ki3IQR0JZIqxRd1Q1
+         jOTvnPKEdwO/Q==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     bryan.odonoghue@linaro.org, linux-arm-msm@vger.kernel.org,
-        robh+dt@kernel.org, konrad.dybcio@somainline.org,
-        devicetree@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        agross@kernel.org
-Subject: Re: (subset) [PATCH v4 0/2] arm64: dts: qcom: pwm: Drop PWM reg dependency
-Date:   Mon, 29 Aug 2022 18:45:43 -0500
-Message-Id: <166181675987.322065.8296651935482445190.b4-ty@kernel.org>
+To:     cgel.zte@gmail.com, krzysztof.kozlowski@linaro.org
+Cc:     zealci@zte.com.cn, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, cui.jinpeng2@zte.com.cn,
+        konrad.dybcio@somainline.org, agross@kernel.org
+Subject: Re: [PATCH linux-next] soc: qcom: icc-bwmon: remove redundant ret variable
+Date:   Mon, 29 Aug 2022 18:45:44 -0500
+Message-Id: <166181675990.322065.10141952054506036858.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20220828132648.3624126-1-bryan.odonoghue@linaro.org>
-References: <20220828132648.3624126-1-bryan.odonoghue@linaro.org>
+In-Reply-To: <20220823133620.211902-1-cui.jinpeng2@zte.com.cn>
+References: <20220823133620.211902-1-cui.jinpeng2@zte.com.cn>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -56,21 +56,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 28 Aug 2022 14:26:46 +0100, Bryan O'Donoghue wrote:
-> V4:
-> - Churn patch#1 prefix to "dt-bindings: mfd: qcom,spmi-pmic:" - Krzysztof
-> - Add's Krzysztof's RB as indicated
+On Tue, 23 Aug 2022 13:36:20 +0000, cgel.zte@gmail.com wrote:
+> From: Jinpeng Cui <cui.jinpeng2@zte.com.cn>
 > 
-> V3:
-> - Splits dtsi and yaml
-> - Uses Krzysztof's suggested commit log in the yaml
+> Return value from devm_regmap_field_bulk_alloc() directly
+> instead of taking this in another redundant variable.
 > 
-> [...]
+> 
 
 Applied, thanks!
 
-[2/2] arm64: dts: qcom: pm8350c: Drop PWM reg declaration
-      commit: eeca7d46217ccfe9289530e959c0fb29190af0d6
+[1/1] soc: qcom: icc-bwmon: remove redundant ret variable
+      commit: 7eb89c17abd2574f627c1277a15f6ff64bec33a4
 
 Best regards,
 -- 
