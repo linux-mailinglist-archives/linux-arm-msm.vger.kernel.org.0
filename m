@@ -2,102 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B7C05A500A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Aug 2022 17:18:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A97D5A509B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Aug 2022 17:49:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229958AbiH2PR6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Aug 2022 11:17:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40386 "EHLO
+        id S230127AbiH2PtF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Aug 2022 11:49:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229972AbiH2PRz (ORCPT
+        with ESMTP id S230105AbiH2Pss (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Aug 2022 11:17:55 -0400
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9403E83051;
-        Mon, 29 Aug 2022 08:17:53 -0700 (PDT)
-Received: by mail-pg1-x52d.google.com with SMTP id q9so7976661pgq.6;
-        Mon, 29 Aug 2022 08:17:53 -0700 (PDT)
+        Mon, 29 Aug 2022 11:48:48 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E047496FEF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 08:48:45 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id 76so8592921pfy.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 08:48:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:subject:cc:to:from:from:to:cc;
-        bh=4S4aGCSHz4Vj3kjY4xlroZ+QjJu7qG4QBgfFBofR0ts=;
-        b=JoRczjGA3zzSk5TZIELeyYloCSmHhwFfAPIygEhaYOnBbROWLsCRTyFxEBbfaziVMa
-         0Y4Y77U1wlXpIqHC9RL7lAXt5yNFBy1u+xcfKXurOLsyB8hAPGVbDw9/MCPK1yv+CZpk
-         zAX4l+VB/ptzOHy3x//ZOp6tUrLXoqoPPqvqhxzTZkMPtfDkewsceDNjCgfhZ3wMDBQA
-         2GQ+P7gFs5aazOhz2M1gejXib7f4lGXcTD66ze38i/hWSJhbdUbB10yLUORXooAKSx5U
-         KgL9XspHkYdC1PQ97Skmjcbe29NQ1f9pwvZzRUVT0HPKbILNVNGUQwE3nlK6M6Ie14rg
-         zrGQ==
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=na4Sz6ydBh+nZpxq8SeQ1xRZ15weaLtAwe8pYhePWlQ=;
+        b=H/eRX2JHvSXkJJdPhRyEMhQay0u6/v3VJlRvqkaDLiX8aJ6JB7wbr4mxi+2Hg8Zqq2
+         wgLgAmJXNSfZkyqAt8UqbVi05AVmdK3lK97m7KyVzKSpBzumTNyZkR/NnebO0Hu6YIPp
+         9b+cAaCUPnMbmsKwimPuYHnbQdWH5PoHWBToQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=4S4aGCSHz4Vj3kjY4xlroZ+QjJu7qG4QBgfFBofR0ts=;
-        b=K60KZqgwINqJhvHjIMSR9HGAeomY+UHXdQl9fEahOZqtUtmhZEMuOHnuLp0TiWMiYp
-         abFPVqG9MRsIsl63o0ghBlnu0XNTjLGGuZwFNCsYkbm9TQUsHSUPcoPlHyaWy1i2YDjh
-         QOF/Ln+5aOAN2IqnqzqJWBB6jyXgZrk7vSSC0kYL60UsAe7m9QgpBLtssqHJUsikLB87
-         SrG5nX3mbl3rG9PTn7g1sS5P48BKzlbpVG0gR/EXus4Z9Ir/dDycirWLW5WS1SAzb1zL
-         jTuzdhxhlzahyHwi/GCNF3nROr1ksto/4dc/SaflgiemysVqjWceCehxawEtRS7gENFC
-         ErDA==
-X-Gm-Message-State: ACgBeo0CHOFdhFXuHVvIvIShZ/ZGl0PwxKe2yKFDYO67tlXoQVRcBSg/
-        o4N6QqtzhJSP0OuwoP5wlcQ=
-X-Google-Smtp-Source: AA6agR5vifeItEAfN0UZDd0WAe9m4uHYdSPgZeCJrcltqBgUdjQC7kVm47B8ZrzYzmR1KtI2xKehZg==
-X-Received: by 2002:a63:d84f:0:b0:428:ee87:3769 with SMTP id k15-20020a63d84f000000b00428ee873769mr14551052pgj.212.1661786272995;
-        Mon, 29 Aug 2022 08:17:52 -0700 (PDT)
-Received: from localhost.localdomain ([182.160.5.243])
-        by smtp.gmail.com with ESMTPSA id cp10-20020a170902e78a00b001750361f42dsm611279plb.125.2022.08.29.08.17.51
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=na4Sz6ydBh+nZpxq8SeQ1xRZ15weaLtAwe8pYhePWlQ=;
+        b=4bbnDwZ2DpwFI3yAbBQkS11dm2FmyrH+ynUUkx1imnSLOhm9gIEdfrpqDbUnwkWGXK
+         KB4FnD0xptxv97XWNrMgd6PDxsjUdlg1V19WpSjTqD4ROo1Un8iBNxXh8155NE3Z6Tun
+         LuVPu4YwTRpcWvYswVyKMwAdl1LHgMDC1YpoHRB7ht33XQSz9kZY0T9g38zvU4FkW9fg
+         w3nZ6bg1gWX3xs+2OxWmv451En69AUTUSIDNEadnoCFH+A+Ev5qOKKvDnmVxtP63rAkV
+         p9GYTpaX+LiD9/vT0MXP06zRmnm1RJ0UX4+6QezugZEVheglPK0PEz7C5vgF7vym8YpO
+         ykvg==
+X-Gm-Message-State: ACgBeo3QbmefftjuvrDJyCuKLZiR6iAl5N8fu+O34wcORLp+2Nmm24kp
+        AaWsTtVP3bfSxcMFD79BsGIhAw==
+X-Google-Smtp-Source: AA6agR4OlrDGaxJKjoSqkWkpMpmBcD7IFDvSgoFmuuKaAuO4Q139yyfrGB75m7gKoFe16R1J0A8/wA==
+X-Received: by 2002:a63:4558:0:b0:429:b6e6:6638 with SMTP id u24-20020a634558000000b00429b6e66638mr14377601pgk.83.1661788124956;
+        Mon, 29 Aug 2022 08:48:44 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:3a97:5017:7e33:8964])
+        by smtp.gmail.com with ESMTPSA id x196-20020a6286cd000000b00536816c0d4asm7613191pfd.147.2022.08.29.08.48.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Aug 2022 08:17:52 -0700 (PDT)
-From:   Tuo Cao <91tuocao@gmail.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, vkoul@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, 91tuocao@gmail.com
-Subject: [RESEND] dmaengine: qcom: gpi: move read_lock_bh to read_lock in tasklet
-Date:   Mon, 29 Aug 2022 23:16:59 +0800
-Message-Id: <20220829151659.6071-1-91tuocao@gmail.com>
-X-Mailer: git-send-email 2.17.1
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Mon, 29 Aug 2022 08:48:44 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Jimmy Chen <jinghung.chen3@hotmail.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] dt-bindings: arm: qcom: Adjust LTE SKUs for sc7280-villager
+Date:   Mon, 29 Aug 2022 08:48:23 -0700
+Message-Id: <20220829084732.1.I9ef7f8b909a7afbef9ff2251a98c67033f37b516@changeid>
+X-Mailer: git-send-email 2.37.2.672.g94769d06f0-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It has already disabled softirq in a tasklet,so it is unnecessary to
-call read_lock_bh in a tasklet.
+There have been a few changes since the patch ("dt-bindings: arm:
+qcom: document sc7280 and villager board").
+* New firmware reports LTE boards as "SKU 512" now. Old firmware will
+  still report "SKU 0", but that's all pre-production and everyone
+  will update.
+* It's been relaized that no "-rev0" boards were ever built that were
+  WiFi-only. Thus we don't two entries for -rev0.
 
-Signed-off-by: Tuo Cao <91tuocao@gmail.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
- drivers/dma/qcom/gpi.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+This builds upon the patch ("dt-bindings: arm: qcom: document sc7280
+and villager board") which hasn't landed yet. In theory this could be
+squashed into that patch.
 
-diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-index 8f0c9c4e2efd..236005f7dd30 100644
---- a/drivers/dma/qcom/gpi.c
-+++ b/drivers/dma/qcom/gpi.c
-@@ -1150,9 +1150,9 @@ static void gpi_ev_tasklet(unsigned long data)
- {
- 	struct gpii *gpii = (struct gpii *)data;
+ Documentation/devicetree/bindings/arm/qcom.yaml | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 8e46a3c5160f..40705e2d56de 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -582,14 +582,9 @@ properties:
+           - const: google,villager
+           - const: qcom,sc7280
  
--	read_lock_bh(&gpii->pm_lock);
-+	read_lock(&gpii->pm_lock);
- 	if (!REG_ACCESS_VALID(gpii->pm_state)) {
--		read_unlock_bh(&gpii->pm_lock);
-+		read_unlock(&gpii->pm_lock);
- 		dev_err(gpii->gpi_dev->dev, "not processing any events, pm_state:%s\n",
- 			TO_GPI_PM_STR(gpii->pm_state));
- 		return;
-@@ -1163,7 +1163,7 @@ static void gpi_ev_tasklet(unsigned long data)
+-      - description: Google Villager with LTE (rev0)
+-        items:
+-          - const: google,villager-rev0-sku0
+-          - const: qcom,sc7280
+-
+       - description: Google Villager with LTE (newest rev)
+         items:
+-          - const: google,villager-sku0
++          - const: google,villager-sku512
+           - const: qcom,sc7280
  
- 	/* enable IEOB, switching back to interrupts */
- 	gpi_config_interrupts(gpii, MASK_IEOB_SETTINGS, 1);
--	read_unlock_bh(&gpii->pm_lock);
-+	read_unlock(&gpii->pm_lock);
- }
- 
- /* marks all pending events for the channel as stale */
+       - items:
 -- 
-2.17.1
+2.37.2.672.g94769d06f0-goog
 
