@@ -2,56 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C805F5A56E7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 00:16:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C3755A5703
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 00:21:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229744AbiH2WP7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Aug 2022 18:15:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49066 "EHLO
+        id S229792AbiH2WU7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Aug 2022 18:20:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229646AbiH2WP5 (ORCPT
+        with ESMTP id S229652AbiH2WU6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Aug 2022 18:15:57 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56ADD6B8D2;
-        Mon, 29 Aug 2022 15:15:56 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 16E00B81366;
-        Mon, 29 Aug 2022 22:15:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03645C433C1;
-        Mon, 29 Aug 2022 22:15:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661811353;
-        bh=dpIHaDhHoFKo6/MX17tyLWkh2Hv4zXMxhNZYFsjlI8E=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=T/ro6VFr/E6qnli6n/2RvedLyGFJYeUxe/qF8oNM8LibI3OHdZtf6Av34FZw9iu8U
-         /2bZ8AUNKcKTMHfsy7KVa541trWvPnJJlDOcMiXFMdfwT42MiDBqYlj2AyM8BScpHI
-         V49MSgwMv7BAmctKPdl+y60x2joaN//KD0AGXastMO+3pjgQGAic+fP7IBCBCCxab4
-         WCEiKsj4J/y5BxW312xEm5qgtzh+mG4g+/NlG9GEsjc9wafh4bOPWoV4Q8ZKToC1Ef
-         WjZ+kKT4Wg7wA2812ToPp0Id5dat8vHPhf80HmTznNlNSOX5SAKWUq8+2OtT/Mq3EX
-         qLQtQXsGibgWg==
-Date:   Mon, 29 Aug 2022 17:15:51 -0500
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-pm@vger.kernel.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, linux-arm-msm@vger.kernel.org,
-        daniel.lezcano@linaro.org, robh+dt@kernel.org, rafael@kernel.org,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>
-Subject: Re: [PATCH v3 1/4] firmware: qcom: scm: Add support for tsens reinit
- workaround
-Message-ID: <20220829221551.uch6jdtaglzebu23@builder.lan>
-References: <20220804054638.3197294-1-bhupesh.sharma@linaro.org>
- <20220804054638.3197294-2-bhupesh.sharma@linaro.org>
+        Mon, 29 Aug 2022 18:20:58 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCC5C79EDC
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 15:20:56 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id jm11so9295973plb.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 15:20:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc;
+        bh=GZQU1toz3ycN5Zt/1Eu0mxxDza6a6KDCxHuVJeEjjL8=;
+        b=MSyeXDHLV3z2ql45vC6CoxQPhs2hxu5q3AA/iykDc9FHnhfpIO2pUKfJLYcHwqxwUi
+         M9tVaeZaP4kNNHECZZ8wX6CmVRtYykgJFgD3SdUstjtKxomc1fNFfyRS9jcnZfxWYc9q
+         v+JR6id643YDf34sJ1S+DjakhAxGq6L7VFA5A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=GZQU1toz3ycN5Zt/1Eu0mxxDza6a6KDCxHuVJeEjjL8=;
+        b=0VS2vafXccn8G8k6xfSRYuvk4YD9CewBJYFwY5r34Lgsd66gsjMO5LGr/V+RPbsVdL
+         btILAzwbFz/8zeS55F0tKyJ7tpT9Ul/lku20N5tl7bj2255LuLuDq7zfzKmcSL8r3WuI
+         +vkVuD6CmeTZEmtxdHC2b1dFMT2dFdig3//GTjG7owh3FUoRlYIcp9ESDAN/CpOhAPrG
+         ky8yI5Sdt+0sB7i+egKivsVCDiSjxL8JK+hpjq5i8biZ+Dp7yF944xdyD/WUDyI/2lF9
+         LX0WsCZYrGnaciRLDnq7b5CBEv6UXtCqYfXEIAcNM9PnpLOiqglRLcnWe2Ktl5pIgQU3
+         Bzuw==
+X-Gm-Message-State: ACgBeo0BWskUq/bZZlhA/z18DXp++g7KwrhG/lzhjTzrqgpfV1elPyx9
+        50VxjIGsBvkBnoSpYOzQT30tzQ==
+X-Google-Smtp-Source: AA6agR6c9g7Nyz6O6x1hoea9yovYOCtSBeyl9hnQDbWQrL3PikuXpJjslImkJiXbGqsIwuAcgPtbjw==
+X-Received: by 2002:a17:90b:1d89:b0:1f5:a59:46b1 with SMTP id pf9-20020a17090b1d8900b001f50a5946b1mr20255688pjb.173.1661811656285;
+        Mon, 29 Aug 2022 15:20:56 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:49ac:6e1:90a2:a0e0])
+        by smtp.gmail.com with UTF8SMTPSA id q4-20020a170902dac400b00174d4fabe76sm2565764plx.214.2022.08.29.15.20.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Aug 2022 15:20:55 -0700 (PDT)
+Date:   Mon, 29 Aug 2022 15:20:53 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Judy Hsiao <judyhsiao@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Jimmy Cheng-Yi Chiang <cychiang@google.com>,
+        Judy Hsiao <judyhsiao@google.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        Satya Priya <quic_c_skakit@quicinc.com>
+Subject: Re: [PATCH v4] arm64: dts: qcom: sc7280: Fix Dmic no sound on
+ villager-r1
+Message-ID: <Yw07xSlVpQcXDqe7@google.com>
+References: <20220826065621.2255795-1-judyhsiao@chromium.org>
+ <CAD=FV=VrgrvJb_sJ8AO6pN8dRNXzzOJ9WvngeJrtVYw_wD1Akg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220804054638.3197294-2-bhupesh.sharma@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <CAD=FV=VrgrvJb_sJ8AO6pN8dRNXzzOJ9WvngeJrtVYw_wD1Akg@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -60,89 +81,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 04, 2022 at 11:16:35AM +0530, Bhupesh Sharma wrote:
-> Some versions of Qualcomm tsens controller might enter a
-> 'bad state' while running stability tests causing sensor
-> temperatures/interrupts status to be in an 'invalid' state.
+On Fri, Aug 26, 2022 at 10:14:58AM -0700, Doug Anderson wrote:
+> Hi,
 > 
-> It is recommended to re-initialize the tsens controller
-> via trustzone (secure registers) using scm call(s) when that
-> happens.
+> On Thu, Aug 25, 2022 at 11:56 PM Judy Hsiao <judyhsiao@chromium.org> wrote:
+> >
+> > Fix the DMIC no sound issue of villager-r1 by using "PP1800_L2C" as the
+> > DMIC power source to match the hardware schematic.
+> >
+> > This patch:
+> >    1. set vdd-micb-supply to PP1800_L2C as the MIC Bias voltage regulator.
+> >    2. In audio-routing, set VA DMIC01~VA DMIC03 to use the vdd-micb-supply
+> >       setting.
+> >
+> > Co-developed-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> > Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
+> > ---
+> > Changes since V3:
+> >   -- Update the commit message and fix extra blank line.
+> > Changes since V2:
+> >   -- Update the commit message.
+> > Changes since V1:
+> >   -- Update the commit message.
+> >
+> > This patch depends on:
+> > arm64: dts: qcom: sc7280: Add herobrine-villager-r1. [1]
+> >
+> > [1] https://patchwork.kernel.org/patch/12929106
 > 
-> Add support for the same in the qcom_scm driver.
+> After applying your [1] then your patch applies without merge
+> conflicts. However, it still doesn't compile. You also depend on
+> whatever patch adds the nodes "lpass_va_macro" and "sound" since
+> you're referencing them in your patch. I haven't been keeping track of
+> the latest status of all the audio patches, so I myself can't point to
+> exactly what patches you depend on and whether those patches are ready
+> to land.
 > 
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Amit Kucheria <amitk@kernel.org>
-> Cc: Thara Gopinath <thara.gopinath@gmail.com>
-> Cc: linux-pm@vger.kernel.org
-> Cc: linux-arm-msm@vger.kernel.org
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  drivers/firmware/qcom_scm.c | 15 +++++++++++++++
->  drivers/firmware/qcom_scm.h |  4 ++++
->  include/linux/qcom_scm.h    |  2 ++
->  3 files changed, 21 insertions(+)
+> In any case, the contents of this patch seem OK assuming the dependent
+> patches cause something that looks like the current (downstream)
+> chromeos-5.15 tree.
 > 
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index cdbfe54c8146..93adcc046a62 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -858,6 +858,21 @@ int qcom_scm_mem_protect_video_var(u32 cp_start, u32 cp_size,
->  }
->  EXPORT_SYMBOL(qcom_scm_mem_protect_video_var);
->  
-> +int qcom_scm_tsens_reinit(void)
-> +{
-> +	int ret;
-> +	const struct qcom_scm_desc desc = {
-> +		.svc = QCOM_SCM_SVC_TSENS,
-> +		.cmd = QCOM_SCM_TSENS_INIT_ID,
-> +	};
-> +	struct qcom_scm_res res;
-> +
-> +	ret = qcom_scm_call(__scm->dev, &desc, &res);
-> +
-> +	return ret ? : res.result[0];
-> +}
-> +EXPORT_SYMBOL(qcom_scm_tsens_reinit);
-> +
->  static int __qcom_scm_assign_mem(struct device *dev, phys_addr_t mem_region,
->  				 size_t mem_sz, phys_addr_t src, size_t src_sz,
->  				 phys_addr_t dest, size_t dest_sz)
-> diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
-> index 0d51eef2472f..495fa00230c7 100644
-> --- a/drivers/firmware/qcom_scm.h
-> +++ b/drivers/firmware/qcom_scm.h
-> @@ -94,6 +94,10 @@ extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
->  #define QCOM_SCM_PIL_PAS_IS_SUPPORTED	0x07
->  #define QCOM_SCM_PIL_PAS_MSS_RESET	0x0a
->  
-> +/* TSENS Services and Function IDs */
-> +#define QCOM_SCM_SVC_TSENS		0x1E
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
-It would be nice if this 'E' was lowercase.
+To my best knowledge the dependencies of the audio mess are (roughly in
+order):
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Add support for audio clock gating resets for SC7280 (v8)
+https://patchwork.kernel.org/project/linux-arm-msm/list/?series=671887
+  ready to land? (patch 2 has a minor comment about SoB tag)
 
-Thanks,
-Bjorn
+Add DT support for audio clock gating resets for SC7280 (v4)
+https://patchwork.kernel.org/project/linux-arm-msm/list/?series=666480
+  ready to land after dependencies land
 
-> +#define QCOM_SCM_TSENS_INIT_ID		0x5
-> +
->  #define QCOM_SCM_SVC_IO			0x05
->  #define QCOM_SCM_IO_READ		0x01
->  #define QCOM_SCM_IO_WRITE		0x02
-> diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
-> index f8335644a01a..5c37e1658cef 100644
-> --- a/include/linux/qcom_scm.h
-> +++ b/include/linux/qcom_scm.h
-> @@ -124,4 +124,6 @@ extern int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
->  extern int qcom_scm_lmh_profile_change(u32 profile_id);
->  extern bool qcom_scm_lmh_dcvsh_available(void);
->  
-> +extern int qcom_scm_tsens_reinit(void);
-> +
->  #endif
-> -- 
-> 2.35.3
-> 
+Add soundcard support for sc7280 based platforms (v14)
+https://patchwork.kernel.org/project/linux-arm-msm/list/?series=657417
+  ready to land after dependencies land
+
+Add dtsi for sc7280 herobrine boards that using rt5682 codec (v3)
+https://patchwork.kernel.org/project/linux-arm-msm/list/?series=644812
+  ready to land after dependencies land
+
+Add new board revision and LTE SKUs for sc7280-villager family (v8)
+https://patchwork.kernel.org/project/linux-arm-msm/list/?series=663014
+  ready to land after dependencies land
+
+arm64: dts: qcom: sc7280: Fix Dmic no sound on villager-r1 (v4)
+https://patchwork.kernel.org/project/linux-arm-msm/patch/20220826065621.2255795-1-judyhsiao@chromium.org/
+  ready to land after dependencies land
+
+So it looks like things are generally ready to land, unless [1] needs a
+re-spin to fix the SoB tag.
+
+m.
+
+[1] https://patchwork.kernel.org/project/linux-arm-msm/patch/1661754153-14813-3-git-send-email-quic_c_skakit@quicinc.com/
