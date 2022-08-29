@@ -2,63 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD23E5A45CA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Aug 2022 11:13:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AADB05A4BDC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Aug 2022 14:31:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229664AbiH2JNv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Aug 2022 05:13:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37008 "EHLO
+        id S229982AbiH2MbF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Aug 2022 08:31:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229657AbiH2JNu (ORCPT
+        with ESMTP id S230466AbiH2Mac (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Aug 2022 05:13:50 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8414C5A888;
-        Mon, 29 Aug 2022 02:13:49 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Mon, 29 Aug 2022 08:30:32 -0400
+Received: from ixit.cz (ip-94-112-206-30.bb.vodafone.cz [94.112.206.30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46742B4EAA;
+        Mon, 29 Aug 2022 05:14:38 -0700 (PDT)
+Received: from [10.0.0.163] (_gateway [10.0.0.1])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 0E383B80DD6;
-        Mon, 29 Aug 2022 09:13:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3DEDC433C1;
-        Mon, 29 Aug 2022 09:13:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661764426;
-        bh=Eqbqp+MrH60JQwN+zE589Hnlma9libigltFy4on3El8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZsemnGJ9vgJqoT2bXEnn7gKqm+G/qNS27JVcXueQYJSEPv7fUFidjcC2FRhN5h7TJ
-         RSSpxmcAG7/5JoNkxiXSiuxf1494QiAnkhmUmW9KsQnHe15OoHksZa+xgyMGOMpuam
-         p9F2HBGfpB/snsgBD9t3O8oUcCmWDRiJD0fxIeQbXeDBz1ESPSL+5I16F2GMgDpKOd
-         pwilZRp13Nda41H6m+Pk2PUaDPrrci3oMr+yuyvMCE9FhnlxRc7l4P6SCCZzYbhpBV
-         FSrxPA5IE9nyhckMB36QjrFh2pEOfIgSzEgHGUUuPF5qJVC/9FW48yEickqIYx0CAN
-         9UH4OD3EB1S2Q==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oSaqA-0002TH-3N; Mon, 29 Aug 2022 11:13:54 +0200
-Date:   Mon, 29 Aug 2022 11:13:54 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        by ixit.cz (Postfix) with ESMTPSA id 383D12007F;
+        Mon, 29 Aug 2022 14:13:25 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1661775205;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=+bTG3oiKbyZ1hTkd242602K3nngKlfoNMtweqkgv9aE=;
+        b=dopkX+7F9hlcUQr1FoV8Yw5dsAEx3tlQGx2niCO+wBl+R+Km1x9TnpOgt5Sb+UGgu2N6+4
+        JKBbWfvLHIjI+LWGG4fgiqH4tk12lDHI2t0cQtGLlZb5ALnaURx/c5gk3ahUz2vFpuHjkR
+        r2gkPq5ZMkS5ZmhxjAmgMt6ncALG464=
+Message-ID: <16f31036-e4ca-a6d8-3321-f5ed8acfbab3@ixit.cz>
+Date:   Mon, 29 Aug 2022 14:13:24 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:104.0) Gecko/20100101
+ Thunderbird/104.0
+Subject: Re: [PATCH] dt-bindings: mfd: qcom,spmi-pmic: add missing compatibles
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 00/30] phy: qcom,qmp: fix dt-bindings and deprecate
- lane suffix
-Message-ID: <YwyDUm+dS7OLTo2h@hovoldconsulting.com>
-References: <20220714124333.27643-1-johan+linaro@kernel.org>
- <YtVPX2WHKU61MTo5@hovoldconsulting.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YtVPX2WHKU61MTo5@hovoldconsulting.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <20220828065123.39734-1-krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+From:   David Heidelberg <david@ixit.cz>
+In-Reply-To: <20220828065123.39734-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RDNS_DYNAMIC,
+        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,39 +60,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vinod, 
+Thank you for catching this!
 
-On Mon, Jul 18, 2022 at 02:17:36PM +0200, Johan Hovold wrote:
-> On Thu, Jul 14, 2022 at 02:43:03PM +0200, Johan Hovold wrote:
-> > When adding support for SC8280XP to the QMP PHY driver I noticed that
-> > the PHY provider child node was not described by the current DT schema.
-> > 
-> > The SC8280XP PHYs also need a second fixed-divider PIPE clock
-> > ("pipediv2") and I didn't want to have to add a bogus "lane" suffix to
-> > the clock name just to match the current "pipe0" name so I decided to
-> > deprecate the unnecessary suffix in the current binding instead.
-> > 
-> > To be able to add the missing child-node schema and handle device
-> > specifics like additional PIPE clocks, it quickly became obvious that
-> > the binding needs to be split up.
-> > 
-> > This series clean up and fixes some issue with the current schema before
-> > splitting it up in separate schemas for PCIe, UFS and USB and adding
-> > missing parts like the child PHY provider nodes.
-> > 
-> > The MSM8996 PCIe PHY gets its own schema as this is the only non-combo
-> > PHY that actually provides more than one PHY per IP block. Note that the
-> > "lane" suffix is still unnecessary and misleading.
-> > 
-> > The final patches add support for the updated binding to the (recently
-> > split up) PHY drivers. Included is also a related combo PHY cleanup.
-> 
-> Hi Vinod,
-> 
-> any chance of getting these into 5.20?
-> 
-> Note that there'll be an -rc8 on Sunday.
+Reviewed-by: David Heidelberg <david@ixit.cz>
 
-Have you had a chance to look at this series yet?
+On 28/08/2022 08:51, Krzysztof Kozlowski wrote:
+> Conversion from TXT to DT schema lost several compatibles.
+>
+> Fixes: 3f5117be9584 ("dt-bindings: mfd: convert to yaml Qualcomm SPMI PMIC")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>   Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 4 ++++
+>   1 file changed, 4 insertions(+)
+>
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> index 2a5bafe0660a..f4e1e64a6ea0 100644
+> --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> @@ -43,9 +43,11 @@ properties:
+>             - qcom,pm8005
+>             - qcom,pm8009
+>             - qcom,pm8019
+> +          - qcom,pm8028
+>             - qcom,pm8110
+>             - qcom,pm8150
+>             - qcom,pm8150b
+> +          - qcom,pm8150c
+>             - qcom,pm8150l
+>             - qcom,pm8226
+>             - qcom,pm8350
+> @@ -56,6 +58,7 @@ properties:
+>             - qcom,pm8916
+>             - qcom,pm8941
+>             - qcom,pm8950
+> +          - qcom,pm8953
+>             - qcom,pm8994
+>             - qcom,pm8998
+>             - qcom,pma8084
+> @@ -64,6 +67,7 @@ properties:
+>             - qcom,pmi8962
+>             - qcom,pmi8994
+>             - qcom,pmi8998
+> +          - qcom,pmk8002
+>             - qcom,pmk8350
+>             - qcom,pmm8155au
+>             - qcom,pmr735a
 
-Johan
+-- 
+David Heidelberg
+Consultant Software Engineer
+
+Matrix: @okias:matrix.org
+
