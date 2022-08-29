@@ -2,119 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 946555A50BC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Aug 2022 17:54:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF37D5A517C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Aug 2022 18:20:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229721AbiH2PyM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Aug 2022 11:54:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59776 "EHLO
+        id S230420AbiH2QUt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Aug 2022 12:20:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229566AbiH2PyL (ORCPT
+        with ESMTP id S230286AbiH2QUX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Aug 2022 11:54:11 -0400
-Received: from cloudserver094114.home.pl (cloudserver094114.home.pl [79.96.170.134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0ECA96749;
-        Mon, 29 Aug 2022 08:54:09 -0700 (PDT)
-Received: from localhost (127.0.0.1) (HELO v370.home.net.pl)
- by /usr/run/smtp (/usr/run/postfix/private/idea_relay_lmtp) via UNIX with SMTP (IdeaSmtpServer 5.0.0)
- id 936fe8cf992e9b5f; Mon, 29 Aug 2022 17:54:08 +0200
-Received: from kreacher.localnet (public-gprs523165.centertel.pl [31.61.162.222])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Mon, 29 Aug 2022 12:20:23 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1500E140BD;
+        Mon, 29 Aug 2022 09:20:19 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by v370.home.net.pl (Postfix) with ESMTPSA id 957EF66D25B;
-        Mon, 29 Aug 2022 17:54:06 +0200 (CEST)
-From:   "Rafael J. Wysocki" <rjw@rjwysocki.net>
-To:     Linux ACPI <linux-acpi@vger.kernel.org>,
-        Hanjun Guo <guohanjun@huawei.com>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        "K. Y. Srinivasan" <kys@microsoft.com>,
-        Haiyang Zhang <haiyangz@microsoft.com>,
-        Stephen Hemminger <sthemmin@microsoft.com>,
-        Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
-        Mark Brown <broonie@kernel.org>,
-        Andreas Noever <andreas.noever@gmail.com>,
-        Michael Jamet <michael.jamet@intel.com>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        Yehezkel Bernat <YehezkelShB@gmail.com>,
-        linux-hyperv@vger.kernel.org, linux-spi@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, Will Deacon <will@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: [PATCH v2 5/5] ACPI: Drop parent field from struct acpi_device
-Date:   Mon, 29 Aug 2022 17:54:06 +0200
-Message-ID: <5617470.DvuYhMxLoT@kreacher>
-In-Reply-To: <a0cab176-3c3a-707a-02c3-74ffc1b4926e@huawei.com>
-References: <12036348.O9o76ZdvQC@kreacher> <5857822.lOV4Wx5bFT@kreacher> <a0cab176-3c3a-707a-02c3-74ffc1b4926e@huawei.com>
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 11A4061225;
+        Mon, 29 Aug 2022 16:20:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D25C433D6;
+        Mon, 29 Aug 2022 16:20:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1661790018;
+        bh=rKldEn8GDoqan884Kl27KYDre5RSBwf1soWE1GqIuUI=;
+        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+        b=Jo27ES0wd1AvWThEa0nNWsF4/0g4E7h6fUZmtGF6fpqKxWQaGM2/7aSaVKcq9vxdz
+         75czUSVooDbVphf884bV11kfN5fPZPvAABfAlW+VFs8USi8AKPQe/brfzmnE7VN68u
+         qhuXnZbyhTKBgKL6ycWq4C7TKJy/ow/hplrFpoxrCBfTHkLX+1JBVzA71cwM3AHn9P
+         l449PrywaV5w/dgku2ObN6ZObfjcAywk7e+8HtteRg64LoBVhLyyXyMO7g5fORlPf1
+         m3JErPnp7uWjth4CxV5kg4QvVma2BsLqYIq5WrNDf2VjFKsPYpgkE7d0f/pr+fx/MI
+         4t1WqSnGXFa2Q==
+From:   Kalle Valo <kvalo@kernel.org>
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Qiang Yu <quic_qianyu@quicinc.com>, quic_hemantk@quicinc.com,
+        loic.poulain@linaro.org, quic_jhugo@quicinc.com,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
+        ath11k@lists.infradead.org
+Subject: Re: [PATCH v3 1/1] bus: mhi: host: Fix up null pointer access in mhi_irq_handler
+References: <1658459838-30802-1-git-send-email-quic_qianyu@quicinc.com>
+        <20220726080636.GE5522@workstation> <87czdrrc95.fsf@kernel.org>
+        <20220729142221.GA9937@thinkpad>
+Date:   Mon, 29 Aug 2022 19:20:10 +0300
+In-Reply-To: <20220729142221.GA9937@thinkpad> (Manivannan Sadhasivam's message
+        of "Fri, 29 Jul 2022 19:52:21 +0530")
+Message-ID: <87h71vc98l.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="UTF-8"
-X-CLIENT-IP: 31.61.162.222
-X-CLIENT-HOSTNAME: public-gprs523165.centertel.pl
-X-VADE-SPAMSTATE: clean
-X-VADE-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvfedrvdekuddgleehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecujffqoffgrffnpdggtffipffknecuuegrihhlohhuthemucduhedtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkfgjfhgggfgtsehtufertddttdejnecuhfhrohhmpedftfgrfhgrvghlucflrdcuhgihshhotghkihdfuceorhhjfiesrhhjfiihshhotghkihdrnhgvtheqnecuggftrfgrthhtvghrnhepvdffueeitdfgvddtudegueejtdffteetgeefkeffvdeftddttdeuhfegfedvjefhnecukfhppeefuddriedurdduiedvrddvvddvnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehinhgvthepfedurdeiuddrudeivddrvddvvddphhgvlhhopehkrhgvrggthhgvrhdrlhhotggrlhhnvghtpdhmrghilhhfrhhomhepfdftrghfrggvlhculfdrucghhihsohgtkhhifdcuoehrjhifsehrjhifhihsohgtkhhirdhnvghtqedpnhgspghrtghpthhtohepvdehpdhrtghpthhtoheplhhinhhugidqrggtphhisehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhuohhhrghnjhhunheshhhurgifvghirdgtohhmpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprghnughrihihrdhshhgvvhgthhgvnhhkoheslhhinhhugidrihhnthgvlhdrtgho
- mhdprhgtphhtthhopehlihhnuhigqdhpmhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkhihssehmihgtrhhoshhofhhtrdgtohhmpdhrtghpthhtohephhgrihihrghnghiisehmihgtrhhoshhofhhtrdgtohhmpdhrtghpthhtohepshhthhgvmhhmihhnsehmihgtrhhoshhofhhtrdgtohhmpdhrtghpthhtohepfigvihdrlhhiuheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepuggvtghuihesmhhitghrohhsohhfthdrtghomhdprhgtphhtthhopegsrhhoohhnihgvsehkvghrnhgvlhdrohhrghdprhgtphhtthhopegrnhgurhgvrghsrdhnohgvvhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehmihgthhgrvghlrdhjrghmvghtsehinhhtvghlrdgtohhmpdhrtghpthhtohepmhhikhgrrdifvghsthgvrhgsvghrgheslhhinhhugidrihhnthgvlhdrtghomhdprhgtphhtthhopegjvghhvgiikhgvlhfuhheusehgmhgrihhlrdgtohhmpdhrtghpthhtoheplhhinhhugidqhhihphgvrhhvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqshhpihesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhushgssehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqrghrmhdqkhgvrhhnvghlsehlihhsthhsrdhinhhfrhgruggvrggurdhorhhgpdhrtghpthhtoheplhhinhhugidqrghrmhdqmhhsmhesvhhgv
- ghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopeifihhllheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgrrhhkrdhruhhtlhgrnhgusegrrhhmrdgtohhmpdhrtghpthhtoheprghgrhhoshhssehkvghrnhgvlhdrohhrghdprhgtphhtthhopegsjhhorhhnrdgrnhguvghrshhsohhnsehlihhnrghrohdrohhrghdprhgtphhtthhopehkohhnrhgrugdrugihsggtihhosehsohhmrghinhhlihhnvgdrohhrgh
-X-DCC--Metrics: v370.home.net.pl 1024; Body=25 Fuz1=25 Fuz2=25
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Saturday, August 27, 2022 3:19:33 PM CEST Hanjun Guo wrote:
-> Hi Rafael,
-> 
-> On 2022/8/25 0:59, Rafael J. Wysocki wrote:
-> > Index: linux-pm/include/acpi/acpi_bus.h
-> > ===================================================================
-> > --- linux-pm.orig/include/acpi/acpi_bus.h
-> > +++ linux-pm/include/acpi/acpi_bus.h
-> > @@ -365,7 +365,6 @@ struct acpi_device {
-> >   	int device_type;
-> >   	acpi_handle handle;		/* no handle for fixed hardware */
-> >   	struct fwnode_handle fwnode;
-> > -	struct acpi_device *parent;
-> >   	struct list_head wakeup_list;
-> >   	struct list_head del_list;
-> >   	struct acpi_device_status status;
-> > @@ -458,6 +457,14 @@ static inline void *acpi_driver_data(str
-> >   #define to_acpi_device(d)	container_of(d, struct acpi_device, dev)
-> >   #define to_acpi_driver(d)	container_of(d, struct acpi_driver, drv)
-> >   
-> > +static inline struct acpi_device *acpi_dev_parent(struct acpi_device *adev)
-> > +{
-> > +	if (adev->dev.parent)
-> > +		return to_acpi_device(adev->dev.parent);
-> > +
-> > +	return NULL;
-> > +}
-> > +
-> >   static inline void acpi_set_device_status(struct acpi_device *adev, u32 sta)
-> >   {
-> >   	*((u32 *)&adev->status) = sta;
-> > @@ -478,6 +485,7 @@ void acpi_initialize_hp_context(struct a
-> >   /* acpi_device.dev.bus == &acpi_bus_type */
-> >   extern struct bus_type acpi_bus_type;
-> >   
-> > +struct acpi_device *acpi_dev_parent(struct acpi_device *adev);
-> 
-> We have a static inline function above, is it duplicated here?
-> Or did I miss some use cases?
+Manivannan Sadhasivam <mani@kernel.org> writes:
 
-No, you didn't, it is redundant.
+> On Tue, Jul 26, 2022 at 08:53:58PM +0300, Kalle Valo wrote:
+>> Manivannan Sadhasivam <mani@kernel.org> writes:
+>> 
+>> > +ath11k, Kalle
+>> >
+>> > On Fri, Jul 22, 2022 at 11:17:18AM +0800, Qiang Yu wrote:
+>> >> The irq handler for a shared IRQ ought to be prepared for running
+>> >> even now it's being freed. So let's check the pointer used by
+>> >> mhi_irq_handler to avoid null pointer access since it is probably
+>> >> released before freeing IRQ.
+>> >> 
+>> >> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+>> >
+>> > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+>> 
+>> This fixes the crash and my regression tests pass now, thanks. But
+>> please see my question below.
+>> 
+>> Tested-by: Kalle Valo <kvalo@kernel.org>
+>> 
+>
+> Thanks Kalle!
 
-I've just sent a fix for this.
+I just tested v6.0-rc3 and it's still crashing. What's the plan to get
+this fix to Linus?
 
-Thanks!
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
 
-
-
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
