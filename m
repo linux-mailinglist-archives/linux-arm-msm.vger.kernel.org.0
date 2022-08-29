@@ -2,52 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 969E65A57D1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 01:47:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B3075A57F0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 01:47:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229838AbiH2Xqm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Aug 2022 19:46:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34646 "EHLO
+        id S229844AbiH2Xqo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Aug 2022 19:46:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229749AbiH2Xqg (ORCPT
+        with ESMTP id S229795AbiH2Xqh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Aug 2022 19:46:36 -0400
+        Mon, 29 Aug 2022 19:46:37 -0400
 Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75B5D9858D;
-        Mon, 29 Aug 2022 16:46:29 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7682D9E6A3;
+        Mon, 29 Aug 2022 16:46:30 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 9B5B6B815BE;
-        Mon, 29 Aug 2022 23:46:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559EBC43141;
-        Mon, 29 Aug 2022 23:46:25 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 565ABB815D5;
+        Mon, 29 Aug 2022 23:46:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CEF1C4314C;
+        Mon, 29 Aug 2022 23:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661816786;
-        bh=ngzmV0n2+BdQTsftiFqUPUBwcYzqmAbmruA7VSeNz4E=;
+        s=k20201202; t=1661816787;
+        bh=9SZwkc/TBmAc74B5tO1jPOls3/b4HJP7u7t/NHHAyD4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=MEmGzWGcxd7CxQW8trPlhlt+53aCFKMC4zmgwPZxpJVzaKqINuGLFJFOxJnlrAquo
-         QOeN5shQYatX0DYVy5Wn/jSYOHMn5XiLRs6QHlskFh69gP5VGn0hlMPY3RuaXSOJrm
-         F4IPfivkApj7zfhxnA2ckL/PJUKYOa/ePqAWRIaI13cGs+CZ0pxB04NjMVOMpAYqdE
-         pwPtKdjykkCJAlVqBG7vLsc7PrhMbOrD/63dPC3XSzg1xgYaPtok0rNRdXl7QZmcD6
-         e18KAlUZnhsNXgeqL9eHWNWFbkhUNrZlphlmJJ4VhlqpQwXaCgwaYcoMWkgW5/zwFa
-         ZOSNKnIYvq1hA==
+        b=SjYj/uFoh+idvxkuG+e8hmyCDfeM/Y3Ex5GHdq/P6PR2w/DLzoDoTpvdC4xnzyPEl
+         t2Fl+fkzT88JrxfeJmt1GRxrpaORAW4cfjcGyWY2xeaJtn5u/G7uecuuqDoWRUBSjf
+         ipUyjSWl9aGOl1j5zqNxHz13wkVXqiZSvzy+S8nEi3oGyYgetashW7iFOJIMXHErOj
+         8T71o7JxFh85X3LuBohBKdHjfNKowxxFYPF5VKKlnwqpGHJEJCHMvapGiGiFkggSXj
+         x/Gd9t6pYHU1jNgM/DFx5Gr/ouiRFfr7UvripEn4K9RIOADyhxidHQeyblBtvGBGDk
+         Vg1/thD6AbSIg==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     svarbanov@mm-sol.com, bhelgaas@google.com,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        dmitry.baryshkov@linaro.org,
-        Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>, krzk@kernel.org,
-        gustavo.pimentel@synopsys.com, agross@kernel.org,
-        jingoohan1@gmail.com
-Cc:     vkoul@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: (subset) [PATCH v6 0/8] dt-bindings: YAMLify pci/qcom,pcie schema
-Date:   Mon, 29 Aug 2022 18:45:48 -0500
-Message-Id: <166181675954.322065.13917863226210915201.b4-ty@kernel.org>
+To:     Bjorn Andersson <andersson@kernel.org>, agross@kernel.org,
+        ebiggers@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, konrad.dybcio@somainline.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sm8450: add Inline Crypto Engine registers and clock
+Date:   Mon, 29 Aug 2022 18:45:49 -0500
+Message-Id: <166181675988.322065.15289670775353557796.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20220506152107.1527552-1-dmitry.baryshkov@linaro.org>
-References: <20220506152107.1527552-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220826071244.185584-1-ebiggers@kernel.org>
+References: <20220826071244.185584-1-ebiggers@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -61,25 +56,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 6 May 2022 18:20:59 +0300, Dmitry Baryshkov wrote:
-> Convert pci/qcom,pcie schema to YAML description. The first patch
-> introduces several warnings which are fixed by the other patches in the
-> series.
+On Fri, 26 Aug 2022 00:12:44 -0700, Eric Biggers wrote:
+> From: Eric Biggers <ebiggers@google.com>
 > 
-> Note regarding the snps,dw-pcie compatibility. The Qualcomm PCIe
-> controller uses Synopsys PCIe IP core. However it is not just fused to
-> the address space. Accessing PCIe registers requires several clocks and
-> regulators to be powered up. Thus it can be assumed that the qcom,pcie
-> bindings are not fully compatible with the snps,dw-pcie schema.
+> Add the registers and clock for the Inline Crypto Engine (ICE) to the
+> device tree node for the UFS host controller on sm8450.  This makes
+> ufs_qcom support inline encryption when CONFIG_SCSI_UFS_CRYPTO=y.
+> 
+> The address and size of the register range, and the minimum and maximum
+> frequency of the ICE core clock, all match the values used downstream.
 > 
 > [...]
 
 Applied, thanks!
 
-[5/8] arm64: dts: qcom: stop using snps,dw-pcie falback
-      commit: 3e4fec3bc8f8d1366cf2d8d8a054ed37e5a41cba
-[8/8] arm64: dts: qcom: replace deprecated perst-gpio with perst-gpios
-      commit: f3f5fb3184ec0cd7f98267a8dc1c0538575fbb77
+[1/1] arm64: dts: qcom: sm8450: add Inline Crypto Engine registers and clock
+      commit: 276ee34a40c1440544f609b54b23b99ead8f2205
 
 Best regards,
 -- 
