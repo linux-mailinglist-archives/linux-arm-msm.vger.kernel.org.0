@@ -2,52 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B3965A5639
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Aug 2022 23:32:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E2FA5A564F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Aug 2022 23:42:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229453AbiH2Vcd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Aug 2022 17:32:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45770 "EHLO
+        id S229559AbiH2VmS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Aug 2022 17:42:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229710AbiH2VcW (ORCPT
+        with ESMTP id S229456AbiH2VmS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Aug 2022 17:32:22 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A070BDB;
-        Mon, 29 Aug 2022 14:32:21 -0700 (PDT)
+        Mon, 29 Aug 2022 17:42:18 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A5EA7C509;
+        Mon, 29 Aug 2022 14:42:16 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 829E6CE13FE;
-        Mon, 29 Aug 2022 21:32:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA44C433C1;
-        Mon, 29 Aug 2022 21:32:17 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 265C061281;
+        Mon, 29 Aug 2022 21:42:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA52FC433D6;
+        Mon, 29 Aug 2022 21:42:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661808737;
-        bh=61pBkpLnKiA8l1OQZn1OET1WloEC2QanlgAje+br33U=;
+        s=k20201202; t=1661809335;
+        bh=W1VMfu9fY3nmLEU1HBpc31zvjXsJcdLyG9QMjo2oNc4=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=delIKnE8PDy1j3+uwp5CA9aZELDd0zRelaP76+LN5ZTFbguWTyIslqP0JZlpsqTR2
-         mM6KQmICgUn+qIinjoE9thZV8YBnUtV2NhD+9ysH+nsHGi13AG30T57158D3jD+w5X
-         Po+wC8ACtI456T+tyYM0R1eJOPOg+5oXJs/G7ERuxbxVv7tbXOi2TDSj+jWXVpzBFj
-         mc6eIJUNC7h7eUoL96MTxSf7x5787p6Xxyw66F4/C5t00VjWs9KxIIgqduRlgf8hte
-         OapZVuYvIeefXqqSaZDUbeYcjgEPuhX+zYKJ3fjCnuV4c6KANccjnHSn7CTkuwP60P
-         EtrkxIwCAT/XA==
-Date:   Mon, 29 Aug 2022 16:32:15 -0500
+        b=Q6uJDf62f1/e5/gSXoUNeUckRIWQFS2OL04NMLeesSA13cVpzz0KJYkuDNxEr3ALi
+         bIwfwqfHgJLFCsJrb8jQ1zHR+2DdNdOpU7HbKkKvxb86bsx9IcVSMnykMMjLRRUywj
+         AmJd8UEkQEMAqyczbTcCM78nNGjYwDwM6c8/5tDStkAa5a2u2QneSImQaJxeI7h0/b
+         8IP7xh+AWNKQMxPSwrkX6vUHHWcmiBjP8jRAbAWnmIkQS2Dkqw2mxSrNcm1P3udF2i
+         qX9XeFkEl3OKtRn1hbCs5i/elvp0lGCJPUsEVShIzdb3/W+YJM9CUNdHHKFIFIvpSs
+         b2I/0TNhWhCDQ==
+Date:   Mon, 29 Aug 2022 16:42:12 -0500
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Wolfram Sang <wsa+renesas@sang-engineering.com>,
-        Qiang Zhao <qiang.zhao@nxp.com>, Li Yang <leoyang.li@nxp.com>
-Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linuxppc-dev@lists.ozlabs.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] soc: move from strlcpy with unused retval to strscpy
-Message-ID: <20220829213215.lw233zzbvhevaqrm@builder.lan>
-References: <20220818210106.7349-1-wsa+renesas@sang-engineering.com>
+        Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] dmaengine: qcom: gpi: Add SM6350 support
+Message-ID: <20220829214212.2kufzgrfjg5ad6ni@builder.lan>
+References: <20220812082721.1125759-1-luca.weiss@fairphone.com>
+ <20220812082721.1125759-3-luca.weiss@fairphone.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220818210106.7349-1-wsa+renesas@sang-engineering.com>
+In-Reply-To: <20220812082721.1125759-3-luca.weiss@fairphone.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -58,64 +60,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 18, 2022 at 11:01:06PM +0200, Wolfram Sang wrote:
-> Follow the advice of the below link and prefer 'strscpy' in this
-> subsystem. Conversion is 1:1 because the return value is not used.
-> Generated by a coccinelle script.
+On Fri, Aug 12, 2022 at 10:27:20AM +0200, Luca Weiss wrote:
+> The Qualcomm SM6350 platform does, like the SM8450, provide a set of GPI
+> controllers with an ee-offset of 0x10000. Add this to the driver.
 > 
-> Link: https://lore.kernel.org/r/CAHk-=wgfRnXz0W3D37d01q3JFkr_i_uTL=V6A6G1oUZcprmknw@mail.gmail.com/
-> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+
 > ---
->  drivers/soc/fsl/qe/qe.c  | 4 ++--
-
-Qiang, Li, would you like to merge this patch? Or could I perhaps get an
-Acked-by from either of you so that I could take the patch through the
-Qualcomm tree?
-
-If you prefer:
-Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
-Bjorn
-
->  drivers/soc/qcom/smp2p.c | 2 +-
->  2 files changed, 3 insertions(+), 3 deletions(-)
+>  drivers/dma/qcom/gpi.c | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/drivers/soc/fsl/qe/qe.c b/drivers/soc/fsl/qe/qe.c
-> index b3c226eb5292..58746e570d14 100644
-> --- a/drivers/soc/fsl/qe/qe.c
-> +++ b/drivers/soc/fsl/qe/qe.c
-> @@ -524,7 +524,7 @@ int qe_upload_firmware(const struct qe_firmware *firmware)
->  	 * saved microcode information and put in the new.
->  	 */
->  	memset(&qe_firmware_info, 0, sizeof(qe_firmware_info));
-> -	strlcpy(qe_firmware_info.id, firmware->id, sizeof(qe_firmware_info.id));
-> +	strscpy(qe_firmware_info.id, firmware->id, sizeof(qe_firmware_info.id));
->  	qe_firmware_info.extended_modes = be64_to_cpu(firmware->extended_modes);
->  	memcpy(qe_firmware_info.vtraps, firmware->vtraps,
->  		sizeof(firmware->vtraps));
-> @@ -599,7 +599,7 @@ struct qe_firmware_info *qe_get_firmware_info(void)
->  	/* Copy the data into qe_firmware_info*/
->  	sprop = of_get_property(fw, "id", NULL);
->  	if (sprop)
-> -		strlcpy(qe_firmware_info.id, sprop,
-> +		strscpy(qe_firmware_info.id, sprop,
->  			sizeof(qe_firmware_info.id));
->  
->  	of_property_read_u64(fw, "extended-modes",
-> diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
-> index d9c28a8a7cbf..e9c8030d50ee 100644
-> --- a/drivers/soc/qcom/smp2p.c
-> +++ b/drivers/soc/qcom/smp2p.c
-> @@ -422,7 +422,7 @@ static int qcom_smp2p_outbound_entry(struct qcom_smp2p *smp2p,
->  	char buf[SMP2P_MAX_ENTRY_NAME] = {};
->  
->  	/* Allocate an entry from the smem item */
-> -	strlcpy(buf, entry->name, SMP2P_MAX_ENTRY_NAME);
-> +	strscpy(buf, entry->name, SMP2P_MAX_ENTRY_NAME);
->  	memcpy(out->entries[out->valid_entries].name, buf, SMP2P_MAX_ENTRY_NAME);
->  
->  	/* Make the logical entry reference the physical value */
+> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+> index 8f0c9c4e2efd..89839864b4ec 100644
+> --- a/drivers/dma/qcom/gpi.c
+> +++ b/drivers/dma/qcom/gpi.c
+> @@ -2288,6 +2288,7 @@ static int gpi_probe(struct platform_device *pdev)
+>  static const struct of_device_id gpi_of_match[] = {
+>  	{ .compatible = "qcom,sc7280-gpi-dma", .data = (void *)0x10000 },
+>  	{ .compatible = "qcom,sdm845-gpi-dma", .data = (void *)0x0 },
+> +	{ .compatible = "qcom,sm6350-gpi-dma", .data = (void *)0x10000 },
+>  	{ .compatible = "qcom,sm8150-gpi-dma", .data = (void *)0x0 },
+>  	{ .compatible = "qcom,sm8250-gpi-dma", .data = (void *)0x0 },
+>  	{ .compatible = "qcom,sm8350-gpi-dma", .data = (void *)0x10000 },
 > -- 
-> 2.35.1
+> 2.37.1
 > 
