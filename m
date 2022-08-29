@@ -2,58 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DDC6A5A5653
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Aug 2022 23:42:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91B905A568E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Aug 2022 23:54:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229563AbiH2Vmh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Aug 2022 17:42:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60202 "EHLO
+        id S229694AbiH2Vyw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Aug 2022 17:54:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbiH2Vmg (ORCPT
+        with ESMTP id S229863AbiH2Vyv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Aug 2022 17:42:36 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 777677C509;
-        Mon, 29 Aug 2022 14:42:35 -0700 (PDT)
+        Mon, 29 Aug 2022 17:54:51 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E5CCF61;
+        Mon, 29 Aug 2022 14:54:49 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id B5ED4B81210;
-        Mon, 29 Aug 2022 21:42:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88FC1C433C1;
-        Mon, 29 Aug 2022 21:42:31 +0000 (UTC)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 85D63CE12AD;
+        Mon, 29 Aug 2022 21:54:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 287FAC433D6;
+        Mon, 29 Aug 2022 21:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661809352;
-        bh=MsyOWASI1g4z1h2BMPcGA+iFSFPUPWSag4GkwTQTTr0=;
+        s=k20201202; t=1661810085;
+        bh=OeSLXvCWQ7C65bUk1sYHK/hHg1itGBL4NFVbuoULT8s=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=gfUPeOL0oxsol1pgs+1ZKtB1/6OBBiKCodFruY4XdnN/DAWYdBMIuLDcOs4kDTd4M
-         BmAjVtAlN/S6RjR31cvtb+Xp8vT2zZSZlX+R7wkXB1xwSrMCf/R0c2YCIGdMmBlYL/
-         ST0XtrZUyJd1LFOb/+7P180jbCcC3BSdf7chgDttsYspezm/5sYHQYnGIVjB7h1wfV
-         s5UEVk20vwHGh8aKAtqr3EuNje77DcqQlRHj9FW16ekj7D2rBCpBMjecyDL1FGkhNt
-         FI7TB+zavJ+Y2U4SLjoWX6mpSWMHdoXgHhHu5I8yDEyRIP0vsZdj3VCYp8KIwzVmdV
-         nYs0egWRFmMyg==
-Date:   Mon, 29 Aug 2022 16:42:29 -0500
+        b=ieQg9ieUPWQlhZDjI3MjCCYc2bqIht15x/+OtR6/G8rnLEdkzpdHkCTXinGhHsokL
+         URkGLPeZD1daNiiTdjTARphNIIOYZeFFBvtAj1Qf4MhEn5EnKJYIIREiksGUNwjKdr
+         XU+PQOBH35uXCUNngPfCy5dS+M1wBs50yPcJlu2GCM6WGVzs/9vbvEObiENZuyKEHL
+         aB62I/h+wlqH0EbXszszVsq0ZeX/5D75rP3tkdCIn2VBbmlQQawkGc//Wbb0gfZr04
+         oMr6AplJFaJNFy5PHSz00OGPCpFTv9XcmFMQeHOcJrdRn4uP4EIikktd5Jb3G+Hau6
+         gZEQm2hNlfkwA==
+Date:   Mon, 29 Aug 2022 16:54:43 -0500
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Luca Weiss <luca.weiss@fairphone.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: dmaengine: qcom: gpi: add compatible
- for SM6350
-Message-ID: <20220829214229.zs264vapq4hxmdpz@builder.lan>
-References: <20220812082721.1125759-1-luca.weiss@fairphone.com>
- <20220812082721.1125759-2-luca.weiss@fairphone.com>
+To:     Rudraksha Gupta <guptarud@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, agross@kernel.org,
+        david@ixit.cz, devicetree@vger.kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org
+Subject: Re: [PATCH v2 1/2] ARM: msm8960: Rename cxo_board to cxo-board and
+ add alias
+Message-ID: <20220829215443.dvc5xnmeqnhmxb2d@builder.lan>
+References: <20220808234723.5184-2-guptarud@gmail.com>
+ <20220809000300.6384-1-guptarud@gmail.com>
+ <YvQMyQLohqcc8Fug@ripper>
+ <499c8b49-a09e-e775-3242-13d37a13877e@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220812082721.1125759-2-luca.weiss@fairphone.com>
+In-Reply-To: <499c8b49-a09e-e775-3242-13d37a13877e@gmail.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -64,29 +60,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 12, 2022 at 10:27:19AM +0200, Luca Weiss wrote:
-> Document the compatible for GPI DMA controller on SM6350 SoC.
+On Wed, Aug 10, 2022 at 10:51:51PM -0400, Rudraksha Gupta wrote:
+> > Clock and dts patches goes through two different paths towards mainline,
 > 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> > so they should be separated.
+> 
+> Gotcha, thanks. I will do that.
+> 
+> 
+> > This breaks compatibility with existing DTB files.
+> 
+> > What you probably want is to make sure that any clocks with parent name
+> 
+> > of "cxo", should have a .fw_name = "cxo", then you can make a
+> 
+> > phandle-based reference in DT and these global names doesn't matter (and
+> 
+> > in the end we can remove this board_clk from the driver).
+> 
+> Ah, I see. If I understand correctly, it should be something like this,
+> right?
+> https://github.com/torvalds/linux/blob/master/drivers/clk/qcom/gcc-msm8996.c#L169-L172
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Correct, this will try to find the clock by clock-names of "cxo" and if
+not found fall back to do a lookup globally just on the name "xo_board".
 
-> ---
->  Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-> index 7d2fc4eb5530..eabf8a76d3a0 100644
-> --- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-> +++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-> @@ -21,6 +21,7 @@ properties:
->      enum:
->        - qcom,sc7280-gpi-dma
->        - qcom,sdm845-gpi-dma
-> +      - qcom,sm6350-gpi-dma
->        - qcom,sm8150-gpi-dma
->        - qcom,sm8250-gpi-dma
->        - qcom,sm8350-gpi-dma
-> -- 
-> 2.37.1
-> 
+So it seems making .name "cxo_board" should handle both cases nicely.
+
+Regards,
+Bjorn
