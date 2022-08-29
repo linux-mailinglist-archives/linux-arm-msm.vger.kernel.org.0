@@ -2,64 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E63AD5A51A8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Aug 2022 18:26:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CE745A520D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Aug 2022 18:44:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230463AbiH2Q0T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Aug 2022 12:26:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33058 "EHLO
+        id S229847AbiH2Qoo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Aug 2022 12:44:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230437AbiH2Q0R (ORCPT
+        with ESMTP id S229490AbiH2Qon (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Aug 2022 12:26:17 -0400
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7021279A7F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 09:26:16 -0700 (PDT)
-Received: by mail-pf1-x42b.google.com with SMTP id 142so8680481pfu.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 09:26:16 -0700 (PDT)
+        Mon, 29 Aug 2022 12:44:43 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AB9E73923
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 09:44:42 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id v5so2335268plo.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 09:44:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc;
-        bh=GZn8dsR0SbA0LLgWvk778Eamu3Zg1IxsU3hRYJ60c7M=;
-        b=aS17D91EapqzI7ABckllr6kGJmh53zKm8Ab/RLyCrQ2T6m60LjWajmatv2MqT+ogbm
-         nDctr/DZ5AzdO6GGwIRsA5FqrLIFE546oMGi+hW69AiT8RmFQuqczTEZxYvQjIxvXTGy
-         ajPhqS0GiGY82FoBGb8Nyk6ryTN9eb36x3Bpc=
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=qLN8fBo6PyBt7E99VZUSZQ3s6EIjif7d4pGqJZoTYK8=;
+        b=AWOO90lMcEYDvhomUOFe3IJEk9k7PehD16RoavUH+k3tVdP29oyJnKhNKlJeLpmH/G
+         N4adaaiJcJM9I5+1ZiAzIMcyrnSOQG5YjURrKnH6yFQb/ZXdSigPXVFZ3lIbwLcXODoD
+         3fTjkc/kk/K1Z8kMkpcCx3uWjP3ZyHBMSDK0I=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=GZn8dsR0SbA0LLgWvk778Eamu3Zg1IxsU3hRYJ60c7M=;
-        b=vshQi0T4qo6AD2L/8I1kF1THew0Rg9dH1j1jfIlsNfIRQH7wF+TCb8sb2dmGD6eVv+
-         +Tn7AQlHwFmjqB1o9cIV6BJtCR1IEiVwNYupaF1eOmFGWlYvZzxQUV2IwOMeuyI5iw4O
-         EE0sezT/jkXLrOd1dCffBXnO1fv6OFkjErDpsJoLXp/SFNqaBYe2xAys1LUxOb8F8svU
-         a0gaXXzMSUk5K1pUOcQXwxxazs6Z4g54fSKVI3+cKOjJMo36IKhr7b++Iy/6NnVrzHi3
-         bxwCERPgsv7uDf7VvcfLZsTrD93aPYSj/swEiS1ubDYuSXAf+vNQxVszJuYvgzyGoz8d
-         xtvg==
-X-Gm-Message-State: ACgBeo3ddChSYkHvMwuGecueukw0QW2/4SBsRuXqPtacihrLHNIZw6AX
-        UsZe8/gYRB19X4KHfRS5DZ0EFg==
-X-Google-Smtp-Source: AA6agR5OfdZX/Iwy3uNY6EY8EZTIaYP6u/ZP6JC8pbO1oWB01yejMfZT11uQYFJhzLe9LSpYsAr7aA==
-X-Received: by 2002:a63:8a43:0:b0:42b:347d:4ad7 with SMTP id y64-20020a638a43000000b0042b347d4ad7mr14171354pgd.188.1661790375765;
-        Mon, 29 Aug 2022 09:26:15 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=qLN8fBo6PyBt7E99VZUSZQ3s6EIjif7d4pGqJZoTYK8=;
+        b=cZQaW9/DrFUSfguiR4RlX1Q48dsBbP95MexcIhYx5QyzfmGHR/sYONS1qEfjpD25HW
+         wbsAfXY/QegtdBmov7H8heP9SThCTe/C44Rvn7RhCrBykGv5AnPv/XU4WURUru7aNhRm
+         9EscrCO0koBqXLYf3wa0TqQ/xEiyvZMe7OUU2Yl5zcN2JMfKGKzyPHX2BC8LdNpEnvgf
+         dSY9IuVs8XnmNpTuxA0nZ6//ue5mllKaueeMRJv+V7J/vVnSEm3Fpl2asKQA9WRQRTPL
+         xbETaq+G0WN7iBY8jDg+U13dg8piI5IRRvXFN4sxGqPA4jcWMpqM+4ohLOxYiPa0Xw9Y
+         HIuA==
+X-Gm-Message-State: ACgBeo1jYsv2UDlNSuAPqEVu96YUWRTyC8QBp182OgfFs+Z8MSorG+ZQ
+        YANP6uwiB2cKBE+3xkl7Uc/4sQ==
+X-Google-Smtp-Source: AA6agR4apsS+tj9IjFo34eaXpnXJQGrN7w2evDtE4E2ZScswf9Oeucx97W3O6v2+bP4nHo2MIiSYtg==
+X-Received: by 2002:a17:90b:35c5:b0:1fd:9087:6a70 with SMTP id nb5-20020a17090b35c500b001fd90876a70mr12414100pjb.158.1661791481886;
+        Mon, 29 Aug 2022 09:44:41 -0700 (PDT)
 Received: from localhost ([2620:15c:11a:202:49ac:6e1:90a2:a0e0])
-        by smtp.gmail.com with UTF8SMTPSA id m2-20020a170902db0200b0016bf9437766sm7843322plx.261.2022.08.29.09.26.14
+        by smtp.gmail.com with UTF8SMTPSA id e8-20020a17090301c800b001729da53673sm7863682plh.14.2022.08.29.09.44.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Aug 2022 09:26:15 -0700 (PDT)
-Date:   Mon, 29 Aug 2022 09:26:12 -0700
+        Mon, 29 Aug 2022 09:44:41 -0700 (PDT)
 From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180-trogdor: Keep pm6150_adc
- enabled for TZ
-Message-ID: <YwzopMkUBfLfFtc8@google.com>
-References: <20220827004901.511543-1-swboyd@chromium.org>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH] arm64: dts: qcom: sc7280-qcard: Add alias 'wifi0'
+Date:   Mon, 29 Aug 2022 09:44:38 -0700
+Message-Id: <20220829094435.1.I4534cf408373478dd6e84dc8b9ddd0d4e1a3f143@changeid>
+X-Mailer: git-send-email 2.37.2.672.g94769d06f0-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220827004901.511543-1-swboyd@chromium.org>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -70,17 +71,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 26, 2022 at 05:49:00PM -0700, Stephen Boyd wrote:
-> There's still a thermal zone using pm6150_adc in the pm6150.dtsi file,
-> pm6150_thermal. It's not super obvious because it indirectly uses the
-> adc through an iio channel in pm6150_temp. Let's keep this enabled on
-> lazor and coachz so that reading the temperature of the pm6150_thermal
-> zone continues to work. Otherwise we get -EINVAL when reading the zone,
-> and I suspect the PMIC temperature trip doesn't work properly so we
-> don't shutdown when the PMIC overheats.
-> 
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Fixes: b8d1e3d33487 ("arm64: dts: qcom: sc7180-trogdor: Delete ADC config for unused thermistors")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Add the alias 'wifi0' for the WiFi interface on the Qcard. The alias
+is needed by the BIOS which patches the WiFi MAC address read from
+the VPD (Vital Product Data) into the device tree.
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+---
+
+ arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
+index 7adf31bb9827..7cd91df7a118 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
+@@ -28,6 +28,7 @@ aliases {
+ 		bluetooth0 = &bluetooth;
+ 		serial0 = &uart5;
+ 		serial1 = &uart7;
++		wifi0 = &wifi;
+ 	};
+ 
+ 	pm8350c_pwm_backlight: backlight {
+-- 
+2.37.2.672.g94769d06f0-goog
+
