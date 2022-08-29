@@ -2,79 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 029075A5292
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Aug 2022 19:04:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F2155A531A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Aug 2022 19:27:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231272AbiH2REX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Aug 2022 13:04:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37594 "EHLO
+        id S229720AbiH2R1L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Aug 2022 13:27:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231259AbiH2RES (ORCPT
+        with ESMTP id S229513AbiH2R1K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Aug 2022 13:04:18 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68B8098A7B;
-        Mon, 29 Aug 2022 10:04:16 -0700 (PDT)
-Received: from [192.168.1.101] (afbd60.neoplus.adsl.tpnet.pl [95.49.29.60])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Mon, 29 Aug 2022 13:27:10 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B78B8E0FA;
+        Mon, 29 Aug 2022 10:27:09 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id D89C03F61A;
-        Mon, 29 Aug 2022 19:04:12 +0200 (CEST)
-Message-ID: <4ac0d11e-3627-af47-eabc-39c8a8757779@somainline.org>
-Date:   Mon, 29 Aug 2022 19:04:12 +0200
+        by ams.source.kernel.org (Postfix) with ESMTPS id DF263B8119C;
+        Mon, 29 Aug 2022 17:27:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C3FC433C1;
+        Mon, 29 Aug 2022 17:27:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1661794026;
+        bh=LngYf8P+LI6UrANiDYF1odyCTinChzauYVwqE9jZYEk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=JnRPX5hGG/m2kiEPTmqWQY6QvgVVXyPU+eqjZ5agyPQQsKK/io9g7B/AvQtz+lCWz
+         WVq2GV+8lgaASRcL9+bJx3+eLbPu577683lRTJblVXNFKm5HMT3ClCSrLxO8bSsMg/
+         qZ4enOxWahqgcMobW+Wg1Q6JelWe1Fc+bsUMKPC8ikwv4y7RMdAW0cS7gBxVQivfLd
+         TkBudKMcPDibwIOgu0m2d6ccR8x3vxTuTvTWhJjpCqpiI+qDh+/6VfzGzdtUJEjXDq
+         yz4Et2enr5+rLrzo8WH75UqHVmRGgebfu9NXqI+JYY0zBMnYLXtYkVgzbB1PowQSbe
+         yKAdGB86SAeCQ==
+Date:   Mon, 29 Aug 2022 22:56:54 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Kalle Valo <kvalo@kernel.org>
+Cc:     Qiang Yu <quic_qianyu@quicinc.com>, quic_hemantk@quicinc.com,
+        loic.poulain@linaro.org, quic_jhugo@quicinc.com,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
+        ath11k@lists.infradead.org
+Subject: Re: [PATCH v3 1/1] bus: mhi: host: Fix up null pointer access in
+ mhi_irq_handler
+Message-ID: <20220829172654.GA84762@thinkpad>
+References: <1658459838-30802-1-git-send-email-quic_qianyu@quicinc.com>
+ <20220726080636.GE5522@workstation>
+ <87czdrrc95.fsf@kernel.org>
+ <20220729142221.GA9937@thinkpad>
+ <87h71vc98l.fsf@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280-qcard: Add alias 'wifi0'
-Content-Language: en-US
-To:     Matthias Kaehlcke <mka@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>
-References: <20220829094435.1.I4534cf408373478dd6e84dc8b9ddd0d4e1a3f143@changeid>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220829094435.1.I4534cf408373478dd6e84dc8b9ddd0d4e1a3f143@changeid>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87h71vc98l.fsf@kernel.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 29.08.2022 18:44, Matthias Kaehlcke wrote:
-> Add the alias 'wifi0' for the WiFi interface on the Qcard. The alias
-> is needed by the BIOS which patches the WiFi MAC address read from
-> the VPD (Vital Product Data) into the device tree.
+On Mon, Aug 29, 2022 at 07:20:10PM +0300, Kalle Valo wrote:
+> Manivannan Sadhasivam <mani@kernel.org> writes:
 > 
-> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> > On Tue, Jul 26, 2022 at 08:53:58PM +0300, Kalle Valo wrote:
+> >> Manivannan Sadhasivam <mani@kernel.org> writes:
+> >> 
+> >> > +ath11k, Kalle
+> >> >
+> >> > On Fri, Jul 22, 2022 at 11:17:18AM +0800, Qiang Yu wrote:
+> >> >> The irq handler for a shared IRQ ought to be prepared for running
+> >> >> even now it's being freed. So let's check the pointer used by
+> >> >> mhi_irq_handler to avoid null pointer access since it is probably
+> >> >> released before freeing IRQ.
+> >> >> 
+> >> >> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> >> >
+> >> > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> >> 
+> >> This fixes the crash and my regression tests pass now, thanks. But
+> >> please see my question below.
+> >> 
+> >> Tested-by: Kalle Valo <kvalo@kernel.org>
+> >> 
+> >
+> > Thanks Kalle!
+> 
+> I just tested v6.0-rc3 and it's still crashing. What's the plan to get
+> this fix to Linus?
 
-Konrad
+Sorry for the delay. Just sent the PR to Greg for including it as a fix for
+v6.0.
+
+Thanks,
+Mani
+
 > 
->  arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi | 1 +
->  1 file changed, 1 insertion(+)
+> -- 
+> https://patchwork.kernel.org/project/linux-wireless/list/
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-> index 7adf31bb9827..7cd91df7a118 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-> @@ -28,6 +28,7 @@ aliases {
->  		bluetooth0 = &bluetooth;
->  		serial0 = &uart5;
->  		serial1 = &uart7;
-> +		wifi0 = &wifi;
->  	};
->  
->  	pm8350c_pwm_backlight: backlight {
+> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+
+-- 
+மணிவண்ணன் சதாசிவம்
