@@ -2,105 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1B505A6F33
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 23:35:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C420A5A70C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Aug 2022 00:27:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229875AbiH3Vfg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 17:35:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34606 "EHLO
+        id S232432AbiH3W10 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 18:27:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229549AbiH3Vff (ORCPT
+        with ESMTP id S232185AbiH3W06 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 17:35:35 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF91F51A04;
-        Tue, 30 Aug 2022 14:35:34 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2CF42618D1;
-        Tue, 30 Aug 2022 21:35:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4FCC433C1;
-        Tue, 30 Aug 2022 21:35:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661895333;
-        bh=x1sCWCTYTgRWZSrAxd+CG69DWl89Qy8FYP1J3jZbV2w=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=QW9dkOSDL3LcXJ2CGAGZmb53L5XBaDxaYAFVmLanW0euALps4DYP71DcaZo1qw3yQ
-         KLb9U6BPqHT9OffKATcXHB/kdt6aLWNfnQzJfyFDbBl2EjNMyOj1skn6iQyzW2aNIB
-         pOHal4yvccQfjpuxFY0N/HqIiKrpIir0pcqsUZr3/HpOjOo0oj+jAMIOfUabENkHRQ
-         ZMt/EhuyY8nrY0wh15rXYlpjps+msr2YJ38UosPKSjcgm4vROnLGFSJf9KSqmc9SxB
-         ClQW3xYp1n9ti4JUKWwaLxGubjWK6c87CKnaZh2QugYPyRk7rGSu73AveFfxKkh5+V
-         xq3jFqBhwIN8g==
-Content-Type: text/plain; charset="utf-8"
+        Tue, 30 Aug 2022 18:26:58 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C95BE61DA4;
+        Tue, 30 Aug 2022 15:25:32 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27ULEBEc010330;
+        Tue, 30 Aug 2022 22:25:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type :
+ content-transfer-encoding; s=qcppdkim1;
+ bh=jbm3UjDcY/kfdEXK+ypRM1eQgzrOIq0LYLt1nrVWse0=;
+ b=oq+ZwbsM9oV7IY5h8mj74vJzYYB77WO4LBbbOvH+yqOy9PmFZebOte7Soa/PxHUNzruP
+ cqy0KhsjIQFKMIMe/Mbo09sGk6EYOHCGvEdm2c1/dfAlH2lH7y6qwJz7n2EZrchCTpHL
+ /oE7g8DHou3wcdjfjUn8ByumTOXZQmcatACSYIiKgnAWkddqAu65cCJXkG1HU719/WzT
+ 0k23jIvsXPx1ufxL3TZKDlQQEIWEkmCenoVNJWPkd8m8XxFGRiu1EshKQOm3vTrw//Hz
+ lytfm9QXgRMOqBsevCVuWACcQv+GYBGpuO0CHR20ULWjVJYKB5dvaCmjJd9MnUgvDjls 3w== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j9m2t1heg-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 30 Aug 2022 22:25:19 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27UMPICA020580
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 30 Aug 2022 22:25:18 GMT
+Received: from hu-gurus-sd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Tue, 30 Aug 2022 15:25:18 -0700
+From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC:     David Heidelberg <david@ixit.cz>,
+        Robert Marko <robimarko@gmail.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>
+Subject: [RESEND PATCH v2 0/5] SCM: Add support for wait-queue aware firmware
+Date:   Tue, 30 Aug 2022 15:25:06 -0700
+Message-ID: <1661898311-30126-1-git-send-email-quic_gurus@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <5ff21b1e-3af9-36ef-e13e-fa33f526d0e3@quicinc.com>
-References: <20220825182152.v2.1.I45235b7c40997bc2abf813e4722b4dcdd6aecf6b@changeid> <20220826024003.qpqtdmdohdmpcskt@baldur> <5ff21b1e-3af9-36ef-e13e-fa33f526d0e3@quicinc.com>
-Subject: Re: [PATCH v2 1/2] clk: qcom: gcc-sc7180: Keep the USB GDSC always on
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-clk@vger.kernel.org,
-        Krishna Kurapati <quic_kriskura@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-Date:   Tue, 30 Aug 2022 14:35:31 -0700
-User-Agent: alot/0.10
-Message-Id: <20220830213533.7C4FCC433C1@smtp.kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 3_xaYGEY4rEU_vTQgy6AWjqNaKRPwsBx
+X-Proofpoint-ORIG-GUID: 3_xaYGEY4rEU_vTQgy6AWjqNaKRPwsBx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-30_12,2022-08-30_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 adultscore=0 mlxlogscore=999 bulkscore=0 suspectscore=0
+ mlxscore=0 clxscore=1011 spamscore=0 malwarescore=0 impostorscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2208300100
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rajendra Nayak (2022-08-29 01:12:02)
-> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> index d3244006c661..0fe017ba901b 100644
-> --- a/drivers/clk/qcom/gdsc.c
-> +++ b/drivers/clk/qcom/gdsc.c
-> @@ -368,6 +368,10 @@ static int _gdsc_disable(struct gdsc *sc)
->          if (sc->pwrsts & PWRSTS_OFF)
->                  gdsc_clear_mem_on(sc);
->=20
-> +       /* If the GDSC supports RET, do not explicitly power it off */
-> +       if (sc->pwrsts & PWRSTS_RET)
-> +               return 0;
-> +
->          ret =3D gdsc_toggle_logic(sc, GDSC_OFF);
->          if (ret)
->                  return ret;
->=20
->=20
-> So with that change, we would then not need the ALWAYS_ON flag set for us=
-b gdsc,
-> instead we would update the .pwrsts to PWRSTS_RET_ON instead of PWRSTS_OF=
-F_ON,
-> and that should make both usb wake-ups to work and we can still have the =
-usb_gdsc as
-> a subdomain of CX for performance state voting.
+This patch series enables the QCOM SCM driver to support firmware (FW) versions
+that expect the high-level OS (HLOS) to be tolerant of SCM call requests not
+being processed right away and, instead, being placed on a wait-queue in FW and
+processed accordingly.
 
-To clarify, usb_gdsc is not setup as a subdomain of CX so far, right?
-Just that eventually we'll make usb_gdsc a subdomain of CX so that
-dev_pm_opp_set_rate() can target the CX domain instead of the usb one?
+The problem this feature is fixing is as follows. In a scenario where there is
+a VM in addition to HLOS (and an underlying hypervisor):
 
-> Does that sounds like a reasonable solution?
+1. HLOS makes an SMC call on core 5
+2. The hypervisor scheduling interrupt interrupts this SMC call.
+3. The hypervisor schedules the VM on core 5.
+4. The VM makes an SMC call on core 5.
+5. The SMC call is non-interruptibly stuck on FW spinlock on core 5.
+6. HLOS cannot reschedule since core 5 is not responding to Reschedule IPIs.
+7. Watchdog timer expires waiting for core 5.
 
-It sounds good to me. What about the existing users of PWRSTS_RET
-though? If I understand correctly this flag means the domain will never
-be turned off, instead it will hit retention during low power modes.
+This problem is solved by FW returning a new return code SCM_WAITQ_SLEEP to
+HLOS right away when it is overwhelmed by the VM's SMC call. HLOS then places
+the call on a wait-queue and wakes it up when it receives an interrupt that
+signifies "all-clear".
 
-While you're crafting this patch can you also document the PWRSTS_*
-defines so that we know what they mean? I can guess that PWRSTS_RET
-means "retention" but I don't know what it really means. I guess it
-means "Deepest power off state is retention of memory cells".
+Additionally, this new design also supports scenarios involving only HLOS (and
+no other VMs).  Such scenarios make use of a second new return code
+SCM_WAITQ_WAKE.
+
+There are three new SMC calls also being defined in this design that, together
+with the two new return codes, form the handshake protocol between Linux and
+FW.
+
+This design is also backwards-compatible with existing firmware versions that
+do not support this feature.
+
+---
+v2:
+- Changes made to patches 4 and 5 are listed therein.
+- Rebased dt-bindings on top of the YAML conversion patch [1].
+
+[1] https://lore.kernel.org/lkml/20220708090431.30437-1-david@ixit.cz/
+---
+
+Guru Das Srinagesh (5):
+  dt-bindings: firmware: qcom-scm: Add "allow-multi-call" property
+  firmware: qcom: scm: Optionally remove SCM call serialization
+  dt-bindings: firmware: qcom-scm: Add optional interrupt
+  firmware: qcom: scm: Add wait-queue helper functions
+  firmware: qcom: scm: Add wait-queue handling logic
+
+ .../devicetree/bindings/firmware/qcom,scm.yaml     |  10 ++
+ drivers/firmware/qcom_scm-smc.c                    | 140 +++++++++++++++++++--
+ drivers/firmware/qcom_scm.c                        | 125 +++++++++++++++++-
+ drivers/firmware/qcom_scm.h                        |  14 +++
+ 4 files changed, 279 insertions(+), 10 deletions(-)
+
+-- 
+2.7.4
+
