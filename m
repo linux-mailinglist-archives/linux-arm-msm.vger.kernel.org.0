@@ -2,78 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C3665A5B8A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 08:11:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DDDA5A5B96
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 08:14:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229830AbiH3GLC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 02:11:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39668 "EHLO
+        id S229822AbiH3GOF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 02:14:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229616AbiH3GLB (ORCPT
+        with ESMTP id S229792AbiH3GOF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 02:11:01 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56CCB61D9D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 23:10:59 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id bt10so14132662lfb.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 23:10:59 -0700 (PDT)
+        Tue, 30 Aug 2022 02:14:05 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA543B81D6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 23:14:03 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id q7so14112676lfu.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 23:14:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=hUQZ2ejLKEXtWhiFjkIEXiKx5+7W4LSI/qrPj7Va8no=;
-        b=DjSh7ZrxojdvW/IHtazfcEv3r0dT3Oa1ZJ22pgkSZwBwa0goaY+VpApIDLBgzjgT/Z
-         J/LTlLADyeMLChodCmockA/RRD5mBOJOB7GrbTBe16OP4/nuIXZnr5qZzU/+HH/smwen
-         bSW6mOa6DuPl/hb34TrX6RuXrMPVCSsQ9FkLjbFfptlMED4UJVH5E/Va9RulZuCSI0Ou
-         fqLQPzsb8K4/g/3idBKUfBqJ4IVU4sjqErKdF+f+zDvGZBp2wdEjrDx1ur3uHj0k40Dg
-         Lox8PQYC8kQUTI1Vd+C5b+Kzxox6kQO59X01VhjKWNTrfMe+1zmARq4YxZnluMNhJSIL
-         lzWw==
+        bh=f7Qyc4+Tcj4HKD3nfJDeYBjnlk9zHLIWyrvpr52gQSY=;
+        b=tvoTZD8WzYAXPwu1p166Vdlb+BHgSRLS6+r9sYH4LYgnoEbrzOOIWPlmGHlGUjkASv
+         W/cfOTlj142TqatCzxwfDEBv9b1pf/CI+8pSCNOYEJvl+gN+FKrtJ3z4147EZG7bnedi
+         0nTyo6CXPSrSkeqvDZt5dfgDhQ48aiX3VeFyqx/Eh04TiRUs6fxyhD8mU+XJU0m9922T
+         gZ2C6CEP38fy93AFLhTy2nmo6LGC2GHf6tNcT3idV/Nvc1+U88NtcL8sAbXu2EWxns8W
+         gIAen1gn8Et4QKdyM6Um3Hh5osxqzTh2tdFhWPsOvQw5LnhlSCMTdm3wVnzhXzMoTLbe
+         /yWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=hUQZ2ejLKEXtWhiFjkIEXiKx5+7W4LSI/qrPj7Va8no=;
-        b=rYBG7lFfibHhc4sIL/USMoUW41+chibKJ6pCLdqIdLpCpN/uFvu2pbtZZCWWbE7D9O
-         DICirEtDw3Hwvb7AxeJh0QSL2+kEJEQzCnjd5zOX1+mvgVj1rbrKo0Ummd+ZVew0J4Zb
-         dRFVILZ7kPQrJEZaE5se5KZz1LVtsr0nhzHDlnE1W5ci0sWiE+sVl0Ajnsvy0GkbgP5K
-         wH1hQ+Y4Gyy0MyFMIow3tljTRXvrPio+fta885f32sQFaCYr2iK2kCOo+coAc/+6oSad
-         Od3D2qMU5b84jsaAtgYEbztwZXCkm6yxPJY5JLTX46X2zDg13xwnRNqJAhhU6QpSSGhM
-         Fjjw==
-X-Gm-Message-State: ACgBeo0jeRY8cmZKLdCkjWff7pkF2rYoDypENntbNExyFMPNiLYJNT3L
-        RrQqxnDb45V7FpJW6EU9iu3KiQ==
-X-Google-Smtp-Source: AA6agR7YIuHSExFLCmMqS015z962FMdrfJfgCt1OY2a8PJgFrirhqrDKu3uVqX7f0kX0kQERhZsUog==
-X-Received: by 2002:a05:6512:1521:b0:48a:3c5d:5d17 with SMTP id bq33-20020a056512152100b0048a3c5d5d17mr7007337lfb.587.1661839857716;
-        Mon, 29 Aug 2022 23:10:57 -0700 (PDT)
+        bh=f7Qyc4+Tcj4HKD3nfJDeYBjnlk9zHLIWyrvpr52gQSY=;
+        b=7bC7ltM8yY0OElSldqoG5OCL72pVoem4w4OEhRtQmdYUDOD4imiJjOcj9BdhRWQPyG
+         Z5DxI6IIlNDOKB7ID9b4gi1ILkeAdpLhavbnhTXaI6UcvJXYvrEGF5oesYOkuAqo2OmT
+         2Jj4D4Qji0OoZ0UiyXoJSKmWQLnUUdoOd32IKdF9rR+xUW6E7dK931GeEWLSI/jdfYVH
+         c5azzXO2eJdXb0PHEGnVgetMOjYM5yMzTtmsqCodrAeu/hNS1EEZ5KigTleZMCSLg2k2
+         TXRJlM1y0U7SK4JDoVMSDl1opSXzy1lZEe4zuBVTQi4mwtomg7XkZ6l4L7+PU5ffaFSM
+         2Ojw==
+X-Gm-Message-State: ACgBeo3S6gLrySR3eh/cry8AclBAqtW0OHF2TPuMnnM25RRg/1QSzf1Y
+        /+QBzKn8CaC/0kX7vdw38vD8Fw==
+X-Google-Smtp-Source: AA6agR7vf1NbhaiKgNrNi6NAyaevkiM1S2zz7vgqfNCJRkaCV6MnL2fbTb9/0uQISNCPQC0DCakmdQ==
+X-Received: by 2002:a05:6512:3b9d:b0:492:d0c5:c3a5 with SMTP id g29-20020a0565123b9d00b00492d0c5c3a5mr6974630lfv.129.1661840042217;
+        Mon, 29 Aug 2022 23:14:02 -0700 (PDT)
 Received: from [192.168.28.124] (balticom-73-99-134.balticom.lv. [109.73.99.134])
-        by smtp.gmail.com with ESMTPSA id q18-20020a2eb4b2000000b00265757e0e66sm638874ljm.48.2022.08.29.23.10.56
+        by smtp.gmail.com with ESMTPSA id u7-20020a056512094700b0048aeff37812sm1480396lft.308.2022.08.29.23.14.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Aug 2022 23:10:57 -0700 (PDT)
-Message-ID: <ef905cd6-89fd-f274-7848-ba43edc8dab3@linaro.org>
-Date:   Tue, 30 Aug 2022 09:10:56 +0300
+        Mon, 29 Aug 2022 23:14:01 -0700 (PDT)
+Message-ID: <65e0c02a-41dd-0858-58f2-7b06b8ab5780@linaro.org>
+Date:   Tue, 30 Aug 2022 09:13:59 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
-Subject: Re: [PATCH] dt-bindings: mfd: qcom,spmi-pmic: add missing compatibles
+Subject: Re: [PATCH v6 2/3] soc: qcom: socinfo: create soc_id table from
+ bindings
 Content-Language: en-US
-To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Heidelberg <david@ixit.cz>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20220828065123.39734-1-krzysztof.kozlowski@linaro.org>
- <20220829220836.4487FC433D6@smtp.kernel.org>
+References: <20220705130300.100882-1-krzysztof.kozlowski@linaro.org>
+ <20220705130300.100882-3-krzysztof.kozlowski@linaro.org>
+ <20220829204930.27wg2htgbq23kgeg@builder.lan>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220829220836.4487FC433D6@smtp.kernel.org>
+In-Reply-To: <20220829204930.27wg2htgbq23kgeg@builder.lan>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,20 +82,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/08/2022 01:08, Stephen Boyd wrote:
-> Quoting Krzysztof Kozlowski (2022-08-27 23:51:23)
->> Conversion from TXT to DT schema lost several compatibles.
+On 29/08/2022 23:49, Bjorn Andersson wrote:
+> On Tue, Jul 05, 2022 at 03:02:59PM +0200, Krzysztof Kozlowski wrote:
+>> The Qualcomm SoC ID values are encoded in few places: DTS files,
+>> Devicetree bindings (both used by some of Qualcomm bootloaders or tools)
+>> and in soc_id table of socinfo driver.  Do not duplicate the actual
+>> values in the last one but use the constants from the bindings.
 >>
->> Fixes: 3f5117be9584 ("dt-bindings: mfd: convert to yaml Qualcomm SPMI PMIC")
+>> Tested by comparing output object file (exactly the same).
+>>
 >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
 > 
-> Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+> I didn't have a strong opinion either way on this, so was hoping someone
+> else would chime in. Doesn't seem like that has happened, but
+> unfortunately the soc_id[] list has changed.
 > 
-> Unless you want me to pick it up?
+> Would you mind rebasing the two patches to match the latest list?
 
-Usually this should go via MFD tree, if Lee is around (I saw some emails
-about OoO).
+Sure.
+
+> 
+>> ---
+>>  drivers/soc/qcom/socinfo.c | 259 +++++++++++++++++++------------------
+>>  1 file changed, 133 insertions(+), 126 deletions(-)
+>>
+>> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+>> index cee579a267a6..d515d3a97f0e 100644
+>> --- a/drivers/soc/qcom/socinfo.c
+>> +++ b/drivers/soc/qcom/socinfo.c
+>> @@ -12,11 +12,14 @@
+>>  #include <linux/slab.h>
+>>  #include <linux/soc/qcom/smem.h>
+>>  #include <linux/string.h>
+>> +#include <linux/stringify.h>
+>>  #include <linux/sys_soc.h>
+>>  #include <linux/types.h>
+>>  
+>>  #include <asm/unaligned.h>
+>>  
+>> +#include <dt-bindings/arm/qcom,ids.h>
+>> +
+>>  /*
+>>   * SoC version type with major number in the upper 16 bits and minor
+>>   * number in the lower 16 bits.
+>> @@ -25,6 +28,10 @@
+>>  #define SOCINFO_MINOR(ver) ((ver) & 0xffff)
+>>  #define SOCINFO_VERSION(maj, min)  ((((maj) & 0xffff) << 16)|((min) & 0xffff))
+>>  
+>> +/* Helper macros to create soc_id table */
+>> +#define qcom_board_id(id) QCOM_ID_ ## id, __stringify(id)
+>> +#define qcom_board_id2(id, name) QCOM_ID_ ## id, (name)
+> 
+> How about naming this qcom_board_id_named() ?
+
+
+Yes, sure.
+
 
 Best regards,
 Krzysztof
