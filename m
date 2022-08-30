@@ -2,74 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CC755A5E16
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 10:31:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25BCD5A5E4B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 10:38:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231515AbiH3Ias (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 04:30:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58230 "EHLO
+        id S231205AbiH3IiD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 04:38:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231331AbiH3Iao (ORCPT
+        with ESMTP id S229550AbiH3IiC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 04:30:44 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 790245B044;
-        Tue, 30 Aug 2022 01:30:42 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 3744AB81719;
-        Tue, 30 Aug 2022 08:30:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5DD7C433D7;
-        Tue, 30 Aug 2022 08:30:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661848239;
-        bh=4fIFFAmJqtaWiPJveN43JWTiBEf0tvkh3C0coDWgI78=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=RKdw1Yl99W5tBdesNduvC+WKgCPMNEqW6XFyVfMVxgD93+oFZ3ZMMuHthDT2mCCLD
-         gqbzX+jsk8UYqlK8Y3fxfvIKVnVlwuUoOYmWJkBK+Z8ZgE2pGtOIJhsipiP4pIm+0R
-         zdxtdRp1U4VYy1athyNZyDwgMfuWpx5nKhp4FzRrny6Uqr+X6BoojoAg1pmIy+resV
-         pCT/KJGttEqF623ZadAJw8W1EerEkyWz+6ybQqTh8eMsxnu5iDyEAHWBCLT2wz0DoN
-         QKdt+aMuWuqiYn0Bd/wLRDiPc3UZqd31X5rI8Nw196K/zPu64uTJJfX1nr13DNY2xu
-         pbus2WrHLKNBA==
-From:   Lorenzo Pieralisi <lpieralisi@kernel.org>
-To:     Manivannan Sadhasivam <mani@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Helgaas <bhelgaas@google.com>, linux-arm-msm@vger.kernel.org,
-        Siddartha Mohanadoss <quic_smohanad@quicinc.com>,
-        linux-pci@vger.kernel.org
-Subject: Re: [PATCH] PCI: qcom-ep: Add MODULE_DEVICE_TABLE
-Date:   Tue, 30 Aug 2022 10:30:34 +0200
-Message-Id: <166184821458.217434.12003679728159470237.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220430084740.3769925-1-dmitry.baryshkov@linaro.org>
-References: <20220430084740.3769925-1-dmitry.baryshkov@linaro.org>
+        Tue, 30 Aug 2022 04:38:02 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 135E3C57A1;
+        Tue, 30 Aug 2022 01:38:02 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id y1so8567153plb.2;
+        Tue, 30 Aug 2022 01:38:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=OKt0SaKYUFDPM64A6Cn07/EmVIDe8Wy7GwAmvsBeu9o=;
+        b=fIvvSYlkOcHjJ41suOSaXMb/7pHUjt+uhtz2UaP1To0OmhrCnIDAWSygWg7+pG3Da1
+         0+AOjaky2e834aVf0fXw4e0UfyNGMq2mHlU6XyR6PCgQ8VxtTYuVcTYiiyMiSxHqenlU
+         dC5cKOhE7Mj/3Dt9axxG3TvhQVhUuhLMPvSvZEVYv86HGlbkx75BBM14hM0qH8UWUJX+
+         UPU63JHPFC0Zd0iLci0J3kib6h7C9bMZmziEPkWJRrH4z1+RAnONSL5I06jM5j2OtR/x
+         c8LTtOfxN49StTslBBxb6DT1OGQJA2KZ6LI2fTUPeKzqddGPLKks7HKJCxQA+XNdW/xG
+         zuTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=OKt0SaKYUFDPM64A6Cn07/EmVIDe8Wy7GwAmvsBeu9o=;
+        b=hNkI4m97qiEhO4cHXnXaWstNyHSBczkkvlgS8V+6ISeMus6WYrLeCHlx7iSd454EU4
+         aFmBIjsRlFilDwcL8WEKcwFl40qOsfKjGamVz2B+6WFQJPy09nLUlty7nuux/kqLdmrq
+         AEZjmQJKSD07kBz5mhuU4Bgn/UgoLX1ZBI/RxYUEnS0+zX4scfSMmmHCgpw5PuW8bBwE
+         ZUfGBw09M8fMIvjsn5R4HTbtwefUJJWLjTKh7UqVfoOAl/JEKENJARcvwOBeSiIYSIdi
+         20fcLol7bcYVQaY3yUNGLOop4188Q/3BmPfS1oziJPipr0nGQWDCU4ENTGW/H7yoKrAT
+         PhOA==
+X-Gm-Message-State: ACgBeo32WK9MiT9VmDboGD5KFIi9Geqwhm0UHq2OY9smxP3ntiLycRXt
+        Ij+t0j6j1Gw8w/+kgvM4dREgfLAqLXU=
+X-Google-Smtp-Source: AA6agR6vJqU1pWfRwxp3epkBabnDXJzQtRQDUQRGVlNPFO/iYEB67Ck5rDWQ9BP1GHsPomNF7O12bQ==
+X-Received: by 2002:a17:90a:318f:b0:1fa:a374:f565 with SMTP id j15-20020a17090a318f00b001faa374f565mr22667328pjb.146.1661848681621;
+        Tue, 30 Aug 2022 01:38:01 -0700 (PDT)
+Received: from localhost.localdomain ([193.203.214.57])
+        by smtp.gmail.com with ESMTPSA id d26-20020aa797ba000000b0053668f17a23sm8507946pfq.220.2022.08.30.01.37.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Aug 2022 01:38:01 -0700 (PDT)
+From:   cgel.zte@gmail.com
+X-Google-Original-From: ye.xingchen@zte.com.cn
+To:     mchehab@kernel.org
+Cc:     stanimir.varbanov@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ye xingchen <ye.xingchen@zte.com.cn>,
+        Zeal Robot <zealci@zte.com.cn>
+Subject: [PATCH linux-next] media: venus: hfi: Remove the unneeded result variable
+Date:   Tue, 30 Aug 2022 08:37:53 +0000
+Message-Id: <20220830083753.276861-1-ye.xingchen@zte.com.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 30 Apr 2022 11:47:40 +0300, Dmitry Baryshkov wrote:
-> Add MODULE_DEVICE_TABLE to enable module autoloading for respective
-> device.
-> 
-> 
+From: ye xingchen <ye.xingchen@zte.com.cn>
 
-Applied to pci/qcom, thanks!
+Return the value venus_hfi_create() directly instead of storing it in
+another redundant variable.
 
-[1/1] PCI: qcom-ep: Add MODULE_DEVICE_TABLE
-      https://git.kernel.org/lpieralisi/pci/c/2baedb9f93c4
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: ye xingchen <ye.xingchen@zte.com.cn>
+---
+ drivers/media/platform/qcom/venus/hfi.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-Thanks,
-Lorenzo
+diff --git a/drivers/media/platform/qcom/venus/hfi.c b/drivers/media/platform/qcom/venus/hfi.c
+index 1968f09ad177..e00aedb41d16 100644
+--- a/drivers/media/platform/qcom/venus/hfi.c
++++ b/drivers/media/platform/qcom/venus/hfi.c
+@@ -569,8 +569,6 @@ irqreturn_t hfi_isr(int irq, void *dev)
+ 
+ int hfi_create(struct venus_core *core, const struct hfi_core_ops *ops)
+ {
+-	int ret;
+-
+ 	if (!ops)
+ 		return -EINVAL;
+ 
+@@ -579,9 +577,8 @@ int hfi_create(struct venus_core *core, const struct hfi_core_ops *ops)
+ 	core->state = CORE_UNINIT;
+ 	init_completion(&core->done);
+ 	pkt_set_version(core->res->hfi_version);
+-	ret = venus_hfi_create(core);
+ 
+-	return ret;
++	return venus_hfi_create(core);
+ }
+ 
+ void hfi_destroy(struct venus_core *core)
+-- 
+2.25.1
