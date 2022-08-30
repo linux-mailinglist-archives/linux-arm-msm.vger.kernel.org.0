@@ -2,66 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D494F5A5C8F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 09:09:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 242C25A5CA5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 09:14:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230447AbiH3HIn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 03:08:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38284 "EHLO
+        id S230105AbiH3HOF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 03:14:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230486AbiH3HHe (ORCPT
+        with ESMTP id S230441AbiH3HOD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 03:07:34 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDD8C9E88D;
-        Tue, 30 Aug 2022 00:07:20 -0700 (PDT)
+        Tue, 30 Aug 2022 03:14:03 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F11DC2764;
+        Tue, 30 Aug 2022 00:14:02 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CA5BC61231;
-        Tue, 30 Aug 2022 07:07:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7672EC433C1;
-        Tue, 30 Aug 2022 07:07:01 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id C326AB816AA;
+        Tue, 30 Aug 2022 07:14:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EAB7C433C1;
+        Tue, 30 Aug 2022 07:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661843222;
-        bh=FMfNnM+I09AoWhN6ovBiEHCCKZyla04MjnYb5+HBX/w=;
+        s=k20201202; t=1661843639;
+        bh=N85wQvT76zz3IeyCl0LFoWyoONSRnwCg16u5Giob5IM=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=lYYXLxk559HkJfjNSMlOUQiSfxmgGkTvUoP5TmcQofe4V8571S7IOiT3f1TjQqmVC
-         Ku6V/1aJq5Hc5UCnmkQD37kIleKUeuZVmTXaSJ+CpT2Ri/M0wF1arbetLW//AJL+ZI
-         pFOtnDyS+pmha2UuFVX7wxLKtGZTGAKvrE7UB1GeDwO6/GA90m1TBYdZWL6S/kWoea
-         DUXujmq8LXDmAhBjOvP3HQxYaF9o33MXsZ7Fbu9KItTzPmO3ATd69PiZkwnIxNO3r8
-         RfyPzFfNgvGHBWVmJijLNoKyd5ygV+WwE/vH3xwWducmXNQsex03NR0OA/+4Vlx/7H
-         vVG9imQyidGnQ==
-Date:   Tue, 30 Aug 2022 12:36:58 +0530
+        b=Ljuu/lqVPmhIsQODLZgymO4xqsRnujIozpGfe+s6+cV+brJoAdMKZRymPpsOGWZ8+
+         mH0/vmiD4szFDaMsDqO4cPQqu9YxHJM5aZ9CoggjWln8ZB90w+LO1iYxzrkaJqjQDB
+         tvkU5iPUdiJyJyniax6oury3naT5kv4uJByTHNLVKp3hDgrcom5DOxNwA6Hd9BieJa
+         ewUG4ValKx27i0hYI/8dLhLneKnXJ8mJngM8nKB0vLzk8d2J2kydUSQKbBd9j8O7nv
+         jmEEOFJ0wD32AXH3Bv1mDSenEQ9PC41fHOCxR8WJ2VJ7XdTiYffciMVHvQNYnsjf8V
+         EDn3H0kYVlycw==
+Date:   Tue, 30 Aug 2022 12:43:54 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Bjorn Andersson <bjorn@kryo.se>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Amelie Delaunay <amelie.delaunay@foss.st.com>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Ray Jui <ray.jui@broadcom.com>,
-        Scott Branden <scott.branden@broadcom.com>,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: phy: Add missing
- (unevaluated|additional)Properties on child nodes
-Message-ID: <Yw23EkV/P3fuNI4C@matsya>
-References: <20220823145649.3118479-14-robh@kernel.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH v2 2/6] phy: qcom-qmp-pcie: split register tables into
+ primary and secondary part
+Message-ID: <Yw24sgVksGzvgr8Q@matsya>
+References: <20220825105044.636209-1-dmitry.baryshkov@linaro.org>
+ <20220825105044.636209-3-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220823145649.3118479-14-robh@kernel.org>
+In-Reply-To: <20220825105044.636209-3-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -72,12 +66,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-08-22, 09:56, Rob Herring wrote:
-> In order to ensure only documented properties are present, node schemas
-> must have unevaluatedProperties or additionalProperties set to false
-> (typically).
+On 25-08-22, 13:50, Dmitry Baryshkov wrote:
+> SM8250 configuration tables are split into two parts: the common one and
+> the PHY-specific tables. Make this split more formal. Rather than having
+> a blind renamed copy of all QMP table fields, add separate struct
+> qmp_phy_cfg_tables and add two instances of this structure to the struct
+> qmp_phy_cfg. Later on this will be used to support different PHY modes
+> (RC vs EP).
 
-Applied, thanks
+This lgtm with once nit
+
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 141 +++++++++++++----------
+>  1 file changed, 83 insertions(+), 58 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> index c84846020272..60cbd2eae346 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> @@ -1346,34 +1346,33 @@ static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_pcs_misc_tbl[] = {
+>  
+>  struct qmp_phy;
+>  
+> -/* struct qmp_phy_cfg - per-PHY initialization config */
+> -struct qmp_phy_cfg {
+> -	/* phy-type - PCIE/UFS/USB */
+> -	unsigned int type;
+> -	/* number of lanes provided by phy */
+> -	int nlanes;
+> -
+> -	/* Init sequence for PHY blocks - serdes, tx, rx, pcs */
+> +struct qmp_phy_cfg_tables {
+>  	const struct qmp_phy_init_tbl *serdes_tbl;
+>  	int serdes_tbl_num;
+> -	const struct qmp_phy_init_tbl *serdes_tbl_sec;
+> -	int serdes_tbl_num_sec;
+>  	const struct qmp_phy_init_tbl *tx_tbl;
+>  	int tx_tbl_num;
+> -	const struct qmp_phy_init_tbl *tx_tbl_sec;
+> -	int tx_tbl_num_sec;
+>  	const struct qmp_phy_init_tbl *rx_tbl;
+>  	int rx_tbl_num;
+> -	const struct qmp_phy_init_tbl *rx_tbl_sec;
+> -	int rx_tbl_num_sec;
+>  	const struct qmp_phy_init_tbl *pcs_tbl;
+>  	int pcs_tbl_num;
+> -	const struct qmp_phy_init_tbl *pcs_tbl_sec;
+> -	int pcs_tbl_num_sec;
+>  	const struct qmp_phy_init_tbl *pcs_misc_tbl;
+>  	int pcs_misc_tbl_num;
+> -	const struct qmp_phy_init_tbl *pcs_misc_tbl_sec;
+> -	int pcs_misc_tbl_num_sec;
+> +};
+> +
+> +/* struct qmp_phy_cfg - per-PHY initialization config */
+> +struct qmp_phy_cfg {
+> +	/* phy-type - PCIE/UFS/USB */
+> +	unsigned int type;
+> +	/* number of lanes provided by phy */
+> +	int nlanes;
+> +
+> +	/* Init sequence for PHY blocks - serdes, tx, rx, pcs */
+> +	struct qmp_phy_cfg_tables primary;
+> +	/*
+> +	 * Init sequence for PHY blocks, providing additional register
+> +	 * programming. Unless required it can be left omitted.
+> +	 */
+> +	struct qmp_phy_cfg_tables secondary;
+
+since this is optional but always defined, we would waste memory here,
+can we make this a pointer and initialize to null when secondary is not
+present
 
 -- 
 ~Vinod
