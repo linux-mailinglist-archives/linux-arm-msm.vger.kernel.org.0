@@ -2,221 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 338FA5A6192
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 13:22:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A3375A61B9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 13:30:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229874AbiH3LVr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 07:21:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45024 "EHLO
+        id S230233AbiH3LaN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 07:30:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229908AbiH3LVk (ORCPT
+        with ESMTP id S229980AbiH3LaE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 07:21:40 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A43F5AC27A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 04:21:38 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id v5so4582273plo.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 04:21:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ecs-corp-partner-google-com.20210112.gappssmtp.com; s=20210112;
-        h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
-         :cc;
-        bh=ceOSXODTV0UEQ0old0AVSNd3nMc530Sckae9kNqwPFs=;
-        b=vjyh43erqz87yzTjjYh7mACkPwH/re2HPP/kHyvqDh0plrqVDqvEw7ZxyBDuC1M0Jq
-         h/x0ZZu9KfFtUE8AVDlnPMx66NWxVwsDh/O0AX2nORRW687pD069DHAP94Ga8FdgW3zn
-         658GdygENnIKFeQWPKFCkExenGhk/IielfWo++ALW71wJdyky0eeaYryhJmMid2DEe4H
-         HJasWo0KZMujw5tiqnYK+P1qVNnee5CClPDQkoJQlXyMHEn0MUskFlQWZyh7DZ4a2f+K
-         bkznlipC6WD0pKTT4SzkSgX+uz20Q974ZTWbfitAHZ8T9p573Olsp36uR6WOyPgjKUVz
-         fumQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=references:in-reply-to:message-id:date:subject:cc:to:from
-         :x-gm-message-state:from:to:cc;
-        bh=ceOSXODTV0UEQ0old0AVSNd3nMc530Sckae9kNqwPFs=;
-        b=1f9UBlYaG22uEF15v/GdNB2rtcRegL6XR+0Zyk4cmxvGM5TS5st3mreUmTodRBrTJv
-         ACqPf/kF5qYFgCLUTCsTENOKoZIjbm4u9/1OqhZ6i485/WNUnFV7qEuhzAqCmuXZ67aU
-         3RelWt80Zo+vsenP3EFyi8SIB4He5jRW8KE2y+I19UF9vzdDtLC5BZU7UdkncEHs0cSA
-         dKtZ0HgPstaWR2aJ3fiBqEqf15U4lITVKDJPLDdUwpEVU8b7gCLpPtcHJ/6phIh6zO+q
-         NGwa+vI8kIs0H+sSz0k0AYW0YePR0eYJKNmnEQfniugNUpiaPGk9JRBPRXIej9BZi8/o
-         NZYw==
-X-Gm-Message-State: ACgBeo1vWT/3ZR50X6hsS2PIbrFEi8knAplNju81AsY+xJgwzEEqhaOm
-        tP0Mw6cwRjc8liIhvMqVgV0mjg==
-X-Google-Smtp-Source: AA6agR7CSBq7DSblhR/GS+uVwHPi0ho8zoo4FMm//2vK27lQQ4evjq4rfedgPqMktVyj85dcfYr2Aw==
-X-Received: by 2002:a17:90b:1d0b:b0:1f5:6554:d556 with SMTP id on11-20020a17090b1d0b00b001f56554d556mr23420217pjb.168.1661858498158;
-        Tue, 30 Aug 2022 04:21:38 -0700 (PDT)
-Received: from localhost.localdomain ([103.104.171.43])
-        by smtp.gmail.com with ESMTPSA id q41-20020a17090a17ac00b001f54fa41242sm8310957pja.42.2022.08.30.04.21.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Aug 2022 04:21:37 -0700 (PDT)
-From:   Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Henry Sun <henrysun@google.com>,
-        Bob Moragues <moragues@chromium.org>,
-        Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Tue, 30 Aug 2022 07:30:04 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D11717581;
+        Tue, 30 Aug 2022 04:30:00 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8324A6154F;
+        Tue, 30 Aug 2022 11:30:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C941CC4347C;
+        Tue, 30 Aug 2022 11:29:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1661858999;
+        bh=1xLqX4IZAgNYnC4h10WjJw6PlukikNFYKog3HwdWdDM=;
+        h=From:To:Cc:Subject:Date:From;
+        b=RAo042DFSY5REyFDd6pGeOPdJAPUXxbTgfnMCpejt+lV5oKgFcPTfrgyP/yI8eNkv
+         FW3lPw+jvjEWDyiIUwXliYqmH7ZPTSi4GF45lXUloWfhAZzXGol+/9A2dBKfuOSjiX
+         38YlKJu9t8SjzxQMpwLo9+WMbcTzF/CLUNECEPk299TLZh0VfB3xwb16J9OiRUaO5o
+         df40iErnbvip+clMNIE12Vmjs8K/qlhJjKgh0I4/R3wDrZ6elLrr9LfZD2dggsSpfJ
+         nWb9oiZ1euphycUvxzprcAyehDXLvgFmwL8RD1hLdm9ZgftlcmnGl3f1y+qIW4LIa6
+         B97R9LCXNy4wg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1oSzRM-0000zn-47; Tue, 30 Aug 2022 13:29:56 +0200
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 2/2] arm64: dts: qcom: Add sc7180-pazquel360
-Date:   Tue, 30 Aug 2022 11:21:08 +0000
-Message-Id: <20220830112013.v2.2.I5bd646de8fac81eb23c8bcf1cbe21125bf9638f3@changeid>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20220830112013.v2.1.Ic4d4e0777115011544dbc2ab07ed4d7b408c003a@changeid>
-References: <20220830112013.v2.1.Ic4d4e0777115011544dbc2ab07ed4d7b408c003a@changeid>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH v4 00/30] phy: qcom,qmp: fix dt-bindings and deprecate lane suffix
+Date:   Tue, 30 Aug 2022 13:28:53 +0200
+Message-Id: <20220830112923.3725-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Create first version device tree for pazquel360
-pazquel360 is convertible and the pazquel it is based on is clamshell.
-sku 20 for lte & wifi
-sku 21 for wifi only
-sku 22 for lte w/o esim & wifi
+When adding support for SC8280XP to the QMP PHY driver I noticed that
+the PHY provider child node was not described by the current DT schema.
 
-Signed-off-by: Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
----
-Changes in v2:
-- Remove the touchscreen setting, as a follow-up patch
+The SC8280XP PHYs also need a second fixed-divider PIPE clock
+("pipediv2") and I didn't want to have to add a bogus "lane" suffix to
+the clock name just to match the current "pipe0" name so I decided to
+deprecate the unnecessary suffix in the current binding instead.
 
- arch/arm64/boot/dts/qcom/Makefile             |  2 +
- .../qcom/sc7180-trogdor-pazquel360-lte.dts    | 22 ++++++++
- .../qcom/sc7180-trogdor-pazquel360-wifi.dts   | 17 +++++++
- .../dts/qcom/sc7180-trogdor-pazquel360.dtsi   | 50 +++++++++++++++++++
- 4 files changed, 91 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360-lte.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360-wifi.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360.dtsi
+To be able to add the missing child-node schema and handle device
+specifics like additional PIPE clocks, it quickly became obvious that
+the binding needs to be split up.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 1d86a33de528..9f736702e06f 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -84,6 +84,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pazquel-lte-parade.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pazquel-lte-ti.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pazquel-parade.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pazquel-ti.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pazquel360-lte.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pazquel360-wifi.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pompom-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pompom-r1-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pompom-r2.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360-lte.dts
-new file mode 100644
-index 000000000000..021bcafcf815
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360-lte.dts
-@@ -0,0 +1,22 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Pazquel board device tree source
-+ *
-+ * Copyright 2021 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180-trogdor.dtsi"
-+#include "sc7180-trogdor-parade-ps8640.dtsi"
-+#include "sc7180-trogdor-pazquel360.dtsi"
-+#include "sc7180-trogdor-lte-sku.dtsi"
-+
-+/ {
-+	model = "Google Pazquel (Parade,LTE)";
-+	compatible = "google,pazquel-sku22", "google,pazquel-sku20", "qcom,sc7180";
-+};
-+
-+&ap_sar_sensor_i2c {
-+	status = "okay";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360-wifi.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360-wifi.dts
-new file mode 100644
-index 000000000000..defd84c5354a
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360-wifi.dts
-@@ -0,0 +1,17 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Pazquel board device tree source
-+ *
-+ * Copyright 2022 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7180-trogdor.dtsi"
-+#include "sc7180-trogdor-parade-ps8640.dtsi"
-+#include "sc7180-trogdor-pazquel360.dtsi"
-+
-+/ {
-+	model = "Google Pazquel (Parade,WIFI-only)";
-+	compatible = "google,pazquel-sku21", "qcom,sc7180";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360.dtsi
-new file mode 100644
-index 000000000000..5702325d0c7b
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360.dtsi
-@@ -0,0 +1,50 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Pazquel board device tree source
-+ *
-+ * Copyright 2021 Google LLC.
-+ */
-+
-+/* This file must be included after sc7180-trogdor.dtsi */
-+#include "sc7180-trogdor-pazquel.dtsi"
-+
-+&alc5682 {
-+	compatible = "realtek,rt5682s";
-+	realtek,dmic1-clk-pin = <2>;
-+	realtek,dmic-clk-rate-hz = <2048000>;
-+};
-+
-+&keyboard_controller {
-+	function-row-physmap = <
-+		MATRIX_KEY(0x00, 0x02, 0)	/* T1 */
-+		MATRIX_KEY(0x03, 0x02, 0)	/* T2 */
-+		MATRIX_KEY(0x02, 0x02, 0)	/* T3 */
-+		MATRIX_KEY(0x01, 0x02, 0)	/* T4 */
-+		MATRIX_KEY(0x03, 0x04, 0)	/* T5 */
-+		MATRIX_KEY(0x02, 0x04, 0)	/* T6 */
-+		MATRIX_KEY(0x01, 0x04, 0)	/* T7 */
-+		MATRIX_KEY(0x02, 0x09, 0)	/* T8 */
-+		MATRIX_KEY(0x01, 0x09, 0)	/* T9 */
-+		MATRIX_KEY(0x00, 0x04, 0)	/* T10 */
-+		MATRIX_KEY(0x03, 0x09, 0)       /* T11 */
-+	>;
-+	linux,keymap = <
-+		MATRIX_KEY(0x00, 0x02, KEY_BACK)
-+		MATRIX_KEY(0x03, 0x02, KEY_REFRESH)
-+		MATRIX_KEY(0x02, 0x02, KEY_ZOOM)
-+		MATRIX_KEY(0x01, 0x02, KEY_SCALE)
-+		MATRIX_KEY(0x03, 0x04, KEY_SYSRQ)
-+		MATRIX_KEY(0x02, 0x04, KEY_BRIGHTNESSDOWN)
-+		MATRIX_KEY(0x01, 0x04, KEY_BRIGHTNESSUP)
-+		MATRIX_KEY(0x02, 0x09, KEY_MUTE)
-+		MATRIX_KEY(0x01, 0x09, KEY_VOLUMEDOWN)
-+		MATRIX_KEY(0x00, 0x04, KEY_VOLUMEUP)
-+		MATRIX_KEY(0x03, 0x09, KEY_SLEEP)
-+		CROS_STD_MAIN_KEYMAP
-+	>;
-+};
-+
-+&sound {
-+	compatible = "google,sc7180-trogdor";
-+	model = "sc7180-rt5682s-max98357a-1mic";
-+};
+This series clean up and fixes some issue with the current schema before
+splitting it up in separate schemas for PCIe, UFS and USB and adding
+missing parts like the child PHY provider nodes.
+
+The MSM8996 PCIe PHY gets its own schema as this is the only non-combo
+PHY that actually provides more than one PHY per IP block. Note that the
+"lane" suffix is still unnecessary and misleading.
+
+The final patches add support for the updated binding to the (recently
+split up) PHY drivers. Included is also a related combo PHY cleanup.
+
+Johan
+
+
+Changes in v4
+ - rebase on phy/next from 2022-08-30 (71351b0e5646 ("phy: move from
+   strlcpy with unused retval to strscpy")) which included a new
+   sc8280xp USB PHY binding
+ - add more tags from Krzysztof and Dmitry
+
+Changes in v3
+ - rebase on linux-next which has a new binding for IPQ8074
+ - fix git-bisect breakage due to removal of an unused variable one
+   patch too soon (Krzysztof)
+ - replace one Fixes tag with reference in commit message (Krzysztof)
+ - drop two redundant minItems (Krzysztof)
+ - fix two Fixes tags that lacked the actual tag
+ - add more ack and review tags from Krzysztof
+
+Changes in v2
+ - squash split + cleanup + example patches (Krzysztof)
+ - deprecate clock-names instead of dropping suffix (Krzysztof)
+ - deprecate reset-names instead of dropping suffix (Krzysztof)
+ - flatten child reg if/then schemas (Krzysztof)
+ - add back optional vddp-ref-clk to all bindings even though it likely
+   only applies to MSM8996/98 UFS (Krzysztof)
+ - add missing sc7180 schema to USB binding
+ - misc clean ups
+   - shorten or drop descriptions
+   - drop quotes around $id and $schema (Krzysztof)
+   - use maxItems with clock-output-names
+   - combine two USB clock+reset schemas
+ - add Reviewed-by/Acked-by tags
+
+
+Johan Hovold (30):
+  dt-bindings: phy: qcom,qmp: fix bogus clock-cells property
+  dt-bindings: phy: qcom,qmp: sort compatible strings
+  dt-bindings: phy: qcom,qmp: drop redundant descriptions
+  dt-bindings: phy: qcom,qmp: fix child node description
+  dt-bindings: phy: qcom,qmp: clean up descriptions
+  dt-bindings: phy: qcom,qmp: clean up example
+  dt-bindings: phy: qcom,qmp: drop child-node comment
+  dt-bindings: phy: add qcom,msm8996-qmp-pcie-phy schema
+  dt-bindings: phy: qcom,msm8996-qmp-pcie: add missing child node schema
+  dt-bindings: phy: qcom,msm8996-qmp-pcie: deprecate PIPE clock names
+  dt-bindings: phy: qcom,msm8996-qmp-pcie: deprecate reset names
+  dt-bindings: phy: add QMP PCIe PHY schema
+  dt-bindings: phy: qcom,qmp-pcie: add missing child node schema
+  dt-bindings: phy: qcom,qmp-pcie: deprecate PIPE clock name
+  dt-bindings: phy: add QMP UFS PHY schema
+  dt-bindings: phy: qcom,qmp-ufs: add missing SM8450 clock
+  dt-bindings: phy: qcom,qmp-ufs: add missing SM8150 power domain
+  dt-bindings: phy: qcom,qmp-ufs: add missing child node schema
+  dt-bindings: phy: add QMP USB PHY schema
+  dt-bindings: phy: qcom,qmp-usb: add missing child node schema
+  dt-bindings: phy: qcom,qmp-usb: deprecate PIPE clock name
+  dt-bindings: phy: qcom,qmp-usb: add missing qcom,sc7180-qmp-usb3-phy
+    schema
+  dt-bindings: phy: qcom,qmp-usb3-dp: fix bogus clock-cells property
+  dt-bindings: phy: qcom,qmp-usb3-dp: deprecate USB PIPE clock name
+  phy: qcom-qmp-pcie: drop pipe clock lane suffix
+  phy: qcom-qmp-combo: drop unused lane reset
+  phy: qcom-qmp-combo: drop pipe clock lane suffix
+  phy: qcom-qmp-pcie-msm8996: drop pipe clock lane suffix
+  phy: qcom-qmp-pcie-msm8996: drop reset lane suffix
+  phy: qcom-qmp-usb: drop pipe clock lane suffix
+
+ .../phy/qcom,msm8996-qmp-pcie-phy.yaml        | 189 +++++++
+ .../bindings/phy/qcom,qmp-pcie-phy.yaml       | 296 ++++++++++
+ .../devicetree/bindings/phy/qcom,qmp-phy.yaml | 504 ------------------
+ .../bindings/phy/qcom,qmp-ufs-phy.yaml        | 239 +++++++++
+ .../bindings/phy/qcom,qmp-usb-phy.yaml        | 388 ++++++++++++++
+ .../bindings/phy/qcom,qmp-usb3-dp-phy.yaml    |   8 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     |   6 +-
+ .../phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c  |   8 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      |   4 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c       |   4 +-
+ 10 files changed, 1118 insertions(+), 528 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-pcie-phy.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,qmp-pcie-phy.yaml
+ delete mode 100644 Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,qmp-ufs-phy.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,qmp-usb-phy.yaml
+
 -- 
-2.17.1
+2.35.1
 
