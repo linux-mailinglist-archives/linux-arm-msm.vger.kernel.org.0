@@ -2,74 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EF3F5A6C7F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 20:44:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9CEF5A6CBC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 21:04:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230350AbiH3SoD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 14:44:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51060 "EHLO
+        id S229959AbiH3TEW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 15:04:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231124AbiH3SoC (ORCPT
+        with ESMTP id S230327AbiH3TEV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 14:44:02 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DA717437F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 11:44:00 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id 76so12216942pfy.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 11:44:00 -0700 (PDT)
+        Tue, 30 Aug 2022 15:04:21 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07FE961135
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 12:04:20 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id w8so7771646lft.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 12:04:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc;
-        bh=NZVZkfFYq+g48u9ab87ZWo6dPBjM06Q+lLAU8Yvk5EA=;
-        b=Axzf/shUDMALwg8iHDSJOsle0Qw6yo7nQ4L0Ew2LPymFZnPev4UAjpWJldbz1gztDq
-         jKZJw7kpHpXifWeb417pif3gyrl7IsgOi9WFU3RwiXyuvYeVh5uByAISbNeGVLzQ7MTp
-         gueWsarra0u8xd3OAbrUmHKAixAZjsKVVwK1g=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=1HAJgIAHEJqsajZozy9olYgVARt50tT0qURDFW8nTY8=;
+        b=RtLwh18UUnowDD0ksEDAXTTsjdpyz7Bv2R3AdBRP26eS9bcY6pwJj2Jcx+tBRBT0nW
+         f5wU20+h7Yd15bBkoWHIoLmQ7Cb4yfDjBv0InNxlIbk0+n5u+E3S6HQ4so/UWs35vNS6
+         z04qaQO7qifxa9JgXGSQ9fVhc3MX2L6uvh6jnSKD9e/+b+Czv8XUOV0qr/ESGYdEws7z
+         qo7inpPDO6W7Iau2x59gtGAuOF9/G87zpf4EYJ5/JKuAlrEQDcQbQJKDGToElgSA0Yyw
+         wIgTC8niiIfdI2TDPwIhD3pnt+grtE72n9t2O6aaDegfzDDZ6Qe0Do3KeP2F7hr6IsYO
+         H+0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=NZVZkfFYq+g48u9ab87ZWo6dPBjM06Q+lLAU8Yvk5EA=;
-        b=J8o7/lHZ20SzScmKBeLqDrrI59hE1q7mzx5IRlx5Hd7WpOQtv8B1yal/D8XS5RtO+E
-         Zy+dzPAnmk7NrfYX780VzDllO9bWJ1lWlDv4GsfH4ty3D7tOD0DBcZ4s5SqnmCCrsK1M
-         GJhcbgCs1gYIqPB6+l4jR7ntUCMAgxl2p+WNkob2VpJ7XyzOTGUvuRfuPWSVdFNRUjx4
-         RWxbkMwdSLTt29eSiFuKXLYvQTCVl/Jejuz2TavzzmHJVcAIKp70kv+hCgGra4mDLrKf
-         V7zlPl3Rt5gtyG9dECeMUmD5bfj1wBRQXdzGslCUtSpeUT98HT8ecDh/gOD9GIjaz4Em
-         rfQw==
-X-Gm-Message-State: ACgBeo2aTWuxRxmmq0fMig7ZCm+oG9jCEiaO7VFzyL7I9VPNdf6kPbbl
-        fZ0kJIqtwj4TEMJYkmwOFJ5JZw==
-X-Google-Smtp-Source: AA6agR7zpTyvcECkA2jQOB4My7timJiRT9otT5h6XOP4Y4xqijtClzf1Ffy2uOmONrciFnSEmceaNw==
-X-Received: by 2002:a63:1841:0:b0:429:8268:1fc with SMTP id 1-20020a631841000000b00429826801fcmr19102261pgy.78.1661885039627;
-        Tue, 30 Aug 2022 11:43:59 -0700 (PDT)
-Received: from localhost ([2620:15c:11a:202:f023:bd53:48bf:f508])
-        by smtp.gmail.com with UTF8SMTPSA id b11-20020a170902d50b00b0016dc2366722sm10163636plg.77.2022.08.30.11.43.58
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=1HAJgIAHEJqsajZozy9olYgVARt50tT0qURDFW8nTY8=;
+        b=7hmErTVFpXD/vcKFu2a7Nu3AhqAKv/BWLKgDtu9moteV25c/iYrB9r0zuN21v8X2Kg
+         JYiFQIujaSkWM4oCruDlT/vKZIjhvnaiViND79ZMIyWPt3axhRtgpova5uASR4ChYxxw
+         RNn6qIP5ZJD2byb1f0Axdtpr6dDzeNsYQYYA7MmPcoplkXl1qTymNTDspqAvD19Y3uib
+         MUXhs53f5AbQkdGkZe+1HRVKfUvQXwSFuyRwOOAERYz2ZVtQREBTK5UzOQF2QU5vGe+P
+         ol2pOj38RZgkdma/I2hqHLa0a9adJa5a6X/lDvHySJWlsTncn4kCpvJkzh0aa2r9Titm
+         rIeQ==
+X-Gm-Message-State: ACgBeo07fj1fXFvW/gkwE9+w9cggKnqcjvxwe+GXc++/ZNbD8Prne5wf
+        xAfRMGUrD81qQ+sZ9WUd24ZmZA==
+X-Google-Smtp-Source: AA6agR7TK8PMmhNU/ANRQ6U0u7NBMwa95d2Kcc/oVQSq5FihD56HEiuJhHEM4vHNoPhzEi3tZ6fq6g==
+X-Received: by 2002:a05:6512:3b8e:b0:492:f799:76b9 with SMTP id g14-20020a0565123b8e00b00492f79976b9mr7687972lfv.207.1661886258245;
+        Tue, 30 Aug 2022 12:04:18 -0700 (PDT)
+Received: from [192.168.28.124] (balticom-73-99-134.balticom.lv. [109.73.99.134])
+        by smtp.gmail.com with ESMTPSA id q18-20020a2eb4b2000000b00265757e0e66sm886322ljm.48.2022.08.30.12.04.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Aug 2022 11:43:59 -0700 (PDT)
-Date:   Tue, 30 Aug 2022 11:43:57 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-clk@vger.kernel.org,
-        Krishna Kurapati <quic_kriskura@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH v2 1/2] clk: qcom: gcc-sc7180: Keep the USB GDSC always on
-Message-ID: <Yw5abfBHQSl62pB9@google.com>
-References: <20220825182152.v2.1.I45235b7c40997bc2abf813e4722b4dcdd6aecf6b@changeid>
- <20220826024003.qpqtdmdohdmpcskt@baldur>
- <5ff21b1e-3af9-36ef-e13e-fa33f526d0e3@quicinc.com>
+        Tue, 30 Aug 2022 12:04:17 -0700 (PDT)
+Message-ID: <7726d82f-d0fc-2a68-fef5-bb991b0d73ad@linaro.org>
+Date:   Tue, 30 Aug 2022 22:04:15 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <5ff21b1e-3af9-36ef-e13e-fa33f526d0e3@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v9 1/3] dt-bindings: arm: qcom: document sc7280 and
+ villager board
+Content-Language: en-US
+To:     Douglas Anderson <dianders@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Sibi Sankar <quic_sibis@quicinc.com>,
+        Jimmy Chen <jinghung.chen3@hotmail.com>,
+        Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220830182923.3720287-1-dianders@chromium.org>
+ <20220830112818.v9.1.I4fa927a776951095d55c41ddb64149c8c0eae57c@changeid>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220830112818.v9.1.I4fa927a776951095d55c41ddb64149c8c0eae57c@changeid>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,76 +83,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 29, 2022 at 01:42:02PM +0530, Rajendra Nayak wrote:
+On 30/08/2022 21:29, Douglas Anderson wrote:
+> From: Jimmy Chen <jinghung.chen3@hotmail.com>
 > 
-> On 8/26/2022 8:10 AM, Bjorn Andersson wrote:
-> > On Thu, Aug 25, 2022 at 06:21:58PM -0700, Matthias Kaehlcke wrote:
-> > > When the GDSC is disabled during system suspend USB is broken on
-> > > sc7180 when the system resumes. Mark the GDSC as always on to
-> > > make sure USB still works after system suspend.
-> > > 
-> > > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> > 
-> > Rajendra, where you able to find some time to look into take the GDSC
-> > into retention state? Do you suggest that I merge these two patches for
-> > now?
-> > 
+> This adds a LTE skus for Chromebook Villager to the yaml.
 > 
-> Hi Bjorn, based on my experiments to support retention on sc7280 these are
-> some of my findings
-> 
-> On Platforms which support CX retention (for example sc7180/sc7280) instead of
-> CX PowerCollapse (PC), We can leave the GDSC turned ON. When CX transitions to RET state
-> the GDSC goes into retention too (some controller state is retained) and USB wakeups work.
-> 
-> On platforms which support CX PC, just leaving the GDSC
-> turned ON will not help since the GDSC will also transition to OFF state
-> when we enter CX PC, hence wake-ups from USB won't work.
-> For such platforms we need to make sure gdsc_force_mem_on() is called
-> and cxcs (* @cxcs: offsets of branch registers to toggle mem/periph bits in)
-> are populated correctly, while leaving the GDSC turned ON.
-> This will make sure usb gdsc transitions from being powered by CX to MX
-> when CX hits PC and we still get USB wakeups to work.
-> So in short we could do the same thing that this patch does on those
-> platforms too with additionally populating the right cxcs entries and it
-> should just work fine.
-> 
-> Now the problem that I see with this approach is not with getting USB wakeups
-> to work in suspend, but with supporting performance state voting when
-> USB is active.
-> The last conclusion we had on that [1] was to model usb_gdsc as a subdomain of CX,
-> so if we do that and we model usb_gdsc as something that supports ALWAYS_ON,
-> we would _never_ drop the CX vote and prevent CX from going down (either to ret
-> or pc)
-> 
-> The only way I think we can solve both the USB wakeups and performance state
-> needs (with usb_gdsc as a subdomain of CX) is if we can model a RET state for gdsc
-> which sets the mem/periph bits while leaving the GDSC ON (Today the RET state sets
-> the mem/periph bits but turns the GDSC OFF)
-> 
-> That would mean a change in gdsc.c like this
+> Signed-off-by: Jimmy Chen <jinghung.chen3@hotmail.com>
+> Acked-by: Rob Herring <robh@kernel.org>
+> [dianders: adjust LTE as SKU 512; remove two variants of -rev0]
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
 > 
-> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> index d3244006c661..0fe017ba901b 100644
-> --- a/drivers/clk/qcom/gdsc.c
-> +++ b/drivers/clk/qcom/gdsc.c
-> @@ -368,6 +368,10 @@ static int _gdsc_disable(struct gdsc *sc)
->         if (sc->pwrsts & PWRSTS_OFF)
->                 gdsc_clear_mem_on(sc);
-> 
-> +       /* If the GDSC supports RET, do not explicitly power it off */
-> +       if (sc->pwrsts & PWRSTS_RET)
-> +               return 0;
-> +
->         ret = gdsc_toggle_logic(sc, GDSC_OFF);
->         if (ret)
->                 return ret;
-> 
-> 
-> So with that change, we would then not need the ALWAYS_ON flag set for usb gdsc,
-> instead we would update the .pwrsts to PWRSTS_RET_ON instead of PWRSTS_OFF_ON,
-> and that should make both usb wake-ups to work and we can still have the usb_gdsc as
-> a subdomain of CX for performance state voting.
+> Changes in v9:
+> - Squash https://lore.kernel.org/r/20220829084732.1.I9ef7f8b909a7afbef9ff2251a98c67033f37b516@changeid
 
-Krishna and I confirmed that this works from the USB side for sc7180 and sc7280.
+FWIW:
+
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+
+Best regards,
+Krzysztof
