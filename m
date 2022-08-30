@@ -2,63 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 86D4F5A5D31
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 09:43:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63EB75A5D44
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 09:47:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231230AbiH3Hnm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 03:43:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38806 "EHLO
+        id S229750AbiH3HrD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 03:47:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231258AbiH3Hnl (ORCPT
+        with ESMTP id S229956AbiH3HrC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 03:43:41 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 572839FA83;
-        Tue, 30 Aug 2022 00:43:40 -0700 (PDT)
+        Tue, 30 Aug 2022 03:47:02 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 268977FFA1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 00:47:01 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 08F9BB816C6;
-        Tue, 30 Aug 2022 07:43:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A02A0C433D6;
-        Tue, 30 Aug 2022 07:43:37 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B4108614D1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 07:47:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E67D6C433C1;
+        Tue, 30 Aug 2022 07:46:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661845417;
-        bh=t7gu4/oIPvmcwrAV72F7qnFd+HBxiVGcKDkFtwBuVDo=;
+        s=k20201202; t=1661845620;
+        bh=jNJcCiEVrx4RDwhr8ThMHWXXkwAN+LdWh9IhEa2aldk=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=thQHoVSONnZuZqFphh5UfEv6fq0LbvdpM0wlnA16jPxre778Ix64aZDhHUWh6MP7G
-         x+uAbOO6/NSspnCZpYq2fVsMO7EuCGfGpeD6aNTZg748eCpkUMW8UgFr3QMp5C2g5U
-         ZHB6U/QGda9ybpgAaT/tIDxvb6XfyShoLlf19FHqifQTRXB0ARDPlI9PjepKlto/7H
-         mKy1iiq44FGkoG54EvFe3Ga93pu5r5C21+t4SUFuTFR2pIZTIZsDPfKBh78VPCpCee
-         4KOPxs3fJ5vDYxFTIsusq/mSLqHT3gHXMnd84hfIc0Fd+RD9B2csoI9qR0A3ZrOyOS
-         3ptOhmOFvzl1w==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oSvuT-0002u7-De; Tue, 30 Aug 2022 09:43:46 +0200
-Date:   Tue, 30 Aug 2022 09:43:45 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 00/30] phy: qcom,qmp: fix dt-bindings and deprecate
- lane suffix
-Message-ID: <Yw2/sVyjofEM+61o@hovoldconsulting.com>
-References: <20220714124333.27643-1-johan+linaro@kernel.org>
- <Yw2a44l9a6zz5qTJ@matsya>
- <Yw21t1SUGjCcUuuw@hovoldconsulting.com>
- <Yw28FdhYSv4x0a6B@matsya>
+        b=a4cZ//8ae4t2/3QEe4Y+QD7Zxl42hOSkJNhXgxYFJpz+Mhv8aOS71WD6p216JOvSp
+         nR5Quwp3EJwfcF/z8ml7DxSDI+R5UvKevHb/SLs/NMe/HrRVL19aINynmjXkbXgww8
+         kAVEpH6+o8SEzFfO3bbYtcijw0WY8Ee1ei+x8k8dL/tb91hJjmoJVY4cHv34j3G9FJ
+         mjemPDAzHFPsU5vfeIV/thjzf+zLepPvvp+Q4KsxnNrpQXP8X+yOsm9fW0tqYgilRr
+         eMZyjmrDVtuOik1Hdi87t+24zo1+9Ql9sfIPHHe3j9dHAu1FU/9Ze9eThqVB3mTgwb
+         rsaClZtuxxLyQ==
+Date:   Tue, 30 Aug 2022 13:16:47 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Jeff Johnson <quic_jjohnson@quicinc.com>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        Hemant Kumar <quic_hemantk@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev
+Subject: Re: [PATCH v4] bus: mhi: host: make mhi_controller_config::event_cfg
+ const
+Message-ID: <20220830074647.GA135982@thinkpad>
+References: <20220819210230.17773-1-quic_jjohnson@quicinc.com>
+ <20220829205112.12036-1-quic_jjohnson@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Yw28FdhYSv4x0a6B@matsya>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220829205112.12036-1-quic_jjohnson@quicinc.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -69,60 +58,115 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 30, 2022 at 12:58:21PM +0530, Vinod Koul wrote:
-> On 30-08-22, 09:01, Johan Hovold wrote:
-> > On Tue, Aug 30, 2022 at 10:36:43AM +0530, Vinod Koul wrote:
-> > > On 14-07-22, 14:43, Johan Hovold wrote:
-> > > > When adding support for SC8280XP to the QMP PHY driver I noticed that
-> > > > the PHY provider child node was not described by the current DT schema.
-> > > > 
-> > > > The SC8280XP PHYs also need a second fixed-divider PIPE clock
-> > > > ("pipediv2") and I didn't want to have to add a bogus "lane" suffix to
-> > > > the clock name just to match the current "pipe0" name so I decided to
-> > > > deprecate the unnecessary suffix in the current binding instead.
-> > > > 
-> > > > To be able to add the missing child-node schema and handle device
-> > > > specifics like additional PIPE clocks, it quickly became obvious that
-> > > > the binding needs to be split up.
-> > > > 
-> > > > This series clean up and fixes some issue with the current schema before
-> > > > splitting it up in separate schemas for PCIe, UFS and USB and adding
-> > > > missing parts like the child PHY provider nodes.
-> > > > 
-> > > > The MSM8996 PCIe PHY gets its own schema as this is the only non-combo
-> > > > PHY that actually provides more than one PHY per IP block. Note that the
-> > > > "lane" suffix is still unnecessary and misleading.
-> > > > 
-> > > > The final patches add support for the updated binding to the (recently
-> > > > split up) PHY drivers. Included is also a related combo PHY cleanup.
-> > > 
-> > > This fails at patch 2 for me on v6.0-rc1, please rebase and resend
-> > 
-> > Are you sure you haven't applied anything to your local tree that causes
-> > this?
+On Mon, Aug 29, 2022 at 01:51:12PM -0700, Jeff Johnson wrote:
+> Currently the event_cfg pointer in struct mhi_controller_config is not
+> defined as a const pointer. This prevents clients from registering a
+> read-only configuration unless they use a typecast. Since the
+> event_cfg should not be modified once registered, add the const
+> qualifier to event_cfg. This is aligned with the definition of ch_cfg.
 > 
-> Pretty sure :-)
-
-Hmm. But nothing had changed in 6.0-rc1 and it still applies on a clean
-6.0-rc1 as expected here.
-
-Would you mind trying again?
-
-	git checkout -b tmp-branch v6.0-rc1
-	b4 am 20220714124333.27643-1-johan+linaro@kernel.org
-	git am ./v3_20220714_johan_linaro_phy_qcom_qmp_fix_dt_bindings_and_deprecate_lane_suffix.mbx
-
-> > I just tried fetching the v3 series from lore and it applies just fine
-> > on top of 6.0-rc1.
-> > 
-> > Note that if you've added a new compatible string locally, the second
-> > patch which sorts the compatible strings is likely to fail to apply.
+> Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+> ---
+> v4:	updated subject, rebased to v6.0-rc3
 > 
-> At that time no, now I think I have patch or so ... Tree should be
-> pushed in a bit, you can check
+> v3:	added pci_generic.c change
+> 
+> v2:	added S-O-B
+> 
+>  drivers/bus/mhi/host/pci_generic.c | 14 +++++++-------
+>  include/linux/mhi.h                |  2 +-
+>  2 files changed, 8 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 9e545f2a5a26..8db63543ce8f 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -238,7 +238,7 @@ static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 3),
+>  };
+>  
+> -static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
+> +static const struct mhi_event_config modem_qcom_v1_mhi_events[] = {
+>  	/* first ring is control+data ring */
+>  	MHI_EVENT_CONFIG_CTRL(0, 64),
+>  	/* DIAG dedicated event ring */
+> @@ -305,7 +305,7 @@ static const struct mhi_channel_config mhi_quectel_em1xx_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
+>  };
+>  
+> -static struct mhi_event_config mhi_quectel_em1xx_events[] = {
+> +static const struct mhi_event_config mhi_quectel_em1xx_events[] = {
+>  	MHI_EVENT_CONFIG_CTRL(0, 128),
+>  	MHI_EVENT_CONFIG_DATA(1, 128),
+>  	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
+> @@ -344,7 +344,7 @@ static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
+>  };
+>  
+> -static struct mhi_event_config mhi_foxconn_sdx55_events[] = {
+> +static struct const mhi_event_config mhi_foxconn_sdx55_events[] = {
 
-Which tree would that be? The linux-phy tree next branch is still at -rc1:
+You still haven't fixed this...
 
-	https://git.kernel.org/pub/scm/linux/kernel/git/phy/linux-phy.git/
+Thanks,
+Mani
 
-Johan
+>  	MHI_EVENT_CONFIG_CTRL(0, 128),
+>  	MHI_EVENT_CONFIG_DATA(1, 128),
+>  	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
+> @@ -391,7 +391,7 @@ static const struct mhi_channel_config mhi_mv3x_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 512, 3),
+>  };
+>  
+> -static struct mhi_event_config mhi_mv3x_events[] = {
+> +static const struct mhi_event_config mhi_mv3x_events[] = {
+>  	MHI_EVENT_CONFIG_CTRL(0, 256),
+>  	MHI_EVENT_CONFIG_DATA(1, 256),
+>  	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
+> @@ -438,7 +438,7 @@ static const struct mhi_channel_config mhi_sierra_em919x_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 512, 2),
+>  };
+>  
+> -static struct mhi_event_config modem_sierra_em919x_mhi_events[] = {
+> +static const struct mhi_event_config modem_sierra_em919x_mhi_events[] = {
+>  	/* first ring is control+data and DIAG ring */
+>  	MHI_EVENT_CONFIG_CTRL(0, 2048),
+>  	/* Hardware channels request dedicated hardware event rings */
+> @@ -472,7 +472,7 @@ static const struct mhi_channel_config mhi_telit_fn980_hw_v1_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 2),
+>  };
+>  
+> -static struct mhi_event_config mhi_telit_fn980_hw_v1_events[] = {
+> +static const struct mhi_event_config mhi_telit_fn980_hw_v1_events[] = {
+>  	MHI_EVENT_CONFIG_CTRL(0, 128),
+>  	MHI_EVENT_CONFIG_HW_DATA(1, 1024, 100),
+>  	MHI_EVENT_CONFIG_HW_DATA(2, 2048, 101)
+> @@ -511,7 +511,7 @@ static const struct mhi_channel_config mhi_telit_fn990_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
+>  };
+>  
+> -static struct mhi_event_config mhi_telit_fn990_events[] = {
+> +static const struct mhi_event_config mhi_telit_fn990_events[] = {
+>  	MHI_EVENT_CONFIG_CTRL(0, 128),
+>  	MHI_EVENT_CONFIG_DATA(1, 128),
+>  	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index a5441ad33c74..ada2f18af4d6 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -281,7 +281,7 @@ struct mhi_controller_config {
+>  	u32 num_channels;
+>  	const struct mhi_channel_config *ch_cfg;
+>  	u32 num_events;
+> -	struct mhi_event_config *event_cfg;
+> +	const struct mhi_event_config *event_cfg;
+>  	bool use_bounce_buf;
+>  	bool m2_no_db;
+>  };
+> -- 
+> 2.37.0
+> 
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
