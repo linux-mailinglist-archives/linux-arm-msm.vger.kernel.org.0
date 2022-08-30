@@ -2,78 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37C165A6959
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 19:14:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 958825A6A5B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 19:28:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229476AbiH3ROJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 13:14:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52070 "EHLO
+        id S231755AbiH3R2J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 13:28:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230038AbiH3ROI (ORCPT
+        with ESMTP id S231145AbiH3R1i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 13:14:08 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDC52BB688
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 10:14:06 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id p8-20020a17090ad30800b001fdfc8c7567so1700465pju.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 10:14:06 -0700 (PDT)
+        Tue, 30 Aug 2022 13:27:38 -0400
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10E021153
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 10:25:06 -0700 (PDT)
+Received: by mail-io1-xd34.google.com with SMTP id p187so9811085iod.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 10:25:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=yqwQGcOiqv9Oi1t+L3v3Q5Co30u0asuBLGn0BCOeI10=;
-        b=HsdlDvSALrhcgvRVY7eRsX9p0+Sb4CQCqYDsLlgAQmIoB6enB2VpDR7Sv0b4R8KLB9
-         /AfR2dcMhoO4luVlM9Fb00EPf4VTRNzJwtH6JJKxRdVbVaYIPQo6LQEaRAH8zpnO8+sn
-         DUJ/6NgRP+LoDueVaiXbmGAZB6JrZtmhA37rdbWo2Yx6OFzZ0p5GgbsGl3NskNAEEAIQ
-         v3woILYZhH1un6xNWxdVFcI5k0dlXEhXTw2VguD3W1CikI/1+G400f/vY9J4A6C03zok
-         gYIIJ9y2IU+ZdswKN6IuxSHf1b72aH8bij2OkyM+/7Qscu2KseipPTV2A0Oq3NTrhm14
-         wA3A==
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=SmSdpqqfvhuzBeG/p+7mNhDOexI5aI2aAxoNsJihLIw=;
+        b=MwDNBXN8YnULPfgN5yg8hA/ERoe4PKJ3NdV4H3LBuK3diQMkKr9cIVUpBkhp0GFul7
+         xFM3eJ+klfy1CjKvDD1Do+ILnhEFPDprBhHlJ3Xr7sCEauXpNsnplfq6tPGAs3ejXHNH
+         8lfx2cndEqpo6Na7ga1peK96Bzlgck8g6Ahbw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=yqwQGcOiqv9Oi1t+L3v3Q5Co30u0asuBLGn0BCOeI10=;
-        b=ed5TqfKEblqw797W2re+IFJYQJktSqhxjqZ8cuwUJk9a9whr4pdi8fgq5xkCJJ/ZN1
-         2WAJRtdXcyKIpYpQUA7cn3867d/yw+9wPVWh+rgTLETOqoP7yIZxUzy9U9+o9X8OgvHf
-         vD4kRYcCdat/duh3B8TGObg1hJzr9FyRvXI49N6i+hsYbuDwGtdc+ojgCr58Ih4tJSdf
-         Cv5vWDAAjBVcyWZyF22tcieLRJgGy4EwadC3jg0nvhGcoKyJbbWTxSoQMmk7fYPy8v1m
-         w4wlhQNkNAlWSYvf48hVBQ5Qp6zfs6A/TOFH37WUutud9CxnlesNChkHJF1QDas5BVQx
-         DpAg==
-X-Gm-Message-State: ACgBeo0XmDL0E41tgvvnnjTfYlNGcaADzD/nBVscpqPv7Pj4COXQWdmk
-        5NXsDU0mgClOBlxzOp9ZP2UhhA==
-X-Google-Smtp-Source: AA6agR4tRqvAI8GMS6qqXAmTyWvwhqsPOiJoYVO7VTKjMyVcd8T6063qBktpVC7Fa1cnldZcn5P5Qw==
-X-Received: by 2002:a17:902:aa41:b0:173:1571:4025 with SMTP id c1-20020a170902aa4100b0017315714025mr22293757plr.110.1661879646107;
-        Tue, 30 Aug 2022 10:14:06 -0700 (PDT)
-Received: from ?IPV6:2401:4900:1c60:5362:9d7f:2354:1d0a:78e3? ([2401:4900:1c60:5362:9d7f:2354:1d0a:78e3])
-        by smtp.gmail.com with ESMTPSA id jn13-20020a170903050d00b001753eb66692sm98782plb.250.2022.08.30.10.14.02
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=SmSdpqqfvhuzBeG/p+7mNhDOexI5aI2aAxoNsJihLIw=;
+        b=7AHc0MJdQ3tA9phL7fOQKY41jHyfKolq6/OKH4rL0t/fLwVfY5PctvgRl3t9941AqP
+         4+ZoSEGn9lzfF9JmjbxbfC4nyVTke2Zv/FdFjyu/1DNg1KgZ83YFay4Scj0uxMlG1EV5
+         bWkDJqKYxJad75zuuIYq+h759Qu2PjN5kYJR9Ckugf9j7vvIEzdybiHtb41oxYD6lyaO
+         57DB4zt2HKAjpRrMw6bn0ekUkgU/OU/yDkUXnTqKzq9QCO+lPShwvEahkpavb9YKZuCY
+         3T+LAhv8labs2zzULUHRbKyFTouG3aBbgQxyL5MhensvDRG0KWco8FWvBHUFH5sGRcMX
+         sdag==
+X-Gm-Message-State: ACgBeo1Zp4cVOAdW1YBXl1YAisATIcmH3ZONFpqlMXW3iqUI5Hl1BuYM
+        ojFGyLlmFVpy0RykMGu4W6zHU0WB1cRbg06j
+X-Google-Smtp-Source: AA6agR4bSsSQ81IZY95K/KTXjG2i0EmU19bH2UX128js1mSz+AqYlmGyEd7F+mf2HzEVpvWcdTai6Q==
+X-Received: by 2002:a05:6638:4704:b0:343:49db:f1f4 with SMTP id cs4-20020a056638470400b0034349dbf1f4mr13200082jab.204.1661880237292;
+        Tue, 30 Aug 2022 10:23:57 -0700 (PDT)
+Received: from mail-io1-f42.google.com (mail-io1-f42.google.com. [209.85.166.42])
+        by smtp.gmail.com with ESMTPSA id p8-20020a92c108000000b002ea9d1b0102sm5626416ile.39.2022.08.30.10.23.56
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Aug 2022 10:14:05 -0700 (PDT)
-Message-ID: <caa29b74-e473-8afe-49c2-451238e2ea4b@linaro.org>
-Date:   Tue, 30 Aug 2022 22:44:00 +0530
+        Tue, 30 Aug 2022 10:23:56 -0700 (PDT)
+Received: by mail-io1-f42.google.com with SMTP id n202so9813359iod.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 10:23:56 -0700 (PDT)
+X-Received: by 2002:a05:6638:14d0:b0:349:d176:d376 with SMTP id
+ l16-20020a05663814d000b00349d176d376mr12105487jak.58.1661880236045; Tue, 30
+ Aug 2022 10:23:56 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v3 3/4] thermal: qcom: tsens: Add driver support for
- re-initialization quirk
-Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-pm@vger.kernel.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, linux-arm-msm@vger.kernel.org,
-        daniel.lezcano@linaro.org, robh+dt@kernel.org, rafael@kernel.org,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>
-References: <20220804054638.3197294-1-bhupesh.sharma@linaro.org>
- <20220804054638.3197294-4-bhupesh.sharma@linaro.org>
- <20220829221422.2r6axgaica67lbpv@builder.lan>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-In-Reply-To: <20220829221422.2r6axgaica67lbpv@builder.lan>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <20220830053307.3997495-1-sheng-liang.pan@quanta.corp-partner.google.com>
+In-Reply-To: <20220830053307.3997495-1-sheng-liang.pan@quanta.corp-partner.google.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 30 Aug 2022 10:23:44 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XXV4x-Hpa9-GUzkwS+cxfvpL93HBCUrn_bvMK8hBAaBA@mail.gmail.com>
+Message-ID: <CAD=FV=XXV4x-Hpa9-GUzkwS+cxfvpL93HBCUrn_bvMK8hBAaBA@mail.gmail.com>
+Subject: Re: [PATCH 0/1] Add a new board device tree named 'evoker' for
+ herobrine variant.
+To:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,253 +82,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
-On 8/30/22 3:44 AM, Bjorn Andersson wrote:
-> On Thu, Aug 04, 2022 at 11:16:37AM +0530, Bhupesh Sharma wrote:
->> Since for some Qualcomm tsens controllers, its suggested to
->> monitor the controller health periodically and in case an
->> issue is detected, to re-initialize the tsens controller
->> via trustzone, add the support for the same in the
->> qcom tsens driver.
->>
->> Note that once the tsens controller is reset using scm call,
->> all SROT and TM region registers will enter the reset mode.
->>
->> While all the SROT registers will be re-programmed and
->> re-enabled in trustzone prior to the scm call exit, the TM
->> region registers will not re-initialized in trustzone and thus
->> need to be handled by the tsens driver.
->>
->> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
->> Cc: Amit Kucheria <amitk@kernel.org>
->> Cc: Thara Gopinath <thara.gopinath@gmail.com>
->> Cc: linux-pm@vger.kernel.org
->> Cc: linux-arm-msm@vger.kernel.org
->> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->> ---
->>   drivers/thermal/qcom/tsens-v2.c |   3 +
->>   drivers/thermal/qcom/tsens.c    | 197 ++++++++++++++++++++++++++++++++
->>   drivers/thermal/qcom/tsens.h    |  12 ++
->>   3 files changed, 212 insertions(+)
->>
->> diff --git a/drivers/thermal/qcom/tsens-v2.c b/drivers/thermal/qcom/tsens-v2.c
->> index b293ed32174b..f521e4479cc5 100644
->> --- a/drivers/thermal/qcom/tsens-v2.c
->> +++ b/drivers/thermal/qcom/tsens-v2.c
->> @@ -88,6 +88,9 @@ static const struct reg_field tsens_v2_regfields[MAX_REGFIELDS] = {
->>   
->>   	/* TRDY: 1=ready, 0=in progress */
->>   	[TRDY] = REG_FIELD(TM_TRDY_OFF, 0, 0),
->> +
->> +	/* FIRST_ROUND_COMPLETE: 1=complete, 0=not complete */
->> +	[FIRST_ROUND_COMPLETE] = REG_FIELD(TM_TRDY_OFF, 3, 3),
->>   };
->>   
->>   static const struct tsens_ops ops_generic_v2 = {
->> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
->> index e49f58e83513..c2d085fb5447 100644
->> --- a/drivers/thermal/qcom/tsens.c
->> +++ b/drivers/thermal/qcom/tsens.c
->> @@ -7,6 +7,7 @@
->>   #include <linux/debugfs.h>
->>   #include <linux/err.h>
->>   #include <linux/io.h>
->> +#include <linux/qcom_scm.h>
->>   #include <linux/module.h>
->>   #include <linux/nvmem-consumer.h>
->>   #include <linux/of.h>
->> @@ -594,6 +595,113 @@ static void tsens_disable_irq(struct tsens_priv *priv)
->>   	regmap_field_write(priv->rf[INT_EN], 0);
->>   }
->>   
->> +static int tsens_reenable_hw_after_scm(struct tsens_priv *priv)
-> 
-> As written, this is a void function.
+On Mon, Aug 29, 2022 at 10:33 PM Sheng-Liang Pan
+<sheng-liang.pan@quanta.corp-partner.google.com> wrote:
+>
+> This patch add the initial dts file for new board 'evoker'.
+>
+>
+>
+> Sheng-Liang Pan (1):
+>   arm64: dts: qcom: sc7280: Add device tree for herobrine evoker
+>
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../dts/qcom/sc7280-herobrine-evoker-r0.dts   | 333 ++++++++++++++++++
+>  2 files changed, 334 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts
 
-Ok.
+Just as a heads up, usually you don't need a cover letter if you're
+just sending one patch.
 
->> +{
->> +	/*
->> +	 * Re-enable watchdog, unmask the bark and
->> +	 * disable cycle completion monitoring.
->> +	 */
->> +	regmap_field_write(priv->rf[WDOG_BARK_CLEAR], 1);
->> +	regmap_field_write(priv->rf[WDOG_BARK_CLEAR], 0);
->> +	regmap_field_write(priv->rf[WDOG_BARK_MASK], 0);
->> +	regmap_field_write(priv->rf[CC_MON_MASK], 1);
->> +
->> +	/* Re-enable interrupts */
->> +	tsens_enable_irq(priv);
->> +
->> +	return 0;
->> +}
->> +
->> +static int tsens_health_check_and_reinit(struct tsens_priv *priv,
->> +					 int hw_id)
->> +{
->> +	int ret, trdy, first_round, sw_reg;
->> +	unsigned long timeout;
->> +
->> +	/* First check if TRDY is SET */
->> +	ret = regmap_field_read(priv->rf[TRDY], &trdy);
->> +	if (ret)
->> +		goto err;
->> +
->> +	if (!trdy) {
-> 
-> if (trdy)
-> 	return 0;
-> 
-> Would save you one level of indentation.
-> 
->> +		ret = regmap_field_read(priv->rf[FIRST_ROUND_COMPLETE], &first_round);
->> +		if (ret)
->> +			goto err;
->> +
->> +		if (!first_round) {
-> 
-> if (first_round)
-> 	return 0;
-> 
-> Would save you another level of indentation.
-> 
->> +			WARN_ON(!mutex_is_locked(&priv->reinit_mutex));
-> 
-> At least for now the function is only called within a small locked
-> region, so it's going to be locked here. But I'm wondering if there's
-> any relationship between the lock state of reinit_mutex and the values
-> of TRDY and FIRST_ROUND_COMPLETE.
-> 
-> Seems like it's possible to hit this function repeatedly and have it
-> exit early because of TRDY and FIRST_ROUND_COMPLETE values and then one
-> day if will reach here and trip.
-> 
-> So how about starting the function with this check, to make it more
-> likely to be hit in our testing?
-> 
->> +
->> +			/* Wait for 2 ms for tsens controller to recover */
->> +			timeout = jiffies + msecs_to_jiffies(RESET_TIMEOUT_MS);
->> +			do {
->> +				ret = regmap_field_read(priv->rf[FIRST_ROUND_COMPLETE],
->> +						&first_round);
->> +				if (ret)
->> +					goto err;
->> +
->> +				if (first_round) {
->> +					dev_dbg(priv->dev, "tsens controller recovered\n");
->> +					return 0; /* success */
->> +				}
->> +			} while (time_before(jiffies, timeout));
-> 
-> I see no delays in this loop, so we're presumably going to spin here
-> tightly for 2ms.
-> 
-> I think you could write this loop as:
-> 
-> 	ret = regmap_field_read_poll_timeout(priv->rf[FIRST_ROUND_COMPLETE],
-> 					     &first_round, first_round, 100, 2000);
-> 	if (ret == 0) {
-> 		dev_dbg(priv->dev, "tsens controller recovered\n");
-> 		return 0;
-> 	}
-> 
->> +
->> +			spin_lock(&priv->reinit_lock);
->> +
->> +			/*
->> +			 * Invoke SCM call only if SW register write is
->> +			 * reflecting in controller. Try it for 2 ms.
->> +			 * In case that fails mark the tsens controller
->> +			 * as unrecoverable.
->> +			 */
->> +			timeout = jiffies + msecs_to_jiffies(RESET_TIMEOUT_MS);
->> +			do {
->> +				ret = regmap_field_write(priv->rf[INT_EN], CRITICAL_INT_EN);
->> +				if (ret)
->> +					goto err;
-> 
-> You're holding reinit_lock here.
-> 
->> +
->> +				ret = regmap_field_read(priv->rf[INT_EN], &sw_reg);
->> +				if (ret)
->> +					goto err;
-> 
-> And here.
-> 
->> +			} while ((sw_reg & CRITICAL_INT_EN) && (time_before(jiffies, timeout)));
-> 
-> And again, this is a tight loop. Please add a usleep_range(100, 1000),
-> perhaps inbetween the write and read?
-> 
->> +
->> +			if (!(sw_reg & CRITICAL_INT_EN)) {
->> +				ret = -ENOTRECOVERABLE;
->> +				goto err;
-> 
-> Again, reinit_lock is held here.
-> 
->> +			}
->> +
->> +			/*
->> +			 * tsens controller did not recover,
->> +			 * proceed with SCM call to re-init it.
->> +			 */
->> +			ret = qcom_scm_tsens_reinit();
->> +			if (ret) {
->> +				dev_err(priv->dev, "tsens reinit scm call failed (%d)\n", ret);
->> +				goto err;
-> 
-> And here.
-> 
->> +			}
->> +
->> +			/*
->> +			 * After the SCM call, we need to re-enable
->> +			 * the interrupts and also set active threshold
->> +			 * for each sensor.
->> +			 */
->> +			ret = tsens_reenable_hw_after_scm(priv);
-> 
-> As written tsens_reenable_hw_after_scm() doesn't return any value, so
-> skip the error handling.
-> 
->> +			if (ret) {
->> +				dev_err(priv->dev,
->> +					"tsens re-enable after scm call failed (%d)\n", ret);
->> +				goto err;
-> 
-> And here...
-> 
->> +			}
->> +
->> +			/* Notify reinit wa worker */
->> +			queue_work(system_highpri_wq, &priv->reinit_wa_notify);
->> +
->> +			spin_unlock(&priv->reinit_lock);
->> +		}
->> +	}
->> +
->> +err:
->> +	return ret;
->> +}
->> +
->>   int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp)
->>   {
->>   	struct tsens_priv *priv = s->priv;
->> @@ -607,6 +715,21 @@ int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp)
->>   	if (tsens_version(priv) == VER_0)
->>   		goto get_temp;
->>   
->> +	/*
->> +	 * For some tsens controllers, its suggested to
->> +	 * monitor the controller health periodically
->> +	 * and in case an issue is detected to reinit
->> +	 * tsens controller via trustzone.
-> 
-> Please use your 80 chars.
-
-Ack to all the above. Will send a fixed v4 shortly.
-
-Thanks.
+-Doug
