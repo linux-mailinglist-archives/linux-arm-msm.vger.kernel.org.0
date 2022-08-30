@@ -2,59 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 433455A5AFF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 07:06:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 41EF25A5B0A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 07:23:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229524AbiH3FGv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 01:06:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54294 "EHLO
+        id S229658AbiH3FXp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 01:23:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbiH3FGu (ORCPT
+        with ESMTP id S229579AbiH3FXo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 01:06:50 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8634D9E2E5;
-        Mon, 29 Aug 2022 22:06:49 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 3DB81B811B2;
-        Tue, 30 Aug 2022 05:06:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6312AC433C1;
-        Tue, 30 Aug 2022 05:06:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661836006;
-        bh=ASOn7IQszNk+VN/K8F4lja21kCAiyz6HLrdzvHYkXRU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=aSpMOTAF50Jycfw9ef+jyokGRBpmTKhDyuHeLrDoh3zBwoALkUoMMBJxIq0mqlc0U
-         zjmFO96lUoFAP1sC2wN3pFKnmP3JJ47QbNaLuwrnTzd/N5cZ8GmPl9VfDyLmsZ/mnp
-         LUX/3xoCdvltbTsT7oM2Lpg8aAEiagvkCW7EU3Lhysj+gM0L0Y3XGIPQlLDCZRwcAm
-         g6jfuf51gR48rOu0dU31K65mYNo4kzi82NwjnlerErNO+KT5PKiVAfaY4YnC6MeXtP
-         B6YJYWzVZ0xqPklWnO+8cGrVHDJISzg6zcMVebBt4x2bfODyem6SjlD4uL1aWAXtEH
-         pHtKdL+YzS6ug==
-Date:   Tue, 30 Aug 2022 10:36:43 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 00/30] phy: qcom,qmp: fix dt-bindings and deprecate
- lane suffix
-Message-ID: <Yw2a44l9a6zz5qTJ@matsya>
-References: <20220714124333.27643-1-johan+linaro@kernel.org>
+        Tue, 30 Aug 2022 01:23:44 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4409E7D1D5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 22:23:40 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id o4so10055803pjp.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 22:23:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc;
+        bh=wB8Td2/uiacFaPNAz4hB1j4lSbOXW1I+BZ1+JeaZT54=;
+        b=EvQ+RefzFYuMMkHXDVVWyhE+WBRfONxOb/paNJ3OC6i8qXmkECw8nOCF21rq6Lm9i/
+         Dr7nUtsBR7K6WjAh0gsgI0l/XmfbA+ObfhNnYr9WyyFlyu5vF1/TtKWXycxoaK2EazHo
+         ywG3QRDgl4EHcoRKWucZy0Dl+qjPr8Z+v6d1ozrV7AlGyhNe1aLtHMXGzDZjenD2LnSK
+         jJsQKnDb45sQTCGgQf0iYQbHlexwvb6nnr1AoI2GfrXt6S75O3SJ+O0QZidWbstr8QTo
+         hfyF9lICOrfbTRzzW9r/3HwuD9yZZMH5MAhqrGTm1VmQ5kIxiTon4rxKZ0TTNiyMSxEE
+         o8bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=wB8Td2/uiacFaPNAz4hB1j4lSbOXW1I+BZ1+JeaZT54=;
+        b=PjE8zyyCEpD21Z9DfPUBBrdOXo8878EVasmVtOvjtyI9SAO3YEVYeV2BUaxCA3+tGl
+         gYOMeWX1WTheComMTlbzlDi3Ta7SPwp7XV6RI1qssCsGemr9+dz095CSbEZxFjL1dz0N
+         GV9tS9hJeWZUleQMbTZLUPylt1j3kgEV7xRLPWaYhcpekhgX85HgERxomJAdTnZFC/GX
+         OOZ0Mcww6RuddYwQLycvhz/p19v8UU1vhfm5UvbWGplP8UVhx0g0NgUa1y0RWrVSW0UA
+         kHjEliI0MB+HehE8SgjPpWBotQ0OBylIRdAQs8c3dfRDOGO34/WE43TcNkF55UmCqXN6
+         qieA==
+X-Gm-Message-State: ACgBeo01UY9D+R63b7Z++b8vxYQjolYVKFQAThu888zMklMDgrFwddvA
+        1hED9tW8oFsoLuHzLWTXOfZaew==
+X-Google-Smtp-Source: AA6agR4cFm79F/9BxmTt4kFH4SsSMqCk2+0LYdwGQ0UZZjq0yfjBEQpyfwK47jPqwdnhZ920hyrPQg==
+X-Received: by 2002:a17:90b:4d07:b0:1ef:521c:f051 with SMTP id mw7-20020a17090b4d0700b001ef521cf051mr22248257pjb.164.1661837019782;
+        Mon, 29 Aug 2022 22:23:39 -0700 (PDT)
+Received: from localhost ([122.171.18.80])
+        by smtp.gmail.com with ESMTPSA id 17-20020a630311000000b0042af14719f4sm671670pgd.51.2022.08.29.22.23.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Aug 2022 22:23:39 -0700 (PDT)
+Date:   Tue, 30 Aug 2022 10:53:35 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        mka@chromium.org, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH] opp: Expose voltage info in debugfs for OPPs w/out
+ explicit regulators
+Message-ID: <20220830052335.zmot3ojvlqkz32z4@vireshk-i7>
+References: <20220826075655.1.I2e4958048f30c3b44a01e31519092f7d3c9204e4@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220714124333.27643-1-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <20220826075655.1.I2e4958048f30c3b44a01e31519092f7d3c9204e4@changeid>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -62,32 +73,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14-07-22, 14:43, Johan Hovold wrote:
-> When adding support for SC8280XP to the QMP PHY driver I noticed that
-> the PHY provider child node was not described by the current DT schema.
+On 26-08-22, 07:56, Douglas Anderson wrote:
+> On some cpufreq drivers we know the voltage associated with each
+> operating point but there is no explicit Linux "regulator" present. An
+> example is "qcom-cpufreq-hw.c". There the voltage is managed
+> automatically by the hardware but we still associate it with the OPP
+> table so we can do energy calculations for EAS.
 > 
-> The SC8280XP PHYs also need a second fixed-divider PIPE clock
-> ("pipediv2") and I didn't want to have to add a bogus "lane" suffix to
-> the clock name just to match the current "pipe0" name so I decided to
-> deprecate the unnecessary suffix in the current binding instead.
+> The OPP framework handles this in general. In _opp_allocate() it can
+> be seen that we always allocate space for one supply even if
+> "regulator_count" is 0.
 > 
-> To be able to add the missing child-node schema and handle device
-> specifics like additional PIPE clocks, it quickly became obvious that
-> the binding needs to be split up.
+> Let's handle this properly in debugfs.
 > 
-> This series clean up and fixes some issue with the current schema before
-> splitting it up in separate schemas for PCIe, UFS and USB and adding
-> missing parts like the child PHY provider nodes.
+> NOTE: as a side effect of this a whole bunch of OPPs in the system may
+> get supply-related files exposed in debugfs that are mostly useless
+> (they'll just contain 0). I'd expect this to be OK but it's moderately
+> annoying. It seems better than trying to dynamically create debugfs
+> directories when the voltages are non-zero or adding extra complexity
+> in the code giving a hint to the OPP framework that voltages should be
+> exposed.
 > 
-> The MSM8996 PCIe PHY gets its own schema as this is the only non-combo
-> PHY that actually provides more than one PHY per IP block. Note that the
-> "lane" suffix is still unnecessary and misleading.
-> 
-> The final patches add support for the updated binding to the (recently
-> split up) PHY drivers. Included is also a related combo PHY cleanup.
+> After this patch, on a sc7180-trogdor class device I can see voltages
+> for the CPU OPPs under /sys/kernel/debug/opp.
 
-This fails at patch 2 for me on v6.0-rc1, please rebase and resend
+The OPP core already supports platforms which don't have a regulator
+set for the CPU device, but the OPP table have an entry for microvolt.
+This already works.
 
-Thanks
+I looked at your DT and I understand why this isn't working for you.
+The problem is that your DT doesn't have any of such values
+(opp-microvolt) but the driver later calls dev_pm_opp_adjust_voltage()
+to set voltage values.
+
+IMO, this is wrong by design. This takes advantage of the fact that
+the OPP core doesn't check if voltage has been previously set for the
+device or not in dev_pm_opp_adjust_voltage() and it works by chance
+currently.
+
+I would suggest adding opp-microvolt property to the DT for this
+platform, the values can be 0 with a comment mentioning that software
+will fill them later, or if you know approximate values you can fill
+them as well.
+
+And then it will work just fine I hope.
+
 -- 
-~Vinod
+viresh
