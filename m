@@ -2,72 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE8F25A5C45
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 08:58:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE70B5A5C53
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 09:01:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230306AbiH3G6D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 02:58:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47856 "EHLO
+        id S230347AbiH3HBQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 03:01:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230302AbiH3G5y (ORCPT
+        with ESMTP id S230348AbiH3HBL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 02:57:54 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B5CBBFE99
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 23:57:53 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id k18so3928034lji.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 23:57:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=MW1YzegDLarSYjOyZFmSWtQsOdOkkipTn6NsA3/awlM=;
-        b=WQrkEPrveKwgi1zwLcyvWQg9IfEC9AiIZ7vmhFjQwiooHoNHNIuJLE1mKIyYZDYd2n
-         uzrswmGVf8+a11ipEdX30cZKFMX+3r3t7I1Z2bX2daOtjq4XS2hevQi1iYCzyRQzdCVY
-         WyGPk5ZYBg5nJLEvsJZkfx8IsAekA2e3KH8FIJMnwplCP2iOwWu9m9LivShCKVkVrkL6
-         TlCuaTNF8KOa1ex27YCUdICRqP0hQM4VQ5xQHKE3vtwXY/RUEcmft+zSmE4QTSk0MWTC
-         gHcfYf/LO3kLk30VzN9AtFGeO3gxWT+efWatVDW255FHX5o/erN163Z2CNCW50Jl4Z8Q
-         bI5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=MW1YzegDLarSYjOyZFmSWtQsOdOkkipTn6NsA3/awlM=;
-        b=oDj1CoWdpP61jHPwZmPTuMEEX5gaXbDiZBMxN7ssGo4HkHsyGHPa2qmf+1JPBJ40Qz
-         JM/6zjrvwpKxECLlvmlmcgPyLoJx0ZnYcUyGilpWwf9lGnTsyfsuEBOi5VzhuTvCF9VJ
-         jx6WptG20mgv/LSq0p00AxwhACRcSl/Mowi5uWHc0SVClMI8c32f3z/f9lywzaxr9WbG
-         QyADvb96ZTw9a4+vfmuXL6+fC/OZ7XRA0hS6Xw1qhc/QbDFcxzpIfRthfN2S/7QzWXij
-         sD0lo9ND9FxBZOd5tJggRLcSa6rge8wJTDaV63paLIoKse41p93x1KIoJEUxBO2DZIH3
-         yAgQ==
-X-Gm-Message-State: ACgBeo3ZdlfDwMpNOMqSKVMdovMKdtxGUhAhkmUiI1jCMkzobypQA18Q
-        j/AS03xa3u1UniZx9WTJHD2AZB5/TCodZFPk92w=
-X-Google-Smtp-Source: AA6agR6u7YjqH6u9sV/UwghO80J9vA0yT2hqA/KYJyVY6yz3/59CqJc+A1gVGLeiBTvFaLzqUFQbPQ==
-X-Received: by 2002:a05:651c:381:b0:264:4fc0:611c with SMTP id e1-20020a05651c038100b002644fc0611cmr2898951ljp.129.1661842671398;
-        Mon, 29 Aug 2022 23:57:51 -0700 (PDT)
-Received: from krzk-bin.. (balticom-73-99-134.balticom.lv. [109.73.99.134])
-        by smtp.gmail.com with ESMTPSA id c1-20020a056512074100b00492cdba2903sm1515420lfs.97.2022.08.29.23.57.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Aug 2022 23:57:50 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Tue, 30 Aug 2022 03:01:11 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72A2F9F77A;
+        Tue, 30 Aug 2022 00:01:05 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 87B49B816AA;
+        Tue, 30 Aug 2022 07:01:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FD5C433D6;
+        Tue, 30 Aug 2022 07:01:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1661842863;
+        bh=1m8t3XQYq2uVxf9hIZZQ7ueuqje2AiVRqFHNHbPJSVE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=JbQLeUv1wrIEeCeDusHAqgn20ilbVFg38RzUBjY3XCBvhC7gvFbpdxoOB1daufk3q
+         uWiLWIjwoMw5re0DiTvYJElcLl/Tq2jgmmIwne4LMNkqmRNwIqvR0CfX11Vbp+DtO+
+         n/dGxrL7CYGzi1hxsF2YQFAzBm/2cEHKFgzeDY+udVqelXAa90GLI6WK6Pao9enHyg
+         JiyNBB3Qv7gYobpGlyp1QhiE0W6d//d72v4rrFve6f8vhqauChOjMarwFgLgWKIZbz
+         G6u7ZkAPWmC0AqblXc7DydMfWDwJoleW6cN0QFHVZsnz+ZLe4LSItDdgPL6fJyH1zf
+         jFZ5BbFTn4ocg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oSvFH-0007Sc-Ga; Tue, 30 Aug 2022 09:01:11 +0200
+Date:   Tue, 30 Aug 2022 09:01:11 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH v7 3/3] arm64: dts: qcom: msm8992-xiaomi-libra: split qcom,msm-id into tuples
-Date:   Tue, 30 Aug 2022 09:57:44 +0300
-Message-Id: <20220830065744.161163-4-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220830065744.161163-1-krzysztof.kozlowski@linaro.org>
-References: <20220830065744.161163-1-krzysztof.kozlowski@linaro.org>
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 00/30] phy: qcom,qmp: fix dt-bindings and deprecate
+ lane suffix
+Message-ID: <Yw21t1SUGjCcUuuw@hovoldconsulting.com>
+References: <20220714124333.27643-1-johan+linaro@kernel.org>
+ <Yw2a44l9a6zz5qTJ@matsya>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yw2a44l9a6zz5qTJ@matsya>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,27 +67,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The qcom,msm-id is an uint32 matrix, so a list of tuples.
+On Tue, Aug 30, 2022 at 10:36:43AM +0530, Vinod Koul wrote:
+> On 14-07-22, 14:43, Johan Hovold wrote:
+> > When adding support for SC8280XP to the QMP PHY driver I noticed that
+> > the PHY provider child node was not described by the current DT schema.
+> > 
+> > The SC8280XP PHYs also need a second fixed-divider PIPE clock
+> > ("pipediv2") and I didn't want to have to add a bogus "lane" suffix to
+> > the clock name just to match the current "pipe0" name so I decided to
+> > deprecate the unnecessary suffix in the current binding instead.
+> > 
+> > To be able to add the missing child-node schema and handle device
+> > specifics like additional PIPE clocks, it quickly became obvious that
+> > the binding needs to be split up.
+> > 
+> > This series clean up and fixes some issue with the current schema before
+> > splitting it up in separate schemas for PCIe, UFS and USB and adding
+> > missing parts like the child PHY provider nodes.
+> > 
+> > The MSM8996 PCIe PHY gets its own schema as this is the only non-combo
+> > PHY that actually provides more than one PHY per IP block. Note that the
+> > "lane" suffix is still unnecessary and misleading.
+> > 
+> > The final patches add support for the updated binding to the (recently
+> > split up) PHY drivers. Included is also a related combo PHY cleanup.
+> 
+> This fails at patch 2 for me on v6.0-rc1, please rebase and resend
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Are you sure you haven't applied anything to your local tree that causes
+this?
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts b/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
-index cbe11c060df9..c4e87d0aec42 100644
---- a/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
-@@ -17,7 +17,7 @@ / {
- 	chassis-type = "handset";
- 
- 	/* required for bootloader to select correct board */
--	qcom,msm-id = <251 0 252 0>;
-+	qcom,msm-id = <251 0>, <252 0>;
- 	qcom,pmic-id = <65545 65546 0 0>;
- 	qcom,board-id = <12 0>;
- 
--- 
-2.34.1
+I just tried fetching the v3 series from lore and it applies just fine
+on top of 6.0-rc1.
 
+Note that if you've added a new compatible string locally, the second
+patch which sorts the compatible strings is likely to fail to apply.
+
+Johan
