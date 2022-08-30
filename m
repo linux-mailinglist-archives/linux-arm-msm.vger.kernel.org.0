@@ -2,61 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98D375A6754
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 17:25:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 284F75A67EE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 18:11:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230425AbiH3PZR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 11:25:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50720 "EHLO
+        id S230304AbiH3QK6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 12:10:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230456AbiH3PZO (ORCPT
+        with ESMTP id S229616AbiH3QK5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 11:25:14 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0992427CEC;
-        Tue, 30 Aug 2022 08:25:07 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C277C615E2;
-        Tue, 30 Aug 2022 15:25:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DB8C433C1;
-        Tue, 30 Aug 2022 15:25:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661873106;
-        bh=wqq8ccHiaVcGJrHvcHsUjlz7+Yg37w0KNDO1IuJO2Y0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=VQ7am+eQ3qlfElEH1csUPhlwYbV3o6m5l+VfqmgZIKEbxhg/RkI02uk5HmExF2Z90
-         vDxpOApwi4ktzIY96428dv/QlSfIeOz11Gov7N4zjuPXLHsy7QNjvHAg3qXWd4Buxo
-         ZbQsJkf7bekoLj6TohWIBveyK54wbNOVLlPNzmomnmoOe8y1x4acTGZPIIyDj36ktx
-         BE90EayGF6J6cqBUEu77UBATFpIj9DwpLCkPdw0jWBo8xZdesJBubGBj0L3BzkbIiL
-         Qk+/WWKUtCVEaV9+V6Z09sR1VaVM6tvq9TwbB5vpEDaILUccI0WBqQbkTpE03arQ9h
-         SQ6G5gnrK8uiA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oT36t-0003LI-E6; Tue, 30 Aug 2022 17:25:03 +0200
-Date:   Tue, 30 Aug 2022 17:25:03 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH 4/4] power: supply: Introduce Qualcomm PMIC GLINK power
- supply
-Message-ID: <Yw4rzyTDaoLFXQOx@hovoldconsulting.com>
-References: <20220818031512.319310-1-bjorn.andersson@linaro.org>
- <20220818031512.319310-5-bjorn.andersson@linaro.org>
+        Tue, 30 Aug 2022 12:10:57 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6444BB56F8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 09:10:56 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id nc14so18254519ejc.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 09:10:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=HeI9CTL7SZ6WtLybLU9iLg/U6rZRWLnwHzWBSTQbFU4=;
+        b=fOyeEvOk2ivf1c403sCJD1/oW4ZOI511YvYZ/dcWVeWy6S0yfWiiroHc+RJ4MaEOKF
+         y+cOf0WhLss9aFOYCvJO1z02hiL+gs87EwC+9eQqEa4G0OqsnoBtj7OULZfNGg9Zxo3M
+         ojnGHlkGffIxH5/S4UAzo1njCwKy1UHn731VM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=HeI9CTL7SZ6WtLybLU9iLg/U6rZRWLnwHzWBSTQbFU4=;
+        b=vT5wjNURaWhEmw3LyY8+L/mx+TD8vMbC3lqtLfWCqb7SRpGRrfOfJy2PVIYGy1GlVd
+         2p3rqplX+NcipA4qWg72lBy/yal2+MnunLb8uso3EOh+v1D1dQnoBMNpFPfjOaMUx3dy
+         uFHi8JKC7ZzXpxaUGJeYdzwTwt/7IQwTUzDgJRWUxzoHvSEfL1gogy3/tmGaS55W38Si
+         VjYCotmKQ3Lxfzth6DY6ZfvVGYDvKmmTq2JjagY/+ctCB+0Oig8kVtx/gfLdcHNVK24S
+         MBt0ilmZFg9VjmicxLUvfrbV0+5OeGP3D3rN8+2gowWfiXjWj9xhMYlDzNxyRMbsQQuC
+         befQ==
+X-Gm-Message-State: ACgBeo0Q2QPHj012Lwpre9O/GM8dMrVBUd5xzUULiWy+j09gQdoUX0IR
+        mPS2g26SKCtjSSBjcRGSkux03js7HPdlvpbM
+X-Google-Smtp-Source: AA6agR56DhiHd1bwoL7cx4kUO8dhqh+CxbYK6HZf2EO7nx1ZOaxXpi5+9A+GeQJ5bQV6PBiw9lJ9Mw==
+X-Received: by 2002:a17:907:8a22:b0:73d:8a12:2d1c with SMTP id sc34-20020a1709078a2200b0073d8a122d1cmr17296639ejc.154.1661875854732;
+        Tue, 30 Aug 2022 09:10:54 -0700 (PDT)
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com. [209.85.128.48])
+        by smtp.gmail.com with ESMTPSA id bo3-20020a0564020b2300b00443d657d8a4sm7464718edb.61.2022.08.30.09.10.52
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Aug 2022 09:10:53 -0700 (PDT)
+Received: by mail-wm1-f48.google.com with SMTP id i188-20020a1c3bc5000000b003a7b6ae4eb2so5262275wma.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 09:10:52 -0700 (PDT)
+X-Received: by 2002:a05:600c:42c3:b0:3a6:431:91bf with SMTP id
+ j3-20020a05600c42c300b003a6043191bfmr9703680wme.188.1661875852435; Tue, 30
+ Aug 2022 09:10:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220818031512.319310-5-bjorn.andersson@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <20220830053307.3997495-1-sheng-liang.pan@quanta.corp-partner.google.com>
+ <20220830133300.1.I7dd7a79c4cc5fe91c3feb004473feb3b34b7b2d8@changeid> <184d4ff5-e80c-6a24-8071-0b0a69710685@linaro.org>
+In-Reply-To: <184d4ff5-e80c-6a24-8071-0b0a69710685@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 30 Aug 2022 09:10:38 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VorVNKHgybGAH=dD5ob+1RYoguczycjOYu-5VPu=9Jkw@mail.gmail.com>
+Message-ID: <CAD=FV=VorVNKHgybGAH=dD5ob+1RYoguczycjOYu-5VPu=9Jkw@mail.gmail.com>
+Subject: Re: [PATCH 1/1] arm64: dts: qcom: sc7280: Add device tree for
+ herobrine evoker
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,218 +84,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 17, 2022 at 08:15:12PM -0700, Bjorn Andersson wrote:
-> The PMIC GLINK service, running on a coprocessor of modern Qualcomm
-> platforms, deals with battery charging and fuel gauging, as well as
-> reporting status of AC and wireless power supplies.
-> 
-> As this is just one of the functionalities provided by the PMIC GLINK
-> service, this power supply driver is implemented as an auxilirary bus
-> driver, spawned by the main "pmic glink" driver when the PMIC GLINK
-> service is detected.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
+Hi,
 
-> +static int qcom_battmgr_request(struct qcom_battmgr *battmgr, void *data, size_t len)
-> +{
-> +	unsigned long left;
-> +	int ret;
-> +
-> +	reinit_completion(&battmgr->ack);
-> +
-> +	battmgr->error = 0;
-> +
-> +	ret = pmic_glink_send(battmgr->client, data, len);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	left = wait_for_completion_timeout(&battmgr->ack, HZ);
-> +	if (!left)
-> +		return -ETIMEDOUT;
-> +
-> +	return battmgr->error;
-> +}
+On Tue, Aug 30, 2022 at 2:33 AM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> > +};
+> > +
+> > +/*
+> > + * ADDITIONS TO FIXED REGULATORS DEFINED IN PARENT DEVICE TREE FILES
+>
+> What does it mean and why it's SCREAMING?
+> > + *
+> > + * Sort order matches the order in the parent files (parents before children).
+>
+> Why? Sorting should be rather alphabetical.
 
-> +static void qcom_battmgr_notification(struct qcom_battmgr *battmgr,
-> +				      const struct qcom_battmgr_message *msg,
-> +				      int len)
-> +{
-> +	size_t payload_len = len - sizeof(struct pmic_glink_hdr);
-> +	unsigned int notification;
-> +
-> +	if (payload_len != sizeof(msg->notification)) {
-> +		dev_warn(battmgr->dev, "ignoring notification with invalid length\n");
-> +		return;
-> +	}
-> +
-> +	notification = le32_to_cpu(msg->notification);
-> +	switch (notification) {
-> +	case NOTIF_BAT_INFO:
-> +		battmgr->info.valid = false;
-> +		fallthrough;
-> +	case NOTIF_BAT_PROPERTY:
-> +		power_supply_changed(battmgr->bat_psy);
-> +		break;
-> +	case NOTIF_USB_PROPERTY:
-> +		power_supply_changed(battmgr->usb_psy);
-> +		break;
-> +	case NOTIF_WLS_PROPERTY:
-> +		power_supply_changed(battmgr->wls_psy);
-> +		break;
-> +	default:
-> +		dev_err(battmgr->dev, "unknown notification: %#x\n", notification);
-> +		break;
-> +	}
-> +}
+We've had this discussion on the lists in the past. See, for instance:
 
-> +static void qcom_battmgr_callback(const void *data, size_t len, void *priv)
-> +{
-> +	const struct pmic_glink_hdr *hdr = data;
-> +	struct qcom_battmgr *battmgr = priv;
-> +	unsigned int opcode = le32_to_cpu(hdr->opcode);
-> +
-> +	if (opcode == BATTMGR_NOTIFICATION)
-> +		qcom_battmgr_notification(battmgr, data, len);
-> +	else if (battmgr->variant == QCOM_BATTMGR_SC8280XP)
-> +		qcom_battmgr_sc8280xp_callback(battmgr, data, len);
-> +	else
-> +		qcom_battmgr_sm8350_callback(battmgr, data, len);
-> +}
-> +
-> +static void qcom_battmgr_enable_worker(struct work_struct *work)
-> +{
-> +	struct qcom_battmgr *battmgr = container_of(work, struct qcom_battmgr, enable_work);
-> +	struct qcom_battmgr_enable_request req = {
-> +		.hdr.owner = PMIC_GLINK_OWNER_BATTMGR,
-> +		.hdr.type = PMIC_GLINK_NOTIFY,
-> +		.hdr.opcode = BATTMGR_REQUEST_NOTIFICATION,
-> +	};
-> +	int ret;
-> +
-> +	ret = qcom_battmgr_request(battmgr, &req, sizeof(req));
-> +	if (ret)
-> +		dev_err(battmgr->dev, "failed to request power notifications\n");
-> +}
-> +
-> +static void qcom_battmgr_pdr_notify(void *priv, int state)
-> +{
-> +	struct qcom_battmgr *battmgr = priv;
-> +
-> +	if (state == SERVREG_SERVICE_STATE_UP) {
-> +		battmgr->service_up = true;
-> +		schedule_work(&battmgr->enable_work);
-> +	} else {
-> +		battmgr->service_up = false;
-> +	}
-> +}
-> +
-> +static const struct of_device_id qcom_battmgr_of_variants[] = {
-> +	{ .compatible = "qcom,sc8180x-pmic-glink", .data = (void *)QCOM_BATTMGR_SC8280XP },
-> +	{ .compatible = "qcom,sc8280xp-pmic-glink", .data = (void *)QCOM_BATTMGR_SC8280XP },
-> +	/* Unmatched devices falls back to QCOM_BATTMGR_SM8350 */
-> +	{}
-> +};
-> +
-> +static char *qcom_battmgr_battery[] = { "battery" };
-> +
-> +static int qcom_battmgr_probe(struct auxiliary_device *adev,
-> +			      const struct auxiliary_device_id *id)
-> +{
-> +	struct power_supply_config psy_cfg_supply = {};
-> +	struct power_supply_config psy_cfg = {};
-> +	const struct of_device_id *match;
-> +	struct qcom_battmgr *battmgr;
-> +	struct device *dev = &adev->dev;
-> +
-> +	battmgr = devm_kzalloc(dev, sizeof(*battmgr), GFP_KERNEL);
-> +	if (!battmgr)
-> +		return -ENOMEM;
-> +
-> +	battmgr->dev = dev;
-> +
-> +	psy_cfg.drv_data = battmgr;
-> +	psy_cfg.of_node = adev->dev.of_node;
-> +
-> +	psy_cfg_supply.drv_data = battmgr;
-> +	psy_cfg_supply.of_node = adev->dev.of_node;
-> +	psy_cfg_supply.supplied_to = qcom_battmgr_battery;
-> +	psy_cfg_supply.num_supplicants = 1;
-> +
-> +	INIT_WORK(&battmgr->enable_work, qcom_battmgr_enable_worker);
-> +	mutex_init(&battmgr->lock);
-> +	init_completion(&battmgr->ack);
-> +
-> +	match = of_match_device(qcom_battmgr_of_variants, dev->parent);
-> +	if (match)
-> +		battmgr->variant = (unsigned long)match->data;
-> +	else
-> +		battmgr->variant = QCOM_BATTMGR_SM8350;
-> +
-> +	battmgr->client = devm_pmic_glink_register_client(dev,
-> +							  PMIC_GLINK_OWNER_BATTMGR,
-> +							  qcom_battmgr_callback,
-> +							  qcom_battmgr_pdr_notify,
-> +							  battmgr);
-> +	if (IS_ERR(battmgr->client))
-> +		return PTR_ERR(battmgr->client);
+https://lore.kernel.org/r/CAD=FV=U2C1W+JHWyGRfyRB=WiPKLYvtjO90UDoJ9p+Xwe09+ow@mail.gmail.com/
 
-This is racy as you register the callbacks before registering the power
-supplies below.
+The tl;dr summary is:
 
-I've seen NULL derefs in qcom_battmgr_notification() when trying to
-access the power supplies before they have been allocated due to early
-notifications on both CRD and X13s. This can easily be reproduced by
-adding some sleep here.
+* Going with exclusively alphabetical sort ordering tends to make
+things more confusing when there's a mix of things that are overridden
+vs. things that are fully defined from scratch.
 
-On the other hand, I guess you can't just move the callback registration
-after registering the supplies as battmgr->client is needed to process
-requests.
+* If we accept that some ordering isn't alphabetical then it makes
+sense to have some sort of section headers to define when sort
+ordering changes. Otherwise people are constantly confused and putting
+things in the wrong place. Certainly there are lots of styles of
+section headers, some of which use all caps.
 
-> +
-> +	if (battmgr->variant == QCOM_BATTMGR_SC8280XP) {
-> +		battmgr->bat_psy = devm_power_supply_register(dev, &sc8280xp_bat_psy_desc, &psy_cfg);
-> +		if (IS_ERR(battmgr->bat_psy))
-> +			return dev_err_probe(dev, PTR_ERR(battmgr->bat_psy),
-> +					     "failed to register battery power supply\n");
-> +
-> +		battmgr->ac_psy = devm_power_supply_register(dev, &sc8280xp_ac_psy_desc, &psy_cfg_supply);
-> +		if (IS_ERR(battmgr->ac_psy))
-> +			return dev_err_probe(dev, PTR_ERR(battmgr->ac_psy),
-> +					     "failed to register AC power supply\n");
-> +
-> +		battmgr->usb_psy = devm_power_supply_register(dev, &sc8280xp_usb_psy_desc, &psy_cfg_supply);
-> +		if (IS_ERR(battmgr->usb_psy))
-> +			return dev_err_probe(dev, PTR_ERR(battmgr->usb_psy),
-> +					     "failed to register USB power supply\n");
-> +
-> +		battmgr->wls_psy = devm_power_supply_register(dev, &sc8280xp_wls_psy_desc, &psy_cfg_supply);
-> +		if (IS_ERR(battmgr->wls_psy))
-> +			return dev_err_probe(dev, PTR_ERR(battmgr->wls_psy),
-> +					     "failed to register wireless charing power supply\n");
-> +	} else {
-> +		battmgr->bat_psy = devm_power_supply_register(dev, &sm8350_bat_psy_desc, &psy_cfg);
-> +		if (IS_ERR(battmgr->bat_psy))
-> +			return dev_err_probe(dev, PTR_ERR(battmgr->bat_psy),
-> +					     "failed to register battery power supply\n");
-> +
-> +		battmgr->usb_psy = devm_power_supply_register(dev, &sm8350_usb_psy_desc, &psy_cfg_supply);
-> +		if (IS_ERR(battmgr->usb_psy))
-> +			return dev_err_probe(dev, PTR_ERR(battmgr->usb_psy),
-> +					     "failed to register USB power supply\n");
-> +
-> +		battmgr->wls_psy = devm_power_supply_register(dev, &sm8350_wls_psy_desc, &psy_cfg_supply);
-> +		if (IS_ERR(battmgr->wls_psy))
-> +			return dev_err_probe(dev, PTR_ERR(battmgr->wls_psy),
-> +					     "failed to register wireless charing power supply\n");
-> +	}
-> +
-> +	dev_set_drvdata(dev, battmgr);
+* What's in this patch with regards to section headers and sort orders
+matches other herobrine-related files. If you want to propose a new
+way to organize files then perhaps you can submit a patch to do so and
+we can evaluate whether it's cleaner or not. If you want to propose a
+different organization, perhaps propose it on sc7180-trogdor files so
+we can see how it looks on a fully fleshed out family. That will help
+us evaluate whether it's easier or harder to understand.
 
-You never use the driver data so you shouldn't set it.
-
-> +
-> +	return 0;
-> +}
-
-Johan
+-Doug
