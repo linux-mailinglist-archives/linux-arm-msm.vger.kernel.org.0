@@ -2,54 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 07D185A59F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 05:28:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 810E35A5ACF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 06:36:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229655AbiH3D2U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Aug 2022 23:28:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59766 "EHLO
+        id S229845AbiH3EgK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 00:36:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229810AbiH3D2L (ORCPT
+        with ESMTP id S229437AbiH3EgJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Aug 2022 23:28:11 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49FFDA2DA3;
-        Mon, 29 Aug 2022 20:28:10 -0700 (PDT)
+        Tue, 30 Aug 2022 00:36:09 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ABB978233;
+        Mon, 29 Aug 2022 21:36:06 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 05D04B8161C;
-        Tue, 30 Aug 2022 03:28:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD77EC433D6;
-        Tue, 30 Aug 2022 03:28:06 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0B808611DA;
+        Tue, 30 Aug 2022 04:36:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85B12C433D6;
+        Tue, 30 Aug 2022 04:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661830087;
-        bh=fpJVDoUPfAFFVyClIW/ENZvoBFYy+UmZpu9qtnrnB+E=;
+        s=k20201202; t=1661834165;
+        bh=M5yG2yTFswgWexgNhMPM7W1/h1WPqfE4dGt85x2Ogls=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ENeJ5dUPJZqcO8ez5TrCm8VqtdFQfGQ5oMdc7tIacKzfhd35GaGFAX9n9c8GVEuXf
-         n9N7JzvSPsLoPS3NrwwfyXTLEQSjMRU3HYgZsauXjrXf0x5liRH+87/qYeBrNocnsK
-         G8sEul0GH7EM/k3aeGje37YcUu9exj5Sh7NqlDhVuPaNHsTDv1EaiQFgjw8qkRV6A5
-         tEMYw+zCXVhclcsLgUesUqY8KyQGWDy8aaTQvxtUImMolCsoSDb+kY8vaECrHNpi/0
-         WdhnR5vKyCD72S/4JQ3jch1poConoRi10pRYm9jr9Y9mmIgBTfVGJrJqElQqlnVWcT
-         IQ+o79wtvLJfQ==
-Date:   Mon, 29 Aug 2022 22:28:04 -0500
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     vkoul@kernel.org, lee@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        linux-kernel@vger.kernel.org, david@ixit.cz, sboyd@kernel.org,
-        devicetree@vger.kernel.org, agross@kernel.org,
-        krzysztof.kozlowski@linaro.org
-Cc:     bryan.odonoghue@linaro.org
-Subject: Re: (subset) [PATCH 00/14] arm64/dt-bindings: mfd: qcom: SPMI PMIC
- fixes
-Message-ID: <20220830032804.wurwqwrvhje3qfld@builder.lan>
-References: <20220828084341.112146-1-krzysztof.kozlowski@linaro.org>
- <166182996519.340873.11988950576516786131.b4-ty@kernel.org>
+        b=V87okQhwG7UDqSnF8GLIb/Aqt2Ig1X+KyVJezb7nrkUeVx9PiVFad8Y4HIvC9yP9Y
+         Zx582UPhmxVtJpOA/Nwu+Qf/k1NhKre/OXxO7bBc/jhOfYX+NdqzfCzUFX7CTjLNPc
+         pwGOB+y2y20HVfcMRJEplQdI4wAo4X9w4xoRytDMx9bFYsDc904F8q8vjH9mKOrpNw
+         xFyf3Qki+Kf1CN3hQXESPv6Pqlgb5fP55VYjVxPe+XopDM79aeS7irGvxZPza4W2E8
+         IdWidQ72Fx52rVcNEGnpBDMDMJOeHNgq8y4PLo6HAx+2PLU4npEIdy9yD16UZsZ0bx
+         QKSE9mO7Kiibg==
+Date:   Tue, 30 Aug 2022 10:06:00 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     David Collins <quic_collinsd@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        David Dai <daidavid1@codeaurora.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 0/2] spmi: pmic-arb: Add support for PMIC v7
+Message-ID: <Yw2TsARPfuCLvDg0@matsya>
+References: <20220201134108.2677578-1-vkoul@kernel.org>
+ <YhUVAwtfjuIdKrRQ@matsya>
+ <1c66890b-6736-61ef-7d16-619f90ced4a0@linaro.org>
+ <4f1ae43c-0f22-19fe-0794-3cc268104396@linaro.org>
+ <20220829222601.47241C433C1@smtp.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <166182996519.340873.11988950576516786131.b4-ty@kernel.org>
+In-Reply-To: <20220829222601.47241C433C1@smtp.kernel.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -60,30 +64,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 29, 2022 at 10:26:43PM -0500, Bjorn Andersson wrote:
-> On Sun, 28 Aug 2022 11:43:27 +0300, Krzysztof Kozlowski wrote:
-> > The Qualcomm SPMI PMIC DT schema conversion was not really tested and several
-> > issues in the bindings and DTS should be corrected.
+On 29-08-22, 15:25, Stephen Boyd wrote:
+> Quoting Dmitry Baryshkov (2022-06-18 08:29:58)
+> > On 01/05/2022 22:41, Dmitry Baryshkov wrote:
+> > > On 22/02/2022 19:53, Vinod Koul wrote:
+> > >> On 01-02-22, 19:11, Vinod Koul wrote:
+> > >>> Hello,
+> > >>>
+> > >>> The is version 3 of support for PMIC v7. I have added a new property
+> > >>> qcom,bus-id for supporting v7 and then add driver changes for v7
+> > >>>
+> > >>> This depends on yaml conversion patch:
+> > >>> https://lore.kernel.org/linux-arm-msm/20211227170151.73116-1-david@ixit.cz/ 
+> > >>>
+> > >>
+> > >> Any feedback on this...
+> > > 
+> > > Another gracious reminder about these patches. At this moment this is 
+> > > one of the important pieces lacking for the full SM8450 support in the 
+> > > upstream kernel.
 > > 
-> > 1. The DTS patches can go independently.
-> > 2. The binding change continuous work of PWM reg fix and depends on it in
-> >    context (diff hunk):
-> >    https://lore.kernel.org/all/20220827145640.3530878-1-bryan.odonoghue@linaro.org/
-> >    Binidings changes and above, can be taken via MFD tree (fixed commit was
-> >    merged in v6.0-rc1).
+> > Stephen, yet another ping. This is the blocking point for the further 
+> > SM8450 progress.
 > > 
-> > [...]
 > 
-> Applied, thanks!
-> 
-> [01/14] ARM: dts: qcom: align SPMI PMIC ADC node name with dtschema
->         commit: 662e305dfc29b96913a03dde1e89e8968da65238
-> [02/14] ARM: dts: qcom: pm8941: align SPMI PMIC LPG node name with dtschema
->         commit: 7b357d3126226b7ec4810e26f4ded44b2286d197
-> [03/14] ARM: dts: qcom: pmx55: align SPMI PMIC Power-on node name with dtschema
->         commit: 4bdfd92cb14d97ef58600926ea6b2788b31c719f
+> Sorry I completely missed this one as it fell off the end of my inbox
+> into the abyss.
 
-Not sure what I did to trick b4 here, but I also merged 4-12.
+Thanks for the reply. Is this applied now or you have some feedback for
+me to address..
 
-Regards,
-Bjorn
+Thanks
+-- 
+~Vinod
