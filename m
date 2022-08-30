@@ -2,441 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 421D65A5B25
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 07:33:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 381A55A5B33
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 07:40:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229685AbiH3Fda (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 01:33:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51162 "EHLO
+        id S229636AbiH3Fks (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 01:40:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229988AbiH3Fd2 (ORCPT
+        with ESMTP id S229531AbiH3Fkr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 01:33:28 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31030B2D87
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 22:33:24 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id f12so9888607plb.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 22:33:24 -0700 (PDT)
+        Tue, 30 Aug 2022 01:40:47 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 620D885F90
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 22:40:45 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id j5so6190491plj.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 22:40:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=quanta-corp-partner-google-com.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=IMsV3rEzvKjqnuZQQZnwnIQF9jl5r0KmBde1klSemlM=;
-        b=i3IKqz4AqZRp5FdlFAqXI77WNumkiQ8pyZ4FJcDwMklUWFprJjrIdSfcnxcZtVTme6
-         MkmBhZzSrQd+BWlb+/vTEYE5c6yJ/qRGB9PdF/RhXxxsKtoEq+zH+WITrPw9wwFn2gOH
-         pRZeqPmDm2qhiBbGmsXQ7uCFOjv/0oihaohgujXfp/5Ez18PS29q5RRXPeo6Wu//KFrR
-         7eHjrblcUKcczhOu4AYXpDdtYGez2kWlVhjkExB4w9FZf0F6PHpZM4XK973Ah2C34t/1
-         FPNUL38aPZaZHN1IsvcWI9sFNuhNktOI+z/tEiGuJ2K4U0lsPWZKav8/T0IW5Uuz5MpJ
-         AbEw==
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc;
+        bh=/AXxGSKHD9gHotHgPkcKQJDg7QFNUaxs4G1mHC7A7EM=;
+        b=GZdC/rr42yOk2UFksu/R3G3rPbI2L9UJtIKaPIria2iMwQfoKStV/mLDhnoeMiWHwT
+         7u4Y7HYJD6VAZ7PmsZW1KcHuHnNAOtRAHAUA6mpvhVj2vskhNKnc6law/JlK2fu3+pVh
+         6jRCrLuXzaGl7Gi8XzAeWCwDHtOEqwzI24b6Q7tiUqR9iVshq/DN9yD5dDLLaN7CUk+s
+         12EjTAip3/Js0sVZ4iRH7jTIuo5GrPzOpZygmQPcTvqPnbB1R1GPTTRfm1qiToyL8Gy/
+         pPBfE1kQK6420hWrFUeTgvDk3zhmmjeWmWzF8Tb9TTOpKwTIjFQJ3O79Lgo5ZgIf9uQL
+         hXFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=IMsV3rEzvKjqnuZQQZnwnIQF9jl5r0KmBde1klSemlM=;
-        b=gZqpBH9vZuHnwgdL3oMQ3geOBh4AR17weXKrUSjGSfbKQexVp8wE8J06q1HCmIB0JF
-         7laSfcUnHI0jPwMLS+Q/AnB7l6LtfJ/7cI6m3mhR8KpVatpImOXHktcwKC1ex2ZUGdEK
-         KeCNHd3v2WtiINLJCPPc4tVLjFtch+cIZCVlCCj1rkHLTUOoKlZ9ThyQCUBvDdLh036S
-         3esJabx0/eqF3tbWTwP+7fZv5+AWkKZs2e3Z64tGkSPidu7FEdiefqGHdfmh4HPwNAh+
-         aIDHkQNU9Gd4M3PUGKg/6fsGAb/UtWkvpJE0AVbhzkMVxzTQ8SelkizETFMBIVhNaxZW
-         r5Cw==
-X-Gm-Message-State: ACgBeo1iPB0pkz3n4BNCkym7YJ1+V1PDjtEQA5W9R6glfQ8BufckkDa9
-        acTtPuNGGrzFRIiri0vJgizhIPbbR8mE3w==
-X-Google-Smtp-Source: AA6agR5E2gdhBbObUZpAgVZGFPy+1i3hptqkkT7lYX7p8fg7n41FEJ3jV5tHuUwWYcMSS9Tv0VAiPg==
-X-Received: by 2002:a17:90b:278a:b0:1fd:c6f1:8d16 with SMTP id pw10-20020a17090b278a00b001fdc6f18d16mr9067734pjb.94.1661837603300;
-        Mon, 29 Aug 2022 22:33:23 -0700 (PDT)
-Received: from liang-Predator-PH517-52.. (60-250-232-247.hinet-ip.hinet.net. [60.250.232.247])
-        by smtp.gmail.com with ESMTPSA id d24-20020a63f258000000b0041d6d37deb5sm688578pgk.81.2022.08.29.22.33.20
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=/AXxGSKHD9gHotHgPkcKQJDg7QFNUaxs4G1mHC7A7EM=;
+        b=SzhpvmYzsWBkEgU1vQnT7GmgowKpmMXKR6Z3Pzbb8XoHPtLmgBCJMydG+y5wnB0vO1
+         w3M6S4JODDqXnjcveN9NttcwHpPLSVI1UjAmOF5M5b5MvlJ+auhVJc1Tc7E/93zzit6o
+         ONBehGn8Chv7PwWT10UgWo9/LI94UW4rA5vjEj5awjqRmglJiVD4vdDk/Ft5KUt2+4TP
+         2hV+twsiQqbZkoKJDCFac1EncFg3v972CY+Q7+FiLaCz0kgiiDG4kFosBjVYiLOl+XSV
+         74db68fjGNdfV1qgiXjOQi2ITBLDa7isViRpYqoksrUEicUdTrdWQ8svR39d6+CzEjzD
+         UEbw==
+X-Gm-Message-State: ACgBeo2Iglv9yHu2mnrsI1qhVbiOIMetJaEheXE8FZDpp2JRhPj3ItsR
+        20hmpoaW9+U7PZPsNpFvCzdWgw==
+X-Google-Smtp-Source: AA6agR4fz8JV9EJ3UVqdHB6K8oLv+ZN6CiYLpiAiB1jb8u1lfRtFBL6/xYco7Xh2MRfH9OHHAYnhzw==
+X-Received: by 2002:a17:902:d4c9:b0:172:f480:bdd with SMTP id o9-20020a170902d4c900b00172f4800bddmr19669902plg.170.1661838044911;
+        Mon, 29 Aug 2022 22:40:44 -0700 (PDT)
+Received: from localhost ([122.171.18.80])
+        by smtp.gmail.com with ESMTPSA id l5-20020a170903120500b00174c1855cd9sm3787283plh.267.2022.08.29.22.40.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Aug 2022 22:33:22 -0700 (PDT)
-From:   Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     mka@chromium.org, dianders@chromium.org,
-        Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
-        Andy Gross <agross@kernel.org>,
+        Mon, 29 Aug 2022 22:40:44 -0700 (PDT)
+Date:   Tue, 30 Aug 2022 11:10:42 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH 1/1] arm64: dts: qcom: sc7280: Add device tree for herobrine evoker
-Date:   Tue, 30 Aug 2022 13:33:07 +0800
-Message-Id: <20220830133300.1.I7dd7a79c4cc5fe91c3feb004473feb3b34b7b2d8@changeid>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220830053307.3997495-1-sheng-liang.pan@quanta.corp-partner.google.com>
-References: <20220830053307.3997495-1-sheng-liang.pan@quanta.corp-partner.google.com>
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Johan Hovold <johan@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: Re: [RFC PATCH 0/4] cpufreq: qcom-hw: Move clocks to CPU node
+Message-ID: <20220830054042.akj7pf366inelvpo@vireshk-i7>
+References: <cover.1657695140.git.viresh.kumar@linaro.org>
+ <20220715160933.GD12197@workstation>
+ <20220718015742.uwskqo55qd67jx2w@vireshk-i7>
+ <20220801023756.76jswkbwivuntqof@vireshk-i7>
+ <20220830032456.z4olnogsyg32vhiz@builder.lan>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220830032456.z4olnogsyg32vhiz@builder.lan>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a basic device tree for the herobrine evoker board.
+On 29-08-22, 22:24, Bjorn Andersson wrote:
+> Conceptually, it sounds like a good idea to express the clock feeding
+> the CPU clusters, which is controlled by the OSM/EPSS.  But do you
+> expect the OPP framework to actually do something with the clock, or
+> just to ensure that the relationship is properly described?
 
-Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
----
+No, the OPP core will never try to set the clock rate in your case,
+though it will do clk_get().
 
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../dts/qcom/sc7280-herobrine-evoker-r0.dts   | 333 ++++++++++++++++++
- 2 files changed, 334 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts
+> FWIW, the possible discrepancy between the requested frequency and the
+> actual frequency comes from the fact that OSM/EPSS throttles the cluster
+> frequency based on a number of different factors (thermal, voltages
+> ...).
+> This is reported back to the kernel using the thermal pressure
+> interface. It would be quite interesting to see some investigation in
+> how efficient the kernel is at making use of this feedback.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 1d86a33de528c..59c22ba54a366 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -103,6 +103,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-crd.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-herobrine-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r0.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-evoker-r0.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-crd-r3.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts
-new file mode 100644
-index 0000000000000..ccbe50b6249ab
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts
-@@ -0,0 +1,333 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Evoker board device tree source
-+ *
-+ * Copyright 2022 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7280-herobrine.dtsi"
-+
-+/ {
-+	model = "Google Evoker";
-+	compatible = "google,evoker", "qcom,sc7280";
-+};
-+
-+/*
-+ * ADDITIONS TO FIXED REGULATORS DEFINED IN PARENT DEVICE TREE FILES
-+ *
-+ * Sort order matches the order in the parent files (parents before children).
-+ */
-+
-+&pp3300_codec {
-+	status = "okay";
-+};
-+
-+/* ADDITIONS TO NODES DEFINED IN PARENT DEVICE TREE FILES */
-+
-+ap_tp_i2c: &i2c0 {
-+	status = "okay";
-+	clock-frequency = <400000>;
-+
-+	trackpad: trackpad@2c {
-+		compatible = "hid-over-i2c";
-+		reg = <0x2c>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&tp_int_odl>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
-+
-+		hid-descr-addr = <0x20>;
-+		vcc-supply = <&pp3300_z1>;
-+
-+		wakeup-source;
-+	};
-+};
-+
-+ts_i2c: &i2c13 {
-+	status = "okay";
-+	clock-frequency = <400000>;
-+
-+	ap_ts: touchscreen@10 {
-+		compatible = "elan,ekth6915";
-+		reg = <0x10>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&ts_int_conn>, <&ts_rst_conn>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <55 IRQ_TYPE_LEVEL_LOW>;
-+
-+		reset-gpios = <&tlmm 54 GPIO_ACTIVE_LOW>;
-+
-+		vcc33-supply = <&ts_avdd>;
-+	};
-+};
-+
-+&ap_sar_sensor_i2c {
-+	status = "okay";
-+};
-+
-+&ap_sar_sensor0 {
-+	status = "okay";
-+};
-+
-+&ap_sar_sensor1 {
-+	status = "okay";
-+};
-+
-+&mdss_edp {
-+	status = "okay";
-+};
-+
-+&mdss_edp_phy {
-+	status = "okay";
-+};
-+
-+/* For nvme */
-+&pcie1 {
-+	status = "okay";
-+};
-+
-+/* For nvme */
-+&pcie1_phy {
-+	status = "okay";
-+};
-+
-+&pwmleds {
-+	status = "okay";
-+};
-+
-+/* For eMMC */
-+&sdhc_1 {
-+	status = "okay";
-+};
-+
-+/* PINCTRL - ADDITIONS TO NODES IN PARENT DEVICE TREE FILES */
-+
-+&ts_rst_conn {
-+	bias-disable;
-+};
-+
-+/* PINCTRL - BOARD-SPECIFIC */
-+
-+/*
-+ * Methodology for gpio-line-names:
-+ * - If a pin goes to herobrine board and is named it gets that name.
-+ * - If a pin goes to herobrine board and is not named, it gets no name.
-+ * - If a pin is totally internal to Qcard then it gets Qcard name.
-+ * - If a pin is not hooked up on Qcard, it gets no name.
-+ */
-+
-+&pm8350c_gpios {
-+	gpio-line-names = "FLASH_STROBE_1",		/* 1 */
-+			  "AP_SUSPEND",
-+			  "PM8008_1_RST_N",
-+			  "",
-+			  "",
-+			  "",
-+			  "PMIC_EDP_BL_EN",
-+			  "PMIC_EDP_BL_PWM",
-+			  "";
-+};
-+
-+&tlmm {
-+	gpio-line-names = "AP_TP_I2C_SDA",		/* 0 */
-+			  "AP_TP_I2C_SCL",
-+			  "SSD_RST_L",
-+			  "PE_WAKE_ODL",
-+			  "AP_SAR_SDA",
-+			  "AP_SAR_SCL",
-+			  "PRB_SC_GPIO_6",
-+			  "TP_INT_ODL",
-+			  "HP_I2C_SDA",
-+			  "HP_I2C_SCL",
-+
-+			  "GNSS_L1_EN",			/* 10 */
-+			  "GNSS_L5_EN",
-+			  "SPI_AP_MOSI",
-+			  "SPI_AP_MISO",
-+			  "SPI_AP_CLK",
-+			  "SPI_AP_CS0_L",
-+			  /*
-+			   * AP_FLASH_WP is crossystem ABI. Schematics
-+			   * call it BIOS_FLASH_WP_OD.
-+			   */
-+			  "AP_FLASH_WP",
-+			  "",
-+			  "AP_EC_INT_L",
-+			  "",
-+
-+			  "UF_CAM_RST_L",		/* 20 */
-+			  "WF_CAM_RST_L",
-+			  "UART_AP_TX_DBG_RX",
-+			  "UART_DBG_TX_AP_RX",
-+			  "",
-+			  "PM8008_IRQ_1",
-+			  "HOST2WLAN_SOL",
-+			  "WLAN2HOST_SOL",
-+			  "MOS_BT_UART_CTS",
-+			  "MOS_BT_UART_RFR",
-+
-+			  "MOS_BT_UART_TX",		/* 30 */
-+			  "MOS_BT_UART_RX",
-+			  "PRB_SC_GPIO_32",
-+			  "HUB_RST_L",
-+			  "",
-+			  "",
-+			  "AP_SPI_FP_MISO",
-+			  "AP_SPI_FP_MOSI",
-+			  "AP_SPI_FP_CLK",
-+			  "AP_SPI_FP_CS_L",
-+
-+			  "AP_EC_SPI_MISO",		/* 40 */
-+			  "AP_EC_SPI_MOSI",
-+			  "AP_EC_SPI_CLK",
-+			  "AP_EC_SPI_CS_L",
-+			  "LCM_RST_L",
-+			  "EARLY_EUD_N",
-+			  "",
-+			  "DP_HOT_PLUG_DET",
-+			  "IO_BRD_MLB_ID0",
-+			  "IO_BRD_MLB_ID1",
-+
-+			  "IO_BRD_MLB_ID2",		/* 50 */
-+			  "SSD_EN",
-+			  "TS_I2C_SDA_CONN",
-+			  "TS_I2C_CLK_CONN",
-+			  "TS_RST_CONN",
-+			  "TS_INT_CONN",
-+			  "AP_I2C_TPM_SDA",
-+			  "AP_I2C_TPM_SCL",
-+			  "PRB_SC_GPIO_58",
-+			  "PRB_SC_GPIO_59",
-+
-+			  "EDP_HOT_PLUG_DET_N",		/* 60 */
-+			  "FP_TO_AP_IRQ_L",
-+			  "",
-+			  "AMP_EN",
-+			  "CAM0_MCLK_GPIO_64",
-+			  "CAM1_MCLK_GPIO_65",
-+			  "WF_CAM_MCLK",
-+			  "PRB_SC_GPIO_67",
-+			  "FPMCU_BOOT0",
-+			  "UF_CAM_SDA",
-+
-+			  "UF_CAM_SCL",			/* 70 */
-+			  "",
-+			  "",
-+			  "WF_CAM_SDA",
-+			  "WF_CAM_SCL",
-+			  "",
-+			  "",
-+			  "EN_FP_RAILS",
-+			  "FP_RST_L",
-+			  "PCIE1_CLKREQ_ODL",
-+
-+			  "EN_PP3300_DX_EDP",		/* 80 */
-+			  "SC_GPIO_81",
-+			  "FORCED_USB_BOOT",
-+			  "WCD_RESET_N",
-+			  "MOS_WLAN_EN",
-+			  "MOS_BT_EN",
-+			  "MOS_SW_CTRL",
-+			  "MOS_PCIE0_RST",
-+			  "MOS_PCIE0_CLKREQ_N",
-+			  "MOS_PCIE0_WAKE_N",
-+
-+			  "MOS_LAA_AS_EN",		/* 90 */
-+			  "SD_CD_ODL",
-+			  "",
-+			  "",
-+			  "MOS_BT_WLAN_SLIMBUS_CLK",
-+			  "MOS_BT_WLAN_SLIMBUS_DAT0",
-+			  "HP_MCLK",
-+			  "HP_BCLK",
-+			  "HP_DOUT",
-+			  "HP_DIN",
-+
-+			  "HP_LRCLK",			/* 100 */
-+			  "HP_IRQ",
-+			  "",
-+			  "",
-+			  "GSC_AP_INT_ODL",
-+			  "EN_PP3300_CODEC",
-+			  "AMP_BCLK",
-+			  "AMP_DIN",
-+			  "AMP_LRCLK",
-+			  "UIM1_DATA_GPIO_109",
-+
-+			  "UIM1_CLK_GPIO_110",		/* 110 */
-+			  "UIM1_RESET_GPIO_111",
-+			  "PRB_SC_GPIO_112",
-+			  "UIM0_DATA",
-+			  "UIM0_CLK",
-+			  "UIM0_RST",
-+			  "UIM0_PRESENT_ODL",
-+			  "SDM_RFFE0_CLK",
-+			  "SDM_RFFE0_DATA",
-+			  "WF_CAM_EN",
-+
-+			  "FASTBOOT_SEL_0",		/* 120 */
-+			  "SC_GPIO_121",
-+			  "FASTBOOT_SEL_1",
-+			  "SC_GPIO_123",
-+			  "FASTBOOT_SEL_2",
-+			  "SM_RFFE4_CLK_GRFC_8",
-+			  "SM_RFFE4_DATA_GRFC_9",
-+			  "WLAN_COEX_UART1_RX",
-+			  "WLAN_COEX_UART1_TX",
-+			  "PRB_SC_GPIO_129",
-+
-+			  "LCM_ID0",			/* 130 */
-+			  "LCM_ID1",
-+			  "",
-+			  "SDR_QLINK_REQ",
-+			  "SDR_QLINK_EN",
-+			  "QLINK0_WMSS_RESET_N",
-+			  "SMR526_QLINK1_REQ",
-+			  "SMR526_QLINK1_EN",
-+			  "SMR526_QLINK1_WMSS_RESET_N",
-+			  "PRB_SC_GPIO_139",
-+
-+			  "SAR1_IRQ_ODL",		/* 140 */
-+			  "SAR0_IRQ_ODL",
-+			  "PRB_SC_GPIO_142",
-+			  "",
-+			  "WCD_SWR_TX_CLK",
-+			  "WCD_SWR_TX_DATA0",
-+			  "WCD_SWR_TX_DATA1",
-+			  "WCD_SWR_RX_CLK",
-+			  "WCD_SWR_RX_DATA0",
-+			  "WCD_SWR_RX_DATA1",
-+
-+			  "DMIC01_CLK",			/* 150 */
-+			  "DMIC01_DATA",
-+			  "DMIC23_CLK",
-+			  "DMIC23_DATA",
-+			  "",
-+			  "",
-+			  "EC_IN_RW_ODL",
-+			  "HUB_EN",
-+			  "WCD_SWR_TX_DATA2",
-+			  "",
-+
-+			  "",				/* 160 */
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+			  "",
-+
-+			  "",				/* 170 */
-+			  "MOS_BLE_UART_TX",
-+			  "MOS_BLE_UART_RX",
-+			  "",
-+			  "",
-+			  "";
-+};
 -- 
-2.34.1
-
+viresh
