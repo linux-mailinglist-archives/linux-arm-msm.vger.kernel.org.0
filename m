@@ -2,70 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 41EF25A5B0A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 07:23:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 989545A5B11
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 07:25:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229658AbiH3FXp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 01:23:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39658 "EHLO
+        id S229801AbiH3FZj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 01:25:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229579AbiH3FXo (ORCPT
+        with ESMTP id S229817AbiH3FZd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 01:23:44 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4409E7D1D5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 22:23:40 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id o4so10055803pjp.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Aug 2022 22:23:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc;
-        bh=wB8Td2/uiacFaPNAz4hB1j4lSbOXW1I+BZ1+JeaZT54=;
-        b=EvQ+RefzFYuMMkHXDVVWyhE+WBRfONxOb/paNJ3OC6i8qXmkECw8nOCF21rq6Lm9i/
-         Dr7nUtsBR7K6WjAh0gsgI0l/XmfbA+ObfhNnYr9WyyFlyu5vF1/TtKWXycxoaK2EazHo
-         ywG3QRDgl4EHcoRKWucZy0Dl+qjPr8Z+v6d1ozrV7AlGyhNe1aLtHMXGzDZjenD2LnSK
-         jJsQKnDb45sQTCGgQf0iYQbHlexwvb6nnr1AoI2GfrXt6S75O3SJ+O0QZidWbstr8QTo
-         hfyF9lICOrfbTRzzW9r/3HwuD9yZZMH5MAhqrGTm1VmQ5kIxiTon4rxKZ0TTNiyMSxEE
-         o8bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=wB8Td2/uiacFaPNAz4hB1j4lSbOXW1I+BZ1+JeaZT54=;
-        b=PjE8zyyCEpD21Z9DfPUBBrdOXo8878EVasmVtOvjtyI9SAO3YEVYeV2BUaxCA3+tGl
-         gYOMeWX1WTheComMTlbzlDi3Ta7SPwp7XV6RI1qssCsGemr9+dz095CSbEZxFjL1dz0N
-         GV9tS9hJeWZUleQMbTZLUPylt1j3kgEV7xRLPWaYhcpekhgX85HgERxomJAdTnZFC/GX
-         OOZ0Mcww6RuddYwQLycvhz/p19v8UU1vhfm5UvbWGplP8UVhx0g0NgUa1y0RWrVSW0UA
-         kHjEliI0MB+HehE8SgjPpWBotQ0OBylIRdAQs8c3dfRDOGO34/WE43TcNkF55UmCqXN6
-         qieA==
-X-Gm-Message-State: ACgBeo01UY9D+R63b7Z++b8vxYQjolYVKFQAThu888zMklMDgrFwddvA
-        1hED9tW8oFsoLuHzLWTXOfZaew==
-X-Google-Smtp-Source: AA6agR4cFm79F/9BxmTt4kFH4SsSMqCk2+0LYdwGQ0UZZjq0yfjBEQpyfwK47jPqwdnhZ920hyrPQg==
-X-Received: by 2002:a17:90b:4d07:b0:1ef:521c:f051 with SMTP id mw7-20020a17090b4d0700b001ef521cf051mr22248257pjb.164.1661837019782;
-        Mon, 29 Aug 2022 22:23:39 -0700 (PDT)
-Received: from localhost ([122.171.18.80])
-        by smtp.gmail.com with ESMTPSA id 17-20020a630311000000b0042af14719f4sm671670pgd.51.2022.08.29.22.23.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Aug 2022 22:23:39 -0700 (PDT)
-Date:   Tue, 30 Aug 2022 10:53:35 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        mka@chromium.org, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH] opp: Expose voltage info in debugfs for OPPs w/out
- explicit regulators
-Message-ID: <20220830052335.zmot3ojvlqkz32z4@vireshk-i7>
-References: <20220826075655.1.I2e4958048f30c3b44a01e31519092f7d3c9204e4@changeid>
+        Tue, 30 Aug 2022 01:25:33 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB24A248C8;
+        Mon, 29 Aug 2022 22:25:31 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 70D4A612D6;
+        Tue, 30 Aug 2022 05:25:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B15AC433C1;
+        Tue, 30 Aug 2022 05:25:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1661837130;
+        bh=Hh7bnQCDCSt3C486NoFQsf6r4Qajsoy/eBJ7UtkwRks=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=YNjQjEGEtHM2qpGA60LXoviJw2eA21I3I0I3IFRxGEJ+HJjBDIMAyxdNb3ORcHKti
+         IKZzUubUKT5V29hXFm6xVIpsX0fThNaXjtGRXtlRCRKZLaY4eP4c332iyEvL0jd1qu
+         KnAcJJPso3THYXjMzvpvniqLZauuJ3U3NbZ+8yw3ngeA/kjNa/eoqw8O23GBk982Sz
+         AiW+ua20YzlKDT27RW3NshTLut7938c5Jy4ew3Qk72UbzkUqX2gNtvwa6/QEp+AtvH
+         Au/JZ3YmMSKowQJSwV8j2ZTmRnrgt5kPVPNocUHHv+lw+CeI2wGvLMZDsM+0e0I74e
+         f9WPLWbFXe/lw==
+Date:   Tue, 30 Aug 2022 10:55:25 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-phy@lists.infradead.org, Johan Hovold <johan@kernel.org>
+Subject: Re: [PATCH v3 1/3] clk: asm9260: use new helper for fixed rate clock
+ creation
+Message-ID: <Yw2fRVsnkHYhcmSy@matsya>
+References: <20220708135450.2845810-1-dmitry.baryshkov@linaro.org>
+ <20220708135450.2845810-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220826075655.1.I2e4958048f30c3b44a01e31519092f7d3c9204e4@changeid>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+In-Reply-To: <20220708135450.2845810-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,50 +64,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26-08-22, 07:56, Douglas Anderson wrote:
-> On some cpufreq drivers we know the voltage associated with each
-> operating point but there is no explicit Linux "regulator" present. An
-> example is "qcom-cpufreq-hw.c". There the voltage is managed
-> automatically by the hardware but we still associate it with the OPP
-> table so we can do energy calculations for EAS.
+On 08-07-22, 16:54, Dmitry Baryshkov wrote:
+> The __clk_hw_register_fixed_rate() is an internal API, which is better
+> not to be called directly. Add new helper to create fixed rate clocks
+> using parent clock accuracy.
 > 
-> The OPP framework handles this in general. In _opp_allocate() it can
-> be seen that we always allocate space for one supply even if
-> "regulator_count" is 0.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/clk/clk-asm9260.c    |  6 ++----
+>  include/linux/clk-provider.h | 14 ++++++++++++++
+>  2 files changed, 16 insertions(+), 4 deletions(-)
 > 
-> Let's handle this properly in debugfs.
-> 
-> NOTE: as a side effect of this a whole bunch of OPPs in the system may
-> get supply-related files exposed in debugfs that are mostly useless
-> (they'll just contain 0). I'd expect this to be OK but it's moderately
-> annoying. It seems better than trying to dynamically create debugfs
-> directories when the voltages are non-zero or adding extra complexity
-> in the code giving a hint to the OPP framework that voltages should be
-> exposed.
-> 
-> After this patch, on a sc7180-trogdor class device I can see voltages
-> for the CPU OPPs under /sys/kernel/debug/opp.
+> diff --git a/drivers/clk/clk-asm9260.c b/drivers/clk/clk-asm9260.c
+> index bacebd457e6f..0609b661ff5a 100644
+> --- a/drivers/clk/clk-asm9260.c
+> +++ b/drivers/clk/clk-asm9260.c
+> @@ -276,10 +276,8 @@ static void __init asm9260_acc_init(struct device_node *np)
+>  
+>  	/* TODO: Convert to DT parent scheme */
+>  	ref_clk = of_clk_get_parent_name(np, 0);
+> -	hw = __clk_hw_register_fixed_rate(NULL, NULL, pll_clk,
+> -			ref_clk, NULL, NULL, 0, rate, 0,
+> -			CLK_FIXED_RATE_PARENT_ACCURACY);
+> -
+> +	hw = clk_hw_register_fixed_rate_parent_accuracy(NULL, pll_clk, ref_clk,
+> +							0, rate);
 
-The OPP core already supports platforms which don't have a regulator
-set for the CPU device, but the OPP table have an entry for microvolt.
-This already works.
+Should this not be described in DT instead, resolve the todo :-)
 
-I looked at your DT and I understand why this isn't working for you.
-The problem is that your DT doesn't have any of such values
-(opp-microvolt) but the driver later calls dev_pm_opp_adjust_voltage()
-to set voltage values.
-
-IMO, this is wrong by design. This takes advantage of the fact that
-the OPP core doesn't check if voltage has been previously set for the
-device or not in dev_pm_opp_adjust_voltage() and it works by chance
-currently.
-
-I would suggest adding opp-microvolt property to the DT for this
-platform, the values can be 0 with a comment mentioning that software
-will fill them later, or if you know approximate values you can fill
-them as well.
-
-And then it will work just fine I hope.
+>  	if (IS_ERR(hw))
+>  		panic("%pOFn: can't register REFCLK. Check DT!", np);
+>  
+> diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
+> index 72d937c03a3e..659ef5a77246 100644
+> --- a/include/linux/clk-provider.h
+> +++ b/include/linux/clk-provider.h
+> @@ -439,6 +439,20 @@ struct clk *clk_register_fixed_rate(struct device *dev, const char *name,
+>  	__clk_hw_register_fixed_rate((dev), NULL, (name), NULL, NULL,	      \
+>  				     (parent_data), NULL, (flags),	      \
+>  				     (fixed_rate), (fixed_accuracy), 0)
+> +/**
+> + * clk_hw_register_fixed_rate_parent_accuracy - register fixed-rate clock with
+> + * the clock framework
+> + * @dev: device that is registering this clock
+> + * @name: name of this clock
+> + * @parent_name: name of clock's parent
+> + * @flags: framework-specific flags
+> + * @fixed_rate: non-adjustable clock rate
+> + */
+> +#define clk_hw_register_fixed_rate_parent_accuracy(dev, name, parent_name,    \
+> +						   flags, fixed_rate)	      \
+> +	__clk_hw_register_fixed_rate((dev), NULL, (name), (parent_name),      \
+> +				     NULL, NULL, (flags), (fixed_rate), 0,    \
+> +				     CLK_FIXED_RATE_PARENT_ACCURACY)
+>  
+>  void clk_unregister_fixed_rate(struct clk *clk);
+>  void clk_hw_unregister_fixed_rate(struct clk_hw *hw);
+> -- 
+> 2.35.1
 
 -- 
-viresh
+~Vinod
