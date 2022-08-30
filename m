@@ -2,78 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1ACA05A6C36
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 20:32:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EFA6C5A6C5C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 20:40:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229549AbiH3ScR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 14:32:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60034 "EHLO
+        id S229607AbiH3SkQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 14:40:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230212AbiH3ScR (ORCPT
+        with ESMTP id S231162AbiH3SkO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 14:32:17 -0400
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A4806C770
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 11:32:16 -0700 (PDT)
-Received: by mail-io1-xd36.google.com with SMTP id n202so9982249iod.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 11:32:16 -0700 (PDT)
+        Tue, 30 Aug 2022 14:40:14 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C18B31C107
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 11:40:12 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id bx38so12289558ljb.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 11:40:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=xcvN7vzmA4AKBJywp467PfjgCNS4VLeJNw5kUl0XNfw=;
-        b=krT24tS8lLnrcRWkeuNhkLC4fKlI7C2qE1i7m3aESOPSK32X4BPXXdMe+kA4GDqX3a
-         Z4DyTB8ZJ+RLji2Jrt6Uva5SxsIm2Sk5EO86xT4ud+eccwIEKjD5PTh98eY3Q7KA4RA8
-         kVErahT9BhGCd3TuPriXRt/BinzSjY0qDdSKM=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=CH2sJI+/EHW23gGx/MNS2o0Bd1ZGntsk+d3f7yO/CWc=;
+        b=U3vJvHzALZt1J5DH2Gy1Bu2Ysxq9QepKsd6g4sHJTAH248qiMSJaaEamAat+U5v9RB
+         w5Bur0zB4aHESKvYwayBz9te4/6pTQpMLqEg39s9tpxX4pA7QRu/RyyF2eKplXiPsekt
+         kWa1TDXVaS7hlF/KAG38/NunnstiXt8AXBhWmt8m6mK2oPO6ON2dh5rX4/tyG8+OeUMr
+         BRHRIr3/jFrDQIvo5k9L7m9nMtoNBOaz0Dy1b0oUPkOffEB//o02zztAox9V8GMqAFrH
+         zUyfk28puaDx4/rP+kKvLNQfQt0KeUjGI82xR4MEW/xAg/ywND+L/OJAcv3/IXXUHW8T
+         Msgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=xcvN7vzmA4AKBJywp467PfjgCNS4VLeJNw5kUl0XNfw=;
-        b=CyXtOI44XiMx+5JyyhrQbwhnq5t8gEEZrsA8Bk4ve3Pbf213nGGJRRvt95+YNsqX5Z
-         3p9YhZtV/KnXRJoSvAk1xHnKq8sBnfxewN2bGZzvMNPUdc9FYNbEPogRwITIte1Gtw58
-         z88WL1AVVNmMVqCXEk8VWNjPnRf3HsODL55SnkkRBA26M4HIJAc7+Gon3kozqw/I08Yb
-         gW+304XqwaSFty+qD8gYFWSYaywhrPkhx/53EEUpB+fNU5Jn6Loltjx1OuyzrQSs723M
-         KSW9eHvENiCfGLyiotS7I/1wXX8Tjh/ohkx2YMTSmZAXCTLycD1ziSnxiJYzAD2n5frt
-         udEw==
-X-Gm-Message-State: ACgBeo3xEh7JITLQMvYMR4c5VapyiUN5aUJPvH+W7CoMuVxKxf/irVOs
-        wmyrX+5c7j9Ff33fHUNwMIVa1HBzE6v60xlE
-X-Google-Smtp-Source: AA6agR6FF8I5E/i3lLuu+laDTv/opjK6flOAcfSB2br5ocoqgb/yoeKhfwJLgUAzJLL9J8O2Vktk5g==
-X-Received: by 2002:a05:6638:358f:b0:349:ff25:3dc8 with SMTP id v15-20020a056638358f00b00349ff253dc8mr12745394jal.85.1661884335374;
-        Tue, 30 Aug 2022 11:32:15 -0700 (PDT)
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com. [209.85.166.50])
-        by smtp.gmail.com with ESMTPSA id g3-20020a02b703000000b0034a56f2f120sm1509654jam.155.2022.08.30.11.32.11
-        for <linux-arm-msm@vger.kernel.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=CH2sJI+/EHW23gGx/MNS2o0Bd1ZGntsk+d3f7yO/CWc=;
+        b=Ha4etlCwjUAPrZkQjMESpjIDbxNo5U867XMf1VhJrubswVj7M6FyStaUv/2yZ/t3Yn
+         pnlcPAtOChHL8Xm7AwgFHMiGKwk/qutwyxHcKr4Wqf/mwW2TNhkRpzPeHZKVcENxpF/6
+         EQdBWfKHPsrAsddCZ7MQ+Bz1S4egFn/in5kfY0GqXcbM1VSxP9S57D0l7ITUbcdNWr98
+         HG6f+AsuA2PMvjwMaQwnX+91JYQDPQI5PKKecvQfpCT+frDRylClRyu7lEuV0pyzIeYT
+         Pqsy5ZI+pHnv2dMtddT6dppafuDU+53tFyHCEgF3xpKpAmthC29vgUKK6ShibTQE3Y2g
+         0HQA==
+X-Gm-Message-State: ACgBeo0sqWXWA/lP2jV56xLnK6JZsE2db0S1v1ybCnuRwTJG59P/Q3eY
+        PRXp9cRpnAJT1rWTHridhr9dQlhUjtoAS6K1
+X-Google-Smtp-Source: AA6agR5Mj63I86ioy8izFwu1w7QEc/dz5ZGAPKJEer38bm/Y7Tral/tf+edsE1ql9U2+D9yjhw4LRg==
+X-Received: by 2002:a2e:9d06:0:b0:261:d208:7475 with SMTP id t6-20020a2e9d06000000b00261d2087475mr7533564lji.113.1661884810974;
+        Tue, 30 Aug 2022 11:40:10 -0700 (PDT)
+Received: from [192.168.28.124] (balticom-73-99-134.balticom.lv. [109.73.99.134])
+        by smtp.gmail.com with ESMTPSA id du13-20020a056512298d00b0048b969ac5cdsm675736lfb.5.2022.08.30.11.40.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Aug 2022 11:32:11 -0700 (PDT)
-Received: by mail-io1-f50.google.com with SMTP id y187so9999945iof.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 11:32:11 -0700 (PDT)
-X-Received: by 2002:a6b:c8d3:0:b0:688:7041:50d2 with SMTP id
- y202-20020a6bc8d3000000b00688704150d2mr11573220iof.154.1661884330916; Tue, 30
- Aug 2022 11:32:10 -0700 (PDT)
+        Tue, 30 Aug 2022 11:40:10 -0700 (PDT)
+Message-ID: <673bafdb-4e76-7dc9-6ab1-a60a44d0c238@linaro.org>
+Date:   Tue, 30 Aug 2022 21:40:09 +0300
 MIME-Version: 1.0
-References: <20220829084732.1.I9ef7f8b909a7afbef9ff2251a98c67033f37b516@changeid>
- <ed582145-3694-b39c-bf54-815279fe93f4@linaro.org>
-In-Reply-To: <ed582145-3694-b39c-bf54-815279fe93f4@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 30 Aug 2022 11:31:58 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UTK=2JGVKHFzC8LnjpvSpdDGVcD48F5bJ0mBVk4cKEfA@mail.gmail.com>
-Message-ID: <CAD=FV=UTK=2JGVKHFzC8LnjpvSpdDGVcD48F5bJ0mBVk4cKEfA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Adjust LTE SKUs for sc7280-villager
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jimmy Chen <jinghung.chen3@hotmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v2 09/11] dt-bindings: PCI: qcom-ep: Define clocks per
+ platform
+Content-Language: en-US
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        lpieralisi@kernel.org, robh@kernel.org, andersson@kernel.org
+Cc:     kw@linux.com, bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
+        dmitry.baryshkov@linaro.org
+References: <20220830165817.183571-1-manivannan.sadhasivam@linaro.org>
+ <20220830165817.183571-10-manivannan.sadhasivam@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220830165817.183571-10-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,30 +81,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 30/08/2022 19:58, Manivannan Sadhasivam wrote:
+> In preparation of adding the bindings for future SoCs, let's define the
+> clocks per platform.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-On Tue, Aug 30, 2022 at 2:44 AM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 29/08/2022 18:48, Douglas Anderson wrote:
-> > There have been a few changes since the patch ("dt-bindings: arm:
-> > qcom: document sc7280 and villager board").
-> > * New firmware reports LTE boards as "SKU 512" now. Old firmware will
-> >   still report "SKU 0", but that's all pre-production and everyone
-> >   will update.
-> > * It's been relaized that no "-rev0" boards were ever built that were
-> >   WiFi-only. Thus we don't two entries for -rev0.
-> >
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > ---
-> > This builds upon the patch ("dt-bindings: arm: qcom: document sc7280
-> > and villager board") which hasn't landed yet. In theory this could be
-> > squashed into that patch.
->
-> Unless Bjorn already merged it, this should be squashed.
+Thank you for your patch. There is something to discuss/improve.
 
-Sure. Squashed as v9 of Jimmy's patches.
+(....)
 
-https://lore.kernel.org/r/20220830182923.3720287-1-dianders@chromium.org
+>  
+>    qcom,perst-regs:
+>      description: Reference to a syscon representing TCSR followed by the two
+> @@ -112,6 +95,36 @@ required:
+>    - reset-names
+>    - power-domains
+>  
+> +allOf:
+> +  - $ref: pci-ep.yaml#
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,sdx55-pcie-ep
+> +    then:
+> +      properties:
+> +        clocks:
+> +          maxItems: 7
 
--Doug
+maxItems is not needed now.
+
+
+Best regards,
+Krzysztof
