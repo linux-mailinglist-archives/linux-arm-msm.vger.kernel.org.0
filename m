@@ -2,80 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3977E5A684E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 18:24:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 60F7B5A6857
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 18:25:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229538AbiH3QYw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 12:24:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50156 "EHLO
+        id S229811AbiH3QZz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 12:25:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbiH3QYv (ORCPT
+        with ESMTP id S229453AbiH3QZy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 12:24:51 -0400
-Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05A9D5592;
-        Tue, 30 Aug 2022 09:24:49 -0700 (PDT)
-Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-11dca1c9c01so17967417fac.2;
-        Tue, 30 Aug 2022 09:24:49 -0700 (PDT)
+        Tue, 30 Aug 2022 12:25:54 -0400
+Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E42435FC3;
+        Tue, 30 Aug 2022 09:25:53 -0700 (PDT)
+Received: by mail-oo1-f42.google.com with SMTP id c17-20020a4a8ed1000000b004452faec26dso2059171ool.5;
+        Tue, 30 Aug 2022 09:25:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=j9hKnhcG2H74szOTuO/QuH+GdjQxo+KorbP/zhVl3Ac=;
-        b=0upfzlkea8qmRIRuCeg5G8s086EAeHeSbGgcm9SOKASa6ZxN/OME5aqqXCrCch2DGc
-         yl2Urc45L5qm6O9t9OOAWmZ9Du3TBqrG9cBEpZyt1/oxGL+kKGqAoD04VnXwneaXFufE
-         tza1SEpFYdzHwBHAXK8fXxxtb2IH9MVuEMF+ivcsg5JlmtHXkPlPcXJbLdsvcZ1eM1Re
-         vVgBxbBGLgEJ+vED+CKQo/03WuqWa2yGHEc9AKnOgLznHXObvD28lOkKI+PlXN6P3tFZ
-         jIg7Pt4Un/vDt+1meyTKZu+rAezktPml18kFcLZ581z4J6hW7kQulX7QYFu0HQV/sq6c
-         dYkg==
-X-Gm-Message-State: ACgBeo1COtzpUMfu2f+rkgQx8IMWjLaKnVEDYR8XUH8/O01sNXDv15HK
-        GKhvDoGgilMtm1lm7TNN1L13Qn7hOw==
-X-Google-Smtp-Source: AA6agR6jxGYMQy0LBcuYfgLJD84RQXshKmUJMu+IU7Y4UmXonuRzzkmsC9mh0JvtJd93YHj+REIgmw==
-X-Received: by 2002:a05:6808:1647:b0:33a:f484:2ae2 with SMTP id az7-20020a056808164700b0033af4842ae2mr9490649oib.60.1661876689162;
-        Tue, 30 Aug 2022 09:24:49 -0700 (PDT)
+        bh=YaikjxgLyqtsdLt2khR2V2BKYtZ+YK4d/SvwCpASp/E=;
+        b=i5BhVP7JqbMkkk9UFs7mz2wftvBvSXSKl7B9qYKEA3e9XBTW3/X0dE+IPGJU73Srh/
+         LZFKxJgg7mEny1eMRqn/iz5uSUvjSia+pt2sFLO2ooBf5n1VyYF9eTqRni39m+nxyj05
+         0aqieBfcZWM5Y57LmqaBsvJK2CVnhy815BBkZHAuYJQGUTJgWykCGniQU/NAI3uO+04c
+         GWfzhlOm/ip2DPzNs/qDFph6Ik/014vT0JtGD5czmkwH7FC3NVjBF8OR0qy2uWxcegKm
+         RLzoo1AkDBc7bONvv+CVDDphFZfYOZF2om8BEOWTxs68vLy05cLjhdBKUO78TVPnK5zG
+         zSew==
+X-Gm-Message-State: ACgBeo3IjHmkoz58Svl79zRhRBmVl2RlWvw8MupxDZVrJ4fGGxhaNKDj
+        hVCHNhDZ1cwIt1QWnEgpRabs7q/3Hg==
+X-Google-Smtp-Source: AA6agR7prvgwV09hc+PdOo95qlSdVRWy8WF9lKniw/j7mhhG0n5nzc730p6IwvmEgZxOf/5UVllw7g==
+X-Received: by 2002:a4a:ddcc:0:b0:44a:d491:b11e with SMTP id i12-20020a4addcc000000b0044ad491b11emr7542038oov.34.1661876753193;
+        Tue, 30 Aug 2022 09:25:53 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id g17-20020a544f91000000b0033a11fcb23bsm6448452oiy.27.2022.08.30.09.24.48
+        by smtp.gmail.com with ESMTPSA id c4-20020a9d6844000000b00636f7059b27sm7595493oto.5.2022.08.30.09.25.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Aug 2022 09:24:48 -0700 (PDT)
-Received: (nullmailer pid 1506950 invoked by uid 1000);
-        Tue, 30 Aug 2022 16:24:47 -0000
-Date:   Tue, 30 Aug 2022 11:24:47 -0500
+        Tue, 30 Aug 2022 09:25:52 -0700 (PDT)
+Received: (nullmailer pid 1514589 invoked by uid 1000);
+        Tue, 30 Aug 2022 16:25:51 -0000
+Date:   Tue, 30 Aug 2022 11:25:51 -0500
 From:   Rob Herring <robh@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
+Cc:     Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Amit Kucheria <amitk@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee@kernel.org>, Andy Gross <agross@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        linux-kernel@vger.kernel.org, David Heidelberg <david@ixit.cz>
-Subject: Re: [PATCH] dt-bindings: mfd: qcom,spmi-pmic: add missing compatibles
-Message-ID: <20220830162447.GA1506864-robh@kernel.org>
-References: <20220828065123.39734-1-krzysztof.kozlowski@linaro.org>
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH] dt-bindings: thermal: qcom-spmi-adc-tm5: add qcom,adc-tm7
+Message-ID: <20220830162551.GA1514331-robh@kernel.org>
+References: <20220828081022.96813-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220828065123.39734-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220828081022.96813-1-krzysztof.kozlowski@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 28 Aug 2022 09:51:23 +0300, Krzysztof Kozlowski wrote:
-> Conversion from TXT to DT schema lost several compatibles.
+On Sun, 28 Aug 2022 11:10:22 +0300, Krzysztof Kozlowski wrote:
+> The qcom,adc-tm7 compatible is already used in PMK8350 so add it to the
+> Qualcomm PMIC Thermal Monitoring ADC.  Based on downstream sources, the
+> new compatible for TM7 differs from older TM5 by allowing configuring
+> per sensor decimation, time measurement and number of sample averaging -
+> unlike one configuration per entire device.  This was not reflected in
+> the bindings, therefore comment the new compatible as incomplete as it
+> might change and its ABI is no stable.
 > 
-> Fixes: 3f5117be9584 ("dt-bindings: mfd: convert to yaml Qualcomm SPMI PMIC")
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
+>  Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 
 Acked-by: Rob Herring <robh@kernel.org>
