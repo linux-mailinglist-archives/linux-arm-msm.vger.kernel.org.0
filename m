@@ -2,97 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CE775A5F1B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 11:19:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1422C5A5F30
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 11:20:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231545AbiH3JS5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 05:18:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50012 "EHLO
+        id S231744AbiH3JUk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 05:20:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231384AbiH3JSw (ORCPT
+        with ESMTP id S231756AbiH3JUS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 05:18:52 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F29AAD5701;
-        Tue, 30 Aug 2022 02:18:47 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id d12-20020a05600c34cc00b003a83d20812fso4159288wmq.1;
-        Tue, 30 Aug 2022 02:18:47 -0700 (PDT)
+        Tue, 30 Aug 2022 05:20:18 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D9CE13F28
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 02:20:01 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id p18so10512283plr.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 02:20:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc;
-        bh=AGaSWYBJDgKfuNXBk/rMpd9HzYqxQJNCfvux8aOnciU=;
-        b=OkWDZIa6FOObDPg4K064OvXgsu/npv0Y459BFnvrGpjZtayryIOXm//bV7VtE+O6Ku
-         Z6wd2miesiJN/ppW2YMSP9cBRqmBKexlGpHQAjEv+y2Eu6lkXXKdYMdSo3EKWztpsW5n
-         LDeMJBGtmITWQY6Ini2sc9A4VU7633IBYInTPbSFNVnazdFOhBgmWg49tISF8q2xXT3L
-         zZhoSBvCa4634fkQJ++bWj41wbFXDwaxLDCo1mbSHQSoFPQTMB9SDOth0gHv/HUV/AWQ
-         VsZZGRgDrYBEB/ip4uuvUBsJkrOnk9bvsp/Dtd8p6BMdIvup4DP62ymW9/8+WGIDGIxX
-         zRzg==
+        d=linaro.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc;
+        bh=1stEK7orHgTbYEfwbeXC8fEwW/r5cq766TAqvkrU7s8=;
+        b=nmk9fHCkrfrblpy/7kg08OX3ped77vmORbwkjjnbEVvUoXKOEKmX0Y1VGcflg+qh+d
+         X5tuUyECrJp6R8RxGK62QsdF+fQbRQzNyCiGISzE5m5StPKqzt0BZ7Glg//ELPo5oSVG
+         etz+NTjXyBz9fyw10DCx3yIeBzqheARABobLgWEFIgvMnpni+6W7Y8HuUMHy2YNYqJHY
+         m9emxannnhCC1uNXxj8tgTkk/x5/54Y8WlBugCyPUt6MTgXTeO99BmfTb1wvKi4O0XP4
+         9fnghGoemu9Z13rG/mPuPrqOM5DJ8YuChJLBsl3tIg+uxjn5TpFRQH9ubuzE0FRZUxDL
+         RPnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc;
-        bh=AGaSWYBJDgKfuNXBk/rMpd9HzYqxQJNCfvux8aOnciU=;
-        b=truJ8s3yLhtpS5qCWbrtXoEDl1SQ/kw7Lj8gQ8lquEl1chVEm1VUYv5U/tvIt1C94l
-         q6njMxU8Pb09dEJoQy02U2FmkUbZ4Jvdmyc5+GlQ7osfORvzk4Sjv4iigPRS7sM1poZY
-         oWTTE7bas8KYniKQnYtZ+GVERbIIsIyFdnYIuGDYBpPtgA24ymd3m0hrcPxWh0zfFNPX
-         awdqN+g1i0WOSwiiZAjlsi0JqF29DyLHEd3nUsYEk4CXzOG2t4n5jlyOr209a/8w5I2o
-         QmonfXta3ibp++Gx1x2QVk2JxbxHh0W7yy4p0i3lkA0x682wAiYr6fPtLP/tzEQsqG+d
-         IVAg==
-X-Gm-Message-State: ACgBeo3aK1Jnv139HH+CV/YfL5Nu4Uvq4ZPFePl3xiOsvrb5MYV6lGzb
-        /p1FQdLg4AiWQFDgNVsNqHs=
-X-Google-Smtp-Source: AA6agR5QPnPnzmdDQ8z8WSYvFsJyyoFZG9CQ43BYjg2K03qhgWNqHPOigcjYhoX/TqbT6IEa4NyRmQ==
-X-Received: by 2002:a05:600c:1f05:b0:3a5:c789:1d9c with SMTP id bd5-20020a05600c1f0500b003a5c7891d9cmr9138971wmb.26.1661851125988;
-        Tue, 30 Aug 2022 02:18:45 -0700 (PDT)
-Received: from debian (host-78-150-37-98.as13285.net. [78.150.37.98])
-        by smtp.gmail.com with ESMTPSA id h15-20020a5d548f000000b0020e6ce4dabdsm9040737wrv.103.2022.08.30.02.18.44
+        bh=1stEK7orHgTbYEfwbeXC8fEwW/r5cq766TAqvkrU7s8=;
+        b=uXYGnbxGs5j7G87abt8OOqA5CxKdwXvOG3t8+kCzf0orQYqhG6PGNl3vPBYX6k9sIZ
+         LNu9usurY/zJ0VrAgtO3rWeI4OHjzDec2TP/IuLyI2ktw+SsFrzSpw8KPTvHQK9gfM2Y
+         I1ONuUi+tNXcE79eao5QBRqlbYXMj/EY/IyEqnyFWYPm3inF2Zflyn2bj5UBfWv/eiIN
+         Kr6nUDNW5/oj5fzR0QvdQNVaWgDaitsjLwO5zLIOHD1+NMtfxiTh/6Mdk2nbxx+rdW82
+         QRr6294NS4o2N1JU7/vQ3Ux9216P4iaTMvTia1mzXbJxAsYBvweMgX3bQTGhncuneETS
+         uB4w==
+X-Gm-Message-State: ACgBeo0OHfyZqAxWvwyvbX+w7ba8iPFP5cX9wGXZsn6py+IEwCCoxyc7
+        LAtbKo/GmKrZMU9MeO6PqDN8
+X-Google-Smtp-Source: AA6agR71f7NK6QRTQvMbVYh6yrfXsyqBOXunCOCPdx/lBWuvieJpGZ4JeK25bmov9unRjiB3MYANpA==
+X-Received: by 2002:a17:902:f64a:b0:172:7576:2124 with SMTP id m10-20020a170902f64a00b0017275762124mr19856760plg.155.1661851200915;
+        Tue, 30 Aug 2022 02:20:00 -0700 (PDT)
+Received: from thinkpad ([117.193.209.245])
+        by smtp.gmail.com with ESMTPSA id q10-20020a170902eb8a00b001749e8eee4fsm5100555plg.226.2022.08.30.02.19.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Aug 2022 02:18:45 -0700 (PDT)
-Date:   Tue, 30 Aug 2022 10:18:43 +0100
-From:   "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-next@vger.kernel.org,
-        Nathan Chancellor <nathan@kernel.org>,
-        clang-built-linux <llvm@lists.linux.dev>
-Subject: build failure of next-20220830 due to 5f8cdece42ff ("drm/msm/dsi:
- switch to DRM_PANEL_BRIDGE")
-Message-ID: <Yw3V8yJgAnPD8o6P@debian>
+        Tue, 30 Aug 2022 02:20:00 -0700 (PDT)
+Date:   Tue, 30 Aug 2022 14:49:53 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Marc Zyngier <maz@kernel.org>
+Cc:     linus.walleij@linaro.org, bjorn.andersson@linaro.org,
+        robimarko@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        johan+linaro@kernel.org, steev@kali.org
+Subject: Re: [PATCH v2] pinctrl: qcom: spmi-gpio: Make IRQCHIP immutable
+Message-ID: <20220830091953.GC135982@thinkpad>
+References: <20220830081212.164709-1-manivannan.sadhasivam@linaro.org>
+ <e20dabe02d88f28fc933b596dee8b69d@kernel.org>
+ <20220830084441.GB135982@thinkpad>
+ <61371efca85fbbd360b3ede9a258ee69@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <61371efca85fbbd360b3ede9a258ee69@kernel.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi All,
+On Tue, Aug 30, 2022 at 09:48:28AM +0100, Marc Zyngier wrote:
+> On 2022-08-30 09:44, Manivannan Sadhasivam wrote:
+> > On Tue, Aug 30, 2022 at 09:26:51AM +0100, Marc Zyngier wrote:
+> > > On 2022-08-30 09:12, Manivannan Sadhasivam wrote:
+> > > > The IRQCHIP implementation used inside the gpiochips are not supposed to
+> > > 
+> > > lower case
+> > > 
+> > > > be changed during runtime. So let's make the one inside the spmi-gpio
+> > > > gpiochip immutable.
+> > > >
+> > > > This fixes the below warning during boot:
+> > > > gpio gpiochip0: (c440000.spmi:pmic@0:gpio@c000): not an immutable
+> > > > chip, please consider fixing it!
+> > > >
+> > > > Separate callbacks need to be provided for irq_{mask/unmask} pointers
+> > > > since
+> > > > the callbacks are supposed to mask/unmask the corresponding parent IRQ
+> > > > in
+> > > > addition to changing the gpio_desc flags.
+> > > 
+> > > This is all part of the existing documentation, so I don't think
+> > > this is really needed.
+> > > 
+> > 
+> > Yes it is documented, but developers usually refer the commits doing the
+> > similar
+> > thing while doing these kind of conversions. For them, this text serves
+> > as a
+> > quick documentation.
+> 
+> If they can't be bothered to read the documentation, why would they
+> consider reading unrelated commits?
+> 
+> > 
+> > So I prefer to keep it in the commit message.
+> 
+> I still think this is pointless.
+> 
 
-The builds of arm64 allmodconfig with clang have failed to build
-next-20220830 with the error:
+Okay. I'll remove it in v3.
 
-drivers/gpu/drm/msm/dsi/dsi_host.c:1903:14: error: variable 'device_node' is uninitialized when used here [-Werror,-Wuninitialized]
-        of_node_put(device_node);
-                    ^~~~~~~~~~~
-drivers/gpu/drm/msm/dsi/dsi_host.c:1870:44: note: initialize the variable 'device_node' to silence this warning
-        struct device_node *endpoint, *device_node;
-                                                  ^
-                                                   = NULL
+Thanks,
+Mani
 
-git bisect pointed to 5f8cdece42ff ("drm/msm/dsi: switch to DRM_PANEL_BRIDGE")
-
-I will be happy to test any patch or provide any extra log if needed.
-
+>         M.
+> -- 
+> Jazz is not dead. It just smells funny...
 
 -- 
-Regards
-Sudip
+மணிவண்ணன் சதாசிவம்
