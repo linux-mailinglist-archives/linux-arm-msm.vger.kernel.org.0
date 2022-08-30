@@ -2,58 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 810E35A5ACF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 06:36:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9EC05A5AFA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 07:05:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229845AbiH3EgK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 00:36:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49124 "EHLO
+        id S229488AbiH3FFd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 01:05:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbiH3EgJ (ORCPT
+        with ESMTP id S229446AbiH3FFc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 00:36:09 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ABB978233;
-        Mon, 29 Aug 2022 21:36:06 -0700 (PDT)
+        Tue, 30 Aug 2022 01:05:32 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 039DD22BDD;
+        Mon, 29 Aug 2022 22:05:31 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0B808611DA;
-        Tue, 30 Aug 2022 04:36:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85B12C433D6;
-        Tue, 30 Aug 2022 04:36:04 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id BC921B811B2;
+        Tue, 30 Aug 2022 05:05:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A914FC433D6;
+        Tue, 30 Aug 2022 05:05:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1661834165;
-        bh=M5yG2yTFswgWexgNhMPM7W1/h1WPqfE4dGt85x2Ogls=;
+        s=k20201202; t=1661835928;
+        bh=QByjyPDQTVmrZkD/ABp5KCdvC712AjaNKJc4hM/Cjuw=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=V87okQhwG7UDqSnF8GLIb/Aqt2Ig1X+KyVJezb7nrkUeVx9PiVFad8Y4HIvC9yP9Y
-         Zx582UPhmxVtJpOA/Nwu+Qf/k1NhKre/OXxO7bBc/jhOfYX+NdqzfCzUFX7CTjLNPc
-         pwGOB+y2y20HVfcMRJEplQdI4wAo4X9w4xoRytDMx9bFYsDc904F8q8vjH9mKOrpNw
-         xFyf3Qki+Kf1CN3hQXESPv6Pqlgb5fP55VYjVxPe+XopDM79aeS7irGvxZPza4W2E8
-         IdWidQ72Fx52rVcNEGnpBDMDMJOeHNgq8y4PLo6HAx+2PLU4npEIdy9yD16UZsZ0bx
-         QKSE9mO7Kiibg==
-Date:   Tue, 30 Aug 2022 10:06:00 +0530
+        b=YHbhzdGT4HOapIGMSBNK3IXUrhMgOrVgg+FqjL4MABT2a3cFcx8UGZ9IC/hk1qiH7
+         bOGMCfWG0R80VYZmsok11TsEsgqTglAY8k7hh8CFMGoNE6Oms4UWLHu4BceaajEfPR
+         OE13tRQxsC/tE6S49nCsQ0N3ryRgrN8L7S69Z1hE1D6fnxr/Q5RzjHZXu0TzvcAW61
+         Sjbh21VCC5/4xlK/zyMYcVjamxvfVuU7p4Eiq3k9lFVcUTzgi1VxagAExwq0X6ymtv
+         HxzPRUOayDI2kALXkY43eIelhApzL732Scv8m3IWvZHzh3DxH3jMKjruBrvA2zCw02
+         Km5bM8AqUrXWw==
+Date:   Tue, 30 Aug 2022 10:35:24 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     David Collins <quic_collinsd@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        David Dai <daidavid1@codeaurora.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 0/2] spmi: pmic-arb: Add support for PMIC v7
-Message-ID: <Yw2TsARPfuCLvDg0@matsya>
-References: <20220201134108.2677578-1-vkoul@kernel.org>
- <YhUVAwtfjuIdKrRQ@matsya>
- <1c66890b-6736-61ef-7d16-619f90ced4a0@linaro.org>
- <4f1ae43c-0f22-19fe-0794-3cc268104396@linaro.org>
- <20220829222601.47241C433C1@smtp.kernel.org>
+Subject: Re: [PATCH v3 00/30] phy: qcom,qmp: fix dt-bindings and deprecate
+ lane suffix
+Message-ID: <Yw2alI4lV7aIsA/o@matsya>
+References: <20220714124333.27643-1-johan+linaro@kernel.org>
+ <YtVPX2WHKU61MTo5@hovoldconsulting.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220829222601.47241C433C1@smtp.kernel.org>
+In-Reply-To: <YtVPX2WHKU61MTo5@hovoldconsulting.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -64,36 +63,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29-08-22, 15:25, Stephen Boyd wrote:
-> Quoting Dmitry Baryshkov (2022-06-18 08:29:58)
-> > On 01/05/2022 22:41, Dmitry Baryshkov wrote:
-> > > On 22/02/2022 19:53, Vinod Koul wrote:
-> > >> On 01-02-22, 19:11, Vinod Koul wrote:
-> > >>> Hello,
-> > >>>
-> > >>> The is version 3 of support for PMIC v7. I have added a new property
-> > >>> qcom,bus-id for supporting v7 and then add driver changes for v7
-> > >>>
-> > >>> This depends on yaml conversion patch:
-> > >>> https://lore.kernel.org/linux-arm-msm/20211227170151.73116-1-david@ixit.cz/ 
-> > >>>
-> > >>
-> > >> Any feedback on this...
-> > > 
-> > > Another gracious reminder about these patches. At this moment this is 
-> > > one of the important pieces lacking for the full SM8450 support in the 
-> > > upstream kernel.
+On 18-07-22, 14:17, Johan Hovold wrote:
+> On Thu, Jul 14, 2022 at 02:43:03PM +0200, Johan Hovold wrote:
+> > When adding support for SC8280XP to the QMP PHY driver I noticed that
+> > the PHY provider child node was not described by the current DT schema.
 > > 
-> > Stephen, yet another ping. This is the blocking point for the further 
-> > SM8450 progress.
+> > The SC8280XP PHYs also need a second fixed-divider PIPE clock
+> > ("pipediv2") and I didn't want to have to add a bogus "lane" suffix to
+> > the clock name just to match the current "pipe0" name so I decided to
+> > deprecate the unnecessary suffix in the current binding instead.
 > > 
+> > To be able to add the missing child-node schema and handle device
+> > specifics like additional PIPE clocks, it quickly became obvious that
+> > the binding needs to be split up.
+> > 
+> > This series clean up and fixes some issue with the current schema before
+> > splitting it up in separate schemas for PCIe, UFS and USB and adding
+> > missing parts like the child PHY provider nodes.
+> > 
+> > The MSM8996 PCIe PHY gets its own schema as this is the only non-combo
+> > PHY that actually provides more than one PHY per IP block. Note that the
+> > "lane" suffix is still unnecessary and misleading.
+> > 
+> > The final patches add support for the updated binding to the (recently
+> > split up) PHY drivers. Included is also a related combo PHY cleanup.
 > 
-> Sorry I completely missed this one as it fell off the end of my inbox
-> into the abyss.
+> Hi Vinod,
+> 
+> any chance of getting these into 5.20?
+> 
+> Note that there'll be an -rc8 on Sunday.
 
-Thanks for the reply. Is this applied now or you have some feedback for
-me to address..
+Sorry phy tree goes thru char-misc and it was already sent and closed,
+so couldnt do the needful
 
-Thanks
 -- 
 ~Vinod
