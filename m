@@ -2,85 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C4645A5CBE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 09:18:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB7415A5CDC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 09:28:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230506AbiH3HSm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 03:18:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57422 "EHLO
+        id S229952AbiH3H23 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 03:28:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230107AbiH3HSh (ORCPT
+        with ESMTP id S229449AbiH3H23 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 03:18:37 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AD76C6528
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 00:18:36 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id m2so10523571lfp.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 00:18:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=W6h8dpQt+6IKb91NzEndI9mBuZUXBODe+03ODQBGbuI=;
-        b=ouJUOpHFwHOkE2h+N3/OkYo8R16gJe9AUl1TJBu3Ve9XfarXUnHlxq2cQEsM0t6k9A
-         o/2Wiz9VwDeICllVTfeeE2V9DR8jlFkm1bfJUVzYIkL6BzwhMwGWyt23wIMb5Y8H9Lan
-         xZfmvr2Ye60LpkpmUV7fv51Gf6dt5fyxELjFuH41TBCmgMz4nYRv/P7+Yh4fb8HJIANa
-         6zUYYbrPzw3jOQwlERzAihKpdDTawy68J60qkF4HyrpqeaPv3EjuiIeCtNFYPUF6Tx0N
-         0kMcx/uz5LAO1npL44UBbUBYah3i8Mtghps4jbeLES/nabrolJlikJ/Ba7okjt0q5MO7
-         RJoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=W6h8dpQt+6IKb91NzEndI9mBuZUXBODe+03ODQBGbuI=;
-        b=1CvK9cpi55I6QcbEBgGcY1wJBa8JykGnfHocOTnY5RfWiR6G+U34G8Pj6cSYSc2qpJ
-         FkvuKfgvVCN934TqLjdceFd3ylTLzSmrp2YvBoRqgm/A5tj4fDJcNqR17uHR6nAF0Njj
-         8tahs+MQzZyC7Zo/fLyQeDqRiC09PHm8MCxlM1XQWlOOimmW4voENZdFmE8c56P3vfGK
-         RNGev9TOmGI8bCtpgK7RtSO+OOB7lqPLSla6O0kkgaUkcktiwrEVeVmUJOeoDf/vquwB
-         +2pmIPREUoqo6WXyH7m/dAnxurogt5QxjvTZd97kmjKTekJw6lGIBG07QjHdF06khQEO
-         CxTw==
-X-Gm-Message-State: ACgBeo2QEzwi/bEf5XQUd/1KC8PIT9nYX0aJroS8QZY87csJuIX5tJBF
-        u0fCK42tYsUETssjt0y2Y4j9Vg==
-X-Google-Smtp-Source: AA6agR48RiXIlhOzRcxivMG+L0nFgg6LKn2aBbAPwcSmk2L+EVRO7FoiHFZXNQZiQkBklQnDl1kdYw==
-X-Received: by 2002:a05:6512:b89:b0:492:e4bf:adcf with SMTP id b9-20020a0565120b8900b00492e4bfadcfmr7032021lfv.203.1661843914714;
-        Tue, 30 Aug 2022 00:18:34 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id g15-20020a2eb5cf000000b0026455099704sm874135ljn.114.2022.08.30.00.18.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Aug 2022 00:18:34 -0700 (PDT)
-Message-ID: <a77a0a6a-b4cf-51d8-51be-70075d0e6601@linaro.org>
-Date:   Tue, 30 Aug 2022 10:18:33 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.1.2
-Subject: Re: [PATCH v2 2/6] phy: qcom-qmp-pcie: split register tables into
- primary and secondary part
-Content-Language: en-GB
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, Bjorn Andersson <bjorn@kryo.se>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Tue, 30 Aug 2022 03:28:29 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60E5D9E100;
+        Tue, 30 Aug 2022 00:28:28 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 19133B816A3;
+        Tue, 30 Aug 2022 07:28:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E838C433C1;
+        Tue, 30 Aug 2022 07:28:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1661844505;
+        bh=GkSxClK7X/1FOfc/IipCQ3oAZda94OTJaGgo+09EP6M=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=htlzUsY7BuuVeY8cN7HRgMPs5r4IhWo13h8mkKsiKlNpAFGx52qSdlktD8K+tFmnI
+         ogjr1hfmEpJtpdDOUX+jEafafS8ikAXP4a5LBtoGixmJwVURpiplt4jkd6PPJgfgKk
+         /pzF37qaFmZ9shK8UQHshdIU9vblhLQSBsk2e2XCKXCAWrnayNxMjChLY7eQrVUstx
+         wNHel7csuqFHth2pLSS+SgRP4iDwdxSStywWmBt47LhoGj36BkptsMqcDh2SqGxt52
+         UXheoJ6dOGPX/q3UXMAjVBqz9Afg/ciINLkzxjtVHotxkbR4pXbgORwNnBPoF8uWPg
+         658A/2W+blq7A==
+Date:   Tue, 30 Aug 2022 12:58:21 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Kishon Vijay Abraham I <kishon@ti.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org
-References: <20220825105044.636209-1-dmitry.baryshkov@linaro.org>
- <20220825105044.636209-3-dmitry.baryshkov@linaro.org>
- <Yw24sgVksGzvgr8Q@matsya>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <Yw24sgVksGzvgr8Q@matsya>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 00/30] phy: qcom,qmp: fix dt-bindings and deprecate
+ lane suffix
+Message-ID: <Yw28FdhYSv4x0a6B@matsya>
+References: <20220714124333.27643-1-johan+linaro@kernel.org>
+ <Yw2a44l9a6zz5qTJ@matsya>
+ <Yw21t1SUGjCcUuuw@hovoldconsulting.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yw21t1SUGjCcUuuw@hovoldconsulting.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,86 +65,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/08/2022 10:13, Vinod Koul wrote:
-> On 25-08-22, 13:50, Dmitry Baryshkov wrote:
->> SM8250 configuration tables are split into two parts: the common one and
->> the PHY-specific tables. Make this split more formal. Rather than having
->> a blind renamed copy of all QMP table fields, add separate struct
->> qmp_phy_cfg_tables and add two instances of this structure to the struct
->> qmp_phy_cfg. Later on this will be used to support different PHY modes
->> (RC vs EP).
+On 30-08-22, 09:01, Johan Hovold wrote:
+> On Tue, Aug 30, 2022 at 10:36:43AM +0530, Vinod Koul wrote:
+> > On 14-07-22, 14:43, Johan Hovold wrote:
+> > > When adding support for SC8280XP to the QMP PHY driver I noticed that
+> > > the PHY provider child node was not described by the current DT schema.
+> > > 
+> > > The SC8280XP PHYs also need a second fixed-divider PIPE clock
+> > > ("pipediv2") and I didn't want to have to add a bogus "lane" suffix to
+> > > the clock name just to match the current "pipe0" name so I decided to
+> > > deprecate the unnecessary suffix in the current binding instead.
+> > > 
+> > > To be able to add the missing child-node schema and handle device
+> > > specifics like additional PIPE clocks, it quickly became obvious that
+> > > the binding needs to be split up.
+> > > 
+> > > This series clean up and fixes some issue with the current schema before
+> > > splitting it up in separate schemas for PCIe, UFS and USB and adding
+> > > missing parts like the child PHY provider nodes.
+> > > 
+> > > The MSM8996 PCIe PHY gets its own schema as this is the only non-combo
+> > > PHY that actually provides more than one PHY per IP block. Note that the
+> > > "lane" suffix is still unnecessary and misleading.
+> > > 
+> > > The final patches add support for the updated binding to the (recently
+> > > split up) PHY drivers. Included is also a related combo PHY cleanup.
+> > 
+> > This fails at patch 2 for me on v6.0-rc1, please rebase and resend
 > 
-> This lgtm with once nit
+> Are you sure you haven't applied anything to your local tree that causes
+> this?
+
+Pretty sure :-)
+
 > 
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 141 +++++++++++++----------
->>   1 file changed, 83 insertions(+), 58 deletions(-)
->>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> index c84846020272..60cbd2eae346 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> @@ -1346,34 +1346,33 @@ static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_pcs_misc_tbl[] = {
->>   
->>   struct qmp_phy;
->>   
->> -/* struct qmp_phy_cfg - per-PHY initialization config */
->> -struct qmp_phy_cfg {
->> -	/* phy-type - PCIE/UFS/USB */
->> -	unsigned int type;
->> -	/* number of lanes provided by phy */
->> -	int nlanes;
->> -
->> -	/* Init sequence for PHY blocks - serdes, tx, rx, pcs */
->> +struct qmp_phy_cfg_tables {
->>   	const struct qmp_phy_init_tbl *serdes_tbl;
->>   	int serdes_tbl_num;
->> -	const struct qmp_phy_init_tbl *serdes_tbl_sec;
->> -	int serdes_tbl_num_sec;
->>   	const struct qmp_phy_init_tbl *tx_tbl;
->>   	int tx_tbl_num;
->> -	const struct qmp_phy_init_tbl *tx_tbl_sec;
->> -	int tx_tbl_num_sec;
->>   	const struct qmp_phy_init_tbl *rx_tbl;
->>   	int rx_tbl_num;
->> -	const struct qmp_phy_init_tbl *rx_tbl_sec;
->> -	int rx_tbl_num_sec;
->>   	const struct qmp_phy_init_tbl *pcs_tbl;
->>   	int pcs_tbl_num;
->> -	const struct qmp_phy_init_tbl *pcs_tbl_sec;
->> -	int pcs_tbl_num_sec;
->>   	const struct qmp_phy_init_tbl *pcs_misc_tbl;
->>   	int pcs_misc_tbl_num;
->> -	const struct qmp_phy_init_tbl *pcs_misc_tbl_sec;
->> -	int pcs_misc_tbl_num_sec;
->> +};
->> +
->> +/* struct qmp_phy_cfg - per-PHY initialization config */
->> +struct qmp_phy_cfg {
->> +	/* phy-type - PCIE/UFS/USB */
->> +	unsigned int type;
->> +	/* number of lanes provided by phy */
->> +	int nlanes;
->> +
->> +	/* Init sequence for PHY blocks - serdes, tx, rx, pcs */
->> +	struct qmp_phy_cfg_tables primary;
->> +	/*
->> +	 * Init sequence for PHY blocks, providing additional register
->> +	 * programming. Unless required it can be left omitted.
->> +	 */
->> +	struct qmp_phy_cfg_tables secondary;
+> I just tried fetching the v3 series from lore and it applies just fine
+> on top of 6.0-rc1.
 > 
-> since this is optional but always defined, we would waste memory here,
-> can we make this a pointer and initialize to null when secondary is not
-> present
+> Note that if you've added a new compatible string locally, the second
+> patch which sorts the compatible strings is likely to fail to apply.
 
-Ack.
-
-
+At that time no, now I think I have patch or so ... Tree should be
+pushed in a bit, you can check
 
 -- 
-With best wishes
-Dmitry
-
+~Vinod
