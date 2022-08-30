@@ -2,75 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 259815A6B9B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 20:02:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 126865A6C23
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 20:29:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230270AbiH3SB7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 14:01:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44986 "EHLO
+        id S230375AbiH3S3e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 14:29:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230293AbiH3SBf (ORCPT
+        with ESMTP id S229980AbiH3S3d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 14:01:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9923E9C8E2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 11:01:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1661882491;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=B4ruO31PHkrlH5v1gXJkpOHPSYcHLtyneSEzcjXO5Ho=;
-        b=MGsOGheHacR2X/1wl1M99EAVcV0j2UnMbhyfPl8/+Krr8pgI78WRO6D7nbNVEN66/Q6OW+
-        mpjcPeKRVVmUnrwnsTB9RhMqEndcZ3+HQt1x0woOqMnrqiB717FfT7wk83AkGrgkNuaNxa
-        Q+g1fNGNF+xxp7DrzwFJBjYgn8osq9Y=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-537-3vhQ1L7YPbyhLkhHV2dMCQ-1; Tue, 30 Aug 2022 14:01:30 -0400
-X-MC-Unique: 3vhQ1L7YPbyhLkhHV2dMCQ-1
-Received: by mail-qv1-f70.google.com with SMTP id nv16-20020a056214361000b00499023aff0bso4041101qvb.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 11:01:30 -0700 (PDT)
+        Tue, 30 Aug 2022 14:29:33 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE69F5B783
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 11:29:30 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id bh13so11419196pgb.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 11:29:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=FU+ZSlt3Sk8P5QdR6iQM+zCwA/rYcAEgbcQlERV36lo=;
+        b=AVLiim4/w5eNujQh+FHqe0pG1E450AahPmNT7gwr7uneMFBOtATFS/aD2CQjgf9kml
+         nOReDHrybn/RecLf1FL98oBhuifJCgGh7Yqif4fu+Wll9wIworADNFc31uiodiFTowHw
+         0i86kuA/KKcMWSjCFICKQN8C/MHe0p+RnJuk8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc;
-        bh=B4ruO31PHkrlH5v1gXJkpOHPSYcHLtyneSEzcjXO5Ho=;
-        b=MNidU+xZontTOtnDRxvCphsOZeQR0bfJdLmnUz9/gE1UGLr+qDlqn6FG7wSPPhGfUv
-         sxy5whawgwyMjbR53j6fm6TG2KqcTA9H1JFu9XA4d8z0Nhf/KWcEEOqFlpENjHwPV6P3
-         T5AkB32wKSZCmWJ1v6FKWG5O/s5MhKv7fnPsS796qi85lhknZpfdwccRMITnulnzBhxe
-         xaMeKHgarifxgqflg7KcnYJPMuA1DduWa+RL/9mXO0V5s4aGkeLpHgQfqM3E8sR5mcJW
-         p0FU7ncFf/CbGCyboI/38ylc6Rs6X1NVyVYVtLpdsmDcx4iqKLbo8iVVdoUWTZ+VbRYE
-         IxIA==
-X-Gm-Message-State: ACgBeo1C+MmH0prw//WHRxMFB+ljAVu3Ny0i9LTmUnQxixHTg67aKq3a
-        JdFsZbRZD0N8lcvfUOPIFh6PDlw1/6h17AtEEHont4GADO1g89s2IUd1eXRIUQVGBg6BBHC94wG
-        5T1is27rMh7IQ+xqXW6n7t55vgA==
-X-Received: by 2002:a05:620a:2452:b0:6bb:d8ba:ca65 with SMTP id h18-20020a05620a245200b006bbd8baca65mr12862208qkn.263.1661882489882;
-        Tue, 30 Aug 2022 11:01:29 -0700 (PDT)
-X-Google-Smtp-Source: AA6agR4FDpHPGTAEXt4hym2rCFYYguOK7NgS2axRiD3nKOflngOJy2QWn639ZrCJ/MLxORdMitK6Nw==
-X-Received: by 2002:a05:620a:2452:b0:6bb:d8ba:ca65 with SMTP id h18-20020a05620a245200b006bbd8baca65mr12862167qkn.263.1661882489395;
-        Tue, 30 Aug 2022 11:01:29 -0700 (PDT)
-Received: from xps13.redhat.com (c-98-239-145-235.hsd1.wv.comcast.net. [98.239.145.235])
-        by smtp.gmail.com with ESMTPSA id bm2-20020a05620a198200b006b5f06186aesm8599670qkb.65.2022.08.30.11.01.28
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=FU+ZSlt3Sk8P5QdR6iQM+zCwA/rYcAEgbcQlERV36lo=;
+        b=MoN3/kpJ/PeaCu72UNclPygB5u3iKaQO5oKSsgMf/nALIrwclyWZdQAd5wp1HNODjQ
+         ivx3qC0IwwxZ7kRLk+HXEg2aMnE1OmHiPh/SGdfPTUHj6gYrxc2C7j6O/3ayVvyR1YbY
+         3A/pBYaqvyo3gWkj+wTbJG1VzaoUKcXvIGa1H1Xtm022rltEJSoEgABeHPmmnwSiVgBn
+         QY/bK0DkUbrYZH+h4y+BvlBgCZ37pVLhg11gTf8joHzVPQ40v09DHcng5odTCJsYO5nf
+         KXbXZjGl7imasCm28YUTIXX2AcqeSb5LlOH90QmNHvpSLbJvmAs6wjOr/10uRdzKWivW
+         XvOQ==
+X-Gm-Message-State: ACgBeo2TnSgzwCk1lPYA5U40asFD6bQYSkr/xUeXHBKPE/NubU3klSSy
+        +Hojkd6gqV5Yjqb2l2wPRxLL+A==
+X-Google-Smtp-Source: AA6agR4/Oe6xii1sTCjsGZNxbvRtumssg8Ek7XhZXfjhbSUnofYieYWz7L2nXatt+BIfuwM+M9Y8MA==
+X-Received: by 2002:aa7:8551:0:b0:538:22ec:d965 with SMTP id y17-20020aa78551000000b0053822ecd965mr12614278pfn.16.1661884170216;
+        Tue, 30 Aug 2022 11:29:30 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:f016:d779:b6b0:fd9d])
+        by smtp.gmail.com with ESMTPSA id u202-20020a6279d3000000b0052e37b32618sm9596358pfc.132.2022.08.30.11.29.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Aug 2022 11:01:29 -0700 (PDT)
-From:   Brian Masney <bmasney@redhat.com>
-To:     andersson@kernel.org
-Cc:     agross@kernel.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ahalaney@redhat.com,
-        echanude@redhat.com
-Subject: [PATCH v3] arm64: dts: qcom: sc8280xp: correct ref_aux clock for ufs_mem_phy
-Date:   Tue, 30 Aug 2022 14:01:20 -0400
-Message-Id: <20220830180120.2082734-1-bmasney@redhat.com>
-X-Mailer: git-send-email 2.37.1
+        Tue, 30 Aug 2022 11:29:29 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Sibi Sankar <quic_sibis@quicinc.com>,
+        Jimmy Chen <jinghung.chen3@hotmail.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v9 0/3] arm64: dts: qcom: Add new board revision and LTE SKUs for sc7280-villager family
+Date:   Tue, 30 Aug 2022 11:29:20 -0700
+Message-Id: <20220830182923.3720287-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.37.2.789.g6183377224-goog
 MIME-Version: 1.0
-Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,63 +71,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The first UFS host controller fails to start on the SA8540P automotive
-board (QDrive3) due to the following errors:
+These patches add a new board revision for device Villager, and add
+new LTE sku for both board revisions.
 
-    ufshcd-qcom 1d84000.ufs: ufshcd_query_flag: Sending flag query for idn 18 failed, err = 253
-    ufshcd-qcom 1d84000.ufs: ufshcd_query_flag: Sending flag query for idn 18 failed, err = 253
-    ufshcd-qcom 1d84000.ufs: ufshcd_query_flag: Sending flag query for idn 18 failed, err = 253
-    ufshcd-qcom 1d84000.ufs: ufshcd_query_flag_retry: query attribute, opcode 5, idn 18, failed
-        with error 253 after 3 retries
+yaml issue has been clarified in [1] and [2], and 'status' has been
+reordeded last since v4.
 
-The system eventually fails to boot with the warning:
+v9 is me squashing changes from my patches [3] [4] in. For patches I
+touched I removed my Reviewed-by. I added my Signed-off-by to all
+patches.
 
-    gcc_ufs_phy_axi_clk status stuck at 'off'
+[1] https://lore.kernel.org/all/CAD=FV=WtKRFQr5jSQvsr08x9dgHrvenUWWtX_SKuCLuSvSH7WQ@mail.gmail.com/
+[2] https://lore.kernel.org/all/d3d4d90b-85b5-5ad9-78e6-5a074c21af4f@linaro.org/
+[3] https://lore.kernel.org/r/20220829084732.1.I9ef7f8b909a7afbef9ff2251a98c67033f37b516@changeid
+[4] https://lore.kernel.org/r/20220829084732.2.I22e256d1ebac577a91fac44d1d12919be7111cd4@changeid/
 
-This issue can be worked around by adding clk_ignore_unused to the
-kernel command line since the system firmware sets up this clock for us.
+Changes in v9:
+- Squash https://lore.kernel.org/r/20220829084732.1.I9ef7f8b909a7afbef9ff2251a98c67033f37b516@changeid
+- Squash https://lore.kernel.org/r/20220829084732.2.I22e256d1ebac577a91fac44d1d12919be7111cd4@changeid/
 
-Let's fix this issue by updating the ref clock on ufs_mem_phy. Note
-that the downstream MSM 5.4 sources list this as ref_clk_parent. With
-this patch, the SA8540P is able to be booted without clk_ignore_unused.
+Changes in v7:
+- Revise typo 'ARCG' to 'ARCH' in Makefile
 
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Fixes: 152d1faf1e2f3 ("arm64: dts: qcom: add SC8280XP platform")
----
-v2 of this patch can be found at
-https://lore.kernel.org/lkml/20220825163755.683843-1-bmasney@redhat.com/T/#u
+Changes in v6:
+- Remove v5 accidentally added sc7280-herobrine-herobrine-r1-lte.dts
 
-v1 of this patch can be found at
-https://lore.kernel.org/lkml/20220623142837.3140680-1-bmasney@redhat.com/T/#u
+Changes in v5:
+- Revise rev0+ to rev0
+- Add -r1 line to the Makefile
+- Reorder '.dtb' in Makefile
+- Put the "interconnects" line back
 
-Note that there's also a similar issue with the second UFS controller
-(ufs_card_hc) since it separately fails with:
+Changes in v4:
+- ("...: Add herobrine-villager-r1") new for v4
+- Reorder 'status' last
 
-    ufshcd-qcom 1da4000.ufs: Controller enable failed
-    ufshcd-qcom 1da4000.ufs: link startup failed 1
-    ...
-    gcc_ufs_card_axi_clk status stuck at 'off'
+Changes in v2:
+- ("...: document sc7280 and villager board") new for v2.
 
-We are currently disabling the second UFS host controller (ufs_card_hc) in
-our DTS at the moment. I haven't had any luck so far tracking this one
-down and it's particularly tough without docs access.
+Jimmy Chen (3):
+  dt-bindings: arm: qcom: document sc7280 and villager board
+  arm64: dts: qcom: sc7280: Add herobrine-villager-r1
+  arm64: dts: qcom: Add LTE SKUs for sc7280-villager family
 
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../devicetree/bindings/arm/qcom.yaml         |  10 +
+ arch/arm64/boot/dts/qcom/Makefile             |   2 +
+ .../boot/dts/qcom/sc7280-chrome-common.dtsi   |  11 -
+ .../boot/dts/qcom/sc7280-herobrine-crd.dts    |   1 +
+ .../qcom/sc7280-herobrine-herobrine-r1.dts    |   1 +
+ .../dts/qcom/sc7280-herobrine-lte-sku.dtsi    |  17 +
+ .../dts/qcom/sc7280-herobrine-villager-r0.dts | 325 +----------------
+ .../qcom/sc7280-herobrine-villager-r1-lte.dts |  14 +
+ .../dts/qcom/sc7280-herobrine-villager-r1.dts |  16 +
+ .../dts/qcom/sc7280-herobrine-villager.dtsi   | 326 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts       |   1 +
+ 11 files changed, 392 insertions(+), 332 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager.dtsi
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 49ea8b5612fc..2bdde4b8f72b 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -891,7 +891,7 @@ ufs_mem_phy: phy@1d87000 {
- 			ranges;
- 			clock-names = "ref",
- 				      "ref_aux";
--			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+			clocks = <&gcc GCC_UFS_REF_CLKREF_CLK>,
- 				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
- 
- 			resets = <&ufs_mem_hc 0>;
 -- 
-2.37.1
+2.37.2.672.g94769d06f0-goog
 
