@@ -2,80 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A1785A5F8F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 11:36:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40AA55A5FAA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Aug 2022 11:44:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231442AbiH3JgS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 05:36:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49360 "EHLO
+        id S230089AbiH3Joe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Aug 2022 05:44:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231331AbiH3Jfq (ORCPT
+        with ESMTP id S229956AbiH3Jod (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 05:35:46 -0400
+        Tue, 30 Aug 2022 05:44:33 -0400
 Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16561E0954
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 02:33:32 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id b26so3797040ljk.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 02:33:32 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EA94A8CC7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 02:44:31 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id bn9so10731511ljb.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Aug 2022 02:44:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=8jLhtnIVjN/sROM6rGUEJSLxhjc41TVh4VC82bHwbSY=;
-        b=z13p8nSsHlnc2WlRI3gE1BGc+ZZF+OEOnqIGGnp/9JM+rMpBm5njAyfuLFD6hBGzMK
-         83NaOvwJBC/1HbFRiwRka/5Xxe+wqRJDM0oAwH22vBmKEZFI/EeTEfrBMXmTMAzRuuRA
-         fqIjWuygbjf+MYU5d07gEEny4azu0sMuewlszqX0Apr/TALpZiGDiJy5p7Dwd4lILeiF
-         DKIbKNljhX3dim3EDesV3mCjOIzwnXvq/yyJHHX6KfOsGkRd1QQJZhX1mjE1XU3yKBg+
-         AU//NNFT8jsyF1bYGoTvu2kHYFY5aB8BpLrWhrcf7/Sez9rPCXOAsLX900qAGw3Y3u2k
-         k5aA==
+        bh=1AEJkkvJsW5PL2iwboBiHlwrTQTde2dlnWXw8tEu3D0=;
+        b=FAgokXKk3aNNyd6z/ejsI3SNO9qh9ttn1mD6G87U7kRtJfoUvCuuO7Mde+uT52JjKZ
+         Aw5N2X5seVmUl3beG/WFteNBZDJugEFyBsyaXtlPZuGMwRCrYZmZjC0bZqWKn/6Pe2UW
+         z0z6N/7VGLzwlfYm2CO3OeKNBn0Fx/xkbtFMcdKz2x5APvvQcX/+3bBKeQCUJRZATf1b
+         8qgrCvnNNMEt+1zGgc3tias8nN9BCU+qoQl0mN7RdrkquLgh+jWSK2tT79gUBZ+atGCV
+         fDEGScertwUdt1sMEj5ZGPISPcrjrAgqsMGXcCitMqWt53tz9RNwKPX95/VovA77YzTy
+         Z3Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=8jLhtnIVjN/sROM6rGUEJSLxhjc41TVh4VC82bHwbSY=;
-        b=rVU8ABMXZI5EHRdpdGfVtAJlCqSvT5eX+BNZ/Y6mWHozf10bhrvyKUUgRK9F6tDSSM
-         LVPys+Bk9/DKIlysKDFDERkqWveIVrokx+pVvueix3X5ZBqBuPne/AB4d8l2oC7W+qaY
-         iTrYaLbsN3L3iaZmnOYakOQHsL4cVIBvx24wqGBsUVoASDXtBsTKPoJteXdeCQFS3uHg
-         bjtqG0E0qUZeItyvPWiWWYbBgdzPsZx5+OlnSej+xU1w/54GM3vUnnh3xJsQ2/sC7oPe
-         ARXA5mRzNmWeBSp2VQfeK06O4CExLeYMeOzRWyK3a3my59IzMDo/5mEKKvhTumESV7Wd
-         RQ/A==
-X-Gm-Message-State: ACgBeo1gADeadLNM9e92BkkD2cluSYLJn5zxt5W9tSs+y54pVtgNgGWM
-        MlDH+RsD5WI/GuQBfgIYl0gmxA==
-X-Google-Smtp-Source: AA6agR5rDpXTINB0t6CY1m8qyUHEvTl7b7yra5ZZrgOSbhUtIvb+lpGvcayneP88lZdREf5a7J99Gw==
-X-Received: by 2002:a2e:a1c8:0:b0:261:e4e5:1cc3 with SMTP id c8-20020a2ea1c8000000b00261e4e51cc3mr7107767ljm.248.1661852010357;
-        Tue, 30 Aug 2022 02:33:30 -0700 (PDT)
+        bh=1AEJkkvJsW5PL2iwboBiHlwrTQTde2dlnWXw8tEu3D0=;
+        b=tKpWhJgrxq0q6H6+U3aHVfzQM8Pc31XLnkyghA33ycI/PqFiVAT4oPNIQ3lM1lweee
+         Dkv1mWTo+zACcEzKm2v6MlYEpaqOHfJhGB0zSLyKIgaqW4FhKjjpdBEO6lVPuClN77zo
+         ux8kCZUyH9KR5DHundvqCXHZ0oRTHdtBd464o+ysrV0OM+U/YZ7Y85iUgxkTRxUTeom0
+         2Nq4/WwpoHr2DRs2/ZNX7IqLzIxfpwkJndLBXoMZYSkmP8u12/xXJAjs0EMRJOOgNLcz
+         X4y1y7us+V035lvlBepd+P+cVADgd1MdmNShcv0cT036EEWQBsXhR9BmvkrFT3VD15My
+         skHw==
+X-Gm-Message-State: ACgBeo2FGQwobCozKkLUqMxrT7IwkgVBhPjVwv/MTd/6Ne6ONNvtohMI
+        YQvxgEBSPZHxMGsQPUJWW74NRg==
+X-Google-Smtp-Source: AA6agR4wmHcZxRiO0kPf6nYJC6H8QVWakQUNp3C2O2l7s7/+azxjAIcRdaM+cCy4MnOoOrgqzVs13w==
+X-Received: by 2002:a2e:a548:0:b0:261:c647:1d86 with SMTP id e8-20020a2ea548000000b00261c6471d86mr7330658ljn.237.1661852669933;
+        Tue, 30 Aug 2022 02:44:29 -0700 (PDT)
 Received: from [192.168.28.124] (balticom-73-99-134.balticom.lv. [109.73.99.134])
-        by smtp.gmail.com with ESMTPSA id f6-20020a056512360600b0049288e0bd61sm1561420lfs.58.2022.08.30.02.33.29
+        by smtp.gmail.com with ESMTPSA id h5-20020a2ea485000000b0025e6a3556ffsm1697579lji.22.2022.08.30.02.44.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Aug 2022 02:33:29 -0700 (PDT)
-Message-ID: <74aa8d80-c176-7c8e-e80e-8d8910d10d8c@linaro.org>
-Date:   Tue, 30 Aug 2022 12:33:28 +0300
+        Tue, 30 Aug 2022 02:44:29 -0700 (PDT)
+Message-ID: <ed582145-3694-b39c-bf54-815279fe93f4@linaro.org>
+Date:   Tue, 30 Aug 2022 12:44:27 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
-Subject: Re: [PATCH 1/1] arm64: dts: qcom: sc7280: Add device tree for
- herobrine evoker
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Adjust LTE SKUs for
+ sc7280-villager
 Content-Language: en-US
-To:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
-        LKML <linux-kernel@vger.kernel.org>
-Cc:     mka@chromium.org, dianders@chromium.org,
+To:     Douglas Anderson <dianders@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Jimmy Chen <jinghung.chen3@hotmail.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20220830053307.3997495-1-sheng-liang.pan@quanta.corp-partner.google.com>
- <20220830133300.1.I7dd7a79c4cc5fe91c3feb004473feb3b34b7b2d8@changeid>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220829084732.1.I9ef7f8b909a7afbef9ff2251a98c67033f37b516@changeid>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220830133300.1.I7dd7a79c4cc5fe91c3feb004473feb3b34b7b2d8@changeid>
+In-Reply-To: <20220829084732.1.I9ef7f8b909a7afbef9ff2251a98c67033f37b516@changeid>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,28 +81,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/08/2022 08:33, Sheng-Liang Pan wrote:
-> Add a basic device tree for the herobrine evoker board.
+On 29/08/2022 18:48, Douglas Anderson wrote:
+> There have been a few changes since the patch ("dt-bindings: arm:
+> qcom: document sc7280 and villager board").
+> * New firmware reports LTE boards as "SKU 512" now. Old firmware will
+>   still report "SKU 0", but that's all pre-production and everyone
+>   will update.
+> * It's been relaized that no "-rev0" boards were ever built that were
+>   WiFi-only. Thus we don't two entries for -rev0.
 > 
-> Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
-> 
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../dts/qcom/sc7280-herobrine-evoker-r0.dts   | 333 ++++++++++++++++++
->  2 files changed, 334 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 1d86a33de528c..59c22ba54a366 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -103,6 +103,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1-lte.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-crd.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-herobrine-r1.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r0.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-evoker-r0.dtb
+> This builds upon the patch ("dt-bindings: arm: qcom: document sc7280
+> and villager board") which hasn't landed yet. In theory this could be
+> squashed into that patch.
 
-Why breaking ordering?
+Unless Bjorn already merged it, this should be squashed.
 
 Best regards,
 Krzysztof
