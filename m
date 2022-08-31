@@ -2,80 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D101A5A7883
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Aug 2022 10:06:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7678C5A789E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Aug 2022 10:13:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230086AbiHaIGg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Aug 2022 04:06:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43354 "EHLO
+        id S230493AbiHaIN2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Aug 2022 04:13:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230458AbiHaIGU (ORCPT
+        with ESMTP id S229838AbiHaIN1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Aug 2022 04:06:20 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B9D65FAD2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 01:06:10 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id z25so18843192lfr.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 01:06:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=QZM44bfiSS9YpVrNx6/y4wSlK9SGHwjcOiRmYMPRcl8=;
-        b=HvrZjBTku8djg7rscuJDEm3Hf5yikxaci8ZaupPbzblA9K7KMVdXCO168UCGPWjwOD
-         xYubgAZwE6ZmChiU6NnOy+uiIgPwcUNTsAxmaaMNOOL2aj6fgZ6YpW/vtRpsKst8Rq4s
-         dVCwMWpLOamIZHB6mia+fXd9uGqr10X8tQ9T16EFUYflrSn63m6D6wT8ONYzsCP62rrh
-         WBaoaVAJC52kH9GvqTnU2uKYTfiv7IgoZUv9D3N8jAC/42LGOOfpysgGEG9C98ftzDt4
-         5fP3EpXDlXjOpQeRfeEsj4k9RY2eBZOhxRz7bn2H5VTF2fFPbG+t+6QNhcGF+b7NyGST
-         UXyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=QZM44bfiSS9YpVrNx6/y4wSlK9SGHwjcOiRmYMPRcl8=;
-        b=z8vgYkHGkRpBg6Q6BwJ97plK7lBIjQTTv6yuStY7O2nCxiT1gttChJ2pZTp0qFBZX5
-         IQ4PY7ms7IlTdgsffBkrBkDvf9pbQu0gynEfJHik0Ru+fVJzNZauO2wnGMi7GpgNC6Hw
-         Q/joGUNE7PwGtm+p993q4dtX92A93iMFor4sQN74YthpXjwlgxKfW5RmFuFHsgDyudiQ
-         sSZ5j2Z7nFfe7OChYF/MBJTWT0va95DLysMs2y92ovAt45tp1ci7w3OlDH5kVji2/Hx0
-         VxEbH7DxbRkzRgvHRbsOngkEzcREi21/I8vyqnUERyKvE0K9uXU0bWdci8AJTVRQTGGq
-         h9YA==
-X-Gm-Message-State: ACgBeo3bErHW5CzarfsESOXS32AWLREha1hA+8bc3V9/hN0Xk9n7PnkQ
-        HzUCsMBgp6YwEJD1j1h4yDY2nA==
-X-Google-Smtp-Source: AA6agR6dFPZ+nNkZTqf2jlM6XrNWfn68euhb8/V7wwJIzPe8Ol76LLvnYbHwPoM2qChzq4RyqxcZKQ==
-X-Received: by 2002:a05:6512:3086:b0:492:c1e7:f5be with SMTP id z6-20020a056512308600b00492c1e7f5bemr9092080lfd.454.1661933167847;
-        Wed, 31 Aug 2022 01:06:07 -0700 (PDT)
-Received: from [192.168.28.124] (balticom-73-99-134.balticom.lv. [109.73.99.134])
-        by smtp.gmail.com with ESMTPSA id 10-20020ac2568a000000b0048a9e18ae67sm1910851lfr.84.2022.08.31.01.06.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 Aug 2022 01:06:07 -0700 (PDT)
-Message-ID: <cc6374f2-dfe8-9904-1b87-fe1d18451f36@linaro.org>
-Date:   Wed, 31 Aug 2022 11:06:06 +0300
+        Wed, 31 Aug 2022 04:13:27 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB9234CA3B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 01:13:25 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 862E6B81F69
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 08:13:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC58C433D6;
+        Wed, 31 Aug 2022 08:13:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1661933603;
+        bh=qR8fx0xSco0ITPyWEFGB1Xbm/jEBjtrF7MD+hzuS5yo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=f0F0U5RJILp7KGn7RcSb1IQ61pJ65mHwiZWW1niffOoypjONBZfXiGGt9suHRFlLK
+         wiHTa16hUkZzPBO8l4LXhCu9j/EYkJ2X3xJdQ9kH4E9RigBR01VWquyLY7PfmBSbnM
+         bV/NmeI5qfLbuLUXRURciYMBS27q8oqGQbLSqEOwzm2iHcsKvgzVU8HeRUm3pwY6lW
+         Gz/2RARJGSeqewwAur8tCqVXCSlqRSSXcxSz6JkjViG2ySM4IAtfyTJPkR+DndTsTQ
+         6+29zNdw+kxDPhx8BLYVuIU8C7shNvyZDvgvF1dUtkWeUtlQAdc42UG05XBqWBxqA+
+         TJyKR25neE6rw==
+Date:   Wed, 31 Aug 2022 13:43:12 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Jeff Johnson <quic_jjohnson@quicinc.com>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        Hemant Kumar <quic_hemantk@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev
+Subject: Re: [PATCH v5] bus: mhi: host: make mhi_controller_config::event_cfg
+ const
+Message-ID: <20220831081312.GA5076@thinkpad>
+References: <20220829205112.12036-1-quic_jjohnson@quicinc.com>
+ <20220830171147.24338-1-quic_jjohnson@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [RESEND PATCH v2 2/5] firmware: qcom: scm: Optionally remove SCM
- call serialization
-Content-Language: en-US
-To:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     David Heidelberg <david@ixit.cz>,
-        Robert Marko <robimarko@gmail.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>
-References: <1661898311-30126-1-git-send-email-quic_gurus@quicinc.com>
- <1661898311-30126-3-git-send-email-quic_gurus@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1661898311-30126-3-git-send-email-quic_gurus@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220830171147.24338-1-quic_jjohnson@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,103 +58,117 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/08/2022 01:25, Guru Das Srinagesh wrote:
-> Some firmware versions support the handling of multiple SCM calls at the
-> same time. Add a device tree boolean property which, when specified,
-> allows this to happen.
+On Tue, Aug 30, 2022 at 10:11:47AM -0700, Jeff Johnson wrote:
+> Currently the event_cfg pointer in struct mhi_controller_config is not
+> defined as a const pointer. This prevents clients from registering a
+> read-only configuration unless they use a typecast. Since the
+> event_cfg should not be modified once registered, add the const
+> qualifier to event_cfg. This is aligned with the definition of ch_cfg.
 > 
-> Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
+> Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+
+Thanks,
+Mani
+
 > ---
->  drivers/firmware/qcom_scm-smc.c | 8 ++++++--
->  drivers/firmware/qcom_scm.c     | 6 ++++++
->  drivers/firmware/qcom_scm.h     | 2 ++
->  3 files changed, 14 insertions(+), 2 deletions(-)
+> v5:	corrected mhi_foxconn_sdx55_events[]
 > 
-> diff --git a/drivers/firmware/qcom_scm-smc.c b/drivers/firmware/qcom_scm-smc.c
-> index d111833..66193c2 100644
-> --- a/drivers/firmware/qcom_scm-smc.c
-> +++ b/drivers/firmware/qcom_scm-smc.c
-> @@ -1,5 +1,6 @@
->  // SPDX-License-Identifier: GPL-2.0-only
->  /* Copyright (c) 2015,2019 The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
->   */
->  
->  #include <linux/io.h>
-> @@ -63,11 +64,14 @@ static void __scm_smc_do(const struct arm_smccc_args *smc,
->  	}
->  
->  	do {
-> -		mutex_lock(&qcom_scm_lock);
-> +		if (!qcom_scm_allow_multicall)
-> +			mutex_lock(&qcom_scm_lock);
->  
->  		__scm_smc_do_quirk(smc, res);
->  
-> -		mutex_unlock(&qcom_scm_lock);
-> +		if (!qcom_scm_allow_multicall)
-> +			mutex_unlock(&qcom_scm_lock);
-> +
->  
->  		if (res->a0 == QCOM_SCM_V2_EBUSY) {
->  			if (retry_count++ > QCOM_SCM_EBUSY_MAX_RETRY)
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index cdbfe54..978706a 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -1,6 +1,7 @@
->  // SPDX-License-Identifier: GPL-2.0-only
->  /* Copyright (c) 2010,2015,2019 The Linux Foundation. All rights reserved.
->   * Copyright (C) 2015 Linaro Ltd.
-> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
->   */
->  #include <linux/platform_device.h>
->  #include <linux/init.h>
-> @@ -23,6 +24,8 @@
->  static bool download_mode = IS_ENABLED(CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT);
->  module_param(download_mode, bool, 0);
->  
-> +bool qcom_scm_allow_multicall = false;
-
-No global variables. This should be part of context/state container.
-
-> +
->  #define SCM_HAS_CORE_CLK	BIT(0)
->  #define SCM_HAS_IFACE_CLK	BIT(1)
->  #define SCM_HAS_BUS_CLK		BIT(2)
-> @@ -1402,6 +1405,9 @@ static int qcom_scm_probe(struct platform_device *pdev)
->  	__scm = scm;
->  	__scm->dev = &pdev->dev;
->  
-> +	qcom_scm_allow_multicall = of_property_read_bool(__scm->dev->of_node,
-> +							"allow-multi-call");
-> +
->  	__get_convention();
->  
->  	/*
-> diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
-> index 0d51eef..c0a4d6b 100644
-> --- a/drivers/firmware/qcom_scm.h
-> +++ b/drivers/firmware/qcom_scm.h
-> @@ -1,5 +1,6 @@
->  /* SPDX-License-Identifier: GPL-2.0-only */
->  /* Copyright (c) 2010-2015,2019 The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
->   */
->  #ifndef __QCOM_SCM_INT_H
->  #define __QCOM_SCM_INT_H
-> @@ -12,6 +13,7 @@ enum qcom_scm_convention {
+> v4:	updated subject, rebased to v6.0-rc3
+> 
+> v3:	added pci_generic.c change
+> 
+> v2:	added S-O-B
+> 
+>  drivers/bus/mhi/host/pci_generic.c | 14 +++++++-------
+>  include/linux/mhi.h                |  2 +-
+>  2 files changed, 8 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 9e545f2a5a26..0db437ac3ba4 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -238,7 +238,7 @@ static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 3),
 >  };
 >  
->  extern enum qcom_scm_convention qcom_scm_convention;
-> +extern bool qcom_scm_allow_multicall;
-
-No externs for variables. You break encapsulation.
-
+> -static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
+> +static const struct mhi_event_config modem_qcom_v1_mhi_events[] = {
+>  	/* first ring is control+data ring */
+>  	MHI_EVENT_CONFIG_CTRL(0, 64),
+>  	/* DIAG dedicated event ring */
+> @@ -305,7 +305,7 @@ static const struct mhi_channel_config mhi_quectel_em1xx_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
+>  };
 >  
->  #define MAX_QCOM_SCM_ARGS 10
->  #define MAX_QCOM_SCM_RETS 3
+> -static struct mhi_event_config mhi_quectel_em1xx_events[] = {
+> +static const struct mhi_event_config mhi_quectel_em1xx_events[] = {
+>  	MHI_EVENT_CONFIG_CTRL(0, 128),
+>  	MHI_EVENT_CONFIG_DATA(1, 128),
+>  	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
+> @@ -344,7 +344,7 @@ static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
+>  };
+>  
+> -static struct mhi_event_config mhi_foxconn_sdx55_events[] = {
+> +static const struct mhi_event_config mhi_foxconn_sdx55_events[] = {
+>  	MHI_EVENT_CONFIG_CTRL(0, 128),
+>  	MHI_EVENT_CONFIG_DATA(1, 128),
+>  	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
+> @@ -391,7 +391,7 @@ static const struct mhi_channel_config mhi_mv3x_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 512, 3),
+>  };
+>  
+> -static struct mhi_event_config mhi_mv3x_events[] = {
+> +static const struct mhi_event_config mhi_mv3x_events[] = {
+>  	MHI_EVENT_CONFIG_CTRL(0, 256),
+>  	MHI_EVENT_CONFIG_DATA(1, 256),
+>  	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
+> @@ -438,7 +438,7 @@ static const struct mhi_channel_config mhi_sierra_em919x_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 512, 2),
+>  };
+>  
+> -static struct mhi_event_config modem_sierra_em919x_mhi_events[] = {
+> +static const struct mhi_event_config modem_sierra_em919x_mhi_events[] = {
+>  	/* first ring is control+data and DIAG ring */
+>  	MHI_EVENT_CONFIG_CTRL(0, 2048),
+>  	/* Hardware channels request dedicated hardware event rings */
+> @@ -472,7 +472,7 @@ static const struct mhi_channel_config mhi_telit_fn980_hw_v1_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 2),
+>  };
+>  
+> -static struct mhi_event_config mhi_telit_fn980_hw_v1_events[] = {
+> +static const struct mhi_event_config mhi_telit_fn980_hw_v1_events[] = {
+>  	MHI_EVENT_CONFIG_CTRL(0, 128),
+>  	MHI_EVENT_CONFIG_HW_DATA(1, 1024, 100),
+>  	MHI_EVENT_CONFIG_HW_DATA(2, 2048, 101)
+> @@ -511,7 +511,7 @@ static const struct mhi_channel_config mhi_telit_fn990_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
+>  };
+>  
+> -static struct mhi_event_config mhi_telit_fn990_events[] = {
+> +static const struct mhi_event_config mhi_telit_fn990_events[] = {
+>  	MHI_EVENT_CONFIG_CTRL(0, 128),
+>  	MHI_EVENT_CONFIG_DATA(1, 128),
+>  	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index a5441ad33c74..ada2f18af4d6 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -281,7 +281,7 @@ struct mhi_controller_config {
+>  	u32 num_channels;
+>  	const struct mhi_channel_config *ch_cfg;
+>  	u32 num_events;
+> -	struct mhi_event_config *event_cfg;
+> +	const struct mhi_event_config *event_cfg;
+>  	bool use_bounce_buf;
+>  	bool m2_no_db;
+>  };
+> -- 
+> 2.37.0
+> 
+> 
 
-
-Best regards,
-Krzysztof
+-- 
+மணிவண்ணன் சதாசிவம்
