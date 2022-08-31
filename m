@@ -2,69 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E1DFD5A726E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Aug 2022 02:32:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48B945A758C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Aug 2022 07:19:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231228AbiHaAcq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Aug 2022 20:32:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45218 "EHLO
+        id S231903AbiHaFT1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Aug 2022 01:19:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231279AbiHaAco (ORCPT
+        with ESMTP id S229637AbiHaFT0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Aug 2022 20:32:44 -0400
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 905AFA407D;
-        Tue, 30 Aug 2022 17:32:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1661905963; x=1693441963;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=QPTkL5Ut9qXS4ROpinL7/DFZZwH7WHdiHczciJOL6gY=;
-  b=nUihuw1Ew4rdDq7A2oeAOQPE5sr8XyXENbd8KBmWGBIKV8Ae87xty2UT
-   rpjJvAggQ5ygXZv0Y9Hlgx1CBwp6ZDgUT3VOSPd0VjQIX4ifBWYbb8nf2
-   ZHWVbTRW2qeCdIMqOfMYaHRHWN5El6bbMen+js3/TVa9qJACHBuzdiwmP
-   iJSlhM60+BRqIsBYhaa1d3EXUdxq2eK3V3FL6JNhLLrsSGcLxxP4caAmA
-   dr1dkWEoTkVbVaWCcbMkEaLoSEjDmiU1T0NybzlzB/wXz3+c2W+fuVxJI
-   8Jl3qNyYuSVp7YPLscYpy61Lt4CqMOcTeUOJMJpRKnCVLAFP2dKaeZfyr
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10455"; a="381635229"
-X-IronPort-AV: E=Sophos;i="5.93,276,1654585200"; 
-   d="scan'208";a="381635229"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Aug 2022 17:32:43 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.93,276,1654585200"; 
-   d="scan'208";a="701197325"
-Received: from lkp-server02.sh.intel.com (HELO 77b6d4e16fc5) ([10.239.97.151])
-  by FMSMGA003.fm.intel.com with ESMTP; 30 Aug 2022 17:32:40 -0700
-Received: from kbuild by 77b6d4e16fc5 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1oTBep-0000nH-34;
-        Wed, 31 Aug 2022 00:32:39 +0000
-Date:   Wed, 31 Aug 2022 08:32:31 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Wed, 31 Aug 2022 01:19:26 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEF1BB6021;
+        Tue, 30 Aug 2022 22:19:25 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27V2HRWn012337;
+        Wed, 31 Aug 2022 05:19:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=NjAqZ3QhtI/ZqQcKoVQ+P6AxCSkVITmaI0m/xYMMmA0=;
+ b=IuiAPXMN80RDgz+MdrWMTqC4DnF3E9Cw7KcnVQwRXb1sokrRUkLjEScUfalb4lFY5q9b
+ CaUlAULfcqHWwUTwFrz83R+Y+tTIx93xWDbD+zWxIjZabAdAAJ7ACHh/DBVRsAFUCeFf
+ 8VoTTBBMXYHBZYWY9nnLEmccJiP5vnR+WS3hUVuGFwFWNGzHcv+4CLtpleou+a6sRCMf
+ 8bwV2wos4GBmzFLrI/Wj43JPiC9VB5eRoClwMo6SOGajF2Fwn7D9gqKb1Izv3cRJozJ4
+ WNAqXB/MKpAX2IyxQ6iflpGJhYsuEimyR7VE1fFdekzWlyCDYvQ4wrNFwRYjbMgIR6yF Zw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j9txbh834-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 31 Aug 2022 05:19:01 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27V5J0TG015884
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 31 Aug 2022 05:19:00 GMT
+Received: from hyd-lnxbld559.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Tue, 30 Aug 2022 22:18:53 -0700
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+To:     freedreno <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Stephen Boyd" <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+CC:     Douglas Anderson <dianders@chromium.org>,
+        <krzysztof.kozlowski@linaro.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     kbuild-all@lists.01.org, David Heidelberg <david@ixit.cz>,
-        Robert Marko <robimarko@gmail.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>
-Subject: Re: [RESEND PATCH v2 4/5] firmware: qcom: scm: Add wait-queue helper
- functions
-Message-ID: <202208310849.pEettWuy-lkp@intel.com>
-References: <1661898311-30126-5-git-send-email-quic_gurus@quicinc.com>
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        "Konrad Dybcio" <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <sboyd@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v6 0/6] clk/qcom: Support gdsc collapse polling using 'reset' interface
+Date:   Wed, 31 Aug 2022 10:48:21 +0530
+Message-ID: <1661923108-789-1-git-send-email-quic_akhilpo@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1661898311-30126-5-git-send-email-quic_gurus@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: wNq8ePCvrbpW_Btfp7sFjXeQVlAiZrdc
+X-Proofpoint-ORIG-GUID: wNq8ePCvrbpW_Btfp7sFjXeQVlAiZrdc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-31_03,2022-08-30_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
+ adultscore=0 mlxlogscore=999 phishscore=0 spamscore=0 malwarescore=0
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 mlxscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2208310025
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,86 +90,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Guru,
 
-Thank you for the patch! Perhaps something to improve:
+Some clients like adreno gpu driver would like to ensure that its gdsc
+is collapsed at hardware during a gpu reset sequence. This is because it
+has a votable gdsc which could be ON due to a vote from another subsystem
+like tz, hyp etc or due to an internal hardware signal. To allow
+this, gpucc driver can expose an interface to the client driver using
+reset framework. Using this the client driver can trigger a polling within
+the gdsc driver.
 
-[auto build test WARNING on next-20220830]
-[cannot apply to robh/for-next linus/master v6.0-rc3 v6.0-rc2 v6.0-rc1 v6.0-rc3]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+This series is rebased on top of linus's master branch.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Guru-Das-Srinagesh/SCM-Add-support-for-wait-queue-aware-firmware/20220831-063013
-base:    282342f2dc97ccf54254c5de51bcc1101229615f
-config: m68k-allyesconfig (https://download.01.org/0day-ci/archive/20220831/202208310849.pEettWuy-lkp@intel.com/config)
-compiler: m68k-linux-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/ad41ee028d07c3e3e41b15e6bd8e2985f30df508
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Guru-Das-Srinagesh/SCM-Add-support-for-wait-queue-aware-firmware/20220831-063013
-        git checkout ad41ee028d07c3e3e41b15e6bd8e2985f30df508
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=m68k SHELL=/bin/bash drivers/firmware/
+Related discussion: https://patchwork.freedesktop.org/patch/493144/
 
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
+Changes in v6:
+- No code changes in this version. Just captured the Acked-by tags
 
-All warnings (new ones prefixed by >>):
+Changes in v5:
+- Nit: Remove a duplicate blank line (Krzysztof)
 
-   In file included from include/linux/string.h:20,
-                    from include/linux/bitmap.h:11,
-                    from include/linux/cpumask.h:12,
-                    from include/linux/smp.h:13,
-                    from include/linux/lockdep.h:14,
-                    from include/linux/spinlock.h:62,
-                    from include/linux/mmzone.h:8,
-                    from arch/m68k/include/asm/virtconvert.h:12,
-                    from arch/m68k/include/asm/io_mm.h:26,
-                    from arch/m68k/include/asm/io.h:8,
-                    from include/linux/io.h:13,
-                    from drivers/firmware/qcom_scm-smc.c:6:
-   drivers/firmware/qcom_scm-smc.c: In function 'fill_wq_resume_args':
->> arch/m68k/include/asm/string.h:68:25: warning: 'memset' used with length equal to number of elements without multiplication by element size [-Wmemset-elt-size]
-      68 | #define memset(d, c, n) __builtin_memset(d, c, n)
-         |                         ^~~~~~~~~~~~~~~~
-   drivers/firmware/qcom_scm-smc.c:58:9: note: in expansion of macro 'memset'
-      58 |         memset(resume->args, 0, ARRAY_SIZE(resume->args));
-         |         ^~~~~~
-   drivers/firmware/qcom_scm-smc.c: In function 'fill_wq_wake_ack_args':
->> arch/m68k/include/asm/string.h:68:25: warning: 'memset' used with length equal to number of elements without multiplication by element size [-Wmemset-elt-size]
-      68 | #define memset(d, c, n) __builtin_memset(d, c, n)
-         |                         ^~~~~~~~~~~~~~~~
-   drivers/firmware/qcom_scm-smc.c:71:9: note: in expansion of macro 'memset'
-      71 |         memset(wake_ack->args, 0, ARRAY_SIZE(wake_ack->args));
-         |         ^~~~~~
-   drivers/firmware/qcom_scm-smc.c: In function 'fill_get_wq_ctx_args':
->> arch/m68k/include/asm/string.h:68:25: warning: 'memset' used with length equal to number of elements without multiplication by element size [-Wmemset-elt-size]
-      68 | #define memset(d, c, n) __builtin_memset(d, c, n)
-         |                         ^~~~~~~~~~~~~~~~
-   drivers/firmware/qcom_scm-smc.c:84:9: note: in expansion of macro 'memset'
-      84 |         memset(get_wq_ctx->args, 0, ARRAY_SIZE(get_wq_ctx->args));
-         |         ^~~~~~
-   drivers/firmware/qcom_scm-smc.c: At top level:
-   drivers/firmware/qcom_scm-smc.c:69:13: warning: 'fill_wq_wake_ack_args' defined but not used [-Wunused-function]
-      69 | static void fill_wq_wake_ack_args(struct arm_smccc_args *wake_ack, u32 smc_call_ctx)
-         |             ^~~~~~~~~~~~~~~~~~~~~
-   drivers/firmware/qcom_scm-smc.c:56:13: warning: 'fill_wq_resume_args' defined but not used [-Wunused-function]
-      56 | static void fill_wq_resume_args(struct arm_smccc_args *resume, u32 smc_call_ctx)
-         |             ^~~~~~~~~~~~~~~~~~~
+Changes in v4:
+- Update gpu dt-binding schema
+- Typo fix in commit text
 
+Changes in v3:
+- Use pointer to const for "struct qcom_reset_ops" in qcom_reset_map (Krzysztof)
 
-vim +/memset +68 arch/m68k/include/asm/string.h
+Changes in v2:
+- Return error when a particular custom reset op is not implemented. (Dmitry)
 
-ea61bc461d09e8 Greg Ungerer 2010-09-07  65  
-ea61bc461d09e8 Greg Ungerer 2010-09-07  66  #define __HAVE_ARCH_MEMSET
-ea61bc461d09e8 Greg Ungerer 2010-09-07  67  extern void *memset(void *, int, __kernel_size_t);
-ea61bc461d09e8 Greg Ungerer 2010-09-07 @68  #define memset(d, c, n) __builtin_memset(d, c, n)
-ea61bc461d09e8 Greg Ungerer 2010-09-07  69  
+Akhil P Oommen (6):
+  dt-bindings: clk: qcom: Support gpu cx gdsc reset
+  clk: qcom: Allow custom reset ops
+  clk: qcom: gdsc: Add a reset op to poll gdsc collapse
+  clk: qcom: gpucc-sc7280: Add cx collapse reset support
+  dt-bindings: drm/msm/gpu: Add optional resets
+  arm64: dts: qcom: sc7280: Add Reset support for gpu
+
+ .../devicetree/bindings/display/msm/gpu.yaml       |  6 +++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |  3 +++
+ drivers/clk/qcom/gdsc.c                            | 23 ++++++++++++++----
+ drivers/clk/qcom/gdsc.h                            |  7 ++++++
+ drivers/clk/qcom/gpucc-sc7280.c                    | 10 ++++++++
+ drivers/clk/qcom/reset.c                           | 27 ++++++++++++++++++++++
+ drivers/clk/qcom/reset.h                           |  8 +++++++
+ include/dt-bindings/clock/qcom,gpucc-sc7280.h      |  3 +++
+ 8 files changed, 83 insertions(+), 4 deletions(-)
 
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.7.4
+
