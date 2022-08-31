@@ -2,101 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C8005A7C4B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Aug 2022 13:39:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 350865A7CE0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Aug 2022 14:06:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229697AbiHaLjY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Aug 2022 07:39:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57596 "EHLO
+        id S229785AbiHaMGh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Aug 2022 08:06:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229498AbiHaLjY (ORCPT
+        with ESMTP id S229498AbiHaMGg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Aug 2022 07:39:24 -0400
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 623B0A7A8C;
-        Wed, 31 Aug 2022 04:39:23 -0700 (PDT)
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-11f0fa892aeso15143517fac.7;
-        Wed, 31 Aug 2022 04:39:23 -0700 (PDT)
+        Wed, 31 Aug 2022 08:06:36 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F5E06CD02
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 05:06:35 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id p16so1629177lfd.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 05:06:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:from:to:cc:subject:date;
+        bh=s7NlDumETs9wQ3Y95JXvaCOT89PMenrVizz0Vrnaec4=;
+        b=IkY358kZDf4ErtZ5IzZdXwdGiVx6cEp1mwN+Ar4JtDwUGkMkhrl+g3NHzn9/4Bcnjb
+         C2Vy8xYEZ88lTwrfdKS/EaGV7sRWAnQNu65bmgIhh4EmSBCHONzCEn8MGOVbOnbyJeNC
+         Ka1D0mmC4Fubu177W7fWjdWToDtkYDX6YZvWpkSKlwggQE5jk7ksEyGmbAh5J10y6kPJ
+         kCLGFvGyx2XD9HBkOJtCXS41JbiXQM4qVMpdKM4SX5r61wJBVxRk6eGOiGFhXOAn+i9v
+         upNza+nNlA/KCq+KJnRSYM5CUSfC1L9iIHF7yzxATNY2F+u8KQq2j0n3hldy9ecXwk0O
+         mNsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=message-id:date:subject:references:in-reply-to:cc:to:from
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=Z1f87H1PJFe4akLNOjaLrcNqXkR7W1AVw321QPPsh6A=;
-        b=tQeX7rtCJW6cZ1wluNaEfOJRKQcW/eyLxA455LQ/XJzttkx3kVSnOV8aWzLpoOWdsT
-         Yoe4pzNd2Vi5jXt1XrY8s5FsArwSoqA0DhBbAmXvNTYbpqmspmx5if7NcsLf10NGj2JS
-         RtfPJor8TJ3Z+jVqLs1bYLXUdCbbhGWEv42eIiI/Zl9+6SSCvtqNYEzegy1iCCGQV/Y8
-         mawO5+LxTQUCkjzjbrLaX+pWryIsQCbZN66Ioq9fIRKBfBYMp2oHBk2VMArmSdPi+O0l
-         P96NWEXWRl38/nGhACZFF87B1pZRRWvywXg/2QUIJWepVWWRGdy/iPU9J+/gr0R6xrxo
-         u7Lw==
-X-Gm-Message-State: ACgBeo1siT7Mni2T76/PkzD3rduA0beH/B7n3X4YRZIB8qdQIBXk0B7a
-        HP1MpcykPErDkZzn68bPJH7nfuKi7g==
-X-Google-Smtp-Source: AA6agR7w54goHzQ8TCm0mSRb3zB+M43ANVNtzpbzFy5mh2e30F1Rhzycat7svTyJqT4E0HA7xPapVA==
-X-Received: by 2002:a54:4899:0:b0:343:3f7c:713d with SMTP id r25-20020a544899000000b003433f7c713dmr987350oic.116.1661945962690;
-        Wed, 31 Aug 2022 04:39:22 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id h7-20020a9d2f07000000b0063736db0ae9sm6463845otb.15.2022.08.31.04.39.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Aug 2022 04:39:22 -0700 (PDT)
-Received: (nullmailer pid 3614526 invoked by uid 1000);
-        Wed, 31 Aug 2022 11:39:21 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     kw@linux.com, andersson@kernel.org, linux-kernel@vger.kernel.org,
-        lpieralisi@kernel.org, dmitry.baryshkov@linaro.org,
-        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        konrad.dybcio@somainline.org, linux-pci@vger.kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
-        bhelgaas@google.com
-In-Reply-To: <20220830165817.183571-10-manivannan.sadhasivam@linaro.org>
-References: <20220830165817.183571-1-manivannan.sadhasivam@linaro.org> <20220830165817.183571-10-manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH v2 09/11] dt-bindings: PCI: qcom-ep: Define clocks per platform
-Date:   Wed, 31 Aug 2022 06:39:21 -0500
-Message-Id: <1661945961.468486.3614525.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=s7NlDumETs9wQ3Y95JXvaCOT89PMenrVizz0Vrnaec4=;
+        b=4+h49bKssW3vMry2qw1BZTXHubzmyGemUdbeWFk4pxmvBy9O5AJbSVS239sfx07UXQ
+         O+bHV0DknJHcqrsgOtK+XJFG32VMWe8Erus4Ur1zTgP93eEk+/MVjCSd1ctQworiKIj9
+         6cZoWRQUex7cyqHKgRDC5ptCK38Yyeti5ljcLcHcQYLrWbHajB2FMw/jtXtNymX1M+9R
+         DM9TVVPQV9erD1FOoc4W9JlM3aIxl9Z8scUpJZXKD3kM/G+CuDd+lkYaRu2HlI5bPcD9
+         3o5EiEv3lCbH/Qp5By5XLvC08z+4o78hhD7ME7OwgFUhGu8rLF9+DOXgvnN3QS7DREQm
+         dWqQ==
+X-Gm-Message-State: ACgBeo0rry5i8ENaBCW451RnccVE5TUlsptkJwBhy+rCOQuCfcQal33Z
+        8qxVJOi1tb7jLR2buQwqCltqn6HFjleV/5urrXI=
+X-Google-Smtp-Source: AA6agR7cEreXLpLAwBgLUPqyrDc3ong+V522Xg4S3xVpUsJ9tuC2UDQHJjc9SONYmQCvWuEiMDgs/bTAuBPOze6peqs=
+X-Received: by 2002:a05:6512:228a:b0:492:b7cd:9599 with SMTP id
+ f10-20020a056512228a00b00492b7cd9599mr8517583lfu.625.1661947593527; Wed, 31
+ Aug 2022 05:06:33 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a05:6520:810:b0:211:82f4:7268 with HTTP; Wed, 31 Aug 2022
+ 05:06:30 -0700 (PDT)
+Reply-To: golsonfinancial@gmail.com
+From:   OLSON FINANCIAL GROUP <ekefelix2018@gmail.com>
+Date:   Wed, 31 Aug 2022 05:06:30 -0700
+Message-ID: <CANOdbzKb4Wgz-qLnjtc=A98bO2Pr5N8n=pTjtZ=9rGwoiFwuWA@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: Yes, score=5.0 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2a00:1450:4864:20:0:0:0:12a listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [ekefelix2018[at]gmail.com]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [ekefelix2018[at]gmail.com]
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  3.2 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 30 Aug 2022 22:28:15 +0530, Manivannan Sadhasivam wrote:
-> In preparation of adding the bindings for future SoCs, let's define the
-> clocks per platform.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  .../devicetree/bindings/pci/qcom,pcie-ep.yaml | 51 ++++++++++++-------
->  1 file changed, 32 insertions(+), 19 deletions(-)
-> 
-
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml: allOf:1:then:properties:clocks: {'maxItems': 7, 'items': [{'description': 'PCIe Auxiliary clock'}, {'description': 'PCIe CFG AHB clock'}, {'description': 'PCIe Master AXI clock'}, {'description': 'PCIe Slave AXI clock'}, {'description': 'PCIe Slave Q2A AXI clock'}, {'description': 'PCIe Sleep clock'}, {'description': 'PCIe Reference clock'}]} should not be valid under {'required': ['maxItems']}
-	hint: "maxItems" is not needed with an "items" list
-	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml: ignoring, error in schema: allOf: 1: then: properties: clocks
-Documentation/devicetree/bindings/pci/qcom,pcie-ep.example.dtb:0:0: /example-0/pcie-ep@40000000: failed to match any schema with compatible: ['qcom,sdx55-pcie-ep']
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+--=20
+Hallo Gr=C3=BC=C3=9Fe,
+Ben=C3=B6tigen Sie dringend einen Kredit, um ein Haus oder ein Auto zu
+kaufen? oder ben=C3=B6tigen Sie ein Gesch=C3=A4fts- oder Privatdarlehen, um=
+ zu
+investieren? ein neues Gesch=C3=A4ft er=C3=B6ffnen, Rechnungen bezahlen? Un=
+d
+zahlen Sie uns Installationen zur=C3=BCck? Wir sind ein zertifiziertes
+Finanzunternehmen. Wir bieten Privatpersonen und Unternehmen Kredite
+an. Wir bieten zuverl=C3=A4ssige Kredite zu einem sehr niedrigen Zinssatz
+von 2 %. F=C3=BCr weitere Informationen
+mailen Sie uns an: golsonfinancial@gmail.com......
