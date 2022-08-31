@@ -2,85 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3368C5A75A9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Aug 2022 07:20:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 516EE5A76A0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Aug 2022 08:31:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230510AbiHaFUQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Aug 2022 01:20:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55826 "EHLO
+        id S230240AbiHaGb2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Aug 2022 02:31:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229659AbiHaFT4 (ORCPT
+        with ESMTP id S230300AbiHaGbM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Aug 2022 01:19:56 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C493D5E;
-        Tue, 30 Aug 2022 22:19:45 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27V5D2AI017414;
-        Wed, 31 Aug 2022 05:19:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=3h1aiXrphk5T2rqN3UBCgmzr+FGo6Il6A5/GglCrd1c=;
- b=k1QMkybIbnx2WhWPTIF0ZE2RuuHNovTdD0wXsoTKtfBGwTHwOvTVxUB2tE0fHwO1yNc6
- pdyyUHWaLXLrejCatOBwYoonVPbcpsJ/vYP5GXH58Es386FkupRhdb2gBvS/7kUdJ2PY
- F5OJTUvdfNjV9R2XKD7JtynBwiU+WCxFdgqUp33LCHUeqxv5/OmR4pRslvIpmCuj7+9p
- iN5nMROOQpLCs5+WOf/X02DYKIBLgVrTGtcaXCq6BxTAGn3Hhn6hxwwy0PvR7arDN2+5
- bGvK0UCdXOFDV+LShmyP33Aif5l9LevqrpL5sEnt0+rlXBhylb6I0AFnFIJPgBUEdP05 sg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j9jm4jy6q-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 31 Aug 2022 05:19:36 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27V5JZn6014135
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 31 Aug 2022 05:19:35 GMT
-Received: from hyd-lnxbld559.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Tue, 30 Aug 2022 22:19:30 -0700
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-To:     freedreno <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Stephen Boyd" <swboyd@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-CC:     Douglas Anderson <dianders@chromium.org>,
-        <krzysztof.kozlowski@linaro.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Wed, 31 Aug 2022 02:31:12 -0400
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5F76A5997;
+        Tue, 30 Aug 2022 23:30:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1661927460; x=1693463460;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Ql+yeo80Y05zchO0DvqFKkJmhw83Gp5KMkZLvvbWsnA=;
+  b=bherEi9u29PWJJD6sqzA5crZtWtbgGBJahJIRFPSuUuld1DQSR6xRUKB
+   pTdNllotQbG1TTiSjPW+VTEdsZFJ8YrAqNpwXi0OklboVFRXFc3C6TE6E
+   6wX+o6Ay5Gflki6kuthyJxLPXy0KNicU6h5yeUBJ8UXLyl89yMGBUp5zs
+   0TRRAnIAnTnuiCODYur86pQswlMmHfZNgQPAcCIkB2RBe99g7k5Nh7cUI
+   QjS7FyNV/lfF12TIsENVq0RaVSka274d9JK8PYcxAhs4ZSO+Wk5G7jB/s
+   42c9D7kmdYY7QnQZGpdPOOs9/MSwBX9lsi3TV2RFhJoAZyFsBJHr3QFWt
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10455"; a="296662712"
+X-IronPort-AV: E=Sophos;i="5.93,277,1654585200"; 
+   d="scan'208";a="296662712"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Aug 2022 23:30:58 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.93,277,1654585200"; 
+   d="scan'208";a="754324011"
+Received: from lkp-server02.sh.intel.com (HELO 811e2ceaf0e5) ([10.239.97.151])
+  by fmsmga001.fm.intel.com with ESMTP; 30 Aug 2022 23:30:55 -0700
+Received: from kbuild by 811e2ceaf0e5 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1oTHFW-00001C-33;
+        Wed, 31 Aug 2022 06:30:54 +0000
+Date:   Wed, 31 Aug 2022 14:30:45 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v6 6/6] arm64: dts: qcom: sc7280: Add Reset support for gpu
-Date:   Wed, 31 Aug 2022 10:48:27 +0530
-Message-ID: <20220831104741.v6.6.I6a1fca5d53c886c05ea3e24cd4282d31c9c0cd0b@changeid>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1661923108-789-1-git-send-email-quic_akhilpo@quicinc.com>
-References: <1661923108-789-1-git-send-email-quic_akhilpo@quicinc.com>
+        Bjorn Andersson <andersson@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     kbuild-all@lists.01.org, David Heidelberg <david@ixit.cz>,
+        Robert Marko <robimarko@gmail.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>
+Subject: Re: [RESEND PATCH v2 4/5] firmware: qcom: scm: Add wait-queue helper
+ functions
+Message-ID: <202208311447.pd8ZLIWT-lkp@intel.com>
+References: <1661898311-30126-5-git-send-email-quic_gurus@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: _rOgocCXem56kzbfs3X5mN2S0oNYw-57
-X-Proofpoint-GUID: _rOgocCXem56kzbfs3X5mN2S0oNYw-57
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-31_03,2022-08-30_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- adultscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
- phishscore=0 clxscore=1015 suspectscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2208310025
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1661898311-30126-5-git-send-email-quic_gurus@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,31 +72,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for Reset using GPUCC driver for GPU. This helps to ensure
-that GPU state is reset by making sure that CX head switch is collapsed.
+Hi Guru,
 
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
----
+Thank you for the patch! Perhaps something to improve:
 
-(no changes since v1)
+[auto build test WARNING on next-20220830]
+[cannot apply to robh/for-next linus/master v6.0-rc3 v6.0-rc2 v6.0-rc1 v6.0-rc3]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+url:    https://github.com/intel-lab-lkp/linux/commits/Guru-Das-Srinagesh/SCM-Add-support-for-wait-queue-aware-firmware/20220831-063013
+base:    282342f2dc97ccf54254c5de51bcc1101229615f
+config: sparc-allyesconfig (https://download.01.org/0day-ci/archive/20220831/202208311447.pd8ZLIWT-lkp@intel.com/config)
+compiler: sparc64-linux-gcc (GCC) 12.1.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/ad41ee028d07c3e3e41b15e6bd8e2985f30df508
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Guru-Das-Srinagesh/SCM-Add-support-for-wait-queue-aware-firmware/20220831-063013
+        git checkout ad41ee028d07c3e3e41b15e6bd8e2985f30df508
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=sparc SHELL=/bin/bash drivers/firmware/
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index e66fc67..f5257d6 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2243,6 +2243,9 @@
- 			nvmem-cells = <&gpu_speed_bin>;
- 			nvmem-cell-names = "speed_bin";
- 
-+			resets = <&gpucc GPU_CX_COLLAPSE>;
-+			reset-names = "cx_collapse";
-+
- 			gpu_opp_table: opp-table {
- 				compatible = "operating-points-v2";
- 
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
+
+All warnings (new ones prefixed by >>):
+
+   In file included from include/linux/string.h:20,
+                    from include/linux/bitmap.h:11,
+                    from include/linux/cpumask.h:12,
+                    from include/linux/smp.h:13,
+                    from include/linux/lockdep.h:14,
+                    from include/linux/rcupdate.h:29,
+                    from include/linux/rculist.h:11,
+                    from include/linux/pid.h:5,
+                    from include/linux/sched.h:14,
+                    from include/linux/delay.h:23,
+                    from drivers/firmware/qcom_scm-smc.c:8:
+   drivers/firmware/qcom_scm-smc.c: In function 'fill_wq_resume_args':
+>> arch/sparc/include/asm/string.h:18:29: warning: 'memset' used with length equal to number of elements without multiplication by element size [-Wmemset-elt-size]
+      18 | #define memset(s, c, count) __builtin_memset(s, c, count)
+         |                             ^~~~~~~~~~~~~~~~
+   drivers/firmware/qcom_scm-smc.c:58:9: note: in expansion of macro 'memset'
+      58 |         memset(resume->args, 0, ARRAY_SIZE(resume->args));
+         |         ^~~~~~
+   drivers/firmware/qcom_scm-smc.c: In function 'fill_wq_wake_ack_args':
+>> arch/sparc/include/asm/string.h:18:29: warning: 'memset' used with length equal to number of elements without multiplication by element size [-Wmemset-elt-size]
+      18 | #define memset(s, c, count) __builtin_memset(s, c, count)
+         |                             ^~~~~~~~~~~~~~~~
+   drivers/firmware/qcom_scm-smc.c:71:9: note: in expansion of macro 'memset'
+      71 |         memset(wake_ack->args, 0, ARRAY_SIZE(wake_ack->args));
+         |         ^~~~~~
+   drivers/firmware/qcom_scm-smc.c: In function 'fill_get_wq_ctx_args':
+>> arch/sparc/include/asm/string.h:18:29: warning: 'memset' used with length equal to number of elements without multiplication by element size [-Wmemset-elt-size]
+      18 | #define memset(s, c, count) __builtin_memset(s, c, count)
+         |                             ^~~~~~~~~~~~~~~~
+   drivers/firmware/qcom_scm-smc.c:84:9: note: in expansion of macro 'memset'
+      84 |         memset(get_wq_ctx->args, 0, ARRAY_SIZE(get_wq_ctx->args));
+         |         ^~~~~~
+   drivers/firmware/qcom_scm-smc.c: At top level:
+   drivers/firmware/qcom_scm-smc.c:69:13: warning: 'fill_wq_wake_ack_args' defined but not used [-Wunused-function]
+      69 | static void fill_wq_wake_ack_args(struct arm_smccc_args *wake_ack, u32 smc_call_ctx)
+         |             ^~~~~~~~~~~~~~~~~~~~~
+   drivers/firmware/qcom_scm-smc.c:56:13: warning: 'fill_wq_resume_args' defined but not used [-Wunused-function]
+      56 | static void fill_wq_resume_args(struct arm_smccc_args *resume, u32 smc_call_ctx)
+         |             ^~~~~~~~~~~~~~~~~~~
+
+
+vim +/memset +18 arch/sparc/include/asm/string.h
+
+70a6fcf3283a0a Al Viro 2016-01-17  16  
+70a6fcf3283a0a Al Viro 2016-01-17  17  #define __HAVE_ARCH_MEMSET
+70a6fcf3283a0a Al Viro 2016-01-17 @18  #define memset(s, c, count) __builtin_memset(s, c, count)
+70a6fcf3283a0a Al Viro 2016-01-17  19  
+
 -- 
-2.7.4
-
+0-DAY CI Kernel Test Service
+https://01.org/lkp
