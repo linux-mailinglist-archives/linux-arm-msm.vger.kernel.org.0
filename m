@@ -2,80 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C9FB75A7860
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Aug 2022 10:02:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 536A95A788E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Aug 2022 10:08:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231253AbiHaICv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Aug 2022 04:02:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35004 "EHLO
+        id S231375AbiHaIIn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Aug 2022 04:08:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229599AbiHaICs (ORCPT
+        with ESMTP id S231337AbiHaIIh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Aug 2022 04:02:48 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AB5EB9F8A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 01:02:47 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id by6so13766248ljb.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 01:02:47 -0700 (PDT)
+        Wed, 31 Aug 2022 04:08:37 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45CBBB276C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 01:08:36 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id m17-20020a7bce11000000b003a5bedec07bso11243706wmc.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 01:08:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=mcjkN3A9DFqOnzyDMP/4vsY+bIAutKbcUU811DHEXug=;
-        b=siwYfse66ZSBcXSIbs3T0fKz2ScX0U0xgDT1LfCiwVAFFNk19D25MDC3Pr4wERESVh
-         hHsm0yz0mbBTXmERMfxO9BtHFeXotDeQdQGfmtCTYGKY8n/lyCPiBTSk9/kWAjWrwxpR
-         nxXqQJb2t+hd6a/EthSjjbtWU5s3jFvtDvZSGTKX8z/Pc3l0QFL3U+MfhPi6m588xP85
-         5PCCQzf09qWI85ul0dNeAJOLbUycDOv7xzQzoE7J4suzXQKmy+fezy6U0tBzWJnFjSx8
-         iceefV8psf8nrSTMuZcf/i/8xZX3+Pu23YtK0EDj11rI7DR5I1yyi7dpnLsEE88PvGzK
-         d6Vg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=dgZ5OlqxSJ9OrGvG83WjC1EfyHitqCW6YeiAJ6MJi5M=;
+        b=dCi8+tthhmPPjM66AZMoyj5XX/gkd1kqgewRKrO3rM449iB/vPYkU5R3LAFwj5C85D
+         CgS2D2SEAyJm1ZeoYJYGFuECUKXXgCUWMrKGvjDziAiDRQB+4DroDINaZKUx7CSSKQPp
+         XpuoIpWzd7on2H2gq3Hy/mPvlGiFdCytkUqDZKMuOJdi8bFV/zMdgyf7/pftfl0M/1j0
+         ULrh0cRxNbAPDtUJiyJmfF2rpACMpACZxPokGzh7UpxDtGemTS4/GZFrHY5EtX7kZsme
+         mxJjxenSAw6yK/0RCW6VGVCz0yX/oNXRLLTCzoa353i8st2fv5Mzn4GRbkuC3Xu29n28
+         lKHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=mcjkN3A9DFqOnzyDMP/4vsY+bIAutKbcUU811DHEXug=;
-        b=bwb59BBLtbASkNF4SutrRxjVMte6h6t9z/EiPUeS18tW8LbR5Ou86/dZavUrNONPus
-         C1I8q3TzwENXUNNqwA0z/AfQ9DPftUK4myrL1rgPzLj1/vGv1WlIdFN5TERiAK2KTeey
-         CFhdZSpHZho5aEqaxEo5gwFAMNz4RqyoBu/Yx4YIx+BDdPUGBp9rOp8P01wMnKZVdlV1
-         1vfI+dWS+BE1wSU0aGrylW5bJsEaHVx1fyjMtIgELhDA/mnNx0NEo5KmlUn+MqIPcT/l
-         c/LPhEVoX8cDVrlDDi0SN2xWDjrmZ0glhgCpfbsHH0pOPSKDbSFrtAPR03rtfSP0T+9a
-         tY3g==
-X-Gm-Message-State: ACgBeo3IlQm/PXBL5/9rpGposZHdL71djB9nlVi5hC3K7rbeCpXmmH3N
-        e2/QMkqK8N6Q16lTmE4oFwRRT6UfkejPNw6C
-X-Google-Smtp-Source: AA6agR5ZFwRrNTK4X0TdLuhjQd5HialV0pcKzZjv37QULxCTS2sXvR8+wol8Rqmm8U9+PMM0GTK7lA==
-X-Received: by 2002:a2e:9f50:0:b0:267:7e8e:5396 with SMTP id v16-20020a2e9f50000000b002677e8e5396mr1854742ljk.222.1661932965694;
-        Wed, 31 Aug 2022 01:02:45 -0700 (PDT)
-Received: from [192.168.28.124] (balticom-73-99-134.balticom.lv. [109.73.99.134])
-        by smtp.gmail.com with ESMTPSA id o19-20020ac25e33000000b0048b064707ebsm1906643lfg.103.2022.08.31.01.02.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 Aug 2022 01:02:45 -0700 (PDT)
-Message-ID: <c842f6c8-fe7b-1e74-d873-4b674556ec40@linaro.org>
-Date:   Wed, 31 Aug 2022 11:02:44 +0300
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=dgZ5OlqxSJ9OrGvG83WjC1EfyHitqCW6YeiAJ6MJi5M=;
+        b=stynhpIeBpoz2ooD5LQcxnUluHkufKTSqRjTWsa7cG4U1u5nWabsW8SKEqu72JFXOj
+         syPUfYktNv4CEkp2yk3aRLOaP4qPTsFDSO2V9GpHSLj3ZInQrMNYMdD4D5G2zRBJncRS
+         zYGjlCgAnonT3EbdE1NzBwLJ3aeyYZ4L4rWroQwrZ/70p6hc0QnyJiSa3j/IikqKnDGu
+         zkNVDKOT4EgUew2KxA9J3Tl83qSul3Ldvjhpufu3V/5K1E4HVjIqhjqW2iNFYAalckJD
+         NeGwLUzKwfUvhjZvTRhVpXnQmQ+tToHB6rT5gErpiHAzGH0HZDYsolDDMyeBB/aO3yPo
+         Us+A==
+X-Gm-Message-State: ACgBeo107ezBO9Z8hrIAa7WPomlBmXYVtmal9uv0dmjf8uTRNFmSEzxG
+        xdslYcoRXirf27urXTn00Dxzmw==
+X-Google-Smtp-Source: AA6agR6zuzDfMk9fxKwk1F//fcR8VdIgb+NJQ/7GTu1ecWFQDKEMuYgfGOFD2p9Y12U78xhqicqkWA==
+X-Received: by 2002:a05:600c:2e47:b0:3a6:75fe:82a9 with SMTP id q7-20020a05600c2e4700b003a675fe82a9mr1159075wmf.189.1661933314602;
+        Wed, 31 Aug 2022 01:08:34 -0700 (PDT)
+Received: from localhost.localdomain (cpc92880-cmbg19-2-0-cust679.5-4.cable.virginm.net. [82.27.106.168])
+        by smtp.gmail.com with ESMTPSA id f16-20020a5d58f0000000b0021e42e7c7dbsm11418278wrd.83.2022.08.31.01.08.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 31 Aug 2022 01:08:34 -0700 (PDT)
+From:   Jean-Philippe Brucker <jean-philippe@linaro.org>
+To:     broonie@kernel.org, lgirdwood@gmail.com
+Cc:     bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
+        agross@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        robimarko@gmail.com,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH v2] dt-bindings: regulator: Fix qcom,spmi-regulator schema
+Date:   Wed, 31 Aug 2022 09:05:04 +0100
+Message-Id: <20220831080503.17600-1-jean-philippe@linaro.org>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [RESEND PATCH v2 3/5] dt-bindings: firmware: qcom-scm: Add
- optional interrupt
-Content-Language: en-US
-To:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     David Heidelberg <david@ixit.cz>,
-        Robert Marko <robimarko@gmail.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>
-References: <1661898311-30126-1-git-send-email-quic_gurus@quicinc.com>
- <1661898311-30126-4-git-send-email-quic_gurus@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1661898311-30126-4-git-send-email-quic_gurus@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,40 +73,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/08/2022 01:25, Guru Das Srinagesh wrote:
-> Add an interrupt specification to the bindings to support the wait-queue
-> feature.
-> 
-> Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
+The DT validator reports an error in the schema:
 
-Also not CC-ed to proper people and lists.
+Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml: ignoring, error in schema: patternProperties: ^(5vs[1-2]|(l|s)[1-9][0-9]?|lvs[1-3])$: properties
 
-> ---
->  Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> index e279fd2..4d6c89f 100644
-> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-> @@ -75,6 +75,11 @@ properties:
->        Specify this flag to remove SCM call serialization. Need to ensure that
->        the firmware being used supports this feature first.
->  
-> +  interrupts:
-> +    description:
-> +      The wait-queue interrupt that firmware raises as part of handshake
-> +      protocol to handle sleeping SCM calls.
+Move the unevaluatedProperties statement out of the properties section
+to fix it.
 
-Missing constraints.
+Fixes: 0b3bbd7646b0 ("regulator: qcom,spmi-regulator: Convert to dtschema")
+Reviewed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+---
+v2: Added Rob's reviewed-by, adding some Ccs
+v1: https://lore.kernel.org/all/20220822152224.507497-2-jean-philippe@linaro.org/
+---
+ .../devicetree/bindings/regulator/qcom,spmi-regulator.yaml     | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Which firmwares support it?
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
+index 8b7c4af4b551..faa4af9fd035 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/qcom,spmi-regulator.yaml
+@@ -35,6 +35,7 @@ patternProperties:
+     description: List of regulators and its properties
+     type: object
+     $ref: regulator.yaml#
++    unevaluatedProperties: false
+ 
+     properties:
+       qcom,ocp-max-retries:
+@@ -100,8 +101,6 @@ patternProperties:
+           SAW controlled gang leader. Will be configured as SAW regulator.
+         type: boolean
+ 
+-      unevaluatedProperties: false
+-
+ required:
+   - compatible
+ 
+-- 
+2.37.2
 
-> +
->    qcom,dload-mode:
->      $ref: /schemas/types.yaml#/definitions/phandle-array
->      items:
-
-
-Best regards,
-Krzysztof
