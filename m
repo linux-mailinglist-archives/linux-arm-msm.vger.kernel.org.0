@@ -2,150 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9220E5A7B64
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Aug 2022 12:37:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EF5B5A7B93
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Aug 2022 12:43:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229941AbiHaKhV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Aug 2022 06:37:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53266 "EHLO
+        id S230000AbiHaKnp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Aug 2022 06:43:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbiHaKhU (ORCPT
+        with ESMTP id S230194AbiHaKnf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Aug 2022 06:37:20 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5E2BB2865
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 03:37:18 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id c7so11010356wrp.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 03:37:18 -0700 (PDT)
+        Wed, 31 Aug 2022 06:43:35 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 563BDC88BB
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 03:43:28 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id jm11so13726765plb.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 03:43:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=qmSDVvWPmXjsEoLB/yy4dBeFNE6LDECdPTKFlVF1PoE=;
-        b=sjv1ud0NJToWCCz5mpoI1XXv7VRN42nSodi+vU6HqC3fe4/RDdH9q78MztUStUg3tz
-         Xc2VH//pGT74lRB34bGeve8JkG1qnn0+IqPnock9NFdhh6qZlnaCkIyowzKTRT7FJxji
-         z/GR4fNB9q+235VImiHhUj3qtbmxYAGPA6OWg32iyZY+RWa1WOllcMXAW5Ypa+UHJ8jW
-         8xs5JdrK3PiKkOFMlLV0DL+qhh48j42QQnv6mKDYipwbJKuU6YxKUw7q3wlwpZcq+q8X
-         TT/+nZgkSnsztlClPhtaZpJBrpVs5ezXDDOxx5Tro2hYIsNMiKVkIvoSrdqaMCZkKMyS
-         wVgA==
+        d=ecs-corp-partner-google-com.20210112.gappssmtp.com; s=20210112;
+        h=message-id:date:subject:cc:to:from:from:to:cc;
+        bh=A2LdkydV9AGLhMQY5rQpkTItkU8kDqfLlwLCs52s6tI=;
+        b=O4kipsSqeeQI8MpWgYiCpxLdomQ3bpf2BSWx1H3x1JeumMRmRG7KowaWaIMKyrvyik
+         QWgFIiQq5hdIxoyp4DzuxbdinvGrSM+iamYZgNAzed9RC3rnbaNHC7+Ff3k5iTmOb7IH
+         7vE/X0buWdmytGSaiNQO+ZUUskkD7n2hYrCb7c2keCDagaaKyaul4DxCElDHCalFe1TK
+         WNYAgMT4+bLFZpU160IUqYngC7TxXXoSIvM4YbmoND+dXKAp0PRI69Yy9MTIzlqWPIR7
+         RpOhgS3h11bjoUMuYXY2zIWgtjZ9pk70FVboyU6T/KjayipZNIEfRcliLpMBE9ZC2A8b
+         FyeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=qmSDVvWPmXjsEoLB/yy4dBeFNE6LDECdPTKFlVF1PoE=;
-        b=Kz+XYYaqIeUl6sSlpQBbJNBqRNwEBRXUhcTWxiD0e6wRdokz+VLOOe3K5LYX7nRp/a
-         WdOsy5lpZ4DLD8XG0WmcsHfg6zBRNnEY8D6PEBg0o+eWPrnPGkvE+EXj60WENZlQrCSz
-         5zQL4/+nFm8YBRwzDd7L01ZYOjWx+nu3JnOJIHo4UWShoGqUS6O6hKUleHsICQJjSwYj
-         /eGtmPr1v6aXMCgQYs+hlYPLnvk2PQZ8v24Lixt4G9TIjiLKm+JwGa702EOfhGg7ou1/
-         zSZumS11hbVvMLZuIc5DR0gKE13YYFMKdrI2G9E+AIQnQ/9QEMKdMGAN3mbSyWv31zZF
-         CvBw==
-X-Gm-Message-State: ACgBeo33Bei8p7pj4KNzmLWvCzsaJl4WVDgLS9MgUDIJCGt9pCnNckYy
-        sOFqzmLm66+UySgRt5RvFntHAg==
-X-Google-Smtp-Source: AA6agR7zq/2i3kOzfh+ND3aVSosKcimESlsCtfJ9TPLHCMLrzMvYwqw/Dz65I9sh80Ti/NbGaa+m0w==
-X-Received: by 2002:a05:6000:144a:b0:220:7181:9283 with SMTP id v10-20020a056000144a00b0022071819283mr10935127wrx.158.1661942237422;
-        Wed, 31 Aug 2022 03:37:17 -0700 (PDT)
-Received: from [192.168.86.238] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.googlemail.com with ESMTPSA id e3-20020adfe383000000b0021ef34124ebsm12377427wrm.11.2022.08.31.03.37.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 Aug 2022 03:37:16 -0700 (PDT)
-Message-ID: <a4562481-780b-585f-01a5-d447040fbd0a@linaro.org>
-Date:   Wed, 31 Aug 2022 11:37:15 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 2/6] ASoC: codecs: wsa-macro: add support for sm8450 and
- sc8280xp
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh@kernel.org>
-Cc:     broonie@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        perex@perex.cz, tiwai@suse.com,
-        pierre-louis.bossart@linux.intel.com,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220818134619.3432-1-srinivas.kandagatla@linaro.org>
- <20220818134619.3432-3-srinivas.kandagatla@linaro.org>
- <20220818171222.GG1978870-robh@kernel.org>
- <9c9226d9-8470-6672-d8ce-3fb1e4df3fda@linaro.org>
- <5da6171a-4949-9cc7-2967-6cc39a7955c8@linaro.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <5da6171a-4949-9cc7-2967-6cc39a7955c8@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
+        bh=A2LdkydV9AGLhMQY5rQpkTItkU8kDqfLlwLCs52s6tI=;
+        b=nwrouTiAotsgKSSwDX2wequO8yenWWgO2MbsHXbdkGVagi79OETibk6Pb4TFXeoq5U
+         +/4y9gLXILiuTskuZqOaD/rX8Gqy386NGcQEzloYOFVp8CDqd10ef0QCJ72foj4vTmHe
+         34EolIdIlkhfPMu7Dfp/pJiYzonC7VzRb9bFixT1MeeZLj+jpckwp8mrOSLPzuupHz2q
+         sV1WYeRDbPNXxD0On5WtOU+5u80Nl9TbTQnAdu7WpcJJbSe/pLNPlrYcOPe/wsmRrz79
+         FYUz7DdAYuG+4+kJ0QRJN8I3bQXH7m+/Gh8dUBS8db9hVFZNwn/VPBweFAcwwIA+2PQC
+         BtFA==
+X-Gm-Message-State: ACgBeo1wmWI8vB3MJqDcVAua3GgA5qc8Y59iCts1WlFDQwht9bpen5SU
+        e7RKl+TIL8AqPI9rKQEUNKggWA==
+X-Google-Smtp-Source: AA6agR7t0T6zJQLfXVRFxDuVMmANdIBGRVNj2vLbzWSOvv80L3yA6WjJ/IpZ1VM9O+wObuj1HVPtqg==
+X-Received: by 2002:a17:902:ba8a:b0:172:baa0:5676 with SMTP id k10-20020a170902ba8a00b00172baa05676mr26140608pls.64.1661942607691;
+        Wed, 31 Aug 2022 03:43:27 -0700 (PDT)
+Received: from localhost.localdomain ([103.150.184.130])
+        by smtp.gmail.com with ESMTPSA id b13-20020a170902650d00b0016be596c8afsm11266905plk.282.2022.08.31.03.43.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 31 Aug 2022 03:43:27 -0700 (PDT)
+From:   Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>
+To:     LKML <linux-kernel@vger.kernel.org>
+Cc:     Henry Sun <henrysun@google.com>,
+        Bob Moragues <moragues@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v2 1/2] dt-bindings: arm: qcom: Document additional skus for sc7180 pazquel360
+Date:   Wed, 31 Aug 2022 10:43:17 +0000
+Message-Id: <20220831104220.v2.1.I11899dbd0476ffc83aaca07f8ca9b204ecd9a84c@changeid>
+X-Mailer: git-send-email 2.17.1
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+pazquel360 is an extension project based on pazquel.
+We create 3 sku on pazquel360:
+   sku 20 for LTE with physical SIM _and_ eSIM and WiFi
+   sku 21 for WiFi only
+   sku 22 for LTE with only a physical SIM
+ Both sku20 and sku22 are LTE SKUs.
+ One has the eSIM stuffed and one doesn't.
+ There is a single shared device tree for the two.
 
+Signed-off-by: Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
-On 31/08/2022 10:19, Krzysztof Kozlowski wrote:
-> On 31/08/2022 12:17, Srinivas Kandagatla wrote:
->>
->>
->> On 18/08/2022 18:12, Rob Herring wrote:
->>> On Thu, Aug 18, 2022 at 02:46:15PM +0100, Srinivas Kandagatla wrote:
->>>> Add compatible for sm8450 and sc8280xp.
->>>>
->>>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->>>> ---
->>>>    sound/soc/codecs/lpass-wsa-macro.c | 2 ++
->>>>    1 file changed, 2 insertions(+)
->>>>
->>>> diff --git a/sound/soc/codecs/lpass-wsa-macro.c b/sound/soc/codecs/lpass-wsa-macro.c
->>>> index 27da6c6c3c5a..f82c297ea3ab 100644
->>>> --- a/sound/soc/codecs/lpass-wsa-macro.c
->>>> +++ b/sound/soc/codecs/lpass-wsa-macro.c
->>>> @@ -2561,6 +2561,8 @@ static const struct dev_pm_ops wsa_macro_pm_ops = {
->>>>    static const struct of_device_id wsa_macro_dt_match[] = {
->>>>    	{.compatible = "qcom,sc7280-lpass-wsa-macro"},
->>>>    	{.compatible = "qcom,sm8250-lpass-wsa-macro"},
->>>> +	{.compatible = "qcom,sm8450-lpass-wsa-macro"},
->>>> +	{.compatible = "qcom,sc8280xp-lpass-wsa-macro" },
->>>
->>> Looks like these are backwards compatible with the existing versions,
->>> why not reflect that in the binding?
->> Backward compatibility is not always true, some of the registers and
->> there defaults tend to change across SoCs. Having SoC specific
->> compatible could help us deal with this and also make code more inline
->> with other codec macros in LPASS IP.
-> 
-> I am not saying that there should be no SoC specific compatible. This
-> one is a must, but the question why duplicating the entries and not
-> using fallback?
+---
 
-You mean using fallback compatible "qcom,sc7280-lpass-wsa-macro" in 
-sc8280xp devicetree and not add new compatibles in the driver?
+(no changes since v1)
 
-The reason for adding this new compatible strings is that macros in this 
-lpass codec that differ form each SoC.
-ex: [PATCH 6/6] ASoC: codecs: tx-macro: add support for sm8450 and 
-sc8280xp and there is a pending patch on va-macro that has soundwire 
-controller frame sync and reset control which is moved from tx-macro to 
-va-macro.
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-so DT might endup with mix of compatibles for same LPASS Codec like this:
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index fb1d00bcc847..851cf5edb582 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -459,6 +459,17 @@ properties:
+           - const: google,pazquel-sku2
+           - const: qcom,sc7180
+ 
++      - description: Google Pazquel360 with LTE (newest rev)
++        items:
++          - const: google,pazquel-sku22
++          - const: google,pazquel-sku20
++          - const: qcom,sc7180
++
++      - description: Google Pazquel360 with WiFi (newest rev)
++        items:
++          - const: google,pazquel-sku21
++          - const: qcom,sc7180
++
+       - description: Sharp Dynabook Chromebook C1 (rev1)
+         items:
+           - const: google,pompom-rev1
+-- 
+2.17.1
 
-"qcom,sc7280-lpass-wsa-macro"
-"qcom,sc8280xp-lpass-va-macro"
-"qcom,sc8280xp-lpass-tx-macro"
-"qcom,sc8280xp-lpass-rx-macro"
-
-AFAIU, the fallback thing will work for things that are identical but in 
-this case they differ across SoCs, and having SoC specific compatibles 
-in now would help handle this.
-
-
-thanks,
-srini
-
-> 
-> Best regards,
-> Krzysztof
