@@ -2,85 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D3B795A88DF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 00:17:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE6B85A8910
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 00:40:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229916AbiHaWRT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Aug 2022 18:17:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45420 "EHLO
+        id S232529AbiHaWkZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Aug 2022 18:40:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229567AbiHaWRS (ORCPT
+        with ESMTP id S230410AbiHaWkY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Aug 2022 18:17:18 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15D2AE9926
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 15:17:16 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27VLo3Z1007109;
-        Wed, 31 Aug 2022 22:16:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=0AWZK2JritVLOwMklM8b3UUT3+DXka2c/qsVayHyR18=;
- b=Wbs5HnXXbAumTeP5kZSIoCvZXrryxZ85jcI9r7O7kxdwPjUzbtpolJEQ8Ln5Ia1MPLvH
- Yj/OcRwhlLoFHKmsxH4YivPg2qLBZvt4OhtPGZrcJmU2bVmDMGIapxvnHlRTeWDzHe7A
- vPZhlhExF1DVzUBoMxf3na5ttV8VfEOpur7AxA03frJlOCt64CyrD+FtraZEfvHpGzdn
- NY2gLLMkgd+nQdAmMwDHZ4cY3r34RVKbeWwiP7kzJq5NgYzZSuB+M1kP+mMS140/xqaN
- tHBY0+/NDKdYJ0UX2gdodNwQZSJeKl5lPtW484b8YWCqBqZFWeuO0JU89tixkWC9QMQN ig== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jaa0t1ghu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 31 Aug 2022 22:16:49 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27VMGmTK004273
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 31 Aug 2022 22:16:48 GMT
-Received: from [10.111.165.88] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 31 Aug
- 2022 15:16:46 -0700
-Message-ID: <d0dfbcd5-0299-3810-9cf1-e2d0a19ce321@quicinc.com>
-Date:   Wed, 31 Aug 2022 15:16:44 -0700
+        Wed, 31 Aug 2022 18:40:24 -0400
+Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B14E7548C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 15:40:22 -0700 (PDT)
+Received: by mail-il1-x129.google.com with SMTP id s11so6856333ilt.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 15:40:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=RzIT64p7dHEXl2Ie7DkQuJYbktQ+VKOmk+ml8MCajzM=;
+        b=n4rgmiRDSvpPLrm3XvCtz4qVxUEwBIVN8mugPBdfcVLMZ5DBGUrIFYUlnjZTcT3XCP
+         6lLzTlcC2SLWhFTbdh3npZc+dNq4Pj0k8s5PVwOwtoggWn4yAWxy94yRaffVqRusyImY
+         SnYGdGz4tFYog64KJ/BI6m9tQz2DtXUMdzSou/4uaqQgupenyjXG2uPyPFQW1V/zbuzi
+         aQBOVfpeMLZoeiBIFkfZiQnNw7F1bcu2LqhsBW7EJDLHaZZYDUQxHJQFzT8P3P3wF5z4
+         bqdrn9QTXAII1eQkq/5kUM7R27yO4BtyJmDbOkB9sY4B/6q77c/re+X7TDd86qKXloMt
+         7rgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=RzIT64p7dHEXl2Ie7DkQuJYbktQ+VKOmk+ml8MCajzM=;
+        b=6MgkOSuI/NlBD5KIJd/kSlZWLTPU3hOZeZWNcr1XKsSSX2vgVBFiOBu+XywbP5iyRu
+         /aqNQ+us6jk8iyOiFYO4MzewBpWyH3TsA1Bu1lkZK4c9cpv3o6Oz0hx7fVcB2dPUfMa9
+         B90fWRQDdTggtUoCaMK+vWLnqcY6jc1sgRKtWoXHt46TuzIgiddCpz450v71SDwmKFoU
+         GnnR8nVzMUPnAm93VjpOmdx+sFP1dttIpL/iSFv/Va7u4a4ETV67XvdsZJ6+6t2k2vEz
+         /CmQAQKTUDfjzWQBJ9FBSpXYrpZyefWH32H2ayNZTewLBKzZxAKq5edXol3NSjiXbocL
+         JSzQ==
+X-Gm-Message-State: ACgBeo2A2l5Qu7QcUF7wozuB0P16zzE6DJvi27Hl3bH+wOFDZ+J9n6Ny
+        y1EifaaZ9X2m+LPFxye8QrfiGX+oK5D/HA==
+X-Google-Smtp-Source: AA6agR7L7tTfSzUelsBqHqLUqZa5knZ+7yNZbZJBEePFT25qTk929vQ83PM4YjLE9I56evt27PhHOw==
+X-Received: by 2002:a05:6e02:1b89:b0:2e9:3065:ea94 with SMTP id h9-20020a056e021b8900b002e93065ea94mr15401590ili.279.1661985621819;
+        Wed, 31 Aug 2022 15:40:21 -0700 (PDT)
+Received: from localhost.localdomain ([98.61.227.136])
+        by smtp.gmail.com with ESMTPSA id n30-20020a02a19e000000b0034c0db05629sm1392005jah.161.2022.08.31.15.40.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 31 Aug 2022 15:40:21 -0700 (PDT)
+From:   Alex Elder <elder@linaro.org>
+To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     mka@chromium.org, evgreen@chromium.org, bjorn.andersson@linaro.org,
+        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+        elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH net-next 0/6] net: ipa: use IDs to track transaction state
+Date:   Wed, 31 Aug 2022 17:40:11 -0500
+Message-Id: <20220831224017.377745-1-elder@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v1 1/4] drm/msm/mdp5: stop overriding drvdata
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20220620213054.1872954-1-dmitry.baryshkov@linaro.org>
- <20220620213054.1872954-2-dmitry.baryshkov@linaro.org>
- <251f0ce1-05cd-548e-9253-82adbc1038ce@quicinc.com>
- <CAA8EJpogK9BbrSzgJp+Rb_Op2+JBFsTdQHxpTFz28c2biE8AUw@mail.gmail.com>
- <7bdfc4da-740b-9e4d-647c-a349b0bfa1f9@quicinc.com>
- <047e1001-754d-0913-fcbe-a4747c5df8b8@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <047e1001-754d-0913-fcbe-a4747c5df8b8@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9K_xUvsr2BSShGym20kHecIUr_b9n4wp
-X-Proofpoint-ORIG-GUID: 9K_xUvsr2BSShGym20kHecIUr_b9n4wp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-31_14,2022-08-31_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 adultscore=0
- mlxlogscore=999 phishscore=0 suspectscore=0 mlxscore=0 malwarescore=0
- spamscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2208310108
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -89,151 +72,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series is the first of three groups of changes that simplify
+the way the IPA driver tracks the state of its transactions.
 
+Each GSI channel has a fixed number of transactions allocated at
+initialization time.  The number allocated matches the number of
+TREs in the transfer ring associated with the channel.  This is
+because the transfer ring limits the number of transfers that can
+ever be underway, and in the worst case, each transaction represents
+a single TRE.
 
-On 8/26/2022 7:23 AM, Dmitry Baryshkov wrote:
-> On 24/08/2022 20:20, Abhinav Kumar wrote:
->>
->>
->> On 8/24/2022 1:29 AM, Dmitry Baryshkov wrote:
->>> On Wed, 24 Aug 2022 at 04:25, Abhinav Kumar 
->>> <quic_abhinavk@quicinc.com> wrote:
->>>>
->>>>
->>>>
->>>> On 6/20/2022 2:30 PM, Dmitry Baryshkov wrote:
->>>>> The rest of the code expects that master's device drvdata is the
->>>>> struct msm_drm_private instance. Do not override the mdp5's drvdata.
->>>>>
->>>>> Fixes: 6874f48bb8b0 ("drm/msm: make mdp5/dpu devices master 
->>>>> components")
->>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>>
->>>> Is this just for consistency across mdp5/dpu drivers?
->>>>
->>>> What issue was seen if mdp5's platform data is overwritten?
->>>
->>> I think there was a crash in mdp5_destroy, but I did not capture the
->>> log at the moment.
->>>
->>> As you can see, the mdp5_destroy() expects to get mdp5_kms pointer
->>> from the drvdata. However the msm_drv_probe sets the drvdata to
->>> msm_drm_private instance. Boom.
->>
->> Yes, I see that msm_drv_probe sets the drvdata to msm_drm_private.
->> But I also see that mdp5_init then sets it to
->>
->> platform_set_drvdata(pdev, mdp5_kms);
->>
->> Does this not override it then?
-> 
-> It does. But then the mdp5_pm_ops use msm_pm_prepare()/_complete(). And 
-> these calls expect the msm_drm_private instance in the drvdata. Maybe I 
-> stumbled upon this. I don't remember exactly, unfortunately.
-> 
+Transactions go through various states during their lifetime.
+Currently a set of lists keeps track of which transactions are in
+each state.  Initially, all transactions are free.  An allocated
+transaction is placed on the allocated list.  Once an allocated
+transaction is committed, it is moved from the allocated to the
+committed list.  When a committed transaction is sent to hardware
+(via a doorbell) it is moved to the pending list.  When hardware
+signals that some work has completed, transactions are moved to the
+completed list.  Finally, when a completed transaction is polled
+it's moved to the polled list before being removed when it becomes
+free.
 
-This explanation makes sense to me. Understood. Hence,
+Changing a transaction's state thus normally involves manipulating
+two lists, and to prevent corruption a spinlock is held while the
+lists are updated.
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Transactions move through their states in a well-defined sequence
+though, and they do so strictly in order.  So transaction 0 is
+always allocated before transaction 1; transaction 0 is always
+committed before transaction 1; and so on, through completion,
+polling, and becoming free.  Because of this, it's sufficient to
+just keep track of which transaction is the first in each state.
+The rest of the transactions in a given state can be derived from
+the first transaction in an "adjacent" state.  As a result, we can
+track the state of all transactions with a set of indexes, and can
+update these without the need for a spinlock.
 
+This first group of patches just defines the set of indexes that
+will be used for this new way of tracking transaction state.  Two
+more groups of patches will follow.  I've broken the 17 patches into
+these three groups to facilitate review.
 
->> Also seems like the commit which introduced it is present since april, 
->> this should have happened even earlier then right?
->>
->>>
->>>>
->>>>> ---
->>>>>    drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 19 +++++++++----------
->>>>>    1 file changed, 9 insertions(+), 10 deletions(-)
->>>>>
->>>>> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c 
->>>>> b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
->>>>> index c668a4b27cc6..daf5b5ca7233 100644
->>>>> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
->>>>> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
->>>>> @@ -203,7 +203,7 @@ static int mdp5_set_split_display(struct 
->>>>> msm_kms *kms,
->>>>> slave_encoder);
->>>>>    }
->>>>>
->>>>> -static void mdp5_destroy(struct platform_device *pdev);
->>>>> +static void mdp5_destroy(struct mdp5_kms *mdp5_kms);
->>>>>
->>>>>    static void mdp5_kms_destroy(struct msm_kms *kms)
->>>>>    {
->>>>> @@ -223,7 +223,7 @@ static void mdp5_kms_destroy(struct msm_kms *kms)
->>>>>        }
->>>>>
->>>>>        mdp_kms_destroy(&mdp5_kms->base);
->>>>> -     mdp5_destroy(mdp5_kms->pdev);
->>>>> +     mdp5_destroy(mdp5_kms);
->>>>>    }
->>>>>
->>>>>    #ifdef CONFIG_DEBUG_FS
->>>>> @@ -651,9 +651,8 @@ static int mdp5_kms_init(struct drm_device *dev)
->>>>>        return ret;
->>>>>    }
->>>>>
->>>>> -static void mdp5_destroy(struct platform_device *pdev)
->>>>> +static void mdp5_destroy(struct mdp5_kms *mdp5_kms)
->>>>>    {
->>>>> -     struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
->>>>>        int i;
->>>>>
->>>>>        if (mdp5_kms->ctlm)
->>>>> @@ -667,7 +666,7 @@ static void mdp5_destroy(struct platform_device 
->>>>> *pdev)
->>>>>                kfree(mdp5_kms->intfs[i]);
->>>>>
->>>>>        if (mdp5_kms->rpm_enabled)
->>>>> -             pm_runtime_disable(&pdev->dev);
->>>>> +             pm_runtime_disable(&mdp5_kms->pdev->dev);
->>>>>
->>>>>        drm_atomic_private_obj_fini(&mdp5_kms->glob_state);
->>>>>        drm_modeset_lock_fini(&mdp5_kms->glob_state_lock);
->>>>> @@ -816,8 +815,6 @@ static int mdp5_init(struct platform_device 
->>>>> *pdev, struct drm_device *dev)
->>>>>                goto fail;
->>>>>        }
->>>>>
->>>>> -     platform_set_drvdata(pdev, mdp5_kms);
->>>>> -
->>>>>        spin_lock_init(&mdp5_kms->resource_lock);
->>>>>
->>>>>        mdp5_kms->dev = dev;
->>>>> @@ -915,7 +912,7 @@ static int mdp5_init(struct platform_device 
->>>>> *pdev, struct drm_device *dev)
->>>>>        return 0;
->>>>>    fail:
->>>>>        if (mdp5_kms)
->>>>> -             mdp5_destroy(pdev);
->>>>> +             mdp5_destroy(mdp5_kms);
->>>>>        return ret;
->>>>>    }
->>>>>
->>>>> @@ -975,7 +972,8 @@ static int mdp5_dev_remove(struct 
->>>>> platform_device *pdev)
->>>>>    static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
->>>>>    {
->>>>>        struct platform_device *pdev = to_platform_device(dev);
->>>>> -     struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
->>>>> +     struct msm_drm_private *priv = platform_get_drvdata(pdev);
->>>>> +     struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
->>>>>
->>>>>        DBG("");
->>>>>
->>>>> @@ -985,7 +983,8 @@ static __maybe_unused int 
->>>>> mdp5_runtime_suspend(struct device *dev)
->>>>>    static __maybe_unused int mdp5_runtime_resume(struct device *dev)
->>>>>    {
->>>>>        struct platform_device *pdev = to_platform_device(dev);
->>>>> -     struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
->>>>> +     struct msm_drm_private *priv = platform_get_drvdata(pdev);
->>>>> +     struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
->>>>>
->>>>>        DBG("");
->>>>>
->>>
->>>
->>>
-> 
+					-Alex
+
+Alex Elder (6):
+  net: ipa: use an array for transactions
+  net: ipa: track allocated transactions with an ID
+  net: ipa: track committed transactions with an ID
+  net: ipa: track pending transactions with an ID
+  net: ipa: track completed transactions with an ID
+  net: ipa: track polled transactions with an ID
+
+ drivers/net/ipa/gsi.h       |  9 +++-
+ drivers/net/ipa/gsi_trans.c | 99 ++++++++++++++++++++++++++++++-------
+ 2 files changed, 89 insertions(+), 19 deletions(-)
+
+-- 
+2.34.1
+
