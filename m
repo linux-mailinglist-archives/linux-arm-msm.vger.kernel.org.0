@@ -2,133 +2,223 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D18A5A80A3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Aug 2022 16:53:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96D725A816A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Aug 2022 17:39:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229453AbiHaOxJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Aug 2022 10:53:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46104 "EHLO
+        id S231878AbiHaPjS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Aug 2022 11:39:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbiHaOxI (ORCPT
+        with ESMTP id S229723AbiHaPjR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Aug 2022 10:53:08 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A445C9917
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 07:53:07 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id nc14so23976458ejc.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 07:53:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=3SBHDQAodprZxU58N6fxxm9XMEGZF1r8qJ0Wxzeitls=;
-        b=V3wivMLpqCGUfOvErwvyzMGDMB3actPkoJXjB9x+5QdBvqm1czGegZ67hUVOoXcOJp
-         aV3bW0fiY5lgbhj0nESLHHfiLaosxh/WZORVW3dAdHzsGuCDNZZOCddyyR/erM5pSLuc
-         B8clr5tOPV87ktHrDNy3qTqsxctKihiE8SXYo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=3SBHDQAodprZxU58N6fxxm9XMEGZF1r8qJ0Wxzeitls=;
-        b=cNRudolng3FjxfytW4WVXI+u6F7wgtRCOTu3gb3DxX/M8LVTdSgAaq0EcTbM5I03h0
-         /ddIAu0XlCjNFPVHvgm1Fva96gNJBgK4luYgeYPcu3haLJRS+jY6iqnFP43bs+WkZcDP
-         GW8IA84pd0yoCQ7AsSF90ZaAccOtQOF3lWwtuCLp7aLimwfL9S1rZI7k5Es0C7uUiQ7N
-         ObEB5g1vQ44Ik6Q/DXMzqTI86ZxaI+HSTgtLmiUYAtKM2k9TKWKaD5q2kt9VNemaKbKS
-         rNgBb8EdAg9ZQZFNSDTd+ZvhDUgMIf6k0Eah4mvXGpKcTCBO7kfpOs61d+JIKI1z5MzF
-         l55A==
-X-Gm-Message-State: ACgBeo28LR0F4hhphjn5e37sADM8nSvaCtHyFWQRtrlkN3RbmPwDWuSf
-        okXFcnwKQI1X7V7ySv1FxOjaYDkGV2ppP6Xl
-X-Google-Smtp-Source: AA6agR7wjGT9sE6n/0LL6YBl/KgwE0STv4OzjWdBqfuq9GdFyzSIADmow4zJWxJDs/w1A6Uv2NHgGA==
-X-Received: by 2002:a17:907:16a9:b0:742:7a6:b17e with SMTP id hc41-20020a17090716a900b0074207a6b17emr6932023ejc.108.1661957585823;
-        Wed, 31 Aug 2022 07:53:05 -0700 (PDT)
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com. [209.85.221.42])
-        by smtp.gmail.com with ESMTPSA id v12-20020a1709061dcc00b0073dc8d0eabesm7338110ejh.15.2022.08.31.07.53.04
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 Aug 2022 07:53:04 -0700 (PDT)
-Received: by mail-wr1-f42.google.com with SMTP id e13so17706756wrm.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 07:53:04 -0700 (PDT)
-X-Received: by 2002:a05:6000:15c6:b0:226:f246:6e70 with SMTP id
- y6-20020a05600015c600b00226f2466e70mr177095wry.617.1661957584434; Wed, 31 Aug
- 2022 07:53:04 -0700 (PDT)
+        Wed, 31 Aug 2022 11:39:17 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E311D8B07;
+        Wed, 31 Aug 2022 08:39:16 -0700 (PDT)
+Received: from dimapc.. (109-252-119-13.nat.spd-mgts.ru [109.252.119.13])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: dmitry.osipenko)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 605226601DE6;
+        Wed, 31 Aug 2022 16:39:11 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1661960354;
+        bh=cwgYAH7jwolcyCLtGI04FpqLq8hntubcRxLSWxfNopM=;
+        h=From:To:Cc:Subject:Date:From;
+        b=oRfvv85zoSNQfVjXtI/ID4UDRPhD6artDtb2I5AoSEgREp4o+Jij3G0qU6jSQdbbb
+         0K7CNinJL0fj0MFBHLIzN27bJRcMu8M/V/eckdXPmxX05IV67Oy0TqwNPqwjXRrZ+y
+         Ez45hjwVwU5b5dgqxLDrh+xHa5aZa7h7zzVnWEP+PDVoKuZgWT+nJs4MPllQdgXJaA
+         n2QsFJspmF+z32Y90ucWbmDcYyaxg2SftiXkQXa6x//kOMcPGSb0MI6FBn8PhF43Il
+         vWV+hyeg1oYHO5wglYHluD5bd5Ro1QmwF3M8BYhLv64bphBv+7ZoqgFkkN4Apu2M2Y
+         UBDopC0d+lehw==
+From:   Dmitry Osipenko <dmitry.osipenko@collabora.com>
+To:     David Airlie <airlied@linux.ie>, Gerd Hoffmann <kraxel@redhat.com>,
+        Gurchetan Singh <gurchetansingh@chromium.org>,
+        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Daniel Almeida <daniel.almeida@collabora.com>,
+        Gert Wollny <gert.wollny@collabora.com>,
+        Gustavo Padovan <gustavo.padovan@collabora.com>,
+        Daniel Stone <daniel@fooishbar.org>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Rob Clark <robdclark@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        =?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas_os@shipmail.org>,
+        Qiang Yu <yuq825@gmail.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Jason Gunthorpe <jgg@ziepe.ca>,
+        Leon Romanovsky <leon@kernel.org>,
+        Juergen Gross <jgross@suse.com>,
+        Stefano Stabellini <sstabellini@kernel.org>,
+        Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Dmitry Osipenko <digetx@gmail.com>,
+        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
+        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        kernel@collabora.com, virtualization@lists.linux-foundation.org,
+        linux-rdma@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH v4 00/21] Move all drivers to a common dma-buf locking convention
+Date:   Wed, 31 Aug 2022 18:37:36 +0300
+Message-Id: <20220831153757.97381-1-dmitry.osipenko@collabora.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-References: <20220829164952.2672848-1-dianders@chromium.org> <Yw8EE/ESDUnIRf8P@hovoldconsulting.com>
-In-Reply-To: <Yw8EE/ESDUnIRf8P@hovoldconsulting.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 31 Aug 2022 07:52:52 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VJz2hjvsUhsjBPt9nmm3X62oTdAqMeSFABYJietPPzWw@mail.gmail.com>
-Message-ID: <CAD=FV=VJz2hjvsUhsjBPt9nmm3X62oTdAqMeSFABYJietPPzWw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] arm64: dts: qcom: Fix broken regulator spec on
- RPMH boards
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        Mark Brown <broonie@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hello,
 
-On Tue, Aug 30, 2022 at 11:47 PM Johan Hovold <johan@kernel.org> wrote:
->
-> On Mon, Aug 29, 2022 at 09:49:46AM -0700, Douglas Anderson wrote:
-> > Prior to commit efb0cb50c427 ("regulator: qcom-rpmh: Implement
-> > get_optimum_mode(), not set_load()") several boards were able to
-> > change their regulator mode even though they had nothing listed in
-> > "regulator-allowed-modes". After that commit (and fixes [1]) we'll be
-> > stuck at the initial mode. Discussion of this (again, see [1]) has
-> > resulted in the decision that the old dts files were wrong and should
-> > be fixed to fully restore old functionality.
-> >
-> > This series attempts to fix everyone. I've kept each board in a
-> > separate patch to make stable / backports work easier.
->
-> Should you also update the bindings so that this can be caught during
-> devicetree validation? That is, to always require
-> "regulator-allowed-modes" when "regulator-allow-set-load" is specified.
+This series moves all drivers to a dynamic dma-buf locking specification.
+From now on all dma-buf importers are made responsible for holding
+dma-buf's reservation lock around all operations performed over dma-bufs
+in accordance to the locking specification. This allows us to utilize
+reservation lock more broadly around kernel without fearing of a potential
+deadlocks.
 
-Yeah, it's probably a good idea. I'm happy to review a patch that does
-that. I'm already quite a few patches deep of submitting random
-cleanups because someone mentioned it in a code review. ;-) That's
-actually how I got in this mess to begin with. The RPMH change was in
-response to a request in a different code review. ...and that came
-about in a code review that was posted in response to a comment about
-how awkward setting regulator loads was... Need to get back to my day
-job.
+This patchset passes all i915 selftests. It was also tested using VirtIO,
+Panfrost, Lima, Tegra, udmabuf, AMDGPU and Nouveau drivers. I tested cases
+of display+GPU, display+V4L and GPU+V4L dma-buf sharing (where appropriate),
+which covers majority of kernel drivers since rest of the drivers share
+same or similar code paths.
 
-In any case, I think these dts patches are ready to land now.
+Changelog:
 
+v4: - Added dma_buf_mmap() to the "locking convention" documentation,
+      which was missed by accident in v3.
 
-> Perhaps at least for RPMh as it seemed you found some cases were this
-> wasn't currently needed (even if that sounded like an Linux-specific
-> implementation detail).
+    - Added acks from Christian König, Tomasz Figa and Hans Verkuil that
+      they gave to couple v3 patches.
 
-I think you're talking about the RPM vs. RPMH difference? It's
-actually not Linux specific. In RPM the API to the "hardware"
-(actually a remote processor) is to pass the load. In RPMH the API to
-the hardware is to pass a mode. This is why RPMH has
-"regulator-allowed-modes" and "regulator-initial-mode". Both RPM and
-RPMH have "regulator-allow-set-load" though...
+    - Dropped the "_unlocked" postfix from function names that don't have
+      the locked variant, as was requested by Christian König.
 
--Doug
+    - Factored out the per-driver preparations into separate patches
+      to ease reviewing of the changes, which is now doable without the
+      global dma-buf functions renaming.
+
+    - Factored out the dynamic locking convention enforcements into separate
+      patches which add the final dma_resv_assert_held(dmabuf->resv) to the
+      dma-buf API functions.
+
+v3: - Factored out dma_buf_mmap_unlocked() and attachment functions
+      into aseparate patches, like was suggested by Christian König.
+
+    - Corrected and factored out dma-buf locking documentation into
+      a separate patch, like was suggested by Christian König.
+
+    - Intel driver dropped the reservation locking fews days ago from
+      its BO-release code path, but we need that locking for the imported
+      GEMs because in the end that code path unmaps the imported GEM.
+      So I added back the locking needed by the imported GEMs, updating
+      the "dma-buf attachment locking specification" patch appropriately.
+
+    - Tested Nouveau+Intel dma-buf import/export combo.
+
+    - Tested udmabuf import to i915/Nouveau/AMDGPU.
+
+    - Fixed few places in Etnaviv, Panfrost and Lima drivers that I missed
+      to switch to locked dma-buf vmapping in the drm/gem: Take reservation
+      lock for vmap/vunmap operations" patch. In a result invalidated the
+      Christian's r-b that he gave to v2.
+
+    - Added locked dma-buf vmap/vunmap functions that are needed for fixing
+      vmappping of Etnaviv, Panfrost and Lima drivers mentioned above.
+      I actually had this change stashed for the drm-shmem shrinker patchset,
+      but then realized that it's already needed by the dma-buf patches.
+      Also improved my tests to better cover these code paths.
+
+v2: - Changed locking specification to avoid problems with a cross-driver
+      ww locking, like was suggested by Christian König. Now the attach/detach
+      callbacks are invoked without the held lock and exporter should take the
+      lock.
+
+    - Added "locking convention" documentation that explains which dma-buf
+      functions and callbacks are locked/unlocked for importers and exporters,
+      which was requested by Christian König.
+
+    - Added ack from Tomasz Figa to the V4L patches that he gave to v1.
+
+Dmitry Osipenko (21):
+  dma-buf: Add unlocked variant of vmapping functions
+  dma-buf: Add unlocked variant of attachment-mapping functions
+  drm/gem: Take reservation lock for vmap/vunmap operations
+  drm/prime: Prepare to dynamic dma-buf locking specification
+  drm/armada: Prepare to dynamic dma-buf locking specification
+  drm/i915: Prepare to dynamic dma-buf locking specification
+  drm/omapdrm: Prepare to dynamic dma-buf locking specification
+  drm/tegra: Prepare to dynamic dma-buf locking specification
+  drm/etnaviv: Prepare to dynamic dma-buf locking specification
+  RDMA/umem: Prepare to dynamic dma-buf locking specification
+  misc: fastrpc: Prepare to dynamic dma-buf locking specification
+  xen/gntdev: Prepare to dynamic dma-buf locking specification
+  media: videobuf2: Prepare to dynamic dma-buf locking specification
+  media: tegra-vde: Prepare to dynamic dma-buf locking specification
+  dma-buf: Move dma_buf_vmap() to dynamic locking specification
+  dma-buf: Move dma_buf_attach() to dynamic locking specification
+  dma-buf: Move dma_buf_map_attachment() to dynamic locking
+    specification
+  dma-buf: Move dma_buf_mmap() to dynamic locking specification
+  dma-buf: Document dynamic locking convention
+  media: videobuf2: Stop using internal dma-buf lock
+  dma-buf: Remove obsoleted internal lock
+
+ Documentation/driver-api/dma-buf.rst          |   6 +
+ drivers/dma-buf/dma-buf.c                     | 211 +++++++++++++++---
+ drivers/gpu/drm/armada/armada_gem.c           |   8 +-
+ drivers/gpu/drm/drm_client.c                  |   4 +-
+ drivers/gpu/drm/drm_gem.c                     |  24 ++
+ drivers/gpu/drm/drm_gem_dma_helper.c          |   6 +-
+ drivers/gpu/drm/drm_gem_framebuffer_helper.c  |   6 +-
+ drivers/gpu/drm/drm_gem_ttm_helper.c          |   9 +-
+ drivers/gpu/drm/drm_prime.c                   |   6 +-
+ drivers/gpu/drm/etnaviv/etnaviv_gem_prime.c   |   2 +-
+ drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c    |   2 +-
+ drivers/gpu/drm/i915/gem/i915_gem_object.c    |  12 +
+ .../drm/i915/gem/selftests/i915_gem_dmabuf.c  |  16 +-
+ drivers/gpu/drm/lima/lima_sched.c             |   4 +-
+ drivers/gpu/drm/omapdrm/omap_gem_dmabuf.c     |   4 +-
+ drivers/gpu/drm/panfrost/panfrost_dump.c      |   4 +-
+ drivers/gpu/drm/panfrost/panfrost_perfcnt.c   |   6 +-
+ drivers/gpu/drm/qxl/qxl_object.c              |  17 +-
+ drivers/gpu/drm/qxl/qxl_prime.c               |   4 +-
+ drivers/gpu/drm/tegra/gem.c                   |  17 +-
+ drivers/infiniband/core/umem_dmabuf.c         |   7 +-
+ .../common/videobuf2/videobuf2-dma-contig.c   |  22 +-
+ .../media/common/videobuf2/videobuf2-dma-sg.c |  19 +-
+ .../common/videobuf2/videobuf2-vmalloc.c      |  17 +-
+ .../platform/nvidia/tegra-vde/dmabuf-cache.c  |   6 +-
+ drivers/misc/fastrpc.c                        |   6 +-
+ drivers/xen/gntdev-dmabuf.c                   |   8 +-
+ include/drm/drm_gem.h                         |   3 +
+ include/linux/dma-buf.h                       |  17 +-
+ 29 files changed, 318 insertions(+), 155 deletions(-)
+
+-- 
+2.37.2
+
