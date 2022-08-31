@@ -2,52 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE6B85A8910
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 00:40:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 739515A8911
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 00:40:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232529AbiHaWkZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 Aug 2022 18:40:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46604 "EHLO
+        id S232549AbiHaWk0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 Aug 2022 18:40:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230410AbiHaWkY (ORCPT
+        with ESMTP id S232186AbiHaWkZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 Aug 2022 18:40:24 -0400
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B14E7548C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 15:40:22 -0700 (PDT)
-Received: by mail-il1-x129.google.com with SMTP id s11so6856333ilt.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 15:40:22 -0700 (PDT)
+        Wed, 31 Aug 2022 18:40:25 -0400
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79E217B7AA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 15:40:23 -0700 (PDT)
+Received: by mail-io1-xd2a.google.com with SMTP id z72so13166394iof.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Aug 2022 15:40:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date;
-        bh=RzIT64p7dHEXl2Ie7DkQuJYbktQ+VKOmk+ml8MCajzM=;
-        b=n4rgmiRDSvpPLrm3XvCtz4qVxUEwBIVN8mugPBdfcVLMZ5DBGUrIFYUlnjZTcT3XCP
-         6lLzTlcC2SLWhFTbdh3npZc+dNq4Pj0k8s5PVwOwtoggWn4yAWxy94yRaffVqRusyImY
-         SnYGdGz4tFYog64KJ/BI6m9tQz2DtXUMdzSou/4uaqQgupenyjXG2uPyPFQW1V/zbuzi
-         aQBOVfpeMLZoeiBIFkfZiQnNw7F1bcu2LqhsBW7EJDLHaZZYDUQxHJQFzT8P3P3wF5z4
-         bqdrn9QTXAII1eQkq/5kUM7R27yO4BtyJmDbOkB9sY4B/6q77c/re+X7TDd86qKXloMt
-         7rgg==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=hjkW+5FH7s1T93UZlntThyQm/ZXADqLvUTT7CWgmonE=;
+        b=Nnwv169lcchIRi5N50vLHCVg0GD83gYuwrhUTbKeysdRSeVhUfGyShjZkynN+H9fkz
+         Llyy/qD77FnfR+XAHjvR1oWIxt9XRP1OxinTBBrs0rTXoxs9R2LF7GenOozgEgtruMcz
+         Ku/swqIu8gVSnXHYcwMIKYQggwfbRaUEjGeHwiLbeW7Gg3yM/YE2I+kyNmPXDO0tWcQh
+         txaonBYPfNiaNveIL24qrg8QKDDVT1bctVPwy1PVgdJqXFLLjKwfHU98p+t2EQHHC90P
+         v0Uy7L/4laStfaoAg5HcA00OT3mPvGAsk7izfExnF28oQ/VpQOBpdkcqfhcZ2dygSndb
+         Clkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=RzIT64p7dHEXl2Ie7DkQuJYbktQ+VKOmk+ml8MCajzM=;
-        b=6MgkOSuI/NlBD5KIJd/kSlZWLTPU3hOZeZWNcr1XKsSSX2vgVBFiOBu+XywbP5iyRu
-         /aqNQ+us6jk8iyOiFYO4MzewBpWyH3TsA1Bu1lkZK4c9cpv3o6Oz0hx7fVcB2dPUfMa9
-         B90fWRQDdTggtUoCaMK+vWLnqcY6jc1sgRKtWoXHt46TuzIgiddCpz450v71SDwmKFoU
-         GnnR8nVzMUPnAm93VjpOmdx+sFP1dttIpL/iSFv/Va7u4a4ETV67XvdsZJ6+6t2k2vEz
-         /CmQAQKTUDfjzWQBJ9FBSpXYrpZyefWH32H2ayNZTewLBKzZxAKq5edXol3NSjiXbocL
-         JSzQ==
-X-Gm-Message-State: ACgBeo2A2l5Qu7QcUF7wozuB0P16zzE6DJvi27Hl3bH+wOFDZ+J9n6Ny
-        y1EifaaZ9X2m+LPFxye8QrfiGX+oK5D/HA==
-X-Google-Smtp-Source: AA6agR7L7tTfSzUelsBqHqLUqZa5knZ+7yNZbZJBEePFT25qTk929vQ83PM4YjLE9I56evt27PhHOw==
-X-Received: by 2002:a05:6e02:1b89:b0:2e9:3065:ea94 with SMTP id h9-20020a056e021b8900b002e93065ea94mr15401590ili.279.1661985621819;
-        Wed, 31 Aug 2022 15:40:21 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=hjkW+5FH7s1T93UZlntThyQm/ZXADqLvUTT7CWgmonE=;
+        b=QS5hEKvpvC/QrjH58I6ujtMgcxXCdWH1VC+KGnjFS3IR3Mx/llgqOAj6XvWbtLFnZi
+         PDDSXdChGbGnevzNS+U+kODCZvcN3zQ9xT50NalUWHJNU9+JE+e4LoRWWadbSsUo8ryL
+         1TyilABUSo2QPkiusMCu7PVQl8wpFQoB1+9yMch0cYQTF6Zt9eE44ryHqC1jzv3oL7lQ
+         Fhd5TNRaPHX8xk6YbIj9S5sUXYIhxT0CvA9+jgGG7rUDR1Z/B10EjGZPyzUGVmF5l+65
+         LkfnvjLtzpGSEJfkh8XC/vNlOVNy6qDEGFGEgNU2YmW+qDGoVmS0Pwwcd4rdeyE//KPS
+         4ncA==
+X-Gm-Message-State: ACgBeo3OCLi67d6QLK7esNuXK61wNRhhc8X5U1V7lLY4KPCwnwvs+oNo
+        w23wy77p2htsM9lgUGONrW28nA==
+X-Google-Smtp-Source: AA6agR45AL7Z4KePSZ1jjAe8UmsoVzWr6mvZ/vFqsqKv1g3vR9ZLPuFuj/WzxpSanqjvbTKtI3fPww==
+X-Received: by 2002:a05:6638:3892:b0:342:8aa5:a050 with SMTP id b18-20020a056638389200b003428aa5a050mr16835283jav.145.1661985622865;
+        Wed, 31 Aug 2022 15:40:22 -0700 (PDT)
 Received: from localhost.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id n30-20020a02a19e000000b0034c0db05629sm1392005jah.161.2022.08.31.15.40.20
+        by smtp.gmail.com with ESMTPSA id n30-20020a02a19e000000b0034c0db05629sm1392005jah.161.2022.08.31.15.40.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Aug 2022 15:40:21 -0700 (PDT)
+        Wed, 31 Aug 2022 15:40:22 -0700 (PDT)
 From:   Alex Elder <elder@linaro.org>
 To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
         pabeni@redhat.com
@@ -56,15 +57,17 @@ Cc:     mka@chromium.org, evgreen@chromium.org, bjorn.andersson@linaro.org,
         quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
         elder@kernel.org, netdev@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 0/6] net: ipa: use IDs to track transaction state
-Date:   Wed, 31 Aug 2022 17:40:11 -0500
-Message-Id: <20220831224017.377745-1-elder@linaro.org>
+Subject: [PATCH net-next 1/6] net: ipa: use an array for transactions
+Date:   Wed, 31 Aug 2022 17:40:12 -0500
+Message-Id: <20220831224017.377745-2-elder@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220831224017.377745-1-elder@linaro.org>
+References: <20220831224017.377745-1-elder@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,62 +75,133 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series is the first of three groups of changes that simplify
-the way the IPA driver tracks the state of its transactions.
+Transactions are always allocated one at a time.  The maximum number
+of them we could ever need occurs if each TRE is assigned to a
+transaction.  So a channel requires no more transactions than the
+number of TREs in its transfer ring.  That number is known to be a
+power-of-2 less than 65536.
 
-Each GSI channel has a fixed number of transactions allocated at
-initialization time.  The number allocated matches the number of
-TREs in the transfer ring associated with the channel.  This is
-because the transfer ring limits the number of transfers that can
-ever be underway, and in the worst case, each transaction represents
-a single TRE.
+The transaction pool abstraction is used for other things, but for
+transactions we can use a simple array of transaction structures,
+and use a free index to indicate which entry in the array is the
+next one free for allocation.
 
-Transactions go through various states during their lifetime.
-Currently a set of lists keeps track of which transactions are in
-each state.  Initially, all transactions are free.  An allocated
-transaction is placed on the allocated list.  Once an allocated
-transaction is committed, it is moved from the allocated to the
-committed list.  When a committed transaction is sent to hardware
-(via a doorbell) it is moved to the pending list.  When hardware
-signals that some work has completed, transactions are moved to the
-completed list.  Finally, when a completed transaction is polled
-it's moved to the polled list before being removed when it becomes
-free.
+By having the number of elements in the array be a power-of-2, we
+can use an ever-incrementing 16-bit free index, and use it modulo
+the array size.  Distinguish a "trans_id" (whose value can exceed
+the number of entries in the transaction array) from a "trans_index"
+(which is less than the number of entries).
 
-Changing a transaction's state thus normally involves manipulating
-two lists, and to prevent corruption a spinlock is held while the
-lists are updated.
+Signed-off-by: Alex Elder <elder@linaro.org>
+---
+ drivers/net/ipa/gsi.h       |  4 +++-
+ drivers/net/ipa/gsi_trans.c | 39 +++++++++++++++++++++----------------
+ 2 files changed, 25 insertions(+), 18 deletions(-)
 
-Transactions move through their states in a well-defined sequence
-though, and they do so strictly in order.  So transaction 0 is
-always allocated before transaction 1; transaction 0 is always
-committed before transaction 1; and so on, through completion,
-polling, and becoming free.  Because of this, it's sufficient to
-just keep track of which transaction is the first in each state.
-The rest of the transactions in a given state can be derived from
-the first transaction in an "adjacent" state.  As a result, we can
-track the state of all transactions with a set of indexes, and can
-update these without the need for a spinlock.
-
-This first group of patches just defines the set of indexes that
-will be used for this new way of tracking transaction state.  Two
-more groups of patches will follow.  I've broken the 17 patches into
-these three groups to facilitate review.
-
-					-Alex
-
-Alex Elder (6):
-  net: ipa: use an array for transactions
-  net: ipa: track allocated transactions with an ID
-  net: ipa: track committed transactions with an ID
-  net: ipa: track pending transactions with an ID
-  net: ipa: track completed transactions with an ID
-  net: ipa: track polled transactions with an ID
-
- drivers/net/ipa/gsi.h       |  9 +++-
- drivers/net/ipa/gsi_trans.c | 99 ++++++++++++++++++++++++++++++-------
- 2 files changed, 89 insertions(+), 19 deletions(-)
-
+diff --git a/drivers/net/ipa/gsi.h b/drivers/net/ipa/gsi.h
+index 23de5f67374cf..4a88aec7e7d92 100644
+--- a/drivers/net/ipa/gsi.h
++++ b/drivers/net/ipa/gsi.h
+@@ -82,7 +82,9 @@ struct gsi_trans_pool {
+ 
+ struct gsi_trans_info {
+ 	atomic_t tre_avail;		/* TREs available for allocation */
+-	struct gsi_trans_pool pool;	/* transaction pool */
++
++	u16 free_id;			/* first free trans in array */
++	struct gsi_trans *trans;	/* transaction array */
+ 	struct gsi_trans **map;		/* TRE -> transaction map */
+ 
+ 	struct gsi_trans_pool sg_pool;	/* scatterlist pool */
+diff --git a/drivers/net/ipa/gsi_trans.c b/drivers/net/ipa/gsi_trans.c
+index 18e7e8c405bea..9775e50d0423f 100644
+--- a/drivers/net/ipa/gsi_trans.c
++++ b/drivers/net/ipa/gsi_trans.c
+@@ -343,20 +343,22 @@ struct gsi_trans *gsi_channel_trans_alloc(struct gsi *gsi, u32 channel_id,
+ 	struct gsi_channel *channel = &gsi->channel[channel_id];
+ 	struct gsi_trans_info *trans_info;
+ 	struct gsi_trans *trans;
++	u16 trans_index;
+ 
+ 	if (WARN_ON(tre_count > channel->trans_tre_max))
+ 		return NULL;
+ 
+ 	trans_info = &channel->trans_info;
+ 
+-	/* We reserve the TREs now, but consume them at commit time.
+-	 * If there aren't enough available, we're done.
+-	 */
++	/* If we can't reserve the TREs for the transaction, we're done */
+ 	if (!gsi_trans_tre_reserve(trans_info, tre_count))
+ 		return NULL;
+ 
+-	/* Allocate and initialize non-zero fields in the transaction */
+-	trans = gsi_trans_pool_alloc(&trans_info->pool, 1);
++	trans_index = trans_info->free_id % channel->tre_count;
++	trans = &trans_info->trans[trans_index];
++	memset(trans, 0, sizeof(*trans));
++
++	/* Initialize non-zero fields in the transaction */
+ 	trans->gsi = gsi;
+ 	trans->channel_id = channel_id;
+ 	trans->rsvd_count = tre_count;
+@@ -367,15 +369,17 @@ struct gsi_trans *gsi_channel_trans_alloc(struct gsi *gsi, u32 channel_id,
+ 	sg_init_marker(trans->sgl, tre_count);
+ 
+ 	trans->direction = direction;
+-
+-	spin_lock_bh(&trans_info->spinlock);
+-
+-	list_add_tail(&trans->links, &trans_info->alloc);
+-
+-	spin_unlock_bh(&trans_info->spinlock);
+-
+ 	refcount_set(&trans->refcount, 1);
+ 
++	/* This free transaction will now be allocated */
++	trans_info->free_id++;
++
++	spin_lock_bh(&trans_info->spinlock);
++
++	list_add_tail(&trans->links, &trans_info->alloc);
++
++	spin_unlock_bh(&trans_info->spinlock);
++
+ 	return trans;
+ }
+ 
+@@ -736,10 +740,11 @@ int gsi_channel_trans_init(struct gsi *gsi, u32 channel_id)
+ 	 * modulo that number to determine the next one that's free.
+ 	 * Transactions are allocated one at a time.
+ 	 */
+-	ret = gsi_trans_pool_init(&trans_info->pool, sizeof(struct gsi_trans),
+-				  tre_max, 1);
+-	if (ret)
++	trans_info->trans = kcalloc(tre_count, sizeof(*trans_info->trans),
++				    GFP_KERNEL);
++	if (!trans_info->trans)
+ 		return -ENOMEM;
++	trans_info->free_id = 0;	/* modulo channel->tre_count */
+ 
+ 	/* A completion event contains a pointer to the TRE that caused
+ 	 * the event (which will be the last one used by the transaction).
+@@ -777,7 +782,7 @@ int gsi_channel_trans_init(struct gsi *gsi, u32 channel_id)
+ err_map_free:
+ 	kfree(trans_info->map);
+ err_trans_free:
+-	gsi_trans_pool_exit(&trans_info->pool);
++	kfree(trans_info->trans);
+ 
+ 	dev_err(gsi->dev, "error %d initializing channel %u transactions\n",
+ 		ret, channel_id);
+@@ -791,6 +796,6 @@ void gsi_channel_trans_exit(struct gsi_channel *channel)
+ 	struct gsi_trans_info *trans_info = &channel->trans_info;
+ 
+ 	gsi_trans_pool_exit(&trans_info->sg_pool);
+-	gsi_trans_pool_exit(&trans_info->pool);
++	kfree(trans_info->trans);
+ 	kfree(trans_info->map);
+ }
 -- 
 2.34.1
 
