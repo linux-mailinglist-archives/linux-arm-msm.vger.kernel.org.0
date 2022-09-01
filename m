@@ -2,52 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 546465A951B
+	by mail.lfdr.de (Postfix) with ESMTP id E69E45A951D
 	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 12:54:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234143AbiIAKye (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Sep 2022 06:54:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50976 "EHLO
+        id S234165AbiIAKyp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Sep 2022 06:54:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234086AbiIAKyd (ORCPT
+        with ESMTP id S234154AbiIAKym (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Sep 2022 06:54:33 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFB751321D2
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 03:54:29 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id o4so16785721pjp.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Sep 2022 03:54:29 -0700 (PDT)
+        Thu, 1 Sep 2022 06:54:42 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 577D31321C4
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 03:54:34 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id t129so17111474pfb.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Sep 2022 03:54:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date;
-        bh=2j/euuewrJLsmuH7PP5LuRSskWex4MK4oenY2YNmi7o=;
-        b=TbZl7S2tkGZvo64LY0ebTP/BW0w7CEo9wRD3fni+bu2LoIcaSC3RsN1j2a9D5p4Cte
-         l4YM+fizu2O9DwG/CDcZ1Re5rMqXlRMnOE0W2TrlA77q52LVDnmgf/l4NGOoe9ritQxe
-         2DjHFEva0mj3FCO6L4ZhH0fBoMlLX65aQ55hjmtq0J6MAtklj3VVReWDD88Yz+bUpzy+
-         Ek1vJ4FVAxbYYr0mA3aU8pi2TE4AUitLfieLTueKMzMMN8m25PMpM8VXpsfuDcIr0LSw
-         eR46jCvJ2av61H3vVKJfFyYWKme0iGc2+l9UQ4eZOBFTTavnr+wkDmaS8/F56QTcYx0S
-         xmAw==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=JUQCoAsOqHp/dubozy2ybfyMmZNRsIHeStZD6k/cN8k=;
+        b=pEHoyzdBfl05pa53IbQHgeW5T2Pk8XlmAmTFxk2pg4HL/nrmtoC975q8j2ZDRANdNv
+         Co4fEWnThatHt8+F6pTwPDv4/sLtMi2cDLupK0G6zsFZd9Z2SPyy8ZAhJEwwU8Hl9ZYh
+         msAX2J4/xLFzGPNKgh2znuo8frcPgb8APsDbgcF3G347i2VqUN/GZccYTTb9GDnawbhq
+         77WMY/iP53dNcAo6iSvT8BVwsox8r2g/4P70wJrbQRCQG6DrzyYew63m1jl/GIGoNkWy
+         RhFpHtLewIltZoSklyakFdiBYNwYUa2jlrHAfy0GKdiaIFB//dMH9xfkE2814WdTL06F
+         RFyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=2j/euuewrJLsmuH7PP5LuRSskWex4MK4oenY2YNmi7o=;
-        b=hFgLIDA9WCnlqduO9am3hpGcwYnd3FxOTQKPUxYsctZcvZk7jr0f1Gqqq2PE7oaEBx
-         CxZjSsixGOXnvfq+5xMJUjWS3IapByDgMvPCoRkWOD7R7FBx9HrX1iGyeqaLMIF3A2X5
-         fGtZCNLWdVqY4haClFsQWJI8Q6UI4pXC/6k0m8HpAX79fqcCHj4Ppd9oHhsXBVzrhAoE
-         4HIO3HDdR9tGKamFPcyiLyxiV4TYmLnYXxycLg6UbZtr3FWQixkN5ExFhBHALeSSTC+D
-         PvrQeO61KNKoxVM3ZV7a/k1VYpyE7+jtrpjHlBej2ycjqVZ5hV8YAPbI5quZug9cuNNW
-         VFDw==
-X-Gm-Message-State: ACgBeo1SXPZ57DFrYP3Q2Op3dFFdzkMqJO2LDTbLZjwx+x3LafOweVyj
-        PB4Bj5CrqPCGB9jj3l4FTFoVRGnXH/0tWw==
-X-Google-Smtp-Source: AA6agR4X3IrGw9Bu8aLpEws0oDKUEuYQZPfL9DS3huamNRggIRsK5P/pRA3DqtdZdhsdCAc6I+RCTg==
-X-Received: by 2002:a17:90b:3907:b0:1fe:34a0:e760 with SMTP id ob7-20020a17090b390700b001fe34a0e760mr6671416pjb.45.1662029668590;
-        Thu, 01 Sep 2022 03:54:28 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=JUQCoAsOqHp/dubozy2ybfyMmZNRsIHeStZD6k/cN8k=;
+        b=ZV+k5H21c01oN7SFbtTcOYp7TbOTjxgBoPVO+UVqg9B+dbVwAq11aMl4O80zA/lzd7
+         THAbGn7IJrhUXk6XOLvtl5SivgTujHC0HZ9l1xB3D7H4eFDUJjsuBkOP82VbNNFeSQ1c
+         hRR1RjzkRBZnztWBeXCzFTK+QRNFzDuBj2JHkYbYvAgFM6H2GND7rqCpX8vtRLC0xWLs
+         h4Er/mB4QuH/GuIJVY3VVZYkiuYXI7WKwM9LQszqEFnC4sl5q7ow4VtLQ+konoqhYUEr
+         FjIT4YphZwTSNpLnYq0JfVQ9t5rqZRnf3AGBqJlooejetUy/DL5jVza4Odz/lEGtZH6v
+         V8Uw==
+X-Gm-Message-State: ACgBeo2wg5DqEakphdqOZr0O+jRhC7RQ8bd2gWTGnzu+I6vllbdJ/uPl
+        PQdfgwax38AtSzjniG0uI3Afgg==
+X-Google-Smtp-Source: AA6agR42SHfyY0313yjJ+yTynSdioV4ONB04qGKCcLNFL7OWBmLXKp2Mj65GLrNmOCcD22FWobLf/Q==
+X-Received: by 2002:a62:1ac5:0:b0:538:3332:d531 with SMTP id a188-20020a621ac5000000b005383332d531mr19601658pfa.46.1662029673282;
+        Thu, 01 Sep 2022 03:54:33 -0700 (PDT)
 Received: from localhost.localdomain ([2401:4900:1c60:5362:8069:f46:34af:eb19])
-        by smtp.gmail.com with ESMTPSA id ij13-20020a170902ab4d00b0016c57657977sm13508910plb.41.2022.09.01.03.54.24
+        by smtp.gmail.com with ESMTPSA id ij13-20020a170902ab4d00b0016c57657977sm13508910plb.41.2022.09.01.03.54.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Sep 2022 03:54:28 -0700 (PDT)
+        Thu, 01 Sep 2022 03:54:33 -0700 (PDT)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-pm@vger.kernel.org
 Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
@@ -56,10 +57,12 @@ Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
         daniel.lezcano@linaro.org, robh+dt@kernel.org, rafael@kernel.org,
         Amit Kucheria <amitk@kernel.org>,
         Thara Gopinath <thara.gopinath@gmail.com>
-Subject: [PATCH v4 0/4] Add support for tsens controller reinit via trustzone
-Date:   Thu,  1 Sep 2022 16:24:10 +0530
-Message-Id: <20220901105414.1171813-1-bhupesh.sharma@linaro.org>
+Subject: [PATCH v4 1/4] firmware: qcom: scm: Add support for tsens reinit workaround
+Date:   Thu,  1 Sep 2022 16:24:11 +0530
+Message-Id: <20220901105414.1171813-2-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.37.1
+In-Reply-To: <20220901105414.1171813-1-bhupesh.sharma@linaro.org>
+References: <20220901105414.1171813-1-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -72,63 +75,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Changes since v3:
------------------
-- v3 can be viewed here: https://lore.kernel.org/linux-arm-msm/20220804054638.3197294-1-bhupesh.sharma@linaro.org/
-- Addressed review comments from Bjorn regarding early exit paths, spin
-  lock being held while returning from func, etc.
-- Also added Bjorn's R-Bs for v3 patches.
-- Rebased on latest linux-next (master branch) tip.
-
-Changes since v2:
------------------
-- v2 can be viewed here: https://lore.kernel.org/linux-arm-msm/20220724122424.2509021-1-bhupesh.sharma@linaro.org/
-- Dropped sm6375 specific patch from v3, as suggested by Konrad.
-- Rebased on latest linux-next (master branch) tip.
-
-Changes since v1:
------------------
-- v1 can be viewed here: https://lore.kernel.org/linux-arm-msm/20220701145815.2037993-1-bhupesh.sharma@linaro.org/
-- Addressed several comments from Bjorn regarding locking, serialization
-  etc received on v1.
-- Addressed Konrad's concerns about the tsens controller found on sm6375
-  SoC which seems to start in a bad state or is disabled when entering
-  the linux world.
-- This series would depend on sm6375 tsens controller changes being
-  added by Konrad. It is based on linux-next (master branch) tip.
-
 Some versions of Qualcomm tsens controller might enter a
-'bad state' causing sensor temperatures/interrupts status
-to be in an 'invalid' state.
+'bad state' while running stability tests causing sensor
+temperatures/interrupts status to be in an 'invalid' state.
 
 It is recommended to re-initialize the tsens controller
 via trustzone (secure registers) using scm call(s) when that
 happens.
 
-This patchset adds the support for the same.
+Add support for the same in the qcom_scm driver.
 
-Cc: andersson@kernel.org
 Cc: Amit Kucheria <amitk@kernel.org>
 Cc: Thara Gopinath <thara.gopinath@gmail.com>
 Cc: linux-pm@vger.kernel.org
 Cc: linux-arm-msm@vger.kernel.org
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+ drivers/firmware/qcom_scm.c | 15 +++++++++++++++
+ drivers/firmware/qcom_scm.h |  4 ++++
+ include/linux/qcom_scm.h    |  2 ++
+ 3 files changed, 21 insertions(+)
 
-Bhupesh Sharma (4):
-  firmware: qcom: scm: Add support for tsens reinit workaround
-  thermal: qcom: tsens: Add hooks for supplying platform specific reinit
-    quirks
-  thermal: qcom: tsens: Add driver support for re-initialization quirk
-  thermal: qcom: tsens: Add reinit quirk support for tsens v2
-    controllers
-
- drivers/firmware/qcom_scm.c     |  15 +++
- drivers/firmware/qcom_scm.h     |   4 +
- drivers/thermal/qcom/tsens-v2.c |  15 +++
- drivers/thermal/qcom/tsens.c    | 193 ++++++++++++++++++++++++++++++++
- drivers/thermal/qcom/tsens.h    |  18 ++-
- include/linux/qcom_scm.h        |   2 +
- 6 files changed, 246 insertions(+), 1 deletion(-)
-
+diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+index cdbfe54c8146..93adcc046a62 100644
+--- a/drivers/firmware/qcom_scm.c
++++ b/drivers/firmware/qcom_scm.c
+@@ -858,6 +858,21 @@ int qcom_scm_mem_protect_video_var(u32 cp_start, u32 cp_size,
+ }
+ EXPORT_SYMBOL(qcom_scm_mem_protect_video_var);
+ 
++int qcom_scm_tsens_reinit(void)
++{
++	int ret;
++	const struct qcom_scm_desc desc = {
++		.svc = QCOM_SCM_SVC_TSENS,
++		.cmd = QCOM_SCM_TSENS_INIT_ID,
++	};
++	struct qcom_scm_res res;
++
++	ret = qcom_scm_call(__scm->dev, &desc, &res);
++
++	return ret ? : res.result[0];
++}
++EXPORT_SYMBOL(qcom_scm_tsens_reinit);
++
+ static int __qcom_scm_assign_mem(struct device *dev, phys_addr_t mem_region,
+ 				 size_t mem_sz, phys_addr_t src, size_t src_sz,
+ 				 phys_addr_t dest, size_t dest_sz)
+diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
+index 0d51eef2472f..5762f02dde7c 100644
+--- a/drivers/firmware/qcom_scm.h
++++ b/drivers/firmware/qcom_scm.h
+@@ -94,6 +94,10 @@ extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
+ #define QCOM_SCM_PIL_PAS_IS_SUPPORTED	0x07
+ #define QCOM_SCM_PIL_PAS_MSS_RESET	0x0a
+ 
++/* TSENS Services and Function IDs */
++#define QCOM_SCM_SVC_TSENS		0x1e
++#define QCOM_SCM_TSENS_INIT_ID		0x5
++
+ #define QCOM_SCM_SVC_IO			0x05
+ #define QCOM_SCM_IO_READ		0x01
+ #define QCOM_SCM_IO_WRITE		0x02
+diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
+index f8335644a01a..5c37e1658cef 100644
+--- a/include/linux/qcom_scm.h
++++ b/include/linux/qcom_scm.h
+@@ -124,4 +124,6 @@ extern int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
+ extern int qcom_scm_lmh_profile_change(u32 profile_id);
+ extern bool qcom_scm_lmh_dcvsh_available(void);
+ 
++extern int qcom_scm_tsens_reinit(void);
++
+ #endif
 -- 
 2.37.1
 
