@@ -2,74 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C8675A9BE2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 17:40:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D37D05A9C44
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 17:52:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233889AbiIAPkf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Sep 2022 11:40:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34046 "EHLO
+        id S233806AbiIAPwY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Sep 2022 11:52:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234500AbiIAPkc (ORCPT
+        with ESMTP id S234143AbiIAPwW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Sep 2022 11:40:32 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9370940570
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 08:40:29 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id bx38so18282575ljb.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Sep 2022 08:40:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=Tc8st16ldO3LR4x4k8qnwcD0Tom1BLgfV/y64ZJm6QU=;
-        b=REBowHyL5yz3ah/2foJcWtFffL7LkMB1FgwC26SSPfHrUoc4ACJ1JMo/gc+TaArr6i
-         aDaou7pheYdkBJD0rYLiEJ+Vr6Vhy9Q25gsLa3zOrw7ParXPQ9fTfrwmBWJJSCtfWUlf
-         5+Apy5n5sco4juevFynJbdXPfOLTYAwtEYtvwmNHd6M4eFw1nG8Fvzs1cGdLDm20yB7O
-         h6KZjccWd83xPv/8FlX5tmfSegrR6p2D2gwk+LkVEPGVqyZCR5KhpBrm06v/Pj/hQDdX
-         sdjRQfe9NrLSk8Mngr0upFOdh9bV10TdmNN5A2f/gA+kt1HCSQsY+sqDMOV1rjsE7hrg
-         BRgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=Tc8st16ldO3LR4x4k8qnwcD0Tom1BLgfV/y64ZJm6QU=;
-        b=gT/9otfZcr29LYazplyf8WckU8ejoqr5Ax7HtNKjnK+r4IprLQEpWWBLAZhIS32LfX
-         SS+9dvKYjf5bEDbC8oREWK9UmGDnqNC9xJAJnasVoGvJG3ATrutNDEOu8ys14d26N8lO
-         F5ETudgc3rmcpgaqqCpWHbZuR8IDDfFP7/ZY5VfRBvlGDB9a50dhdZ23wIIfvY6rMGWk
-         u8TzoApCcXQ+Po2e5M8O+/tBWtnDNsRUzA/F90PN6Ta6JyQ2gL3AKPyTAIsYzM6VpSNx
-         xU1j3Qgw4O2L4hDlU/cj30eN4tervi/PVU89dr9gEc4dUnlYHi8sw+BhpNEoNBAZD4Ov
-         /DXw==
-X-Gm-Message-State: ACgBeo2XFbshrQUEK7Xm0QDI/gWlVE1Rj1Q9JoA0hQO+OSy0Rl1gNi7f
-        sFrrQiyIq0M7sB8FtR2HWUOy+A==
-X-Google-Smtp-Source: AA6agR5PFZ8fGUUHpOcmkv1A29YAZ8ou6iydEeE839SYJXlfDUWf+aogaGVzTGrNpN5cO7/Aeoi0hQ==
-X-Received: by 2002:a05:651c:1a0e:b0:268:94ad:85f8 with SMTP id by14-20020a05651c1a0e00b0026894ad85f8mr2091413ljb.415.1662046828381;
-        Thu, 01 Sep 2022 08:40:28 -0700 (PDT)
-Received: from [192.168.28.124] (balticom-73-99-134.balticom.lv. [109.73.99.134])
-        by smtp.gmail.com with ESMTPSA id v8-20020a056512348800b004946b549a19sm1527807lfr.45.2022.09.01.08.40.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Sep 2022 08:40:27 -0700 (PDT)
-Message-ID: <2f0b658c-1e82-4518-5060-660e2eedf72c@linaro.org>
-Date:   Thu, 1 Sep 2022 18:40:26 +0300
+        Thu, 1 Sep 2022 11:52:22 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 252AF402D9;
+        Thu,  1 Sep 2022 08:52:21 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B829561F19;
+        Thu,  1 Sep 2022 15:52:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDFCC433D6;
+        Thu,  1 Sep 2022 15:52:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1662047540;
+        bh=34vESrVVRe/Gvd1WwwkrRcgjvAK0J4ZY6Nipqtoutgs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Aj2arhAoWe07La6XVtPnCUxijvLpgwYBi1YBn9wVtXodcREyNJh44XP192jPrZWEY
+         4cQx29s2fH5WooVsi9YwAiyC03/TPXXxUlshA+Z4cLsIFrUHe9SrF7Nw+sgVYiqhmS
+         gdnOF9Hboc5uwVEH66H4v17LfcFYE3WF01iw5EI2GyL9uJyhNl1s+a4lEGiaDbnhEr
+         vOia4IOspZ+D51srFikbpPekK46b+ZlrQ8VEIklPGuqvunfPsk4uv6YGKVHsaB8XXN
+         N8iwFi0MlGcWf7B+Eb3jT2tqt0A/+VR+NqyyqadY+xkkkJrF9OPyK3rJidFPin5cg0
+         IslzDQgPs6OIQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oTmUP-0004Qm-Fa; Thu, 01 Sep 2022 17:52:21 +0200
+Date:   Thu, 1 Sep 2022 17:52:21 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andrew Halaney <ahalaney@redhat.com>,
+        Mark Brown <broonie@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 0/6] arm64: dts: qcom: Fix broken regulator spec on
+ RPMH boards
+Message-ID: <YxDVNW+EQbHRw16s@hovoldconsulting.com>
+References: <20220829164952.2672848-1-dianders@chromium.org>
+ <Yw8EE/ESDUnIRf8P@hovoldconsulting.com>
+ <CAD=FV=VJz2hjvsUhsjBPt9nmm3X62oTdAqMeSFABYJietPPzWw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: sc7280: Add cpu and llcc BWMON
-Content-Language: en-US
-To:     Rajendra Nayak <quic_rjendra@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@somainline.org,
-        robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20220901124730.19460-1-quic_rjendra@quicinc.com>
- <20220901124730.19460-5-quic_rjendra@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220901124730.19460-5-quic_rjendra@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=VJz2hjvsUhsjBPt9nmm3X62oTdAqMeSFABYJietPPzWw@mail.gmail.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,15 +74,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/09/2022 15:47, Rajendra Nayak wrote:
-> Add cpu and llcc BWMON nodes and their corresponding
-> OPP tables for sc7280 SoC.
+On Wed, Aug 31, 2022 at 07:52:52AM -0700, Doug Anderson wrote:
+> Hi,
 > 
-> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+> On Tue, Aug 30, 2022 at 11:47 PM Johan Hovold <johan@kernel.org> wrote:
+> >
+> > On Mon, Aug 29, 2022 at 09:49:46AM -0700, Douglas Anderson wrote:
+> > > Prior to commit efb0cb50c427 ("regulator: qcom-rpmh: Implement
+> > > get_optimum_mode(), not set_load()") several boards were able to
+> > > change their regulator mode even though they had nothing listed in
+> > > "regulator-allowed-modes". After that commit (and fixes [1]) we'll be
+> > > stuck at the initial mode. Discussion of this (again, see [1]) has
+> > > resulted in the decision that the old dts files were wrong and should
+> > > be fixed to fully restore old functionality.
+> > >
+> > > This series attempts to fix everyone. I've kept each board in a
+> > > separate patch to make stable / backports work easier.
+> >
+> > Should you also update the bindings so that this can be caught during
+> > devicetree validation? That is, to always require
+> > "regulator-allowed-modes" when "regulator-allow-set-load" is specified.
+> 
+> Yeah, it's probably a good idea. I'm happy to review a patch that does
+> that. I'm already quite a few patches deep of submitting random
+> cleanups because someone mentioned it in a code review. ;-) That's
+> actually how I got in this mess to begin with. The RPMH change was in
+> response to a request in a different code review. ...and that came
+> about in a code review that was posted in response to a comment about
+> how awkward setting regulator loads was... Need to get back to my day
+> job.
 
+Heh.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> In any case, I think these dts patches are ready to land now.
 
+Yeah, as the old dtbs are now broken with newer kernels these are indeed
+needed.
 
-Best regards,
-Krzysztof
+But regardless of the question of backwards compatibility, it seems that
+the bindings should at least reflect that the old DTs are now considered
+malformed.
+
+> > Perhaps at least for RPMh as it seemed you found some cases were this
+> > wasn't currently needed (even if that sounded like an Linux-specific
+> > implementation detail).
+> 
+> I think you're talking about the RPM vs. RPMH difference? It's
+> actually not Linux specific. In RPM the API to the "hardware"
+> (actually a remote processor) is to pass the load. In RPMH the API to
+> the hardware is to pass a mode. This is why RPMH has
+> "regulator-allowed-modes" and "regulator-initial-mode". Both RPM and
+> RPMH have "regulator-allow-set-load" though...
+
+Ah, ok. And this was only an issue for Qualcomm DTs, which are the only
+users of "regulator-allow-set-load" in mainline.
+
+Johan
