@@ -2,60 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DFCE05A941B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 12:18:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 802695A9428
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 12:19:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233621AbiIAKRz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Sep 2022 06:17:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38102 "EHLO
+        id S232177AbiIAKTH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Sep 2022 06:19:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233598AbiIAKRx (ORCPT
+        with ESMTP id S231443AbiIAKTF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Sep 2022 06:17:53 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CCF51341A6
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 03:17:50 -0700 (PDT)
-Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <pza@pengutronix.de>)
-        id 1oThGU-0007Ov-7H; Thu, 01 Sep 2022 12:17:38 +0200
-Received: from pza by ptx.hi.pengutronix.de with local (Exim 4.92)
-        (envelope-from <pza@pengutronix.de>)
-        id 1oThGQ-000073-U2; Thu, 01 Sep 2022 12:17:34 +0200
-Date:   Thu, 1 Sep 2022 12:17:34 +0200
-From:   Philipp Zabel <p.zabel@pengutronix.de>
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        krzysztof.kozlowski@linaro.org, Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 2/6] clk: qcom: Allow custom reset ops
-Message-ID: <20220901101734.GA32271@pengutronix.de>
-References: <1661923108-789-1-git-send-email-quic_akhilpo@quicinc.com>
- <20220831104741.v6.2.I75baff799a363bbb960376539e3a0f737377c3f1@changeid>
+        Thu, 1 Sep 2022 06:19:05 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB4C813418F;
+        Thu,  1 Sep 2022 03:19:04 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2819cEEX003472;
+        Thu, 1 Sep 2022 10:18:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=qS26eoGYtM3IcSGsZUsPpBd5i9/TOIqrcxtJBkrGh0c=;
+ b=AfeOoVgJvMzCwpOGBXDGXb9JNtYrfZE1BdchliKi54ClJdQ2iIK+EeIOwrjpnut9DY4D
+ NRihIc6mIiQx6MiMQAdt8pehi/+fL55Rd3Hr3X+pIotwzSxbB5eIm/jvMSlOkz+NUDS4
+ wtEPyuhuzcWhvxVYBzNREmBRRZ3fiIB8RMMirsCUWq+lszyQgoqik0DMm9N8LQXvd+aZ
+ l/v8Lxh+iQeytHTymWI2Kjpknlka3Dg+6rQaei11gXQrjqPAb+oay9+Pkp4GPaSFBxMN
+ hkvGqkwfDyGNgDb0QiJA19CPadC5aN6uKD+udW0cIWN2BIMtNOpNON1INe6hsOgaWe+C Gw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jarc80dej-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 01 Sep 2022 10:18:56 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 281AItjg008396
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 1 Sep 2022 10:18:55 GMT
+Received: from blr-ubuntu-173.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Thu, 1 Sep 2022 03:18:50 -0700
+From:   Rajendra Nayak <quic_rjendra@quicinc.com>
+To:     <andersson@kernel.org>, <agross@kernel.org>,
+        <konrad.dybcio@somainline.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <mka@chromium.org>
+CC:     <johan+linaro@kernel.org>, <quic_kriskura@quicinc.com>,
+        <dianders@chromium.org>, <linux-clk@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Rajendra Nayak" <quic_rjendra@quicinc.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Subject: [PATCH 1/3] clk: qcom: gdsc: Fix the handling of PWRSTS_RET support
+Date:   Thu, 1 Sep 2022 15:47:54 +0530
+Message-ID: <20220901101756.28164-1-quic_rjendra@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220831104741.v6.2.I75baff799a363bbb960376539e3a0f737377c3f1@changeid>
-X-Sent-From: Pengutronix Hildesheim
-X-URL:  http://www.pengutronix.de/
-X-Accept-Language: de,en
-X-Accept-Content-Type: text/plain
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
-X-SA-Exim-Mail-From: pza@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: gWh9pBeloEVVZkeVRrPfB-vWvdFEAK64
+X-Proofpoint-GUID: gWh9pBeloEVVZkeVRrPfB-vWvdFEAK64
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-09-01_06,2022-08-31_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
+ adultscore=0 mlxlogscore=987 lowpriorityscore=0 malwarescore=0
+ clxscore=1011 priorityscore=1501 spamscore=0 mlxscore=0 impostorscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2209010046
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -64,81 +79,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Akhil,
+GDSCs cannot be transitioned into a Retention state in SW.
+When either the RETAIN_MEM bit, or both the RETAIN_MEM and
+RETAIN_PERIPH bits are set, and the GDSC is left ON, the HW
+takes care of retaining the memory/logic for the domain when
+the parent domain transitions to low power state.
+The existing logic handling the PWRSTS_RET seems to set the
+RETAIN_MEM/RETAIN_PERIPH bits but then explicitly turns the
+GDSC OFF as part of _gdsc_disable(). Fix that by leaving the
+GDSC in ON state.
 
-On Wed, Aug 31, 2022 at 10:48:23AM +0530, Akhil P Oommen wrote:
-> Allow soc specific clk drivers to specify a custom reset operation. We
-> will use this in an upcoming patch to allow gpucc driver to specify a
-> differet reset operation for cx_gdsc.
-> 
-> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> 
-> (no changes since v3)
-> 
-> Changes in v3:
-> - Use pointer to const for "struct qcom_reset_ops" in qcom_reset_map (Krzysztof)
-> 
-> Changes in v2:
-> - Return error when a particular custom reset op is not implemented. (Dmitry)
-> 
->  drivers/clk/qcom/reset.c | 27 +++++++++++++++++++++++++++
->  drivers/clk/qcom/reset.h |  8 ++++++++
->  2 files changed, 35 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/reset.c b/drivers/clk/qcom/reset.c
-> index 819d194..b7ae4a3 100644
-> --- a/drivers/clk/qcom/reset.c
-> +++ b/drivers/clk/qcom/reset.c
-> @@ -13,6 +13,21 @@
->  
->  static int qcom_reset(struct reset_controller_dev *rcdev, unsigned long id)
->  {
-> +	struct qcom_reset_controller *rst;
-> +	const struct qcom_reset_map *map;
-> +
-> +	rst = to_qcom_reset_controller(rcdev);
-> +	map = &rst->reset_map[id];
-> +
-> +	if (map->ops && map->ops->reset)
-> +		return map->ops->reset(map->priv);
-> +	/*
-> +	 * If custom ops is implemented but just not this callback, return
-> +	 * error
-> +	 */
-> +	else if (map->ops)
-> +		return -EOPNOTSUPP;
-> +
+Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+---
+There are a few existing users of PWRSTS_RET and I am not
+sure if they would be impacted with this change
 
-It doesn't seem necessary to stack reset_ops -> qcom_reset_ops for what
-you need here.
-Just add an optional const struct reset_ops * to qcom_cc_desc and feed
-that into qcom_cc_really_probe to replace &qcom_reset_ops.
+1. mdss_gdsc in mmcc-msm8974.c, I am expecting that the
+gdsc is actually transitioning to OFF and might be left
+ON as part of this change, atleast till we hit system wide
+low power state.
+If we really leak more power because of this
+change, the right thing to do would be to update .pwrsts for
+mdss_gdsc to PWRSTS_OFF_ON instead of PWRSTS_RET_ON
+I dont have a msm8974 hardware, so if anyone who has can report
+any issues I can take a look further on how to fix it.
 
-[...]
-> +struct qcom_reset_ops {
-> +	int (*reset)(void *priv);
-> +	int (*assert)(void *priv);
-> +	int (*deassert)(void *priv);
+2. gpu_gx_gdsc in gpucc-msm8998.c and
+   gpu_gx_gdsc in gpucc-sdm660.c
+Both of these seem to add support for 3 power state
+OFF, RET and ON, however I dont see any logic in gdsc
+driver to handle 3 different power states.
+So I am expecting that these are infact just transitioning
+between ON and OFF and RET state is never really used.
+The ideal fix for them would be to just update their resp.
+.pwrsts to PWRSTS_OFF_ON only. 
 
-Why add assert and deassert ops? There doesn't seem to be any user.
+ drivers/clk/qcom/gdsc.c | 10 ++++++++++
+ drivers/clk/qcom/gdsc.h |  5 +++++
+ 2 files changed, 15 insertions(+)
 
-> +};
-> +
->  struct qcom_reset_map {
->  	unsigned int reg;
->  	u8 bit;
-> +	const struct qcom_reset_ops *ops;
-> +	void *priv;
+diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+index d3244006c661..ccf63771e852 100644
+--- a/drivers/clk/qcom/gdsc.c
++++ b/drivers/clk/qcom/gdsc.c
+@@ -368,6 +368,16 @@ static int _gdsc_disable(struct gdsc *sc)
+ 	if (sc->pwrsts & PWRSTS_OFF)
+ 		gdsc_clear_mem_on(sc);
+ 
++	/*
++	 * If the GDSC supports only a Retention state, apart from ON,
++	 * leave it in ON state.
++	 * There is no SW control to transition the GDSC into
++	 * Retention state. This happens in HW when the parent
++	 * domain goes down to a Low power state
++	 */
++	if (sc->pwrsts == PWRSTS_RET_ON)
++		return 0;
++
+ 	ret = gdsc_toggle_logic(sc, GDSC_OFF);
+ 	if (ret)
+ 		return ret;
+diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
+index 5de48c9439b2..981a12c8502d 100644
+--- a/drivers/clk/qcom/gdsc.h
++++ b/drivers/clk/qcom/gdsc.h
+@@ -49,6 +49,11 @@ struct gdsc {
+ 	const u8			pwrsts;
+ /* Powerdomain allowable state bitfields */
+ #define PWRSTS_OFF		BIT(0)
++/*
++ * There is no SW control to transition a GDSC into
++ * PWRSTS_RET. This happens in HW when the parent
++ * domain goes down to a low power state
++ */
+ #define PWRSTS_RET		BIT(1)
+ #define PWRSTS_ON		BIT(2)
+ #define PWRSTS_OFF_ON		(PWRSTS_OFF | PWRSTS_ON)
+-- 
+2.17.1
 
-Adding per-reset ops + priv counters seems excessive to me.
-
-Are you expecting different reset controls in the same reset controller
-to have completely different ops at some point? If so, I would wonder
-whether it wouldn't be better to split the reset controller in that
-case. Either way, for the GDSC collapse workaround this does not seem
-to be required at all.
-
-regards
-Philipp
