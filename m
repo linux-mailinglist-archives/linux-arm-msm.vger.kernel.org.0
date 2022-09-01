@@ -2,71 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 546DD5A927E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 10:56:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 962415A9286
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 10:58:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234318AbiIAI4d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Sep 2022 04:56:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36692 "EHLO
+        id S234314AbiIAI55 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Sep 2022 04:57:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234298AbiIAI4U (ORCPT
+        with ESMTP id S234313AbiIAI51 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Sep 2022 04:56:20 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81EFF12DA1B
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 01:56:16 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id s15so12027523ljp.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Sep 2022 01:56:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=Jy+Nx5e1wupR0KzXVzggqv8qHhtxj0ywC7sePqykO6s=;
-        b=cpJLrjHLKTid6qkNL+p/FQKdSQ6xfVk28iz7axyGk8I9DbR7rqm4XUBl4sGWTK36mG
-         v1LlB6E6BcMDdmrIypMdIZ9vxbcPq0whVOSG+519HQRRjeHI/VLMivWQ1l6PPGyS9WH9
-         TFQpLsAkhUwN2P58dCXeUjh9yxMeXyYdNMB7/cDHqtLgMFsvOUNMtWhzZoEumHlqAo7k
-         PiiWag83yNGYIE07Xr/eEplE94+KAFcLPn2fGFDXA86KzgVH9+T+Yc8SFzzYMxGwBRJL
-         LydO4IPTkWn4wHMc0dGbc9gyKZ9mH1E6ugqusW2r85MVxn6bZBF2OZwqaTaGWVLhgFsg
-         E8ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=Jy+Nx5e1wupR0KzXVzggqv8qHhtxj0ywC7sePqykO6s=;
-        b=N9b+e7W0HYei2eIriJDoCoMvuCWn2uLTnjEtDviXwL66GKjTdHrv4bsxfDY1LJFb1q
-         jnqrMS5GxZnCm6bTv0rW00UgrdN/EDYoRMYSPEYeCkR7f6HNENaPL50DtlAWb/mhhwQQ
-         wgisxkULgI4c7zD6WEsI9Z3YnVEv0w7fP+Ko3P+jqixQQGroMK19K/wTL5MjmR+p9/5E
-         QXazeG1gzEWdxrMTrtF/nLb//Ex6QYQssrTE9qfBjQSvTbcO7mEanfpFJmpMfKdMIY+I
-         B23Ni59zyYUjZRYvQ1msf9smDNdP6OKenkd5Q8/qNFBPDgfntbdDMIxmhyX++cj1wnrQ
-         SoIQ==
-X-Gm-Message-State: ACgBeo1Mv6Gv16hZ8sKahULjiSval+CVJv/YnY7T2bAydmuHhdYOuFMP
-        aZbRsEpG7H3A4fb2sOXRD3qLPQ==
-X-Google-Smtp-Source: AA6agR4SzbwimpRvnEDcVRpNXMzxY+xQNigfkYzUlA95yqrR9gR/a2LSxZyVtcanXaMR5LdXdpioMw==
-X-Received: by 2002:a2e:9d8b:0:b0:265:b87d:b43b with SMTP id c11-20020a2e9d8b000000b00265b87db43bmr5196954ljj.531.1662022574317;
-        Thu, 01 Sep 2022 01:56:14 -0700 (PDT)
-Received: from krzk-bin.. (balticom-73-99-134.balticom.lv. [109.73.99.134])
-        by smtp.gmail.com with ESMTPSA id c20-20020a056512075400b004947984bc78sm883856lfs.188.2022.09.01.01.56.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Sep 2022 01:56:13 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH RFT 3/3] ARM: dts: qcom: align RPM regulators node name with bindings
-Date:   Thu,  1 Sep 2022 11:56:09 +0300
-Message-Id: <20220901085609.95624-3-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220901085609.95624-1-krzysztof.kozlowski@linaro.org>
-References: <20220901085609.95624-1-krzysztof.kozlowski@linaro.org>
+        Thu, 1 Sep 2022 04:57:27 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CA23130A04
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 01:57:01 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 52A7FCE2520
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 08:56:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2ED1C433D6;
+        Thu,  1 Sep 2022 08:56:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1662022616;
+        bh=prYcUWBTjUdLAux/fhlgeXI0aAwL5jIZ2AF09Netluw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Jo62ltvxVmKObiek7Hxd5ModsYmzAK7zkenD28Ftk0MUDkuZbhJZrZWHDm8rL6hpT
+         KMkgaJ2efBkigrJ7YZHJfnJokFatHcL6k5NpQpRDeIwJJMd0/s5ZRoHK9Yuba0vo4X
+         UkNLjs5ukI1qyLYqAOrh0Uw2+OX/H2d5sn+4UzYSakDT+a2TKCQZbEbcN6WkNeGS/h
+         9GiRRWtxltJ67WY+XcIhtLMqQsLuATd3kyT7p8g31o/HpO97YosYXacCBJtvFQXFQc
+         7awIf0w6AohZ7NASvL4SstHFWelcrUkEqfiM1qyBphTcqdir2AcG/miWeL9wifILcj
+         6mV1M41an5bSA==
+Date:   Thu, 1 Sep 2022 14:26:51 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     yung-chuan.liao@linux.intel.com,
+        pierre-louis.bossart@linux.intel.com, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, dan.carpenter@oracle.com
+Subject: Re: [PATCH v2] soundwire: qcom: fix device status array range
+Message-ID: <YxBz05JZgK38Hugt@matsya>
+References: <20220708104747.8722-1-srinivas.kandagatla@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220708104747.8722-1-srinivas.kandagatla@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,179 +55,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Node names should be generic and new DT schema expects RPM regulators
-node to be just "regulators".
+On 08-07-22, 11:47, Srinivas Kandagatla wrote:
+> This patch updates device status array range from 11 to 12 as we will
+> be reading status from device number 0 to device number 11 inclusive.
+> 
+> Without this patch we can potentially access status array out of range
+> during auto-enumeration.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Applied, thanks
 
----
-
-Not tested on hardware, but I do not expect functional impact.
----
- arch/arm/boot/dts/qcom-apq8026-asus-sparrow.dts               | 2 +-
- arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts                   | 2 +-
- arch/arm/boot/dts/qcom-apq8074-dragonboard.dts                | 4 ++--
- arch/arm/boot/dts/qcom-apq8084.dtsi                           | 2 +-
- arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts      | 4 ++--
- arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi         | 4 ++--
- arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts           | 4 ++--
- arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts            | 2 +-
- .../boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts   | 2 +-
- 9 files changed, 13 insertions(+), 13 deletions(-)
-
-diff --git a/arch/arm/boot/dts/qcom-apq8026-asus-sparrow.dts b/arch/arm/boot/dts/qcom-apq8026-asus-sparrow.dts
-index ace8cea27949..2908a8a8a3d0 100644
---- a/arch/arm/boot/dts/qcom-apq8026-asus-sparrow.dts
-+++ b/arch/arm/boot/dts/qcom-apq8026-asus-sparrow.dts
-@@ -81,7 +81,7 @@ &pm8226_vib {
- };
- 
- &rpm_requests {
--	pm8226-regulators {
-+	regulators {
- 		compatible = "qcom,rpm-pm8226-regulators";
- 
- 		pm8226_s3: s3 {
-diff --git a/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts b/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
-index 2b7e52fda6a7..e5bdc12123ce 100644
---- a/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
-+++ b/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
-@@ -102,7 +102,7 @@ bluetooth {
- };
- 
- &rpm_requests {
--	pm8226-regulators {
-+	regulators {
- 		compatible = "qcom,rpm-pm8226-regulators";
- 
- 		pm8226_s3: s3 {
-diff --git a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-index 3051a861ff0c..86ba9165c2b3 100644
---- a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-+++ b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-@@ -57,7 +57,7 @@ phy@b {
- };
- 
- &rpm_requests {
--	pm8841-regulators {
-+	regulators-0 {
- 		compatible = "qcom,rpm-pm8841-regulators";
- 
- 		pm8841_s1: s1 {
-@@ -81,7 +81,7 @@ pm8841_s4: s4 {
- 		};
- 	};
- 
--	pm8941-regulators {
-+	regulators-1 {
- 		compatible = "qcom,rpm-pm8941-regulators";
- 
- 		vdd_l1_l3-supply = <&pm8941_s1>;
-diff --git a/arch/arm/boot/dts/qcom-apq8084.dtsi b/arch/arm/boot/dts/qcom-apq8084.dtsi
-index c2e22bf3260d..2f4e4ac686a5 100644
---- a/arch/arm/boot/dts/qcom-apq8084.dtsi
-+++ b/arch/arm/boot/dts/qcom-apq8084.dtsi
-@@ -479,7 +479,7 @@ rpm-requests {
- 				compatible = "qcom,rpm-apq8084";
- 				qcom,smd-channels = "rpm_requests";
- 
--				pma8084-regulators {
-+				regulators-0 {
- 					compatible = "qcom,rpm-pma8084-regulators";
- 
- 					pma8084_s1: s1 {};
-diff --git a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-index ec5d340562b6..8a3761ed9655 100644
---- a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-@@ -344,7 +344,7 @@ led@5 {
- };
- 
- &rpm_requests {
--	pm8841-regulators {
-+	regulators-0 {
- 		compatible = "qcom,rpm-pm8841-regulators";
- 
- 		pm8841_s1: s1 {
-@@ -368,7 +368,7 @@ pm8841_s4: s4 {
- 		};
- 	};
- 
--	pm8941-regulators {
-+	regulators-1 {
- 		compatible = "qcom,rpm-pm8941-regulators";
- 
- 		vdd_l1_l3-supply = <&pm8941_s1>;
-diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
-index 5a70683d9103..320c9bf397f8 100644
---- a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
-@@ -214,7 +214,7 @@ &pm8941_wled {
- };
- 
- &rpm_requests {
--	pm8841-regulators {
-+	regulators-0 {
- 		compatible = "qcom,rpm-pm8841-regulators";
- 
- 		pm8841_s1: s1 {
-@@ -238,7 +238,7 @@ pm8841_s4: s4 {
- 		};
- 	};
- 
--	pm8941-regulators {
-+	regulators-1 {
- 		compatible = "qcom,rpm-pm8941-regulators";
- 
- 		vdd_l1_l3-supply = <&pm8941_s1>;
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts b/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-index ff6e0066768b..9107bc6f24db 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-@@ -190,7 +190,7 @@ &remoteproc_mss {
- };
- 
- &rpm_requests {
--	pm8841-regulators {
-+	regulators-0 {
- 		compatible = "qcom,rpm-pm8841-regulators";
- 
- 		pm8841_s1: s1 {
-@@ -209,7 +209,7 @@ pm8841_s3: s3 {
- 		};
- 	};
- 
--	pm8941-regulators {
-+	regulators-1 {
- 		compatible = "qcom,rpm-pm8941-regulators";
- 
- 		vdd_l1_l3-supply = <&pm8941_s1>;
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-index 983e10c3d863..156023204c1e 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-@@ -470,7 +470,7 @@ &remoteproc_mss {
- };
- 
- &rpm_requests {
--	pma8084-regulators {
-+	regulators-0 {
- 		compatible = "qcom,rpm-pma8084-regulators";
- 
- 		pma8084_s1: s1 {
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-index 3f45f5c5d37b..e4580ed996e6 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-@@ -319,7 +319,7 @@ led@7 {
- };
- 
- &rpm_requests {
--	pm8941-regulators {
-+	regulators-0 {
- 		compatible = "qcom,rpm-pm8941-regulators";
- 
- 		vdd_l1_l3-supply = <&pm8941_s1>;
 -- 
-2.34.1
-
+~Vinod
