@@ -2,82 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A8315A9051
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 09:32:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F9145A9059
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 09:33:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233841AbiIAHcY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Sep 2022 03:32:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38112 "EHLO
+        id S232768AbiIAHdN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Sep 2022 03:33:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233845AbiIAHcF (ORCPT
+        with ESMTP id S232599AbiIAHc4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Sep 2022 03:32:05 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2443A12BC11
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 00:28:59 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id bn9so16950317ljb.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Sep 2022 00:28:59 -0700 (PDT)
+        Thu, 1 Sep 2022 03:32:56 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 400C4B517F
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 00:30:28 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id z25so23178703lfr.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Sep 2022 00:30:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=JWfT+qeNC2CT3Ipogz2ktqK+tonEIf45b3bHsAFEBxU=;
-        b=U08bGpTCBUkzRa9qDDUxPPJY9H5aZwby0Ihz6i9A2pZh+4DEQGs9qvCtLelKwDAkJh
-         +Lvd7yeUF1/UlLZXezQt/VGyoOMfkFThGnImM9qBIH6ab9nQlyYjfsJYZHWAjwaSND4D
-         0XiaNAfBOH0dsSrY7GM1HH/73SD/yJ457vDE8fuKTUTxOJO+2YQOQAtWJGrT/1WbSv6S
-         Tr0xjz1ARJ7rfR20YM/+gHw4+JyP2ilQbZKgjl0JzZBNR14Hktv1+8da4PLdUcrWliFL
-         R5X+W4U3EWNIATK+AtdiUo/DA1m5yvfr/crc6QQAm/bGEEKl0498ApyTAiZsFcTvvCpk
-         bT8Q==
+        bh=Yq1f5sXSl9dJBBsa4JJtzhgEzf3Vcbcgdkoadank0UY=;
+        b=djMelikWbC/lJ29b+RcknkU1Y10YBy9OxcmWeKREbcDJZ7sIMbL7ZYDHEtfg7WWj/e
+         C3PYlYa3kq3VB8KYoyf9BFYkRuA92YeiaVrBAE7jPxx90EZaorcQn4NE7uKUwV+x87ci
+         4+EE7VD/aU1mjDn5J4ZjZoDb/drWpjXr0y9Dgnbpz124meHVprM6tAfv3z3P4IxXIwQi
+         H8mZ/M9p+vrlDwmZNgDeZGS9rYUMB98eJP+9QXE25bCbHVOziulP5lvdpsZhI/6WnGDa
+         k6SrtklCLROaDxYaqRxIe/BfgB96gPTfuLve0ZIP1B4LRFM95B5IDAbwI+SXdvVZY+Rd
+         uDxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=JWfT+qeNC2CT3Ipogz2ktqK+tonEIf45b3bHsAFEBxU=;
-        b=Js/36Y44vZN1TMsvGahSTqJpqg+P6r5b1a3AaxqJ20ygXwNMsSVfLJEAZ7NW/QsztA
-         6/9q4BdbHmalOzm5oBy6Yy9wKShY1NM+yOUNyI9hizBBTWA5u+u5LKvfuIiomFapmOHR
-         6KxhJFYRzx0y9tSWmcIZIvWCtapg3CP8bhIeALp671NoJveQzy93L4f8iOzBJmNbewr9
-         bO5CBzRkhqw95kEOx8GRyfxM5/7fVX1ZAOFwkyw1LLLrpfx7qAdZeMtXC/rOCpFl/Ugb
-         Dcckb4VxK/g1Owp1v80uDPIQe9QCLFcK4zJZKDL5/66ba1gje02VQmqN0bZV8xMMebc4
-         1t9w==
-X-Gm-Message-State: ACgBeo1yYU2hlnEOm9XkiivbScTQdcDaUZYnp1xMCEdvba4tAHBSosVC
-        nXeDu35Z4wTleMn31hkQN1exQg==
-X-Google-Smtp-Source: AA6agR7wyn4mb8cX3p67uFfHPU+JkbXoaTyVz81XLi4YVfOhv+6H5UDNEufviysPXbybIUB/Zcy+2w==
-X-Received: by 2002:a05:651c:204d:b0:25e:3111:419f with SMTP id t13-20020a05651c204d00b0025e3111419fmr5492973ljo.320.1662017330935;
-        Thu, 01 Sep 2022 00:28:50 -0700 (PDT)
+        bh=Yq1f5sXSl9dJBBsa4JJtzhgEzf3Vcbcgdkoadank0UY=;
+        b=4nvhKDR+RHajQ+V4pgbYtfP3P7w7FdSK0tfJq3pERKqD5Jpsy0ks4X7ULUkhrLwMGm
+         dteEykESs2XoOjk2gGnFfjdJtFz+cV8z6Ke8iDHXGmsDJTSuK1+B7I5ozAt3hsznAaqj
+         mI1kT4D2aqVDe6iX9St1nqpAwROSWhNM6XKwaLBlqWJBHjaPjku+6yLPHIaX60uS0VbC
+         I/lmxCVmiXjmU+wtUhDFxzFxje3QjcfnW5NGG+85m8vfVcKBEWKbHqzk3Dj0JAyy8GTK
+         SYddYGGoGTjo5r9s2gNfH7kiWmVaFmv34cvUalFhtK6TtTXNMVf63i6u8LEjBe+V7zus
+         2c/w==
+X-Gm-Message-State: ACgBeo0oVkY3lUuoqO+OVna76vSjQjz1G7nu5fUXJ+A0XkwWLj/hkDRI
+        slAW7IAUsfPR3EWBP7uq8F46tA==
+X-Google-Smtp-Source: AA6agR7yPEX4lBca6MaRVV7FLC8JsJi9f1Qnc5BJpKL2yg/lvtRzib/see+UUQqoafpytn52CBFq6A==
+X-Received: by 2002:a05:6512:1395:b0:48d:81c:5159 with SMTP id p21-20020a056512139500b0048d081c5159mr11687844lfa.375.1662017426392;
+        Thu, 01 Sep 2022 00:30:26 -0700 (PDT)
 Received: from [192.168.28.124] (balticom-73-99-134.balticom.lv. [109.73.99.134])
-        by smtp.gmail.com with ESMTPSA id m9-20020ac24249000000b00492f37e428asm2251246lfl.172.2022.09.01.00.28.49
+        by smtp.gmail.com with ESMTPSA id h6-20020a2ea486000000b00268bc2c1ed0sm151744lji.22.2022.09.01.00.30.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Sep 2022 00:28:50 -0700 (PDT)
-Message-ID: <fea60b71-4623-43f5-d81c-a0250a63c697@linaro.org>
-Date:   Thu, 1 Sep 2022 10:28:49 +0300
+        Thu, 01 Sep 2022 00:30:25 -0700 (PDT)
+Message-ID: <aac3942d-bc0b-7763-0d12-f5d6c585cc97@linaro.org>
+Date:   Thu, 1 Sep 2022 10:30:24 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
-Subject: Re: [PATCH 2/6] ASoC: codecs: wsa-macro: add support for sm8450 and
+Subject: Re: [PATCH 6/6] ASoC: codecs: tx-macro: add support for sm8450 and
  sc8280xp
 Content-Language: en-US
 To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Herring <robh@kernel.org>
-Cc:     broonie@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        broonie@kernel.org
+Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
         perex@perex.cz, tiwai@suse.com,
         pierre-louis.bossart@linux.intel.com,
         linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20220818134619.3432-1-srinivas.kandagatla@linaro.org>
- <20220818134619.3432-3-srinivas.kandagatla@linaro.org>
- <20220818171222.GG1978870-robh@kernel.org>
- <9c9226d9-8470-6672-d8ce-3fb1e4df3fda@linaro.org>
- <5da6171a-4949-9cc7-2967-6cc39a7955c8@linaro.org>
- <a4562481-780b-585f-01a5-d447040fbd0a@linaro.org>
+ <20220818134619.3432-7-srinivas.kandagatla@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <a4562481-780b-585f-01a5-d447040fbd0a@linaro.org>
+In-Reply-To: <20220818134619.3432-7-srinivas.kandagatla@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,69 +81,120 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/08/2022 13:37, Srinivas Kandagatla wrote:
+On 18/08/2022 16:46, Srinivas Kandagatla wrote:
+> LPASS VA Macro now has soundwire master to deal with access to
+> analog mic in low power island use cases.
 > 
+> This is added after sc8280xp, add support for this.
+> Along with this also add compatibles for sm8450 and sc8280xp.
 > 
-> On 31/08/2022 10:19, Krzysztof Kozlowski wrote:
->> On 31/08/2022 12:17, Srinivas Kandagatla wrote:
->>>
->>>
->>> On 18/08/2022 18:12, Rob Herring wrote:
->>>> On Thu, Aug 18, 2022 at 02:46:15PM +0100, Srinivas Kandagatla wrote:
->>>>> Add compatible for sm8450 and sc8280xp.
->>>>>
->>>>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->>>>> ---
->>>>>    sound/soc/codecs/lpass-wsa-macro.c | 2 ++
->>>>>    1 file changed, 2 insertions(+)
->>>>>
->>>>> diff --git a/sound/soc/codecs/lpass-wsa-macro.c b/sound/soc/codecs/lpass-wsa-macro.c
->>>>> index 27da6c6c3c5a..f82c297ea3ab 100644
->>>>> --- a/sound/soc/codecs/lpass-wsa-macro.c
->>>>> +++ b/sound/soc/codecs/lpass-wsa-macro.c
->>>>> @@ -2561,6 +2561,8 @@ static const struct dev_pm_ops wsa_macro_pm_ops = {
->>>>>    static const struct of_device_id wsa_macro_dt_match[] = {
->>>>>    	{.compatible = "qcom,sc7280-lpass-wsa-macro"},
->>>>>    	{.compatible = "qcom,sm8250-lpass-wsa-macro"},
->>>>> +	{.compatible = "qcom,sm8450-lpass-wsa-macro"},
->>>>> +	{.compatible = "qcom,sc8280xp-lpass-wsa-macro" },
->>>>
->>>> Looks like these are backwards compatible with the existing versions,
->>>> why not reflect that in the binding?
->>> Backward compatibility is not always true, some of the registers and
->>> there defaults tend to change across SoCs. Having SoC specific
->>> compatible could help us deal with this and also make code more inline
->>> with other codec macros in LPASS IP.
->>
->> I am not saying that there should be no SoC specific compatible. This
->> one is a must, but the question why duplicating the entries and not
->> using fallback?
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
+>  sound/soc/codecs/lpass-va-macro.c | 64 ++++++++++++++++++++++++++++++-
+>  1 file changed, 62 insertions(+), 2 deletions(-)
 > 
-> You mean using fallback compatible "qcom,sc7280-lpass-wsa-macro" in 
-> sc8280xp devicetree and not add new compatibles in the driver?
-> 
-> The reason for adding this new compatible strings is that macros in this 
-> lpass codec that differ form each SoC.
-> ex: [PATCH 6/6] ASoC: codecs: tx-macro: add support for sm8450 and 
-> sc8280xp and there is a pending patch on va-macro that has soundwire 
-> controller frame sync and reset control which is moved from tx-macro to 
-> va-macro.
-> 
-> so DT might endup with mix of compatibles for same LPASS Codec like this:
-> 
-> "qcom,sc7280-lpass-wsa-macro"
-> "qcom,sc8280xp-lpass-va-macro"
-> "qcom,sc8280xp-lpass-tx-macro"
-> "qcom,sc8280xp-lpass-rx-macro"
-> 
-> AFAIU, the fallback thing will work for things that are identical but in 
-> this case they differ across SoCs, and having SoC specific compatibles 
-> in now would help handle this.
+> diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
+> index a35f684053d2..f8b0c8caa1db 100644
+> --- a/sound/soc/codecs/lpass-va-macro.c
+> +++ b/sound/soc/codecs/lpass-va-macro.c
+> @@ -25,6 +25,10 @@
+>  #define CDC_VA_FS_CONTROL_EN			BIT(0)
+>  #define CDC_VA_FS_COUNTER_CLR			BIT(1)
+>  #define CDC_VA_CLK_RST_CTRL_SWR_CONTROL		(0x0008)
+> +#define CDC_VA_SWR_RESET_MASK		BIT(1)
+> +#define CDC_VA_SWR_RESET_ENABLE		BIT(1)
+> +#define CDC_VA_SWR_CLK_EN_MASK		BIT(0)
+> +#define CDC_VA_SWR_CLK_ENABLE		BIT(0)
+>  #define CDC_VA_TOP_CSR_TOP_CFG0			(0x0080)
+>  #define CDC_VA_FS_BROADCAST_EN			BIT(1)
+>  #define CDC_VA_TOP_CSR_DMIC0_CTL		(0x0084)
+> @@ -66,6 +70,8 @@
+>  #define CDC_VA_TOP_CSR_SWR_MIC_CTL0		(0x00D0)
+>  #define CDC_VA_TOP_CSR_SWR_MIC_CTL1		(0x00D4)
+>  #define CDC_VA_TOP_CSR_SWR_MIC_CTL2		(0x00D8)
+> +#define CDC_VA_SWR_MIC_CLK_SEL_0_1_MASK		(0xEE)
+> +#define CDC_VA_SWR_MIC_CLK_SEL_0_1_DIV1		(0xCC)
+>  #define CDC_VA_TOP_CSR_SWR_CTRL			(0x00DC)
+>  #define CDC_VA_INP_MUX_ADC_MUX0_CFG0		(0x0100)
+>  #define CDC_VA_INP_MUX_ADC_MUX0_CFG1		(0x0104)
+> @@ -194,6 +200,8 @@ struct va_macro {
+>  	unsigned long active_ch_mask[VA_MACRO_MAX_DAIS];
+>  	unsigned long active_ch_cnt[VA_MACRO_MAX_DAIS];
+>  	u16 dmic_clk_div;
+> +	bool has_swr_master;
+> +	bool reset_swr;
+>  
+>  	int dec_mode[VA_MACRO_NUM_DECIMATORS];
+>  	struct regmap *regmap;
+> @@ -325,6 +333,9 @@ static bool va_is_rw_register(struct device *dev, unsigned int reg)
+>  	case CDC_VA_TOP_CSR_DMIC2_CTL:
+>  	case CDC_VA_TOP_CSR_DMIC3_CTL:
+>  	case CDC_VA_TOP_CSR_DMIC_CFG:
+> +	case CDC_VA_TOP_CSR_SWR_MIC_CTL0:
+> +	case CDC_VA_TOP_CSR_SWR_MIC_CTL1:
+> +	case CDC_VA_TOP_CSR_SWR_MIC_CTL2:
+>  	case CDC_VA_TOP_CSR_DEBUG_BUS:
+>  	case CDC_VA_TOP_CSR_DEBUG_EN:
+>  	case CDC_VA_TOP_CSR_TX_I2S_CTL:
+> @@ -1306,12 +1317,40 @@ static const struct snd_soc_component_driver va_macro_component_drv = {
+>  
+>  static int fsgen_gate_enable(struct clk_hw *hw)
+>  {
+> -	return va_macro_mclk_enable(to_va_macro(hw), true);
+> +	struct va_macro *va = to_va_macro(hw);
+> +	struct regmap *regmap = va->regmap;
+> +	int ret;
+> +
+> +	ret = va_macro_mclk_enable(va, true);
+> +	if (!va->has_swr_master)
+> +		return ret;
+> +
+> +	if (va->reset_swr)
+> +		regmap_update_bits(regmap, CDC_VA_CLK_RST_CTRL_SWR_CONTROL,
+> +				   CDC_VA_SWR_RESET_MASK,
+> +				   CDC_VA_SWR_RESET_ENABLE);
+> +
+> +	regmap_update_bits(regmap, CDC_VA_CLK_RST_CTRL_SWR_CONTROL,
+> +			   CDC_VA_SWR_CLK_EN_MASK,
+> +			   CDC_VA_SWR_CLK_ENABLE);
+> +	if (va->reset_swr)
+> +		regmap_update_bits(regmap, CDC_VA_CLK_RST_CTRL_SWR_CONTROL,
+> +				   CDC_VA_SWR_RESET_MASK, 0x0);
+> +	va->reset_swr = false;
+> +
+> +	return ret;
+>  }
+>  
+>  static void fsgen_gate_disable(struct clk_hw *hw)
+>  {
+> -	va_macro_mclk_enable(to_va_macro(hw), false);
+> +	struct va_macro *va = to_va_macro(hw);
+> +	struct regmap *regmap = va->regmap;
+> +
+> +	if (va->has_swr_master)
+> +		regmap_update_bits(regmap, CDC_VA_CLK_RST_CTRL_SWR_CONTROL,
+> +			   CDC_VA_SWR_CLK_EN_MASK, 0x0);
+> +
+> +	va_macro_mclk_enable(va, false);
+>  }
+>  
+>  static int fsgen_gate_is_enabled(struct clk_hw *hw)
+> @@ -1459,6 +1498,11 @@ static int va_macro_probe(struct platform_device *pdev)
+>  
+>  	dev_set_drvdata(dev, va);
+>  
+> +	if (of_device_is_compatible(dev->of_node, "qcom,sm8450-lpass-va-macro") ||
+> +		of_device_is_compatible(dev->of_node, "qcom,sc8280xp-lpass-va-macro")) {
+> +		va->has_swr_master = true;
+> +		va->reset_swr = true;
 
-Ahh, I see now. The true problem is that driver encodes compatibles in
-several places. That's very confusing design - variants should be rather
-customized via driver data, not via multiple of_device_is_compatible()
-inside the code.
+This should go to driver_data. Either via quirks/flags or device type
+(enum for each device). Usually the first (flags) is more flexible if
+you want to support many devices.
+
+This also explains Rob's concerns about unneeded entries in of_device_id
+table.
+
 
 Best regards,
 Krzysztof
