@@ -1,61 +1,61 @@
 Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from out1.vger.email (unknown [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 636F15A9CBA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 18:12:08 +0200 (CEST)
+Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
+	by mail.lfdr.de (Postfix) with ESMTP id 8AB045A9CCA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 18:14:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234910AbiIAQLt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Sep 2022 12:11:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45524 "EHLO
+        id S235038AbiIAQNy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Sep 2022 12:13:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234942AbiIAQLs (ORCPT
+        with ESMTP id S235001AbiIAQNk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Sep 2022 12:11:48 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AAE66E8BF
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 09:11:44 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id bq23so25151888lfb.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Sep 2022 09:11:44 -0700 (PDT)
+        Thu, 1 Sep 2022 12:13:40 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04938915CA
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 09:13:39 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id m7so16239336lfq.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Sep 2022 09:13:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=ZT0UUgL98furUMTTllJ+IvKDmlJK1HsHd+roqciqR7g=;
-        b=XmjqaXzcNHK1fQAUkelNc1TLbofd+c3HoDH/xwjX0atcCtDwNCfThcM2oD1jrv6mD0
-         HUr4r+fomvVC7Ul6Iac4NE1Tr5yPTwFWGkETeoZJsaETaH2SHh+T9dXPx5r5F1mEl4Qz
-         4a822TemsMhKG3+p8mYh/6k9vvg2YWdYsQkK5lUCaxqW/hJbZqQlf8JoshSr6abUlpOj
-         fXvbFN1zzHUDVcnXxe++nT7/B9Z0y+8TLmQ1BpseEqZFjpc5X34gfHjEgS5hIZskNuGH
-         jPV9bFxm6+IRHr98dw8dDx6zTFwZNQSVpfy6Mp+miAStK1ZDk9PADZQHX4/mdIUkGDYz
-         T6Tw==
+        bh=/h8fdpcLhY4wu6EZotB0ad3yUb1WuRgsZLCw3g30N7s=;
+        b=AL58HhQtL8dAINZDiR9Jy7SCy6M1Dh/RHGgmNLEaJXlbv04ar66bwmzyAjo/AkOzfM
+         HLA0NmZy0HcVlc//0crt4Y78sdwVeYZTRZLrBnkasm5jDooceRFzNsWaHLxzN64ZSxio
+         ARI582Qi7CFJFX8Ee2UaYuB2gR/LGnTLRoevMAjhm+l3ZrZYgQFCzaEnSEm3xa/MpFy/
+         77VlrEwioFsuiM0TPssqXQmgUBrbaSOeTKg5tc+GlAqSsBC6dVQCIat3X4ER7Td7kPzV
+         uJEEZaN9PXuPkfjY9VlCDcFrxKsmrWV+aOyykph5dmYow4TwiBnkEUxNd53xh2ZdcbG8
+         FgLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=ZT0UUgL98furUMTTllJ+IvKDmlJK1HsHd+roqciqR7g=;
-        b=RquQ+C/R0GCvL+gudy37r03CsPpTbTMgZhAAoVCE/4/e9AFEQRjh43wcVqOjtoKuZ7
-         VcQKp1SbiXgbp0jPJg9o2aVqmg2gYR15lwt/EgWeS8yA0EAkueJPCZE1KWDylAgnK2Ql
-         c/36df8YMeZqH8o8xeU43Njyjk64Lj8oUDSDW/+ONZ6eMgpqhmLvRQz43kcfXsZRxKzS
-         gxtmamzyMb6bOGKxZes4zAKvztvuOa29Pc+smm+QDOswek97nFZE6nFTA8q1wGF6Eg4f
-         76hC5YO4rXtPv9DDLWYZDUqBRtHa29ZSOzlonxqsVCOFcCS8kvTWFhLu7b2CYmUbQXS6
-         6ggQ==
-X-Gm-Message-State: ACgBeo3LkfJ1vIzXDkJH+hfE5pNXbvem8T1AoxhG62qENtC4hLU5lwTK
-        U9VPc9hLxPoLYcuHPv0ixXdpvA==
-X-Google-Smtp-Source: AA6agR7fa2cffMYhl6EVvGJvlvaohMBq/6GEuVCGGl4FC8t88eKtvkuzfo4WFJl3V4F8xXTCVl/DRA==
-X-Received: by 2002:a05:6512:260d:b0:492:df5a:e4f9 with SMTP id bt13-20020a056512260d00b00492df5ae4f9mr10306759lfb.90.1662048702494;
-        Thu, 01 Sep 2022 09:11:42 -0700 (PDT)
+        bh=/h8fdpcLhY4wu6EZotB0ad3yUb1WuRgsZLCw3g30N7s=;
+        b=3bp/yKCqCXUpCCl0CaoYAOjIsTP8S2pUSowEEVAF1RNVASffunUZJWhmrGE8eLfXfV
+         8Rsj0+LbCoEA2sjcqyXA6rnz2DdFOrRB6ZTfl2RRy2eNI96vGfN/lbJWBoGHcnG+yxBy
+         jLgN8rdmNZRg2DFtl+qpbfQM4j6OMmfqlPPR0lbSxk4Art8/220UI/pj7+mJYMgXRs0V
+         OZTFRgbRWJ7eugEEmPSbfbcgC3IvHgf1VPu3zBKT+LEWLAsFYIK3AR8PeywIaW0DKQrU
+         bqe3iExyGvtOp8ZawmeQsr8bUOv9AfdiMhcEyYaHDd+hImyvvpVZocys/NlSub5wqWaF
+         537A==
+X-Gm-Message-State: ACgBeo0WwFC5TpbHmZyj8O+Sy0fu0E3ZAPr/8hCwcYBI2RX37I54RMzo
+        V9aJTAEqQ0ZKRwnfSnNXW8oL5A==
+X-Google-Smtp-Source: AA6agR4WPGNknCusu5ZB4w+TzAKz+hU2cGpzNsGUYnCdtjfKXHgQ3HQZ0okBViuMoNSFRKc4vQ/Vdg==
+X-Received: by 2002:a05:6512:6c8:b0:494:796e:93b6 with SMTP id u8-20020a05651206c800b00494796e93b6mr4379172lff.213.1662048817367;
+        Thu, 01 Sep 2022 09:13:37 -0700 (PDT)
 Received: from [192.168.28.124] (balticom-73-99-134.balticom.lv. [109.73.99.134])
-        by smtp.gmail.com with ESMTPSA id bd8-20020a05651c168800b002687e283bf1sm754869ljb.134.2022.09.01.09.11.41
+        by smtp.gmail.com with ESMTPSA id m9-20020a197109000000b00485caa0f5dfsm2389640lfc.44.2022.09.01.09.13.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Sep 2022 09:11:41 -0700 (PDT)
-Message-ID: <7804ffbe-4e27-d8bd-dbe2-75d1323da064@linaro.org>
-Date:   Thu, 1 Sep 2022 19:11:40 +0300
+        Thu, 01 Sep 2022 09:13:36 -0700 (PDT)
+Message-ID: <a0204dc3-af13-6b0b-d779-0f207d1aff7e@linaro.org>
+Date:   Thu, 1 Sep 2022 19:13:35 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
-Subject: Re: [PATCH 08/14] dt-bindings: ufs: qcom: Add sm6115 binding
+Subject: Re: [PATCH 09/14] arm64: dts: qcom: sm6115: Add UFS nodes
 Content-Language: en-US
 To:     Iskren Chernev <iskren.chernev@gmail.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -64,15 +64,12 @@ Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
+        linux-kernel@vger.kernel.org
 References: <20220901072414.1923075-1-iskren.chernev@gmail.com>
- <20220901072414.1923075-9-iskren.chernev@gmail.com>
+ <20220901072414.1923075-10-iskren.chernev@gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220901072414.1923075-9-iskren.chernev@gmail.com>
+In-Reply-To: <20220901072414.1923075-10-iskren.chernev@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -86,51 +83,105 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 01/09/2022 10:24, Iskren Chernev wrote:
-> Add SM6115 UFS to DT schema.
+> The SM6115 comes with UFS support, so add the related UFS and UFS PHY
+> nodes.
 > 
 > Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
 > ---
->  .../devicetree/bindings/ufs/qcom,ufs.yaml     | 26 +++++++++++++++++++
->  1 file changed, 26 insertions(+)
+>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 70 ++++++++++++++++++++++++++++
+>  1 file changed, 70 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> index f2d6298d926c..7c5f6e2e6d4c 100644
-> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> @@ -28,6 +28,7 @@ properties:
->            - qcom,msm8998-ufshc
->            - qcom,sc8280xp-ufshc
->            - qcom,sdm845-ufshc
-> +          - qcom,sm6115-ufshc
->            - qcom,sm6350-ufshc
->            - qcom,sm8150-ufshc
->            - qcom,sm8250-ufshc
-> @@ -178,6 +179,31 @@ allOf:
->            minItems: 1
->            maxItems: 1
+> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> index cde963c56ac9..491fffff8aa1 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> @@ -620,6 +620,76 @@ opp-202000000 {
+>  			};
+>  		};
 >  
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,sm6115-ufshc
-> +    then:
-> +      properties:
-> +        clocks:
-> +          minItems: 8
-> +          maxItems: 8
-> +        clock-names:
-> +          items:
-> +            - const: core_clk
-> +            - const: bus_aggr_clk
-> +            - const: iface_clk
-> +            - const: core_clk_unipro
-> +            - const: core_clk_ice
+> +		ufs_mem_hc: ufshc@4804000 {
+> +			compatible = "qcom,sm6115-ufshc", "qcom,ufshc",
+> +				     "jedec,ufs-2.0";
+> +			reg = <0x4804000 0x3000>, <0x4810000 0x8000>;
+> +			reg-names = "std", "ice";
 
-Use existing name and put it in the same place as existing variant - sdm845:
-ice_core_clk
+I could imagine that testing DTS against existing bindings might miss a
+lot, because we have still a lot of errors. But at least I would expect
+you test your DTS against your own bindings, which you submit here (and
+previously).
 
+You just wrote that ice is not allowed.
+
+> +			interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
+> +			phys = <&ufs_mem_phy_lanes>;
+> +			phy-names = "ufsphy";
+> +			lanes-per-direction = <1>;
+> +			#reset-cells = <1>;
+> +			resets = <&gcc GCC_UFS_PHY_BCR>;
+> +			reset-names = "rst";
+> +
+> +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
+> +			iommus = <&apps_smmu 0x100 0>;
+> +
+> +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_SYS_NOC_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
+> +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
+> +				 <&gcc GCC_UFS_PHY_ICE_CORE_CLK>,
+> +				 <&rpmcc RPM_SMD_XO_CLK_SRC>,
+> +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>;
+> +			clock-names = "core_clk",
+> +				      "bus_aggr_clk",
+> +				      "iface_clk",
+> +				      "core_clk_unipro",
+> +				      "core_clk_ice",
+> +				      "ref_clk",
+> +				      "tx_lane0_sync_clk",
+> +				      "rx_lane0_sync_clk";
+> +
+> +			freq-table-hz = <50000000 200000000>,
+> +					<0 0>,
+> +					<0 0>,
+> +					<37500000 150000000>,
+> +					<75000000 300000000>,
+> +					<0 0>,
+> +					<0 0>,
+> +					<0 0>;
+> +
+> +			non-removable;
+
+Is it allowed property?
+
+> +			status = "disabled";
+> +		};
+> +
+> +		ufs_mem_phy: phy@4807000 {
+> +			compatible = "qcom,sm6115-qmp-ufs-phy";
+> +			reg = <0x4807000 0x1c4>;
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +			ranges;
+> +
+> +			clocks = <&gcc GCC_UFS_CLKREF_CLK>,
+> +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
+> +			clock-names = "ref", "ref_aux";
+> +
+> +			resets = <&ufs_mem_hc 0>;
+> +			reset-names = "ufsphy";
+> +			status = "disabled";
+> +
+> +			ufs_mem_phy_lanes: lanes@4807400 {
+> +				reg = <0x4807400 0x098>,
+> +				      <0x4807600 0x130>,
+> +				      <0x4807c00 0x16c>;
+> +				#phy-cells = <0>;
+> +			};
+> +		};
+> +
+> +
+
+Just one blank line.
 
 Best regards,
 Krzysztof
