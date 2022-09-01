@@ -2,52 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 63FAA5A92E7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 11:15:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A24C25A92E4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 11:15:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233335AbiIAJPn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Sep 2022 05:15:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44136 "EHLO
+        id S232646AbiIAJPm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Sep 2022 05:15:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234078AbiIAJPe (ORCPT
+        with ESMTP id S234077AbiIAJPc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Sep 2022 05:15:34 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0943A59A6
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 02:15:30 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id p16so5476592lfd.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Sep 2022 02:15:30 -0700 (PDT)
+        Thu, 1 Sep 2022 05:15:32 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47D2BA61FA
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 02:15:31 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id z6so23492110lfu.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Sep 2022 02:15:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date;
-        bh=zQcaTdcAmFm7hKWlLt7/xAx+RulymiwoxzvlaJ6Dn4Y=;
-        b=JqDX3BcBRbEuzqHtzIvmuHl9zsEJNPKE7l/J9hCp3dTmiGTmUGANlkcI61pxniOBiP
-         JxczKhAJraORVgVbg3yw8lYcJeaF+LtkllQqtBOPlBYn7TgWtk9L3gidTKpAFvNomSBM
-         JaRq7x1SXvS03vxVyCOUvP0ntcSuwyHGmoHeBPnn9h6QpfenpwarKlfdmKqoHb5FTPmh
-         HTBBsziaEU8lFuSsw/qnJH7DLsdhFgMSsV8+a9x/uxUOjSo2CPpzL1YcqAZSWr9srsWZ
-         i8a332tycHTFY/IoelO9ictoS7XQhRWzEB0x2H8wef6vYxMMHqZQZZLbMIr88GnmRX2Z
-         3bCQ==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=jNM+5myziriC40IcLi6KZeIacAr+ajJ9scGcT8bKpzo=;
+        b=TPU5kkYcJ/bgeVpCEiOlPxfeLqUaaCPDobVW8KvP0t4ccjSpwx+gYAwldV7QaklzxM
+         YUPO6qjo6OEi/7l1GhfjVE7Cr1igB6CdWJgTTi9HpjS4QT84noyhAXEd9QLaJl5h4M1/
+         GoAueKnl0gIsq6AjZPXF1rO/kQX6sRaTq4B6jeCkc4fuIVWEcEu1NF6Vg/kn2PQ9V3Dn
+         hyPSkDhVH3aLmX1e1Hk0ApD8P3TFuIT/lJwxfF16QivYZfYsrD9sXF8WjNQb8fxmuDOy
+         yOYvEnlvZEWp+LVI7Cw+6XmzXhhB2Rphl6NsmERJvi7sgabkLedAVqAa8hbJjEIlur9w
+         oQ/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=zQcaTdcAmFm7hKWlLt7/xAx+RulymiwoxzvlaJ6Dn4Y=;
-        b=AF3OUGgDRXmwCMNuyII+QbVDOZu1t3L3RaXinucX1nJ8X73Rnrp8pFVL4is03g60Bi
-         CYNOY3+9ROQT+nAD22HItsk1vfcc8aNRAf/MTfoQE7bf15XET2DJRvnqmpDDFFBWyRS8
-         RrE6Cd8nkZjq5E5ZXQg84MfAHFWr3LLkkGlfpoHpi3p5h1UgdxrXM2tkiFSisYoI/G5x
-         25nMgAS4WYZ95s9SX8Fz4O064rZ+khn9xJhifFujKZHHu/IjVZ9Eal6Dq1UP8Zd5a8Aq
-         1ceA/yg1YFOW44S4XSBtS28MUpnPoMNoE/n2JXojX2dpwOoKysp9aqHU61LvChJ0pDsR
-         tfRA==
-X-Gm-Message-State: ACgBeo0ZNEkr9LZkDJly7oyXL/dn3FSpcbsZEfbWQ5wgcF4LY1in/mwi
-        aiisapC+fPP9gpVO84U33ebvfw==
-X-Google-Smtp-Source: AA6agR5GXLMIEsCjNQLVkedtAe8QPcwwd2ykMWWhZGoYNdvLxKo95u/JLQVVYd6Zn/3caSaICMdj+Q==
-X-Received: by 2002:a05:6512:3406:b0:494:9e2a:cbd with SMTP id i6-20020a056512340600b004949e2a0cbdmr486161lfr.635.1662023728748;
-        Thu, 01 Sep 2022 02:15:28 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=jNM+5myziriC40IcLi6KZeIacAr+ajJ9scGcT8bKpzo=;
+        b=Zj6be8I9VRQ5gj7wnJpqiNiZp6EXEqQzj6k/Dt/zau9yMptj54x7MTill8G1Sh7MOG
+         hqrhx5MzMmfwBLy6Kkdyauti51ykGRXXowKLN9Iq/6taZJfH3S/4ONHdZqKG365nPzJp
+         rrPDVGh1Lfv164TMPhIdl3WsTPW+XP1/1RueEp4XJYJEN7FnunqMa6kPGiSZojcOtdC8
+         4CxcpdWg6/iS8g0gVqvXXxjwDlbhK2fYJnI9+tP4D6us9lnXxj08QdgFUhNQC8gyVSn9
+         HKOCj+8KIUwTl7vpkGgcBkIwqc2zCGH61MiGu9sLqMr4iyRc7iawHT+yRDtSbDCXpKXO
+         gTvA==
+X-Gm-Message-State: ACgBeo3qpO7mdgOfSAoPM9dw/iLL4hZS7WHOi+QcMcjUToSgvIMxvGwD
+        4w9EPb0zxpVqAiNIa4zqGh/k9w==
+X-Google-Smtp-Source: AA6agR5LX8WMcaeVD4ENclbBhkqZGs2/l0DYGO4bc0F6WTraZHk3TbrLnXaw4WnOMwev2kp1gk7JMQ==
+X-Received: by 2002:a05:6512:2350:b0:494:9925:f734 with SMTP id p16-20020a056512235000b004949925f734mr965847lfu.97.1662023729618;
+        Thu, 01 Sep 2022 02:15:29 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id t17-20020a2e2d11000000b00261b4df9ec4sm2422349ljt.138.2022.09.01.02.15.27
+        by smtp.gmail.com with ESMTPSA id t17-20020a2e2d11000000b00261b4df9ec4sm2422349ljt.138.2022.09.01.02.15.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Sep 2022 02:15:28 -0700 (PDT)
+        Thu, 01 Sep 2022 02:15:29 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -57,10 +58,12 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, Johan Hovold <johan@kernel.org>
-Subject: [RFC PATCH 0/3] drm/msm/dp: several fixes for the IRQ handling
-Date:   Thu,  1 Sep 2022 12:15:24 +0300
-Message-Id: <20220901091527.1992208-1-dmitry.baryshkov@linaro.org>
+Subject: [RFC PATCH 1/3] drm/msm/dp: fold disable_irq into devm_request_irq
+Date:   Thu,  1 Sep 2022 12:15:25 +0300
+Message-Id: <20220901091527.1992208-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220901091527.1992208-1-dmitry.baryshkov@linaro.org>
+References: <20220901091527.1992208-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -73,19 +76,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Johan Hovold has reported that returning a probe deferral from the
-msm_dp_modeset_init() can cause issues because the IRQ is not freed
-properly. This (compile-tested only) series tries to fix the issue by
-moving devm_request_irq() to the probe callback.
+Calling disable_irq() right after devm_request_irq() is a bad practice.
+it leaves a small window when the driver doesn't expect the IRQ, but the
+hardware still can trigger it. Use the IRQF_NO_AUTOEN flag to prevent
+the request_irq from enabling the IRQ line.
 
-Dmitry Baryshkov (3):
-  drm/msm/dp: fold disable_irq into devm_request_irq
-  drm/msm/dp: switch to using platform_get_irq()
-  drm/msm/dp: move dp_request_irq() call to dp_display_probe()
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
- drivers/gpu/drm/msm/dp/dp_display.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
-
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index bfd0aeff3f0d..3173e6962a78 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -1251,13 +1251,12 @@ int dp_display_request_irq(struct msm_dp *dp_display)
+ 
+ 	rc = devm_request_irq(&dp->pdev->dev, dp->irq,
+ 			dp_display_irq_handler,
+-			IRQF_TRIGGER_HIGH, "dp_display_isr", dp);
++			IRQF_TRIGGER_HIGH | IRQF_NO_AUTOEN, "dp_display_isr", dp);
+ 	if (rc < 0) {
+ 		DRM_ERROR("failed to request IRQ%u: %d\n",
+ 				dp->irq, rc);
+ 		return rc;
+ 	}
+-	disable_irq(dp->irq);
+ 
+ 	return 0;
+ }
 -- 
 2.35.1
 
