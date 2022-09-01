@@ -2,88 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1926D5AA0CD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 22:20:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A8695AA0F0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 22:34:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234808AbiIAUUf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Sep 2022 16:20:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58272 "EHLO
+        id S231936AbiIAUel (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Sep 2022 16:34:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231650AbiIAUUe (ORCPT
+        with ESMTP id S231443AbiIAUek (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Sep 2022 16:20:34 -0400
+        Thu, 1 Sep 2022 16:34:40 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5A6C481D5;
-        Thu,  1 Sep 2022 13:20:32 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 281JHjfq011034;
-        Thu, 1 Sep 2022 20:20:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=7NdMKjCGr0VH2jWf99Ve+nXSQZagUgzEpQTAIP2HZc4=;
- b=N7MQ++j1zzlVZo+jZzD9xTnA9UPKT4OqxhshqBUvwERux2q0HtbTU0ySNxJ0pCRSmr/v
- NPjQPQNs4/1EiDFY9k5yj6VVTEsZJwhOWz+L8NVNHLIHcIHI0ECwT+noBQTLQXprShlL
- UPgAm0Ub+Nx/t4SPhs0Dpvk49B3uiGzo1g7TaZZLrWRDa3goP5C5sbRB5WnFXDyTUmTD
- kq/XDrr7L3V9bFS0SVL79vjEA467uo3B6s9KRzatXMFQ5aeLs5Gov6JEv2gZ5rcAxpyz
- 0IPwNNaVC3L6hBpl8QU7tm9qzeVYRcjx3XlzKG+TOlqmMb1vvjGGQrAAhgkGqcU+otlt VA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ja79knp0g-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A78797961B
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 13:34:39 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 281JT1OR005375;
+        Thu, 1 Sep 2022 20:34:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=Q9TSN0NSgVwqjK9PyRQKz0GDsZInAB+hqlu0cf+g4rg=;
+ b=Tnvv99YvvHIdI0r+oJJlUe9s+TSV9fgX1WDS3yOdupcPlUSV0LYMFWd8T+dV7XR35gI+
+ ZBNq1d1QhyV0eyyBw5RJ3j+54LgviN1QeaW6T32ddWGCqRjuIJsIEN0tTNG9ZqbU2Kax
+ ZmdPtOHrg9GRt7yAO6u/TFbtXL+0alDN5kFSMJu0wQL3BYTq4/cfoYAFkscswhMuO7iQ
+ DFziH10p91YsQOfnh9PRSxOEKqySqEk9GoAbIqJ7rZ5ePvfWI6wSyMBB//U7tqcdLdQL
+ r15e2/WOxQ4pIcoLpf6eteOP8ftxeAqTlmoaQr2z47bAbKcv2AJhsFh97Psy1ROI95oV Ow== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jabqk4x03-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 01 Sep 2022 20:20:17 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 281KKGrn004976
+        Thu, 01 Sep 2022 20:34:37 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 281KYaiF008325
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 1 Sep 2022 20:20:16 GMT
-Received: from [10.216.21.90] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 1 Sep 2022
- 13:20:11 -0700
-Message-ID: <2339be29-c35a-67a4-8e98-daf247dd77dd@quicinc.com>
-Date:   Fri, 2 Sep 2022 01:50:07 +0530
+        Thu, 1 Sep 2022 20:34:36 GMT
+Received: from JESSZHAN.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Thu, 1 Sep 2022 13:34:35 -0700
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+To:     <freedreno@lists.freedesktop.org>
+CC:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <robdclark@gmail.com>, <seanpaul@chromium.org>,
+        <swboyd@chromium.org>, <dmitry.baryshkov@linaro.org>,
+        <quic_abhinavk@quicinc.com>
+Subject: [PATCH 0/2] Add support for HDR color formats
+Date:   Thu, 1 Sep 2022 13:34:20 -0700
+Message-ID: <20220901203422.217-1-quic_jesszhan@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH v6 3/6] clk: qcom: gdsc: Add a reset op to poll gdsc
- collapse
-Content-Language: en-US
-To:     Philipp Zabel <p.zabel@pengutronix.de>
-CC:     freedreno <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        <krzysztof.kozlowski@linaro.org>, Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1661923108-789-1-git-send-email-quic_akhilpo@quicinc.com>
- <20220831104741.v6.3.I162c4be55f230cd439f0643f1624527bdc8a9831@changeid>
- <20220901102817.GB32271@pengutronix.de>
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-In-Reply-To: <20220901102817.GB32271@pengutronix.de>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RrxUfKEOlK-krrFliA-9F3YbRt6ORIds
-X-Proofpoint-ORIG-GUID: RrxUfKEOlK-krrFliA-9F3YbRt6ORIds
+X-Proofpoint-GUID: KFAjqE1QtdS_VzXr57nZd9RQ9lJP_HDB
+X-Proofpoint-ORIG-GUID: KFAjqE1QtdS_VzXr57nZd9RQ9lJP_HDB
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
  definitions=2022-09-01_12,2022-08-31_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- adultscore=0 mlxscore=0 malwarescore=0 suspectscore=0 impostorscore=0
- priorityscore=1501 phishscore=0 mlxlogscore=999 bulkscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1011
+ impostorscore=0 mlxscore=0 priorityscore=1501 adultscore=0
+ lowpriorityscore=0 malwarescore=0 spamscore=0 phishscore=0 bulkscore=0
+ mlxlogscore=780 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2207270000 definitions=main-2209010088
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -92,133 +78,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/1/2022 3:58 PM, Philipp Zabel wrote:
-> On Wed, Aug 31, 2022 at 10:48:24AM +0530, Akhil P Oommen wrote:
->> Add a reset op compatible function to poll for gdsc collapse.
->>
->> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>
->> (no changes since v2)
->>
->> Changes in v2:
->> - Minor update to function prototype
->>
->>   drivers/clk/qcom/gdsc.c | 23 +++++++++++++++++++----
->>   drivers/clk/qcom/gdsc.h |  7 +++++++
->>   2 files changed, 26 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
->> index 44520ef..2d0f1d1 100644
->> --- a/drivers/clk/qcom/gdsc.c
->> +++ b/drivers/clk/qcom/gdsc.c
->> @@ -17,6 +17,7 @@
->>   #include <linux/reset-controller.h>
->>   #include <linux/slab.h>
->>   #include "gdsc.h"
->> +#include "reset.h"
->>   
->>   #define PWR_ON_MASK		BIT(31)
->>   #define EN_REST_WAIT_MASK	GENMASK_ULL(23, 20)
->> @@ -116,7 +117,8 @@ static int gdsc_hwctrl(struct gdsc *sc, bool en)
->>   	return regmap_update_bits(sc->regmap, sc->gdscr, HW_CONTROL_MASK, val);
->>   }
->>   
->> -static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status)
->> +static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status,
->> +		s64 timeout_us, unsigned int interval_ms)
->>   {
->>   	ktime_t start;
->>   
->> @@ -124,7 +126,9 @@ static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status)
->>   	do {
->>   		if (gdsc_check_status(sc, status))
->>   			return 0;
->> -	} while (ktime_us_delta(ktime_get(), start) < TIMEOUT_US);
->> +		if (interval_ms)
->> +			msleep(interval_ms);
->> +	} while (ktime_us_delta(ktime_get(), start) < timeout_us);
-> Could this loop be implemented with read_poll_timeout()?
-I felt it is not worth the code churn. Currently, we hit this path only 
-during GPU recovery which is a rare event.
->
->>   	if (gdsc_check_status(sc, status))
->>   		return 0;
->> @@ -172,7 +176,7 @@ static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status)
->>   		udelay(1);
->>   	}
->>   
->> -	ret = gdsc_poll_status(sc, status);
->> +	ret = gdsc_poll_status(sc, status, TIMEOUT_US, 0);
->>   	WARN(ret, "%s status stuck at 'o%s'", sc->pd.name, status ? "ff" : "n");
->>   
->>   	if (!ret && status == GDSC_OFF && sc->rsupply) {
->> @@ -343,7 +347,7 @@ static int _gdsc_disable(struct gdsc *sc)
->>   		 */
->>   		udelay(1);
->>   
->> -		ret = gdsc_poll_status(sc, GDSC_ON);
->> +		ret = gdsc_poll_status(sc, GDSC_ON, TIMEOUT_US, 0);
->>   		if (ret)
->>   			return ret;
->>   	}
->> @@ -565,3 +569,14 @@ int gdsc_gx_do_nothing_enable(struct generic_pm_domain *domain)
->>   	return 0;
->>   }
->>   EXPORT_SYMBOL_GPL(gdsc_gx_do_nothing_enable);
->> +
->> +int gdsc_wait_for_collapse(void *priv)
->> +{
->> +	struct gdsc *sc = priv;
->> +	int ret;
->> +
->> +	ret = gdsc_poll_status(sc, GDSC_OFF, 500000, 5);
->> +	WARN(ret, "%s status stuck at 'on'", sc->pd.name);
->> +	return ret;
->> +}
->> +EXPORT_SYMBOL_GPL(gdsc_wait_for_collapse);
-> Superficially, using this as a reset op seems like abuse of the reset
-> controller API. Calling reset_control_reset() on this in the GPU driver
-> will not trigger a reset signal on the GPU's "cx_collapse" reset input.
->
-> So at the very least, this patchset should contain an explanation why
-> this is a good idea regardless, and how this is almost a reset control.
->
-> I have read the linked discussion, and I'm not sure I understand all
-> of it, so please correct me if I'm wrong: There is some other way to
-> force the GDSC into a state that will eventually cause a GPU reset, and
-> this is just the remaining part to make sure that the workaround dance
-> is finished?
->
-> If so, it should be explained that this depends on something else to
-> actually indirectly trigger the reset, and where this happens.
+Add support for HDR color formats.
 
-Let me clarify a bit. In Qcom gpu subsystem, power collapse is the only 
-way to properly reset the cx domain. Power collapse is a bit complex 
-here because multiple subsystems/drivers can keep a vote on the 
-regulator which blocks power collapse. So we remove the vote from gpu 
-driver and poll (with a reasonable timeout obviously) until everyone 
-removes their vote and gdsc collapses.
+XR30 linear/compressed format has been validated with null_platform_test
+on SC7180, and P010 linear has been validated with plane_test (also on
+SC7180).
 
-I suppose generally a reset implementation would look like this:
+Jessica Zhang (2):
+  drm/msm/dpu: Add support for XR30 format
+  drm/msm/dpu: Add support for P010 format
 
-reset {
-         Step 1: Trigger a reset pulse
-         Step 2: Wait/poll for reset to complete
-}
+ drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c   | 24 ++++++++++++++++++-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  3 +++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     |  2 ++
+ 3 files changed, 28 insertions(+), 1 deletion(-)
 
-We skip step1 because we don't have a way to force it during gpu reset. 
-Instead of that, we just remove the gdsc vote from the gpu driver. So 
-all that is left to do here is step 2.
-
-Like you suggested, I think it would be better if we document this in 
-patch 4.
-
-Thanks for the review. Please let me know if you have any feedback.
-
--Akhil.
->
-> regards
-> Philipp
+--
+2.35.1
 
