@@ -2,130 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1A365A9508
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 12:47:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 546465A951B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 12:54:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232229AbiIAKrT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Sep 2022 06:47:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40814 "EHLO
+        id S234143AbiIAKye (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Sep 2022 06:54:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229495AbiIAKrS (ORCPT
+        with ESMTP id S234086AbiIAKyd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Sep 2022 06:47:18 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FB3026122;
-        Thu,  1 Sep 2022 03:47:17 -0700 (PDT)
-Received: from [192.168.2.145] (109-252-119-13.nat.spd-mgts.ru [109.252.119.13])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
-        (No client certificate requested)
-        (Authenticated sender: dmitry.osipenko)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 0F1A86601E0A;
-        Thu,  1 Sep 2022 11:47:13 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1662029236;
-        bh=601JQW1vRODbZW3nXgrYwKwIYLdatGO7bqQS64cjbC8=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=gvIVOPIBzWZGuD6NygXzh1sohbyafn5m4zlspwSvOk7AqMsde4hQLAfTpZRLGT/Xg
-         tZCPVrVupNm/ycsQg0HqK9JAnd7gStXHbCQs/hnoLYCspCe/qIfCqS3tgCPNdjs6sS
-         6ns55hsCsiGqdQjsubmEAVFEAIr1tWG+6jF0V0SgiLyirr7LqTX8z2z8vQEx25L7xu
-         2xXzrL/ZUdOZB7ntAgCtSMwR/pQbOLBKNp236a2yKz2+EFYW2nQ4gkKtpamcIbbFgE
-         dA/wt53VbNU8A3PjajlEJ4BJ2/tgJLW7ng1Zhlr12NCwAZ4urG6dRbPgfbiRq0WfC9
-         7rk9NN0l3hsgQ==
-Message-ID: <532eedc8-b468-4409-1887-8fff264a6486@collabora.com>
-Date:   Thu, 1 Sep 2022 13:47:10 +0300
+        Thu, 1 Sep 2022 06:54:33 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFB751321D2
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 03:54:29 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id o4so16785721pjp.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Sep 2022 03:54:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=2j/euuewrJLsmuH7PP5LuRSskWex4MK4oenY2YNmi7o=;
+        b=TbZl7S2tkGZvo64LY0ebTP/BW0w7CEo9wRD3fni+bu2LoIcaSC3RsN1j2a9D5p4Cte
+         l4YM+fizu2O9DwG/CDcZ1Re5rMqXlRMnOE0W2TrlA77q52LVDnmgf/l4NGOoe9ritQxe
+         2DjHFEva0mj3FCO6L4ZhH0fBoMlLX65aQ55hjmtq0J6MAtklj3VVReWDD88Yz+bUpzy+
+         Ek1vJ4FVAxbYYr0mA3aU8pi2TE4AUitLfieLTueKMzMMN8m25PMpM8VXpsfuDcIr0LSw
+         eR46jCvJ2av61H3vVKJfFyYWKme0iGc2+l9UQ4eZOBFTTavnr+wkDmaS8/F56QTcYx0S
+         xmAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=2j/euuewrJLsmuH7PP5LuRSskWex4MK4oenY2YNmi7o=;
+        b=hFgLIDA9WCnlqduO9am3hpGcwYnd3FxOTQKPUxYsctZcvZk7jr0f1Gqqq2PE7oaEBx
+         CxZjSsixGOXnvfq+5xMJUjWS3IapByDgMvPCoRkWOD7R7FBx9HrX1iGyeqaLMIF3A2X5
+         fGtZCNLWdVqY4haClFsQWJI8Q6UI4pXC/6k0m8HpAX79fqcCHj4Ppd9oHhsXBVzrhAoE
+         4HIO3HDdR9tGKamFPcyiLyxiV4TYmLnYXxycLg6UbZtr3FWQixkN5ExFhBHALeSSTC+D
+         PvrQeO61KNKoxVM3ZV7a/k1VYpyE7+jtrpjHlBej2ycjqVZ5hV8YAPbI5quZug9cuNNW
+         VFDw==
+X-Gm-Message-State: ACgBeo1SXPZ57DFrYP3Q2Op3dFFdzkMqJO2LDTbLZjwx+x3LafOweVyj
+        PB4Bj5CrqPCGB9jj3l4FTFoVRGnXH/0tWw==
+X-Google-Smtp-Source: AA6agR4X3IrGw9Bu8aLpEws0oDKUEuYQZPfL9DS3huamNRggIRsK5P/pRA3DqtdZdhsdCAc6I+RCTg==
+X-Received: by 2002:a17:90b:3907:b0:1fe:34a0:e760 with SMTP id ob7-20020a17090b390700b001fe34a0e760mr6671416pjb.45.1662029668590;
+        Thu, 01 Sep 2022 03:54:28 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1c60:5362:8069:f46:34af:eb19])
+        by smtp.gmail.com with ESMTPSA id ij13-20020a170902ab4d00b0016c57657977sm13508910plb.41.2022.09.01.03.54.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Sep 2022 03:54:28 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-pm@vger.kernel.org
+Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, linux-arm-msm@vger.kernel.org,
+        daniel.lezcano@linaro.org, robh+dt@kernel.org, rafael@kernel.org,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>
+Subject: [PATCH v4 0/4] Add support for tsens controller reinit via trustzone
+Date:   Thu,  1 Sep 2022 16:24:10 +0530
+Message-Id: <20220901105414.1171813-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v4 00/21] Move all drivers to a common dma-buf locking
- convention
-Content-Language: en-US
-To:     =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        David Airlie <airlied@linux.ie>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Gurchetan Singh <gurchetansingh@chromium.org>,
-        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Daniel Almeida <daniel.almeida@collabora.com>,
-        Gert Wollny <gert.wollny@collabora.com>,
-        Gustavo Padovan <gustavo.padovan@collabora.com>,
-        Daniel Stone <daniel@fooishbar.org>,
-        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Rob Clark <robdclark@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        =?UTF-8?Q?Thomas_Hellstr=c3=b6m?= <thomas_os@shipmail.org>,
-        Qiang Yu <yuq825@gmail.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Jason Gunthorpe <jgg@ziepe.ca>,
-        Leon Romanovsky <leon@kernel.org>,
-        Juergen Gross <jgross@suse.com>,
-        Stefano Stabellini <sstabellini@kernel.org>,
-        Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        Russell King <linux@armlinux.org.uk>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Christian Gmeiner <christian.gmeiner@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Dmitry Osipenko <digetx@gmail.com>,
-        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
-        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        kernel@collabora.com, virtualization@lists.linux-foundation.org,
-        linux-rdma@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20220831153757.97381-1-dmitry.osipenko@collabora.com>
- <8322099f-4ef3-6a5d-4a66-27c4b3329884@amd.com>
-From:   Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <8322099f-4ef3-6a5d-4a66-27c4b3329884@amd.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Christian,
+Changes since v3:
+-----------------
+- v3 can be viewed here: https://lore.kernel.org/linux-arm-msm/20220804054638.3197294-1-bhupesh.sharma@linaro.org/
+- Addressed review comments from Bjorn regarding early exit paths, spin
+  lock being held while returning from func, etc.
+- Also added Bjorn's R-Bs for v3 patches.
+- Rebased on latest linux-next (master branch) tip.
 
-On 9/1/22 10:49, Christian König wrote:
-> Hi Dmitry,
-> 
-> I've gone over this multiple times now and while it is still possible
-> that we missed something I think that this should land now.
+Changes since v2:
+-----------------
+- v2 can be viewed here: https://lore.kernel.org/linux-arm-msm/20220724122424.2509021-1-bhupesh.sharma@linaro.org/
+- Dropped sm6375 specific patch from v3, as suggested by Konrad.
+- Rebased on latest linux-next (master branch) tip.
 
-Thank you very much for the review!
+Changes since v1:
+-----------------
+- v1 can be viewed here: https://lore.kernel.org/linux-arm-msm/20220701145815.2037993-1-bhupesh.sharma@linaro.org/
+- Addressed several comments from Bjorn regarding locking, serialization
+  etc received on v1.
+- Addressed Konrad's concerns about the tsens controller found on sm6375
+  SoC which seems to start in a bad state or is disabled when entering
+  the linux world.
+- This series would depend on sm6375 tsens controller changes being
+  added by Konrad. It is based on linux-next (master branch) tip.
 
-> The whole topic is just to complicated that we can 100% sure guarantee
-> that there isn't anything wrong with the locking, but lockdep and driver
-> testing should allow us to quickly find remaining issues.
+Some versions of Qualcomm tsens controller might enter a
+'bad state' causing sensor temperatures/interrupts status
+to be in an 'invalid' state.
 
-At least the most popular drivers should be okay. If anyone will find
-issue introduced by this series, then indeed shouldn't be a problem to
-fix it later on.
+It is recommended to re-initialize the tsens controller
+via trustzone (secure registers) using scm call(s) when that
+happens.
 
-> Do you have commit rights to drm-misc-next or should I push it?
+This patchset adds the support for the same.
 
-I got the drm-misc commit right two weeks ago, haven't pushed anything
-there yet. Please let me try to do the push. I'll let you know if any
-kind of help will be needed from you.
+Cc: andersson@kernel.org
+Cc: Amit Kucheria <amitk@kernel.org>
+Cc: Thara Gopinath <thara.gopinath@gmail.com>
+Cc: linux-pm@vger.kernel.org
+Cc: linux-arm-msm@vger.kernel.org
 
-I'll wait for more acks/r-bs and then do the push.
+Bhupesh Sharma (4):
+  firmware: qcom: scm: Add support for tsens reinit workaround
+  thermal: qcom: tsens: Add hooks for supplying platform specific reinit
+    quirks
+  thermal: qcom: tsens: Add driver support for re-initialization quirk
+  thermal: qcom: tsens: Add reinit quirk support for tsens v2
+    controllers
+
+ drivers/firmware/qcom_scm.c     |  15 +++
+ drivers/firmware/qcom_scm.h     |   4 +
+ drivers/thermal/qcom/tsens-v2.c |  15 +++
+ drivers/thermal/qcom/tsens.c    | 193 ++++++++++++++++++++++++++++++++
+ drivers/thermal/qcom/tsens.h    |  18 ++-
+ include/linux/qcom_scm.h        |   2 +
+ 6 files changed, 246 insertions(+), 1 deletion(-)
 
 -- 
-Best regards,
-Dmitry
+2.37.1
+
