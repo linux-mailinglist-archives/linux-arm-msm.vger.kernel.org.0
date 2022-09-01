@@ -2,77 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F9145A9059
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 09:33:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 280E95A9065
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 09:35:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232768AbiIAHdN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Sep 2022 03:33:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59150 "EHLO
+        id S233831AbiIAHff (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Sep 2022 03:35:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232599AbiIAHc4 (ORCPT
+        with ESMTP id S233853AbiIAHfa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Sep 2022 03:32:56 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 400C4B517F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 00:30:28 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id z25so23178703lfr.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Sep 2022 00:30:28 -0700 (PDT)
+        Thu, 1 Sep 2022 03:35:30 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F08F0DFC2
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 00:35:12 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id bn9so16964267ljb.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Sep 2022 00:35:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=Yq1f5sXSl9dJBBsa4JJtzhgEzf3Vcbcgdkoadank0UY=;
-        b=djMelikWbC/lJ29b+RcknkU1Y10YBy9OxcmWeKREbcDJZ7sIMbL7ZYDHEtfg7WWj/e
-         C3PYlYa3kq3VB8KYoyf9BFYkRuA92YeiaVrBAE7jPxx90EZaorcQn4NE7uKUwV+x87ci
-         4+EE7VD/aU1mjDn5J4ZjZoDb/drWpjXr0y9Dgnbpz124meHVprM6tAfv3z3P4IxXIwQi
-         H8mZ/M9p+vrlDwmZNgDeZGS9rYUMB98eJP+9QXE25bCbHVOziulP5lvdpsZhI/6WnGDa
-         k6SrtklCLROaDxYaqRxIe/BfgB96gPTfuLve0ZIP1B4LRFM95B5IDAbwI+SXdvVZY+Rd
-         uDxw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=NRv1MPSnJ6fbS5CRV69fk+nV0uPunEr6DOm4zVpHg7g=;
+        b=RWox0HfD5FTb9ZdbRn+9qLHmNC2sSi2am9D6QhIy722T1FI2kfHuVCwDjsex0jXfnU
+         3vUYrAB1xWEYkFpzWN+0kCwY7RTyrpT89DfIonIZ7T+H8hVmxdyWISSSBoThJ1QPEoGI
+         CLhOelFyplFRqeI9o7Qib6uk/CQAPljVcaw4T3hX5wPOe45JJ83EFBc+CNJNORuA6SSB
+         ET4E87dde8xE4mI9Qv/K9p2XVIbM5trx7YhJTCf/wDV531KTauNx/GGcUS6aCzYvtp71
+         F7+z78K7WcdpfVSPUUfzG+GK4r0RFDJx48Q6yKIyWuF20Qp6ZSjp9nnpSBbyNiDog5uq
+         7vlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=Yq1f5sXSl9dJBBsa4JJtzhgEzf3Vcbcgdkoadank0UY=;
-        b=4nvhKDR+RHajQ+V4pgbYtfP3P7w7FdSK0tfJq3pERKqD5Jpsy0ks4X7ULUkhrLwMGm
-         dteEykESs2XoOjk2gGnFfjdJtFz+cV8z6Ke8iDHXGmsDJTSuK1+B7I5ozAt3hsznAaqj
-         mI1kT4D2aqVDe6iX9St1nqpAwROSWhNM6XKwaLBlqWJBHjaPjku+6yLPHIaX60uS0VbC
-         I/lmxCVmiXjmU+wtUhDFxzFxje3QjcfnW5NGG+85m8vfVcKBEWKbHqzk3Dj0JAyy8GTK
-         SYddYGGoGTjo5r9s2gNfH7kiWmVaFmv34cvUalFhtK6TtTXNMVf63i6u8LEjBe+V7zus
-         2c/w==
-X-Gm-Message-State: ACgBeo0oVkY3lUuoqO+OVna76vSjQjz1G7nu5fUXJ+A0XkwWLj/hkDRI
-        slAW7IAUsfPR3EWBP7uq8F46tA==
-X-Google-Smtp-Source: AA6agR7yPEX4lBca6MaRVV7FLC8JsJi9f1Qnc5BJpKL2yg/lvtRzib/see+UUQqoafpytn52CBFq6A==
-X-Received: by 2002:a05:6512:1395:b0:48d:81c:5159 with SMTP id p21-20020a056512139500b0048d081c5159mr11687844lfa.375.1662017426392;
-        Thu, 01 Sep 2022 00:30:26 -0700 (PDT)
-Received: from [192.168.28.124] (balticom-73-99-134.balticom.lv. [109.73.99.134])
-        by smtp.gmail.com with ESMTPSA id h6-20020a2ea486000000b00268bc2c1ed0sm151744lji.22.2022.09.01.00.30.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Sep 2022 00:30:25 -0700 (PDT)
-Message-ID: <aac3942d-bc0b-7763-0d12-f5d6c585cc97@linaro.org>
-Date:   Thu, 1 Sep 2022 10:30:24 +0300
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=NRv1MPSnJ6fbS5CRV69fk+nV0uPunEr6DOm4zVpHg7g=;
+        b=VwdUNn6DFhHkeqsLCl9Jr6fRTACwaIkcLvsbvROe1AJ96jdCUm5wP08gi7fs1j0l9A
+         ozfCPmapr6tEdYE0lwcZ6kNjJGT6fnCNQQFb1Z453ghNaYbH+7cX9Savq5SOsrMi5NuX
+         C4vpSH49fY7nOglu1vyiSVVAK7wuwh3wf3g2jT/tifXN6ZWwCH8i6Ig6WYTJFoGaAgag
+         M6LJwfh7/JsheXdEZ0IPVZ0sWgRC+Z+qeiZ5Lc6wRpIMyPFpiclrIB6I4rcedyLojogw
+         1rbZ3HTvhHZLlz+6B8c6PzRL9hsGVDHzTEMs6dUgc+oCDhwH6n1txZovJoRewE0QxAeI
+         mX2g==
+X-Gm-Message-State: ACgBeo0bqGPUq1ZnH3dBY3yug7Mv9qioppgf10jU+01j1vMYJ0N0Y2RQ
+        t70iJctEENmUauLvaJKykAzRhg==
+X-Google-Smtp-Source: AA6agR5huUDAi+q1PzZQ2AkzAATLcYsocrwx2S4h81Ku53jzzHCOggETsBF7EUnU86PaDDPaCh4cPg==
+X-Received: by 2002:a05:651c:1989:b0:268:a377:ba49 with SMTP id bx9-20020a05651c198900b00268a377ba49mr1182606ljb.443.1662017709106;
+        Thu, 01 Sep 2022 00:35:09 -0700 (PDT)
+Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id a28-20020a2eb55c000000b0025e2c5a12b6sm1545253ljn.129.2022.09.01.00.35.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Sep 2022 00:35:08 -0700 (PDT)
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sm8450: Add description of camera control interfaces
+Date:   Thu,  1 Sep 2022 10:35:04 +0300
+Message-Id: <20220901073504.3077363-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH 6/6] ASoC: codecs: tx-macro: add support for sm8450 and
- sc8280xp
-Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        broonie@kernel.org
-Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        perex@perex.cz, tiwai@suse.com,
-        pierre-louis.bossart@linux.intel.com,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220818134619.3432-1-srinivas.kandagatla@linaro.org>
- <20220818134619.3432-7-srinivas.kandagatla@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220818134619.3432-7-srinivas.kandagatla@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,120 +71,173 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/08/2022 16:46, Srinivas Kandagatla wrote:
-> LPASS VA Macro now has soundwire master to deal with access to
-> analog mic in low power island use cases.
-> 
-> This is added after sc8280xp, add support for this.
-> Along with this also add compatibles for sm8450 and sc8280xp.
-> 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> ---
->  sound/soc/codecs/lpass-va-macro.c | 64 ++++++++++++++++++++++++++++++-
->  1 file changed, 62 insertions(+), 2 deletions(-)
-> 
-> diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
-> index a35f684053d2..f8b0c8caa1db 100644
-> --- a/sound/soc/codecs/lpass-va-macro.c
-> +++ b/sound/soc/codecs/lpass-va-macro.c
-> @@ -25,6 +25,10 @@
->  #define CDC_VA_FS_CONTROL_EN			BIT(0)
->  #define CDC_VA_FS_COUNTER_CLR			BIT(1)
->  #define CDC_VA_CLK_RST_CTRL_SWR_CONTROL		(0x0008)
-> +#define CDC_VA_SWR_RESET_MASK		BIT(1)
-> +#define CDC_VA_SWR_RESET_ENABLE		BIT(1)
-> +#define CDC_VA_SWR_CLK_EN_MASK		BIT(0)
-> +#define CDC_VA_SWR_CLK_ENABLE		BIT(0)
->  #define CDC_VA_TOP_CSR_TOP_CFG0			(0x0080)
->  #define CDC_VA_FS_BROADCAST_EN			BIT(1)
->  #define CDC_VA_TOP_CSR_DMIC0_CTL		(0x0084)
-> @@ -66,6 +70,8 @@
->  #define CDC_VA_TOP_CSR_SWR_MIC_CTL0		(0x00D0)
->  #define CDC_VA_TOP_CSR_SWR_MIC_CTL1		(0x00D4)
->  #define CDC_VA_TOP_CSR_SWR_MIC_CTL2		(0x00D8)
-> +#define CDC_VA_SWR_MIC_CLK_SEL_0_1_MASK		(0xEE)
-> +#define CDC_VA_SWR_MIC_CLK_SEL_0_1_DIV1		(0xCC)
->  #define CDC_VA_TOP_CSR_SWR_CTRL			(0x00DC)
->  #define CDC_VA_INP_MUX_ADC_MUX0_CFG0		(0x0100)
->  #define CDC_VA_INP_MUX_ADC_MUX0_CFG1		(0x0104)
-> @@ -194,6 +200,8 @@ struct va_macro {
->  	unsigned long active_ch_mask[VA_MACRO_MAX_DAIS];
->  	unsigned long active_ch_cnt[VA_MACRO_MAX_DAIS];
->  	u16 dmic_clk_div;
-> +	bool has_swr_master;
-> +	bool reset_swr;
->  
->  	int dec_mode[VA_MACRO_NUM_DECIMATORS];
->  	struct regmap *regmap;
-> @@ -325,6 +333,9 @@ static bool va_is_rw_register(struct device *dev, unsigned int reg)
->  	case CDC_VA_TOP_CSR_DMIC2_CTL:
->  	case CDC_VA_TOP_CSR_DMIC3_CTL:
->  	case CDC_VA_TOP_CSR_DMIC_CFG:
-> +	case CDC_VA_TOP_CSR_SWR_MIC_CTL0:
-> +	case CDC_VA_TOP_CSR_SWR_MIC_CTL1:
-> +	case CDC_VA_TOP_CSR_SWR_MIC_CTL2:
->  	case CDC_VA_TOP_CSR_DEBUG_BUS:
->  	case CDC_VA_TOP_CSR_DEBUG_EN:
->  	case CDC_VA_TOP_CSR_TX_I2S_CTL:
-> @@ -1306,12 +1317,40 @@ static const struct snd_soc_component_driver va_macro_component_drv = {
->  
->  static int fsgen_gate_enable(struct clk_hw *hw)
->  {
-> -	return va_macro_mclk_enable(to_va_macro(hw), true);
-> +	struct va_macro *va = to_va_macro(hw);
-> +	struct regmap *regmap = va->regmap;
-> +	int ret;
-> +
-> +	ret = va_macro_mclk_enable(va, true);
-> +	if (!va->has_swr_master)
-> +		return ret;
-> +
-> +	if (va->reset_swr)
-> +		regmap_update_bits(regmap, CDC_VA_CLK_RST_CTRL_SWR_CONTROL,
-> +				   CDC_VA_SWR_RESET_MASK,
-> +				   CDC_VA_SWR_RESET_ENABLE);
-> +
-> +	regmap_update_bits(regmap, CDC_VA_CLK_RST_CTRL_SWR_CONTROL,
-> +			   CDC_VA_SWR_CLK_EN_MASK,
-> +			   CDC_VA_SWR_CLK_ENABLE);
-> +	if (va->reset_swr)
-> +		regmap_update_bits(regmap, CDC_VA_CLK_RST_CTRL_SWR_CONTROL,
-> +				   CDC_VA_SWR_RESET_MASK, 0x0);
-> +	va->reset_swr = false;
-> +
-> +	return ret;
->  }
->  
->  static void fsgen_gate_disable(struct clk_hw *hw)
->  {
-> -	va_macro_mclk_enable(to_va_macro(hw), false);
-> +	struct va_macro *va = to_va_macro(hw);
-> +	struct regmap *regmap = va->regmap;
-> +
-> +	if (va->has_swr_master)
-> +		regmap_update_bits(regmap, CDC_VA_CLK_RST_CTRL_SWR_CONTROL,
-> +			   CDC_VA_SWR_CLK_EN_MASK, 0x0);
-> +
-> +	va_macro_mclk_enable(va, false);
->  }
->  
->  static int fsgen_gate_is_enabled(struct clk_hw *hw)
-> @@ -1459,6 +1498,11 @@ static int va_macro_probe(struct platform_device *pdev)
->  
->  	dev_set_drvdata(dev, va);
->  
-> +	if (of_device_is_compatible(dev->of_node, "qcom,sm8450-lpass-va-macro") ||
-> +		of_device_is_compatible(dev->of_node, "qcom,sc8280xp-lpass-va-macro")) {
-> +		va->has_swr_master = true;
-> +		va->reset_swr = true;
+Add description of two CCI controllers found on QCOM SM8450.
 
-This should go to driver_data. Either via quirks/flags or device type
-(enum for each device). Usually the first (flags) is more flexible if
-you want to support many devices.
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 142 +++++++++++++++++++++++++++
+ 1 file changed, 142 insertions(+)
 
-This also explains Rob's concerns about unneeded entries in of_device_id
-table.
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index 4978c5ba5dd0..ce634504e08b 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -2302,6 +2302,84 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
+ 			};
+ 		};
+ 
++		cci0: cci@ac15000 {
++			compatible = "qcom,sm8450-cci";
++			reg = <0 0xac15000 0 0x1000>;
++			interrupts = <GIC_SPI 460 IRQ_TYPE_EDGE_RISING>;
++			power-domains = <&camcc TITAN_TOP_GDSC>;
++
++			clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
++				 <&camcc CAM_CC_SLOW_AHB_CLK_SRC>,
++				 <&camcc CAM_CC_CPAS_AHB_CLK>,
++				 <&camcc CAM_CC_CCI_0_CLK>,
++				 <&camcc CAM_CC_CCI_0_CLK_SRC>;
++			clock-names = "camnoc_axi",
++				      "slow_ahb_src",
++				      "cpas_ahb",
++				      "cci",
++				      "cci_src";
++			pinctrl-0 = <&cci0_default &cci1_default>;
++			pinctrl-1 = <&cci0_sleep &cci1_sleep>;
++			pinctrl-names = "default", "sleep";
++
++			status = "disabled";
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			cci0_i2c0: i2c-bus@0 {
++				reg = <0>;
++				clock-frequency = <1000000>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++
++			cci0_i2c1: i2c-bus@1 {
++				reg = <1>;
++				clock-frequency = <1000000>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++		};
++
++		cci1: cci@ac16000 {
++			compatible = "qcom,sm8450-cci";
++			reg = <0 0xac16000 0 0x1000>;
++			interrupts = <GIC_SPI 271 IRQ_TYPE_EDGE_RISING>;
++			power-domains = <&camcc TITAN_TOP_GDSC>;
++
++			clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
++				 <&camcc CAM_CC_SLOW_AHB_CLK_SRC>,
++				 <&camcc CAM_CC_CPAS_AHB_CLK>,
++				 <&camcc CAM_CC_CCI_1_CLK>,
++				 <&camcc CAM_CC_CCI_1_CLK_SRC>;
++			clock-names = "camnoc_axi",
++				      "slow_ahb_src",
++				      "cpas_ahb",
++				      "cci",
++				      "cci_src";
++			pinctrl-0 = <&cci2_default &cci3_default>;
++			pinctrl-1 = <&cci2_sleep &cci3_sleep>;
++			pinctrl-names = "default", "sleep";
++
++			status = "disabled";
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			cci1_i2c0: i2c-bus@0 {
++				reg = <0>;
++				clock-frequency = <1000000>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++
++			cci1_i2c1: i2c-bus@1 {
++				reg = <1>;
++				clock-frequency = <1000000>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++		};
++
+ 		camcc: clock-controller@ade0000 {
+ 			compatible = "qcom,sm8450-camcc";
+ 			reg = <0 0x0ade0000 0 0x20000>;
+@@ -2379,6 +2457,70 @@ tlmm: pinctrl@f100000 {
+ 			gpio-ranges = <&tlmm 0 0 211>;
+ 			wakeup-parent = <&pdc>;
+ 
++			cci0_default: cci0-default-state {
++				/* SDA, SCL */
++				pins = "gpio110", "gpio111";
++				function = "cci_i2c";
++				drive-strength = <2>;
++				bias-pull-up;
++			};
++
++			cci0_sleep: cci0-sleep-state {
++				/* SDA, SCL */
++				pins = "gpio110", "gpio111";
++				function = "cci_i2c";
++				drive-strength = <2>;
++				bias-pull-down;
++			};
++
++			cci1_default: cci1-default-state {
++				/* SDA, SCL */
++				pins = "gpio112", "gpio113";
++				function = "cci_i2c";
++				drive-strength = <2>;
++				bias-pull-up;
++			};
++
++			cci1_sleep: cci1-sleep-state {
++				/* SDA, SCL */
++				pins = "gpio112", "gpio113";
++				function = "cci_i2c";
++				drive-strength = <2>;
++				bias-pull-down;
++			};
++
++			cci2_default: cci2-default-state {
++				/* SDA, SCL */
++				pins = "gpio114", "gpio115";
++				function = "cci_i2c";
++				drive-strength = <2>;
++				bias-pull-up;
++			};
++
++			cci2_sleep: cci2-sleep-state {
++				/* SDA, SCL */
++				pins = "gpio114", "gpio115";
++				function = "cci_i2c";
++				drive-strength = <2>;
++				bias-pull-down;
++			};
++
++			cci3_default: cci3-default-state {
++				/* SDA, SCL */
++				pins = "gpio208", "gpio209";
++				function = "cci_i2c";
++				drive-strength = <2>;
++				bias-pull-up;
++			};
++
++			cci3_sleep: cci3-sleep-state {
++				/* SDA, SCL */
++				pins = "gpio208", "gpio209";
++				function = "cci_i2c";
++				drive-strength = <2>;
++				bias-pull-down;
++			};
++
+ 			pcie0_default_state: pcie0-default-state {
+ 				perst {
+ 					pins = "gpio94";
+-- 
+2.33.0
 
-
-Best regards,
-Krzysztof
