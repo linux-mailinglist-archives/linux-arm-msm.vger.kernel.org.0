@@ -2,83 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 57B475A9CF9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 18:20:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D9875A9DE0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 19:17:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231281AbiIAQUg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Sep 2022 12:20:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34590 "EHLO
+        id S233848AbiIARRP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Sep 2022 13:17:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233260AbiIAQUZ (ORCPT
+        with ESMTP id S233392AbiIARRL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Sep 2022 12:20:25 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85A9C2F3AF
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 09:20:23 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id bq23so25188968lfb.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Sep 2022 09:20:23 -0700 (PDT)
+        Thu, 1 Sep 2022 13:17:11 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFB3E647FF
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 10:17:09 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id w2so17719574pld.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Sep 2022 10:17:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=m+FhuVC9zsmBuPqczl82iep7EQ0hRYQKXXieJt5VGZg=;
-        b=dcWnJRXDU4JrUZbK/QiyBi/v6boEp5WzmqeDKimaZ8Dm4sQC/tY9/GHF6Dawf1FLuw
-         LvJO3UXXbRBGsdxkWdMUmFtTdLKgALBmHeF7uYdTPmrSj9dBdMo84GWuW/wC2MRdmBKH
-         Iq+9zKsJht1IK15bGi7xc0px+D+WIDXOT+O5F8NgUIFSKarDyfKGRyyf7JH2jrxMYXtT
-         qj5WzBq8f7Z2mFVIHSQM4ILDmKDKbhCTfG5MpCza5Em5vbQ0bBS4xYQ6jDR2Gfvw6TzA
-         Y/a7EElMMLP14jP9wVCn1tW8OkTJr+8leMQkyVwcPlGAjoiqqDKN+XocCw8asbT8CJMb
-         YDBA==
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=2Jj25UZyRhgqyO+BR+KMQnX1ckBvZ3LEt9xJbNLqsdQ=;
+        b=NtrhabWO2jozpsnAy/Ruq2/NfdDJHKxikJKm8wdSLqDN32pt2+nqlQlyhe3+fUX5Wl
+         NkaM3hUact0+NWIQ6dMDZYPDHczxKuBr62GoZJxnD8bK3VKLkuMoBA/8K3U6Ibxrm0ZE
+         HEs7X47UKVgId3jiBeG06Q49Jjyo0EtjEydko=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=m+FhuVC9zsmBuPqczl82iep7EQ0hRYQKXXieJt5VGZg=;
-        b=zHnRr1wV7iY4YvMMEBv56tBqXSnTyxXtq5szGGbsubNUg6HL3XYmyEcsZfly+m5SaM
-         xdO2F3uUkM7bkDUxbYQqQjLlNbs6XPNLYuxxAfvFqOlEzqzERDq7hrJ5zA9rLfxaL1Dp
-         DYRy7bZ27Upfsm6/teXBA6NXCCJSRbbSAULqdCixX7RQgxEhVUWdNGRcg1Nfc5Le8ULT
-         18Xf7x7+WSo+zL9MrSpdVaP0yZdWVNepRNsrgnBJpplKg8dCJgvG1VmzOskTdLf2eHb9
-         vuXQd7QPD8PNsTtQHZ54fEXe8H1okQV6aMu7f1ji2jVPs9aZjqmHpGdYEMiIzwPszFs+
-         GtFg==
-X-Gm-Message-State: ACgBeo1GH8N4i9peMGGJwrtB7qpbmfBxJ4KzLO7f/Y7fU+PYCfIX9VMT
-        J9FD7+cCLuajKQL4rPBo8TWU0Q==
-X-Google-Smtp-Source: AA6agR7qj8UkAxIk7Zimk3Lo5Lwb7oBdWKWEyGYjaKKWTeBaWKdcQuL65WY5fr/iOVNtxuivNVxKow==
-X-Received: by 2002:a05:6512:3b87:b0:494:9a8d:f74f with SMTP id g7-20020a0565123b8700b004949a8df74fmr1292105lfv.8.1662049221843;
-        Thu, 01 Sep 2022 09:20:21 -0700 (PDT)
-Received: from [192.168.28.124] (balticom-73-99-134.balticom.lv. [109.73.99.134])
-        by smtp.gmail.com with ESMTPSA id y20-20020a05651c107400b00261cd70e41asm1850937ljm.32.2022.09.01.09.20.20
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=2Jj25UZyRhgqyO+BR+KMQnX1ckBvZ3LEt9xJbNLqsdQ=;
+        b=Rb7p5BXzEUoKXGa/TrqM8C/AOMf8mT8ODM9S+1Oi9MZ/OZqEsOb/zPRHyWPlnf4z/z
+         wDMtw+9+Dy++wx8+aP0tnSHEi5Wq5/amSLR5wvev1X9p7886Z76qo2nlj8BhCaPa1QWA
+         8R93H2akO05MGQYUoNSktTRUhhdg2ocLRRALYSU+PDqcHV0QTiyujxM2j+QZvzLZ+q7u
+         galyGCkDpe24DuQRlCtYXwvJn3jRBWRsyG+unvMLzF/u/PhA2/542XegVk6Kz3sO/Odj
+         ziv6w9JFsj4lAm9i+UrteHDG/zLRdYFQ06pP9qpcib/6sP1+OHSPhmoSpeZ+Zgp24AOt
+         y10Q==
+X-Gm-Message-State: ACgBeo23BVo8v1g1rY4Q5DClfD65LRH6uocDwmcKu7m+AJPSlmgn7+a6
+        /S9jicM08UyjixEsJsrYIGlWhw==
+X-Google-Smtp-Source: AA6agR44lXt6Z51IuJvoY5+8O3mc5yc7egYdzoZygLx9D4XWj60XvG6mM3eZhHmnToy0nHzqH0KOUw==
+X-Received: by 2002:a17:902:ee42:b0:174:88f1:20d7 with SMTP id 2-20020a170902ee4200b0017488f120d7mr24152047plo.32.1662052629335;
+        Thu, 01 Sep 2022 10:17:09 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:34cd:3659:c11f:5d05])
+        by smtp.gmail.com with UTF8SMTPSA id d9-20020a655ac9000000b0041c45d76b6bsm5593032pgt.38.2022.09.01.10.17.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Sep 2022 09:20:20 -0700 (PDT)
-Message-ID: <ccd72f2b-911e-c4fd-7bbc-ce21e5a34c68@linaro.org>
-Date:   Thu, 1 Sep 2022 19:20:19 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH 14/14] arm64: dts: qcom: sm4250: Add support for
- oneplus-billie2
-Content-Language: en-US
-To:     Iskren Chernev <iskren.chernev@gmail.com>,
+        Thu, 01 Sep 2022 10:17:09 -0700 (PDT)
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>, linux-kernel@vger.kernel.org
-References: <20220901072414.1923075-1-iskren.chernev@gmail.com>
- <20220901072414.1923075-15-iskren.chernev@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220901072414.1923075-15-iskren.chernev@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        devicetree@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH] arm64: dts: qcom: sc7180: Configure USB as wakeup source
+Date:   Thu,  1 Sep 2022 10:17:03 -0700
+Message-Id: <20220901101658.1.I347ea409ee3134bd32a29e33fecd1a6ef32085a0@changeid>
+X-Mailer: git-send-email 2.37.2.789.g6183377224-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,153 +71,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/09/2022 10:24, Iskren Chernev wrote:
-> Add initial support for OnePlus Nord N100, based on SM4250. Currently
-> working:
-> - boots
-> - usb
-> - buildin flash storage (UFS)
-> - SD card reader
-> 
-> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
-> ---
->  .../boot/dts/qcom/sm4250-oneplus-billie2.dts  | 240 ++++++++++++++++++
->  1 file changed, 240 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-> new file mode 100644
-> index 000000000000..c1cf0288aa5f
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-> @@ -0,0 +1,240 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2021, Iskren Chernev <iskren.chernev@gmail.com>
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "sm4250.dtsi"
-> +
-> +/ {
-> +	model = "OnePlus Nord N100";
-> +	compatible = "oneplus,billie2", "qcom,sm4250";
-> +
-> +	/* required for bootloader to select correct board */
-> +	qcom,msm-id = <0x1a1 0x10000 0x1bc 0x10000>;
-> +	qcom,board-id = <0x1000b 0x00>;
-> +
-> +	aliases {
-> +	};
-> +
-> +	chosen {
-> +		bootargs = "earlycon=tty0 console=tty0 clk_ignore_unused pd_ignore_unused";
+The dwc3 USB controller of the sc7180 supports USB remote
+wakeup, configure it as a wakeup source.
 
-No bootargs. They are not suitable for wide-use.
+Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+---
 
-> +
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-> +
-> +		stdout-path = "framebuffer0";
-> +
-> +		framebuffer0: framebuffer@9d400000 {
-> +			compatible = "simple-framebuffer";
-> +			reg = <0 0x5c000000 0 (1600 * 720 * 4)>;
-> +			width = <720>;
-> +			height = <1600>;
-> +			stride = <(720 * 4)>;
-> +			format = "a8r8g8b8";
-> +			status= "okay";
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-No need for status in new nodes.
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 2d1f38342858..507718f309e1 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -2780,7 +2780,9 @@ usb_1: usb@a6f8800 {
+ 					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3 0>;
+ 			interconnect-names = "usb-ddr", "apps-usb";
+ 
+-			usb_1_dwc3: dwc3@a600000 {
++			wakeup-source;
++
++			usb_1_dwc3: usb@a600000 {
+ 				compatible = "snps,dwc3";
+ 				reg = <0 0x0a600000 0 0xe000>;
+ 				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
+-- 
+2.37.2.789.g6183377224-goog
 
-> +		};
-> +	};
-> +
-> +	reserved-memory {
-> +		mtp_mem: memory@cc300000 {
-> +			reg = <0x00 0xcc300000 0x00 0xb00000>;
-> +			no-map;
-> +		};
-> +
-> +		param_mem: memory@cc200000 {
-> +			reg = <0x00 0xcc200000 0x00 0x100000>;
-> +			no-map;
-> +		};
-> +
-> +		bootloader_log_mem: memory@5fff7000 {
-> +			reg = <0x00 0x5fff7000 0x00 0x8000>;
-> +			no-map;
-> +		};
-> +
-> +		ramoops@cbe00000 {
-> +			compatible = "ramoops";
-> +			reg = <0x0 0xcbe00000 0x0 0x400000>;
-> +			record-size = <0x40000>;
-> +			pmsg-size = <0x200000>;
-> +			console-size = <0x40000>;
-> +			ftrace-size = <0x40000>;
-> +		};
-> +	};
-> +};
-> +
-> +&usb3 {
-> +	status = "okay";
-> +};
-> +
-> +&hsusb_phy {
-> +	status = "okay";
-
-Status is the last property. Also in other places.
-
-> +	vdd-supply = <&vreg_l4a>;
-> +	vdda-pll-supply = <&vreg_l12a>;
-> +	vdda-phy-dpdm-supply = <&vreg_l15a>;
-> +
-> +};
-> +
-> +&tlmm {
-> +	gpio-reserved-ranges = <14 4>;
-> +};
-> +
-> +&sdhc_2 {
-> +	status = "okay";
-> +	vmmc-supply = <&vreg_l22a>;
-> +	vqmmc-supply = <&vreg_l5a>;
-> +
-> +	cd-gpios = <&tlmm 88 GPIO_ACTIVE_HIGH>;
-> +
-> +	pinctrl-names = "default", "sleep";
-> +	pinctrl-0 = <&sdc2_state_on>;
-> +	pinctrl-1 = <&sdc2_state_off>;
-> +};
-> +
-> +&ufs_mem_hc {
-> +	status = "okay";
-> +	vcc-supply = <&vreg_l24a>;
-> +	vcc-max-microamp = <600000>;
-> +	vccq2-supply = <&vreg_l11a>;
-> +	vccq2-max-microamp = <600000>;
-> +};
-> +
-> +&ufs_mem_phy {
-> +	status = "okay";
-> +	vdda-phy-supply = <&vreg_l4a>;
-> +	vdda-pll-supply = <&vreg_l12a>;
-> +	vddp-ref-clk-supply = <&vreg_l18a>;
-> +};
-> +
-> +&rpm_requests {
-> +	pm6125-regulators {
-
-regulators
-
-> +		compatible = "qcom,rpm-pm6125-regulators";
-> +
-
-
-Best regards,
-Krzysztof
