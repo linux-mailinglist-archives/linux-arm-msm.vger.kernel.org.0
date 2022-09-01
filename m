@@ -2,72 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 444795A9347
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 11:34:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC50A5A93C3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 12:01:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233687AbiIAJe3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Sep 2022 05:34:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43892 "EHLO
+        id S232494AbiIAKBQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Sep 2022 06:01:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234167AbiIAJeP (ORCPT
+        with ESMTP id S232152AbiIAKBP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Sep 2022 05:34:15 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0919E133F38
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 02:34:09 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id bn9so17249680ljb.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Sep 2022 02:34:08 -0700 (PDT)
+        Thu, 1 Sep 2022 06:01:15 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91A7113489C
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 03:01:12 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id bq23so23664773lfb.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Sep 2022 03:01:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=pCsNP9MbZ025gHs9OjCXOsmaJmHix0BqZR8j/xHE3Mo=;
-        b=x2ByYfRaEeVq05W02vKtaLFmP6XetOzHQF0mYm7moturGUufU7dPL40XdMLX9Ufoig
-         6Y3Q/gmSLSEgQe5Dckiwy+YVgtRdO+Zb1oSQjgrtJ+3P+H7+jzvUoei8BTavGbmecvRe
-         lRsIat19pUFTP91ZPcg032Elh7dvoO4WRTWyZdQNRe32wxUjR5yPt3Pij55rcNd8+j6V
-         sQa7L22OmT+2h5WV8RrdSbtU8Z9iAKUUQJINVEy0fc3mbeW1/K4eOjlJag3wrdZS7/nf
-         FKzZykMSI44ebu6oscvn1ACW1BK/DRrSd+sgEusnpLL4lbXAPvLIRJV0ub3d24TbUjD2
-         Kg3A==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=UqgiLV0VjUKBJcxnLyNLTyV9eN+dAh8A/iqAACf8+dA=;
+        b=qPDLCIYOwEP0VD55mNFupQq6wIzbcFHFLZrCcDkTOwZfolZtzzlbTrHWZw0t5twFX5
+         n9c09BxM7QSkWWhf/UiZWT487FfYr3P3XwJmwA85RkmDNZtjyzzQ8AiuutpZPQ6jAylS
+         zunBK3n56GFzJqUxmPK1Jfcrr/edXsq7xeuynlO0EBCoC96oVfwIEOE+NaB+xJkG9dbI
+         Dh5Lcf3ZSKgtuUINz57lr69alOiT14+7aLnSRn76hD5IQbDyAZZgPRCrL1lDPnkL0nRT
+         wkxUZjmCkcFtOYpT1ivhU0nD5yGrMGaJd/hL5gY5WhUgfSzDdraY7mhrIoHFQOIjwgER
+         wluA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=pCsNP9MbZ025gHs9OjCXOsmaJmHix0BqZR8j/xHE3Mo=;
-        b=eRvGdZe3bUhci6+ogpa2Pip0AlETPUsXVLHj6R9rkujjQQ61H5nJk6gd11NwNG71/U
-         6ABQWCr6Ua59GKjiqs16CYcjV9Vomp54HIvyufHn9qt2vXJ1TS5R0+ygqRL69m3VwqTX
-         bZpRnsJZGZCRr7El45BzXo+It1jjtT0Z9dIQqFv4yKvHcvJOm4Q+kdtwb9xmrwyBmNyF
-         AO//YYI7H2HYc/VLKGRP/m9icHkLLdBv/EHdysOPaty4Zo/FTd1/J6CRNc2zDR1zFOl8
-         rGUcjzS9uyX69CW/flgfFeDly0iBQAJdNEwBzb/lzDOeosS67sH9u+Fp7IHMtYUHvnDw
-         DRjA==
-X-Gm-Message-State: ACgBeo1bQs8btfJh8lLxfPtiWUtLUkYWfWaXS7EBNZWfAm8mK9sNLyF6
-        SWzPmqFivYbuk0MAWbJBo9ue/A==
-X-Google-Smtp-Source: AA6agR78A1kG72lKgOLZtqfNXpnCKHHJpWE3Jgr2dgcCxfNDljAAt/nhzhWtP+TEOSYZWKQzkzkfLQ==
-X-Received: by 2002:a2e:b8d6:0:b0:268:9b1d:5084 with SMTP id s22-20020a2eb8d6000000b002689b1d5084mr1627916ljp.37.1662024847203;
-        Thu, 01 Sep 2022 02:34:07 -0700 (PDT)
-Received: from krzk-bin.. (balticom-73-99-134.balticom.lv. [109.73.99.134])
-        by smtp.gmail.com with ESMTPSA id w15-20020a05651234cf00b0049486c66140sm638830lfr.119.2022.09.01.02.34.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Sep 2022 02:34:06 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=UqgiLV0VjUKBJcxnLyNLTyV9eN+dAh8A/iqAACf8+dA=;
+        b=2Ocml4iH1lULCA+p/rpaE1vn59zFLJr1EjyixLtmz1cHl8bbQXNNcrJt06PKlFb4Sv
+         Lp6ldWrrdOtl1XLPsa55+e70buiiUWJ2Icw5HsCS3NZQhxzXnpqmk7/BrQrE43/O/Q7X
+         rQ077iMa6Czi3UNaGYdm+WrgB3VUwQy/BYmco6yKSIMCQhlJIYbA8yLGNEfK1e6qJQYM
+         AzQZzpB3M3u+HFWFni5416hXJu3vGCAUQddb4lpfoDZUs28F99RIe3ePBi0qgFewFg5V
+         hLka4QT+brWrGSdzG7K6Fhs1+1LLTz2hxiCf4bkFg/Fk52jJdQ8jsPooGmCoOGGRjyAW
+         dMtQ==
+X-Gm-Message-State: ACgBeo2zAGI1LU4NWbKYB+Up5QnCDBrdA8VudZ6zMl6ZO8PgjdlVgtK7
+        4zk79ynN+BYeRxHY+0EGbuPppQ==
+X-Google-Smtp-Source: AA6agR6g+J6hbZWE8D79tqnXYT/J1Z+BYuCIbp6i4arwcPiX+TtniNK3fPjXn3edpb61J1WeKy8VoQ==
+X-Received: by 2002:a19:5e01:0:b0:492:c03a:aa8e with SMTP id s1-20020a195e01000000b00492c03aaa8emr11392646lfb.139.1662026470851;
+        Thu, 01 Sep 2022 03:01:10 -0700 (PDT)
+Received: from [192.168.28.124] (balticom-73-99-134.balticom.lv. [109.73.99.134])
+        by smtp.gmail.com with ESMTPSA id f24-20020a2eb5b8000000b0025e5cd1620fsm1627599ljn.57.2022.09.01.03.01.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Sep 2022 03:01:10 -0700 (PDT)
+Message-ID: <cae05f4d-57af-7923-58e5-c4bf06a8a3c8@linaro.org>
+Date:   Thu, 1 Sep 2022 13:01:09 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc7280: Add device tree for
+ herobrine evoker
+Content-Language: en-US
+To:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
+        LKML <linux-kernel@vger.kernel.org>
+Cc:     mka@chromium.org, dianders@chromium.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH RFT v2 4/4] ARM: dts: qcom: align RPM regulators node name with bindings
-Date:   Thu,  1 Sep 2022 12:34:01 +0300
-Message-Id: <20220901093401.134473-3-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220901093303.134346-1-krzysztof.kozlowski@linaro.org>
-References: <20220901093303.134346-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20220901091253.93333-1-sheng-liang.pan@quanta.corp-partner.google.com>
+ <20220901170958.1.I7dd7a79c4cc5fe91c3feb004473feb3b34b7b2d8@changeid>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220901170958.1.I7dd7a79c4cc5fe91c3feb004473feb3b34b7b2d8@changeid>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,184 +83,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Node names should be generic and new DT schema expects RPM regulators
-node to be just "regulators".
+On 01/09/2022 12:12, Sheng-Liang Pan wrote:
+> Add a basic device tree for the herobrine evoker board.
+> 
+> Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
+> ---
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+And this is third v1? At least this is what your subject is suggesting.
+Patches should be properly versioned. Git format-patch helps in that,
+but you can use any other tools if you wish.
 
----
+I pointed you to documentation you must read before posting. You can
+keep ignoring it, so we keep ignoring your patch.
 
-Not tested on hardware, but I do not expect functional impact. Tested
-with comparing DTB.
+That's a NAK :(
 
-Changes since v1:
-1. Fix more nodes.
-2. Do not shuffle regulators around as it might impact probe order.
----
- arch/arm/boot/dts/qcom-apq8026-asus-sparrow.dts               | 2 +-
- arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts                   | 2 +-
- arch/arm/boot/dts/qcom-apq8074-dragonboard.dts                | 4 ++--
- arch/arm/boot/dts/qcom-apq8084.dtsi                           | 2 +-
- arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts      | 4 ++--
- arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi         | 4 ++--
- arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts           | 4 ++--
- arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts            | 2 +-
- .../boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts   | 2 +-
- 9 files changed, 13 insertions(+), 13 deletions(-)
-
-diff --git a/arch/arm/boot/dts/qcom-apq8026-asus-sparrow.dts b/arch/arm/boot/dts/qcom-apq8026-asus-sparrow.dts
-index ace8cea27949..2908a8a8a3d0 100644
---- a/arch/arm/boot/dts/qcom-apq8026-asus-sparrow.dts
-+++ b/arch/arm/boot/dts/qcom-apq8026-asus-sparrow.dts
-@@ -81,7 +81,7 @@ &pm8226_vib {
- };
- 
- &rpm_requests {
--	pm8226-regulators {
-+	regulators {
- 		compatible = "qcom,rpm-pm8226-regulators";
- 
- 		pm8226_s3: s3 {
-diff --git a/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts b/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
-index 2b7e52fda6a7..e5bdc12123ce 100644
---- a/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
-+++ b/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
-@@ -102,7 +102,7 @@ bluetooth {
- };
- 
- &rpm_requests {
--	pm8226-regulators {
-+	regulators {
- 		compatible = "qcom,rpm-pm8226-regulators";
- 
- 		pm8226_s3: s3 {
-diff --git a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-index 3051a861ff0c..86ba9165c2b3 100644
---- a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-+++ b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-@@ -57,7 +57,7 @@ phy@b {
- };
- 
- &rpm_requests {
--	pm8841-regulators {
-+	regulators-0 {
- 		compatible = "qcom,rpm-pm8841-regulators";
- 
- 		pm8841_s1: s1 {
-@@ -81,7 +81,7 @@ pm8841_s4: s4 {
- 		};
- 	};
- 
--	pm8941-regulators {
-+	regulators-1 {
- 		compatible = "qcom,rpm-pm8941-regulators";
- 
- 		vdd_l1_l3-supply = <&pm8941_s1>;
-diff --git a/arch/arm/boot/dts/qcom-apq8084.dtsi b/arch/arm/boot/dts/qcom-apq8084.dtsi
-index c2e22bf3260d..2f4e4ac686a5 100644
---- a/arch/arm/boot/dts/qcom-apq8084.dtsi
-+++ b/arch/arm/boot/dts/qcom-apq8084.dtsi
-@@ -479,7 +479,7 @@ rpm-requests {
- 				compatible = "qcom,rpm-apq8084";
- 				qcom,smd-channels = "rpm_requests";
- 
--				pma8084-regulators {
-+				regulators-0 {
- 					compatible = "qcom,rpm-pma8084-regulators";
- 
- 					pma8084_s1: s1 {};
-diff --git a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-index ec5d340562b6..8a3761ed9655 100644
---- a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-@@ -344,7 +344,7 @@ led@5 {
- };
- 
- &rpm_requests {
--	pm8841-regulators {
-+	regulators-0 {
- 		compatible = "qcom,rpm-pm8841-regulators";
- 
- 		pm8841_s1: s1 {
-@@ -368,7 +368,7 @@ pm8841_s4: s4 {
- 		};
- 	};
- 
--	pm8941-regulators {
-+	regulators-1 {
- 		compatible = "qcom,rpm-pm8941-regulators";
- 
- 		vdd_l1_l3-supply = <&pm8941_s1>;
-diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
-index 5a70683d9103..320c9bf397f8 100644
---- a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
-@@ -214,7 +214,7 @@ &pm8941_wled {
- };
- 
- &rpm_requests {
--	pm8841-regulators {
-+	regulators-0 {
- 		compatible = "qcom,rpm-pm8841-regulators";
- 
- 		pm8841_s1: s1 {
-@@ -238,7 +238,7 @@ pm8841_s4: s4 {
- 		};
- 	};
- 
--	pm8941-regulators {
-+	regulators-1 {
- 		compatible = "qcom,rpm-pm8941-regulators";
- 
- 		vdd_l1_l3-supply = <&pm8941_s1>;
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts b/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-index ff6e0066768b..9107bc6f24db 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-@@ -190,7 +190,7 @@ &remoteproc_mss {
- };
- 
- &rpm_requests {
--	pm8841-regulators {
-+	regulators-0 {
- 		compatible = "qcom,rpm-pm8841-regulators";
- 
- 		pm8841_s1: s1 {
-@@ -209,7 +209,7 @@ pm8841_s3: s3 {
- 		};
- 	};
- 
--	pm8941-regulators {
-+	regulators-1 {
- 		compatible = "qcom,rpm-pm8941-regulators";
- 
- 		vdd_l1_l3-supply = <&pm8941_s1>;
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-index 983e10c3d863..156023204c1e 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-@@ -470,7 +470,7 @@ &remoteproc_mss {
- };
- 
- &rpm_requests {
--	pma8084-regulators {
-+	regulators-0 {
- 		compatible = "qcom,rpm-pma8084-regulators";
- 
- 		pma8084_s1: s1 {
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-index 3f45f5c5d37b..e4580ed996e6 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-@@ -319,7 +319,7 @@ led@7 {
- };
- 
- &rpm_requests {
--	pm8941-regulators {
-+	regulators-0 {
- 		compatible = "qcom,rpm-pm8941-regulators";
- 
- 		vdd_l1_l3-supply = <&pm8941_s1>;
--- 
-2.34.1
-
+Best regards,
+Krzysztof
