@@ -2,152 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D39965A9529
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 12:55:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 888DB5A974A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 14:48:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234416AbiIAKzZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Sep 2022 06:55:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51556 "EHLO
+        id S233384AbiIAMsm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Sep 2022 08:48:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234339AbiIAKzD (ORCPT
+        with ESMTP id S233301AbiIAMsl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Sep 2022 06:55:03 -0400
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB273A19F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 03:54:47 -0700 (PDT)
-Received: by mail-pg1-x531.google.com with SMTP id 202so16019336pgc.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Sep 2022 03:54:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=9Rgza/BFhiKgz5qbn9tPTsIEssmmxYhCqKqdcg+i9QY=;
-        b=gSPF6cYdqAKPZBIfnj0ykq8qkjlihGmDcLYbY1JGovRpm98ByZ/r58JoGphkqYmn/W
-         saR5sAJ8dhx80eN8CLs3yhUzH9aDWx+57vnNlj/pkgxDik3jNmDPd7cGoIQr0qgHJ27L
-         z2KajvrNb9oAMZRVwKPWmlX732/E8MZVcdG4AknCEWmPfw9jvlQcXErOvqlFg3YBjrb0
-         T7pj/36wWglz35CHTiYG+M3Q+85w31cf9KKJUKNatDPlGuwuWz0Jzrs717RzwYtl0Jlz
-         Robmj4WKGtZJqBchIgsSeXXc7CQ2tbc85Yk0QdH157dsOMDbKlIqtPcTbiMi6Ta/gtNv
-         R0rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=9Rgza/BFhiKgz5qbn9tPTsIEssmmxYhCqKqdcg+i9QY=;
-        b=ClVO90Ryfg69ARfh2K7hli+a1t3s3dcwlCHxc7ObepHDkr5OtJVEc5sa4NuFXWPllM
-         T3fzYtGE5SNLrF3XewLT4JyPLug5C63uSCdd8PR62iGPjYgCN24xDt/eoudUBGqjFbUJ
-         DcUJeNaiRFiQCGZAa2qV7vSfLEbBjqagvm9QcdU859ARkkXSoAxbelLDCwZGzKDorqTi
-         z0pcLryPBD2EYRt0p+StFzSB67bUqW18Ru/p87axKLpk0Qr44pIYfVzK9WfdMMZa6HxG
-         +z3IIQrG0wCjnnT6jQKp28zw8HuZJVbbi2u9KV+1DJBfK7dhjr+PhdNDZj9ni93Dd0ai
-         Hw1Q==
-X-Gm-Message-State: ACgBeo0mMAM0TuRzAUvG/k7wmL1SdW6Mo4q5za62biLBWnrh/zciWCeA
-        50+pAEUbNfo6HE53IHxQPHAigA==
-X-Google-Smtp-Source: AA6agR5tOEba8IL4Jg1YiwEsoVUeCfd8Ux+DLPb4woSbhcyyLTvyIkvIYPlLjgqQvWYomSPtBhYbFg==
-X-Received: by 2002:a63:4503:0:b0:430:48ac:6046 with SMTP id s3-20020a634503000000b0043048ac6046mr4910890pga.74.1662029685943;
-        Thu, 01 Sep 2022 03:54:45 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:1c60:5362:8069:f46:34af:eb19])
-        by smtp.gmail.com with ESMTPSA id ij13-20020a170902ab4d00b0016c57657977sm13508910plb.41.2022.09.01.03.54.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Sep 2022 03:54:45 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-pm@vger.kernel.org
-Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, linux-arm-msm@vger.kernel.org,
-        daniel.lezcano@linaro.org, robh+dt@kernel.org, rafael@kernel.org,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>
-Subject: [PATCH v4 4/4] thermal: qcom: tsens: Add reinit quirk support for tsens v2 controllers
-Date:   Thu,  1 Sep 2022 16:24:14 +0530
-Message-Id: <20220901105414.1171813-5-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20220901105414.1171813-1-bhupesh.sharma@linaro.org>
-References: <20220901105414.1171813-1-bhupesh.sharma@linaro.org>
+        Thu, 1 Sep 2022 08:48:41 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 709265F121;
+        Thu,  1 Sep 2022 05:48:37 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2819xs8G014440;
+        Thu, 1 Sep 2022 12:48:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=nxV6iAZ2I8a9AIpEpUT8XDfbJrhFBMWEyWw67dSAMTc=;
+ b=ASeuwYtle6y4roOaB1j/4s5ojVguMPhP0qWvceLI84Tw/qYEhj4G+lwY5Fjs0Mz0r2/d
+ kOe/x9GNnPrF2Lgu7EU6eIMooJvFsZZSRKwcg82T2AkrYU+F40ItazuSN4d/ZMcNHrh7
+ M8NfZCCZk5bj+d4tZ7Xm0LpOKIvkdHhVIlklspeTe8UJ4VmCC00qkxpei6O09WvxTANp
+ H4eFasWY/Ve8HfhYDYOQJSJ6YKEVnHVBA8n8iEpca8cmzofBRkmb33Rc7AdBHHwpfMnG
+ de2fR5QnGmxf9P/kwcke9Cnv6bGl6mdvRpxseXzD2YfI5kqS4vbt/ggEM+QOdPQgXcMH hw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jaeb4tfd7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 01 Sep 2022 12:48:31 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 281CmUX3025499
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 1 Sep 2022 12:48:30 GMT
+Received: from blr-ubuntu-173.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Thu, 1 Sep 2022 05:48:27 -0700
+From:   Rajendra Nayak <quic_rjendra@quicinc.com>
+To:     <krzysztof.kozlowski@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@somainline.org>,
+        <robh+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+Subject: [PATCH 0/4] soc: qcom: icc-bwmon: Add support for llcc and cpu bwmon on sc7280
+Date:   Thu, 1 Sep 2022 18:17:26 +0530
+Message-ID: <20220901124730.19460-1-quic_rjendra@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: -A0CECDwVdhw0Mn2i3081ny43gGWiLws
+X-Proofpoint-ORIG-GUID: -A0CECDwVdhw0Mn2i3081ny43gGWiLws
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-09-01_08,2022-08-31_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxlogscore=789
+ impostorscore=0 suspectscore=0 priorityscore=1501 mlxscore=0 bulkscore=0
+ malwarescore=0 clxscore=1011 phishscore=0 lowpriorityscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2207270000
+ definitions=main-2209010058
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some Qualcomm tsens v2 controllers like those present on
-sm8150 SoC might require re-initialization via trustzone
-[via scm call(s)] when it enters a 'bad state' causing
-sensor temperatures/interrupts status to be in an
-'invalid' state.
+This patchset adds support for cpu bwmon (bwmon4) and llcc bwmon (bwmon5) found
+on sc7280 SoC.
 
-Add hooks for the same in the qcom tsens driver.
+Patchset is based on top of series [1] that adds support for llcc bwmon on sdm845
 
-Devices requiring the same can pass the relevant
-compatible string in dt and the driver hook can
-be used accordingly.
+[1]
+https://patchwork.kernel.org/project/linux-arm-msm/list/?series=663695&state=*
 
-Cc: Amit Kucheria <amitk@kernel.org>
-Cc: Thara Gopinath <thara.gopinath@gmail.com>
-Cc: linux-pm@vger.kernel.org
-Cc: linux-arm-msm@vger.kernel.org
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- drivers/thermal/qcom/tsens-v2.c | 12 ++++++++++++
- drivers/thermal/qcom/tsens.c    |  3 +++
- drivers/thermal/qcom/tsens.h    |  2 +-
- 3 files changed, 16 insertions(+), 1 deletion(-)
+Rajendra Nayak (4):
+  dt-bindings: interconnect: qcom,msm8998-bwmon: Add support for sc7280
+    BWMONs
+  soc: qcom: icc-bwmon: add support for sc7280 LLCC BWMON
+  soc: qcom: icc-bwmon: force clear counter/irq registers
+  arm64: dts: qcom: sc7280: Add cpu and llcc BWMON
 
-diff --git a/drivers/thermal/qcom/tsens-v2.c b/drivers/thermal/qcom/tsens-v2.c
-index f521e4479cc5..431f17f99d34 100644
---- a/drivers/thermal/qcom/tsens-v2.c
-+++ b/drivers/thermal/qcom/tsens-v2.c
-@@ -104,6 +104,18 @@ struct tsens_plat_data data_tsens_v2 = {
- 	.fields	= tsens_v2_regfields,
- };
- 
-+/*
-+ * For some tsens v2 controllers, its suggested to monitor the
-+ * controller health periodically and in case an issue is detected
-+ * to reinit tsens controller via trustzone.
-+ */
-+struct tsens_plat_data data_tsens_v2_reinit = {
-+	.ops		= &ops_generic_v2,
-+	.feat		= &tsens_v2_feat,
-+	.needs_reinit_wa = true,
-+	.fields	= tsens_v2_regfields,
-+};
-+
- /* Kept around for backward compatibility with old msm8996.dtsi */
- struct tsens_plat_data data_8996 = {
- 	.num_sensors	= 13,
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index ecf544683e73..ab8561ddedb2 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -1138,6 +1138,9 @@ static const struct of_device_id tsens_table[] = {
- 	}, {
- 		.compatible = "qcom,msm8996-tsens",
- 		.data = &data_8996,
-+	}, {
-+		.compatible = "qcom,sm8150-tsens",
-+		.data = &data_tsens_v2_reinit,
- 	}, {
- 		.compatible = "qcom,tsens-v1",
- 		.data = &data_tsens_v1,
-diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
-index 900d2a74d25e..03cc3a790972 100644
---- a/drivers/thermal/qcom/tsens.h
-+++ b/drivers/thermal/qcom/tsens.h
-@@ -607,6 +607,6 @@ extern struct tsens_plat_data data_8916, data_8939, data_8974, data_9607;
- extern struct tsens_plat_data data_tsens_v1, data_8976;
- 
- /* TSENS v2 targets */
--extern struct tsens_plat_data data_8996, data_tsens_v2;
-+extern struct tsens_plat_data data_8996, data_tsens_v2_reinit, data_tsens_v2;
- 
- #endif /* __QCOM_TSENS_H__ */
+ .../interconnect/qcom,msm8998-bwmon.yaml      |  2 +
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          | 76 +++++++++++++++++++
+ drivers/soc/qcom/icc-bwmon.c                  | 21 +++++
+ 3 files changed, 99 insertions(+)
+
 -- 
-2.37.1
+2.17.1
 
