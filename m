@@ -2,163 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD7515A8F90
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 09:16:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1B665A9013
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 09:25:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232440AbiIAHQs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Sep 2022 03:16:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58908 "EHLO
+        id S233884AbiIAHZp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Sep 2022 03:25:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229706AbiIAHQr (ORCPT
+        with ESMTP id S233912AbiIAHZW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Sep 2022 03:16:47 -0400
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2046.outbound.protection.outlook.com [40.107.243.46])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E4AD1243D2;
-        Thu,  1 Sep 2022 00:16:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=C7FWfhsNIwuOy3OT430mYaGey6sF8Vu5uEaDtfN1ZjawwylmzfN73TkMV4zrqYXYmL0q96pwqkHSUuYqU+IMKhBSOn3IQ3E4eluFz3k+kJP3mvQvjPGthlcHwjfvF4SvuPsw7QV/Mxn3BuoRVx9j5L3A4y3F4lOhAHKHKRIoapJi4cDhule0jB8nMGTtrKzYgH7onq0pYi1DeoQz75UeP+cHAheeZjtFdxXLMfpYylAgWnlAgLKaVzwY9MRAXgbdGSFUPFSvioX5PD/A5a4dbrdJ8b/EThSK+kktS19t4QkgoDP2nKnmsx7AFyVCMbLgcA2e9Eb6bp1AQbR72xYamA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=NHLVt8A/betNG8SaQLcMk/gr0EGqztrxEPR0r60twJk=;
- b=K98IkF/UVErQl1bxJO17OG1G3BL2n4TR46E8bahAnqMJ2XhqYVCQNsWU7j+kEV3BVw7Be+NK9U0JCBG8azwKxQnpaIkaOyNh1WAwK21t6yWcDmStM2/Ub9yh7at4js2hatO+k58NGRPwQHefQzX9RGC0al4gPq7SSA0DeI1Kzyk/tDgsoa/6FDp2vS0/bmhMfzRzZM+3cuGwtfZaEUGAnhvE+lJliiGCmxQUc5WEdar5VCLJSnl8mez9KjxQ+2Hi0V2H00UcJGGyYZ0Na3r1eqRfEKGWEhg4AdXqxgn9Tj001YOjZTF3nRDK2rGYtmXFP3clr0uMSgM+POEeP0TnDQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NHLVt8A/betNG8SaQLcMk/gr0EGqztrxEPR0r60twJk=;
- b=WoSPa4NKSM+sNNoVSdwEiaNK3CYxWcJM8VyLXLT/1fUeGc8nLV6z6hqveZ/Z6jzaTIFgXD1G85X61HeMqMolDmQjS2jBFPljYyTbStfB1dKRAxY3nex415jYHMIdge6xGHzxdaLd1f5jcFsr7voeme/zkSCkzsz2CUmEqxZLOoY=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from BYAPR12MB3589.namprd12.prod.outlook.com (2603:10b6:a03:df::29)
- by BL3PR12MB6547.namprd12.prod.outlook.com (2603:10b6:208:38e::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5588.10; Thu, 1 Sep
- 2022 07:16:44 +0000
-Received: from BYAPR12MB3589.namprd12.prod.outlook.com
- ([fe80::a997:c7f:aea0:764a]) by BYAPR12MB3589.namprd12.prod.outlook.com
- ([fe80::a997:c7f:aea0:764a%4]) with mapi id 15.20.5566.021; Thu, 1 Sep 2022
- 07:16:43 +0000
-Message-ID: <192b9a30-6f15-3702-c679-c3f26b76c9ef@amd.com>
-Date:   Thu, 1 Sep 2022 09:16:29 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v4 19/21] dma-buf: Document dynamic locking convention
-Content-Language: en-US
-To:     Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-        David Airlie <airlied@linux.ie>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Gurchetan Singh <gurchetansingh@chromium.org>,
-        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Daniel Almeida <daniel.almeida@collabora.com>,
-        Gert Wollny <gert.wollny@collabora.com>,
-        Gustavo Padovan <gustavo.padovan@collabora.com>,
-        Daniel Stone <daniel@fooishbar.org>,
-        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Rob Clark <robdclark@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        =?UTF-8?Q?Thomas_Hellstr=c3=b6m?= <thomas_os@shipmail.org>,
-        Qiang Yu <yuq825@gmail.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Jason Gunthorpe <jgg@ziepe.ca>,
-        Leon Romanovsky <leon@kernel.org>,
-        Juergen Gross <jgross@suse.com>,
-        Stefano Stabellini <sstabellini@kernel.org>,
-        Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        Russell King <linux@armlinux.org.uk>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Christian Gmeiner <christian.gmeiner@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Dmitry Osipenko <digetx@gmail.com>,
-        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
-        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        kernel@collabora.com, virtualization@lists.linux-foundation.org,
-        linux-rdma@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20220831153757.97381-1-dmitry.osipenko@collabora.com>
- <20220831153757.97381-20-dmitry.osipenko@collabora.com>
-From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
-In-Reply-To: <20220831153757.97381-20-dmitry.osipenko@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: AM6PR05CA0009.eurprd05.prod.outlook.com
- (2603:10a6:20b:2e::22) To BYAPR12MB3589.namprd12.prod.outlook.com
- (2603:10b6:a03:df::29)
+        Thu, 1 Sep 2022 03:25:22 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 462B87B2A0;
+        Thu,  1 Sep 2022 00:24:21 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id n17so21097591wrm.4;
+        Thu, 01 Sep 2022 00:24:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=FfDq+PL0HtRMJmQ7okExKVvxgDYmDgwtpUcBQc3oIdc=;
+        b=bXlqRLe1E2Ri+ZgnM7Xyu+Hy5OJgCUvv+Uo+hUtAcJcFSsFedxcuMYuRsN4DMm8lcZ
+         yevxLBeAh9DU3xxOnJkQS3mqZI0qtynVV2//T7b5y0Ud6lznMb3cE1ZDZwBy9GWmb0sc
+         m9dOUyQiYNsbX2HZR23M06EhsRI6/FKY2HQMjakjYKmiZ3Po6w3Ep6KIaCfdWyM7YOOQ
+         0x4eXvXbUXCDEPHcGKcZWBdzf0eYd2DZ5HjQMA48of1psvUeRgsd+0l7fbGF/wHg1w7k
+         T3aHAAw9lEe/Ck5ElgXFg+UZmSegplsR7zSehPG1QyHR91P6y5Uf+oQrjzfcNu5OvTyi
+         04Ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=FfDq+PL0HtRMJmQ7okExKVvxgDYmDgwtpUcBQc3oIdc=;
+        b=ezETe31KrHg8CQRtD8rB61Zt7MZfrDx4wNnIvtTzwW4k1WiJK1J7ID0sxzOHOPCB/J
+         tOjpqlNjePO4yGuuJPIvqBZvs3y+7vStfS2LgjBbUpa1MMNCL+5W0nuukM5YGpGu8krJ
+         ObryU7l1AEPYqmSRKdM7xhz2XFtPvoFW/iMx2yd7XV9dgenjsaUTjQ9zckc102yniFe3
+         Amc//dReJhoeuuQ1pB/SEvLYumcqw9djGF+PqdJDHO1ZY+GJNnt8IEXnTxqXW0I5Z118
+         MmTKSyPeCeBwkkF/dl+YK1HLxdvY57eOCxbD0xnjf7+ZEcYEoAIA+dY9dyfgnZIN0jaB
+         bdXA==
+X-Gm-Message-State: ACgBeo1v3ZJqPTeeU7w/BEgMS9mqyMcAmnFWpEmU6XG8sqvE4qzTFbfi
+        WvKs7ZC7e758VOkbdRur0Bs=
+X-Google-Smtp-Source: AA6agR7WfQv3I+P4MP70H/mo05rtkX2lnDyDz5fH0loGvP9O/eRysAGJ13X+SDiEm+TfmAs097o3rg==
+X-Received: by 2002:a5d:6d0e:0:b0:21e:fc95:3dfc with SMTP id e14-20020a5d6d0e000000b0021efc953dfcmr13966439wrq.112.1662017059763;
+        Thu, 01 Sep 2022 00:24:19 -0700 (PDT)
+Received: from localhost (87-126-55-15.ip.btc-net.bg. [87.126.55.15])
+        by smtp.gmail.com with ESMTPSA id l14-20020adfe58e000000b0022377df817fsm13709308wrm.58.2022.09.01.00.24.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Sep 2022 00:24:18 -0700 (PDT)
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Iskren Chernev <iskren.chernev@gmail.com>
+Subject: [PATCH 00/14] Add support for sm6115,4250 and OnePlus Nord N100
+Date:   Thu,  1 Sep 2022 10:23:59 +0300
+Message-Id: <20220901072414.1923075-1-iskren.chernev@gmail.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: d5e18351-2cd4-41b9-f3c2-08da8be9ec5b
-X-MS-TrafficTypeDiagnostic: BL3PR12MB6547:EE_
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 4AArAxg4nVDu1rhkdi0sNgfrkQsWv+kLvK2ItSwhgIFNzvFeRMASaBVoRGVxBONS745plw8B7i0cnajmxceI/9/O+b3BSSb6ERlL02JLrCNEl++PdQyqxWBFXfREO1y5N5qqtoWKs4s1NlJdOjE/breaBH2RfCQjZnJhUoEka7PcJ+xcMkdoT3D6l/jRRmMcrJd5Sz1Zzme0poH7NokTYcuvgaDitYpkM8rGBLykUW3iBzwrdmYvEvEbMbqw+hBDupzxPuzkjNwcdhwbXPQj0SFslYtIAxcQZQNjDw7Qv7BeSovaOAx6E2eu3LAY4BkA9/NxU9MGtduw45bRVfUmXMHl5ZXPfNfmQxQ0uODW+N6CGT63KjhZnw0Au3nvBTKZnFZwBagO3wuJXt6QIgrm/sgVk543QU/gVjE2pBzFJ3G7Dlf/RaekCRWq6OQMUSJm24Z/CQMTxNqgme5ohCe3CfgeeJbkfkoWibkS6R2GioAn8P3XcqMTxy4gGm8249WNTp7V+2JliOZ2TlVBiByK+uyD+tq0JexBmta9HGbaWutqDBTIyTGcapvwwroLY9gklWM7i7Q+2kX0t2xgEYzHgt9mOn8Bsxf/8zQHew8wkh3TK18AoAix1okNy1wFik0V1WNpkVW7bYPUm3vyPJMwcLWxchRwNp7gG2LS99ycTp2CHZ1kiaGd35lRO7jUd37o0B9MWmXi5UJXdbNpUrNYHH5qhZv2yraTgWK7yGHw6MuCxwXLzahX8vKE4aHxh1rHb4qWLKoOJCW/BVCQqjEnRNSNiGPuDl6uPzuPvk8sT3QpA4kFoXWlp+mQhXRgXbrY
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR12MB3589.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(136003)(346002)(376002)(366004)(39860400002)(396003)(7416002)(66556008)(66946007)(8676002)(4326008)(31686004)(921005)(66574015)(66476007)(36756003)(186003)(5660300002)(2906002)(8936002)(7406005)(316002)(110136005)(6486002)(478600001)(6666004)(41300700001)(6512007)(2616005)(6506007)(31696002)(26005)(38100700002)(83380400001)(86362001)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bnNkL1Y0YnBRM2FRSEFSUEFKSXFBdys5ZmxROHNtYXo5ZFgyZ0hXVEI2a1RC?=
- =?utf-8?B?eDdJbWhReVdmUHo1VWVVY2QzY3pFYU1WRnF5S0t3MnpEak1jT1BLZlgxSEVs?=
- =?utf-8?B?a1hBcmJwbS9FTlZRMktsVkhnQXA3Ulk5VEVuanFlZDdVaWxDZXNPZkZaSVpa?=
- =?utf-8?B?ZDRJZngrTTArLzUyOVc5K25vc1NUVmZKUWZLdXhkMnNHU1lvLzNWcnN5OWhx?=
- =?utf-8?B?TEJ6a2JYYlIxUkdwM1ZyTHVmeVJYWjhTejdWdFFBcndDUFg0ZmVzVEh6elc0?=
- =?utf-8?B?WVlxV3lGWjJqLzlsd1ZCdkxwUUZkcnJpYTJqd29SRXpKQUthVWJRNmJVZVlC?=
- =?utf-8?B?WHAvVkw5cEVvbUR6ejM5U1l1SDBvQzFHeFFOUjdMajFXb1VQZUtNM3NDRU9F?=
- =?utf-8?B?ekdNSk1qemZoK05kQytYamsyTitrZEFvakxFcGc0YlpRR1RlY296ZzNDaURi?=
- =?utf-8?B?bC9TbDBqTG00WXAwUzRqNmxodjhTWVowd0crTzZjV0l6bmh0UWZ6N0FSSUtq?=
- =?utf-8?B?UUs3eXM5YjFOU2FwQWM1NldYdlNhc0FPTFRuQ3lMQzR6VjJjdzJmZmxUV3Nu?=
- =?utf-8?B?ajRvYWlhY3VIZ1hQRThIaEhYNGVBc3JIT0twZjdFUnIvTTViSmE3VlVDOENS?=
- =?utf-8?B?UFQ5TmRrVXZ2a2tiaXkrUkJ5R2diZUF0YlZkMGRFL3dpaktnMnBOaVBUUS9s?=
- =?utf-8?B?TER5RVlFOHMyU25JT0RHVjJzZWloTm1ISHpSNGVFQXN6eUhxWFY2OFBucUhL?=
- =?utf-8?B?SllJV3V6QnFHOHVaZWhaSmJLblNlNkpKNDlmcTdNWnpieldDQkJHQ3RrUkdK?=
- =?utf-8?B?dDFFU0tEbzlScnFGZlNMYjRrT1ZsMEczNVh2UjAzNVdrclJaRzJ3UmdySUsz?=
- =?utf-8?B?bTBEQWd1UGNXakJxSWY5WTRIVjBpcDljWStFMzZMcDZPajBxYWR1VGtRblhh?=
- =?utf-8?B?Wlo0ZE9XWVUveDlzN3pESmN1eFpCYlZiS09lK0UzRGg4UWRPSkxkUnZJWFFR?=
- =?utf-8?B?YXpsYXhKQ1VkM2I4dlhhamJyME92VnlmRVZpWFJiZlRHLzc5UlpHNVRFVmNm?=
- =?utf-8?B?WTRGemZQNGcvZk4yVGZ2azZuYVVrWDJQSmFqVWZJdEx5RWpxcVFpMGIxZmly?=
- =?utf-8?B?eTNZSURqbzFZeFlldGM2UVpQT3lEanZvVFEvQUZZZTFvcVJhbXl6bTVFUERM?=
- =?utf-8?B?aEpBb3BjdVN4UUs5dGEyUUxTYWVQMFduQ1BYSE5MdXltU1c1cmhGM1JrcW1v?=
- =?utf-8?B?TXlPcjdUZENLdEk0WksrRTgzY0F6WXRTa29NWmN2WlJwU1YxMTFERlE5a0s0?=
- =?utf-8?B?YXVMY1BoaVF0c01GaEFRenVKWlhMYkEyUHZzZnNOMlZjY2Fvd0xhWXA1Uk5O?=
- =?utf-8?B?U0RYR2pmWHgvSm5GUWJnZ2NFTzBqWmRGTmZ5eWZLdHdyeWVhTS9HeDN5NzRU?=
- =?utf-8?B?ZzVUcVZrSnZjTDh1UmN5bHF5OVJ1cVhld2wxRDZjNmtuQUlBYnFxY0hyVnJh?=
- =?utf-8?B?cHRzOTNrVGp5REZzenY2VFk2bloyVmNYRUV6K3huaUw2a0dWWFU4YkVPNGFP?=
- =?utf-8?B?VFFwQnpxNlFuZVhtWGZzbjU1SXYyTkFwR2N3UHJmMjIweSt1Uk4xRVd4cjZW?=
- =?utf-8?B?dklmMGppVlJSVGZsYk51ZVRpNE5SV2RaSHdBaEpoenNpamI5NjVBZk0xejhx?=
- =?utf-8?B?TmIySUY1MXB2Szg2T1J1OEcxSFg1RjhrVnBpWTFVa24xU0drOERaNEhVOGcr?=
- =?utf-8?B?VkIvallrV3BUVDB4MFJFOFk0WmptbUJLUU1zcnNETldGc05jWDJ3RE03M1RS?=
- =?utf-8?B?ZWNOc2ZRd3Zwaks2YmorbUROeTdSYVNxcUhrekw2MXhIQ09SdTVMZXREVUto?=
- =?utf-8?B?VTlIR1pHc0xMeW91NkpYMTY3cmJVTE9EWXV0MHZIVGsrMFVuVndGVGlaWE9R?=
- =?utf-8?B?TUJyTW5aelNNNlFlNFlvV0xvY3FRbncyRW1YRnlUZHZDRVhxK2E5NGtKak04?=
- =?utf-8?B?MHNOQnlSbVMreWhJdmxwQWlRZlVmbjdEWUxjZC81eHJic1doVEpZNzFFWXhk?=
- =?utf-8?B?WnlWTmFUTGlRRU0xeXJTcHpPVkVwUkJwVkRsUzkxcHlKZnRvKzAxTjBCMGN0?=
- =?utf-8?Q?BMMjt9L5JlYolxgAYc2AgQyJI?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d5e18351-2cd4-41b9-f3c2-08da8be9ec5b
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR12MB3589.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Sep 2022 07:16:43.8561
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: m2uzCUa36if5xNJgp6hjWo3+LnOorUhKbWbiHjxBFPC6dUgghPP+e4hbLY4ArK3k
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR12MB6547
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -166,110 +70,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am 31.08.22 um 17:37 schrieb Dmitry Osipenko:
-> Add documentation for the dynamic locking convention. The documentation
-> tells dma-buf API users when they should take the reservation lock and
-> when not.
->
-> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+This series adds support for sm6115 (clocks, pinctrl, usb, ufs, sdhc),
+sm4250 (mostly empty shell on top of sm6115) and finally basic OnePlus Nord
+N100 (codename billie2), including the above mentiond items plus simple
+framebuffer.
 
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Please note that this series depends on [1] (driver compat and bindings).
 
-> ---
->   Documentation/driver-api/dma-buf.rst |  6 +++
->   drivers/dma-buf/dma-buf.c            | 64 ++++++++++++++++++++++++++++
->   2 files changed, 70 insertions(+)
->
-> diff --git a/Documentation/driver-api/dma-buf.rst b/Documentation/driver-api/dma-buf.rst
-> index 36a76cbe9095..622b8156d212 100644
-> --- a/Documentation/driver-api/dma-buf.rst
-> +++ b/Documentation/driver-api/dma-buf.rst
-> @@ -119,6 +119,12 @@ DMA Buffer ioctls
->   
->   .. kernel-doc:: include/uapi/linux/dma-buf.h
->   
-> +DMA-BUF locking convention
-> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> +
-> +.. kernel-doc:: drivers/dma-buf/dma-buf.c
-> +   :doc: locking convention
-> +
->   Kernel Functions and Structures Reference
->   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->   
-> diff --git a/drivers/dma-buf/dma-buf.c b/drivers/dma-buf/dma-buf.c
-> index d9130486cb8f..97ce884fad76 100644
-> --- a/drivers/dma-buf/dma-buf.c
-> +++ b/drivers/dma-buf/dma-buf.c
-> @@ -794,6 +794,70 @@ static struct sg_table * __map_dma_buf(struct dma_buf_attachment *attach,
->   	return sg_table;
->   }
->   
-> +/**
-> + * DOC: locking convention
-> + *
-> + * In order to avoid deadlock situations between dma-buf exports and importers,
-> + * all dma-buf API users must follow the common dma-buf locking convention.
-> + *
-> + * Convention for importers
-> + *
-> + * 1. Importers must hold the dma-buf reservation lock when calling these
-> + *    functions:
-> + *
-> + *     - dma_buf_pin()
-> + *     - dma_buf_unpin()
-> + *     - dma_buf_map_attachment()
-> + *     - dma_buf_unmap_attachment()
-> + *     - dma_buf_vmap()
-> + *     - dma_buf_vunmap()
-> + *
-> + * 2. Importers must not hold the dma-buf reservation lock when calling these
-> + *    functions:
-> + *
-> + *     - dma_buf_attach()
-> + *     - dma_buf_dynamic_attach()
-> + *     - dma_buf_detach()
-> + *     - dma_buf_export(
-> + *     - dma_buf_fd()
-> + *     - dma_buf_get()
-> + *     - dma_buf_put()
-> + *     - dma_buf_mmap()
-> + *     - dma_buf_begin_cpu_access()
-> + *     - dma_buf_end_cpu_access()
-> + *     - dma_buf_map_attachment_unlocked()
-> + *     - dma_buf_unmap_attachment_unlocked()
-> + *     - dma_buf_vmap_unlocked()
-> + *     - dma_buf_vunmap_unlocked()
-> + *
-> + * Convention for exporters
-> + *
-> + * 1. These &dma_buf_ops callbacks are invoked with unlocked dma-buf
-> + *    reservation and exporter can take the lock:
-> + *
-> + *     - &dma_buf_ops.attach()
-> + *     - &dma_buf_ops.detach()
-> + *     - &dma_buf_ops.release()
-> + *     - &dma_buf_ops.begin_cpu_access()
-> + *     - &dma_buf_ops.end_cpu_access()
-> + *
-> + * 2. These &dma_buf_ops callbacks are invoked with locked dma-buf
-> + *    reservation and exporter can't take the lock:
-> + *
-> + *     - &dma_buf_ops.pin()
-> + *     - &dma_buf_ops.unpin()
-> + *     - &dma_buf_ops.map_dma_buf()
-> + *     - &dma_buf_ops.unmap_dma_buf()
-> + *     - &dma_buf_ops.mmap()
-> + *     - &dma_buf_ops.vmap()
-> + *     - &dma_buf_ops.vunmap()
-> + *
-> + * 3. Exporters must hold the dma-buf reservation lock when calling these
-> + *    functions:
-> + *
-> + *     - dma_buf_move_notify()
-> + */
-> +
->   /**
->    * dma_buf_dynamic_attach - Add the device to dma_buf's attachments list
->    * @dmabuf:		[in]	buffer to attach device to.
+[1] https://lore.kernel.org/linux-devicetree/20220815100952.23795-1-a39.skl@gmail.com/
+
+Iskren Chernev (14):
+  arm64: dts: qcom: sm6115: Add basic soc dtsi
+  arm64: dts: qcom: sm6115: Add rpmcc and rpmpd nodes
+  arm64: dts: qcom: sm6115: Add GCC node
+  arm64: dts: qcom: sm6115: Add pinctrl node
+  arm64: dts: qcom: sm6115: Add apps smmu node
+  arm64: dts: qcom: sm6115: Add usb and related phy nodes
+  arm64: dts: qcom: sm6115: Add sdhci nodes and related pinctrl
+  dt-bindings: ufs: qcom: Add sm6115 binding
+  arm64: dts: qcom: sm6115: Add UFS nodes
+  arm64: dts: qcom: sm6115: Add SPMI bus node
+  dt-bindings: arm: cpus: Add kryo240 compatible
+  arm64: dts: qcom: sm4250: Add soc dtsi
+  dt-bindings: arm: qcom: Add compatible for oneplus,billie2 phone
+  arm64: dts: qcom: sm4250: Add support for oneplus-billie2
+
+ .../devicetree/bindings/arm/cpus.yaml         |   1 +
+ .../devicetree/bindings/arm/qcom.yaml         |   7 +
+ .../devicetree/bindings/ufs/qcom,ufs.yaml     |  26 +
+ .../boot/dts/qcom/sm4250-oneplus-billie2.dts  | 240 +++++
+ arch/arm64/boot/dts/qcom/sm4250.dtsi          |  38 +
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          | 919 ++++++++++++++++++
+ 6 files changed, 1231 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sm4250.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sm6115.dtsi
+
+--
+2.37.2
 
