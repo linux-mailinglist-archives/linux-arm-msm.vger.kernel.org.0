@@ -2,76 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 512F05AA107
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 22:44:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A085D5AA18C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 23:37:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232301AbiIAUop (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Sep 2022 16:44:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33372 "EHLO
+        id S231443AbiIAVho (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Sep 2022 17:37:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232713AbiIAUoo (ORCPT
+        with ESMTP id S229514AbiIAVhm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Sep 2022 16:44:44 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 399F35FE3
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 13:34:50 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 281Jmr6V021099;
-        Thu, 1 Sep 2022 20:34:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=9zgtldukfpaFfXFlDu7O/9Jkrprn+HmTvthjTii1qDU=;
- b=XsQEVOYG0vqUx898iPmF66+U3+dBWXtSBSRbpCd170L0HMbDVf9HVaRJPKaFeSbW1oQo
- uNs6xkschfVutM4Qd6RE7CJa/b+my++MomElxNMgL4BKo2LSbWwteLHMqslEBSPJKZzQ
- OS7vG42x0s7mkjFFv4XzbmP0wPxb8Rm3IMXyzFPOIuxhSFv4Wzea8eIS2oLYA7szkP5e
- WhNKWz8ILzKVX6n8EpvW5ybU30RBxztHLOaEKcQm67V4ccftp3/Wc7y30P8ymUZzmPhX
- UcwuLtBmttg6EzNVwmpkuiRFumSfBUOaA3Z06CwdOq1uvjBHNNRtcuj33Et8techMTyN 4Q== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jabqk4x1d-1
+        Thu, 1 Sep 2022 17:37:42 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D71F75FC4
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 14:37:41 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 281JHWi4018918;
+        Thu, 1 Sep 2022 21:37:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=LevqhUuWD1J9uonqMLIeQZ8iSl9I2MiO8O8i/ay53F4=;
+ b=almQ0uCgm1HwMhoJ04p3iDgav/C3FglkrTOQyQxmTlPUwU40zgoWu77Ex/ibDFXjODq/
+ m154WQvtqKIzdU+4YDI4rtqvAHjt6d64hKSDZ/vhQrXR3O4WghCPFBQlXdExsmzZzfoh
+ qhiNhji/GuV/rcI2/A0DViUcb4xfUHGkkv4uOIrj3irZzLxIJW2iMV0x3XXwxvnIYJ+E
+ IiLe6hLgANbPOF3fMjyoABtPjXf8/+o4ca28pzZnTsQZU9XosjGJ4uM3ZCHnvHMtVhrH
+ Pri9p4hXvKcvroBPXRuC8Z3JTe5tmNG8aiO7lZihfK+ouCG7eosZY+oIok8DEPNldDrR sA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jabgcw6st-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 01 Sep 2022 20:34:47 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 281KYkdc008606
+        Thu, 01 Sep 2022 21:37:35 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 281LbYOp009925
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 1 Sep 2022 20:34:46 GMT
-Received: from JESSZHAN.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Thu, 1 Sep 2022 13:34:46 -0700
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-To:     <freedreno@lists.freedesktop.org>
-CC:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <robdclark@gmail.com>, <seanpaul@chromium.org>,
-        <swboyd@chromium.org>, <dmitry.baryshkov@linaro.org>,
-        <quic_abhinavk@quicinc.com>
-Subject: [PATCH 2/2] drm/msm/dpu: Add support for P010 format
-Date:   Thu, 1 Sep 2022 13:34:22 -0700
-Message-ID: <20220901203422.217-3-quic_jesszhan@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220901203422.217-1-quic_jesszhan@quicinc.com>
-References: <20220901203422.217-1-quic_jesszhan@quicinc.com>
+        Thu, 1 Sep 2022 21:37:34 GMT
+Received: from [10.111.173.210] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 1 Sep 2022
+ 14:37:32 -0700
+Message-ID: <9627ff41-6bd8-e380-0e8e-438aecdb824f@quicinc.com>
+Date:   Thu, 1 Sep 2022 14:37:30 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v1 2/4] drm/msm/dpu: move resource allocation to the
+ _probe function
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20220620213054.1872954-1-dmitry.baryshkov@linaro.org>
+ <20220620213054.1872954-3-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220620213054.1872954-3-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: fWEgeHjMz3Cq4OVLeKbfYNfVWy_Z6YGo
-X-Proofpoint-ORIG-GUID: fWEgeHjMz3Cq4OVLeKbfYNfVWy_Z6YGo
+X-Proofpoint-ORIG-GUID: rTBI604HoyFyxizXuxdSl7Ms1-zoxLIG
+X-Proofpoint-GUID: rTBI604HoyFyxizXuxdSl7Ms1-zoxLIG
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
  definitions=2022-09-01_12,2022-08-31_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
- impostorscore=0 mlxscore=0 priorityscore=1501 adultscore=0
- lowpriorityscore=0 malwarescore=0 spamscore=0 phishscore=0 bulkscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2209010088
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ lowpriorityscore=0 adultscore=0 clxscore=1015 phishscore=0 bulkscore=0
+ priorityscore=1501 mlxlogscore=999 spamscore=0 malwarescore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2209010094
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,82 +86,112 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for P010 color format. This adds support for both linear and
-compressed formats.
 
-Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c    | 17 ++++++++++++++++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      |  1 +
- 3 files changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-index 57971c08f57c..d95540309d4d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-@@ -434,6 +434,12 @@ static const struct dpu_format dpu_format_map[] = {
- 		DPU_CHROMA_H2V1, DPU_FORMAT_FLAG_YUV,
- 		DPU_FETCH_LINEAR, 2),
- 
-+	PSEUDO_YUV_FMT_LOOSE(P010,
-+		0, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
-+		C1_B_Cb, C2_R_Cr,
-+		DPU_CHROMA_420, DPU_FORMAT_FLAG_DX | DPU_FORMAT_FLAG_YUV,
-+		DPU_FETCH_LINEAR, 2),
-+
- 	INTERLEAVED_YUV_FMT(VYUY,
- 		0, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
- 		C2_R_Cr, C0_G_Y, C1_B_Cb, C0_G_Y,
-@@ -536,6 +542,14 @@ static const struct dpu_format dpu_format_map_ubwc[] = {
- 		DPU_CHROMA_420, DPU_FORMAT_FLAG_YUV |
- 				DPU_FORMAT_FLAG_COMPRESSED,
- 		DPU_FETCH_UBWC, 4, DPU_TILE_HEIGHT_NV12),
-+
-+	PSEUDO_YUV_FMT_TILED(P010,
-+		0, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
-+		C1_B_Cb, C2_R_Cr,
-+		DPU_CHROMA_420, DPU_FORMAT_FLAG_DX |
-+				DPU_FORMAT_FLAG_YUV |
-+				DPU_FORMAT_FLAG_COMPRESSED,
-+		DPU_FETCH_UBWC, 4, DPU_TILE_HEIGHT_UBWC),
- };
- 
- /* _dpu_get_v_h_subsample_rate - Get subsample rates for all formats we support
-@@ -584,7 +598,8 @@ static int _dpu_format_get_media_color_ubwc(const struct dpu_format *fmt)
- 	int color_fmt = -1;
- 	int i;
- 
--	if (fmt->base.pixel_format == DRM_FORMAT_NV12) {
-+	if (fmt->base.pixel_format == DRM_FORMAT_NV12 ||
-+	    fmt->base.pixel_format == DRM_FORMAT_P010) {
- 		if (DPU_FORMAT_IS_DX(fmt)) {
- 			if (fmt->unpack_tight)
- 				color_fmt = COLOR_FMT_NV12_BPP10_UBWC;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 53b6edb2f563..199a2f755db4 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -210,6 +210,7 @@ static const uint32_t plane_formats_yuv[] = {
- 	DRM_FORMAT_RGBX4444,
- 	DRM_FORMAT_BGRX4444,
- 
-+	DRM_FORMAT_P010,
- 	DRM_FORMAT_NV12,
- 	DRM_FORMAT_NV21,
- 	DRM_FORMAT_NV16,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index 60ea834dc8d6..f130bf783081 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -73,6 +73,7 @@ static const uint32_t qcom_compressed_supported_formats[] = {
- 	DRM_FORMAT_BGR565,
- 
- 	DRM_FORMAT_NV12,
-+	DRM_FORMAT_P010,
- };
- 
- /**
--- 
-2.35.1
+On 6/20/2022 2:30 PM, Dmitry Baryshkov wrote:
+> To let the probe function bail early if any of the resources is
+> unavailable, move resource allocattion from kms_init directly to the
+  allocation
+> probe callback. While we are at it, replace irq_of_parse_and_map() with
+> platform_get_irq().
+Any specific reason to replace this?
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
+With those two addressed,
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 62 +++++++++++++------------
+>   1 file changed, 32 insertions(+), 30 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index ae13a3a5d8a5..756be04d804b 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -1206,31 +1206,13 @@ static int dpu_kms_init(struct drm_device *ddev)
+>   	struct device *dev = ddev->dev;
+>   	struct platform_device *pdev = to_platform_device(dev);
+>   	struct dpu_kms *dpu_kms;
+> -	int irq;
+>   	struct dev_pm_opp *opp;
+>   	int ret = 0;
+>   	unsigned long max_freq = ULONG_MAX;
+>   
+> -	dpu_kms = devm_kzalloc(&pdev->dev, sizeof(*dpu_kms), GFP_KERNEL);
+> +	dpu_kms = to_dpu_kms(priv->kms);
+>   	if (!dpu_kms)
+> -		return -ENOMEM;
+> -
+> -	ret = devm_pm_opp_set_clkname(dev, "core");
+> -	if (ret)
+> -		return ret;
+> -	/* OPP table is optional */
+> -	ret = devm_pm_opp_of_add_table(dev);
+> -	if (ret && ret != -ENODEV) {
+> -		dev_err(dev, "invalid OPP table in device tree\n");
+> -		return ret;
+> -	}
+> -
+> -	ret = devm_clk_bulk_get_all(&pdev->dev, &dpu_kms->clocks);
+> -	if (ret < 0) {
+> -		DPU_ERROR("failed to parse clocks, ret=%d\n", ret);
+> -		return ret;
+> -	}
+> -	dpu_kms->num_clocks = ret;
+> +		return -EINVAL;
+>   
+>   	opp = dev_pm_opp_find_freq_floor(dev, &max_freq);
+>   	if (!IS_ERR(opp))
+> @@ -1249,21 +1231,41 @@ static int dpu_kms_init(struct drm_device *ddev)
+>   	pm_runtime_enable(&pdev->dev);
+>   	dpu_kms->rpm_enabled = true;
+>   
+> -	priv->kms = &dpu_kms->base;
+> -
+> -	irq = irq_of_parse_and_map(dpu_kms->pdev->dev.of_node, 0);
+> -	if (!irq) {
+> -		DPU_ERROR("failed to get irq\n");
+> -		return -EINVAL;
+> -	}
+> -	dpu_kms->base.irq = irq;
+> -
+>   	return 0;
+>   }
+>   
+>   static int dpu_dev_probe(struct platform_device *pdev)
+>   {
+> -	return msm_drv_probe(&pdev->dev, dpu_kms_init, NULL);
+> +	struct device *dev = &pdev->dev;
+> +	struct dpu_kms *dpu_kms;
+> +	int irq;
+> +	int ret = 0;
+> +
+> +	dpu_kms = devm_kzalloc(dev, sizeof(*dpu_kms), GFP_KERNEL);
+> +	if (!dpu_kms)
+> +		return -ENOMEM;
+> +
+> +	ret = devm_pm_opp_set_clkname(dev, "core");
+> +	if (ret)
+> +		return ret;
+> +	/* OPP table is optional */
+> +	ret = devm_pm_opp_of_add_table(dev);
+> +	if (ret && ret != -ENODEV)
+> +		return dev_err_probe(dev, ret, "invalid OPP table in device tree\n");
+> +
+> +	ret = devm_clk_bulk_get_all(&pdev->dev, &dpu_kms->clocks);
+> +	if (ret < 0)
+> +		return dev_err_probe(dev, ret, "failed to parse clocks\n");
+> +
+> +	dpu_kms->num_clocks = ret;
+> +
+> +	irq = platform_get_irq(pdev, 0);
+> +	if (irq < 0)
+> +		return dev_err_probe(dev, irq, "failed to get irq\n");
+> +
+> +	dpu_kms->base.irq = irq;
+> +
+> +	return msm_drv_probe(&pdev->dev, dpu_kms_init, &dpu_kms->base);
+>   }
+>   
+>   static int dpu_dev_remove(struct platform_device *pdev)
