@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C7F795A9328
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 11:32:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BFC75A933F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Sep 2022 11:34:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233624AbiIAJcz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Sep 2022 05:32:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42454 "EHLO
+        id S233026AbiIAJeZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Sep 2022 05:34:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233656AbiIAJcx (ORCPT
+        with ESMTP id S234138AbiIAJeN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Sep 2022 05:32:53 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 618F31314E4
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 02:32:51 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id j14so13209556lfu.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Sep 2022 02:32:51 -0700 (PDT)
+        Thu, 1 Sep 2022 05:34:13 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3F8F133F26
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Sep 2022 02:34:06 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id g7so6602996lfe.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Sep 2022 02:34:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc;
-        bh=3iiGf3Tyr91E8vi4eGA9o6oUupAxAC01vXvdnh+gkz8=;
-        b=Mpv4J11i3z5RjI7+6xVGZBsrAFUaRE3AwnOmijKMdvqzXI56Fv7REz0ErWRZ9+RweZ
-         2jHzCGPH4Y71YrLvXTkpWvEl5lfJRHLZXHAXBQVuBnAb9P+akMcdhaTa338OuDIrjqRW
-         8w0QYF2dWbbfQ5LzNl9wyboWk3efHS+iD0i7Eh2dZf2x+RLVruP3QW94vMlkleZUr8Id
-         6HEei4lj8PoFrqPtTcBVA7/Eu4wlEDVEyPOKjDhYBzLFQzLIwfp9BTxZaLXiBopaUc3d
-         vfKftnHKeRtrhEEkqjEb2sQUdd5abSqbDO4WjZKwJ4IyCBFCeULydtR7UGHj7IZfS5yh
-         UZ5g==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc;
+        bh=DSaZ0LA4GSYllLixs9o93TTMdAOVfyC8/UEB44abwGg=;
+        b=sXgj1ZsP2wqlw6HyUulS04iJs1/ZNMbUl+1CCRN4oAa7zilONXfLXFvyQUPEmRpplT
+         glKxj4qjopGXnvLG7Akos5mza4GRw/jHc77N/WxGTcspRBR2+MYlYkOrlu6lBoTYiVjW
+         F3LakQYG5SCjgEQsPKeu/smmzidG2Fn9QmuOaiJukn7eM7ZsZPjDpoa3LsiZhCekJhYk
+         2ZmauijZXlHUb3CCoPKwvzASsSzinFSuTHbNdHWaV9zcwvctIzufWEM1U2t6LNtLfMxE
+         R1DNwx4qR2vhf4hJUaV2v12FhKm9pGHb25MHCQva6irg32otPyZAZH+0WZnYO+RZHzQq
+         l+4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc;
-        bh=3iiGf3Tyr91E8vi4eGA9o6oUupAxAC01vXvdnh+gkz8=;
-        b=mzIpo2UROaEiHtGt3Rj9ydaRJ8Jw6qpOK7PfwTmdq2nCQ7gfh0UBasUTceblPGM4Ev
-         2q7KxZeqeBdR0pJyH1xDkbnKFBXELkT4OrT+U0qwLU4vey5bMr+3sqgQ1EIR7fgr4bPg
-         G7VM2O8fR5HyxRaTv2hzfFMlchhu/FsFtiVjQO76GE+x1Q1tCEW+vc+TXhpM819eIZaT
-         ZEg3wCJS50+EIKRc7z0vS/yj6V7HSxWOga0coS8ewI3FveAa/tYbBMrIkKF2p2efExJc
-         RDktdblpVAeyHtA6nWrXU4Bgm/xespZl7lDTaILXuNsBqyydWU+Qvuh5tsYfHoJKHEbF
-         i0CA==
-X-Gm-Message-State: ACgBeo0JKJQu8J7H+GojvIhFWXsuH9itr4aZp1mT5Kb+E9+fIW3gnDYL
-        9ekZCZGcxtlEx/tdFLWqmKX85Q==
-X-Google-Smtp-Source: AA6agR7omwfon1PMfnUt3KRiqvGUUOqs0Bxw4whpKcnQjmOyQ5XFbVbNM52giGUfqOdolzDzWE9+BA==
-X-Received: by 2002:a05:6512:b12:b0:492:8943:c813 with SMTP id w18-20020a0565120b1200b004928943c813mr9803065lfu.143.1662024769717;
-        Thu, 01 Sep 2022 02:32:49 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
+        bh=DSaZ0LA4GSYllLixs9o93TTMdAOVfyC8/UEB44abwGg=;
+        b=NWal42zcD8lYUkbmpUefB9nlp73Xry4UF6qvUuFhVn+4L2D1tHJbI6XsP1J0yMhnPi
+         d9TrYN4vzEkC2cXJZVfvTlJ2UHU78Cng9P8Hz2zye+4g/swhE6pwopKshCD59pm8Lk+a
+         GE1ye+810FnYUsOlf3CD/flhbIajSXPEe6CafsgbgKU1og2lEkuvSVBEM7pFgbTiL5kw
+         pURDxqLAAqVxz1h8M2uMLYjI1lgv2n2myMsayfoQH/EolDTyGKMIN9vH8hjL7bPctnbd
+         Dq3TQhtwnZMhG5gOW7skshUi3pYdl+EuWZuPy7Q2ta30JfygwGyoFXNeq4d7EnGMXWWJ
+         wNkQ==
+X-Gm-Message-State: ACgBeo0o8n5BoXBOcBUCjaqMeDm41ohus8v3EecP29j+i2cP0tSKl4eW
+        27r8cHDerVNZLpL5qxux/2gFig==
+X-Google-Smtp-Source: AA6agR7DHAyIPdyJYUNxv2j9VLq71HLZ8kYOadf6YXUcHSGKDVIMpw4lu0btBzColpztrnReLlIOVw==
+X-Received: by 2002:a05:6512:1696:b0:492:d11b:4819 with SMTP id bu22-20020a056512169600b00492d11b4819mr11042792lfb.354.1662024844993;
+        Thu, 01 Sep 2022 02:34:04 -0700 (PDT)
 Received: from krzk-bin.. (balticom-73-99-134.balticom.lv. [109.73.99.134])
-        by smtp.gmail.com with ESMTPSA id e14-20020a2e984e000000b0025e57b40009sm2442960ljj.89.2022.09.01.02.32.48
+        by smtp.gmail.com with ESMTPSA id w15-20020a05651234cf00b0049486c66140sm638830lfr.119.2022.09.01.02.34.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Sep 2022 02:32:49 -0700 (PDT)
+        Thu, 01 Sep 2022 02:34:04 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -57,10 +57,12 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH RFT v2 1/4] dt-bindings: soc: qcom: smd-rpm: add PMIC regulators nodes
-Date:   Thu,  1 Sep 2022 12:32:40 +0300
-Message-Id: <20220901093243.134288-1-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH RFT v2 2/4] dt-bindings: soc: qcom: smd-rpm: add qcom,glink-channels
+Date:   Thu,  1 Sep 2022 12:33:59 +0300
+Message-Id: <20220901093401.134473-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220901093303.134346-1-krzysztof.kozlowski@linaro.org>
+References: <20220901093303.134346-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -73,35 +75,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Qualcomm RPM over SMD contains devices for one or two PMIC
-regulators - already used in several DTS files.
+The Qualcomm Resource Power Manager (RPM) over SMD bindings contain
+compatibles and description for RPM devices on two different
+communication channels: SMD and GLINK.  Except the difference in the
+parent node, they use different properties for describing name of
+channel qcom,smd-channels or qcom,glink-channels.  The first one is
+already present but second is missing:
+
+  qcom/sm6125-sony-xperia-seine-pdx201.dtb: rpm-requests: 'qcom,glink-channels' does not match any of the regexes: '^regulators(-[01])?$', 'pinctrl-[0-9]+'
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 ---
 
 Changes since v1:
-1. None
+1. New patch
 ---
- Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml | 5 +++++
- 1 file changed, 5 insertions(+)
+ .../bindings/soc/qcom/qcom,smd-rpm.yaml       | 21 +++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
-index 09d5bfa920f2..deccc637b6d4 100644
+index deccc637b6d4..0655f71b0f23 100644
 --- a/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
 +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
-@@ -61,6 +61,11 @@ properties:
-     items:
-       - const: rpm_requests
+@@ -4,7 +4,7 @@
+ $id: "http://devicetree.org/schemas/soc/qcom/qcom,smd-rpm.yaml#"
+ $schema: "http://devicetree.org/meta-schemas/core.yaml#"
  
-+patternProperties:
-+  "^regulators(-[01])?$":
-+    $ref: /schemas/regulator/qcom,smd-rpm-regulator.yaml#
-+    unevaluatedProperties: false
+-title: Qualcomm Resource Power Manager (RPM) over SMD
++title: Qualcomm Resource Power Manager (RPM) over SMD/GLINK
+ 
+ description: |
+   This driver is used to interface with the Resource Power Manager (RPM) found
+@@ -12,9 +12,9 @@ description: |
+   to vote for state of the system resources, such as clocks, regulators and bus
+   frequencies.
+ 
+-  The SMD information for the RPM edge should be filled out.  See qcom,smd.yaml
+-  for the required edge properties.  All SMD related properties will reside
+-  within the RPM node itself.
++  The SMD or GLINK information for the RPM edge should be filled out.  See
++  qcom,smd.yaml for the required edge properties.  All SMD/GLINK related
++  properties will reside within the RPM node itself.
+ 
+   The RPM exposes resources to its subnodes.  The rpm_requests node must be
+   present and this subnode may contain children that designate regulator
+@@ -55,6 +55,12 @@ properties:
+   power-controller:
+     $ref: /schemas/power/qcom,rpmpd.yaml#
+ 
++  qcom,glink-channels:
++    $ref: /schemas/types.yaml#/definitions/string-array
++    description: Channel name used for the RPM communication
++    items:
++      - const: rpm_requests
 +
- if:
-   properties:
-     compatible:
+   qcom,smd-channels:
+     $ref: /schemas/types.yaml#/definitions/string-array
+     description: Channel name used for the RPM communication
+@@ -76,8 +82,15 @@ if:
+           - qcom,rpm-msm8974
+           - qcom,rpm-msm8953
+ then:
++  properties:
++    qcom,glink-channels: false
+   required:
+     - qcom,smd-channels
++else:
++  properties:
++    qcom,smd-channels: false
++  required:
++    - qcom,glink-channels
+ 
+ required:
+   - compatible
 -- 
 2.34.1
 
