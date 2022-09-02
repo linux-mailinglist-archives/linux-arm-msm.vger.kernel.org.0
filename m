@@ -2,176 +2,266 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DBB485AAC9D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 12:38:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D0805AAD4E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 13:20:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235795AbiIBKig (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Sep 2022 06:38:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60158 "EHLO
+        id S232699AbiIBLTr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Sep 2022 07:19:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235543AbiIBKif (ORCPT
+        with ESMTP id S235019AbiIBLTp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Sep 2022 06:38:35 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5410BD08E;
-        Fri,  2 Sep 2022 03:38:34 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id b19so1800080ljf.8;
-        Fri, 02 Sep 2022 03:38:34 -0700 (PDT)
+        Fri, 2 Sep 2022 07:19:45 -0400
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48AFD9D
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Sep 2022 04:09:44 -0700 (PDT)
+Received: by mail-io1-xd31.google.com with SMTP id i77so1299692ioa.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Sep 2022 04:09:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=zb5JB4hN023tPDYi3X8LwwwxfrMO5eJ6HDfLqyKNUp4=;
-        b=b+3QDVeZ8R7VkX5Bf/lQ/zM5cKpssDiy6sioxY3jw9J59uDY2aLPinjOd5/AfzMPSF
-         F25cqjiDBi0zlLf8NewvQzjGLBKLLwe77dGjcGOssNv9QG7GD4v9Y7R5vUVBkwhzJqAt
-         W+NgPvhc+LGHFoczAHcg6Xd3RZE5aY0kB0c6sHOthdo2C6I6KgqGlMNMjWhr5LBa7hEJ
-         PF8PoWJrMQEbxEgzwwdfZOe63pnK6yiDDUckqcBXrJcCgoCnkkMNTICwsyuKzCch5zAF
-         oZnume/cpTmEe8YMT0zAnJRdyZ8FX7N+NEVx+V/5rqxYqoL28d0bRVzC4c7nr4HeYJuG
-         nuzg==
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=rnQqxt9RdPdB0yUEssxLU4y2HHyz75pTKHB4+46VEDk=;
+        b=YKMkFg2wcPO+GodKwxrdiBk5aFGvc4yu22RjgCrVptcEBKO6OgdpYUwKn8VSn7WS3S
+         ffZNZuofiRlmNSKy8Hcck8r7/Y9wNBKmAXu0E04iAcB3PTicRO6pT6IenW5tLn9NZ2CZ
+         isXEYIaH4L0RE60P0q2N/Yhk/2OQnldSjH3VhjtZ1ZPlYHSaUGEIVWCk0KSzWI7U9cSQ
+         ddfLFuAdVc9qdOq+nR6uLx6S/7IVBahR2Q+GBW6rHK8p2v439nzodxdoJ87U3VnsVCQ3
+         lm7Yt364E06teOxa6lNvMH90SpIs91MEdBPtGlZMWlidcKFuMZW8/KIlOy4Ak45sFgcH
+         AWXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=zb5JB4hN023tPDYi3X8LwwwxfrMO5eJ6HDfLqyKNUp4=;
-        b=OGNnZ0tVAQj3uSE5zdnk6UhqMQybX46sjIc6EGPZr8IToZkewv+PbDVQaGkjoWePiV
-         nCiZ4Nlen8ND762kWoGARZUU6LtXn6IsoHfGOe4KTJGApUYcWpJ761wAzjCe9YLqWVEr
-         WI9BihvLuZPsHD0z1SREwEBrg0wPPhk2o/QjNWFsv3+SullpPwZC/rOb2yEq48Zj32cj
-         INpwM80RCUut8ruLLEz6mSxucvSzLzOsf0v7YMf5sus3n5Vv5syR4jh+mPp2gof8KDpd
-         iOwtTrd6wqISvHogqNdMGX1kkFM3JTmP54tnNOqV8zdHFtbieqxOojQigwggh5e4cWzr
-         7RQg==
-X-Gm-Message-State: ACgBeo08SLKmT8bDY2ynmoV+1T1NmnTPcsfeqQgR/OtcEqWb/NdxfEB9
-        3rnTtXMoS12aj0ogOuYBMiM=
-X-Google-Smtp-Source: AA6agR40LFWSHSrrETgLqAmkw4fHaA4WAaccG4Nn66YZ/3AUuSYYBeJUuN4jK3ma7gFMPZa8TWb1KQ==
-X-Received: by 2002:a2e:bf07:0:b0:261:cafb:d4a8 with SMTP id c7-20020a2ebf07000000b00261cafbd4a8mr10289818ljr.268.1662115113077;
-        Fri, 02 Sep 2022 03:38:33 -0700 (PDT)
-Received: from [192.168.2.145] (109-252-119-13.nat.spd-mgts.ru. [109.252.119.13])
-        by smtp.googlemail.com with ESMTPSA id 5-20020a2eb945000000b00267232d0652sm147092ljs.46.2022.09.02.03.38.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Sep 2022 03:38:32 -0700 (PDT)
-Message-ID: <c89680d0-30ee-f5d7-be68-fa84458df04d@gmail.com>
-Date:   Fri, 2 Sep 2022 13:38:30 +0300
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=rnQqxt9RdPdB0yUEssxLU4y2HHyz75pTKHB4+46VEDk=;
+        b=S+BBGWGCJ3ftCDcB+dXvCHt+Gtmq71SQGyXQ3WGiW2wfHIiud24YPLF7oQ2FNzeEKv
+         HUrOF0kN9y9gEmhET63gTjn2RpKfx4QwCT904VXKgcp4nzOyqwuivEVV7Xx3/CvcF3y3
+         q5TnJ31NlH2FXXefFCeh5uxzmdnqpBdFJLRU5wN/uWnF2uXTX+nThz3tnv+BMx8Tq8p/
+         rSusVcobFScGT+48qghUrWb2wGIu0aoDPrDHqiEqW5SdQq3zMzRpXoUNJxKrOEViZKOz
+         DlDFeL4vXmi2fyla92ja46Rq4fcjaNx+3wNSXIDDclYRe2Oh/PdRnJE0l5NUEDuzWgT3
+         Gv0w==
+X-Gm-Message-State: ACgBeo0Pl4dVXkC8+TEibgAb70UDMvPQhMSi3nRpX688k/qJucste6gv
+        qU8WVBTefm3uH/iWVXOdHyN9y0tXlXwBvQndiVXOyg==
+X-Google-Smtp-Source: AA6agR4qznCELC8Uk9g2P6txc/sJEZSXNo9TqSMZMSDnKvqiRarJOjhs/bocMU285biwzGnSM19C+Sc/gMDUmmDPcOg=
+X-Received: by 2002:a05:6638:3792:b0:346:82f6:a9f4 with SMTP id
+ w18-20020a056638379200b0034682f6a9f4mr19375402jal.102.1662116983612; Fri, 02
+ Sep 2022 04:09:43 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v4 06/21] drm/i915: Prepare to dynamic dma-buf locking
- specification
-Content-Language: en-US
-From:   Dmitry Osipenko <digetx@gmail.com>
-To:     "Ruhl, Michael J" <michael.j.ruhl@intel.com>,
-        Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        "Vivi, Rodrigo" <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        =?UTF-8?Q?Thomas_Hellstr=c3=b6m?= <thomas_os@shipmail.org>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        Chris Wilson <chris@chris-wilson.co.uk>
-Cc:     "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
-        "linaro-mm-sig@lists.linaro.org" <linaro-mm-sig@lists.linaro.org>,
-        "amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>,
-        "intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>,
-        "kernel@collabora.com" <kernel@collabora.com>,
-        "virtualization@lists.linux-foundation.org" 
-        <virtualization@lists.linux-foundation.org>,
-        "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Gurchetan Singh <gurchetansingh@chromium.org>,
-        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Daniel Almeida <daniel.almeida@collabora.com>,
-        Gert Wollny <gert.wollny@collabora.com>,
-        Gustavo Padovan <gustavo.padovan@collabora.com>,
-        Daniel Stone <daniel@fooishbar.org>,
-        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Rob Clark <robdclark@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Qiang Yu <yuq825@gmail.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Jason Gunthorpe <jgg@ziepe.ca>,
-        Leon Romanovsky <leon@kernel.org>,
-        "Gross, Jurgen" <jgross@suse.com>,
-        Stefano Stabellini <sstabellini@kernel.org>,
-        Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        Russell King <linux@armlinux.org.uk>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Christian Gmeiner <christian.gmeiner@gmail.com>
-References: <20220831153757.97381-1-dmitry.osipenko@collabora.com>
- <20220831153757.97381-7-dmitry.osipenko@collabora.com>
- <DM5PR11MB1324088635FDE00B0D957816C17B9@DM5PR11MB1324.namprd11.prod.outlook.com>
- <760b999f-b15d-102e-8bc7-c3e69f07f43f@gmail.com>
-In-Reply-To: <760b999f-b15d-102e-8bc7-c3e69f07f43f@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <1662111486-15021-1-git-send-email-quic_kalyant@quicinc.com>
+In-Reply-To: <1662111486-15021-1-git-send-email-quic_kalyant@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 2 Sep 2022 14:09:32 +0300
+Message-ID: <CAA8EJpqwB9Skq_DVwHERn0Soz=4hHLDiyzyeEteWfb6QbePU4g@mail.gmail.com>
+Subject: Re: [v2] drm/msm/disp/dpu1: add support for dspp sub block flush in sc7280
+To:     Kalyan Thota <quic_kalyant@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_vpolimer@quicinc.com, quic_abhinavk@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-02.09.2022 13:31, Dmitry Osipenko пишет:
-> 01.09.2022 17:02, Ruhl, Michael J пишет:
-> ...
->>> --- a/drivers/gpu/drm/i915/gem/i915_gem_object.c
->>> +++ b/drivers/gpu/drm/i915/gem/i915_gem_object.c
->>> @@ -331,7 +331,19 @@ static void __i915_gem_free_objects(struct
->>> drm_i915_private *i915,
->>> 			continue;
->>> 		}
->>>
->>> +		/*
->>> +		 * dma_buf_unmap_attachment() requires reservation to be
->>> +		 * locked. The imported GEM shouldn't share reservation lock,
->>> +		 * so it's safe to take the lock.
->>> +		 */
->>> +		if (obj->base.import_attach)
->>> +			i915_gem_object_lock(obj, NULL);
->>
->> There is a lot of stuff going here.  Taking the lock may be premature...
->>
->>> 		__i915_gem_object_pages_fini(obj);
->>
->> The i915_gem_dmabuf.c:i915_gem_object_put_pages_dmabuf is where
->> unmap_attachment is actually called, would it make more sense to make
->> do the locking there?
-> 
-> The __i915_gem_object_put_pages() is invoked with a held reservation
-> lock, while freeing object is a special time when we know that GEM is
-> unused.
-> 
-> The __i915_gem_free_objects() was taking the lock two weeks ago until
-> the change made Chris Wilson [1] reached linux-next.
-> 
-> [1]
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=2826d447fbd60e6a05e53d5f918bceb8c04e315c
-> 
-> I don't think we can take the lock within
-> i915_gem_object_put_pages_dmabuf(), it may/should deadlock other code paths.
+On Fri, 2 Sept 2022 at 12:38, Kalyan Thota <quic_kalyant@quicinc.com> wrote:
+>
+> Flush mechanism for DSPP blocks has changed in sc7280 family, it
+> allows individual sub blocks to be flushed in coordination with
+> master flush control.
+>
+> Representation: master_flush && (PCC_flush | IGC_flush .. etc )
+>
+> This change adds necessary support for the above design.
+>
+> Changes in v1:
+> - Few nits (Doug, Dmitry)
+> - Restrict sub-block flush programming to dpu_hw_ctl file (Dmitry)
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c       |  2 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  5 +++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  2 ++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c     | 35 +++++++++++++++++++++++++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h     | 10 ++++++--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h    |  7 ++++++
+>  6 files changed, 56 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index 601d687..ab38a52 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -766,7 +766,7 @@ static void _dpu_crtc_setup_cp_blocks(struct drm_crtc *crtc)
+>
+>                 /* stage config flush mask */
+>                 ctl->ops.update_pending_flush_dspp(ctl,
+> -                       mixer[i].hw_dspp->idx);
+> +                       mixer[i].hw_dspp->idx, DPU_DSPP_SUB_PCC);
+>         }
+>  }
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 27f029f..0eecb2f 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -65,7 +65,10 @@
+>         (PINGPONG_SDM845_MASK | BIT(DPU_PINGPONG_TE2))
+>
+>  #define CTL_SC7280_MASK \
+> -       (BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_FETCH_ACTIVE) | BIT(DPU_CTL_VM_CFG))
+> +       (BIT(DPU_CTL_ACTIVE_CFG) | \
+> +        BIT(DPU_CTL_FETCH_ACTIVE) | \
+> +        BIT(DPU_CTL_VM_CFG) | \
+> +        BIT(DPU_CTL_DSPP_SUB_BLOCK_FLUSH))
+>
+>  #define MERGE_3D_SM8150_MASK (0)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> index 38aa38a..6a0b784 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> @@ -191,6 +191,7 @@ enum {
+>   * @DPU_CTL_SPLIT_DISPLAY:     CTL supports video mode split display
+>   * @DPU_CTL_FETCH_ACTIVE:      Active CTL for fetch HW (SSPPs)
+>   * @DPU_CTL_VM_CFG:            CTL config to support multiple VMs
+> + * @DPU_CTL_DSPP_BLOCK_FLUSH: CTL config to support dspp sub-block flush
+>   * @DPU_CTL_MAX
+>   */
+>  enum {
+> @@ -198,6 +199,7 @@ enum {
+>         DPU_CTL_ACTIVE_CFG,
+>         DPU_CTL_FETCH_ACTIVE,
+>         DPU_CTL_VM_CFG,
+> +       DPU_CTL_DSPP_SUB_BLOCK_FLUSH,
+>         DPU_CTL_MAX
+>  };
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> index a35ecb6..3b14c30 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> @@ -33,6 +33,7 @@
+>  #define   CTL_INTF_FLUSH                0x110
+>  #define   CTL_INTF_MASTER               0x134
+>  #define   CTL_FETCH_PIPE_ACTIVE         0x0FC
+> +#define   CTL_DSPP_n_FLUSH             0x13C
 
-On the other hand, we can check whether the GEM's refcount number is
-zero in i915_gem_object_put_pages_dmabuf() and then take the lock if
-it's zero.
+CTL_DSPP_n_FLUSH(n)
 
-Also, seems it should be possible just to bail out from
-i915_gem_object_put_pages_dmabuf() if refcount=0. The further
-drm_prime_gem_destroy() will take care of unmapping. Perhaps this could
-be the best option, I'll give it a test.
+>
+>  #define CTL_MIXER_BORDER_OUT            BIT(24)
+>  #define CTL_FLUSH_MASK_CTL              BIT(17)
+> @@ -82,6 +83,31 @@ static int _mixer_stages(const struct dpu_lm_cfg *mixer, int count,
+>         return stages;
+>  }
+>
+> +static u32 _set_dspp_sub_block_flush(struct dpu_hw_ctl *ctx,
+> +       enum dpu_dspp dspp, enum dpu_dspp_sub_blk dspp_sub_blk)
+> +{
+> +       uint32_t flushbits = 0, active;
+> +
+> +       switch (dspp_sub_blk) {
+> +       case DPU_DSPP_SUB_IGC:
+> +               flushbits = BIT(2);
+> +               break;
+> +       case DPU_DSPP_SUB_PCC:
+> +               flushbits = BIT(4);
+> +               break;
+> +       case DPU_DSPP_SUB_GC:
+> +               flushbits = BIT(5);
+> +               break;
+> +       default:
+> +               return 0;
+> +       }
+> +
+> +       active = DPU_REG_READ(&ctx->hw, CTL_DSPP_n_FLUSH + ((dspp - 1) * 4));
+> +       DPU_REG_WRITE(&ctx->hw, CTL_DSPP_n_FLUSH + ((dspp - 1) * 4), active | flushbits);
+> +
+> +       return BIT(29);
+> +}
+> +
+>  static inline u32 dpu_hw_ctl_get_flush_register(struct dpu_hw_ctl *ctx)
+>  {
+>         struct dpu_hw_blk_reg_map *c = &ctx->hw;
+> @@ -287,8 +313,15 @@ static void dpu_hw_ctl_update_pending_flush_merge_3d_v1(struct dpu_hw_ctl *ctx,
+>  }
+>
+>  static void dpu_hw_ctl_update_pending_flush_dspp(struct dpu_hw_ctl *ctx,
+> -       enum dpu_dspp dspp)
+> +       enum dpu_dspp dspp, enum dpu_dspp_sub_blk dspp_sub_blk)
+>  {
+> +
+> +       if ((test_bit(DPU_CTL_DSPP_SUB_BLOCK_FLUSH, &ctx->caps->features))) {
+> +               ctx->pending_flush_mask |=
+> +                       _set_dspp_sub_block_flush(ctx, dspp, dspp_sub_blk);
+> +               return;
+> +       }
+
+Please  inline _set_dspp_sub_block_flush(), split this if to a
+separate function (e.g.
+dpu_hw_ctl_update_pending_flush_dspp_subblocks()), and use it instead
+of dpu_hw_ctl_update_pending_flush_dspp like it was done before.
+
+> +
+>         switch (dspp) {
+>         case DSPP_0:
+>                 ctx->pending_flush_mask |= BIT(13);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> index 96c012e..227f1bd 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> @@ -149,12 +149,18 @@ struct dpu_hw_ctl_ops {
+>
+>         /**
+>          * OR in the given flushbits to the cached pending_flush_mask
+> -        * No effect on hardware
+> +        *
+> +        * If the hardware supports dspp sub block flush, then sub-block
+> +        * flushes are written to the hardware and main dspp flush will
+> +        * be cached in the pending_flush_mask.
+> +        *
+>          * @ctx       : ctl path ctx pointer
+>          * @blk       : DSPP block index
+> +        * @dspp_sub_blk : DSPP sub-block index
+>          */
+>         void (*update_pending_flush_dspp)(struct dpu_hw_ctl *ctx,
+> -               enum dpu_dspp blk);
+> +               enum dpu_dspp blk,  enum dpu_dspp_sub_blk dspp_sub_blk);
+> +
+>         /**
+>          * Write the value of the pending_flush_mask to hardware
+>          * @ctx       : ctl path ctx pointer
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> index d3b0ed0..c113d52 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> @@ -167,6 +167,13 @@ enum dpu_dspp {
+>         DSPP_MAX
+>  };
+>
+> +enum dpu_dspp_sub_blk{
+> +       DPU_DSPP_SUB_PCC = 1,
+> +       DPU_DSPP_SUB_IGC,
+> +       DPU_DSPP_SUB_GC,
+> +       DPU_DSPP_SUB_MAX
+> +};
+
+Can we please use the existing enum DPU_DSPP_foo instead of adding a
+new enum for no particular reason?
+
+> +
+>  enum dpu_ctl {
+>         CTL_0 = 1,
+>         CTL_1,
+> --
+> 2.7.4
+>
+
+
+-- 
+With best wishes
+Dmitry
