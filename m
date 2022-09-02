@@ -2,61 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 695995ABA1A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 23:33:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E1135ABA1E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 23:34:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229484AbiIBVcN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Sep 2022 17:32:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57682 "EHLO
+        id S229623AbiIBVea (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Sep 2022 17:34:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229884AbiIBVcI (ORCPT
+        with ESMTP id S229840AbiIBVe2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Sep 2022 17:32:08 -0400
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDE00F0776;
-        Fri,  2 Sep 2022 14:32:07 -0700 (PDT)
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-12566bc8e52so4672416fac.12;
-        Fri, 02 Sep 2022 14:32:07 -0700 (PDT)
+        Fri, 2 Sep 2022 17:34:28 -0400
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12B9310A6;
+        Fri,  2 Sep 2022 14:34:27 -0700 (PDT)
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-11f34610d4aso7876511fac.9;
+        Fri, 02 Sep 2022 14:34:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=4QI4nEyjsiVuTahVuT4LVwrwcPM2qTDJilCYENPbJv8=;
-        b=TpV+ZVihsErJn5UX/VdZqnav5eDihMYnlVb8aAgMwAsmStBCjzoGi4LAX6ixuhG9Ay
-         PM2veihAuaZXLJeN/FsCxZVVJFblhlOgJFaivPXq/eB1ZWNYt3xTGp13vV4PyEVnVGdX
-         BPJPYdhB2w/LI/QOd1P1wp1Mcamm2JWK1fVdpPE18iDpQqnE0KfuNP05QH4ISapsvE6q
-         cPXqciBItaNvPspoqn+5ZqRoy3YlNpswt40iUsG+G2ahDCHAhfT3UfIEUVIJRLRkIcx/
-         k1ftVWkjBlldeZuwfGW9URX4HnO71KqDm2mH5YgpQwYKK2VL3bB1Xz9XMhPUuHdeMOKS
-         1MFA==
-X-Gm-Message-State: ACgBeo1NSMajKWreoRy9J2/zR5UtNp0n0O5J4XSTENKU5aAjHubcs8P5
-        bMBfyUg5eImU02kmWY8ocQ==
-X-Google-Smtp-Source: AA6agR5GWmF9cXQRHgWyYJMq13ylv5lwehumlQvIzSsM+on4P9hTbKpE2WfQFxU/2FYHIFgr/a5Lvg==
-X-Received: by 2002:aca:1c1a:0:b0:343:7dc2:7442 with SMTP id c26-20020aca1c1a000000b003437dc27442mr2592722oic.143.1662154327099;
-        Fri, 02 Sep 2022 14:32:07 -0700 (PDT)
+        h=message-id:date:subject:references:in-reply-to:cc:to:from
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=XXjP8cgiaYw1PqhWIGrRkQJ366WMJ28RuFPXWF5wiYY=;
+        b=Xohw6WOKydHeUjUzINi7qJMpswv8fCRqKPT3htN8dHYht0eSpLd57Sa10zUGCZ1/z3
+         CEBLlStKEsVGFJ8BOzSSEYYR2D5I+ailRXU0PRWwamspSRwoXxchoNuoG+51miNjK2Pc
+         cfWp8BmLCgpEjlTGff8QVg77TvhWLVO5O30ZbvCZZPn8csCzC/uHIdUIHxZ//Md/R9Al
+         wV5lyEB16Abczbb4k3v+aHFcNJoeq8Y4IuEbL2AOdRXZxUjS0or3OifwiX47AyYds9yW
+         OLKabLJoc14LcM6tJaOBnOmslXlyxCxJiDg6zl1+OTNkLY4QUsAK5MdyjY7aK8AoiTGi
+         uXIw==
+X-Gm-Message-State: ACgBeo2qJ2tAxPXXM/PmE6qjo0VCsrOvmdTd93x3y9tcLITYlqZ0EGba
+        65643Zcu5ZFE9/jTSdz3hQ==
+X-Google-Smtp-Source: AA6agR5MrliGH4/f0zSChYbho79KSE2oXFvKHQsWTmYQTKWOiMRQWDjOZm8zWMidzrHnWhrZZqaIXw==
+X-Received: by 2002:a05:6870:c0c1:b0:10d:96:737f with SMTP id e1-20020a056870c0c100b0010d0096737fmr3329609oad.101.1662154466229;
+        Fri, 02 Sep 2022 14:34:26 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id r130-20020a4a3788000000b00448a3ecdc9dsm1083038oor.22.2022.09.02.14.32.06
+        by smtp.gmail.com with ESMTPSA id bf15-20020a056808190f00b00344eb5a9416sm1415354oib.55.2022.09.02.14.34.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Sep 2022 14:32:06 -0700 (PDT)
-Received: (nullmailer pid 450801 invoked by uid 1000);
-        Fri, 02 Sep 2022 21:32:06 -0000
-Date:   Fri, 2 Sep 2022 16:32:06 -0500
+        Fri, 02 Sep 2022 14:34:25 -0700 (PDT)
+Received: (nullmailer pid 454796 invoked by uid 1000);
+        Fri, 02 Sep 2022 21:34:24 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     linux-kernel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Subject: Re: [PATCH RFT v2 2/4] dt-bindings: soc: qcom: smd-rpm: add
- qcom,glink-channels
-Message-ID: <20220902213206.GA450746-robh@kernel.org>
-References: <20220901093303.134346-1-krzysztof.kozlowski@linaro.org>
- <20220901093401.134473-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220901093401.134473-1-krzysztof.kozlowski@linaro.org>
+To:     Andrew Halaney <ahalaney@redhat.com>
+Cc:     broonie@kernel.org, lgirdwood@gmail.com, johan@kernel.org,
+        konrad.dybcio@somainline.org, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, dianders@chromium.org,
+        robh+dt@kernel.org
+In-Reply-To: <20220902185148.635292-2-ahalaney@redhat.com>
+References: <20220902185148.635292-1-ahalaney@redhat.com> <20220902185148.635292-2-ahalaney@redhat.com>
+Subject: Re: [PATCH 1/3] regulator: dt-bindings: qcom,rpmh: Use additionalProperties
+Date:   Fri, 02 Sep 2022 16:34:24 -0500
+Message-Id: <1662154464.752050.454795.nullmailer@robh.at.kernel.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
@@ -68,25 +63,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 01 Sep 2022 12:33:59 +0300, Krzysztof Kozlowski wrote:
-> The Qualcomm Resource Power Manager (RPM) over SMD bindings contain
-> compatibles and description for RPM devices on two different
-> communication channels: SMD and GLINK.  Except the difference in the
-> parent node, they use different properties for describing name of
-> channel qcom,smd-channels or qcom,glink-channels.  The first one is
-> already present but second is missing:
+On Fri, 02 Sep 2022 13:51:46 -0500, Andrew Halaney wrote:
+> Right now, running make dt_binding_check results in this snippet:
 > 
->   qcom/sm6125-sony-xperia-seine-pdx201.dtb: rpm-requests: 'qcom,glink-channels' does not match any of the regexes: '^regulators(-[01])?$', 'pinctrl-[0-9]+'
+>     /mnt/extrassd/git/linux-next/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml: 'additionalProperties' is a required property
+>             hint: A schema without a "$ref" to another schema must define all properties and use "additionalProperties"
+>             from schema $id: http://devicetree.org/meta-schemas/base.yaml#
+>       SCHEMA  Documentation/devicetree/bindings/processed-schema.json
+>     <snip..>
+>     /mnt/extrassd/git/linux-next/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml: ignoring, error in schema:
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Which results in the schema not being properly evaluated. Swap out
+> unevaluatedProperties which doesn't seem to be doing anything for
+> additionalProperties.
 > 
+> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
 > ---
-> 
-> Changes since v1:
-> 1. New patch
-> ---
->  .../bindings/soc/qcom/qcom,smd-rpm.yaml       | 21 +++++++++++++++----
->  1 file changed, 17 insertions(+), 4 deletions(-)
+>  .../devicetree/bindings/regulator/qcom,rpmh-regulator.yaml    | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
 
-Acked-by: Rob Herring <robh@kernel.org>
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.example.dtb: pm8998-rpmh-regulators: 'vdd-l7-l12-l14-l15-supply' does not match any of the regexes: '^(smps|ldo|lvs)[0-9]+$', 'pinctrl-[0-9]+'
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
