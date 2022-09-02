@@ -2,108 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E1135ABA1E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 23:34:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 422345ABADE
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Sep 2022 00:42:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229623AbiIBVea (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Sep 2022 17:34:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60410 "EHLO
+        id S229593AbiIBWm4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Sep 2022 18:42:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229840AbiIBVe2 (ORCPT
+        with ESMTP id S229500AbiIBWmz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Sep 2022 17:34:28 -0400
-Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12B9310A6;
-        Fri,  2 Sep 2022 14:34:27 -0700 (PDT)
-Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-11f34610d4aso7876511fac.9;
-        Fri, 02 Sep 2022 14:34:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=message-id:date:subject:references:in-reply-to:cc:to:from
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=XXjP8cgiaYw1PqhWIGrRkQJ366WMJ28RuFPXWF5wiYY=;
-        b=Xohw6WOKydHeUjUzINi7qJMpswv8fCRqKPT3htN8dHYht0eSpLd57Sa10zUGCZ1/z3
-         CEBLlStKEsVGFJ8BOzSSEYYR2D5I+ailRXU0PRWwamspSRwoXxchoNuoG+51miNjK2Pc
-         cfWp8BmLCgpEjlTGff8QVg77TvhWLVO5O30ZbvCZZPn8csCzC/uHIdUIHxZ//Md/R9Al
-         wV5lyEB16Abczbb4k3v+aHFcNJoeq8Y4IuEbL2AOdRXZxUjS0or3OifwiX47AyYds9yW
-         OLKabLJoc14LcM6tJaOBnOmslXlyxCxJiDg6zl1+OTNkLY4QUsAK5MdyjY7aK8AoiTGi
-         uXIw==
-X-Gm-Message-State: ACgBeo2qJ2tAxPXXM/PmE6qjo0VCsrOvmdTd93x3y9tcLITYlqZ0EGba
-        65643Zcu5ZFE9/jTSdz3hQ==
-X-Google-Smtp-Source: AA6agR5MrliGH4/f0zSChYbho79KSE2oXFvKHQsWTmYQTKWOiMRQWDjOZm8zWMidzrHnWhrZZqaIXw==
-X-Received: by 2002:a05:6870:c0c1:b0:10d:96:737f with SMTP id e1-20020a056870c0c100b0010d0096737fmr3329609oad.101.1662154466229;
-        Fri, 02 Sep 2022 14:34:26 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id bf15-20020a056808190f00b00344eb5a9416sm1415354oib.55.2022.09.02.14.34.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Sep 2022 14:34:25 -0700 (PDT)
-Received: (nullmailer pid 454796 invoked by uid 1000);
-        Fri, 02 Sep 2022 21:34:24 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Andrew Halaney <ahalaney@redhat.com>
-Cc:     broonie@kernel.org, lgirdwood@gmail.com, johan@kernel.org,
-        konrad.dybcio@somainline.org, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, dianders@chromium.org,
-        robh+dt@kernel.org
-In-Reply-To: <20220902185148.635292-2-ahalaney@redhat.com>
-References: <20220902185148.635292-1-ahalaney@redhat.com> <20220902185148.635292-2-ahalaney@redhat.com>
-Subject: Re: [PATCH 1/3] regulator: dt-bindings: qcom,rpmh: Use additionalProperties
-Date:   Fri, 02 Sep 2022 16:34:24 -0500
-Message-Id: <1662154464.752050.454795.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        Fri, 2 Sep 2022 18:42:55 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70015E725F;
+        Fri,  2 Sep 2022 15:42:53 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 282KFRek013313;
+        Fri, 2 Sep 2022 22:42:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=DMpRXlBJEPMO1B/g5veB7Bj4BDZBa0GEsIo0IPwimq8=;
+ b=Tz8mnj0sY64ja2xd6V6NSERV1sUbtLFk8D5pSqZrIzBavpSeka0yDiEHA/zV0Z7/642g
+ p1E43onlwGUQ4sPv0WlaAvbhT22oWQHZaK57XJkAwPoh10JocAzQ9/0f4bvHv9B1PeFL
+ OkVNbb/TOQWcW2fLCg7DQBSTXUf7jcHBmbkhtOHpbt2Fr094aGm7VU5x+AvgWEc393qS
+ OOvtvlh4XZS0lKu5JCstK7mNllR7SBS0f1Cjpzc0C1CO9sXpwEeGpkP6uIj+9L+ny1eR
+ n7obaTzI08F39AjwWHEBhijHUTMxpg22NnmPVSHLeenbGqmtSRHfjhlv4eUTV3X2E9Ut 2A== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jashfe9n7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 02 Sep 2022 22:42:24 +0000
+Received: from nasanex01a.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 282MgNF0007683
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 2 Sep 2022 22:42:23 GMT
+Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Fri, 2 Sep 2022 15:42:23 -0700
+From:   Asutosh Das <quic_asutoshd@quicinc.com>
+To:     <quic_nguyenb@quicinc.com>, <quic_xiaosenh@quicinc.com>,
+        <stanley.chu@mediatek.com>, <adrian.hunter@intel.com>,
+        <bvanassche@acm.org>, <avri.altman@wdc.com>, <mani@kernel.org>,
+        <quic_cang@quicinc.com>, <beanhuo@micron.com>,
+        <martin.petersen@oracle.com>, <linux-scsi@vger.kernel.org>
+CC:     Asutosh Das <quic_asutoshd@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: [RFC PATCH v3 0/4] UFS Multi-Circular Queue (MCQ) 
+Date:   Fri, 2 Sep 2022 15:41:36 -0700
+Message-ID: <cover.1662157846.git.quic_asutoshd@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: FyOsImqxk4e0V8qq-rO8w6jW7_Bd8rgA
+X-Proofpoint-ORIG-GUID: FyOsImqxk4e0V8qq-rO8w6jW7_Bd8rgA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-09-02_06,2022-08-31_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
+ malwarescore=0 impostorscore=0 phishscore=0 clxscore=1011 mlxscore=0
+ bulkscore=0 mlxlogscore=888 lowpriorityscore=0 spamscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2209020101
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 02 Sep 2022 13:51:46 -0500, Andrew Halaney wrote:
-> Right now, running make dt_binding_check results in this snippet:
-> 
->     /mnt/extrassd/git/linux-next/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml: 'additionalProperties' is a required property
->             hint: A schema without a "$ref" to another schema must define all properties and use "additionalProperties"
->             from schema $id: http://devicetree.org/meta-schemas/base.yaml#
->       SCHEMA  Documentation/devicetree/bindings/processed-schema.json
->     <snip..>
->     /mnt/extrassd/git/linux-next/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml: ignoring, error in schema:
-> 
-> Which results in the schema not being properly evaluated. Swap out
-> unevaluatedProperties which doesn't seem to be doing anything for
-> additionalProperties.
-> 
-> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-> ---
->  .../devicetree/bindings/regulator/qcom,rpmh-regulator.yaml    | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
+UFS Multi-Circular Queue (MCQ) has been added in UFSHCI v4.0 to improve storage performance.
+This patch series is a RFC implementation of this.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+This is the initial driver implementation and it has been verified by booting on an emulation
+platform. During testing, all low power modes were disabled and it was in HS-G1 mode.
 
-yamllint warnings/errors:
+Please take a look and let us know your thoughts.
 
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.example.dtb: pm8998-rpmh-regulators: 'vdd-l7-l12-l14-l15-supply' does not match any of the regexes: '^(smps|ldo|lvs)[0-9]+$', 'pinctrl-[0-9]+'
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+v2 -> v3:
+- Split the changes based on functionality
+- Addressed queue configuration issues
+- Faster SQE tail pointer increments
+- Addressed comments from Bart and Manivannan
 
-doc reference errors (make refcheckdocs):
+v1 -> v2:
+- Enabled host_tagset
+- Added queue num configuration support
+- Added one more vops to allow vendor provide the wanted MAC
+- Determine nutrs and can_queue by considering both MAC, bqueuedepth and EXT_IID support
+- Postponed MCQ initialization and scsi_add_host() to async probe
+- Used (EXT_IID, Task Tag) tuple to support up to 4096 tasks (theoretically)
 
-See https://patchwork.ozlabs.org/patch/
 
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
+Asutosh Das (2):
+  ufs: core: prepare ufs for multi circular queue support
+  ufs: core: mcq: Adds Multi-Circular Queue support
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+Can Guo (2):
+  ufs: core: Add Event Specific Interrupt configuration vendor specific
+    ops
+  ufs: host: qcom: Add MCQ support
 
-pip3 install dtschema --upgrade
+ drivers/ufs/core/Makefile      |   2 +-
+ drivers/ufs/core/ufs-mcq.c     | 474 +++++++++++++++++++++++++++++++++++++++++
+ drivers/ufs/core/ufshcd-priv.h | 102 +++++++++
+ drivers/ufs/core/ufshcd.c      | 370 +++++++++++++++++++++++++-------
+ drivers/ufs/host/ufs-qcom.c    | 134 ++++++++++++
+ drivers/ufs/host/ufs-qcom.h    |  13 ++
+ include/ufs/ufs.h              |   6 +
+ include/ufs/ufshcd.h           | 137 ++++++++++++
+ include/ufs/ufshci.h           |  79 +++++++
+ 9 files changed, 1238 insertions(+), 79 deletions(-)
+ create mode 100644 drivers/ufs/core/ufs-mcq.c
 
-Please check and re-submit.
+-- 
+2.7.4
 
