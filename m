@@ -2,163 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 048CC5AAB74
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 11:31:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F2205AAB7F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 11:35:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235256AbiIBJbq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Sep 2022 05:31:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36604 "EHLO
+        id S235363AbiIBJfF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Sep 2022 05:35:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235548AbiIBJbd (ORCPT
+        with ESMTP id S235471AbiIBJfA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Sep 2022 05:31:33 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAFD0C2E8A
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Sep 2022 02:31:30 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id k6-20020a05600c1c8600b003a54ecc62f6so1044075wms.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Sep 2022 02:31:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=1gh2cH8+/vu9+O44Ntzb/QjlvRTOJYihF+Y3Qm1SXrI=;
-        b=X4/4Zk55Ukbyir5IW5L08w5Q+fBtLNiG6CONxZPYH5OrhlCyRaaYThfUPWsbJipvYT
-         swTNjLlHybyUWC/dfqbdAW5Ah7r6Ymh4/g/oVrerD+13326oWvDv3zz6rydOMv/zNWXn
-         LtHud4zBf5xTIhynm9koMjOkNsLG74eqnxnm8RKGFRPGx7mBVVLJnC9rPLFS1X7yRHuD
-         1yX57RVfuS/GckEUMvFGVsy+Mf5mTMSC+0BUZDK65PEfhodItsbyEKzD56Ku/yT7NOR6
-         3oT1E3kXSyaBiSKfL1ykhnf13PQkgJjtaV8uIpotOq7DBSYoGzbS6ubAJ3YQ7hxyMo0X
-         wobw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=1gh2cH8+/vu9+O44Ntzb/QjlvRTOJYihF+Y3Qm1SXrI=;
-        b=TeD2fzkhCGR9aDd4oKdUZSNUgre3xog+5q0BDbyT3cHNP5x25J2iS0htoDzM3EHGli
-         9lsgX89v+guVhc20HQ4QvbFQQzSMJTDfPYgxAHJXmIgbKPSeYGft6bJ+km55y4MSKWS0
-         1Jgax4AYvOfistOldbO+IvusGKdeQVREwkozrmtGbX9k18JNYrnnDYM7ko1Cr2WuWomj
-         GZ+kp2Z4MsONhC9emDlhZuXvT7pfxIyOtkWWPphwsnmWCxRG3CEqWG8K2M2HW0aHZqY4
-         e5dbfHRpHnzx7MwM7bFc/y/S5G4B1sdAyGmVYW+1MK169RxMoQKtr2H0qUsT+CrzVOoV
-         vAZw==
-X-Gm-Message-State: ACgBeo3hKGzsmq6R56ubgUaMC5b1OWV88JV0XTpQZ4M3lCgVUWGiFVql
-        RLU4rxbQpxtScfS7AI+UgTOjkQ==
-X-Google-Smtp-Source: AA6agR7RmSVyjAeQGFw3MIw2xrxrUVQiVxAzEY6jcgGsEMR0UnpBnCqr/mnb1uGpwjcB9GCyqvs1tA==
-X-Received: by 2002:a1c:7703:0:b0:3a5:aefa:68e3 with SMTP id t3-20020a1c7703000000b003a5aefa68e3mr2239820wmi.158.1662111089219;
-        Fri, 02 Sep 2022 02:31:29 -0700 (PDT)
-Received: from [192.168.86.238] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.googlemail.com with ESMTPSA id g40-20020a05600c4ca800b003a4f1385f0asm1537794wmp.24.2022.09.02.02.31.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Sep 2022 02:31:28 -0700 (PDT)
-Message-ID: <c22a8724-4a1c-dcc5-816d-32faedf6dee2@linaro.org>
-Date:   Fri, 2 Sep 2022 10:31:24 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v4 11/21] misc: fastrpc: Prepare to dynamic dma-buf
- locking specification
-Content-Language: en-US
-To:     Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-        David Airlie <airlied@linux.ie>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Gurchetan Singh <gurchetansingh@chromium.org>,
-        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Daniel Almeida <daniel.almeida@collabora.com>,
-        Gert Wollny <gert.wollny@collabora.com>,
-        Gustavo Padovan <gustavo.padovan@collabora.com>,
-        Daniel Stone <daniel@fooishbar.org>,
-        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Rob Clark <robdclark@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        =?UTF-8?Q?Thomas_Hellstr=c3=b6m?= <thomas_os@shipmail.org>,
-        Qiang Yu <yuq825@gmail.com>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Jason Gunthorpe <jgg@ziepe.ca>,
-        Leon Romanovsky <leon@kernel.org>,
-        Juergen Gross <jgross@suse.com>,
-        Stefano Stabellini <sstabellini@kernel.org>,
-        Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        Russell King <linux@armlinux.org.uk>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Christian Gmeiner <christian.gmeiner@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Dmitry Osipenko <digetx@gmail.com>,
-        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
-        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        kernel@collabora.com, virtualization@lists.linux-foundation.org,
-        linux-rdma@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20220831153757.97381-1-dmitry.osipenko@collabora.com>
- <20220831153757.97381-12-dmitry.osipenko@collabora.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20220831153757.97381-12-dmitry.osipenko@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Fri, 2 Sep 2022 05:35:00 -0400
+Received: from wnew4-smtp.messagingengine.com (wnew4-smtp.messagingengine.com [64.147.123.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15FACE026;
+        Fri,  2 Sep 2022 02:34:58 -0700 (PDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailnew.west.internal (Postfix) with ESMTP id 871352B05965;
+        Fri,  2 Sep 2022 05:34:56 -0400 (EDT)
+Received: from imap51 ([10.202.2.101])
+  by compute3.internal (MEProxy); Fri, 02 Sep 2022 05:34:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+        :content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm1; t=1662111296; x=1662114896; bh=uzP2BTOvx9
+        B1JqfpE816Vor6uj+jKwcwYjNS21O8AC8=; b=OqYzw3jv6r/dQ7IyYO/ABg5QV6
+        2PaXmd4idaKmu+9pMGyza+Nc93Nxzsb1aDXzja6QClzCFvRIpOYGciAwVYEKDB8D
+        AwggKFTYAu8kvp3qI1Hi5A7V3VEjkX4AG09TYHKYc1lRPuRUyJbI3EQJwwWBCub0
+        3CB/BBgd4yO0sWpZ8AzghfUZYcne93EeHmyEdwddkxAlcl0mwa+vJUsmrqtBQ3X2
+        U/DQy48zmWcfcIIuwiyUhBlzV4it3GyCo2708o8E63usOoCRJTTIFM0lcPJm8SO+
+        ZmqXRsBOTEMX29TCWYIYMwONGNg/dSmolGrffFjjNmIlV9sRp3TTi8rUSIrg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        i56a14606.fm1; t=1662111296; x=1662114896; bh=uzP2BTOvx9B1JqfpE8
+        16Vor6uj+jKwcwYjNS21O8AC8=; b=FYGPnO/FLMJCHzB07bHkt0aAdbsjQ/1MSb
+        4r1YV0NXhv2JwV0icU++Sj8SYpMKGNtg+FhUnl13sbEVpDpKh3A3J+nKbvH51foL
+        lGj+PBCDA/b0a5ty4GpL4H5taxxfwSiCJCteN2ziG9xkd+OnjRAYkfwM91+SNgcx
+        ETOJyigDa2Mg60Hu2kHX/9tiTeoT/p11uG9WIDr4sXGvFzhfKST1KDN6ilosjaz2
+        0Ix9MzPuuomKO+C3D/v60dAxvwkkClmyh6UlOaHp98+onPdZuAqCQZdxkoPcrq/4
+        1AuPzXVfy2ZvoH6QkfbkRftTl2WDvhGeDBrUySD5sXnzN1aKtnVQ==
+X-ME-Sender: <xms:P84RY4wwzJwd9ByesmKSVZlRa89Uu_XWD-4wHVjJ0oXPdZfINEZnxw>
+    <xme:P84RY8SPlKfNSqG3iEnAIwqsCo18ypP6VskXDQf83IwrluyxYR-CvAhRl5wYR4ah2
+    Smnk7I6ZjoVjMMnLSo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdeltddgudekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetrhhn
+    ugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtth
+    gvrhhnpeffgeffuddtvdehffefleethfejjeegvdelffejieegueetledvtedtudelgfdu
+    gfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrrh
+    hnugesrghrnhgusgdruggv
+X-ME-Proxy: <xmx:P84RY6Wme0tsYzXkC4FcAPI8cyij5t7MEmFEJJ952DEMkFgGqsaHZA>
+    <xmx:P84RY2ieXTYpanCAxPYPK46WfLfrB2cPHlvk9g_TxkpBQhUR6d5G6w>
+    <xmx:P84RY6CmUbYZtZ-rPnvDKc1RA3Wg6u452jwFHo7xXRxlqNV69JLhlw>
+    <xmx:P84RYyspN20-QlDhOuzLnuGQKZLCzuLNMHFfZBDmlkPU-YQPF3FyXGOXZFc>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 7D91FB60083; Fri,  2 Sep 2022 05:34:55 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-841-g7899e99a45-fm-20220811.002-g7899e99a
+Mime-Version: 1.0
+Message-Id: <81ed8e35-fa70-4b0e-9601-131c9d0c46d4@www.fastmail.com>
+In-Reply-To: <20220831141218.516100-1-krzysztof.kozlowski@linaro.org>
+References: <20220831141218.516100-1-krzysztof.kozlowski@linaro.org>
+Date:   Fri, 02 Sep 2022 11:34:34 +0200
+From:   "Arnd Bergmann" <arnd@arndb.de>
+To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@somainline.org>,
+        "Catalin Marinas" <catalin.marinas@arm.com>,
+        "Will Deacon" <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        arm@kernel.org, soc@kernel.org, "Olof Johansson" <olof@lixom.net>
+Subject: Re: [RESEND PATCH] arm64: defconfig: enable newer Qualcomm SoC sound drivers
+Content-Type: text/plain
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 31/08/2022 16:37, Dmitry Osipenko wrote:
-> Prepare fastrpc to the common dynamic dma-buf locking convention by
-> starting to use the unlocked versions of dma-buf API functions.
-> 
-> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+On Wed, Aug 31, 2022, at 4:12 PM, Krzysztof Kozlowski wrote:
+> Enable sound support (machine drivers) for Qualcomm SC7180 and SC7280
+> SoCs.
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
+>
+> Resending because I missed ARM SoC maintainers and Bjorn.
 
-LGTM,
-
-Incase you plan to take it via another tree.
-
-Acked-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
-
---srini
->   drivers/misc/fastrpc.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 93ebd174d848..6fcfb2e9f7a7 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -310,8 +310,8 @@ static void fastrpc_free_map(struct kref *ref)
->   				return;
->   			}
->   		}
-> -		dma_buf_unmap_attachment(map->attach, map->table,
-> -					 DMA_BIDIRECTIONAL);
-> +		dma_buf_unmap_attachment_unlocked(map->attach, map->table,
-> +						  DMA_BIDIRECTIONAL);
->   		dma_buf_detach(map->buf, map->attach);
->   		dma_buf_put(map->buf);
->   	}
-> @@ -726,7 +726,7 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
->   		goto attach_err;
->   	}
->   
-> -	map->table = dma_buf_map_attachment(map->attach, DMA_BIDIRECTIONAL);
-> +	map->table = dma_buf_map_attachment_unlocked(map->attach, DMA_BIDIRECTIONAL);
->   	if (IS_ERR(map->table)) {
->   		err = PTR_ERR(map->table);
->   		goto map_err;
+No objections to the patch, but I'm unsure what I'm supposed to
+do with it. Is this for Bjorn or me to pick up? Do we need it
+as a 6.0 fix or should this wait for 6.1?
