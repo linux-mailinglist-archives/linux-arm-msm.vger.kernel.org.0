@@ -2,69 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DAD35AB545
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 17:32:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 944635AB5EC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 17:56:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235792AbiIBPcn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Sep 2022 11:32:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49290 "EHLO
+        id S237368AbiIBPz7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Sep 2022 11:55:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236916AbiIBPcX (ORCPT
+        with ESMTP id S236426AbiIBPzA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Sep 2022 11:32:23 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7768A1BB
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Sep 2022 08:15:03 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id bd26-20020a05600c1f1a00b003a5e82a6474so1593102wmb.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Sep 2022 08:15:03 -0700 (PDT)
+        Fri, 2 Sep 2022 11:55:00 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5960F186C2
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Sep 2022 08:49:21 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id w5so2806107wrn.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Sep 2022 08:49:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=ppnIzcD1Lvog5KH9Fyfxjv2BYJnZPxI6mOxm9069x0Q=;
-        b=Fvsdo4X7t20LzXiT5gHh6YEPAklYxulIy6hd9e1+71rOqYERWz3mUY8QIpce1YWs5c
-         T4GxcW+az/HLD9HYS7mo1WII36FmPQ62/cGEAJtSHd4mhVyFpkXKXjTmAPX2rHvb9Yjl
-         Wqc40omyd0iKDDLJkDYsYX1UUrW1NYCPYzx04NkdrKpDmvNTUK+atIJDatnxUJVTIaz3
-         R8GCtkFGKGeMd5D+tqYAvs2oChSOTCBt9HUJDvR+iJzpcZFrBlyA72C7ZuMddbEhzxMw
-         A8TXhu5Zpw2yscF2sKZ8r07wchn6YlROakTcdPXQ15+/Q4SU9f2bcjlVF3nZWT5YWHjq
-         3lyA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=A8QQlHJvfCbaBzS2PU/2MLWW0321DP7okLoPDVol5xw=;
+        b=L1XAi25oPDm1oqbBc0NuoKX6xUAiKUJPv/QUBAj3BkAK6+stxtIFbCLBLDdIuWO1dO
+         Nn0pRB4aPwhsg8Oy8hWyF0m8BzX5dkv7w5R/m0X6jxLh94EakrU74/tmhjAgpGP1Ma4U
+         J44U1OC32lBeC26XYKILdz4k5P24ml1aNIrO6k0uv82UA7Gh0xu43C9UyhrAc6U26G3d
+         jhTxQvCt2RbBjSgMK3toWoLYYGOrohjNzaneN2FQTv5RjXQN87dHWGYQkgGHnFSV7mf0
+         JIvpTHf73ZVN+X4dq5XuQP6nJ6SGUR5YHLq/wV47eWYj0OwNfJgqzByOiLtLvLnTbkd4
+         BGmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=ppnIzcD1Lvog5KH9Fyfxjv2BYJnZPxI6mOxm9069x0Q=;
-        b=j9RgpVNtN6tPZi2zwTKaRoEXFXy6ZG7n7JNsEaZyIIMiHKLGZQOsxQnapPJFMFuxjK
-         A0uGVFhxsKt75KTJ7IMl4iRKgzSW2IXpsoXD25Fghmw0fGhz2zRbpkAjmkhm52OoABe+
-         hdZAyvkxGSUhxlb6Oi8UgzY5m8g71FKv9rcy+C0lefOt+uX4twtlI1EAp2SdiYuMIKBt
-         BAYflyU/vTeEJPdI+wKttVqLWZ5mu2q67OSvsqOXbKhY98yEHj34OtomO57dkvkKsToC
-         6+NxjtQqih2DeLKFzvqovbYTwu7PzSbG5gU40ID4CJpArAT38Ht+bUo9jAi+28mr1hGx
-         w1vQ==
-X-Gm-Message-State: ACgBeo0LFqndiXnnMMbuFb9pzJJmcdQPH5Xt2rahBzh59022PSoNoaxu
-        p9xX93T1PiBfpKF/c2DOmR5YtDzgA9zRxZWv
-X-Google-Smtp-Source: AA6agR7FlLcf18Fay4hYuE/8S7Rn5LcJExIwtFG5sZbJLUHX9IIteBZnXfpei+us/9OKzgyeQZXOyg==
-X-Received: by 2002:a05:600c:2311:b0:3a6:84e5:bcad with SMTP id 17-20020a05600c231100b003a684e5bcadmr3239020wmo.72.1662131702350;
-        Fri, 02 Sep 2022 08:15:02 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=A8QQlHJvfCbaBzS2PU/2MLWW0321DP7okLoPDVol5xw=;
+        b=Y/Rf0C2Ne4Fg+bCWkHJE/1ZNSSAuOEp9vxbGcgWArZWuuHh7Y2G6EY1tZCSIAZMY4u
+         yHVGfgswltaejLfZk2QQytUY5rd6p7et541eRd7FA8eFdQHJb8lFE+N+mK+io+ICWILV
+         XAY1tH6BpPa894omx6QBRFENnrjrSsBeZ3SvOwi2Rqvers8ti2EU4fCclxmBvCzQfRMn
+         uaT/eODGCUMAG+ahtB1pTPCLm0xAwVTvDH6v+3dB9flWuRctZz6vISg5cwGOMNVYnN8/
+         lMf/j8tIoV0Ml6HddrqYaRZEUkJ+EfCHV+u2Obv5nfcbmnwMBGIuVHNowtbvyC2iVtta
+         S1qA==
+X-Gm-Message-State: ACgBeo1TOcKBMlIe013uboagMJqqW9tNbae1ETIpUikayGwlxUyqkBdR
+        XRG0gQW2OFhCOG7WJfj3dTGttw==
+X-Google-Smtp-Source: AA6agR4VhQ06SJnCyHhZEG+L586fFuHuQTr0G87F4kmmMfOUykSVSJAybuueleO+BSeFErj5j4IXvw==
+X-Received: by 2002:a05:6000:1a86:b0:226:fd9b:7357 with SMTP id f6-20020a0560001a8600b00226fd9b7357mr3863759wry.458.1662133759948;
+        Fri, 02 Sep 2022 08:49:19 -0700 (PDT)
 Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id w10-20020a05600c014a00b003a4efb794d7sm2361493wmm.36.2022.09.02.08.15.00
+        by smtp.gmail.com with ESMTPSA id b1-20020a05600010c100b002250f9abdefsm2046741wrx.117.2022.09.02.08.49.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Sep 2022 08:15:01 -0700 (PDT)
+        Fri, 02 Sep 2022 08:49:19 -0700 (PDT)
 From:   Abel Vesa <abel.vesa@linaro.org>
 To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Ekansh Gupta <ekangupt@qti.qualcomm.com>,
-        Vamsi Krishna Gattupalli <quic_vgattupa@quicinc.com>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Ekansh Gupta <quic_ekagupt@quicinc.com>
+Cc:     Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         linux-arm-msm@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Ola Jeppsson <ola@snap.com>
-Subject: [PATCH 3/3] misc: fastrpc: Fix use-after-free race condition for maps
-Date:   Fri,  2 Sep 2022 18:14:23 +0300
-Message-Id: <20220902151423.3351414-3-abel.vesa@linaro.org>
+        devicetree@vger.kernel.org
+Subject: [PATCH v2 00/10] misc: fastrpc: Add audiopd support
+Date:   Fri,  2 Sep 2022 18:48:50 +0300
+Message-Id: <20220902154900.3404524-1-abel.vesa@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220902151423.3351414-1-abel.vesa@linaro.org>
-References: <20220902151423.3351414-1-abel.vesa@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -77,58 +78,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Ola Jeppsson <ola@snap.com>
+This patchset adds audiopd support to fastrpc.
 
-It is possible that in between calling fastrpc_map_get() until
-map->fl->lock is taken in fastrpc_free_map(), another thread can call
-fastrpc_map_lookup() and get a reference to a map that is about to be
-deleted.
+The first version is here:
+https://lore.kernel.org/all/20220902131344.3029826-1-abel.vesa@linaro.org/
 
-Rewrite fastrpc_map_get() to only increase the reference count of a map
-if it's non-zero. Propagate this to callers so they can know if a map is
-about to be deleted.
+Changes since v1:
+ * dropped the patch 13:
+   "misc: fastrpc: Remove unnecessary if braces in fastrpc_internal_invoke"
+ * sent patches 1, 2 and 3 as a separate patchset
 
-Fixes this warning:
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 5 PID: 10100 at lib/refcount.c:25 refcount_warn_saturate
-...
-Call trace:
- refcount_warn_saturate
- [fastrpc_map_get inlined]
- [fastrpc_map_lookup inlined]
- fastrpc_map_create
- fastrpc_internal_invoke
- fastrpc_device_ioctl
- __arm64_sys_ioctl
- invoke_syscall
+Abel Vesa (10):
+  misc: fastrpc: Rename audio protection domain to root
+  misc: fastrpc: Add reserved mem support
+  dt-bindings: misc: fastrpc: Document memory-region property
+  misc: fastrpc: Add fastrpc_remote_heap_alloc
+  misc: fastrpc: Use fastrpc_map_put in fastrpc_map_create on fail
+  misc: fastrpc: Rework fastrpc_req_munmap
+  misc: fastrpc: Add support for audiopd
+  misc: fastrpc: Safekeep mmaps on interrupted invoke
+  misc: fastrpc: Add mmap request assigning for static PD pool
+  misc: fastrpc: Add dma_mask to fastrpc_channel_ctx
 
-Fixes: c68cfb718c8f9 ("misc: fastrpc: Add support for context Invoke method")
-Signed-off-by: Ola Jeppsson <ola@snap.com>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/misc/fastrpc.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ .../devicetree/bindings/misc/qcom,fastrpc.txt |   5 +
+ drivers/misc/fastrpc.c                        | 267 +++++++++++++++---
+ include/uapi/misc/fastrpc.h                   |   7 +
+ 3 files changed, 247 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 50c17f5da3a8..58654d394d17 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -332,10 +332,12 @@ static void fastrpc_map_put(struct fastrpc_map *map)
- 		kref_put(&map->refcount, fastrpc_free_map);
- }
- 
--static void fastrpc_map_get(struct fastrpc_map *map)
-+static int fastrpc_map_get(struct fastrpc_map *map)
- {
--	if (map)
--		kref_get(&map->refcount);
-+	if (!map)
-+		return -ENOENT;
-+
-+	return kref_get_unless_zero(&map->refcount) ? 0 : -ENOENT;
- }
- 
- 
 -- 
 2.34.1
 
