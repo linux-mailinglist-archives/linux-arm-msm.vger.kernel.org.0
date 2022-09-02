@@ -2,142 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 756215AB1E0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 15:44:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0375E5AB227
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 15:52:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236260AbiIBNoJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Sep 2022 09:44:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42752 "EHLO
+        id S238260AbiIBNwZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Sep 2022 09:52:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237877AbiIBNna (ORCPT
+        with ESMTP id S238259AbiIBNwA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Sep 2022 09:43:30 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09139220D1;
-        Fri,  2 Sep 2022 06:20:04 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id e18so2682539edj.3;
-        Fri, 02 Sep 2022 06:20:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=Yflm318cdjKKS5Aq2XfV+05wBq9c0y5FzGJjH2Yk41k=;
-        b=Jkbt1v21G9Rxye/+N0o+IPOTj+CuYxmmfaK+N29VNl/9G+1qxjAcFRWyz3WKpt8fpG
-         0En1J4aPdQ1j2H/JkICRxNolwWhc7d9MxiK5bbehVLVvF8EGNqKn5KzTWDUAYuveOo/E
-         qEa14Xcww3Atx3eBw4lCvL/p5wjoVzdVALga1VjNQPIiTEvuZDSxnwKWheAwkcKWIt3q
-         lXcu6daCRI2nPoTmhpOea4xE7vXlBqojB4Q/nOhggO/jOpeLVC0vZvbxzBd6889QFMfV
-         M8UmLmatw9W+2wmJl6NTPcgsrA+qmPMEJ/OHrt/x4Ot9be4MAcLFtojgME9F/vYiaUlZ
-         3eFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=Yflm318cdjKKS5Aq2XfV+05wBq9c0y5FzGJjH2Yk41k=;
-        b=jyQ5qfrsuJdSt8Y18OlpT3zSpmKo2cj0l10Dmi6XID87WCD7Lk57ZsJuXDzFJfPD8o
-         pCysIfxMVMmE2/mCKIsIZe+Wx/mDESS63EN3C9rVvmUkTYFNEtKQBZQs7hvhCBk3i8D5
-         n2I4xL3I/msK0sIY0XbbAKG1h05fAeTb8ml7CgiSj3vRVqPpwGJzlPgZt9+tzpMdTpn3
-         cGzY30t7A2C1aQmi0H+m13JzN0WLcQPlucYeyMCPxyezgp/6MwUgneeMBGispMIDC6sE
-         Ki4dH7uPNlbLFNrcw+YMPAFxkEwe+gGeJyt1iowxjspAUKFjMw7dQmQFkQf3QzfcwEmS
-         rMsQ==
-X-Gm-Message-State: ACgBeo0rvfVPGXba4QasNKpon0DbPKQkCQpnMrVhXH8mOwd2gZLk7myb
-        dU3mfIcqC9hjJ8C2gaZU7So=
-X-Google-Smtp-Source: AA6agR4OiTkdRvW0jcLpeFu+OQUHUqFNbN72o5cyjawWba6U+tMSbT/7lYfLOeesYk2FIldmbW4ZIw==
-X-Received: by 2002:aa7:cb56:0:b0:447:8d82:729b with SMTP id w22-20020aa7cb56000000b004478d82729bmr33697090edt.342.1662124707233;
-        Fri, 02 Sep 2022 06:18:27 -0700 (PDT)
-Received: from [10.17.0.13] ([37.120.217.82])
-        by smtp.gmail.com with ESMTPSA id bt14-20020a0564020a4e00b004462849aa06sm1484643edb.5.2022.09.02.06.18.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Sep 2022 06:18:26 -0700 (PDT)
-Message-ID: <312ede16-f0a9-9b9e-a0d6-fb6e37d9f1bb@gmail.com>
-Date:   Fri, 2 Sep 2022 15:18:25 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH 0/4] firmware: Add support for Qualcomm UEFI Secure
- Application
-Content-Language: en-US
-To:     Sumit Garg <sumit.garg@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Fri, 2 Sep 2022 09:52:00 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4CC0139D53;
+        Fri,  2 Sep 2022 06:26:21 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 113E9B82B52;
+        Fri,  2 Sep 2022 13:25:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CFE6C433C1;
+        Fri,  2 Sep 2022 13:25:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1662125113;
+        bh=P47PCuy0b6sjxqQyA4e/eNhGPyUNXr9Ohfa1FHwdEbo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=GXgRa4X58KPDpke2OHKTTsw9CmD0ohAmE9l2+HfbtkI6/SxOs4Y3MdzOGcN8t7SjM
+         r20K8eFqEIt0FdeiHQ/WnRF+/B5KZsRCXyN0sE+K6hYt+LsVNixjZr2MaTvTj9CJr2
+         9jo/Dxrh4Ibtkk3Mc3YbaTuRLsBn8t+P6jdT7YlY=
+Date:   Fri, 2 Sep 2022 15:25:10 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorande@qti.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>
-References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
- <dfd07f84-c4bd-a18c-2263-49f999f2934c@linaro.org>
- <f42539d0-c2a3-a2b2-c35b-b7a5904b376f@gmail.com>
- <db00f6a9-263d-9c47-486e-7080ffc5b3c9@linaro.org>
-From:   Maximilian Luz <luzmaximilian@gmail.com>
-In-Reply-To: <db00f6a9-263d-9c47-486e-7080ffc5b3c9@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: *
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Ekansh Gupta <ekangupt@qti.qualcomm.com>,
+        Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Ola Jeppsson <ola@snap.com>
+Subject: Re: [PATCH 01/14] misc: fastrpc: Fix use-after-free and race in
+ fastrpc_map_find
+Message-ID: <YxIENg1AalM46bpi@kroah.com>
+References: <20220902131344.3029826-1-abel.vesa@linaro.org>
+ <20220902131344.3029826-2-abel.vesa@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220902131344.3029826-2-abel.vesa@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Fri, Sep 02, 2022 at 04:13:31PM +0300, Abel Vesa wrote:
+> Currently, there is a race window between the point when the mutex is
+> unlocked in fastrpc_map_lookup and the reference count increasing
+> (fastrpc_map_get) in fastrpc_map_find, which can also lead to
+> use-after-free.
+> 
+> So lets merge fastrpc_map_find into fastrpc_map_lookup which allows us
+> to both protect the maps list by also taking the &fl->lock spinlock and
+> the reference count, since the spinlock will be released only after.
+> Add take_ref argument to make this suitable for all callers.
+> 
+> Co-developed-by: Ola Jeppsson <ola@snap.com>
+> Signed-off-by: Ola Jeppsson <ola@snap.com>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>  drivers/misc/fastrpc.c | 41 +++++++++++++++++++++--------------------
+>  1 file changed, 21 insertions(+), 20 deletions(-)
 
-On 9/2/22 09:26, Sumit Garg wrote:
-> Hi Maximilian,
-> 
-> On 02/08/22 18:52, Maximilian Luz wrote:
+What commit does this fix?  Should it go to stable trees?
 
-[...]
+Try splitting this series up into 2, one for 6.0-final with bugfixes to
+resolve issues found, and the next one on top of that for new features.
 
->> Thanks for this information! So as far as I understand it, this is currently an
->> interface to user-space only, i.e. does not allow in-kernel drivers for apps?
-> 
-> The Linux TEE framework already provides an in-kernel interface to TEE as well via TEE bus [1]. There are already multiple kernel drivers [2] [3] [4] [5] [6] [7] using it. So an EFI driver can be an addition to that.
-> 
-> Now coming on to TEE implementations, the drivers I mentioned are based on OP-TEE where devices are queried/enumerated during OP-TEE probe here [8]. So in similar manner QTEE smcinvoke driver should be able to register devices on the TEE bus.
-> 
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/staging/tee.rst#n56
-> 
-> [2] drivers/char/tpm/tpm_ftpm_tee.c
-> 
-> [3] drivers/char/hw_random/optee-rng.c
-> 
-> [4] drivers/firmware/arm_scmi/optee.c
-> 
-> [5] security/keys/trusted-keys/trusted_tee.c
-> 
-> [6] drivers/firmware/broadcom/tee_bnxt_fw.c
-> 
-> [7] drivers/rtc/rtc-optee.c
-> 
-> [8] drivers/tee/optee/device.c
+thanks,
 
-Thanks for those links!
-
-I think it would indeed be good if we could make it work via that
-interface and I guess that should generally be possible. As far as I can
-see, the biggest problem might be that the current firmware doesn't seem
-to use UUIDs, so I guess we might need to emulate them somehow.
-
-It would be great if someone with some actual knowledge of the firmware
-used on those devices could have a look at this and provide some
-insights.
-
-My plan for now is to hold off on the UEFI variable driver until we have
-a (proper) TEE driver, which unfortunately might be a bit out of my
-depth. I'm happy to help out in any way I can though.
-
-Regards,
-Max
+greg k-h
