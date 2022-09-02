@@ -2,171 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CFCE5AB9CA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 23:03:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E08BE5ABA06
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 23:30:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230515AbiIBVCn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Sep 2022 17:02:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35176 "EHLO
+        id S229593AbiIBVaE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Sep 2022 17:30:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229583AbiIBVCb (ORCPT
+        with ESMTP id S229917AbiIBVaC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Sep 2022 17:02:31 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05ADDBD4F6
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Sep 2022 14:02:29 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id i77so2639317ioa.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Sep 2022 14:02:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=Sg94S1ohGjSO+2FVqvQ4ZE3HnavccZA0F79TKZotqVs=;
-        b=o9qQ43NUmTFDtsWINhDRhOkVGXDvg/H28BHjXIDDAEPud8d9lSZEHUA9LlfLcwHDva
-         dDJrZm3qqB7nsHYvewhltyadSReDKbLEevaB19KsVU52naGDx6JOHOJbQoZRzgZSIefV
-         Mjh8BpDYLeeU7W+p+wCeM3NkaxlEUjad5u5Y3KDzZjrW9rc3n4EkJOcAgM3qWWCco72i
-         nK+I1s6KAqk9x+sVXzB7SYmj6Jr+vuF3BFsPwSrc4l0Tl8vi5J0aGvw4SSXChJvldh9L
-         SWd3rTClLlqPJ08BIsCVeKPVQ8STXdNwTyxLN4xcn/gUFRdqFD7JOoY9w3LZqYgsvmId
-         3jpA==
+        Fri, 2 Sep 2022 17:30:02 -0400
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08F825A15C;
+        Fri,  2 Sep 2022 14:30:02 -0700 (PDT)
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-11eb44f520dso7852175fac.10;
+        Fri, 02 Sep 2022 14:30:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=Sg94S1ohGjSO+2FVqvQ4ZE3HnavccZA0F79TKZotqVs=;
-        b=8OssJu9y2SR5IUqrD2OU/pp8S//ei4jP8ZvdJTccIsOJ/+VoRGcTtwVAmtg/g26HjN
-         aKhwudn4sZ3rMudl6MfJM1TAabv4FtbI7RRUfOrebPlga5MWpBH8R6crjEeFQ+s3oz0B
-         iyiGNntwtzgUra2dPaG+bkyiNcu1qcbI19SbwAeBXe+bdUsV9azraKg7Ueil2LZYfbBc
-         YSymXtXYXJmRl+artkGTZ+8QRFkLRi8J582t/bXcUZnv6M/PPIpptfxrXKPyqwufA3DL
-         wDVquNACKMNLyHeUGpFxqnDKlW42fzqWC0a1TR3fvyfcAC+M8iCkxFD/2vhW0cLQGwAH
-         O7mA==
-X-Gm-Message-State: ACgBeo1Oa51EPmPFvvMwXB2jRVIVNIIj03NFigJ7AaRkPyhlknvM41zD
-        b261g9eCDgtwdMQBDZ9rc/1jOA==
-X-Google-Smtp-Source: AA6agR4bipgwhYJcj70+tEd37INbaqRP3sa2haOjLbdU0WafJ0IULWIhc59GMUjKLG7TzCpXBhBeFQ==
-X-Received: by 2002:a05:6638:2613:b0:346:e2c5:aa4e with SMTP id m19-20020a056638261300b00346e2c5aa4emr20374986jat.160.1662152548689;
-        Fri, 02 Sep 2022 14:02:28 -0700 (PDT)
-Received: from presto.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id i7-20020a0566022c8700b00689e718d971sm1259208iow.51.2022.09.02.14.02.27
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=gOAzsL9bsAt7jlkpt+vaf6xyvNBMEcyrbnj+YjtEFYc=;
+        b=5fDAY4x2dMqzPEgQUedR8J7stknjQuZ70tT/QFejKOgrcfOCeiWTTaGNVc19filzOq
+         ctpYMN8D5bXF8/zBD6aEsr9d5PGJ+vyQzGNsOKxpDLN6++FvlMX1NJdvrpTX4QVMCt8T
+         Sw+J3GRV85TU9H6ornGH/WqREHzhUsKJ4LX6yw6hTVzwM1rHa//YhQ1ockzkxX0LO/nA
+         sS7GMLAKs+aweWxHm+Uwbes4snTgN74xzvQAWzZgZ1dtMj3o32uEzZJrGSSeGwxz8rOf
+         g3zgwpDzikUfx+l5KEELPH4kY/cBRK22XyzfnunyGfsxmD4CM3vNSACPtatsXzAxKkWT
+         VZkQ==
+X-Gm-Message-State: ACgBeo2ti5+ghXwAoYZhEkSekCRsrP9FnFQ8DRP5vewHwBIAPPZ7HG80
+        JU7kTePiA1oNzH6OwhFq/A==
+X-Google-Smtp-Source: AA6agR5FyIT3medZqlb0ztfVLiAWmg0Ir31ztuO4VBzvFV7cYnSkWqB9g9H+Fvmqw+fsq/JV6Chk/Q==
+X-Received: by 2002:a05:6870:b3aa:b0:11f:5995:8e2e with SMTP id w42-20020a056870b3aa00b0011f59958e2emr3398439oap.204.1662154201303;
+        Fri, 02 Sep 2022 14:30:01 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id r33-20020a05687108a100b0011e37fb5493sm1684953oaq.30.2022.09.02.14.30.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Sep 2022 14:02:28 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     mka@chromium.org, evgreen@chromium.org, bjorn.andersson@linaro.org,
-        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-        elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 6/6] net: ipa: verify a few more IDs
-Date:   Fri,  2 Sep 2022 16:02:18 -0500
-Message-Id: <20220902210218.745873-7-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220902210218.745873-1-elder@linaro.org>
-References: <20220902210218.745873-1-elder@linaro.org>
+        Fri, 02 Sep 2022 14:30:00 -0700 (PDT)
+Received: (nullmailer pid 447636 invoked by uid 1000);
+        Fri, 02 Sep 2022 21:29:59 -0000
+Date:   Fri, 2 Sep 2022 16:29:59 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     devicetree@vger.kernel.org, Loic Poulain <loic.poulain@linaro.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-i2c@vger.kernel.org,
+        Robert Foss <robert.foss@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Subject: Re: [PATCH] dt-bindings: i2c: qcom,i2c-cci: specify SM8450 CCI clocks
+Message-ID: <20220902212959.GA447603-robh@kernel.org>
+References: <20220901074218.21108-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220901074218.21108-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The completed transaction list is used in gsi_channel_trans_complete()
-to return the next transaction in completed state.
+On Thu, 01 Sep 2022 10:42:18 +0300, Krzysztof Kozlowski wrote:
+> Document clocks for SM8450 Camera Control Interface I2C controller.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+> 
+> Based on:
+> 1. https://lore.kernel.org/all/20220901073504.3077363-1-vladimir.zapolskiy@linaro.org/
+> ---
+>  Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-Add some temporary checks to verify the transaction indicated by the
-completed ID matches the one first in this list.
-
-Similarly, we use the pending and completed transaction lists when
-cancelling pending transactions in gsi_channel_trans_cancel_pending().
-
-Add temporary checks there to verify the transactions indicated by
-IDs match those tracked by these lists.
-
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- drivers/net/ipa/gsi_trans.c | 46 ++++++++++++++++++++++++++++++++++---
- 1 file changed, 43 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/net/ipa/gsi_trans.c b/drivers/net/ipa/gsi_trans.c
-index b4a6f2b563566..05ab4d052c68b 100644
---- a/drivers/net/ipa/gsi_trans.c
-+++ b/drivers/net/ipa/gsi_trans.c
-@@ -237,8 +237,24 @@ gsi_channel_trans_mapped(struct gsi_channel *channel, u32 index)
- /* Return the oldest completed transaction for a channel (or null) */
- struct gsi_trans *gsi_channel_trans_complete(struct gsi_channel *channel)
- {
--	return list_first_entry_or_null(&channel->trans_info.complete,
--					struct gsi_trans, links);
-+	struct gsi_trans_info *trans_info = &channel->trans_info;
-+	u16 trans_id = trans_info->completed_id;
-+	struct gsi_trans *trans;
-+
-+	trans = list_first_entry_or_null(&trans_info->complete,
-+					 struct gsi_trans, links);
-+
-+	if (!trans) {
-+		WARN_ON(trans_id != trans_info->pending_id);
-+		return NULL;
-+	}
-+
-+	if (!WARN_ON(trans_id == trans_info->pending_id)) {
-+		trans_id %= channel->tre_count;
-+		WARN_ON(trans != &trans_info->trans[trans_id]);
-+	}
-+
-+	return trans;
- }
- 
- /* Move a transaction from the allocated list to the committed list */
-@@ -690,6 +706,8 @@ void gsi_channel_trans_cancel_pending(struct gsi_channel *channel)
- {
- 	struct gsi_trans_info *trans_info = &channel->trans_info;
- 	struct gsi_trans *trans;
-+	struct gsi_trans *first;
-+	struct gsi_trans *last;
- 	bool cancelled;
- 
- 	/* channel->gsi->mutex is held by caller */
-@@ -701,11 +719,33 @@ void gsi_channel_trans_cancel_pending(struct gsi_channel *channel)
- 
- 	list_splice_tail_init(&trans_info->pending, &trans_info->complete);
- 
-+	first = list_first_entry_or_null(&trans_info->complete,
-+					 struct gsi_trans, links);
-+	last = list_last_entry_or_null(&trans_info->complete,
-+				       struct gsi_trans, links);
-+
- 	spin_unlock_bh(&trans_info->spinlock);
- 
-+	/* All pending transactions are now completed */
-+	WARN_ON(cancelled != (trans_info->pending_id !=
-+				trans_info->committed_id));
-+
-+	trans_info->pending_id = trans_info->committed_id;
-+
- 	/* Schedule NAPI polling to complete the cancelled transactions */
--	if (cancelled)
-+	if (cancelled) {
-+		u16 trans_id;
-+
- 		napi_schedule(&channel->napi);
-+
-+		trans_id = trans_info->completed_id;
-+		trans = &trans_info->trans[trans_id % channel->tre_count];
-+		WARN_ON(trans != first);
-+
-+		trans_id = trans_info->pending_id - 1;
-+		trans = &trans_info->trans[trans_id % channel->tre_count];
-+		WARN_ON(trans != last);
-+	}
- }
- 
- /* Issue a command to read a single byte from a channel */
--- 
-2.34.1
-
+Acked-by: Rob Herring <robh@kernel.org>
