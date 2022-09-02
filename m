@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 471075AB22E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 15:52:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 683D35AB20E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 15:49:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238259AbiIBNwi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Sep 2022 09:52:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46418 "EHLO
+        id S237977AbiIBNtr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Sep 2022 09:49:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237675AbiIBNwH (ORCPT
+        with ESMTP id S238052AbiIBNt3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Sep 2022 09:52:07 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74380162166
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Sep 2022 06:26:48 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id og21so3916087ejc.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Sep 2022 06:26:47 -0700 (PDT)
+        Fri, 2 Sep 2022 09:49:29 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86145133F1E
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Sep 2022 06:24:15 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id t5so2649939edc.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Sep 2022 06:24:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=1fcl6Kulh1x6/Y+M+GkZaGHNlzH6/YOoS5vivMb0MlE=;
-        b=jYtnCcq11fPJFVWuACWwCv8StrnrBoj1r/h5QOzjdQptXS5XE/AOZ1xecQj/7sc9dz
-         SQBHt8+2x9+XIKEm3Wxs+aE2fUEVI3PGsNepnHlV2Pa2Hcc+chx7J0cKEavR5748bD9R
-         gdwL3crCVGS8PlPRtrF3Cw1RRkzG1JDltQxp5kgFIf2UnprP9sH4XIqYtiRbbBxd5jj7
-         ExfBCasVJLh4ZJ3EORG1iVuibSuA/szOSF8nPEgnij4aDnLjJYwf/NgUZUA1xgxnnacX
-         H075E4UvQkUU+vqdYBL/s1hoT0INggDWhXvPCDJJ5yRzFkqg9z2I7FKB2FsyVPh+UtQw
-         Exgg==
+        bh=f3juMO/QwGZ+BjBeOfHfdqcLNOZRF7cyhCYwluCkxeQ=;
+        b=FsvfCD4fFri9ZLt4icWNoxumI89IaBr46swWniyCuaSJIEgzeprtbrHKzzgjqYIfNp
+         KRGG4CvVTRTSNNsyAVq50oSjSh6Cl57nmqnEyucaCudM+mpqOLwWccWUSX6fuOetOoNk
+         y3iccoLOQLwA8swtNmI+xqQKdMN8GUCoBAH37dzl0Hcrx/age5SuN/Yk8JAs6f+C24Gc
+         nzzr7PupYNEukcZLFi4LHdvNiqJO3DBrreLnasJ2PvE4ij9pAP2x1ClvMopst7yMCKEG
+         ylLL7HQuzcu8ESuSP0uKw3KzL1NqeAiTqdieUM44xfsRh+63UfXvfS2wRJZCvy3G4pbe
+         o3EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=1fcl6Kulh1x6/Y+M+GkZaGHNlzH6/YOoS5vivMb0MlE=;
-        b=qgx/h7HaBmBRCh24kPT/23wEeo6HVjkoDVdXgJnu6sBPlmbbC6TLaRjUCQNvHj5Sww
-         YVqOytSwuxsO1XQyX2kf5c9qoWcmhooxT1YoiPSEmK9GP/E6DNwtPDHpOlHbDyPu7E5g
-         B68GPqUNdiTCHBl9t4xZxcj/ucpxz0wPzVOBkkG7HLAeO5vt3U+Emt0xfcdxq4QI+ri4
-         f2xzQeUbMMzuMxJjjnYgRynRCvXBMi5nIJlLvq4gx0esB/RbF46w5j5LsY6wK8rd/KE6
-         CuH1GgKEZDQV+WZltoSyyG4GLCA/pR3r1J+J5mk6Os24bIkGHgz3d6ItRZEaIQGmxJjq
-         LfIg==
-X-Gm-Message-State: ACgBeo0DIS6AJ7eiMOre9VlRjTEeVynrDHJ3nuG8Faw9lbqbRJBFJMhv
-        24DUN1kjKUhzwyAQqCG0N4arLYymPjtMIiav
-X-Google-Smtp-Source: AA6agR74ahPptcNrG18gQjunnP/JImLsIRID6lpLSAw9N2eDslUUyr/HPEnbg4sccZhv39qXwi8+BQ==
-X-Received: by 2002:a5d:6609:0:b0:226:ced9:be58 with SMTP id n9-20020a5d6609000000b00226ced9be58mr16701330wru.80.1662124470743;
-        Fri, 02 Sep 2022 06:14:30 -0700 (PDT)
+        bh=f3juMO/QwGZ+BjBeOfHfdqcLNOZRF7cyhCYwluCkxeQ=;
+        b=sIYESdKNY381CRYp06f+3zzvY6qbHAljb+5xgsCZvPBygVhtu/h0kBOdp4S9wDy7h9
+         MShnjhQH998AfZ8JXBZzJMkHrTkRJEe15Rim4sc+NiFt1qxanGs8XtextnmOONanK/1V
+         cpng/4/2BYnLUF3g1J9vsAw/vW32T9rVcfzbhdYQQbUdbAq1eJ1pfvwp9Y5cBuV81XZA
+         JVPqeZAjer0A3G0QeENaQ+L2D9luXeZWhhsg0YdXRpm6mpKpo0xYUgyIOUJH+u61s/H8
+         l/PaBkqWM7tB1v8NcX9bodDEOpW0prrzuaqwX4Ky6hhLELsiskB+oAdAQhl1GW7+1MSu
+         ZLjw==
+X-Gm-Message-State: ACgBeo2rh/QoHUD+K/t6eAOpllfv/jusEuUyn/NSSdPXg8hU+x4Vl123
+        NL38uypETjh5rSSLRU+g5tyGfSjuLaAp/bd0
+X-Google-Smtp-Source: AA6agR6OqKinT5/4EHt46gGsDbPUCuf9XqOtGSv0Ynobk2lD+nB1338peyuhMf7gWAERZgPSG/KbGQ==
+X-Received: by 2002:a5d:46d0:0:b0:226:d133:3a4a with SMTP id g16-20020a5d46d0000000b00226d1333a4amr16789519wrs.400.1662124472225;
+        Fri, 02 Sep 2022 06:14:32 -0700 (PDT)
 Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id v14-20020a5d43ce000000b002253fd19a6asm1766253wrr.18.2022.09.02.06.14.29
+        by smtp.gmail.com with ESMTPSA id v14-20020a5d43ce000000b002253fd19a6asm1766253wrr.18.2022.09.02.06.14.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Sep 2022 06:14:30 -0700 (PDT)
+        Fri, 02 Sep 2022 06:14:31 -0700 (PDT)
 From:   Abel Vesa <abel.vesa@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorande@qti.qualcomm.com>,
@@ -62,9 +62,9 @@ Cc:     Arnd Bergmann <arnd@arndb.de>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: [PATCH 07/14] misc: fastrpc: Add fastrpc_remote_heap_alloc
-Date:   Fri,  2 Sep 2022 16:13:37 +0300
-Message-Id: <20220902131344.3029826-8-abel.vesa@linaro.org>
+Subject: [PATCH 08/14] misc: fastrpc: Use fastrpc_map_put in fastrpc_map_create on fail
+Date:   Fri,  2 Sep 2022 16:13:38 +0300
+Message-Id: <20220902131344.3029826-9-abel.vesa@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220902131344.3029826-1-abel.vesa@linaro.org>
 References: <20220902131344.3029826-1-abel.vesa@linaro.org>
@@ -80,69 +80,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Split fastrpc_buf_alloc in such a way it allows allocation of remote
-heap too and add fastrpc_remote_heap_alloc to do so.
+Move the kref_init right after the allocation so that we can use
+fastrpc_map_put on any following error case.
 
-Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- drivers/misc/fastrpc.c | 29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ drivers/misc/fastrpc.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 52271f51800d..6730aa324e10 100644
+index 6730aa324e10..5eececd9b6bd 100644
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -379,7 +379,7 @@ static void fastrpc_buf_free(struct fastrpc_buf *buf)
- 	kfree(buf);
- }
- 
--static int fastrpc_buf_alloc(struct fastrpc_user *fl, struct device *dev,
-+static int __fastrpc_buf_alloc(struct fastrpc_user *fl, struct device *dev,
- 			     u64 size, struct fastrpc_buf **obuf)
- {
- 	struct fastrpc_buf *buf;
-@@ -407,14 +407,37 @@ static int fastrpc_buf_alloc(struct fastrpc_user *fl, struct device *dev,
+@@ -745,6 +745,8 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
  		return -ENOMEM;
- 	}
  
-+	*obuf = buf;
+ 	INIT_LIST_HEAD(&map->node);
++	kref_init(&map->refcount);
 +
-+	return 0;
-+}
-+
-+static int fastrpc_buf_alloc(struct fastrpc_user *fl, struct device *dev,
-+			     u64 size, struct fastrpc_buf **obuf)
-+{
-+	int ret;
-+	struct fastrpc_buf *buf;
-+
-+	ret = __fastrpc_buf_alloc(fl, dev, size, obuf);
-+	if (ret)
-+		return ret;
-+
-+	buf = *obuf;
-+
- 	if (fl->sctx && fl->sctx->sid)
- 		buf->phys += ((u64)fl->sctx->sid << 32);
+ 	map->fl = fl;
+ 	map->fd = fd;
+ 	map->buf = dma_buf_get(fd);
+@@ -771,7 +773,6 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
+ 	map->size = len;
+ 	map->va = sg_virt(map->table->sgl);
+ 	map->len = len;
+-	kref_init(&map->refcount);
  
--	*obuf = buf;
--
- 	return 0;
+ 	if (attr & FASTRPC_ATTR_SECUREMAP) {
+ 		/*
+@@ -801,7 +802,7 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
+ attach_err:
+ 	dma_buf_put(map->buf);
+ get_err:
+-	kfree(map);
++	fastrpc_map_put(map);
+ 
+ 	return err;
  }
- 
-+static int fastrpc_remote_heap_alloc(struct fastrpc_user *fl, struct device *dev,
-+				     u64 size, struct fastrpc_buf **obuf)
-+{
-+	struct device *rdev = &fl->cctx->rpdev->dev;
-+
-+	return  __fastrpc_buf_alloc(fl, rdev, size, obuf);
-+}
-+
- static void fastrpc_channel_ctx_free(struct kref *ref)
- {
- 	struct fastrpc_channel_ctx *cctx;
 -- 
 2.34.1
 
