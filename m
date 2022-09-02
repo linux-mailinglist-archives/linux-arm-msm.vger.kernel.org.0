@@ -2,64 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 43C985AB774
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 19:26:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A0345AB7F5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 20:08:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236389AbiIBR0T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Sep 2022 13:26:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45370 "EHLO
+        id S229437AbiIBSIO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Sep 2022 14:08:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235127AbiIBR0S (ORCPT
+        with ESMTP id S229468AbiIBSHv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Sep 2022 13:26:18 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88E3159278;
-        Fri,  2 Sep 2022 10:26:17 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id EC5C8B82CC9;
-        Fri,  2 Sep 2022 17:26:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B8AC433D6;
-        Fri,  2 Sep 2022 17:26:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1662139574;
-        bh=Se+I02gEhyXCqeTHHuUDXwx8mkIp6MEIWCCZx8JwIR0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ii05UBBr4n1t7/4wvbt0XlM54gruE9+FA008cbxOHxCdiqZh4pDz89OpV6FDNozeq
-         t/+CNXMgzQIvKrOMk3deXU41T3V5OI9QAxCviRpeFooUiSdSEwNP1yo1FpqidZWAjE
-         3mTQ7OHyvQ6nUz5PFmbubjj6BSyR20YgpOEUKdZ1o0NNVtBgUs0TSSQyuzXB9tZpNB
-         xJysIY/f2EQAX1JScQim6Pat9/4xRnjB1YISdT+impy7zpJFPBQj7RPw3d/BvQX5DZ
-         mAFa+W7bij18qSiJHpv/urUbeolkx2JAp2+yrgJeFCJiKcHOg7Fuy93rfTui6Api23
-         qSRGNnt02+iIQ==
-Date:   Fri, 2 Sep 2022 22:56:10 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Yu Chen <chenyu56@huawei.com>,
-        Binghui Wang <wangbinghui@hisilicon.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Carvalho Chehab <mchehab+huawei@kernel.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH 2/4] dt-bindings: phy: hisilicon,hi3670-usb3: simplify
- example
-Message-ID: <YxI8svqIvOu837g3@matsya>
-References: <20220817142246.828762-1-krzysztof.kozlowski@linaro.org>
- <20220817142246.828762-3-krzysztof.kozlowski@linaro.org>
+        Fri, 2 Sep 2022 14:07:51 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C042DF8F7F
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Sep 2022 11:07:50 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 282EtRA0019824;
+        Fri, 2 Sep 2022 18:07:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=sNgKGIkKnrFxcpeL2U9z4eTzGEWRWnj4alXcFZYVksw=;
+ b=A+sluVXNHRQ9fKRnJLhG46dwVcHz5dSj/epZoJB998mWf2U4oArpMAcupZJ29HxQiK44
+ 7kjNQFErmadowDK89HGgA44bH4Yr6FBSLPg+nr+COV6nOU48MxuLERh5BQZzR3Ro4XrL
+ opOOAVj1tngJ1Ict3fzW6MLxHo/rNAUlajh/2nlH2qQc1XpkZpbKKLGa6IQbR5OEXJmB
+ CcKeREz13C4RxtEArXrNJJv9rLsFLkXp8tLv04ivzzHQ4y3oaVrtV0eAx/0iSSFOFD9R
+ O0i/X6uQ1zZYyDE2rRBGa5k7N7PCg2M01CdkZ99pzkiz4MFAlCZMoJTRSw1Qi05AQf1m AQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jbhw0s2uf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 02 Sep 2022 18:07:44 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 282HmW9c008119
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 2 Sep 2022 17:48:32 GMT
+Received: from [10.111.173.210] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Fri, 2 Sep 2022
+ 10:48:30 -0700
+Message-ID: <005fd4aa-7f7c-af98-6787-48f04fa2f166@quicinc.com>
+Date:   Fri, 2 Sep 2022 10:48:28 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220817142246.828762-3-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v1 3/4] drm/msm/mdp4: move resource allocation to the
+ _probe function
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20220620213054.1872954-1-dmitry.baryshkov@linaro.org>
+ <20220620213054.1872954-4-dmitry.baryshkov@linaro.org>
+ <014fc43f-bee6-88eb-9d3c-69aed2fcd7c6@quicinc.com>
+ <7D8A3C28-85A1-4737-B6ED-EACBF488FF70@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <7D8A3C28-85A1-4737-B6ED-EACBF488FF70@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: F7ranNSIvBh2_bVqxeeyvrYYUrtDGzMk
+X-Proofpoint-GUID: F7ranNSIvBh2_bVqxeeyvrYYUrtDGzMk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-09-02_04,2022-08-31_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ adultscore=0 impostorscore=0 mlxlogscore=999 malwarescore=0 phishscore=0
+ bulkscore=0 spamscore=0 priorityscore=1501 clxscore=1015 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2207270000
+ definitions=main-2209020083
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -68,11 +88,193 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17-08-22, 17:22, Krzysztof Kozlowski wrote:
-> syscon and simple-mfd cannot be used without device specific compatible,
-> so simplify the example to fix this.
 
-Acked-By: Vinod Koul <vkoul@kernel.org>
 
--- 
-~Vinod
+On 9/1/2022 11:06 PM, Dmitry Baryshkov wrote:
+> 
+> 
+> On 2 September 2022 03:24:17 GMT+03:00, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>>
+>> On 6/20/2022 2:30 PM, Dmitry Baryshkov wrote:
+>>> To let the probe function bail early if any of the resources is
+>>> unavailable, move resource allocattion from kms_init directly to the
+>>> probe callback. While we are at it, replace irq_of_parse_and_map() with
+>>> platform_get_irq().
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 107 +++++++++++------------
+>>>    1 file changed, 51 insertions(+), 56 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+>>> index 41dc60784847..6499713eccf6 100644
+>>> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+>>> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+>>> @@ -139,8 +139,6 @@ static void mdp4_destroy(struct msm_kms *kms)
+>>>    		pm_runtime_disable(dev);
+>>>      	mdp_kms_destroy(&mdp4_kms->base);
+>>> -
+>>> -	kfree(mdp4_kms);
+>>>    }
+>>>      static const struct mdp_kms_funcs kms_funcs = {
+>>> @@ -383,57 +381,27 @@ static int mdp4_kms_init(struct drm_device *dev)
+>>>    {
+>>>    	struct platform_device *pdev = to_platform_device(dev->dev);
+>>>    	struct msm_drm_private *priv = dev->dev_private;
+>>> -	struct mdp4_kms *mdp4_kms;
+>>> +	struct mdp4_kms *mdp4_kms = to_mdp4_kms(to_mdp_kms(priv->kms));
+>>>    	struct msm_kms *kms = NULL;
+>>>    	struct iommu_domain *iommu;
+>>>    	struct msm_gem_address_space *aspace;
+>>> -	int irq, ret;
+>>> +	int ret;
+>>>    	u32 major, minor;
+>>>    	unsigned long max_clk;
+>>>      	/* TODO: Chips that aren't apq8064 have a 200 Mhz max_clk */
+>>>    	max_clk = 266667000;
+>>>    -	mdp4_kms = kzalloc(sizeof(*mdp4_kms), GFP_KERNEL);
+>>> -	if (!mdp4_kms) {
+>>> -		DRM_DEV_ERROR(dev->dev, "failed to allocate kms\n");
+>>> -		return -ENOMEM;
+>>> -	}
+>>> -
+>>>    	ret = mdp_kms_init(&mdp4_kms->base, &kms_funcs);
+>>>    	if (ret) {
+>>>    		DRM_DEV_ERROR(dev->dev, "failed to init kms\n");
+>>>    		goto fail;
+>>>    	}
+>>>    -	priv->kms = &mdp4_kms->base.base;
+>>>    	kms = priv->kms;
+>>>      	mdp4_kms->dev = dev;
+>>>    -	mdp4_kms->mmio = msm_ioremap(pdev, NULL);
+>>> -	if (IS_ERR(mdp4_kms->mmio)) {
+>>> -		ret = PTR_ERR(mdp4_kms->mmio);
+>>> -		goto fail;
+>>> -	}
+>>> -
+>>> -	irq = platform_get_irq(pdev, 0);
+>>> -	if (irq < 0) {
+>>> -		ret = irq;
+>>> -		DRM_DEV_ERROR(dev->dev, "failed to get irq: %d\n", ret);
+>>> -		goto fail;
+>>> -	}
+>>> -
+>>> -	kms->irq = irq;
+>>> -
+>>> -	/* NOTE: driver for this regulator still missing upstream.. use
+>>> -	 * _get_exclusive() and ignore the error if it does not exist
+>>> -	 * (and hope that the bootloader left it on for us)
+>>> -	 */
+>>> -	mdp4_kms->vdd = devm_regulator_get_exclusive(&pdev->dev, "vdd");
+>>> -	if (IS_ERR(mdp4_kms->vdd))
+>>> -		mdp4_kms->vdd = NULL;
+>>> -
+>>>    	if (mdp4_kms->vdd) {
+>>>    		ret = regulator_enable(mdp4_kms->vdd);
+>>>    		if (ret) {
+>>> @@ -442,24 +410,6 @@ static int mdp4_kms_init(struct drm_device *dev)
+>>>    		}
+>>>    	}
+>>>    -	mdp4_kms->clk = devm_clk_get(&pdev->dev, "core_clk");
+>>> -	if (IS_ERR(mdp4_kms->clk)) {
+>>> -		DRM_DEV_ERROR(dev->dev, "failed to get core_clk\n");
+>>> -		ret = PTR_ERR(mdp4_kms->clk);
+>>> -		goto fail;
+>>> -	}
+>>> -
+>>> -	mdp4_kms->pclk = devm_clk_get(&pdev->dev, "iface_clk");
+>>> -	if (IS_ERR(mdp4_kms->pclk))
+>>> -		mdp4_kms->pclk = NULL;
+>>> -
+>>> -	mdp4_kms->axi_clk = devm_clk_get(&pdev->dev, "bus_clk");
+>>> -	if (IS_ERR(mdp4_kms->axi_clk)) {
+>>> -		DRM_DEV_ERROR(dev->dev, "failed to get axi_clk\n");
+>>> -		ret = PTR_ERR(mdp4_kms->axi_clk);
+>>> -		goto fail;
+>>> -	}
+>>> -
+>>>    	clk_set_rate(mdp4_kms->clk, max_clk);
+>>>      	read_mdp_hw_revision(mdp4_kms, &major, &minor);
+>>> @@ -474,10 +424,9 @@ static int mdp4_kms_init(struct drm_device *dev)
+>>>    	mdp4_kms->rev = minor;
+>>>      	if (mdp4_kms->rev >= 2) {
+>>> -		mdp4_kms->lut_clk = devm_clk_get(&pdev->dev, "lut_clk");
+>>> -		if (IS_ERR(mdp4_kms->lut_clk)) {
+>>> +		if (!mdp4_kms->lut_clk) {
+>>>    			DRM_DEV_ERROR(dev->dev, "failed to get lut_clk\n");
+>>> -			ret = PTR_ERR(mdp4_kms->lut_clk);
+>>> +			ret = -ENODEV;
+>>>    			goto fail;
+>>>    		}
+>>>    		clk_set_rate(mdp4_kms->lut_clk, max_clk);
+>>> @@ -560,7 +509,53 @@ static const struct dev_pm_ops mdp4_pm_ops = {
+>>>      static int mdp4_probe(struct platform_device *pdev)
+>>>    {
+>>> -	return msm_drv_probe(&pdev->dev, mdp4_kms_init, NULL);
+>>> +	struct device *dev = &pdev->dev;
+>>> +	struct mdp4_kms *mdp4_kms;
+>>> +	int irq;
+>>> +
+>>> +	mdp4_kms = devm_kzalloc(dev, sizeof(*mdp4_kms), GFP_KERNEL);
+>>> +	if (!mdp4_kms)
+>>> +		return dev_err_probe(dev, -ENOMEM, "failed to allocate kms\n");
+>>> +
+>>> +	mdp4_kms->mmio = msm_ioremap(pdev, NULL);
+>>> +	if (IS_ERR(mdp4_kms->mmio))
+>>> +		return PTR_ERR(mdp4_kms->mmio);
+>>> +
+>>> +	irq = platform_get_irq(pdev, 0);
+>>> +	if (irq < 0)
+>>> +		return dev_err_probe(dev, irq, "failed to get irq\n");
+>>> +
+>>> +	mdp4_kms->base.base.irq = irq;
+>>> +
+>>> +	/* NOTE: driver for this regulator still missing upstream.. use
+>>> +	 * _get_exclusive() and ignore the error if it does not exist
+>>> +	 * (and hope that the bootloader left it on for us)
+>>> +	 */
+>>> +	mdp4_kms->vdd = devm_regulator_get_exclusive(&pdev->dev, "vdd");
+>>> +	if (IS_ERR(mdp4_kms->vdd))
+>>> +		mdp4_kms->vdd = NULL;
+>>> +
+>>> +	mdp4_kms->clk = devm_clk_get(&pdev->dev, "core_clk");
+>>> +	if (IS_ERR(mdp4_kms->clk))
+>>> +		return dev_err_probe(dev, PTR_ERR(mdp4_kms->clk), "failed to get core_clk\n");
+>>> +
+>>> +	mdp4_kms->pclk = devm_clk_get(&pdev->dev, "iface_clk");
+>>> +	if (IS_ERR(mdp4_kms->pclk))
+>>> +		mdp4_kms->pclk = NULL;
+>>> +
+>>> +	mdp4_kms->axi_clk = devm_clk_get(&pdev->dev, "bus_clk");
+>>> +	if (IS_ERR(mdp4_kms->axi_clk))
+>>> +		return dev_err_probe(dev, PTR_ERR(mdp4_kms->axi_clk), "failed to get axi_clk\n");
+>>> +
+>>> +	/*
+>>> +	 * This is required for revn >= 2. Handle errors here and let the kms
+>>> +	 * init bail out if the clock is not provided.
+>>> +	 */
+>>> +	mdp4_kms->lut_clk = devm_clk_get_optional(&pdev->dev, "lut_clk");
+>>> +	if (IS_ERR(mdp4_kms->lut_clk))
+>>> +		return dev_err_probe(dev, PTR_ERR(mdp4_kms->lut_clk), "failed to get lut_clk\n");
+>>
+>> I can see that you have moved this from init to probe and only rev >=2 needs it.
+>>
+>> But, your check here will end up returning from probe because you have a return. So I guess you means just having dev_err_probe without the return and let the init fail if the clk is not found because we have the hw_rev only in init.
+> 
+> No. The function called here is the devm_clk_get_optional(). So the driver will get NULL if the clock is not present in the DT and an error only in an error case (e.g. EINVAL, EPROBE_DEFER).
+> 
+> Later on the mdp4_kms_init() will check hw_rev and return -ENODEV if the clock is required, but is set to NULL (not present in DT).
+> 
+
+Ok, I have understood. But dont you think this is too much convolution 
+just for this check? Why not leave the lut_clk in the init instead of 
+trying to move it to probe and add all this?
+
+> 
+>>
+>>> +
+>>> +	return msm_drv_probe(&pdev->dev, mdp4_kms_init, &mdp4_kms->base.base);
+>>>    }
+>>>      static int mdp4_remove(struct platform_device *pdev)
+> 
