@@ -2,232 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 80ADC5AA8B5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 09:27:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B6D3E5AA8F9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 09:42:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235223AbiIBH1L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Sep 2022 03:27:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54852 "EHLO
+        id S235360AbiIBHmw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Sep 2022 03:42:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234101AbiIBH1L (ORCPT
+        with ESMTP id S234042AbiIBHmv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Sep 2022 03:27:11 -0400
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99E64B5148
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Sep 2022 00:27:08 -0700 (PDT)
-Received: by mail-pg1-x52d.google.com with SMTP id v4so1222113pgi.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Sep 2022 00:27:08 -0700 (PDT)
+        Fri, 2 Sep 2022 03:42:51 -0400
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C700A74E6
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Sep 2022 00:42:50 -0700 (PDT)
+Received: by mail-pg1-x52a.google.com with SMTP id q9so1267268pgq.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Sep 2022 00:42:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=sJtVpmkFY08WY7LXA/ozxMi1qLKASR3s0joHG/nWqyY=;
-        b=Cn1aZEFgcAfeXe0eVBIHqzLKHgWUsMHq6nx0vzHR8F3TaJkEihPwPwQ3sAQtZdXmLQ
-         MgCy3YCMuJfKVPIzqRXYz106uC64CWASHYrS5IkU+ittZEKT+Hj9nNbzSKBNPAyD67eN
-         agCvitqFxfihPiF/410NGS3gUMokz4LLF0bnA7U/qclW5PucF7GqfwvUINhaubUh5i0q
-         HuFeRuIX7sdJJdraU3UNWqNFUeeGOXETTLxXyUqaNGO0SP8mm0cHlO1yBzB/bzpKKjpL
-         hWd5AORg1by06MqOz1YM7yKILorOT/bnWjZSFudeyuLrvnj17X125r4MMraBpi46rVJK
-         TWdw==
+        d=quanta-corp-partner-google-com.20210112.gappssmtp.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=Lfyy8dLQgoFKZtBDJ6fyaqkz/t8A+UW1YcDjEL4rq5Q=;
+        b=iFCVe+5bwiCRkvsOMncfGz0ouL3Sg+txM/UTmSOJsDhP6m+4sE6FiCwQev6a1GMm8E
+         1I+WGAsAdo34wOlK2mcakCqXFJ0tiX/lnzzLKUsEkqaH9kxf0JpZVR7acL+nzbFSlFe9
+         B2Zzj699h1TlhVKgVb3SMLlavAnJmfL37EyJQDqrks5hi2Nh43Ye7qGlvX0gCgAs5EUY
+         ii9LNmt0/EGYeiHauhhQXRwHeAt5U06pKd4dtDhq8DsKHhV2FWG8qe+RrZuIAG37Vjme
+         3iAhsUu+V+M7k9saZXAA21Uaqb0bVEONgv1dzT9Hrg1MYU/as01I7hQngih3M0KLc0cZ
+         2wmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=sJtVpmkFY08WY7LXA/ozxMi1qLKASR3s0joHG/nWqyY=;
-        b=ufYsVHFrBWvi5uiVp4wvfUtbpxDUR/vY+AnMEPby3i355O8RVqkHzoc6hZRZ3S67GJ
-         M/J8a/RYD4Gd7jRKS8p/mNgAZOuqahI4CEG/t2n8Wvoc95pms14Ev2y4aGcX0S8Xo97f
-         I3BoV4C8bMvHrwhwqRz7iTigB/9pFpGmonOkqr07QHBYTHtDn5vfnYajMp8pHYZVIqs0
-         QU+ICEq5QxQW68Xovnibv/K3QhJA5sAiikrES60ixzB9wtt4gn4LlQuf1ZPOARAIdFKp
-         0o8IrrfA58JjhC+hytTyDwzEh5XxvPwCrXfW2IPJjTjEHiqPQIF74NCA/c3D0lYrbdVX
-         VcMQ==
-X-Gm-Message-State: ACgBeo3YKikZkoCZW/xQUI8Nw0CzQYm4ShtOC2mMZ8yakfZAt1KbxoS7
-        W+qT/kzyomxMIAdAIHunpg1XBk+/3df2VqQy
-X-Google-Smtp-Source: AA6agR4i+k/17lXj0/dmHbg3/O1oZcl/uiGB7o+NaxYFkKXKUdrUZBvJZIxwZffacljaHKcq0zzulw==
-X-Received: by 2002:a05:6a00:9a5:b0:538:73c:bf8f with SMTP id u37-20020a056a0009a500b00538073cbf8fmr27684156pfg.9.1662103628087;
-        Fri, 02 Sep 2022 00:27:08 -0700 (PDT)
-Received: from [192.168.1.21] ([223.178.213.132])
-        by smtp.gmail.com with ESMTPSA id q29-20020aa7961d000000b0053617cbe2d2sm899604pfg.168.2022.09.02.00.27.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Sep 2022 00:27:07 -0700 (PDT)
-Message-ID: <db00f6a9-263d-9c47-486e-7080ffc5b3c9@linaro.org>
-Date:   Fri, 2 Sep 2022 12:56:58 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 0/4] firmware: Add support for Qualcomm UEFI Secure
- Application
-Content-Language: en-US
-To:     Maximilian Luz <luzmaximilian@gmail.com>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=Lfyy8dLQgoFKZtBDJ6fyaqkz/t8A+UW1YcDjEL4rq5Q=;
+        b=aqUKxSG+ytmwBvY2sueYwU0mwPZFSSHahZmQ5f/rsY27y2Zo7R4v+zEbAlKQmd4zLk
+         2YCfvDZxleLKBWaMNhvlWU2z0TL61ToBEMKTOLesHVem9OUYmiN3ag1XFgHoB1bMgOg1
+         8hxXyrKJ+PaXQD4715rMneIgNwVRQ52BCMMshr6RPP4gx+C01JNu6ZZAVXPoJbZNaAx+
+         Hc0gNAywWCvM8kxVdNnLRx+/GxI7S9ZV2wFtwd/dyrpluwtEyDPmSjSuhyl2XTWoDRe9
+         sOeW7eOsQBodUN+xIr/LN2TmI6EE25zjIYxGCaRsjHiGX0VbBV3uEFBDLetkvdrI8zzC
+         /LFA==
+X-Gm-Message-State: ACgBeo2h/vWG1OvQls9bdZgvTHkzOszp3UJPLR5TIMml5Te/489Aq+7Y
+        +NHItG/rSQ0BMC4tCumIISBTIA==
+X-Google-Smtp-Source: AA6agR4mlLPaXxDGgRj5JSsMKDcIm0FTPCzwJ+oR1NS/dtcTcO5nu8/rehrHCyhQAEampHMjUbeGVg==
+X-Received: by 2002:aa7:8a0b:0:b0:537:f5f1:fd91 with SMTP id m11-20020aa78a0b000000b00537f5f1fd91mr29589113pfa.41.1662104569939;
+        Fri, 02 Sep 2022 00:42:49 -0700 (PDT)
+Received: from liang-Predator-PH517-52.. (60-250-232-247.hinet-ip.hinet.net. [60.250.232.247])
+        by smtp.gmail.com with ESMTPSA id f21-20020aa79695000000b005363abb6d0bsm975099pfk.15.2022.09.02.00.42.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Sep 2022 00:42:49 -0700 (PDT)
+From:   Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
+To:     LKML <linux-kernel@vger.kernel.org>
+Cc:     dianders@chromium.org, mka@chromium.org,
+        Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>
-References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
- <dfd07f84-c4bd-a18c-2263-49f999f2934c@linaro.org>
- <f42539d0-c2a3-a2b2-c35b-b7a5904b376f@gmail.com>
-From:   Sumit Garg <sumit.garg@linaro.org>
-In-Reply-To: <f42539d0-c2a3-a2b2-c35b-b7a5904b376f@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH 0/2] Add a new board device tree named 'evoker' for herobrine variant.
+Date:   Fri,  2 Sep 2022 15:42:38 +0800
+Message-Id: <20220902074240.117075-1-sheng-liang.pan@quanta.corp-partner.google.com>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Maximilian,
+This patch add the initial dts file for new board 'evoker'.
 
-On 02/08/22 18:52, Maximilian Luz wrote:
->
->
-> On 8/2/22 13:51, Srinivas Kandagatla wrote:
->> Hi Maximilian,
->>
->> On 23/07/2022 23:49, Maximilian Luz wrote:
->>> On modern Qualcomm platforms, access to EFI variables is restricted to
->>> the secure world / TrustZone, i.e. the Trusted Execution Environment
->>> (TrEE or TEE) as Qualcomm seems to call it. To access EFI variables, we
->>> therefore need to talk to the UEFI Secure Application (uefisecapp),
->>> residing in the TrEE.
->>>
->>> This series adds support for accessing EFI variables on those 
->>> platforms.
->>>
->>> To do this, we first need to add some SCM call functions used to manage
->>> and talk to Secure Applications. A very small subset of this interface
->>> is added in the second patch (whereas the first one exports the 
->>> required
->>> functions for that). Interface specifications are extracted from [1].
->>> While this does not (yet) support re-entrant SCM calls (including
->>> callbacks and listeners), this is enough to talk to the aforementioned
->>> uefisecapp on a couple of platforms (I've tested this on a Surface 
->>> Pro X
->>> and heard reports from Lenovo Flex 5G, Lenovo Thinkpad x13s, and Lenovo
->>> Yoga C630 devices).
->>>
->>> The third patch adds a client driver for uefisecapp, installing the
->>> respective efivar operations. The application interface has been 
->>> reverse
->>> engineered from the Windows QcTrEE8180.sys driver.
->>>
->>> Apart from uefisecapp, there are more Secure Applications running that
->>> we might want to support in the future. For example, on the Surface Pro
->>> X (sc8180x-based), the TPM is also managed via one.
->>>
->>> I'm not sure whether this should go to drivers/firmware or to
->>> drivers/soc/qcom. I've put this into firmware as all of this is
->>> essentially an interface to the secure firmware running in the 
->>> TrustZone
->>> (and SCM stuff is handled here already), but please let me know if I
->>> should move this.
->>
->>  From what I see so far is that this is adapted from downstream 
->> qseecom driver, this approach could work for a limited usecases but 
->> not scalable, as we cannot add drivers for each Qualcomm specific TA 
->> in kernel.
->> This has to be handled in much generic way using Linux TEE framework, 
->> and let the userspace side deal with TA specific bits.
->
-> I generally agree with the sentiment, however UEFI variables should 
-> IMHO be
-> handled by the kernel. Moving handling of those to userspace breaks 
-> things like
-> EFI-based pstore and efivarfs. The latter will in turn break some 
-> user-space
-> tools (most notably efibootmgr used by e.g. GRUB and I think fwupdmgr 
-> which
-> needs to set some capsule variables). Ideally, we would find a way to 
-> not break
-> these, i.e. have them work out-of-the-box.
->
-> A similar argumentation might apply to the TPM app.
+Sorry about getting mixed up with version numbers. Here are links to
+previous postings and what I'll assume the version number is:
 
-See below, there is already an existing TPM app driver [2] in kernel 
-although the app is based on OP-TEE.
+v1: https://lore.kernel.org/r/20220830053307.3997495-1-sheng-liang.pan@quanta.corp-partner.google.com/
+v2: https://lore.kernel.org/r/20220901061336.61386-1-sheng-liang.pan@quanta.corp-partner.google.com/
+v3: https://lore.kernel.org/r/20220901091253.93333-1-sheng-liang.pan@quanta.corp-partner.google.com/
 
->
->> AFAIU, Qualcomm is moving away from qseecom interface to new 
->> smc-invoke interface, most of Qualcomm SoCs starting from SDM660 
->> already have support to this.
->>
->> This interface provides a better abstracted IPC mechanism to talk to 
->> TA. Most of these TA specific interfaces are packed in closed 
->> userspace source.
->> Having said that QTEE smcinvoke driver can be modeled as a proper TEE 
->> driver with Userspace driving the TA specific bits using existing tee 
->> uapis.
->> This also brings in other features like loading, Listeners aka 
->> callbacks, secure memory allocations..etc.
->>
->> In the past, I have tried to do a prototype of this smcinvoke driver 
->> as a proper tee driver, incase you are interested patches are at 
->> https://git.linaro.org/landing-teams/working/qualcomm/kernel.git/log/?h=tracking-qcomlt-qcomtee
->> Plan is to discuss with Qualcomm and send it for upstream review.
->
-> Thanks for this information! So as far as I understand it, this is 
-> currently an
-> interface to user-space only, i.e. does not allow in-kernel drivers 
-> for apps?
+Changes in v4:
+- Got the version number correct
+- Got the version number correct
 
-The Linux TEE framework already provides an in-kernel interface to TEE 
-as well via TEE bus [1]. There are already multiple kernel drivers [2] 
-[3] [4] [5] [6] [7] using it. So an EFI driver can be an addition to that.
+Changes in v2:
+- Bindings patch added
 
-Now coming on to TEE implementations, the drivers I mentioned are based 
-on OP-TEE where devices are queried/enumerated during OP-TEE probe here 
-[8]. So in similar manner QTEE smcinvoke driver should be able to 
-register devices on the TEE bus.
+Sheng-Liang Pan (2):
+  dt-bindings: arm: qcom: document sc7280 and evoker board
+  arm64: dts: qcom: sc7280: Add device tree for herobrine evoker
 
-[1] 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/staging/tee.rst#n56
+ .../devicetree/bindings/arm/qcom.yaml         |   5 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../dts/qcom/sc7280-herobrine-evoker-r0.dts   | 333 ++++++++++++++++++
+ 3 files changed, 339 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts
 
-[2] drivers/char/tpm/tpm_ftpm_tee.c
+-- 
+2.34.1
 
-[3] drivers/char/hw_random/optee-rng.c
-
-[4] drivers/firmware/arm_scmi/optee.c
-
-[5] security/keys/trusted-keys/trusted_tee.c
-
-[6] drivers/firmware/broadcom/tee_bnxt_fw.c
-
-[7] drivers/rtc/rtc-optee.c
-
-[8] drivers/tee/optee/device.c
-
--Sumit
-
-PS. TBH, I haven't looked into detail workings for the QTEE smcinvoke 
-driver.
-
-> It would be great if this could then be extended to handle (the bare 
-> minimum
-> of) in-kernel drivers (i.e. only things that the kernel itself needs, 
-> like EFI
-> variables). Alternatively, I'm happy to hear suggestions on how we not 
-> break
-> the aforementioned things while moving handling off to userspace.
->
->> I think its worth exploring if uefisecapp can talk smcinvoke.
->> I can ping Qualcomm engineers to see if that is doable.
->
-> I think that would be great! Thanks!
->
-> Regards,
-> Max
->
