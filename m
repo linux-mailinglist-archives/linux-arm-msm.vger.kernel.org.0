@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CCC4A5AB603
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 17:58:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D6385AB60A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 17:58:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237344AbiIBP46 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Sep 2022 11:56:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39142 "EHLO
+        id S237602AbiIBP5E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Sep 2022 11:57:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237504AbiIBPzq (ORCPT
+        with ESMTP id S237523AbiIBPzs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Sep 2022 11:55:46 -0400
+        Fri, 2 Sep 2022 11:55:48 -0400
 Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E30A5CCE35
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Sep 2022 08:49:38 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id n23-20020a7bc5d7000000b003a62f19b453so3569704wmk.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Sep 2022 08:49:38 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A76C530565
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Sep 2022 08:49:40 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id bd26-20020a05600c1f1a00b003a5e82a6474so1649902wmb.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Sep 2022 08:49:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=OADg3UgKowYhLczGEB28pcVY5skR7AiQxx4OTT83oDk=;
-        b=y7Rk8ICnOfrD0j6KSZBIf/1FGs+bqFw3R7YqoVI/qVfeSBtBopi0/B/9M7M/WHGLW9
-         8sQO11wCSzfNP1xBq9tdohy2EiIva/8zvzo1EryS9C7qpx40njDs5sAakGeFvUGf2FHW
-         XkGLKoG8oXYb5nGTjuKddeuLkC/huZ/9NE4e3gBCUJbF+UxxOZSQvVVwKbTXmER6yQ9Z
-         oI81o8C0YLW6iXwwNKq4JAbgAX05DvfFNaekATfYEFmKY5eFb83t6Rc/v931oaiqhofg
-         sj/2MUki2KlLxxOiMCPTZxQ7dCMj3l0Es+r+5cNavdWqTjTdytY5fykK0ATuYQmAsDVu
-         UkGw==
+        bh=dNkfbcn62y/NJL9U/75vFs6h+xO9hdV9lllr4bUi92w=;
+        b=NnJZ209fH9ut5pCl5YNN1NS33WJYCiqoIZHZrM2MU5wnNl++2PsVmofIT6KHoHRbtt
+         8T7iha/CIH3r9lXJs+XzMrghM/SsgvAwypMBBSJEgMS/yTT0QsnKluZgvfO3+pl7nhNu
+         IyUJFeRwTgkE0UCP0ZBzoFTTnIAQhsTx5zavKIdveJouUOwZDj1AzD7O++JY3iDSCeBS
+         UpxFfuXhH9eqwTVTz/0d905lcjAxQgJuCEpEzRP4+baek99wdQmSBIDjUNOT9xLn++f5
+         WYLERK8rhPU33H9BCOA9vvtaGkleX7wb43y1Rf5BIF7Sbc+YYvARurq4dheD/cnFD7BH
+         q2PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=OADg3UgKowYhLczGEB28pcVY5skR7AiQxx4OTT83oDk=;
-        b=X+fFn1d0JN6cU4zjABWnHVqrZs+MPZ8mRM/YuGdp58HT/BhXa5d5bprH7U7/OeEfeU
-         fN0tFjUhbCaiA7qiI11vVpV1829VQ16HzIsDLwz7/ve+N/5bRXmxq6MhPL82BwYcvgPh
-         fooHhoNJ+srxyS+hceLu76lX6roC3bxzGLrAph54HejXEDsmLN7WnV6CjkKCFB4QegnO
-         JiZrTE1cb5GlF+KhWq3eB7TBDktPPxHyVM+tOVKe89d+bzoEtaDxBhON+HvtzErYPRs0
-         nRSV3d4sblYn//eBmpN112Hitv6MCG+I93D/f+UL0iipRZ0HBTgzepHcE8mPJmMlEOKv
-         jRkg==
-X-Gm-Message-State: ACgBeo1eYWYblSNEFDx1yvi7i6Ft1VDw8zGwIa5Sb5uuvUEcLvhw8A1W
-        rZaOgnz8jy9Mo6j1AUYFFJ4bEw==
-X-Google-Smtp-Source: AA6agR6DQgD2vikls/B/Z/ovZVSB1zI3rOVFwzeL8kqqj/tMY/Kw364LWUvbox3z8cINk0MdtZIXAQ==
-X-Received: by 2002:a05:600c:348f:b0:3a5:e28c:a1d5 with SMTP id a15-20020a05600c348f00b003a5e28ca1d5mr3221691wmq.33.1662133777452;
-        Fri, 02 Sep 2022 08:49:37 -0700 (PDT)
+        bh=dNkfbcn62y/NJL9U/75vFs6h+xO9hdV9lllr4bUi92w=;
+        b=P+KvislPyvKcc1hig9qwSb/39AaBzhKaFSU+wySc6YmmoNkJmk0Q/v0oxFm3sLlOFQ
+         45UX1lMSqtCa1zc7SuAH/xPyxOOh/3G/E/2Nv5R1JKc8ypvIkjR5hUHbJkLm+IPb0V6P
+         Zfx0kdKo6qg3tGKqFHOsFLXGK1wo8GAsARQ0V8wlXSlDbeHQekQh8vnJSuJkHkSeGUbH
+         LTJaLcmLQ79G4CfUdj3ilEg8Pn+EfssJJEpvxHd8Gr8A9gD0Hc/qPoQZBWmtHjaiuO5p
+         u6O5KFGrMkWHuPyqsIUWIKy46G+yi/gJig/ZksXCggE1BKTaTi6OOccxivnMjgV+kcWk
+         WjTg==
+X-Gm-Message-State: ACgBeo28tMPzUupZPFkYGFDt4krZsCNHF7uCxgWZEr5Xqhq+81EScxT3
+        3heGP+jPRS87roA4/nuLNdkhNA==
+X-Google-Smtp-Source: AA6agR4xGcX2rpgiPA2NzFN1tU9fSWh3NpGn1JtYdQYDMb5QycBlV85ciadFPjVe2YH2MRJ0CHi6nQ==
+X-Received: by 2002:a1c:ed0b:0:b0:3a6:30c:12f with SMTP id l11-20020a1ced0b000000b003a6030c012fmr3302745wmh.133.1662133779098;
+        Fri, 02 Sep 2022 08:49:39 -0700 (PDT)
 Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id b1-20020a05600010c100b002250f9abdefsm2046741wrx.117.2022.09.02.08.49.35
+        by smtp.gmail.com with ESMTPSA id b1-20020a05600010c100b002250f9abdefsm2046741wrx.117.2022.09.02.08.49.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Sep 2022 08:49:37 -0700 (PDT)
+        Fri, 02 Sep 2022 08:49:38 -0700 (PDT)
 From:   Abel Vesa <abel.vesa@linaro.org>
 To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Amol Maheshwari <amahesh@qti.qualcomm.com>,
@@ -63,9 +63,9 @@ Cc:     Rob Herring <robh@kernel.org>,
         linux-arm-msm@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         devicetree@vger.kernel.org
-Subject: [PATCH v2 09/10] misc: fastrpc: Add mmap request assigning for static PD pool
-Date:   Fri,  2 Sep 2022 18:48:59 +0300
-Message-Id: <20220902154900.3404524-10-abel.vesa@linaro.org>
+Subject: [PATCH v2 10/10] misc: fastrpc: Add dma_mask to fastrpc_channel_ctx
+Date:   Fri,  2 Sep 2022 18:49:00 +0300
+Message-Id: <20220902154900.3404524-11-abel.vesa@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220902154900.3404524-1-abel.vesa@linaro.org>
 References: <20220902154900.3404524-1-abel.vesa@linaro.org>
@@ -81,56 +81,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If the mmap request is to add pages and thre are VMIDs associated with
-that context, do a call to SCM to reassign that memory. Do not do this
-for remote heap allocation, that is done on init create static process
-only.
+dma_set_mask_and_coherent only updates the mask to which the device
+dma_mask pointer points to. Add a dma_mask to the channel ctx and set
+the device dma_mask to point to that, otherwise the dma_set_mask will
+return an error and the dma_set_coherent_mask will be skipped too.
 
 Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- drivers/misc/fastrpc.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ drivers/misc/fastrpc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 41eabdf0a256..66dc71e20e4f 100644
+index 66dc71e20e4f..ce0acc7a2986 100644
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -1849,8 +1849,9 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
- 	if (copy_from_user(&req, argp, sizeof(req)))
- 		return -EFAULT;
+@@ -278,6 +278,7 @@ struct fastrpc_channel_ctx {
+ 	struct list_head invoke_interrupted_mmaps;
+ 	bool secure;
+ 	bool unsigned_support;
++	u64 dma_mask;
+ };
  
--	if (req.flags != ADSP_MMAP_ADD_PAGES) {
-+	if (req.flags != ADSP_MMAP_ADD_PAGES && req.flags != ADSP_MMAP_REMOTE_HEAP_ADDR) {
- 		dev_err(dev, "flag not supported 0x%x\n", req.flags);
-+
- 		return -EINVAL;
- 	}
+ struct fastrpc_device {
+@@ -2309,6 +2310,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+ 	kref_init(&data->refcount);
  
-@@ -1896,6 +1897,22 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
- 	/* let the client know the address to use */
- 	req.vaddrout = rsp_msg.vaddr;
- 
-+	/* Add memory to static PD pool, protection thru hypervisor */
-+	if (req.flags != ADSP_MMAP_REMOTE_HEAP_ADDR && fl->cctx->vmcount) {
-+		struct qcom_scm_vmperm perm;
-+		int err = 0;
-+
-+		perm.vmid = QCOM_SCM_VMID_HLOS;
-+		perm.perm = QCOM_SCM_PERM_RWX;
-+		err = qcom_scm_assign_mem(buf->phys, buf->size,
-+			&(fl->cctx->vmperms[0].vmid), &perm, 1);
-+		if (err) {
-+			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
-+					buf->phys, buf->size, err);
-+			goto err_assign;
-+		}
-+	}
-+
- 	spin_lock(&fl->lock);
- 	list_add_tail(&buf->node, &fl->mmaps);
- 	spin_unlock(&fl->lock);
+ 	dev_set_drvdata(&rpdev->dev, data);
++	rdev->dma_mask = &data->dma_mask;
+ 	dma_set_mask_and_coherent(rdev, DMA_BIT_MASK(32));
+ 	INIT_LIST_HEAD(&data->users);
+ 	INIT_LIST_HEAD(&data->invoke_interrupted_mmaps);
 -- 
 2.34.1
 
