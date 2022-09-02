@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F6895AB196
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 15:37:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55CB85AB192
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 15:37:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237536AbiIBNhE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Sep 2022 09:37:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51028 "EHLO
+        id S237421AbiIBNhB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Sep 2022 09:37:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236806AbiIBNg1 (ORCPT
+        with ESMTP id S237419AbiIBNgU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Sep 2022 09:36:27 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AB76CE304
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Sep 2022 06:15:48 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id s23so1227736wmj.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Sep 2022 06:15:48 -0700 (PDT)
+        Fri, 2 Sep 2022 09:36:20 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E96A4C1229
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Sep 2022 06:15:32 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id e20so2245003wri.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Sep 2022 06:15:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=WnO3+Tq5eMt/+enVaGVDJlIeL9+c7akKx/S/wlTJFkE=;
-        b=UmXkXiwbZYjdT1WWoa7TKGadkVKY+Z0QEU4eN3/HPr+dBvch18rB7LORSO6U0qgg+1
-         iv1AD9sH+8629kWvpUNRkrY61edccstQiHE1xWfotzbYsVjbK0dlOdpSZaGDxcr7NNaJ
-         UszPAp4JYEnf9348BU5RfzuNr8LHRkvfbda2kTxXkTrud+6f0zIOair+yeV/5ECgbsgJ
-         SblmDu6yZIDpVkfr2wsq5bINUhNNs5LyoMrH4iLlduSpXOVtep/NSjcyy+vILzZZlhpO
-         nbnXF6HsBNS3OSunJ+QldSM+D5bg1bzg/lX9xNsbOh/UL8GVK0RweP/AlSvD/1hAOXZL
-         U3wQ==
+        bh=blbmrFpJ9v4eZ8XtVb/9BQ24QeOnYxz1Q7arIgGoVBE=;
+        b=JkMK5OzLYFHwYGJkH+rJgVL2TXyIeszHxwCz+5aDOVBJPPpq8XrVl8OYIuQHSxSCJp
+         BLEbXQX3r5/3pXknb0xdPg5cOJel8nLrsAvMuqpDIewgODYkKZWHacnjrIg3mHVOWPZq
+         CivERmwWkfqGEsMo40rqUtArQztACHGG4RW6ZsInO7ONCw+m4MyEbvK6D22gYgkjfwl3
+         ru1v3hjmip+LvvyOl41JtMwfGqIyk2Wzz6lCRmRl6fNZnqtljNqSvV1bR07faw2JQMxt
+         XmHgO9JNrtOng4XeOCrl3Oi87G+U8JCbC1CrsswSR+wIH7tDJsKMGr0syzI0zFaBXFHx
+         0l8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=WnO3+Tq5eMt/+enVaGVDJlIeL9+c7akKx/S/wlTJFkE=;
-        b=R4pe6foFM8TeyoSRAr1UNZZ5XUeNNNHiQWR2CRzioHHEhDKrUV6RVvauj4iaVZkDP+
-         QlBupZZJasOd7FEnoMJP7B6ALVZRVmyj2xHVwG4l4caAW+X1N1nTpwrmHLzSCRaJwnAS
-         kWMA7J4jUDWHI6o+gULCBr6Kk23YS/NzeaosqLWA2wdxy5pLVUZEXpHzLp/WbKopwdz7
-         thjLq+LRykLh7m3kuyRcG6PEoT1+hQB0DbqoFv/1rYf03rij4Uau334FkuVgh1idaLzi
-         z14ygJ5ULPEohwqKMJ2cl4ZLvwYWJTmJZOU/CHzinkYSTVY2U6G/CbLGh+6PYx3U5oGt
-         Vzkg==
-X-Gm-Message-State: ACgBeo15G2Aeci1GOpvMbenX2JSZs0+Vwf0zCveGEbagGvDZtQrcPy5R
-        G2UvlVlE4gDeZGBb2qKMDqdbAA==
-X-Google-Smtp-Source: AA6agR4PCzGvdorz12vZVArhdEpd8kAlXYH6pzoxUJ+7Z6gc+c/oA5WHjwLjcdtwlpRE8DkJB/Yb8A==
-X-Received: by 2002:a05:600c:4f43:b0:3a6:2335:f5de with SMTP id m3-20020a05600c4f4300b003a62335f5demr2880057wmq.109.1662124462878;
-        Fri, 02 Sep 2022 06:14:22 -0700 (PDT)
+        bh=blbmrFpJ9v4eZ8XtVb/9BQ24QeOnYxz1Q7arIgGoVBE=;
+        b=Tuz/aqAZYzd06PxIw/Z/tyrfYGh8gRqr2iwqdWL3ouAXY5p7ptMcbuo++Bsc7yjS5z
+         p2IuIh4F0Zf9HMC3mpDD8Mi/4b9pyosuRuCqnC/v8BOOEtaPZiZdor0xIlUMSaoulRUD
+         jbuJZ4rNhbN4uPetw7zfFbc0/rarU/pW+Vhfuk3pLEEOyzElm4WrsOKBNhVVNF+p7xeG
+         voXKbjnB+yH3iVCSnVlaQiiKoMeLUPffFk4t/rPD+sFMu2KtaGMD4N53L4BL4qyO8ko/
+         sMENz5VHVi2zIa/JQZ69uDu3FLqv/46OPdAFlRTFcQu4CDwVEZALwsp5dIMIIiN8WW3E
+         /g1g==
+X-Gm-Message-State: ACgBeo1w8Wr4Y9IAFcZhqUD6mWXScH56sFp8bRaDknz8c7W9xAnRevGx
+        SmjwOiw5/k6YzLRPPhHdYAz1d//nbdbgynlE
+X-Google-Smtp-Source: AA6agR635/f4JPmMaovAepr83BQhxnemnllSa7fgOEtLDvqVJBZAPT36PfDqSGdGiT/AsgWwDvBDoQ==
+X-Received: by 2002:a5d:47a6:0:b0:228:473c:b84b with SMTP id 6-20020a5d47a6000000b00228473cb84bmr1178709wrb.556.1662124464603;
+        Fri, 02 Sep 2022 06:14:24 -0700 (PDT)
 Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id v14-20020a5d43ce000000b002253fd19a6asm1766253wrr.18.2022.09.02.06.14.21
+        by smtp.gmail.com with ESMTPSA id v14-20020a5d43ce000000b002253fd19a6asm1766253wrr.18.2022.09.02.06.14.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Sep 2022 06:14:22 -0700 (PDT)
+        Fri, 02 Sep 2022 06:14:23 -0700 (PDT)
 From:   Abel Vesa <abel.vesa@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorande@qti.qualcomm.com>,
@@ -63,9 +63,9 @@ Cc:     Arnd Bergmann <arnd@arndb.de>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         Ola Jeppsson <ola@snap.com>
-Subject: [PATCH 02/14] misc: fastrpc: Don't remove map on creater_process and device_release
-Date:   Fri,  2 Sep 2022 16:13:32 +0300
-Message-Id: <20220902131344.3029826-3-abel.vesa@linaro.org>
+Subject: [PATCH 03/14] misc: fastrpc: Fix use-after-free race condition for maps
+Date:   Fri,  2 Sep 2022 16:13:33 +0300
+Message-Id: <20220902131344.3029826-4-abel.vesa@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220902131344.3029826-1-abel.vesa@linaro.org>
 References: <20220902131344.3029826-1-abel.vesa@linaro.org>
@@ -81,65 +81,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Do not remove the map from the list on error path in
-fastrpc_init_create_process, instead call fastrpc_map_put, to avoid
-use-after-free. Do not remove it on fastrpc_device_release either,
-call fastrpc_map_put instead.
+From: Ola Jeppsson <ola@snap.com>
 
-The fastrpc_free_map is the only proper place to remove the map.
-This is called only after the reference count is 0.
+It is possible that in between calling fastrpc_map_get() until
+map->fl->lock is taken in fastrpc_free_map(), another thread can call
+fastrpc_map_lookup() and get a reference to a map that is about to be
+deleted.
 
-Co-developed-by: Ola Jeppsson <ola@snap.com>
+Rewrite fastrpc_map_get() to only increase the reference count of a map
+if it's non-zero. Propagate this to callers so they can know if a map is
+about to be deleted.
+
+Fixes this warning:
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 5 PID: 10100 at lib/refcount.c:25 refcount_warn_saturate
+...
+Call trace:
+ refcount_warn_saturate
+ [fastrpc_map_get inlined]
+ [fastrpc_map_lookup inlined]
+ fastrpc_map_create
+ fastrpc_internal_invoke
+ fastrpc_device_ioctl
+ __arm64_sys_ioctl
+ invoke_syscall
+
 Signed-off-by: Ola Jeppsson <ola@snap.com>
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- drivers/misc/fastrpc.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/misc/fastrpc.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 0c816a11eeec..50c17f5da3a8 100644
+index 50c17f5da3a8..58654d394d17 100644
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -316,6 +316,13 @@ static void fastrpc_free_map(struct kref *ref)
- 		dma_buf_put(map->buf);
- 	}
- 
-+	if (map->fl) {
-+		spin_lock(&map->fl->lock);
-+		list_del(&map->node);
-+		spin_unlock(&map->fl->lock);
-+		map->fl = NULL;
-+	}
-+
- 	kfree(map);
+@@ -332,10 +332,12 @@ static void fastrpc_map_put(struct fastrpc_map *map)
+ 		kref_put(&map->refcount, fastrpc_free_map);
  }
  
-@@ -1266,12 +1273,7 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
- 	fl->init_mem = NULL;
- 	fastrpc_buf_free(imem);
- err_alloc:
--	if (map) {
--		spin_lock(&fl->lock);
--		list_del(&map->node);
--		spin_unlock(&fl->lock);
--		fastrpc_map_put(map);
--	}
-+	fastrpc_map_put(map);
- err:
- 	kfree(args);
+-static void fastrpc_map_get(struct fastrpc_map *map)
++static int fastrpc_map_get(struct fastrpc_map *map)
+ {
+-	if (map)
+-		kref_get(&map->refcount);
++	if (!map)
++		return -ENOENT;
++
++	return kref_get_unless_zero(&map->refcount) ? 0 : -ENOENT;
+ }
  
-@@ -1347,10 +1349,8 @@ static int fastrpc_device_release(struct inode *inode, struct file *file)
- 		fastrpc_context_put(ctx);
- 	}
  
--	list_for_each_entry_safe(map, m, &fl->maps, node) {
--		list_del(&map->node);
-+	list_for_each_entry_safe(map, m, &fl->maps, node)
- 		fastrpc_map_put(map);
--	}
- 
- 	list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
- 		list_del(&buf->node);
 -- 
 2.34.1
 
