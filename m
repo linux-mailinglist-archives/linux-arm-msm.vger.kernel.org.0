@@ -2,79 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 44ACA5AAB4B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 11:25:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B00E95AAB73
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Sep 2022 11:31:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235697AbiIBJZf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Sep 2022 05:25:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59878 "EHLO
+        id S234985AbiIBJbo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Sep 2022 05:31:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235990AbiIBJZb (ORCPT
+        with ESMTP id S235518AbiIBJbc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Sep 2022 05:25:31 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EADA0419A0
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Sep 2022 02:25:26 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id fa2so1481304pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Sep 2022 02:25:26 -0700 (PDT)
+        Fri, 2 Sep 2022 05:31:32 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A72B5C04F4
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Sep 2022 02:31:29 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id bp20so1043065wrb.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Sep 2022 02:31:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=1bTDW9HnOkiIYV5uJ57r2XB6ZhefyzNRvfE7YurBQEo=;
-        b=AxLhRfI9R75qPsG2gU38kDjJE6+gQI1IxuS5UvbEKVwR+RpHAuLOPy2k25fSJN/2zl
-         c0kZopziRkgXAFT1PmJagrGzop2dWOJJlE8lMM4O44fFYQBtRoJwEe4DkBK5N9xWNga0
-         jCVHtUcWGs6Z+BsXFc6+qSDpwE+mfyte1Ab4NU4XKdFIrOZV/KUu+EYsb/Jji7RnBZLD
-         iFCwq3+Txw/mM+Q9HXabRCEeodOo6PCF91749PkivG+Gv+KTELhJm1zm5XMRe3N65o8A
-         T8RCNI0s1JP4mm8MvfsdFRtFQq09f+TTiI49Zd0eB+ZXLprw5jvqyv8wHPwJs9odb4c3
-         jaig==
+        bh=1gh2cH8+/vu9+O44Ntzb/QjlvRTOJYihF+Y3Qm1SXrI=;
+        b=EVe1TJlwgwENLq9wjko+3+iqmTNZUI3JPuYAT7OKSM+R/epnoMEDtd8xg6TmEMxWx3
+         w3tho74vxXAPjBSsm4lYFUcgCWErhh5+d3jcpk70E6Cl1y+e5y1R2FlOY66Rl8+JeCwL
+         W3nltWTUG/K5D5uJwaOIEe1GS28g32m2+6rHL+rUQ9SE6SLcEMA41Q+pdYi3o3e/Gse3
+         vkzFGeV6Fodjv9QezhLGwOjQYvAKxf+B1t8jpSLVlaAcYGHcSmHNtUS1CA4d+v2e/F68
+         XWkTUJ18yNVic8+Sr4F0TOACzpTFk8RLS58xwLJ8vLbq0MIzXXHOSVbDexp4Q4m4S3zf
+         Pupw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=1bTDW9HnOkiIYV5uJ57r2XB6ZhefyzNRvfE7YurBQEo=;
-        b=jeu56F9I51PFJd33OAxX3oSqSKiFiX3Jo1lB+wBsmTvwZ1eo25m9HW5/pMb5t+dDBU
-         0vBmiUghj7SQbBGYPmTHzKck7nNJP/urvQzGnoA8apmskYA0xjBjDzanVzQYjWWypkue
-         n/zcyYov3PLxoKW63xWxyPj33W3m0bAJ+abHB4CEKtjtLijFMRt2TqKv87iEvTug3MJW
-         4kXwetd+s9AHWLUqwt7tkT/U2OehOYwYfQU9clXcgPAdm86IEiycspOJYg4NplzzkcPZ
-         d0Bc1hWmEVRWCYFaX/l7wwHKSIDTxaRfxf5RdySKXx2/cMZU8SMOdLg9wdGujbZxS4fB
-         Yq5Q==
-X-Gm-Message-State: ACgBeo0PXkkFuHJ6NQrJiKa9nS91IDnGWTTdyesEL3yn2sYPigTeQzKn
-        B8i6rrXUvUgJRspaAfxs2729WA==
-X-Google-Smtp-Source: AA6agR703vVUNiUJs+wEbCRE7Q3PqGL/0ksxZ5aMw4iWUxLstSZPLNkWHqA8WmHx+gBlSutsukvN4A==
-X-Received: by 2002:a17:902:e751:b0:174:89f8:cef2 with SMTP id p17-20020a170902e75100b0017489f8cef2mr26838879plf.156.1662110725762;
-        Fri, 02 Sep 2022 02:25:25 -0700 (PDT)
-Received: from ?IPV6:2401:4900:1c60:5362:9d7f:2354:1d0a:78e3? ([2401:4900:1c60:5362:9d7f:2354:1d0a:78e3])
-        by smtp.gmail.com with ESMTPSA id h15-20020a170902f54f00b001728ac8af94sm1110860plf.248.2022.09.02.02.25.22
+        bh=1gh2cH8+/vu9+O44Ntzb/QjlvRTOJYihF+Y3Qm1SXrI=;
+        b=73lE1RTtZlHizj/qpM5MF9QOuDgEZ3LdEs5w2340S5CFM50t1QPqAr8joeg75wY/t6
+         eYBsXYN2AP0fzcK2TMkduVFyQ0p6Li7p7OEG4wL7+XCuseKclT4DA24XmIt0p88dmvTZ
+         2QoirV7YBFK46zvCHQwVuxCtLyLZ0nDFSW1CnRckHNkX45LbLWqzK5K2BouDf7HArRmg
+         xK+46DScdJ8Fn6GPq5hxvpFRgaWexWre0bHYsUyTZF0E7G0X6+vDsX1sqKG4wTS9vYil
+         GuX8silbc4PggjdINe6qtTitZekdKfDa6kHOksacfdPpC5G/xDMDUiGym8KM1MrGiYEq
+         KQrg==
+X-Gm-Message-State: ACgBeo0t7eZK1cdZT53ZssHmJ9qeJJHW36/WSRy33RZx5pia6yICTjfj
+        EkkXharLSKklEMxWn71Ip8EfSw==
+X-Google-Smtp-Source: AA6agR6YtQhQs9M+XpNrEr5ZjCr4K1ke8LjplN8/PGIGXMDtTqKLhIXAP+/GSYEqOabmcCpXMoNTwQ==
+X-Received: by 2002:a05:6000:184e:b0:226:e227:35e4 with SMTP id c14-20020a056000184e00b00226e22735e4mr10140437wri.624.1662111088131;
+        Fri, 02 Sep 2022 02:31:28 -0700 (PDT)
+Received: from [192.168.86.238] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.googlemail.com with ESMTPSA id d17-20020adffbd1000000b002253d865715sm1042629wrs.87.2022.09.02.02.31.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Sep 2022 02:25:25 -0700 (PDT)
-Message-ID: <58ab7d34-71af-f69c-1961-fd484cb477ac@linaro.org>
-Date:   Fri, 2 Sep 2022 14:55:20 +0530
+        Fri, 02 Sep 2022 02:31:27 -0700 (PDT)
+Message-ID: <c2cd764e-ef70-4a7a-fe7d-aade5adb8057@linaro.org>
+Date:   Fri, 2 Sep 2022 10:31:24 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH] dt-bindings: leds: Describe optional 'reg' property used
- for Qualcomm LPG nodes
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v4 11/21] misc: fastrpc: Prepare to dynamic dma-buf
+ locking specification
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        robh@kernel.org, pavel@ucw.cz, devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-References: <20220721195502.1525214-1-bhupesh.sharma@linaro.org>
- <CAA8EJppGS38aP7gyd1c3kNgraAVJDoqUef2cDfZpu2aL_iwW0g@mail.gmail.com>
- <YvFZgr1RRq6tYaVC@ripper> <a35dc076-e33f-1b31-2a01-27bb37301039@linaro.org>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-In-Reply-To: <a35dc076-e33f-1b31-2a01-27bb37301039@linaro.org>
+To:     Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+        David Airlie <airlied@linux.ie>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Gurchetan Singh <gurchetansingh@chromium.org>,
+        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Daniel Almeida <daniel.almeida@collabora.com>,
+        Gert Wollny <gert.wollny@collabora.com>,
+        Gustavo Padovan <gustavo.padovan@collabora.com>,
+        Daniel Stone <daniel@fooishbar.org>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Rob Clark <robdclark@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        =?UTF-8?Q?Thomas_Hellstr=c3=b6m?= <thomas_os@shipmail.org>,
+        Qiang Yu <yuq825@gmail.com>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Jason Gunthorpe <jgg@ziepe.ca>,
+        Leon Romanovsky <leon@kernel.org>,
+        Juergen Gross <jgross@suse.com>,
+        Stefano Stabellini <sstabellini@kernel.org>,
+        Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Dmitry Osipenko <digetx@gmail.com>,
+        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
+        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        kernel@collabora.com, virtualization@lists.linux-foundation.org,
+        linux-rdma@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20220831153757.97381-1-dmitry.osipenko@collabora.com>
+ <20220831153757.97381-12-dmitry.osipenko@collabora.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20220831153757.97381-12-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,69 +120,45 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 8/9/22 12:21 PM, Krzysztof Kozlowski wrote:
-> On 08/08/2022 21:44, Bjorn Andersson wrote:
->> On Thu 21 Jul 13:19 PDT 2022, Dmitry Baryshkov wrote:
->>
->>> On Thu, 21 Jul 2022 at 22:55, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
->>>>
->>>> As Bjorn noted in [1], it is useful to describe the optional
->>>> 'reg' property for Qualcomm LPG nodes as it is used in
->>>> some Qualcomm dts files.
->>>
->>> I don't think this is correct. LPG block maps to several regions, so
->>> using just one of them in reg doesn't look correct.
->>>
->>
->> I agree, but I also like the uniformity of having unit addresses for the
->> devices on the spmi buses.
+On 31/08/2022 16:37, Dmitry Osipenko wrote:
+> Prepare fastrpc to the common dynamic dma-buf locking convention by
+> starting to use the unlocked versions of dma-buf API functions.
 > 
-> regulators also do not have reg, so I guess consistency is already gone.
-> 
-> I vote here to reflect the real hardware/device which means:
-> 1. IIUC, the design of entire SPMI bindings and its implementation is
-> around parent device sitting on SPMI bus and children using its
-> regmap/io space.
-> 2. The children are not really re-usable for different cases/devices
-> (e.g. standalone WLED or LPG, outside of PMIC).
-> 3. This means entire design is tightly coupled and LPG (or wled,
-> regulators) bindings describe the piece of PMIC, thus I find appropriate
-> skipping "reg".
-> 4. If we want to keep the "reg", then it should rather reflect reality,
-> so if Dmitry said - multiple items for separate IO address ranges.
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
 
-Ok, so I think the majority opinion is to skip 'reg' from the 
-devicetree-binding. Lets stick to that.
+LGTM,
 
->>
->>>> This fixes the following 'make dtbs_check' error reported for
->>>> pm8350c & sc8280xp pwm nodes:
->>>>
->>>> arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb:
->>>>   pwm@e800: 'reg' does not match any of the regexes:
->>>>   '^led@[0-9a-f]$', 'pinctrl-[0-9]+'
->>>
->>> I'd prefer to follow the existing schema and to drop the region from
->>> those files.
->>>
->>
->> I'm fine either way, but we have more of these nodes, so I would like to
->> hear from the DT maintainers on the direction to take. All nodes on the
->> spmi bus has an (at least one) address, so it would be accurate to state
->> this in the node.
->>
->> It does however not seem like devicetree@, nor Krzysztof is Cc'ed on
->> this patch, so I've added them...
->>
-> 
-> Anyway this patch has to be resent to properly reach DT patchwork.
-> 
-> Bhupesh,
-> 
-> Please use scripts/get_maintainer.pl to Cc relevant folks and mailing
-> lists. While resending, add appropriate device prefix to subject, so:
-> dt-bindings: leds: qcom-lpg:
+Incase you plan to take it via another tree.
 
-Sure, will send v2 accordingly.
+Acked-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-Thanks.
+
+--srini
+>   drivers/misc/fastrpc.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index 93ebd174d848..6fcfb2e9f7a7 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -310,8 +310,8 @@ static void fastrpc_free_map(struct kref *ref)
+>   				return;
+>   			}
+>   		}
+> -		dma_buf_unmap_attachment(map->attach, map->table,
+> -					 DMA_BIDIRECTIONAL);
+> +		dma_buf_unmap_attachment_unlocked(map->attach, map->table,
+> +						  DMA_BIDIRECTIONAL);
+>   		dma_buf_detach(map->buf, map->attach);
+>   		dma_buf_put(map->buf);
+>   	}
+> @@ -726,7 +726,7 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
+>   		goto attach_err;
+>   	}
+>   
+> -	map->table = dma_buf_map_attachment(map->attach, DMA_BIDIRECTIONAL);
+> +	map->table = dma_buf_map_attachment_unlocked(map->attach, DMA_BIDIRECTIONAL);
+>   	if (IS_ERR(map->table)) {
+>   		err = PTR_ERR(map->table);
+>   		goto map_err;
