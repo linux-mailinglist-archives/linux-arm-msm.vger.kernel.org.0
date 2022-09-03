@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 12D005AC0F9
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Sep 2022 20:58:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 99CED5AC0FC
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Sep 2022 20:59:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231639AbiICS6e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 3 Sep 2022 14:58:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57538 "EHLO
+        id S232881AbiICS7U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 3 Sep 2022 14:59:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231396AbiICS6c (ORCPT
+        with ESMTP id S232816AbiICS7S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 3 Sep 2022 14:58:32 -0400
-Received: from mail-40136.proton.ch (mail-40136.proton.ch [185.70.40.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAD4B57264;
-        Sat,  3 Sep 2022 11:58:29 -0700 (PDT)
-Date:   Sat, 03 Sep 2022 18:58:18 +0000
+        Sat, 3 Sep 2022 14:59:18 -0400
+Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40E7057264;
+        Sat,  3 Sep 2022 11:59:18 -0700 (PDT)
+Date:   Sat, 03 Sep 2022 18:59:10 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1662231508; x=1662490708;
-        bh=oC3eNokSVQM0L9hwWw0OMbDDF2IWxQAIitsSbaCemuI=;
+        s=protonmail; t=1662231554; x=1662490754;
+        bh=9L+ya5D+HHVzJ5A4w7jqzlee5Frl26BuJPqFAGtXACA=;
         h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
          References:Feedback-ID:From:To:Cc:Date:Subject:Reply-To:
          Feedback-ID:Message-ID;
-        b=fZAWTroNgNBWHdInKCyNi+VIh4Cqj0CCJDMwXgAujB990cH0hAI6nfG/ReRQsaM26
-         ViYox8+mY5fkOWRPZZbOYTgyxBc3ShD/JQ1IH6A2/FjAtp87MKbPvzRlEZi7Tu3z5J
-         /sUFXrR6IQ1xBdIkijONNDpjWAjeM933lzdhVq7c=
+        b=NImseukOYaGDkkChPfsbZ4Kqoa97NI/NWK49vmHM9uAxS5X1KB2OPK6TbxUz3TgYX
+         fjvn8+Q5jrpGuACFMEwmBkfKUqVYdV9RjbMrJ/IW7twkJF3yGSmR+hs1DikYvRMWvT
+         le3aZvPNKaEi7IjfqBdhAZIT6KflURlnT+P7W4Ec=
 To:     Iskren Chernev <iskren.chernev@gmail.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -34,15 +34,14 @@ Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Das Srinagesh <quic_gurus@quicinc.com>,
-        linux-kernel@vger.kernel.org
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
 Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: Re: [PATCH v2 2/9] dt-bindings: firmware: document Qualcomm SM6115 SCM
-Message-ID: <14c7bd55-f462-5599-8280-e9b6495c00cd@connolly.tech>
-In-Reply-To: <20220903174150.3566935-3-iskren.chernev@gmail.com>
-References: <20220903174150.3566935-1-iskren.chernev@gmail.com> <20220903174150.3566935-3-iskren.chernev@gmail.com>
+Subject: Re: [PATCH v2 4/9] dt-bindings: pinctrl: qcom: sm6115: Add reserved ranges
+Message-ID: <c54bf940-a9f2-44a3-b327-b9e4d779a910@connolly.tech>
+In-Reply-To: <20220903174150.3566935-5-iskren.chernev@gmail.com>
+References: <20220903174150.3566935-1-iskren.chernev@gmail.com> <20220903174150.3566935-5-iskren.chernev@gmail.com>
 Feedback-ID: 10753939:user:proton
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -59,46 +58,33 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 03/09/2022 19:56, Caleb Connolly wrote:
+On 03/09/2022 18:41, Iskren Chernev wrote:
+> Ideally this and similar common properties will be inherited so you
+> won't need to paste them in every pinctrl binding.
 >
->
-> On 03/09/2022 18:41, Iskren Chernev wrote:
->> Document the compatible for Qualcomm=C2=A0 SM6115 SCM.
->>
->> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
->
-> Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-
-Nope, wrong email, please disregard and use
+> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
 
 Reviewed-by: Caleb Connolly <caleb@connolly.tech>
->> ---
->> =C2=A0 Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 1 +
->> =C2=A0 1 file changed, 1 insertion(+)
->>
->> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
->> b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
->> index 9fdeee07702f..c5b76c9f7ad0 100644
->> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
->> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
->> @@ -44,6 +44,7 @@ properties:
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - qco=
-m,scm-sdm845
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - qco=
-m,scm-sdx55
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - qco=
-m,scm-sdx65
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - qcom,scm-sm611=
-5
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - qco=
-m,scm-sm6125
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - qco=
-m,scm-sm6350
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - qco=
-m,scm-sm8150
->> --
->> 2.37.2
->>
+> ---
+>   .../devicetree/bindings/pinctrl/qcom,sm6115-pinctrl.yaml        | 2 ++
+>   1 file changed, 2 insertions(+)
+>
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-pinctr=
+l.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-pinctrl.yaml
+> index a7a2bb8bff46..d8443811767d 100644
+> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-pinctrl.yaml
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-pinctrl.yaml
+> @@ -49,6 +49,8 @@ properties:
+>     gpio-ranges:
+>       maxItems: 1
+>
+> +  gpio-reserved-ranges: true
+> +
+>     wakeup-parent: true
+>
+>   #PIN CONFIGURATION NODES
+> --
+> 2.37.2
 >
 
 --
