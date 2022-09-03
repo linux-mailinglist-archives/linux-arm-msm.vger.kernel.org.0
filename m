@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 66AB35ABFE7
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Sep 2022 18:54:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3AD35ABFF6
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Sep 2022 19:04:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231177AbiICQyI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 3 Sep 2022 12:54:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49466 "EHLO
+        id S231344AbiICRE2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 3 Sep 2022 13:04:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229901AbiICQyH (ORCPT
+        with ESMTP id S230422AbiICRE1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 3 Sep 2022 12:54:07 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DD594D824;
-        Sat,  3 Sep 2022 09:54:06 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id r4so6409748edi.8;
-        Sat, 03 Sep 2022 09:54:06 -0700 (PDT)
+        Sat, 3 Sep 2022 13:04:27 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F176EB0;
+        Sat,  3 Sep 2022 10:04:25 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id bj12so9348414ejb.13;
+        Sat, 03 Sep 2022 10:04:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=enTjVccMI7zVJxhuIsvJAc9Bul3yVB/Yhn5bDIsujys=;
-        b=CnyAR1K3WpZCSKDo4YMU/6iOxzD60cGy31+T68uwOkBjrGcaYVjwR6J9N/Sm2KOC6t
-         PwFO+GwLrmQgxeLbtsonmsAo7aOO7GBz9NZUoZAHfLD1l6YO/CRhc4Phtf58rUvUjTZA
-         ycN/W3QSWrk/vMhnBVFEQCinutN5eOK9Eb/zLUuKfQGCWU2rRpPEodCVr1Up4gWRGKVi
-         r680azqk/n+LUbWxM4sha+RM4Z1iSj2T1lKo4nKHjc6yquhaxxAdu0r+JG8jhe7clqCn
-         ENfAhU2WK2JWB3bd+v5itA+bmxjnpdQ/wifcuOZ5Snx0sfQ4c9StPE6SgFo0LOkhleEN
-         cEnA==
+        bh=yxIgBn6wmYWPsRLdC51HzjmvMPKahEKhVb6/Ezsf8mA=;
+        b=ijUqM1sW6mBfkE8312xgrAE9ovi6QTzYF9G5bRdlJopYfEEo8RczFkLnWsPzA+hCPu
+         DgtA9/7hQa1L2Ml01WIt5kue58GqgQL0NpEFJva2/+wTK8Ycv+nRh9DKIRINXFPHSMWC
+         qMAMVIobLM68kXcjbNITPradRcbZ8HX3rkzC84vZ7+j9zb9/N/N8BjhXnhHE5vPQVvxc
+         DGZEvXWEbp3mAriGUJLvgSvO36crwcPhWrT/JdORFhmGWdy/+/TmOrBztEZRL0NBIoxk
+         2dkfem6hMT6NYE/rObRHBRMknb1LxEAlvZNnH9Az3jNu/Sq7bdY4IrHuheF8KiQ5mUHo
+         cNHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=enTjVccMI7zVJxhuIsvJAc9Bul3yVB/Yhn5bDIsujys=;
-        b=0murk8D+4+1ziqvOSTDYeCrb1ZijWOkqZ50DRltsILpaoTsB7VpiEhSm0TUcwmK/IH
-         AnsCcyhOQRYBLO8mPuwqZ9WFCGwikYEOu5dkj7QPS4zYny+i+c63Olv+Bqv/N7bhz5xR
-         P00gfYA/WkUJ4ekuOd3OH57hnPXIjG1RwWpA+PbhP3vJQbvduAPzactSF5URgAQCzest
-         C08mO9GvW14hAGWIWQykDd++kHVF7w+zJP14jjiEwABk2So0A/SHaxKyseAhxkev9rTX
-         bCahVlw48/lg+x3NSH9X61bObwTs+57uTuXZngvaLbP81QnM4zkgxZmkwOmt5+kOe34m
-         I8hg==
-X-Gm-Message-State: ACgBeo0Tjzq9dC4qeDjaZFhr+QbSc0iqJC7dkGVIxoR5n7GaIv1CvMyi
-        QiQI4s57cxZEcXpZKw4khY8=
-X-Google-Smtp-Source: AA6agR4NVA71S/KhP2L4AL9mo6BsrulPaXeUD+9t3G89qnrWRa0H4cubVN/ks9rKnz95GQp8iHvmFQ==
-X-Received: by 2002:a05:6402:2802:b0:43a:9098:55a0 with SMTP id h2-20020a056402280200b0043a909855a0mr37113428ede.179.1662224045019;
-        Sat, 03 Sep 2022 09:54:05 -0700 (PDT)
+        bh=yxIgBn6wmYWPsRLdC51HzjmvMPKahEKhVb6/Ezsf8mA=;
+        b=zCuNg6unDJUfD0bGw2Oa1XM8fX7Ij76m4hN2ptlBnB9ZhTgy2UIrB4IqYD+N04fOwv
+         LJC7yQZ1huxphA43up2Rm4KSYuqvhEVoJg9Xn/Dq2YU2+amndVxyWiuOl6IjhXmQlXTg
+         sm8gq8dt3JyfWg0GGlEFWYUGzS5ZP/jkQ7VPGmLocEfNx1ARhzB2oNI8QdsgDFwZETVY
+         c7TmX5a9XOw++n3T3SV65twfXtK4NasbD1MGCRUYeSQc6CMyoAiC0YX75VmTlX83h1zd
+         l5q0FI6jlFSd0KyLA9YWjDg+S95MSthpBHSXOqayHvoiak0iffS20HTk6ddrL5BKykI4
+         urGg==
+X-Gm-Message-State: ACgBeo0pJeJwf/XlZSLStYawVGft0hPyNZbErAoy1YS04b6YStPtU6iV
+        3Nc6dzwQnc5rWAlPkZ65j3Q=
+X-Google-Smtp-Source: AA6agR6LpCThAlRPo/ggANiOJBQT8ScLgVqJIejA+pV0Wm8SSnWY7ZA/pyHOPnOS4TlJmbpeUnE+Zg==
+X-Received: by 2002:a17:907:2bc7:b0:73d:d239:110b with SMTP id gv7-20020a1709072bc700b0073dd239110bmr30616553ejc.752.1662224663681;
+        Sat, 03 Sep 2022 10:04:23 -0700 (PDT)
 Received: from [192.168.74.101] ([77.78.20.135])
-        by smtp.gmail.com with ESMTPSA id y6-20020a170906070600b0073d70df6e56sm2684678ejb.138.2022.09.03.09.54.03
+        by smtp.gmail.com with ESMTPSA id e23-20020a50a697000000b004481ee9b4besm3464223edc.63.2022.09.03.10.04.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 03 Sep 2022 09:54:04 -0700 (PDT)
-Message-ID: <89e6a200-d9af-7263-5e09-d7d824277a30@gmail.com>
-Date:   Sat, 3 Sep 2022 19:54:01 +0300
+        Sat, 03 Sep 2022 10:04:23 -0700 (PDT)
+Message-ID: <488be3d3-d4c4-6200-be99-b85e6ac72c34@gmail.com>
+Date:   Sat, 3 Sep 2022 20:04:19 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.12.0
-Subject: Re: [PATCH 08/14] dt-bindings: ufs: qcom: Add sm6115 binding
+Subject: Re: [PATCH 09/14] arm64: dts: qcom: sm6115: Add UFS nodes
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -64,16 +64,13 @@ Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
+        linux-kernel@vger.kernel.org
 References: <20220901072414.1923075-1-iskren.chernev@gmail.com>
- <20220901072414.1923075-9-iskren.chernev@gmail.com>
- <7804ffbe-4e27-d8bd-dbe2-75d1323da064@linaro.org>
+ <20220901072414.1923075-10-iskren.chernev@gmail.com>
+ <a0204dc3-af13-6b0b-d779-0f207d1aff7e@linaro.org>
 From:   Iskren Chernev <iskren.chernev@gmail.com>
-In-Reply-To: <7804ffbe-4e27-d8bd-dbe2-75d1323da064@linaro.org>
+In-Reply-To: <a0204dc3-af13-6b0b-d779-0f207d1aff7e@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,60 +85,125 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 9/1/22 19:11, Krzysztof Kozlowski wrote:
+On 9/1/22 19:13, Krzysztof Kozlowski wrote:
 > On 01/09/2022 10:24, Iskren Chernev wrote:
->> Add SM6115 UFS to DT schema.
+>> The SM6115 comes with UFS support, so add the related UFS and UFS PHY
+>> nodes.
 >>
 >> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
 >> ---
->>  .../devicetree/bindings/ufs/qcom,ufs.yaml     | 26 +++++++++++++++++++
->>  1 file changed, 26 insertions(+)
+>>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 70 ++++++++++++++++++++++++++++
+>>  1 file changed, 70 insertions(+)
 >>
->> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->> index f2d6298d926c..7c5f6e2e6d4c 100644
->> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->> @@ -28,6 +28,7 @@ properties:
->>            - qcom,msm8998-ufshc
->>            - qcom,sc8280xp-ufshc
->>            - qcom,sdm845-ufshc
->> +          - qcom,sm6115-ufshc
->>            - qcom,sm6350-ufshc
->>            - qcom,sm8150-ufshc
->>            - qcom,sm8250-ufshc
->> @@ -178,6 +179,31 @@ allOf:
->>            minItems: 1
->>            maxItems: 1
+>> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+>> index cde963c56ac9..491fffff8aa1 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+>> @@ -620,6 +620,76 @@ opp-202000000 {
+>>  			};
+>>  		};
 >>
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - qcom,sm6115-ufshc
->> +    then:
->> +      properties:
->> +        clocks:
->> +          minItems: 8
->> +          maxItems: 8
->> +        clock-names:
->> +          items:
->> +            - const: core_clk
->> +            - const: bus_aggr_clk
->> +            - const: iface_clk
->> +            - const: core_clk_unipro
->> +            - const: core_clk_ice
+>> +		ufs_mem_hc: ufshc@4804000 {
+>> +			compatible = "qcom,sm6115-ufshc", "qcom,ufshc",
+>> +				     "jedec,ufs-2.0";
+>> +			reg = <0x4804000 0x3000>, <0x4810000 0x8000>;
+>> +			reg-names = "std", "ice";
 >
-> Use existing name and put it in the same place as existing variant - sdm845:
-> ice_core_clk
+> I could imagine that testing DTS against existing bindings might miss a
+> lot, because we have still a lot of errors. But at least I would expect
+> you test your DTS against your own bindings, which you submit here (and
+> previously).
+>
+> You just wrote that ice is not allowed.
 
-The only problem with sdm845 bindings is the presence of rx_lane1_sync_clk
-clock. I'm guessing I could pass zeros there, because it shouldn't be used. Or
-it could be moved to last property and then min/maxItems to guard, but that is
-a change to something more-or-less immutable.
+OK, I'm an idiot. I didn't run the bindings checks, not against existing
+bindings or my bindings or whatever. It's my fault.
 
+Ice should be allowed, I fixed the bindings in v2.
+
+For the record, running dtbs_checks is a PITA, not only because of the
+thousands of warnings in unrelated code, but because it takes forever.
+
+Maybe the docs should be updated with instructions on how to run it on a single
+(or a small subset) of DTBs. I had to comment out a lot of Makefile lines to
+focus it on mine. It would really help if the binding check works more like
+a compiler, not some magic spell hidden in a bunch of Makefiles.
+
+I'll list all remaining issues with description/explanation in v2. The fact
+that some bindings break on all DTBs present doesn't help either.
+
+>> +			interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
+>> +			phys = <&ufs_mem_phy_lanes>;
+>> +			phy-names = "ufsphy";
+>> +			lanes-per-direction = <1>;
+>> +			#reset-cells = <1>;
+>> +			resets = <&gcc GCC_UFS_PHY_BCR>;
+>> +			reset-names = "rst";
+>> +
+>> +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
+>> +			iommus = <&apps_smmu 0x100 0>;
+>> +
+>> +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
+>> +				 <&gcc GCC_SYS_NOC_UFS_PHY_AXI_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_ICE_CORE_CLK>,
+>> +				 <&rpmcc RPM_SMD_XO_CLK_SRC>,
+>> +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>;
+>> +			clock-names = "core_clk",
+>> +				      "bus_aggr_clk",
+>> +				      "iface_clk",
+>> +				      "core_clk_unipro",
+>> +				      "core_clk_ice",
+>> +				      "ref_clk",
+>> +				      "tx_lane0_sync_clk",
+>> +				      "rx_lane0_sync_clk";
+>> +
+>> +			freq-table-hz = <50000000 200000000>,
+>> +					<0 0>,
+>> +					<0 0>,
+>> +					<37500000 150000000>,
+>> +					<75000000 300000000>,
+>> +					<0 0>,
+>> +					<0 0>,
+>> +					<0 0>;
+>> +
+>> +			non-removable;
+>
+> Is it allowed property?
+
+I dropped it.
+
+>> +			status = "disabled";
+>> +		};
+>> +
+>> +		ufs_mem_phy: phy@4807000 {
+>> +			compatible = "qcom,sm6115-qmp-ufs-phy";
+>> +			reg = <0x4807000 0x1c4>;
+>> +			#address-cells = <1>;
+>> +			#size-cells = <1>;
+>> +			ranges;
+>> +
+>> +			clocks = <&gcc GCC_UFS_CLKREF_CLK>,
+>> +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
+>> +			clock-names = "ref", "ref_aux";
+>> +
+>> +			resets = <&ufs_mem_hc 0>;
+>> +			reset-names = "ufsphy";
+>> +			status = "disabled";
+>> +
+>> +			ufs_mem_phy_lanes: lanes@4807400 {
+>> +				reg = <0x4807400 0x098>,
+>> +				      <0x4807600 0x130>,
+>> +				      <0x4807c00 0x16c>;
+>> +				#phy-cells = <0>;
+>> +			};
+>> +		};
+>> +
+>> +
+>
+> Just one blank line.
+>
 > Best regards,
 > Krzysztof
-
-Regards,
-Iskren
