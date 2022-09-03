@@ -2,107 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71D845ABDE2
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Sep 2022 10:45:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 408C65ABE79
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Sep 2022 12:31:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232303AbiICIo7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 3 Sep 2022 04:44:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49798 "EHLO
+        id S229741AbiICKb3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 3 Sep 2022 06:31:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231128AbiICIo6 (ORCPT
+        with ESMTP id S229464AbiICKb2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 3 Sep 2022 04:44:58 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55C0D22BC3
-        for <linux-arm-msm@vger.kernel.org>; Sat,  3 Sep 2022 01:44:56 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id x1-20020a17090ab00100b001fda21bbc90so7615146pjq.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 03 Sep 2022 01:44:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date;
-        bh=SqBWJMi80DJWLQXPnlKcmrIcjb7xa2nf0K9N0p5fp6o=;
-        b=DvrsLWEMlhjHH/5WVBfj8Y5DO9stEG/FvSbPWBRhc9QTWUx35WY9XbpVZxfp/1Y+yE
-         4ZcaHwpKk8wfWhO5f7nmYblFk91e1lEn/Jwxe+UFOQZL8HjaScdFtlqBo8t5hjwuJh3C
-         htSouEhj02sYU3NoYMYMyctkGsh2iUFZEmEUQtOW2vmF+hYhGxGvTHw6iVo1l60Acv7c
-         KKm30r0FN0egi85rCg/r4/GTQuBXa0YwDucTVNrLIdBzjP1nTsyPticABpfW/Nq00b4n
-         K7ZFS+FPFkb31FuQR2nAKBn39Fsrcos5ztJJf9ObODW51kJFZQRoWa5IDUOJFbyOhmnv
-         t6+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=SqBWJMi80DJWLQXPnlKcmrIcjb7xa2nf0K9N0p5fp6o=;
-        b=Fw3ZhycQJURkn5q2z8kA72dJVupg/C+UF7sGU7Ul/R2r8zNYuO4yLeBB2ybb42eoE6
-         k98Y66kxM1PiTibLU0iTTq4C62jr49l6V+PPiGRax4kfFYqeObRFjswaM+GJzB2xgmtm
-         Vg8IIWIzzgOEOjLJwGVA7buK4QkTYkYR7+kKURdip724nNoVjVeom6nEiRhyJgvoshO6
-         HvSorKKhMMxe/9AhI4HVgKE478bP0djhpozyI/mYJ5XJ6RppzeTr5AcngYYN4RTaRfUl
-         RtNAY4c7/CpapwEQZ9NldvqRrEQNR1tIRGdxUwPgL4kaYLiR2QTIAJPSZkJlNCyvi+Ck
-         rgvQ==
-X-Gm-Message-State: ACgBeo1/trWdIKOZKagTxoa/givKqXnjzpuEWzRXqCQuW+NV0OGU9MVd
-        cjl8S1haehOfQ0p3kQ+a7+77VA3BZv8H+w==
-X-Google-Smtp-Source: AA6agR553+63YCOpEHkjQVUXYkeZkjdY8vc36nto1zMSug5I3wsmEei7vRDlKN1S7NZA0jZgp7pzrg==
-X-Received: by 2002:a17:90b:1c8e:b0:1f7:5250:7b44 with SMTP id oo14-20020a17090b1c8e00b001f752507b44mr9107957pjb.212.1662194695348;
-        Sat, 03 Sep 2022 01:44:55 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:1c60:5362:9d7f:2354:1d0a:78e3])
-        by smtp.gmail.com with ESMTPSA id 5-20020a17090a190500b001fe444b2245sm2827696pjg.25.2022.09.03.01.44.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 03 Sep 2022 01:44:55 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     devicetree@vger.kernel.org, agross@kernel.org,
-        bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH] arm64: dts: qcom: sc8280xp-pmics: Remove reg entry for pmc8280c_lpg node
-Date:   Sat,  3 Sep 2022 14:14:40 +0530
-Message-Id: <20220903084440.1509562-1-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.37.1
+        Sat, 3 Sep 2022 06:31:28 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BA6D57E2B;
+        Sat,  3 Sep 2022 03:31:27 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 283ALLLZ001758;
+        Sat, 3 Sep 2022 10:31:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=aEc794XOU78IjaB4Anobb658Fmb1e6ScIqNaoytW334=;
+ b=RUQ9NRkbPVkSkrGXne8na09hAMj1Lej+YB2aUeGIjmKI98zlaKGVjog7UtnPSR1Ma4pL
+ NTgqLDb8hvTfRJf9WiGwR6Kx3m8cwcy5FnnhtM8zWQD9YefP3UfsGeaJssJgd0CB1U5c
+ uer4+x97YRl4t2ZDVysmFs7Oa7mvf9+es/IRsxhzlsvYYccmz9aGzCScrMQnkBdUOlWY
+ x33TLiKGyMD9RESDgZrwl1/Mf8vhBkV/o/XY6o/CNthd5QzsZKsB2XAIbUqrk5mVhhOg
+ N8IBW/UXLsXAwGbF4qchGDQSfhZ3uPkFF9he6ffpzifzT2k/fbX/YmpXZMZs/qzqGQwq KQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jbypmgjah-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 03 Sep 2022 10:31:00 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 283AUxvX019182
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 3 Sep 2022 10:30:59 GMT
+Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Sat, 3 Sep 2022 03:30:53 -0700
+From:   Krishna Kurapati <quic_kriskura@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>
+CC:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>, <quic_vpulyala@quicinc.com>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>
+Subject: [PATCH v12 0/3] Add QCOM SNPS PHY overriding params support
+Date:   Sat, 3 Sep 2022 16:00:45 +0530
+Message-ID: <1662201048-26049-1-git-send-email-quic_kriskura@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: EVsXVSRJYCKl0L82I8Jqab4e5rrsva7J
+X-Proofpoint-GUID: EVsXVSRJYCKl0L82I8Jqab4e5rrsva7J
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-09-03_03,2022-08-31_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1011
+ phishscore=0 spamscore=0 mlxscore=0 bulkscore=0 adultscore=0
+ suspectscore=0 lowpriorityscore=0 malwarescore=0 mlxlogscore=659
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2209030053
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Commit eeca7d46217c ("arm64: dts: qcom: pm8350c: Drop PWM reg declaration")
-dropped PWM reg declaration for pm8350c pwm(s), but there is a leftover
-'reg' entry inside the lpg/pwm node in sc8280xp dts file. Remove the same.
+Added support for overriding tuning parameters in QCOM SNPS PHY
+from device tree. This parameter tuning is required to tune the
+hs signal on dp/dm lines for electrical compliance to be successful.
 
-While at it, also remove the unused unit address in the node
-label.
+Changes in v12:
+Fixed nitpicks in driver code.
 
-Fixes: eeca7d46217c ("arm64: dts: qcom: pm8350c: Drop PWM reg declaration")
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+Changes in v11:
+Made changes to logs added in phy driver.
+Fixed nitpicks in code.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-index ae90b97aecb8..2e5cf55afdd5 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-@@ -60,9 +60,8 @@ pmc8280c_gpios: gpio@8800 {
- 			#interrupt-cells = <2>;
- 		};
- 
--		pmc8280c_lpg: lpg@e800 {
-+		pmc8280c_lpg: lpg {
- 			compatible = "qcom,pm8350c-pwm";
--			reg = <0xe800>;
- 
- 			#address-cells = <1>;
- 			#size-cells = <0>;
+Changes in v10:
+Fixed patch headers.
+
+changes in v9:
+Fixed nitpick in driver code.
+
+changes in v8:
+Fixed nitpick in driver code.
+
+changes in v7:
+Fixed nitpick in driver code and dtsi file.
+
+changes in v6:
+Fixed errors in dt-bindings.
+Fixed nitpick in driver code.
+
+changes in v5:
+Fixed nitpicks in code.
+Added minimum and maximum for each parameter added in dt-bindings.
+Added proper suffixes to each parameter as per dtschema.
+
+changes in v4:
+Fixed nitpicks in code.
+Initial compliance test results showed overshoot in the middle of eye
+diagram. The current dt values were put in place to correct it and fix
+overshoot issue.
+
+changes in v3:
+Added support for phy tuning parameters to be represented in bps and
+corresponding register values to be written are obtained by traversing
+through data map declared in the driver.
+
+changes in v2:
+Reading the individual fields in each overriding register from
+device tree.
+
+Krishna Kurapati (2):
+  phy: qcom-snps: Add support for overriding phy tuning parameters
+  arm64: dts: qcom: sc7280: Update SNPS Phy params for SC7280 IDP device
+
+Sandeep Maheswaram (1):
+  dt-bindings: phy: qcom,usb-snps-femto-v2: Add phy override params
+    bindings
+
+ .../bindings/phy/qcom,usb-snps-femto-v2.yaml       |  88 +++++++
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi           |   6 +
+ drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c      | 252 ++++++++++++++++++++-
+ 3 files changed, 344 insertions(+), 2 deletions(-)
+
 -- 
-2.37.1
+2.7.4
 
