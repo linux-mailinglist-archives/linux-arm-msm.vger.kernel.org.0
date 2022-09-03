@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99CED5AC0FC
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Sep 2022 20:59:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A17065AC10B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Sep 2022 21:08:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232881AbiICS7U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 3 Sep 2022 14:59:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58092 "EHLO
+        id S232594AbiICTIf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 3 Sep 2022 15:08:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232816AbiICS7S (ORCPT
+        with ESMTP id S230320AbiICTIe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 3 Sep 2022 14:59:18 -0400
-Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40E7057264;
-        Sat,  3 Sep 2022 11:59:18 -0700 (PDT)
-Date:   Sat, 03 Sep 2022 18:59:10 +0000
+        Sat, 3 Sep 2022 15:08:34 -0400
+Received: from mail-40136.proton.ch (mail-40136.proton.ch [185.70.40.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D6E057E37
+        for <linux-arm-msm@vger.kernel.org>; Sat,  3 Sep 2022 12:08:33 -0700 (PDT)
+Date:   Sat, 03 Sep 2022 19:08:20 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1662231554; x=1662490754;
-        bh=9L+ya5D+HHVzJ5A4w7jqzlee5Frl26BuJPqFAGtXACA=;
+        s=protonmail; t=1662232111; x=1662491311;
+        bh=iURgxyu9ob4++N5UHicPVjw94qeA3C2soRlfY+K5wPk=;
         h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
          References:Feedback-ID:From:To:Cc:Date:Subject:Reply-To:
          Feedback-ID:Message-ID;
-        b=NImseukOYaGDkkChPfsbZ4Kqoa97NI/NWK49vmHM9uAxS5X1KB2OPK6TbxUz3TgYX
-         fjvn8+Q5jrpGuACFMEwmBkfKUqVYdV9RjbMrJ/IW7twkJF3yGSmR+hs1DikYvRMWvT
-         le3aZvPNKaEi7IjfqBdhAZIT6KflURlnT+P7W4Ec=
+        b=Pb53YiaSOfwtRJGfhelyHt4rQRkpIUiz7lx95feravHcOKKH/bEGOwGzxy7W1M3vM
+         yXMBaRnECFnSHhvr4BKFur1qgkEriYm/k5Dc1DYumrETedoU6HoszP2N9e5SjN+NIU
+         Kcl7WG+XexCMMHllIcNkvccN9m48rlHwdzrCgbd0=
 To:     Iskren Chernev <iskren.chernev@gmail.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -34,22 +34,20 @@ Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
+        linux-kernel@vger.kernel.org
 Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: Re: [PATCH v2 4/9] dt-bindings: pinctrl: qcom: sm6115: Add reserved ranges
-Message-ID: <c54bf940-a9f2-44a3-b327-b9e4d779a910@connolly.tech>
-In-Reply-To: <20220903174150.3566935-5-iskren.chernev@gmail.com>
-References: <20220903174150.3566935-1-iskren.chernev@gmail.com> <20220903174150.3566935-5-iskren.chernev@gmail.com>
+Subject: Re: [PATCH v2 6/9] dt-bindings: arm: qcom: Add compatible for oneplus,billie2 phone
+Message-ID: <180096cd-9205-96b8-b6c4-a2a900166ceb@connolly.tech>
+In-Reply-To: <20220903174150.3566935-7-iskren.chernev@gmail.com>
+References: <20220903174150.3566935-1-iskren.chernev@gmail.com> <20220903174150.3566935-7-iskren.chernev@gmail.com>
 Feedback-ID: 10753939:user:proton
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -59,30 +57,45 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 03/09/2022 18:41, Iskren Chernev wrote:
-> Ideally this and similar common properties will be inherited so you
-> won't need to paste them in every pinctrl binding.
+> oneplus,billie2 (OnePlus Nord N100) is based on QualComm Snapdragon
+> SM4250 SoC.
+>
+> Add support for the same in dt-bindings.
 >
 > Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Reviewed-by: Caleb Connolly <caleb@connolly.tech>
 > ---
->   .../devicetree/bindings/pinctrl/qcom,sm6115-pinctrl.yaml        | 2 ++
->   1 file changed, 2 insertions(+)
+>   Documentation/devicetree/bindings/arm/qcom.yaml | 7 +++++++
+>   1 file changed, 7 insertions(+)
 >
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-pinctr=
-l.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-pinctrl.yaml
-> index a7a2bb8bff46..d8443811767d 100644
-> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-pinctrl.yaml
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-pinctrl.yaml
-> @@ -49,6 +49,8 @@ properties:
->     gpio-ranges:
->       maxItems: 1
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentat=
+ion/devicetree/bindings/arm/qcom.yaml
+> index 19c2f4314741..63cc41cd0119 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -54,6 +54,8 @@ description: |
+>           sdm845
+>           sdx55
+>           sdx65
+> +        sm4250
+> +        sm6115
+>           sm6125
+>           sm6350
+>           sm7225
+> @@ -670,6 +672,11 @@ properties:
+>                 - xiaomi,polaris
+>             - const: qcom,sdm845
 >
-> +  gpio-reserved-ranges: true
+> +      - items:
+> +          - enum:
+> +              - oneplus,billie2
+> +          - const: qcom,sm4250
 > +
->     wakeup-parent: true
->
->   #PIN CONFIGURATION NODES
+>         - items:
+>             - enum:
+>                 - sony,pdx201
 > --
 > 2.37.2
 >
