@@ -2,104 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DBBE65AC47E
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Sep 2022 15:25:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A0FF5AC4E7
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Sep 2022 17:17:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233755AbiIDNY7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Sep 2022 09:24:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36954 "EHLO
+        id S234448AbiIDPRY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Sep 2022 11:17:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229903AbiIDNY6 (ORCPT
+        with ESMTP id S229477AbiIDPRX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Sep 2022 09:24:58 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 091491EAD0;
-        Sun,  4 Sep 2022 06:24:57 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id u9so12338278ejy.5;
-        Sun, 04 Sep 2022 06:24:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=Bdqzu+VtsZVtfIj9GP+yvbSAyPZKsekyvy5yCrlp8+U=;
-        b=U9RMKb/Fw6uaL+z7jtElY0l2S8XPbsE7/XkTZ3b65gk0+RUU+Eq5n5yqjGA2zWtiMj
-         nd7dg/DVR4y2nDw675cQe83H9t2EEFzRPA7NCHIDJ7g+QzpKDQ8cSfDU9kHxLsnTm8Qa
-         B0fPuhRmAUOoDcgqvt8WJhscddTBlQYyAi4bQQ9Yf8OaA5VupT+qCVjb8bPFjSyvfr6N
-         q+tgrtrojWh2NTWnJX4SXCNHzp/1oG9jyEBWOWmhEXxtyQWP0lffhT7D6lit4nZQDnI6
-         uiZPy6Tvxo+ANa0+xlyt7G0OkIZcLIwo/hHjm7zq/iQsaKftMV6zJ6o4uf62+KQVSVOs
-         grwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=Bdqzu+VtsZVtfIj9GP+yvbSAyPZKsekyvy5yCrlp8+U=;
-        b=Ht1gOnW2lMl+8lKk3DhiCJjM7x0PgRuxCRulVuT9f1oZ9pAubH/FIdVCgUKL5yVGNG
-         rXk+5A5soM+IO8C+knRlCWCXnbQdupcUw5NN0VmnFqng/4GfXsFRiucPTmJ5XS3dD0VL
-         NTQc3xLjDj4Suqt3y9SupNS0j99arBHdItBgTsBxl31ouIKm9bBXImewM3tjlnDd0HEW
-         KChw7rW6qFjfnS0fUXzG60pd8qMw4IFxsA9S6kb0fBqFktuGiKNUxvaPRPQ46WX0xnBc
-         G5tmtqp/YJF56Z/ls5ieolPDlw6WCH0FQR8NbLhY+4Zvcm03E7oN8rV+3S/jwzgLI+LW
-         UwIQ==
-X-Gm-Message-State: ACgBeo3Tlpn0RaI0GgZ1zdvzmRYDNHpzbpBJRaaKOYyiiabLjVL6gpQB
-        +pqHo5WGYGAxO+2vLzPLH3s=
-X-Google-Smtp-Source: AA6agR4l36T2EoiYPzEMRPEhBLvst64id+VOIhhytjDwER1pFe1mnJg+K8eP0XrOE0ZLkjqzvfKj2g==
-X-Received: by 2002:a17:907:271b:b0:730:aa8e:74eb with SMTP id w27-20020a170907271b00b00730aa8e74ebmr33280729ejk.478.1662297895494;
-        Sun, 04 Sep 2022 06:24:55 -0700 (PDT)
-Received: from [192.168.74.101] ([77.78.20.135])
-        by smtp.gmail.com with ESMTPSA id cm20-20020a0564020c9400b0044e74c9dfedsm860413edb.86.2022.09.04.06.24.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 04 Sep 2022 06:24:54 -0700 (PDT)
-Message-ID: <eac61be4-7d66-f07c-55ce-2ffb2caabbca@gmail.com>
-Date:   Sun, 4 Sep 2022 16:24:52 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v2 7/9] arm64: dts: qcom: sm6115: Add basic soc dtsi
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
+        Sun, 4 Sep 2022 11:17:23 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2D7533427;
+        Sun,  4 Sep 2022 08:17:22 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 5502AB80D70;
+        Sun,  4 Sep 2022 15:17:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21440C433D6;
+        Sun,  4 Sep 2022 15:17:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1662304640;
+        bh=xjdPYgdB9h50iN/sMAXgx3TlezzJ2hEsjMGUNuESwQw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=bSZ4dTKtfMNrRfeMjIh0uwpaywenCjzYh7YAtyAapy/xSEsV2B/DjrmrWFNfaoIxZ
+         fRLCTgyJhn0nU3HHUKigGDtRWjfxtQfKkiBmg4Vx2ur7rtVDKDpxBAFTMbsJ57ckn0
+         K0zPIG3VCYowbB3wCwadpgFSVG+fLaqif+4d2OmQPZm2pSQaSdYPsgr87J2XIsGgY0
+         Q8qcamBf9Wd2s0h/3AwC0MKS3OFLay2XyAnJTm6sIJSaZt0qTzAqjKri9VZ/yLm+ub
+         J82ButxZ6R+CFLc8PS+QSfsRwyKehuqD4AoIBiq7IuTkw4KDCipnGxROIAEzUS+mAu
+         DzYxz/mLbtQ3A==
+Date:   Sun, 4 Sep 2022 20:47:15 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org
-References: <20220903174150.3566935-1-iskren.chernev@gmail.com>
- <20220903174150.3566935-8-iskren.chernev@gmail.com>
- <0583bec6-3bcd-b4b5-910e-bb82ec72028e@somainline.org>
-From:   Iskren Chernev <iskren.chernev@gmail.com>
-In-Reply-To: <0583bec6-3bcd-b4b5-910e-bb82ec72028e@somainline.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com
+Subject: Re: [PATCH v11 2/3] phy: qcom-snps: Add support for overriding phy
+ tuning parameters
+Message-ID: <YxTBewhBecSgXvPq@matsya>
+References: <1658384954-9506-1-git-send-email-quic_kriskura@quicinc.com>
+ <1658384954-9506-3-git-send-email-quic_kriskura@quicinc.com>
+ <20220830203518.pty67fyefho4ewgw@builder.lan>
+ <31d459e4-57c0-85d1-2d88-e5bf0bed6604@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <31d459e4-57c0-85d1-2d88-e5bf0bed6604@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 31-08-22, 18:41, Krishna Kurapati PSSNV wrote:
+ 
+> > The ordering of this list needs to match the order of
+> > override_param_map[] and there's nothing indicating this in the code.
+> > 
+> > I was considering suggesting that you add a enum/define and do
+> > 	[SQUELCH_DETECTOR_BP] = "qcom,squelch-detector-bp",
+> > 	...
+> > and then do the same in the override_param_map array.
+> > >
+> > But I think it will be cleaner if you add a const char const pointer to
+> > override_param_map and just specify these strings in the
+> > override_param_map array.
+> > 
+> > Each entry will grow by a pointer, but multiple copies of the same
+> > strings (when added in the future) should be combined by the compiler.
+> > 
+> IIUC, you want me to remove this array of const char*'s and embed them in
+> the override_param_map and iterate through it without using this const
+> phy_seq_props as a reference.
 
-On 9/3/22 22:46, Konrad Dybcio wrote:
->> +		user_contig_mem: memory@fbc00000 {
->> +			reg = <0x0 0xfbc00000 0x0 0x1000000>;
-> Pretty sure this and linux_cma_mem don't need to be reserved at a precise
-> location.. I might be wrong, though..
+I think that would make it simpler.. 
 
-In downstream pretty much no reserved memory location have precise location.
-How do you figure out which one is which?
+> > > +static const struct override_param_map sc7280[] = {
+> > 
+> > There's nothing ensuring that the loop below doesn't run off the end of
+> > this array. So when the next platform is added, there's no way to
+> > handle the fact that they might have a different set of properties.
+> > 
+> > If you add the property name to these elements, that will no longer be a
+> > problem (and you can add a {} entry at the end of the list and check for
+> > this when looping over the elements.
 
->> +	timer {
->> +		compatible = "arm,armv8-timer";
->> +		interrupts = <GIC_PPI 1 0xf08>,
->> +			     <GIC_PPI 2 0xf08>,
->> +			     <GIC_PPI 3 0xf08>,
->> +			     <GIC_PPI 0 0xf08>;
->> +		clock-frequency = <19200000>;
-> Remove clock-frequency if the platform boots without it.
+Would be great if this is addressed as well
 
-And if not stick it in DTS?
+-- 
+~Vinod
