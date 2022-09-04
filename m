@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 216885AC5FF
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Sep 2022 21:10:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C5F195AC602
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Sep 2022 21:14:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234462AbiIDTKU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Sep 2022 15:10:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45550 "EHLO
+        id S234507AbiIDTOr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Sep 2022 15:14:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234454AbiIDTKS (ORCPT
+        with ESMTP id S234454AbiIDTOq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Sep 2022 15:10:18 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EF6B1834F
-        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Sep 2022 12:10:15 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id w19so7260504ljj.7
-        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Sep 2022 12:10:15 -0700 (PDT)
+        Sun, 4 Sep 2022 15:14:46 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A39613EB3
+        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Sep 2022 12:14:44 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id v26so10376709lfd.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Sep 2022 12:14:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=Zg+iO2cHAZ4r3CwVknTSd9WpAQ+T+PmH9eUM+TKxTdc=;
-        b=BOb1TQqLBg3Vo9NOObXNapdN3fX1o2A47xccVzPBEh3W6eETgX0cVeJZJ+Pbu3sUUd
-         e3VT1m7M2ht2A1QeJwtWSMgFH7REHFEKHtriZLobW2N6MRbsxmSI8Qf6WkuPkS4l3kyb
-         8tXScDm6Z6GeBQ6iDmT4s1HOvBCpvagV2Jiizr64YjxGMl0jv3Z3+j+KfscEOZwqfzUy
-         Oy478r+iOEZHRIC/xZoNu719WhIlen/bWReEhsqTmZ5mEbAWLY5PmUq6FKRpQHbwdgQH
-         ezy6GprCjx7XKx5F0g81Aajc8WvDtmmxc5ZtW7U0q9dtyNQZsJDl0AYj8ZWQ4c6IS7c3
-         O4pA==
+        bh=3GXh/ns1cJ/0c/GapXMPVA54+Xh4yfj4dl+7YFfWaUY=;
+        b=wkk+uEcKDPx2YAmk7uSmpiP0cgoeu8Wq1z7ZeGpxUFA5yFBN22EgebzlDhFopcYLOj
+         1cJV6h/SrBlvUo5g2hEMsQp2f3E8Fy3u1IKNiVNHx0gntkdlmJD8AmpZqwSYfmIkQZeQ
+         HwgQLVlTap+yROtvfOo03sHgJVqnY0K5MbXkFEc3twCJXVWWBhqNGWVseli7gBHPGh1d
+         +v17mkHqE5wBDmcIpl84E9AeQZ/sTw0VptttUOBPRI9NT8nz+HPtaSVaScfu3IlQZCRt
+         FjizDrvAryJQ6Wd3yy4XkYd96uEBaZ/eyKamnEkKzCYK0aK6LtUiU8pomCHY5pmL/9oW
+         wr3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=Zg+iO2cHAZ4r3CwVknTSd9WpAQ+T+PmH9eUM+TKxTdc=;
-        b=gKUNs6uQ79qnmhP8hfiyluGxCW0dVBuHdCKux3rBasX3Mzvhe0V3QjWgKwUHUW2+1w
-         ve+Az4fii4LGV5nXkH6da1ksBGY5iU1NyEBpW16u+jlN9HiOzp2vzAgI2dmJ5E+pk6M1
-         TUJbqPnOZmbcWgurdefyM4SfiqZzw4MOdpzYjUgQbb7Un1Pi2JR32ORLXjaMkigpn8jD
-         TuogF5yFvh+UVYOuEj8A7jOEaSqrL3pXK/avFSfFByFBbdVrokZl2z8du65pckZWMwN6
-         x9X4EK6DF/5Tr7Q052CW4RGvmIbSaKG2UgypouCTUW9EyKjozkPEaujJEpdvwbfxpNER
-         q4FA==
-X-Gm-Message-State: ACgBeo1eZmA+xg1KhmPpbtBhp5HS/iI4VzRy6u/WTu0dGMCU1BnOdItF
-        Jx3etNGP1zU3XGnNwxApeWoc/A==
-X-Google-Smtp-Source: AA6agR4G1EVK6Vkm3ynfxZbN+nIgBnYZIWjL6IipexTk4VhVtEQ6oXIt2rHZsPBpI/X/zmGj4u3Fqw==
-X-Received: by 2002:a2e:a99b:0:b0:261:b1a1:4ee9 with SMTP id x27-20020a2ea99b000000b00261b1a14ee9mr14389646ljq.366.1662318613931;
-        Sun, 04 Sep 2022 12:10:13 -0700 (PDT)
+        bh=3GXh/ns1cJ/0c/GapXMPVA54+Xh4yfj4dl+7YFfWaUY=;
+        b=4dRge23waf1sHNG/ocs2XqqZOfQoYAXm66zwaBlIoOn6/cgfiSe+BJCBHDsNoIwQPb
+         QZQeDocOrBYxR1D79hUvjuT1cEtkplQwrqJi1Z4dajfdsLajfRjBoi8cy2M5R+e9I+6h
+         zSzP4V3afVqeqwtmlGRUvzKGWpFG5XgojTwJ0dcTbf2ihudIf0lzI1XBgXcJVQpCHPCt
+         Kh5KKOhKunLuvz9Ji3ycM5QUDDhuyy8GG5+ylX5epSidzEl6QjsocWxQf1d5QPNqbHok
+         xm5+Yd74KbntjzZ4K5VtBT1wDm4JVPvde/VYEFfOCEp3AMViLAxGslCHI2xCI2fZAnqf
+         4yaQ==
+X-Gm-Message-State: ACgBeo3U6v04qHqfaUIQgXV4283AocAEAmZiwPsoGJv0knsSyk7ew+qT
+        lXTKpZ5rEQVL0WcPAECCLVMNGw==
+X-Google-Smtp-Source: AA6agR65rv4fXBrevKCCM1P0Gy2/g/+9ZK4R6CXmOMuFjn+F7xVJkIQ1wisP9+dZws3s8X+HDpKvrg==
+X-Received: by 2002:a05:6512:1149:b0:494:9b4f:75e5 with SMTP id m9-20020a056512114900b004949b4f75e5mr6148774lfg.236.1662318883009;
+        Sun, 04 Sep 2022 12:14:43 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id k6-20020ac257c6000000b00490b5f09973sm992560lfo.92.2022.09.04.12.10.12
+        by smtp.gmail.com with ESMTPSA id t16-20020a056512209000b0048aef1abb08sm987827lfr.297.2022.09.04.12.14.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 04 Sep 2022 12:10:13 -0700 (PDT)
-Message-ID: <199167f2-0420-8c56-5156-35005069549d@linaro.org>
-Date:   Sun, 4 Sep 2022 22:10:11 +0300
+        Sun, 04 Sep 2022 12:14:42 -0700 (PDT)
+Message-ID: <423bc933-2049-5bf8-b0ca-7e1ddc1f5852@linaro.org>
+Date:   Sun, 4 Sep 2022 22:14:40 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
-Subject: Re: [PATCH 08/14] dt-bindings: ufs: qcom: Add sm6115 binding
+Subject: Re: [PATCH v2 2/9] dt-bindings: firmware: document Qualcomm SM6115
+ SCM
 Content-Language: en-US
 To:     Iskren Chernev <iskren.chernev@gmail.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -64,17 +65,14 @@ Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220901072414.1923075-1-iskren.chernev@gmail.com>
- <20220901072414.1923075-9-iskren.chernev@gmail.com>
- <7804ffbe-4e27-d8bd-dbe2-75d1323da064@linaro.org>
- <89e6a200-d9af-7263-5e09-d7d824277a30@gmail.com>
+        Robert Marko <robimarko@gmail.com>,
+        Das Srinagesh <quic_gurus@quicinc.com>,
+        linux-kernel@vger.kernel.org, Adam Skladowski <a39.skl@gmail.com>
+References: <20220903174150.3566935-1-iskren.chernev@gmail.com>
+ <20220903174150.3566935-3-iskren.chernev@gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <89e6a200-d9af-7263-5e09-d7d824277a30@gmail.com>
+In-Reply-To: <20220903174150.3566935-3-iskren.chernev@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,63 +85,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/09/2022 19:54, Iskren Chernev wrote:
+On 03/09/2022 20:41, Iskren Chernev wrote:
+> Document the compatible for Qualcomm  SM6115 SCM.
 > 
-> 
-> On 9/1/22 19:11, Krzysztof Kozlowski wrote:
->> On 01/09/2022 10:24, Iskren Chernev wrote:
->>> Add SM6115 UFS to DT schema.
->>>
->>> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
->>> ---
->>>  .../devicetree/bindings/ufs/qcom,ufs.yaml     | 26 +++++++++++++++++++
->>>  1 file changed, 26 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->>> index f2d6298d926c..7c5f6e2e6d4c 100644
->>> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->>> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->>> @@ -28,6 +28,7 @@ properties:
->>>            - qcom,msm8998-ufshc
->>>            - qcom,sc8280xp-ufshc
->>>            - qcom,sdm845-ufshc
->>> +          - qcom,sm6115-ufshc
->>>            - qcom,sm6350-ufshc
->>>            - qcom,sm8150-ufshc
->>>            - qcom,sm8250-ufshc
->>> @@ -178,6 +179,31 @@ allOf:
->>>            minItems: 1
->>>            maxItems: 1
->>>
->>> +  - if:
->>> +      properties:
->>> +        compatible:
->>> +          contains:
->>> +            enum:
->>> +              - qcom,sm6115-ufshc
->>> +    then:
->>> +      properties:
->>> +        clocks:
->>> +          minItems: 8
->>> +          maxItems: 8
->>> +        clock-names:
->>> +          items:
->>> +            - const: core_clk
->>> +            - const: bus_aggr_clk
->>> +            - const: iface_clk
->>> +            - const: core_clk_unipro
->>> +            - const: core_clk_ice
->>
->> Use existing name and put it in the same place as existing variant - sdm845:
->> ice_core_clk
-> 
-> The only problem with sdm845 bindings is the presence of rx_lane1_sync_clk
-> clock. I'm guessing I could pass zeros there, because it shouldn't be used. Or
-> it could be moved to last property and then min/maxItems to guard, but that is
-> a change to something more-or-less immutable.
+> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
 
-I don't understand - what is the problem here. How presence of some
-clock affects name of other clock and its place/location in list of clocks?
+There was such patch:
+https://lore.kernel.org/all/338f2929-aa67-bf63-2d66-5de48f6af1c4@linaro.org/
+
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
 Best regards,
