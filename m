@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D696F5AC562
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Sep 2022 18:23:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8B385AC5AC
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Sep 2022 19:22:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230013AbiIDQXe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Sep 2022 12:23:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52958 "EHLO
+        id S234406AbiIDRWG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Sep 2022 13:22:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229596AbiIDQXd (ORCPT
+        with ESMTP id S233768AbiIDRWG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Sep 2022 12:23:33 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01A822B24A;
-        Sun,  4 Sep 2022 09:23:31 -0700 (PDT)
+        Sun, 4 Sep 2022 13:22:06 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82721303CF;
+        Sun,  4 Sep 2022 10:22:05 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 8AF55B80DB0;
-        Sun,  4 Sep 2022 16:23:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E62C433D6;
-        Sun,  4 Sep 2022 16:23:28 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1E6AD60F77;
+        Sun,  4 Sep 2022 17:22:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55DAFC433D6;
+        Sun,  4 Sep 2022 17:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1662308609;
-        bh=EGjh7mS5zJnu1xp3jsOWXePLs1ZonDTFOjM6Yw4z0sk=;
+        s=k20201202; t=1662312124;
+        bh=HMQgwDI76WiAFBkZo0CkfR6wG07owwAMh5ZHn7lvDs8=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=E4YB9JMuAOXI9y1z4Z55HvKxWVmKoRXckM/SnJILzF0v2X2OVMyE0UwdoXdOquFkn
-         e6DZ8zFJDOjQkUJJwKH1qEnpOtNOEFmJ80QRG5lyoOcP/K5HyzX+an82zVepWizoun
-         r1BXNl9zmT/E4vOJVJ6lnfMDXo3EAd+sv1vmG2VvgoB+/hY9yLz38q/RkYtmH9t5jG
-         iwRdhqAE/kjtOWOlbpQ2jo06yHgbYYfW5cVETBGSMFF2TxZ+Meyz6FnqT9h/cONpk2
-         zzb6WYESAKi2jis1rd6V9D5IuZnN7yW86nfffHjrYYnwLAmZ6SXfdGjcTi6KqRcV+x
-         osUQoWho/LAmQ==
-Date:   Sun, 4 Sep 2022 21:53:24 +0530
+        b=TADRxJARSNjw7GHmC/HOUdV2x5cVOPjHku2DpmPgcT7NReGRss4e/8CVt56COZWHl
+         OswpMkT6TsLHm+Yki7JBhBUTscWas+zQ9LV7WAX+lO6KfhYrpMZNffY3Pv5LIPCTdB
+         n100n1yc5u3qQbH6/DILkk5c2mjmkbCxrPVHFEUSQIo591GcemRzYVWSIZZDf3RLTm
+         oFIDay+4ySsqI3iAHUVlJHyWM0oZDFEAZFHjhm6jUJsryC4Ujq2nWeyOh3Zra+31VX
+         vfrtxOYaebv7uKWty5fGOLo+r+/p3FnzQV/kJDslZ8W6lRHbQPMce8Iq4duUgtPQbW
+         fTGQQyWD3vKHA==
+Date:   Sun, 4 Sep 2022 22:51:59 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Luca Weiss <luca.weiss@fairphone.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        devicetree@vger.kernel.org, dmaengine@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/3] Add GPI DMA support for SM6350
-Message-ID: <YxTQ/A8i0HpAO9om@matsya>
-References: <20220812082721.1125759-1-luca.weiss@fairphone.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     gustavo.pimentel@synopsys.com, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Serge Semin <fancer.lancer@gmail.com>,
+        Frank Li <Frank.Li@nxp.com>
+Subject: Re: [PATCH] dmaengine: dw-edma: Remove runtime PM support
+Message-ID: <YxTet82IgKtQ+q9q@matsya>
+References: <20220512083612.122824-1-manivannan.sadhasivam@linaro.org>
+ <20220819084018.GC215264@thinkpad>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220812082721.1125759-1-luca.weiss@fairphone.com>
+In-Reply-To: <20220819084018.GC215264@thinkpad>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -57,14 +57,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12-08-22, 10:27, Luca Weiss wrote:
-> This series hooks up GPI DMA support for the SM6350 I2C.
+On 19-08-22, 14:10, Manivannan Sadhasivam wrote:
+> On Thu, May 12, 2022 at 02:06:12PM +0530, Manivannan Sadhasivam wrote:
+> > Currently, the dw-edma driver enables the runtime_pm for parent device
+> > (chip->dev) and increments/decrements the refcount during alloc/free
+> > chan resources callbacks.
+> > 
+> > This leads to a problem when the eDMA driver has been probed, but the
+> > channels were not used. This scenario can happen when the DW PCIe driver
+> > probes eDMA driver successfully, but the PCI EPF driver decides not to
+> > use eDMA channels and use iATU instead for PCI transfers.
+> > 
+> > In this case, the underlying device would be runtime suspended due to
+> > pm_runtime_enable() in dw_edma_probe() and the PCI EPF driver would have
+> > no knowledge of it.
+> > 
+> > Ideally, the eDMA driver should not be the one doing the runtime PM of
+> > the parent device. The responsibility should instead belong to the client
+> > drivers like PCI EPF.
+> > 
+> > So let's remove the runtime PM support from eDMA driver.
+> > 
+> > Cc: Serge Semin <fancer.lancer@gmail.com>
+> > Cc: Frank Li <Frank.Li@nxp.com>
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > 
-> It has been tested using himax,hxcommon driver that I forward-ported
-> from the original vendor kernel on fairphone-fp4 - previously I have
-> used i2c-gpio bitbang in my tree.
+> Looks like this one missed 6.0. Vinod, can you please merge this now?
 
-Applied 1-2, thanks
+This fails for me, can you pls rebase and resend
 
 -- 
 ~Vinod
