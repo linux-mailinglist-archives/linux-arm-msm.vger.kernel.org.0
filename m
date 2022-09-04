@@ -2,83 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D6055AC61C
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Sep 2022 21:29:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A2655AC62D
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Sep 2022 21:32:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234724AbiIDT3Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Sep 2022 15:29:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36392 "EHLO
+        id S234975AbiIDTc6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Sep 2022 15:32:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234332AbiIDT3P (ORCPT
+        with ESMTP id S234971AbiIDTc5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Sep 2022 15:29:15 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1E962E6A6
-        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Sep 2022 12:29:13 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id bx38so7273765ljb.10
-        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Sep 2022 12:29:13 -0700 (PDT)
+        Sun, 4 Sep 2022 15:32:57 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9371F2F015
+        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Sep 2022 12:32:55 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id p18so7288306ljc.9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Sep 2022 12:32:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=zHeAXo2eVvuHVI2CtRdbixiwjmytc3y6afJUtYoJYpk=;
-        b=ThWlvfZfdpLZC6rr/TLTj3uI1wa6gss0BeXEu/MR0bu6mh5ROH84GuWWi0yMygSsk8
-         GQMd6eUlDaYvmd9VAzJKYHpIlk81VNLE1B6WbCvBWQ8cmCfHV7IdZaxRlu62hKuwI68T
-         aWoUSaic1aeLY7G3xVPOc5+D8P1P28prp2Dw4wLC0UFzleMPnWcdC4RW5nEsCHvjA26N
-         h9e8wEp0ulmb1DhqIsw/uU3xo076Qrz6al7h0tKy2PDYbFViyg0vm2JCX+EWUjovIO7h
-         jAAdt5zqurVEgQ1Glytm30i06NVu1K1E4kCgWhcmFsrts1U7FFwRj3FVvrhLU4Lqecxm
-         hgCw==
+        bh=v94704O0TujNsYv17nMnBtu+OH84/eWQsf7ETYu5jHU=;
+        b=raPVkER/pA/imnNF3kT8eAcWerRaKCjrqBh/wET6ENZryx2c7P8UT3SIFG8eB/Qlq0
+         tE/YDV+OC6gtDr5gXzoGgkMLmAbYi6Qh4HclWcsAZ06fe1mpQwlQLrlOEiI1qQ9Dyy0H
+         3GYilxmuI4B4dkhfvCffFepqRjpB0jvtGAq9qnbKgpeV/M21yrwAqADL7HO9zkmnnxnm
+         xNfpjh/E0ooeAQJWMS0K7sZbigbdYL0hWMkZoRqOTqjU+bUXWIMUCtNocmCRcW+VXF+y
+         gNCsQ381EOG6ADOir1Pwr7PkgAKuK7G1iKTHWeyOT1qTcgNJaMHVMNyC+WQkqPWIi2O7
+         XQ9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=zHeAXo2eVvuHVI2CtRdbixiwjmytc3y6afJUtYoJYpk=;
-        b=l8dB4G4cEezFsla3xOQZgM+5hxAKrjvgd/D0x2pqUSq8ST2OmE1eKHcBbMWTNXJNT9
-         gzyQmfTI8sn3hFz4SsfwmS9/n4cnkLqqp99u194XWjx5THQnxHFI+2bv39joTPFvIJb6
-         c18wwzS9rWJs4LsNSMPM1sKl5LiM6xGwZjbl/9XJDVP0a5P0CPzXzvoBpnWPTPfcARo4
-         pWX0MhOWfdvsXRpNP8Y8jhISz7/9Z4NF9jO5/U1L3V8MU53xuSyRzBaPf7W6q3mdUBZz
-         +uE5oma7klPC6yj+gIRAQIS8+r5oBYFi7TsbQD5491SaBsqIV7PdFgsU+Ow2h8UwCUWP
-         /Pjg==
-X-Gm-Message-State: ACgBeo3ONGCtRh3vYPWBPjxbuyTl7vwoX4TRI7Hfh5j1rbOJYmaxPJ3G
-        hC/EON57B8DSWLiAQmnp2dBOfg==
-X-Google-Smtp-Source: AA6agR65K/IgRHnj6QpYI1nFz586TFGQ5PPBnlzIci/aK9vvxN7Khb0SzyqI1idYiXM726MSBrsDTA==
-X-Received: by 2002:a2e:bc26:0:b0:266:9e0f:ee86 with SMTP id b38-20020a2ebc26000000b002669e0fee86mr8871593ljf.1.1662319752110;
-        Sun, 04 Sep 2022 12:29:12 -0700 (PDT)
+        bh=v94704O0TujNsYv17nMnBtu+OH84/eWQsf7ETYu5jHU=;
+        b=J6GSVvz/52j1TTF7znkl/ex+fJuGbOTWdRwcPprKJbWpbZG5Cwe1uW/045LS+X/RTq
+         93lyCR17tOaMPCMJ52WksI6EWs2JbgshKRLwvyVI5Xh3WY/HEPVZlWlFoneAoIzMY5Nj
+         WmbfQHiHkvoR4W0foupLWowkenIgbsVxWnJjWFhWqMQQksXylj5CrrD4iuWuK1mZmNJf
+         Ji7CjoyoDBuosH/usfnzQjx2K2n7ELc/JFNAa/3gXJdxVNCJJf8MTFZMYtv6c8lVdpO0
+         swut+oVzzLvXtI0unr7iu72fAxj6+1DnHtdftGIsmPeuGrzFR7HlIZR+a0awdnNEbaQZ
+         aWpw==
+X-Gm-Message-State: ACgBeo265waoFJyRblFaTXycHZ0OeC5EqmAGHEoQ8NhQCui9SeayKQsE
+        2kK/dbRz5nDdZvg0jZQ9Rcx0zg==
+X-Google-Smtp-Source: AA6agR5REWTNOc8xN6hgbVoCILU5d1wRngjWNHHWSEPfiwS7FtzGVXNiGV9cwF3kbGOmN7JE7NzJSg==
+X-Received: by 2002:a2e:7207:0:b0:269:1f9:6365 with SMTP id n7-20020a2e7207000000b0026901f96365mr2851875ljc.201.1662319974001;
+        Sun, 04 Sep 2022 12:32:54 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id e19-20020a05651c111300b00261aecd1c53sm1087776ljo.71.2022.09.04.12.29.10
+        by smtp.gmail.com with ESMTPSA id x12-20020ac259cc000000b0049497a2b288sm996454lfn.58.2022.09.04.12.32.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 04 Sep 2022 12:29:11 -0700 (PDT)
-Message-ID: <58608d9f-bc79-4e97-2027-e68863213aea@linaro.org>
-Date:   Sun, 4 Sep 2022 22:29:04 +0300
+        Sun, 04 Sep 2022 12:32:53 -0700 (PDT)
+Message-ID: <3ff2773d-92e0-d52d-4350-d63a40a70f07@linaro.org>
+Date:   Sun, 4 Sep 2022 22:32:51 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
-Subject: Re: [PATCH v2 03/10] dt-bindings: misc: fastrpc: Document
- memory-region property
+Subject: Re: [RESEND PATCH] arm64: defconfig: enable newer Qualcomm SoC sound
+ drivers
 Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Andy Gross <agross@kernel.org>,
+To:     Arnd Bergmann <arnd@arndb.de>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Ekansh Gupta <quic_ekagupt@quicinc.com>
-Cc:     Rob Herring <robh@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org
-References: <20220902154900.3404524-1-abel.vesa@linaro.org>
- <20220902154900.3404524-4-abel.vesa@linaro.org>
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        arm@kernel.org, soc@kernel.org, Olof Johansson <olof@lixom.net>
+References: <20220831141218.516100-1-krzysztof.kozlowski@linaro.org>
+ <81ed8e35-fa70-4b0e-9601-131c9d0c46d4@www.fastmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220902154900.3404524-4-abel.vesa@linaro.org>
+In-Reply-To: <81ed8e35-fa70-4b0e-9601-131c9d0c46d4@www.fastmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,17 +81,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/09/2022 18:48, Abel Vesa wrote:
-> Add memory-region property to the list of optional properties, specify
-> the value type and a definition
+On 02/09/2022 12:34, Arnd Bergmann wrote:
+> On Wed, Aug 31, 2022, at 4:12 PM, Krzysztof Kozlowski wrote:
+>> Enable sound support (machine drivers) for Qualcomm SC7180 and SC7280
+>> SoCs.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>
+>> Resending because I missed ARM SoC maintainers and Bjorn.
+> 
+> No objections to the patch, but I'm unsure what I'm supposed to
+> do with it. Is this for Bjorn or me to pick up? 
 
-You should write why adding this property. Is it already used?
+It seems usually Bjorn picks his parts of defconfig changes, so I guess
+this can go indeed via Bjorn.
 
-New properties can go only to DT schema, so first the conversion [1]
-should be finished or started from zero (9 months it's quite a time for
-a resend...).
+> Do we need it
+> as a 6.0 fix or should this wait for 6.1?
 
-https://lore.kernel.org/all/20211208101508.24582-1-david@ixit.cz/
+Can wait for v6.1.
 
 
 Best regards,
