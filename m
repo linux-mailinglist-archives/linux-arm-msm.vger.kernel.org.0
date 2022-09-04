@@ -2,92 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA1BE5AC5DE
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Sep 2022 20:16:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 216885AC5FF
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Sep 2022 21:10:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231339AbiIDSQm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Sep 2022 14:16:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54920 "EHLO
+        id S234462AbiIDTKU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Sep 2022 15:10:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231181AbiIDSQl (ORCPT
+        with ESMTP id S234454AbiIDTKS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Sep 2022 14:16:41 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ADA62AC7B;
-        Sun,  4 Sep 2022 11:16:40 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 284HsKIH018843;
-        Sun, 4 Sep 2022 18:16:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=ubnAS8VgAnez/UAxDq8AwKFPMgv5RWi6uPoVQePbBlE=;
- b=WbMVm5gv0azn6Wu7ZjnkNCLfY+2vxCCFyRGvsXx7Bv0hh33UZaR+EohJEyNseHlB4oBQ
- cN6cdEZdPr20Q13sVn1N/AG1OcoGl4dmeZqleuRCWY5wCethSO5uWmyyNKPRDmkwrdoO
- zZGHsncyEy7Fb0WwEc5aoB2V5E9xyskCXDyM/mqmCgvh3rXatM/0x6fuQMpNBDQ+xY/6
- 22LgvNAVk9LAlJ8ZXTZgYAB/TElNTclOed9jHys/6tKjcFt91f71MS0l+fXzA2mr6jo/
- 6urbBsavP/KzyFoASY4qIFZev4OegD5WIhCa6YfqAx8OymZwusTpbOLdth8oHdn5jKYu yg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jc07dabvg-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 04 Sep 2022 18:16:22 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 284IGLM0027586
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 4 Sep 2022 18:16:21 GMT
-Received: from [10.216.14.47] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Sun, 4 Sep 2022
- 11:16:15 -0700
-Message-ID: <7ec9f707-f554-4f50-e7fb-f66a6989daac@quicinc.com>
-Date:   Sun, 4 Sep 2022 23:46:11 +0530
+        Sun, 4 Sep 2022 15:10:18 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EF6B1834F
+        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Sep 2022 12:10:15 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id w19so7260504ljj.7
+        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Sep 2022 12:10:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=Zg+iO2cHAZ4r3CwVknTSd9WpAQ+T+PmH9eUM+TKxTdc=;
+        b=BOb1TQqLBg3Vo9NOObXNapdN3fX1o2A47xccVzPBEh3W6eETgX0cVeJZJ+Pbu3sUUd
+         e3VT1m7M2ht2A1QeJwtWSMgFH7REHFEKHtriZLobW2N6MRbsxmSI8Qf6WkuPkS4l3kyb
+         8tXScDm6Z6GeBQ6iDmT4s1HOvBCpvagV2Jiizr64YjxGMl0jv3Z3+j+KfscEOZwqfzUy
+         Oy478r+iOEZHRIC/xZoNu719WhIlen/bWReEhsqTmZ5mEbAWLY5PmUq6FKRpQHbwdgQH
+         ezy6GprCjx7XKx5F0g81Aajc8WvDtmmxc5ZtW7U0q9dtyNQZsJDl0AYj8ZWQ4c6IS7c3
+         O4pA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=Zg+iO2cHAZ4r3CwVknTSd9WpAQ+T+PmH9eUM+TKxTdc=;
+        b=gKUNs6uQ79qnmhP8hfiyluGxCW0dVBuHdCKux3rBasX3Mzvhe0V3QjWgKwUHUW2+1w
+         ve+Az4fii4LGV5nXkH6da1ksBGY5iU1NyEBpW16u+jlN9HiOzp2vzAgI2dmJ5E+pk6M1
+         TUJbqPnOZmbcWgurdefyM4SfiqZzw4MOdpzYjUgQbb7Un1Pi2JR32ORLXjaMkigpn8jD
+         TuogF5yFvh+UVYOuEj8A7jOEaSqrL3pXK/avFSfFByFBbdVrokZl2z8du65pckZWMwN6
+         x9X4EK6DF/5Tr7Q052CW4RGvmIbSaKG2UgypouCTUW9EyKjozkPEaujJEpdvwbfxpNER
+         q4FA==
+X-Gm-Message-State: ACgBeo1eZmA+xg1KhmPpbtBhp5HS/iI4VzRy6u/WTu0dGMCU1BnOdItF
+        Jx3etNGP1zU3XGnNwxApeWoc/A==
+X-Google-Smtp-Source: AA6agR4G1EVK6Vkm3ynfxZbN+nIgBnYZIWjL6IipexTk4VhVtEQ6oXIt2rHZsPBpI/X/zmGj4u3Fqw==
+X-Received: by 2002:a2e:a99b:0:b0:261:b1a1:4ee9 with SMTP id x27-20020a2ea99b000000b00261b1a14ee9mr14389646ljq.366.1662318613931;
+        Sun, 04 Sep 2022 12:10:13 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id k6-20020ac257c6000000b00490b5f09973sm992560lfo.92.2022.09.04.12.10.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 04 Sep 2022 12:10:13 -0700 (PDT)
+Message-ID: <199167f2-0420-8c56-5156-35005069549d@linaro.org>
+Date:   Sun, 4 Sep 2022 22:10:11 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v11 2/3] phy: qcom-snps: Add support for overriding phy
- tuning parameters
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH 08/14] dt-bindings: ufs: qcom: Add sm6115 binding
 Content-Language: en-US
-To:     Vinod Koul <vkoul@kernel.org>
-CC:     Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Andy Gross" <agross@kernel.org>,
+To:     Iskren Chernev <iskren.chernev@gmail.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        "Matthias Kaehlcke" <mka@chromium.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_vpulyala@quicinc.com>
-References: <1658384954-9506-1-git-send-email-quic_kriskura@quicinc.com>
- <1658384954-9506-3-git-send-email-quic_kriskura@quicinc.com>
- <20220830203518.pty67fyefho4ewgw@builder.lan>
- <31d459e4-57c0-85d1-2d88-e5bf0bed6604@quicinc.com> <YxTBewhBecSgXvPq@matsya>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <YxTBewhBecSgXvPq@matsya>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Rob Herring <robh+dt@kernel.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220901072414.1923075-1-iskren.chernev@gmail.com>
+ <20220901072414.1923075-9-iskren.chernev@gmail.com>
+ <7804ffbe-4e27-d8bd-dbe2-75d1323da064@linaro.org>
+ <89e6a200-d9af-7263-5e09-d7d824277a30@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <89e6a200-d9af-7263-5e09-d7d824277a30@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: wGhgHhrOrBDHo0fwH3Q3gDi2rhOx0CEz
-X-Proofpoint-ORIG-GUID: wGhgHhrOrBDHo0fwH3Q3gDi2rhOx0CEz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-09-04_03,2022-08-31_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- spamscore=0 suspectscore=0 malwarescore=0 mlxlogscore=999 impostorscore=0
- priorityscore=1501 clxscore=1015 adultscore=0 bulkscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2209040093
-X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -95,48 +87,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 03/09/2022 19:54, Iskren Chernev wrote:
+> 
+> 
+> On 9/1/22 19:11, Krzysztof Kozlowski wrote:
+>> On 01/09/2022 10:24, Iskren Chernev wrote:
+>>> Add SM6115 UFS to DT schema.
+>>>
+>>> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+>>> ---
+>>>  .../devicetree/bindings/ufs/qcom,ufs.yaml     | 26 +++++++++++++++++++
+>>>  1 file changed, 26 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>>> index f2d6298d926c..7c5f6e2e6d4c 100644
+>>> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>>> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>>> @@ -28,6 +28,7 @@ properties:
+>>>            - qcom,msm8998-ufshc
+>>>            - qcom,sc8280xp-ufshc
+>>>            - qcom,sdm845-ufshc
+>>> +          - qcom,sm6115-ufshc
+>>>            - qcom,sm6350-ufshc
+>>>            - qcom,sm8150-ufshc
+>>>            - qcom,sm8250-ufshc
+>>> @@ -178,6 +179,31 @@ allOf:
+>>>            minItems: 1
+>>>            maxItems: 1
+>>>
+>>> +  - if:
+>>> +      properties:
+>>> +        compatible:
+>>> +          contains:
+>>> +            enum:
+>>> +              - qcom,sm6115-ufshc
+>>> +    then:
+>>> +      properties:
+>>> +        clocks:
+>>> +          minItems: 8
+>>> +          maxItems: 8
+>>> +        clock-names:
+>>> +          items:
+>>> +            - const: core_clk
+>>> +            - const: bus_aggr_clk
+>>> +            - const: iface_clk
+>>> +            - const: core_clk_unipro
+>>> +            - const: core_clk_ice
+>>
+>> Use existing name and put it in the same place as existing variant - sdm845:
+>> ice_core_clk
+> 
+> The only problem with sdm845 bindings is the presence of rx_lane1_sync_clk
+> clock. I'm guessing I could pass zeros there, because it shouldn't be used. Or
+> it could be moved to last property and then min/maxItems to guard, but that is
+> a change to something more-or-less immutable.
+
+I don't understand - what is the problem here. How presence of some
+clock affects name of other clock and its place/location in list of clocks?
 
 
-On 9/4/2022 8:47 PM, Vinod Koul wrote:
-> On 31-08-22, 18:41, Krishna Kurapati PSSNV wrote:
->   
->>> The ordering of this list needs to match the order of
->>> override_param_map[] and there's nothing indicating this in the code.
->>>
->>> I was considering suggesting that you add a enum/define and do
->>> 	[SQUELCH_DETECTOR_BP] = "qcom,squelch-detector-bp",
->>> 	...
->>> and then do the same in the override_param_map array.
->>>>
->>> But I think it will be cleaner if you add a const char const pointer to
->>> override_param_map and just specify these strings in the
->>> override_param_map array.
->>>
->>> Each entry will grow by a pointer, but multiple copies of the same
->>> strings (when added in the future) should be combined by the compiler.
->>>
->> IIUC, you want me to remove this array of const char*'s and embed them in
->> the override_param_map and iterate through it without using this const
->> phy_seq_props as a reference.
-> 
-> I think that would make it simpler..
-> 
->>>> +static const struct override_param_map sc7280[] = {
->>>
->>> There's nothing ensuring that the loop below doesn't run off the end of
->>> this array. So when the next platform is added, there's no way to
->>> handle the fact that they might have a different set of properties.
->>>
->>> If you add the property name to these elements, that will no longer be a
->>> problem (and you can add a {} entry at the end of the list and check for
->>> this when looping over the elements.
-> 
-> Would be great if this is addressed as well
-Hi Vinod. Thanks for the review. I have posted v12 addressing these 
-comments.
-
-https://lore.kernel.org/linux-usb/1662201048-26049-1-git-send-email-quic_kriskura@quicinc.com/
-
-Regards,
-Krishna,
-> 
+Best regards,
+Krzysztof
