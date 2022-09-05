@@ -2,175 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 06F725AD2EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 14:40:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE6375AD316
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 14:51:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237958AbiIEMan (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Sep 2022 08:30:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57602 "EHLO
+        id S237015AbiIEMns (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Sep 2022 08:43:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237403AbiIEMaP (ORCPT
+        with ESMTP id S238366AbiIEMnd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Sep 2022 08:30:15 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36F7F60693;
-        Mon,  5 Sep 2022 05:26:28 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id bd26-20020a05600c1f1a00b003a5e82a6474so5587842wmb.4;
-        Mon, 05 Sep 2022 05:26:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date;
-        bh=tAW3My05WCTmzHfQ20v4+422b2rUR8g6mM7zB5mCK5c=;
-        b=H4qfO4cL2opf/Oims/aoUBSsApZKqNzReLWDBf21NNU3zOzkUVzYu9/ukGsOp7JdbB
-         9M+uMTZMSauTYXRMVl/5ps7yjrG3ZPGf1USr/PieL2z4r/6SWBSsARzsiKoNvrGMeLjf
-         gmdgtaoeoQub7Hh4wZ2FfJwsajmPfapVUgwNg/vJDkOZezFwWpa5ZpsrRWaGNI+cXoyE
-         mfCT48BrURA9yeWXhe+PmwQKxbEGHnc/j2xik+wbgRUFK9aoC/8IN/fwI9UmJxx3yCnw
-         GO3nw40TKiUQl89+pHR42XU5m6b5QmimoPYdkH3pQNfn9fxcNGU9oMQoroOPyMRUaNlZ
-         KRsw==
+        Mon, 5 Sep 2022 08:43:33 -0400
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48D125FF7F;
+        Mon,  5 Sep 2022 05:40:59 -0700 (PDT)
+Received: by mail-ot1-f43.google.com with SMTP id h20-20020a056830165400b00638ac7ddba5so6084193otr.4;
+        Mon, 05 Sep 2022 05:40:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=tAW3My05WCTmzHfQ20v4+422b2rUR8g6mM7zB5mCK5c=;
-        b=RNwa+fezx0hZaoneXl67XYmysK/EuSwT0fzFPV8LLJ6Kq13ObFJ5ge0I8suD8Dr+DK
-         tVpZEb2yTVrAhva/o+OuAHfUzn4USty/GP+NhspJUWoMBYwcL1VC2V9FE6CG/TlBuozc
-         yzbtdEqhnR51jXXnRLC1CkhXiGppvnoKco6D34qxo2Cx3yu7/9PF6lWzxAqv47r/sOGa
-         23irtPyEQQry53aTxUmjlGNBbEG2ql6nxRHwAB4dn9WXHFmwvzTp9sNK9FlHXu5aY5Dt
-         PRNbWDbDaK4u/bumnabZZFkYipifl2rhEGoViqYcuQpOCoLnZd4cqXfrT5FL/8hqJ8hu
-         cIwg==
-X-Gm-Message-State: ACgBeo2mfz5jEiMGJuz0/Y+ohL4yhR2fmE0CbABftjUSag9uFy1TW+6K
-        I5sY+YjO+GxU2vWgwGu6WTU=
-X-Google-Smtp-Source: AA6agR5k4PoyPjWt82Qnzkt4tXrp7SK1j65iKZUj6dX3ITrjRqYQNa1z4jEW70ny5h5k3QSCdq4K2A==
-X-Received: by 2002:a05:600c:2193:b0:3a5:346f:57d0 with SMTP id e19-20020a05600c219300b003a5346f57d0mr10430095wme.124.1662380768536;
-        Mon, 05 Sep 2022 05:26:08 -0700 (PDT)
-Received: from [10.176.234.249] ([137.201.254.41])
-        by smtp.googlemail.com with ESMTPSA id c11-20020a5d528b000000b0021e42e7c7dbsm8441891wrv.83.2022.09.05.05.26.07
+        h=message-id:date:subject:references:in-reply-to:cc:to:from
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=vdBwwKn2Xl4pm4tpPtpu48ujTi08Q+jwgvphGlSojxg=;
+        b=rB7WngDafgSRnsw7RXQmkpsMtUPDrEqxTlQ70ZjPjIU5J87NVpCWib03IxRqEzU5R9
+         plzzH4ogw4xEuemIauQL+UDJCvhAS+Lq3hpGPd/zScvza7yqFZ0+0TUblUtVaWR5jniV
+         /R7Xi90y7YFVM579tov/2oJkppF3vA1q+nrcuFmLfi0NhDcRL4hmzLfDZI70go2u72Zt
+         SyGOAYG70TllNxwMr/WVk8kddk6EI2mzm54QQoV6SUfEkDbu5OPChRwJdywXoJN+/KbR
+         jljpfLjFBrgxjxWkVZYRVXb+JlTHb/UTuzWgnIFQGo2bF249JrODeHMVYZ4Pi9H4y4MH
+         LQww==
+X-Gm-Message-State: ACgBeo0A3jf9D3pi9wuKEBsYTc88mBWB7rK/fyJHU/OLRM/6MnckHO0b
+        6+wnYXMnGBuLe7rNz0oQGA==
+X-Google-Smtp-Source: AA6agR7SwXlWCoYqEo/sNvj+gGGVxCebcT/z95Z8+eS1E6Gz52y6Bu0EWp1jCYQVysDCw5HYtof5OQ==
+X-Received: by 2002:a9d:5f05:0:b0:638:9ae3:59e with SMTP id f5-20020a9d5f05000000b006389ae3059emr19362668oti.271.1662381658484;
+        Mon, 05 Sep 2022 05:40:58 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id e38-20020a05687023a600b001048f70e03dsm4945117oap.15.2022.09.05.05.40.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Sep 2022 05:26:08 -0700 (PDT)
-Message-ID: <6e594dc2ce6103884b7768c2fed55eabec0d5ed8.camel@gmail.com>
-Subject: Re: [RFC PATCH v3 1/4] ufs: core: prepare ufs for multi circular
- queue support
-From:   Bean Huo <huobean@gmail.com>
-To:     Asutosh Das <quic_asutoshd@quicinc.com>, quic_nguyenb@quicinc.com,
-        quic_xiaosenh@quicinc.com, stanley.chu@mediatek.com,
-        adrian.hunter@intel.com, bvanassche@acm.org, avri.altman@wdc.com,
-        mani@kernel.org, quic_cang@quicinc.com, beanhuo@micron.com,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        open list <linux-kernel@vger.kernel.org>
-Date:   Mon, 05 Sep 2022 14:26:06 +0200
-In-Reply-To: <757bbfe36629b7c31ef2630971f8678a7801223f.1662157846.git.quic_asutoshd@quicinc.com>
-References: <cover.1662157846.git.quic_asutoshd@quicinc.com>
-         <757bbfe36629b7c31ef2630971f8678a7801223f.1662157846.git.quic_asutoshd@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-User-Agent: Evolution 3.44.1-0ubuntu1 
-MIME-Version: 1.0
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Mon, 05 Sep 2022 05:40:58 -0700 (PDT)
+Received: (nullmailer pid 1957045 invoked by uid 1000);
+        Mon, 05 Sep 2022 12:40:57 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        David Heidelberg <david@ixit.cz>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        devicetree@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org
+In-Reply-To: <20220905103715.955786-1-abel.vesa@linaro.org>
+References: <20220905103715.955786-1-abel.vesa@linaro.org>
+Subject: Re: [PATCH v6 1/2] dt-bindings: misc: fastrpc convert bindings to yaml
+Date:   Mon, 05 Sep 2022 07:40:57 -0500
+Message-Id: <1662381657.354400.1957044.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QXN1dG9zaCwKCgpPbiBGcmksIDIwMjItMDktMDIgYXQgMTU6NDEgLTA3MDAsIEFzdXRvc2ggRGFz
-IHdyb3RlOgo+IFByZXBhcmF0b3J5IGNoYW5nZXMgZm9yIHVwY29taW5nIG11bHRpIGNpcmN1bGFy
-IHF1ZXVlLgo+IAo+IENvLWRldmVsb3BlZC1ieTogQ2FuIEd1byA8cXVpY19jYW5nQHF1aWNpbmMu
-Y29tPgo+IFNpZ25lZC1vZmYtYnk6IENhbiBHdW8gPHF1aWNfY2FuZ0BxdWljaW5jLmNvbT4KPiBT
-aWduZWQtb2ZmLWJ5OiBBc3V0b3NoIERhcyA8cXVpY19hc3V0b3NoZEBxdWljaW5jLmNvbT4KPiAt
-LS0KPiDCoGRyaXZlcnMvdWZzL2NvcmUvdWZzaGNkLmMgfCA5OSArKysrKysrKysrKysrKysrKysr
-KysrKysrLS0tLS0tLS0tLS0tCj4gLS0tLS0tLS0tLQo+IMKgMSBmaWxlIGNoYW5nZWQsIDUzIGlu
-c2VydGlvbnMoKyksIDQ2IGRlbGV0aW9ucygtKQo+IAo+IAo+IMKgCj4gQEAgLTIxMzQsMTQgKzIx
-MzUsMTQgQEAgc3RhdGljIHZvaWQgdWZzaGNkX3VwZGF0ZV9tb25pdG9yKHN0cnVjdAo+IHVmc19o
-YmEgKmhiYSwgY29uc3Qgc3RydWN0IHVmc2hjZF9scmIgKgo+IMKgICogQHRhc2tfdGFnOiBUYXNr
-IHRhZyBvZiB0aGUgY29tbWFuZAo+IMKgICovCgpZb3UgZGlkbid0IGNoYW5nZSBwYXJhbWV0ZXIg
-bmFtZSBpbiB0aGUgZnVuY3Rpb24gZGVzY3JpcHRpb24uCgo+IMKgc3RhdGljIGlubGluZQo+IC12
-b2lkIHVmc2hjZF9zZW5kX2NvbW1hbmQoc3RydWN0IHVmc19oYmEgKmhiYSwgdW5zaWduZWQgaW50
-IHRhc2tfdGFnKQo+ICt2b2lkIHVmc2hjZF9zZW5kX2NvbW1hbmQoc3RydWN0IHVmc19oYmEgKmhi
-YSwgc3RydWN0IHVmc2hjZF9scmIKPiAqbHJicCkKPiDCoHsKPiAtwqDCoMKgwqDCoMKgwqBzdHJ1
-Y3QgdWZzaGNkX2xyYiAqbHJicCA9ICZoYmEtPmxyYlt0YXNrX3RhZ107Cj4gK8KgwqDCoMKgwqDC
-oMKgaW50IHRhc2tfdGFnID0gbHJicC0+dGFza190YWc7Cj4gwqDCoMKgwqDCoMKgwqDCoHVuc2ln
-bmVkIGxvbmcgZmxhZ3M7Cj4gwqAKPiDCoMKgwqDCoMKgwqDCoMKgbHJicC0+aXNzdWVfdGltZV9z
-dGFtcCA9IGt0aW1lX2dldCgpOwo+IMKgwqDCoMKgwqDCoMKgwqBscmJwLT5jb21wbF90aW1lX3N0
-YW1wID0ga3RpbWVfc2V0KDAsIDApOwo+IC3CoMKgwqDCoMKgwqDCoHVmc2hjZF9hZGRfY29tbWFu
-ZF90cmFjZShoYmEsIHRhc2tfdGFnLCBVRlNfQ01EX1NFTkQpOwo+ICvCoMKgwqDCoMKgwqDCoHVm
-c2hjZF9hZGRfY29tbWFuZF90cmFjZShoYmEsIGxyYnAsIFVGU19DTURfU0VORCk7Cj4gwqDCoMKg
-wqDCoMKgwqDCoHVmc2hjZF9jbGtfc2NhbGluZ19zdGFydF9idXN5KGhiYSk7Cj4gwqDCoMKgwqDC
-oMKgwqDCoGlmICh1bmxpa2VseSh1ZnNoY2Rfc2hvdWxkX2luZm9ybV9tb25pdG9yKGhiYSwgbHJi
-cCkpKQo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgdWZzaGNkX3N0YXJ0X21vbml0
-b3IoaGJhLCBscmJwKTsKPiBAQCAtMjU1Myw5ICsyNTU0LDEwIEBAIHZvaWQgdWZzaGNkX3ByZXBh
-cmVfdXRwX3Njc2lfY21kX3VwaXUoc3RydWN0Cj4gdWZzaGNkX2xyYiAqbHJicCwgdTggdXBpdV9m
-bGFncykKPiDCoMKgwqDCoMKgwqDCoMKgLyogY29tbWFuZCBkZXNjcmlwdG9yIGZpZWxkcyAqLwo+
-IMKgwqDCoMKgwqDCoMKgwqB1Y2RfcmVxX3B0ci0+aGVhZGVyLmR3b3JkXzAgPSBVUElVX0hFQURF
-Ul9EV09SRCgKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgVVBJVV9UUkFOU0FDVElPTl9DT01NQU5ELCB1cGl1X2ZsYWdzLAo+
-IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoGxyYnAtPmx1biwgbHJicC0+dGFza190YWcpOwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoGxyYnAtPmx1biwgbHJi
-cC0+dGFza190YWcgJiAweGZmKTsKPiDCoMKgwqDCoMKgwqDCoMKgdWNkX3JlcV9wdHItPmhlYWRl
-ci5kd29yZF8xID0gVVBJVV9IRUFERVJfRFdPUkQoCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgVVBJVV9DT01NQU5EX1NFVF9U
-WVBFX1NDU0ksIDAsIDAsIDApOwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoFVQSVVfQ09NTUFORF9TRVRfVFlQRV9TQ1NJLCAw
-LCAwLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoChscmJwLT50YXNrX3RhZyAmIDB4ZjAwKSA8PCA0KTsKPiDCoAoKQXJlIHlv
-dSBzdXJlIGhlcmUgIihscmJwLT50YXNrX3RhZyAmIDB4ZjAwKSA8PCA0IiBpcyBjb3JyZWN0PyAK
-Cgp0aGlzIHdpbGwgb3ZlcndyaXRlIG90aGVyIGZpZWxkcywgc2VlIFVQSVVfSEVBREVSX0RXT1JE
-OgoKI2RlZmluZSBVUElVX0hFQURFUl9EV09SRChieXRlMywgYnl0ZTIsIGJ5dGUxLCBieXRlMClc
-CiAgICAgICAgICAgICAgICAgICAgICAgIGNwdV90b19iZTMyKChieXRlMyA8PCAyNCkgfCAoYnl0
-ZTIgPDwgMTYpIHxcCiAgICAgICAgICAgICAgICAgICAgICAgICAoYnl0ZTEgPDwgOCkgfCAoYnl0
-ZTApKQoKCgo+IAo+IMKgCj4gLcKgwqDCoMKgwqDCoMKgdWZzaGNkX3NlbmRfY29tbWFuZChoYmEs
-IHRhZyk7Cj4gK8KgwqDCoMKgwqDCoMKgdWZzaGNkX3NlbmRfY29tbWFuZChoYmEsIGxyYnApOwo+
-IMKgwqDCoMKgwqDCoMKgwqBlcnIgPSB1ZnNoY2Rfd2FpdF9mb3JfZGV2X2NtZChoYmEsIGxyYnAs
-IHRpbWVvdXQpOwo+IMKgwqDCoMKgwqDCoMKgwqB1ZnNoY2RfYWRkX3F1ZXJ5X3VwaXVfdHJhY2Uo
-aGJhLCBlcnIgPyBVRlNfUVVFUllfRVJSIDoKPiBVRlNfUVVFUllfQ09NUCwKPiDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgIChzdHJ1Y3QgdXRwX3VwaXVfcmVxICopbHJicC0KPiA+dWNkX3JzcF9wdHIpOwo+IEBAIC00
-NTEzLDYgKzQ1MTUsNyBAQCBpbnQgdWZzaGNkX21ha2VfaGJhX29wZXJhdGlvbmFsKHN0cnVjdCB1
-ZnNfaGJhCj4gKmhiYSkKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqBSRUdfVVRQX1RSQU5TRkVSX1JFUV9MSVNUX0JBU0VfTCk7Cj4gwqDCoMKgwqDCoMKg
-wqDCoHVmc2hjZF93cml0ZWwoaGJhLCB1cHBlcl8zMl9iaXRzKGhiYS0+dXRyZGxfZG1hX2FkZHIp
-LAo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoFJFR19V
-VFBfVFJBTlNGRVJfUkVRX0xJU1RfQkFTRV9IKTsKPiArCj4gwqDCoMKgwqDCoMKgwqDCoHVmc2hj
-ZF93cml0ZWwoaGJhLCBsb3dlcl8zMl9iaXRzKGhiYS0+dXRtcmRsX2RtYV9hZGRyKSwKPiDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBSRUdfVVRQX1RBU0tf
-UkVRX0xJU1RfQkFTRV9MKTsKPiDCoMKgwqDCoMKgwqDCoMKgdWZzaGNkX3dyaXRlbChoYmEsIHVw
-cGVyXzMyX2JpdHMoaGJhLT51dG1yZGxfZG1hX2FkZHIpLAo+IEBAIC01MzIwLDYgKzUzMjMsMzIg
-QEAgc3RhdGljIHZvaWQgdWZzaGNkX3JlbGVhc2Vfc2NzaV9jbWQoc3RydWN0Cj4gdWZzX2hiYSAq
-aGJhLAo+IMKgwqDCoMKgwqDCoMKgwqB1ZnNoY2RfY2xrX3NjYWxpbmdfdXBkYXRlX2J1c3koaGJh
-KTsKPiDCoH0KPiDCoAo+ICt2b2lkIHVmc2hjZF9jb21wbF9vbmVfY3FlKHN0cnVjdCB1ZnNfaGJh
-ICpoYmEsIGludCB0YXNrX3RhZykKClRoaXMgZnVuY3Rpb24gZG9lcyBvbmx5IGNvbXBsZXRlIG9u
-ZSB0YXNrLiBXaGF0IGRvZXMgY3FlIHN0YW5kIGZvcj8KCj4gK3sKPiArwqDCoMKgwqDCoMKgwqBz
-dHJ1Y3QgdWZzaGNkX2xyYiAqbHJicDsKPiArwqDCoMKgwqDCoMKgwqBzdHJ1Y3Qgc2NzaV9jbW5k
-ICpjbWQ7Cj4gKwo+ICvCoMKgwqDCoMKgwqDCoGxyYnAgPSAmaGJhLT5scmJbdGFza190YWddOwo+
-ICvCoMKgwqDCoMKgwqDCoGxyYnAtPmNvbXBsX3RpbWVfc3RhbXAgPSBrdGltZV9nZXQoKTsKPiAr
-wqDCoMKgwqDCoMKgwqBjbWQgPSBscmJwLT5jbWQ7Cj4gK8KgwqDCoMKgwqDCoMKgaWYgKGNtZCkg
-ewo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBpZiAodW5saWtlbHkodWZzaGNkX3No
-b3VsZF9pbmZvcm1fbW9uaXRvcihoYmEsCj4gbHJicCkpKQo+ICvCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgdWZzaGNkX3VwZGF0ZV9tb25pdG9yKGhiYSwgbHJi
-cCk7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHVmc2hjZF9hZGRfY29tbWFuZF90
-cmFjZShoYmEsIGxyYnAsIFVGU19DTURfQ09NUCk7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoGNtZC0+cmVzdWx0ID0gdWZzaGNkX3RyYW5zZmVyX3JzcF9zdGF0dXMoaGJhLCBscmJw
-KTsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgdWZzaGNkX3JlbGVhc2Vfc2NzaV9j
-bWQoaGJhLCBscmJwKTsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgLyogRG8gbm90
-IHRvdWNoIGxyYnAgYWZ0ZXIgc2NzaSBkb25lICovCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoHNjc2lfZG9uZShjbWQpOwo+ICvCoMKgwqDCoMKgwqDCoH0gZWxzZSBpZiAobHJicC0+
-Y29tbWFuZF90eXBlID09IFVUUF9DTURfVFlQRV9ERVZfTUFOQUdFIHx8Cj4gK8KgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgbHJicC0+Y29tbWFuZF90eXBlID09IFVUUF9DTURfVFlQ
-RV9VRlNfU1RPUkFHRSkgewo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBpZiAoaGJh
-LT5kZXZfY21kLmNvbXBsZXRlKSB7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqB1ZnNoY2RfYWRkX2NvbW1hbmRfdHJhY2UoaGJhLCBscmJwLAo+IFVGU19E
-RVZfQ09NUCk7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqBjb21wbGV0ZShoYmEtPmRldl9jbWQuY29tcGxldGUpOwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgdWZzaGNkX2Nsa19zY2FsaW5nX3VwZGF0ZV9idXN5
-KGhiYSk7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoH0KPiArwqDCoMKgwqDCoMKg
-wqB9Cj4gK30KPiArCgoKS2luZCByZWdhcmRzLApCZWFuCgo=
+On Mon, 05 Sep 2022 13:37:14 +0300, Abel Vesa wrote:
+> Convert Qualcomm FastRPC bindings to yaml format, so that we could validate
+> dt-entries correctly and any future additions can go into yaml format.
+> 
+> Use compute-cb@ subnodes instead of just cb@.
+> 
+> Also add qcom,non-secure-domain, qcom,glink-channels and
+> qcom,smd-channels missing properties to make sure dtbs_check doesn't
+> fail right off the bat.
+> 
+> Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Co-developed-by: David Heidelberg <david@ixit.cz>
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+> 
+> Changes since v5:
+>  * Removed the txt file
+> 
+>  .../devicetree/bindings/misc/qcom,fastrpc.txt |  88 --------------
+>  .../bindings/misc/qcom,fastrpc.yaml           | 108 ++++++++++++++++++
+>  2 files changed, 108 insertions(+), 88 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
+>  create mode 100644 Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> 
+
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/misc/qcom,fastrpc.example.dtb: smd-edge: 'qcom,smd-edge' is a required property
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/misc/qcom,fastrpc.example.dtb: smd-edge: 'oneOf' conditional failed, one must be fixed:
+	'mboxes' is a required property
+	'qcom,ipc' is a required property
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/misc/qcom,fastrpc.example.dtb: smd-edge: 'oneOf' conditional failed, one must be fixed:
+	'interrupts' is a required property
+	'interrupts-extended' is a required property
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml
+
+doc reference errors (make refcheckdocs):
+Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml: Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
+MAINTAINERS: Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
+
+See https://patchwork.ozlabs.org/patch/
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
 
