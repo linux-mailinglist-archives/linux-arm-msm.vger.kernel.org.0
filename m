@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C7765ACCC7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 09:29:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C5BC15ACD00
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 09:45:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235915AbiIEH3i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Sep 2022 03:29:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39422 "EHLO
+        id S235313AbiIEHdA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Sep 2022 03:33:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237883AbiIEH33 (ORCPT
+        with ESMTP id S235577AbiIEHct (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Sep 2022 03:29:29 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47101B9B;
-        Mon,  5 Sep 2022 00:29:26 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id w2so10228354edc.0;
-        Mon, 05 Sep 2022 00:29:26 -0700 (PDT)
+        Mon, 5 Sep 2022 03:32:49 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6216CDF81;
+        Mon,  5 Sep 2022 00:32:47 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id z8so10167823edb.6;
+        Mon, 05 Sep 2022 00:32:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=c8Fp7xbOBPiDPrMPRWEI6qZ2LdwuEUkMDG7mK0etL1w=;
-        b=mBcg+E2QMt+vbq77hTaeEwZbI7isR5fFJ9AcKdE7PabR9iPEeB9pBvPZB6u5z1bPWt
-         w6DGxEg/O3FFwZwb8Pr3PXeY1Ki+DilNKybSR6R310fAfiRF7xfW2mAlvLd0xPT3pHtx
-         fUuQ1b5liC+HOaQIZM0rtXHW+pQ8ftZ+NBnIerhICHPvWpqQOJamHGQSMN1oXCzg/6Qg
-         hnnqqQfkIGNeV+EQZj0BF1VtAt/j+BpXDxm8SpoTDwOBVhP4Spw/Lv5PbKm2PCxziDLw
-         g0w3c21MdX1rZAB8pgxYNHabow58GHY2nW7Q6Zd8dFpur41d9xNs3YLswTZMw1Rt+VwV
-         Z2yQ==
+        bh=KFZqMLqmCNNJgCkCjQcZg7wMtjJMqTFKiKSwJLQrOXM=;
+        b=XlYbRNum2TUfQpNOtotlD5LPSnvLYdo5FfFpb7zpNS7CnyFPTqiow0Bhk5G16UaOHn
+         oZpPq0KISHNHsdwjWM1MDZW7U/ys1dDPSfqzl9fe9iAtQQMC2RsTXBe08jQkEiiW679N
+         8dJWxxBj4qfDOUwOsZkaYcoIfMVUItONGv6+q2V8toEQY1bG5Ewd2PK0m18YzalWFgAD
+         s2UN9DtVGGWCbjN/0YgCLdzv7psTNZCc5bN3eCcSXYC++jeLrtLcOccDA3r6dulRnhEf
+         AJaisC4MBm4g20p8vJNWcI6i8J182lpP885x3XW7/x5fSkATNA8csfgROStpvNov8Qpw
+         j59A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=c8Fp7xbOBPiDPrMPRWEI6qZ2LdwuEUkMDG7mK0etL1w=;
-        b=gJC9mRRnl2SB/XRTnM3IzlV7KyIK05MQVo7EloPYli2L9oiMHRILRRdk6tPcRrapfE
-         pZUNxAFP80252bIc68AS+c+/i/a/HqgkaowGuyHF8+5hUwtyTk7rD4OSLBb+hQzffX2N
-         jqJuTvk0SVhunXHiYzb+GgXC30uhWnubw5OgdWQwle21wWRtdlpuNsHbycWYgio2hlrB
-         NecWzK6Nbt3iDl7seSanwD/iQ7u2uwGPuVDKEZeDJxWHJSFV2qm2T6pJVcPSfHfPSGZX
-         Ot5RyeJRUdQIfOy6QyoWfo0b6VbCA/51pETwxoWn24YzquH/qTnj8OSvMH/O51FQWQlb
-         2cbQ==
-X-Gm-Message-State: ACgBeo0cS4O2Hd9qBiMChSUvN7Wpqqo0SAWASaymBBngUAiclJa0SVXo
-        /IvQLcZWGPgAaw4Jk9V9juk=
-X-Google-Smtp-Source: AA6agR5XhI9SkUjAGjQeiLowNt+ajuGy8A24Y72F/JDl54cU7/bjBhLmv6/V+HDiSvoY0YvXqWwgbA==
-X-Received: by 2002:a05:6402:538b:b0:446:34f:2232 with SMTP id ew11-20020a056402538b00b00446034f2232mr40398081edb.4.1662362964700;
-        Mon, 05 Sep 2022 00:29:24 -0700 (PDT)
+        bh=KFZqMLqmCNNJgCkCjQcZg7wMtjJMqTFKiKSwJLQrOXM=;
+        b=p4gdL4FFs96H4M259FM3OHS2AIXhpkIXD2E/5EtJX8Vqx7xJ7cT9YBRsAdXx9iOSuu
+         oWrmYaN5Mrzeku8s9gFF79BDy/8tu6QAeStkVARn0efwic5MPrVCvaSwvRDhC4NPmRHy
+         RsE05FbGgc/mASEj9drPe5ChPlAbakcAcTSkMpFTwliO6nT3WH+QhK8JMqx+QrAobBDz
+         RVCUkEKEV9yf/Yhm4ez06OGHc9WFpPbaSCWKDovS5FI/RJUYXgzu1l56hsIAWZ170tLD
+         e7Yq9c3/rjGVuo4jEDkzIu5omUOMFqJpkCwq48FVj7NiTRPGIx3KpPdaBmBTQT/3Uvbt
+         CMNw==
+X-Gm-Message-State: ACgBeo2VTviUn6H5F76zgmD7b19N3hEvQCnn//sEds6Q85KbovAbqsO+
+        dJFhr4CQ6AQXjbFpCuXkk7Q=
+X-Google-Smtp-Source: AA6agR6QSLtTM7mbKeZS/znWAxdxGlZtU9oiulGTfmASctqcoy/oVB1kJZ3DcUuEfaFzFiFc+8p0RQ==
+X-Received: by 2002:a05:6402:4407:b0:447:1026:7537 with SMTP id y7-20020a056402440700b0044710267537mr41179894eda.312.1662363165769;
+        Mon, 05 Sep 2022 00:32:45 -0700 (PDT)
 Received: from [192.168.74.101] ([77.78.20.135])
-        by smtp.gmail.com with ESMTPSA id e5-20020a50d4c5000000b0044e983132c3sm831915edj.60.2022.09.05.00.29.23
+        by smtp.gmail.com with ESMTPSA id i23-20020aa7c9d7000000b0044e7d69091asm1771748edt.85.2022.09.05.00.32.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Sep 2022 00:29:23 -0700 (PDT)
-Message-ID: <72f86c4f-79fa-bff4-f14e-4cd7fa7ce41f@gmail.com>
-Date:   Mon, 5 Sep 2022 10:29:23 +0300
+        Mon, 05 Sep 2022 00:32:45 -0700 (PDT)
+Message-ID: <c5fc8d51-76e5-dace-a4c8-7de88f622086@gmail.com>
+Date:   Mon, 5 Sep 2022 10:32:44 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.12.0
-Subject: Re: [PATCH 08/14] dt-bindings: ufs: qcom: Add sm6115 binding
+Subject: Re: [PATCH v2 2/9] dt-bindings: firmware: document Qualcomm SM6115
+ SCM
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -64,18 +65,15 @@ Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220901072414.1923075-1-iskren.chernev@gmail.com>
- <20220901072414.1923075-9-iskren.chernev@gmail.com>
- <7804ffbe-4e27-d8bd-dbe2-75d1323da064@linaro.org>
- <89e6a200-d9af-7263-5e09-d7d824277a30@gmail.com>
- <199167f2-0420-8c56-5156-35005069549d@linaro.org>
+        Robert Marko <robimarko@gmail.com>,
+        Das Srinagesh <quic_gurus@quicinc.com>,
+        linux-kernel@vger.kernel.org, Adam Skladowski <a39.skl@gmail.com>
+References: <20220903174150.3566935-1-iskren.chernev@gmail.com>
+ <20220903174150.3566935-3-iskren.chernev@gmail.com>
+ <423bc933-2049-5bf8-b0ca-7e1ddc1f5852@linaro.org>
 From:   Iskren Chernev <iskren.chernev@gmail.com>
-In-Reply-To: <199167f2-0420-8c56-5156-35005069549d@linaro.org>
+In-Reply-To: <423bc933-2049-5bf8-b0ca-7e1ddc1f5852@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -90,73 +88,23 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 9/4/22 22:10, Krzysztof Kozlowski wrote:
-> On 03/09/2022 19:54, Iskren Chernev wrote:
+On 9/4/22 22:14, Krzysztof Kozlowski wrote:
+> On 03/09/2022 20:41, Iskren Chernev wrote:
+>> Document the compatible for Qualcomm  SM6115 SCM.
 >>
->>
->> On 9/1/22 19:11, Krzysztof Kozlowski wrote:
->>> On 01/09/2022 10:24, Iskren Chernev wrote:
->>>> Add SM6115 UFS to DT schema.
->>>>
->>>> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
->>>> ---
->>>>  .../devicetree/bindings/ufs/qcom,ufs.yaml     | 26 +++++++++++++++++++
->>>>  1 file changed, 26 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->>>> index f2d6298d926c..7c5f6e2e6d4c 100644
->>>> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->>>> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->>>> @@ -28,6 +28,7 @@ properties:
->>>>            - qcom,msm8998-ufshc
->>>>            - qcom,sc8280xp-ufshc
->>>>            - qcom,sdm845-ufshc
->>>> +          - qcom,sm6115-ufshc
->>>>            - qcom,sm6350-ufshc
->>>>            - qcom,sm8150-ufshc
->>>>            - qcom,sm8250-ufshc
->>>> @@ -178,6 +179,31 @@ allOf:
->>>>            minItems: 1
->>>>            maxItems: 1
->>>>
->>>> +  - if:
->>>> +      properties:
->>>> +        compatible:
->>>> +          contains:
->>>> +            enum:
->>>> +              - qcom,sm6115-ufshc
->>>> +    then:
->>>> +      properties:
->>>> +        clocks:
->>>> +          minItems: 8
->>>> +          maxItems: 8
->>>> +        clock-names:
->>>> +          items:
->>>> +            - const: core_clk
->>>> +            - const: bus_aggr_clk
->>>> +            - const: iface_clk
->>>> +            - const: core_clk_unipro
->>>> +            - const: core_clk_ice
->>>
->>> Use existing name and put it in the same place as existing variant - sdm845:
->>> ice_core_clk
->>
->> The only problem with sdm845 bindings is the presence of rx_lane1_sync_clk
->> clock. I'm guessing I could pass zeros there, because it shouldn't be used. Or
->> it could be moved to last property and then min/maxItems to guard, but that is
->> a change to something more-or-less immutable.
+>> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
 >
-> I don't understand - what is the problem here. How presence of some
-> clock affects name of other clock and its place/location in list of clocks?
+> There was such patch:
+> https://lore.kernel.org/all/338f2929-aa67-bf63-2d66-5de48f6af1c4@linaro.org/
 
-qcom,sdm845-ufshc has 9 clocks, one of which is rx_lane1_sync_clk.
-qcom,sm6115-ufshc has 8 clocks (all of the ones in sdm845 without
-rx_lane1_sync_clk). So if I'm understanding correctly, you want to put the
-sm6115 with sdm845, which means re-use the clocks and reg specification from
-sdm845, which means sm6115 will "inherit" this rx_lane1_sync_clk, and then
-I have to put it in DT (otherwise the schema would complain), and I'm asking if
-I can put an empty (i.e <0 0>) value, so schema is satisfied but clock is still
-not really passed.
+Yep, but that patch is for .txt schema, and now the schema is .yaml. So if you
+applied the other patchset and then ran dtbs_check it would still complain, so
+I added a patch here, in case the other patchset is not updated. I hope such
+a simple commit won't cause trouble (if you merge one and then try to merge the
+other).
 
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
+>
 > Best regards,
 > Krzysztof
