@@ -2,146 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C2CEC5ACC39
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 09:28:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C7765ACCC7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 09:29:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237358AbiIEHZ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Sep 2022 03:25:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56026 "EHLO
+        id S235915AbiIEH3i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Sep 2022 03:29:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237128AbiIEHZg (ORCPT
+        with ESMTP id S237883AbiIEH33 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Sep 2022 03:25:36 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8FAE40BE6;
-        Mon,  5 Sep 2022 00:22:44 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2855e1qP007005;
-        Mon, 5 Sep 2022 07:21:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=kubCKYLJeUMpMSD/hRdOyYdxZyH84wz7YEGced83hJE=;
- b=b1eYvakBepUCkBmNZWZSmh7v8zKKxZQfWzw0LXkt+bYjaOOf79Ouu7SNNHjRqMcIkwOR
- bzz3F0MgD6b3IIvQRvI5+97oivM+ybV/zBXdxpb3IiJvnU3zbG3wGcQH3xgg0Ui8AxCk
- q0G+B43oibJPfc5lWknkz5i1yMiOdemF9kGkQmlKyov/vRnPUPRsKwF/I7yJc1O+48GY
- M+N9r61zwGp4C0eQjjZihqP+/VPK6k4AcBWcn3HWeo4jUjEIWrpfzxC+efsIzPPWN+r2
- hSGWWoGWOfF3Lk9uxC120cvoMtSFTCDJ39wVh/G6dx53sKF9eixp6/TxR9Q4BGU44TUF 7g== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jbypmkd82-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 05 Sep 2022 07:21:27 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2857LQXJ003272
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 5 Sep 2022 07:21:26 GMT
-Received: from [10.50.47.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 5 Sep 2022
- 00:21:17 -0700
-Message-ID: <3af38280-c94b-e5ef-7a66-4869b1f36a30@quicinc.com>
-Date:   Mon, 5 Sep 2022 12:51:12 +0530
+        Mon, 5 Sep 2022 03:29:29 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47101B9B;
+        Mon,  5 Sep 2022 00:29:26 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id w2so10228354edc.0;
+        Mon, 05 Sep 2022 00:29:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=c8Fp7xbOBPiDPrMPRWEI6qZ2LdwuEUkMDG7mK0etL1w=;
+        b=mBcg+E2QMt+vbq77hTaeEwZbI7isR5fFJ9AcKdE7PabR9iPEeB9pBvPZB6u5z1bPWt
+         w6DGxEg/O3FFwZwb8Pr3PXeY1Ki+DilNKybSR6R310fAfiRF7xfW2mAlvLd0xPT3pHtx
+         fUuQ1b5liC+HOaQIZM0rtXHW+pQ8ftZ+NBnIerhICHPvWpqQOJamHGQSMN1oXCzg/6Qg
+         hnnqqQfkIGNeV+EQZj0BF1VtAt/j+BpXDxm8SpoTDwOBVhP4Spw/Lv5PbKm2PCxziDLw
+         g0w3c21MdX1rZAB8pgxYNHabow58GHY2nW7Q6Zd8dFpur41d9xNs3YLswTZMw1Rt+VwV
+         Z2yQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=c8Fp7xbOBPiDPrMPRWEI6qZ2LdwuEUkMDG7mK0etL1w=;
+        b=gJC9mRRnl2SB/XRTnM3IzlV7KyIK05MQVo7EloPYli2L9oiMHRILRRdk6tPcRrapfE
+         pZUNxAFP80252bIc68AS+c+/i/a/HqgkaowGuyHF8+5hUwtyTk7rD4OSLBb+hQzffX2N
+         jqJuTvk0SVhunXHiYzb+GgXC30uhWnubw5OgdWQwle21wWRtdlpuNsHbycWYgio2hlrB
+         NecWzK6Nbt3iDl7seSanwD/iQ7u2uwGPuVDKEZeDJxWHJSFV2qm2T6pJVcPSfHfPSGZX
+         Ot5RyeJRUdQIfOy6QyoWfo0b6VbCA/51pETwxoWn24YzquH/qTnj8OSvMH/O51FQWQlb
+         2cbQ==
+X-Gm-Message-State: ACgBeo0cS4O2Hd9qBiMChSUvN7Wpqqo0SAWASaymBBngUAiclJa0SVXo
+        /IvQLcZWGPgAaw4Jk9V9juk=
+X-Google-Smtp-Source: AA6agR5XhI9SkUjAGjQeiLowNt+ajuGy8A24Y72F/JDl54cU7/bjBhLmv6/V+HDiSvoY0YvXqWwgbA==
+X-Received: by 2002:a05:6402:538b:b0:446:34f:2232 with SMTP id ew11-20020a056402538b00b00446034f2232mr40398081edb.4.1662362964700;
+        Mon, 05 Sep 2022 00:29:24 -0700 (PDT)
+Received: from [192.168.74.101] ([77.78.20.135])
+        by smtp.gmail.com with ESMTPSA id e5-20020a50d4c5000000b0044e983132c3sm831915edj.60.2022.09.05.00.29.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Sep 2022 00:29:23 -0700 (PDT)
+Message-ID: <72f86c4f-79fa-bff4-f14e-4cd7fa7ce41f@gmail.com>
+Date:   Mon, 5 Sep 2022 10:29:23 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH v5 2/3] PCI: qcom: Restrict pci transactions after pci
- suspend
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH 08/14] dt-bindings: ufs: qcom: Add sm6115 binding
 Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "Krishna Chaitanya Chundru" <quic_krichai@quicinc.com>
-CC:     Stephen Boyd <swboyd@chromium.org>, <helgaas@kernel.org>,
-        <linux-pci@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <mka@chromium.org>,
-        <quic_vbadigan@quicinc.com>, <quic_hemantk@quicinc.com>,
-        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <dmitry.baryshkov@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Andy Gross <agross@kernel.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>
-References: <1659526134-22978-1-git-send-email-quic_krichai@quicinc.com>
- <1659526134-22978-3-git-send-email-quic_krichai@quicinc.com>
- <CAE-0n500y-n+ZjasYQRAa3JgamQG1c+Aqn0YiX-i0L-w6C4dbQ@mail.gmail.com>
- <3d052733-3600-b6eb-baf3-d8806a150af3@quicinc.com>
- <CAE-0n53oMnnn7rOPEiibc=XM52z9THDc9jYhe3x3C_AsLtmARQ@mail.gmail.com>
- <81dcbf72-92bb-093a-da48-89a73ead820e@quicinc.com>
- <CAE-0n50NRiBNDjK2UrA_wOoRz3+3cKb4uiUiCw4t1F19Kw9EhA@mail.gmail.com>
- <20220827172655.GA14465@thinkpad>
- <a1b7c47c-9657-54bb-6b4e-1d98b3a65b91@quicinc.com>
- <20220830115514.GD135982@thinkpad>
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-In-Reply-To: <20220830115514.GD135982@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: rUhb-i1K1UpPaAIekJeyIwhdi64bYleT
-X-Proofpoint-GUID: rUhb-i1K1UpPaAIekJeyIwhdi64bYleT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-09-05_05,2022-09-05_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1011
- phishscore=0 spamscore=0 mlxscore=0 bulkscore=0 adultscore=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 mlxlogscore=910
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2209050035
-X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220901072414.1923075-1-iskren.chernev@gmail.com>
+ <20220901072414.1923075-9-iskren.chernev@gmail.com>
+ <7804ffbe-4e27-d8bd-dbe2-75d1323da064@linaro.org>
+ <89e6a200-d9af-7263-5e09-d7d824277a30@gmail.com>
+ <199167f2-0420-8c56-5156-35005069549d@linaro.org>
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+In-Reply-To: <199167f2-0420-8c56-5156-35005069549d@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/30/2022 5:25 PM, Manivannan Sadhasivam wrote:
 
-<SNIP>...
 
->> diff --git a/kernel/irq/irqdesc.c b/kernel/irq/irqdesc.c
->> index 21b3ac2a29d2..042afec1cf9d 100644
->> --- a/kernel/irq/irqdesc.c
->> +++ b/kernel/irq/irqdesc.c
->> @@ -487,8 +487,9 @@ static int alloc_descs(unsigned int start, unsigned int
->> cnt, int node,
+On 9/4/22 22:10, Krzysztof Kozlowski wrote:
+> On 03/09/2022 19:54, Iskren Chernev wrote:
 >>
 >>
+>> On 9/1/22 19:11, Krzysztof Kozlowski wrote:
+>>> On 01/09/2022 10:24, Iskren Chernev wrote:
+>>>> Add SM6115 UFS to DT schema.
+>>>>
+>>>> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+>>>> ---
+>>>>  .../devicetree/bindings/ufs/qcom,ufs.yaml     | 26 +++++++++++++++++++
+>>>>  1 file changed, 26 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>>>> index f2d6298d926c..7c5f6e2e6d4c 100644
+>>>> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>>>> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>>>> @@ -28,6 +28,7 @@ properties:
+>>>>            - qcom,msm8998-ufshc
+>>>>            - qcom,sc8280xp-ufshc
+>>>>            - qcom,sdm845-ufshc
+>>>> +          - qcom,sm6115-ufshc
+>>>>            - qcom,sm6350-ufshc
+>>>>            - qcom,sm8150-ufshc
+>>>>            - qcom,sm8250-ufshc
+>>>> @@ -178,6 +179,31 @@ allOf:
+>>>>            minItems: 1
+>>>>            maxItems: 1
+>>>>
+>>>> +  - if:
+>>>> +      properties:
+>>>> +        compatible:
+>>>> +          contains:
+>>>> +            enum:
+>>>> +              - qcom,sm6115-ufshc
+>>>> +    then:
+>>>> +      properties:
+>>>> +        clocks:
+>>>> +          minItems: 8
+>>>> +          maxItems: 8
+>>>> +        clock-names:
+>>>> +          items:
+>>>> +            - const: core_clk
+>>>> +            - const: bus_aggr_clk
+>>>> +            - const: iface_clk
+>>>> +            - const: core_clk_unipro
+>>>> +            - const: core_clk_ice
+>>>
+>>> Use existing name and put it in the same place as existing variant - sdm845:
+>>> ice_core_clk
 >>
->>                 if (affinity) {
->>                          if (affinity->is_managed) {
->> -                               flags = IRQD_AFFINITY_MANAGED |
->> -                                       IRQD_MANAGED_SHUTDOWN;
->> +//                             flags = IRQD_AFFINITY_MANAGED |
->> +//                                     IRQD_MANAGED_SHUTDOWN;
->> +                               flags = 0;//IRQD_AFFINITY_MANAGED |
->>                          }
->>                          mask = &affinity->mask;
->>                          node = cpu_to_node(cpumask_first(mask));
->>
-> The only solution I can think of is keeping the clocks related to DBI access
-> active or switch to another clock source that consumes less power if available
-> during suspend.
+>> The only problem with sdm845 bindings is the presence of rx_lane1_sync_clk
+>> clock. I'm guessing I could pass zeros there, because it shouldn't be used. Or
+>> it could be moved to last property and then min/maxItems to guard, but that is
+>> a change to something more-or-less immutable.
 >
-> But limiting the DBI access using hacks doesn't look good.
+> I don't understand - what is the problem here. How presence of some
+> clock affects name of other clock and its place/location in list of clocks?
 
-Why not just define "irq_startup and irq_shutdown" callbacks for dw_pcie_msi_irq_chip?
-So when the cpu is offlined and irq_shutdown is called for that irqchip in migrate_one_irq(),
-you would mask the irq and then disable the clocks. Similarly, on CPU onlining, you would
-enable the clocks and unmask the irq. This way XO is still achieved as you are turning off
-the clocks before suspend and back on after resume.
+qcom,sdm845-ufshc has 9 clocks, one of which is rx_lane1_sync_clk.
+qcom,sm6115-ufshc has 8 clocks (all of the ones in sdm845 without
+rx_lane1_sync_clk). So if I'm understanding correctly, you want to put the
+sm6115 with sdm845, which means re-use the clocks and reg specification from
+sdm845, which means sm6115 will "inherit" this rx_lane1_sync_clk, and then
+I have to put it in DT (otherwise the schema would complain), and I'm asking if
+I can put an empty (i.e <0 0>) value, so schema is satisfied but clock is still
+not really passed.
 
-Thanks,
-Sai
-
-
+> Best regards,
+> Krzysztof
