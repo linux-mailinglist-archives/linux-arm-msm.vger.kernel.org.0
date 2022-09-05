@@ -2,79 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CCC05ACBD1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 09:07:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2CEC5ACC39
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 09:28:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237039AbiIEHFj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Sep 2022 03:05:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45278 "EHLO
+        id S237358AbiIEHZ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Sep 2022 03:25:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236998AbiIEHFh (ORCPT
+        with ESMTP id S237128AbiIEHZg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Sep 2022 03:05:37 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 136D13D590
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Sep 2022 00:05:36 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id f24so7706913plr.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Sep 2022 00:05:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=hCoU6yFiUUQwKXB+c9+cZmF5PiP+rY4cM9qprj6opUU=;
-        b=IGmOuB6R6WVg3gNfqQRU/bmYV1HfOPwq2zYxglr5CKA2awT7tqRVFo8FyhE9MwR/sz
-         CFlXBYRA3RO4PA634JvYIzD84ViFVPiAj+ecYN2wQjKJSpP1TnWgOnZ9FuvVG26orGhf
-         a4x9CriuNWP1+LNYADpNeHkcVhyrSFFingmnjIaZ8pJwY8AnpgO2vdiU5ay3RH7bOPFc
-         xOQxEHpC57R/1GEGAUw5oWI5L0tfEzLxM6HjMbXXP2BkMOCK7jUm92DmMjrt5lG1i4BI
-         tezW9nuo8R7c4TAQhD/GigSDPdPuIuFZfwcxdEBQyZBIoZ8hwsy7IkeLBJl+/5Wn3MpN
-         vwlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=hCoU6yFiUUQwKXB+c9+cZmF5PiP+rY4cM9qprj6opUU=;
-        b=yQhnXgjsDGIIt0pDS91X1+Eg15AxaHF1JQFIItQ2jO8JrFopOqq7pzfpVkbvTiA/G+
-         tAMj1z7yuXdm9ynsKpORQGhRZsA27idcuL/sfQfxy4t155g9OEYkH1PNjVivAODv9AfM
-         KEIuQL5pHrksXNM5EDaimLtj2exOuLVPWekwLrFsBDMFfpMvhcbnSYiXz7z8ac8SuhX9
-         iEakA31MgXeO3IKvNBDHRj8h2EBDvIy9zr0qdcRbBVuKbFzxUC6UPtAjhpg2ZsvQ/wQs
-         WyiQFrs+Oeqf4RitR9b51lRsvFn/dedvRVQPzh2Cjisr6yw3KMlIh9dupQ4c+EacAHKZ
-         99Nw==
-X-Gm-Message-State: ACgBeo2OJmMzaXOEyRXkxQ2WyBcRbKMPa7NDSK9OsPLFDwX7mA6dGtuO
-        AlB/nIv3RHzVNSbcea9Gis05rA==
-X-Google-Smtp-Source: AA6agR4mUAPOQvLH0bbeLZS8HC/Lp0yTm8lJbBhnoM+lZJqjHtwulUnvZV5V2MRvghPN8RrEgpVMow==
-X-Received: by 2002:a17:90a:4d82:b0:1fb:6497:e071 with SMTP id m2-20020a17090a4d8200b001fb6497e071mr18036121pjh.166.1662361535185;
-        Mon, 05 Sep 2022 00:05:35 -0700 (PDT)
-Received: from ?IPV6:2401:4900:1c60:5362:9d7f:2354:1d0a:78e3? ([2401:4900:1c60:5362:9d7f:2354:1d0a:78e3])
-        by smtp.gmail.com with ESMTPSA id b8-20020a170902bd4800b00172c7dee22fsm617731plx.236.2022.09.05.00.05.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Sep 2022 00:05:34 -0700 (PDT)
-Message-ID: <3668ec5c-becf-2cac-c647-e20fb2156d8f@linaro.org>
-Date:   Mon, 5 Sep 2022 12:35:30 +0530
+        Mon, 5 Sep 2022 03:25:36 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8FAE40BE6;
+        Mon,  5 Sep 2022 00:22:44 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2855e1qP007005;
+        Mon, 5 Sep 2022 07:21:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=kubCKYLJeUMpMSD/hRdOyYdxZyH84wz7YEGced83hJE=;
+ b=b1eYvakBepUCkBmNZWZSmh7v8zKKxZQfWzw0LXkt+bYjaOOf79Ouu7SNNHjRqMcIkwOR
+ bzz3F0MgD6b3IIvQRvI5+97oivM+ybV/zBXdxpb3IiJvnU3zbG3wGcQH3xgg0Ui8AxCk
+ q0G+B43oibJPfc5lWknkz5i1yMiOdemF9kGkQmlKyov/vRnPUPRsKwF/I7yJc1O+48GY
+ M+N9r61zwGp4C0eQjjZihqP+/VPK6k4AcBWcn3HWeo4jUjEIWrpfzxC+efsIzPPWN+r2
+ hSGWWoGWOfF3Lk9uxC120cvoMtSFTCDJ39wVh/G6dx53sKF9eixp6/TxR9Q4BGU44TUF 7g== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jbypmkd82-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 05 Sep 2022 07:21:27 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2857LQXJ003272
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 5 Sep 2022 07:21:26 GMT
+Received: from [10.50.47.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 5 Sep 2022
+ 00:21:17 -0700
+Message-ID: <3af38280-c94b-e5ef-7a66-4869b1f36a30@quicinc.com>
+Date:   Mon, 5 Sep 2022 12:51:12 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-pmics: Remove reg entry for
- pmc8280c_lpg node
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH v5 2/3] PCI: qcom: Restrict pci transactions after pci
+ suspend
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     devicetree@vger.kernel.org, agross@kernel.org,
-        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>
-References: <20220903084440.1509562-1-bhupesh.sharma@linaro.org>
- <42790a40-458a-55ff-7e4b-796e72f474ac@kernel.org>
- <66eaf16e-cb7c-a0b4-9ce5-02611308b0e6@linaro.org>
- <6b845257-e8e5-92e4-8cf1-f3e394cbc59e@kernel.org>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-In-Reply-To: <6b845257-e8e5-92e4-8cf1-f3e394cbc59e@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "Krishna Chaitanya Chundru" <quic_krichai@quicinc.com>
+CC:     Stephen Boyd <swboyd@chromium.org>, <helgaas@kernel.org>,
+        <linux-pci@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <mka@chromium.org>,
+        <quic_vbadigan@quicinc.com>, <quic_hemantk@quicinc.com>,
+        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <dmitry.baryshkov@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>
+References: <1659526134-22978-1-git-send-email-quic_krichai@quicinc.com>
+ <1659526134-22978-3-git-send-email-quic_krichai@quicinc.com>
+ <CAE-0n500y-n+ZjasYQRAa3JgamQG1c+Aqn0YiX-i0L-w6C4dbQ@mail.gmail.com>
+ <3d052733-3600-b6eb-baf3-d8806a150af3@quicinc.com>
+ <CAE-0n53oMnnn7rOPEiibc=XM52z9THDc9jYhe3x3C_AsLtmARQ@mail.gmail.com>
+ <81dcbf72-92bb-093a-da48-89a73ead820e@quicinc.com>
+ <CAE-0n50NRiBNDjK2UrA_wOoRz3+3cKb4uiUiCw4t1F19Kw9EhA@mail.gmail.com>
+ <20220827172655.GA14465@thinkpad>
+ <a1b7c47c-9657-54bb-6b4e-1d98b3a65b91@quicinc.com>
+ <20220830115514.GD135982@thinkpad>
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+In-Reply-To: <20220830115514.GD135982@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: rUhb-i1K1UpPaAIekJeyIwhdi64bYleT
+X-Proofpoint-GUID: rUhb-i1K1UpPaAIekJeyIwhdi64bYleT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-09-05_05,2022-09-05_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1011
+ phishscore=0 spamscore=0 mlxscore=0 bulkscore=0 adultscore=0
+ suspectscore=0 lowpriorityscore=0 malwarescore=0 mlxlogscore=910
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2209050035
+X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,58 +105,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 8/30/2022 5:25 PM, Manivannan Sadhasivam wrote:
 
+<SNIP>...
 
-On 9/5/22 12:08 PM, Krzysztof Kozlowski wrote:
-> On 05/09/2022 08:47, Bhupesh Sharma wrote:
->> Hi Krzysztof,
+>> diff --git a/kernel/irq/irqdesc.c b/kernel/irq/irqdesc.c
+>> index 21b3ac2a29d2..042afec1cf9d 100644
+>> --- a/kernel/irq/irqdesc.c
+>> +++ b/kernel/irq/irqdesc.c
+>> @@ -487,8 +487,9 @@ static int alloc_descs(unsigned int start, unsigned int
+>> cnt, int node,
 >>
->> On 9/5/22 12:52 AM, Krzysztof Kozlowski wrote:
->>> On 03/09/2022 11:44, Bhupesh Sharma wrote:
->>>> Commit eeca7d46217c ("arm64: dts: qcom: pm8350c: Drop PWM reg declaration")
->>>> dropped PWM reg declaration for pm8350c pwm(s), but there is a leftover
->>>> 'reg' entry inside the lpg/pwm node in sc8280xp dts file. Remove the same.
->>>>
->>>> While at it, also remove the unused unit address in the node
->>>> label.
->>>>
->>>> Fixes: eeca7d46217c ("arm64: dts: qcom: pm8350c: Drop PWM reg declaration")
->>>> Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>> Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>>> Cc: Bjorn Andersson <andersson@kernel.org>
->>>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->>>> ---
->>>>    arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi | 3 +--
->>>>    1 file changed, 1 insertion(+), 2 deletions(-)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
->>>> index ae90b97aecb8..2e5cf55afdd5 100644
->>>> --- a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
->>>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
->>>> @@ -60,9 +60,8 @@ pmc8280c_gpios: gpio@8800 {
->>>>    			#interrupt-cells = <2>;
->>>>    		};
->>>>    
->>>> -		pmc8280c_lpg: lpg@e800 {
->>>> +		pmc8280c_lpg: lpg {
->>>
->>> I wonder why I did not see the errors when testing all DTSes for
->>> https://lore.kernel.org/all/20220828084341.112146-9-krzysztof.kozlowski@linaro.org/
 >>
->> I did not see the error while running the 'make dtbs_check' locally, so
->> may be something to improve in 'make dtbs_check' infrastructure there.
 >>
->>> Anyway, it cannot be lpg - binding requires "pwm".
+>>                 if (affinity) {
+>>                          if (affinity->is_managed) {
+>> -                               flags = IRQD_AFFINITY_MANAGED |
+>> -                                       IRQD_MANAGED_SHUTDOWN;
+>> +//                             flags = IRQD_AFFINITY_MANAGED |
+>> +//                                     IRQD_MANAGED_SHUTDOWN;
+>> +                               flags = 0;//IRQD_AFFINITY_MANAGED |
+>>                          }
+>>                          mask = &affinity->mask;
+>>                          node = cpu_to_node(cpumask_first(mask));
 >>
->> I think that should be a separate patch. It does not seem related to
->> this change anyways - which fixes eeca7d46217c . I will send a v2 soon.
-> 
-> You would be changing same line twice and eeca7d46217c is not going to
-> be backported, so I am no sure if there is benefit to make two patches.
+> The only solution I can think of is keeping the clocks related to DBI access
+> active or switch to another clock source that consumes less power if available
+> during suspend.
+>
+> But limiting the DBI access using hacks doesn't look good.
 
-Ok. v2 sent accordingly 
-(https://lore.kernel.org/linux-arm-msm/20220905070240.1634997-1-bhupesh.sharma@linaro.org/)
+Why not just define "irq_startup and irq_shutdown" callbacks for dw_pcie_msi_irq_chip?
+So when the cpu is offlined and irq_shutdown is called for that irqchip in migrate_one_irq(),
+you would mask the irq and then disable the clocks. Similarly, on CPU onlining, you would
+enable the clocks and unmask the irq. This way XO is still achieved as you are turning off
+the clocks before suspend and back on after resume.
 
-Please help review.
+Thanks,
+Sai
 
-Thanks.
+
