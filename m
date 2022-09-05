@@ -2,83 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC4F65AD0C2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 12:57:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E52AA5AD226
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 14:12:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237905AbiIEKzA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Sep 2022 06:55:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36838 "EHLO
+        id S236361AbiIEMK2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Sep 2022 08:10:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237895AbiIEKys (ORCPT
+        with ESMTP id S235938AbiIEMK1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Sep 2022 06:54:48 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F0EA205F7
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Sep 2022 03:54:43 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id w8so12530854lft.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Sep 2022 03:54:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=3EON71xpMwuE31HszjcxT0gv8fFt5vL8HY5cDtEoyUE=;
-        b=U1rmQSpkYInIJ/w1y8qPLW9s27eUufq+xhfDRiiOgutlRZ8eSnIVG0cyxQc6PX7PZq
-         V/B/5YEQNA1Xa1SLFx3AbD1wUDkbR11eIGe5mIE2HphZxL5FwvlluUgRoscbGHUiL37I
-         90zmwQ0nZFyBBWp+VIkCARI20ma06uBcRk0nVB2kMBjRC1YgN8TXwv/73t0WQSlNKM3V
-         6v6SunHROv1+f93O7tIPgkfNKneq6bpx0SHa2I+uA8PpugEhFt2QC451keADaOsUSXDt
-         NL2E9ykTKxGL4JyXKMBdGaQqgTvkf2LJ4dVQDTmL982JmKtFoF3qZkQjiCI9aq5M683Y
-         UJzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=3EON71xpMwuE31HszjcxT0gv8fFt5vL8HY5cDtEoyUE=;
-        b=VnXY+IH1uhkNbPBc0Lk+KTlgsP5CXhGWIOLxnC7fxBbGS0wAfcdlzaXQtM/5+tQ9Sf
-         TrPRybWcjWuLDVEG7AKLgIKPlI2cumuGF1NCetXd5YFt8i8XONYHnwZxxqu0c9fnqzUI
-         dV6CNy/TuuBr51MMKXTNK8y3RhYovXunxrapycAqkoCQqhOtLsB0qIH9RtX4UWyB2/Dq
-         XOJxWz1uyzYeymS82HN78DMCuzwNbtgWYyPLUWmiws6BXW+s5MgviKihNUia2zzeatSJ
-         sjhKV9z9XoTsekLefnpasnPvQXaqEUYmCIHNeRW1iLVfy6UTGwNCex+skqsMbb7JwE1J
-         EO1A==
-X-Gm-Message-State: ACgBeo0p+ReMgQzu2nyU2s2QXCXBBBrg6KqoIq3sQjesldoEyw0i4uuF
-        y/2FSCJ0VajZ5fAN5hALul5/S4c7DJ9paSvI
-X-Google-Smtp-Source: AA6agR4HAtf2siphc2MwmgM2lBhxpekezqteaTDXFaXJ9HVvuX+dtGDD8Bie5+TFY2HMGRqAUk6zxw==
-X-Received: by 2002:a05:6512:39c6:b0:48b:9d1d:fd9c with SMTP id k6-20020a05651239c600b0048b9d1dfd9cmr17826526lfu.633.1662375281813;
-        Mon, 05 Sep 2022 03:54:41 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id c5-20020ac25f65000000b0048a9603399csm1158685lfc.116.2022.09.05.03.54.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Sep 2022 03:54:41 -0700 (PDT)
-Message-ID: <3933cc0c-a99c-7bda-bbb2-c7b2e9f84cf5@linaro.org>
-Date:   Mon, 5 Sep 2022 12:54:39 +0200
+        Mon, 5 Sep 2022 08:10:27 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BF981D30A;
+        Mon,  5 Sep 2022 05:10:19 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id D9242B81136;
+        Mon,  5 Sep 2022 12:10:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 7BB89C433D6;
+        Mon,  5 Sep 2022 12:10:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1662379816;
+        bh=eylQ0s2BbGYGUgUlOOMnOJccPXVbeBe07REu27ee0/s=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=Ns1t5VghnfxehV1jEv633PDLOpY4KUQhwaQTsN595p6I0NTqOa/p0V5mFmqFRtlJ6
+         GgicmhSULwuTBctNebrdzyv6g1tQddbnQEKVPHYH5mpSOhD11VdNX2s/I1Px8aJIXv
+         NCbiOyEg6evhY29/oew416SOP629bhUzr0/KvW4nabQEYzpWoXAHTJO726Q5MTbZFl
+         niiHqd0JAwnadZ8jXOLAknnKuCnR5wjoGvYDvrU0eE3EfsBYcNPaGKUhdoLFdIII6t
+         yzhQ9ao0Y0eiF0LrsDUFAUj4xPT2D/vW22E6rag89OeQa33cpS51HtSV22Mlj0zNan
+         zAXhq+SRk+zAA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 60DD9C73FE0;
+        Mon,  5 Sep 2022 12:10:16 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH 09/14] arm64: dts: qcom: sm6115: Add UFS nodes
-Content-Language: en-US
-To:     Iskren Chernev <iskren.chernev@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Nicolas Dechesne <nicolas.dechesne@linaro.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net-next 0/6] net: ipa: start using transaction IDs
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <166237981638.17156.8447007118751978814.git-patchwork-notify@kernel.org>
+Date:   Mon, 05 Sep 2022 12:10:16 +0000
+References: <20220902210218.745873-1-elder@linaro.org>
+In-Reply-To: <20220902210218.745873-1-elder@linaro.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, mka@chromium.org, evgreen@chromium.org,
+        bjorn.andersson@linaro.org, quic_cpratapa@quicinc.com,
+        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
+        quic_subashab@quicinc.com, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20220901072414.1923075-1-iskren.chernev@gmail.com>
- <20220901072414.1923075-10-iskren.chernev@gmail.com>
- <a0204dc3-af13-6b0b-d779-0f207d1aff7e@linaro.org>
- <488be3d3-d4c4-6200-be99-b85e6ac72c34@gmail.com>
- <180f706d-3304-3a5a-82b7-f37948e5d100@linaro.org>
- <b6424212-75c1-4f42-da01-ae4ce5dc1b68@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <b6424212-75c1-4f42-da01-ae4ce5dc1b68@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,30 +62,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/09/2022 12:45, Iskren Chernev wrote:
+Hello:
+
+This series was applied to netdev/net-next.git (master)
+by David S. Miller <davem@davemloft.net>:
+
+On Fri,  2 Sep 2022 16:02:12 -0500 you wrote:
+> A previous group of patches added ID fields to track the state of
+> transactions:
+>   https://lore.kernel.org/netdev/20220831224017.377745-1-elder@linaro.org
 > 
->>>
->>> I'll list all remaining issues with description/explanation in v2. The fact
->>> that some bindings break on all DTBs present doesn't help either.
->>
->> We're working on this... It's quite a lot of effort, especially when new
->> warnings are being added. :)
+> This series starts using those IDs instead of the lists used
+> previously.  Most of this series involves reworking the function
+> that determines which transaction is the "last", which determines
+> when a channel has been quiesed.  The last patch is mainly used to
+> prove that the new index method of tracking transaction state is
+> equivalent to the previous use of lists.
 > 
-> I understand. Is there an up-for-grabs list, or any schema fixes are welcome?
+> [...]
 
-Any fixes are welcomed, but check if someone did not post it. For
-bindings conversion, the easiest is with "dfn:old-schema.txt" on
-https://lore.kernel.org/all/.
+Here is the summary with links:
+  - [net-next,1/6] net: ipa: rework last transaction determination
+    https://git.kernel.org/netdev/net-next/c/b2abe33d23cf
+  - [net-next,2/6] net: ipa: use IDs for last allocated transaction
+    https://git.kernel.org/netdev/net-next/c/c30623ea0b3a
+  - [net-next,3/6] net: ipa: use IDs exclusively for last transaction
+    https://git.kernel.org/netdev/net-next/c/897c0ce665d6
+  - [net-next,4/6] net: ipa: simplify gsi_channel_trans_last()
+    https://git.kernel.org/netdev/net-next/c/e68d1d1591fd
+  - [net-next,5/6] net: ipa: further simplify gsi_channel_trans_last()
+    https://git.kernel.org/netdev/net-next/c/4601e75596cb
+  - [net-next,6/6] net: ipa: verify a few more IDs
+    https://git.kernel.org/netdev/net-next/c/8672bab7eb94
 
-We have some Linaro internal tracking, but maybe it would be useful to
-expose it to avoid duplication of work and to track better what is still
-to do/fix.
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
-+Cc Nicolas,
-Are we interested in some public tracking not only upstream status but
-also actual things to do (like DTS fixes, DT schema conversions)? It
-might be quite a lot of effort for us, but if community is engaged, they
-would offload us in task tracking system.
 
-Best regards,
-Krzysztof
