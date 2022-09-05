@@ -2,128 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C437C5ACE66
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 11:04:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B4E75ACEA3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 11:18:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236692AbiIEI7U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Sep 2022 04:59:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56870 "EHLO
+        id S236379AbiIEJQX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Sep 2022 05:16:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238010AbiIEI7H (ORCPT
+        with ESMTP id S234831AbiIEJQW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Sep 2022 04:59:07 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84995501A5
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Sep 2022 01:59:04 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id n17so10407135wrm.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Sep 2022 01:59:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=qMb83d2Mm6a6mh+7YEGczs+GjjGflfa5g/QuvR+DiTU=;
-        b=Kb7Z+9dsVNZAvjd2NtJ8V/GgmhyUZaCK4Du0bB9gwKSk8QDqVtopc3u2COkR23MJ11
-         GfUFpnv+wEyzY093toF6YORnDxTxRcSzR+yqA9eMl32dJuSowcn3tPxtlHO22u34R0gn
-         YWKMwdi/uV+5gAm2G9j9znsbcvttxZYd9xT9X566tEMz6j2DmPTqH7Q+P1P66OVAzvRv
-         HjMb9q/dBZ4+XYjGDPEvXK2fXTVvAUGBzAqxWroxedxdjYmLWQDt6ejzqraT0BSIdByq
-         uFfYn73pQfC0G3GjnG28bjPJLS6fsSuetLZfUSJxWKOyAYkHSB1KKLwdBqS6tsgD5E1c
-         7DUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=qMb83d2Mm6a6mh+7YEGczs+GjjGflfa5g/QuvR+DiTU=;
-        b=oOaMulDfmlQiK9bxCoUgfxyvWpnmEOs1ScvV/m9+WYhnb9oKAcvsl70wahirBp5bgj
-         6pqOSWQ3zGscuAq+7wM0XeLq5W41YCJVQN1yF0xkD+uKoj6FAzEVnlZ7mJOwJ/HDfvwN
-         mei20FD7yJKWdPbIW5ts8FhLe7PFfHpPF20fVw/4nPTPENch7remNUYCAhLtxSFwT0Od
-         BVkWsacHOWwSwupDr/NXqTRtpk0BJ1oDEOtuuKDeyzmqzZ6mLMoE2yUOeUoIm6hWrfE+
-         VZgefLMrZdZzVO8B+hSis0lMPTQRkJ4Oa73HfZTzZXp2q+vqLgbgBerJIPNVmbyD4p84
-         sHhg==
-X-Gm-Message-State: ACgBeo3TIz0+ym5MKz2hU4voYxx6GhgVRQ41PWu65uEClCeLYxSrP/jw
-        kigXbI9EAs6LfWhTkpq6w24xVA==
-X-Google-Smtp-Source: AA6agR72bczK2Zykm9Hoysn0o118X96SbQLvuFOYIHk5CryKiJW10XaFDrTmXvf466CrhZwwpsteGg==
-X-Received: by 2002:adf:de01:0:b0:228:62ae:78bc with SMTP id b1-20020adfde01000000b0022862ae78bcmr4330773wrm.41.1662368343149;
-        Mon, 05 Sep 2022 01:59:03 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id x1-20020a5d6b41000000b002250c35826dsm8290182wrw.104.2022.09.05.01.59.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Sep 2022 01:59:02 -0700 (PDT)
-Message-ID: <5bd53318-5261-08ee-3d38-1aa74be3d56e@nexus-software.ie>
-Date:   Mon, 5 Sep 2022 09:59:01 +0100
+        Mon, 5 Sep 2022 05:16:22 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A7D93C175;
+        Mon,  5 Sep 2022 02:16:21 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2654461192;
+        Mon,  5 Sep 2022 09:16:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 864D6C433D6;
+        Mon,  5 Sep 2022 09:16:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1662369380;
+        bh=mSrbaGciGB3lq5EQyxvPqDDGd2vT1uxuRQ5lFDDPziY=;
+        h=From:To:Cc:Subject:Date:From;
+        b=IlW+VpylxcCrYsMgQ7z8b7B3isKSc1+l2SGurlQTfiNPkZJodDbxGLHtKTY1KzxcQ
+         vbjOUstqxG8Z6YXwmFBWgmpCahRnjIVtpDuYCB+Ahys0uzCIk5Sn3lJOgG1qEb4xxC
+         dP1J+gCxpZ51g4JkvAPunaW6/BiIJGn8Cg0pV1qObEwXRux+GL4gVQY3gRfEqk10p2
+         GSZF/6q99JgC9VQ2uW6F6AzgottZftTfH8fRdQ7JV1p/z5SYPhLxoBc5RUMImO/HjP
+         JsVGOzJ/Kc90LttoUYpIeCFy2jSbtN4JUaTfowOgbb3FhxEwyJJHLHOaESCxTaiAOp
+         ZUBIpNGOs0/kg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1oV8DO-0005Iw-CR; Mon, 05 Sep 2022 11:16:22 +0200
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH] arm64: dts: qcom: fix syscon node names
+Date:   Mon,  5 Sep 2022 11:16:02 +0200
+Message-Id: <20220905091602.20364-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc8280xp-pmics: Remove reg entry &
- use correct node name for pmc8280c_lpg node
-Content-Language: en-US
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     devicetree@vger.kernel.org, agross@kernel.org,
-        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>
-References: <20220905070240.1634997-1-bhupesh.sharma@linaro.org>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <20220905070240.1634997-1-bhupesh.sharma@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/09/2022 08:02, Bhupesh Sharma wrote:
-> Commit eeca7d46217c ("arm64: dts: qcom: pm8350c: Drop PWM reg declaration")
-> dropped PWM reg declaration for pm8350c pwm(s), but there is a leftover
-> 'reg' entry inside the lpg/pwm node in sc8280xp dts file. Remove the same.
-> 
-> While at it, also remove the unused unit address in the node
-> label.
-> 
-> Also, since dt-bindings expect LPG/PWM node name to be "pwm",
-> use correct node name as well, to fix the following
-> error reported by 'make dtbs_check':
-> 
->    'lpg' does not match any of the regexes
-> 
-> Fixes: eeca7d46217c ("arm64: dts: qcom: pm8350c: Drop PWM reg declaration")
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
-> - v1 can be viewed here: https://lore.kernel.org/linux-arm-msm/20220903084440.1509562-1-bhupesh.sharma@linaro.org/
-> - Fixed the review comments shared by Krzysztof.
-> 
-> 
->   arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-> index ae90b97aecb8..24836b6b9bbc 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-> @@ -60,9 +60,8 @@ pmc8280c_gpios: gpio@8800 {
->   			#interrupt-cells = <2>;
->   		};
->   
-> -		pmc8280c_lpg: lpg@e800 {
-> +		pmc8280c_lpg: pwm {
->   			compatible = "qcom,pm8350c-pwm";
-> -			reg = <0xe800>;
->   
->   			#address-cells = <1>;
->   			#size-cells = <0>;
+Some recent changes that added new syscon nodes used misspelled node names.
 
-Eh well I didn't drop the reg from this node because it was named lpg 
-not pwm ;)
+Fixes: 86d7c9460e2c arm64: dts: qcom: sm8150: split TCSR halt regs out of mutex
+Fixes: 0da603387225 arm64: dts: qcom: sdm630: split TCSR halt regs out of mutex
+Fixes: 8a8531e69b2d arm64: dts: qcom: sdm845: split TCSR halt regs out of mutex
+Fixes: d9a2214d6ba5 arm64: dts: qcom: sc7280: split TCSR halt regs out of mutex
+Fixes: ce1ac53c7faa arm64: dts: qcom: sc7180: split TCSR halt regs out of mutex
+Fixes: fc10cfa38580 arm64: dts: qcom: msm8998: split TCSR halt regs out of mutex
+Fixes: 100ce2205924 arm64: dts: qcom: msm8996: split TCSR halt regs out of mutex
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+---
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/msm8998.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sc7180.dtsi  | 2 +-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi  | 2 +-
+ arch/arm64/boot/dts/qcom/sdm630.dtsi  | 2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi  | 2 +-
+ arch/arm64/boot/dts/qcom/sm8150.dtsi  | 2 +-
+ 7 files changed, 7 insertions(+), 7 deletions(-)
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 9fa524079c1b..a67b181a6135 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -833,7 +833,7 @@ tcsr_mutex: hwlock@740000 {
+ 			#hwlock-cells = <1>;
+ 		};
+ 
+-		tcsr_1: sycon@760000 {
++		tcsr_1: syscon@760000 {
+ 			compatible = "qcom,tcsr-msm8996", "syscon";
+ 			reg = <0x00760000 0x20000>;
+ 		};
+diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+index d463a66715ea..1118134ff01e 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -1047,7 +1047,7 @@ tcsr_mutex: hwlock@1f40000 {
+ 			#hwlock-cells = <1>;
+ 		};
+ 
+-		tcsr_regs_1: sycon@1f60000 {
++		tcsr_regs_1: syscon@1f60000 {
+ 			compatible = "qcom,msm8998-tcsr", "syscon";
+ 			reg = <0x01f60000 0x20000>;
+ 		};
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index e8debb0da411..58976a1ba06b 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -1462,7 +1462,7 @@ tcsr_mutex: hwlock@1f40000 {
+ 			#hwlock-cells = <1>;
+ 		};
+ 
+-		tcsr_regs_1: sycon@1f60000 {
++		tcsr_regs_1: syscon@1f60000 {
+ 			compatible = "qcom,sc7180-tcsr", "syscon";
+ 			reg = <0 0x01f60000 0 0x20000>;
+ 		};
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 50c3d79abcc3..50bbc069c218 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -2160,7 +2160,7 @@ tcsr_mutex: hwlock@1f40000 {
+ 			#hwlock-cells = <1>;
+ 		};
+ 
+-		tcsr_1: sycon@1f60000 {
++		tcsr_1: syscon@1f60000 {
+ 			compatible = "qcom,sc7280-tcsr", "syscon";
+ 			reg = <0 0x01f60000 0 0x20000>;
+ 		};
+diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+index 9ae6610af93a..b51b85f583e5 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+@@ -703,7 +703,7 @@ tcsr_mutex: hwlock@1f40000 {
+ 			#hwlock-cells = <1>;
+ 		};
+ 
+-		tcsr_regs_1: sycon@1f60000 {
++		tcsr_regs_1: syscon@1f60000 {
+ 			compatible = "qcom,sdm630-tcsr", "syscon";
+ 			reg = <0x01f60000 0x20000>;
+ 		};
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 347c3abc117b..d761da47220d 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -2625,7 +2625,7 @@ tcsr_mutex: hwlock@1f40000 {
+ 			#hwlock-cells = <1>;
+ 		};
+ 
+-		tcsr_regs_1: sycon@1f60000 {
++		tcsr_regs_1: syscon@1f60000 {
+ 			compatible = "qcom,sdm845-tcsr", "syscon";
+ 			reg = <0 0x01f60000 0 0x20000>;
+ 		};
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 008f2e8c171c..cef8c4f4f0ff 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -2054,7 +2054,7 @@ tcsr_mutex: hwlock@1f40000 {
+ 			#hwlock-cells = <1>;
+ 		};
+ 
+-		tcsr_regs_1: sycon@1f60000 {
++		tcsr_regs_1: syscon@1f60000 {
+ 			compatible = "qcom,sm8150-tcsr", "syscon";
+ 			reg = <0x0 0x01f60000 0x0 0x20000>;
+ 		};
+-- 
+2.35.1
+
