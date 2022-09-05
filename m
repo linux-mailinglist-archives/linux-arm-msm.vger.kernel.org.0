@@ -2,57 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B4E75ACEA3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 11:18:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B7A925ACF43
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 11:56:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236379AbiIEJQX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Sep 2022 05:16:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55204 "EHLO
+        id S237280AbiIEJzC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Sep 2022 05:55:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234831AbiIEJQW (ORCPT
+        with ESMTP id S236514AbiIEJzA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Sep 2022 05:16:22 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A7D93C175;
-        Mon,  5 Sep 2022 02:16:21 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2654461192;
-        Mon,  5 Sep 2022 09:16:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 864D6C433D6;
-        Mon,  5 Sep 2022 09:16:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1662369380;
-        bh=mSrbaGciGB3lq5EQyxvPqDDGd2vT1uxuRQ5lFDDPziY=;
-        h=From:To:Cc:Subject:Date:From;
-        b=IlW+VpylxcCrYsMgQ7z8b7B3isKSc1+l2SGurlQTfiNPkZJodDbxGLHtKTY1KzxcQ
-         vbjOUstqxG8Z6YXwmFBWgmpCahRnjIVtpDuYCB+Ahys0uzCIk5Sn3lJOgG1qEb4xxC
-         dP1J+gCxpZ51g4JkvAPunaW6/BiIJGn8Cg0pV1qObEwXRux+GL4gVQY3gRfEqk10p2
-         GSZF/6q99JgC9VQ2uW6F6AzgottZftTfH8fRdQ7JV1p/z5SYPhLxoBc5RUMImO/HjP
-         JsVGOzJ/Kc90LttoUYpIeCFy2jSbtN4JUaTfowOgbb3FhxEwyJJHLHOaESCxTaiAOp
-         ZUBIpNGOs0/kg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1oV8DO-0005Iw-CR; Mon, 05 Sep 2022 11:16:22 +0200
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Mon, 5 Sep 2022 05:55:00 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F79413EB2
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Sep 2022 02:54:57 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id t14so3318773wrx.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Sep 2022 02:54:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=bZF5w9xzj7lZChgIF/6nwP7MFLkNSnuZx9RimSg71+g=;
+        b=AQFLNfl32NJkoDdTUY88Aj4+OfBskPvgs6DBhZpYwtbZzxtGps5VBHRFE0aqlvWGpC
+         ULBALyuiRMYvHqckLayRvg3YHOY93nUwmgKodEVOYiqHWin5y2MtXMHwJ4W9AQavKkRe
+         S0L7dQTtoKdfeuxQ/KLUGH6gWvoayCSPC95gMfiemr3ngYR6rpNMafyY8udIjUjOw7GL
+         BRWJuE9P2wglcyTiUEpVWMo1xx2PzBADyb1PpGey+Fi4S62wFzOAoarngqQ9I4vVMjyr
+         8lLrqeU8dLnx9YhKUhfJiyUosJpqL53B93ji1n5X8xZh7GGI2ySPyXb1hPmsPHolAiZv
+         XA+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=bZF5w9xzj7lZChgIF/6nwP7MFLkNSnuZx9RimSg71+g=;
+        b=yLE1qz+rKbJLp5VG451LpyvpZSlKh4J86MQDJEpyHwmeBHRw2bBCZZuNl/FuDTf8KG
+         ymX2Ob7xnwQW2/KjPKclZG/7VM6/QwgB+U3HT5KfsRcY4CnxDdTksCMm7bg9if53iMgz
+         PH0i6xWKhdtd9U/cTTnLJWww19s0D2cSWYVhUpbzzGlhBb0uiVVz7jCWJzKHtOuGv5JX
+         U8UXV0WnGyOlNRTIm5IkrUzXHEmRgf1Xj3/PfAJWyJ+VN2oBkErfr0n5I11dxKZ6Don1
+         HWb125xK3TIH5T+aOBDNLFTFBUEqEVhdHYUc/doaB6JUMFMheij1zrTnAc4C5b8L0mwa
+         Dh/w==
+X-Gm-Message-State: ACgBeo1RYzfoGm5Ry4QB62QcSacE2i4SoW4hHEuttxSQJQNJyHmNhlqO
+        hgJE8VauNMe2zgbYwJy6Nh0WPg==
+X-Google-Smtp-Source: AA6agR7WFBghrrcaK4xA5ytl2V7YKojFB7RtZCmYECOr5Na51jVyTsGvzpxHXQk2aO0NtOi7BfuQnQ==
+X-Received: by 2002:a05:6000:178d:b0:226:ffe8:72df with SMTP id e13-20020a056000178d00b00226ffe872dfmr8890594wrg.496.1662371696141;
+        Mon, 05 Sep 2022 02:54:56 -0700 (PDT)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id t8-20020adfe108000000b00225213fd4a9sm8497264wrz.33.2022.09.05.02.54.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Sep 2022 02:54:55 -0700 (PDT)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH] arm64: dts: qcom: fix syscon node names
-Date:   Mon,  5 Sep 2022 11:16:02 +0200
-Message-Id: <20220905091602.20364-1-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.35.1
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        David Heidelberg <david@ixit.cz>
+Subject: [PATCH v5 1/2] dt-bindings: misc: fastrpc convert bindings to yaml
+Date:   Mon,  5 Sep 2022 12:53:39 +0300
+Message-Id: <20220905095340.902390-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -60,117 +75,147 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some recent changes that added new syscon nodes used misspelled node names.
+Convert Qualcomm FastRPC bindings to yaml format, so that we could validate
+dt-entries correctly and any future additions can go into yaml format.
 
-Fixes: 86d7c9460e2c arm64: dts: qcom: sm8150: split TCSR halt regs out of mutex
-Fixes: 0da603387225 arm64: dts: qcom: sdm630: split TCSR halt regs out of mutex
-Fixes: 8a8531e69b2d arm64: dts: qcom: sdm845: split TCSR halt regs out of mutex
-Fixes: d9a2214d6ba5 arm64: dts: qcom: sc7280: split TCSR halt regs out of mutex
-Fixes: ce1ac53c7faa arm64: dts: qcom: sc7180: split TCSR halt regs out of mutex
-Fixes: fc10cfa38580 arm64: dts: qcom: msm8998: split TCSR halt regs out of mutex
-Fixes: 100ce2205924 arm64: dts: qcom: msm8996: split TCSR halt regs out of mutex
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Use compute-cb@ subnodes instead of just cb@.
+
+Also add qcom,non-secure-domain, qcom,glink-channels and
+qcom,smd-channels missing properties to make sure dtbs_check doesn't
+fail right off the bat.
+
+Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Co-developed-by: David Heidelberg <david@ixit.cz>
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 2 +-
- arch/arm64/boot/dts/qcom/sc7180.dtsi  | 2 +-
- arch/arm64/boot/dts/qcom/sc7280.dtsi  | 2 +-
- arch/arm64/boot/dts/qcom/sdm630.dtsi  | 2 +-
- arch/arm64/boot/dts/qcom/sdm845.dtsi  | 2 +-
- arch/arm64/boot/dts/qcom/sm8150.dtsi  | 2 +-
- 7 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 9fa524079c1b..a67b181a6135 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -833,7 +833,7 @@ tcsr_mutex: hwlock@740000 {
- 			#hwlock-cells = <1>;
- 		};
- 
--		tcsr_1: sycon@760000 {
-+		tcsr_1: syscon@760000 {
- 			compatible = "qcom,tcsr-msm8996", "syscon";
- 			reg = <0x00760000 0x20000>;
- 		};
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index d463a66715ea..1118134ff01e 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -1047,7 +1047,7 @@ tcsr_mutex: hwlock@1f40000 {
- 			#hwlock-cells = <1>;
- 		};
- 
--		tcsr_regs_1: sycon@1f60000 {
-+		tcsr_regs_1: syscon@1f60000 {
- 			compatible = "qcom,msm8998-tcsr", "syscon";
- 			reg = <0x01f60000 0x20000>;
- 		};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index e8debb0da411..58976a1ba06b 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -1462,7 +1462,7 @@ tcsr_mutex: hwlock@1f40000 {
- 			#hwlock-cells = <1>;
- 		};
- 
--		tcsr_regs_1: sycon@1f60000 {
-+		tcsr_regs_1: syscon@1f60000 {
- 			compatible = "qcom,sc7180-tcsr", "syscon";
- 			reg = <0 0x01f60000 0 0x20000>;
- 		};
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 50c3d79abcc3..50bbc069c218 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2160,7 +2160,7 @@ tcsr_mutex: hwlock@1f40000 {
- 			#hwlock-cells = <1>;
- 		};
- 
--		tcsr_1: sycon@1f60000 {
-+		tcsr_1: syscon@1f60000 {
- 			compatible = "qcom,sc7280-tcsr", "syscon";
- 			reg = <0 0x01f60000 0 0x20000>;
- 		};
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index 9ae6610af93a..b51b85f583e5 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -703,7 +703,7 @@ tcsr_mutex: hwlock@1f40000 {
- 			#hwlock-cells = <1>;
- 		};
- 
--		tcsr_regs_1: sycon@1f60000 {
-+		tcsr_regs_1: syscon@1f60000 {
- 			compatible = "qcom,sdm630-tcsr", "syscon";
- 			reg = <0x01f60000 0x20000>;
- 		};
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 347c3abc117b..d761da47220d 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -2625,7 +2625,7 @@ tcsr_mutex: hwlock@1f40000 {
- 			#hwlock-cells = <1>;
- 		};
- 
--		tcsr_regs_1: sycon@1f60000 {
-+		tcsr_regs_1: syscon@1f60000 {
- 			compatible = "qcom,sdm845-tcsr", "syscon";
- 			reg = <0 0x01f60000 0 0x20000>;
- 		};
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 008f2e8c171c..cef8c4f4f0ff 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -2054,7 +2054,7 @@ tcsr_mutex: hwlock@1f40000 {
- 			#hwlock-cells = <1>;
- 		};
- 
--		tcsr_regs_1: sycon@1f60000 {
-+		tcsr_regs_1: syscon@1f60000 {
- 			compatible = "qcom,sm8150-tcsr", "syscon";
- 			reg = <0x0 0x01f60000 0x0 0x20000>;
- 		};
+Changes since v4:
+ * set global additionalProperties to false and removed the one for
+ patternProperties
+ * fixed compute-cb property to allow more than 9 nodes.
+ * added missing qcom,glink-channels, qcom,non-secure-domain and
+ qcom,smd-channels, without which the dtbs_check would fail
+
+ .../bindings/misc/qcom,fastrpc.yaml           | 108 ++++++++++++++++++
+ 1 file changed, 108 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+
+diff --git a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+new file mode 100644
+index 000000000000..3c11a3741994
+--- /dev/null
++++ b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+@@ -0,0 +1,108 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: "http://devicetree.org/schemas/misc/qcom,fastrpc.yaml#"
++$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++
++title: Qualcomm FastRPC Driver
++
++maintainers:
++  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
++
++description: |
++  The FastRPC implements an IPC (Inter-Processor Communication)
++  mechanism that allows for clients to transparently make remote method
++  invocations across DSP and APPS boundaries. This enables developers
++  to offload tasks to the DSP and free up the application processor for
++  other tasks.
++
++properties:
++  compatible:
++    items:
++      - const: qcom,fastrpc
++
++  label:
++    items:
++      enum:
++        - adsp
++        - mdsp
++        - sdsp
++        - cdsp
++
++  qcom,glink-channels:
++    description:
++      A list of channels tied to this function, used for matching
++      the function to a set of virtual channels.
++    $ref: "/schemas/types.yaml#/definitions/string-array"
++
++  qcom,non-secure-domain:
++    description:
++      Used to mark the current domain as non-secure.
++    type: boolean
++
++  qcom,smd-channels:
++    description:
++      Channel name used for the RPM communication
++    $ref: "/schemas/types.yaml#/definitions/string-array"
++
++  '#address-cells':
++    const: 1
++
++  '#size-cells':
++    const: 0
++
++patternProperties:
++  "(compute-)?cb@[0-9]*$":
++    type: object
++
++    description: >
++      Each subnode of the Fastrpc represents compute context banks available on the dsp.
++
++    properties:
++      compatible:
++        items:
++          - const: qcom,fastrpc-compute-cb
++
++      reg:
++        maxItems: 1
++
++      qcom,nsession:
++        $ref: /schemas/types.yaml#/definitions/uint32
++        default: 1
++        description: >
++          A value indicating how many sessions can share this context bank.
++
++    required:
++      - compatible
++      - reg
++
++required:
++  - compatible
++  - label
++  - '#address-cells'
++  - '#size-cells'
++
++additionalProperties: false
++
++examples:
++  - |
++    smd-edge {
++        label = "lpass";
++        fastrpc {
++            compatible = "qcom,fastrpc";
++            label = "adsp";
++            qcom,smd-channels = "fastrpcsmd-apps-dsp";
++            #address-cells = <1>;
++            #size-cells = <0>;
++
++            compute-cb@1 {
++                compatible = "qcom,fastrpc-compute-cb";
++                reg = <1>;
++            };
++
++            compute-cb@2 {
++                compatible = "qcom,fastrpc-compute-cb";
++                reg = <2>;
++            };
++        };
++    };
 -- 
-2.35.1
+2.34.1
 
