@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CEBB55ACA6D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 08:20:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6CFE5ACA79
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 08:22:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234617AbiIEGTx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Sep 2022 02:19:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54530 "EHLO
+        id S236470AbiIEGVR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Sep 2022 02:21:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236270AbiIEGTw (ORCPT
+        with ESMTP id S236270AbiIEGVP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Sep 2022 02:19:52 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3ACC13DF4;
-        Sun,  4 Sep 2022 23:19:50 -0700 (PDT)
+        Mon, 5 Sep 2022 02:21:15 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43A122B62D;
+        Sun,  4 Sep 2022 23:21:15 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6025B610D5;
-        Mon,  5 Sep 2022 06:19:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F10C8C433C1;
-        Mon,  5 Sep 2022 06:19:45 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D2838610E7;
+        Mon,  5 Sep 2022 06:21:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 756C6C433D6;
+        Mon,  5 Sep 2022 06:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1662358789;
-        bh=qoVU5IEku9HQk6piaO1ti5LKrgIU0qiuy5TONVv+YGc=;
+        s=k20201202; t=1662358874;
+        bh=056KAePOeWgzIG5LJsb+xoS5aEhxNBcn6X0QjCynVOo=;
         h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=WbhpBa4oNYu4pybWN/GNkcg1rjEJJ+uhDKXay5P/yQJeLJV4wLgeSqCTVtiIRmz8V
-         Pa+ZY0Jlkd4Ff4r0jLNjQ2LHpW/C1hzwMiyG7Uv4vh3o1k+slIPLHPfsx2lS/FOOB6
-         N2sCxUcJ1pFszykKb6oxm1dANWozR/VDC4N7cbRpQcMcaY0L3ZqjhSty1UNQFz/CTQ
-         6zNXoqb/8yHHD3sgo4+A2cYXOwVSMq3mhf0Q/BmSK3mXmH1enarW+Co2KUVLd4Va6M
-         q4n2erohl8dtqCR4qkCkBYogNfc4CxtfgJuAkeWY2PT+s61G+xJUXWjCqD3qx8irGh
-         k0mZ6YBwujkRA==
-Date:   Mon, 5 Sep 2022 08:19:42 +0200
+        b=XdNTeqviAxPaYfXQBCXsrQG2mq7ZAVcobfT6XXI3oDsn8ifBtUUUQoOTNH2cYqoYT
+         EWG8N1mc3OZpX/xqdkK0LuZRruyFowz03dVrdlBKt9HdNN/mrZPr7KS9DfjoVC7D7b
+         NYZVa2h/Dt2BEpcpyxaFlefQYMukqh5zORWfD6tKJhpnd/UeZz08/MwTYg3vtvJY19
+         uNU879voF7VWVRV0eUWXW+2r5xYJO0kQ1sTyPXK0Moz08bghCLBzDqvHPInfITVLYS
+         aWr1aKkB/TndgBDUIAFWxtw8KLd9rfBNtxV7MOx2AyyhPKUU9quSf+k42LL/WtWksO
+         PRW5G/3Oai0/g==
+Date:   Mon, 5 Sep 2022 08:21:07 +0200
 From:   Mauro Carvalho Chehab <mchehab@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
@@ -48,12 +48,12 @@ Cc:     Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-usb@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH 2/4] dt-bindings: phy: hisilicon,hi3670-usb3: simplify
+Subject: Re: [PATCH 1/4] dt-bindings: phy: hisilicon,hi3660-usb3: simplify
  example
-Message-ID: <20220905081942.4cd47318@coco.lan>
-In-Reply-To: <20220817142246.828762-3-krzysztof.kozlowski@linaro.org>
+Message-ID: <20220905082107.7ff83539@coco.lan>
+In-Reply-To: <20220817142246.828762-2-krzysztof.kozlowski@linaro.org>
 References: <20220817142246.828762-1-krzysztof.kozlowski@linaro.org>
-        <20220817142246.828762-3-krzysztof.kozlowski@linaro.org>
+        <20220817142246.828762-2-krzysztof.kozlowski@linaro.org>
 X-Mailer: Claws Mail 4.1.0 (GTK 3.24.34; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -68,7 +68,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Em Wed, 17 Aug 2022 17:22:44 +0300
+Em Wed, 17 Aug 2022 17:22:43 +0300
 Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> escreveu:
 
 > syscon and simple-mfd cannot be used without device specific compatible,
@@ -76,14 +76,14 @@ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> escreveu:
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  .../bindings/phy/hisilicon,hi3670-usb3.yaml   | 26 ++++++-------------
->  1 file changed, 8 insertions(+), 18 deletions(-)
+>  .../bindings/phy/hisilicon,hi3660-usb3.yaml   | 22 +++++--------------
+>  1 file changed, 6 insertions(+), 16 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/hisilicon,hi3670-usb3.yaml b/Documentation/devicetree/bindings/phy/hisilicon,hi3670-usb3.yaml
-> index ebd78acfe2de..1cb00dbcd4c5 100644
-> --- a/Documentation/devicetree/bindings/phy/hisilicon,hi3670-usb3.yaml
-> +++ b/Documentation/devicetree/bindings/phy/hisilicon,hi3670-usb3.yaml
-> @@ -52,22 +52,12 @@ additionalProperties: false
+> diff --git a/Documentation/devicetree/bindings/phy/hisilicon,hi3660-usb3.yaml b/Documentation/devicetree/bindings/phy/hisilicon,hi3660-usb3.yaml
+> index c2e073e26190..20b79e2e8b82 100644
+> --- a/Documentation/devicetree/bindings/phy/hisilicon,hi3660-usb3.yaml
+> +++ b/Documentation/devicetree/bindings/phy/hisilicon,hi3660-usb3.yaml
+> @@ -41,20 +41,10 @@ additionalProperties: false
 >  
 >  examples:
 >    - |
@@ -95,24 +95,20 @@ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> escreveu:
 > -        compatible = "syscon", "simple-mfd";
 > -        reg = <0x0 0xff200000 0x0 0x1000>;
 > -
-> -        usb_phy {
-> -          compatible = "hisilicon,hi3670-usb-phy";
+> -        usb-phy {
+> -          compatible = "hisilicon,hi3660-usb-phy";
 > -          #phy-cells = <0>;
 > -          hisilicon,pericrg-syscon = <&crg_ctrl>;
 > -          hisilicon,pctrl-syscon = <&pctrl>;
-> -          hisilicon,sctrl-syscon = <&sctrl>;
-> -          hisilicon,eye-diagram-param = <0xfdfee4>;
-> -          hisilicon,tx-vboost-lvl = <0x5>;
+> -          hisilicon,eye-diagram-param = <0x22466e4>;
 > -        };
 > -      };
 > +    usb-phy {
-> +        compatible = "hisilicon,hi3670-usb-phy";
+> +        compatible = "hisilicon,hi3660-usb-phy";
 > +        #phy-cells = <0>;
 > +        hisilicon,pericrg-syscon = <&crg_ctrl>;
 > +        hisilicon,pctrl-syscon = <&pctrl>;
-> +        hisilicon,sctrl-syscon = <&sctrl>;
-> +        hisilicon,eye-diagram-param = <0xfdfee4>;
-> +        hisilicon,tx-vboost-lvl = <0x5>;
+> +        hisilicon,eye-diagram-param = <0x22466e4>;
 >      };
 
 Acked-by: Mauro Carvalho Chehab <mchehab@kernel.org>
