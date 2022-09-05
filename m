@@ -2,116 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 860B55AD76B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 18:27:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10D0F5AD7B8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 18:41:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229875AbiIEQ1J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Sep 2022 12:27:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34674 "EHLO
+        id S231817AbiIEQlF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Sep 2022 12:41:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229476AbiIEQ1I (ORCPT
+        with ESMTP id S229551AbiIEQlE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Sep 2022 12:27:08 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78614617B;
-        Mon,  5 Sep 2022 09:27:07 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id bz13so8598431wrb.2;
-        Mon, 05 Sep 2022 09:27:07 -0700 (PDT)
+        Mon, 5 Sep 2022 12:41:04 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4AD65F224
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Sep 2022 09:41:02 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id k18so9718715lji.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Sep 2022 09:41:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date;
-        bh=T1hTUTEWq87p2cMRfpquYoG7rS+T/aAUPvt2ZKbM0yk=;
-        b=nZWkmXAM6oB1XnP68ZaYrX6SvrpahhgVmAK6X9m2MRwTCf80hq1bV0NYBNjhZT1TuP
-         ghb0UZT63EFcmoLnt6lGsYIm5e+08zkb38/wO2EQOuIo1cDUgzrMPMSRnDEsxUAAUt4K
-         GZPxfMo/j/wlZzmPiigbC+r5u9abyDhcrNSLTsObxOJ2tyiZnkmstZ8WFJ0+wwMYioRJ
-         i8vPieXjI8EyrnN8A1km4KGy9POjY4t1aWO287oqlRe0L5xb22crtvXfCKSM1mIJMdZe
-         RMg/Kvy6tK33MQIl9z3PB2Y6avrHsC5jd3pI7F0N4de+S+AdXH/RXF8WOUM5JEd3JmqP
-         PgFA==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=lUVY9wLQD/KhYbvUWN5fb2ErW+DbSkU8EoAMBzx1S5U=;
+        b=WC1h+oYOSZiMWUOdunF0j0EDSmX15JVM2O79DuI38xjocndQ6kMJQ16P39uIzVRh4h
+         WqY+C+gkZstzumL2q66wpLvwl7pFGU+fDbfpmLJ7MkD7lZMhBkQ/DUV6lBeEql2N5j4V
+         qOoJNBdMoxVeziWPoHYlbxKatnRHcmKCN7nB8G9AB9JEcHlYsdvnWEsPDk+g2fRU89e1
+         tyenC9hjxteWi5vOkYPTb6trUJ9NrwKSARrrbiMOMciQ3G71h07GhVO67m8OivtRq7ab
+         EjqXohSPn3IcWEB5LHRjeE6j88lN5xh1fAuSY5t6KrCgtbnBAa+BufI849Z0xDmLlNlp
+         tyRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=T1hTUTEWq87p2cMRfpquYoG7rS+T/aAUPvt2ZKbM0yk=;
-        b=QSv8o4kPKg4yBZGPOy80ihQLTmn5LjXTibTVHRf5PXGXCpCPkBiwErlVMkkpc47fCm
-         vK9RPd4tzyR7ra+9Oqk1N9b0bJ5axROBDkJq07LYx3A32z0Uq1KvHSo7pIYGv20Bajjd
-         +EzdpUdSMVN9kaUejqqHo4A65S/VZfzdYqD9jSV7w6RrnIl3c/qnYlyYjDHVZ3RuqmHY
-         RxKQxiIGJ4Ab2HHBg/nEmVTP3P9z7baG3SyRanbphuFYcXFCG48Wxzqs/Ts1aYOF1YsR
-         IrI0hzrWotXZMQqSog99yT56hKZ3TVJX2t4ZsWK5VcbipGBpCt1vUR7M895G7ZswuYLi
-         IRAw==
-X-Gm-Message-State: ACgBeo3hhxSi9NkkjNG7Flfqmjg8fxOfXvvB/dsv0CH5wIbgcemylGjz
-        kfC3Hq2uavqZGRYfLRYZVLI=
-X-Google-Smtp-Source: AA6agR7hQeOEdQm/U1C8FGztiC5rGCUZdS6rTNUxrOf0J+tP572H9oxgA2kNI6//tcSwZpzcgA4Z9A==
-X-Received: by 2002:a5d:4448:0:b0:226:82ff:f3e6 with SMTP id x8-20020a5d4448000000b0022682fff3e6mr25809980wrr.115.1662395225977;
-        Mon, 05 Sep 2022 09:27:05 -0700 (PDT)
-Received: from [10.176.234.249] ([137.201.254.41])
-        by smtp.googlemail.com with ESMTPSA id e18-20020a5d5012000000b00226dedf1ab7sm4127026wrt.76.2022.09.05.09.27.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Sep 2022 09:27:05 -0700 (PDT)
-Message-ID: <c3d2d8b307f7e11b7a2be751673220049b9a1a77.camel@gmail.com>
-Subject: Re: [RFC PATCH v3 2/4] ufs: core: mcq: Adds Multi-Circular Queue
- support
-From:   Bean Huo <huobean@gmail.com>
-To:     Asutosh Das <quic_asutoshd@quicinc.com>, quic_nguyenb@quicinc.com,
-        quic_xiaosenh@quicinc.com, stanley.chu@mediatek.com,
-        adrian.hunter@intel.com, bvanassche@acm.org, avri.altman@wdc.com,
-        mani@kernel.org, quic_cang@quicinc.com, beanhuo@micron.com,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Jinyoung Choi <j-young.choi@samsung.com>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
-        open list <linux-kernel@vger.kernel.org>
-Date:   Mon, 05 Sep 2022 18:27:03 +0200
-In-Reply-To: <04f4949e4dea991a93bdf6727bf12948ecc586be.1662157846.git.quic_asutoshd@quicinc.com>
-References: <cover.1662157846.git.quic_asutoshd@quicinc.com>
-         <04f4949e4dea991a93bdf6727bf12948ecc586be.1662157846.git.quic_asutoshd@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-User-Agent: Evolution 3.44.1-0ubuntu1 
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=lUVY9wLQD/KhYbvUWN5fb2ErW+DbSkU8EoAMBzx1S5U=;
+        b=hZQJFB4cC0MTYMkj5dVcXiJ2ZqZSxvbb4Llgcf5WZ/wca+6LiRLBQZMwydVQd/4g61
+         MMcWfInpc9+qk11SoLjIjB/xW8MEW+zQmCLVZ/63vLYddgoRvATtQKD6d77x5SO88Rel
+         b87yFT2jF/dIkW0hQXRIINtQHNjUYAuRp0I+M1lEzrwkhbGGuNg629VwX1F223G+9+OC
+         OEdXT0kGGAduJc5lHljVSQgrrxoYWE0q44SLdo5J4VXL77OxoFPHL+RdQyi9+2EhN0N2
+         5tQCecef1KsjG9tFFf9tYhbkYB0WZ0TOBkTo2/bCu6QkdpP7/9ASfG/FQYAMIfYSHT6a
+         C+sg==
+X-Gm-Message-State: ACgBeo0ryGRfLloqwaXbKAUPKF0splQHnqQ7AiImo8fPUJPxwmDznKJG
+        zTh560IwbPjGmJO/xKCZNhmnoA==
+X-Google-Smtp-Source: AA6agR6HLS4+eFG4fIaVMDGpISoxeLNvbeLnz1eGC4tU9uQhcoLlsR1quf0rWJIWZHNMR7k7Q+FPhA==
+X-Received: by 2002:a2e:a913:0:b0:25d:3128:21af with SMTP id j19-20020a2ea913000000b0025d312821afmr14872323ljq.58.1662396061335;
+        Mon, 05 Sep 2022 09:41:01 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id t18-20020a192d52000000b0048af749c060sm1236556lft.157.2022.09.05.09.40.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Sep 2022 09:41:00 -0700 (PDT)
+Message-ID: <84095d0e-28a1-885b-8217-f787c4cf338d@linaro.org>
+Date:   Mon, 5 Sep 2022 18:40:58 +0200
 MIME-Version: 1.0
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v5 1/2] dt-bindings: arm: qcom: document sc7280 and evoker
+ board
+Content-Language: en-US
+To:     Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
+        LKML <linux-kernel@vger.kernel.org>
+Cc:     mka@chromium.org, dianders@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20220902080912.118592-1-sheng-liang.pan@quanta.corp-partner.google.com>
+ <20220902160845.v5.1.Ief93544cd0cbfa412092f5de92de10d59a2a5b3a@changeid>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220902160845.v5.1.Ief93544cd0cbfa412092f5de92de10d59a2a5b3a@changeid>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-T24gRnJpLCAyMDIyLTA5LTAyIGF0IDE1OjQxIC0wNzAwLCBBc3V0b3NoIERhcyB3cm90ZToKPiAK
-PiArCj4gK3N0YXRpYyB2b2lkIHVmc2hjZF9tY3FfY29uZmlnX25yX3F1ZXVlcyhzdHJ1Y3QgdWZz
-X2hiYSAqaGJhKQo+ICt7Cj4gK8KgwqDCoMKgwqDCoMKgaW50IGksIHJlbTsKPiArwqDCoMKgwqDC
-oMKgwqB1MzIgaGJhcV9jYXAsIGNtcDsKPiArwqDCoMKgwqDCoMKgwqBzdHJ1Y3QgU2NzaV9Ib3N0
-ICpob3N0ID0gaGJhLT5ob3N0Owo+ICsKPiArwqDCoMKgwqDCoMKgwqBoYmFxX2NhcCA9IGhiYS0+
-bWNxX2NhcGFiaWxpdGllcyAmIDB4ZmY7Cj4gKwo+ICvCoMKgwqDCoMKgwqDCoHJlbSA9IGhiYXFf
-Y2FwIC0gZGV2X2NtZF9xdWV1ZTsKPiArwqDCoMKgwqDCoMKgwqAvKiBtaW4oKSBjb21wYXJlcyB2
-YXJpYWJsZXMgb2Ygc2FtZSB0eXBlICovCj4gK8KgwqDCoMKgwqDCoMKgaGJhLT5ucl9xdWV1ZXNb
-SENUWF9UWVBFX0RFRkFVTFRdID0gbWluKGhiYXFfY2FwIC0KPiBkZXZfY21kX3F1ZXVlLAoKIGhi
-YS0+bnJfcXVldWVzW0hDVFhfVFlQRV9ERUZBVUxUXSA9IG1pbihyZW0sIG51bV9wb3NzaWJsZV9j
-cHVzKCkpOwoKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoG51bV9wb3Nz
-aWJsZV9jcHVzKCkpOwo+ICvCoMKgwqDCoMKgwqDCoHJlbSAtPSBoYmEtPm5yX3F1ZXVlc1tIQ1RY
-X1RZUEVfREVGQVVMVF07Cj4gK8KgwqDCoMKgwqDCoMKgaWYgKHJlbSA8PSAwKQo+ICvCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBnb3RvIG91dDsKPiArwqDCoMKgwqDCoMKgwqBjbXAgPSBy
-ZW07Cj4gK8KgwqDCoMKgwqDCoMKgaGJhLT5ucl9xdWV1ZXNbSENUWF9UWVBFX1BPTExdID0gbWlu
-KGNtcCwgcG9sbF9xdWV1ZXMpOwo+ICvCoMKgwqDCoMKgwqDCoHJlbSAtPSBoYmEtPm5yX3F1ZXVl
-c1tIQ1RYX1RZUEVfUE9MTF07Cj4gK8KgwqDCoMKgwqDCoMKgaWYgKHJlbSA8PSAwKQo+ICvCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBnb3RvIG91dDsKPiArwqDCoMKgwqDCoMKgwqBjbXAg
-PSByZW07Cj4gK8KgwqDCoMKgwqDCoMKgaGJhLT5ucl9xdWV1ZXNbSENUWF9UWVBFX1JFQURdID0g
-bWluKGNtcCwgcmVhZF9xdWV1ZXMpOwoKc3RhdGljIHJlYWRfcXVldWVzIGlzIG5vdCBpbml0aWFs
-aXplZC4KCj4gCi4uLi4uCj4gK3N0YXRpYyBpbmxpbmUgdm9pZCB1ZnNoY2RfaW5jX3RwKHN0cnVj
-dCB1ZnNfaHdfcXVldWUgKnEpCj4gK3sKPiArwqDCoMKgwqDCoMKgwqB1MzIgbWFzayA9IHEtPm1h
-eF9lbnRyaWVzIC0gMTsKPiArwqDCoMKgwqDCoMKgwqB1MzIgdmFsOwo+ICsKPiArwqDCoMKgwqDC
-oMKgwqBxLT5zcV90cF9zbG90ID0gKHEtPnNxX3RwX3Nsb3QgKyAxKSAmIG1hc2s7Cj4gK8KgwqDC
-oMKgwqDCoMKgdmFsID0gcS0+c3FfdHBfc2xvdCAqIHNpemVvZihzdHJ1Y3QgdXRwX3RyYW5zZmVy
-X3JlcV9kZXNjKTsKPiArwqDCoMKgwqDCoMKgwqB3cml0ZWwodmFsLCBxLT5tY3Ffc3FfdHApOwo+
-ICt9CgpUaGlzIGZ1bmN0aW9uIGp1c3QgYWNjZXNzZXMgdGhlIHN1Ym1pc3Npb24gcXVldWUgdGFp
-bCBwb2ludGVyLiBUaGUKZnVuY3Rpb24gbmFtZSBzaG91bGQgY2xlYXJseSBleHBsYWluIHRoaXMu
-CgoKCgo=
+On 02/09/2022 10:09, Sheng-Liang Pan wrote:
+> This adds Chromebook Evoker to the yaml.
+> 
+> Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
 
+
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+
+Best regards,
+Krzysztof
