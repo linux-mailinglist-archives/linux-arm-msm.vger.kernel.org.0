@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 449E55AD584
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 16:52:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED3385AD5F8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 17:17:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229570AbiIEOwW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Sep 2022 10:52:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36958 "EHLO
+        id S236598AbiIEPPc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Sep 2022 11:15:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236851AbiIEOwU (ORCPT
+        with ESMTP id S238051AbiIEPPZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Sep 2022 10:52:20 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFF024F198;
-        Mon,  5 Sep 2022 07:52:19 -0700 (PDT)
+        Mon, 5 Sep 2022 11:15:25 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 840AF140CA;
+        Mon,  5 Sep 2022 08:15:24 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 59A3BB811DD;
-        Mon,  5 Sep 2022 14:52:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21D0FC433C1;
-        Mon,  5 Sep 2022 14:52:12 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 19AF5612D7;
+        Mon,  5 Sep 2022 15:15:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5688EC433D7;
+        Mon,  5 Sep 2022 15:15:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1662389537;
-        bh=rynh9eHuLGphHuv8tPFUM/cZZjVJWwRhNLpk0/cl4+w=;
+        s=k20201202; t=1662390923;
+        bh=H/TZpaSNH/3isRci5sv0IwXAXjpsEvaJ6CH6e8EAzc4=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=sSa8k35lZL5Q1rhj8YVYVo+qhBs1A97IeEHn6BRCbkJfYZBtLLY6VdlKbcDa8ETF5
-         iUNhu1grTL1FmI/dCurZ7ijFmFglQBAeCxACjBYVXCnfk4z1oTuzKg7E9LK3xu6+vG
-         UfPn7dr3vqy3yiPXw8DCUcPIVCCfSZ90QFQTMzvKZwLlhvEeX9MdJ1Prtqkhx2u73t
-         ocX8N8ypflA7V07DLB6ZXqo5Chhf2hs6K++Q9pOC4Qu/3z5pebHTi3cNNOj+OTV2fe
-         q6b4Uy87Ddzo0diJJ2dAjMd39eO8sfc+Q2XSXDTDqxxkWV6tJ2R8mIXyhUoSLBa7X/
-         R+ROt3qQupl0Q==
-Date:   Mon, 5 Sep 2022 15:52:08 +0100
+        b=j7W+EhG75b+6wClcVNFMUb0Mwwn9LSUDGvgO7qKtBqYvlPj04GnwSMZdY0yqJCeNI
+         p7iyGgnw5MVrE55DGMpeTguVNv9+KU80dHHOxA7OHp/yvNhCDXVvEQpYXBITXTdINa
+         IfISzIj1ddgVuB8nUbV2/kveHZBAG9X7urAI0GdqPvaWe8m1vxYfNJ/9jfMydBSUKG
+         Qbanv2Sk2o1Mtyat4ooRIvi+18bq73Q8E0cTcRn8nitLwJQQDwWa2MObN7Tgx+W5L6
+         /bAO0prXeJ4vB4/FZ3DuQWD2Yf1CB9UGPiUgZYz7k91hqRHjXG2xUOzlxZLjsGNPv7
+         4CvJfst2JEDhw==
+Date:   Mon, 5 Sep 2022 16:15:09 +0100
 From:   Lee Jones <lee@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -40,21 +40,18 @@ Cc:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        David Heidelberg <david@ixit.cz>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: Re: [PATCH 14/14] dt-bindings: mfd: qcom,spmi-pmic: fix TM ADC node
- schema on PM8998
-Message-ID: <YxYNGLT1X+5AVnBN@google.com>
-References: <20220828084341.112146-1-krzysztof.kozlowski@linaro.org>
- <20220828084341.112146-15-krzysztof.kozlowski@linaro.org>
+        linux-kernel@vger.kernel.org
+Subject: Re: [RFT PATCH v3 01/16] dt-bindings: mfd: qcom,tcsr: add several
+ devices
+Message-ID: <YxYSfbpINDvDffGQ@google.com>
+References: <20220819083209.50844-1-krzysztof.kozlowski@linaro.org>
+ <20220819083209.50844-2-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220828084341.112146-15-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220819083209.50844-2-krzysztof.kozlowski@linaro.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -65,21 +62,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 28 Aug 2022, Krzysztof Kozlowski wrote:
+On Fri, 19 Aug 2022, Krzysztof Kozlowski wrote:
 
-> There are two bindings for Qualcomm SPMI PMIC Thermal Monitoring ADC:
-> one for ADC HC and one for ADC TM5 and TM7.  PM8998 uses the former one,
-> so fix matching of child schema:
+> Document existing (MSM8996, SC7280) and new compatibles for TCSR syscon
+> registers (QCS404, SC7180, SDM630, SDM845, SM8150, MSM8998).
 > 
->   qcom/msm8998-asus-novago-tp370ql.dtb: pmic@0: adc-tm@3400:compatible:0: 'qcom,spmi-adc-tm-hc' is not one of ['qcom,spmi-adc-tm5', 'qcom,spmi-adc-tm5-gen2', 'qcom,adc-tm7']
-> 
-> Fixes: 3f5117be9584 ("dt-bindings: mfd: convert to yaml Qualcomm SPMI PMIC")
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../bindings/mfd/qcom,spmi-pmic.yaml           | 18 +++++++++++++++++-
->  1 file changed, 17 insertions(+), 1 deletion(-)
 
-Applied, thanks.
+What does RFT mean?
+
+> ---
+> 
+> Changes since v2:
+> 1. Add more compatibles.
+> 
+> Changes since v1:
+> 1. Correct order of compatibles.
+> ---
+>  Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+> index 2f816fd0c9ec..d3c25daa995e 100644
+> --- a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+> @@ -18,6 +18,13 @@ properties:
+>      oneOf:
+>        - items:
+>            - enum:
+> +              - qcom,msm8998-tcsr
+> +              - qcom,qcs404-tcsr
+> +              - qcom,sc7180-tcsr
+> +              - qcom,sc7280-tcsr
+> +              - qcom,sdm630-tcsr
+> +              - qcom,sdm845-tcsr
+> +              - qcom,sm8150-tcsr
+>                - qcom,tcsr-apq8064
+>                - qcom,tcsr-apq8084
+>                - qcom,tcsr-ipq8064
+> @@ -27,6 +34,7 @@ properties:
+>                - qcom,tcsr-msm8953
+>                - qcom,tcsr-msm8960
+>                - qcom,tcsr-msm8974
+> +              - qcom,tcsr-msm8996
+>            - const: syscon
+>        - items:
+>            - const: qcom,tcsr-ipq6018
 
 -- 
 Lee Jones [李琼斯]
