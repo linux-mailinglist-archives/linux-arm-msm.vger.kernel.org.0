@@ -2,77 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 465D95AC9DA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 07:48:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CEBB55ACA6D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 08:20:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235313AbiIEFsF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Sep 2022 01:48:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34856 "EHLO
+        id S234617AbiIEGTx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Sep 2022 02:19:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235424AbiIEFsE (ORCPT
+        with ESMTP id S236270AbiIEGTw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Sep 2022 01:48:04 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 695242F39D
-        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Sep 2022 22:48:02 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id c24so7197336pgg.11
-        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Sep 2022 22:48:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=/MSOkfzcFDVOwb+RS/ivu6q81kMf5WeXuE6nXo0vYzw=;
-        b=z3ENzGxwfrHKOJ5hIrRFfQWdK9HQXJE5wEl8yca9odjvcVDKEcwYNuUQ3saqPr7miW
-         mF1QpmiMkHGRlte9vIKhtmyw2Sy/HYPnEB5l0DmukbwwXSe65i0rP4myTJdEuHIc8eew
-         eg4Pp3shVhpYya+HcE4TMqeHHN2YkxsnnQyE1vCdRqRHKk/IZPAgjYQk89zKrYpsOgPr
-         T5f+vNtYlsyArA59WQpUBxxxduffw2jFMe5SJht4yBkvdRTU6ERnGc4kb1cY7ltXE7ez
-         FcxSkF4tbvV3aOJoPepuFApEU/5nyYdY6p1jX6nPvao9IYNwByFu4lTIFjDyxueR/5mp
-         p67Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=/MSOkfzcFDVOwb+RS/ivu6q81kMf5WeXuE6nXo0vYzw=;
-        b=5zIba5fJujOgUggW5aFBsh/XnnubBHpj4NLiWns/H1g4Siz2nTh00TAzOiDborT48W
-         xyBWNTAfn+u3xChMsKkj84PGPLmm6VRrPIj9wksPQKQQxTaQMBDtcuf8zclLCBcIdW+Q
-         ijX7/W0972HtJEncGMVFlIModI/HUNF1NnNIdmcaz0GxHiIp4jPFEeMOgslpdt9wbc9A
-         NjfN3pKUUVXMS7BQW3EcA/dKdp/KB5ItTbdJMDTMhzaTFdh7dppdPj36ddCRHp2BJoUy
-         72Isc7LpnkC8dBpNcGVNOc9lQX6V5FB9qooF2hsDodr3oI3w7KFD1x1rUMsIu2ekYq6n
-         zvmQ==
-X-Gm-Message-State: ACgBeo3OIPlVXDuHOLsNzMCbLPzeMvUDN+teZwpYTkHhaqJWJ2RHz+wH
-        qCRJEIL1WAtGIcR2AiCAdhd9gA==
-X-Google-Smtp-Source: AA6agR5F/Rwe8lQfPR84iEIKaj/8EdP4mhMjo5k43tg2ef1dm6TqvKoSPlvY/+MuNlwrFUeNHpymPg==
-X-Received: by 2002:a05:6a00:1c90:b0:537:e144:4481 with SMTP id y16-20020a056a001c9000b00537e1444481mr43747206pfw.24.1662356881806;
-        Sun, 04 Sep 2022 22:48:01 -0700 (PDT)
-Received: from ?IPV6:2401:4900:1c60:5362:9d7f:2354:1d0a:78e3? ([2401:4900:1c60:5362:9d7f:2354:1d0a:78e3])
-        by smtp.gmail.com with ESMTPSA id a6-20020a1709027d8600b00176b63535ccsm636924plm.193.2022.09.04.22.47.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 04 Sep 2022 22:48:01 -0700 (PDT)
-Message-ID: <66eaf16e-cb7c-a0b4-9ce5-02611308b0e6@linaro.org>
-Date:   Mon, 5 Sep 2022 11:17:55 +0530
+        Mon, 5 Sep 2022 02:19:52 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3ACC13DF4;
+        Sun,  4 Sep 2022 23:19:50 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6025B610D5;
+        Mon,  5 Sep 2022 06:19:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F10C8C433C1;
+        Mon,  5 Sep 2022 06:19:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1662358789;
+        bh=qoVU5IEku9HQk6piaO1ti5LKrgIU0qiuy5TONVv+YGc=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=WbhpBa4oNYu4pybWN/GNkcg1rjEJJ+uhDKXay5P/yQJeLJV4wLgeSqCTVtiIRmz8V
+         Pa+ZY0Jlkd4Ff4r0jLNjQ2LHpW/C1hzwMiyG7Uv4vh3o1k+slIPLHPfsx2lS/FOOB6
+         N2sCxUcJ1pFszykKb6oxm1dANWozR/VDC4N7cbRpQcMcaY0L3ZqjhSty1UNQFz/CTQ
+         6zNXoqb/8yHHD3sgo4+A2cYXOwVSMq3mhf0Q/BmSK3mXmH1enarW+Co2KUVLd4Va6M
+         q4n2erohl8dtqCR4qkCkBYogNfc4CxtfgJuAkeWY2PT+s61G+xJUXWjCqD3qx8irGh
+         k0mZ6YBwujkRA==
+Date:   Mon, 5 Sep 2022 08:19:42 +0200
+From:   Mauro Carvalho Chehab <mchehab@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Yu Chen <chenyu56@huawei.com>,
+        Binghui Wang <wangbinghui@hisilicon.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Carvalho Chehab <mchehab+huawei@kernel.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
+Subject: Re: [PATCH 2/4] dt-bindings: phy: hisilicon,hi3670-usb3: simplify
+ example
+Message-ID: <20220905081942.4cd47318@coco.lan>
+In-Reply-To: <20220817142246.828762-3-krzysztof.kozlowski@linaro.org>
+References: <20220817142246.828762-1-krzysztof.kozlowski@linaro.org>
+        <20220817142246.828762-3-krzysztof.kozlowski@linaro.org>
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.34; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-pmics: Remove reg entry for
- pmc8280c_lpg node
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     devicetree@vger.kernel.org, agross@kernel.org,
-        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>
-References: <20220903084440.1509562-1-bhupesh.sharma@linaro.org>
- <42790a40-458a-55ff-7e4b-796e72f474ac@kernel.org>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-In-Reply-To: <42790a40-458a-55ff-7e4b-796e72f474ac@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,47 +68,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof,
+Em Wed, 17 Aug 2022 17:22:44 +0300
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> escreveu:
 
-On 9/5/22 12:52 AM, Krzysztof Kozlowski wrote:
-> On 03/09/2022 11:44, Bhupesh Sharma wrote:
->> Commit eeca7d46217c ("arm64: dts: qcom: pm8350c: Drop PWM reg declaration")
->> dropped PWM reg declaration for pm8350c pwm(s), but there is a leftover
->> 'reg' entry inside the lpg/pwm node in sc8280xp dts file. Remove the same.
->>
->> While at it, also remove the unused unit address in the node
->> label.
->>
->> Fixes: eeca7d46217c ("arm64: dts: qcom: pm8350c: Drop PWM reg declaration")
->> Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> Cc: Bjorn Andersson <andersson@kernel.org>
->> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi | 3 +--
->>   1 file changed, 1 insertion(+), 2 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
->> index ae90b97aecb8..2e5cf55afdd5 100644
->> --- a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
->> @@ -60,9 +60,8 @@ pmc8280c_gpios: gpio@8800 {
->>   			#interrupt-cells = <2>;
->>   		};
->>   
->> -		pmc8280c_lpg: lpg@e800 {
->> +		pmc8280c_lpg: lpg {
+> syscon and simple-mfd cannot be used without device specific compatible,
+> so simplify the example to fix this.
 > 
-> I wonder why I did not see the errors when testing all DTSes for
-> https://lore.kernel.org/all/20220828084341.112146-9-krzysztof.kozlowski@linaro.org/
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../bindings/phy/hisilicon,hi3670-usb3.yaml   | 26 ++++++-------------
+>  1 file changed, 8 insertions(+), 18 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/hisilicon,hi3670-usb3.yaml b/Documentation/devicetree/bindings/phy/hisilicon,hi3670-usb3.yaml
+> index ebd78acfe2de..1cb00dbcd4c5 100644
+> --- a/Documentation/devicetree/bindings/phy/hisilicon,hi3670-usb3.yaml
+> +++ b/Documentation/devicetree/bindings/phy/hisilicon,hi3670-usb3.yaml
+> @@ -52,22 +52,12 @@ additionalProperties: false
+>  
+>  examples:
+>    - |
+> -    bus {
+> -      #address-cells = <2>;
+> -      #size-cells = <2>;
+> -
+> -      usb3_otg_bc: usb3_otg_bc@ff200000 {
+> -        compatible = "syscon", "simple-mfd";
+> -        reg = <0x0 0xff200000 0x0 0x1000>;
+> -
+> -        usb_phy {
+> -          compatible = "hisilicon,hi3670-usb-phy";
+> -          #phy-cells = <0>;
+> -          hisilicon,pericrg-syscon = <&crg_ctrl>;
+> -          hisilicon,pctrl-syscon = <&pctrl>;
+> -          hisilicon,sctrl-syscon = <&sctrl>;
+> -          hisilicon,eye-diagram-param = <0xfdfee4>;
+> -          hisilicon,tx-vboost-lvl = <0x5>;
+> -        };
+> -      };
+> +    usb-phy {
+> +        compatible = "hisilicon,hi3670-usb-phy";
+> +        #phy-cells = <0>;
+> +        hisilicon,pericrg-syscon = <&crg_ctrl>;
+> +        hisilicon,pctrl-syscon = <&pctrl>;
+> +        hisilicon,sctrl-syscon = <&sctrl>;
+> +        hisilicon,eye-diagram-param = <0xfdfee4>;
+> +        hisilicon,tx-vboost-lvl = <0x5>;
+>      };
 
-I did not see the error while running the 'make dtbs_check' locally, so 
-may be something to improve in 'make dtbs_check' infrastructure there.
-
-> Anyway, it cannot be lpg - binding requires "pwm".
-
-I think that should be a separate patch. It does not seem related to 
-this change anyways - which fixes eeca7d46217c . I will send a v2 soon.
+Acked-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 
 Thanks,
-Bhupesh
+Mauro
