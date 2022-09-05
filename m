@@ -2,156 +2,221 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27B4D5ACB6C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 08:57:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 305CC5ACB80
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 08:57:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236391AbiIEGvH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Sep 2022 02:51:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48202 "EHLO
+        id S235930AbiIEGym (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Sep 2022 02:54:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236173AbiIEGvF (ORCPT
+        with ESMTP id S236355AbiIEGyk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Sep 2022 02:51:05 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70EC61F2D9
-        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Sep 2022 23:51:03 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id z6so11733176lfu.9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Sep 2022 23:51:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=7l1Ke7T6M+oZvtuxdITH0Qf+JbsLNo5gUL5ZqA0qy+Y=;
-        b=oV31RxlKuOTqexYDOvpxYXg7TBDxHrnLEFY+R1VNIIdDPLKabg29Ons+XPT4mT7Crm
-         wxifLo8pLdwG7KsbbWfpvKm5gJrIMjcVPyDEoWM7M0aUPB4VM05NUwhdRFi1zb/v7owO
-         QvgXv7bsSjDZpmpq18+gY4kFIEW66Y70dA/4pvTky7pdsi1J9tbNEUDAYzPkJjpqd0BO
-         Kw0kxz6u9Epjq8pryosYXKIqXVJAM5UAYWYUuRWdvfHiy7PwMGXbWHnVLKr2mwDW7oqX
-         Et1jbwLYKYbw3qP0jd+zVPG80Yq8JVdqG3URN5to74xfxFKDcDZFZpnh7sZjYvlLWQSa
-         +vwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=7l1Ke7T6M+oZvtuxdITH0Qf+JbsLNo5gUL5ZqA0qy+Y=;
-        b=CK0gbki0wcLCGSwbBb65WRFyY0Aw3wqX4esKHUz5pvvzvDkOx62PsAzfG+8yXQ/W8R
-         vMaGd6MMZUi+Qmbw8l0qlJCInHLHUoplMC7WAz3Q04Nn6s/tbeGqbXSzXaCIHMWOl9aI
-         pyEOcPLKAIct8+KWnRyOyWq+k4tiEHl7gyJs2QVMsflZbCrm+Wu4ukN0mc6tYsyA8zwj
-         iw7civEQRO4s/9pFl5SabrxbswOOPuIq2y/sx5AMhuPfG/qwocnbb/CIzve99Ft9rc05
-         ZsozcXUZF+U5L8UUKFz/3mN9wvsafiaj58An7p2XiX2Bj+itNpvrF2Sbl4K1cUiPo9rh
-         LMtw==
-X-Gm-Message-State: ACgBeo1zZ7jtnULt5RnX70l66e7zueGqMkBh6SBrItG+fCtyBbSxcisC
-        25bCf74E8MddGyafcCPnNe72c92/1Hj4SY0ReUiO9Q==
-X-Google-Smtp-Source: AA6agR6mgPO8b5a8qN6Hwu+o7a0FkP+RxxtCU71emjql8vwfRr1sKKPmvZKgBtd1GpvHcMIgHHfbiz5NC+pZmkXZatc=
-X-Received: by 2002:a05:6512:537:b0:494:8359:4ad with SMTP id
- o23-20020a056512053700b00494835904admr8089979lfc.409.1662360661770; Sun, 04
- Sep 2022 23:51:01 -0700 (PDT)
+        Mon, 5 Sep 2022 02:54:40 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29B13B7FF;
+        Sun,  4 Sep 2022 23:54:39 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2855eb4Z021847;
+        Mon, 5 Sep 2022 06:54:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=ZUIEl+4WD4NaRQLXv9dXuG1XnICSHABP58clEbULyY4=;
+ b=CExsCnCwmszsru6VWg5nXrwsLrX+EpK9wbdsqO234BIf7hfsh4Kzf4u/s1u9Nhnumogd
+ 5sSM8LEpn9TovDwX0VWVmtNrlb8so8fI8JJxYIPM7a4jwpSWxieRvnxMOk6CB8IWR8JJ
+ PJ6Dp/14iYV3x73+60LIA0ZNg2paMi0pkxEGmlToKFQ6iF09De55wpvt8yg18nM1NX9A
+ g2A8fz7puIDkMMUObkogXuv+5bTWYKiWetUVfi7+H6QoYjEn+KTD0SPKgzjs68X5nJ14
+ rwtQ8+7zQG2K7V0VjffKPHBXeat9s/VUDfgAXTGw7zI09rxdiVH7tFUZ2yoXZ6ElbBdc gg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jbww03fcp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 05 Sep 2022 06:54:26 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2856sIF2022812
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 5 Sep 2022 06:54:18 GMT
+Received: from jinlmao-gv.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Sun, 4 Sep 2022 23:54:14 -0700
+From:   Mao Jinlong <quic_jinlmao@quicinc.com>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>
+CC:     Mao Jinlong <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: [PATCH v13 0/9] Coresight: Add support for TPDM and TPDA 
+Date:   Mon, 5 Sep 2022 14:53:48 +0800
+Message-ID: <20220905065357.1296-1-quic_jinlmao@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
- <dfd07f84-c4bd-a18c-2263-49f999f2934c@linaro.org> <f42539d0-c2a3-a2b2-c35b-b7a5904b376f@gmail.com>
- <db00f6a9-263d-9c47-486e-7080ffc5b3c9@linaro.org> <312ede16-f0a9-9b9e-a0d6-fb6e37d9f1bb@gmail.com>
-In-Reply-To: <312ede16-f0a9-9b9e-a0d6-fb6e37d9f1bb@gmail.com>
-From:   Sumit Garg <sumit.garg@linaro.org>
-Date:   Mon, 5 Sep 2022 12:20:50 +0530
-Message-ID: <CAFA6WYOS6iw+4e6TW9NLO2-Bk37rZFN_S2J3dyOVvgOcd9CtXA@mail.gmail.com>
-Subject: Re: [PATCH 0/4] firmware: Add support for Qualcomm UEFI Secure Application
-To:     Maximilian Luz <luzmaximilian@gmail.com>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        OP-TEE TrustedFirmware <op-tee@lists.trustedfirmware.org>,
-        Jens Wiklander <jens.wiklander@linaro.org>,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: nYMrwkHFN9tEXdHjVf2KGRCF3b-ZhifA
+X-Proofpoint-ORIG-GUID: nYMrwkHFN9tEXdHjVf2KGRCF3b-ZhifA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-09-05_05,2022-09-05_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ adultscore=0 spamscore=0 mlxlogscore=999 suspectscore=0 malwarescore=0
+ bulkscore=0 phishscore=0 clxscore=1015 lowpriorityscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2209050033
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+ TEE ML
+This series adds support for the trace performance monitoring and
+diagnostics hardware (TPDM and TPDA). It is composed of two major
+elements.
+a) Changes for original coresight framework to support for TPDM and TPDA.
+b) Add driver code for TPDM and TPDA.
 
-On Fri, 2 Sept 2022 at 18:48, Maximilian Luz <luzmaximilian@gmail.com> wrote:
->
-> Hi,
->
-> On 9/2/22 09:26, Sumit Garg wrote:
-> > Hi Maximilian,
-> >
-> > On 02/08/22 18:52, Maximilian Luz wrote:
->
-> [...]
->
-> >> Thanks for this information! So as far as I understand it, this is currently an
-> >> interface to user-space only, i.e. does not allow in-kernel drivers for apps?
-> >
-> > The Linux TEE framework already provides an in-kernel interface to TEE as well via TEE bus [1]. There are already multiple kernel drivers [2] [3] [4] [5] [6] [7] using it. So an EFI driver can be an addition to that.
-> >
-> > Now coming on to TEE implementations, the drivers I mentioned are based on OP-TEE where devices are queried/enumerated during OP-TEE probe here [8]. So in similar manner QTEE smcinvoke driver should be able to register devices on the TEE bus.
-> >
-> > [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/staging/tee.rst#n56
-> >
-> > [2] drivers/char/tpm/tpm_ftpm_tee.c
-> >
-> > [3] drivers/char/hw_random/optee-rng.c
-> >
-> > [4] drivers/firmware/arm_scmi/optee.c
-> >
-> > [5] security/keys/trusted-keys/trusted_tee.c
-> >
-> > [6] drivers/firmware/broadcom/tee_bnxt_fw.c
-> >
-> > [7] drivers/rtc/rtc-optee.c
-> >
-> > [8] drivers/tee/optee/device.c
->
-> Thanks for those links!
->
-> I think it would indeed be good if we could make it work via that
-> interface and I guess that should generally be possible. As far as I can
-> see, the biggest problem might be that the current firmware doesn't seem
-> to use UUIDs, so I guess we might need to emulate them somehow.
->
+Introduction of changes for original coresight framework
+Support TPDM as new coresight source.
+Since only STM and ETM are supported as coresight source originally.
+TPDM is a newly added coresight source. We need to change
+the original way of saving coresight path to support more types source
+for coresight driver.
+The following patch is to add support more coresight sources.
+    coresight: core: Use IDR for non-cpu bound sources' paths.
 
-Okay, so I had a brief look at your driver to get an idea how QTEE
-identifies its trusted/secure applications. AFAIU, it uses constant
-strings as follows:
+Introduction of TPDM and TPDA
+TPDM - The trace performance monitoring and diagnostics monitor or TPDM in
+short serves as data collection component for various dataset types
+specified in the QPMDA(Qualcomm performance monitoring and diagnostics
+architecture) spec. The primary use case of the TPDM is to collect data
+from different data sources and send it to a TPDA for packetization,
+timestamping and funneling.
+     Coresight: Add coresight TPDM source driver
+     dt-bindings: arm: Adds CoreSight TPDM hardware definitions
+     coresight-tpdm: Add DSB dataset support
+     coresight-tpdm: Add integration test support
+     docs: sysfs: coresight: Add sysfs ABI documentation for TPDM
 
-#define QCTEE_UEFISEC_APP_NAME "qcom.tz.uefisecapp"
+TPDA - The trace performance monitoring and diagnostics aggregator or
+TPDA in short serves as an arbitration and packetization engine for the
+performance monitoring and diagnostics network as specified in the QPMDA
+(Qualcomm performance monitoring and diagnostics architecture)
+specification. The primary use case of the TPDA is to provide
+packetization, funneling and timestamping of Monitor data as specified
+in the QPMDA specification.
+The following patch is to add driver for TPDA.
+     Coresight: Add TPDA link driver
+     dt-bindings: arm: Adds CoreSight TPDA hardware definitions
 
-I think we should be able to extend the TEE bus concept to accept
-constant strings as device IDs as well. So if a driver wants to
-support both OP-TEE and QTEE based apps then it can put corresponding
-identifiers (UUID or a constant string) in the TEE device match ID
-table. This way we should be able to support other TEE implementations
-as I think any other identifier apart from UUID can be represented as
-a constant string.
+The last patch of this series is a device tree modification, which add
+the TPDM and TPDA configuration to device tree for validating.
+    ARM: dts: msm: Add coresight components for SM8250
+    ARM: dts: msm: Add tpdm mm/prng for sm8250
 
-If anyone else has any better then feel free to discuss.
+Once this series patches are applied properly, the tpdm and tpda nodes
+should be observed at the coresight path /sys/bus/coresight/devices
+e.g.
+/sys/bus/coresight/devices # ls -l | grep tpd
+tpda0 -> ../../../devices/platform/soc@0/6004000.tpda/tpda0
+tpdm0 -> ../../../devices/platform/soc@0/6c08000.mm.tpdm/tpdm0
 
--Sumit
+We can use the commands are similar to the below to validate TPDMs.
+Enable coresight sink first.
 
-> It would be great if someone with some actual knowledge of the firmware
-> used on those devices could have a look at this and provide some
-> insights.
->
-> My plan for now is to hold off on the UEFI variable driver until we have
-> a (proper) TEE driver, which unfortunately might be a bit out of my
-> depth. I'm happy to help out in any way I can though.
->
-> Regards,
-> Max
+echo 1 > /sys/bus/coresight/devices/tmc_etf0/enable_sink
+echo 1 > /sys/bus/coresight/devices/tpdm0/enable_source
+echo 1 > /sys/bus/coresight/devices/tpdm0/integration_test
+echo 2 > /sys/bus/coresight/devices/tpdm0/integration_test
+The test data will be collected in the coresight sink which is enabled.
+If rwp register of the sink is keeping updating when do
+integration_test (by cat tmc_etf0/mgmt/rwp), it means there is data
+generated from TPDM to sink.
+
+There must be a tpda between tpdm and the sink. When there are some
+other trace event hw components in the same HW block with tpdm, tpdm
+and these hw components will connect to the coresight funnel. When
+there is only tpdm trace hw in the HW block, tpdm will connect to
+tpda directly.
+  
+    +---------------+                +-------------+
+    |  tpdm@6c08000 |                |tpdm@684C000 |
+    +-------|-------+                +------|------+
+            |                               |
+    +-------|-------+                       |
+    | funnel@6c0b000|                       |
+    +-------|-------+                       |
+            |                               |
+    +-------|-------+                       |
+    |funnel@6c2d000 |                       |
+    +-------|-------+                       |
+            |                               |
+            |    +---------------+          |
+            +----- tpda@6004000  -----------+
+                 +-------|-------+
+                         |
+                 +-------|-------+
+                 |funnel@6005000 |
+                 +---------------+
+
+This patch series depends on patch series:
+"[v4,00/13] coresight: Add new API to allocate trace source ID values"
+https://patchwork.kernel.org/project/linux-arm-kernel/cover/20220823091009.14121-1-mike.leach@linaro.org/
+
+Changes from V12:
+1. Fix the conflicts when apply patches to the latest base line.
+
+Mao Jinlong (9):
+  coresight: core: Use IDR for non-cpu bound sources' paths.
+  Coresight: Add coresight TPDM source driver
+  dt-bindings: arm: Adds CoreSight TPDM hardware
+  coresight-tpdm: Add DSB dataset support
+  coresight-tpdm: Add integration test support
+  Coresight: Add TPDA link driver
+  dt-bindings: arm: Adds CoreSight TPDA hardware definitions
+  arm64: dts: qcom: sm8250: Add coresight components
+  arm64: dts: qcom: sm8250: Add tpdm mm/prng
+
+ .../testing/sysfs-bus-coresight-devices-tpdm  |  13 +
+ .../bindings/arm/qcom,coresight-tpda.yaml     | 111 +++
+ .../bindings/arm/qcom,coresight-tpdm.yaml     |  93 +++
+ MAINTAINERS                                   |   1 +
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          | 671 ++++++++++++++++++
+ drivers/hwtracing/coresight/Kconfig           |  23 +
+ drivers/hwtracing/coresight/Makefile          |   2 +
+ drivers/hwtracing/coresight/coresight-core.c  |  42 +-
+ drivers/hwtracing/coresight/coresight-tpda.c  | 208 ++++++
+ drivers/hwtracing/coresight/coresight-tpda.h  |  35 +
+ drivers/hwtracing/coresight/coresight-tpdm.c  | 259 +++++++
+ drivers/hwtracing/coresight/coresight-tpdm.h  |  62 ++
+ include/linux/coresight.h                     |   1 +
+ 13 files changed, 1509 insertions(+), 12 deletions(-)
+ create mode 100644 Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+ create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
+ create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
+ create mode 100644 drivers/hwtracing/coresight/coresight-tpda.c
+ create mode 100644 drivers/hwtracing/coresight/coresight-tpda.h
+ create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.c
+ create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.h
+
+-- 
+2.17.1
+
