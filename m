@@ -2,64 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 407105AD556
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 16:45:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25ABB5AD567
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 16:45:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237051AbiIEOoB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Sep 2022 10:44:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46514 "EHLO
+        id S238624AbiIEOpu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Sep 2022 10:45:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238416AbiIEOnC (ORCPT
+        with ESMTP id S238641AbiIEOpc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Sep 2022 10:43:02 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D18A1EC62;
-        Mon,  5 Sep 2022 07:41:03 -0700 (PDT)
+        Mon, 5 Sep 2022 10:45:32 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8FE2DFD8;
+        Mon,  5 Sep 2022 07:44:32 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id D08F7B811E9;
-        Mon,  5 Sep 2022 14:41:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED9FC433C1;
-        Mon,  5 Sep 2022 14:40:55 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6661061040;
+        Mon,  5 Sep 2022 14:44:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 213BDC433D7;
+        Mon,  5 Sep 2022 14:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1662388860;
-        bh=z+kDqX33jrhb82AEByjlMWgt9j5tQ/K93wDMIdLY0mM=;
+        s=k20201202; t=1662389069;
+        bh=H9hA8zdC+SGFL9yiRvISUV/6e2tbwEh+Q6op7CMDZ28=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=j/R6CPVXbZ7n/nvdrNybUQZdtuWGiton1smrVIscsz0hP6ijQssCTe6D73mN16x8A
-         EzASL50uSnvu05vKJoTJdMPiHpsuqqZRjSHQY9ue4DmQ7Iqu2WYI9SIJiWJ3zi4v21
-         mpD5474tGpsZ5SnjJEAHkG+48eLfSfh7BPk5lrOJShjTLR2HR08oMu/emGvgj/QyEQ
-         K99/VWGRJXK05CbssvXcDR5zEFkFDlUm8uUNRqqjw3r50iGm6x7QiGIwEWAA3gRahs
-         bW5mGiO4OgBlZIUCJ+OkSxpF9DN5Md2KoM/no5AibRJccrLAJ86fw50oIDFuDbO0s3
-         RILL0rqcVOR2Q==
-Date:   Mon, 5 Sep 2022 15:40:49 +0100
+        b=DTwQyZ5eUoZYUrkXczCO4BnLTgzT2tHKdVDsb23l9Ep+IezoNzBNniPF2eEgUuLOE
+         7hHMmLGCyM4iO3nYUSZRNb1uP/wUXodoK+57p5zYOu6A5Si4AxHSTUK2VOIfi/zKuh
+         D8NNcUMSIV2BZX+KD74Eg+dMNes1CMVUBoIV8UhI8kVuGdTc4A2PTvOErB8dLI8RIj
+         aq4IjwoPEbpbtykRkHipzn6fvxi/cg0/4fVTHEawLAeQbw88e0eOzNIjdJZeZ905pr
+         JEUGjzq4S99frH7lLW4Qn0CSv0juW+HiIVJw6o4GT1dPgwcp/mAopJX8K4IbxUSNay
+         SQY3QHiXJrHaA==
+Date:   Mon, 5 Sep 2022 15:44:13 +0100
 From:   Lee Jones <lee@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Yu Chen <chenyu56@huawei.com>,
-        Binghui Wang <wangbinghui@hisilicon.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Carvalho Chehab <mchehab+huawei@kernel.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH 4/4] dt-bindings: mfd: syscon: require specific
- compatible also for simple-mfd
-Message-ID: <YxYKcTavYef/ByKe@google.com>
-References: <20220817142246.828762-1-krzysztof.kozlowski@linaro.org>
- <20220817142246.828762-5-krzysztof.kozlowski@linaro.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: mfd: qcom,spmi-pmic: extend example
+Message-ID: <YxYLPdIcs98nbBtA@google.com>
+References: <20220828130113.5845-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220817142246.828762-5-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220828130113.5845-1-krzysztof.kozlowski@linaro.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -70,19 +60,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 17 Aug 2022, Krzysztof Kozlowski wrote:
+On Sun, 28 Aug 2022, Krzysztof Kozlowski wrote:
 
-> The syscon bindings require a device specific compatible, beside the
-> "syscon".  However schema counts "simple-mfd" as such, which allows
-> simple-mfd+syscon to sneak in.
-> 
-> Adjust the match to be sure simple-mfd also comes with a device specific
-> compatible.
+> Add a more complete example with PM6150 to provide better validation of
+> the bindings.
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  Documentation/devicetree/bindings/mfd/syscon.yaml | 14 +++++++++++++-
->  1 file changed, 13 insertions(+), 1 deletion(-)
+>  .../bindings/mfd/qcom,spmi-pmic.yaml          | 84 +++++++++++++++++++
+>  1 file changed, 84 insertions(+)
 
 Applied, thanks.
 
