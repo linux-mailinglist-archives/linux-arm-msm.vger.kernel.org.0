@@ -2,72 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10A255AD94F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Sep 2022 20:56:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65F455ADB90
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 00:54:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232315AbiIES4B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Sep 2022 14:56:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42880 "EHLO
+        id S232763AbiIEWyv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Sep 2022 18:54:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232263AbiIES4A (ORCPT
+        with ESMTP id S232806AbiIEWyu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Sep 2022 14:56:00 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68A712A426;
-        Mon,  5 Sep 2022 11:55:59 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 285Ik89h026486;
-        Mon, 5 Sep 2022 18:55:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=NmgrSPTzg48CBHlab3ChVbglQtqav8ym8MQg7TLtMEw=;
- b=Cx4WbjmfLawbxkZg+soUgDqrbpoe60Nbphj2No9qwX7S+lR2rHloGdxcBTjCb/vUhiLB
- 7UBNqZYPZA8c4PnQHEGcPhkBgALprDZcRNBwOKxOh/rO/nyFlcdw24r1kZxPqGW3FIrK
- 4RRPtzlEZzltBJOsgIy0a3a3TBVyV8vyjzWRgYfNDhTSEB1kHYzTbclCBtYFj7IaGiMS
- OiyrcbmLopv1F31MLTeH9ZyOROyEnANYsXgCarSNTiRcyRr5l3l3T1gBAzG/pZViy6Rk
- Ou/F3l4SszRmZZWtAUUsntHNQE7hoC+zqr0blPaz1XtFIpMwJOid9369eFo99gF6aeyN FA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jbxh750et-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 05 Sep 2022 18:55:57 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 285ItuFT008861
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 5 Sep 2022 18:55:56 GMT
-Received: from deesin-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Mon, 5 Sep 2022 11:55:53 -0700
-From:   Deepak Kumar Singh <quic_deesin@quicinc.com>
-To:     <bjorn.andersson@linaro.org>, <swboyd@chromium.org>,
-        <quic_clew@quicinc.com>, <mathieu.poirier@linaro.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        Deepak Kumar Singh <quic_deesin@quicinc.com>
-Subject: [PATCH V2 2/2] rpmsg: glink: Add lock to rpmsg_ctrldev_remove
-Date:   Tue, 6 Sep 2022 00:25:20 +0530
-Message-ID: <1662404120-24338-2-git-send-email-quic_deesin@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1662404120-24338-1-git-send-email-quic_deesin@quicinc.com>
-References: <1662404120-24338-1-git-send-email-quic_deesin@quicinc.com>
+        Mon, 5 Sep 2022 18:54:50 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 396B2101E6
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Sep 2022 15:54:46 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id cu2so19670059ejb.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Sep 2022 15:54:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=AY38e3Y1B/S7L4VDN+SNO+YmSaywD4g+rBxdXKf89Dw=;
+        b=qeaISqJZFXUCenSVew7J2ua/t8D3EvaKWs+XfN0Xyqh3oW0OlosmvAtWTIRCXm1K9b
+         wdfrXzWgJGjagIwYbari7QTznPiukHbXic3eDwQDhqW9q3EQP2FCNx6e6VDtNZ3WgL1F
+         0X7yxfJKF22Qfltjn9LZHz7zWszUeaIRNPJOPuYEJbcZI/keOmZVPZFPra/1GF3on2da
+         MApPEccCnTWszPgg0ICQrT0cLCZ+Ekn2aNCtk15Zg7yCjedLo3Bu/fGIEbAODKhvmJYe
+         o5uPzFWW+0+mdzqC9hclblmwFXrpeS5yIU0G9getqiXPOvUP2sWxs/l2C3x8HbFxWI4z
+         yMhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=AY38e3Y1B/S7L4VDN+SNO+YmSaywD4g+rBxdXKf89Dw=;
+        b=3Z+ajsaoLD0QOcqnA90eHpWlLm3lRUcmzSMc1ZJ1KgH18G03n2bQiAew8jClJgQdwL
+         7aWhkf8q7tezywRAfuft7GSxVo3O14J99o5jTxDvoTwquzeEEn9QcsnkzW3fejuxG92b
+         8Hzc5xNIzRkAD36B0aCYNTy9Ur/YE67CTf+fYMLKaE2aGInmBMgp41MONLQsFSPSH1ZS
+         o17lRNfDu436QEuWOv5mi5203XLd3M4Cho4mNugNywseEcWBTPgxFJvp7S8djV+8v4nZ
+         MMBkJPMivbvm6RGlat4PHJu7MUg74AobfCN7cSJQnBrdyiQJwKdE0oEDMTklBvSSb/6n
+         4H7A==
+X-Gm-Message-State: ACgBeo3w+pjuUbsfK3GVBrkm1JBh5Z/+xAz0NeZHgQpYHKVhmqSONte7
+        a5rMSKkZETOZmq2VdBnaqr02quT7bmGD3w==
+X-Google-Smtp-Source: AA6agR5IFIla6pZjvuCavVzJomKSsNap+WJvLy29eMi+GptGjmPGY7UtXEzOonUtdojOm4uVmbqlug==
+X-Received: by 2002:a17:907:728c:b0:730:c005:5d93 with SMTP id dt12-20020a170907728c00b00730c0055d93mr37869071ejc.265.1662418485203;
+        Mon, 05 Sep 2022 15:54:45 -0700 (PDT)
+Received: from localhost.localdomain ([84.238.208.206])
+        by smtp.gmail.com with ESMTPSA id ay2-20020a056402202200b0044841a78c70sm7090817edb.93.2022.09.05.15.54.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Sep 2022 15:54:44 -0700 (PDT)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+To:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: [PATCH] venus: venc_ctrls: Add default value for CLL info
+Date:   Tue,  6 Sep 2022 01:54:34 +0300
+Message-Id: <20220905225435.721588-1-stanimir.varbanov@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 16y-isuszVKabiCJsl1xhn-NeoAB89U0
-X-Proofpoint-GUID: 16y-isuszVKabiCJsl1xhn-NeoAB89U0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-05_14,2022-09-05_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- phishscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
- priorityscore=1501 impostorscore=0 spamscore=0 mlxlogscore=856
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2209050092
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -78,45 +68,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hold ctrl device lock in rpmsg_ctrldev_remove to avoid any
-new create ept call to proceed, otherwise new ept creation
-and associted char device may suceed. Any further call from
-user space for rpmsg_eptdev_open will reference already freed
-rpdev and will result in crash. Below crash signature was
-observed -
+Add default value for CLL info when creating compound control.
 
-rpmsg_create_ept+0x40/0xa0
-rpmsg_eptdev_open+0x88/0x138
-chrdev_open+0xc4/0x1c8
-do_dentry_open+0x230/0x378
-vfs_open+0x3c/0x48
-path_openat+0x93c/0xa78
-do_filp_open+0x98/0x118
-do_sys_openat2+0x90/0x220
-do_sys_open+0x64/0x8c
-
-Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 ---
- drivers/rpmsg/rpmsg_ctrl.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/qcom/venus/venc_ctrls.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rpmsg/rpmsg_ctrl.c b/drivers/rpmsg/rpmsg_ctrl.c
-index 107da70..4332538 100644
---- a/drivers/rpmsg/rpmsg_ctrl.c
-+++ b/drivers/rpmsg/rpmsg_ctrl.c
-@@ -194,10 +194,12 @@ static void rpmsg_ctrldev_remove(struct rpmsg_device *rpdev)
- 	struct rpmsg_ctrldev *ctrldev = dev_get_drvdata(&rpdev->dev);
- 	int ret;
+diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
+index cfcacdb797db..7468e43800a9 100644
+--- a/drivers/media/platform/qcom/venus/venc_ctrls.c
++++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+@@ -379,6 +379,7 @@ int venc_ctrl_init(struct venus_inst *inst)
+ 		{ 34000, 13250, 7500 },
+ 		{ 16000, 34500, 3000 }, 15635, 16450, 10000000, 500,
+ 	};
++	struct v4l2_ctrl_hdr10_cll_info p_hdr10_cll = { 1000, 400 };
  
-+	mutex_lock(&ctrldev->ctrl_lock);
- 	/* Destroy all endpoints */
- 	ret = device_for_each_child(&ctrldev->dev, NULL, rpmsg_chrdev_eptdev_destroy);
+ 	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 59);
  	if (ret)
- 		dev_warn(&rpdev->dev, "failed to nuke endpoints: %d\n", ret);
-+	mutex_unlock(&ctrldev->ctrl_lock);
+@@ -606,7 +607,7 @@ int venc_ctrl_init(struct venus_inst *inst)
  
- 	cdev_device_del(&ctrldev->cdev, &ctrldev->dev);
- 	put_device(&ctrldev->dev);
+ 	v4l2_ctrl_new_std_compound(&inst->ctrl_handler, &venc_ctrl_ops,
+ 				   V4L2_CID_COLORIMETRY_HDR10_CLL_INFO,
+-				   v4l2_ctrl_ptr_create(NULL));
++				   v4l2_ctrl_ptr_create(&p_hdr10_cll));
+ 
+ 	v4l2_ctrl_new_std_compound(&inst->ctrl_handler, &venc_ctrl_ops,
+ 				   V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY,
 -- 
-2.7.4
+2.25.1
 
