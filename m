@@ -2,132 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7819A5AE363
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 10:48:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7368B5AE370
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 10:50:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239230AbiIFIrP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Sep 2022 04:47:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37878 "EHLO
+        id S234004AbiIFIt0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Sep 2022 04:49:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239315AbiIFIqw (ORCPT
+        with ESMTP id S239612AbiIFIsr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Sep 2022 04:46:52 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9BE578BCE;
-        Tue,  6 Sep 2022 01:42:59 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id b16so14186390edd.4;
-        Tue, 06 Sep 2022 01:42:59 -0700 (PDT)
+        Tue, 6 Sep 2022 04:48:47 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07E6D7A528
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 01:46:05 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id k9so14371069wri.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 01:46:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=tP5HePAM+ajxYSe0bk8z7pkG3VRLXsVkQqpZO2Z6iCs=;
-        b=cg37L4Xf6MHEQ5UsGmC374ty8ZFu/cwYIOiE6D86wCjCJ5gXtGccpY3Zt2OsFeacBY
-         +5j+mpIE7guBk5ukQLA3aVlTCHL06B4bNI6G9RG4s/fR3NvxUYtogVHFQTBdr8EDW3YJ
-         XA29EJ/VDnWTYJ0MZp0ntC7Tpg8ipPbezaSXMzhrYKpNbfCMsxU0swVHNPN+aO/ADBg8
-         LqR7FLsi1+Wee96hx8dKLIzTqNEAotlyc0c9LhoUlPGe6pTM/gRpPOghzmUkLZN5CNxw
-         w/FekFeb21GTV0nI6/7UiXT/5ctdGMENQfXigX8vjm1nfGnB1D9b9q2jAyhxSDEPfpNv
-         sFTw==
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=Odm1frpHPsrLRAe7/u7i98rAPlfDwtj9Yxie2DmtS4M=;
+        b=hVCnTlqjhczb0RvxNzP+8m1HDiYzK8xk6T/cjsluF6cy4nTb8pvNROcyah5EbsJ+R5
+         mkAI2kqII8zS+WLiyvoWGUR9sjjN8SR43IBIz3Fj2G0GXQOnFYFlsfyTxqQiyeRfMwqT
+         Ji1ubHz2AfaucLoqFnDGGw1BIXGvV9Cz+/PT1uw/zhhk1RSHN3y8MrLls4z0TC4ykBy5
+         kWvYnHpAANsNtok0k89zOlidk8rN3OEMKHtlMM35h9nbEmT6MWS1xKfplwnZy3NgEZMe
+         hmBPwVbGHuLU+VAu/UzBxtZbMF/r2sr9/bFCJ6up20jaHc4OoaUru0zSSkm3R5Ryz1fE
+         IR2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=tP5HePAM+ajxYSe0bk8z7pkG3VRLXsVkQqpZO2Z6iCs=;
-        b=nov9pV9OX2FOp1zGigrgB15W7bpdWF0SkmlfLgiVf5sEYm83ehElPZNzJv3fICtUzG
-         OTD7ojZDjOAh82YcBs9I3sAcllf0dcroeMJyOhL3jz1mFZ6fYz9KjgUOIWT/AkHuwflS
-         TIH0GD0+KlK4avSdXrJhEdDo45gmVBfBmTsJOphC1tx3Qusz4HaJziIGsy+hVpirDsIr
-         LT8wIHod9DmqRjPBK4WhbSQvxCjf+UHJH3HIMkxr5404WzPu38UMO2Mw1w3SY0pJwZv9
-         ktyhZY15CJNVs4wqFhqTkCCja4J2gOrrQoofrOvbz5SU7tnKDKRrsH3x5mzcbjFxUAT8
-         sLtg==
-X-Gm-Message-State: ACgBeo18/gVMqdcSiYpnP6rQiJqUFgUprMjGZ/f5JjHn1WEnkdB2WQtN
-        kLyV2w7SsBejOL8ITcO5jkA=
-X-Google-Smtp-Source: AA6agR5bS+4j8YwEOyVkGGsIIAHnsSrC6HHryFZeb/Zdcirth3itz7A7cjQlXUl/gL6+JEFOkNzAHw==
-X-Received: by 2002:a05:6402:294c:b0:446:fb0:723b with SMTP id ed12-20020a056402294c00b004460fb0723bmr47480266edb.258.1662453773901;
-        Tue, 06 Sep 2022 01:42:53 -0700 (PDT)
-Received: from [192.168.74.101] ([77.78.20.135])
-        by smtp.gmail.com with ESMTPSA id ka15-20020a170907920f00b0073d68db09ecsm6197261ejb.23.2022.09.06.01.42.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Sep 2022 01:42:53 -0700 (PDT)
-Message-ID: <da038cb1-bb4b-4e7c-f17d-99e179c61741@gmail.com>
-Date:   Tue, 6 Sep 2022 11:42:53 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v2 9/9] arm64: dts: qcom: sm4250: Add support for
- oneplus-billie2
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=Odm1frpHPsrLRAe7/u7i98rAPlfDwtj9Yxie2DmtS4M=;
+        b=HSZWm6fRmAIWZEWshBJSyXndA7L3KmMEjaej+Htw4uf4FXhkEhfN2Gv1wzlPpihF7C
+         Z9BNvKIQUbW1+gRjaBhB/rQuSgx6sF5D4B06jgb+IskeRYuZXxlpx4XH8xwSfm+lPWOo
+         JTfxluKuSmhPxIodu7bqbNI6M8Gcp/CQhfUYqP+14h0DpADnuUV2DUHbfMs/9AGstgxz
+         kWxIciANfx+oFd8nGWn7qYBkf5b18LaTL7dVqngfCZCcq8dDPaQZwyYuc3ISvY8Lri6L
+         1XhiLMrqtfRDwlPsfaCAhzFqzPn2NJ5piv8/q0iNQt1k4k24fh/kFUAVCQeaJvPK/uNf
+         7+0A==
+X-Gm-Message-State: ACgBeo2EAnn9DbiLDvRpP9gLv9jIjLm/qCU/ZWsR6E0T8C8YUlRk2JrR
+        4s53H188ZFfkf9EbMF80ja7EoA==
+X-Google-Smtp-Source: AA6agR5gtPQIV/66kXeeuRBLEkMRihbEDAybdp29TUCUCXHlUiY9DPvVWlTWEI/FKuAAiZPH0IzfDw==
+X-Received: by 2002:adf:e4ca:0:b0:228:d8b7:48a7 with SMTP id v10-20020adfe4ca000000b00228d8b748a7mr1216182wrm.300.1662453963537;
+        Tue, 06 Sep 2022 01:46:03 -0700 (PDT)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id l20-20020a05600c089400b003a30fbde91dsm19226259wmp.20.2022.09.06.01.46.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Sep 2022 01:46:02 -0700 (PDT)
+Date:   Tue, 6 Sep 2022 11:46:01 +0300
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>, linux-kernel@vger.kernel.org
-References: <20220903174150.3566935-1-iskren.chernev@gmail.com>
- <20220903174150.3566935-10-iskren.chernev@gmail.com>
- <e655cddd-677b-f277-667f-48107671db2a@linaro.org>
-From:   Iskren Chernev <iskren.chernev@gmail.com>
-In-Reply-To: <e655cddd-677b-f277-667f-48107671db2a@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        David Heidelberg <david@ixit.cz>
+Subject: Re: [PATCH v7 1/2] dt-bindings: misc: fastrpc convert bindings to
+ yaml
+Message-ID: <YxcIyRadKQN+BmRe@linaro.org>
+References: <20220905144554.1772073-1-abel.vesa@linaro.org>
+ <3649a134-0ea7-b67c-8b5a-2971f090446c@linaro.org>
+ <YxcFB4lEu16SXOyl@linaro.org>
+ <2ffe1ad9-bce9-ff4c-f6f2-6473f4939a52@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2ffe1ad9-bce9-ff4c-f6f2-6473f4939a52@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 22-09-06 10:36:14, Krzysztof Kozlowski wrote:
+> On 06/09/2022 10:29, Abel Vesa wrote:
+> > On 22-09-06 08:45:22, Krzysztof Kozlowski wrote:
+> >> On 05/09/2022 16:45, Abel Vesa wrote:
+> >>> Convert Qualcomm FastRPC bindings to yaml format, so that we could validate
+> >>> dt-entries correctly and any future additions can go into yaml format.
+> >>>
+> >>> Use compute-cb@ subnodes instead of just cb@.
+> >>>
+> >>> Also add qcom,non-secure-domain, qcom,glink-channels and
+> >>> qcom,smd-channels missing properties to make sure dtbs_check doesn't
+> >>> fail right off the bat.
+> >>
+> >> qcom,non-secure-domain is in original binding, so I don't understand why
+> >> it is being "added".
+> >>
+> > 
+> > Yeah, my bad, I should've added this line to the changes since v4.
+> > 
+> >>>
+> >>> Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> >>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> >>> Co-developed-by: David Heidelberg <david@ixit.cz>
+> >>> Signed-off-by: David Heidelberg <david@ixit.cz>
+> >>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> >>> ---
+> >>>
+> >>> Changes since v6:
+> >>>  * renamed the parent node name in the example from smd-edge to glink-edge
+> >>>
+> >>>  .../devicetree/bindings/misc/qcom,fastrpc.txt |  88 -------------
+> >>>  .../bindings/misc/qcom,fastrpc.yaml           | 118 ++++++++++++++++++
+> >>
+> >> As you can see in Rob's bot report - the patchset introduces errors and
+> >> is not bisectable.
+> > 
+> > Please note that Rob's bot report is for v6.
+> 
+> I see report as a reply to this patch, so for v7. Why do you think it is v6?
 
+Oh, didn't see Rob's bot reply to v7 before.
 
-On 9/6/22 11:33, Krzysztof Kozlowski wrote:
-> On 03/09/2022 19:41, Iskren Chernev wrote:
->> Add initial support for OnePlus Nord N100, based on SM4250. Currently
->> working:
->> - boots
->> - usb
->> - buildin flash storage (UFS)
->> - SD card reader
->>
->> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
->> ---
->> Remaining issues from make dtbs_check:
->> - rpm-requests: it doesn't like the pm6125-regulators subnode. Every other
->>   DTS I checked is written in this way.
->
-> Yes, I sent patches for it, already merged, so please rebase on linux-next.
->
-> https://lore.kernel.org/all/20220828084341.112146-1-krzysztof.kozlowski@linaro.org/
+> 
+> > 
+> > v7 fixes the errors reported, by using glink-edge instead of smd-edge.
+> > 
+> > Looking at all QCOM SoCs that have fastrpc node in devicetree, they all
+> > seem to be using glink-edge.
+> 
+> I was not talking about these errors (they were separate issue). I am
+> talking about wrong path error.
+> 
 
-Great, thanks!
+Yes, got it now. Will resend.
 
->> +
->> +	clocks {
->> +		xo-board {
->
-> These should be overridden by label, not full node path.
+> > 
+> >>
+> >> You also need to fix qcom,glink-edge.yaml
+> >>
+> > 
+> > I don't see why, with the changes I made in v7, there are no errors
+> > anymore.
+> 
+> There are, but not from tooling. The error is wrong path. It should be
+> converted to proper schema $ref.
 
-Will do.
+Sure. Will do.
 
->> +&rpm_requests {
->> +	pm6125-regulators {
->
-> Please rebase and test with
-> Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+Thanks!
 
-I will, I'm just waiting for Konrad to say what to do about the reserved-memory
-nodes. For some reason mainline doesn't use alloc-ranges (dynamic) regions. On
-the other hand all of the dynamic ranges are not used ATM, so I can just drop
-them?
-
+> 
 > Best regards,
 > Krzysztof
