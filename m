@@ -2,82 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E97905AEF2B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 17:44:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48FA05AEE97
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 17:22:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233407AbiIFPod (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Sep 2022 11:44:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52332 "EHLO
+        id S239099AbiIFPWR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Sep 2022 11:22:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229713AbiIFPoL (ORCPT
+        with ESMTP id S239070AbiIFPWB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Sep 2022 11:44:11 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66C5B12D2A
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 07:54:36 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id i188-20020a1c3bc5000000b003a7b6ae4eb2so9764659wma.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 07:54:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=2tufqt6hRvw4ZCjcl0S8PqA9okU//2v9afvDFY8wrQU=;
-        b=cn351tdR+0cIDsmGptIae3AEmwZKqeJ7YSt0CUUmJooLYckje5U4WFDkn+WWqeETox
-         xfFT2An0ClBMR6gNQDrAY+ZPvtoZm+xDgJVcq44aowTW8JH6gf0rjng1fDpsLErOYb6y
-         36ILp1o7m10fF1++Nmzzbj1zex4h8xxFlVPNpBno9e6gcB1TEDLb0Vz84NNnP/UyQodQ
-         0UYtUdEbFn6aU4KoFAhrXv20sKIRK+xV2fSkSS9vbI31kQVRXkdAWJugcPaeagyNUkfG
-         0s1LQhQfQ0wITCIP1SWmODLR5sr8CdDLqxW3dXQeYcjZMC/wmiCb/5AN2JE8izu1Disz
-         8ijg==
+        Tue, 6 Sep 2022 11:22:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42B8F98582
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 07:33:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1662474756;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=UR3tpVQB87hjnz6CIQkDKO5srhiUjCJi4qcya16w4tU=;
+        b=FU7QTswA6Wl737PupGEYNemqRU1EHCbc8ZClIwNgIvn4diEEIxShvxG6NEtZvIxgwFPInl
+        nSnrQ4rYl7Te08iES1ZryEUwYZ46P50mAGKP8XlE++ojNHRnDXQSteBcs0teMBMJ00LEj5
+        Ky0CXjCMZTUDt3J/B45EYWiu+yfv+Uw=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-557-5AEZHigONRKyTAOkpqU4hA-1; Tue, 06 Sep 2022 10:32:34 -0400
+X-MC-Unique: 5AEZHigONRKyTAOkpqU4hA-1
+Received: by mail-qk1-f199.google.com with SMTP id bj2-20020a05620a190200b006bba055ab6eso9269536qkb.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 07:32:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=2tufqt6hRvw4ZCjcl0S8PqA9okU//2v9afvDFY8wrQU=;
-        b=nlWH83spYUh3LVTXu6XQ3mLN/5JEcSmsbJ3KLMeERVsd/wXBFDFbs3cxhbCIvG7gFu
-         Dp+w50SFXZEaqzFeYddHWn7DZyLl/SkCJQcRhFpV//uf6OP2BfEnnnT5pJ5TcV72yBYf
-         Qfo2uj3pilMnfp08DESeH59wlyofMOyiNK3c1utTvl/j8Go7n847rq9GHTzVJ/b8GRcD
-         vTMLmMEfQSLH+dNYofNQherZmFwjsLlU4MaDXB1T+JDM+n/KJkvJauzk1MGgI0d0Zh/7
-         AZ7Cd0rccHgOFra1CEiQVZfrUeSkDBvg1mZcEuK68DsIELmMByku3+6NTx05+PJVfi/4
-         TPuQ==
-X-Gm-Message-State: ACgBeo1nKsihVSzWaq13ELnH3kECn8BI1X7eB96zrdEm0jt3UG9tGdkF
-        kVUlJVYida3FK3nbNION1ajpzO+obZ+ZWA==
-X-Google-Smtp-Source: AA6agR6TeaGO/qboYw8IAWcoqcnxH33Mp7H614yZrQqQra93kcfJS9HNV+9utEQlpuZ88K2l7pLwdQ==
-X-Received: by 2002:a05:600c:1c19:b0:3a5:51aa:d041 with SMTP id j25-20020a05600c1c1900b003a551aad041mr13889901wms.172.1662473561428;
-        Tue, 06 Sep 2022 07:12:41 -0700 (PDT)
-Received: from [192.168.86.238] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.googlemail.com with ESMTPSA id az19-20020a05600c601300b003a342933727sm22294206wmb.3.2022.09.06.07.12.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Sep 2022 07:12:40 -0700 (PDT)
-Message-ID: <87f59c6d-c2ad-25c2-a0cf-972b5df42bce@linaro.org>
-Date:   Tue, 6 Sep 2022 15:12:39 +0100
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=UR3tpVQB87hjnz6CIQkDKO5srhiUjCJi4qcya16w4tU=;
+        b=C9EE/ps0pgnimkZyptdYuJAti7f+01OU25TuYxixJbkelt8N7BE8ZRrYE6F/o1X4la
+         JBH1zhTaceTg0HuAJdTNpcqESJlcomLUM11GIj78JJDthDGTsG2kpG0aj/3f8jYz/t0V
+         K8LHvX/nt/xvHvc7gzmSjDiKAjsnTZNaW8yrczR7189ru0eEtfphHfO5NR6YhVAu+25i
+         QKr0bqnUrk/JSVUOiEsmWlfsHPq6SHVzhDc/X47dMBHVakVLOmPK5XpTfgHih4I8TmTP
+         l9sgjtr0uBujaUZ2UAfRe4NvsZp5RuKTXR0iN4pQ2qrf9xz/aVoq67Yt4fPxdSR+iV/w
+         A56w==
+X-Gm-Message-State: ACgBeo3BKWEYq7erzrVW1dTIcGBNO7thtFAN8nC14j+cC1Poas2nEppM
+        3PEBXbivlzLTq16hFeetdSybypVsZd4+5u8HQ9OjalxcbUgYdMno44moe89jglQNGCOmMPg6u3k
+        ppNgJEPGQwJZYm4lhs0yF1XCqzw==
+X-Received: by 2002:a05:620a:1902:b0:6b8:d90e:cef7 with SMTP id bj2-20020a05620a190200b006b8d90ecef7mr35967908qkb.131.1662474753940;
+        Tue, 06 Sep 2022 07:32:33 -0700 (PDT)
+X-Google-Smtp-Source: AA6agR4yqmWdCMcB91qR0ZPYtY1lNOGF4Baa+YL8OcijdvG/VE2V8+OrHjcjCVGoCtYu6aw/EYDGQw==
+X-Received: by 2002:a05:620a:1902:b0:6b8:d90e:cef7 with SMTP id bj2-20020a05620a190200b006b8d90ecef7mr35967879qkb.131.1662474753663;
+        Tue, 06 Sep 2022 07:32:33 -0700 (PDT)
+Received: from halaneylaptop ([2600:1700:1ff0:d0e0::a])
+        by smtp.gmail.com with ESMTPSA id r3-20020ae9d603000000b006af0ce13499sm11260719qkk.115.2022.09.06.07.32.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Sep 2022 07:32:33 -0700 (PDT)
+Date:   Tue, 6 Sep 2022 09:32:31 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        dianders@chromium.org, johan@kernel.org
+Subject: Re: [PATCH 1/3] regulator: dt-bindings: qcom,rpmh: Use
+ additionalProperties
+Message-ID: <20220906143231.4xqg43uz2emvbe72@halaneylaptop>
+References: <20220902185148.635292-1-ahalaney@redhat.com>
+ <20220902185148.635292-2-ahalaney@redhat.com>
+ <33c19838-2e44-2164-11c7-b14be5908809@linaro.org>
+ <a10fa048-2ccc-d946-986c-c00a02d6fd71@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 00/10] misc: fastrpc: Add audiopd support
-Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Ekansh Gupta <quic_ekagupt@quicinc.com>
-Cc:     Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org
-References: <20220902154900.3404524-1-abel.vesa@linaro.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20220902154900.3404524-1-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a10fa048-2ccc-d946-986c-c00a02d6fd71@linaro.org>
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,47 +84,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Abel,
-Thanks for picking up these patches and reworking.
-
-On 02/09/2022 16:48, Abel Vesa wrote:
-> This patchset adds audiopd support to fastrpc.
+On Mon, Sep 05, 2022 at 06:53:23PM +0200, Krzysztof Kozlowski wrote:
+> On 05/09/2022 18:45, Krzysztof Kozlowski wrote:
+> > On 02/09/2022 20:51, Andrew Halaney wrote:
+> >> Right now, running make dt_binding_check results in this snippet:
+> >>
+> >>     /mnt/extrassd/git/linux-next/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml: 'additionalProperties' is a required property
+> >>             hint: A schema without a "$ref" to another schema must define all properties and use "additionalProperties"
+> >>             from schema $id: http://devicetree.org/meta-schemas/base.yaml#
+> >>       SCHEMA  Documentation/devicetree/bindings/processed-schema.json
+> >>     <snip..>
+> >>     /mnt/extrassd/git/linux-next/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml: ignoring, error in schema:
+> >>
+> >> Which results in the schema not being properly evaluated. Swap out
+> >> unevaluatedProperties which doesn't seem to be doing anything for
+> >> additionalProperties.
+> > 
+> > unevaluatedProperties were required due to usage of defs-allOf
+> > (ba5d99609a5e ("regulator: dt-bindings: qcom,rpmh: document supplies per
+> > variant")
+> > ).
+> > 
+> > Are you sure that it works correctly with additionalProperties?
+> > 
+> > Judging by errors it doesn't....
 > 
-> The first version is here:
-> https://lore.kernel.org/all/20220902131344.3029826-1-abel.vesa@linaro.org/
+> What's more - I cannot reproduce that error (latest released dtschema)...
 > 
 
-I have tested this on sm8450 with audiopd and loading Single MIC ECNS 
-module to adsp.
+Ugh, I thought maybe I had ran into something here that was only in
+linux-next, but no. I've had my environment borked the whole time I was
+working on this series. So sorry about that.
 
-Which platforms did you test these patches on?
+I'll send a v2 once I rework things with my environment working
+properly. Your comments here make sense to me -- unevaluatedProperties
+makes sense here based on what I see in the example binding... so this
+patch and the next will get dropped entirely.
 
+Thanks,
+Andrew
 
-Tested-by: Srinivas Kandagatla  <srinivas.kandagatla@linaro.org>
-
-
---srini
-
-
-> Changes since v1:
->   * dropped the patch 13:
->     "misc: fastrpc: Remove unnecessary if braces in fastrpc_internal_invoke"
->   * sent patches 1, 2 and 3 as a separate patchset
-> 
-> Abel Vesa (10):
->    misc: fastrpc: Rename audio protection domain to root
->    misc: fastrpc: Add reserved mem support
->    dt-bindings: misc: fastrpc: Document memory-region property
->    misc: fastrpc: Add fastrpc_remote_heap_alloc
->    misc: fastrpc: Use fastrpc_map_put in fastrpc_map_create on fail
->    misc: fastrpc: Rework fastrpc_req_munmap
->    misc: fastrpc: Add support for audiopd
->    misc: fastrpc: Safekeep mmaps on interrupted invoke
->    misc: fastrpc: Add mmap request assigning for static PD pool
->    misc: fastrpc: Add dma_mask to fastrpc_channel_ctx
-> 
->   .../devicetree/bindings/misc/qcom,fastrpc.txt |   5 +
->   drivers/misc/fastrpc.c                        | 267 +++++++++++++++---
->   include/uapi/misc/fastrpc.h                   |   7 +
->   3 files changed, 247 insertions(+), 32 deletions(-)
-> 
