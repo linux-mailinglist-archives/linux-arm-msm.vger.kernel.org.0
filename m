@@ -2,83 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C964D5AE2B2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 10:34:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 817515AE30D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 10:40:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233609AbiIFIeF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Sep 2022 04:34:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34858 "EHLO
+        id S233391AbiIFIj1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Sep 2022 04:39:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233551AbiIFIeE (ORCPT
+        with ESMTP id S239400AbiIFIiO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Sep 2022 04:34:04 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA705D6B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 01:34:02 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id c10so1990335ljj.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 01:34:02 -0700 (PDT)
+        Tue, 6 Sep 2022 04:38:14 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40AF8792EB
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 01:36:21 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id bq23so16245991lfb.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 01:36:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=MoaaiE0rKLAl2TzTI2nwsEuqohvEs2vQN4l+SMWi66s=;
-        b=nNsSlwZ91EYCBo+CS0owGfQxSD9xUPrNwSXiaO3lGvxtYMrXjolYseUjT+HfmzgHxL
-         /BYnaPeREWN985CV9sxfk3LraVVJd6t8nSyACq90IFCNUU/g2zbfxo3zEvMFgddKgegg
-         CsGYhJM4qUpeRp5mUKXR+iR6myqA9VYkaI6ojvRLvNigaBsI74StXndwpz0oew2meQSr
-         AFY8HS/t8yMuk336v0WvaxOs7AJrHwd6f+/46DmVRgaT6mtagQpvqagd8Na1qwTOwkuX
-         ukHOO13AgUddS4nw02dVksWO1gbG566SW4RjnwP58ALFypmqYuKn1hD2nEMEAmaTVdJB
-         9how==
+        bh=tFTaLA+xpIJrxWMnNeVJLXjIoHG3xwURMaiC6XKOdzU=;
+        b=rHeyG8Vpgr1wHZ+w7ve6CGe73zRl/gSsXKPxRszAqhKdkvCMG0QslpJFsPdTOBOV/0
+         UxI6Liu7wGB6eoA+gTQvVd2HJh/Cr/Cbz3N4U/B7AOhsy7jyjfy/CipEToOo2ge7KIql
+         CfbQE3IhSfxKnjs0DZrp5yTWl8jASogHeGZ/5zH0tnGkjW2ufGHWDVzXT+mMjxFB1zM5
+         DUFa4YrjE+fT5nyIErtDtwgtSDgxcR+tGToK0mrDKoEBmAokgOd6GXbO69NNCUZC7h6Y
+         PeFC84sEsZxzXybH4f4/gcXqFF9+ZhxHGAXsIWQmdV/Xp48019x4JKHL4P0tK0oYqvDa
+         SJIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=MoaaiE0rKLAl2TzTI2nwsEuqohvEs2vQN4l+SMWi66s=;
-        b=xM43IBstA1IT0noFG90FVuC85roqC0sE+0o/ZxLjfXFHWH1NEHASjxmbsAZll8K34u
-         XUQs63e/tWZaO5LqOEFZMiWF1bGqmsqI0qDtkKsiG5zKuppKWH7Fv8cvYoTAqfACv0IC
-         bIrpAGFBCAhO9xO3pQWIasroigon3cbmG/uKPmq+ikGTYBVuW1f6GZApHydDz9s+77ha
-         bwfdfdncwKEPmUl/IDc3rxqILAQGmI1pKTpRHx5fhoqJdTTXqdXT1RHcf4n/aM0wQQ+K
-         ZYfKmyEUYYGOro6pQ9rdqJ8uOHwtAeHi8X0H2FwWAOhKbzTvwteL0Mi4MLTw5gaLJ29E
-         KRqw==
-X-Gm-Message-State: ACgBeo2LKZT5sNnZZj7cQ6WLIN/g7gUu1vhoocb9g9YMb/PkZ7+TxeaD
-        ZRivLd83qg+O7kDPS/h0ycy2MQ==
-X-Google-Smtp-Source: AA6agR4yloSWaCeMraxcXawRrDhzWmVYwu7k6IkSyLx1SV/lgI6MuGr8gVZSnCbMUrnEg7RqAMzXsg==
-X-Received: by 2002:a2e:aa18:0:b0:261:e6a7:e08f with SMTP id bf24-20020a2eaa18000000b00261e6a7e08fmr16618945ljb.318.1662453241294;
-        Tue, 06 Sep 2022 01:34:01 -0700 (PDT)
+        bh=tFTaLA+xpIJrxWMnNeVJLXjIoHG3xwURMaiC6XKOdzU=;
+        b=AlW1StegWEYZsCZdB72G4DnEWulUCOYRzBjHEkBRlxyAXP/lvjCdQ6DM3gA9c3m4gR
+         5Zk5iBxFiWpzuPJnYPaK7IeQ+k1gsyy0hhXnMkFM/wc0mQKHOqlFLT50mtDp0HiPsgKO
+         +2hEyqP7Tc1nRRDErg4Q0C8vemTu5nB7Jda04Jt94on7EgrBFnVvjHlXxoYRtDaQrY5B
+         sm8W3GR5w8JbfNwrMwyCDElUyj0I2E4YUUEZUK9HU7poqwt2vdY10E6gV4B5iB+vcwTH
+         HfXFc5AyV1+wJDhDyZrnBzo9Rp9GbZCeTaYhgta8YHicVOhH0aTERbTIuxgM7trR/A7/
+         OQNw==
+X-Gm-Message-State: ACgBeo2hB8k/VJy/ArLNkdpWkQ2BHQh6uFmUCD1ttInxwLRtMVHpnN5k
+        CguGlSdkldFIvLCWc2vQCiNbDQ==
+X-Google-Smtp-Source: AA6agR4yUmh46SlmHRz2l4j4NOwkJPabbyDLjtN7DPAznNzkFLSIZaBb90PIYV2/VFIbVbQeZ6u0Jg==
+X-Received: by 2002:a05:6512:158b:b0:48b:38:cff8 with SMTP id bp11-20020a056512158b00b0048b0038cff8mr16388208lfb.100.1662453376189;
+        Tue, 06 Sep 2022 01:36:16 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id 11-20020ac25f4b000000b00492ce573726sm1597418lfz.47.2022.09.06.01.33.59
+        by smtp.gmail.com with ESMTPSA id a3-20020a056512200300b0049306939413sm1590097lfb.211.2022.09.06.01.36.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Sep 2022 01:34:00 -0700 (PDT)
-Message-ID: <e655cddd-677b-f277-667f-48107671db2a@linaro.org>
-Date:   Tue, 6 Sep 2022 10:33:59 +0200
+        Tue, 06 Sep 2022 01:36:15 -0700 (PDT)
+Message-ID: <2ffe1ad9-bce9-ff4c-f6f2-6473f4939a52@linaro.org>
+Date:   Tue, 6 Sep 2022 10:36:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
-Subject: Re: [PATCH v2 9/9] arm64: dts: qcom: sm4250: Add support for
- oneplus-billie2
+Subject: Re: [PATCH v7 1/2] dt-bindings: misc: fastrpc convert bindings to
+ yaml
 Content-Language: en-US
-To:     Iskren Chernev <iskren.chernev@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>, linux-kernel@vger.kernel.org
-References: <20220903174150.3566935-1-iskren.chernev@gmail.com>
- <20220903174150.3566935-10-iskren.chernev@gmail.com>
+        Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        David Heidelberg <david@ixit.cz>
+References: <20220905144554.1772073-1-abel.vesa@linaro.org>
+ <3649a134-0ea7-b67c-8b5a-2971f090446c@linaro.org>
+ <YxcFB4lEu16SXOyl@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220903174150.3566935-10-iskren.chernev@gmail.com>
+In-Reply-To: <YxcFB4lEu16SXOyl@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,171 +85,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/09/2022 19:41, Iskren Chernev wrote:
-> Add initial support for OnePlus Nord N100, based on SM4250. Currently
-> working:
-> - boots
-> - usb
-> - buildin flash storage (UFS)
-> - SD card reader
+On 06/09/2022 10:29, Abel Vesa wrote:
+> On 22-09-06 08:45:22, Krzysztof Kozlowski wrote:
+>> On 05/09/2022 16:45, Abel Vesa wrote:
+>>> Convert Qualcomm FastRPC bindings to yaml format, so that we could validate
+>>> dt-entries correctly and any future additions can go into yaml format.
+>>>
+>>> Use compute-cb@ subnodes instead of just cb@.
+>>>
+>>> Also add qcom,non-secure-domain, qcom,glink-channels and
+>>> qcom,smd-channels missing properties to make sure dtbs_check doesn't
+>>> fail right off the bat.
+>>
+>> qcom,non-secure-domain is in original binding, so I don't understand why
+>> it is being "added".
+>>
 > 
-> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
-> ---
-> Remaining issues from make dtbs_check:
-> - rpm-requests: it doesn't like the pm6125-regulators subnode. Every other
->   DTS I checked is written in this way.
+> Yeah, my bad, I should've added this line to the changes since v4.
+> 
+>>>
+>>> Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>>> Co-developed-by: David Heidelberg <david@ixit.cz>
+>>> Signed-off-by: David Heidelberg <david@ixit.cz>
+>>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+>>> ---
+>>>
+>>> Changes since v6:
+>>>  * renamed the parent node name in the example from smd-edge to glink-edge
+>>>
+>>>  .../devicetree/bindings/misc/qcom,fastrpc.txt |  88 -------------
+>>>  .../bindings/misc/qcom,fastrpc.yaml           | 118 ++++++++++++++++++
+>>
+>> As you can see in Rob's bot report - the patchset introduces errors and
+>> is not bisectable.
+> 
+> Please note that Rob's bot report is for v6.
 
-Yes, I sent patches for it, already merged, so please rebase on linux-next.
-
-https://lore.kernel.org/all/20220828084341.112146-1-krzysztof.kozlowski@linaro.org/
+I see report as a reply to this patch, so for v7. Why do you think it is v6?
 
 > 
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../boot/dts/qcom/sm4250-oneplus-billie2.dts  | 243 ++++++++++++++++++
->  2 files changed, 244 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
+> v7 fixes the errors reported, by using glink-edge instead of smd-edge.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 1d86a33de528..b8c2de2932a6 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -133,6 +133,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-polaris.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-shift-axolotl.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sm4250-oneplus-billie2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm6350-sony-xperia-lena-pdx213.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm7225-fairphone-fp4.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-> new file mode 100644
-> index 000000000000..ea5f626a6749
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-> @@ -0,0 +1,243 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2021, Iskren Chernev <iskren.chernev@gmail.com>
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "sm4250.dtsi"
-> +
-> +/ {
-> +	model = "OnePlus Nord N100";
-> +	compatible = "oneplus,billie2", "qcom,sm4250";
-> +
-> +	/* required for bootloader to select correct board */
-> +	qcom,msm-id = <0x1a1 0x10000 0x1bc 0x10000>;
-> +	qcom,board-id = <0x1000b 0x00>;
-> +
-> +	aliases {
-> +	};
-> +
-> +	chosen {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-> +
-> +		stdout-path = "framebuffer0";
-> +
-> +		framebuffer0: framebuffer@9d400000 {
-> +			compatible = "simple-framebuffer";
-> +			reg = <0 0x5c000000 0 (1600 * 720 * 4)>;
-> +			width = <720>;
-> +			height = <1600>;
-> +			stride = <(720 * 4)>;
-> +			format = "a8r8g8b8";
-> +		};
-> +	};
-> +
-> +	clocks {
-> +		xo-board {
+> Looking at all QCOM SoCs that have fastrpc node in devicetree, they all
+> seem to be using glink-edge.
 
-These should be overridden by label, not full node path.
+I was not talking about these errors (they were separate issue). I am
+talking about wrong path error.
 
-> +			clock-frequency = <19200000>;
-> +		};
-> +
-> +		sleep-clk {
-> +			clock-frequency = <32764>;
-> +		};
-> +	};
-> +
-> +	reserved-memory {
-> +		mtp_mem: memory@cc300000 {
-> +			reg = <0x00 0xcc300000 0x00 0xb00000>;
-> +			no-map;
-> +		};
-> +
-> +		param_mem: memory@cc200000 {
-> +			reg = <0x00 0xcc200000 0x00 0x100000>;
-> +			no-map;
-> +		};
-> +
-> +		bootloader_log_mem: memory@5fff7000 {
-> +			reg = <0x00 0x5fff7000 0x00 0x8000>;
-> +			no-map;
-> +		};
-> +
-> +		ramoops@cbe00000 {
-> +			compatible = "ramoops";
-> +			reg = <0x0 0xcbe00000 0x0 0x400000>;
-> +			record-size = <0x40000>;
-> +			pmsg-size = <0x200000>;
-> +			console-size = <0x40000>;
-> +			ftrace-size = <0x40000>;
-> +		};
-> +	};
-> +};
-> +
-> +&usb3 {
-> +	status = "okay";
-> +};
-> +
-> +&hsusb_phy {
-> +	vdd-supply = <&vreg_l4a>;
-> +	vdda-pll-supply = <&vreg_l12a>;
-> +	vdda-phy-dpdm-supply = <&vreg_l15a>;
-> +	status = "okay";
-> +};
-> +
-> +&tlmm {
-> +	gpio-reserved-ranges = <14 4>;
-> +};
-> +
-> +&sdhc_2 {
-> +	vmmc-supply = <&vreg_l22a>;
-> +	vqmmc-supply = <&vreg_l5a>;
-> +
-> +	cd-gpios = <&tlmm 88 GPIO_ACTIVE_HIGH>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&ufs_mem_hc {
-> +	vcc-supply = <&vreg_l24a>;
-> +	vcc-max-microamp = <600000>;
-> +	vccq2-supply = <&vreg_l11a>;
-> +	vccq2-max-microamp = <600000>;
-> +	status = "okay";
-> +};
-> +
-> +&ufs_mem_phy {
-> +	vdda-phy-supply = <&vreg_l4a>;
-> +	vdda-pll-supply = <&vreg_l12a>;
-> +	vddp-ref-clk-supply = <&vreg_l18a>;
-> +	status = "okay";
-> +};
-> +
-> +&rpm_requests {
-> +	pm6125-regulators {
+> 
+>>
+>> You also need to fix qcom,glink-edge.yaml
+>>
+> 
+> I don't see why, with the changes I made in v7, there are no errors
+> anymore.
 
-Please rebase and test with
-Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-
-
+There are, but not from tooling. The error is wrong path. It should be
+converted to proper schema $ref.
 
 Best regards,
 Krzysztof
