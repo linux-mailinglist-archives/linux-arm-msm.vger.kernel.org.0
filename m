@@ -2,174 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E3965AF293
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 19:31:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 265EE5AF2FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 19:46:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236695AbiIFR2p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Sep 2022 13:28:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41192 "EHLO
+        id S229446AbiIFRqw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Sep 2022 13:46:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238547AbiIFR2J (ORCPT
+        with ESMTP id S229437AbiIFRqv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Sep 2022 13:28:09 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE17B2AE36
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 10:19:52 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id z72so9439859iof.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 10:19:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=iyM6dtbNFzdJQR32hgHiDgJSwSi9j8lAYdcvFPMbXJQ=;
-        b=JuA28ed5jfpBvyjkILaIrZc370JCraCfaVZn0DwL/4XC41roAyCqdnFq6wu5ilJPe8
-         eoWcn+CF5cnYMI+CZsOPAmW8Cm6SOsL0uoXmlXjgd0G933yf2HdAEPZATZgyeKG3643P
-         wo8AEnhlzk4tT0kl7vimXVaDzY/I+Hc4FNG6Z4344k7fu+oXyf7Td6Nfs/+hXL0dKpRf
-         twpDyDuurRHgnOt8Er1gujlyEHl4hi658FnSs0YYAMzlP47tpPxNwniaDiBsNltPXKti
-         8xswIFw9fL1e/NMq7A3wgMkrlIf7zYb3dQ1avCH+hoVmPaNcfEFCa6Fx4lif9SfuupIP
-         2RJA==
+        Tue, 6 Sep 2022 13:46:51 -0400
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72D176EF1C;
+        Tue,  6 Sep 2022 10:46:45 -0700 (PDT)
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-11ee4649dfcso30087966fac.1;
+        Tue, 06 Sep 2022 10:46:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=iyM6dtbNFzdJQR32hgHiDgJSwSi9j8lAYdcvFPMbXJQ=;
-        b=b9O4CXPrxNj+hiSl2JOBgfEawXShXAYCDORjofKExC2lUtsXniT+rEvt56DH2bTCw9
-         I1CfHAuOTccREP3C5mxOFNd48S2ioX73VApQcf99XFCReXxEPu63OGiF1wtg8B/qbAXR
-         KaFcfdqei1wJ3QyuQZfYSkrN5VcX6Ot7f/VjOuqW4UiJUV8u5S6F6bsNvSGD2Y0Csi+h
-         XL9lCh9NJ6OzWinRTmJfGy7V3JC1nMECxtwFdcsqzqNXjlvyA9yp8scoKRaTke08cOiM
-         NeUQ1drPyT1z7m34Sv0p9UidM83k1hmo4f/XnYSXJ8KYiU9f8KkP9E9Qd42oSh2XL39u
-         LiOw==
-X-Gm-Message-State: ACgBeo3ShmZirpyvxtx8XaTXXXwxVUbYkgv8R86sdau6+IRPr3A7YCTb
-        wIjqW2n8iB1jOsRfh/FZ/cZysg==
-X-Google-Smtp-Source: AA6agR6w7W/TozARn63hxlzaI23dFAQKaWq+NONJ95SyRshkKGSZ8QqS4uF3yMhJkXqBdv4i/6+TWA==
-X-Received: by 2002:a05:6602:2d41:b0:688:e962:2b53 with SMTP id d1-20020a0566022d4100b00688e9622b53mr25867027iow.79.1662484792111;
-        Tue, 06 Sep 2022 10:19:52 -0700 (PDT)
-Received: from presto.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id q10-20020a056e020c2a00b002eb3f5fc4easm5292204ilg.27.2022.09.06.10.19.51
+        h=message-id:date:subject:references:in-reply-to:cc:to:from
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=HzG5COCo19lT3oBLgm1nvDwcIQQgyJlzuG7SNbHTaDU=;
+        b=EfqvCJv4EJGQHW2EngMd2R2Spen4DloQpQ/TVy3FXX+OcC4HEH/9A0TD01GIZVq9iE
+         FdA9FrMSRcdFJkTgMVTXbJLQheTBNdNTq0l5pPKyk/J06QcUHHBDrLLZoIsuScKx/KLZ
+         5qelH67uJdEjIBWm5Rtwgbw3SHA/SrIFf8x+Mo0AxcGLVcgsT0oytuOSRKMZcf4hZsKn
+         Rx9umggsKQyxNSBYLQUz2aqh7Osp+fNHzzpiuM931VIC9cs0P/+KTZjg9Cx4Ux773RSW
+         DP+4eBBmvl62FZ7B519rTgm1kTpNjrNLEcBlp0FAC9n7xXJ4ufFZLIK1xjOP/WQjj2gT
+         13XQ==
+X-Gm-Message-State: ACgBeo1GnHzqDaHPUzUiyIFH5P66Mg0/fyanwbiVfW50mBSncs2DznOy
+        4WJnM9KH+lZeG/hnCcLhx+oMuoLYWw==
+X-Google-Smtp-Source: AA6agR6RDLZuCPdeXtZwiyPUodQixHiTacheiSfTh+HaN2WJ01ett6hG3ahw/odd+L270KgcOrJkyA==
+X-Received: by 2002:a05:6870:430b:b0:101:3d98:ba41 with SMTP id w11-20020a056870430b00b001013d98ba41mr12501688oah.46.1662486404036;
+        Tue, 06 Sep 2022 10:46:44 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id 22-20020aca0916000000b00344adbc3492sm5583872oij.24.2022.09.06.10.46.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Sep 2022 10:19:51 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     mka@chromium.org, evgreen@chromium.org, bjorn.andersson@linaro.org,
-        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-        elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 5/5] net: ipa: don't have gsi_channel_update() return a value
-Date:   Tue,  6 Sep 2022 12:19:42 -0500
-Message-Id: <20220906171942.957704-6-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220906171942.957704-1-elder@linaro.org>
-References: <20220906171942.957704-1-elder@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Tue, 06 Sep 2022 10:46:43 -0700 (PDT)
+Received: (nullmailer pid 780017 invoked by uid 1000);
+        Tue, 06 Sep 2022 17:46:42 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Andy Gross <agross@kernel.org>, alsa-devel@alsa-project.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+In-Reply-To: <20220906121655.303693-10-krzysztof.kozlowski@linaro.org>
+References: <20220906121655.303693-1-krzysztof.kozlowski@linaro.org> <20220906121655.303693-10-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 09/12] dt-bindings: soc: qcom: apr: correct service children
+Date:   Tue, 06 Sep 2022 12:46:42 -0500
+Message-Id: <1662486402.667876.780014.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If it finds no completed transactions, gsi_channel_trans_complete()
-calls gsi_channel_update() to check hardware.  If new transactions
-have completed, gsi_channel_update() records that, then calls
-gsi_channel_trans_complete() to return the first of those found.
-This recursion won't go any further, but can be avoided if we
-have gsi_channel_update() only be responsible for updating state
-after accessing hardware.
+On Tue, 06 Sep 2022 14:16:52 +0200, Krzysztof Kozlowski wrote:
+> The APR bindings were not describing properly children nodes for DAIs.
+> None of the DTSes use unit addresses for the children, so correct the
+> nodes and reference their schema: clock-controller, dais and routing.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../bindings/soc/qcom/qcom,apr.yaml           | 38 +++++++++++++------
+>  .../sound/qcom,q6dsp-lpass-clocks.yaml        | 16 ++------
+>  .../sound/qcom,q6dsp-lpass-ports.yaml         | 16 ++------
+>  3 files changed, 35 insertions(+), 35 deletions(-)
+> 
 
-Change gsi_channel_update() so it simply checks for and handles
-new completions, without returning a value.  If it needs to call
-that function, have gsi_channel_trans_complete() determine whether
-there are new transactions available after the update.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- drivers/net/ipa/gsi.c         | 8 +++-----
- drivers/net/ipa/gsi_private.h | 6 +++---
- drivers/net/ipa/gsi_trans.c   | 7 +++++--
- 3 files changed, 11 insertions(+), 10 deletions(-)
+yamllint warnings/errors:
 
-diff --git a/drivers/net/ipa/gsi.c b/drivers/net/ipa/gsi.c
-index 5471843b665fc..3f97653450bb9 100644
---- a/drivers/net/ipa/gsi.c
-+++ b/drivers/net/ipa/gsi.c
-@@ -1475,7 +1475,7 @@ void gsi_channel_doorbell(struct gsi_channel *channel)
- }
- 
- /* Consult hardware, move any newly completed transactions to completed list */
--struct gsi_trans *gsi_channel_update(struct gsi_channel *channel)
-+void gsi_channel_update(struct gsi_channel *channel)
- {
- 	u32 evt_ring_id = channel->evt_ring_id;
- 	struct gsi *gsi = channel->gsi;
-@@ -1494,12 +1494,12 @@ struct gsi_trans *gsi_channel_update(struct gsi_channel *channel)
- 	offset = GSI_EV_CH_E_CNTXT_4_OFFSET(evt_ring_id);
- 	index = gsi_ring_index(ring, ioread32(gsi->virt + offset));
- 	if (index == ring->index % ring->count)
--		return NULL;
-+		return;
- 
- 	/* Get the transaction for the latest completed event. */
- 	trans = gsi_event_trans(gsi, gsi_ring_virt(ring, index - 1));
- 	if (!trans)
--		return NULL;
-+		return;
- 
- 	/* For RX channels, update each completed transaction with the number
- 	 * of bytes that were actually received.  For TX channels, report
-@@ -1507,8 +1507,6 @@ struct gsi_trans *gsi_channel_update(struct gsi_channel *channel)
- 	 * up the network stack.
- 	 */
- 	gsi_evt_ring_update(gsi, evt_ring_id, index);
--
--	return gsi_channel_trans_complete(channel);
- }
- 
- /**
-diff --git a/drivers/net/ipa/gsi_private.h b/drivers/net/ipa/gsi_private.h
-index a937811bb1bb7..af4cc13864e21 100644
---- a/drivers/net/ipa/gsi_private.h
-+++ b/drivers/net/ipa/gsi_private.h
-@@ -95,12 +95,12 @@ void gsi_channel_trans_exit(struct gsi_channel *channel);
- void gsi_channel_doorbell(struct gsi_channel *channel);
- 
- /* gsi_channel_update() - Update knowledge of channel hardware state
-- * @channel:	Channel whose doorbell should be rung
-+ * @channel:	Channel to be updated
-  *
-  * Consult hardware, move any newly completed transactions to a
-- * channel's completed list
-+ * channel's completed list.
-  */
--struct gsi_trans *gsi_channel_update(struct gsi_channel *channel);
-+void gsi_channel_update(struct gsi_channel *channel);
- 
- /**
-  * gsi_ring_virt() - Return virtual address for a ring entry
-diff --git a/drivers/net/ipa/gsi_trans.c b/drivers/net/ipa/gsi_trans.c
-index 0b78ae904bacf..03e54fc4376a6 100644
---- a/drivers/net/ipa/gsi_trans.c
-+++ b/drivers/net/ipa/gsi_trans.c
-@@ -240,8 +240,11 @@ struct gsi_trans *gsi_channel_trans_complete(struct gsi_channel *channel)
- 	struct gsi_trans_info *trans_info = &channel->trans_info;
- 	u16 trans_id = trans_info->completed_id;
- 
--	if (trans_id == trans_info->pending_id)
--		return gsi_channel_update(channel);
-+	if (trans_id == trans_info->pending_id) {
-+		gsi_channel_update(channel);
-+		if (trans_id == trans_info->pending_id)
-+			return NULL;
-+	}
- 
- 	return &trans_info->trans[trans_id %= channel->tre_count];
- }
--- 
-2.34.1
+dtschema/dtc warnings/errors:
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,q6apm-dai.example.dtb: gpr: service@1: '#address-cells', '#size-cells', 'apm-dai@1' do not match any of the regexes: 'pinctrl-[0-9]+'
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
 
