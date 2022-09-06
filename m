@@ -2,119 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68A6B5AF095
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 18:37:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 08F195AF09C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 18:37:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233442AbiIFQhH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Sep 2022 12:37:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45036 "EHLO
+        id S233902AbiIFQhO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Sep 2022 12:37:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233797AbiIFQgp (ORCPT
+        with ESMTP id S233330AbiIFQgm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Sep 2022 12:36:45 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2559414D3B;
-        Tue,  6 Sep 2022 09:12:59 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 286Ac2L7030314;
-        Tue, 6 Sep 2022 16:12:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=nFjaabrQNY09jR57Vw3+gq4pp7hiX6Yx4HqOBOuEyuM=;
- b=oQiS/xSbbLaolo873Qsi3PUn3gnKxMMEOYKKb/izeMBPVCDcK0djzIqazY3/bRjigg6w
- BOaHXZ1SBccpnsI+zVfvePWiElMAUO8X9EkYLdN2mrDygW3e7Ob8Pn154B1ZvD/ccZYo
- ECOMMRw4XpET4BzXw8qMi183weQjOIQcY6NHrojFR6Ipj8E9EbSFnuLeBECJR6QOj+IF
- Ji+2wlYKU8iqBqnEMyl9ScW11zgf4r2hw+wzmQf+GPtXTvf9yU/HasiN5zCrzqXe9ga7
- C97saPSSSf0qjcj5eeJ1tyRIuaePuR75CCsMpKnAOD/5zvcJq+UEBa6otWWLRLz5Hbyg 4A== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3je1cdhjfg-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 06 Sep 2022 16:12:40 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 286GCd4a004334
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 6 Sep 2022 16:12:39 GMT
-Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Tue, 6 Sep 2022 09:12:33 -0700
-From:   Krishna Kurapati <quic_kriskura@quicinc.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>
-CC:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_vpulyala@quicinc.com>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>
-Subject: [PATCH v12 3/3] arm64: dts: qcom: sc7280: Update SNPS Phy params for SC7280 IDP device
-Date:   Tue, 6 Sep 2022 21:42:09 +0530
-Message-ID: <1662480729-10187-4-git-send-email-quic_kriskura@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1662480729-10187-1-git-send-email-quic_kriskura@quicinc.com>
-References: <1662480729-10187-1-git-send-email-quic_kriskura@quicinc.com>
+        Tue, 6 Sep 2022 12:36:42 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FC101A8
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 09:12:55 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id z20so12862194ljq.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 09:12:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=/Nx3mH5ct9QYpoBU00B/ScU7zjA9VoC62pYJpkPSb+0=;
+        b=C8cZQFXaa61yU4SrHQ+z2RUREsINQPfpjDxOHnk9rDEOvRE3ock2QmxnK8YSiG4XuP
+         WNXQuL7nBdyL9sxZS7FPupijVONMx0NGze/N5GrovdbyBAJHPiFipLDSN9w3N6Y3nwOc
+         FRp/kBBArbTAJ8Rqn+kzx/1qWM6GZDj3Yz10PFXfMV/B2045cCqeOxu04on9ZcM6y5l8
+         mfy6wqW65WQZC7t2vKoiCqt8ym4b/CgyCvQGcdRVWWevj1eSWdKT9me/9OjA/LtHlZPX
+         GOM1TRi1AqIVurh+LkerPnooW2qA9NpriY/2CossgrhArmaXCMUih8WDEHAiOo+UNqez
+         ZXtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=/Nx3mH5ct9QYpoBU00B/ScU7zjA9VoC62pYJpkPSb+0=;
+        b=Z/Jp5BTeQXyjfSrYxPX0b+vAlsdP2BA6w9mIRWStVt2jQy+4vMWVBW+kN4q/wDVEF0
+         aBetE1dt6Pl0O5lYCRmZcLRywgZ2kyONajxrLrLrsXDbQSa9izQ6YWMRmBhgLj37lgSx
+         i5+9Ab34suWVmPnJQBnUJsScYNzhMg07KZv0UgxnD2VaHKXBL18JSulBFBX22D/vqoVm
+         TgLeXTps7qIAzwFnnTKnTpdwcbxcIaJDG33RMZDrmVPPP62oiehtSQvTHACjWzbe9nr8
+         afshD6EtNOr1wMhOJEd83qRVgyG7/SsqYTz1f+sDu6JEHn+g3S67BVPdXhQ3789EmTJu
+         iyLQ==
+X-Gm-Message-State: ACgBeo2qi4z4HAEm/lyf7w+QXuDfNyr2hxHCS5tHj1f89bInCCIJgpWI
+        FB1gDsO5lh9FQ+g5dYo8bf/RhN96/eoK8A==
+X-Google-Smtp-Source: AA6agR4EaFe2XbhpwW6/C+wSaaX2AYP7xlORVBSPVXTkkJdhAk0LJl4qlI6kcu6z2cuYCEJOuzzoCQ==
+X-Received: by 2002:a2e:83c9:0:b0:24d:a95d:7b7a with SMTP id s9-20020a2e83c9000000b0024da95d7b7amr16140667ljh.254.1662480773537;
+        Tue, 06 Sep 2022 09:12:53 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id e1-20020a196901000000b004947555dbc2sm1819378lfc.100.2022.09.06.09.12.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Sep 2022 09:12:53 -0700 (PDT)
+Message-ID: <67657fa4-4b15-da4c-db3a-907b2a5b6d92@linaro.org>
+Date:   Tue, 6 Sep 2022 18:12:51 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: KH2NJf2fyc5wdoQosBkuQ3HTGD-rXvNP
-X-Proofpoint-ORIG-GUID: KH2NJf2fyc5wdoQosBkuQ3HTGD-rXvNP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-06_09,2022-09-06_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 phishscore=0 impostorscore=0 clxscore=1015 mlxscore=0
- suspectscore=0 mlxlogscore=802 malwarescore=0 bulkscore=0
- priorityscore=1501 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2207270000 definitions=main-2209060075
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v11] dt-bindings: misc: fastrpc convert bindings to yaml
+Content-Language: en-US
+To:     Abel Vesa <abel.vesa@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-remoteproc@vger.kernel.org, David Heidelberg <david@ixit.cz>
+References: <20220906150102.3399115-1-abel.vesa@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220906150102.3399115-1-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Overriding the SNPS Phy tuning parameters for SC7280 IDP device.
+On 06/09/2022 17:01, Abel Vesa wrote:
+> Convert Qualcomm FastRPC bindings to yaml format, so that we could validate
+> dt-entries correctly and any future additions can go into yaml format.
+> 
 
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+Thank you for your patch. There is something to discuss/improve.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index 0c48db6..053fd1e 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -325,6 +325,12 @@
- 	vdda-pll-supply = <&vreg_l10c_0p8>;
- 	vdda33-supply = <&vreg_l2b_3p0>;
- 	vdda18-supply = <&vreg_l1c_1p8>;
-+	qcom,hs-rise-fall-time-bp = <0>;
-+	qcom,squelch-detector-bp = <(-2090)>;
-+	qcom,hs-disconnect-bp = <1743>;
-+	qcom,hs-amplitude-bp = <1780>;
-+	qcom,hs-crossover-voltage-microvolt = <(-31000)>;
-+	qcom,hs-output-impedance-micro-ohms = <2600000>;
- };
- 
- &usb_1_qmpphy {
--- 
-2.7.4
+> +
+> +patternProperties:
+> +  "(compute-)?cb@[0-9]*$":
+> +    type: object
+> +
+> +    description: >
+> +      Each subnode of the Fastrpc represents compute context banks available on the dsp.
+> +
+> +    properties:
+> +      compatible:
+> +        const: qcom,fastrpc-compute-cb
+> +
+> +      reg:
+> +        maxItems: 1
+> +
+> +      qcom,nsession:
+> +        $ref: /schemas/types.yaml#/definitions/uint32
+> +        default: 1
+> +        description: >
+> +          A value indicating how many sessions can share this context bank.
+> +
+> +    required:
+> +      - compatible
+> +      - reg
 
+I think this was pointed previously by Rob in v4 - you need here
+additionalProperties: false (on that level of indentation).
+
+> +
+> +required:
+> +  - compatible
+> +  - label
+> +  - "#address-cells"
+> +  - "#size-cells"
+> +
+
+
+Best regards,
+Krzysztof
