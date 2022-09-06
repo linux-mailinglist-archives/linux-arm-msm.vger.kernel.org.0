@@ -2,76 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3826E5AF76D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 23:54:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FE6C5AF792
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 00:01:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229447AbiIFVys (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Sep 2022 17:54:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34258 "EHLO
+        id S229676AbiIFWBC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Sep 2022 18:01:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229600AbiIFVyq (ORCPT
+        with ESMTP id S229637AbiIFWBB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Sep 2022 17:54:46 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CE092495E
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 14:54:41 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id u9so26289601ejy.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 14:54:41 -0700 (PDT)
+        Tue, 6 Sep 2022 18:01:01 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BECB394121
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 15:00:59 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id fg1so4179055ejc.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 15:00:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date;
-        bh=AOS1RPD3u8TwBcbN7lQkUbqEyQ5lUlBIgtzl/5BvCt8=;
-        b=ENgVronGcCwSedNCwVslHZ8WLV0fwSNVko2wg/BW5swdnQna7TzxSRjoo7j0ZLuA/K
-         nJvV/gEJUHakeQVDqgQM5QGftcslhxhx5LF8q0jc6kVMCBBjj1sFV4ATUgaePi9TImlB
-         jgMA+liOyGEuXf5EHPq+x7dKhULnvo9mGQwK8=
+        bh=a7BlxrU2ulUCUinwJQC17AnM6l9GrZy8aOhqpXfsYtY=;
+        b=ZzpE+VKInyTLCtVVYQQH1y09V3uy2pFXV9Xe2a6fqHy3bUloQGyx+qFz3In6xQuUbe
+         016tuW8KG+JkhYtDfL4jTD148uCnzOpECWn5+nxM1ezSrP+IWGpmXuJ4N6X+RLegGVF4
+         mGewzGi6lkoLIhi0ejPgWYWIaBkT7UHJaycoo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=AOS1RPD3u8TwBcbN7lQkUbqEyQ5lUlBIgtzl/5BvCt8=;
-        b=PDyrytYhudaKr/CaKPCWvK19EjWYW2WCYVsUmi/clwudJEPsWHeQMuWqBbsarQK2bU
-         dMGPB0KO2M4qfmng9qiDWuOUqHeHrnBPRDxVX5GpMqLsxhcZgnNVnnyiA37DEDkJbBlf
-         WjsGkdi4pQkDr78WnhrQPOMjESRoXAmL1Bwig7MU+dyNfAF2avy5oH2DbHOsaC/ni5QK
-         07VJJraFkNIdN9f1xhgN5D0lfgRNDj9kCLKab1Fs2omf5c+xs6j97FU1PdvOw4p19p8x
-         GxhZ8HUnmerkDAqQDr7uzvSEaNE8lkkUQ91C3WHogO7g53PX3OC7ASSPxySLN0Xd+yce
-         RTiA==
-X-Gm-Message-State: ACgBeo0ZvixrZGkdRpvEVXre7YJdldsydq5lPQajP59Ch9mHiP1vNQv0
-        H8CpUYADO3AneiTmbUKG/OLeDpwwFF2WC/HU
-X-Google-Smtp-Source: AA6agR7de56zQKxIa3CM7+amrvSrKCMXr9lTUwbieoD0dzCp+MuWR1d7WPkptLfHE57A7van2YdvYA==
-X-Received: by 2002:a17:906:505:b0:73d:b188:17d9 with SMTP id j5-20020a170906050500b0073db18817d9mr314556eja.97.1662501279655;
-        Tue, 06 Sep 2022 14:54:39 -0700 (PDT)
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com. [209.85.221.52])
-        by smtp.gmail.com with ESMTPSA id ca8-20020aa7cd68000000b0043d7b19abd0sm4473090edb.39.2022.09.06.14.54.37
+        bh=a7BlxrU2ulUCUinwJQC17AnM6l9GrZy8aOhqpXfsYtY=;
+        b=A0EVTqRo76AOe59ox6v+gAmbmGoY/eQ01A9MXcNP3OufaVKmkzMKzQrup+mD9u04Jm
+         URV4JLwvfjWWTy4GIUzP+ggYfrCUP4/9BUD/H/SEgCfNTSuI0OAdrmCMlSvi2aJGElu5
+         u3U0MuN5Zk9UFgza5B4GPXqNngdr7zMU+pulzEg2wVXRZY2gKA21sFYk65rqwd8f8BIp
+         HINJR0f2KCc+LlZlOLgPP4toxeq2V333AS4SgA4qDDAdI6/mn4Gr28IaclFl3YWyMQWW
+         yRUQaaaMZ+K5+3kkcdUF36b2Q4Yr68SOOWt4mbpzqVgdr0VuiJAu6vkka2YO5SyFV8L+
+         sbIA==
+X-Gm-Message-State: ACgBeo1nqwi946DX0HDn/LhnfBFWh4mjQ76n7fTUbZ9cn1W/zwnnc/jI
+        r97SJGxuoAKVCYRdQK3I0tU4Rr2VyKsuwzsg
+X-Google-Smtp-Source: AA6agR76+72SViqcAiyOTqSfoFLgebeaJhdnmqK1QmG/JpH6ye8YSa1aufrqwZzArmWC4s4Uy+sxSA==
+X-Received: by 2002:a17:906:dac8:b0:741:545b:796a with SMTP id xi8-20020a170906dac800b00741545b796amr361031ejb.240.1662501658091;
+        Tue, 06 Sep 2022 15:00:58 -0700 (PDT)
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com. [209.85.221.50])
+        by smtp.gmail.com with ESMTPSA id er20-20020a056402449400b0044d6c6a5b5fsm6733376edb.89.2022.09.06.15.00.54
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Sep 2022 14:54:38 -0700 (PDT)
-Received: by mail-wr1-f52.google.com with SMTP id bz13so14018851wrb.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 14:54:37 -0700 (PDT)
+        Tue, 06 Sep 2022 15:00:56 -0700 (PDT)
+Received: by mail-wr1-f50.google.com with SMTP id k9so17480272wri.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 15:00:54 -0700 (PDT)
 X-Received: by 2002:a5d:4d0c:0:b0:228:cd9f:5a4c with SMTP id
- z12-20020a5d4d0c000000b00228cd9f5a4cmr278070wrt.138.1662501277455; Tue, 06
- Sep 2022 14:54:37 -0700 (PDT)
+ z12-20020a5d4d0c000000b00228cd9f5a4cmr286781wrt.138.1662501653855; Tue, 06
+ Sep 2022 15:00:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220906201959.69920-1-ahalaney@redhat.com>
-In-Reply-To: <20220906201959.69920-1-ahalaney@redhat.com>
+References: <20220830182923.3720287-1-dianders@chromium.org>
+In-Reply-To: <20220830182923.3720287-1-dianders@chromium.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 6 Sep 2022 14:54:25 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=V1VS=JyG=B2bp6w5XutUxcpzi6Bo7PADJ1GyzQkhM=Ug@mail.gmail.com>
-Message-ID: <CAD=FV=V1VS=JyG=B2bp6w5XutUxcpzi6Bo7PADJ1GyzQkhM=Ug@mail.gmail.com>
-Subject: Re: [PATCH v2] regulator: dt-bindings: qcom,rpmh: Indicate
- regulator-allow-set-load dependencies
-To:     Andrew Halaney <ahalaney@redhat.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+Date:   Tue, 6 Sep 2022 15:00:42 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VD5v8q9shO=uugQiqzotxaGEP3jDfurU+MjuEztFvMqg@mail.gmail.com>
+Message-ID: <CAD=FV=VD5v8q9shO=uugQiqzotxaGEP3jDfurU+MjuEztFvMqg@mail.gmail.com>
+Subject: Re: [PATCH v9 0/3] arm64: dts: qcom: Add new board revision and LTE
+ SKUs for sc7280-villager family
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Sibi Sankar <quic_sibis@quicinc.com>,
+        Jimmy Chen <jinghung.chen3@hotmail.com>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Johan Hovold <johan@kernel.org>
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -85,39 +84,71 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Tue, Sep 6, 2022 at 1:20 PM Andrew Halaney <ahalaney@redhat.com> wrote:
+On Tue, Aug 30, 2022 at 11:29 AM Douglas Anderson <dianders@chromium.org> wrote:
 >
-> For RPMH regulators it doesn't make sense to indicate
-> regulator-allow-set-load without saying what modes you can switch to,
-> so be sure to indicate a dependency on regulator-allowed-modes.
+> These patches add a new board revision for device Villager, and add
+> new LTE sku for both board revisions.
 >
-> With this in place devicetree validation can catch issues like this:
+> yaml issue has been clarified in [1] and [2], and 'status' has been
+> reordeded last since v4.
 >
->     /mnt/extrassd/git/linux-next/arch/arm64/boot/dts/qcom/sm8350-hdk.dtb: pm8350-rpmh-regulators: ldo5: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
->             From schema: /mnt/extrassd/git/linux-next/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+> v9 is me squashing changes from my patches [3] [4] in. For patches I
+> touched I removed my Reviewed-by. I added my Signed-off-by to all
+> patches.
 >
-> Suggested-by: Johan Hovold <johan@kernel.org>
-> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-> ---
+> [1] https://lore.kernel.org/all/CAD=FV=WtKRFQr5jSQvsr08x9dgHrvenUWWtX_SKuCLuSvSH7WQ@mail.gmail.com/
+> [2] https://lore.kernel.org/all/d3d4d90b-85b5-5ad9-78e6-5a074c21af4f@linaro.org/
+> [3] https://lore.kernel.org/r/20220829084732.1.I9ef7f8b909a7afbef9ff2251a98c67033f37b516@changeid
+> [4] https://lore.kernel.org/r/20220829084732.2.I22e256d1ebac577a91fac44d1d12919be7111cd4@changeid/
 >
-> v1: https://lore.kernel.org/linux-arm-msm/20220902185148.635292-1-ahalaney@redhat.com/
-> Changes since v1:
->   - Dropped first two patches in the series as they were user error
->     (thanks Krzysztof for highlighting this!)
->   - No change in the remaining patch
+> Changes in v9:
+> - Squash https://lore.kernel.org/r/20220829084732.1.I9ef7f8b909a7afbef9ff2251a98c67033f37b516@changeid
+> - Squash https://lore.kernel.org/r/20220829084732.2.I22e256d1ebac577a91fac44d1d12919be7111cd4@changeid/
 >
-> Krzysztof also asked if this patch in particular should apply to other
-> regulators, which I think it should for those regulator's who implement
-> set_mode(). Unfortunately I don't know of a good way to get that
-> information in order to apply it at a broader scope for devicetree
-> regulator validation. At least with this in place RPMH users can get
-> better coverage... if someone has suggestions for how to broaden the
-> scope I'm all ears!
+> Changes in v7:
+> - Revise typo 'ARCG' to 'ARCH' in Makefile
 >
-> Thanks,
-> Andrew
+> Changes in v6:
+> - Remove v5 accidentally added sc7280-herobrine-herobrine-r1-lte.dts
 >
->  .../devicetree/bindings/regulator/qcom,rpmh-regulator.yaml    | 4 ++++
->  1 file changed, 4 insertions(+)
+> Changes in v5:
+> - Revise rev0+ to rev0
+> - Add -r1 line to the Makefile
+> - Reorder '.dtb' in Makefile
+> - Put the "interconnects" line back
+>
+> Changes in v4:
+> - ("...: Add herobrine-villager-r1") new for v4
+> - Reorder 'status' last
+>
+> Changes in v2:
+> - ("...: document sc7280 and villager board") new for v2.
+>
+> Jimmy Chen (3):
+>   dt-bindings: arm: qcom: document sc7280 and villager board
+>   arm64: dts: qcom: sc7280: Add herobrine-villager-r1
+>   arm64: dts: qcom: Add LTE SKUs for sc7280-villager family
+>
+>  .../devicetree/bindings/arm/qcom.yaml         |  10 +
+>  arch/arm64/boot/dts/qcom/Makefile             |   2 +
+>  .../boot/dts/qcom/sc7280-chrome-common.dtsi   |  11 -
+>  .../boot/dts/qcom/sc7280-herobrine-crd.dts    |   1 +
+>  .../qcom/sc7280-herobrine-herobrine-r1.dts    |   1 +
+>  .../dts/qcom/sc7280-herobrine-lte-sku.dtsi    |  17 +
+>  .../dts/qcom/sc7280-herobrine-villager-r0.dts | 325 +----------------
+>  .../qcom/sc7280-herobrine-villager-r1-lte.dts |  14 +
+>  .../dts/qcom/sc7280-herobrine-villager-r1.dts |  16 +
+>  .../dts/qcom/sc7280-herobrine-villager.dtsi   | 326 ++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dts       |   1 +
+>  11 files changed, 392 insertions(+), 332 deletions(-)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-villager.dtsi
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Is there anything blocking these changes from landing? I just tried
+applying them and they now give a (tiny) Makefile context conflict
+with the evoker dts that just landed, but "git am -3" handled it fine
+for me.
+
+-Doug
