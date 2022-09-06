@@ -2,79 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 476015AF45A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 21:23:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D5375AF4A0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 21:42:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229596AbiIFTXA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Sep 2022 15:23:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50462 "EHLO
+        id S229792AbiIFTl3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Sep 2022 15:41:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229823AbiIFTW5 (ORCPT
+        with ESMTP id S229956AbiIFTlZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Sep 2022 15:22:57 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DE34A926E
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 12:22:56 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id u6so16395484eda.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 12:22:55 -0700 (PDT)
+        Tue, 6 Sep 2022 15:41:25 -0400
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43A1580E8A
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 12:41:23 -0700 (PDT)
+Received: by mail-yb1-xb33.google.com with SMTP id f131so2792557ybf.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 12:41:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date;
-        bh=5bwFM9UuatV/9s8ea3bTh+4VZX12Y9aX8P2/k8aLadI=;
-        b=hcEkiN0x5Rv0as/DYY7Tm7xnP5Xa+yJ7efy26/W2MLY3B+YYG5B48z5mwaEeXTqWr+
-         n/b1GDFCeQmeLKWox9YdDw6r1NGqEwx1cR1KJMNGYAbTfQwW8lS1lKeV1RcrD0ZkHqww
-         +2t/j2981gd/8Xo31O63L9z5KSUenBdc/b+6k=
+        bh=snU6sHLVFuhFuegCz2LY5uuGVktWfNxhucOSPu7x3aQ=;
+        b=wHBp6mR5w+Xd1tEiqooTyS8Ep4Ay3sazBcUaioh7iqJpCe5zfFGywdqLdgknSZqsJK
+         4s75HteCxyyHfSMbOnQtS2qWDl6/VXfV9T+suuhOYo+rtZf5Wm3TdB68SYCL4vR09YYC
+         4P0Z7IF7/ix94DimDR/5HV3HdferHNb+UzA/Ck+GNktplONrOf8twaoDpN/bpetp+fLF
+         0vnJhLCUEgIV+0JeZMnAIKc1GORmmk41xHK76om87gsTep9prhSozgYbQSpe1/hPsW/4
+         Soav00fk8802IepJ1tQy7myIPs1YAkw+jbFzpT3HUbofcQHFaS/28N1kGKNLVfAkkkfo
+         5+mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=5bwFM9UuatV/9s8ea3bTh+4VZX12Y9aX8P2/k8aLadI=;
-        b=AUAvAkpILMK9Z0Wm0piY7L6nKSYfTiP/ADWWZoQcgD+3GMZ5cvXmsIdxktfZJk1M22
-         zkSCv5oTC+//S0FlvW/EMPf/LwXQlXNKH68PolhXGCMBuzeFAIRQMjGdYpy5adSceFDZ
-         Xo5TrcnNUpgO9qqsn/gVVlmCWySDxapnU4VMzswuXgBwro3DRfYa4rmbI6Hlcp+79F1R
-         efiHaZr6AEhOXYm+Ufnw02TQNYTCz+H7yRgXjLFzppmcUZccArsyrYG2NbfreHsdS7Q3
-         gKRDiPpXIQausFFBM1EZUpZi/t+htmTORISd8KTHQMoc1CWDW32yKf88zk2zQQFDCmos
-         zFwQ==
-X-Gm-Message-State: ACgBeo2AzFfB/dXf2NsDYS2q0r8Cc3ZILeSCJ/UNu3utbfVOWjiea3Vk
-        sWVlccnmpiA1KYT5TbT3Kvqg5/5LbCOpJ33u
-X-Google-Smtp-Source: AA6agR52fBjLMbzswYgcQw1KuT9+8Np7ovdwU89MxbUysBMxXlXmyNchmpujGn3wfooE/6gD+8PfgA==
-X-Received: by 2002:a05:6402:1ad1:b0:44e:8dfb:2d04 with SMTP id ba17-20020a0564021ad100b0044e8dfb2d04mr109604edb.400.1662492174358;
-        Tue, 06 Sep 2022 12:22:54 -0700 (PDT)
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com. [209.85.128.52])
-        by smtp.gmail.com with ESMTPSA id d16-20020a170906305000b0073dde7c1767sm7200281ejd.175.2022.09.06.12.22.53
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Sep 2022 12:22:53 -0700 (PDT)
-Received: by mail-wm1-f52.google.com with SMTP id k17so7400614wmr.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 12:22:53 -0700 (PDT)
-X-Received: by 2002:a05:600c:42c3:b0:3a6:431:91bf with SMTP id
- j3-20020a05600c42c300b003a6043191bfmr13994897wme.188.1662492173404; Tue, 06
- Sep 2022 12:22:53 -0700 (PDT)
+        bh=snU6sHLVFuhFuegCz2LY5uuGVktWfNxhucOSPu7x3aQ=;
+        b=6zy0HznWn8V9x7BX8IhH1sXxZzOKUHDLSdm/6QD/+r9rcSmkxqA9yrqM+ri80d1CqR
+         tvlRpV+FUy/VKvU/Gf2lxfMyi4RRlNgzsXcuA3hj8O3MV2xGdK+XM5IzTB3sKhUVS+ks
+         AeAbJu2ff8VMI2o0GCuYKdOUkscKIt66DYUSA9aqGzX9ziGb2TtS2m3pMoKNnlAW7YA5
+         GlzcYcNW5WIabVYks4V7RsLhAE7tmxM+F4L2QkcFSkWrTDQ+uU6wTmiGu6J1S+YGM+3h
+         9Lqx+F88+scVof/xlk+I9l3hIdGYchOZ7+cEy2hHX+X2MZMaatKn/a4tiladx3IMQnH5
+         FiEw==
+X-Gm-Message-State: ACgBeo2/+/177CqzaK7z6vySAfyU9+H0N/zFpbaRkW5EhWcGL73BKw/S
+        CrPJ+PukI5tmyXI9iLcg75SSXLcIUAfdD0bGNOucYw==
+X-Google-Smtp-Source: AA6agR5G8yckKVkmwDJ1JIT5INXPH+zDHdVVnaWJpfc1vFTYPqRYDNyyh/s08b/ty20JzitIYp4q6FTMdHOZDoDl/vU=
+X-Received: by 2002:a25:5c3:0:b0:6a9:90fb:c9e6 with SMTP id
+ 186-20020a2505c3000000b006a990fbc9e6mr203601ybf.152.1662493282333; Tue, 06
+ Sep 2022 12:41:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220901102946.v2.1.I347ea409ee3134bd32a29e33fecd1a6ef32085a0@changeid>
- <CAD=FV=WBzVTaz1dtMswNMWhBzBBUQZTxqXff_DgiuP6WJgG8Qg@mail.gmail.com> <YxeZrvKvRB/ct3Ss@google.com>
-In-Reply-To: <YxeZrvKvRB/ct3Ss@google.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 6 Sep 2022 12:22:42 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VsRi2kt9K9E+VOEGqdJFT43-aj415Gk2Q=OP64L-JAUA@mail.gmail.com>
-Message-ID: <CAD=FV=VsRi2kt9K9E+VOEGqdJFT43-aj415Gk2Q=OP64L-JAUA@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc7180: Configure USB as wakeup source
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
+References: <20220906183334.203787-1-luca@z3ntu.xyz> <20220906183334.203787-4-luca@z3ntu.xyz>
+In-Reply-To: <20220906183334.203787-4-luca@z3ntu.xyz>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 6 Sep 2022 22:41:11 +0300
+Message-ID: <CAA8EJpqjnafKyUrd1ntYFeGTDtRxgEUSu0Mg9wNGxObJ3wF0Kw@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: msm8953: add MDSS
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,65 +73,94 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Tue, 6 Sept 2022 at 21:36, Luca Weiss <luca@z3ntu.xyz> wrote:
+>
+> From: Vladimir Lypak <vladimir.lypak@gmail.com>
+>
+> Add the MDSS, MDP and DSI nodes that are found on msm8953 SoC.
+>
+> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
+> Changes since v2:
+> - add "core" clock for mdss as suggested by Dmitry Baryshkov
+>
+>  arch/arm64/boot/dts/qcom/msm8953.dtsi | 210 ++++++++++++++++++++++++++
+>  1 file changed, 210 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi b/arch/arm64/boot/dts/qcom/msm8953.dtsi
+> index 3d11331e78d2..580333141a66 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
+> @@ -726,6 +726,216 @@ tcsr_phy_clk_scheme_sel: syscon@193f044 {
+>                         reg = <0x193f044 0x4>;
+>                 };
+>
+> +               mdss: mdss@1a00000 {
+> +                       compatible = "qcom,mdss";
+> +
+> +                       reg = <0x1a00000 0x1000>,
+> +                             <0x1ab0000 0x1040>;
+> +                       reg-names = "mdss_phys",
+> +                                   "vbif_phys";
+> +
+> +                       power-domains = <&gcc MDSS_GDSC>;
+> +                       interrupts = <GIC_SPI 72 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +                       interrupt-controller;
+> +                       #interrupt-cells = <1>;
+> +
+> +                       clocks = <&gcc GCC_MDSS_AHB_CLK>,
+> +                                <&gcc GCC_MDSS_AXI_CLK>,
+> +                                <&gcc GCC_MDSS_VSYNC_CLK>,
+> +                                <&gcc GCC_MDSS_MDP_CLK>;
+> +                       clock-names = "iface",
+> +                                     "bus",
+> +                                     "vsync",
+> +                                     "core";
+> +
+> +                       #address-cells = <1>;
+> +                       #size-cells = <1>;
+> +                       ranges;
+> +
+> +                       status = "disabled";
+> +
+> +                       mdp: mdp@1a01000 {
+> +                               compatible = "qcom,mdp5";
 
-On Tue, Sep 6, 2022 at 12:04 PM Matthias Kaehlcke <mka@chromium.org> wrote:
->
-> Hi Doug,
->
-> On Tue, Sep 06, 2022 at 11:33:56AM -0700, Doug Anderson wrote:
-> > Hi,
-> >
-> > On Thu, Sep 1, 2022 at 10:29 AM Matthias Kaehlcke <mka@chromium.org> wrote:
-> > >
-> > > The dwc3 USB controller of the sc7180 supports USB remote
-> > > wakeup, configure it as a wakeup source.
-> > >
-> > > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> > > ---
-> > >
-> > > Changes in v2:
-> > > - use qcom/arm64-for-6.1 as base, v1 was unintendedly based on a
-> > >   downstream branch that was used for testing
-> > >
-> > >  arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 ++
-> > >  1 file changed, 2 insertions(+)
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > > index e8debb0da411..af5bab27eaf3 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> > > @@ -2782,6 +2782,8 @@ usb_1: usb@a6f8800 {
-> > >                                         <&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3 0>;
-> > >                         interconnect-names = "usb-ddr", "apps-usb";
-> > >
-> > > +                       wakeup-source;
-> > > +
-> >
-> > The patch documenting this property has landed in commit 416b61893860
-> > ("dt-bindings: usb: qcom,dwc3: add wakeup-source property"). I guess
-> > the only question is whether this should be in the general sc7180
-> > device tree file or just for trogdor.
->
-> I had a similar comment on the patch for sc7280 [1], there the rationale
-> for putting the property into the .dtsi of the SoC was that the wakeup
-> capability is provided by the SoC.
->
-> For sc8280xp.dtsi the property is also in the .dtsi of the SoC:
->
-> https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/tree/arch/arm64/boot/dts/qcom/sc8280xp.dtsi?h=arm64-for-6.1#n1315
->
-> > Any chance it could cause problems for devices that aren't designed like
-> > trogdor?
->
-> Probably not in a functional sense, however power consumption during system
-> suspend is slightly higher (2-3 mW) when USB wakeup is enabled. Boards can
-> disable wakeup by deleting the property in their .dtsi file, though it
-> is not necessarily evident that this is an option to reduce power
-> consumption.
->
-> [1] https://patchwork.kernel.org/project/linux-arm-msm/patch/1649321104-31322-7-git-send-email-quic_c_sanm@quicinc.com/
+Could you please change this to "qcom,msm8953-mdp5", "qcom,mdp5".
 
-OK then.
+> +                               reg = <0x1a01000 0x89000>;
+> +                               reg-names = "mdp_phys";
+> +
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+[skipped]
+
+> +
+> +                       dsi0_phy: dsi-phy@1a94400 {
+
+Let's probably use a generic name 'phy' here and for dsi1_phy.
+
+The rest looks good to me.
+
+> +                               compatible = "qcom,dsi-phy-14nm-8953";
+> +                               reg = <0x1a94400 0x100>,
+> +                                     <0x1a94500 0x300>,
+> +                                     <0x1a94800 0x188>;
+> +                               reg-names = "dsi_phy",
+> +                                           "dsi_phy_lane",
+> +                                           "dsi_pll";
+> +
+> +                               #clock-cells = <1>;
+> +                               #phy-cells = <0>;
+> +
+> +                               clocks = <&gcc GCC_MDSS_AHB_CLK>, <&xo_board>;
+> +                               clock-names = "iface", "ref";
+> +
+> +                               status = "disabled";
+> +                       };
+
+
+-- 
+With best wishes
+Dmitry
