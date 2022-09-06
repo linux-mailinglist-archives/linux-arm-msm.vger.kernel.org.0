@@ -2,78 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7368B5AE370
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 10:50:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE9C55AE3BE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 11:03:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234004AbiIFIt0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Sep 2022 04:49:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39004 "EHLO
+        id S239333AbiIFJDZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Sep 2022 05:03:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239612AbiIFIsr (ORCPT
+        with ESMTP id S234286AbiIFJDY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Sep 2022 04:48:47 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07E6D7A528
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 01:46:05 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id k9so14371069wri.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 01:46:04 -0700 (PDT)
+        Tue, 6 Sep 2022 05:03:24 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 194123ECC8
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 02:03:23 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id z6so16310410lfu.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 02:03:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=Odm1frpHPsrLRAe7/u7i98rAPlfDwtj9Yxie2DmtS4M=;
-        b=hVCnTlqjhczb0RvxNzP+8m1HDiYzK8xk6T/cjsluF6cy4nTb8pvNROcyah5EbsJ+R5
-         mkAI2kqII8zS+WLiyvoWGUR9sjjN8SR43IBIz3Fj2G0GXQOnFYFlsfyTxqQiyeRfMwqT
-         Ji1ubHz2AfaucLoqFnDGGw1BIXGvV9Cz+/PT1uw/zhhk1RSHN3y8MrLls4z0TC4ykBy5
-         kWvYnHpAANsNtok0k89zOlidk8rN3OEMKHtlMM35h9nbEmT6MWS1xKfplwnZy3NgEZMe
-         hmBPwVbGHuLU+VAu/UzBxtZbMF/r2sr9/bFCJ6up20jaHc4OoaUru0zSSkm3R5Ryz1fE
-         IR2A==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=qKAHS8QOJPr7gTNEKi97bZ2RBqwyh0sayFIzXNeO7N8=;
+        b=FGQxGcqFByjtxDxOIs5PvfbJTQ9eEq9GcmSCWha7C0lIb2q3lUGFl8ZVz9wIQMdSJa
+         lKLX3QwZxiNNoY4coo1hyXGBH59d74JVFqtvc9j1LwObBXdArMyIB8MLVvaFTzJednbY
+         M7keFOSDLziyCZhusXNGJbJGnW8kr1y7K1tn+YjidvDyCgbGKxlSYliAegoCMHbHjrus
+         V2MiGMd4mKUvx4lTsndwKPYiBHHrdioq9buZK5XfdhdFz/LJgH8oJBMc8gMXy1RsZNSc
+         BdzVKv4dxX599HnYsmMJSptltzoEZCc0tZY0rmkBNLmHNP+YRtMG0KpeJ0BoW9sHHKGd
+         gXHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=Odm1frpHPsrLRAe7/u7i98rAPlfDwtj9Yxie2DmtS4M=;
-        b=HSZWm6fRmAIWZEWshBJSyXndA7L3KmMEjaej+Htw4uf4FXhkEhfN2Gv1wzlPpihF7C
-         Z9BNvKIQUbW1+gRjaBhB/rQuSgx6sF5D4B06jgb+IskeRYuZXxlpx4XH8xwSfm+lPWOo
-         JTfxluKuSmhPxIodu7bqbNI6M8Gcp/CQhfUYqP+14h0DpADnuUV2DUHbfMs/9AGstgxz
-         kWxIciANfx+oFd8nGWn7qYBkf5b18LaTL7dVqngfCZCcq8dDPaQZwyYuc3ISvY8Lri6L
-         1XhiLMrqtfRDwlPsfaCAhzFqzPn2NJ5piv8/q0iNQt1k4k24fh/kFUAVCQeaJvPK/uNf
-         7+0A==
-X-Gm-Message-State: ACgBeo2EAnn9DbiLDvRpP9gLv9jIjLm/qCU/ZWsR6E0T8C8YUlRk2JrR
-        4s53H188ZFfkf9EbMF80ja7EoA==
-X-Google-Smtp-Source: AA6agR5gtPQIV/66kXeeuRBLEkMRihbEDAybdp29TUCUCXHlUiY9DPvVWlTWEI/FKuAAiZPH0IzfDw==
-X-Received: by 2002:adf:e4ca:0:b0:228:d8b7:48a7 with SMTP id v10-20020adfe4ca000000b00228d8b748a7mr1216182wrm.300.1662453963537;
-        Tue, 06 Sep 2022 01:46:03 -0700 (PDT)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id l20-20020a05600c089400b003a30fbde91dsm19226259wmp.20.2022.09.06.01.46.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Sep 2022 01:46:02 -0700 (PDT)
-Date:   Tue, 6 Sep 2022 11:46:01 +0300
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        David Heidelberg <david@ixit.cz>
-Subject: Re: [PATCH v7 1/2] dt-bindings: misc: fastrpc convert bindings to
- yaml
-Message-ID: <YxcIyRadKQN+BmRe@linaro.org>
-References: <20220905144554.1772073-1-abel.vesa@linaro.org>
- <3649a134-0ea7-b67c-8b5a-2971f090446c@linaro.org>
- <YxcFB4lEu16SXOyl@linaro.org>
- <2ffe1ad9-bce9-ff4c-f6f2-6473f4939a52@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=qKAHS8QOJPr7gTNEKi97bZ2RBqwyh0sayFIzXNeO7N8=;
+        b=7X9HEsvEB3KVlygMg6aWBaF3T84D9UgRcg0A2F8jJzHeB2UG2q74QheEx5KC4Srx5t
+         LpNueF5v7e9m8Be6sNBnHBNx3blN4zptqR8K4NtGTPzxO6hMMlmLrqOEqUGXk2pT3MHF
+         GGqLalljgqOJkaRULhzOdx36ndLoSc2O3M53iK3FYze8Kpd/g3VuBm579dkjhVGNJ4C9
+         gSXrUa8eDQvrnZv512UIHWhCog049j0i+n1MJiuHl28iUjLjKImF3IJbseNzEb3/aphJ
+         FDg/2QjABxjQpWyf4etn/iCLko+rmn3k83aBU0BYE+ItBBMo2jve0F5BcJT3x68CM2IO
+         qgYA==
+X-Gm-Message-State: ACgBeo1Bvcy+Z0ABpuQIPh7At86OtUIQIMwqA3cSnx+8x0mmMMXscEaC
+        5vtEuo8i5vD6rUQALvGaZcA88g==
+X-Google-Smtp-Source: AA6agR71TapACZZa68tF3V1Bts7FpSvEvhdkK84e8jhYmvFXx2UsXQ/vF3J0/lgxyibBVYn21QZF6Q==
+X-Received: by 2002:a05:6512:2805:b0:48b:78:6e91 with SMTP id cf5-20020a056512280500b0048b00786e91mr16482906lfb.569.1662455001421;
+        Tue, 06 Sep 2022 02:03:21 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id f12-20020a056512360c00b0049482adb3basm1601042lfs.63.2022.09.06.02.03.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Sep 2022 02:03:20 -0700 (PDT)
+Message-ID: <5d4abf52-17d5-343b-b771-ac87bc2cff07@linaro.org>
+Date:   Tue, 6 Sep 2022 11:03:19 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2ffe1ad9-bce9-ff4c-f6f2-6473f4939a52@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v3 2/7] dt-bindings: remoteproc: qcom,q6v5: Move MSM8916
+ to schema
+Content-Language: en-US
+To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Sireesh Kodali <sireeshkodali1@gmail.com>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20220831134626.2803117-1-stephan.gerhold@kernkonzept.com>
+ <20220831134626.2803117-3-stephan.gerhold@kernkonzept.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220831134626.2803117-3-stephan.gerhold@kernkonzept.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,76 +86,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22-09-06 10:36:14, Krzysztof Kozlowski wrote:
-> On 06/09/2022 10:29, Abel Vesa wrote:
-> > On 22-09-06 08:45:22, Krzysztof Kozlowski wrote:
-> >> On 05/09/2022 16:45, Abel Vesa wrote:
-> >>> Convert Qualcomm FastRPC bindings to yaml format, so that we could validate
-> >>> dt-entries correctly and any future additions can go into yaml format.
-> >>>
-> >>> Use compute-cb@ subnodes instead of just cb@.
-> >>>
-> >>> Also add qcom,non-secure-domain, qcom,glink-channels and
-> >>> qcom,smd-channels missing properties to make sure dtbs_check doesn't
-> >>> fail right off the bat.
-> >>
-> >> qcom,non-secure-domain is in original binding, so I don't understand why
-> >> it is being "added".
-> >>
-> > 
-> > Yeah, my bad, I should've added this line to the changes since v4.
-> > 
-> >>>
-> >>> Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> >>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> >>> Co-developed-by: David Heidelberg <david@ixit.cz>
-> >>> Signed-off-by: David Heidelberg <david@ixit.cz>
-> >>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> >>> ---
-> >>>
-> >>> Changes since v6:
-> >>>  * renamed the parent node name in the example from smd-edge to glink-edge
-> >>>
-> >>>  .../devicetree/bindings/misc/qcom,fastrpc.txt |  88 -------------
-> >>>  .../bindings/misc/qcom,fastrpc.yaml           | 118 ++++++++++++++++++
-> >>
-> >> As you can see in Rob's bot report - the patchset introduces errors and
-> >> is not bisectable.
-> > 
-> > Please note that Rob's bot report is for v6.
-> 
-> I see report as a reply to this patch, so for v7. Why do you think it is v6?
+On 31/08/2022 15:46, Stephan Gerhold wrote:
 
-Oh, didn't see Rob's bot reply to v7 before.
+Thank you for your patch. There is something to discuss/improve.
 
-> 
-> > 
-> > v7 fixes the errors reported, by using glink-edge instead of smd-edge.
-> > 
-> > Looking at all QCOM SoCs that have fastrpc node in devicetree, they all
-> > seem to be using glink-edge.
-> 
-> I was not talking about these errors (they were separate issue). I am
-> talking about wrong path error.
-> 
+> +  qcom,halt-regs:
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> +    description:
+> +      Halt registers are used to halt transactions of various sub-components
+> +      within MSS.
+> +    items:
+> +      - items:
+> +          - description: phandle to TCSR syscon region
+> +          - description: offset to the Q6 halt register
+> +          - description: offset to the modem halt register
+> +          - description: offset to the nc halt register
+> +
+> +  memory-region:
+> +    items:
+> +      - description: MBA reserved region
+> +      - description: MPSS reserved region
+> +
+> +  firmware-name:
+> +    $ref: /schemas/types.yaml#/definitions/string-array
+> +    items:
+> +      - description: Name of MBA firmware
+> +      - description: Name of modem firmware
+> +
+> +  bam-dmux:
+> +    $ref: /schemas/net/qcom,bam-dmux.yaml#
+> +    description:
+> +      Qualcomm BAM Data Multiplexer (provides network interface to the modem)
+> +
+> +  smd-edge:
+> +    $ref: qcom,smd-edge.yaml#
+> +    description:
+> +      Qualcomm SMD subnode which represents communication edge, channels
+> +      and devices related to the DSP.
+> +
+> +    properties:
+> +      label:
+> +        enum:
+> +          - modem
+> +          - hexagon
 
-Yes, got it now. Will resend.
+This needs unevaluatedProperties:false. I will fix qcom,adsp.yaml which
+has similar problem.
 
-> > 
-> >>
-> >> You also need to fix qcom,glink-edge.yaml
-> >>
-> > 
-> > I don't see why, with the changes I made in v7, there are no errors
-> > anymore.
-> 
-> There are, but not from tooling. The error is wrong path. It should be
-> converted to proper schema $ref.
-
-Sure. Will do.
-
-Thanks!
-
-> 
-> Best regards,
-> Krzysztof
+Best regards,
+Krzysztof
