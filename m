@@ -2,70 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D5375AF4A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 21:42:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B04955AF5BF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 22:22:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229792AbiIFTl3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Sep 2022 15:41:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51646 "EHLO
+        id S231411AbiIFUVm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Sep 2022 16:21:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229956AbiIFTlZ (ORCPT
+        with ESMTP id S231255AbiIFUVL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Sep 2022 15:41:25 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43A1580E8A
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 12:41:23 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id f131so2792557ybf.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 12:41:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=snU6sHLVFuhFuegCz2LY5uuGVktWfNxhucOSPu7x3aQ=;
-        b=wHBp6mR5w+Xd1tEiqooTyS8Ep4Ay3sazBcUaioh7iqJpCe5zfFGywdqLdgknSZqsJK
-         4s75HteCxyyHfSMbOnQtS2qWDl6/VXfV9T+suuhOYo+rtZf5Wm3TdB68SYCL4vR09YYC
-         4P0Z7IF7/ix94DimDR/5HV3HdferHNb+UzA/Ck+GNktplONrOf8twaoDpN/bpetp+fLF
-         0vnJhLCUEgIV+0JeZMnAIKc1GORmmk41xHK76om87gsTep9prhSozgYbQSpe1/hPsW/4
-         Soav00fk8802IepJ1tQy7myIPs1YAkw+jbFzpT3HUbofcQHFaS/28N1kGKNLVfAkkkfo
-         5+mA==
+        Tue, 6 Sep 2022 16:21:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD8289C50F
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 13:20:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1662495630;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=vINMxXDx/GP00laEzueh2Ucc5/ncSXAIQhbYOwhIwO0=;
+        b=KHjj9DNOCNrOCJ9TnXFZn2+umxsHHO4HA9zYW+2ZgtuPoMOIg7U6MyyudoOXNyZ0ABb5wU
+        x+JSnqO/RxYkENdrs+NE/eNtFb4EyBdwwkSDoF8GMEGA1YV6HN7YSQ4vYR3+NTpCK1Yzt7
+        U/t95leG8N5QXOaYRz4Za75+FBjZpnk=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-649-B1mPE3wgMsKG8wSz1o-qSw-1; Tue, 06 Sep 2022 16:20:28 -0400
+X-MC-Unique: B1mPE3wgMsKG8wSz1o-qSw-1
+Received: by mail-qk1-f197.google.com with SMTP id r14-20020a05620a298e00b006be796b6164so10217095qkp.19
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 13:20:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=snU6sHLVFuhFuegCz2LY5uuGVktWfNxhucOSPu7x3aQ=;
-        b=6zy0HznWn8V9x7BX8IhH1sXxZzOKUHDLSdm/6QD/+r9rcSmkxqA9yrqM+ri80d1CqR
-         tvlRpV+FUy/VKvU/Gf2lxfMyi4RRlNgzsXcuA3hj8O3MV2xGdK+XM5IzTB3sKhUVS+ks
-         AeAbJu2ff8VMI2o0GCuYKdOUkscKIt66DYUSA9aqGzX9ziGb2TtS2m3pMoKNnlAW7YA5
-         GlzcYcNW5WIabVYks4V7RsLhAE7tmxM+F4L2QkcFSkWrTDQ+uU6wTmiGu6J1S+YGM+3h
-         9Lqx+F88+scVof/xlk+I9l3hIdGYchOZ7+cEy2hHX+X2MZMaatKn/a4tiladx3IMQnH5
-         FiEw==
-X-Gm-Message-State: ACgBeo2/+/177CqzaK7z6vySAfyU9+H0N/zFpbaRkW5EhWcGL73BKw/S
-        CrPJ+PukI5tmyXI9iLcg75SSXLcIUAfdD0bGNOucYw==
-X-Google-Smtp-Source: AA6agR5G8yckKVkmwDJ1JIT5INXPH+zDHdVVnaWJpfc1vFTYPqRYDNyyh/s08b/ty20JzitIYp4q6FTMdHOZDoDl/vU=
-X-Received: by 2002:a25:5c3:0:b0:6a9:90fb:c9e6 with SMTP id
- 186-20020a2505c3000000b006a990fbc9e6mr203601ybf.152.1662493282333; Tue, 06
- Sep 2022 12:41:22 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=vINMxXDx/GP00laEzueh2Ucc5/ncSXAIQhbYOwhIwO0=;
+        b=Ih07k5Ra/bjuLQIbtkOSnv+cpN5pb7lEeHxrCnJhFnYcb/GuznpvVC6tqCEl0BkKR5
+         zJY6+xA0PVkmBCwvNJn+2w+KqE8/RAyQsDMX/hDFdydf9Ye8Fv8e++qVPVtncKzAzJFI
+         sLNIXNul8UnYPzmBGilCzxUXt1E1o3IZfkeoZOyLwby/FeVfKWOp3ppqY98WQoOkm10j
+         d5JNsfOsBP40bOCAD4zh35/UJ+kcr7YX+1NmdYwUPqkJtWYg4rk+XhGWX07QH5sF3rip
+         j6mCFNEE7VriNIl9YD+i+4Wo/YPECmlMRlkue6Z7r7qfmflBm5TCE92AGX6QfJWwoa0W
+         +63A==
+X-Gm-Message-State: ACgBeo0t6IPMVo/cSczc2JSMqg0l1bV4Ulr43fLcxjDPeTVC5S3oCVdX
+        Ss46kzITJTpBglh0XVaYgvUZXNjlBym9snrWmwWPZnZkUMTui6Zu2z7TZa2wNN/wsiHyag1NYkn
+        k+VTCD0QSRHkUgVqTAR2BzkKQ8Q==
+X-Received: by 2002:a05:6214:1cc8:b0:46e:1920:70f8 with SMTP id g8-20020a0562141cc800b0046e192070f8mr313888qvd.6.1662495627968;
+        Tue, 06 Sep 2022 13:20:27 -0700 (PDT)
+X-Google-Smtp-Source: AA6agR7FvlA5FhvR3KvnIshbIQJl0zQIP1ibxwJlVoyeLJTiDcXTn96w5r5a1ESbR3w6uJUzZcMwNQ==
+X-Received: by 2002:a05:6214:1cc8:b0:46e:1920:70f8 with SMTP id g8-20020a0562141cc800b0046e192070f8mr313868qvd.6.1662495627698;
+        Tue, 06 Sep 2022 13:20:27 -0700 (PDT)
+Received: from halaneylaptop.redhat.com ([2600:1700:1ff0:d0e0::a])
+        by smtp.gmail.com with ESMTPSA id o13-20020a05620a2a0d00b006b5df4d2c81sm13049873qkp.94.2022.09.06.13.20.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Sep 2022 13:20:27 -0700 (PDT)
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, dianders@chromium.org,
+        johan@kernel.org, Andrew Halaney <ahalaney@redhat.com>
+Subject: [PATCH v2] regulator: dt-bindings: qcom,rpmh: Indicate regulator-allow-set-load dependencies
+Date:   Tue,  6 Sep 2022 15:19:59 -0500
+Message-Id: <20220906201959.69920-1-ahalaney@redhat.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-References: <20220906183334.203787-1-luca@z3ntu.xyz> <20220906183334.203787-4-luca@z3ntu.xyz>
-In-Reply-To: <20220906183334.203787-4-luca@z3ntu.xyz>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 6 Sep 2022 22:41:11 +0300
-Message-ID: <CAA8EJpqjnafKyUrd1ntYFeGTDtRxgEUSu0Mg9wNGxObJ3wF0Kw@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: msm8953: add MDSS
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,94 +79,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 6 Sept 2022 at 21:36, Luca Weiss <luca@z3ntu.xyz> wrote:
->
-> From: Vladimir Lypak <vladimir.lypak@gmail.com>
->
-> Add the MDSS, MDP and DSI nodes that are found on msm8953 SoC.
->
-> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
-> Changes since v2:
-> - add "core" clock for mdss as suggested by Dmitry Baryshkov
->
->  arch/arm64/boot/dts/qcom/msm8953.dtsi | 210 ++++++++++++++++++++++++++
->  1 file changed, 210 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-> index 3d11331e78d2..580333141a66 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-> @@ -726,6 +726,216 @@ tcsr_phy_clk_scheme_sel: syscon@193f044 {
->                         reg = <0x193f044 0x4>;
->                 };
->
-> +               mdss: mdss@1a00000 {
-> +                       compatible = "qcom,mdss";
-> +
-> +                       reg = <0x1a00000 0x1000>,
-> +                             <0x1ab0000 0x1040>;
-> +                       reg-names = "mdss_phys",
-> +                                   "vbif_phys";
-> +
-> +                       power-domains = <&gcc MDSS_GDSC>;
-> +                       interrupts = <GIC_SPI 72 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +                       interrupt-controller;
-> +                       #interrupt-cells = <1>;
-> +
-> +                       clocks = <&gcc GCC_MDSS_AHB_CLK>,
-> +                                <&gcc GCC_MDSS_AXI_CLK>,
-> +                                <&gcc GCC_MDSS_VSYNC_CLK>,
-> +                                <&gcc GCC_MDSS_MDP_CLK>;
-> +                       clock-names = "iface",
-> +                                     "bus",
-> +                                     "vsync",
-> +                                     "core";
-> +
-> +                       #address-cells = <1>;
-> +                       #size-cells = <1>;
-> +                       ranges;
-> +
-> +                       status = "disabled";
-> +
-> +                       mdp: mdp@1a01000 {
-> +                               compatible = "qcom,mdp5";
+For RPMH regulators it doesn't make sense to indicate
+regulator-allow-set-load without saying what modes you can switch to,
+so be sure to indicate a dependency on regulator-allowed-modes.
 
-Could you please change this to "qcom,msm8953-mdp5", "qcom,mdp5".
+With this in place devicetree validation can catch issues like this:
 
-> +                               reg = <0x1a01000 0x89000>;
-> +                               reg-names = "mdp_phys";
-> +
+    /mnt/extrassd/git/linux-next/arch/arm64/boot/dts/qcom/sm8350-hdk.dtb: pm8350-rpmh-regulators: ldo5: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+            From schema: /mnt/extrassd/git/linux-next/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
 
-[skipped]
+Suggested-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+---
 
-> +
-> +                       dsi0_phy: dsi-phy@1a94400 {
+v1: https://lore.kernel.org/linux-arm-msm/20220902185148.635292-1-ahalaney@redhat.com/
+Changes since v1:
+  - Dropped first two patches in the series as they were user error
+    (thanks Krzysztof for highlighting this!)
+  - No change in the remaining patch
 
-Let's probably use a generic name 'phy' here and for dsi1_phy.
+Krzysztof also asked if this patch in particular should apply to other
+regulators, which I think it should for those regulator's who implement
+set_mode(). Unfortunately I don't know of a good way to get that
+information in order to apply it at a broader scope for devicetree
+regulator validation. At least with this in place RPMH users can get
+better coverage... if someone has suggestions for how to broaden the
+scope I'm all ears!
 
-The rest looks good to me.
+Thanks,
+Andrew
 
-> +                               compatible = "qcom,dsi-phy-14nm-8953";
-> +                               reg = <0x1a94400 0x100>,
-> +                                     <0x1a94500 0x300>,
-> +                                     <0x1a94800 0x188>;
-> +                               reg-names = "dsi_phy",
-> +                                           "dsi_phy_lane",
-> +                                           "dsi_pll";
-> +
-> +                               #clock-cells = <1>;
-> +                               #phy-cells = <0>;
-> +
-> +                               clocks = <&gcc GCC_MDSS_AHB_CLK>, <&xo_board>;
-> +                               clock-names = "iface", "ref";
-> +
-> +                               status = "disabled";
-> +                       };
+ .../devicetree/bindings/regulator/qcom,rpmh-regulator.yaml    | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+index 9a36bee750af..92ff4d59ba20 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+@@ -99,12 +99,16 @@ properties:
+     type: object
+     $ref: "regulator.yaml#"
+     description: BOB regulator node.
++    dependencies:
++      regulator-allow-set-load: ["regulator-allowed-modes"]
+ 
+ patternProperties:
+   "^(smps|ldo|lvs)[0-9]+$":
+     type: object
+     $ref: "regulator.yaml#"
+     description: smps/ldo regulator nodes(s).
++    dependencies:
++      regulator-allow-set-load: ["regulator-allowed-modes"]
+ 
+ required:
+   - compatible
 -- 
-With best wishes
-Dmitry
+2.37.2
+
