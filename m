@@ -2,97 +2,241 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 91AF05AF5CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 22:25:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CF3A5AF723
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 23:41:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229731AbiIFUZd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Sep 2022 16:25:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47784 "EHLO
+        id S229638AbiIFVlU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Sep 2022 17:41:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229930AbiIFUZc (ORCPT
+        with ESMTP id S229912AbiIFVlR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Sep 2022 16:25:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D58A7FE61
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 13:25:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1662495930;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=uWq0DQ3f4X7MTaLrpOjEjqg4Wu5PCHE713Z5NmM6sFY=;
-        b=OYKml+JIs4IDO0rhtUG/QMWzDYMD9Clsp54GEg/zOhkkcWhL9jj0VU0OZA5/X75vhzFGbC
-        2uQ5bEhwtwY0nxMmLqhUyJN34bAK0QEIBGBoUO3RJuXEsEapUiUpPcDiB4BSM2QWt3dY3s
-        FZE/eDZ4x6j1FEs8xiFKxgLZFxTx0Is=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-629-bk55s7S2OY6RSbxau05J0w-1; Tue, 06 Sep 2022 16:25:29 -0400
-X-MC-Unique: bk55s7S2OY6RSbxau05J0w-1
-Received: by mail-qk1-f197.google.com with SMTP id j13-20020a05620a288d00b006be7b2a758fso10133118qkp.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 13:25:29 -0700 (PDT)
+        Tue, 6 Sep 2022 17:41:17 -0400
+Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 616A28A6EE;
+        Tue,  6 Sep 2022 14:41:10 -0700 (PDT)
+Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-127f5411b9cso148174fac.4;
+        Tue, 06 Sep 2022 14:41:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=uWq0DQ3f4X7MTaLrpOjEjqg4Wu5PCHE713Z5NmM6sFY=;
-        b=2zEDHfzLAvnolMRk6luo5lGq/wPB89cYlWJIf1nfmsz5CpAvPttdngJDH0+4ctl/Se
-         CCPsGKM5jWlI3jWhYRLyxKTnhDFvpRITzkj0Ir6AmsF8mqM7RAjr09ze6bhvHUs+/wbS
-         rmobC4SL/3nMPk7qg0fa7NvNNSJBnf4fgNln+wyT/xGjrIi8s0M0ptM1Ac2PrIPGe0au
-         SxJxaZoox0AV2GuRAIKdR76ksnRU9DbxculgasreuHNL0upiy3EMZzoZYm6cOlorGUnJ
-         MunFJnh6OnntlxOTi2r3H5dFhego7j/IxaQ1B5e7Sa+6AgXcfOGDISjnsbY4h2oEu8OO
-         cqHA==
-X-Gm-Message-State: ACgBeo38x7w6ZKlXQwqaO7bQKev41MrXWwc2T6TFkB24p3odQAtjlcEG
-        Ib2vvGCwhhI9yYR3vYJXamQVjFP0h6/YHblCy7Kpk9SbKfhcaNVhzeXliRdREeVumxoHVr+5YjJ
-        tfNLQpnk0mJcC+uuV3heF+pn4zw==
-X-Received: by 2002:ac8:5b03:0:b0:343:679b:64f2 with SMTP id m3-20020ac85b03000000b00343679b64f2mr357913qtw.260.1662495928598;
-        Tue, 06 Sep 2022 13:25:28 -0700 (PDT)
-X-Google-Smtp-Source: AA6agR4egzO6xt0SmhlP9DK65FMQdsts/oyfk4ZClfRpE6BDi9UEKa+ciSJbTyc7rql38ozwwMMnYQ==
-X-Received: by 2002:ac8:5b03:0:b0:343:679b:64f2 with SMTP id m3-20020ac85b03000000b00343679b64f2mr357901qtw.260.1662495928385;
-        Tue, 06 Sep 2022 13:25:28 -0700 (PDT)
-Received: from halaneylaptop ([2600:1700:1ff0:d0e0::a])
-        by smtp.gmail.com with ESMTPSA id x6-20020ac84a06000000b00342f8143599sm10471111qtq.13.2022.09.06.13.25.27
+        h=message-id:date:subject:references:in-reply-to:cc:to:from
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=FbKPQXfgOSHzOYW0WiEuQn3YF7xR5w7WxlOeboF7hFg=;
+        b=G4TLyzu5Y/BxI9LIuFEsYvS51xSa1mzUR2TALMF8RQnWuwPf5nV7qRNjVwZw11Ysiq
+         aCQLetA1k6euY/RtboBxGops/LaHIb4HCvk0j2ww5bvxbJLbWlJIqqyhPjU6BRJBqjCl
+         42CSIlzJuVtsMpS0SR0oHVewpNh8cT50reHrm7MAYt663G1j2vBMPMdLEaP0qHkktx/O
+         CnrkoUvKP5BO4UU46nGrW6skxxcTAE8zzxIYMSGo+Dpxzl9AWb7lK/x7J8bVtI2AzGp9
+         ZwmRXwG1Ec4Z6YpPqO3NRHiCP43p6aP+5MrgjCD1qRtmPn7DHnDcuKaHkbYrdZmRza1P
+         s6hA==
+X-Gm-Message-State: ACgBeo21zb5jO80LJ/OI1VdoWwL3VxEWrU0sdV6G6q2+4sLZ8/SiXYZQ
+        wo7bH6bS6Qkj1JX4NUcC+Q==
+X-Google-Smtp-Source: AA6agR6frPS+sWwOl68vgFD6HQuEoYRcMk19NM5wPt3pojgx36cNn0sP9Jv9fT72zxeJwTOBOou6zg==
+X-Received: by 2002:a05:6870:a188:b0:126:444d:743d with SMTP id a8-20020a056870a18800b00126444d743dmr149386oaf.111.1662500469213;
+        Tue, 06 Sep 2022 14:41:09 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id be36-20020a05687058a400b000f5e89a9c60sm7649013oab.3.2022.09.06.14.41.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Sep 2022 13:25:28 -0700 (PDT)
-Date:   Tue, 6 Sep 2022 15:25:25 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, dianders@chromium.org, johan@kernel.org
-Subject: Re: [PATCH 0/3] regulator: dt-bindings: qcom,rpmh: dt-binding fixups
-Message-ID: <20220906202525.s77kgjmptdm7cjtw@halaneylaptop>
-References: <20220902185148.635292-1-ahalaney@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220902185148.635292-1-ahalaney@redhat.com>
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Tue, 06 Sep 2022 14:41:08 -0700 (PDT)
+Received: (nullmailer pid 1224963 invoked by uid 1000);
+        Tue, 06 Sep 2022 21:41:00 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Andrew Halaney <ahalaney@redhat.com>
+Cc:     krzysztof.kozlowski+dt@linaro.org, andersson@kernel.org,
+        devicetree@vger.kernel.org, agross@kernel.org,
+        linux-kernel@vger.kernel.org, dianders@chromium.org,
+        linux-arm-msm@vger.kernel.org, johan@kernel.org,
+        lgirdwood@gmail.com, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, broonie@kernel.org
+In-Reply-To: <20220906201959.69920-1-ahalaney@redhat.com>
+References: <20220906201959.69920-1-ahalaney@redhat.com>
+Subject: Re: [PATCH v2] regulator: dt-bindings: qcom,rpmh: Indicate regulator-allow-set-load dependencies
+Date:   Tue, 06 Sep 2022 16:41:00 -0500
+Message-Id: <1662500460.139898.1224962.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 02, 2022 at 01:51:45PM -0500, Andrew Halaney wrote:
-> Hi,
+On Tue, 06 Sep 2022 15:19:59 -0500, Andrew Halaney wrote:
+> For RPMH regulators it doesn't make sense to indicate
+> regulator-allow-set-load without saying what modes you can switch to,
+> so be sure to indicate a dependency on regulator-allowed-modes.
 > 
-> This is my poor attempt at getting devicetree validation into a better
-> state for qcom,rpmh-regulator.yaml. This is a follow-up to Johan's
-> request for this over here:
+> With this in place devicetree validation can catch issues like this:
 > 
->     https://lore.kernel.org/linux-arm-msm/Yw8EE%2FESDUnIRf8P@hovoldconsulting.com/
+>     /mnt/extrassd/git/linux-next/arch/arm64/boot/dts/qcom/sm8350-hdk.dtb: pm8350-rpmh-regulators: ldo5: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+>             From schema: /mnt/extrassd/git/linux-next/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
 > 
-> In particular, I'm not certain patch 1 is the correct way to handle
-> things, and patch 2 makes validation too wide for the *-supply nodes.
+> Suggested-by: Johan Hovold <johan@kernel.org>
+> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+> ---
 > 
-> I'd love any feedback here as I'm really not experienced in any of the
-> spaces (regulator, rpmh, or dt schema) so nit picking is welcomed.
+> v1: https://lore.kernel.org/linux-arm-msm/20220902185148.635292-1-ahalaney@redhat.com/
+> Changes since v1:
+>   - Dropped first two patches in the series as they were user error
+>     (thanks Krzysztof for highlighting this!)
+>   - No change in the remaining patch
+> 
+> Krzysztof also asked if this patch in particular should apply to other
+> regulators, which I think it should for those regulator's who implement
+> set_mode(). Unfortunately I don't know of a good way to get that
+> information in order to apply it at a broader scope for devicetree
+> regulator validation. At least with this in place RPMH users can get
+> better coverage... if someone has suggestions for how to broaden the
+> scope I'm all ears!
+> 
+> Thanks,
+> Andrew
+> 
+>  .../devicetree/bindings/regulator/qcom,rpmh-regulator.yaml    | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
 
-v2 posted over here: https://lore.kernel.org/linux-arm-msm/20220906201959.69920-1-ahalaney@redhat.com/
+Running 'make dtbs_check' with the schema in this patch gives the
+following warnings. Consider if they are expected or the schema is
+incorrect. These may not be new warnings.
+
+Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+This will change in the future.
+
+Full log is available here: https://patchwork.ozlabs.org/patch/
+
+
+pm8150l-rpmh-regulators: ldo6: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano-bahamut.dtb
+	arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano-griffin.dtb
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dtb
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dtb
+
+pm8150l-rpmh-regulators: ldo9: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano-bahamut.dtb
+	arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano-griffin.dtb
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dtb
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dtb
+
+pm8350-rpmh-regulators: ldo5: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sm8350-hdk.dtb
+
+pm8350-rpmh-regulators: ldo6: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sm8350-hdk.dtb
+
+pm8350-rpmh-regulators: ldo7: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sm8350-hdk.dtb
+
+pm8350-rpmh-regulators: ldo9: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sm8350-hdk.dtb
+
+pmc8280-1-rpmh-regulators: ldo3: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
+	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
+
+pmc8280-1-rpmh-regulators: ldo4: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
+	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
+
+pmc8280-1-rpmh-regulators: ldo6: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
+	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
+
+pmc8280-2-rpmh-regulators: ldo3: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
+	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
+
+pmc8280-2-rpmh-regulators: ldo4: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
+	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
+
+pmc8280-2-rpmh-regulators: ldo6: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
+
+pmc8280-2-rpmh-regulators: ldo7: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
+	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
+
+pmc8280-2-rpmh-regulators: ldo9: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
+	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
+
+pmc8280c-rpmh-regulators: ldo12: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
+
+pmc8280c-rpmh-regulators: ldo13: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
+	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
+
+pmc8280c-rpmh-regulators: ldo1: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
+	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
+
+pmc8280c-rpmh-regulators: ldo7: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb
+
+pmm8155au-1-rpmh-regulators: ldo10: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sa8155p-adp.dtb
+
+pmm8155au-1-rpmh-regulators: ldo5: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sa8155p-adp.dtb
+
+pmm8155au-2-rpmh-regulators: ldo5: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sa8155p-adp.dtb
+
+pmm8155au-2-rpmh-regulators: ldo8: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sa8155p-adp.dtb
+
+pmm8540-a-regulators: ldo13: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
+
+pmm8540-a-regulators: ldo3: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
+
+pmm8540-a-regulators: ldo5: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
+
+pmm8540-a-regulators: ldo7: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
+
+pmm8540-c-regulators: ldo10: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
+
+pmm8540-c-regulators: ldo17: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
+
+pmm8540-c-regulators: ldo1: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
+
+pmm8540-c-regulators: ldo2: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
+
+pmm8540-c-regulators: ldo3: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
+
+pmm8540-c-regulators: ldo4: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
+
+pmm8540-c-regulators: ldo6: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
+
+pmm8540-c-regulators: ldo7: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
+
+pmm8540-g-regulators: ldo3: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
+
+pmm8540-g-regulators: ldo7: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
+
+pmm8540-g-regulators: ldo8: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
+
+pmm8540-g-regulators: qcom,pmic-id:0: 'g' is not one of ['a', 'b', 'c', 'd', 'e', 'f', 'h', 'k']
+	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
+
+pmm8540-g-regulators: Unevaluated properties are not allowed ('qcom,pmic-id' was unexpected)
+	arch/arm64/boot/dts/qcom/sa8295p-adp.dtb
 
