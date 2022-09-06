@@ -2,92 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 296685ADDB3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 05:03:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A41D65ADFBC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 08:27:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238130AbiIFDDW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Sep 2022 23:03:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50154 "EHLO
+        id S232930AbiIFG1e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Sep 2022 02:27:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232371AbiIFDDS (ORCPT
+        with ESMTP id S231785AbiIFG1d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Sep 2022 23:03:18 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98687659F3;
-        Mon,  5 Sep 2022 20:03:17 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28620mUK018111;
-        Tue, 6 Sep 2022 03:02:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Tc6EpNFZm+9NHdKjj0VbkY8yZPYUDinr4yfonAuofRQ=;
- b=IAnvaksPMtnVdIIMrni6mKp4WGSJOyD2ZCJEokA4bvyhrpm9llahutfH3bmEENuKn0gC
- j5L4wCUsIJlg9w2NIyOdJHFQ869u1H/+VnRmvU7+3bP2GgKXu7zOxHidI6slP5+CoKbh
- fI7xvj/rD8OwQ2D38xtXXty4wKH16HFzaqmRKYIM7GdcCvH6bO1QKmlmRpIrcKFei0Jn
- qFuS8SSy5+z5PsPDMKxoB31dNBS/f5Po4fH/TohXJ7yKWiTURHw3XCPLjTYXUK2er99H
- J5EW+g5GhK4zJ25jiErlvwXiOvJ97SG1XFY08AG5doYbPVKKTy8alVvucnR9eZ6QN0uM TQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jby58wj5r-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 06 Sep 2022 03:02:45 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2862mYOw024803
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 6 Sep 2022 02:48:34 GMT
-Received: from [10.216.11.219] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 5 Sep 2022
- 19:48:26 -0700
-Message-ID: <4e5bc823-0a98-da39-9f01-af819ee675ef@quicinc.com>
-Date:   Tue, 6 Sep 2022 08:18:19 +0530
+        Tue, 6 Sep 2022 02:27:33 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8215351A03
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Sep 2022 23:27:31 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id z20so11207888ljq.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Sep 2022 23:27:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=nshJb49fHZlYHMXX+yyxoc1qZlMUxPF5Tzv9ojAyrhs=;
+        b=HjV8/yKABv7pJsvYPg7nvYkjSgOre3Vy6ct1vdbcHV0havfZumj633CUjvYXUezDIl
+         TGSFScMjJ2CVengVr+xTJyVRSVjN8+pAmvE7YOh9lBvVaOcShqQJnlH28zdKpdcqFSF8
+         28UKB8FSvAF6O9cMlItzyltJzbmGfbGgUAYTMUij2HSHNd5EFP7obnbN/YOaVmyuLd2L
+         ghzxzNSFbrvqz8PP/b3Q9j+W32f0qQkI8J77b9RWfVuEby/yqFtuLzB6bHek6SOjBcHQ
+         IrF0zRMtrHhqwE9zWTiFlCWZpgT+rfrBwcbyTItV+lYFzBbf/asIOwm0f/rbfALGiDnO
+         yqtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=nshJb49fHZlYHMXX+yyxoc1qZlMUxPF5Tzv9ojAyrhs=;
+        b=GFcsUL5pFcvaEGHAqMqUVWDUbNUoScWWTpVy/eyxaXhmmSiHfSujtJskBKoqBKQy8G
+         tBnJ0RGCz4aNxh/jvcYm75wN/THlZODjNC+bZDbNuZin+Dc8SQoM8MLDgJnoLryyMBLA
+         ZM5OnFynVVWjLvux58X1T8xQjUJrd8DrIiWo2HWx3mMcVFKQdU2LkKu4fdLH9ZwIiyfQ
+         3y1eDtK7Nb0fvjXcNfqrd+n5yNWTc4HB5ARlUx3xQXxbDU8Ja9dXIK2n9c4DTo1lTM8l
+         XSG1T/tUeD1d0+fxBDC/ctNsyip6pkoHMI52+aszcXsgcbXC/orsn+Prw7pevrCYb5/7
+         6I/A==
+X-Gm-Message-State: ACgBeo2eNj9f87MNJtL3plBRZzWd5TMEck1uYMvujtXOjLWQansV0JVM
+        Kcq7+murvx4Ys8/VGLsAeQryGA==
+X-Google-Smtp-Source: AA6agR53uyXvGjzX0rBn86Qvf9VJ7HUtTZcms2muO8WiDwzXtmLrNX3JsNpYLO0jS+O/cpbXzictyQ==
+X-Received: by 2002:a2e:155d:0:b0:26a:a1b3:e6e6 with SMTP id 29-20020a2e155d000000b0026aa1b3e6e6mr630665ljv.399.1662445649673;
+        Mon, 05 Sep 2022 23:27:29 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id dt26-20020a0565122a9a00b0049668ebacdcsm414280lfb.99.2022.09.05.23.27.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Sep 2022 23:27:28 -0700 (PDT)
+Message-ID: <fdc52cc7-c353-8696-f432-2b3ff40c79b7@linaro.org>
+Date:   Tue, 6 Sep 2022 08:27:27 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v12 2/3] phy: qcom-snps: Add support for overriding phy
- tuning parameters
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v7 2/2] MAINTAINERS: Update fastrpc documentation file
+ from txt to yaml
 Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     Abel Vesa <abel.vesa@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_vpulyala@quicinc.com>
-References: <1662201048-26049-1-git-send-email-quic_kriskura@quicinc.com>
- <1662201048-26049-3-git-send-email-quic_kriskura@quicinc.com>
- <20220906024552.lob5k4q3iyagyo5e@baldur>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <20220906024552.lob5k4q3iyagyo5e@baldur>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Rob Herring <robh@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <20220905144554.1772073-1-abel.vesa@linaro.org>
+ <20220905144554.1772073-2-abel.vesa@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220905144554.1772073-2-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Xul-_ViYEhCSAQikk6TYI23VuJ3TYYmm
-X-Proofpoint-GUID: Xul-_ViYEhCSAQikk6TYI23VuJ3TYYmm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-06_01,2022-09-05_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- lowpriorityscore=0 spamscore=0 malwarescore=0 adultscore=0
- priorityscore=1501 mlxscore=0 phishscore=0 clxscore=1015 suspectscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2209060013
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -96,31 +83,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 05/09/2022 16:45, Abel Vesa wrote:
+> The documentation for fastrpc bingings is now YAML. So update the
+> MAINTAINERS file.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+> 
+> Changes since v6:
+>  * no change
+> 
+>  MAINTAINERS | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 96f47a7865d6..ad697195fc59 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -16863,7 +16863,7 @@ M:	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>  M:	Amol Maheshwari <amahesh@qti.qualcomm.com>
+>  L:	linux-arm-msm@vger.kernel.org
+>  S:	Maintained
+> -F:	Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
+> +F:	Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
 
+Your patchset is still not bisectable...
 
-On 9/6/2022 8:15 AM, Bjorn Andersson wrote:
-> On Sat, Sep 03, 2022 at 04:00:47PM +0530, Krishna Kurapati wrote:
-> [..]
->> +static void qcom_snps_hsphy_read_override_param_seq(struct device *dev)
->> +{
->> +	struct device_node *node = dev->of_node;
->> +	s32 val;
->> +	int ret, i;
->> +	struct qcom_snps_hsphy *hsphy;
->> +	const struct override_param_map *cfg = of_device_get_match_data(dev);
-> 
-> Given that you don't have any .data specified for the other compatibles
-> (which is fine), cfg would be NULL here and below loop would attempt to
-> access NULL[0].prop_name and crash.
-> 
-> Please add a check for !cfg and just return here.
-> 
-> With that I think the series looks good.
-> 
-> Regards,
-> Bjorn
-My bad. Missed this before. Thanks for pointing it out.
-Will push updated changes.
-
-Thanks,
-Krishna,
+Best regards,
+Krzysztof
