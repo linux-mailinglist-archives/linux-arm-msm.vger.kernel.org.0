@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A7AF05AE7C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 14:20:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E3445AE7C2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 14:20:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239915AbiIFMUB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Sep 2022 08:20:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35144 "EHLO
+        id S239919AbiIFMUC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Sep 2022 08:20:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240309AbiIFMTe (ORCPT
+        with ESMTP id S240326AbiIFMTg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Sep 2022 08:19:34 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC6307E332
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 05:17:14 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id z29so17015554lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 05:17:14 -0700 (PDT)
+        Tue, 6 Sep 2022 08:19:36 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 456F74E876
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 05:17:21 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id k18so12022231lji.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 05:17:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=Olx2xfEl0PLpI3+3+5Qjw680apGzpUP0gS3Mnyx3230=;
-        b=jD2je3ofjQyfg/jOh+LKalUVOeBAAwrbkYEw21Sy5iOwMAdmX9y5mHP53gRvgVND6B
-         EvGMCz2fygVPNQWXs8kWLOct/tEKZzBrabZxXRYqsYU6lAtic8byQZqKWL/c/mSjwmWb
-         HJIekXpLhTd64mrGYRTulWsVj+73kjg6lVZ/s6U7k8B/ATZq1ydF9iml+OrPWHb83MGf
-         /yT5LyvlmjZKTulVOpEzsXzzjQinCIfvydt+CIz95iR9zwB7Q9GtF5YwVDVrC65fC/Fq
-         e41P1BghT2SnBLR0EyEaU/iYipZ5gdePZbdgyOtM1jMdgpYim/uRiewF9TKYib7rQJ0r
-         mHGQ==
+        bh=4c/EC/fKGrr33lYs8dg9VuKkDELdZWUkP9xmgTJvUBY=;
+        b=AKdYf2tDhidX1KT/T+gAUIvcmI5DL9Hdo42r+/QzKvZtDTIWxfg8mx1MB7sUpzA1qv
+         WGqiKkvZomaXC2cqMPCuzKzeqdvHVYbdkXHpXOMUiv+WeOHLZoOR52ES9q1EqpYaC3tk
+         jODzVpZ85S/wUiME0jHn1SeeWW0r4SXaDP+C0mcijzxqbxTLuCUix+3umAMjp8hEzhzZ
+         /K4LKMuex7a43qIDqz2+/C3yJyhaU2ii2gchFFn5Z7dUVCDQA45sE5c3gCxxeqLl5Tp8
+         w7RO9+wKtZH0N8oOFsKra1FP1ecGBKW0uEicAUp65Q232rQDkHriHIZISNKNCm2qSOTE
+         S1QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=Olx2xfEl0PLpI3+3+5Qjw680apGzpUP0gS3Mnyx3230=;
-        b=EKBwyiHUtrxYS/o0PrHHQMsy+ef0P7Z4AXtOeuzcKvUXbf7FQ0KRMfptiwKrmXj3zv
-         cxE2wPSu2GKuZBGc89+bik52ryCUJv3O4YItpStW4iwrCWh6R0DIrQrcaZDGdGNC/bXh
-         d7FDVs+uwaxB66wT1rJi7hovlij7xg7FnQqbP/fgx16XQCtfLnVP+jZde/2zY1ZHrS74
-         WKqzptX2/WjpHAYel4+6ahFJixUmHDIGKHMO2mGc9IlOGAz8F5bd/iDFmEURUBUEPqAU
-         4ruoB3f8/NP0J+Y5nUOn2++/ZLoewCYyNiPgRwwpO+4Z5Ig9Y//mEmDu++4w+YRhYf8Y
-         xYWA==
-X-Gm-Message-State: ACgBeo0+0aauj+SpWZfa6wc0f8KcGYa3+nUlPhh9bMUKK4QHvnSeK8i+
-        +PHg10KusGUs2B+eCsDPcc4UsQ==
-X-Google-Smtp-Source: AA6agR5TML3s8NoEL5itQJnrQzTJ3E7pKRUH2G3Fd4S7hT94Gg7+NWiCuPmzmzxU5jNAYCnta6P3sg==
-X-Received: by 2002:a05:6512:3503:b0:496:517:5802 with SMTP id h3-20020a056512350300b0049605175802mr4379125lfs.83.1662466628883;
-        Tue, 06 Sep 2022 05:17:08 -0700 (PDT)
+        bh=4c/EC/fKGrr33lYs8dg9VuKkDELdZWUkP9xmgTJvUBY=;
+        b=Fz1vNeb8zRWGT0jt0D3Ds3ySBgQ4a+wXKd3hpHts8FRL5Pxy69vgPfZhn2X/CdegPe
+         zyxRcnelNPGPHR+/Zq39Lo1qpLybYE1gWgufRO80yVAxW7FBisuJrmo8gwYtuiFTVFCz
+         k6w/pIvp9Iog6DdOGYbf6B9zVe+WQm02jm/FilPzqeEvfKIvsXPuLocxMEOVZNbCyw/B
+         oKARH3cgQ4mnmbYhX3+LuZLmGwLuhQ6lch6B7iM753GxDLsNPqarMy7bWW/NAkoS6b9C
+         WMLRoiGBAmlnFMCIMoDhSpoaf6HlGgK495mY9OKjQZiePTNkMO1NpPhEOI4EeTiHk6A9
+         jFUQ==
+X-Gm-Message-State: ACgBeo2BPGinGpRyy7oEZh5nKt1DdBFXmn6Gkf/2FwpwwbhgjgEIufzU
+        lMXWECSv8SqRKqtoFD6OwklP0w==
+X-Google-Smtp-Source: AA6agR44+E/liePOSIZSTFuXxRzgwxJb+aWcT5stK1SaSKB7IQQo/JOorZ6imcdLruZUNKfzMndreg==
+X-Received: by 2002:a2e:a408:0:b0:26a:7a25:bbb6 with SMTP id p8-20020a2ea408000000b0026a7a25bbb6mr2031669ljn.221.1662466630141;
+        Tue, 06 Sep 2022 05:17:10 -0700 (PDT)
 Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id u17-20020a05651c131100b0025df5f38da8sm1882802lja.119.2022.09.06.05.17.07
+        by smtp.gmail.com with ESMTPSA id u17-20020a05651c131100b0025df5f38da8sm1882802lja.119.2022.09.06.05.17.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Sep 2022 05:17:08 -0700 (PDT)
+        Tue, 06 Sep 2022 05:17:09 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -61,9 +61,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 08/12] arm64: dts: qcom: sm8250: use generic name for LPASS clock controller
-Date:   Tue,  6 Sep 2022 14:16:51 +0200
-Message-Id: <20220906121655.303693-9-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 09/12] dt-bindings: soc: qcom: apr: correct service children
+Date:   Tue,  6 Sep 2022 14:16:52 +0200
+Message-Id: <20220906121655.303693-10-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220906121655.303693-1-krzysztof.kozlowski@linaro.org>
 References: <20220906121655.303693-1-krzysztof.kozlowski@linaro.org>
@@ -79,28 +79,173 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The node names should be generic according to Devicetree specification,
-so use "clock-controller" instead of "cc".  The bindings so far did not
-define this name (as child of APR service).
+The APR bindings were not describing properly children nodes for DAIs.
+None of the DTSes use unit addresses for the children, so correct the
+nodes and reference their schema: clock-controller, dais and routing.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../bindings/soc/qcom/qcom,apr.yaml           | 38 +++++++++++++------
+ .../sound/qcom,q6dsp-lpass-clocks.yaml        | 16 ++------
+ .../sound/qcom,q6dsp-lpass-ports.yaml         | 16 ++------
+ 3 files changed, 35 insertions(+), 35 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index da9f7a701bc7..da340159c0f1 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -4799,7 +4799,7 @@ q6afedai: dais {
- 							#sound-dai-cells = <1>;
- 						};
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
+index 028c5d105adb..61b010793fca 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
+@@ -97,6 +97,22 @@ patternProperties:
+             3 = AMDB Service.
+             4 = Voice processing manager.
  
--						q6afecc: cc {
-+						q6afecc: clock-controller {
- 							compatible = "qcom,q6afe-clocks";
- 							#clock-cells = <2>;
- 						};
++      clock-controller:
++        $ref: /schemas/sound/qcom,q6dsp-lpass-clocks.yaml#
++        description: Qualcomm DSP LPASS clock controller
++        unevaluatedProperties: false
++
++      dais:
++        # TODO: Waiting for Documentation/devicetree/bindings/sound/qcom,q6asm.txt
++        # Ref defined in allOf below.
++        type: object
++        description: Qualcomm DSP LPASS audio ports
++
++      routing:
++        # TODO: Waiting for Documentation/devicetree/bindings/sound/qcom,q6adm.txt
++        type: object
++        description: Qualcomm DSP LPASS audio ports
++
+       qcom,protection-domain:
+         $ref: /schemas/types.yaml#/definitions/string-array
+         description: protection domain service name and path for apr service
+@@ -107,17 +123,17 @@ patternProperties:
+           "tms/servreg", "msm/modem/wlan_pd".
+           "tms/servreg", "msm/slpi/sensor_pd".
+ 
+-      '#address-cells':
+-        const: 1
+-
+-      '#size-cells':
+-        const: 0
+-
+-    patternProperties:
+-      "^.*@[0-9a-f]+$":
+-        type: object
+-        description:
+-          Service based devices like clock controllers or digital audio interfaces.
++    allOf:
++      - if:
++          properties:
++            compatible:
++              enum:
++                - qcom,q6afe
++        then:
++          properties:
++            dais:
++              $ref: /schemas/sound/qcom,q6dsp-lpass-ports.yaml#
++              unevaluatedProperties: false
+ 
+     additionalProperties: false
+ 
+diff --git a/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-clocks.yaml b/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-clocks.yaml
+index f83f00737a2f..604861d84ffa 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-clocks.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-clocks.yaml
+@@ -18,9 +18,6 @@ properties:
+       - qcom,q6afe-clocks
+       - qcom,q6prm-lpass-clocks
+ 
+-  reg:
+-    maxItems: 1
+-
+   '#clock-cells':
+     const: 2
+     description:
+@@ -32,7 +29,6 @@ properties:
+ 
+ required:
+   - compatible
+-  - reg
+   - "#clock-cells"
+ 
+ additionalProperties: false
+@@ -46,11 +42,9 @@ examples:
+         #size-cells = <0>;
+         apr-service@4 {
+             reg = <APR_SVC_AFE>;
+-            #address-cells = <1>;
+-            #size-cells = <0>;
+-            clock-controller@2 {
++
++            clock-controller {
+               compatible = "qcom,q6afe-clocks";
+-              reg = <2>;
+               #clock-cells = <2>;
+             };
+         };
+@@ -66,11 +60,9 @@ examples:
+         service@2 {
+             reg = <GPR_PRM_MODULE_IID>;
+             compatible = "qcom,q6prm";
+-            #address-cells = <1>;
+-            #size-cells = <0>;
+-            clock-controller@2 {
++
++            clock-controller {
+               compatible = "qcom,q6prm-lpass-clocks";
+-              reg = <2>;
+               #clock-cells = <2>;
+             };
+         };
+diff --git a/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-ports.yaml b/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-ports.yaml
+index dc7fba7b92d5..5e666d9fb388 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-ports.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-ports.yaml
+@@ -18,9 +18,6 @@ properties:
+       - qcom,q6afe-dais
+       - qcom,q6apm-lpass-dais
+ 
+-  reg:
+-    maxItems: 1
+-
+   '#sound-dai-cells':
+     const: 1
+ 
+@@ -145,7 +142,6 @@ patternProperties:
+ 
+ required:
+   - compatible
+-  - reg
+   - "#sound-dai-cells"
+   - "#address-cells"
+   - "#size-cells"
+@@ -161,11 +157,9 @@ examples:
+         #size-cells = <0>;
+         apr-service@4 {
+             reg = <APR_SVC_AFE>;
+-            #address-cells = <1>;
+-            #size-cells = <0>;
+-            q6afedai@1 {
++
++            dais {
+               compatible = "qcom,q6afe-dais";
+-              reg = <1>;
+               #address-cells = <1>;
+               #size-cells = <0>;
+               #sound-dai-cells = <1>;
+@@ -187,11 +181,9 @@ examples:
+         service@1 {
+             compatible = "qcom,q6apm";
+             reg = <GPR_APM_MODULE_IID>;
+-            #address-cells = <1>;
+-            #size-cells = <0>;
+-            q6apmdai@1 {
++
++            dais {
+               compatible = "qcom,q6apm-lpass-dais";
+-              reg = <1>;
+               #address-cells = <1>;
+               #size-cells = <0>;
+               #sound-dai-cells = <1>;
 -- 
 2.34.1
 
