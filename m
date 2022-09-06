@@ -2,147 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 817515AE30D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 10:40:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 137EA5AE341
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 10:45:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233391AbiIFIj1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Sep 2022 04:39:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39848 "EHLO
+        id S239254AbiIFIm7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Sep 2022 04:42:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239400AbiIFIiO (ORCPT
+        with ESMTP id S233147AbiIFImc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Sep 2022 04:38:14 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40AF8792EB
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 01:36:21 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id bq23so16245991lfb.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 01:36:20 -0700 (PDT)
+        Tue, 6 Sep 2022 04:42:32 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EC8578216;
+        Tue,  6 Sep 2022 01:38:52 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id s11so14129824edd.13;
+        Tue, 06 Sep 2022 01:38:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=tFTaLA+xpIJrxWMnNeVJLXjIoHG3xwURMaiC6XKOdzU=;
-        b=rHeyG8Vpgr1wHZ+w7ve6CGe73zRl/gSsXKPxRszAqhKdkvCMG0QslpJFsPdTOBOV/0
-         UxI6Liu7wGB6eoA+gTQvVd2HJh/Cr/Cbz3N4U/B7AOhsy7jyjfy/CipEToOo2ge7KIql
-         CfbQE3IhSfxKnjs0DZrp5yTWl8jASogHeGZ/5zH0tnGkjW2ufGHWDVzXT+mMjxFB1zM5
-         DUFa4YrjE+fT5nyIErtDtwgtSDgxcR+tGToK0mrDKoEBmAokgOd6GXbO69NNCUZC7h6Y
-         PeFC84sEsZxzXybH4f4/gcXqFF9+ZhxHGAXsIWQmdV/Xp48019x4JKHL4P0tK0oYqvDa
-         SJIw==
+        bh=7aKcWrHN0iy5lXqS6WWR60dmN/jKxbkqMcVmWFyZOLI=;
+        b=cDuUtI7zVTHj675gi9AY7ykpUUvRcTJd8av+hapb1tW/ieoFruFNFltdwC2epnpHi9
+         Dx2eQg86oLemuVU+I+p2fRyXfTZsQTbV2uSTrBLdNVRdLNA/dMw1C1SCeGpKqI2iop9v
+         vnoHhLsgptMUa6WYb0A7O8tS6DQvYw3KK+opl4x9ABOSQrSFrtTdDkVSs/yNpXawo0M9
+         wefnuU7QAI9bkBGsDXl4yJW/moWdUezMOBIbHX7UBcC4KuUhT6K1VPZpnjvWNk1IAQXv
+         SRFrvNKztVPJQmyElsZ3p5SRsjiolqN7jf6CcyJaUFLzIBggKs6kok9a0ZP3r4LAaWkg
+         A8TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=tFTaLA+xpIJrxWMnNeVJLXjIoHG3xwURMaiC6XKOdzU=;
-        b=AlW1StegWEYZsCZdB72G4DnEWulUCOYRzBjHEkBRlxyAXP/lvjCdQ6DM3gA9c3m4gR
-         5Zk5iBxFiWpzuPJnYPaK7IeQ+k1gsyy0hhXnMkFM/wc0mQKHOqlFLT50mtDp0HiPsgKO
-         +2hEyqP7Tc1nRRDErg4Q0C8vemTu5nB7Jda04Jt94on7EgrBFnVvjHlXxoYRtDaQrY5B
-         sm8W3GR5w8JbfNwrMwyCDElUyj0I2E4YUUEZUK9HU7poqwt2vdY10E6gV4B5iB+vcwTH
-         HfXFc5AyV1+wJDhDyZrnBzo9Rp9GbZCeTaYhgta8YHicVOhH0aTERbTIuxgM7trR/A7/
-         OQNw==
-X-Gm-Message-State: ACgBeo2hB8k/VJy/ArLNkdpWkQ2BHQh6uFmUCD1ttInxwLRtMVHpnN5k
-        CguGlSdkldFIvLCWc2vQCiNbDQ==
-X-Google-Smtp-Source: AA6agR4yUmh46SlmHRz2l4j4NOwkJPabbyDLjtN7DPAznNzkFLSIZaBb90PIYV2/VFIbVbQeZ6u0Jg==
-X-Received: by 2002:a05:6512:158b:b0:48b:38:cff8 with SMTP id bp11-20020a056512158b00b0048b0038cff8mr16388208lfb.100.1662453376189;
-        Tue, 06 Sep 2022 01:36:16 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id a3-20020a056512200300b0049306939413sm1590097lfb.211.2022.09.06.01.36.15
+        bh=7aKcWrHN0iy5lXqS6WWR60dmN/jKxbkqMcVmWFyZOLI=;
+        b=saG59GXTFexjfvYoyjxyH4sJZg8nPSxAO3l4DEcFAWlwezafd7uQfdYYcDjqIwacpY
+         oKlIKlvDPhK3wc0LVgDE8Tzku9fJVFxXJDymAR1QzI8aFRXUPaFP7O1HfVMV0fXwXh+D
+         d7GBosVQWXJSJ//XgDTwQr2HR7PCoEf+HPHunmUCZWAHdnhI/5FDMxm/Sx76eUonDjov
+         7XV4LL517BZJYvT02MBXzyOfRlIWq70+vLj7KbqtOq7LTybCyVjJZ3GkOp5uIOru/3Fl
+         IaJ/ZnG1Rto10cAxNowvCkPkjgZZpoO5AqZdLWGvOhA+UQSqGjgFT9mxqIKhdNI7vpCZ
+         ubKQ==
+X-Gm-Message-State: ACgBeo3WrkaSc/puzYZRwwJtmL/6kUEHME2FZJVpTmfW98NLHGiOMc8O
+        9LQYPqb15Jucc59hfyDKbH8=
+X-Google-Smtp-Source: AA6agR59/EsDw+4IIUjpBCdyYu05A7w7PVNvttbU27dBMXxkQJLsZm9LX/0Y0hoNNKfHdXaLMRsXVg==
+X-Received: by 2002:aa7:c506:0:b0:44e:6abd:1fb8 with SMTP id o6-20020aa7c506000000b0044e6abd1fb8mr8841675edq.308.1662453530666;
+        Tue, 06 Sep 2022 01:38:50 -0700 (PDT)
+Received: from [192.168.74.101] ([77.78.20.135])
+        by smtp.gmail.com with ESMTPSA id b23-20020a170906039700b00715a02874acsm6228600eja.35.2022.09.06.01.38.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Sep 2022 01:36:15 -0700 (PDT)
-Message-ID: <2ffe1ad9-bce9-ff4c-f6f2-6473f4939a52@linaro.org>
-Date:   Tue, 6 Sep 2022 10:36:14 +0200
+        Tue, 06 Sep 2022 01:38:50 -0700 (PDT)
+Message-ID: <4fe6c7ea-38e6-2a6e-fa78-29664f819aca@gmail.com>
+Date:   Tue, 6 Sep 2022 11:38:50 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH v7 1/2] dt-bindings: misc: fastrpc convert bindings to
- yaml
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v2 1/9] dt-bindings: ufs: qcom: Add sm6115 binding
 Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        David Heidelberg <david@ixit.cz>
-References: <20220905144554.1772073-1-abel.vesa@linaro.org>
- <3649a134-0ea7-b67c-8b5a-2971f090446c@linaro.org>
- <YxcFB4lEu16SXOyl@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <YxcFB4lEu16SXOyl@linaro.org>
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220903174150.3566935-1-iskren.chernev@gmail.com>
+ <20220903174150.3566935-2-iskren.chernev@gmail.com>
+ <14abb0cd-4f65-030e-5479-bf1487979624@linaro.org>
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+In-Reply-To: <14abb0cd-4f65-030e-5479-bf1487979624@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/09/2022 10:29, Abel Vesa wrote:
-> On 22-09-06 08:45:22, Krzysztof Kozlowski wrote:
->> On 05/09/2022 16:45, Abel Vesa wrote:
->>> Convert Qualcomm FastRPC bindings to yaml format, so that we could validate
->>> dt-entries correctly and any future additions can go into yaml format.
->>>
->>> Use compute-cb@ subnodes instead of just cb@.
->>>
->>> Also add qcom,non-secure-domain, qcom,glink-channels and
->>> qcom,smd-channels missing properties to make sure dtbs_check doesn't
->>> fail right off the bat.
+
+
+On 9/6/22 11:29, Krzysztof Kozlowski wrote:
+> On 03/09/2022 19:41, Iskren Chernev wrote:
+>> Add SM6115 UFS to DT schema.
 >>
->> qcom,non-secure-domain is in original binding, so I don't understand why
->> it is being "added".
+>> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+>> ---
+>>  .../devicetree/bindings/ufs/qcom,ufs.yaml     | 26 +++++++++++++++++++
+>>  1 file changed, 26 insertions(+)
 >>
+>> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>> index f2d6298d926c..be55a5dfc68f 100644
+>> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>> @@ -28,6 +28,7 @@ properties:
+>>            - qcom,msm8998-ufshc
+>>            - qcom,sc8280xp-ufshc
+>>            - qcom,sdm845-ufshc
+>> +          - qcom,sm6115-ufshc
+>>            - qcom,sm6350-ufshc
+>>            - qcom,sm8150-ufshc
+>>            - qcom,sm8250-ufshc
+>> @@ -178,6 +179,31 @@ allOf:
+>>            minItems: 1
+>>            maxItems: 1
+>>  
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            enum:
+>> +              - qcom,sm6115-ufshc
+>> +    then:
+>> +      properties:
+>> +        clocks:
+>> +          minItems: 8
+>> +          maxItems: 8
+>> +        clock-names:
+>> +          items:
+>> +            - const: core_clk
+>> +            - const: bus_aggr_clk
+>> +            - const: iface_clk
+>> +            - const: core_clk_unipro
+>> +            - const: core_clk_ice
 > 
-> Yeah, my bad, I should've added this line to the changes since v4.
-> 
->>>
->>> Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->>> Co-developed-by: David Heidelberg <david@ixit.cz>
->>> Signed-off-by: David Heidelberg <david@ixit.cz>
->>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
->>> ---
->>>
->>> Changes since v6:
->>>  * renamed the parent node name in the example from smd-edge to glink-edge
->>>
->>>  .../devicetree/bindings/misc/qcom,fastrpc.txt |  88 -------------
->>>  .../bindings/misc/qcom,fastrpc.yaml           | 118 ++++++++++++++++++
->>
->> As you can see in Rob's bot report - the patchset introduces errors and
->> is not bisectable.
-> 
-> Please note that Rob's bot report is for v6.
+> This still is not naming and order of sdm845.
 
-I see report as a reply to this patch, so for v7. Why do you think it is v6?
+Yes, this will come in v3. v2 was released before we finished discussing this issue.
 
+>> +            - const: ref_clk
+>> +            - const: tx_lane0_sync_clk
+>> +            - const: rx_lane0_sync_clk
 > 
-> v7 fixes the errors reported, by using glink-edge instead of smd-edge.
-> 
-> Looking at all QCOM SoCs that have fastrpc node in devicetree, they all
-> seem to be using glink-edge.
-
-I was not talking about these errors (they were separate issue). I am
-talking about wrong path error.
-
-> 
->>
->> You also need to fix qcom,glink-edge.yaml
->>
-> 
-> I don't see why, with the changes I made in v7, there are no errors
-> anymore.
-
-There are, but not from tooling. The error is wrong path. It should be
-converted to proper schema $ref.
-
-Best regards,
-Krzysztof
+> Best regards,
+> Krzysztof
