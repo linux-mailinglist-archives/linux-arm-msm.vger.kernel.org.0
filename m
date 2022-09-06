@@ -2,119 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 86DB55AF0B6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 18:39:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DF155AF11E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Sep 2022 18:52:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234550AbiIFQjU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Sep 2022 12:39:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47468 "EHLO
+        id S233683AbiIFQwU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Sep 2022 12:52:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238581AbiIFQi1 (ORCPT
+        with ESMTP id S233513AbiIFQwC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Sep 2022 12:38:27 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54CBD7CA86;
-        Tue,  6 Sep 2022 09:16:18 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 286BFREO006637;
-        Tue, 6 Sep 2022 16:16:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=nFjaabrQNY09jR57Vw3+gq4pp7hiX6Yx4HqOBOuEyuM=;
- b=TxS3o8cCdnDIpZ0JGQBWoP7Rxwe1T6CQRcoavIgUPEk09T9wi6TIzrdfj65/nrXB3ENw
- QDNBLmWAf6+kdDhpuiZYU41AqM5CuAd2wufv1vr+alLGvgfLP52ip7SF6wo6+qhTf7ns
- rAAOLpKIaYfionnCsf95EMEy9K0iECDvUztF2NFexl3b6fHFskHAy7Gv7P5W47xe05up
- PJ7QUy9be3GvWAzrwYzcUzPfW3eFPaGc36VUO9jB2ebHgRe2tOwsSYjsYQJ+uKxpelNx
- 3uQCQzKIiwAuKaKVVnegmqmzkQeSDkM7inhZwK8qtVnTVYF+4zVQwBVur0MYrY5RmZWq Og== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jdusrjr6m-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 06 Sep 2022 16:16:06 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 286GG5wl008339
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 6 Sep 2022 16:16:05 GMT
-Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Tue, 6 Sep 2022 09:15:59 -0700
-From:   Krishna Kurapati <quic_kriskura@quicinc.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>
-CC:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_vpulyala@quicinc.com>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>
-Subject: [PATCH v13 3/3] arm64: dts: qcom: sc7280: Update SNPS Phy params for SC7280 IDP device
-Date:   Tue, 6 Sep 2022 21:45:33 +0530
-Message-ID: <1662480933-12326-4-git-send-email-quic_kriskura@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1662480933-12326-1-git-send-email-quic_kriskura@quicinc.com>
-References: <1662480933-12326-1-git-send-email-quic_kriskura@quicinc.com>
+        Tue, 6 Sep 2022 12:52:02 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E78E1248C0;
+        Tue,  6 Sep 2022 09:38:35 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id F2E776159A;
+        Tue,  6 Sep 2022 16:38:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE53C433C1;
+        Tue,  6 Sep 2022 16:38:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1662482314;
+        bh=6/CdKGlfq3OAOR+FjUbyLJY/bKq92frvKJFpNWVPDUo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=Z1IdA04C8DoptpVhrSG6i09TJyEdvM0WUY0WeRxWOBNajKmwSMje8LSqigxXU+rZY
+         IipbqEueTxsw7EpeQrEjhN4C7H0+Df7Jq/rkgULQqEWctRJYafnZ90wM5QJQvzUhg2
+         /01Q5zIv0/0l3W9GY1hviqLuqnhgYK/CKvN5ZR1M1PQDDxciEpNYPPTLBLTOVIvnya
+         rLVEbMkBA364aEWAaAeAri4QcxqD9S3K4cH9vy5vfTzDgtw1ocoLB2r2VIApVLlnx4
+         nxs7Zvadx2P70rWvf6pE8xfJxu9zcTozGyLfqrSWO7yJ4p97ssOpFagCAmTIDwo5sF
+         fKp39oKBDGAug==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     linux-arm-msm@vger.kernel.org, bhupesh.sharma@linaro.org
+Cc:     bryan.odonoghue@linaro.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        devicetree@vger.kernel.org, agross@kernel.org, robh+dt@kernel.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc8280xp-pmics: Remove reg entry & use correct node name for pmc8280c_lpg node
+Date:   Tue,  6 Sep 2022 11:38:26 -0500
+Message-Id: <166248229990.53237.4180188464536295468.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.37.1
+In-Reply-To: <20220905070240.1634997-1-bhupesh.sharma@linaro.org>
+References: <20220905070240.1634997-1-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4yqFdQaidrA7gaVMYKNiQx_4HpzFWO5_
-X-Proofpoint-ORIG-GUID: 4yqFdQaidrA7gaVMYKNiQx_4HpzFWO5_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-06_09,2022-09-06_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- bulkscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0
- priorityscore=1501 mlxlogscore=802 malwarescore=0 suspectscore=0
- clxscore=1015 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2209060076
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Overriding the SNPS Phy tuning parameters for SC7280 IDP device.
+On Mon, 5 Sep 2022 12:32:40 +0530, Bhupesh Sharma wrote:
+> Commit eeca7d46217c ("arm64: dts: qcom: pm8350c: Drop PWM reg declaration")
+> dropped PWM reg declaration for pm8350c pwm(s), but there is a leftover
+> 'reg' entry inside the lpg/pwm node in sc8280xp dts file. Remove the same.
+> 
+> While at it, also remove the unused unit address in the node
+> label.
+> 
+> [...]
 
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+Applied, thanks!
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index 0c48db6..053fd1e 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -325,6 +325,12 @@
- 	vdda-pll-supply = <&vreg_l10c_0p8>;
- 	vdda33-supply = <&vreg_l2b_3p0>;
- 	vdda18-supply = <&vreg_l1c_1p8>;
-+	qcom,hs-rise-fall-time-bp = <0>;
-+	qcom,squelch-detector-bp = <(-2090)>;
-+	qcom,hs-disconnect-bp = <1743>;
-+	qcom,hs-amplitude-bp = <1780>;
-+	qcom,hs-crossover-voltage-microvolt = <(-31000)>;
-+	qcom,hs-output-impedance-micro-ohms = <2600000>;
- };
- 
- &usb_1_qmpphy {
+[1/1] arm64: dts: qcom: sc8280xp-pmics: Remove reg entry & use correct node name for pmc8280c_lpg node
+      commit: 7dac7991408f77b0b33ee5e6b729baa683889277
+
+Best regards,
 -- 
-2.7.4
-
+Bjorn Andersson <andersson@kernel.org>
