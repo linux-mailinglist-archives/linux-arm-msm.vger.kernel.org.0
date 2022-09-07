@@ -2,107 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A7425B08DA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 17:42:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 848E65B090D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 17:46:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229892AbiIGPmg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Sep 2022 11:42:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39922 "EHLO
+        id S229766AbiIGPqW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Sep 2022 11:46:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229563AbiIGPma (ORCPT
+        with ESMTP id S229672AbiIGPqN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Sep 2022 11:42:30 -0400
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 969F6B0B3A;
-        Wed,  7 Sep 2022 08:42:28 -0700 (PDT)
-Received: by mail-ot1-f54.google.com with SMTP id v2-20020a056830090200b006397457afecso10506495ott.13;
-        Wed, 07 Sep 2022 08:42:28 -0700 (PDT)
+        Wed, 7 Sep 2022 11:46:13 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB49E83BCE
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Sep 2022 08:46:11 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id iw17so8345021plb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Sep 2022 08:46:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=o4ouWFzrxI306Mkvi1g00iFUOC1Xlx6br+pck/+37ak=;
+        b=bQjsydOBwSpAY7GCFbmwkmz20KF84ENWHERlpNxAfBYZ7FGRTHIX45ObOZNpcvPfPq
+         WtebGvv117RbX8FoXmqUjbanzwFJA3BbGbQeW8knzSeBolzxdgrijwlFahBY6yE/cdeB
+         SPSXmE39pQbfdfoS4ISYszBIYoSxFpx2tgt4Q=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=O0C9t0VY3tvvvQVSv0/pXgbdUBlFzo5v3zMl5r02uQU=;
-        b=bgzhqVpt3OnLIuZ4VSICRTvj52t4nOdgrYHD1y7VDdcV9Tt9EEca40jpiknKjpPhF5
-         mvRy5nQyWg6m1MFd9mmH8eJxS2rPoLGk+uD5+fAWazGRZAO2+prTERsCg73RgKR7kU81
-         YXisgGzu7p/gpS/XmEyH7vr3d1tVDf3/fIsbFTeBJjq4gedUej1rDy30B48YXxSr1vDS
-         7lREDqwoci4m1nIAh5guBSPeCrOGrYFNrt2cvMVYfD/D3Nht/dxeWUz1J4mQP8wjgbQZ
-         LXhJSEZVNEag7VwNcd+BFGxm8AHcSELLMbKJLlxKhGMvn1DBsXnsWogNb4bx1rgn5H1Q
-         rvqQ==
-X-Gm-Message-State: ACgBeo0cR1G46Dqs2qBDJFLsID4oW0UqtoMJMRAP/IXjIZYC59vdypx0
-        n2UqR98QTu4Sa78g4sOoi+oTjWMsGQ==
-X-Google-Smtp-Source: AA6agR7LI/fVhUFeKz5sWm4Jx6IOy+RzpBAsW5Hc/i9i0RkMlpD3hfgjX5MK8MKQzdWCsaBTRik4MQ==
-X-Received: by 2002:a9d:67c1:0:b0:63b:2b5c:90bd with SMTP id c1-20020a9d67c1000000b0063b2b5c90bdmr1653134otn.237.1662565347815;
-        Wed, 07 Sep 2022 08:42:27 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id a11-20020a4a988b000000b00435a8024bc1sm5159957ooj.4.2022.09.07.08.42.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Sep 2022 08:42:27 -0700 (PDT)
-Received: (nullmailer pid 3505199 invoked by uid 1000);
-        Wed, 07 Sep 2022 15:42:26 -0000
-Date:   Wed, 7 Sep 2022 10:42:26 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     linux-remoteproc@vger.kernel.org,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Andy Gross <agross@kernel.org>,
+        bh=o4ouWFzrxI306Mkvi1g00iFUOC1Xlx6br+pck/+37ak=;
+        b=5rxh9M+uHuktQyiqk+wvjN4e/+KZY5ByF2eHzr57R7QTl2WnuXwvo5A7vO3uKwFLnt
+         JKjYWgJphKhUsAEvFzSyJY5Dsm52tNVZB9falXPLDVYOK5Sqo/BAkmIO0gjegiAllK3A
+         s5e990N2zsthyTgHBY6n/E5bam0IDe/Ny4iAl8A9z8pHj3wRBelyh2boFM+eAdcSQa1k
+         0YFKCaM+HzgFjYBV0sWNKC9jFz8F5lwucVGT3s6yKuvkf0RR6Vk1T6/rsb5siWupj6QC
+         gcb7/hFLyK3z3AEqW6KrQYwoRV+tmUmEbtFcXVvZF6fBXyE2tRdLQ/i5W2ga6AIjx96b
+         9cEg==
+X-Gm-Message-State: ACgBeo2yrC5fXKtPqsbNXgcW7WMi4iwBxbdbPkrk7MLIYd+fUjE5HIYT
+        mevmOocHF/QxAtQAuloFYCP0gQ==
+X-Google-Smtp-Source: AA6agR4AMLfYmQ/6XnBmEodJgHE0lJ47tpNnT7FEi3eCWWn3qhk3bqkquCUtVFw17urR6r8Qm/afPg==
+X-Received: by 2002:a17:903:204b:b0:176:a6c5:4277 with SMTP id q11-20020a170903204b00b00176a6c54277mr4415234pla.24.1662565571171;
+        Wed, 07 Sep 2022 08:46:11 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:7731:4d19:a7d1:20d])
+        by smtp.gmail.com with UTF8SMTPSA id be7-20020a656e47000000b0041a716cec9esm10595529pgb.62.2022.09.07.08.46.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Sep 2022 08:46:09 -0700 (PDT)
+Date:   Wed, 7 Sep 2022 08:46:06 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Judy Hsiao <judyhsiao@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        David Heidelberg <david@ixit.cz>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v12] dt-bindings: misc: fastrpc convert bindings to yaml
-Message-ID: <20220907154226.GA3505117-robh@kernel.org>
-References: <20220907074301.3996021-1-abel.vesa@linaro.org>
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Jimmy Cheng-Yi Chiang <cychiang@google.com>,
+        Judy Hsiao <judyhsiao@google.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        Satya Priya <quic_c_skakit@quicinc.com>
+Subject: Re: [PATCH v4] arm64: dts: qcom: sc7280: Fix Dmic no sound on
+ villager-r1
+Message-ID: <Yxi8vnmtowA83WLm@google.com>
+References: <20220826065621.2255795-1-judyhsiao@chromium.org>
+ <CAD=FV=VrgrvJb_sJ8AO6pN8dRNXzzOJ9WvngeJrtVYw_wD1Akg@mail.gmail.com>
+ <Yw07xSlVpQcXDqe7@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220907074301.3996021-1-abel.vesa@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <Yw07xSlVpQcXDqe7@google.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 07 Sep 2022 10:43:01 +0300, Abel Vesa wrote:
-> Convert Qualcomm FastRPC bindings to yaml format, so that we could validate
-> dt-entries correctly and any future additions can go into yaml format.
+On Mon, Aug 29, 2022 at 03:20:53PM -0700, Matthias Kaehlcke wrote:
+> On Fri, Aug 26, 2022 at 10:14:58AM -0700, Doug Anderson wrote:
+> > Hi,
+> > 
+> > On Thu, Aug 25, 2022 at 11:56 PM Judy Hsiao <judyhsiao@chromium.org> wrote:
+> > >
+> > > Fix the DMIC no sound issue of villager-r1 by using "PP1800_L2C" as the
+> > > DMIC power source to match the hardware schematic.
+> > >
+> > > This patch:
+> > >    1. set vdd-micb-supply to PP1800_L2C as the MIC Bias voltage regulator.
+> > >    2. In audio-routing, set VA DMIC01~VA DMIC03 to use the vdd-micb-supply
+> > >       setting.
+> > >
+> > > Co-developed-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> > > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> > > Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
+> > > ---
+> > > Changes since V3:
+> > >   -- Update the commit message and fix extra blank line.
+> > > Changes since V2:
+> > >   -- Update the commit message.
+> > > Changes since V1:
+> > >   -- Update the commit message.
+> > >
+> > > This patch depends on:
+> > > arm64: dts: qcom: sc7280: Add herobrine-villager-r1. [1]
+> > >
+> > > [1] https://patchwork.kernel.org/patch/12929106
+> > 
+> > After applying your [1] then your patch applies without merge
+> > conflicts. However, it still doesn't compile. You also depend on
+> > whatever patch adds the nodes "lpass_va_macro" and "sound" since
+> > you're referencing them in your patch. I haven't been keeping track of
+> > the latest status of all the audio patches, so I myself can't point to
+> > exactly what patches you depend on and whether those patches are ready
+> > to land.
+> > 
+> > In any case, the contents of this patch seem OK assuming the dependent
+> > patches cause something that looks like the current (downstream)
+> > chromeos-5.15 tree.
+> > 
+> > Reviewed-by: Douglas Anderson <dianders@chromium.org>
 > 
-> Use compute-cb@ subnodes instead of just cb@. Add qcom,glink-channels and
-> qcom,smd-channels missing properties to make sure dtbs_check doesn't fail
-> right off the bat. Correct the name of the parent node in the example from
-> smd-edge to glink-edge.
+> To my best knowledge the dependencies of the audio mess are (roughly in
+> order):
 > 
-> Since now the qcom,fastrpc bindings document is yaml, update the
-> reference to it in qcom,glink-edge and also use $ref.
-> 
-> Also update the MAINTAINERS file to point to the yaml version.
-> 
-> Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Co-developed-by: David Heidelberg <david@ixit.cz>
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
-> 
-> Changes since v11:
->  * added 'additionalProperties: false' to the patternProperties,
->    as suggested by Krzysztof
-> 
->  .../devicetree/bindings/misc/qcom,fastrpc.txt |  88 -------------
->  .../bindings/misc/qcom,fastrpc.yaml           | 124 ++++++++++++++++++
->  .../bindings/remoteproc/qcom,glink-edge.yaml  |   4 +-
->  MAINTAINERS                                   |   2 +-
->  4 files changed, 127 insertions(+), 91 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
->  create mode 100644 Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
-> 
+> Add support for audio clock gating resets for SC7280 (v8)
+> https://patchwork.kernel.org/project/linux-arm-msm/list/?series=671887
+>   ready to land? (patch 2 has a minor comment about SoB tag)
 
-Applied, thanks!
+The comment has been addressed in v9:
+
+https://patchwork.kernel.org/project/linux-arm-msm/list/?series=673055
+
+So it seems all the audio bits should be ready to land.
+
+Satya: please make sure to include change logs in all future patches to
+help reviewers understand what changed in each version.
+
+> Add DT support for audio clock gating resets for SC7280 (v4)
+> https://patchwork.kernel.org/project/linux-arm-msm/list/?series=666480
+>   ready to land after dependencies land
+> 
+> Add soundcard support for sc7280 based platforms (v14)
+> https://patchwork.kernel.org/project/linux-arm-msm/list/?series=657417
+>   ready to land after dependencies land
+> 
+> Add dtsi for sc7280 herobrine boards that using rt5682 codec (v3)
+> https://patchwork.kernel.org/project/linux-arm-msm/list/?series=644812
+>   ready to land after dependencies land
+> 
+> Add new board revision and LTE SKUs for sc7280-villager family (v8)
+> https://patchwork.kernel.org/project/linux-arm-msm/list/?series=663014
+>   ready to land after dependencies land
+> 
+> arm64: dts: qcom: sc7280: Fix Dmic no sound on villager-r1 (v4)
+> https://patchwork.kernel.org/project/linux-arm-msm/patch/20220826065621.2255795-1-judyhsiao@chromium.org/
+>   ready to land after dependencies land
+> 
+> So it looks like things are generally ready to land, unless [1] needs a
+> re-spin to fix the SoB tag.
+> 
+> m.
+> 
+> [1] https://patchwork.kernel.org/project/linux-arm-msm/patch/1661754153-14813-3-git-send-email-quic_c_skakit@quicinc.com/
