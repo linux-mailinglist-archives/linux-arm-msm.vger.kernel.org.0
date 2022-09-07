@@ -2,82 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 55AC85B0BA7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 19:42:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BA465B0BD5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 19:53:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229863AbiIGRmV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Sep 2022 13:42:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43876 "EHLO
+        id S230063AbiIGRxE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Sep 2022 13:53:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229707AbiIGRmT (ORCPT
+        with ESMTP id S229946AbiIGRxE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Sep 2022 13:42:19 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 736FB7C318;
-        Wed,  7 Sep 2022 10:42:18 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 287FmTth026854;
-        Wed, 7 Sep 2022 17:42:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=xFDq35mmAJYJOEza2s0pazbnmRY1ELwvsbbSXtUUi+I=;
- b=jNLCfLbDQJoM26saZaHQMzVUPGP8D9f+VH5zaYF9+Hfv955i2TsDwN43yxO5Hrbsj3MF
- KwCf/K/hCJRxIb78kwVAlAGlBu9/+nHmgiVhydLPX4wtZRKJDfqQQagAyzP3/j5iPzZH
- BDrr1fFRaqYeGpPQKkaoXhEFZpmkvRUVSS7yFFwhQMwpmC6Oct1KbcGRDg6/EEep8i9v
- mZdP97gsoJ5r3/39jfu0E++TJGnVUh6NcgyKWkmBi0OXjvt+hpQxcF0n5F4SJpAXYEiN
- vdLCHMeJXKH2oS2NZeqrTT7NymuO6RQLD5hFQ0GqwEMsD07fCGwNayMC8cUcoPjW5hQ6 vg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jeqfwj7hb-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 07 Sep 2022 17:42:11 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 287HgAM0017230
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 7 Sep 2022 17:42:10 GMT
-Received: from [10.111.166.232] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 7 Sep 2022
- 10:42:07 -0700
-Message-ID: <e7f08898-b967-f1fb-6067-5243622dd7be@quicinc.com>
-Date:   Wed, 7 Sep 2022 10:42:05 -0700
+        Wed, 7 Sep 2022 13:53:04 -0400
+Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A22579E885;
+        Wed,  7 Sep 2022 10:53:02 -0700 (PDT)
+Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-1278624b7c4so19688358fac.5;
+        Wed, 07 Sep 2022 10:53:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=0N7indwEWNDLUfh9nzv03hTWDqZDGMDUSanpWNLjPkE=;
+        b=ZRmnoTngUTwewA5ohg96sZEXphzkFfiNwoHcvceoZdfq28To/soRw8kipUa5lHDyxt
+         o3RyKCGFsQb/ueGmUV3j6Bxd1oc5G5wn+r5K2mVc5Mz3gUNfpq6/qcLffdroWuc1XVJk
+         uIz8MKds5NNAKnQoLM2vcenxzP076SKvsy97gK31zgLsY8LRnnb3WZzqCPigwCdJ7T2B
+         6GSvnumCuEaYHSXSImozDAIrLdyYMG9eK3KDxqot3HASsSwH0xiTeH9X+qxgSXVjpnGr
+         l3idncPqTydgQ4p2i+ZJrNtxvW448tOs0n6LGQRytbJVsbseiWIpU3QTGwV+xmQmYp1V
+         Zo9A==
+X-Gm-Message-State: ACgBeo2tB2ipmWsavqjG1kBJY0ew3v69ZNPQlpJhasrMTYbGhAVZLmkY
+        9smwIsrX3O/oHZeki1OwgA==
+X-Google-Smtp-Source: AA6agR7k0HGz1SBz7Bg+JULUAdmjfDYE7RHVkqJna8fZHBQdcH3EcCL3VFYCMpMNoCP853yvFELu4A==
+X-Received: by 2002:a05:6870:4614:b0:125:72da:9b2b with SMTP id z20-20020a056870461400b0012572da9b2bmr12652128oao.118.1662573181889;
+        Wed, 07 Sep 2022 10:53:01 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id l3-20020a056870f14300b0012752d3212fsm4937419oac.53.2022.09.07.10.53.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Sep 2022 10:53:01 -0700 (PDT)
+Received: (nullmailer pid 3789429 invoked by uid 1000);
+        Wed, 07 Sep 2022 17:53:00 -0000
+Date:   Wed, 7 Sep 2022 12:53:00 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Richard Acayan <mailingradian@gmail.com>
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
+        konrad.dybcio@somainline.org, mturquette@baylibre.com,
+        sboyd@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        tdas@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, caleb@connolly.tech,
+        jo@jsfamily.in
+Subject: Re: [PATCH 1/3] dt-bindings: clock: gcc-sdm845: add sdm670 global
+ clocks
+Message-ID: <20220907175300.GA3779566-robh@kernel.org>
+References: <20220907025035.15609-1-mailingradian@gmail.com>
+ <20220907025035.15609-2-mailingradian@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH] drm/msm/dp: cleared DP_DOWNSPREAD_CTRL register before
- start link training
-Content-Language: en-US
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <bjorn.andersson@linaro.org>
-CC:     <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1662571300-4898-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <1662571300-4898-1-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: gC-7QpqqnlvDoHSKIvzKbRV2sGIUoSYm
-X-Proofpoint-GUID: gC-7QpqqnlvDoHSKIvzKbRV2sGIUoSYm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-07_09,2022-09-07_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- impostorscore=0 adultscore=0 phishscore=0 clxscore=1015 suspectscore=0
- spamscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2209070068
-X-Spam-Status: No, score=-7.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220907025035.15609-2-mailingradian@gmail.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,96 +70,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 9/7/2022 10:21 AM, Kuogee Hsieh wrote:
-> DOWNSPREAD_CTRL (0x107) shall be cleared to 0 upon power-on reset or an
-> upstream device disconnect. This patch will enforce this rule by always
-> cleared DOWNPREAD_CTRL register to 0 before start link training. At rare
-> case that DP MSA timing parameters may be mis-interpreted by the sinker
-sinker--->sink
-> which causes audio sampling rate be calculated wrongly and cause audio
-> did not work at sinker if DOWNSPREAD_CTRL register is not cleared to 0.
-same here
-> This patch also make sure bring sinker out of D3 power-down mode into D0
-> (normal operation mode) successfully by retrying 3 times.
+On Tue, Sep 06, 2022 at 10:50:33PM -0400, Richard Acayan wrote:
+> The Snapdragon 670 clocks will be added into the sdm845 gcc driver. Most
+> of the new clocks, GDSCs, and resets already have reserved IDs but there
+> are some resources that don't. Add the new clock and extra BCR from
+> Snapdragon 670 and document the differences between the SoC parent clocks.
 > 
-here too
-> Fixes: 154b5a7da0fd ("drm/msm/dp: add displayPort driver support")
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 > ---
->   drivers/gpu/drm/msm/dp/dp_ctrl.c |  5 ++---
->   drivers/gpu/drm/msm/dp/dp_link.c | 17 +++++++++++------
->   2 files changed, 13 insertions(+), 9 deletions(-)
+>  .../bindings/clock/qcom,gcc-sdm845.yaml       | 24 +++++++++++++++----
+>  include/dt-bindings/clock/qcom,gcc-sdm845.h   |  2 ++
+>  2 files changed, 21 insertions(+), 5 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index ab6aa13..e864a6e 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -1245,7 +1245,7 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
->   {
->   	int ret = 0;
->   	const u8 *dpcd = ctrl->panel->dpcd;
-> -	u8 encoding = DP_SET_ANSI_8B10B;
-> +	u8 encoding[2] = {0, DP_SET_ANSI_8B10B};
->   	u8 ssc;
->   	u8 assr;
->   	struct dp_link_info link_info = {0};
-> @@ -1263,8 +1263,7 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
->   		drm_dp_dpcd_write(ctrl->aux, DP_DOWNSPREAD_CTRL, &ssc, 1);
->   	}
->   
-> -	drm_dp_dpcd_write(ctrl->aux, DP_MAIN_LINK_CHANNEL_CODING_SET,
-> -				&encoding, 1);
-> +	drm_dp_dpcd_write(ctrl->aux, DP_DOWNSPREAD_CTRL, encoding, 2);
->   
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml b/Documentation/defaced/bindings/clock/qcom,gcc-sdm845.yaml
+> index daf7906ebc40..ba94dd32e619 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
+> @@ -19,23 +19,21 @@ description: |
+>  
+>  properties:
+>    compatible:
+> -    const: qcom,gcc-sdm845
+> +    enum:
+> +      - qcom,gcc-sdm670
+> +      - qcom,gcc-sdm845
+>  
+>    clocks:
+>      items:
+>        - description: Board XO source
+>        - description: Board active XO source
+>        - description: Sleep clock source
+> -      - description: PCIE 0 Pipe clock source
+> -      - description: PCIE 1 Pipe clock source
 
-This seems wrong.
+You just changed the clocks from 5 to 3. Please test your changes:
 
-This will override the value programmed by the above piece of code.
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.example.dtb: clock-controller@100000: clocks: [[4294967295, 0], [4294967295, 1], [4294967295], [4294967295], [4294967295]] is too long
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.example.dtb: clock-controller@100000: clock-names: ['bi_tcxo', 'bi_tcxo_ao', 'sleep_clk', 'pcie_0_pipe_clk', 'pcie_1_pipe_clk'] is too long
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.example.dtb: clock-controller@100000: clocks: [[4294967295, 0], [4294967295, 1], [4294967295], [4294967295], [4294967295]] is too long
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.example.dtb: clock-controller@100000: clock-names:0: 'pcie_0_pipe_clk' was expected
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.example.dtb: clock-controller@100000: clock-names:1: 'pcie_1_pipe_clk' was expected
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.example.dtb: clock-controller@100000: clock-names: ['bi_tcxo', 'bi_tcxo_ao', 'sleep_clk', 'pcie_0_pipe_clk', 'pcie_1_pipe_clk'] is too long
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
 
-         if (drm_dp_max_downspread(dpcd)) {
-                 ssc = DP_SPREAD_AMP_0_5;
-                 drm_dp_dpcd_write(ctrl->aux, DP_DOWNSPREAD_CTRL, &ssc, 1);
-         }
+What you want here I think is 'minItems: 3' and then restrict the clocks 
+to 3 or 5 in the if/then schema.
 
-Perhaps, you should have an else case to the above if and program 0 only 
-for those cases?
-
->   	if (drm_dp_alternate_scrambler_reset_cap(dpcd)) {
->   		assr = DP_ALTERNATE_SCRAMBLER_RESET_ENABLE;
-> diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-> index 36f0af0..3ad3826 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_link.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_link.c
-> @@ -49,7 +49,7 @@ static int dp_aux_link_power_up(struct drm_dp_aux *aux,
->   					struct dp_link_info *link)
->   {
->   	u8 value;
-> -	int err;
-> +	int i, err;
->   
->   	if (link->revision < 0x11)
->   		return 0;
-> @@ -61,11 +61,16 @@ static int dp_aux_link_power_up(struct drm_dp_aux *aux,
->   	value &= ~DP_SET_POWER_MASK;
->   	value |= DP_SET_POWER_D0;
->   
-> -	err = drm_dp_dpcd_writeb(aux, DP_SET_POWER, value);
-> -	if (err < 0)
-> -		return err;
-> -
-> -	usleep_range(1000, 2000);
-> +	/*
-> +	 * When turning on, we need to retry for 1ms to give the sink
-> +	 * time to wake up.
-> +	 */
-> +	for (i = 0; i < 3; i++) {
-> +	        err = drm_dp_dpcd_writeb(aux, DP_SET_POWER, value);
-> +		usleep_range(1000, 2000);
-> +		if (err == 1)
-> +			break;
-> +	}
->   
->   	return 0;
->   }
+Rob
