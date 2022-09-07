@@ -2,93 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 03AD55B0BFD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 20:01:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 418E15B0CAB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 20:44:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230349AbiIGSBj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Sep 2022 14:01:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49282 "EHLO
+        id S230309AbiIGSoz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Sep 2022 14:44:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229794AbiIGSBR (ORCPT
+        with ESMTP id S230369AbiIGSop (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Sep 2022 14:01:17 -0400
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC39BBFAA2;
-        Wed,  7 Sep 2022 11:01:07 -0700 (PDT)
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-1278a61bd57so19435288fac.7;
-        Wed, 07 Sep 2022 11:01:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=CcKlit7HWPI71ZUe/GljJgB5zkSi4EijYD98Jqq648E=;
-        b=NO52m8senwiSrdJf2qOHJZzfAdBXaz7BvGmLZuEhXNne5yQyFmKNmMi68Y4BvBOYv3
-         UWQJRq/heeV5JSUW5GutUSZXMDUcgH5eK8DxZ0lLyarIbfdTfEm9dHDGy5f2YOwBs0Hu
-         Gz3tI8tjicBrPjEqdaTptbwNrOCm8uhm072I7ayXXxJwLMTZvkeLmyEbPnRXUGc1cBdY
-         3f4nHLkmdIbOgmzB7g1AnBpnJPPB5H6NFajp9qNJ7U/euC6k0h90T7LZZvX6mKQ20sy6
-         MjCVLrgkxivgJiDkpRjYYnEWd6EeOz+5tpUoD44fpGZoFUuqv4+HUEy6VhceQd12pMW/
-         C/AQ==
-X-Gm-Message-State: ACgBeo1Cs763rCR2fGpQauIRmuFTYV3r7xvVM+R5soXzxMiGaefxa6qE
-        UWf6A5DOjfaiQJz6rt6q4A==
-X-Google-Smtp-Source: AA6agR4biI7Jy8t1a+y/JH8nraXYykytOrk/m+fs/VxKBmcF6nuftmhGQC4Flf3XySFMmoHn+de8wA==
-X-Received: by 2002:a05:6808:199f:b0:343:3592:4dea with SMTP id bj31-20020a056808199f00b0034335924deamr1940962oib.163.1662573664559;
-        Wed, 07 Sep 2022 11:01:04 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id s25-20020a056870631900b00127fbb7afffsm949675oao.5.2022.09.07.11.01.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Sep 2022 11:01:04 -0700 (PDT)
-Received: (nullmailer pid 3803412 invoked by uid 1000);
-        Wed, 07 Sep 2022 18:01:03 -0000
-Date:   Wed, 7 Sep 2022 13:01:03 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH v2 10/14] dt-bindings: soc: qcom: apr: correct service
- children
-Message-ID: <20220907180103.GA3803351-robh@kernel.org>
-References: <20220907101556.37394-1-krzysztof.kozlowski@linaro.org>
- <20220907101556.37394-11-krzysztof.kozlowski@linaro.org>
+        Wed, 7 Sep 2022 14:44:45 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B6B01FCD6;
+        Wed,  7 Sep 2022 11:44:40 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BB76B61983;
+        Wed,  7 Sep 2022 18:44:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4332C433C1;
+        Wed,  7 Sep 2022 18:44:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1662576279;
+        bh=k8yIosi5SUGgCrgLwCIzRTlvsUroui/xnAWiLrUI0ko=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=AWh7aKF0gKdd84R12nhidY+viV0A/WGpmGkpa68NHblPHRXpOAGhwQ8VQDVPd2ztH
+         36L+QWZK5nd/ZBwV2noXkxtLgajySpY69yCsmmbJ1K7Ii8Qy3fBHUq+h/FXKwfJa72
+         sw7CYQHs2EpiKTpABVPZRDnSVJ7eA9WCk2ArA3akHgsS+AW+iZdbugsoOgYUvq4cKr
+         kbuyika1ydPZF3Im+zYBXT4GDxz0BAbzESCOaDNDHfFtUNC9I96rK2Ju+86EMiGE1+
+         vWnfQAudSP9zyP0XoJwIWY+RYP0PbhyZSFan+RxZ+OCKJNWwLuyI20e2yyou1EwHYN
+         oiDOCFKfzdRIg==
+Date:   Wed, 7 Sep 2022 13:44:37 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mka@chromium.org,
+        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
+        swboyd@chromium.org, dmitry.baryshkov@linaro.org,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>
+Subject: Re: [PATCH v3 1/3] PCI: qcom: Add sc7280 aggre0, aggre1 and ddr sf
+ tbu clocks in PCIe driver
+Message-ID: <20220907184437.GA137711@bhelgaas>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220907101556.37394-11-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <1662171184-25211-2-git-send-email-quic_krichai@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 07 Sep 2022 12:15:52 +0200, Krzysztof Kozlowski wrote:
-> The APR bindings were not describing properly children nodes for DAIs.
-> None of the DTSes use unit addresses for the children, so correct the
-> nodes and reference their schema: clock-controller, dais and routing.
+On Sat, Sep 03, 2022 at 07:43:02AM +0530, Krishna chaitanya chundru wrote:
+> Add missing aggre0, aggre1 and ddrs sf tbu clocks in PCIe driver.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> 
-> ---
-> 
-> Changes since v1:
-> 1. Correct also sound/qcom,q6apm-dai.yaml (Rob)
-> ---
->  .../bindings/soc/qcom/qcom,apr.yaml           | 68 ++++++++++++++++---
->  .../bindings/sound/qcom,q6apm-dai.yaml        | 10 +--
->  .../sound/qcom,q6dsp-lpass-clocks.yaml        | 16 ++---
->  .../sound/qcom,q6dsp-lpass-ports.yaml         | 16 ++---
->  4 files changed, 66 insertions(+), 44 deletions(-)
-> 
+> If these clocks are not presenti, the PCIe link goes down in system suspend
+> and resume.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+s/presenti/present/
+
+But the hardware clocks are present regardless of this driver change.
+
+I suspect the point of this is really that if the driver doesn't
+clk_get() these clocks to increase the reference count, we don't know
+that the clocks are in use, and since they appear unused, they get
+turned off during suspend.
+
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 2ea1375..a7202f0 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1548,7 +1548,10 @@ static const struct qcom_pcie_cfg sm8450_pcie1_cfg = {
+>  static const struct qcom_pcie_cfg sc7280_cfg = {
+>  	.ops = &ops_1_9_0,
+>  	.has_tbu_clk = true,
+> +	.has_ddrss_sf_tbu_clk = true,
+>  	.pipe_clk_need_muxing = true,
+> +	.has_aggre0_clk = true,
+> +	.has_aggre1_clk = true,
+>  };
+>  
+>  static const struct qcom_pcie_cfg sc8180x_cfg = {
+> -- 
+> 2.7.4
+> 
