@@ -2,72 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B22265AFDC3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 09:43:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 234B25AFE4B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 10:00:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229982AbiIGHnV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Sep 2022 03:43:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60680 "EHLO
+        id S230021AbiIGIAr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Sep 2022 04:00:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229799AbiIGHnT (ORCPT
+        with ESMTP id S230228AbiIGIAh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Sep 2022 03:43:19 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F6069E2C9
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Sep 2022 00:43:17 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id n23-20020a7bc5d7000000b003a62f19b453so11238893wmk.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Sep 2022 00:43:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date;
-        bh=ZvHaiQUYrI7ffrC8v+rjATEn33e2BYk+lNLUexSwYe8=;
-        b=uwb1JIlbETc2//L6IJM1Wfu99ZdBSHX/p9As/fU0J/kjtVtBexyuIoC3peGl9UyP0b
-         gQ1EO3OLo3J8fiWm4gvRMWaJ8++VHpV3a+E7mJxbbonRuG0PaONhIxpKAmuxbLbr/3Op
-         RxxV81JGz3Ms/aqO4Au9Mv1u/3pbfor3jbRPm6LErnC96eQJl6f1CK11lLki5FLYGoqh
-         2GfvmV8tzCWq2E+s+EPNSD5109VCSpmuo6xFrgpYXK6r4mVvc8PP9j3Wi/WT397YtKmT
-         0gRcFaR5GTl0C1vkHJqt6uY0279hG764+hJAtRifeqvqFKQdJ8vhvxg0B+wVJHppZc9M
-         eJNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=ZvHaiQUYrI7ffrC8v+rjATEn33e2BYk+lNLUexSwYe8=;
-        b=7SZqOj/fX1Q3BIRNS9lNg/eFiLZwVJuuGwF0HYI/ETfw8Gsk1ASxdibMvk8pkEbIws
-         fg1rFro6mLpy7flzNtlunWU/oKjCcb/mUb4X/QxMxNALzJWwIvVKSTHBbVM/0OfrNRXJ
-         FJ1/ZEeVXpB6MEx87mizGCVuMdH15MQAEjHslJnV5ocdJzduTYGz2983aMraa5IgAZDY
-         WnySvVp8QZiACe8iWEbZjp+d0drLyAa/fw9gWyKfweYUbevAZAq+vx06wXyM4aCHpV4r
-         fuOSda7xGFdiDqdJc6lsU71ZEXe0Zy8pL9qNbk05kchvknuMPYqb+HE5Uo2OzbB7tRKy
-         qKTg==
-X-Gm-Message-State: ACgBeo3iSkMNqXQkr+szMQgsH12j33dDvxG29GXEpfbl69CNSih4GUOF
-        OBsjzY9EqLez6VmuBn+N5ajc2g==
-X-Google-Smtp-Source: AA6agR5XC1UBEFjbUSm0esCNq+HZ2HHGjMTNZCfbWj/RIDEChFofN6han1BkytYhy1iP/QwgcbyEmA==
-X-Received: by 2002:a05:600c:4c06:b0:3a5:4eec:eb4b with SMTP id d6-20020a05600c4c0600b003a54eeceb4bmr1185063wmp.151.1662536596003;
-        Wed, 07 Sep 2022 00:43:16 -0700 (PDT)
-Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id t8-20020adfe108000000b00225213fd4a9sm16339861wrz.33.2022.09.07.00.43.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Sep 2022 00:43:15 -0700 (PDT)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-remoteproc@vger.kernel.org, David Heidelberg <david@ixit.cz>
-Subject: [PATCH v12] dt-bindings: misc: fastrpc convert bindings to yaml
-Date:   Wed,  7 Sep 2022 10:43:01 +0300
-Message-Id: <20220907074301.3996021-1-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Wed, 7 Sep 2022 04:00:37 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B96AA5F80
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Sep 2022 01:00:28 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5616B616EF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Sep 2022 08:00:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F799C433B5;
+        Wed,  7 Sep 2022 08:00:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1662537627;
+        bh=90ylMoXY5CdNdeYF5G2KIHeYF40APZTZaqUwAJr1djM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=cXaY/jGMs8xHJ+KTWu3Va0i/cl3PA6Orcee/89HezJVT/KQ4i4BiMnin6nfzgKfel
+         ecE9/lAZAKOI0oJviN5on8QcogUdPrcUPV4UhvK+mOpbWof2USTGdmkGP4iYU/y/pz
+         QGmwn/uTrvctHhHlDwk+V5rST7yhQOHKnlgOlQ0mflZm7/EU6sybotVDO/hhswMnbi
+         1Rsiv/42lJYc3RV3LgRzbd4wxbVpfeSzcN8sPxA0Su1S+poQt25fNRJiYvBzZGJkRQ
+         aYdOicLlpDMetCDckV0OsisAsNBBW2UdlhsM97q4TZApVJbhj3a7vC+zbhuzEjttta
+         qc/Wp7d+AO+Zw==
+Date:   Wed, 7 Sep 2022 13:30:16 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Jeff Johnson <quic_jjohnson@quicinc.com>
+Cc:     Hemant Kumar <quic_hemantk@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev
+Subject: Re: [PATCH v5] bus: mhi: host: make mhi_controller_config::event_cfg
+ const
+Message-ID: <20220907080016.GA22505@workstation>
+References: <20220829205112.12036-1-quic_jjohnson@quicinc.com>
+ <20220830171147.24338-1-quic_jjohnson@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220830171147.24338-1-quic_jjohnson@quicinc.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,291 +57,114 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert Qualcomm FastRPC bindings to yaml format, so that we could validate
-dt-entries correctly and any future additions can go into yaml format.
+On Tue, Aug 30, 2022 at 10:11:47AM -0700, Jeff Johnson wrote:
+> Currently the event_cfg pointer in struct mhi_controller_config is not
+> defined as a const pointer. This prevents clients from registering a
+> read-only configuration unless they use a typecast. Since the
+> event_cfg should not be modified once registered, add the const
+> qualifier to event_cfg. This is aligned with the definition of ch_cfg.
+> 
+> Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 
-Use compute-cb@ subnodes instead of just cb@. Add qcom,glink-channels and
-qcom,smd-channels missing properties to make sure dtbs_check doesn't fail
-right off the bat. Correct the name of the parent node in the example from
-smd-edge to glink-edge.
+Applied to mhi-next!
 
-Since now the qcom,fastrpc bindings document is yaml, update the
-reference to it in qcom,glink-edge and also use $ref.
+Thanks,
+Mani
 
-Also update the MAINTAINERS file to point to the yaml version.
-
-Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Co-developed-by: David Heidelberg <david@ixit.cz>
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
-
-Changes since v11:
- * added 'additionalProperties: false' to the patternProperties,
-   as suggested by Krzysztof
-
- .../devicetree/bindings/misc/qcom,fastrpc.txt |  88 -------------
- .../bindings/misc/qcom,fastrpc.yaml           | 124 ++++++++++++++++++
- .../bindings/remoteproc/qcom,glink-edge.yaml  |   4 +-
- MAINTAINERS                                   |   2 +-
- 4 files changed, 127 insertions(+), 91 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
- create mode 100644 Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
-
-diff --git a/Documentation/devicetree/bindings/misc/qcom,fastrpc.txt b/Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
-deleted file mode 100644
-index 5ec124b138a6..000000000000
---- a/Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
-+++ /dev/null
-@@ -1,88 +0,0 @@
--Qualcomm Technologies, Inc. FastRPC Driver
--
--The FastRPC implements an IPC (Inter-Processor Communication)
--mechanism that allows for clients to transparently make remote method
--invocations across DSP and APPS boundaries. This enables developers
--to offload tasks to the DSP and free up the application processor for
--other tasks.
--
--- compatible:
--	Usage: required
--	Value type: <stringlist>
--	Definition: must be "qcom,fastrpc"
--
--- label
--	Usage: required
--	Value type: <string>
--	Definition: should specify the dsp domain name this fastrpc
--	corresponds to. must be one of this: "adsp", "mdsp", "sdsp", "cdsp"
--
--- qcom,non-secure-domain:
--	Usage: required
--	Value type: <boolean>
--	Definition: Property to specify that dsp domain is non-secure.
--
--- qcom,vmids:
--	Usage: optional
--	Value type: <u32 array>
--	Definition: Virtual machine IDs for remote processor.
--
--- #address-cells
--	Usage: required
--	Value type: <u32>
--	Definition: Must be 1
--
--- #size-cells
--	Usage: required
--	Value type: <u32>
--	Definition: Must be 0
--
--= COMPUTE BANKS
--Each subnode of the Fastrpc represents compute context banks available
--on the dsp.
--- All Compute context banks MUST contain the following properties:
--
--- compatible:
--	Usage: required
--	Value type: <stringlist>
--	Definition: must be "qcom,fastrpc-compute-cb"
--
--- reg
--	Usage: required
--	Value type: <u32>
--	Definition: Context Bank ID.
--
--- qcom,nsessions:
--	Usage: Optional
--	Value type: <u32>
--	Defination: A value indicating how many sessions can share this
--		    context bank. Defaults to 1 when this property
--		    is not specified.
--
--Example:
--
--adsp-pil {
--	compatible = "qcom,msm8996-adsp-pil";
--	...
--	smd-edge {
--		label = "lpass";
--		fastrpc {
--			compatible = "qcom,fastrpc";
--			qcom,smd-channels = "fastrpcsmd-apps-dsp";
--			label = "adsp";
--			#address-cells = <1>;
--			#size-cells = <0>;
--
--			cb@1 {
--				compatible = "qcom,fastrpc-compute-cb";
--				reg = <1>;
--			};
--
--			cb@2 {
--				compatible = "qcom,fastrpc-compute-cb";
--				reg = <2>;
--			};
--			...
--		};
--	};
--};
-diff --git a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
-new file mode 100644
-index 000000000000..f25924d33fa9
---- /dev/null
-+++ b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
-@@ -0,0 +1,124 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/misc/qcom,fastrpc.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm FastRPC Driver
-+
-+maintainers:
-+  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-+
-+description: |
-+  The FastRPC implements an IPC (Inter-Processor Communication)
-+  mechanism that allows for clients to transparently make remote method
-+  invocations across DSP and APPS boundaries. This enables developers
-+  to offload tasks to the DSP and free up the application processor for
-+  other tasks.
-+
-+properties:
-+  compatible:
-+    const: qcom,fastrpc
-+
-+  label:
-+    enum:
-+      - adsp
-+      - mdsp
-+      - sdsp
-+      - cdsp
-+
-+  qcom,glink-channels:
-+    description:
-+      A list of channels tied to this function, used for matching
-+      the function to a set of virtual channels.
-+    $ref: "/schemas/types.yaml#/definitions/string-array"
-+    maxItems: 1
-+
-+  qcom,non-secure-domain:
-+    description:
-+      Used to mark the current domain as non-secure.
-+    type: boolean
-+
-+  qcom,smd-channels:
-+    description:
-+      Channel name used for the RPM communication
-+    $ref: "/schemas/types.yaml#/definitions/string-array"
-+    maxItems: 1
-+
-+  qcom,vmids:
-+    description:
-+      Virtual machine IDs for remote processor.
-+    $ref: "/schemas/types.yaml#/definitions/uint32-array"
-+
-+  "#address-cells":
-+    const: 1
-+
-+  "#size-cells":
-+    const: 0
-+
-+patternProperties:
-+  "(compute-)?cb@[0-9]*$":
-+    type: object
-+
-+    description: >
-+      Each subnode of the Fastrpc represents compute context banks available on the dsp.
-+
-+    properties:
-+      compatible:
-+        const: qcom,fastrpc-compute-cb
-+
-+      reg:
-+        maxItems: 1
-+
-+      qcom,nsession:
-+        $ref: /schemas/types.yaml#/definitions/uint32
-+        default: 1
-+        description: >
-+          A value indicating how many sessions can share this context bank.
-+
-+    required:
-+      - compatible
-+      - reg
-+
-+    additionalProperties: false
-+
-+required:
-+  - compatible
-+  - label
-+  - "#address-cells"
-+  - "#size-cells"
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/mailbox/qcom-ipcc.h>
-+
-+    glink-edge {
-+        interrupts-extended = <&ipcc IPCC_CLIENT_LPASS
-+                                     IPCC_MPROC_SIGNAL_GLINK_QMP
-+                                     IRQ_TYPE_EDGE_RISING>;
-+        mboxes = <&ipcc IPCC_CLIENT_LPASS
-+                        IPCC_MPROC_SIGNAL_GLINK_QMP>;
-+        label = "lpass";
-+        qcom,remote-pid = <2>;
-+
-+        fastrpc {
-+            compatible = "qcom,fastrpc";
-+            label = "adsp";
-+            qcom,smd-channels = "fastrpcsmd-apps-dsp";
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+
-+            compute-cb@1 {
-+                compatible = "qcom,fastrpc-compute-cb";
-+                reg = <1>;
-+            };
-+
-+            compute-cb@2 {
-+                compatible = "qcom,fastrpc-compute-cb";
-+                reg = <2>;
-+            };
-+        };
-+    };
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
-index fa69f7b21eed..8953678da83e 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
-@@ -23,9 +23,9 @@ properties:
-       Qualcomm APR/GPR (Asynchronous/Generic Packet Router)
- 
-   fastrpc:
--    type: object
-+    $ref: /schemas/misc/qcom,fastrpc.yaml#
-     description:
--      See Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
-+      Qualcomm FastRPC
- 
-   interrupts:
-     maxItems: 1
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 96f47a7865d6..ad697195fc59 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -16863,7 +16863,7 @@ M:	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
- M:	Amol Maheshwari <amahesh@qti.qualcomm.com>
- L:	linux-arm-msm@vger.kernel.org
- S:	Maintained
--F:	Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
-+F:	Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
- F:	drivers/misc/fastrpc.c
- F:	include/uapi/misc/fastrpc.h
- 
--- 
-2.34.1
-
+> ---
+> v5:	corrected mhi_foxconn_sdx55_events[]
+> 
+> v4:	updated subject, rebased to v6.0-rc3
+> 
+> v3:	added pci_generic.c change
+> 
+> v2:	added S-O-B
+> 
+>  drivers/bus/mhi/host/pci_generic.c | 14 +++++++-------
+>  include/linux/mhi.h                |  2 +-
+>  2 files changed, 8 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 9e545f2a5a26..0db437ac3ba4 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -238,7 +238,7 @@ static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 3),
+>  };
+>  
+> -static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
+> +static const struct mhi_event_config modem_qcom_v1_mhi_events[] = {
+>  	/* first ring is control+data ring */
+>  	MHI_EVENT_CONFIG_CTRL(0, 64),
+>  	/* DIAG dedicated event ring */
+> @@ -305,7 +305,7 @@ static const struct mhi_channel_config mhi_quectel_em1xx_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
+>  };
+>  
+> -static struct mhi_event_config mhi_quectel_em1xx_events[] = {
+> +static const struct mhi_event_config mhi_quectel_em1xx_events[] = {
+>  	MHI_EVENT_CONFIG_CTRL(0, 128),
+>  	MHI_EVENT_CONFIG_DATA(1, 128),
+>  	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
+> @@ -344,7 +344,7 @@ static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
+>  };
+>  
+> -static struct mhi_event_config mhi_foxconn_sdx55_events[] = {
+> +static const struct mhi_event_config mhi_foxconn_sdx55_events[] = {
+>  	MHI_EVENT_CONFIG_CTRL(0, 128),
+>  	MHI_EVENT_CONFIG_DATA(1, 128),
+>  	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
+> @@ -391,7 +391,7 @@ static const struct mhi_channel_config mhi_mv3x_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 512, 3),
+>  };
+>  
+> -static struct mhi_event_config mhi_mv3x_events[] = {
+> +static const struct mhi_event_config mhi_mv3x_events[] = {
+>  	MHI_EVENT_CONFIG_CTRL(0, 256),
+>  	MHI_EVENT_CONFIG_DATA(1, 256),
+>  	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
+> @@ -438,7 +438,7 @@ static const struct mhi_channel_config mhi_sierra_em919x_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 512, 2),
+>  };
+>  
+> -static struct mhi_event_config modem_sierra_em919x_mhi_events[] = {
+> +static const struct mhi_event_config modem_sierra_em919x_mhi_events[] = {
+>  	/* first ring is control+data and DIAG ring */
+>  	MHI_EVENT_CONFIG_CTRL(0, 2048),
+>  	/* Hardware channels request dedicated hardware event rings */
+> @@ -472,7 +472,7 @@ static const struct mhi_channel_config mhi_telit_fn980_hw_v1_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 2),
+>  };
+>  
+> -static struct mhi_event_config mhi_telit_fn980_hw_v1_events[] = {
+> +static const struct mhi_event_config mhi_telit_fn980_hw_v1_events[] = {
+>  	MHI_EVENT_CONFIG_CTRL(0, 128),
+>  	MHI_EVENT_CONFIG_HW_DATA(1, 1024, 100),
+>  	MHI_EVENT_CONFIG_HW_DATA(2, 2048, 101)
+> @@ -511,7 +511,7 @@ static const struct mhi_channel_config mhi_telit_fn990_channels[] = {
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
+>  };
+>  
+> -static struct mhi_event_config mhi_telit_fn990_events[] = {
+> +static const struct mhi_event_config mhi_telit_fn990_events[] = {
+>  	MHI_EVENT_CONFIG_CTRL(0, 128),
+>  	MHI_EVENT_CONFIG_DATA(1, 128),
+>  	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index a5441ad33c74..ada2f18af4d6 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -281,7 +281,7 @@ struct mhi_controller_config {
+>  	u32 num_channels;
+>  	const struct mhi_channel_config *ch_cfg;
+>  	u32 num_events;
+> -	struct mhi_event_config *event_cfg;
+> +	const struct mhi_event_config *event_cfg;
+>  	bool use_bounce_buf;
+>  	bool m2_no_db;
+>  };
+> -- 
+> 2.37.0
+> 
+> 
