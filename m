@@ -2,337 +2,245 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AA885B0E0B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 22:22:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17C0A5B0E23
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 22:27:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229509AbiIGUV7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Sep 2022 16:21:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37754 "EHLO
+        id S230007AbiIGU1p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Sep 2022 16:27:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbiIGUV6 (ORCPT
+        with ESMTP id S229984AbiIGU1o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Sep 2022 16:21:58 -0400
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E650A3449;
-        Wed,  7 Sep 2022 13:21:57 -0700 (PDT)
-Received: by mail-ot1-f45.google.com with SMTP id 92-20020a9d0be5000000b0063946111607so11014673oth.10;
-        Wed, 07 Sep 2022 13:21:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=2U6d2Qid73yh3Rdnn6a6LubqffyglKVJNPUisWHqSUc=;
-        b=DW6Y2qKZtSe+Clmav3+KKupnkraQl2RpBp2XjFdtOxNlnxpX+INm/0bVlxo7HPtmg+
-         CvXjA5nX8b2qTYdf73WgsTOTHsXFuS4SrjrCaUYPZa+Y1CztI6UcCkTUWEZtFvN71rU1
-         fV4oeNJ2rfsbKF7awheIYX23MpXMeEvn/IFtl8cBZ3eje8KW8Ufyz7o5gi6Yu1ggS1Lc
-         GeEQXCIHGYXsi4injdPfx6gGDp/9mAfPBdNw3wh5nJ6/qAOTs1GnrYDNWYRjwlLLgcY0
-         vZ6RZjFfeh4emGiey01597uvyEddeVyurpLQP3e327Klo0Gh7hUFsb9uaZcxpzI4Q47H
-         85Eg==
-X-Gm-Message-State: ACgBeo0tLC/5WWR30DQRgbpqm3Vopu4+dN1INE4RVTB5aU1TeZAFPStw
-        ipHf8a2OtpeVI9KhYgWwPw==
-X-Google-Smtp-Source: AA6agR5danNmNgoWoDE2ASwhAZyME3DY1WK0lLob6U5qZhvPEvqxt2Ob3ARjJ9IoOyfH0JkCqjMEBg==
-X-Received: by 2002:a05:6830:2095:b0:638:f0eb:f44d with SMTP id y21-20020a056830209500b00638f0ebf44dmr2170081otq.288.1662582116245;
-        Wed, 07 Sep 2022 13:21:56 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id d132-20020aca368a000000b00342fc99c5cbsm6842958oia.54.2022.09.07.13.21.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Sep 2022 13:21:55 -0700 (PDT)
-Received: (nullmailer pid 229841 invoked by uid 1000);
-        Wed, 07 Sep 2022 20:21:55 -0000
-Date:   Wed, 7 Sep 2022 15:21:55 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, Loic Poulain <loic.poulain@linaro.org>,
-        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        freedreno@lists.freedesktop.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-Subject: Re: [PATCH v6 12/12] dt-bindings: display/msm: add support for the
- display on SM8250
-Message-ID: <20220907202155.GA216714-robh@kernel.org>
-References: <20220901102312.2005553-1-dmitry.baryshkov@linaro.org>
- <20220901102312.2005553-13-dmitry.baryshkov@linaro.org>
+        Wed, 7 Sep 2022 16:27:44 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5CC1C12F7;
+        Wed,  7 Sep 2022 13:27:42 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 287KKBMC023592;
+        Wed, 7 Sep 2022 20:27:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=EFnBZp+qRg5HlqnBE8Ox+Rq8lJoTg3g+r/+0ivX52IU=;
+ b=DKbf97KUL6jBdapBk/nvAgFakgYNbKU+uAaQrFfMU79wVMO+nxx3xcNT+qPZH7LLoIg/
+ 5ZQ67TpOmhNt+cpYcOkVYnoaKhF9aLMN0J55o8nwRIfdMkyvlsUfXhyPjdFAl7si6//6
+ Uhm0PuwLTGnv2SgM+/GEvVLNoWNx/3GMScbo0lJWPrHoT6Uz9t2WG6KiccXTe1S+b5wQ
+ lDO1QdM/i4sfhYpIXDrbLPuLld0OlgbhON9DVZbWDZ3ssGCYVeQbfJNVHfzcAe39Jo6M
+ bypL4DtwMdInAO2PEEsWWY85bdqJkvTnf/McuL0wlGEEE5un3HjZtPOL/kjAh7lo6t5/ IA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jer1x2p56-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 07 Sep 2022 20:27:39 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 287KRcUQ001876
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 7 Sep 2022 20:27:38 GMT
+Received: from [10.110.115.160] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 7 Sep 2022
+ 13:27:37 -0700
+Message-ID: <b7da735b-2ac9-68af-95bb-86ecc81c750c@quicinc.com>
+Date:   Wed, 7 Sep 2022 13:27:06 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220901102312.2005553-13-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v4 1/2] dt-bindings: power: reset: qcom-pon: update "reg"
+ property details
+Content-Language: en-US
+From:   Anjelique Melendez <quic_amelende@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <corbet@lwn.net>, <sre@kernel.org>, <robh+dt@kernel.org>,
+        <agross@kernel.org>, <bjorn.andersson@linaro.org>
+CC:     <krzysztof.kozlowski+dt@linaro.org>, <vkoul@kernel.org>,
+        <linux-doc@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        David Collins <quic_collinsd@quicinc.com>
+References: <20220725191314.19456-1-quic_amelende@quicinc.com>
+ <20220725191314.19456-2-quic_amelende@quicinc.com>
+ <a47a33a5-aec7-2a52-f1e8-52c45307862e@linaro.org>
+ <0e6bf142-ca56-2414-86c4-1a18b74b3ba6@quicinc.com>
+In-Reply-To: <0e6bf142-ca56-2414-86c4-1a18b74b3ba6@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: -VcN0grdqGtflX2ZQzYiXi3Dt06-h0zZ
+X-Proofpoint-GUID: -VcN0grdqGtflX2ZQzYiXi3Dt06-h0zZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-07_10,2022-09-07_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
+ suspectscore=0 bulkscore=0 mlxlogscore=999 spamscore=0 priorityscore=1501
+ malwarescore=0 clxscore=1011 adultscore=0 phishscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2207270000
+ definitions=main-2209070076
+X-Spam-Status: No, score=-7.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 01, 2022 at 01:23:12PM +0300, Dmitry Baryshkov wrote:
-> Add DPU and MDSS schemas to describe MDSS and DPU blocks on the Qualcomm
-> SM8250 platform.
+
+Hi,
+
+Wanted to send a reminder for this patch conversation.
+
+Thanks,
+Anjelique
+On 8/19/2022 1:26 PM, Anjelique Melendez wrote:
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../bindings/display/msm/dpu-sm8250.yaml      |  96 ++++++++++++++++
->  .../bindings/display/msm/mdss-common.yaml     |   4 +-
->  .../bindings/display/msm/mdss-sm8250.yaml     | 106 ++++++++++++++++++
->  3 files changed, 204 insertions(+), 2 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sm8250.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/mdss-sm8250.yaml
+> Hi Krzysztof,
+> First I would like to apologize for my lack of response to this patch series
+> over these past few weeks. I have been out of office.
 > 
-> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sm8250.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sm8250.yaml
-> new file mode 100644
-> index 000000000000..9bc2ee4a6589
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/dpu-sm8250.yaml
-> @@ -0,0 +1,96 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/msm/dpu-sm8250.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Display DPU dt properties for SM8250
-
-Qualcomm SM8250 Display DPU
-
-> +
-> +maintainers:
-> +  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> +
-> +description: |
-> +  Device tree bindings for the DPU display controller for SM8250 target.
-
-If you don't have more to say than the title, then just drop.
-
-> +
-> +allOf:
-> +  - $ref: /schemas/display/msm/dpu-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sm8250-dpu
-> +
-> +  reg:
-> +    items:
-> +      - description: Address offset and size for mdp register set
-> +      - description: Address offset and size for vbif register set
-> +
-> +  reg-names:
-> +    items:
-> +      - const: mdp
-> +      - const: vbif
-> +
-> +  clocks:
-> +    items:
-> +      - description: Display ahb clock
-> +      - description: Display hf axi clock
-> +      - description: Display core clock
-> +      - description: Display vsync clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: iface
-> +      - const: bus
-> +      - const: core
-> +      - const: vsync
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,dispcc-sm8250.h>
-> +    #include <dt-bindings/clock/qcom,gcc-sm8250.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/interconnect/qcom,sm8250.h>
-> +    #include <dt-bindings/power/qcom-rpmpd.h>
-> +
-> +    display-controller@ae01000 {
-> +      compatible = "qcom,sm8250-dpu";
-> +      reg = <0x0ae01000 0x8f000>,
-> +            <0x0aeb0000 0x2008>;
-> +      reg-names = "mdp", "vbif";
-> +
-> +      clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +               <&gcc GCC_DISP_HF_AXI_CLK>,
-> +               <&dispcc DISP_CC_MDSS_MDP_CLK>,
-> +               <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-> +      clock-names = "iface", "bus", "core", "vsync";
-> +
-> +      assigned-clocks = <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-> +      assigned-clock-rates = <19200000>;
-> +
-> +      operating-points-v2 = <&mdp_opp_table>;
-> +      power-domains = <&rpmhpd SM8250_MMCX>;
-> +
-> +      interrupt-parent = <&mdss>;
-> +      interrupts = <0>;
-> +
-> +      ports {
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        port@0 {
-> +          reg = <0>;
-> +          endpoint {
-> +            remote-endpoint = <&dsi0_in>;
-> +          };
-> +        };
-> +
-> +        port@1 {
-> +          reg = <1>;
-> +          endpoint {
-> +            remote-endpoint = <&dsi1_in>;
-> +          };
-> +        };
-> +      };
-> +    };
-> +...
-> diff --git a/Documentation/devicetree/bindings/display/msm/mdss-common.yaml b/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
-> index 053c1e889552..a0a54cd63100 100644
-> --- a/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
-> @@ -27,11 +27,11 @@ properties:
->  
->    clocks:
->      minItems: 2
-> -    maxItems: 3
-> +    maxItems: 4
->  
->    clock-names:
->      minItems: 2
-> -    maxItems: 3
-> +    maxItems: 4
->  
->    interrupts:
->      maxItems: 1
-> diff --git a/Documentation/devicetree/bindings/display/msm/mdss-sm8250.yaml b/Documentation/devicetree/bindings/display/msm/mdss-sm8250.yaml
-> new file mode 100644
-> index 000000000000..d581d10fea2d
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/mdss-sm8250.yaml
-> @@ -0,0 +1,106 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/msm/mdss-sm8250.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Display MDSS dt properties for SM8250 target
-
-Same comment here.
-
-> +
-> +maintainers:
-> +  - Krishna Manikandan <quic_mkrishn@quicinc.com>
-> +
-> +description: |
-> +  Device tree bindings for MSM Mobile Display Subsystem(MDSS) that encapsulates
-> +  sub-blocks like DPU display controller, DSI and DP interfaces etc. Device tree
-> +  bindings of MDSS are mentioned for SM8250 target.
-> +
-> +allOf:
-> +  - $ref: /schemas/display/msm/mdss-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - const: qcom,sm8250-mdss
-> +
-> +  clocks:
-> +    items:
-> +      - description: Display AHB clock from gcc
-> +      - description: Display hf axi clock
-> +      - description: Display sf axi clock
-> +      - description: Display core clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: iface
-> +      - const: bus
-> +      - const: nrt_bus
-> +      - const: core
-> +
-> +  iommus:
-> +    maxItems: 1
-> +
-> +  interconnects:
-> +    maxItems: 2
-> +
-> +  interconnect-names:
-> +    maxItems: 2
-> +
-> +patternProperties:
-> +  "^display-controller@[0-9a-f]+$":
-> +    type: object
-> +    properties:
-> +      compatible:
-> +        const: qcom,sm8250-dpu
-> +
-> +  "^dsi@[0-9a-f]+$":
-> +    type: object
-> +    properties:
-> +      compatible:
-> +        const: qcom,mdss-dsi-ctrl
-> +
-> +  "^dsi-phy@[0-9a-f]+$":
-> +    type: object
-> +    properties:
-> +      compatible:
-> +        const: qcom,dsi-phy-7nm
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,dispcc-sm8250.h>
-> +    #include <dt-bindings/clock/qcom,gcc-sm8250.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/interconnect/qcom,sm8250.h>
-> +    #include <dt-bindings/power/qcom-rpmpd.h>
-> +
-> +    display-subsystem@ae00000 {
-> +      compatible = "qcom,sm8250-mdss";
-> +      reg = <0x0ae00000 0x1000>;
-> +      reg-names = "mdss";
-> +
-> +      interconnects = <&mmss_noc MASTER_MDP_PORT0 &mc_virt SLAVE_EBI_CH0>,
-> +                      <&mmss_noc MASTER_MDP_PORT1 &mc_virt SLAVE_EBI_CH0>;
-> +      interconnect-names = "mdp0-mem", "mdp1-mem";
-> +
-> +      power-domains = <&dispcc MDSS_GDSC>;
-> +
-> +      clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +               <&gcc GCC_DISP_HF_AXI_CLK>,
-> +               <&gcc GCC_DISP_SF_AXI_CLK>,
-> +               <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> +      clock-names = "iface", "bus", "nrt_bus", "core";
-> +
-> +      interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
-> +      interrupt-controller;
-> +      #interrupt-cells = <1>;
-> +
-> +      iommus = <&apps_smmu 0x820 0x402>;
-> +
-> +      status = "disabled";
-
-Drop
-
-> +
-> +      #address-cells = <1>;
-> +      #size-cells = <1>;
-> +      ranges;
-> +    };
-> +...
-> -- 
-> 2.35.1
+> On 7/26/2022 3:25 AM, Krzysztof Kozlowski wrote:
+>> On 25/07/2022 21:13, Anjelique Melendez wrote:
+>>> From: David Collins <quic_collinsd@quicinc.com>
+>>>
+>>> Update the description of "reg" property to add the PON_PBS base
+>>> address along with PON_HLOS base address.  Also add "reg-names"
+>>> property constraints.
+>>>
+>>> Signed-off-by: David Collins <quic_collinsd@quicinc.com>
+>>> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
+>>> ---
+>>>  Documentation/devicetree/bindings/power/reset/qcom,pon.yaml | 50 +++++++++++++++++++++++++++---
+>>>  1 file changed, 46 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+>>> index 353f155d..d7b6b875 100644
+>>> --- a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+>>> +++ b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+>>> @@ -15,18 +15,27 @@ description: |
+>>>  
+>>>    This DT node has pwrkey and resin as sub nodes.
+>>>  
+>>> -allOf:
+>>> -  - $ref: reboot-mode.yaml#
+>>> -
+>>>  properties:
+>>>    compatible:
+>>>      enum:
+>>>        - qcom,pm8916-pon
+>>>        - qcom,pms405-pon
+>>>        - qcom,pm8998-pon
+>>> +      - qcom,pmk8350-pon
+>>>  
+>>>    reg:
+>>> -    maxItems: 1
+>>> +    description: |
+>>> +      Specifies the SPMI base address for the PON (power-on) peripheral.  For
+>>> +      PMICs that have the PON peripheral (GEN3) split into PON_HLOS and PON_PBS
+>>> +      (e.g. PMK8350), this can hold addresses of both PON_HLOS and PON_PBS
+>>> +      peripherals.  In that case, the PON_PBS address needs to be specified to
+>>> +      facilitate software debouncing on some PMIC.
+>>> +    minItems: 1
+>>> +    maxItems: 2
+>>> +
+>>> +  reg-names:
+>>> +    minItems: 1
+>>> +    maxItems: 2
+>>>  
+>>>    pwrkey:
+>>>      type: object
+>>> @@ -42,6 +51,39 @@ required:
+>>>  
+>>>  unevaluatedProperties: false
+>>>  
+>>> +allOf:
+>>> +  - $ref: reboot-mode.yaml#
+>>> +  - if:
+>>> +      properties:
+>>> +        compatible:
+>>> +          contains:
+>>> +            enum:
+>>> +              - qcom,pm8916-pon
+>>> +              - qcom,pms405-pon
+>>> +              - qcom,pm8998-pon
+>>> +    then:
+>>> +      properties:
+>>> +        reg:
+>>> +          maxItems: 1
+>>> +        reg-names:
+>>> +          items:
+>>> +            - const: pon
+>>
+>> All your previous patches were actually missing (in commit msg, in the
+>> code) that piece of information which you add here. You now add
+>> reg-names with "pon" for older devices. I assumed previous that it is
+>> somehow needed, so I gave you the hints how it should be coded. But I
+>> don't understand - why are you doing it
+>>
+>> This should be explained in commit msg. To me it is not needed at all...
+>> unless you want to mark that first address space is entirely different
+>> for other devices?
+> Adding reg-names "pon" for older devices is simply to provide clarification
+> about what the register relates to. Similar to reg-names "hlos" and "pbs"
+> for gen3 children devices, reg-names is completely optional and is not
+> consumed by any driver.
+> 
+> Before adding the "qcom,pmk8350-pon" compatible string, the best way to
+> differentiate between a "qcom,pm8998-pon" parent with a gen1/gen2 child vs a
+> "qcom,pm8998-pon" parent with a gen3 child with only an hlos register was to
+> include reg-names. i.e.
+> 
+> pon_hlos@1300 {
+>         reg = <0x1300>;
+>         compatible = "qcom,pm8998-pon";
+> 	reg-names = "pon";
+> };
+> 
+> vs 
+> 
+> pon_hlos@1300 {
+>         reg = <0x1300>;
+>         compatible = "qcom,pm8998-pon";
+> 	reg-names = "hlos";
+> };
+> 
+> Adding the new "qcom,pmk8350-pon" compatible string would now be used to
+> differentiate between gen1/gen2 vs gen3 children, so we could get rid of the
+> addition of reg-names for older devices.
 > 
 > 
+> Similarly we could get rid of reg-names and the "qcom,pmk8350-pon" compatible
+> string as a whole like mentioned in
+> https://lore.kernel.org/all/99a5d9ac-9c20-b441-44af-26772a0e989d@linaro.org/,
+> if reg-names and the new compatible string is causing too much confusion.
+> 
+> 
+> Thanks,
+> Anjelique 
+>>
+> 
+>>> +  - if:
+>>> +      properties:
+>>> +        compatible:
+>>> +          contains:
+>>> +            const: qcom,pmk8350-pon
+>>> +    then:
+>>> +      properties:
+>>> +        reg:
+>>> +          minItems: 1
+>>> +          maxItems: 2
+>>> +        reg-names:
+>>> +          minItems: 1
+>>> +          items:
+>>> +            - const: hlos
+>>> +            - const: pbs
+>>> +
+>>>  examples:
+>>>    - |
+>>>     #include <dt-bindings/interrupt-controller/irq.h>
+>>
+>>
+>> Best regards,
+>> Krzysztof
