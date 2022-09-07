@@ -2,54 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 234B25AFE4B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 10:00:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E1CA5AFEFF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 10:31:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230021AbiIGIAr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Sep 2022 04:00:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45062 "EHLO
+        id S229780AbiIGIbG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Sep 2022 04:31:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230228AbiIGIAh (ORCPT
+        with ESMTP id S229917AbiIGIa7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Sep 2022 04:00:37 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B96AA5F80
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Sep 2022 01:00:28 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5616B616EF
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Sep 2022 08:00:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F799C433B5;
-        Wed,  7 Sep 2022 08:00:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1662537627;
-        bh=90ylMoXY5CdNdeYF5G2KIHeYF40APZTZaqUwAJr1djM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=cXaY/jGMs8xHJ+KTWu3Va0i/cl3PA6Orcee/89HezJVT/KQ4i4BiMnin6nfzgKfel
-         ecE9/lAZAKOI0oJviN5on8QcogUdPrcUPV4UhvK+mOpbWof2USTGdmkGP4iYU/y/pz
-         QGmwn/uTrvctHhHlDwk+V5rST7yhQOHKnlgOlQ0mflZm7/EU6sybotVDO/hhswMnbi
-         1Rsiv/42lJYc3RV3LgRzbd4wxbVpfeSzcN8sPxA0Su1S+poQt25fNRJiYvBzZGJkRQ
-         aYdOicLlpDMetCDckV0OsisAsNBBW2UdlhsM97q4TZApVJbhj3a7vC+zbhuzEjttta
-         qc/Wp7d+AO+Zw==
-Date:   Wed, 7 Sep 2022 13:30:16 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Jeff Johnson <quic_jjohnson@quicinc.com>
-Cc:     Hemant Kumar <quic_hemantk@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev
-Subject: Re: [PATCH v5] bus: mhi: host: make mhi_controller_config::event_cfg
- const
-Message-ID: <20220907080016.GA22505@workstation>
-References: <20220829205112.12036-1-quic_jjohnson@quicinc.com>
- <20220830171147.24338-1-quic_jjohnson@quicinc.com>
+        Wed, 7 Sep 2022 04:30:59 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A869A2856
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Sep 2022 01:30:57 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id l12so6649498ljg.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Sep 2022 01:30:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=HoBu5pVRP0QlH9IyjF/UfBIe/8xVli1mPMeUsv8Z2sM=;
+        b=wHxxXgOaPb0hNl/IJP0P+lOmntLkVF5Yp02OoLnxprSjola21wH2Sl47pU32q2dEho
+         v3+4xYTvBKFcabjwfshFDu0V4rOeDzT3vKP9BSN8wBi2n9N6o3VUuZfJk/9aOwCYHmYS
+         5eRenIKcxScpXLtxpeCdsc/9q4pQJpl15dd9hAKleqeKpx4MORzmNLoMRNLVAhNC1QwY
+         qZicXyBsxF0+0bya/Y9S+aegK5DaKN8X4Qdys0tu7Xhud+l8RuNJUr6xbMxR2ORhwojl
+         mHh8GyIqGcK2PxlP+L3WZR89c+Ov+L4rmZVitja4c5prSHhoLVBW/wi40zB+JmsxLgFd
+         155Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=HoBu5pVRP0QlH9IyjF/UfBIe/8xVli1mPMeUsv8Z2sM=;
+        b=c12PCwI6n3czLdZK/AOmflsAxMGOg8qAY4R9Pk/KRSgP3ppjkL7QA4OVkQZHKk6yQn
+         ihYyTw2n9MjM0UVOz5f3oWHmhCGlDNG6La4WmyB3Gm3jbVkIn7PYTyXC1WWCv+j+Cyow
+         +hA9uEdqrrkji0gTkItYNKe1JRkGzv9gSG5cJyTCZAy1wcf6bmHkrKyCvdf/iUIqKsSv
+         4ch0t68TGYR8p6awPgUWjwIPylH6/nT9s6MkpkFuzBERk7B7VhuBlBxymxR0CRxf6ECV
+         lziA69oonSEqtZt1lewvof4xazO4jsgcuHnZTWPhfGvNgpkRbDc4Nll8Rj83L+e6uZUe
+         SMaA==
+X-Gm-Message-State: ACgBeo2kR/st8khcQ2V15yngVu5Xy5oufj1M/UZaupctCXNvvuWptZDE
+        +XKAeVvVHMUh1eKiSN0Ifljoaw==
+X-Google-Smtp-Source: AA6agR7IEanWZYdcRnIeSyrGPg0ZoBPFDp/3VMgyRg9nCW7WCbetSuOiEUA1I1IqmDBXvZBOXapokw==
+X-Received: by 2002:a05:651c:12cb:b0:25b:fa3f:c3f with SMTP id 11-20020a05651c12cb00b0025bfa3f0c3fmr681462lje.364.1662539455364;
+        Wed, 07 Sep 2022 01:30:55 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id p15-20020a2eb98f000000b00268d84f8db1sm2467364ljp.92.2022.09.07.01.30.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Sep 2022 01:30:54 -0700 (PDT)
+Message-ID: <7f91afa5-b5bf-4f26-c540-a04e52825248@linaro.org>
+Date:   Wed, 7 Sep 2022 10:30:53 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220830171147.24338-1-quic_jjohnson@quicinc.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH 09/12] dt-bindings: soc: qcom: apr: correct service
+ children
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Andy Gross <agross@kernel.org>, alsa-devel@alsa-project.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <20220906121655.303693-1-krzysztof.kozlowski@linaro.org>
+ <20220906121655.303693-10-krzysztof.kozlowski@linaro.org>
+ <1662486402.667876.780014.nullmailer@robh.at.kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1662486402.667876.780014.nullmailer@robh.at.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -57,114 +85,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 30, 2022 at 10:11:47AM -0700, Jeff Johnson wrote:
-> Currently the event_cfg pointer in struct mhi_controller_config is not
-> defined as a const pointer. This prevents clients from registering a
-> read-only configuration unless they use a typecast. Since the
-> event_cfg should not be modified once registered, add the const
-> qualifier to event_cfg. This is aligned with the definition of ch_cfg.
+On 06/09/2022 19:46, Rob Herring wrote:
+> On Tue, 06 Sep 2022 14:16:52 +0200, Krzysztof Kozlowski wrote:
+>> The APR bindings were not describing properly children nodes for DAIs.
+>> None of the DTSes use unit addresses for the children, so correct the
+>> nodes and reference their schema: clock-controller, dais and routing.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  .../bindings/soc/qcom/qcom,apr.yaml           | 38 +++++++++++++------
+>>  .../sound/qcom,q6dsp-lpass-clocks.yaml        | 16 ++------
+>>  .../sound/qcom,q6dsp-lpass-ports.yaml         | 16 ++------
+>>  3 files changed, 35 insertions(+), 35 deletions(-)
+>>
 > 
-> Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+> 
+> yamllint warnings/errors:
+> 
+> dtschema/dtc warnings/errors:
+> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,q6apm-dai.example.dtb: gpr: service@1: '#address-cells', '#size-cells', 'apm-dai@1' do not match any of the regexes: 'pinctrl-[0-9]+'
+> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
 
-Applied to mhi-next!
+I missed one more place with example to fix.
 
-Thanks,
-Mani
-
-> ---
-> v5:	corrected mhi_foxconn_sdx55_events[]
-> 
-> v4:	updated subject, rebased to v6.0-rc3
-> 
-> v3:	added pci_generic.c change
-> 
-> v2:	added S-O-B
-> 
->  drivers/bus/mhi/host/pci_generic.c | 14 +++++++-------
->  include/linux/mhi.h                |  2 +-
->  2 files changed, 8 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 9e545f2a5a26..0db437ac3ba4 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -238,7 +238,7 @@ static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
->  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 3),
->  };
->  
-> -static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
-> +static const struct mhi_event_config modem_qcom_v1_mhi_events[] = {
->  	/* first ring is control+data ring */
->  	MHI_EVENT_CONFIG_CTRL(0, 64),
->  	/* DIAG dedicated event ring */
-> @@ -305,7 +305,7 @@ static const struct mhi_channel_config mhi_quectel_em1xx_channels[] = {
->  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
->  };
->  
-> -static struct mhi_event_config mhi_quectel_em1xx_events[] = {
-> +static const struct mhi_event_config mhi_quectel_em1xx_events[] = {
->  	MHI_EVENT_CONFIG_CTRL(0, 128),
->  	MHI_EVENT_CONFIG_DATA(1, 128),
->  	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
-> @@ -344,7 +344,7 @@ static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
->  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
->  };
->  
-> -static struct mhi_event_config mhi_foxconn_sdx55_events[] = {
-> +static const struct mhi_event_config mhi_foxconn_sdx55_events[] = {
->  	MHI_EVENT_CONFIG_CTRL(0, 128),
->  	MHI_EVENT_CONFIG_DATA(1, 128),
->  	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
-> @@ -391,7 +391,7 @@ static const struct mhi_channel_config mhi_mv3x_channels[] = {
->  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 512, 3),
->  };
->  
-> -static struct mhi_event_config mhi_mv3x_events[] = {
-> +static const struct mhi_event_config mhi_mv3x_events[] = {
->  	MHI_EVENT_CONFIG_CTRL(0, 256),
->  	MHI_EVENT_CONFIG_DATA(1, 256),
->  	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
-> @@ -438,7 +438,7 @@ static const struct mhi_channel_config mhi_sierra_em919x_channels[] = {
->  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 512, 2),
->  };
->  
-> -static struct mhi_event_config modem_sierra_em919x_mhi_events[] = {
-> +static const struct mhi_event_config modem_sierra_em919x_mhi_events[] = {
->  	/* first ring is control+data and DIAG ring */
->  	MHI_EVENT_CONFIG_CTRL(0, 2048),
->  	/* Hardware channels request dedicated hardware event rings */
-> @@ -472,7 +472,7 @@ static const struct mhi_channel_config mhi_telit_fn980_hw_v1_channels[] = {
->  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 2),
->  };
->  
-> -static struct mhi_event_config mhi_telit_fn980_hw_v1_events[] = {
-> +static const struct mhi_event_config mhi_telit_fn980_hw_v1_events[] = {
->  	MHI_EVENT_CONFIG_CTRL(0, 128),
->  	MHI_EVENT_CONFIG_HW_DATA(1, 1024, 100),
->  	MHI_EVENT_CONFIG_HW_DATA(2, 2048, 101)
-> @@ -511,7 +511,7 @@ static const struct mhi_channel_config mhi_telit_fn990_channels[] = {
->  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
->  };
->  
-> -static struct mhi_event_config mhi_telit_fn990_events[] = {
-> +static const struct mhi_event_config mhi_telit_fn990_events[] = {
->  	MHI_EVENT_CONFIG_CTRL(0, 128),
->  	MHI_EVENT_CONFIG_DATA(1, 128),
->  	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index a5441ad33c74..ada2f18af4d6 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -281,7 +281,7 @@ struct mhi_controller_config {
->  	u32 num_channels;
->  	const struct mhi_channel_config *ch_cfg;
->  	u32 num_events;
-> -	struct mhi_event_config *event_cfg;
-> +	const struct mhi_event_config *event_cfg;
->  	bool use_bounce_buf;
->  	bool m2_no_db;
->  };
-> -- 
-> 2.37.0
-> 
-> 
+Best regards,
+Krzysztof
