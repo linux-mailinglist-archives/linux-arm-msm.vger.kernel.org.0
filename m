@@ -2,82 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 103445AFA92
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 05:26:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 024C35AFC59
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 08:28:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229477AbiIGD0l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Sep 2022 23:26:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56712 "EHLO
+        id S229684AbiIGG2L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Sep 2022 02:28:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229624AbiIGD0j (ORCPT
+        with ESMTP id S229437AbiIGG2L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Sep 2022 23:26:39 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 158F8832FD
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 20:26:38 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id t8-20020a9d5908000000b0063b41908168so9406413oth.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 20:26:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=ZXmqcDwCNHYT98hHW5xGO1fd6xJaEvG9lWSh2f3hy/o=;
-        b=Zfrz6fe6Lo9OTxr6Ld7B12LdCNi7ipVOK16cY/oT88UV3+svcizdul7KOGXqYEBXko
-         UGC5PTG8Tr7zmeEDcbGH3zbvRbZHaAobvoMle8ptzBbHakxwURUlbhHHWKTMrDgPcrpV
-         eKYvp/X2iGg3GMzbm3+YemhVtu7cfdSBNINYiXaUQ0J2iJv2zrdeK1a1wCEASpQb41fb
-         okdtHYhJkKgLsN+dUVpkmKPXoRc7zFd4fCjt4lva0XQFBOOyEgFg59SBoKtq/URxVLlh
-         cuHpGQLb/tt6Dmcag1M55BAYLz49Yqv//5ljnW0J0962LOjJ0NrLs0cu/NPEw8pQUltC
-         11Iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=ZXmqcDwCNHYT98hHW5xGO1fd6xJaEvG9lWSh2f3hy/o=;
-        b=2oOBgrfRxX6n3VmsPigOsJJh0zK8wW9t/ebnzd8WUZK3KuspTngh64fPFMW65x6X9t
-         70X/1mUJHjT24wqJ3RpbLUHpcE3GPFVxosG9Fe7XXFxJ63KzDy39FtVsefm4Jb9n6IT/
-         bpNxwGopiZfmxven0zzy0RFfaTw5+gm/Mhvc6GtFeaHCOQy5Uuf4fjkITLnWr6aii3RF
-         ILOrg0yFTatCrum3Q1dMvv7mg5kyRJgtk4YHTlyfqyW0k1WFgUC/A5utapTv91LvVJrr
-         d82+Qxa0nHfA1j2DQ1ST9sMCAcCIUDn2KfK/Sqy7VRNuOS68K4dKqOybtvVPzAS/7yxE
-         8bwg==
-X-Gm-Message-State: ACgBeo3SiG5UkGmyfpplMdeo4HRUOSu5qfaOZh/+LbdbCqSZx9h2r9qa
-        nR2STUAtZOpy/tZ+xRKjyit/Zw==
-X-Google-Smtp-Source: AA6agR7YsmduzcN42HFQdUUCbrwuK36JyuKORNqNhUEkKjFlcOBhSt9x9LiHfpoT+hWgIJFU6yQwvg==
-X-Received: by 2002:a9d:4545:0:b0:636:cd1e:494f with SMTP id p5-20020a9d4545000000b00636cd1e494fmr670321oti.132.1662521197431;
-        Tue, 06 Sep 2022 20:26:37 -0700 (PDT)
-Received: from [192.168.11.16] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id v14-20020a0568301bce00b0063911de9fd8sm6795403ota.24.2022.09.06.20.26.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Sep 2022 20:26:36 -0700 (PDT)
-Message-ID: <a2d5acff-10fd-31da-a04d-f0ecee3c5a44@kali.org>
-Date:   Tue, 6 Sep 2022 22:26:34 -0500
+        Wed, 7 Sep 2022 02:28:11 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B24078C00E;
+        Tue,  6 Sep 2022 23:28:10 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 5E3CEB81B6E;
+        Wed,  7 Sep 2022 06:28:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C147C433C1;
+        Wed,  7 Sep 2022 06:28:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1662532088;
+        bh=KWq6t8sirh/Dx0hC8hVA1xMEpvcF9InY07/Sx6GZjVo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Dk+troH/mm8ytfmLXVq5/BK3riMgMYefZY+iPzzRvWAiOMuH6Mnumq3C+YFVDi/CN
+         buYa8yU5PV7Ucx4sYMd9eE1KA/s8CEVqxWB+3DH1OtBHXn5uI/DFbDI46pvIK32+DW
+         sdVV4JussUV6VrdQgwLzO7mDSxuTh0pSW+O0VBUbfsgC7RU7rSd3QEKfiWc78bkdwE
+         CvBG7ICYq9+eIqZf2S5LQjSNH0/fsw7SWyy3dAgEmjUXul3NIXS+Lo3eRGrr6qqX3y
+         bChq43AknonEka1tGQ6Jvi5G+q2FokK9HmVVhDu6So/hrsXkKoJCTg6jw5QgmkhFzx
+         TPFFo8m3oBuyg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oVoXj-00074e-B3; Wed, 07 Sep 2022 08:28:11 +0200
+Date:   Wed, 7 Sep 2022 08:28:11 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Andrew Halaney <ahalaney@redhat.com>
+Cc:     agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        dianders@chromium.org
+Subject: Re: [PATCH v2] regulator: dt-bindings: qcom,rpmh: Indicate
+ regulator-allow-set-load dependencies
+Message-ID: <Yxg5+9lkHnNsI30j@hovoldconsulting.com>
+References: <20220906201959.69920-1-ahalaney@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.13.0
-Subject: Re: [PATCH 02/12] arm64: dts: qcom: sdm845: align APR services node
- names with dtschema
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org
-References: <20220906121655.303693-1-krzysztof.kozlowski@linaro.org>
- <20220906121655.303693-3-krzysztof.kozlowski@linaro.org>
-From:   Steev Klimaszewski <steev@kali.org>
-In-Reply-To: <20220906121655.303693-3-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220906201959.69920-1-ahalaney@redhat.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,58 +62,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Sep 06, 2022 at 03:19:59PM -0500, Andrew Halaney wrote:
+> For RPMH regulators it doesn't make sense to indicate
+> regulator-allow-set-load without saying what modes you can switch to,
+> so be sure to indicate a dependency on regulator-allowed-modes.
+> 
+> With this in place devicetree validation can catch issues like this:
+> 
+>     /mnt/extrassd/git/linux-next/arch/arm64/boot/dts/qcom/sm8350-hdk.dtb: pm8350-rpmh-regulators: ldo5: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+>             From schema: /mnt/extrassd/git/linux-next/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+> 
+> Suggested-by: Johan Hovold <johan@kernel.org>
+> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
 
-On 9/6/22 7:16 AM, Krzysztof Kozlowski wrote:
-> DT schema expects APR services node names to be "service":
->
->    qcom/sdm630-sony-xperia-nile-voyager.dtb: remoteproc@15700000: glink-edge:apr:service@4: 'dais' does not match any of the regexes: '^.*@[0-9a-f]+$', 'pinctrl-[0-9]+'
->
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Looks good to me.
+
+Reviewed-by: Johan Hovold <johan+kernel@kernel.org>
+
 > ---
->   arch/arm64/boot/dts/qcom/sdm845.dtsi | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index 98d34b5e1df2..8e7b577f78c2 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -767,13 +767,13 @@ apr {
->   				#size-cells = <0>;
->   				qcom,intents = <512 20>;
->   
-> -				apr-service@3 {
-> +				service@3 {
->   					reg = <APR_SVC_ADSP_CORE>;
->   					compatible = "qcom,q6core";
->   					qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
->   				};
->   
-> -				q6afe: apr-service@4 {
-> +				q6afe: service@4 {
->   					compatible = "qcom,q6afe";
->   					reg = <APR_SVC_AFE>;
->   					qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
-> @@ -785,7 +785,7 @@ q6afedai: dais {
->   					};
->   				};
->   
-> -				q6asm: apr-service@7 {
-> +				q6asm: service@7 {
->   					compatible = "qcom,q6asm";
->   					reg = <APR_SVC_ASM>;
->   					qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
-> @@ -798,7 +798,7 @@ q6asmdai: dais {
->   					};
->   				};
->   
-> -				q6adm: apr-service@8 {
-> +				q6adm: service@8 {
->   					compatible = "qcom,q6adm";
->   					reg = <APR_SVC_ADM>;
->   					qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
+> 
+> v1: https://lore.kernel.org/linux-arm-msm/20220902185148.635292-1-ahalaney@redhat.com/
+> Changes since v1:
+>   - Dropped first two patches in the series as they were user error
+>     (thanks Krzysztof for highlighting this!)
+>   - No change in the remaining patch
+> 
+> Krzysztof also asked if this patch in particular should apply to other
+> regulators, which I think it should for those regulator's who implement
+> set_mode(). Unfortunately I don't know of a good way to get that
+> information in order to apply it at a broader scope for devicetree
+> regulator validation. At least with this in place RPMH users can get
+> better coverage... if someone has suggestions for how to broaden the
+> scope I'm all ears!
 
+I guess the commit message could have tried to capture that is feature
+of the hardware (as Linux implementation details shouldn't impact the
+binding). And apparently there are regulators that do not need this
+(e.g. RPM).
 
-Tested on the Lenovo Yoga C630
-
-Tested-by: Steev Klimaszewski <steev@kali.org>
-
+Johan
