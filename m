@@ -2,80 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B529C5B01DE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 12:24:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 486A15B0276
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 13:08:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230326AbiIGKY4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Sep 2022 06:24:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34664 "EHLO
+        id S230228AbiIGLIL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Sep 2022 07:08:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230302AbiIGKYw (ORCPT
+        with ESMTP id S229997AbiIGLH5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Sep 2022 06:24:52 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31A4E38B1
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Sep 2022 03:24:36 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id s15so15416667ljp.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Sep 2022 03:24:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=sjy4Jxxxofr/CNtkGo5BunwXXx20LZ0tjJE5uoNvdEQ=;
-        b=OGIExj4MjF/TqRB81wkACNnrGKX0bsArf1wuHu+JuLcWpZFBEH/FUO3li6w7en8MOc
-         BLUuPzWcKWHu0qkvn4tyyDD35IMJCiPA7kKPIJK/exdObqV1PKYINtL6jklXYs+e6dXj
-         F7o1U4W5BNFBcwAv+6CnfLHtMwchNpTO7HnZ87n+zxPlDjZf3x7Ik2H8iWNpXE4+7hmg
-         Z7aY3wk5FxM2z9e+KwbcGpO5nUaxq0kXVWtnC3vuSoEEzfC3GF5dDBe6LEvvKCxH/28x
-         tQqe4FM+4AdMY5NY0TA5lHOQNZN+Ssm8LnTdaSKmCeGKektk437RS3cB6F/hiOs8LzRd
-         igag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=sjy4Jxxxofr/CNtkGo5BunwXXx20LZ0tjJE5uoNvdEQ=;
-        b=uu+5WwE9+TNL3blVG8YZ3sI4F0mggCr5WJNe2T7nnX2BbfZ50WesXvrJJ8RdKCZnWi
-         eKMjx7fjvGVaTMXphrR1v0j5YrqEdxl481n/Np+WIB3VJGMDA63RSKfozuxeutC+mIqW
-         RzhMaJQ+YubYU5xzzr1FnnnVz7Bb1VxECryWUBFi9gHmRR4FFZRgztNyatVAXwK9BvWh
-         W2S2L2Ymgr2bzdE+/MeXmufwjZJ3GnZFebnQ5Ly9AI1MybD6dXaHFa/+aKbeO+/dDrop
-         lIGx4DzCdYcGHtkoscVSMaGqXe7NNNN/9DobNztguwa46eKhvteY6QanNIG4Ovh1TuWP
-         J1LA==
-X-Gm-Message-State: ACgBeo2Xr/7oqM2I5xZW7Ucs8YE9zGcD+zgesBgSvS20F/NOJhj5/Z+y
-        Cxf436wUVEj86+A1PBzsdusfiQ==
-X-Google-Smtp-Source: AA6agR7LrS6Wpr0G0GMNseZ4mqfHBTC8LHNpanhfuhXUqUCYOVOmftOUiwx4o+SwlUSvSCvYDrDtOQ==
-X-Received: by 2002:a05:651c:1542:b0:249:5d86:3164 with SMTP id y2-20020a05651c154200b002495d863164mr784613ljp.500.1662546274641;
-        Wed, 07 Sep 2022 03:24:34 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id q17-20020ac25111000000b004946c3cf53fsm2375739lfb.59.2022.09.07.03.24.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Sep 2022 03:24:33 -0700 (PDT)
-Message-ID: <115bb541-57d1-23fa-d365-4e239f933d1b@linaro.org>
-Date:   Wed, 7 Sep 2022 12:24:32 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH v12] dt-bindings: misc: fastrpc convert bindings to yaml
-Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 7 Sep 2022 07:07:57 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E927A4048;
+        Wed,  7 Sep 2022 04:07:55 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 4A13AB81C50;
+        Wed,  7 Sep 2022 11:07:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EED2C4FEBA;
+        Wed,  7 Sep 2022 11:07:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1662548869;
+        bh=R/PhWywYtgEKJuMR5zOLfk52NFVBKuOa/xjsqShlLAk=;
+        h=From:To:Cc:Subject:Date:From;
+        b=kjlhADsS4zS55Ga17a5df6axQz+lgRtS1Ei1laYjWSxZs5seXLUxZTTwAwasXiP9b
+         Mdo+fbMeFwY0hpQGPsZs0dSnOeCQbijejuZ0BKWbMLdJWItEn9XtX5HBFLaZZPGwAJ
+         GRzCUBJALrgRTwva/6wAASBY4VCzclbLZSrDO1DT6MnNC7JifgZUAw+D454OprWqcw
+         CUQotlV0Y2uRtbOISrFjtfekIPrfvUaH+ztDf4FET/C1nPinGmRCjf/cjYpVcqV5z3
+         q1jstqU4mDRN+hVIVH9EEaO34I23yOHfxL6VbAKDYrLdBml4OOkdzN9rFSYkwBwaN0
+         YECHUDRqGXJsw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1oVsuO-0004yk-0J; Wed, 07 Sep 2022 13:07:52 +0200
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-remoteproc@vger.kernel.org, David Heidelberg <david@ixit.cz>
-References: <20220907074301.3996021-1-abel.vesa@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220907074301.3996021-1-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 00/16] phy: qcom-qmp: further clean ups
+Date:   Wed,  7 Sep 2022 13:07:12 +0200
+Message-Id: <20220907110728.19092-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,29 +61,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/09/2022 09:43, Abel Vesa wrote:
-> Convert Qualcomm FastRPC bindings to yaml format, so that we could validate
-> dt-entries correctly and any future additions can go into yaml format.
-> 
-> Use compute-cb@ subnodes instead of just cb@. Add qcom,glink-channels and
-> qcom,smd-channels missing properties to make sure dtbs_check doesn't fail
-> right off the bat. Correct the name of the parent node in the example from
-> smd-edge to glink-edge.
-> 
-> Since now the qcom,fastrpc bindings document is yaml, update the
-> reference to it in qcom,glink-edge and also use $ref.
-> 
-> Also update the MAINTAINERS file to point to the yaml version.
-> 
-> Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Co-developed-by: David Heidelberg <david@ixit.cz>
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+This series clean up the QMP PHY drivers somewhat after the recent
+driver split.
+
+Included are also some fixes for runtime PM not being disabled on driver
+unbind.
+
+Note that these apply on top of the qmp-pcie series posted yesterday:
+
+	https://lore.kernel.org/all/20220906074550.4383-1-johan+linaro@kernel.org/
+
+Johan
 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Johan Hovold (16):
+  phy: qcom-qmp-combo: disable runtime PM on unbind
+  phy: qcom-qmp-combo: drop unused defines
+  phy: qcom-qmp-pcie: drop unused runtime PM implementation
+  phy: qcom-qmp-pcie: drop unused defines
+  phy: qcom-qmp-pcie-msm8996: drop unused runtime PM implementation
+  phy: qcom-qmp-pcie-msm8996: drop unused defines
+  phy: qcom-qmp-ufs: drop unused runtime PM implementation
+  phy: qcom-qmp-ufs: drop unused defines
+  phy: qcom-qmp-usb: disable runtime PM on unbind
+  phy: qcom-qmp-usb: drop unused defines
+  phy: qcom-qmp: silence noisy probe
+  phy: qcom-qmp-combo: shorten function prefixes
+  phy: qcom-qmp-pcie-msm8996: drop unused secondary init tables
+  phy: qcom-qmp-pcie-msm8996: shorten function prefixes
+  phy: qcom-qmp-ufs: shorten function prefixes
+  phy: qcom-qmp-usb: shorten function prefixes
 
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     | 189 ++++++++---------
+ .../phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c  | 191 +++++-------------
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      |  64 ------
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       | 163 ++++-----------
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c       | 143 ++++++-------
+ 5 files changed, 238 insertions(+), 512 deletions(-)
 
-Best regards,
-Krzysztof
+-- 
+2.35.1
+
