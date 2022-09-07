@@ -2,157 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4228E5B0B61
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 19:22:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B4C85B0B82
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 19:32:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229513AbiIGRWD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Sep 2022 13:22:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43944 "EHLO
+        id S229757AbiIGRcn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Sep 2022 13:32:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229814AbiIGRWC (ORCPT
+        with ESMTP id S229510AbiIGRcn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Sep 2022 13:22:02 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0FC5BD103;
-        Wed,  7 Sep 2022 10:22:00 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 287CxmcB025725;
-        Wed, 7 Sep 2022 17:21:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=9ukwriFT3hEu5Om6UVyZI9cMcULqyyS/q2DbWeK2S0w=;
- b=Sm/kFin6xjmdLajEVlEqopfAl9S4f+H+1v0u71wdSbcUfI+ftxaz7i85GpKY4okr/KSe
- 0afDAslWqPRxKuRY64/BMVL8dfyPDj/fgjkXw9H/h3R+LNrGvama9R5LHgwaP63t+Ncy
- b4ZRrMfNnlJdiaFcvunOq9n9AlJ+kRCdOC1puCUwpBXKBGH0VeHP1+8sRM5u0KNNjI8I
- tyU8kuJDYAjWdab2v9uOyMbH7EG/cHZfAClVymdvTHxLIEM3vvLeAIGPM9Pnmq7x/cI6
- eSVSy4qBl8SfBqjHSmZjHP1aD3IKQFXfFK1c9WOiM0LEksmP1d4ccmpkBN6JhSVSrHsi ww== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jer1x2182-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 07 Sep 2022 17:21:51 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 287HLoJe028339
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 7 Sep 2022 17:21:50 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Wed, 7 Sep 2022 10:21:49 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
-        <airlied@linux.ie>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
-CC:     <quic_abhinavk@quicinc.com>, <quic_khsieh@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH] drm/msm/dp: cleared DP_DOWNSPREAD_CTRL register before start link training
-Date:   Wed, 7 Sep 2022 10:21:40 -0700
-Message-ID: <1662571300-4898-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Wed, 7 Sep 2022 13:32:43 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 475AEA7AAA
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Sep 2022 10:32:42 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id o4so15227272pjp.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Sep 2022 10:32:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date;
+        bh=PV80BfdzomPMJURi087Oy7m2sToiidrH8fxfw0BanCk=;
+        b=WRRE6viD0EvhH9JvdnKy35PydpK4R3QCY/miuWOrErAWVcPaRy85VWJR0c678t9Ppl
+         UJeDRqiNHEAe2812nwuVeiQxxbaF2Vp+J9CHb6Zx4SjHwcf1XHtK2bgHI6p85n9jk/4M
+         mUBSZhxssIJrPWHUlG1Ie0s75g9vyAhz1qJaelALcMhfxDhL3lBpvZqutwAWU5dDFqtJ
+         GhFRKKtxKttbyFedwpl+YK4U/MIidIGNTwjcLrzRbUwpVh3XoI9aOyN0TBAulIfDKo6l
+         L7oaMvC6JgAZrFIDLTZrQHKo/3X/J1GyN7JPh54MqIKzf2dcmXjAWc42qTGhixSwoh8Y
+         u6+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=PV80BfdzomPMJURi087Oy7m2sToiidrH8fxfw0BanCk=;
+        b=mMndDqeEa7LynJ9Vxp467H1rsz2dmraO/cMK3fm4eWBCam4UqsXteFRnLtycGO3/SP
+         mTpL7tFBtbeU0xQJ2h03lbDSW3UG9KEqZAqPRJY9JqPXnc+7TrccJg6DqNHjczCEySRW
+         p9/WQVNiD9MzyL7ayjGOgkcJQdBx9brmeOea57+PahPxhqITCBuyaOwUzkggRcobQwMc
+         NJiPuZGNT5E8iaV6c6lf0n53Q7TSXPAywRf0hMV/yhU5GUXhTKzyJSGCEWI2P1z9GTOP
+         ofhFyuoHBVT5Zzq/W9nSrWLPQkqdyxLHznplO2LtC+Xlp8rtmSHuYbsjWvdBnZoNdPlY
+         eKag==
+X-Gm-Message-State: ACgBeo3/F+NmvID8vDSlk/pTcZYyFgRL1WCxlKWe7CAcm5uYm7NNHTdp
+        j/huWV3z3LW7lVgwcm+T7SMl
+X-Google-Smtp-Source: AA6agR4UATw/VzqQynEchHeCQ6k+uSoa//y5hg8/e35Ta7K7Nfw3Mu88+Tq3J1V+IwbNulUfgaL6Mw==
+X-Received: by 2002:a17:902:e811:b0:176:a865:8b31 with SMTP id u17-20020a170902e81100b00176a8658b31mr4905982plg.54.1662571961768;
+        Wed, 07 Sep 2022 10:32:41 -0700 (PDT)
+Received: from thinkpad ([117.217.178.248])
+        by smtp.gmail.com with ESMTPSA id o7-20020a656a47000000b004308422060csm10562677pgu.69.2022.09.07.10.32.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Sep 2022 10:32:40 -0700 (PDT)
+Date:   Wed, 7 Sep 2022 23:02:34 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, Johan Hovold <johan@kernel.org>
+Subject: Re: [RFC PATCH 0/3] drm/msm/dp: several fixes for the IRQ handling
+Message-ID: <20220907173234.GA539582@thinkpad>
+References: <20220901091527.1992208-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 8PEwNNaT_BV7xmCgo2B1xe0NjZANEolb
-X-Proofpoint-GUID: 8PEwNNaT_BV7xmCgo2B1xe0NjZANEolb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-07_08,2022-09-07_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
- suspectscore=0 bulkscore=0 mlxlogscore=999 spamscore=0 priorityscore=1501
- malwarescore=0 clxscore=1011 adultscore=0 phishscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2207270000
- definitions=main-2209070066
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220901091527.1992208-1-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-DOWNSPREAD_CTRL (0x107) shall be cleared to 0 upon power-on reset or an
-upstream device disconnect. This patch will enforce this rule by always
-cleared DOWNPREAD_CTRL register to 0 before start link training. At rare
-case that DP MSA timing parameters may be mis-interpreted by the sinker
-which causes audio sampling rate be calculated wrongly and cause audio
-did not work at sinker if DOWNSPREAD_CTRL register is not cleared to 0.
-This patch also make sure bring sinker out of D3 power-down mode into D0
-(normal operation mode) successfully by retrying 3 times.
+On Thu, Sep 01, 2022 at 12:15:24PM +0300, Dmitry Baryshkov wrote:
+> Johan Hovold has reported that returning a probe deferral from the
+> msm_dp_modeset_init() can cause issues because the IRQ is not freed
+> properly. This (compile-tested only) series tries to fix the issue by
+> moving devm_request_irq() to the probe callback.
+> 
 
-Fixes: 154b5a7da0fd ("drm/msm/dp: add displayPort driver support")
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_ctrl.c |  5 ++---
- drivers/gpu/drm/msm/dp/dp_link.c | 17 +++++++++++------
- 2 files changed, 13 insertions(+), 9 deletions(-)
+This series fixes the probe deferral issue on Lenovo Thinkpad X13s. But I
+didn't look close enough to verify if all other resource deallocation are just
+fine.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index ab6aa13..e864a6e 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1245,7 +1245,7 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
- {
- 	int ret = 0;
- 	const u8 *dpcd = ctrl->panel->dpcd;
--	u8 encoding = DP_SET_ANSI_8B10B;
-+	u8 encoding[2] = {0, DP_SET_ANSI_8B10B};
- 	u8 ssc;
- 	u8 assr;
- 	struct dp_link_info link_info = {0};
-@@ -1263,8 +1263,7 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
- 		drm_dp_dpcd_write(ctrl->aux, DP_DOWNSPREAD_CTRL, &ssc, 1);
- 	}
- 
--	drm_dp_dpcd_write(ctrl->aux, DP_MAIN_LINK_CHANNEL_CODING_SET,
--				&encoding, 1);
-+	drm_dp_dpcd_write(ctrl->aux, DP_DOWNSPREAD_CTRL, encoding, 2);
- 
- 	if (drm_dp_alternate_scrambler_reset_cap(dpcd)) {
- 		assr = DP_ALTERNATE_SCRAMBLER_RESET_ENABLE;
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-index 36f0af0..3ad3826 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.c
-+++ b/drivers/gpu/drm/msm/dp/dp_link.c
-@@ -49,7 +49,7 @@ static int dp_aux_link_power_up(struct drm_dp_aux *aux,
- 					struct dp_link_info *link)
- {
- 	u8 value;
--	int err;
-+	int i, err;
- 
- 	if (link->revision < 0x11)
- 		return 0;
-@@ -61,11 +61,16 @@ static int dp_aux_link_power_up(struct drm_dp_aux *aux,
- 	value &= ~DP_SET_POWER_MASK;
- 	value |= DP_SET_POWER_D0;
- 
--	err = drm_dp_dpcd_writeb(aux, DP_SET_POWER, value);
--	if (err < 0)
--		return err;
--
--	usleep_range(1000, 2000);
-+	/*
-+	 * When turning on, we need to retry for 1ms to give the sink
-+	 * time to wake up.
-+	 */
-+	for (i = 0; i < 3; i++) {
-+	        err = drm_dp_dpcd_writeb(aux, DP_SET_POWER, value);
-+		usleep_range(1000, 2000);
-+		if (err == 1)
-+			break;
-+	}
- 
- 	return 0;
- }
+Thanks for the quick series, Dmitry!
+
+Regards,
+Mani
+
+> Dmitry Baryshkov (3):
+>   drm/msm/dp: fold disable_irq into devm_request_irq
+>   drm/msm/dp: switch to using platform_get_irq()
+>   drm/msm/dp: move dp_request_irq() call to dp_display_probe()
+> 
+>  drivers/gpu/drm/msm/dp/dp_display.c | 19 +++++++++----------
+>  1 file changed, 9 insertions(+), 10 deletions(-)
+> 
+> -- 
+> 2.35.1
+> 
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+மணிவண்ணன் சதாசிவம்
