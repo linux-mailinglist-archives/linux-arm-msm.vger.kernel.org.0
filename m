@@ -2,75 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9877A5B012C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 12:02:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 80D925B0180
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 12:17:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230002AbiIGKCa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Sep 2022 06:02:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56716 "EHLO
+        id S230152AbiIGKRP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Sep 2022 06:17:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230269AbiIGKCH (ORCPT
+        with ESMTP id S230236AbiIGKQz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Sep 2022 06:02:07 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EF61B6550
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Sep 2022 03:01:48 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id e16so261902wrx.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Sep 2022 03:01:48 -0700 (PDT)
+        Wed, 7 Sep 2022 06:16:55 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C9D6B8F00
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Sep 2022 03:16:06 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id bn9so15381880ljb.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Sep 2022 03:16:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=a8/Cnr3+NRiTeHm77aJYOksHa5QVLbTuiIVNWMiWpbM=;
-        b=QG6xanwk5cuEfiq/oJekTvPzTUk+xsrSNaWVGrOrbJAx8bjH0kv0AzvSJCXgeJj6vX
-         qVEH28rDfkV74cxT7Q8+89AhD/DnNlv7x2Bpju9v+Mi/JMRIo11ifF4klTKl4rdxoibN
-         THbRahYqunJdr6MdOr2CYhmKQ/5wqXqYJSnI7GAOmA2PggU0254oFrVVtfkzKToezlhB
-         pm4xU+jQSVHRX6yFPKHL2tKklCNWkgGeNLBfHYhHhmCCWXApFXaCT8LFaR9nK+7B0+hC
-         iwyNBTC+/XJLn4qw5niTvvvInENxqZ0diBhTvRgmSfMzPZlGvlM9B2d3T/2mZX5LuQl7
-         IfqQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=3cA7dqgK29hXFF6uJvQ4BHeA+tHJfj6koNcu22+1Hr8=;
+        b=Hy6HBAQezdf60tWZN7LIjziTj7M5/9xzdLhTneso24T91epLE3nPn9M8nxyWLbW3il
+         Q19WX3z+2P+rJzT7gZ7RysB5pIGPedgOjzYPe1GNmlgSIW4IhKgsGWvaF0uKalQLJmNC
+         sIKZY0M9eXiTUWMoH8SQ+sbPS+PjyFd7bwoxV1Vx6uD7kFv3tZAHuPWcCc93bFlVqqgz
+         ffvw96bh2JvBb8zkJ07L+PpwTfVW309r0MSM6cioLCDhaFaVj8tfzN+8w05a4x3BwnbB
+         LLbicUcFjmSf3QtHvhInoZ4q3uuC1hRUFVAT2BbW2w454cw8bNypO+Hm/AeVTZj3Tn/D
+         vuzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=a8/Cnr3+NRiTeHm77aJYOksHa5QVLbTuiIVNWMiWpbM=;
-        b=AZPnJ2X7KgwJfE8L0tflHi3KwrwKgXl8IcrQOjJrsevRoqHr/R1KPy+LEFWXvmw7TH
-         TtdxKYemDiVaPVD4ObeGB1rDQYNRiBrdwEmJQh6+wEyLbvFEqalk9xeOCGnRw8Oi26MJ
-         gczfv7lZ4WnE7n6jbqBRPC4J0QH+mhb84qs6JxVRNgDplJmkFgzvgcMQxLJUyJiY33c0
-         i2Kh12fd9ndMYLoxlhbOg5u+QdEf07LRS/EDJOxRnWOqY7V3lqWzfi1s0m4YtqAOEaWp
-         YYPKfm1tc1uUfLP+xgpO54MbY6S6IzG2JI5J4hTgjTyo+QkcgcygucS0vZ9rmSwixJ8h
-         s8Qw==
-X-Gm-Message-State: ACgBeo0Lkdsvr+dkgypXCBL6D6SGAhaCnLLXdiN7F63Z4rA1Ub4/+qNI
-        4JCnIPtOZbTwecLJr1C/4yNFuA==
-X-Google-Smtp-Source: AA6agR7U1xM6IHLwwgCqdU0PlTwcu1ukzEPYF479TZ7OE12LaBASXo2WIzRmeqjQXlAU+Rk28pJkZg==
-X-Received: by 2002:a05:6000:144a:b0:229:b76f:86f9 with SMTP id v10-20020a056000144a00b00229b76f86f9mr677000wrx.613.1662544906871;
-        Wed, 07 Sep 2022 03:01:46 -0700 (PDT)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id c6-20020a05600c0ac600b003a5bd5ea215sm18021930wmr.37.2022.09.07.03.01.45
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=3cA7dqgK29hXFF6uJvQ4BHeA+tHJfj6koNcu22+1Hr8=;
+        b=Fj+y+ZCnRGzD9WMlKWZA2vymSvXygxtjc8paBm7GKMhcv8bR6TVWOwkeRJdIoN55fQ
+         tyAjyPRTR/xs4QXdHQCwc83FwyxKaXU+2TZh+sMUMNZNUl2HVvG6stuW8CEQWLC5F8sW
+         WNU/LFrCtUf4rELD2eokEgNZYWNJveGbPD4R2efxRagD1H6gK5eearp5F2sOFcdJ8liB
+         M6hxJY4w7kKoeHbECpNRT743Oz135fQpPNJq4Bi1opja+O2S/fEtN3zPkJ0Y/H9xTMKf
+         CI9ZwVfKvie9HSYWlzQ8IQa08IUV4sj2GcPc8QzJvfhPQiM3Sw4ZzENc7GgQwsD9CeJB
+         /Maw==
+X-Gm-Message-State: ACgBeo1AJ3+Zbcq7BlvI1jzv1jiEM318oAKIwc6GHZ9vxq7nkx4scdJb
+        SysSktJoaxt/gVE8ZsYCPTuvGg==
+X-Google-Smtp-Source: AA6agR5kMxBjpX/4YyjspCvud2EcoThLtvD9lUV+btA0OeIkvy3ClJ+phX0euGGDKW9B8lVVVSNYJw==
+X-Received: by 2002:a2e:a309:0:b0:26a:c623:264 with SMTP id l9-20020a2ea309000000b0026ac6230264mr717373lje.267.1662545764599;
+        Wed, 07 Sep 2022 03:16:04 -0700 (PDT)
+Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id u9-20020a2ea169000000b0026ab0e480bcsm960734ljl.39.2022.09.07.03.16.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Sep 2022 03:01:46 -0700 (PDT)
-Date:   Wed, 7 Sep 2022 13:01:44 +0300
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 07 Sep 2022 03:16:04 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Ekansh Gupta <quic_ekagupt@quicinc.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 00/10] misc: fastrpc: Add audiopd support
-Message-ID: <YxhsCKEWFmlFgKWU@linaro.org>
-References: <20220902154900.3404524-1-abel.vesa@linaro.org>
- <87f59c6d-c2ad-25c2-a0cf-972b5df42bce@linaro.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 00/14] ASoC/qcom/arm64: Qualcomm ADSP DTS and binding fixes
+Date:   Wed,  7 Sep 2022 12:15:42 +0200
+Message-Id: <20220907101556.37394-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87f59c6d-c2ad-25c2-a0cf-972b5df42bce@linaro.org>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -81,55 +76,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22-09-06 15:12:39, Srinivas Kandagatla wrote:
-> Hi Abel,
-> Thanks for picking up these patches and reworking.
-> 
-> On 02/09/2022 16:48, Abel Vesa wrote:
-> > This patchset adds audiopd support to fastrpc.
-> > 
-> > The first version is here:
-> > https://lore.kernel.org/all/20220902131344.3029826-1-abel.vesa@linaro.org/
-> > 
-> 
-> I have tested this on sm8450 with audiopd and loading Single MIC ECNS module
-> to adsp.
-> 
-> Which platforms did you test these patches on?
+Hi,
 
-I have tested on sm8250, with memory-region property and vmids added
-locally to the adsp fastrpc devicetree node.
+Dependencies/merging
+====================
+1. The DTS patches are independent.
+2. The binding patches should come together, because of context changes. Could
+   be one of: Qualcomm SoC, ASoC or DT tree.
 
-> 
-> 
-> Tested-by: Srinivas Kandagatla  <srinivas.kandagatla@linaro.org>
+Changes since v1
+================
+1. Patch 9: New patch.
+2. Patch 10: Correct also sound/qcom,q6apm-dai.yaml (Rob).
+2. Patch 13: New patch.
+3. Add Rb/Tb tags.
 
-Thanks for testing it on sm8450 too.
+Best regards,
+Krzysztof
 
-> 
-> 
-> --srini
-> 
-> 
-> > Changes since v1:
-> >   * dropped the patch 13:
-> >     "misc: fastrpc: Remove unnecessary if braces in fastrpc_internal_invoke"
-> >   * sent patches 1, 2 and 3 as a separate patchset
-> > 
-> > Abel Vesa (10):
-> >    misc: fastrpc: Rename audio protection domain to root
-> >    misc: fastrpc: Add reserved mem support
-> >    dt-bindings: misc: fastrpc: Document memory-region property
-> >    misc: fastrpc: Add fastrpc_remote_heap_alloc
-> >    misc: fastrpc: Use fastrpc_map_put in fastrpc_map_create on fail
-> >    misc: fastrpc: Rework fastrpc_req_munmap
-> >    misc: fastrpc: Add support for audiopd
-> >    misc: fastrpc: Safekeep mmaps on interrupted invoke
-> >    misc: fastrpc: Add mmap request assigning for static PD pool
-> >    misc: fastrpc: Add dma_mask to fastrpc_channel_ctx
-> > 
-> >   .../devicetree/bindings/misc/qcom,fastrpc.txt |   5 +
-> >   drivers/misc/fastrpc.c                        | 267 +++++++++++++++---
-> >   include/uapi/misc/fastrpc.h                   |   7 +
-> >   3 files changed, 247 insertions(+), 32 deletions(-)
-> > 
+Krzysztof Kozlowski (14):
+  arm64: dts: qcom: sdm630: align APR services node names with dtschema
+  arm64: dts: qcom: sdm845: align APR services node names with dtschema
+  arm64: dts: qcom: sm8250: align APR services node names with dtschema
+  arm64: dts: qcom: msm8996: fix APR services nodes
+  arm64: dts: qcom: sdm845: align dai node names with dtschema
+  arm64: dts: qcom: msm8996: align dai node names with dtschema
+  arm64: dts: qcom: qrb5165-rb5: align dai node names with dtschema
+  arm64: dts: qcom: sm8250: use generic name for LPASS clock controller
+  ASoC: dt-bindings:: qcom,q6asm: convert to dtschema
+  dt-bindings: soc: qcom: apr: correct service children
+  ASoC: dt-bindings: qcom,q6dsp-lpass-ports: cleanup example
+  ASoC: dt-bindings: qcom,q6dsp-lpass-clocks: cleanup example
+  ASoC: dt-bindings: qcom,q6apm-dai: adjust indentation in example
+  dt-bindings: soc: qcom: apr: add missing properties
+
+ .../bindings/soc/qcom/qcom,apr.yaml           | 111 +++++++++++++++--
+ .../bindings/sound/qcom,q6apm-dai.yaml        |  21 ++--
+ .../devicetree/bindings/sound/qcom,q6asm.txt  |  70 -----------
+ .../devicetree/bindings/sound/qcom,q6asm.yaml | 112 ++++++++++++++++++
+ .../sound/qcom,q6dsp-lpass-clocks.yaml        |  36 +++---
+ .../sound/qcom,q6dsp-lpass-ports.yaml         |  64 +++++-----
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |  10 +-
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts      |   4 +-
+ arch/arm64/boot/dts/qcom/sdm630.dtsi          |   8 +-
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts    |   2 +-
+ .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts |   2 +-
+ .../boot/dts/qcom/sdm845-xiaomi-polaris.dts   |   4 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |   8 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  10 +-
+ 14 files changed, 293 insertions(+), 169 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/sound/qcom,q6asm.txt
+ create mode 100644 Documentation/devicetree/bindings/sound/qcom,q6asm.yaml
+
+-- 
+2.34.1
+
