@@ -2,67 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 072435B0F1C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 23:27:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B60515B0F32
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 23:33:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229653AbiIGV15 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Sep 2022 17:27:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59266 "EHLO
+        id S230200AbiIGVdk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Sep 2022 17:33:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229696AbiIGV1z (ORCPT
+        with ESMTP id S230055AbiIGVdj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Sep 2022 17:27:55 -0400
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [5.144.164.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9577B8F13;
-        Wed,  7 Sep 2022 14:27:52 -0700 (PDT)
-Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 2EB531F9DF;
-        Wed,  7 Sep 2022 23:27:49 +0200 (CEST)
-Date:   Wed, 7 Sep 2022 23:27:47 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org
-Subject: Re: [PATCH v2 3/5] arm64: dts: qcom: Add PM6125 PMIC
-Message-ID: <20220907212747.i2y6qi75avhavyr4@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-iio@vger.kernel.org
-References: <20220805135729.1037079-1-marijn.suijten@somainline.org>
- <20220805135729.1037079-4-marijn.suijten@somainline.org>
- <4cef00b4-c184-ae78-3709-5ed520ca3375@linaro.org>
+        Wed, 7 Sep 2022 17:33:39 -0400
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BC1EC0E68
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Sep 2022 14:33:38 -0700 (PDT)
+Received: by mail-ot1-x334.google.com with SMTP id y25-20020a056830109900b0063b3c1fe018so11145146oto.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Sep 2022 14:33:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date;
+        bh=QscqM0nV84svG7WCGc8n2xoost3b0ICJjoMuYYPkgIg=;
+        b=l97wHQLTtkoC2yyIythJfrgytAdirbzW+UXcePOcQqT8dD1nyb2Orof9p/7oMQ9ElD
+         tGJZ8qoD+j4jh3drrCMeXTNRJZggeV2RWHeaZ0hG0dFTTMuK9JY6Tk3/+LD16B+21Pye
+         TxaXPNmWr68NJFbOPfTIhJATk5usDAC2SYpEE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=QscqM0nV84svG7WCGc8n2xoost3b0ICJjoMuYYPkgIg=;
+        b=PuFQIFSgewlymYBEyn8VFZF/W/ijA+CbbL5dEUc6ZkRihngSi//puT7Esk6akpvFOQ
+         4qrcd1a6GRzW5dtNlqq2h/KVClilKJEuRsTg2ZHERCyBETUXt3rH2A7nbY0W7n4gtkt4
+         2VxyN/4wSPuJ7mPIDaZZbN3ja0XXRT07EH8w29ypD2Y9gpGw03ZXozeNibGpyiZ0hFsE
+         eHFQ10qimVjGKSBmgyJoL/pDYbys0nzVDPOcSPFkis262OfHZwUPR/sXK3HBtPFDl+mN
+         iAT8uDjXyrlvMFnTYgxs8JF8fKqUq2WT83JeIi2WOoNN5lFwY4ZX4+U2ffkUxNf9D9h4
+         5DuA==
+X-Gm-Message-State: ACgBeo1KseEXU7yn/dTLSOfYsa2oDvWtCpku03PexCOdyUoSNFxK3s97
+        B689gJ5rG+l3v8f4bGAIH/G/RlgKzn0LZW+Esr0wQw==
+X-Google-Smtp-Source: AA6agR6xMl6s69LJEe9/ANEpj86tS5Mf5dVXH93JXMx7uTBSPGstJb9qa0FXVFjAjOE1JVl+mNneubqBOO5h7W4c6Lw=
+X-Received: by 2002:a9d:53cb:0:b0:637:1ddc:615c with SMTP id
+ i11-20020a9d53cb000000b006371ddc615cmr2302282oth.3.1662586417672; Wed, 07 Sep
+ 2022 14:33:37 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 7 Sep 2022 16:33:36 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4cef00b4-c184-ae78-3709-5ed520ca3375@linaro.org>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
+In-Reply-To: <20220902043511.17130-5-quic_rjendra@quicinc.com>
+References: <20220902043511.17130-1-quic_rjendra@quicinc.com> <20220902043511.17130-5-quic_rjendra@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Wed, 7 Sep 2022 16:33:36 -0500
+Message-ID: <CAE-0n50x=h_rBaWAcTk_BBCMLpD=XQ6=BKLGp5+m8i4Lvn4fyg@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sc7280: Add cpu and llcc BWMON
+To:     Rajendra Nayak <quic_rjendra@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -71,80 +68,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-08-08 12:17:06, Krzysztof Kozlowski wrote:
-> On 05/08/2022 16:57, Marijn Suijten wrote:
-> > This PMIC is commonly used on boards with an SM6125 SoC and looks very
-> > similar in layout to the PM6150.
-> > 
-> > Downstream declares more nodes to be available, but these have been
-> > omitted from this patch: the pwm/lpg block is unused on my reference
-> > device making it impossible to test/validate, and the spmi-clkdiv does
-> > not have a single device-tree binding using this driver yet, hence
-> > inclusion is better postponed until ie. audio which uses these clocks is
-> > brought up.
-> > 
-> 
-> Thank you for your patch. There is something to discuss/improve.
+Quoting Rajendra Nayak (2022-09-01 21:35:11)
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 13d7f267b289..a839ba968d13 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -3275,6 +3275,82 @@
+>                         };
+>                 };
+>
+> +               pmu@9091000 {
+> +                       compatible = "qcom,sc7280-llcc-bwmon";
+> +                       reg = <0 0x9091000 0 0x1000>;
+> +
+[...]
+> +                       };
+> +               };
+> +
+> +               pmu@90b6000 {
 
-I can respin the series with the suggested changes (and the iio patch
-removed as that has now been applied), but note that all other PMIC dtsi
-files as of -next today still carry the "wrong" adc-tm or gpios node
-names.  Are there plans to patch those up too (if not already in a
-series that I missed)?
+This unit address
 
-- Marijn
+> +                       compatible = "qcom,sc7280-cpu-bwmon", "qcom,msm8998-bwmon";
+> +                       reg = <0 0x090b6400 0 0x600>;
 
-> > +
-> > +			xo-therm@4c {
-> > +				reg = <ADC5_XO_THERM_100K_PU>;
-> > +				qcom,pre-scaling = <1 1>;
-> > +				qcom,hw-settle-time = <200>;
-> > +				qcom,ratiometric;
-> > +			};
-> > +		};
-> > +
-> > +		pm6125_adc_tm: adc-tm@3500 {
-> 
-> Generic node names, so either this is adc or thermal-sensor. Looks like
-> thermal-sensor.
-> 
-> > +			compatible = "qcom,spmi-adc-tm5";
-> > +			reg = <0x3500>;
-> > +			interrupts = <0x0 0x35 0x0 IRQ_TYPE_EDGE_RISING>;
-> > +			#address-cells = <1>;
-> > +			#size-cells = <0>;
-> > +			#thermal-sensor-cells = <1>;
-> > +			status = "disabled";
-> > +		};
-> > +
-> > +		pm6125_rtc: rtc@6000 {
-> > +			compatible = "qcom,pm8941-rtc";
-> > +			reg = <0x6000>, <0x6100>;
-> > +			reg-names = "rtc", "alarm";
-> > +			interrupts = <0x0 0x61 0x1 IRQ_TYPE_EDGE_RISING>;
-> > +			status = "disabled";
-> > +		};
-> > +
-> > +		pm6125_gpio: gpios@c000 {
-> 
-> s/gpios/gpio/
-> 
-> > +			compatible = "qcom,pm6125-gpio", "qcom,spmi-gpio";
-> > +			reg = <0xc000>;
-> > +			gpio-controller;
-> > +			gpio-ranges = <&pm6125_gpio 0 0 9>;
-> > +			#gpio-cells = <2>;
-> > +			interrupt-controller;
-> > +			#interrupt-cells = <2>;
-> > +		};
-> > +	};
-> > +
-> > +	pmic@1 {
-> > +		compatible = "qcom,pm6125", "qcom,spmi-pmic";
-> > +		reg = <0x1 SPMI_USID>;
-> > +	};
-> > +};
-> 
-> 
-> Best regards,
-> Krzysztof
+doesn't match this one. Please fix.
