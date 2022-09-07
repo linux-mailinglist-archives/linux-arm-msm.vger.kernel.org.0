@@ -2,69 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF0E45B0FBD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 00:19:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 41FEF5B0FE5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 00:39:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229598AbiIGWTJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Sep 2022 18:19:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52996 "EHLO
+        id S229774AbiIGWjo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Sep 2022 18:39:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229516AbiIGWTI (ORCPT
+        with ESMTP id S229535AbiIGWjn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Sep 2022 18:19:08 -0400
-Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C37DA74D1;
-        Wed,  7 Sep 2022 15:19:07 -0700 (PDT)
-Received: by mail-qt1-x836.google.com with SMTP id j17so11549078qtp.12;
-        Wed, 07 Sep 2022 15:19:07 -0700 (PDT)
+        Wed, 7 Sep 2022 18:39:43 -0400
+Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8248720BCD;
+        Wed,  7 Sep 2022 15:39:42 -0700 (PDT)
+Received: by mail-io1-xd2b.google.com with SMTP id n202so12679733iod.6;
+        Wed, 07 Sep 2022 15:39:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=g5BXvyyoRCIgsReMPkjX53sa1oRrOY6KLwL7WymMjiA=;
-        b=OpCQdVbI+ZMb4UMDXOG+3jnDJkPyTNTvyI3xz64n3AaAuWFPToZu3P2MwahnImM4x0
-         ImZF0PXvQ+cf3wMyJdGHsFcxnc5xjmgWkElz64/BhPJmrdTscvcwxnx4gIfMd3YZt3+b
-         l9SPOAR8AGU7ss2kPX54slDhKafeoMkNA+wQ1lvMgZn7DVrv8MP7lN9F3T/LDFFFOoS/
-         PXNiH0qL3ZG4wXrxY2gRHPLfxca/4qRMyiB/O5W639uwBGZB/br/S85VNWkV2MQyzHHv
-         VklFDIAzbXepK+GrUIqJCYtbGXA/UUY3hai6PAxwiUVX8SVu0HdopyyupgdWDRrpaAXC
-         n8yw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=ZVWLDRAiCpXFvvWvaJuQtquchD9nB6ZRLnRscUbvYY4=;
+        b=IJVpCisouaFuMOJ8AjdLXYDTTdE+2N/137mqmBUSjkUVvChX56i/GCqmNuWAz4gRrC
+         Ujew8DOf2ggfgEgROhIRAWDm9z1Z3BoHuzKB6Lst/3sfGxS5gCq4tR6QVZEy9nXRsBF/
+         Ca/4BZ5HHd+fXKAjlarUQXmVEYGeZxCR8/lBNyVdBMXhv1ri5b/meA3QlP6eTVT+Nabz
+         nbF9dZlfmn0VMBYXjZ9YeABKOy86XvLyUkeiqBKEIUI2eWaup/2+Wej+vVWoIKbz8ikg
+         JTgsuyGT9xGmY181HKCCt1RNaCMB1HRJl2t0v24G8vAlcS7yhUEFq9rfd6vgo64Ufk3Z
+         rpdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=g5BXvyyoRCIgsReMPkjX53sa1oRrOY6KLwL7WymMjiA=;
-        b=E7BU+ldjrlpcn10Hvu978/LauPaz1GRM84WV86BNqynwhuBiLm7PQ49c/PrEz62o15
-         FN113k29ogPBRuZMjSU5R1uRpJnuKwuC7n1PkQPcAXduCF+qFR3e7TzCtRDf31YVNpUg
-         crPGZzRMy08KPnKUZJlke8iPMqzyqL+PbOBOLhmIB4tmiNcI8jniomzWC3bY1hcoHDpN
-         3vQAKTSM5CkU/raclFVIK6+6FFWir318eykMG6OlEc1aYLOhlhyZnfZz58mnM/VB2hQq
-         9czUwj186K/DBbQl0YdoX34/IuK4wKgRVbQZ5h7Q1narB468Sia2SZWij9jGsj1xRoQl
-         /yIA==
-X-Gm-Message-State: ACgBeo1nV2tjylAd7bxbx+zOdcE2Ju0UZaxV3iePeKI4RaJZdgRxchQW
-        tX7ijYuENK5JJb1rv00/TTn8MsGk/G4=
-X-Google-Smtp-Source: AA6agR6Qfk0zI+RqDXBOTYdUPL3FaLm85b07XqeNvOJfBGEokYtcCZAGPv222eM6G72hjOQsew2ubw==
-X-Received: by 2002:ac8:7c44:0:b0:344:5653:df43 with SMTP id o4-20020ac87c44000000b003445653df43mr5305055qtv.359.1662589146661;
-        Wed, 07 Sep 2022 15:19:06 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=ZVWLDRAiCpXFvvWvaJuQtquchD9nB6ZRLnRscUbvYY4=;
+        b=DromrOM2BecC9gWRO9iDGOkuPyYsYW9LQKU7OYydebJ5bnKgRmGOwJuRK8tnuYhkPF
+         rmNlSfyaGxIgJeBkOGqG5neTCNtRjuf2rOSY0Yfdw4Smz4CCPnLNuWnxyRwqJZDpZ1vF
+         whd3nTsd7BPlk+0Z72SjCma3VApbaVRzQIYh9ypi30K/cjBaoubM0JUBTFFm54sf3Sm5
+         87QKDRrGvvwsIRjU1gqsrTtgHQeD8i1xxskUr8woB6eN6S2aehAmWs/KKzKNEmoDs4U1
+         dFw9GypuPeiS3/JIiCoskeTtJu+cXfv+52qhA+wiMfAx1MTnfGz6+4grzkgqDhoJqn19
+         2mew==
+X-Gm-Message-State: ACgBeo1oWkOLYlqyKHMGvLdohhHo7nVVJT8eBs0QAGfmumMPooGZe4w4
+        agBK+FJQVAiQS6KipvqdtyVLn5b2Qu/nRw==
+X-Google-Smtp-Source: AA6agR7ybdT/ZPNhdjjw5zL9ZQ6lw3VU9S4YrvhCmgGJFFGtfpKO0VqE8wRx1knENbaUFGu+RPsTow==
+X-Received: by 2002:a05:6638:1396:b0:357:148d:8705 with SMTP id w22-20020a056638139600b00357148d8705mr2519055jad.61.1662590381723;
+        Wed, 07 Sep 2022 15:39:41 -0700 (PDT)
 Received: from localhost ([2607:fea8:a2e2:2d00::4aff])
-        by smtp.gmail.com with UTF8SMTPSA id e5-20020ac80105000000b00342b7e4241fsm13583504qtg.77.2022.09.07.15.19.05
+        by smtp.gmail.com with UTF8SMTPSA id x1-20020a026f01000000b00343610fb9b8sm7658091jab.129.2022.09.07.15.39.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Sep 2022 15:19:06 -0700 (PDT)
+        Wed, 07 Sep 2022 15:39:41 -0700 (PDT)
 From:   Richard Acayan <mailingradian@gmail.com>
-To:     robh@kernel.org
+To:     linux-arm-msm@vger.kernel.org
 Cc:     andersson@kernel.org, agross@kernel.org,
         konrad.dybcio@somainline.org, mturquette@baylibre.com,
         sboyd@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, tdas@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht, caleb@connolly.tech,
-        jo@jsfamily.in, Richard Acayan <mailingradian@gmail.com>
-Subject: Re: [PATCH 1/3] dt-bindings: clock: gcc-sdm845: add sdm670 global clocks
-Date:   Wed,  7 Sep 2022 18:18:33 -0400
-Message-Id: <20220907221832.136715-1-mailingradian@gmail.com>
+        jo@jsfamily.in
+Subject: [PATCH v2 0/3] SDM670 Global Clocks
+Date:   Wed,  7 Sep 2022 18:39:24 -0400
+Message-Id: <20220907223927.139858-1-mailingradian@gmail.com>
 X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20220907175300.GA3779566-robh@kernel.org>
-References: <20220907175300.GA3779566-robh@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -77,12 +74,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> You just changed the clocks from 5 to 3. Please test your changes:
+Changes since v1:
+ - regenerate patches to fixed malformed patch
+ - fix schema so that the parent clocks are specified correctly
+ - remove core_bi_test_pll_se from new parent_data to match array sizes
+ - reference correct frequency table for gcc_sdm670_cpuss_rbcpr_clk_src
+ - set correct index for sdcc1_ice_core_clk_src
 
-Right. I'll make sure to set up CI locally before my next series.
+This patch series adds global clocks essential for features of the Qualcomm
+Snapdragon 670 (hopefully) cleanly into the SDM845 driver without doing
+runtime fixups like in Google's bonito kernel (see patch 3).
 
-> What you want here I think is 'minItems: 3' and then restrict the clocks 
-> to 3 or 5 in the if/then schema.
+This series (mostly patch 2) affects kernels made for Snapdragon 845 and
+might need some further testing on SDM845 devices. I do not have a
+Snapdragon 845-based device so someone else will have to double check if
+it is necessary.
 
-Yes, thanks for directing me. I found what I needed in
-Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml.
+ .../devicetree/bindings/clock/qcom,gcc-sdm845.yaml |  60 ++-
+ drivers/clk/qcom/Kconfig                           |   4 +-
+ drivers/clk/qcom/gcc-sdm845.c                      | 404 ++++++++++++++++++++-
+ include/dt-bindings/clock/qcom,gcc-sdm845.h        |   2 +
+ 4 files changed, 453 insertions(+), 17 deletions(-)
+
+
