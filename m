@@ -2,79 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4939D5AF7F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 00:27:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 296BE5AF8B1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Sep 2022 02:01:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230041AbiIFW1M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Sep 2022 18:27:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48820 "EHLO
+        id S229551AbiIGABM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Sep 2022 20:01:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230051AbiIFW05 (ORCPT
+        with ESMTP id S229436AbiIGABL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Sep 2022 18:26:57 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 852F713D52
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 15:26:56 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id lz22so5556929ejb.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 15:26:56 -0700 (PDT)
+        Tue, 6 Sep 2022 20:01:11 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D9DE66A63
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Sep 2022 17:01:09 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id bp20so17286167wrb.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 17:01:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=a+Vs+P0ciT3P+roY2k8XBdIwCVWYhAwaTZ/i25+tK1Q=;
-        b=G38S/EqecQ8sQP0LzugoHuJ4vO5tGIs1Irzd5Df2yBAJ60O5P5fac0bguYHaOigTSZ
-         /8feiG7RBqs6a7WUgyG0z8RRq/IbpO2nf9njQRB0Vd5FXLenlPVPCSvkNxR3B5IQSHnP
-         fGvhZTNH64t4bL+IDvTHVbgt/2/KnS70+CCcA=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=88hXmKXc1thUjeX+tf74vW/rmtLSitNf5zRyTTR2X/k=;
+        b=eXwtNAg/f1lVgmp/xSQDkzlJ/4YWCIlgejhg7VgyBU5ySJjXp3fRoqBT4fdj9kMcqq
+         ZUgTj/9xBxL/srBhbdmiZP3AFNDOQQiWs7UsDcd5IAIk/28uCBWC9ZZAcVC/JVb+EwaY
+         VYKcQTSjnwX3mHaeEvFvT5SgDW4H0JV63y4J6djyoC2XQqk8d+S926gKxdiFzNl8FTk6
+         jQqBQxJPc7b05WJEbc5qTm5LhDYiiSmUvemCJECWuppHfRZrcCLBc1e9QWXwsU22oiQX
+         a5ujYXJnuImgx+Y72jC7eWoCUpapZpE7IHoCK2Zci40QJ1S8He9OtxN7lQ6LQ8XQYpLb
+         2dew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=a+Vs+P0ciT3P+roY2k8XBdIwCVWYhAwaTZ/i25+tK1Q=;
-        b=2T3AMzoVkXxZFodY1271vSI5GmIXROJuVYdhRiVCPY3CHMtO8s0y94R3s/BwiLhK9g
-         4tRI9BIjJPPhrdj0CkDUwnIzF7XlbN3mLtne22b6BSgfCXvrwcMTAiYj8p4Lq8uNE2se
-         nY3LQMPKvD0PV2DNhVKiky13jzyD8fEyN6HtviDHUSJsGPonReP3dDsk1NPy2zHWiG+f
-         4Y3ArfrA3VBDW/D7G6wd9mIfT6T5DqB7y5nshvJwJyZd58pEIx4jKTwiAhw/Z3/FlW3A
-         GXKpIXqzbRtC1aRaNRVF6kG3P5nBZFhDopTY8iI2cfDDEytiMICY+moC7P/2fKFBMGau
-         TixQ==
-X-Gm-Message-State: ACgBeo0hrdkTM2qNeHvGZfW2Bmz0OP2P5Yes7ykUlYdERnQjO1PL0oU1
-        xN6T0ou9qwVymJYS2Lbx0BxgPBii4aVUWrzQ
-X-Google-Smtp-Source: AA6agR4d0SFgd/lz8fkc6z9DPR8brdN/Ib6+pM2G4S+ft/BWbecPIfjr041PfpNVSEkw1w+hWeU2uA==
-X-Received: by 2002:a17:906:3fc3:b0:750:5e2b:ff1b with SMTP id k3-20020a1709063fc300b007505e2bff1bmr402039ejj.233.1662503214805;
-        Tue, 06 Sep 2022 15:26:54 -0700 (PDT)
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com. [209.85.128.45])
-        by smtp.gmail.com with ESMTPSA id g8-20020a170906538800b006fe0abb00f0sm7227706ejo.209.2022.09.06.15.26.53
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Sep 2022 15:26:53 -0700 (PDT)
-Received: by mail-wm1-f45.google.com with SMTP id k17so7634905wmr.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Sep 2022 15:26:53 -0700 (PDT)
-X-Received: by 2002:a05:600c:22d3:b0:3a8:424d:f386 with SMTP id
- 19-20020a05600c22d300b003a8424df386mr280546wmg.57.1662503212860; Tue, 06 Sep
- 2022 15:26:52 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=88hXmKXc1thUjeX+tf74vW/rmtLSitNf5zRyTTR2X/k=;
+        b=ciffzBBQjlBl8AGVle6KnmONAcm3/7jXV/FixkyHlUnC/jAK1kYRc1sahS6f+qqJdx
+         h+AGXfKFqe9mwMdST7JCQRLQuj4V67DDx0NyCuf/CsitRDCvwwjN5eUINx3hPnt2Tv6n
+         HqhSzTf2nLevLYYGUwpt7IXvMUBA8it2glPCIFkVc20B3UEFI0KWLFlwwkHy8rLml380
+         1VBz2gV8foxZET4MhcQ8fOOYN/gQsIhm/+ZaWRvPILmO1L0VafyLb6gnkX/ClaDRV8B8
+         /F6YPGeyQBTZ5d9dlfTpVWJJRVwH1xwvpDrhZ0HWeZlXw/5b8cGH/zz2MI2HpcPfEo7a
+         PZtQ==
+X-Gm-Message-State: ACgBeo3KlebGg4EkVQzzU/hW/vkCKBKfvuHcyTboydDNgBTWthzc1QJv
+        4o7Zha/xhg+DOSGMr2IFewQo+w==
+X-Google-Smtp-Source: AA6agR5KMHp2Gk4iYo0cjhxNJGCk1LA10bMi2+KKdP4BaQDGId3SR9xpUvy5pvUm/EE+Q+8KTflehA==
+X-Received: by 2002:a5d:4150:0:b0:228:dbc4:d26b with SMTP id c16-20020a5d4150000000b00228dbc4d26bmr443503wrq.254.1662508867735;
+        Tue, 06 Sep 2022 17:01:07 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id g13-20020a05600c4ecd00b003a4c6e67f01sm26848613wmq.6.2022.09.06.17.01.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Sep 2022 17:01:07 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, quic_mkrishn@quicinc.com,
+        agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     bryan.odonoghue@linaro.org
+Subject: [PATCH 00/11] qcom,mdss-dsi-ctrl: Remove redundant phy-names from yaml and dtsi
+Date:   Wed,  7 Sep 2022 01:00:54 +0100
+Message-Id: <20220907000105.786265-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-References: <20220901024827.v3.1.I3aa360986c0e7377ea5e96c116f014ff1ab8c968@changeid>
-In-Reply-To: <20220901024827.v3.1.I3aa360986c0e7377ea5e96c116f014ff1ab8c968@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 6 Sep 2022 15:26:41 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Wf2gPHzSXh_2bKe+KgYVhKDUgmEtx2nnBrQ9FawqxH9Q@mail.gmail.com>
-Message-ID: <CAD=FV=Wf2gPHzSXh_2bKe+KgYVhKDUgmEtx2nnBrQ9FawqxH9Q@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] dt-bindings: arm: qcom: Document additional skus
- for sc7180 pazquel360
-To:     Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Bob Moragues <moragues@chromium.org>,
-        Henry Sun <henrysun@google.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,33 +72,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Bjorn,
+phy-names is both inconsistently used and not actually required by the driver.
 
-On Wed, Aug 31, 2022 at 7:50 PM Yunlong Jia
-<yunlong.jia@ecs.corp-partner.google.com> wrote:
->
-> pazquel360 is an extension project based on pazquel.
-> We create 3 sku on pazquel360:
->    sku 20 for LTE with physical SIM _and_ eSIM and WiFi
->    sku 21 for WiFi only
->    sku 22 for LTE with only a physical SIM
->  Both sku20 and sku22 are LTE SKUs.
->  One has the eSIM stuffed and one doesn't.
->  There is a single shared device tree for the two.
->
-> Signed-off-by: Yunlong Jia <yunlong.jia@ecs.corp-partner.google.com>
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
->
-> ---
->
-> Changes in v3:
->  1. Adjust the format of the changelog.
->
-> ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 11 +++++++++++
->  1 file changed, 11 insertions(+)
+Previous discussion with Krzysztof and Rob suggested to remove the property.
 
-I think these two patches are ready to land if now is a good time. Thanks!
+https://www.spinics.net/lists/linux-arm-msm/msg116525.html
 
--Doug
+- Mark as deprecated and not required in yaml
+- Drop from associated dtsi files => grep -r mdss-dsi arch/arm* | grep qcom
+
+Bryan O'Donoghue (11):
+  dt-bindings: msm: dsi-controller-main: Drop redundant phy-names
+  ARM: dts: qcom: apq8064: Drop redundant phy-names from DSI controller
+  ARM: dts: qcom: msm8974: Drop redundant phy-names from DSI controller
+  arm64: dts: qcom: msm8916: Drop redundant phy-names from DSI
+    controller
+  arm64: dts: qcom: msm8996: Drop redundant phy-names from DSI
+    controller
+  arm64: dts: qcom: sc7180: Drop redundant phy-names from DSI controller
+  arm64: dts: qcom: sc7280: Drop redundant phy-names from DSI controller
+  arm64: dts: qcom: sdm660: Drop redundant phy-names from DSI controller
+  arm64: dts: qcom: sdm630: Drop redundant phy-names from DSI controller
+  arm64: dts: qcom: sdm845: Drop redundant phy-names from DSI controller
+  arm64: dts: qcom: sm8250: Drop redundant phy-names from DSI controller
+
+ .../devicetree/bindings/display/msm/dsi-controller-main.yaml    | 2 +-
+ arch/arm/boot/dts/qcom-apq8064.dtsi                             | 1 -
+ arch/arm/boot/dts/qcom-msm8974.dtsi                             | 1 -
+ arch/arm64/boot/dts/qcom/msm8916.dtsi                           | 1 -
+ arch/arm64/boot/dts/qcom/msm8996.dtsi                           | 2 --
+ arch/arm64/boot/dts/qcom/sc7180.dtsi                            | 1 -
+ arch/arm64/boot/dts/qcom/sc7280.dtsi                            | 1 -
+ arch/arm64/boot/dts/qcom/sdm630.dtsi                            | 1 -
+ arch/arm64/boot/dts/qcom/sdm660.dtsi                            | 1 -
+ arch/arm64/boot/dts/qcom/sdm845.dtsi                            | 2 --
+ arch/arm64/boot/dts/qcom/sm8250.dtsi                            | 2 --
+ 11 files changed, 1 insertion(+), 14 deletions(-)
+
+-- 
+2.37.3
+
