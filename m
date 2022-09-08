@@ -2,129 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C93B35B1F16
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 15:30:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB7AB5B1F3C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 15:32:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229869AbiIHN3s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 09:29:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58836 "EHLO
+        id S231878AbiIHNcv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 09:32:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232402AbiIHN3O (ORCPT
+        with ESMTP id S231475AbiIHNc2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 09:29:14 -0400
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 730D181B00;
-        Thu,  8 Sep 2022 06:29:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1662643752; x=1694179752;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=iMp9w4wgPvBJFcprqiqbm816Nf5nzWcjGT/HX2kTYFE=;
-  b=GsMmKkCtlCjuuF/zSeuF0ZMWHRiWiYz66eUAFBdwx3fobXIoFMB2BlKY
-   gWvVUlmEVYo97gp6r/r07/IPoRcTgmX9xX11RmPscLDjfNaqCT4BY4Z2P
-   lKPxrBWIh3XCVPEFsUm/TxLaFWbqVfFUqjwr4LvSJPLBiPfIZnJBs9Ncs
-   Ip1gRoNSmcrSlud/8ZfTFvdYpYMQ93Hyly/whyizw3hwqRwHzevY1K7Z0
-   Zdo7zBnJIrWDHcpxBO7/qxx9tdTkx0rubCCMX/GqwehkfbfABp8/B1cE9
-   8cjpZntpBPqMrjvE6Gg7o5ykBI6ig1S07JQ8/WlwYNLmPncAcBl7vBeSy
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10464"; a="284189185"
-X-IronPort-AV: E=Sophos;i="5.93,300,1654585200"; 
-   d="scan'208";a="284189185"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2022 06:29:10 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.93,300,1654585200"; 
-   d="scan'208";a="610693628"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by orsmga007.jf.intel.com with ESMTP; 08 Sep 2022 06:29:04 -0700
-Received: by black.fi.intel.com (Postfix, from userid 1003)
-        id 1A0726D1; Thu,  8 Sep 2022 16:29:13 +0300 (EEST)
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Hans de Goede <hdegoede@redhat.com>,
-        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Mark Brown <broonie@kernel.org>, linux-acpi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-efi@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-spi@vger.kernel.org,
-        devel@acpica.org
-Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Len Brown <lenb@kernel.org>, Elie Morisse <syniurge@gmail.com>,
-        Nehal Shah <nehal-bakulchandra.shah@amd.com>,
-        Shyam Sundar S K <shyam-sundar.s-k@amd.com>,
-        Khalil Blaiech <kblaiech@nvidia.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Will Deacon <will@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Daniel Mack <daniel@zonque.org>,
-        Haojian Zhuang <haojian.zhuang@gmail.com>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Robert Moore <robert.moore@intel.com>,
-        Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH v2 8/8] efi/dev-path-parser: Refactor _UID handling to use acpi_dev_uid_to_integer()
-Date:   Thu,  8 Sep 2022 16:29:10 +0300
-Message-Id: <20220908132910.62122-9-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220908132910.62122-1-andriy.shevchenko@linux.intel.com>
-References: <20220908132910.62122-1-andriy.shevchenko@linux.intel.com>
+        Thu, 8 Sep 2022 09:32:28 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D78CFF0BF
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 06:31:07 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id bx38so19868000ljb.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 06:31:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=K8lsIXUFAXFlvET6IMdtGmpuoPDOZDFg3zMmcGfzIwI=;
+        b=Z/99+K9k1Ibo1tPR+57rjDoV1qxZEgDqsG4vHdLURL6Ny+9TcaB2J1SYqWcU7A1zyk
+         CyXUHCGgSKb5zWrMdM7QladzOgHyiasHGw4ND6um6GpoNPg7P71NVv3pIlhATtFkQb/4
+         3+9TOmp/L40w+0ifimb7Qb/NsDhgPIfAa0GSyeJa6aTCsJG9NFaXHasCIV3YBuPi6fGL
+         SNZUZwB4K+TRpdtZfBFUdis0gP3da46HfwiLA1uVLNUyIZaQy7CmwpVTyHWnpSXnMxnQ
+         UZ/cAlHiYMjU++z2lZrEkqJqM1vkPXmR6c4x0MMZOX6+AvHtk/GNxOU+jxHwfpEhfudg
+         mYqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=K8lsIXUFAXFlvET6IMdtGmpuoPDOZDFg3zMmcGfzIwI=;
+        b=pVMfrW0h83+N/6J+3rr4Xg1ZJB/IsSLVsEIJTO2HAMuGp4wQY1o5I/kJKXK3NtvRJG
+         b1rOjkX+YtdQ3VDySubVISs+ejiC1ti3jFVLhtuOi8dqKBSCNHgwflFCzkTLdue2w+xw
+         NG89Ftbr3oJUSGtMRRM0FbRvgZ/PWkUHYdwCYfFDdNA4Bk+0IbLC6Dzvm8e4QD755LdQ
+         U0Lr3w+CZOfIDyeO/jXj54oTUw55rCGwD2EQaRaPtCPzeIl6jx/7uq/uAVcsqzEUc18z
+         zHOHmomlKvCa4nCRgZKZVirdL/Tlqdo0aWrIyCSHGeJAVeK5E1cXnr3RBKR02Y+mQ5UM
+         QYhw==
+X-Gm-Message-State: ACgBeo2kOqaRR9a4VmnmlwhFPIpX6wHkNqngJgfiJb5cP1OHQSNCWxwl
+        8fe11mYtYwU6buAklOwbjHErnA==
+X-Google-Smtp-Source: AA6agR7n+DhBD0AHyU4D5+n4AgxeApq7jxVuKSkPHwBfUpELv4I4hWyE5YDn2Gmno7sD/lWJlZy0Fw==
+X-Received: by 2002:a05:651c:12cb:b0:25b:fa3f:c3f with SMTP id 11-20020a05651c12cb00b0025bfa3f0c3fmr2611062lje.364.1662643864620;
+        Thu, 08 Sep 2022 06:31:04 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id p10-20020a2eba0a000000b002688844741bsm3195632lja.126.2022.09.08.06.31.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 Sep 2022 06:31:04 -0700 (PDT)
+Message-ID: <06748378-f5a3-5dec-eba0-58123084c51b@linaro.org>
+Date:   Thu, 8 Sep 2022 15:31:03 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v3 1/4] ASoC: qcom: common: use EXPORT_SYMBOL_GPL instead
+ of EXPORT_SYMBOL
+Content-Language: en-US
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        broonie@kernel.org
+Cc:     lgirdwood@gmail.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, bgoswami@quicinc.com,
+        perex@perex.cz, tiwai@suse.com, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220908063448.27102-1-srinivas.kandagatla@linaro.org>
+ <20220908063448.27102-2-srinivas.kandagatla@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220908063448.27102-2-srinivas.kandagatla@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-ACPI utils provide acpi_dev_uid_to_integer() helper to extract _UID as
-an integer. Use it instead of custom approach.
+On 08/09/2022 08:34, Srinivas Kandagatla wrote:
+> qcom_snd_parse_of depends on ASoC EXPORT_SYMBOL_GPL functions,
+> so make qcom_snd_parse_of and EXPORT_SYMBOL_GPL.
+> 
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
----
- drivers/firmware/efi/dev-path-parser.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/firmware/efi/dev-path-parser.c b/drivers/firmware/efi/dev-path-parser.c
-index eb9c65f97841..f80d87c199c3 100644
---- a/drivers/firmware/efi/dev-path-parser.c
-+++ b/drivers/firmware/efi/dev-path-parser.c
-@@ -15,9 +15,11 @@
- static long __init parse_acpi_path(const struct efi_dev_path *node,
- 				   struct device *parent, struct device **child)
- {
--	char hid[ACPI_ID_LEN], uid[11]; /* UINT_MAX + null byte */
- 	struct acpi_device *adev;
- 	struct device *phys_dev;
-+	char hid[ACPI_ID_LEN];
-+	u64 uid;
-+	int ret;
- 
- 	if (node->header.length != 12)
- 		return -EINVAL;
-@@ -27,12 +29,12 @@ static long __init parse_acpi_path(const struct efi_dev_path *node,
- 		'A' + ((node->acpi.hid >>  5) & 0x1f) - 1,
- 		'A' + ((node->acpi.hid >>  0) & 0x1f) - 1,
- 			node->acpi.hid >> 16);
--	sprintf(uid, "%u", node->acpi.uid);
- 
- 	for_each_acpi_dev_match(adev, hid, NULL, -1) {
--		if (adev->pnp.unique_id && !strcmp(adev->pnp.unique_id, uid))
-+		ret = acpi_dev_uid_to_integer(adev, &uid);
-+		if (ret == 0 && node->acpi.uid == uid)
- 			break;
--		if (!adev->pnp.unique_id && node->acpi.uid == 0)
-+		if (ret == -ENODATA && node->acpi.uid == 0)
- 			break;
- 	}
- 	if (!adev)
--- 
-2.35.1
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
+
+Best regards,
+Krzysztof
