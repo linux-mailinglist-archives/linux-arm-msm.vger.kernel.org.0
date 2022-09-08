@@ -2,73 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99DCB5B1B13
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 13:15:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DC5A5B1B1B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 13:16:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229579AbiIHLOz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 07:14:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52116 "EHLO
+        id S230092AbiIHLQf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 07:16:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230092AbiIHLOu (ORCPT
+        with ESMTP id S229721AbiIHLQe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 07:14:50 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD55033E3B
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 04:14:48 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id v6so6071978ljj.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 04:14:48 -0700 (PDT)
+        Thu, 8 Sep 2022 07:16:34 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4B45C6957
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 04:16:31 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id by6so19448615ljb.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 04:16:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=Rl5eBRjVMIfBFMNhgiMgpTHOyqMi/gFtjav/siqbg5c=;
-        b=WTg9aG4AzDMi0Q7cADc+b4QdQGc5LBmrXMLkEFgfxX6soYvyl6QXho9+lbC5TsVZWI
-         9ktpj88zxEhY2f5uKp5p9SsEfOq87C1CcoEdXcJrin1w2R6/tenO0S2FBIxmwD2gxEpu
-         nMSuYmHG8hsCCWYMTcHMmvEqnsXagq1DgSL5tB8blpJZLXuL75Lu2jHUCKwqs9xP/gNo
-         etHeQjWcZgfqzbQ5HD0ljOU44AaXOOzZsgEi7G4gn/7yj9R4rLw2nFSETOdMl2khHv6A
-         H1dIBLOFxKOAkJtnsVXRPmQJAiO+rOSI2X48BMF+j6OUz9s9/GZgclosyRhaZEGLRWHb
-         rdag==
+        bh=WOxGa6HDdZTkz+qaFAMzvcgUAVFd9V45w/3KQDKwpCI=;
+        b=QgYMkiugBcSQvEwKtmTDnsQFAgT1NHRFpcgN00InVwjf0e/82PfGO/50/cgJJNG+UE
+         IDviNRSwAUJcjGNR848LdzZUgBzup5swhYKMCMMCulJwOo/fYt4s9SwobZGHP00rTU3G
+         umbLymyj2oL6g1n4BHPInwe8bmP5sevNDdGM/1ivTzPSWxkbGmoMhVSB4j4FYQ4rM40M
+         tlRjvhjm2EVqZiUHkC3QvZXzVqYJzDqpufO5x2fAYdrB6fVZJwGuGrqLTsU1rEHgPlrX
+         nchASRVod92uw74+Ep/B4Tn7dU0WDJgcPXJnLL/gLQgOC8FQO2GEbXfvc+vC46IiHFQ7
+         mDxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=Rl5eBRjVMIfBFMNhgiMgpTHOyqMi/gFtjav/siqbg5c=;
-        b=V3prmEIDaKsZtyxz0A4SryD8QmVyKh18FdvgjhHVmK0HWiT5me7cWS/YShueenIepS
-         y2CVONCcjwZeqjJ09hFSzp0vjGLqqWud+8D+jP2Tbc9kxRFvg568GHznnC6H/gLXVhhk
-         E2jN8bl2Z/9QB+ZegZgYOJFFZlzw1PnW5BRFI57AJk4raCqfS+DcxWKgOnj8/nsj1Zyb
-         hvj/Is9ZzAUNVT7tBLYdwKuTI2iXrY18F8i5a4r4aVhgZP7QTij6hLCyk9h7P+BVn0vY
-         GWklDOi/6MlgVSYq0ptzLf8NjFUA+ORii94+wh4yDJrWM6ZpFBJJBgFNPP7V8DiDqZRr
-         cttQ==
-X-Gm-Message-State: ACgBeo3B1w4ygEqMT1ul+yGFK6BlG7C7Md4mmks/b+yS29RNdKoGcKAE
-        Lhe2drEbvhzTC3wxJhj6JRd2Uw==
-X-Google-Smtp-Source: AA6agR4z5wi0efa/Fv9BjzVLS5RePp44A7tbdiGNCs3gHxPAQwi1JvV7Brlx7I2QndRlJsG3vyAAsQ==
-X-Received: by 2002:a2e:98d1:0:b0:263:76b4:5dc4 with SMTP id s17-20020a2e98d1000000b0026376b45dc4mr2221209ljj.460.1662635687241;
-        Thu, 08 Sep 2022 04:14:47 -0700 (PDT)
+        bh=WOxGa6HDdZTkz+qaFAMzvcgUAVFd9V45w/3KQDKwpCI=;
+        b=plgEjXkwj9MZQD/xcmMaPiRqjCdNeJmkJKbTtX4hpU9+PQidwoxaXl9UyjifDeedrk
+         ljBGsO8sJV/mAAnJX1eT4tV9aFTHvqsW3YOr9H7pWedejNMgftFozEEdfm2frbFtfk49
+         T8MbndDtcxui89A9g5QYg2u2RuOs/IMepV6A+ghz2CLiaP7KspreDKQt+TVH9iBQPYEP
+         M9CS2ktK0CmChH8nPIAxt077nOn90Q1Gq81QyMjOO9LnDMRqsP3EXAkwOOJdQArItStv
+         CXFXBH8oiFjcBgezlVe3iWNaM0EgFtA3KM2jhHA6Pyo9ymmFxXsLKS7DX0R09X3Yjn/1
+         PavA==
+X-Gm-Message-State: ACgBeo0O0kac/wxHuqMNHW6YCJsUhQCKsa5ysmalX8ti7uo2fsh7QYSI
+        86kVFywhC2iLHwV+WiKiJVKtFg==
+X-Google-Smtp-Source: AA6agR6kiJ4FX1LJJ/Uo44iVsHBip9Lv0pwLDM6D16vW1SGLhcD/fIU21n32DClqzX3EKl/GiPay4g==
+X-Received: by 2002:a05:651c:c86:b0:25e:7181:e1a5 with SMTP id bz6-20020a05651c0c8600b0025e7181e1a5mr2260875ljb.492.1662635789973;
+        Thu, 08 Sep 2022 04:16:29 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id p7-20020a05651211e700b0049487818dd9sm2986214lfs.60.2022.09.08.04.14.45
+        by smtp.gmail.com with ESMTPSA id a9-20020a196609000000b004946274b7d6sm2992129lfc.166.2022.09.08.04.16.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Sep 2022 04:14:46 -0700 (PDT)
-Message-ID: <169beab2-141a-82c8-9205-76ba85e0e8d1@linaro.org>
-Date:   Thu, 8 Sep 2022 13:14:44 +0200
+        Thu, 08 Sep 2022 04:16:29 -0700 (PDT)
+Message-ID: <35722313-6585-1748-6821-aebe0859ef6e@linaro.org>
+Date:   Thu, 8 Sep 2022 13:16:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
-Subject: Re: [PATCH 3/4] pinctrl: qcom: spmi-gpio: Add compatible for PM7250B
+Subject: Re: [PATCH v2 1/5] dt-bindings: net: Add generic Bluetooth controller
 Content-Language: en-US
-To:     Anjelique Melendez <quic_amelende@quicinc.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, linus.walleij@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
-Cc:     konrad.dybcio@somainline.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Jishnu Prakash <quic_jprakash@quicinc.org>,
-        David Collins <quic_collinsd@quicinc.org>
-References: <20220907201528.9351-1-quic_amelende@quicinc.com>
- <20220907201528.9351-4-quic_amelende@quicinc.com>
+To:     Sven Peter <sven@svenpeter.dev>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Hector Martin <marcan@marcan.st>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        asahi@lists.linux.dev, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        Rocky Liao <rjliao@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org
+References: <20220907170935.11757-1-sven@svenpeter.dev>
+ <20220907170935.11757-2-sven@svenpeter.dev>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220907201528.9351-4-quic_amelende@quicinc.com>
+In-Reply-To: <20220907170935.11757-2-sven@svenpeter.dev>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,18 +94,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/09/2022 22:15, Anjelique Melendez wrote:
-> From: Jishnu Prakash <quic_jprakash@quicinc.org>
+On 07/09/2022 19:09, Sven Peter wrote:
 > 
-> Add support for qcom,pm7250b-gpio variant.
+> Bluetooth controllers share the common local-bd-address property.
+> Add a generic YAML schema to replace bluetooth.txt for those.
 > 
-> Signed-off-by: Jishnu Prakash <quic_jprakash@quicinc.org>
-> Signed-off-by: David Collins <quic_collinsd@quicinc.org>
-> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
+> Signed-off-by: Sven Peter <sven@svenpeter.dev>
 > ---
+> changes from v1:
+>   - removed blueetooth.txt instead of just replacing it with a
+>     deprecation note
+>   - replaced references to bluetooth.txt
+> 
+> checkpatch complains here because it thinks I do to many things at once,
+> I think it's better to replace bluetooth.txt in single commit though.
+> Let me know if you prefer this to be split into multiple commits
+> instead.
+> 
+> .../bindings/net/bluetooth-controller.yaml    | 30 +++++++++++++++++++
 
+I propose to keep it in net/bluetooth subdirectory. In next patch you
+can move there other files.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>  .../devicetree/bindings/net/bluetooth.txt     |  5 ----
+>  .../bindings/net/qualcomm-bluetooth.yaml      |  4 +--
+>  .../bindings/soc/qcom/qcom,wcnss.yaml         |  8 ++---
+>  4 files changed, 35 insertions(+), 12 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/net/bluetooth-controller.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/net/bluetooth.txt
+> 
+> diff --git a/Documentation/devicetree/bindings/net/bluetooth-controller.yaml b/Documentation/devicetree/bindings/net/bluetooth-controller.yaml
+> new file mode 100644
+> index 000000000000..0ea8a20e30f9
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/net/bluetooth-controller.yaml
+> @@ -0,0 +1,30 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/net/bluetooth-controller.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Bluetooth Controller Generic Binding
+> +
+> +maintainers:
+> +  - Marcel Holtmann <marcel@holtmann.org>
+> +  - Johan Hedberg <johan.hedberg@gmail.com>
+> +  - Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+> +
+> +properties:
+> +  $nodename:
+> +    pattern: "^bluetooth(@.*)?$"
+> +
+> +  local-bd-address:
+> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+> +    minItems: 6
+
+No need for minitems.
+
 
 
 Best regards,
