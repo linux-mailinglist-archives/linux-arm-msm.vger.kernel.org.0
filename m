@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16B005B295C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 00:30:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9776A5B2963
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 00:33:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230115AbiIHWaq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 18:30:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55532 "EHLO
+        id S229551AbiIHWbb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 18:31:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230123AbiIHWan (ORCPT
+        with ESMTP id S230120AbiIHWb1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 18:30:43 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21100A3D17
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 15:30:41 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id f11so16152189lfa.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 15:30:41 -0700 (PDT)
+        Thu, 8 Sep 2022 18:31:27 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA865A2844
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 15:31:10 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id bq23so30172836lfb.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 15:31:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=uti3bNXT+PHAstH618C2R3Rjnml8waJ+h4TTs4KwneA=;
-        b=yMVbgwlEwqy/sUUqQ0eBluwrQK09mSxukCuHALRPrGKcAAnPtlPac81c1OTRHle2t4
-         kKFI+tr3xNBGge7HpZxTZdgx1cYSeqBrLiIhU9S497Xj8irdKMLc+JqeXfy+RLLzosEm
-         qhYNUHNIc7rnlhCNoIW1A4v/5ugFwgp4DWPscGFNkRFZ+N+1F5AcbXUldQO+fbNRxMDt
-         ZRzJdZQ3ph+5/wXqaahfQZX+CESx1sPCrecR/JnawLEboyiGSBwUgEkYGSdVMU/N8CX4
-         jWZ2LU8HE2jznF7Q1xFtsnMIlSwDDtph0ihYWSR7X/Aq5Lcx91hwgKwmmnMZ0VP2Yfeo
-         RVKA==
+        bh=8T4fKvOonid0j3E0r/ArsOfkeoikKqk38EUT6s5grdA=;
+        b=O7p2FnJF2IXwOXG9q90yWZqlOpP5Kg/nCQMh9N243NDTZCEeYYqFujSIBAjYUKM3ox
+         8dISPwjjoQSAjH+U4sAre1zysed/8u78DTFkO2oitTvZ9WZR8NOrOAgEURQPc7wnW4+S
+         g8bRvf+wvpICmmNwoLtWBhoeOX1GQRybnwTZK/Qt/efH842dy4/Vwlvvm8MSRVk749vQ
+         mipSpGXXvg6lYnkU82BFDC2WFB3uxTZP+N8TnHOSowftd+cX/jwdXzW/tVjvQEn9AXLO
+         PUn+bFL5j4Qmj05N9lJJC2Lo71WjZY6ZSbqg/vEPQgofaYMg+PxuQvn2aAn1SX7l/kar
+         Pa8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=uti3bNXT+PHAstH618C2R3Rjnml8waJ+h4TTs4KwneA=;
-        b=EDC+c+FF/J7nGP1ykh/uOSHhFtsQLYDoj8EhWh+fPamdPl9zPm8Mn6zb1HjEnvsfli
-         BhYG/Fzlaa5Qu87hQMW3EAyAnHF6j70a2Fl9rwTFtMVYP+koaeLquYm9v7WLuuRc1d9G
-         TTxMKTvN6LznAvhclEMDO15wXYL3Qr8GdQzKy7b7ggUqf5XwZfXz1cRgNfL5ltkIG8JB
-         sAAOMKVuhwO8xgf1P9LRPeaH3rJ6r2k1tBwJkWaLTH1wHEceQMBwe5PK+SGMSdg78FXg
-         6aLT2k4o0lRZqGdrGlExARi+n9/ljB1n9BUWncSfE6tj1Zi5BE3JdRLuuyO8BP+g8uK5
-         t1Rg==
-X-Gm-Message-State: ACgBeo0OkVgVPVy7qz1zquE+wOVeNm3fu0MjAwrDKqJyQG+JeEuH8NPj
-        SMNzEhoy6Fy8Q3IewIaAhHYDhg==
-X-Google-Smtp-Source: AA6agR5wHJDeGSpvkhg3sY+PQY2J6mrzHBEHWd6t16O/1QG3m7Di4PC5PYA6U+sQPcrTCPqFLU7cYw==
-X-Received: by 2002:ac2:5208:0:b0:497:aadf:eac7 with SMTP id a8-20020ac25208000000b00497aadfeac7mr3001515lfl.315.1662676239438;
-        Thu, 08 Sep 2022 15:30:39 -0700 (PDT)
+        bh=8T4fKvOonid0j3E0r/ArsOfkeoikKqk38EUT6s5grdA=;
+        b=ESCEvBRdpnvUwyI0kzQxnK3yaOFLU5TrLQLVbW45y9wdz3s+XL/VfHSK3s3gEX0Ewh
+         0b3+q9RlaRD3onB12aMlN7to9gXy7f/VDYics+n8xzUxKP410YNN+paZUAqNHPhYBb/Q
+         NU0WZih0hZiHLDEgczvhsO6TrqYC9BGhxM/sLHKvZeeTlcN6Hkxqr6eO9AjC2gpVln8t
+         LMQjA0DWzRkd/sHFXsIvaV/fbJRXcwq3t5gTWPYmd8pQqwEGV7oTtghbKgtNjv43o31f
+         Gku/SgIRUa5dOrMsdmFJy+2wUVjQMcbDb4SZpuG+BWoT+YpyyrwkajYw9wRSnQg9B7Ae
+         HqwA==
+X-Gm-Message-State: ACgBeo21bbIoacRSFCNKI++8hJFyw86Vhjq9PfQc+ctVqmjnJ6dSbSUJ
+        tsKvbRCJmaMAT1aNwqyequo72A==
+X-Google-Smtp-Source: AA6agR67YkpQrolzfl4/9Dr8NGHEb+7wdMV29e4tx+XpR4M1h3c+ReW8hy8FzAfuWKUudHKtQzAdwA==
+X-Received: by 2002:a05:6512:32c6:b0:494:99fe:49b9 with SMTP id f6-20020a05651232c600b0049499fe49b9mr3203063lfg.410.1662676265588;
+        Thu, 08 Sep 2022 15:31:05 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id 25-20020ac25f59000000b00494a1e875a9sm4485lfz.191.2022.09.08.15.30.38
+        by smtp.gmail.com with ESMTPSA id 6-20020a2eb946000000b0026ab0087ff3sm5890ljs.54.2022.09.08.15.31.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Sep 2022 15:30:39 -0700 (PDT)
-Message-ID: <952912fe-5ee5-8742-de47-77c013d2c93a@linaro.org>
-Date:   Fri, 9 Sep 2022 01:30:38 +0300
+        Thu, 08 Sep 2022 15:31:05 -0700 (PDT)
+Message-ID: <78a086ce-4961-9144-9d81-a928ff0bc0ad@linaro.org>
+Date:   Fri, 9 Sep 2022 01:31:04 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.1.2
-Subject: Re: [PATCH 00/11] qcom,mdss-dsi-ctrl: Remove redundant phy-names from
- yaml and dtsi
+Subject: Re: [PATCH 01/11] dt-bindings: msm: dsi-controller-main: Drop
+ redundant phy-names
 Content-Language: en-GB
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, robdclark@gmail.com,
         quic_abhinavk@quicinc.com, sean@poorly.run, robh+dt@kernel.org,
@@ -65,8 +65,9 @@ To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, robdclark@gmail.com,
         konrad.dybcio@somainline.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org
 References: <20220907000105.786265-1-bryan.odonoghue@linaro.org>
+ <20220907000105.786265-2-bryan.odonoghue@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220907000105.786265-1-bryan.odonoghue@linaro.org>
+In-Reply-To: <20220907000105.786265-2-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -80,46 +81,49 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 07/09/2022 03:00, Bryan O'Donoghue wrote:
-> phy-names is both inconsistently used and not actually required by the driver.
+> Adding in msm8939 which is based msm8916 dtsi I stumbled across a binding
+> check complaining about the phy name for msm8916 which we were reusing for
+> msm8939.
 > 
-> Previous discussion with Krzysztof and Rob suggested to remove the property.
+> The currently inconsistent upstream dtsi naming of "dsi" and "dsi-phy" is
+> not captured in the yaml for this driver.
 > 
-> https://www.spinics.net/lists/linux-arm-msm/msg116525.html
+> The driver however doesn't care about the name of DSI phy, hence the yaml
+> check is redundant.
 > 
-> - Mark as deprecated and not required in yaml
-> - Drop from associated dtsi files => grep -r mdss-dsi arch/arm* | grep qcom
+> Both Krzysztof and Rob suggested we could drop the phy-names entirely if it
+> really isn't a dependency.
 > 
-> Bryan O'Donoghue (11):
->    dt-bindings: msm: dsi-controller-main: Drop redundant phy-names
+> So, drop the inconsistent and unnecessary phy-names field from the yaml.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-I'm going to take this into msm-next, the rest can go via Bjorn.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
->    ARM: dts: qcom: apq8064: Drop redundant phy-names from DSI controller
->    ARM: dts: qcom: msm8974: Drop redundant phy-names from DSI controller
->    arm64: dts: qcom: msm8916: Drop redundant phy-names from DSI
->      controller
->    arm64: dts: qcom: msm8996: Drop redundant phy-names from DSI
->      controller
->    arm64: dts: qcom: sc7180: Drop redundant phy-names from DSI controller
->    arm64: dts: qcom: sc7280: Drop redundant phy-names from DSI controller
->    arm64: dts: qcom: sdm660: Drop redundant phy-names from DSI controller
->    arm64: dts: qcom: sdm630: Drop redundant phy-names from DSI controller
->    arm64: dts: qcom: sdm845: Drop redundant phy-names from DSI controller
->    arm64: dts: qcom: sm8250: Drop redundant phy-names from DSI controller
-> 
+> ---
 >   .../devicetree/bindings/display/msm/dsi-controller-main.yaml    | 2 +-
->   arch/arm/boot/dts/qcom-apq8064.dtsi                             | 1 -
->   arch/arm/boot/dts/qcom-msm8974.dtsi                             | 1 -
->   arch/arm64/boot/dts/qcom/msm8916.dtsi                           | 1 -
->   arch/arm64/boot/dts/qcom/msm8996.dtsi                           | 2 --
->   arch/arm64/boot/dts/qcom/sc7180.dtsi                            | 1 -
->   arch/arm64/boot/dts/qcom/sc7280.dtsi                            | 1 -
->   arch/arm64/boot/dts/qcom/sdm630.dtsi                            | 1 -
->   arch/arm64/boot/dts/qcom/sdm660.dtsi                            | 1 -
->   arch/arm64/boot/dts/qcom/sdm845.dtsi                            | 2 --
->   arch/arm64/boot/dts/qcom/sm8250.dtsi                            | 2 --
->   11 files changed, 1 insertion(+), 14 deletions(-)
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
+> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+> index 880bfe930830c..3742e2ab4fb1d 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+> @@ -49,6 +49,7 @@ properties:
+>       maxItems: 1
+>   
+>     phy-names:
+> +    deprecated: true
+>       const: dsi
+>   
+>     "#address-cells": true
+> @@ -133,7 +134,6 @@ required:
+>     - clocks
+>     - clock-names
+>     - phys
+> -  - phy-names
+>     - assigned-clocks
+>     - assigned-clock-parents
+>     - power-domains
 
 -- 
 With best wishes
