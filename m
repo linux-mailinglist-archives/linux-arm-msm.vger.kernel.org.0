@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A58E5B1F3E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 15:32:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9771E5B1F44
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 15:33:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231810AbiIHNcx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 09:32:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38902 "EHLO
+        id S232431AbiIHNd1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 09:33:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230264AbiIHNcd (ORCPT
+        with ESMTP id S232443AbiIHNdJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 09:32:33 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB0E31C129
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 06:31:13 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id p7so27733768lfu.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 06:31:13 -0700 (PDT)
+        Thu, 8 Sep 2022 09:33:09 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 601ECED99C
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 06:31:58 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id v6so6511314ljj.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 06:31:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=jQghVYNNLFvAYVhHk3htZ31JTcz3j4JGO/5azadmfA4=;
-        b=bdc3HEsGEFsO5u8cJFBMrMyO++uqvKIYwJpUGFRJOBPJcqUoo/pBD729kQ/cRKV/3W
-         G7q923vp8/76mK4BbdU0y/M9LHwI5lvJl6M57l2NTsDNSSpdfARM8Oodb2JnL4WlJrVZ
-         qrSg4fhSDU/tnEHit61qsdyGtsAx/FMhilE5MYHU1Av2+VXNsfIJdEcRxq3czu0Fh+P3
-         dsFGEVAmifnbWuH9sDq6rO9n3wVzqJ2c+GODSPLMEcoRlp8y8in4rmx4rGyYDp8CEbSu
-         d5bioHGbMYF1VU3ArX+/zaHyAAqqmYDlwChdelROLDeA5+51Q1uaPaw1rOQLlg/+2lRS
-         AsUQ==
+        bh=Ohu6CozGjy5GhPmh3m1Q0H8HEbccCG50CgwFnCzBG1M=;
+        b=ptC5lx8ui2N6P9aJgfgD/F4uhtNhf8ZhMAdQGSWGNJjjsoGCpVpb5iWXuz3JTUDXdP
+         fJ++bXHzabeC1AT1bMDCssosOPFRXmMhsJueCRRtQk4JPstA0V+AKgvPi2HDoWButk+2
+         6jYHd1d5/4QHSccAePsM42YVSYsxWZ68NYKC5vfMDqgiv7xRvIr6oHaTfgCjoqb1bwpW
+         tXnXth03V8x03pU+cnwNOvuld4SD1H911urQ08y5dL1A2mC9txdftm0dHz9c8NcSLMSF
+         0jhGk4sXoxMxM0fhdM1yFKP4kTz/HK4bnAVkX9FuvicMKiPe6lYJRHnfj2myLr1uihWi
+         ChqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=jQghVYNNLFvAYVhHk3htZ31JTcz3j4JGO/5azadmfA4=;
-        b=nKJbjCKm5ftURWTf+V7MlPvMZLlGHLvEoSks02l97beD+c3mTQXT0p0Tjqbq9aU4/c
-         gjeV8YcJP+4cB5utCjeBIhueRabpBp04YxOnRYgDezK+HmfhJJtDmIuWUYVmENi6VWyL
-         ulEcWSvnTtastINmfurzh+UQ1sfxFY8VpIM765ZwSHxhcPzUjuywBTxIBboLSNMvSh/i
-         oyxUoo+kfuSmdY51uimzLNcXA7Pe7GcVGrKa1rQLOYnFUlhJv/NHYQotCi+xceSPRlCQ
-         6+QuESOtJRMbJKlzl5r+AbeLoNBmzS78vMqGG4+d8A8lTsu2vX8PFe6DRGQ6/xUkrGdr
-         dgcQ==
-X-Gm-Message-State: ACgBeo2IZjpGvdWqvDAqV5YU0ZvLoxgbvtsamute0sdE35VKBD+4QPTB
-        Kw24jAdC44Pr/tzlc8H/Fe6Pig==
-X-Google-Smtp-Source: AA6agR7qjl+zSeMlOQ9wemphfHK+lgEuVxLJn/6XmOv9c9Hoacw+i/jSv3JahMGxlU5YZiMqA7t+vg==
-X-Received: by 2002:a05:6512:10c1:b0:492:a27d:ff44 with SMTP id k1-20020a05651210c100b00492a27dff44mr2540903lfg.405.1662643870345;
-        Thu, 08 Sep 2022 06:31:10 -0700 (PDT)
+        bh=Ohu6CozGjy5GhPmh3m1Q0H8HEbccCG50CgwFnCzBG1M=;
+        b=Te/4ceKwrctb6LFc5gvtkkgxRY1JqFbuPKXZ/v5p9ebj8AX8zefDmiEr+41Oup95Rl
+         y395ZRtxjScE3WejlhhcAsyWkrPliJ+yR4W8vzbYBwlMGGwHL/lWcUBnXCCmZIpA+xeX
+         zA7AY3OthknLUIgBW2GLrxmtNo2S+kd/suKz3h1lWMhGStAVdCNul6P5DHjVWhrdiP8q
+         V6KQRl3dVloAgi/5B4mHi1HNW55JZ2BIz8Hxq98kj6OAIoblIGyMiAe+4XwdsGJOafhH
+         WAVLH2a5X2U0JYGFiBZCL4XJrxqYlvrrIs0dM/mgqeSH/rv5uiUrSqY3ztBhP3Y+9W2+
+         rcIA==
+X-Gm-Message-State: ACgBeo1xrspyh9pNru/9Mj91gRsGeV03yTXMhlP/gpfggiLFugYaQ9En
+        TnGfQRuJBTh19xnCR4YW6yy7Rg==
+X-Google-Smtp-Source: AA6agR7Mn8Ot0yeAgeYYRNMj+qOLoKvpoqnimvLBQxheimGNxcIm97oXVTGZg8bmOEsl1kwDWwNeHQ==
+X-Received: by 2002:a2e:a787:0:b0:26b:ded1:7652 with SMTP id c7-20020a2ea787000000b0026bded17652mr125008ljf.263.1662643916226;
+        Thu, 08 Sep 2022 06:31:56 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id m3-20020a194343000000b00497817b8ebbsm1667932lfj.134.2022.09.08.06.31.09
+        by smtp.gmail.com with ESMTPSA id a27-20020a05651c031b00b00263630ab29dsm3192690ljp.118.2022.09.08.06.31.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Sep 2022 06:31:09 -0700 (PDT)
-Message-ID: <6b11389c-35fc-122b-5ee8-a00675f19540@linaro.org>
-Date:   Thu, 8 Sep 2022 15:31:08 +0200
+        Thu, 08 Sep 2022 06:31:55 -0700 (PDT)
+Message-ID: <6e6b12aa-f516-6ea1-58e5-f46033b84985@linaro.org>
+Date:   Thu, 8 Sep 2022 15:31:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
-Subject: Re: [PATCH v3 2/4] ASoC: dt-bindings: qcom,sm8250: add compatibles
- for sm8450 and sm8250
+Subject: Re: [PATCH v3 3/4] ASoC: qcom: sm8250: move some code to common
 Content-Language: en-US
 To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         broonie@kernel.org
@@ -64,16 +63,16 @@ Cc:     lgirdwood@gmail.com, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, bgoswami@quicinc.com,
         perex@perex.cz, tiwai@suse.com, linux-arm-msm@vger.kernel.org,
         alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>
+        linux-kernel@vger.kernel.org
 References: <20220908063448.27102-1-srinivas.kandagatla@linaro.org>
- <20220908063448.27102-3-srinivas.kandagatla@linaro.org>
+ <20220908063448.27102-4-srinivas.kandagatla@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220908063448.27102-3-srinivas.kandagatla@linaro.org>
+In-Reply-To: <20220908063448.27102-4-srinivas.kandagatla@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,13 +81,26 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 08/09/2022 08:34, Srinivas Kandagatla wrote:
-> Add compatibles for sm8450 and sm8250xp based soundcards.
+> SM8450 machine driver code can be reused across multiple Qualcomm SoCs,
+> Atleast another 2 of them for now (SM8450 and SM8250XP).
+
+s/Atleast/At least/
+
 > 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> Acked-by: Rob Herring <robh@kernel.org>
+> Move some of the common SoundWire stream specific code to common file
+> so that other drivers can use it instead of duplicating.
+> 
+> This patch is to prepare the common driver to be able to add new SoCs support
+> with less dupication.
+
+s/dupication/duplication/
 
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+
+Assuming there were no changes against v2:
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
 Best regards,
