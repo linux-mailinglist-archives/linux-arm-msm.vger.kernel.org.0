@@ -2,69 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C1F65B1ABC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 12:57:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D1705B1AE2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 13:07:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230188AbiIHK52 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 06:57:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53618 "EHLO
+        id S229695AbiIHLHm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 07:07:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229587AbiIHK51 (ORCPT
+        with ESMTP id S229644AbiIHLHl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 06:57:27 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47EBB5FF68
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 03:57:25 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id t7so20375312wrm.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 03:57:25 -0700 (PDT)
+        Thu, 8 Sep 2022 07:07:41 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5163198766
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 04:07:36 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id u18so14819862lfo.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 04:07:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=MTpafhz6IFrqVPkemCGOt9Lbta4msZyE0ZaenAtXmGc=;
-        b=BKDKFt0NzIiRAuszyYSTnmvIjX9+MtmXMvlgdbUdEyAdSOp85ZU4PVdFIPsGyuE8P7
-         toH1E5/T8CDnZqUiKX8+XScAz4sx9qFTTfhxznTjMuE2+nRRekgWvro4xrKisxY5U6KL
-         9p3MUp6XDFmH8mKyGoxXHuP1dorV3MAJa5QYgBOTLjt6BJqDykF9n18eRRYnfqrzsEN5
-         4M+0io/6e9WF4AvRQHCYqVvYAsFSk7zjP0kbIcOiaUswUz2Y5fd3dAJEa8FzvoY0ySfz
-         ecDEJAZnOTf/a5MHwM6uEY+Mk3ZYXgT67TFwg+CtC3jH90idF/8DnmPSfbRl/Y8n6dsF
-         SZng==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=k9hmPZ4TQ475Q+zHQ4uSjdPfa/1uPRyyVAGnJUmO4cU=;
+        b=rVkTN2u/N0LsO4YLogfNF38S77kmesLtL5JEAE0RQLQUjfIMTPFKXIymmaaHnnPDab
+         MCU4ewSO/5TSOlHYwhtx9CapBb7BwcTtAkeC8xvSHlPC4H1bBYokbqvGoa0rkLJZNEnL
+         oj3UJbVFEGqq36Tw50MEl7u2sobrGhDreeIKUA9r3uhxJjl0NOOGkxU2mHGVYEppnhi9
+         lGl8x4/IEdCapkFtSv0EFPR9TO/2aHaR9tq7tszrUSur2MaD6+49nurAfi6PvUyf2OOK
+         DmU/W+VZAZYyrGDjeosvPkbtSNb3hMYRsUilV16ES7kYLlO05UM70ILBI0hxa22TP0XN
+         hnnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=MTpafhz6IFrqVPkemCGOt9Lbta4msZyE0ZaenAtXmGc=;
-        b=VCvbIVURvNDGqavaNlRubVH+HAEpa2z721Q8xXhUeR35AtqLyu3VSeOt2kqMcf1JOT
-         E3N5mCVhMB2uMh575p620xOhnVjQepjFRWoMVDboguH/W01Uygi02IH0c1q1uIu3r6Om
-         eZuu2xuUTOussCj07Ic66kaPOLeAg7jqKiPiMih0T+j2yh8uG6FokXVHktC6xKGyOSp+
-         9k/XCLjFWVEgFtmjXr1cphCFFZu+8sK9Fx3/VPmyi8EMzc/BbmTjHXpTuC8rsGDMaUru
-         o+WqV/OiQCkomfg1sdeRrU7VJwWHt39lB7OrIlxVPxPE1KkztqnqUL1L1HMqUzUxo2dG
-         POXA==
-X-Gm-Message-State: ACgBeo0g5kJ4lfITUbNKalgEO7juNjTq9QBlkwtyHBgd+B/1thmPJyuz
-        3ssSpLMXxchlPr3Q8oMZ+yoABw==
-X-Google-Smtp-Source: AA6agR4IFeJGhbOHvttmD7hhRPThg+F+cQeqUAzpsC1bxlRo/cytynuWcEkKxJqAfaBH3r4H+CqL/A==
-X-Received: by 2002:a05:6000:1f0c:b0:226:f3f3:9929 with SMTP id bv12-20020a0560001f0c00b00226f3f39929mr4644490wrb.362.1662634643905;
-        Thu, 08 Sep 2022 03:57:23 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id k1-20020adff281000000b00223b8168b15sm20877527wro.66.2022.09.08.03.57.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Sep 2022 03:57:23 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc:     bryan.odonoghue@linaro.org
-Subject: [PATCH 1/1] arm64: dts: qcom: Fix apq8016 compat string to match yaml
-Date:   Thu,  8 Sep 2022 11:57:20 +0100
-Message-Id: <20220908105720.857294-2-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20220908105720.857294-1-bryan.odonoghue@linaro.org>
-References: <20220908105720.857294-1-bryan.odonoghue@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=k9hmPZ4TQ475Q+zHQ4uSjdPfa/1uPRyyVAGnJUmO4cU=;
+        b=VA9hW8Q6HD/0QqrRNvc21P7/rax1iB/y6XEziaarMsxVkYP0syksqBCRfLEg+F5uer
+         RVSaBdCv7j7RYsooBcuWJJghgr6VAQ9iwbcPXqjIXpStQuRnptE0jhL2lfCA7x7TFnbT
+         gRyx0NJdYO2LnFaZ7NJkzXKjOy5Om1ucFCx9iIVT3X5UWm8YX0K3NDSYonD1C41PM7Y0
+         Pb8p8LGU3EgeHPO3C62zBRfT9FkkopAaqUOYviPq/Mj5zeTWvEU1FW3u8fTh/yznpsfg
+         Bzt6FAw5FsyT63HwPlSBTHdzwsV7hlRRyxUqwxSkraghLjxqqxUb8l+VEz+3P/Fb6m5s
+         P5WQ==
+X-Gm-Message-State: ACgBeo38ubcaVMUBAyFv4KUfL9WuAmW7vonFPUW/k58b6H9uT7KP1Ree
+        g/OS6Xl+zYs01TkLTb5nIQnDww==
+X-Google-Smtp-Source: AA6agR6XRYejb3ho7CGR7DjdwL9+WyGL+/6iuvpKqUWcwtkfNv04/j8KklLvf4TfUNGVw79gS28Hgw==
+X-Received: by 2002:ac2:4c4d:0:b0:497:a420:fe25 with SMTP id o13-20020ac24c4d000000b00497a420fe25mr2783444lfk.647.1662635254656;
+        Thu, 08 Sep 2022 04:07:34 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id a8-20020a056512200800b00497a0ea92desm1421722lfb.135.2022.09.08.04.07.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 Sep 2022 04:07:33 -0700 (PDT)
+Message-ID: <2d4de63a-c536-669d-b90d-21f60bc6b6fb@linaro.org>
+Date:   Thu, 8 Sep 2022 13:07:32 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v2 1/3] dt-bindings: clock: gcc-sdm845: add sdm670 global
+ clocks
+Content-Language: en-US
+To:     Richard Acayan <mailingradian@gmail.com>,
+        linux-arm-msm@vger.kernel.org
+Cc:     andersson@kernel.org, agross@kernel.org,
+        konrad.dybcio@somainline.org, mturquette@baylibre.com,
+        sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, tdas@codeaurora.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, caleb@connolly.tech,
+        jo@jsfamily.in
+References: <20220907223927.139858-1-mailingradian@gmail.com>
+ <20220907223927.139858-2-mailingradian@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220907223927.139858-2-mailingradian@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,31 +84,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The documented yaml compat string for the apq8016 is
-"qcom,apq8016-lpass-cpu" not "qcom,lpass-cpu-apq8016". Looking at the other
-lpass compat strings the general form is "qcom,socnum-lpass-cpu".
+On 08/09/2022 00:39, Richard Acayan wrote:
+> The Snapdragon 670 clocks will be added into the sdm845 gcc driver. Most
+> of the new clocks, GDSCs, and resets already have reserved IDs but there
+> are some resources that don't. Add the new clock and extra BCR from
+> Snapdragon 670 and document the differences between the SoC parent clocks.
+> 
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 
-We need to fix both the driver and dts to match.
 
-Fixes: 3761a3618f55 ("arm64: dts: qcom: add lpass node")
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thank you for your patch. There is something to discuss/improve.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 48bc2e09128d9..7a9882e39e905 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -1424,7 +1424,7 @@ sound: sound@7702000 {
- 
- 		lpass: audio-controller@7708000 {
- 			status = "disabled";
--			compatible = "qcom,lpass-cpu-apq8016";
-+			compatible = "qcom,apq8016-lpass-cpu";
- 
- 			/*
- 			 * Note: Unlike the name would suggest, the SEC_I2S_CLK
--- 
-2.37.3
+>    '#clock-cells':
+>      const: 1
+> @@ -63,6 +57,46 @@ required:
+>    - '#reset-cells'
+>    - '#power-domain-cells'
+>  
+> +allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: qcom,gcc-sdm845
+> +    then:
+> +      properties:
+> +        clocks:
+> +          items:
+> +            - description: Board XO source
+> +            - description: Board active XO source
+> +            - description: Sleep clock source
+> +            - description: PCIE 0 Pipe clock source
+> +            - description: PCIE 1 Pipe clock source
+> +        clock-names:
+> +          items:
+> +            - const: bi_tcxo
+> +            - const: bi_tcxo_ao
+> +            - const: sleep_clk
+> +            - const: pcie_0_pipe_clk
+> +            - const: pcie_1_pipe_clk
 
+Blank line here.
+
+With this:
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
