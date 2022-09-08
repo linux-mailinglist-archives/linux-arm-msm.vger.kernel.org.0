@@ -2,82 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 670675B28E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 00:00:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68FFE5B28ED
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 00:03:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229552AbiIHWAt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 18:00:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45212 "EHLO
+        id S229609AbiIHWCy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 18:02:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229918AbiIHWA2 (ORCPT
+        with ESMTP id S229534AbiIHWCx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 18:00:28 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72ACE1CC;
-        Thu,  8 Sep 2022 14:59:20 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id u22so483plq.12;
-        Thu, 08 Sep 2022 14:59:20 -0700 (PDT)
+        Thu, 8 Sep 2022 18:02:53 -0400
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31046226;
+        Thu,  8 Sep 2022 15:02:52 -0700 (PDT)
+Received: by mail-pj1-f42.google.com with SMTP id t6-20020a17090a950600b0020063f8f964so4295933pjo.0;
+        Thu, 08 Sep 2022 15:02:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=vMpxFnLbKz83gjzPIBTT7rCY9HADGWi0UqV/ZOOtUxw=;
-        b=pZDojHYG/x9U29bP9u/oeNrN1w0FegXosYS30fcaaZCyvC8zNM8SfSmse2U3yHQwkZ
-         Y6wWzYaHW7milsSsYq3h/n8jyqo6EJEh15xcY4oFL1PyBxqBf9klOLkqWJHIdNhNP9JI
-         GpRb3vj3LPvueDY8zvTshz+fbi2DGg16488AIwoM09aMdymQGSd/Pjr+VqD2fR89pdxN
-         YH9WV/Vjwuba6Oi+HHY2gjnJphaRFJvTUL8ojVhdb/z/167j+0FkS8rQEo+BePypSeUi
-         dQMBp5Bv6uuFEbmc+sgHclMfrXZZRTFZ45lm7Nea2rr5bm0l9jP9VLU/SLqwpjAnzvLx
-         VpDQ==
-X-Gm-Message-State: ACgBeo13HwBwwcTRaj9eO1dUlXTzalx3lHgXc/3r5qyKICRGHiZFc+TQ
-        FOMSXAvGVVEI01fY8xkm4kBNDMGX9Fg=
-X-Google-Smtp-Source: AA6agR43vj41RAVCljt/WpAvx7IYddgFALsXWp81BUtKTXP1upF2bCH63MoFFtddWxv7sCMJBHJ/1Q==
-X-Received: by 2002:a17:90b:390e:b0:202:5d4e:c1f2 with SMTP id ob14-20020a17090b390e00b002025d4ec1f2mr6251496pjb.45.1662674299082;
-        Thu, 08 Sep 2022 14:58:19 -0700 (PDT)
+        bh=b12taMnIzdMKm4jddAntJRZjOPMuOvjwagtVtJORdzI=;
+        b=pq1zBUWfMR3nUFc4rN2pj6sxK5EUoYvSLnQlNAWedj6PaZR6LUZ7BRxohIpYGzRZI3
+         f1PMQwIkNnW+huLZSsP34rVpxdowygya+BHc0EA7TiYrhjezC4+h8dUnrMTFqi+4N2dW
+         IqV9lt1ax2dAPYkdSRK/UNLS8BYTCO2ewjeUqy9sKOJ3n4vNs8KRz8URIrHnJkb/tlKh
+         56pFJNLjimWb3xOQHx8JOmwHIp50bCk3T+eQx588kwp3t2AK6oxmvE5LUABh0y/rDig7
+         qmO60H1ujiAAWOv7zoX35LbxvWXFzkXFyMEe89RsJrzzowVYpiLiUnPgQrEsJG0JCn6g
+         b1kw==
+X-Gm-Message-State: ACgBeo0xyZK73aB8ZnzZVW9vHi5R0x2O/BzgFBAldNT9r9BwDpVdayKA
+        9zB/kISUdbv8uOrxsh18Xvk=
+X-Google-Smtp-Source: AA6agR6pTB2tPVoMwzw7k4ZKmtCcnvQ4r6tBR0MR1NlBGJdXUd+qKpMCTXAozXCSSiKuB1tqLquBXA==
+X-Received: by 2002:a17:90b:3a89:b0:200:5a01:e3a6 with SMTP id om9-20020a17090b3a8900b002005a01e3a6mr6334666pjb.64.1662674571626;
+        Thu, 08 Sep 2022 15:02:51 -0700 (PDT)
 Received: from ?IPV6:2620:15c:211:201:c18a:7410:112c:aa7c? ([2620:15c:211:201:c18a:7410:112c:aa7c])
-        by smtp.gmail.com with ESMTPSA id k15-20020a170902c40f00b00176d8e33601sm6560752plk.203.2022.09.08.14.58.16
+        by smtp.gmail.com with ESMTPSA id 201-20020a6217d2000000b0053e5daf1a25sm108199pfx.45.2022.09.08.15.02.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Sep 2022 14:58:18 -0700 (PDT)
-Message-ID: <37d36dd9-f467-233c-babd-4e7c1c953c6c@acm.org>
-Date:   Thu, 8 Sep 2022 14:58:14 -0700
+        Thu, 08 Sep 2022 15:02:50 -0700 (PDT)
+Message-ID: <877d782d-8fb1-44bc-6de9-1c3c7f8667f3@acm.org>
+Date:   Thu, 8 Sep 2022 15:02:47 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.12.0
-Subject: Re: [RFC PATCH v3 1/4] ufs: core: prepare ufs for multi circular
- queue support
+Subject: Re: [RFC PATCH v3 2/4] ufs: core: mcq: Adds Multi-Circular Queue
+ support
 Content-Language: en-US
-To:     Asutosh Das <quic_asutoshd@quicinc.com>, quic_nguyenb@quicinc.com,
-        quic_xiaosenh@quicinc.com, stanley.chu@mediatek.com,
-        adrian.hunter@intel.com, avri.altman@wdc.com, mani@kernel.org,
-        quic_cang@quicinc.com, beanhuo@micron.com,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+To:     Bean Huo <huobean@gmail.com>,
+        Asutosh Das <quic_asutoshd@quicinc.com>,
+        quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
+        stanley.chu@mediatek.com, adrian.hunter@intel.com,
+        avri.altman@wdc.com, mani@kernel.org, quic_cang@quicinc.com,
+        beanhuo@micron.com, martin.petersen@oracle.com,
+        linux-scsi@vger.kernel.org
 Cc:     linux-arm-msm@vger.kernel.org,
         Alim Akhtar <alim.akhtar@samsung.com>,
         "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Jinyoung Choi <j-young.choi@samsung.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
         open list <linux-kernel@vger.kernel.org>
 References: <cover.1662157846.git.quic_asutoshd@quicinc.com>
- <757bbfe36629b7c31ef2630971f8678a7801223f.1662157846.git.quic_asutoshd@quicinc.com>
+ <04f4949e4dea991a93bdf6727bf12948ecc586be.1662157846.git.quic_asutoshd@quicinc.com>
+ <c3d2d8b307f7e11b7a2be751673220049b9a1a77.camel@gmail.com>
 From:   Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <757bbfe36629b7c31ef2630971f8678a7801223f.1662157846.git.quic_asutoshd@quicinc.com>
+In-Reply-To: <c3d2d8b307f7e11b7a2be751673220049b9a1a77.camel@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,
         FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/2/22 15:41, Asutosh Das wrote:
-> Preparatory changes for upcoming multi circular queue.
+On 9/5/22 09:27, Bean Huo wrote:
+> static read_queues is not initialized.
 
-One patch per change please and also describe each individual change. 
- From 
-https://www.kernel.org/doc/html/latest/process/submitting-patches.html#split-changes: 
-"Separate each logical change into a separate patch".
+Hi Bean,
+
+The Linux kernel coding style guide does not allow to explicitly 
+initialize static variables to zero. The C standard requires that static 
+variables that are not initialized explicitly are initialized to zero. 
+ From https://en.wikipedia.org/wiki/.bss: "In C, statically allocated 
+objects without an explicit initializer are initialized to zero (for 
+arithmetic types) or a null pointer (for pointer types)."
 
 Thanks,
 
