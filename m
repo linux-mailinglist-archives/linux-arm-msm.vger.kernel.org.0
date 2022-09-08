@@ -2,94 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C7985B230F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 18:05:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEAC85B231C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 18:07:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231650AbiIHQFE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 12:05:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44354 "EHLO
+        id S231743AbiIHQHf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 12:07:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231124AbiIHQFD (ORCPT
+        with ESMTP id S231370AbiIHQHe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 12:05:03 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09ADB1FCFE
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 09:05:01 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id bq9so13994526wrb.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 09:05:00 -0700 (PDT)
+        Thu, 8 Sep 2022 12:07:34 -0400
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8222CE4DD0
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 09:07:33 -0700 (PDT)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-346cd4c3d7aso79917087b3.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 09:07:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=W8Bb70RnM7+M3BfzJDsvaPNXFgt0KDaRDT2dCnghNLY=;
-        b=u9VZnK2sLRA3fAzJLvEGoYCyXEJz0ktGn67gxCsidBxbRnlDvl0tAqlUr9V2Lc9oUL
-         sH49RJg3ivKn8Sya4z6kS78qW+TrI4GGBYmeuEOGPwBVoGemt7276gRkWyPZz71xN3S2
-         egkdq7tGhPKiNhjgKFbFBKDqbJBfL4F8FTTUMLzleyEK0nZ6u3yGkCiBeUrzzMs6fus2
-         /+lYsY+anOy2DwvV96q1vEUEKmF2TAmgab6KyUk5lrjnjHh+l1tD8Bn9QIEXDCtE+VYo
-         9IVFhJZlSKwhVKnfG0YLJAGnJC8NXNi5nj81KXy7wwyLTgkVavcJyfWK0USat3d3l2N/
-         nT0A==
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=JJv51cMEwPKHeGHtyDWtDlnrabxmd1GuWDEXM9pG4rU=;
+        b=TcrxrJCtL6pyn3nnmMSCsZMPhcs5m3fyi2iV7TKoaOShZwoPJQYgjIx1KBYqXESOP0
+         bNBni7sHtK8MyEgvjgrpp9gur+gQLZj+Q80cmIREIB/RY5abPTO5tOnxFz9MXRG2zAar
+         117pLJeiY50esGdC1pApVgf1nKk0IeyoJawvZDOf+oLvJ5A3IdPLmHWZdai1sW8jlrMb
+         xwzeasSr/jc0rmPNyLp5Ak2o/AWa7XoT5FdGPt4i8iaKYZyk2vwijRjgAAhGmtRjhhJg
+         Ga9S67aUzkZzbjdoTAAvgPD6bPdvsVs0DJbIvQEU9UZrrTy4JUidRk74VH05GppL80F+
+         SGHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=W8Bb70RnM7+M3BfzJDsvaPNXFgt0KDaRDT2dCnghNLY=;
-        b=4omJmV0od/gAxidpjcchBCj8glS50KUlJIwDt0LgvGJU7YPHtqhAyFb/fNZ4WDK1lo
-         to/n55ajUQB7vXeguK4G33SWtGM2YtD/jB4OI4g2KHbgf7PP20i0KE/k9cpW+5uMKg0w
-         mkM4CnltL2OYXK9Oqm72v4aVzAuVClhD61fbq9yMviRUs4TY/rGOx01ROyEF3Fb/wUXA
-         EpTCn+Almm4Qn+pdsMa8vwcfnPd4dVJP7Sc3uv3/B40ExT3r1aIiQHm1MrpiSU1ymrc5
-         Zum8eaiLCQq7EiMZs3scvCywAMKOb4TtSv4PfJrJEvfRntxkDtWx23qaEfec2Do4kagl
-         Jpuw==
-X-Gm-Message-State: ACgBeo33d7XauDe8kab2CuFj7W4Mam1HmPTqr5b4KSUp5GWKs49t5+GF
-        mjLg58K7/b5SoICSbnRlIbsPYQ==
-X-Google-Smtp-Source: AA6agR5Rq/TrOYVS5sCsQ0Pk0Owlkd3Mi7wHEnFOUO1Xv0O4Z2VskjC8W4FofL7jR0QXRXovg/ryDA==
-X-Received: by 2002:a5d:65ce:0:b0:228:d8b6:d1 with SMTP id e14-20020a5d65ce000000b00228d8b600d1mr5509935wrw.486.1662653099589;
-        Thu, 08 Sep 2022 09:04:59 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id m2-20020a05600c3b0200b003a5ee64cc98sm3346012wms.33.2022.09.08.09.04.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Sep 2022 09:04:57 -0700 (PDT)
-Message-ID: <0334cda1-61c8-84af-eba4-6f2f68a7cb3f@nexus-software.ie>
-Date:   Thu, 8 Sep 2022 17:04:54 +0100
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=JJv51cMEwPKHeGHtyDWtDlnrabxmd1GuWDEXM9pG4rU=;
+        b=DalYoq0ye+wCerpJ57mEfmwfCY0/zrNjfK+lPcgPCJw1jpKjuJZgmBHX2aZ6iYk4fm
+         HUNC5WVeGeCwh0aP0OIbdmTkSsEJBlAxMvr5zmcx0pKGhEqtQv1JgDLDsCMJaIGWZOwJ
+         x8QLEEkOMk2dA+u8vKy4B4hADaeltGdVRzWWcpoeqBE5AmbjUX48DVACUAkNSA9tShyI
+         ORkoyQOq+Y2kjTM++55bvOljnYWTayqAauimL/L2POXmnBLQo9YPwgvVN1u+vB+LL8BC
+         ztH0eolIZkwBrjvSCE8Ou3JkzLvY0y4myjgMcy8KSbPKIBn/6bdF8pHtWV36MjVBMOPm
+         Dicw==
+X-Gm-Message-State: ACgBeo2DViu8EnkG48aWxtIT6fOheFYcFwUkNKDtYHrp5X9smMpZe2RB
+        zYoqJnD/e0aJvAXxXpjMI3QH3XFjmRgM4wY+22MpfA==
+X-Google-Smtp-Source: AA6agR4zjZ5M4DR5iRReMpuVoqJUCuQUa9QEuRg73CcLPLa7gZkhLwEqcDY/mIHWG91nOJscsrrtch3EhKjLReFSL5I=
+X-Received: by 2002:a0d:ffc5:0:b0:341:6cc1:c589 with SMTP id
+ p188-20020a0dffc5000000b003416cc1c589mr8431078ywf.418.1662653252731; Thu, 08
+ Sep 2022 09:07:32 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: msm8953: add MDSS
-Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220906183334.203787-1-luca@z3ntu.xyz>
- <20220906183334.203787-4-luca@z3ntu.xyz>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <20220906183334.203787-4-luca@z3ntu.xyz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+References: <1662651516-30283-1-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1662651516-30283-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 8 Sep 2022 19:07:21 +0300
+Message-ID: <CAA8EJpr_cBTyugJx1qZCEEgsdNvxHmZ7TPZiqRu_kb=NNNVLKw@mail.gmail.com>
+Subject: Re: [PATCH v3] drm/msm/dp: cleared DP_DOWNSPREAD_CTRL register before
+ start link training
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
+        dianders@chromium.org, vkoul@kernel.org, daniel@ffwll.ch,
+        airlied@linux.ie, agross@kernel.org, bjorn.andersson@linaro.org,
+        quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/09/2022 19:33, Luca Weiss wrote:
-> +				phy-names = "dsi";
+On Thu, 8 Sept 2022 at 18:38, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>
+> DOWNSPREAD_CTRL (0x107) shall be cleared to 0 upon power-on reset or an
+> upstream device disconnect. This patch will enforce this rule by always
+> cleared DOWNSPREAD_CTRL register to 0 before start link training. At rare
+> case that DP MSA timing parameters may be mis-interpreted by the sink
+> which causes audio sampling rate be calculated wrongly and cause audio
+> did not work at sink if DOWNSPREAD_CTRL register is not cleared to 0.
+> This patch also make sure bring sink out of D3 power-down mode into D0
+> (normal operation mode) successfully by retrying 3 times.
 
-Hi Luca.
+Split into three separate patches please.
 
-It looks like the phy-names property drop will go through.
-Suggest dropping the above for your V2.
 
-https://lore.kernel.org/all/20220907000105.786265-6-bryan.odonoghue@linaro.org/T/
-
----
-bod
+-- 
+With best wishes
+Dmitry
