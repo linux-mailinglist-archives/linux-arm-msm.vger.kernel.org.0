@@ -2,65 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CDBF5B206F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 16:23:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C8C85B2098
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 16:29:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232280AbiIHOXw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 10:23:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57950 "EHLO
+        id S232646AbiIHO3n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 10:29:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232281AbiIHOXu (ORCPT
+        with ESMTP id S232568AbiIHO3g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 10:23:50 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5B401316D8
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 07:23:49 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id s11so24614305edd.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 07:23:49 -0700 (PDT)
+        Thu, 8 Sep 2022 10:29:36 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D289D13D26
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 07:29:33 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id y18so5370088ljh.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 07:29:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=p3DDNNeH7lCPlmJjEkAMIprBwVt2TkoLL2ZSNR+i2uQ=;
-        b=hr+/b7N8DmRxnyhKeaX2jbus5KsLh9ib5SrIzFoqDskfSog0lF0nErMjN+RvJQ5Dhs
-         yKGk3leGwE21sivoesF0Y6xu/fikwpjHBMQEZIBYGYtUDkB4Sd/aNj0AmBVL//tmT7WR
-         MCCrcT+0lGehCTy7ghtFoXH+FRvDxOx/lQ0Bs=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=IQR375oRxnZf2kodfPY8b5WXgAl2frXO5MLWypEn38Q=;
+        b=zmjpmg+WdRp6cHOOYjZTEaoAj2FUyqJHgttikmf01asdhjogxji6sWHb0YULI+WNm2
+         hSdIqVMt7L8Q4L+vUeWq9Bum+lHWDBSIbO66+bR1mijNaxKFWoCBnDH9OZHWPugnnZAN
+         /a1npjG/XLYLtrNq5IWm2tWZmmweLM8fHZFgE1DQyzjFyqxh+G0CerloEZymb/mLKM8C
+         R1MyYQxusiTGcqcLkEvJZmcZ1jnql48iZnhBK2qd10uUbvX1tgFT4pVuD3B4eGwhsUzj
+         AEFjH3B8ys85nV7kmPJdiPpt0/Qe9H41LC2JXxTgOvkSvs//BCsIOwsVdQoUlsoiNWTh
+         G8uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=p3DDNNeH7lCPlmJjEkAMIprBwVt2TkoLL2ZSNR+i2uQ=;
-        b=d4acpOOoqvXcSJ5gBQUZPOSH20CDhjZjTFAgQuHoAlYbrcO7RLtJ0dtUJyvK1a4j1q
-         iTgqE4LBxrYSWCLbvGU2/tMHPbMmTy3v1zjDdC9uag3fkFHBqgN1Djqg8HidzBV1+gRq
-         ocpUY2gjeqKmuCkCqNJbcOnCDB/lXNlMiDuQd+q9zG4srSPnz2JnaTk9poCyDpc0Pa0m
-         vFGC54KQwhCtXKFroIQovDDBemIvvrU6e9oe7+chpNcCCRNrV695pK3h37Vf5L1g51+W
-         dOqwuKxh8s74Ow3fW0AVL5UpdkmSiKU0Z8m10JX3vOTqAaOpDhrmCds4zbdhzG3AlXCS
-         a1AQ==
-X-Gm-Message-State: ACgBeo1NhjOm0crIJ0DYWLzxjM9OjR7No2bsIa0Df0Ga7sKH5BMrMGFh
-        Ov8u8fQNNjUPrWJCFkASg5TEkROG2pmIma/B
-X-Google-Smtp-Source: AA6agR7r3lDWlA9J/UXqOmOITuJ4+38uB6ofrmt3IrQhQ9PDvgXE9J/VxaG5Hp4uQ2MKuSI5/ZbpHw==
-X-Received: by 2002:a05:6402:1a4d:b0:44e:221d:d1dd with SMTP id bf13-20020a0564021a4d00b0044e221dd1ddmr7598720edb.267.1662647028045;
-        Thu, 08 Sep 2022 07:23:48 -0700 (PDT)
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com. [209.85.221.45])
-        by smtp.gmail.com with ESMTPSA id fe12-20020a056402390c00b00450d23d40besm715075edb.82.2022.09.08.07.23.46
-        for <linux-arm-msm@vger.kernel.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=IQR375oRxnZf2kodfPY8b5WXgAl2frXO5MLWypEn38Q=;
+        b=lr3wzj5QevTvR1yOas6QgmB9B2g7JFtGuaDdF6Qx1Y4hzdBmpDLjHSvKIz+30/7tWP
+         17wDIYtvQUczUuQ4n1IJx/kKSqYYmGhbLguzordTYuI/m+tyoQaGxwGnXdc2bMI91tC3
+         AFXWgejMZwgBinCz+GuIberYZ3SSRr8jh0Y5o8W/2ejTUhCDGW/xLDw8ArAzX9LVziii
+         B/2O3nFo2i/9AO+Kcir/pgDqf1m+T+O2aedFYC1jnUPIpZQtrHiERWEgoAyvgB9hPytA
+         t9NrTFZkGAn7nuQaFWdJqVF4ZSrWNALbPp00WQEmkf+PJqskk+M+oleZAE7FBnVQBApY
+         NKfg==
+X-Gm-Message-State: ACgBeo07toILJr3lKmmo6osLzLrHztbjZdp6eUn4uUT1M+NBfD4LCiPD
+        QUqAzh/R3XtM+p8jAcsPhKZNGQ==
+X-Google-Smtp-Source: AA6agR7F5bUfjQa21ulmnIH/kP8kg8ZCU7Mu/1M094w1XOHHK6s6cUshRJs/32QfxVTfQo6ZNSEKYQ==
+X-Received: by 2002:a2e:7805:0:b0:26b:c19b:f08a with SMTP id t5-20020a2e7805000000b0026bc19bf08amr965567ljc.267.1662647371942;
+        Thu, 08 Sep 2022 07:29:31 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id b15-20020a19644f000000b00497adccecddsm561835lfj.170.2022.09.08.07.29.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Sep 2022 07:23:46 -0700 (PDT)
-Received: by mail-wr1-f45.google.com with SMTP id o25so1775560wrf.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 07:23:46 -0700 (PDT)
-X-Received: by 2002:a5d:4d0c:0:b0:228:cd9f:5a4c with SMTP id
- z12-20020a5d4d0c000000b00228cd9f5a4cmr5509487wrt.138.1662647025759; Thu, 08
- Sep 2022 07:23:45 -0700 (PDT)
+        Thu, 08 Sep 2022 07:29:31 -0700 (PDT)
+Message-ID: <168cde58-d061-97e7-54a5-5d3cccf3ce22@linaro.org>
+Date:   Thu, 8 Sep 2022 16:29:29 +0200
 MIME-Version: 1.0
-References: <20220907204924.173030-1-ahalaney@redhat.com> <abad381a-dfe7-9337-ff35-f657bf373d44@linaro.org>
-In-Reply-To: <abad381a-dfe7-9337-ff35-f657bf373d44@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 8 Sep 2022 07:23:33 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VmnKtx9smitqvNgmiCs-UCnLGFgbPnKd41QWeo1t3c9g@mail.gmail.com>
-Message-ID: <CAD=FV=VmnKtx9smitqvNgmiCs-UCnLGFgbPnKd41QWeo1t3c9g@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
 Subject: Re: [PATCH v3] regulator: dt-bindings: qcom,rpmh: Indicate
  regulator-allow-set-load dependencies
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+To:     Doug Anderson <dianders@chromium.org>
 Cc:     Andrew Halaney <ahalaney@redhat.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -74,10 +72,16 @@ Cc:     Andrew Halaney <ahalaney@redhat.com>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
         <devicetree@vger.kernel.org>, Johan Hovold <johan@kernel.org>,
         Johan Hovold <johan+kernel@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+References: <20220907204924.173030-1-ahalaney@redhat.com>
+ <abad381a-dfe7-9337-ff35-f657bf373d44@linaro.org>
+ <CAD=FV=VmnKtx9smitqvNgmiCs-UCnLGFgbPnKd41QWeo1t3c9g@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAD=FV=VmnKtx9smitqvNgmiCs-UCnLGFgbPnKd41QWeo1t3c9g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,79 +89,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 08/09/2022 16:23, Doug Anderson wrote:
+> Hi,
+> 
+> On Thu, Sep 8, 2022 at 3:25 AM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>> On 07/09/2022 22:49, Andrew Halaney wrote:
+>>> For RPMH regulators it doesn't make sense to indicate
+>>> regulator-allow-set-load without saying what modes you can switch to,
+>>> so be sure to indicate a dependency on regulator-allowed-modes.
+>>>
+>>> In general this is true for any regulators that are setting modes
+>>> instead of setting a load directly, for example RPMH regulators. A
+>>> counter example would be RPM based regulators, which set a load
+>>> change directly instead of a mode change. In the RPM case
+>>> regulator-allow-set-load alone is sufficient to describe the regulator
+>>> (the regulator can change its output current, here's the new load),
+>>> but in the RPMH case what valid operating modes exist must also be
+>>> stated to properly describe the regulator (the new load is this, what
+>>> is the optimum mode for this regulator with that load, let's change to
+>>> that mode now).
+>>>
+>>> With this in place devicetree validation can catch issues like this:
+>>>
+>>>     /mnt/extrassd/git/linux-next/arch/arm64/boot/dts/qcom/sm8350-hdk.dtb: pm8350-rpmh-regulators: ldo5: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
+>>>             From schema: /mnt/extrassd/git/linux-next/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+>>>
+>>> Where the RPMH regulator hardware is described as being settable, but
+>>> there are no modes described to set it to!
+>>>
+>>> Suggested-by: Johan Hovold <johan+kernel@kernel.org>
+>>> Reviewed-by: Johan Hovold <johan+kernel@kernel.org>
+>>> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+>>> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+>>> ---
+>>>
+>>> v2: https://lore.kernel.org/linux-arm-msm/20220906201959.69920-1-ahalaney@redhat.com/
+>>> Changes since v2:
+>>>   - Updated commit message to explain how this is a property of the
+>>>     hardware, and why it only applies to certain regulators like RPMH
+>>>     (Johan + Krzysztof recommendation)
+>>>   - Added Johan + Douglas' R-B tags
+>>
+>> You posted before we finished discussion so let me paste it here:
+>>
+>> The bindings don't express it, but the regulator core explicitly asks
+>> for set_mode with set_load callbacks in drms_uA_update(), which depends
+>> on REGULATOR_CHANGE_DRMS (toggled with regulator-allow-set-load).
+>>
+>> drms_uA_update() later calls regulator_mode_constrain() which checks if
+>> mode changing is allowed (REGULATOR_CHANGE_MODE).
+>>
+>> Therefore based on current implementation and meaning of
+>> set-load/allowed-modes properties, I would say that this applies to all
+>> regulators. I don't think that RPMh is special here.
+> 
+> RPMh is special compared to RPM because in RPMh the hardware exposes
+> "modes" to the OS and in RPM the hardware doesn't. Specifically:
+> 
+> In RPM, the OS (Linux) has no idea what mode the regulator is running
+> at and what modes are valid. The OS just tells the RPM hardware "I'm
+> requesting a load of X uA. Thanks!" So "regulator-allow-set-mode"
+> basically says "yeah, let the OS talk to RPM about loads for this
+> regulator.
 
-On Thu, Sep 8, 2022 at 3:25 AM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 07/09/2022 22:49, Andrew Halaney wrote:
-> > For RPMH regulators it doesn't make sense to indicate
-> > regulator-allow-set-load without saying what modes you can switch to,
-> > so be sure to indicate a dependency on regulator-allowed-modes.
-> >
-> > In general this is true for any regulators that are setting modes
-> > instead of setting a load directly, for example RPMH regulators. A
-> > counter example would be RPM based regulators, which set a load
-> > change directly instead of a mode change. In the RPM case
-> > regulator-allow-set-load alone is sufficient to describe the regulator
-> > (the regulator can change its output current, here's the new load),
-> > but in the RPMH case what valid operating modes exist must also be
-> > stated to properly describe the regulator (the new load is this, what
-> > is the optimum mode for this regulator with that load, let's change to
-> > that mode now).
-> >
-> > With this in place devicetree validation can catch issues like this:
-> >
-> >     /mnt/extrassd/git/linux-next/arch/arm64/boot/dts/qcom/sm8350-hdk.dtb: pm8350-rpmh-regulators: ldo5: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
-> >             From schema: /mnt/extrassd/git/linux-next/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
-> >
-> > Where the RPMH regulator hardware is described as being settable, but
-> > there are no modes described to set it to!
-> >
-> > Suggested-by: Johan Hovold <johan+kernel@kernel.org>
-> > Reviewed-by: Johan Hovold <johan+kernel@kernel.org>
-> > Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> > Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-> > ---
-> >
-> > v2: https://lore.kernel.org/linux-arm-msm/20220906201959.69920-1-ahalaney@redhat.com/
-> > Changes since v2:
-> >   - Updated commit message to explain how this is a property of the
-> >     hardware, and why it only applies to certain regulators like RPMH
-> >     (Johan + Krzysztof recommendation)
-> >   - Added Johan + Douglas' R-B tags
->
-> You posted before we finished discussion so let me paste it here:
->
-> The bindings don't express it, but the regulator core explicitly asks
-> for set_mode with set_load callbacks in drms_uA_update(), which depends
-> on REGULATOR_CHANGE_DRMS (toggled with regulator-allow-set-load).
->
-> drms_uA_update() later calls regulator_mode_constrain() which checks if
-> mode changing is allowed (REGULATOR_CHANGE_MODE).
->
-> Therefore based on current implementation and meaning of
-> set-load/allowed-modes properties, I would say that this applies to all
-> regulators. I don't think that RPMh is special here.
+So how does set load works for this case? You mentioned
+"allow-set-mode", but we talk about "allow-set-load".
 
-RPMh is special compared to RPM because in RPMh the hardware exposes
-"modes" to the OS and in RPM the hardware doesn't. Specifically:
+> 
+> In RPMh, the OS knows all about the modes. For each regulator it's the
+> OS's job to know how much load the regulator can handle before it
+> needs to change modes. So the OS adds up all the load requests from
+> all the users of the regulator and then translates that to a mode. The
+> OS knows all about the modes possible for the regulator and limiting
+> them to a subset is a concept that is sensible.
+> 
+> This is why, for instance, there can be an "initial mode" specified
+> for RPMh but not for RPM. The OS doesn't ever know what mode a RPM
+> regulator is in but it does for RPMh.
 
-In RPM, the OS (Linux) has no idea what mode the regulator is running
-at and what modes are valid. The OS just tells the RPM hardware "I'm
-requesting a load of X uA. Thanks!" So "regulator-allow-set-mode"
-basically says "yeah, let the OS talk to RPM about loads for this
-regulator.
+Sorry, I don't find it related. Whether RPM has modes or not, does not
+matter to this discussion unless it sets as well allow-set-load without
+the mode... and then how does it work? In current implementation it
+shouldn't...
 
-In RPMh, the OS knows all about the modes. For each regulator it's the
-OS's job to know how much load the regulator can handle before it
-needs to change modes. So the OS adds up all the load requests from
-all the users of the regulator and then translates that to a mode. The
-OS knows all about the modes possible for the regulator and limiting
-them to a subset is a concept that is sensible.
-
-This is why, for instance, there can be an "initial mode" specified
-for RPMh but not for RPM. The OS doesn't ever know what mode a RPM
-regulator is in but it does for RPMh.
-
--Doug
+Best regards,
+Krzysztof
