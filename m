@@ -2,139 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 451BC5B16C8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 10:21:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 574245B16D1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 10:23:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231349AbiIHIVK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 04:21:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58776 "EHLO
+        id S230392AbiIHIXa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 04:23:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229559AbiIHIVI (ORCPT
+        with ESMTP id S230070AbiIHIX3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 04:21:08 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1460DA2AAC;
-        Thu,  8 Sep 2022 01:21:07 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id C7A10CE1E99;
-        Thu,  8 Sep 2022 08:21:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B85CC43146;
-        Thu,  8 Sep 2022 08:21:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1662625261;
-        bh=juJ+Obww8wGr6tHeP9vf9AOYM2NQPYUQZ/m7TW5mLNU=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=tizFdmsAzfuZlcCB1PzQp+Fstqe0Gz/AU3kH4AsoFOt+oJE/o4IJp0tANnzRfQ+ds
-         O0udAzI/++KI8ecttK/dmXVBeehu33B5OHBJfPfYOD4W9GI9EB8Kfz8+LtQqxdX99E
-         U9JC0ZstQrPGvahqbtM61E7xpDN79w48fkW7if2xCQ0ObfHZnU4RimHHLqLVSjExGq
-         J1ta3+FMDkBK7Y80bcqW5f7OJuZyn2E2uCwFYbn8vwnaUqaW1iZ2MK7uO9nyc4De8R
-         V9zKT+azQeKqRyWVEL5IEdVS0frhuR7XvnlvfWARjzvUkAmOs1BHXVPqIA0UVRL9sc
-         sLgENxteOH48Q==
-Received: by mail-lf1-f46.google.com with SMTP id q21so12247568lfo.0;
-        Thu, 08 Sep 2022 01:21:01 -0700 (PDT)
-X-Gm-Message-State: ACgBeo3BR0ABJEmP3N7Kfbfk66qDdm/WEp8W/O8qhpAcot3AHHPJGIPn
-        YDMkAzODaTSbGfzXuTTN8g52Ndx6T4311ysyfnU=
-X-Google-Smtp-Source: AA6agR6dVHNrG/c/DlIxGmDXzttHjB7dvERz4OoFS1ZmwhxbUMB6F4NaUD6zTLgJ+iw33LlIWsyPAIONcZdrrPXC6Rg=
-X-Received: by 2002:a05:6512:150e:b0:492:d9fd:9bdf with SMTP id
- bq14-20020a056512150e00b00492d9fd9bdfmr2222287lfb.583.1662625259228; Thu, 08
- Sep 2022 01:20:59 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220907164606.65742-1-andriy.shevchenko@linux.intel.com> <20220907164606.65742-9-andriy.shevchenko@linux.intel.com>
-In-Reply-To: <20220907164606.65742-9-andriy.shevchenko@linux.intel.com>
-From:   Ard Biesheuvel <ardb@kernel.org>
-Date:   Thu, 8 Sep 2022 10:20:47 +0200
-X-Gmail-Original-Message-ID: <CAMj1kXFLgo2fC80Z6zKUC8ULyLrFJ7XOvzwE5tYYLtzDhqqHOw@mail.gmail.com>
-Message-ID: <CAMj1kXFLgo2fC80Z6zKUC8ULyLrFJ7XOvzwE5tYYLtzDhqqHOw@mail.gmail.com>
-Subject: Re: [PATCH v1 8/8] efi/dev-path-parser: Refactor _UID handling to use acpi_dev_uid_to_integer()
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc:     "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-        Wolfram Sang <wsa+renesas@sang-engineering.com>,
-        Hans de Goede <hdegoede@redhat.com>,
-        linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-efi@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-spi@vger.kernel.org,
-        devel@acpica.org, "Rafael J. Wysocki" <rafael@kernel.org>,
-        Len Brown <lenb@kernel.org>, Elie Morisse <syniurge@gmail.com>,
-        Nehal Shah <nehal-bakulchandra.shah@amd.com>,
-        Shyam Sundar S K <shyam-sundar.s-k@amd.com>,
-        Khalil Blaiech <kblaiech@nvidia.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Will Deacon <will@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Daniel Mack <daniel@zonque.org>,
-        Haojian Zhuang <haojian.zhuang@gmail.com>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Mark Brown <broonie@kernel.org>,
-        Robert Moore <robert.moore@intel.com>,
-        Wolfram Sang <wsa@kernel.org>
+        Thu, 8 Sep 2022 04:23:29 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E8DAB4416;
+        Thu,  8 Sep 2022 01:23:24 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id t7so19703443wrm.10;
+        Thu, 08 Sep 2022 01:23:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date;
+        bh=xc4RgE3PUhocOgenP0ywVlkdXr/eaf54hZdXFi8BVb0=;
+        b=mbCVQGm4IfnN3MFd0T/X57SrahPJpL7q3pQfgaTPUsZKr6hdByFKzIKN72QMTn6GU5
+         QvPK1lp9EPiVgekD8z6yWf/vU7yi9jqxeYiE9q+y0RGcKgtPiv9DKzd3PblYPxEhgayl
+         cMvwNx8vSqIUamnYEL8HZSl6hQSCmhcI2tew0TmLPrJM1OCHC5nXL/aguYXPxg5WOL6N
+         Ml68kGSi/Z5tl9bcTvhdFFuZ3q7MpIGdZE1UKsDqLZDF9o5WYTruHhYAxPyN29h+a8KY
+         8tDq+In0jE0gD7tw6X3yQMcAn5rhVrk/bi55XpV3omWwzkE16j/m5nV9NfgKSh1qZlQK
+         qPfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=xc4RgE3PUhocOgenP0ywVlkdXr/eaf54hZdXFi8BVb0=;
+        b=Vs1S39nnIWzp5QwHNkGHbVA6TvwNa6Ke8qezMWXwsQNnTKZh3eDgmHT5M2Awh6RACA
+         DdFA3NAi8TGAjtlGCH8nAoAgU0tVIiXISYEsXyDigbisVKgKLiNbFGIChH8IUhpWIuAH
+         6E/K8sKzP/nWj+OmewEGWQFZytdMoh3LGqo20c/ObJD1kV2rjzcqTrTXMeMme2fc0U4N
+         KKWZCxjfb48YGGph82YW8heJwi4veWCIR3Ysqg1UV1j0SOnBx4s6OGn31JE0V3S/bv+J
+         nNU9YJuCUS4i95f4LsbW27M0pcftev69V3bvXkv7UIjIQV2sGbcZd3XOKD0Khphhtxtk
+         lS5A==
+X-Gm-Message-State: ACgBeo0D3aWPVa+OeTmu9WMw8tOC0trfNsNYTsz508HYaybw+vdPfhxF
+        uBDUSF4hyLDKLopPSuZvnqQ=
+X-Google-Smtp-Source: AA6agR5By09qzajZi0KlG/79DDr8MNO8fRvENdlAnUfP9IUmP6OWcxnCFC3YaXbX7SRznWxHMdE/Zg==
+X-Received: by 2002:a5d:5273:0:b0:228:b382:8ea0 with SMTP id l19-20020a5d5273000000b00228b3828ea0mr4192991wrc.347.1662625402705;
+        Thu, 08 Sep 2022 01:23:22 -0700 (PDT)
+Received: from [10.176.234.249] ([137.201.254.41])
+        by smtp.googlemail.com with ESMTPSA id p21-20020a1c7415000000b003b2878b9e0dsm1830540wmc.20.2022.09.08.01.23.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Sep 2022 01:23:22 -0700 (PDT)
+Message-ID: <6b56ad5fd5b5ab128afd399adb54a7566c4a144f.camel@gmail.com>
+Subject: Re: [RFC PATCH v3 1/4] ufs: core: prepare ufs for multi circular
+ queue support
+From:   Bean Huo <huobean@gmail.com>
+To:     "Asutosh Das (asd)" <quic_asutoshd@quicinc.com>,
+        quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
+        stanley.chu@mediatek.com, adrian.hunter@intel.com,
+        bvanassche@acm.org, avri.altman@wdc.com, mani@kernel.org,
+        quic_cang@quicinc.com, beanhuo@micron.com,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        open list <linux-kernel@vger.kernel.org>
+Date:   Thu, 08 Sep 2022 10:23:20 +0200
+In-Reply-To: <df32bbd5-4109-903b-c7ba-7777a298f5aa@quicinc.com>
+References: <cover.1662157846.git.quic_asutoshd@quicinc.com>
+         <757bbfe36629b7c31ef2630971f8678a7801223f.1662157846.git.quic_asutoshd@quicinc.com>
+         <6e594dc2ce6103884b7768c2fed55eabec0d5ed8.camel@gmail.com>
+         <df32bbd5-4109-903b-c7ba-7777a298f5aa@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.44.1-0ubuntu1 
+MIME-Version: 1.0
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 7 Sept 2022 at 18:57, Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
->
-> ACPI utils provide acpi_dev_uid_to_integer() helper to extract _UID as
-> an integer. Use it instead of custom approach.
->
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> ---
->  drivers/firmware/efi/dev-path-parser.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/firmware/efi/dev-path-parser.c b/drivers/firmware/efi/dev-path-parser.c
-> index eb9c65f97841..113b3ca1bd76 100644
-> --- a/drivers/firmware/efi/dev-path-parser.c
-> +++ b/drivers/firmware/efi/dev-path-parser.c
-> @@ -15,9 +15,11 @@
->  static long __init parse_acpi_path(const struct efi_dev_path *node,
->                                    struct device *parent, struct device **child)
->  {
-> -       char hid[ACPI_ID_LEN], uid[11]; /* UINT_MAX + null byte */
->         struct acpi_device *adev;
->         struct device *phys_dev;
-> +       char hid[ACPI_ID_LEN];
-> +       long ret;
-> +       u64 uid;
->
->         if (node->header.length != 12)
->                 return -EINVAL;
-> @@ -27,12 +29,12 @@ static long __init parse_acpi_path(const struct efi_dev_path *node,
->                 'A' + ((node->acpi.hid >>  5) & 0x1f) - 1,
->                 'A' + ((node->acpi.hid >>  0) & 0x1f) - 1,
->                         node->acpi.hid >> 16);
-> -       sprintf(uid, "%u", node->acpi.uid);
->
->         for_each_acpi_dev_match(adev, hid, NULL, -1) {
-> -               if (adev->pnp.unique_id && !strcmp(adev->pnp.unique_id, uid))
-> +               ret = acpi_dev_uid_to_integer(adev, &uid);
-> +               if (ret == -ENODATA && node->acpi.uid == 0)
->                         break;
-> -               if (!adev->pnp.unique_id && node->acpi.uid == 0)
-> +               if (ret == 0 && node->acpi.uid == uid)
+T24gV2VkLCAyMDIyLTA5LTA3IGF0IDIwOjAwIC0wNzAwLCBBc3V0b3NoIERhcyAoYXNkKSB3cm90
+ZToKPiA+ID4gdWZzaGNkX2xyYiAqbHJicCwgdTggdXBpdV9mbGFncykKPiA+ID4gwqAgwqDCoMKg
+wqDCoMKgwqDCoC8qIGNvbW1hbmQgZGVzY3JpcHRvciBmaWVsZHMgKi8KPiA+ID4gwqAgwqDCoMKg
+wqDCoMKgwqDCoHVjZF9yZXFfcHRyLT5oZWFkZXIuZHdvcmRfMCA9IFVQSVVfSEVBREVSX0RXT1JE
+KAo+ID4gPiDCoCDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgVVBJVV9UUkFOU0FDVElPTl9DT01NQU5ELAo+ID4gPiB1cGl1X2Zs
+YWdzLAo+ID4gPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqBscmJwLT5sdW4sIGxyYnAtPnRhc2tfdGFnKTsKPiA+ID4gK8KgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+bHJicC0+bHVuLCBscmJwLT50YXNrX3RhZyAmCj4gPiA+IDB4ZmYpOwo+ID4gPiDCoCDCoMKgwqDC
+oMKgwqDCoMKgdWNkX3JlcV9wdHItPmhlYWRlci5kd29yZF8xID0gVVBJVV9IRUFERVJfRFdPUkQo
+Cj4gPiA+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoFVQSVVfQ09NTUFORF9TRVRfVFlQRV9TQ1NJLCAwLCAwLAo+ID4gPiAwKTsK
+PiA+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgVVBJVV9DT01NQU5EX1NFVF9UWVBFX1NDU0ksIDAsIDAsCj4gPiA+ICvCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oChscmJwLT50YXNrX3RhZyAmIDB4ZjAwKSA8PCA0KTsKPiA+ID4gwqDCoCAKPiA+IAo+ID4gQXJl
+IHlvdSBzdXJlIGhlcmUgIihscmJwLT50YXNrX3RhZyAmIDB4ZjAwKSA8PCA0IiBpcyBjb3JyZWN0
+Pwo+ID4gCj4gRVhUX0lJRCBpcyB0aGUgaGlnaGVyIG5pYmJsZSBpbiBEV09SRDEuIFNvIHRoaXMg
+bG9va3MgY29ycmVjdCB0byBtZS4KPiAKPiBDT01NQU5EIFVQSVUKPiAwwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgMcKgwqDCoMKgIDLCoMKgwqDCoMKgMwo+IHh4MDAwMDAxYiBGbGFncyBMVU4gVGFzayBU
+YWcKPiA0wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoDXCoMKg
+wqDCoMKgwqDCoDbCoMKgwqDCoMKgwqDCoDcKPiBJSUQgQ29tbWFuZCBTZXQgVHlwZSBSZXNlcnZl
+ZCBSZXNlcnZlZCBFWFRfSUlEIHwgUmVzZXJ2ZWQKCkhpIEFzdXRvc2gsCgp5ZXMsIFs3OjRdIG9m
+IGJ5dGUgNyBpbiBVUElVIGhlYWRlciBmb3IgaG9zdCB0byBkZXZpY2UgVVBJVXMgRVhUX0lJRCwK
+dGhpcyBpcyBjb3JyZWN0LgoKYnV0IEkgdGhpbmsgYnl0ZTcgc2hvdWxkIGJlICAobHJicC0+dGFz
+a190YWcgJiAweGYwMCkgPj4gNCk7IHJhdGhlcgp0aGFuICI8PCA0IgoKb3Igd2hhdCBJIG1pc3N1
+bmRlcnNvb2QuCgoKS2luZCByZWdhcmRzLApCZWFuCgoK
 
-Is it necessary to reorder the conditions here? I.e., why not
-
-> +               ret = acpi_dev_uid_to_integer(adev, &uid);
-> +               if (ret == 0 && node->acpi.uid == uid)
->                         break;
-> +               if (ret == -ENODATA && node->acpi.uid == 0)
->                         break;
-
-?
-
-With that fixed,
-
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
