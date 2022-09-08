@@ -2,77 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FCEA5B1663
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 10:09:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9FB25B1669
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 10:09:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230354AbiIHIJv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 04:09:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54870 "EHLO
+        id S231357AbiIHIJy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 04:09:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231339AbiIHIJP (ORCPT
+        with ESMTP id S231328AbiIHIJr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 04:09:15 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 474EDD6B94
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 01:09:10 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id a8so4844212lff.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 01:09:10 -0700 (PDT)
+        Thu, 8 Sep 2022 04:09:47 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1486720BEB
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 01:09:45 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id m1so23134213edb.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 01:09:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=2uHrS5IyfnxI/NDFuBzpGUtE32OKmUy5qZV4Ecgh0oc=;
-        b=gF6W14in+Ehs6sp+AkS6psdFKC/u4aP5AwvCVT6W7WcMV39HehtaNvK/fLYjGYxA5g
-         Nhc9N6aJleHtixfkONiJHyrm/HegZT+iB2eenV2M2Lgj+ENipbo5KciZ0G9z/M0HYoL5
-         riazXZfVNz4oT1ixjDcJTt2AVdoaX4YXTQVG5Hau0NfLNUhp76n7Yu0wZFR/GKg2lGtI
-         YaGu9Y1nl9XdU1AzjckgVIOSnPq+bCQc+Fn7sy2Z6djkrtjOR6sHIC08TPyb5fkIBscd
-         Uo6670mqhTDaqhPfc4eSSSKGllq4gzpoe41yi9xRZH94vcgIvO6DZUTG42MVzQwVlHOG
-         uk2w==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=S1qXKiCajjh/Uipc8YgMZjzlpJicWnNYZECRNVm1W44=;
+        b=YUOI2kYGVp8TedktBBfFdNobEmHj7S9Q1LO8y/r2tvlZZ+5ZC4wlQhkhl1SEtvc4cP
+         F8XJfH9efVRhKhKBlrIduz313st7Jm3Ay4LLP9V5gtcdxIruOaGROH2A2qaODRX7H/ua
+         0Su8QeZwPmjFNoNx9t/sC8yFpobFSwGGGbMtMNlEXPce22uejctJNRxxDegKT6OegWUg
+         xLelMTTz2OPFcT79j0o7xF8ZimSkWQRyIB+3N6jF39pwaJ3byW8+tFfI3QBTAkbd6TSv
+         XNLXIUdaszwnMZZCzxaOOQ9kVY7yf5ayJPm+udIirSx11k5DxI+p4ARltB8EWRgoSXXT
+         gGNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=2uHrS5IyfnxI/NDFuBzpGUtE32OKmUy5qZV4Ecgh0oc=;
-        b=1k4YYPVFayTbD8vYg2JwK67wKDCcBUR7qu7MA0ktNV0s3wd3JC0nGGD6ONI1ri/gIJ
-         hJCyMvInoa899feJxn+tY/aos2cZkOy6GkZaCUD4BqsewriSdTFt8QYyH75zWtVopefK
-         DgmOEUAMaNuxV3yMF3mWq3qqDvl0G2qPd2SvGZ0RC17vcHc9156+sIWUsl8s04xFdBUL
-         umDIb9Dm/Q2seQZH/zX3sDkxD7XzjgFvpoOJVaMthCXeXKXGJDS4kiFKme5h9tt4GldG
-         5z+N+Mu/NgRiYSioZIR2iIZZJA/4VOiksXOpu7SjTtt+6NPs+2IvIGVPLpjtWHulYZ1N
-         lHvw==
-X-Gm-Message-State: ACgBeo1jTiRIWBM7PZUbmwmJX/KpWfR8rR+VSyb0GxOYyYFz8DuluGiY
-        zzJ8j4fpTnvJA+uYHG5iACdOZw==
-X-Google-Smtp-Source: AA6agR7pxVb5YwWUQEZSo/a3AgfqoV97EsEwBgmAxmp1OkHqO2X/cm6gPU6guzwl2xQwUmTGx2Tvaw==
-X-Received: by 2002:a05:6512:3f4:b0:497:a33e:365e with SMTP id n20-20020a05651203f400b00497a33e365emr2484276lfq.638.1662624548677;
-        Thu, 08 Sep 2022 01:09:08 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id p1-20020ac24ec1000000b0048cf7e8145asm535993lfr.117.2022.09.08.01.09.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Sep 2022 01:09:08 -0700 (PDT)
-Message-ID: <0728587d-1c11-f83b-8266-21f4179519db@linaro.org>
-Date:   Thu, 8 Sep 2022 10:09:07 +0200
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=S1qXKiCajjh/Uipc8YgMZjzlpJicWnNYZECRNVm1W44=;
+        b=WkncWLNdm6owRNavZ4qLXRHsgAUl0YUCF+va4e2pePEcLExcalNFKza8JZFNEGtb1X
+         JVhBFFyDdNpu70qDbYFJzAkk1LVpyAQwtYPyAFs3fPEGQrOAhjUvLFDSG7liA6xGfLSW
+         WkiHYlurelHwqENxdnI+gmZIe65TYgqpuBipH6zMUcFp+Z0B/GL9qW3/sXzl3Y1kR+al
+         Vw4nG7C1S54kpE4yZ17CeYCqVguF85Qv5M/slDu/7oPFnHc5JVXoQNFUzCgdK54zNaj+
+         Pf0IfBFhpw3HRP1IFHNJpxwpLHNx4faWcEwRs9qZhK/EKsMkrwa/9HiJuTnSaVM1Erhz
+         qeEQ==
+X-Gm-Message-State: ACgBeo1lNSAE2dg12WDOhVPAbr1TL+AMHpg+kj/F/fYXTGKhi+xK9uYl
+        jPq5Slq5GBc22h1EHewMI10BU5RicBPE5/kCgCDQEmKg36CHGw==
+X-Google-Smtp-Source: AA6agR4Ul4v+ifKJUG+DffGG6giEHITRYdE5Bt6AKV97jrthkmExLFsd8TA3X6Foj57Noofm4ulq1/3/4JopmDpgxeQ=
+X-Received: by 2002:a05:6402:2691:b0:43d:ba10:854b with SMTP id
+ w17-20020a056402269100b0043dba10854bmr5936048edd.158.1662624583635; Thu, 08
+ Sep 2022 01:09:43 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH 1/3] dt-bindings: pinctrl: qcom,pmic-mpp: make compatible
- fallbacks specific
-Content-Language: en-US
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+References: <20220903174150.3566935-1-iskren.chernev@gmail.com> <20220903174150.3566935-5-iskren.chernev@gmail.com>
+In-Reply-To: <20220903174150.3566935-5-iskren.chernev@gmail.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Thu, 8 Sep 2022 10:09:32 +0200
+Message-ID: <CACRpkdYwc=py6s0CqGZgusH4yQA+ZqQGYgeWqcv+NDpnSwt3Vw@mail.gmail.com>
+Subject: Re: [PATCH v2 4/9] dt-bindings: pinctrl: qcom: sm6115: Add reserved ranges
+To:     Iskren Chernev <iskren.chernev@gmail.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220908080801.28910-1-krzysztof.kozlowski@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220908080801.28910-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,15 +73,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/09/2022 10:07, Krzysztof Kozlowski wrote:
-> Instead of allowing compatibles followed by any fallback (for SPMI or
-> SSBI PMICs), make the list specific.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
+On Sat, Sep 3, 2022 at 7:42 PM Iskren Chernev <iskren.chernev@gmail.com> wrote:
 
-Arh, I am sorry, this is a duplicated patch (mistake when
-git-format-patching). Please ignore this patchset.
+> Ideally this and similar common properties will be inherited so you
+> won't need to paste them in every pinctrl binding.
+>
+> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
 
-Best regards,
-Krzysztof
+This patch 4/9 applied to the pinctrl tree.
+
+Yours,
+Linus Walleij
