@@ -2,105 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 41A085B252E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 19:52:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 815C05B256F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 20:15:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231814AbiIHRwN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 13:52:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40254 "EHLO
+        id S231398AbiIHSPp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 14:15:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229842AbiIHRwM (ORCPT
+        with ESMTP id S230105AbiIHSPm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 13:52:12 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2114D99DE;
-        Thu,  8 Sep 2022 10:52:11 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id t14so20139283wrx.8;
-        Thu, 08 Sep 2022 10:52:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=kT+2AbTrH1Kh7uAi7sVUDrkL8YeDLjiGtQ85nst8gfU=;
-        b=eUcl9Y0xLe5I1Pus5u74csvo/LKTlohSmCxPX+tbDeSL8iGEViZmBkXiZ3VWD0Upb0
-         2mO2ePdJpdfgmdIkZJw2OWHce4Etar9/2uwx+eWAfsMk/xYvMG8kWDL9lFMTihWUF/fV
-         bAXfVAJZsThVpObTsyA9GhaBhbAj+Zfl0M6dIXAQ7k355UQZurA+m/tnDm2RVa0AoNol
-         Wat9+o0uEhzf4Q9TL65H97HxJUe/5OZwkpQI8m5RfZ4TRTxG20QARrA78afMW1s01a4I
-         791yhCMweJ6cS5t/6LhoghDmmbnsGX5CKYjtnGo3zWWH4MtUSJHkpauzP2CtE9z8EUqY
-         G4nA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=kT+2AbTrH1Kh7uAi7sVUDrkL8YeDLjiGtQ85nst8gfU=;
-        b=Jwg4W/8o2wtxaa1fPDtdz2Be0skmBldtZm6urrbsJ41akfLrcTTU4Gs9iDcsW8Vbw8
-         SZ8vR3BPTvHGW7RA3//WHsdf1r2jiEiNoHkn5e0MUEGdL2vKXf7x0V3lkJJyORhiPxPa
-         QGDDIv7e1vOhlygT43gM2vGsk5HYRxFPyI+i2hTc0WEXkPFLHoGmwNh9OKq5v0fwgbqL
-         1ysi05TM4I8qUNmLDSwZGXaG4t9ODRA7uZWG14F/wwUCRSJl/XGBRenipgpQELoc8qJ+
-         k+ItbhA2XUOyLnU6DCmzV/pnslFO50ojEmBMAalIChTAn59oE7CrtZQ2/ngJD93nfCQ4
-         5PZw==
-X-Gm-Message-State: ACgBeo1qP4VJOJeRTc5RpevmLBCEmIGk14qWOwjoWvD3BhnqjxEuQLv4
-        /GiamulItUkFeH8UMEBPv1g=
-X-Google-Smtp-Source: AA6agR6ac9wu3/ypYFwz28EfERWFSyeR30QK/KsEUG2H6NdnyQUu/tU98reF2mS37pHqFLnbL2ZBhw==
-X-Received: by 2002:a5d:64cf:0:b0:220:6d8e:1db0 with SMTP id f15-20020a5d64cf000000b002206d8e1db0mr5580917wri.564.1662659529837;
-        Thu, 08 Sep 2022 10:52:09 -0700 (PDT)
-Received: from [192.168.74.101] ([77.78.20.135])
-        by smtp.gmail.com with ESMTPSA id v11-20020adfe4cb000000b00228a17f92fesm14705767wrm.51.2022.09.08.10.52.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Sep 2022 10:52:09 -0700 (PDT)
-Message-ID: <843b8280-5e71-c008-0ca2-4d289ca6e7da@gmail.com>
-Date:   Thu, 8 Sep 2022 20:52:10 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v2 9/9] arm64: dts: qcom: sm4250: Add support for
- oneplus-billie2
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Thu, 8 Sep 2022 14:15:42 -0400
+Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75A2F7E31A;
+        Thu,  8 Sep 2022 11:15:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:MIME-Version:Message-Id
+        :Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=KEqqxV7+w6K6/dAlPcwLEpwvGqKa/pz7uec2FiPbYSI=; b=PvgMfBqLq4KlQg5Tjhv4zwVBaG
+        bu9e1bm68tg93nP4+Tf/IRRBYILykx6zLzQs8n20HUTJkOrCVlVa/qawGEpZfZ7kOE5aTqa5z7DxB
+        jWEgP/ZjSTQzRBNq4YbxZzQRPKD3xaTBFAPR680+09TLUbejYFOiynSJ5/ayUFaj2D+mUE+S40w5o
+        ytTutMP0la2I92RbUJCV1Kxdveux97QKJwUqcE6j6auKQmG8jOj9Np+FCLLgrv3GcDKvAFkFWtbcL
+        uui02Wrgz4Rc37tt/3QA7jMC5vCVvW+1Ih3Ghm3THQvdY8Ag+b0aixZx7mG/KpxMWXaz1WuiQW42M
+        vH3nl3Cg==;
+Received: from [10.22.3.24] (helo=kernkonzept.com)
+        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.94.2)
+        id 1oWM3g-004g7y-Re; Thu, 08 Sep 2022 20:15:24 +0200
+From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>, linux-kernel@vger.kernel.org
-References: <20220903174150.3566935-1-iskren.chernev@gmail.com>
- <20220903174150.3566935-10-iskren.chernev@gmail.com>
- <e655cddd-677b-f277-667f-48107671db2a@linaro.org>
-From:   Iskren Chernev <iskren.chernev@gmail.com>
-In-Reply-To: <e655cddd-677b-f277-667f-48107671db2a@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Stephan Gerhold <stephan@gerhold.net>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Subject: [PATCH] dt-bindings: remoteproc: qcom,smd-edge: Add APR/FastRPC
+Date:   Thu,  8 Sep 2022 20:14:32 +0200
+Message-Id: <20220908181432.458900-1-stephan.gerhold@kernkonzept.com>
+X-Mailer: git-send-email 2.30.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Similar to qcom,glink-edge.yaml the smd-edge can also contain
+apr/fastrpc nodes for functionality exposed by the modem or audio DSP.
 
+These nodes are already used in existing device trees, adding them
+fixes the following dtbs_check warnings after converting
+qcom,msm8916-mss-pil to DT schema:
 
-On 9/6/22 11:33, Krzysztof Kozlowski wrote:
-> On 03/09/2022 19:41, Iskren Chernev wrote:
->> Remaining issues from make dtbs_check:
->> - rpm-requests: it doesn't like the pm6125-regulators subnode. Every other
->>   DTS I checked is written in this way.
->
-> Yes, I sent patches for it, already merged, so please rebase on linux-next.
->
-> https://lore.kernel.org/all/20220828084341.112146-1-krzysztof.kozlowski@linaro.org/
->
-> Please rebase and test with
-> Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+arch/arm64/boot/dts/qcom/apq8016-sbc.dtb: remoteproc@4080000: smd-edge:
+Unevaluated properties are not allowed ('fastrpc' was unexpected)
+  From schema: remoteproc/qcom,msm8916-mss-pil.yaml
 
-It looks like this patch covers SPMI regulators. In most devices RPM/H (i.e
-indirect) regulators are used, so this doesn't fix it for me.
+Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+---
+Since qcom,fastrpc.yaml only exists in Rob's tree right now and
+a similar change for qcom,glink-edge.yaml was applied there it is
+probably easiest if this patch goes through Rob's tree as well.
+---
+ .../devicetree/bindings/remoteproc/qcom,smd-edge.yaml  | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml
+index 06eebf791e32..9b9eaa80fd20 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml
+@@ -19,6 +19,16 @@ properties:
+   $nodename:
+     const: "smd-edge"
+ 
++  apr:
++    $ref: /schemas/soc/qcom/qcom,apr.yaml#
++    description:
++      Qualcomm APR/GPR (Asynchronous/Generic Packet Router)
++
++  fastrpc:
++    $ref: /schemas/misc/qcom,fastrpc.yaml#
++    description:
++      Qualcomm FastRPC
++
+   interrupts:
+     maxItems: 1
+ 
+-- 
+2.30.2
+
