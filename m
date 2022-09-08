@@ -2,81 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5A735B214E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 16:53:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF3E15B2155
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 16:55:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230507AbiIHOxl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 10:53:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36310 "EHLO
+        id S230461AbiIHOzo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 10:55:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232726AbiIHOx3 (ORCPT
+        with ESMTP id S232277AbiIHOzn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 10:53:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35BBD11C14B
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 07:53:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1662648799;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=76ECzjugHtUyaD7j2ziCZZrFV5+B8AZDc9iXeo3J9+o=;
-        b=GiTin7OW2OmUt+wsyFAsYu/Gc9pEbrLo8zbqTID4NxjJAVBaZpGZz7Yvzq29c361KuXhXG
-        9lEja4gZL5eG61NuMypSZGIJmA1AVl08tFimmiGyTkOEjBPswR4r8NoXoHPtvNZLoj5A8o
-        E7HrWJN75PNX/WD+RWhlDtrC00IS5rU=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-467-PmeOfkwoPgumIkCNuF0Z0g-1; Thu, 08 Sep 2022 10:53:17 -0400
-X-MC-Unique: PmeOfkwoPgumIkCNuF0Z0g-1
-Received: by mail-qt1-f199.google.com with SMTP id h7-20020ac85047000000b0035a6794699bso1686287qtm.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 07:53:17 -0700 (PDT)
+        Thu, 8 Sep 2022 10:55:43 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA6F19BB56
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 07:55:40 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id p5so7177969ljc.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 07:55:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=fgfnhY3Ull0vFOfCmjRPglZnCyMcEKdcwqQSL0htN4s=;
+        b=Tfxv0wLLpxiul/CCTKgU19nq1+XuXriBZ9LEMrMatNFJ1wo2fzx/HSwJqbhQM44pmK
+         wwdS9BNxGTEgHi0RmOwgAN3usrdTi/vOqYrMp+qN/466jLe50E4voyYfGoqsfVRtk4Yu
+         GGs8UuleALrZvGc3Em9sxDAuWYiNV5JWHBznhh/PNQfGPRFewKAe78QbCzZvmo7D0fNH
+         p5z7id3h1Bd3mKefKckdHPrEHoFDDNOrQiQ2d0daHrehbFKtiuI1nHgpufCe1DWyLE/o
+         9QBOwZig6kQNYdGH4bSIzTozQCH3DT5PviCl1OC9UVmflrCatHXBpui/QATYDhZwXc7q
+         6Huw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=76ECzjugHtUyaD7j2ziCZZrFV5+B8AZDc9iXeo3J9+o=;
-        b=ff0L9qBJavEwOtHzjNzV0NN/vDW1Q84xGd5yNPSGggEV2NyYq7/FTy5j6IfK4OU24z
-         8XGkShGaHECegiEvlSdwMistDYcCEw6aG1XB5f5hdIsqI4fAV+kIm4zEDxLb8c6oksOh
-         GcmVtULPuI+JV4AxEZwlVdtZfhN7q/zrPGC8ZshFU3G68cy0z1E2Eqyz8FlA7wrt/Dwh
-         YIZQdf1nNgDmOi//hpvM2PKGGLiHul+5SvBSbiEUV+gPqHDmwGrTVQfk+sOMoBNTemp3
-         9oH2KNGyUj53s9VxH5LCv+yaLhKzvMklR/0QUKsiG/h+elAvzRWrd4Ck4wiv7W5vumSY
-         o//Q==
-X-Gm-Message-State: ACgBeo2Vy314jl3MHIUOZUgQ5vaX0cyPDWr4QzE2ZsF31wXoNEJ9k33k
-        RiJmi301tHodG5yfouzatk+hLd6NlpVC2iHYiKrGVkvLJbSpoqGcod3lA63sYMEvmTuhoD7+OCy
-        iryBHevhqKZsElPzUOb/SWjxouA==
-X-Received: by 2002:ac8:5706:0:b0:342:fdd6:d59d with SMTP id 6-20020ac85706000000b00342fdd6d59dmr8466230qtw.159.1662648797301;
-        Thu, 08 Sep 2022 07:53:17 -0700 (PDT)
-X-Google-Smtp-Source: AA6agR7xlawUD+Dugqo7vUJvxhUgkRE9UnaumgCDRVqbHWN7AwZXEjJfJPgwCZZutZPtLlo/0uiW/Q==
-X-Received: by 2002:ac8:5706:0:b0:342:fdd6:d59d with SMTP id 6-20020ac85706000000b00342fdd6d59dmr8466212qtw.159.1662648797035;
-        Thu, 08 Sep 2022 07:53:17 -0700 (PDT)
-Received: from halaneylaptop ([2600:1700:1ff0:d0e0::a])
-        by smtp.gmail.com with ESMTPSA id g6-20020ac87746000000b003436103df40sm14068145qtu.8.2022.09.08.07.53.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Sep 2022 07:53:16 -0700 (PDT)
-Date:   Thu, 8 Sep 2022 09:53:13 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        dianders@chromium.org, johan@kernel.org,
-        Johan Hovold <johan+kernel@kernel.org>
-Subject: Re: [PATCH v3] regulator: dt-bindings: qcom,rpmh: Indicate
- regulator-allow-set-load dependencies
-Message-ID: <20220908145313.36coao263bntngn6@halaneylaptop>
-References: <20220907204924.173030-1-ahalaney@redhat.com>
- <abad381a-dfe7-9337-ff35-f657bf373d44@linaro.org>
- <20220908145038.o4olsfencb54uqiz@halaneylaptop>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=fgfnhY3Ull0vFOfCmjRPglZnCyMcEKdcwqQSL0htN4s=;
+        b=dbc4x4KZV7ghho/AaEtySucOOBJwtIE94/8kzbBmCdlJU3RuOnVY4b32kvxf6gUFg9
+         wBNbWU6TzofNas+7KXvZxnfdzon0qnRCJH16gw8nqj3OU2fwHocg0LZDnOJStzj+ip8+
+         yb30HD/4TMqV1L1cQP+fkSJpQsKE5BKRwJuaUiFmNI1a7aLfUNqRU38AQNgKu32qeyeb
+         5ePZpKiK+TqpqMgFCQPplqbyQqRB6OnhRscz9HNDSvOqq3cUhV7DVfIFtbVSXbzeet5T
+         4MHtwtr2I6FlkE9X9JwqvcRpFkpq1KwaGGcaLJAQuvVgRkmDPnVjTW5VwGjT5RH5eMZr
+         ufjg==
+X-Gm-Message-State: ACgBeo2ISmyZRtVEz09IuLdy4TQdcDmxMVHhY6+PQKKwNkpjRGdnTzfh
+        OPN2jBoyk4f29pn8EIEOI7MVMQ==
+X-Google-Smtp-Source: AA6agR7CdTkFme++fxO7yCuNAUYEhQGmRtghzjNi1mJGcVbSKLCJ2f0obGMN5IJudh/AGuecUAFTjg==
+X-Received: by 2002:a2e:a910:0:b0:26a:ed13:cda6 with SMTP id j16-20020a2ea910000000b0026aed13cda6mr1407716ljq.250.1662648939305;
+        Thu, 08 Sep 2022 07:55:39 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id c16-20020ac24150000000b0048afd0c496fsm3066503lfi.156.2022.09.08.07.55.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 Sep 2022 07:55:38 -0700 (PDT)
+Message-ID: <889151be-9ea8-6a9e-e5fe-eac1dd93250c@linaro.org>
+Date:   Thu, 8 Sep 2022 16:55:37 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220908145038.o4olsfencb54uqiz@halaneylaptop>
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v4 1/2] dt-bindings: power: reset: qcom-pon: update "reg"
+ property details
+Content-Language: en-US
+To:     Anjelique Melendez <quic_amelende@quicinc.com>, corbet@lwn.net,
+        sre@kernel.org, robh+dt@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
+        linux-doc@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        David Collins <quic_collinsd@quicinc.com>
+References: <20220725191314.19456-1-quic_amelende@quicinc.com>
+ <20220725191314.19456-2-quic_amelende@quicinc.com>
+ <a47a33a5-aec7-2a52-f1e8-52c45307862e@linaro.org>
+ <0e6bf142-ca56-2414-86c4-1a18b74b3ba6@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <0e6bf142-ca56-2414-86c4-1a18b74b3ba6@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,156 +84,100 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Gah, ignore all the below. I drafted something up, went to something
-else, reviewed and sent to realize this was addressed already by others.
+On 19/08/2022 22:26, Anjelique Melendez wrote:
+> 
+> Hi Krzysztof,
+> First I would like to apologize for my lack of response to this patch series
+> over these past few weeks. I have been out of office.
+> 
+> On 7/26/2022 3:25 AM, Krzysztof Kozlowski wrote:
+>> On 25/07/2022 21:13, Anjelique Melendez wrote:
+>>> From: David Collins <quic_collinsd@quicinc.com>
+>>>
+>>> Update the description of "reg" property to add the PON_PBS base
+>>> address along with PON_HLOS base address.  Also add "reg-names"
+>>> property constraints.
+>>>
+>>> Signed-off-by: David Collins <quic_collinsd@quicinc.com>
+>>> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
+>>> ---
+>>>  Documentation/devicetree/bindings/power/reset/qcom,pon.yaml | 50 +++++++++++++++++++++++++++---
+>>>  1 file changed, 46 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+>>> index 353f155d..d7b6b875 100644
+>>> --- a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+>>> +++ b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+>>> @@ -15,18 +15,27 @@ description: |
+>>>  
+>>>    This DT node has pwrkey and resin as sub nodes.
+>>>  
+>>> -allOf:
+>>> -  - $ref: reboot-mode.yaml#
+>>> -
+>>>  properties:
+>>>    compatible:
+>>>      enum:
+>>>        - qcom,pm8916-pon
+>>>        - qcom,pms405-pon
+>>>        - qcom,pm8998-pon
+>>> +      - qcom,pmk8350-pon
+>>>  
+>>>    reg:
+>>> -    maxItems: 1
+>>> +    description: |
+>>> +      Specifies the SPMI base address for the PON (power-on) peripheral.  For
+>>> +      PMICs that have the PON peripheral (GEN3) split into PON_HLOS and PON_PBS
+>>> +      (e.g. PMK8350), this can hold addresses of both PON_HLOS and PON_PBS
+>>> +      peripherals.  In that case, the PON_PBS address needs to be specified to
+>>> +      facilitate software debouncing on some PMIC.
+>>> +    minItems: 1
+>>> +    maxItems: 2
+>>> +
+>>> +  reg-names:
+>>> +    minItems: 1
+>>> +    maxItems: 2
+>>>  
+>>>    pwrkey:
+>>>      type: object
+>>> @@ -42,6 +51,39 @@ required:
+>>>  
+>>>  unevaluatedProperties: false
+>>>  
+>>> +allOf:
+>>> +  - $ref: reboot-mode.yaml#
+>>> +  - if:
+>>> +      properties:
+>>> +        compatible:
+>>> +          contains:
+>>> +            enum:
+>>> +              - qcom,pm8916-pon
+>>> +              - qcom,pms405-pon
+>>> +              - qcom,pm8998-pon
+>>> +    then:
+>>> +      properties:
+>>> +        reg:
+>>> +          maxItems: 1
+>>> +        reg-names:
+>>> +          items:
+>>> +            - const: pon
+>>
+>> All your previous patches were actually missing (in commit msg, in the
+>> code) that piece of information which you add here. You now add
+>> reg-names with "pon" for older devices. I assumed previous that it is
+>> somehow needed, so I gave you the hints how it should be coded. But I
+>> don't understand - why are you doing it
+>>
+>> This should be explained in commit msg. To me it is not needed at all...
+>> unless you want to mark that first address space is entirely different
+>> for other devices?
+> Adding reg-names "pon" for older devices is simply to provide clarification
+> about what the register relates to. Similar to reg-names "hlos" and "pbs"
+> for gen3 children devices, reg-names is completely optional and is not
+> consumed by any driver.
 
-Thanks,
-Andrew
+OK, can be. Include it in the commit msg, please.
 
-On Thu, Sep 08, 2022 at 09:50:38AM -0500, Andrew Halaney wrote:
-> On Thu, Sep 08, 2022 at 12:25:25PM +0200, Krzysztof Kozlowski wrote:
-> > On 07/09/2022 22:49, Andrew Halaney wrote:
-> > > For RPMH regulators it doesn't make sense to indicate
-> > > regulator-allow-set-load without saying what modes you can switch to,
-> > > so be sure to indicate a dependency on regulator-allowed-modes.
-> > > 
-> > > In general this is true for any regulators that are setting modes
-> > > instead of setting a load directly, for example RPMH regulators. A
-> > > counter example would be RPM based regulators, which set a load
-> > > change directly instead of a mode change. In the RPM case
-> > > regulator-allow-set-load alone is sufficient to describe the regulator
-> > > (the regulator can change its output current, here's the new load),
-> > > but in the RPMH case what valid operating modes exist must also be
-> > > stated to properly describe the regulator (the new load is this, what
-> > > is the optimum mode for this regulator with that load, let's change to
-> > > that mode now).
-> > > 
-> > > With this in place devicetree validation can catch issues like this:
-> > > 
-> > >     /mnt/extrassd/git/linux-next/arch/arm64/boot/dts/qcom/sm8350-hdk.dtb: pm8350-rpmh-regulators: ldo5: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
-> > >             From schema: /mnt/extrassd/git/linux-next/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
-> > > 
-> > > Where the RPMH regulator hardware is described as being settable, but
-> > > there are no modes described to set it to!
-> > > 
-> > > Suggested-by: Johan Hovold <johan+kernel@kernel.org>
-> > > Reviewed-by: Johan Hovold <johan+kernel@kernel.org>
-> > > Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> > > Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-> > > ---
-> > > 
-> > > v2: https://lore.kernel.org/linux-arm-msm/20220906201959.69920-1-ahalaney@redhat.com/
-> > > Changes since v2:
-> > >   - Updated commit message to explain how this is a property of the
-> > >     hardware, and why it only applies to certain regulators like RPMH
-> > >     (Johan + Krzysztof recommendation)
-> > >   - Added Johan + Douglas' R-B tags
-> > 
-> > You posted before we finished discussion so let me paste it here:
-> > 
-> > The bindings don't express it, but the regulator core explicitly asks
-> > for set_mode with set_load callbacks in drms_uA_update(), which depends
-> > on REGULATOR_CHANGE_DRMS (toggled with regulator-allow-set-load).
-> 
-> If I follow correctly it isn't asking for both, just either set_mode()
-> or set_load():
-> 
-> https://elixir.bootlin.com/linux/v6.0-rc4/source/drivers/regulator/core.c#L961
-> copy pasta below
-> 	/*
-> 	 * first check to see if we can set modes at all, otherwise just
-> 	 * tell the consumer everything is OK.
-> 	 */
-> 	if (!regulator_ops_is_valid(rdev, REGULATOR_CHANGE_DRMS)) {
-> 		rdev_dbg(rdev, "DRMS operation not allowed\n");
-> 		return 0;
-> 	}
-> 
-> 	if (!rdev->desc->ops->get_optimum_mode &&
-> 	    !rdev->desc->ops->set_load)
-> 		return 0;
-> 
-> 	if (!rdev->desc->ops->set_mode &&
-> 	    !rdev->desc->ops->set_load)
-> 		return -EINVAL;
-> 
-> I'm interpreting the if statements as:
-> 
->     1. Can the core set the load (as you highlighted REGULATOR_CHANGE_DRMS is
->        toggled by regulator-allow-set-load) for this hardware at all?
-> 
->     2. Are we able to determine the best mode to switch to, or can we
->        just set the load directly? If neither of those the core can't do
->        much
-> 
->     3. Can we set the mode we determined was
->        optimum with get_optimum_mode()? If the hardware is settable, and
->        the core can determine a new mode but there's no mode set_mode()
->        to actually switch that's an error unless we can just call
->        set_load() directly with our new current requirement
-> 
-> That's a long winded way of saying I don't think the core asks for
-> set_mode && set_load callbacks to be implemented (which is how I
-> interpreted your message above).
-> 
-> > 
-> > drms_uA_update() later calls regulator_mode_constrain() which checks if
-> > mode changing is allowed (REGULATOR_CHANGE_MODE).
-> 
-> If set_load() is implemented this is not checked and the load is set
-> directly before returning from drms_uA_update().
-> https://elixir.bootlin.com/linux/v6.0-rc4/source/drivers/regulator/core.c#L973
-> 
-> > 
-> > Therefore based on current implementation and meaning of
-> > set-load/allowed-modes properties, I would say that this applies to all
-> > regulators. I don't think that RPMh is special here.
-> > 
-> 
-> The above comments are why I don't think it applies to *all* regulators.
-> It does apply to any "mode based" regulator hardware though (which I
-> attempted to capture in the last paragraph in the commit message), but
-> unfortunately I do not know of a way to do the below pseudo check at a
-> regulator-wide binding level:
-> 
->     if regulator-allow-set-load && !set_load() && set_mode() && !regulator-allowed-modes:
->         complain_about_invalid_devicetree()
-> 
-> Basically, the bindings don't really indicate the ops hardware supports
-> so I can't think of a good way to key check the set_mode() and
-> !set_load() bits to catch this at a wider level, so I opted to just
-> attack the dt-binding at a hardware specific level since I can make
-> assumptions about what operations the hardware supports at that level.
-> 
-> So, with this approach I do only plug the hole up for RPMh users, other
-> set_mode() users are still at risk. Other than duplicating this to those
-> users I can't really think of a generic way to tackle this at the
-> regulator.yaml level since I don't see a good way to grab the ops
-> supported.
-> 
-> We could maybe add extra bindings to indicate what ops are
-> supported, i.e. regulator-set-load and regulator-set-mode, and then have
-> (hopefully this is possible in the dt-bindings) some if statements like:
-> 
->     if (regulator-allow-set-load) {
->         if (regulator-set-load)
->             return 0;
->         else if (regulator-set-mode && !regulator-allowed-modes)
->             return -EINVAL;
->         else
->             return -EINVAL;
->     }
-> 
-> But I'm not really sure how I feel about making each dt-binding specify
-> what ops their hardware supports.
-> 
-> Regardless I think the current patch helps out RPMh users.. but I'm open
-> to extending it if we can come up with a good way to do it!
-> 
-> Thanks,
-> Andrew
-> 
-> > Best regards,
-> > Krzysztof
-> > 
 
+Best regards,
+Krzysztof
