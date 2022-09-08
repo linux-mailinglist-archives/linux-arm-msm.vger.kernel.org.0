@@ -2,114 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 574245B16D1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 10:23:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D2ED5B1774
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 10:46:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230392AbiIHIXa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 04:23:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33284 "EHLO
+        id S231580AbiIHIp6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 04:45:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230070AbiIHIX3 (ORCPT
+        with ESMTP id S231576AbiIHIp5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 04:23:29 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E8DAB4416;
-        Thu,  8 Sep 2022 01:23:24 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id t7so19703443wrm.10;
-        Thu, 08 Sep 2022 01:23:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date;
-        bh=xc4RgE3PUhocOgenP0ywVlkdXr/eaf54hZdXFi8BVb0=;
-        b=mbCVQGm4IfnN3MFd0T/X57SrahPJpL7q3pQfgaTPUsZKr6hdByFKzIKN72QMTn6GU5
-         QvPK1lp9EPiVgekD8z6yWf/vU7yi9jqxeYiE9q+y0RGcKgtPiv9DKzd3PblYPxEhgayl
-         cMvwNx8vSqIUamnYEL8HZSl6hQSCmhcI2tew0TmLPrJM1OCHC5nXL/aguYXPxg5WOL6N
-         Ml68kGSi/Z5tl9bcTvhdFFuZ3q7MpIGdZE1UKsDqLZDF9o5WYTruHhYAxPyN29h+a8KY
-         8tDq+In0jE0gD7tw6X3yQMcAn5rhVrk/bi55XpV3omWwzkE16j/m5nV9NfgKSh1qZlQK
-         qPfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=xc4RgE3PUhocOgenP0ywVlkdXr/eaf54hZdXFi8BVb0=;
-        b=Vs1S39nnIWzp5QwHNkGHbVA6TvwNa6Ke8qezMWXwsQNnTKZh3eDgmHT5M2Awh6RACA
-         DdFA3NAi8TGAjtlGCH8nAoAgU0tVIiXISYEsXyDigbisVKgKLiNbFGIChH8IUhpWIuAH
-         6E/K8sKzP/nWj+OmewEGWQFZytdMoh3LGqo20c/ObJD1kV2rjzcqTrTXMeMme2fc0U4N
-         KKWZCxjfb48YGGph82YW8heJwi4veWCIR3Ysqg1UV1j0SOnBx4s6OGn31JE0V3S/bv+J
-         nNU9YJuCUS4i95f4LsbW27M0pcftev69V3bvXkv7UIjIQV2sGbcZd3XOKD0Khphhtxtk
-         lS5A==
-X-Gm-Message-State: ACgBeo0D3aWPVa+OeTmu9WMw8tOC0trfNsNYTsz508HYaybw+vdPfhxF
-        uBDUSF4hyLDKLopPSuZvnqQ=
-X-Google-Smtp-Source: AA6agR5By09qzajZi0KlG/79DDr8MNO8fRvENdlAnUfP9IUmP6OWcxnCFC3YaXbX7SRznWxHMdE/Zg==
-X-Received: by 2002:a5d:5273:0:b0:228:b382:8ea0 with SMTP id l19-20020a5d5273000000b00228b3828ea0mr4192991wrc.347.1662625402705;
-        Thu, 08 Sep 2022 01:23:22 -0700 (PDT)
-Received: from [10.176.234.249] ([137.201.254.41])
-        by smtp.googlemail.com with ESMTPSA id p21-20020a1c7415000000b003b2878b9e0dsm1830540wmc.20.2022.09.08.01.23.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Sep 2022 01:23:22 -0700 (PDT)
-Message-ID: <6b56ad5fd5b5ab128afd399adb54a7566c4a144f.camel@gmail.com>
-Subject: Re: [RFC PATCH v3 1/4] ufs: core: prepare ufs for multi circular
- queue support
-From:   Bean Huo <huobean@gmail.com>
-To:     "Asutosh Das (asd)" <quic_asutoshd@quicinc.com>,
-        quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
-        stanley.chu@mediatek.com, adrian.hunter@intel.com,
-        bvanassche@acm.org, avri.altman@wdc.com, mani@kernel.org,
-        quic_cang@quicinc.com, beanhuo@micron.com,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        open list <linux-kernel@vger.kernel.org>
-Date:   Thu, 08 Sep 2022 10:23:20 +0200
-In-Reply-To: <df32bbd5-4109-903b-c7ba-7777a298f5aa@quicinc.com>
-References: <cover.1662157846.git.quic_asutoshd@quicinc.com>
-         <757bbfe36629b7c31ef2630971f8678a7801223f.1662157846.git.quic_asutoshd@quicinc.com>
-         <6e594dc2ce6103884b7768c2fed55eabec0d5ed8.camel@gmail.com>
-         <df32bbd5-4109-903b-c7ba-7777a298f5aa@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-User-Agent: Evolution 3.44.1-0ubuntu1 
+        Thu, 8 Sep 2022 04:45:57 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12761B6D4D;
+        Thu,  8 Sep 2022 01:45:55 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28887NYx024008;
+        Thu, 8 Sep 2022 08:45:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=YcRUpWSQE7vjpX45lvo4VdQHbDTBhmUSKR6BBbYf56Y=;
+ b=ABiyRE+CRVFlZdbUHWvv22r179OO5R3iOBB6JbAEI2pBusfzS/hzFr+cLqTVDELoOJom
+ BQh1u2KKvaVp1SwyoWmvsG4qW/A35vyrmIr0CAZKhkFDDyjjxKjr+/HzeJH4WkpBTxds
+ kN72+keETAi9r85KxiIPUbEEjcz1I5hKOPr9rqDSIsfkr/LWXfCqnJW1zJgnomw1mfj2
+ pfq5bGs0+0mKiK+xyoWsUIVQq2UcNKnJj1rG9zQWkSi8kz65tuyLOjrAM3tm13+MzfBE
+ b+NEwSDxuKCcSouXznjGcxw7sHu4kI/qM7zLG1eAIrZo67ThvXhDhTrLkaAzPsnc5dR5 tQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jer7y3xrw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 08 Sep 2022 08:45:27 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2888jQn3014666
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 8 Sep 2022 08:45:26 GMT
+Received: from taozha-gv.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Thu, 8 Sep 2022 01:45:22 -0700
+From:   Tao Zhang <quic_taozha@quicinc.com>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>
+CC:     Tao Zhang <quic_taozha@quicinc.com>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <bjorn.andersson@linaro.org>
+Subject: [PATCH 0/9] Add support to configure TPDM DSB subunit
+Date:   Thu, 8 Sep 2022 16:44:56 +0800
+Message-ID: <1662626705-13097-1-git-send-email-quic_taozha@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: oE2wL18CPnjFcUrfSGdiDV7QNqrE794i
+X-Proofpoint-ORIG-GUID: oE2wL18CPnjFcUrfSGdiDV7QNqrE794i
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-08_06,2022-09-07_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ bulkscore=0 phishscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0
+ spamscore=0 impostorscore=0 mlxlogscore=999 clxscore=1011
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2209080031
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-T24gV2VkLCAyMDIyLTA5LTA3IGF0IDIwOjAwIC0wNzAwLCBBc3V0b3NoIERhcyAoYXNkKSB3cm90
-ZToKPiA+ID4gdWZzaGNkX2xyYiAqbHJicCwgdTggdXBpdV9mbGFncykKPiA+ID4gwqAgwqDCoMKg
-wqDCoMKgwqDCoC8qIGNvbW1hbmQgZGVzY3JpcHRvciBmaWVsZHMgKi8KPiA+ID4gwqAgwqDCoMKg
-wqDCoMKgwqDCoHVjZF9yZXFfcHRyLT5oZWFkZXIuZHdvcmRfMCA9IFVQSVVfSEVBREVSX0RXT1JE
-KAo+ID4gPiDCoCDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgVVBJVV9UUkFOU0FDVElPTl9DT01NQU5ELAo+ID4gPiB1cGl1X2Zs
-YWdzLAo+ID4gPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqBscmJwLT5sdW4sIGxyYnAtPnRhc2tfdGFnKTsKPiA+ID4gK8KgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-bHJicC0+bHVuLCBscmJwLT50YXNrX3RhZyAmCj4gPiA+IDB4ZmYpOwo+ID4gPiDCoCDCoMKgwqDC
-oMKgwqDCoMKgdWNkX3JlcV9wdHItPmhlYWRlci5kd29yZF8xID0gVVBJVV9IRUFERVJfRFdPUkQo
-Cj4gPiA+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoFVQSVVfQ09NTUFORF9TRVRfVFlQRV9TQ1NJLCAwLCAwLAo+ID4gPiAwKTsK
-PiA+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgVVBJVV9DT01NQU5EX1NFVF9UWVBFX1NDU0ksIDAsIDAsCj4gPiA+ICvCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oChscmJwLT50YXNrX3RhZyAmIDB4ZjAwKSA8PCA0KTsKPiA+ID4gwqDCoCAKPiA+IAo+ID4gQXJl
-IHlvdSBzdXJlIGhlcmUgIihscmJwLT50YXNrX3RhZyAmIDB4ZjAwKSA8PCA0IiBpcyBjb3JyZWN0
-Pwo+ID4gCj4gRVhUX0lJRCBpcyB0aGUgaGlnaGVyIG5pYmJsZSBpbiBEV09SRDEuIFNvIHRoaXMg
-bG9va3MgY29ycmVjdCB0byBtZS4KPiAKPiBDT01NQU5EIFVQSVUKPiAwwqDCoMKgwqDCoMKgwqDC
-oMKgwqAgMcKgwqDCoMKgIDLCoMKgwqDCoMKgMwo+IHh4MDAwMDAxYiBGbGFncyBMVU4gVGFzayBU
-YWcKPiA0wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoDXCoMKg
-wqDCoMKgwqDCoDbCoMKgwqDCoMKgwqDCoDcKPiBJSUQgQ29tbWFuZCBTZXQgVHlwZSBSZXNlcnZl
-ZCBSZXNlcnZlZCBFWFRfSUlEIHwgUmVzZXJ2ZWQKCkhpIEFzdXRvc2gsCgp5ZXMsIFs3OjRdIG9m
-IGJ5dGUgNyBpbiBVUElVIGhlYWRlciBmb3IgaG9zdCB0byBkZXZpY2UgVVBJVXMgRVhUX0lJRCwK
-dGhpcyBpcyBjb3JyZWN0LgoKYnV0IEkgdGhpbmsgYnl0ZTcgc2hvdWxkIGJlICAobHJicC0+dGFz
-a190YWcgJiAweGYwMCkgPj4gNCk7IHJhdGhlcgp0aGFuICI8PCA0IgoKb3Igd2hhdCBJIG1pc3N1
-bmRlcnNvb2QuCgoKS2luZCByZWdhcmRzLApCZWFuCgoK
+Introduction of TPDM DSB subunit
+DSB subunit is responsible for creating a dataset element, and is also
+optionally responsible for packing it to fit multiple elements on a
+single ATB transfer if possible in the configuration. The TPDM Core
+Datapath requests timestamps be stored by the TPDA and then delivering
+ATB sized data (depending on ATB width and element size, this could
+be smaller or larger than a dataset element) to the ATB Mast FSM.
+
+The DSB subunit must be configured prior to enablement. This series
+adds support for TPDM to configure the configure DSB subunit.
+
+Once this series patches are applied properly, the new tpdm nodes for
+should be observed at the tpdm path /sys/bus/coresight/devices/tpdm*
+which supports DSB subunit.
+e.g.
+/sys/devices/platform/soc@0/69d0000.tpdm/tpdm0#ls -l | grep dsb
+-rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_edge_ctrl
+-rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_edge_ctrl_mask
+-rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_mode
+-rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_patt_mask
+-rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_patt_ts
+-rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_patt_type
+-rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_patt_val
+-rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_trig_patt_mask
+-rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_trig_patt_val
+-rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_trig_ts
+-rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_trig_type
+
+We can use the commands are similar to the below to configure the
+TPDMs which support DSB subunit. Enable coresight sink first.
+echo 1 > /sys/bus/coresight/devices/tmc_etf0/enable_sink
+echo 1 > /sys/bus/coresight/devices/tpdm0/reset
+echo 0x3 0x3 0x1 > /sys/bus/coresight/devices/tpdm0/dsb_edge_ctrl_mask
+echo 0x6d 0x6d 0 > /sys/bus/coresight/devices/tpdm0/dsb_edge_ctrl
+echo 1 > /sys/bus/coresight/devices/tpdm0/dsb_patt_ts
+echo 1 > /sys/bus/coresight/devices/tpdm0/dsb_patt_type
+echo 0 > /sys/bus/coresight/devices/tpdm0/dsb_trig_ts
+echo 0 0xFFFFFFFF > /sys/bus/coresight/devices/tpdm0/dsb_patt_mask
+echo 0 0xFFFFFFFF > /sys/bus/coresight/devices/tpdm0/dsb_trig_patt_val
+
+This series applies to coresight/next
+https://git.kernel.org/pub/scm/linux/kernel/git/coresight/linux.git?h=next
+
+This patch series depends on patch series "[v12,0/9] Coresight: Add
+support for TPDM and TPDA"
+https://patchwork.kernel.org/project/linux-arm-kernel/cover/20220905065357.1296-1-quic_jinlmao@quicinc.com/
+
+Tao Zhang (9):
+  dt-bindings: arm: Add support for DSB element
+  coresight-tpda: Add DSB dataset support
+  coresight-tpdm: Initialize DSB subunit configuration
+  coresight-tpdm: Add reset node to TPDM node
+  coresight-tpdm: Add nodes to set trigger timestamp and type
+  coresight-tpdm: Add node to set dsb programming mode
+  coresight-tpdm: Add nodes for dsb element creation
+  coresight-tpdm: Add nodes to configure pattern match output
+  coresight-tpdm: Add nodes for timestamp request
+
+ .../bindings/arm/qcom,coresight-tpda.yaml          |   9 +
+ drivers/hwtracing/coresight/coresight-tpda.c       |  62 ++
+ drivers/hwtracing/coresight/coresight-tpda.h       |   4 +
+ drivers/hwtracing/coresight/coresight-tpdm.c       | 625 ++++++++++++++++++++-
+ drivers/hwtracing/coresight/coresight-tpdm.h       |  60 ++
+ 5 files changed, 756 insertions(+), 4 deletions(-)
+
+-- 
+2.7.4
 
