@@ -2,88 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 14D7D5B1AA8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 12:54:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42EE45B1AB9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 12:57:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231147AbiIHKym (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 06:54:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46674 "EHLO
+        id S229576AbiIHK50 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 06:57:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229989AbiIHKyl (ORCPT
+        with ESMTP id S229587AbiIHK5Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 06:54:41 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A6BA14083
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 03:54:39 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id z25so27102937lfr.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 03:54:39 -0700 (PDT)
+        Thu, 8 Sep 2022 06:57:25 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95A761BEA9
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 03:57:24 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id t14so18112051wrx.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 03:57:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=bCjsbMYZ00s3E9QUzikbHsFvxZCZ1zkIocwZxv7IphA=;
-        b=xnXcsywD7K3tfuoeLQmbTCrHSULkd9jjsAbbkODi36eIdKZYGf270bvN7pW4YmSTmE
-         ALtFZIG9C/QKdmeZq3XdKUdu3VyALOORD83WBndMnn5y72Mt356vngP/31C40Fqw9u6b
-         FD2n3GnjEFtyKsiVm8aKrxIXPczOl5pNud3qMSeQcaAwdv3pGPkeMCRkCfHrvz9ZxUE1
-         r93fKphlsx0vGf2/jjvm44xVxOsnWYgs1alRF2spfmV9PdE7G1f5rmVyyrNrIZCp3feE
-         bbq5cay3jd4RSY9XLGC4FcjET1ggS7BK3cR7MGQoGUNFR5qrreZTmtANE41RXbkn1tRn
-         H0jg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=0XntZr01rGA1POmKpXBwRBE55P0uI1oL4HsDs04iVeY=;
+        b=TLiFohCTKGEc7RrPqVgj6ILUTPCYX60UI3pg/lAQSoyRrt4u11BcXs3JRFojNCYq+a
+         OWe48Fa1g1fdYI7hof6ngXM2K5C71cHHdP459HBKMhBkonOCYxh7Xp40Sw35tjOH4eqh
+         sBp87fnz8V0ZUhaILqBBR07yBThi7Jex+Js5z4Ib++jWhFTBhjpMWqAnf84QGD0Rjqrd
+         uGr+GZmnfMlcY8LnUcaxLqKhQ8fgCxnKsqNv2yfNtLI94EqTbPjxrBmrC4QwDz3NpGtY
+         oAADBUHxrIkllidXSG5FpLga+MFl4n3kW/dFXcWNToDVBgC6wjgDlueFAKy8VnzbZktW
+         /WxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=bCjsbMYZ00s3E9QUzikbHsFvxZCZ1zkIocwZxv7IphA=;
-        b=iggc5sjS5REJrxd/+/TQAMGUHaYCDSkyQUkXZRfZ6iYlknfg4xIVm6MIW0W4BNpPpc
-         oBUN9wvopakySwCMxCB+CJfvTTFRwSP6HCoHU0MlT6kX6CqXUofxxF5sVHyIsxYe9iMl
-         GimuAvmmBqmYeHx3P9bvp9JZM2Gc04dL0UUxqiuTZjPTOuUVict+7aNYLpd2bF7yiq5d
-         9Bd+loIZIO4c7gyxn9lPys4mBo3ZWv2BFAIdj2kbBhqbvKi8SssaZoH29yAqkJPdCmA0
-         d8KxskDiIohoPoa4ZTm9RRwfO7lSgHxutreDiliQ62sO801i99tsM05vx+URRgywM1sS
-         sSaw==
-X-Gm-Message-State: ACgBeo2VWHrFP3VYFzJfwLdcq6r+/ngUYco3vzeff609POW0U1aOw15o
-        QNEbLA285hapjWsEaaYfeCxnxg==
-X-Google-Smtp-Source: AA6agR5rfdSWsMUsiO6kMYy0JFg5VhOo46XNZ5k5GrnOkUDIdPzN4hKQ+17pXP0rav/iy2DwBCot9A==
-X-Received: by 2002:a05:6512:22d5:b0:494:7988:f591 with SMTP id g21-20020a05651222d500b004947988f591mr2458085lfu.548.1662634477415;
-        Thu, 08 Sep 2022 03:54:37 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id g11-20020a2eb5cb000000b002637c04b472sm3110010ljn.83.2022.09.08.03.54.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Sep 2022 03:54:36 -0700 (PDT)
-Message-ID: <e015754f-2f33-ab7d-4f18-e1bef39a8390@linaro.org>
-Date:   Thu, 8 Sep 2022 12:54:35 +0200
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=0XntZr01rGA1POmKpXBwRBE55P0uI1oL4HsDs04iVeY=;
+        b=CKd7Jgecc7dW0aEXcudKieRXVBQmvEg3B01/O4qx9qqWUOAVo2zU0qZNfoPBsS3dF1
+         Xbzll53PAQrTd6guCu7QTAVnMHL5+xDFap+JfY696ZHmBgNs8bdQ5Ct5z9+NPfEvmh/f
+         YqeRU8YJPIwRPgzej2G+MlWnsf1TW/neOg3GYm7Sk63lJ1v8z7vag3v9+aHi/A2d0v1u
+         rIHLkHLltsFtojMRyF9wk8kI2/NJmwkunWOXrp+2VHmy3CE50y7dKQBZVarWQVOt03K2
+         iy+/v15Q2uStV1crG1Z+A35AWy7rHHMzIKi2qN3uD6u6vPwfG3aB50+Q7KIM7v5TeLlw
+         aGUg==
+X-Gm-Message-State: ACgBeo3cyngiJhnGUPKNnYQiWLXFMsybIOyIWIaBTz3tIJM0yyKBkgMd
+        NB4YT7i8Jp9NAkWvI8Z5et/dmI8Knhdx0Q==
+X-Google-Smtp-Source: AA6agR5HDc6gu2Bj+ugeTREJiHj3KDCOsV7sSTYKK6XOojrV8wILaN8vvzGa19q3ek19ZydnC6dMIw==
+X-Received: by 2002:adf:d215:0:b0:228:6293:10ff with SMTP id j21-20020adfd215000000b00228629310ffmr4690937wrh.171.1662634643065;
+        Thu, 08 Sep 2022 03:57:23 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id k1-20020adff281000000b00223b8168b15sm20877527wro.66.2022.09.08.03.57.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Sep 2022 03:57:22 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     bryan.odonoghue@linaro.org
+Subject: [PATCH 0/1] RESEND: arm64: dts: qcom: Fix apq8016 compat string to match yaml
+Date:   Thu,  8 Sep 2022 11:57:19 +0100
+Message-Id: <20220908105720.857294-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH 1/9] dt-bindings: arm: Add support for DSB element
-Content-Language: en-US
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
-References: <1662626705-13097-1-git-send-email-quic_taozha@quicinc.com>
- <1662626705-13097-2-git-send-email-quic_taozha@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1662626705-13097-2-git-send-email-quic_taozha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,34 +69,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/09/2022 10:44, Tao Zhang wrote:
-> Add property "qcom,dsb-elem-size" to support DSB element for TPDA.
-> Specifies the DSB element size supported by each monitor connected
-> to the aggregator on each port. Should be specified in pairs (port,
-> dsb element size).
-> 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
-> index eb9bfc5..1bb3fdf 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
-> @@ -40,6 +40,13 @@ properties:
->      minItems: 1
->      maxItems: 2
->  
-> +  qcom,dsb-elem-size:
-> +    description: |
-> +      Specifies the DSB element size supported by each monitor
-> +      connected to the aggregator on each port. Should be specified
-> +      in pairs (port, dsb element size).
-> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+Resending with a cover letter.
 
-So it is rather uint32-matrix (need to describe the items subschema).
-What about maxItems?
+The compat string for the lpass was documented as "qcom,apq8016-lpass-cpu"
+firstly in the .txt and then subsequnetly in the .yaml.
 
-Best regards,
-Krzysztof
+Commit: dc1ebd1811e9 ("ASoC: qcom: Add apq8016 lpass driver support")
+Commit: 4b381d7e86fd ("ASoC: lpass-cpu: Move to yaml format")
+
+We discussed how to fix it and decided to move the driver and the dts to
+match the txt/YAML
+
+https://patches.linaro.org/project/alsa-devel/patch/20220418230956.3059563-2-bryan.odonoghue@linaro.org/
+
+We applied the fixed string with text about previous deprecation
+Commit: 2a2ef688b1b03e ("ASoC: qcom: lpass: Fix apq8016 compat string to match yaml")
+
+The last fix in the chain is the dtsi.
+
+Bryan O'Donoghue (1):
+  arm64: dts: qcom: Fix apq8016 compat string to match yaml
+
+ arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+-- 
+2.37.3
+
