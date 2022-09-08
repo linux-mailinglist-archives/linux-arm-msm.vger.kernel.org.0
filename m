@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B85DF5B1861
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 11:21:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B7405B1869
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 11:21:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231736AbiIHJUw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 05:20:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38308 "EHLO
+        id S231546AbiIHJVN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 05:21:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230329AbiIHJUd (ORCPT
+        with ESMTP id S231743AbiIHJUf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 05:20:33 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B9CB82D2E
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 02:20:09 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id u18so14395490lfo.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 02:20:08 -0700 (PDT)
+        Thu, 8 Sep 2022 05:20:35 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2EB086B55
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 02:20:10 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id by6so19105476ljb.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 02:20:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=IE9iYaf4ljXjTzH90yeiguLHiQ95amY6yCG9ecN7egM=;
-        b=zhPVsuG2l3xnWS3yDCpDzylO8CO7FHZKJ3Zd07Uynvqf/7lz8HLM0vuxl7BINDfmXL
-         /5FiRSJ/BgW1WlAfEuMZlzpscb+me2WIsTmlCRgFytsqhtKhdj9sOWnDme1XfKJLsZ9G
-         8oW36CmqJdg47VWJGwAszWQIrVkSMHUmLAdn3AFw/kZgRWpoOS7mstMGT+xBOwdtfGON
-         +wSZz+qIhMDD8HAO2ImE5FfUbkrX5hpvU6h8bHYWcxe6Lz7vSKo8ZUUf21XZvHYE+s0z
-         0BgwxYt47ZbhpLA/ui8gQd+QyTKtc/3PFbnN7o0pgQnQN6s9EErQjIt3jtzQxeMiyF8X
-         A8LQ==
+        bh=/9JIT1QugDrGf1OxGIQaaREkYREoMbYTQ7fht5bGWRo=;
+        b=YH94jeZaGjiAt7N+BveeNhCjiyHS8gGpaC7ynzdJIJSi79FbinYrvwnS9chRBNsRKy
+         e4hVRcwqpMWL6j3YXLpHBVA2IUVoo8onXqFgZfpN/v3E4JLZPb+TV/0+zd/vDyoBCPzt
+         cO3c1Y7GUSJCq5Eb6jD23btbrl9YzLOoRnuMlPLwI6A4aHAvY0/1oyWTQjxtQXBry4+2
+         xQb3kb9/quVSx8WaMQ7Nrp125M6wCbc5hV9UkxJRsCx/phtRVMlXD9LqmIT0ka+XQUyg
+         qKqJVsjeYHT/N6adkR5Cmxq1swbUHq62aYTmN1T4MSzk6sQu4UbquUvAOK/vUfIGJ9gO
+         Ff3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=IE9iYaf4ljXjTzH90yeiguLHiQ95amY6yCG9ecN7egM=;
-        b=DoQ4FPjXdn9Wz3TZji6OaaY/lCURWWdIILzP3sg8/D8LDpptuvCZif5/Jstaz51kLn
-         t9gziNGXmij3ychj3IGELwisS1deImtqPHElXCf0/iZ4A4CU4ZVRHHbESc7fQqB1JNtD
-         qaYVNc7GQMc+J3NU/kPuxMS3OC2fTvAlXHavFpqNTR/S/EG4rbtbskOzmxaPvBnf9tJv
-         SfROLcaofCExBDAn1Ls6htJVGdKOratmC9PcAWwDbNHHmyx3z3UfWaD9Zq0eyEn5XWho
-         3r6WrSOJgzYeDm/uIGPcWd3zIjBQZUOohlUWJO7TXKwK7v4hxb8japc6j7Cwdp4Z9GXM
-         7ROQ==
-X-Gm-Message-State: ACgBeo05ZNAyT/N+rUGfhpTGVeNh4WpM2qn/3LDimF2CacJgPCDhXwqH
-        6/ccK635s4Dn6Kab/liStjEQBQ==
-X-Google-Smtp-Source: AA6agR5lOjJt6vP+XfpUeEi0d0i62RnR1ZVSDdEFDVUHchyMZxKh3epAz79gCniN/mJbV1a1VKqujw==
-X-Received: by 2002:a05:6512:3a95:b0:498:f272:6587 with SMTP id q21-20020a0565123a9500b00498f2726587mr188386lfu.148.1662628807024;
-        Thu, 08 Sep 2022 02:20:07 -0700 (PDT)
+        bh=/9JIT1QugDrGf1OxGIQaaREkYREoMbYTQ7fht5bGWRo=;
+        b=CaCZ7oZhbDHmRlafy6XqrVHOFtu6Et9itglGiGdhPPM1XsvfIs49Fg3ySEGgYD0jIp
+         8mriSImFAmms2aGpj3QTHPkDodthfODE8csMhH1Cr8oNmKx9IXJnnMATqP2Sw/k3dOT8
+         rXLN9/f31e9wmTp8Grgox3+OLJWiaq6WESShcqReNys14Yn4BB+z1BvCr/+s0xJnddSc
+         a5igPbnlk1dDX12SCW3f8qNa4fdK7FiDeDFRz1ZCgqRTRzKUASOa5KcMv7Y7L3nfuVNT
+         IgTR4fQQQGiDbV2NEoQtpT3BQucIqqH9pMOxU4NtXsrelLIt6th7JtWK9rkoNf1zUkNf
+         KC0Q==
+X-Gm-Message-State: ACgBeo39M/04dNx6n6FKOndR++nS1X27VLtX8zJptH0Gmayt/re4xBLE
+        RY28SDIq9fi1DUrJ1CrsjCOvKA==
+X-Google-Smtp-Source: AA6agR5ZHgdochYVCe6yWvNjdCbg2QV60T6mhPC8fkxAHTK0UGiiIg6GTAhAHUqM+DMyuMBanE3Oug==
+X-Received: by 2002:a2e:b6d3:0:b0:26b:ddd7:919 with SMTP id m19-20020a2eb6d3000000b0026bddd70919mr26695ljo.491.1662628808264;
+        Thu, 08 Sep 2022 02:20:08 -0700 (PDT)
 Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id q17-20020a056512211100b004946a758d21sm218219lfr.161.2022.09.08.02.20.05
+        by smtp.gmail.com with ESMTPSA id q17-20020a056512211100b004946a758d21sm218219lfr.161.2022.09.08.02.20.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Sep 2022 02:20:06 -0700 (PDT)
+        Thu, 08 Sep 2022 02:20:07 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Banajit Goswami <bgoswami@quicinc.com>,
@@ -62,9 +62,9 @@ To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v3 13/14] ASoC: dt-bindings: qcom,q6apm-dai: adjust indentation in example
-Date:   Thu,  8 Sep 2022 11:19:45 +0200
-Message-Id: <20220908091946.44800-14-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 14/14] dt-bindings: soc: qcom: apr: add missing properties
+Date:   Thu,  8 Sep 2022 11:19:46 +0200
+Message-Id: <20220908091946.44800-15-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220908091946.44800-1-krzysztof.kozlowski@linaro.org>
 References: <20220908091946.44800-1-krzysztof.kozlowski@linaro.org>
@@ -80,44 +80,89 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Cleanup the example DTS by fixing indentation to 4-spaces and adding
-blank lines for readability.
+The APR bindings were not describing all properties already used in DTS:
+1. Add qcom,glink-channels, qcom,smd-channels and qcom,intents (widely
+   used).
+2. Add power-domains for MSM8996.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 ---
+ .../bindings/soc/qcom/qcom,apr.yaml           | 47 +++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
-Changes since v1:
-1. New patch
----
- .../devicetree/bindings/sound/qcom,q6apm-dai.yaml   | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/devicetree/bindings/sound/qcom,q6apm-dai.yaml b/Documentation/devicetree/bindings/sound/qcom,q6apm-dai.yaml
-index 844d72b30969..24f7bf2bfd95 100644
---- a/Documentation/devicetree/bindings/sound/qcom,q6apm-dai.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,q6apm-dai.yaml
-@@ -33,13 +33,14 @@ examples:
-         #address-cells = <1>;
-         #size-cells = <0>;
-         qcom,domain = <GPR_DOMAIN_ID_ADSP>;
-+
-         service@1 {
--          compatible = "qcom,q6apm";
--          reg = <1>;
-+            compatible = "qcom,q6apm";
-+            reg = <1>;
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
+index a1a8f77beef7..4060bac759e1 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml
+@@ -20,6 +20,9 @@ properties:
+       - qcom,apr-v2
+       - qcom,gpr
  
--          dais {
--            compatible = "qcom,q6apm-dais";
--            iommus = <&apps_smmu 0x1801 0x0>;
--          };
-+            dais {
-+                compatible = "qcom,q6apm-dais";
-+                iommus = <&apps_smmu 0x1801 0x0>;
-+            };
-         };
-     };
++  power-domains:
++    maxItems: 1
++
+   qcom,apr-domain:
+     $ref: /schemas/types.yaml#/definitions/uint32
+     enum: [1, 2, 3, 4, 5, 6, 7]
+@@ -52,6 +55,26 @@ properties:
+         2 = Audio DSP Domain
+         3 = Application Processor Domain
+ 
++  qcom,glink-channels:
++    $ref: /schemas/types.yaml#/definitions/string-array
++    description: Channel name used for the communication
++    items:
++      - const: apr_audio_svc
++
++  qcom,intents:
++    $ref: /schemas/types.yaml#/definitions/uint32-array
++    description:
++      List of (size, amount) pairs describing what intents should be
++      preallocated for this virtual channel. This can be used to tweak the
++      default intents available for the channel to meet expectations of the
++      remote.
++
++  qcom,smd-channels:
++    $ref: /schemas/types.yaml#/definitions/string-array
++    description: Channel name used for the communication
++    items:
++      - const: apr_audio_svc
++
+   '#address-cells':
+     const: 1
+ 
+@@ -171,6 +194,30 @@ required:
+   - compatible
+   - qcom,domain
+ 
++allOf:
++  - if:
++      properties:
++        compatible:
++          enum:
++            - qcom,gpr
++    then:
++      properties:
++        power-domains: false
++
++  - if:
++      required:
++        - qcom,glink-channels
++    then:
++      properties:
++        qcom,smd-channels: false
++
++  - if:
++      required:
++        - qcom,smd-channels
++    then:
++      properties:
++        qcom,glink-channels: false
++
+ additionalProperties: false
+ 
+ examples:
 -- 
 2.34.1
 
