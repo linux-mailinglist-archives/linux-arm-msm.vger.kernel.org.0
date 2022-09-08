@@ -2,613 +2,413 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 996365B29FC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 01:13:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCDCB5B2A0E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 01:18:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230086AbiIHXM6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 19:12:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43964 "EHLO
+        id S229973AbiIHXR7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 19:17:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229979AbiIHXMu (ORCPT
+        with ESMTP id S230001AbiIHXR5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 19:12:50 -0400
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93B81109D20;
-        Thu,  8 Sep 2022 16:12:43 -0700 (PDT)
-Received: by mail-qt1-x832.google.com with SMTP id cb8so165707qtb.0;
-        Thu, 08 Sep 2022 16:12:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=VgrsYXOjSgETMbO7C39JsWi0i4j2onPpweJQPqKgzDk=;
-        b=JWHpjCHv9HNEg+OETiYttbM+BeT8NJ2CexJDT8HpxvDuOV53I3eGuAt2EAAw9pE+5i
-         YrU99YtebHnjxce0A1yQFTJUchajw7NR5lr+EaouggppLwD4IU3uYpiwxOE0MIC+TtYY
-         acNltbCOl7rDGAodk87XL3Q9D7LnZMnNVQP/6I4HqoMUMOpD3c4/ZBbupXVScc74UKBH
-         9ildQMCsWOsklIiv3I2c6No1b05KIBQgQj8/jhx8qaU+/6yPsALu9Z/V7kHsZUnAQbEx
-         CvcfahnYdB9wY4s+7CIKKvxhAkK0cHI2ZiY8KRHNgyVrE5ExKzOQJERWKK4BFpj1JkV/
-         IeHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=VgrsYXOjSgETMbO7C39JsWi0i4j2onPpweJQPqKgzDk=;
-        b=3sGhKr7yvk6lQQ0aBW56UjCaKDoOmT95RePwM9zIFRdsvkxUwoF9iaXhYrEC4qmeMz
-         p6IqrJai8ofTLaroTCjlrfNE+xEnL3ujufFE1l5g1pDkl2ZQDiWSG4ovE+vIuISNrc5F
-         a8HbenQ0dgDk/XzhPhyUOTydlnpwF5me5Kb4aHvv3yq9SU4VrQn0O4j7hj0gC/eaFBmi
-         YvB5PMK4up1CLjxfriC57JNmR2G9K9FoQRCrNPffrT+54ZkFv2ZXN/JtEZ5kCTLy9GS/
-         F++UWVN95uKH7wZNpCGe0SuGbgErqkS+b1MwuSkEsP8zkX5VdaZu0243MPDFHTVA18Cc
-         y1HA==
-X-Gm-Message-State: ACgBeo0NLptTxMjSm+Q9uBEXE4LMJgb9Klyoj7BlVMhkK3vZKfZNHhlF
-        lAnJtRXAcBXxcEpeHCN6Gn41LRwfvog=
-X-Google-Smtp-Source: AA6agR4HGzUiWhbiPFrgA2sej9el+farwYERitVsTsPd4ZS97sZYpow6/51qJ350UmOgNxIC1jvGIg==
-X-Received: by 2002:a05:622a:4c6:b0:343:71e9:d661 with SMTP id q6-20020a05622a04c600b0034371e9d661mr10214492qtx.626.1662678761569;
-        Thu, 08 Sep 2022 16:12:41 -0700 (PDT)
-Received: from localhost ([2607:fea8:a2e2:2d00::6f2a])
-        by smtp.gmail.com with UTF8SMTPSA id j7-20020a05620a288700b006b5d9a1d326sm55173qkp.83.2022.09.08.16.12.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Sep 2022 16:12:40 -0700 (PDT)
-From:   Richard Acayan <mailingradian@gmail.com>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Thu, 8 Sep 2022 19:17:57 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D8CC10E86A;
+        Thu,  8 Sep 2022 16:17:54 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BB0F261E68;
+        Thu,  8 Sep 2022 23:17:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FBCFC433D7;
+        Thu,  8 Sep 2022 23:17:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1662679073;
+        bh=jR7gX2FL4TvSSe9zjk5NzIM3Z6U/ODSb9N8fZlm3LGk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Ytcu9eaTor6NqLceGIaIAtI1VKcS90xH8Bo/rw+7FVTktsXcjKikrKnOzZfT7V6N4
+         x6F0iiuSU2NRhN7wp+isjYguw/PZ1fFziX/GmhSdyfQWTBDVacNGeTM0+fl5PU+sNo
+         pgOMu58akHR08w0S85Pky41mP3UWoZup0ZILPM8I61PwKxHLusCTyI5UqGt3ztGuDn
+         Uz3IbnZSDTm74L04t889N3vgvJnhV/vAvqmoBSq2rNc10JD7A88ybNXd6WxY32aASM
+         dzu0WKyWUSWPoZ9aovAznmMKZIuzZ7xWNodOaWcyWoiV25Id9jXRsuXxuyfnk2wsHH
+         X+9XxDlxcIipA==
+Date:   Thu, 8 Sep 2022 18:17:49 -0500
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <tdas@codeaurora.org>, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Caleb Connolly <caleb@connolly.tech>,
-        Joel Selvaraj <jo@jsfamily.in>,
-        Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH v3 3/3] clk: qcom: gcc-sdm845: add sdm670 global clock data
-Date:   Thu,  8 Sep 2022 19:12:24 -0400
-Message-Id: <20220908231224.209020-4-mailingradian@gmail.com>
-X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20220908231224.209020-1-mailingradian@gmail.com>
-References: <20220908231224.209020-1-mailingradian@gmail.com>
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com
+Subject: Re: [PATCH v13 2/3] phy: qcom-snps: Add support for overriding phy
+ tuning parameters
+Message-ID: <20220908231749.7mihn6yhkqpdeuee@builder.lan>
+References: <1662480933-12326-1-git-send-email-quic_kriskura@quicinc.com>
+ <1662480933-12326-3-git-send-email-quic_kriskura@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1662480933-12326-3-git-send-email-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Snapdragon 670 adds and removes some clocks, adds new frequencies, and
-adds a new GPLL (Global Phase-Locked Loop) in reference to SDM845, while
-also removing some GDSCs. Despite these differences, there are many
-similarities with SDM670. Add data for SDM670 in the driver for SDM845 to
-reuse the most of the clock data.
+On Tue, Sep 06, 2022 at 09:45:32PM +0530, Krishna Kurapati wrote:
+> Add support for overriding electrical signal tuning parameters for
+> SNPS HS Phy.
+> 
 
-Advantages and disadvantages of this approach:
- + maintenance applies to both sdm670 and sdm845 by default
- + less duplicate code (clocks) means smaller distro/pre-built kernels
-   with all drivers enabled
- - clocks for both SoC's must be compiled if the user wants clocks for one
-   specific SoC (both or none)
- - additional testing needed for sdm845 devices
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
-Link: https://android.googlesource.com/kernel/msm/+/443bd8d6e2cf54698234c752e6de97b4b8a528bd%5E%21/#F10
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
----
- drivers/clk/qcom/Kconfig      |   4 +-
- drivers/clk/qcom/gcc-sdm845.c | 394 ++++++++++++++++++++++++++++++++++
- 2 files changed, 396 insertions(+), 2 deletions(-)
+Regards,
+Bjorn
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index 1cf1ef70e347..17951088b1db 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -545,10 +545,10 @@ config QCS_Q6SSTOP_404
- 	  controller to reset the Q6SSTOP subsystem.
- 
- config SDM_GCC_845
--	tristate "SDM845 Global Clock Controller"
-+	tristate "SDM845/SDM670 Global Clock Controller"
- 	select QCOM_GDSC
- 	help
--	  Support for the global clock controller on SDM845 devices.
-+	  Support for the global clock controller on SDM845 and SDM670 devices.
- 	  Say Y if you want to use peripheral devices such as UART, SPI,
- 	  i2C, USB, UFS, SDDC, PCIe, etc.
- 
-diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
-index cd6e4e41dc9b..6af08e0ca847 100644
---- a/drivers/clk/qcom/gcc-sdm845.c
-+++ b/drivers/clk/qcom/gcc-sdm845.c
-@@ -31,6 +31,7 @@ enum {
- 	P_GPLL0_OUT_EVEN,
- 	P_GPLL0_OUT_MAIN,
- 	P_GPLL4_OUT_MAIN,
-+	P_GPLL6_OUT_MAIN,
- 	P_SLEEP_CLK,
- };
- 
-@@ -68,6 +69,23 @@ static struct clk_alpha_pll gpll4 = {
- 	},
- };
- 
-+static struct clk_alpha_pll gpll6 = {
-+	.offset = 0x13000,
-+	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_FABIA],
-+	.clkr = {
-+		.enable_reg = 0x52000,
-+		.enable_mask = BIT(6),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gpll6",
-+			.parent_data = &(const struct clk_parent_data){
-+				.fw_name = "bi_tcxo", .name = "bi_tcxo",
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_alpha_pll_fixed_fabia_ops,
-+		},
-+	},
-+};
-+
- static const struct clk_div_table post_div_table_fabia_even[] = {
- 	{ 0x0, 1 },
- 	{ 0x1, 2 },
-@@ -194,6 +212,19 @@ static const struct clk_parent_data gcc_parent_data_10[] = {
- 	{ .hw = &gpll0_out_even.clkr.hw },
- };
- 
-+static const struct parent_map gcc_parent_map_11[] = {
-+	{ P_BI_TCXO, 0 },
-+	{ P_GPLL0_OUT_MAIN, 1 },
-+	{ P_GPLL6_OUT_MAIN, 2 },
-+	{ P_GPLL0_OUT_EVEN, 6 },
-+};
-+
-+static const struct clk_parent_data gcc_parent_data_11[] = {
-+	{ .fw_name = "bi_tcxo", .name = "bi_tcxo" },
-+	{ .hw = &gpll0.clkr.hw },
-+	{ .hw = &gpll6.clkr.hw },
-+	{ .hw = &gpll0_out_even.clkr.hw },
-+};
- 
- static const struct freq_tbl ftbl_gcc_cpuss_ahb_clk_src[] = {
- 	F(19200000, P_BI_TCXO, 1, 0, 0),
-@@ -233,6 +264,26 @@ static struct clk_rcg2 gcc_cpuss_rbcpr_clk_src = {
- 	},
- };
- 
-+static const struct freq_tbl ftbl_gcc_sdm670_cpuss_rbcpr_clk_src[] = {
-+	F(19200000, P_BI_TCXO, 1, 0, 0),
-+	F(50000000, P_GPLL0_OUT_MAIN, 12, 0, 0),
-+	{ }
-+};
-+
-+static struct clk_rcg2 gcc_sdm670_cpuss_rbcpr_clk_src = {
-+	.cmd_rcgr = 0x4815c,
-+	.mnd_width = 0,
-+	.hid_width = 5,
-+	.parent_map = gcc_parent_map_3,
-+	.freq_tbl = ftbl_gcc_sdm670_cpuss_rbcpr_clk_src,
-+	.clkr.hw.init = &(struct clk_init_data){
-+		.name = "gcc_cpuss_rbcpr_clk_src",
-+		.parent_data = gcc_parent_data_8_ao,
-+		.num_parents = ARRAY_SIZE(gcc_parent_data_8_ao),
-+		.ops = &clk_rcg2_ops,
-+	},
-+};
-+
- static const struct freq_tbl ftbl_gcc_gp1_clk_src[] = {
- 	F(19200000, P_BI_TCXO, 1, 0, 0),
- 	F(25000000, P_GPLL0_OUT_EVEN, 12, 0, 0),
-@@ -656,6 +707,54 @@ static struct clk_rcg2 gcc_qupv3_wrap1_s7_clk_src = {
- 	.clkr.hw.init = &gcc_qupv3_wrap1_s7_clk_src_init,
- };
- 
-+static const struct freq_tbl ftbl_gcc_sdcc1_apps_clk_src[] = {
-+	F(144000, P_BI_TCXO, 16, 3, 25),
-+	F(400000, P_BI_TCXO, 12, 1, 4),
-+	F(20000000, P_GPLL0_OUT_EVEN, 5, 1, 3),
-+	F(25000000, P_GPLL0_OUT_EVEN, 6, 1, 2),
-+	F(50000000, P_GPLL0_OUT_EVEN, 6, 0, 0),
-+	F(100000000, P_GPLL0_OUT_MAIN, 6, 0, 0),
-+	F(192000000, P_GPLL6_OUT_MAIN, 2, 0, 0),
-+	F(384000000, P_GPLL6_OUT_MAIN, 1, 0, 0),
-+	{ }
-+};
-+
-+static struct clk_rcg2 gcc_sdcc1_apps_clk_src = {
-+	.cmd_rcgr = 0x26028,
-+	.mnd_width = 8,
-+	.hid_width = 5,
-+	.parent_map = gcc_parent_map_11,
-+	.freq_tbl = ftbl_gcc_sdcc1_apps_clk_src,
-+	.clkr.hw.init = &(struct clk_init_data){
-+		.name = "gcc_sdcc1_apps_clk_src",
-+		.parent_data = gcc_parent_data_11,
-+		.num_parents = ARRAY_SIZE(gcc_parent_data_11),
-+		.ops = &clk_rcg2_floor_ops,
-+	},
-+};
-+
-+static const struct freq_tbl ftbl_gcc_sdcc1_ice_core_clk_src[] = {
-+	F(75000000, P_GPLL0_OUT_EVEN, 4, 0, 0),
-+	F(150000000, P_GPLL0_OUT_MAIN, 4, 0, 0),
-+	F(200000000, P_GPLL0_OUT_MAIN, 3, 0, 0),
-+	F(300000000, P_GPLL0_OUT_MAIN, 2, 0, 0),
-+	{ }
-+};
-+
-+static struct clk_rcg2 gcc_sdcc1_ice_core_clk_src = {
-+	.cmd_rcgr = 0x26010,
-+	.mnd_width = 8,
-+	.hid_width = 5,
-+	.parent_map = gcc_parent_map_0,
-+	.freq_tbl = ftbl_gcc_sdcc1_ice_core_clk_src,
-+	.clkr.hw.init = &(struct clk_init_data){
-+		.name = "gcc_sdcc1_ice_core_clk_src",
-+		.parent_data = gcc_parent_data_0,
-+		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-+		.ops = &clk_rcg2_ops,
-+	},
-+};
-+
- static const struct freq_tbl ftbl_gcc_sdcc2_apps_clk_src[] = {
- 	F(400000, P_BI_TCXO, 12, 1, 4),
- 	F(9600000, P_BI_TCXO, 2, 0, 0),
-@@ -705,6 +804,31 @@ static struct clk_rcg2 gcc_sdcc4_apps_clk_src = {
- 	},
- };
- 
-+static const struct freq_tbl ftbl_gcc_sdm670_sdcc4_apps_clk_src[] = {
-+	F(400000, P_BI_TCXO, 12, 1, 4),
-+	F(9600000, P_BI_TCXO, 2, 0, 0),
-+	F(19200000, P_BI_TCXO, 1, 0, 0),
-+	F(25000000, P_GPLL0_OUT_EVEN, 12, 0, 0),
-+	F(33333333, P_GPLL0_OUT_EVEN, 9, 0, 0),
-+	F(50000000, P_GPLL0_OUT_MAIN, 12, 0, 0),
-+	F(100000000, P_GPLL0_OUT_MAIN, 6, 0, 0),
-+	{ }
-+};
-+
-+static struct clk_rcg2 gcc_sdm670_sdcc4_apps_clk_src = {
-+	.cmd_rcgr = 0x1600c,
-+	.mnd_width = 8,
-+	.hid_width = 5,
-+	.parent_map = gcc_parent_map_0,
-+	.freq_tbl = ftbl_gcc_sdm670_sdcc4_apps_clk_src,
-+	.clkr.hw.init = &(struct clk_init_data){
-+		.name = "gcc_sdcc4_apps_clk_src",
-+		.parent_data = gcc_parent_data_0,
-+		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
-+		.ops = &clk_rcg2_floor_ops,
-+	},
-+};
-+
- static const struct freq_tbl ftbl_gcc_tsif_ref_clk_src[] = {
- 	F(105495, P_BI_TCXO, 2, 1, 91),
- 	{ }
-@@ -1283,6 +1407,28 @@ static struct clk_branch gcc_cpuss_rbcpr_clk = {
- 	},
- };
- 
-+/*
-+ * The source clock frequencies are different for SDM670; define a child clock
-+ * pointing to the source clock that uses SDM670 frequencies.
-+ */
-+static struct clk_branch gcc_sdm670_cpuss_rbcpr_clk = {
-+	.halt_reg = 0x48008,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x48008,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_cpuss_rbcpr_clk",
-+			.parent_hws = (const struct clk_hw*[]){
-+				&gcc_sdm670_cpuss_rbcpr_clk_src.clkr.hw,
-+			},
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch gcc_ddrss_gpu_axi_clk = {
- 	.halt_reg = 0x44038,
- 	.halt_check = BRANCH_VOTED,
-@@ -2353,6 +2499,55 @@ static struct clk_branch gcc_qupv3_wrap_1_s_ahb_clk = {
- 	},
- };
- 
-+static struct clk_branch gcc_sdcc1_ahb_clk = {
-+	.halt_reg = 0x26008,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x26008,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_sdcc1_ahb_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch gcc_sdcc1_apps_clk = {
-+	.halt_reg = 0x26004,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x26004,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_sdcc1_apps_clk",
-+			.parent_hws = (const struct clk_hw*[]){
-+				&gcc_sdcc1_apps_clk_src.clkr.hw,
-+			},
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch gcc_sdcc1_ice_core_clk = {
-+	.halt_reg = 0x2600c,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x2600c,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_sdcc1_ice_core_clk",
-+			.parent_hws = (const struct clk_hw*[]){
-+				&gcc_sdcc1_ice_core_clk_src.clkr.hw,
-+			},
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch gcc_sdcc2_ahb_clk = {
- 	.halt_reg = 0x14008,
- 	.halt_check = BRANCH_HALT,
-@@ -2415,6 +2610,28 @@ static struct clk_branch gcc_sdcc4_apps_clk = {
- 	},
- };
- 
-+/*
-+ * The source clock frequencies are different for SDM670; define a child clock
-+ * pointing to the source clock that uses SDM670 frequencies.
-+ */
-+static struct clk_branch gcc_sdm670_sdcc4_apps_clk = {
-+	.halt_reg = 0x16004,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x16004,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "gcc_sdcc4_apps_clk",
-+			.parent_hws = (const struct clk_hw*[]){
-+				&gcc_sdm670_sdcc4_apps_clk_src.clkr.hw,
-+			},
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- static struct clk_branch gcc_sys_noc_cpuss_ahb_clk = {
- 	.halt_reg = 0x414c,
- 	.halt_check = BRANCH_HALT_VOTED,
-@@ -3308,6 +3525,155 @@ static struct gdsc hlos1_vote_mmnoc_mmu_tbu_sf_gdsc = {
- 	.flags = VOTABLE,
- };
- 
-+static struct clk_regmap *gcc_sdm670_clocks[] = {
-+	[GCC_AGGRE_UFS_PHY_AXI_CLK] = &gcc_aggre_ufs_phy_axi_clk.clkr,
-+	[GCC_AGGRE_USB3_PRIM_AXI_CLK] = &gcc_aggre_usb3_prim_axi_clk.clkr,
-+	[GCC_APC_VS_CLK] = &gcc_apc_vs_clk.clkr,
-+	[GCC_BOOT_ROM_AHB_CLK] = &gcc_boot_rom_ahb_clk.clkr,
-+	[GCC_CAMERA_AHB_CLK] = &gcc_camera_ahb_clk.clkr,
-+	[GCC_CAMERA_AXI_CLK] = &gcc_camera_axi_clk.clkr,
-+	[GCC_CAMERA_XO_CLK] = &gcc_camera_xo_clk.clkr,
-+	[GCC_CE1_AHB_CLK] = &gcc_ce1_ahb_clk.clkr,
-+	[GCC_CE1_AXI_CLK] = &gcc_ce1_axi_clk.clkr,
-+	[GCC_CE1_CLK] = &gcc_ce1_clk.clkr,
-+	[GCC_CFG_NOC_USB3_PRIM_AXI_CLK] = &gcc_cfg_noc_usb3_prim_axi_clk.clkr,
-+	[GCC_CPUSS_AHB_CLK] = &gcc_cpuss_ahb_clk.clkr,
-+	[GCC_CPUSS_AHB_CLK_SRC] = &gcc_cpuss_ahb_clk_src.clkr,
-+	[GCC_CPUSS_RBCPR_CLK] = &gcc_sdm670_cpuss_rbcpr_clk.clkr,
-+	[GCC_CPUSS_RBCPR_CLK_SRC] = &gcc_sdm670_cpuss_rbcpr_clk_src.clkr,
-+	[GCC_DDRSS_GPU_AXI_CLK] = &gcc_ddrss_gpu_axi_clk.clkr,
-+	[GCC_DISP_AHB_CLK] = &gcc_disp_ahb_clk.clkr,
-+	[GCC_DISP_AXI_CLK] = &gcc_disp_axi_clk.clkr,
-+	[GCC_DISP_GPLL0_CLK_SRC] = &gcc_disp_gpll0_clk_src.clkr,
-+	[GCC_DISP_GPLL0_DIV_CLK_SRC] = &gcc_disp_gpll0_div_clk_src.clkr,
-+	[GCC_DISP_XO_CLK] = &gcc_disp_xo_clk.clkr,
-+	[GCC_GP1_CLK] = &gcc_gp1_clk.clkr,
-+	[GCC_GP1_CLK_SRC] = &gcc_gp1_clk_src.clkr,
-+	[GCC_GP2_CLK] = &gcc_gp2_clk.clkr,
-+	[GCC_GP2_CLK_SRC] = &gcc_gp2_clk_src.clkr,
-+	[GCC_GP3_CLK] = &gcc_gp3_clk.clkr,
-+	[GCC_GP3_CLK_SRC] = &gcc_gp3_clk_src.clkr,
-+	[GCC_GPU_CFG_AHB_CLK] = &gcc_gpu_cfg_ahb_clk.clkr,
-+	[GCC_GPU_GPLL0_CLK_SRC] = &gcc_gpu_gpll0_clk_src.clkr,
-+	[GCC_GPU_GPLL0_DIV_CLK_SRC] = &gcc_gpu_gpll0_div_clk_src.clkr,
-+	[GCC_GPU_IREF_CLK] = &gcc_gpu_iref_clk.clkr,
-+	[GCC_GPU_MEMNOC_GFX_CLK] = &gcc_gpu_memnoc_gfx_clk.clkr,
-+	[GCC_GPU_SNOC_DVM_GFX_CLK] = &gcc_gpu_snoc_dvm_gfx_clk.clkr,
-+	[GCC_GPU_VS_CLK] = &gcc_gpu_vs_clk.clkr,
-+	[GCC_MSS_AXIS2_CLK] = &gcc_mss_axis2_clk.clkr,
-+	[GCC_MSS_CFG_AHB_CLK] = &gcc_mss_cfg_ahb_clk.clkr,
-+	[GCC_MSS_GPLL0_DIV_CLK_SRC] = &gcc_mss_gpll0_div_clk_src.clkr,
-+	[GCC_MSS_MFAB_AXIS_CLK] = &gcc_mss_mfab_axis_clk.clkr,
-+	[GCC_MSS_Q6_MEMNOC_AXI_CLK] = &gcc_mss_q6_memnoc_axi_clk.clkr,
-+	[GCC_MSS_SNOC_AXI_CLK] = &gcc_mss_snoc_axi_clk.clkr,
-+	[GCC_MSS_VS_CLK] = &gcc_mss_vs_clk.clkr,
-+	[GCC_PDM2_CLK] = &gcc_pdm2_clk.clkr,
-+	[GCC_PDM2_CLK_SRC] = &gcc_pdm2_clk_src.clkr,
-+	[GCC_PDM_AHB_CLK] = &gcc_pdm_ahb_clk.clkr,
-+	[GCC_PDM_XO4_CLK] = &gcc_pdm_xo4_clk.clkr,
-+	[GCC_PRNG_AHB_CLK] = &gcc_prng_ahb_clk.clkr,
-+	[GCC_QMIP_CAMERA_AHB_CLK] = &gcc_qmip_camera_ahb_clk.clkr,
-+	[GCC_QMIP_DISP_AHB_CLK] = &gcc_qmip_disp_ahb_clk.clkr,
-+	[GCC_QMIP_VIDEO_AHB_CLK] = &gcc_qmip_video_ahb_clk.clkr,
-+	[GCC_QUPV3_WRAP0_S0_CLK] = &gcc_qupv3_wrap0_s0_clk.clkr,
-+	[GCC_QUPV3_WRAP0_S0_CLK_SRC] = &gcc_qupv3_wrap0_s0_clk_src.clkr,
-+	[GCC_QUPV3_WRAP0_S1_CLK] = &gcc_qupv3_wrap0_s1_clk.clkr,
-+	[GCC_QUPV3_WRAP0_S1_CLK_SRC] = &gcc_qupv3_wrap0_s1_clk_src.clkr,
-+	[GCC_QUPV3_WRAP0_S2_CLK] = &gcc_qupv3_wrap0_s2_clk.clkr,
-+	[GCC_QUPV3_WRAP0_S2_CLK_SRC] = &gcc_qupv3_wrap0_s2_clk_src.clkr,
-+	[GCC_QUPV3_WRAP0_S3_CLK] = &gcc_qupv3_wrap0_s3_clk.clkr,
-+	[GCC_QUPV3_WRAP0_S3_CLK_SRC] = &gcc_qupv3_wrap0_s3_clk_src.clkr,
-+	[GCC_QUPV3_WRAP0_S4_CLK] = &gcc_qupv3_wrap0_s4_clk.clkr,
-+	[GCC_QUPV3_WRAP0_S4_CLK_SRC] = &gcc_qupv3_wrap0_s4_clk_src.clkr,
-+	[GCC_QUPV3_WRAP0_S5_CLK] = &gcc_qupv3_wrap0_s5_clk.clkr,
-+	[GCC_QUPV3_WRAP0_S5_CLK_SRC] = &gcc_qupv3_wrap0_s5_clk_src.clkr,
-+	[GCC_QUPV3_WRAP0_S6_CLK] = &gcc_qupv3_wrap0_s6_clk.clkr,
-+	[GCC_QUPV3_WRAP0_S6_CLK_SRC] = &gcc_qupv3_wrap0_s6_clk_src.clkr,
-+	[GCC_QUPV3_WRAP0_S7_CLK] = &gcc_qupv3_wrap0_s7_clk.clkr,
-+	[GCC_QUPV3_WRAP0_S7_CLK_SRC] = &gcc_qupv3_wrap0_s7_clk_src.clkr,
-+	[GCC_QUPV3_WRAP1_S0_CLK] = &gcc_qupv3_wrap1_s0_clk.clkr,
-+	[GCC_QUPV3_WRAP1_S0_CLK_SRC] = &gcc_qupv3_wrap1_s0_clk_src.clkr,
-+	[GCC_QUPV3_WRAP1_S1_CLK] = &gcc_qupv3_wrap1_s1_clk.clkr,
-+	[GCC_QUPV3_WRAP1_S1_CLK_SRC] = &gcc_qupv3_wrap1_s1_clk_src.clkr,
-+	[GCC_QUPV3_WRAP1_S2_CLK] = &gcc_qupv3_wrap1_s2_clk.clkr,
-+	[GCC_QUPV3_WRAP1_S2_CLK_SRC] = &gcc_qupv3_wrap1_s2_clk_src.clkr,
-+	[GCC_QUPV3_WRAP1_S3_CLK] = &gcc_qupv3_wrap1_s3_clk.clkr,
-+	[GCC_QUPV3_WRAP1_S3_CLK_SRC] = &gcc_qupv3_wrap1_s3_clk_src.clkr,
-+	[GCC_QUPV3_WRAP1_S4_CLK] = &gcc_qupv3_wrap1_s4_clk.clkr,
-+	[GCC_QUPV3_WRAP1_S4_CLK_SRC] = &gcc_qupv3_wrap1_s4_clk_src.clkr,
-+	[GCC_QUPV3_WRAP1_S5_CLK] = &gcc_qupv3_wrap1_s5_clk.clkr,
-+	[GCC_QUPV3_WRAP1_S5_CLK_SRC] = &gcc_qupv3_wrap1_s5_clk_src.clkr,
-+	[GCC_QUPV3_WRAP1_S6_CLK] = &gcc_qupv3_wrap1_s6_clk.clkr,
-+	[GCC_QUPV3_WRAP1_S6_CLK_SRC] = &gcc_qupv3_wrap1_s6_clk_src.clkr,
-+	[GCC_QUPV3_WRAP1_S7_CLK] = &gcc_qupv3_wrap1_s7_clk.clkr,
-+	[GCC_QUPV3_WRAP1_S7_CLK_SRC] = &gcc_qupv3_wrap1_s7_clk_src.clkr,
-+	[GCC_QUPV3_WRAP_0_M_AHB_CLK] = &gcc_qupv3_wrap_0_m_ahb_clk.clkr,
-+	[GCC_QUPV3_WRAP_0_S_AHB_CLK] = &gcc_qupv3_wrap_0_s_ahb_clk.clkr,
-+	[GCC_QUPV3_WRAP_1_M_AHB_CLK] = &gcc_qupv3_wrap_1_m_ahb_clk.clkr,
-+	[GCC_QUPV3_WRAP_1_S_AHB_CLK] = &gcc_qupv3_wrap_1_s_ahb_clk.clkr,
-+	[GCC_SDCC1_AHB_CLK] = &gcc_sdcc1_ahb_clk.clkr,
-+	[GCC_SDCC1_APPS_CLK] = &gcc_sdcc1_apps_clk.clkr,
-+	[GCC_SDCC1_APPS_CLK_SRC] = &gcc_sdcc1_apps_clk_src.clkr,
-+	[GCC_SDCC1_ICE_CORE_CLK_SRC] = &gcc_sdcc1_ice_core_clk_src.clkr,
-+	[GCC_SDCC1_ICE_CORE_CLK] = &gcc_sdcc1_ice_core_clk.clkr,
-+	[GCC_SDCC2_AHB_CLK] = &gcc_sdcc2_ahb_clk.clkr,
-+	[GCC_SDCC2_APPS_CLK] = &gcc_sdcc2_apps_clk.clkr,
-+	[GCC_SDCC2_APPS_CLK_SRC] = &gcc_sdcc2_apps_clk_src.clkr,
-+	[GCC_SDCC4_AHB_CLK] = &gcc_sdcc4_ahb_clk.clkr,
-+	[GCC_SDCC4_APPS_CLK] = &gcc_sdm670_sdcc4_apps_clk.clkr,
-+	[GCC_SDCC4_APPS_CLK_SRC] = &gcc_sdm670_sdcc4_apps_clk_src.clkr,
-+	[GCC_SYS_NOC_CPUSS_AHB_CLK] = &gcc_sys_noc_cpuss_ahb_clk.clkr,
-+	[GCC_TSIF_AHB_CLK] = &gcc_tsif_ahb_clk.clkr,
-+	[GCC_TSIF_INACTIVITY_TIMERS_CLK] =
-+					&gcc_tsif_inactivity_timers_clk.clkr,
-+	[GCC_TSIF_REF_CLK] = &gcc_tsif_ref_clk.clkr,
-+	[GCC_TSIF_REF_CLK_SRC] = &gcc_tsif_ref_clk_src.clkr,
-+	[GCC_UFS_MEM_CLKREF_CLK] = &gcc_ufs_mem_clkref_clk.clkr,
-+	[GCC_UFS_PHY_AHB_CLK] = &gcc_ufs_phy_ahb_clk.clkr,
-+	[GCC_UFS_PHY_AXI_CLK] = &gcc_ufs_phy_axi_clk.clkr,
-+	[GCC_UFS_PHY_AXI_CLK_SRC] = &gcc_ufs_phy_axi_clk_src.clkr,
-+	[GCC_UFS_PHY_ICE_CORE_CLK] = &gcc_ufs_phy_ice_core_clk.clkr,
-+	[GCC_UFS_PHY_ICE_CORE_CLK_SRC] = &gcc_ufs_phy_ice_core_clk_src.clkr,
-+	[GCC_UFS_PHY_PHY_AUX_CLK] = &gcc_ufs_phy_phy_aux_clk.clkr,
-+	[GCC_UFS_PHY_PHY_AUX_CLK_SRC] = &gcc_ufs_phy_phy_aux_clk_src.clkr,
-+	[GCC_UFS_PHY_RX_SYMBOL_0_CLK] = &gcc_ufs_phy_rx_symbol_0_clk.clkr,
-+	[GCC_UFS_PHY_TX_SYMBOL_0_CLK] = &gcc_ufs_phy_tx_symbol_0_clk.clkr,
-+	[GCC_UFS_PHY_UNIPRO_CORE_CLK] = &gcc_ufs_phy_unipro_core_clk.clkr,
-+	[GCC_UFS_PHY_UNIPRO_CORE_CLK_SRC] =
-+					&gcc_ufs_phy_unipro_core_clk_src.clkr,
-+	[GCC_USB30_PRIM_MASTER_CLK] = &gcc_usb30_prim_master_clk.clkr,
-+	[GCC_USB30_PRIM_MASTER_CLK_SRC] = &gcc_usb30_prim_master_clk_src.clkr,
-+	[GCC_USB30_PRIM_MOCK_UTMI_CLK] = &gcc_usb30_prim_mock_utmi_clk.clkr,
-+	[GCC_USB30_PRIM_MOCK_UTMI_CLK_SRC] =
-+					&gcc_usb30_prim_mock_utmi_clk_src.clkr,
-+	[GCC_USB30_PRIM_SLEEP_CLK] = &gcc_usb30_prim_sleep_clk.clkr,
-+	[GCC_USB3_PRIM_CLKREF_CLK] = &gcc_usb3_prim_clkref_clk.clkr,
-+	[GCC_USB3_PRIM_PHY_AUX_CLK] = &gcc_usb3_prim_phy_aux_clk.clkr,
-+	[GCC_USB3_PRIM_PHY_AUX_CLK_SRC] = &gcc_usb3_prim_phy_aux_clk_src.clkr,
-+	[GCC_USB3_PRIM_PHY_COM_AUX_CLK] = &gcc_usb3_prim_phy_com_aux_clk.clkr,
-+	[GCC_USB3_PRIM_PHY_PIPE_CLK] = &gcc_usb3_prim_phy_pipe_clk.clkr,
-+	[GCC_USB_PHY_CFG_AHB2PHY_CLK] = &gcc_usb_phy_cfg_ahb2phy_clk.clkr,
-+	[GCC_VDDA_VS_CLK] = &gcc_vdda_vs_clk.clkr,
-+	[GCC_VDDCX_VS_CLK] = &gcc_vddcx_vs_clk.clkr,
-+	[GCC_VDDMX_VS_CLK] = &gcc_vddmx_vs_clk.clkr,
-+	[GCC_VIDEO_AHB_CLK] = &gcc_video_ahb_clk.clkr,
-+	[GCC_VIDEO_AXI_CLK] = &gcc_video_axi_clk.clkr,
-+	[GCC_VIDEO_XO_CLK] = &gcc_video_xo_clk.clkr,
-+	[GCC_VS_CTRL_AHB_CLK] = &gcc_vs_ctrl_ahb_clk.clkr,
-+	[GCC_VS_CTRL_CLK] = &gcc_vs_ctrl_clk.clkr,
-+	[GCC_VS_CTRL_CLK_SRC] = &gcc_vs_ctrl_clk_src.clkr,
-+	[GCC_VSENSOR_CLK_SRC] = &gcc_vsensor_clk_src.clkr,
-+	[GPLL0] = &gpll0.clkr,
-+	[GPLL0_OUT_EVEN] = &gpll0_out_even.clkr,
-+	[GPLL4] = &gpll4.clkr,
-+	[GPLL6] = &gpll6.clkr,
-+	[GCC_CPUSS_DVM_BUS_CLK] = &gcc_cpuss_dvm_bus_clk.clkr,
-+	[GCC_CPUSS_GNOC_CLK] = &gcc_cpuss_gnoc_clk.clkr,
-+	[GCC_QSPI_CORE_CLK_SRC] = &gcc_qspi_core_clk_src.clkr,
-+	[GCC_QSPI_CORE_CLK] = &gcc_qspi_core_clk.clkr,
-+	[GCC_QSPI_CNOC_PERIPH_AHB_CLK] = &gcc_qspi_cnoc_periph_ahb_clk.clkr,
-+};
-+
- static struct clk_regmap *gcc_sdm845_clocks[] = {
- 	[GCC_AGGRE_NOC_PCIE_TBU_CLK] = &gcc_aggre_noc_pcie_tbu_clk.clkr,
- 	[GCC_AGGRE_UFS_CARD_AXI_CLK] = &gcc_aggre_ufs_card_axi_clk.clkr,
-@@ -3533,6 +3899,22 @@ static const struct qcom_reset_map gcc_sdm845_resets[] = {
- 	[GCC_PCIE_1_PHY_BCR] = { 0x8e01c },
- };
- 
-+static struct gdsc *gcc_sdm670_gdscs[] = {
-+	[UFS_PHY_GDSC] = &ufs_phy_gdsc,
-+	[USB30_PRIM_GDSC] = &usb30_prim_gdsc,
-+	[HLOS1_VOTE_AGGRE_NOC_MMU_AUDIO_TBU_GDSC] =
-+			&hlos1_vote_aggre_noc_mmu_audio_tbu_gdsc,
-+	[HLOS1_VOTE_AGGRE_NOC_MMU_TBU1_GDSC] =
-+			&hlos1_vote_aggre_noc_mmu_tbu1_gdsc,
-+	[HLOS1_VOTE_AGGRE_NOC_MMU_TBU2_GDSC] =
-+			&hlos1_vote_aggre_noc_mmu_tbu2_gdsc,
-+	[HLOS1_VOTE_MMNOC_MMU_TBU_HF0_GDSC] =
-+			&hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc,
-+	[HLOS1_VOTE_MMNOC_MMU_TBU_HF1_GDSC] =
-+			&hlos1_vote_mmnoc_mmu_tbu_hf1_gdsc,
-+	[HLOS1_VOTE_MMNOC_MMU_TBU_SF_GDSC] = &hlos1_vote_mmnoc_mmu_tbu_sf_gdsc,
-+};
-+
- static struct gdsc *gcc_sdm845_gdscs[] = {
- 	[PCIE_0_GDSC] = &pcie_0_gdsc,
- 	[PCIE_1_GDSC] = &pcie_1_gdsc,
-@@ -3563,6 +3945,17 @@ static const struct regmap_config gcc_sdm845_regmap_config = {
- 	.fast_io	= true,
- };
- 
-+static const struct qcom_cc_desc gcc_sdm670_desc = {
-+	.config = &gcc_sdm845_regmap_config,
-+	.clks = gcc_sdm670_clocks,
-+	.num_clks = ARRAY_SIZE(gcc_sdm670_clocks),
-+	/* Snapdragon 670 can function without its own exclusive resets. */
-+	.resets = gcc_sdm845_resets,
-+	.num_resets = ARRAY_SIZE(gcc_sdm845_resets),
-+	.gdscs = gcc_sdm670_gdscs,
-+	.num_gdscs = ARRAY_SIZE(gcc_sdm670_gdscs),
-+};
-+
- static const struct qcom_cc_desc gcc_sdm845_desc = {
- 	.config = &gcc_sdm845_regmap_config,
- 	.clks = gcc_sdm845_clocks,
-@@ -3574,6 +3967,7 @@ static const struct qcom_cc_desc gcc_sdm845_desc = {
- };
- 
- static const struct of_device_id gcc_sdm845_match_table[] = {
-+	{ .compatible = "qcom,gcc-sdm670", .data = &gcc_sdm670_desc },
- 	{ .compatible = "qcom,gcc-sdm845", .data = &gcc_sdm845_desc },
- 	{ }
- };
--- 
-2.37.3
-
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 255 +++++++++++++++++++++++++-
+>  1 file changed, 253 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> index 5d20378..2502294 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> @@ -52,6 +52,12 @@
+>  #define USB2_SUSPEND_N				BIT(2)
+>  #define USB2_SUSPEND_N_SEL			BIT(3)
+>  
+> +#define USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X0		(0x6c)
+> +#define USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X1		(0x70)
+> +#define USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X2		(0x74)
+> +#define USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X3		(0x78)
+> +#define PARAM_OVRD_MASK				0xFF
+> +
+>  #define USB2_PHY_USB_PHY_CFG0			(0x94)
+>  #define UTMI_PHY_DATAPATH_CTRL_OVERRIDE_EN	BIT(0)
+>  #define UTMI_PHY_CMN_CTRL_OVERRIDE_EN		BIT(1)
+> @@ -60,12 +66,47 @@
+>  #define REFCLK_SEL_MASK				GENMASK(1, 0)
+>  #define REFCLK_SEL_DEFAULT			(0x2 << 0)
+>  
+> +#define HS_DISCONNECT_MASK			GENMASK(2, 0)
+> +#define SQUELCH_DETECTOR_MASK			GENMASK(7, 5)
+> +
+> +#define HS_AMPLITUDE_MASK			GENMASK(3, 0)
+> +#define PREEMPHASIS_DURATION_MASK		BIT(5)
+> +#define PREEMPHASIS_AMPLITUDE_MASK		GENMASK(7, 6)
+> +
+> +#define HS_RISE_FALL_MASK			GENMASK(1, 0)
+> +#define HS_CROSSOVER_VOLTAGE_MASK		GENMASK(3, 2)
+> +#define HS_OUTPUT_IMPEDANCE_MASK		GENMASK(5, 4)
+> +
+> +#define LS_FS_OUTPUT_IMPEDANCE_MASK		GENMASK(3, 0)
+> +
+>  static const char * const qcom_snps_hsphy_vreg_names[] = {
+>  	"vdda-pll", "vdda33", "vdda18",
+>  };
+>  
+>  #define SNPS_HS_NUM_VREGS		ARRAY_SIZE(qcom_snps_hsphy_vreg_names)
+>  
+> +struct override_param {
+> +	s32	value;
+> +	u8	reg_val;
+> +};
+> +
+> +struct override_param_map {
+> +	const char *prop_name;
+> +	const struct override_param *param_table;
+> +	u8 table_size;
+> +	u8 reg_offset;
+> +	u8 param_mask;
+> +};
+> +
+> +struct phy_override_seq {
+> +	bool	need_update;
+> +	u8	offset;
+> +	u8	value;
+> +	u8	mask;
+> +};
+> +
+> +#define NUM_HSPHY_TUNING_PARAMS	(9)
+> +
+>  /**
+>   * struct qcom_snps_hsphy - snps hs phy attributes
+>   *
+> @@ -91,6 +132,7 @@ struct qcom_snps_hsphy {
+>  
+>  	bool phy_initialized;
+>  	enum phy_mode mode;
+> +	struct phy_override_seq update_seq_cfg[NUM_HSPHY_TUNING_PARAMS];
+>  };
+>  
+>  static inline void qcom_snps_hsphy_write_mask(void __iomem *base, u32 offset,
+> @@ -173,10 +215,158 @@ static int qcom_snps_hsphy_set_mode(struct phy *phy, enum phy_mode mode,
+>  	return 0;
+>  }
+>  
+> +static const struct override_param hs_disconnect_sc7280[] = {
+> +	{ -272, 0 },
+> +	{ 0, 1 },
+> +	{ 317, 2 },
+> +	{ 630, 3 },
+> +	{ 973, 4 },
+> +	{ 1332, 5 },
+> +	{ 1743, 6 },
+> +	{ 2156, 7 },
+> +};
+> +
+> +static const struct override_param squelch_det_threshold_sc7280[] = {
+> +	{ -2090, 7 },
+> +	{ -1560, 6 },
+> +	{ -1030, 5 },
+> +	{ -530, 4 },
+> +	{ 0, 3 },
+> +	{ 530, 2 },
+> +	{ 1060, 1 },
+> +	{ 1590, 0 },
+> +};
+> +
+> +static const struct override_param hs_amplitude_sc7280[] = {
+> +	{ -660, 0 },
+> +	{ -440, 1 },
+> +	{ -220, 2 },
+> +	{ 0, 3 },
+> +	{ 230, 4 },
+> +	{ 440, 5 },
+> +	{ 650, 6 },
+> +	{ 890, 7 },
+> +	{ 1110, 8 },
+> +	{ 1330, 9 },
+> +	{ 1560, 10 },
+> +	{ 1780, 11 },
+> +	{ 2000, 12 },
+> +	{ 2220, 13 },
+> +	{ 2430, 14 },
+> +	{ 2670, 15 },
+> +};
+> +
+> +static const struct override_param preemphasis_duration_sc7280[] = {
+> +	{ 10000, 1 },
+> +	{ 20000, 0 },
+> +};
+> +
+> +static const struct override_param preemphasis_amplitude_sc7280[] = {
+> +	{ 10000, 1 },
+> +	{ 20000, 2 },
+> +	{ 30000, 3 },
+> +	{ 40000, 0 },
+> +};
+> +
+> +static const struct override_param hs_rise_fall_time_sc7280[] = {
+> +	{ -4100, 3 },
+> +	{ 0, 2 },
+> +	{ 2810, 1 },
+> +	{ 5430, 0 },
+> +};
+> +
+> +static const struct override_param hs_crossover_voltage_sc7280[] = {
+> +	{ -31000, 1 },
+> +	{ 0, 3 },
+> +	{ 28000, 2 },
+> +};
+> +
+> +static const struct override_param hs_output_impedance_sc7280[] = {
+> +	{ -2300000, 3 },
+> +	{ 0, 2 },
+> +	{ 2600000, 1 },
+> +	{ 6100000, 0 },
+> +};
+> +
+> +static const struct override_param ls_fs_output_impedance_sc7280[] = {
+> +	{ -1053, 15 },
+> +	{ -557, 7 },
+> +	{ 0, 3 },
+> +	{ 612, 1 },
+> +	{ 1310, 0 },
+> +};
+> +
+> +static const struct override_param_map sc7280_snps_7nm_phy[] = {
+> +	{
+> +		"qcom,hs-disconnect-bp",
+> +		hs_disconnect_sc7280,
+> +		ARRAY_SIZE(hs_disconnect_sc7280),
+> +		USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X0,
+> +		HS_DISCONNECT_MASK
+> +	},
+> +	{
+> +		"qcom,squelch-detector-bp",
+> +		squelch_det_threshold_sc7280,
+> +		ARRAY_SIZE(squelch_det_threshold_sc7280),
+> +		USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X0,
+> +		SQUELCH_DETECTOR_MASK
+> +	},
+> +	{
+> +		"qcom,hs-amplitude-bp",
+> +		hs_amplitude_sc7280,
+> +		ARRAY_SIZE(hs_amplitude_sc7280),
+> +		USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X1,
+> +		HS_AMPLITUDE_MASK
+> +	},
+> +	{
+> +		"qcom,pre-emphasis-duration-bp",
+> +		preemphasis_duration_sc7280,
+> +		ARRAY_SIZE(preemphasis_duration_sc7280),
+> +		USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X1,
+> +		PREEMPHASIS_DURATION_MASK,
+> +	},
+> +	{
+> +		"qcom,pre-emphasis-amplitude-bp",
+> +		preemphasis_amplitude_sc7280,
+> +		ARRAY_SIZE(preemphasis_amplitude_sc7280),
+> +		USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X1,
+> +		PREEMPHASIS_AMPLITUDE_MASK,
+> +	},
+> +	{
+> +		"qcom,hs-rise-fall-time-bp",
+> +		hs_rise_fall_time_sc7280,
+> +		ARRAY_SIZE(hs_rise_fall_time_sc7280),
+> +		USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X2,
+> +		HS_RISE_FALL_MASK
+> +	},
+> +	{
+> +		"qcom,hs-crossover-voltage-microvolt",
+> +		hs_crossover_voltage_sc7280,
+> +		ARRAY_SIZE(hs_crossover_voltage_sc7280),
+> +		USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X2,
+> +		HS_CROSSOVER_VOLTAGE_MASK
+> +	},
+> +	{
+> +		"qcom,hs-output-impedance-micro-ohms",
+> +		hs_output_impedance_sc7280,
+> +		ARRAY_SIZE(hs_output_impedance_sc7280),
+> +		USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X2,
+> +		HS_OUTPUT_IMPEDANCE_MASK,
+> +	},
+> +	{
+> +		"qcom,ls-fs-output-impedance-bp",
+> +		ls_fs_output_impedance_sc7280,
+> +		ARRAY_SIZE(ls_fs_output_impedance_sc7280),
+> +		USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X3,
+> +		LS_FS_OUTPUT_IMPEDANCE_MASK,
+> +	},
+> +	{},
+> +};
+> +
+>  static int qcom_snps_hsphy_init(struct phy *phy)
+>  {
+>  	struct qcom_snps_hsphy *hsphy = phy_get_drvdata(phy);
+> -	int ret;
+> +	int ret, i;
+>  
+>  	dev_vdbg(&phy->dev, "%s(): Initializing SNPS HS phy\n", __func__);
+>  
+> @@ -223,6 +413,14 @@ static int qcom_snps_hsphy_init(struct phy *phy)
+>  	qcom_snps_hsphy_write_mask(hsphy->base, USB2_PHY_USB_PHY_HS_PHY_CTRL1,
+>  					VBUSVLDEXT0, VBUSVLDEXT0);
+>  
+> +	for (i = 0; i < ARRAY_SIZE(hsphy->update_seq_cfg); i++) {
+> +		if (hsphy->update_seq_cfg[i].need_update)
+> +			qcom_snps_hsphy_write_mask(hsphy->base,
+> +					hsphy->update_seq_cfg[i].offset,
+> +					hsphy->update_seq_cfg[i].mask,
+> +					hsphy->update_seq_cfg[i].value);
+> +	}
+> +
+>  	qcom_snps_hsphy_write_mask(hsphy->base,
+>  					USB2_PHY_USB_PHY_HS_PHY_CTRL_COMMON2,
+>  					VREGBYPASS, VREGBYPASS);
+> @@ -280,7 +478,10 @@ static const struct phy_ops qcom_snps_hsphy_gen_ops = {
+>  static const struct of_device_id qcom_snps_hsphy_of_match_table[] = {
+>  	{ .compatible	= "qcom,sm8150-usb-hs-phy", },
+>  	{ .compatible	= "qcom,usb-snps-hs-5nm-phy", },
+> -	{ .compatible	= "qcom,usb-snps-hs-7nm-phy", },
+> +	{
+> +		.compatible	= "qcom,usb-snps-hs-7nm-phy",
+> +		.data		= &sc7280_snps_7nm_phy,
+> +	},
+>  	{ .compatible	= "qcom,usb-snps-femto-v2-phy",	},
+>  	{ }
+>  };
+> @@ -291,6 +492,55 @@ static const struct dev_pm_ops qcom_snps_hsphy_pm_ops = {
+>  			   qcom_snps_hsphy_runtime_resume, NULL)
+>  };
+>  
+> +static void qcom_snps_hsphy_override_param_update_val(
+> +			const struct override_param_map map,
+> +			s32 dt_val, struct phy_override_seq *seq_entry)
+> +{
+> +	int i;
+> +
+> +	/*
+> +	 * Param table for each param is in increasing order
+> +	 * of dt values. We need to iterate over the list to
+> +	 * select the entry that matches the dt value and pick
+> +	 * up the corresponding register value.
+> +	 */
+> +	for (i = 0; i < map.table_size - 1; i++) {
+> +		if (map.param_table[i].value == dt_val)
+> +			break;
+> +	}
+> +
+> +	seq_entry->need_update = true;
+> +	seq_entry->offset = map.reg_offset;
+> +	seq_entry->mask = map.param_mask;
+> +	seq_entry->value = map.param_table[i].reg_val << __ffs(map.param_mask);
+> +}
+> +
+> +static void qcom_snps_hsphy_read_override_param_seq(struct device *dev)
+> +{
+> +	struct device_node *node = dev->of_node;
+> +	s32 val;
+> +	int ret, i;
+> +	struct qcom_snps_hsphy *hsphy;
+> +	const struct override_param_map *cfg = of_device_get_match_data(dev);
+> +
+> +	if (!cfg)
+> +		return;
+> +
+> +	hsphy = dev_get_drvdata(dev);
+> +
+> +	for (i = 0; cfg[i].prop_name != NULL; i++) {
+> +		ret = of_property_read_s32(node, cfg[i].prop_name, &val);
+> +		if (ret)
+> +			continue;
+> +
+> +		qcom_snps_hsphy_override_param_update_val(cfg[i], val,
+> +					&hsphy->update_seq_cfg[i]);
+> +		dev_dbg(&hsphy->phy->dev, "Read param: %s dt_val: %d reg_val: 0x%x\n",
+> +			cfg[i].prop_name, val, hsphy->update_seq_cfg[i].value);
+> +
+> +	}
+> +}
+> +
+>  static int qcom_snps_hsphy_probe(struct platform_device *pdev)
+>  {
+>  	struct device *dev = &pdev->dev;
+> @@ -352,6 +602,7 @@ static int qcom_snps_hsphy_probe(struct platform_device *pdev)
+>  
+>  	dev_set_drvdata(dev, hsphy);
+>  	phy_set_drvdata(generic_phy, hsphy);
+> +	qcom_snps_hsphy_read_override_param_seq(dev);
+>  
+>  	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
+>  	if (!IS_ERR(phy_provider))
+> -- 
+> 2.7.4
+> 
