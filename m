@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C4B7E5B1645
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 10:07:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A1DF5B1654
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 10:08:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230109AbiIHIHM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 04:07:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53582 "EHLO
+        id S231311AbiIHIIJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 04:08:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229574AbiIHIHL (ORCPT
+        with ESMTP id S231231AbiIHIIH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 04:07:11 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C983CD2771
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 01:07:09 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id q21so12197636lfo.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 01:07:09 -0700 (PDT)
+        Thu, 8 Sep 2022 04:08:07 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B592D5727
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 01:08:05 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id bt10so26444387lfb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 01:08:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date;
         bh=JIBPCNWbj9cecXNvDfnBoFCAPIFUTWEJI8WrfdBbKVU=;
-        b=snZdPWqtr2eMuQRIlgwO7pqW5RS7DVletpBtdbQ/AOgKqBNLimr4sr73NibaKOKnHT
-         lFg1q0Tg2aW1uv1vkfG7wwlfhGz5usjBJG46KkP7NjFYyRnryPl1U/853K28tinaSjCL
-         XlakPQUFXSmI/ZtFkVJOk4UfKTwpulQp/QWY15oXeAqLzNu31C41fYiXotrJzG7JACbx
-         G4LVSTXOroy+rBBH4+DtHw+XieEsQCFo0rjWT/6HAn4HI1XMQfGrY1i+ZLnmfkE0Ily/
-         stvpQ/eNhZZtHhhdqb3oYirg8Ka2F6x+Z6Y8IOnNVTlsDSgOFbY022xo+8t43pbUio8C
-         ndvw==
+        b=UrCBknrwrTHwgWophVsI98zOBga4gi+3YsN7Z2zV+Oc0+SuKLG82NTPefcX8+qUvui
+         QU6HoGw7CvuTahJsK8W2W5UuMza7QmvnoUOZZWdhmACFGaRMU7E4q/bx/YL3wV3DBXlw
+         27byq1k9c1S3315n7UArdhTPLGXZIhrYX4nvWzDcb1vS3aBKnWrax/Ccuxvk3zFwBTD0
+         qSuWQzL6VceU/+wdM7UXi+QyQYUvYAPCZkpf4rypvzBGxCHNrTQXJh8XbK8LKXOlB8Lf
+         lnXGDG8paiMLub41lowMmt/4TP5wZXkOvKxzsr7q4myRCZEmmBK0YfNVUIHPuwAXlxXh
+         Gubg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date;
         bh=JIBPCNWbj9cecXNvDfnBoFCAPIFUTWEJI8WrfdBbKVU=;
-        b=VTCZsFE09WLd+djS5N+/Gx5ACo5i2p5JjnUMSHv31TmebNvpHLmvZG/4ucoJfSBizo
-         aattbHf/HZBX0nrZwUO51WNQmJHcIklbuOIy73+1GU/4DUQk8gbqM/VZBcW3Tkon3rje
-         fQgNwIrU8l9nAszA0QfOm6lZyD3nR7ERxBZsBeS/Lt6DMl0enJ6yzp2OTnr0cTE/mm4+
-         0AwLeUBfE9apGNh86u0KLOtPEmeNWSNDG/x8ZIew/9z9oBR3uQLJKbXLP5+Et9uN7//b
-         vtpbAeOIVD4fqh8eWqE2Fsu9I+SQvGkvS16y26/VDu3/MvdK4AURky2JH/wRRjFc0jHX
-         T90g==
-X-Gm-Message-State: ACgBeo2htxhhyTUnSFxenAbedc6Sp2+v+aA5OtrxE0L+P0C0HbgHGm+r
-        jzPU1ieM2/cd7a+1LUTr1n+voQ==
-X-Google-Smtp-Source: AA6agR6bi61JlNKPmLVRo+JBbKRF4+ff8UPjrT51MF24gA/paG6mogNY3pKdrlEwgKZdQwtOqarzdQ==
-X-Received: by 2002:a05:6512:1285:b0:494:680f:390f with SMTP id u5-20020a056512128500b00494680f390fmr2230044lfs.601.1662624428165;
-        Thu, 08 Sep 2022 01:07:08 -0700 (PDT)
+        b=KxpWm5Qlvp3iKiu412kFaHmBr7pjCxcvH4XPWcQx6Y/E2QxjCBuLQft8GoOOg2kua8
+         75JuQZ9wlMACuA9IMOPhpqe3/E/rbOYbYfIRsg5o2vprvwHh7PxpLpQxStAsmD0zVnzd
+         jzdO3pJi8HWkPg75YRrULCRnEi1PGq9qxe06gaWo3CSQIgQrlY5dfHpRMWBtHrYbcukK
+         gDeF+0dubwzGd+tGphsLD+dkGHCWdPLeXGPab+u49ceju79YSSg0AeS/EmmXHwvZyDuz
+         tn0MCeTaBW4nljG8bM1BdjTVKr+j61xaoxBydZXZX7atou6xK3RjK/ngrPmbOWY++nQN
+         +aJw==
+X-Gm-Message-State: ACgBeo2vkRiSHQnJeusyOD+R3O0RJA8UNL00SKv/hqq3gWJAO6wLaFYn
+        aXAFnBImTki7AhRxfyKUk243PA==
+X-Google-Smtp-Source: AA6agR6LQp3G0Ji01d4/4I46poA8KDS6PNPUtwbNDKYMLC9OEywqbMo59AYcHMc/WhEaBDt8qLuL4g==
+X-Received: by 2002:a05:6512:3b09:b0:48b:394e:6b3b with SMTP id f9-20020a0565123b0900b0048b394e6b3bmr2170567lfv.567.1662624483732;
+        Thu, 08 Sep 2022 01:08:03 -0700 (PDT)
 Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id n27-20020a05651203fb00b0048a757d1303sm2920503lfq.217.2022.09.08.01.07.06
+        by smtp.gmail.com with ESMTPSA id f1-20020a05651c02c100b0026ab83298d6sm1425265ljo.77.2022.09.08.01.08.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Sep 2022 01:07:07 -0700 (PDT)
+        Thu, 08 Sep 2022 01:08:03 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -58,15 +58,15 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] dt-bindings: pinctrl: qcom,pmic-mpp: make compatible fallbacks specific
-Date:   Thu,  8 Sep 2022 10:07:03 +0200
-Message-Id: <20220908080703.28643-1-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/3] dt-bindings: pinctrl: qcom,pmic-mpp: make compatible fallbacks specific
+Date:   Thu,  8 Sep 2022 10:07:59 +0200
+Message-Id: <20220908080801.28910-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
