@@ -2,76 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 128E75B1AF6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 13:10:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 94ABA5B1B00
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 13:13:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229572AbiIHLKR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 07:10:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45524 "EHLO
+        id S229695AbiIHLNX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 07:13:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229624AbiIHLKP (ORCPT
+        with ESMTP id S229552AbiIHLNW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 07:10:15 -0400
+        Thu, 8 Sep 2022 07:13:22 -0400
 Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E8FD8A6DB
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 04:10:12 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id y29so6854533ljq.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 04:10:12 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEB8DDFF4D
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 04:13:16 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id s15so19475047ljp.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 04:13:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=M8TjVGi+dvieD4daFHMvoDToWClMKumVkJMvJ1/RkFQ=;
-        b=JUL+XJHQ4d/04YtpxtDMwFY2Y5MmaF/xiJBFAsvXzhDyQ9lglQuK10Tztc9Em2yx05
-         xFR/XXNay9QrpLUaX2Q8YsOIOAkDSzQN3ZRhAT45zn7fKxeOJrcgB+nUyT1ciE5Jkem5
-         dSqSLOupHgCk1PBOisWvAhsZVC925rJIob4H+Gc1ll5fyFAOZchFaJEH75T4gprtyQTW
-         8zmAelNwh13Xn+3iT+1D8ROFPbGcmCg0ASO9VDp7SpLgQfLmcIDg3NvlUQdh3OY4/lIu
-         8ZqpVFWmReLmEljfMqcDc5ItnKuzJHPdSYvWKhueTK4V3qIOTEDTb3SD69/66JaFWTln
-         Z7OQ==
+        bh=vReDt8yJoofW75TqPCK861NZU37LZm5B+5UoGHmyr4g=;
+        b=fkvsTa9O0LX4Dm+3T/VX/F7rPoLPQTF5CuDwqd6YAjxeDf0pbsAH4TSr4MRJIbUiMy
+         2BExz/DG7E087WStoAiGWcqYskhwHa1gkLnXjk3DP4C/dE4cbYTMEBdUSuoi4Vq8x6HY
+         L5BgBMF9Hw92mMUMl6YSfzCGPFBSsQPJ/0Vw8BPt0WmSoJsFfiwe7l2x12MiG8r1HP1e
+         X7uAzaXSF7mxLmBXrluMgmJSPfiv30DUlNCOjpqIRqoo5ePHvoi32/qWXMfRAbMIrnmP
+         Z3NkVcyvXMYAvv9v1V6sItdJtXMprjh5uL2ByKMHhR5prt5yIiJrcWAcpy3K5v+dov9x
+         ZMWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=M8TjVGi+dvieD4daFHMvoDToWClMKumVkJMvJ1/RkFQ=;
-        b=4nOtFj9RneKT2lYUatULJxYUHT06ITU2TC1nwORlAHiCPmMcEoYz7KgN7cgjVdK9iS
-         7ZJnicVxUpkBiQ94hzdUE/0XxA83LQfUqlU00gmUDADw5WjGbPQxEp6CMV7Ch/eQ8alh
-         57e1y/s/9iJg25Ln46ctNO/ZxYfxMsfwguHogJPzdX0/BVnwQ2gKRdPewF5UphRdFMhk
-         xCPHWodswUotNevCFUjVvwEvOucvXglugwYiAhtUOVQ75Hpq5mHFmpeTigh/rszdIKL3
-         9RXaQvmz+f2sBO5YXboffm2p/iHzch6teEJ3fqMfZb2ITTxHo/6IILs8wP31HmXWwWdV
-         Eefg==
-X-Gm-Message-State: ACgBeo03oo18Gaefo/ko7RypZhaps6KAxVeJXJj1m+usygrD31a4694P
-        O4jONsgnfiZLIEh0RrCrVSzalg==
-X-Google-Smtp-Source: AA6agR6vHmIYNFIFpblQhNC8Ltenxf7xgA/5SHfm848ngZh43E14ZZH2Q+SOU89YcKh8GIjhp+xWCg==
-X-Received: by 2002:a2e:9bd9:0:b0:267:5851:4676 with SMTP id w25-20020a2e9bd9000000b0026758514676mr2226608ljj.10.1662635410616;
-        Thu, 08 Sep 2022 04:10:10 -0700 (PDT)
+        bh=vReDt8yJoofW75TqPCK861NZU37LZm5B+5UoGHmyr4g=;
+        b=qXDDUzWtRrjBFvkb1h5NSIHRvgofT0HdMHUlrE3BIOUOu6Gl3NnU4lpKEYW0O3Y1nz
+         B1jSr/5szfSjPyxTqvxYa2l3yr/lNVUWIEUGskinx3P+qhK0IVGARUi1mg8RWWgrVp2S
+         +/INfOYmmJx0JaP19jGEJCe1rvJQEwygpRqOrf7j2DL/EHlHLCdz6WmdFy3MiHUGe3R8
+         0yIpKVNVQV11iSvEG1wqQ2ltfEOkej7B5JiHFeKVXyUsVsuW9+NWoD+tNzvZn4QU8JDh
+         +hJdEyaoHeWg2LSOznW7T0dOAfIAnCYnK3SPVFEBL+LFARYZg1pxHl/GTi3LHTioQsCY
+         v4Vg==
+X-Gm-Message-State: ACgBeo3Kxwi/S0ldOWRRPXUVJSV8GQoftjTdN6a2+w7ukyB4HGxvLD78
+        hsGhGdqug/YDyBMtG65IK1CYqg==
+X-Google-Smtp-Source: AA6agR4JeCyW9VC1eBsiZRcqPlxlTw0tPz8/qgiwtefT6Tt8bH/qCp4SvFpRtmwO09qh/tCLow0SGg==
+X-Received: by 2002:a2e:9447:0:b0:261:e71e:e3d with SMTP id o7-20020a2e9447000000b00261e71e0e3dmr2318222ljh.227.1662635595364;
+        Thu, 08 Sep 2022 04:13:15 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id v25-20020a05651203b900b00497aae401f8sm762134lfp.184.2022.09.08.04.10.09
+        by smtp.gmail.com with ESMTPSA id w12-20020a05651234cc00b00489d1896c06sm2981545lfr.125.2022.09.08.04.13.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Sep 2022 04:10:09 -0700 (PDT)
-Message-ID: <8233a19a-9b0b-6962-6f36-381c8f380ad3@linaro.org>
-Date:   Thu, 8 Sep 2022 13:10:08 +0200
+        Thu, 08 Sep 2022 04:13:14 -0700 (PDT)
+Message-ID: <70f262d5-8d78-1c9a-2491-106af668f81a@linaro.org>
+Date:   Thu, 8 Sep 2022 13:13:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
-Subject: Re: [PATCH v2 3/3] clk: qcom: gcc-sdm845: add sdm670 global clock
- data
+Subject: Re: [PATCH 4/4] dt-bindings: qcom-pmic-gpio: Add PM7250B and PM8450
+ bindings
 Content-Language: en-US
-To:     Richard Acayan <mailingradian@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     andersson@kernel.org, agross@kernel.org,
-        konrad.dybcio@somainline.org, mturquette@baylibre.com,
-        sboyd@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, tdas@codeaurora.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, caleb@connolly.tech,
-        jo@jsfamily.in
-References: <20220907223927.139858-1-mailingradian@gmail.com>
- <20220907223927.139858-4-mailingradian@gmail.com>
+To:     Anjelique Melendez <quic_amelende@quicinc.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, linus.walleij@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
+Cc:     konrad.dybcio@somainline.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220907201528.9351-1-quic_amelende@quicinc.com>
+ <20220907201528.9351-5-quic_amelende@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220907223927.139858-4-mailingradian@gmail.com>
+In-Reply-To: <20220907201528.9351-5-quic_amelende@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,92 +80,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/09/2022 00:39, Richard Acayan wrote:
-> The Snapdragon 670 adds and removes some clocks, adds new frequencies, and
-> adds a new GPLL (Global Phase-Locked Loop) in reference to SDM845, while
-> also removing some GDSCs. Despite these differences, there are many
-> similarities with SDM670. Add data for SDM670 in the driver for SDM845 to
-> reuse the most of the clock data.
+On 07/09/2022 22:15, Anjelique Melendez wrote:
+> Update the Qualcomm Technologies, Inc. PMIC GPIO binding documentation
+> to include compatible strings for PM7250B and PM8450 PMICs.
 > 
-> Advantages and disadvantages of this approach:
->  + maintenance applies to both sdm670 and sdm845 by default
->  + less duplicate code (clocks) means smaller distro/pre-built kernels
->    with all drivers enabled
->  - clocks for both SoC's must be compiled if the user wants clocks for one
->    specific SoC (both or none)
->  - additional testing needed for sdm845 devices
-> 
-> Link: https://android.googlesource.com/kernel/msm/+/443bd8d6e2cf54698234c752e6de97b4b8a528bd^!/#F10
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
 > ---
->  drivers/clk/qcom/Kconfig      |   4 +-
->  drivers/clk/qcom/gcc-sdm845.c | 398 ++++++++++++++++++++++++++++++++++
->  2 files changed, 400 insertions(+), 2 deletions(-)
+>  Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
+> index 694898f382be..a548323e54f1 100644
+> --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
+> @@ -24,6 +24,7 @@ properties:
+>            - qcom,pm6150-gpio
+>            - qcom,pm6150l-gpio
+>            - qcom,pm6350-gpio
+> +          - qcom,pm7250b-gpio
+>            - qcom,pm7325-gpio
+>            - qcom,pm8005-gpio
+>            - qcom,pm8008-gpio
 
-Thank you for your patch. There is something to discuss/improve.
-
-> +					&gcc_tsif_inactivity_timers_clk.clkr,
-> +	[GCC_TSIF_REF_CLK] = &gcc_tsif_ref_clk.clkr,
-> +	[GCC_TSIF_REF_CLK_SRC] = &gcc_tsif_ref_clk_src.clkr,
-> +	[GCC_UFS_MEM_CLKREF_CLK] = &gcc_ufs_mem_clkref_clk.clkr,
-> +	[GCC_UFS_PHY_AHB_CLK] = &gcc_ufs_phy_ahb_clk.clkr,
-> +	[GCC_UFS_PHY_AXI_CLK] = &gcc_ufs_phy_axi_clk.clkr,
-> +	[GCC_UFS_PHY_AXI_CLK_SRC] = &gcc_ufs_phy_axi_clk_src.clkr,
-> +	[GCC_UFS_PHY_ICE_CORE_CLK] = &gcc_ufs_phy_ice_core_clk.clkr,
-> +	[GCC_UFS_PHY_ICE_CORE_CLK_SRC] = &gcc_ufs_phy_ice_core_clk_src.clkr,
-> +	[GCC_UFS_PHY_PHY_AUX_CLK] = &gcc_ufs_phy_phy_aux_clk.clkr,
-> +	[GCC_UFS_PHY_PHY_AUX_CLK_SRC] = &gcc_ufs_phy_phy_aux_clk_src.clkr,
-> +	[GCC_UFS_PHY_RX_SYMBOL_0_CLK] = &gcc_ufs_phy_rx_symbol_0_clk.clkr,
-> +	[GCC_UFS_PHY_TX_SYMBOL_0_CLK] = &gcc_ufs_phy_tx_symbol_0_clk.clkr,
-> +	[GCC_UFS_PHY_UNIPRO_CORE_CLK] = &gcc_ufs_phy_unipro_core_clk.clkr,
-> +	[GCC_UFS_PHY_UNIPRO_CORE_CLK_SRC] =
-> +					&gcc_ufs_phy_unipro_core_clk_src.clkr,
-> +	[GCC_USB30_PRIM_MASTER_CLK] = &gcc_usb30_prim_master_clk.clkr,
-> +	[GCC_USB30_PRIM_MASTER_CLK_SRC] = &gcc_usb30_prim_master_clk_src.clkr,
-> +	[GCC_USB30_PRIM_MOCK_UTMI_CLK] = &gcc_usb30_prim_mock_utmi_clk.clkr,
-> +	[GCC_USB30_PRIM_MOCK_UTMI_CLK_SRC] =
-> +					&gcc_usb30_prim_mock_utmi_clk_src.clkr,
-> +	[GCC_USB30_PRIM_SLEEP_CLK] = &gcc_usb30_prim_sleep_clk.clkr,
-> +	[GCC_USB3_PRIM_CLKREF_CLK] = &gcc_usb3_prim_clkref_clk.clkr,
-> +	[GCC_USB3_PRIM_PHY_AUX_CLK] = &gcc_usb3_prim_phy_aux_clk.clkr,
-> +	[GCC_USB3_PRIM_PHY_AUX_CLK_SRC] = &gcc_usb3_prim_phy_aux_clk_src.clkr,
-> +	[GCC_USB3_PRIM_PHY_COM_AUX_CLK] = &gcc_usb3_prim_phy_com_aux_clk.clkr,
-> +	[GCC_USB3_PRIM_PHY_PIPE_CLK] = &gcc_usb3_prim_phy_pipe_clk.clkr,
-> +	[GCC_USB_PHY_CFG_AHB2PHY_CLK] = &gcc_usb_phy_cfg_ahb2phy_clk.clkr,
-> +	[GCC_VDDA_VS_CLK] = &gcc_vdda_vs_clk.clkr,
-> +	[GCC_VDDCX_VS_CLK] = &gcc_vddcx_vs_clk.clkr,
-> +	[GCC_VDDMX_VS_CLK] = &gcc_vddmx_vs_clk.clkr,
-> +	[GCC_VIDEO_AHB_CLK] = &gcc_video_ahb_clk.clkr,
-> +	[GCC_VIDEO_AXI_CLK] = &gcc_video_axi_clk.clkr,
-> +	[GCC_VIDEO_XO_CLK] = &gcc_video_xo_clk.clkr,
-> +	[GCC_VS_CTRL_AHB_CLK] = &gcc_vs_ctrl_ahb_clk.clkr,
-> +	[GCC_VS_CTRL_CLK] = &gcc_vs_ctrl_clk.clkr,
-> +	[GCC_VS_CTRL_CLK_SRC] = &gcc_vs_ctrl_clk_src.clkr,
-> +	[GCC_VSENSOR_CLK_SRC] = &gcc_vsensor_clk_src.clkr,
-> +	[GPLL0] = &gpll0.clkr,
-> +	[GPLL0_OUT_EVEN] = &gpll0_out_even.clkr,
-> +	[GPLL4] = &gpll4.clkr,
-> +	[GPLL6] = &gpll6.clkr,
-> +	[GCC_CPUSS_DVM_BUS_CLK] = &gcc_cpuss_dvm_bus_clk.clkr,
-> +	[GCC_CPUSS_GNOC_CLK] = &gcc_cpuss_gnoc_clk.clkr,
-> +	[GCC_QSPI_CORE_CLK_SRC] = &gcc_qspi_core_clk_src.clkr,
-> +	[GCC_QSPI_CORE_CLK] = &gcc_qspi_core_clk.clkr,
-> +	[GCC_QSPI_CNOC_PERIPH_AHB_CLK] = &gcc_qspi_cnoc_periph_ahb_clk.clkr,
-> +};
-> +
->  static struct clk_regmap *gcc_sdm845_clocks[] = {
->  	[GCC_AGGRE_NOC_PCIE_TBU_CLK] = &gcc_aggre_noc_pcie_tbu_clk.clkr,
->  	[GCC_AGGRE_UFS_CARD_AXI_CLK] = &gcc_aggre_ufs_card_axi_clk.clkr,
-> @@ -3515,6 +3881,7 @@ static const struct qcom_reset_map gcc_sdm845_resets[] = {
->  	[GCC_QUPV3_WRAPPER_1_BCR] = { 0x18000 },
->  	[GCC_QUSB2PHY_PRIM_BCR] = { 0x12000 },
->  	[GCC_QUSB2PHY_SEC_BCR] = { 0x12004 },
-> +	[GCC_SDCC1_BCR] = { 0x26000 },
-
-You are changing existing SDM845, so this should be separate patch with
-its own explanation.
-
+This is incomplete. You need to update allOf.
 
 Best regards,
 Krzysztof
