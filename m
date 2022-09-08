@@ -2,89 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 902415B14D4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 08:39:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE0385B1592
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 09:26:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230439AbiIHGjS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 02:39:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34054 "EHLO
+        id S231292AbiIHH0c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 03:26:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229563AbiIHGjB (ORCPT
+        with ESMTP id S229911AbiIHH0b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 02:39:01 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73447C7BAE;
-        Wed,  7 Sep 2022 23:38:40 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2886Q4lK025050;
-        Thu, 8 Sep 2022 06:38:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=LPgzPBamNRKA4KxAW8ALy4x4jbE4Kt2EiNmgCKQYneg=;
- b=d6wgSCVYo0O3nlKxcIiakYVxajL5ZG3zOY1iXxBXbWzIpSmVPeqK23dxrL4uZGYLY3Ut
- hK53jDNF5CYdAB6PV+LpMgwxmLnFT1MFM6TGW/ARTKRtBZXgbew2nBciTrgP7FNax97e
- JxFs3m2cozhrpgUQcmKSZEDGXWHrilNmgYmKBv7Ft2Omkz+C+FW0oQ1kdxNWYldnEEWb
- pE6xO1lwzI+ykATPtVe1l5Oj0edDu2LJgbnF2/3KtNkjYxQQv6f6rNNB3SIDFcYpveIm
- U8GwpNbT0AK0WQaSIB2DY1kVrnmrjrLn5Vwzu/RwufMkGvbAqQ6XTIAzi8ROARM1HD1i YA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jequfkmrs-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 08 Sep 2022 06:38:34 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2886cXHZ021247
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 8 Sep 2022 06:38:33 GMT
-Received: from [10.216.34.143] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 7 Sep 2022
- 23:38:26 -0700
-Message-ID: <9609ade9-da03-6c3e-4d1a-80e97ac3b692@quicinc.com>
-Date:   Thu, 8 Sep 2022 12:08:23 +0530
+        Thu, 8 Sep 2022 03:26:31 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1EC480F5F
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 00:26:29 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id w8so26220895lft.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 00:26:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=zV14ZrPb0sLe3LlJJhGfIpC1GJYkmJpmWMU/WGtehbI=;
+        b=gfOOKl14bPeQJmyQHPROYW1RZ6gTeG51WxCl8wVG5NKJ9qO4xuN/gfd0gCd4kxvBqU
+         DMWe+mlHCMvBDwxho76t33439XmBey5up5wN01r1TrCXG164S92RApQW/hXZ3NmmWjPo
+         uUgll2Q7BTWa3vnxZIQCOti65s+zn0sggUR8BChQF16uIDdjvysr3q2+LvQWIiIAqJwO
+         Gr8c/A5KQASdWuYHcUUrdeWZ4gZslrggA7I/uaENKqn6XQ4FcuAYoIChNLCaG8vMey/V
+         nb8SvxQn1hd4owrRQdZqwzQHKrAUGQ47veTnzEuliXrZ8Wbmo7W5bsErADh0XrWdawRv
+         Ohig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=zV14ZrPb0sLe3LlJJhGfIpC1GJYkmJpmWMU/WGtehbI=;
+        b=SUbY5tXMw0DMcGNCRllAxZcJl54PH+qKhAo+bTQDQVaxaqci2j0cvSMcUf4+nFs+1+
+         wRGGXnc/XxRZYfJfHJ22WlG9VeFQ2sHeCPNlrojRTDtPpjm0VIT3t0JSq4EsK3/C6O+f
+         21fUEKLG/owZFAvdFYpr9x1zyCUZ41zSvafMT+0XbM+dhYNDGGvsI28ldgIesLkps9/L
+         sLP9jQ+OUmAdtDahK1GBLdghZgldRH/o3axjkdC1GVBvq5W08MIuw7ZNYGSTEleLDLnZ
+         EDKrBvWYnsNVpb501oYVDYd53P7hX8SwQODs1QR3g8E43zQrIvazfR6RpmpFkGP1GYqr
+         6hgQ==
+X-Gm-Message-State: ACgBeo1cGzkvPFK2L5D7RvKEHAqrt5yDKXhWDKuydfQb2hiqk9aTDxrz
+        5BIRWbUjPJsgyjec59VAc8ZBJw==
+X-Google-Smtp-Source: AA6agR6hfBQxU5tREXAYW7heBGTbG9JR2EcyRgYr5+8t111tVvCNN1TGQEysisztgbCCE4VCgUeb8Q==
+X-Received: by 2002:a05:6512:e99:b0:492:cf19:875 with SMTP id bi25-20020a0565120e9900b00492cf190875mr2349119lfb.690.1662621987999;
+        Thu, 08 Sep 2022 00:26:27 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id 18-20020a2eb952000000b00268335eaa8asm3072406ljs.51.2022.09.08.00.26.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 Sep 2022 00:26:27 -0700 (PDT)
+Message-ID: <5bf2258e-9d98-8427-07eb-f2577e6f3b54@linaro.org>
+Date:   Thu, 8 Sep 2022 09:26:26 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: sc7280: Add missing aggre0,
- aggre1 clocks
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v2 3/5] arm64: dts: qcom: Add PM6125 PMIC
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <helgaas@kernel.org>
-CC:     <linux-pci@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <mka@chromium.org>,
-        <quic_vbadigan@quicinc.com>, <quic_hemantk@quicinc.com>,
-        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <manivannan.sadhasivam@linaro.org>,
-        <swboyd@chromium.org>, <dmitry.baryshkov@linaro.org>,
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-References: <1662171184-25211-1-git-send-email-quic_krichai@quicinc.com>
- <1662171184-25211-4-git-send-email-quic_krichai@quicinc.com>
- <cc00fad3-08fb-462a-12ac-73143aa4206f@linaro.org>
-From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <cc00fad3-08fb-462a-12ac-73143aa4206f@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org
+References: <20220805135729.1037079-1-marijn.suijten@somainline.org>
+ <20220805135729.1037079-4-marijn.suijten@somainline.org>
+ <4cef00b4-c184-ae78-3709-5ed520ca3375@linaro.org>
+ <20220907212747.i2y6qi75avhavyr4@SoMainline.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220907212747.i2y6qi75avhavyr4@SoMainline.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9tovZ1LiDMIuOSwd9RYarpfoggFYj1RV
-X-Proofpoint-ORIG-GUID: 9tovZ1LiDMIuOSwd9RYarpfoggFYj1RV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-08_04,2022-09-07_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- mlxlogscore=999 adultscore=0 clxscore=1015 priorityscore=1501 bulkscore=0
- malwarescore=0 phishscore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2207270000
- definitions=main-2209080023
-X-Spam-Status: No, score=-7.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-6.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -93,39 +90,74 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 07/09/2022 23:27, Marijn Suijten wrote:
+> On 2022-08-08 12:17:06, Krzysztof Kozlowski wrote:
+>> On 05/08/2022 16:57, Marijn Suijten wrote:
+>>> This PMIC is commonly used on boards with an SM6125 SoC and looks very
+>>> similar in layout to the PM6150.
+>>>
+>>> Downstream declares more nodes to be available, but these have been
+>>> omitted from this patch: the pwm/lpg block is unused on my reference
+>>> device making it impossible to test/validate, and the spmi-clkdiv does
+>>> not have a single device-tree binding using this driver yet, hence
+>>> inclusion is better postponed until ie. audio which uses these clocks is
+>>> brought up.
+>>>
+>>
+>> Thank you for your patch. There is something to discuss/improve.
+> 
+> I can respin the series with the suggested changes (and the iio patch
+> removed as that has now been applied), but note that all other PMIC dtsi
+> files as of -next today still carry the "wrong" adc-tm or gpios node
+> names.  Are there plans to patch those up too (if not already in a
+> series that I missed)?
 
-On 9/7/2022 5:52 PM, Krzysztof Kozlowski wrote:
-> On 03/09/2022 04:13, Krishna chaitanya chundru wrote:
->> Add missing aggre0, aggre1 clocks.
+See below
+
+> 
+> - Marijn
+> 
+>>> +
+>>> +			xo-therm@4c {
+>>> +				reg = <ADC5_XO_THERM_100K_PU>;
+>>> +				qcom,pre-scaling = <1 1>;
+>>> +				qcom,hw-settle-time = <200>;
+>>> +				qcom,ratiometric;
+>>> +			};
+>>> +		};
+>>> +
+>>> +		pm6125_adc_tm: adc-tm@3500 {
 >>
->> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 4 ++++
->>   1 file changed, 4 insertions(+)
+>> Generic node names, so either this is adc or thermal-sensor. Looks like
+>> thermal-sensor.
+
+My comment was here not correct. The schema indeed expects this to be
+adc-tm. I did not plan to change it, so let's keep adc-tm also here.
+
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> index e66fc67..a5ce095 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> @@ -2043,6 +2043,8 @@
->>   				 <&gcc GCC_PCIE_1_SLV_AXI_CLK>,
->>   				 <&gcc GCC_PCIE_1_SLV_Q2A_AXI_CLK>,
->>   				 <&gcc GCC_AGGRE_NOC_PCIE_TBU_CLK>,
->> +				 <&gcc GCC_AGGRE_NOC_PCIE_CENTER_SF_AXI_CLK>,
->> +				 <&gcc GCC_AGGRE_NOC_PCIE_1_AXI_CLK>,
->>   				 <&gcc GCC_DDRSS_PCIE_SF_CLK>;
->>   
->>   			clock-names = "pipe",
->> @@ -2055,6 +2057,8 @@
->>   				      "bus_slave",
->>   				      "slave_q2a",
->>   				      "tbu",
->> +				      "aggre0",
->> +				      "aggre1",
->>   				      "ddrss_sf_tbu";
->>   
-> Same as binding - adding entries in the middle causes ABI issues.
->
-> Best regards,
-> Krzysztof
-Ok I will change the order as suggested.
+>>> +			compatible = "qcom,spmi-adc-tm5";
+>>> +			reg = <0x3500>;
+>>> +			interrupts = <0x0 0x35 0x0 IRQ_TYPE_EDGE_RISING>;
+>>> +			#address-cells = <1>;
+>>> +			#size-cells = <0>;
+>>> +			#thermal-sensor-cells = <1>;
+>>> +			status = "disabled";
+>>> +		};
+>>> +
+>>> +		pm6125_rtc: rtc@6000 {
+>>> +			compatible = "qcom,pm8941-rtc";
+>>> +			reg = <0x6000>, <0x6100>;
+>>> +			reg-names = "rtc", "alarm";
+>>> +			interrupts = <0x0 0x61 0x1 IRQ_TYPE_EDGE_RISING>;
+>>> +			status = "disabled";
+>>> +		};
+>>> +
+>>> +		pm6125_gpio: gpios@c000 {
+>>
+>> s/gpios/gpio/
+
+Both are allowed by schema, but convention in all other cases is "gpio",
+so let's change it. I'll send a patch for other files.
+
+Best regards,
+Krzysztof
