@@ -2,69 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B14555B290C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 00:10:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C9735B293C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 00:28:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229787AbiIHWK2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 18:10:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48818 "EHLO
+        id S229926AbiIHW24 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 18:28:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229544AbiIHWK2 (ORCPT
+        with ESMTP id S229817AbiIHW2y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 18:10:28 -0400
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B82EBB02B
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 15:10:26 -0700 (PDT)
-Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-345528ceb87so124555897b3.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 15:10:26 -0700 (PDT)
+        Thu, 8 Sep 2022 18:28:54 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5A79F340E
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 15:28:52 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id bq23so30164861lfb.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 15:28:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=/WcHqdHM8dnvu0KhL8XnDPtvYcltW68n+l5+9CRl2js=;
-        b=SkIfqdYOLK8R9nL8tGEdusHKauZ2yGxXEslcHgQHtVciNUS/jVWDcjmB3+hBBisgPv
-         4jvuzOhivKBk3kAn0wjyfdxZSzCHSZeRzRhXhofW31wAiQSccBgCDeVSqueT1dPMcvLm
-         /lcAaPhRKLufjVrLKefaGBQgHfVB5wVT4O1F6jDr2iQGdsC/or9SuLb9CRCPEaM0mIc4
-         rQTYfUi+Rg84zYOLbnUVLBzrUH9JhzhVCnVbwJVv05IhTOYk3i5o7aEc0HhyIYLQXcMZ
-         /RVQzgqwRNHvX13ec/twUcuqr5rlf6g0JwndelKboKm7502axGrsALyVS/71C1ZObF9a
-         uBIg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=YvAdGykEq7nSKOvPWAG7qubexjgftEKGvB66ejdN5V4=;
+        b=jhxpROZ204WKs3eV40WldY4SIqufY/J0PvqLrckl3pJWXVsol/v7jljgDLdDIawyQj
+         yMmOYsKl8D7x0iF2ZdBJbMbn7aTB1mXo0OAWkWRLXvsy6b9ZAP+MGQKRtAwlmWyd+k2g
+         40rJ2IG2rg5C3a5F1zRWKt3HWfSj2cI10qjyHFGsbcKBaawLniX7la3N5Raw8RNNqy1j
+         Ysf0oioUugtE7+kW+vwy66Ikp1iKwj9k/go93bnVrIlA4FW0j+IdGacFhm9+/xv6z881
+         z5WPcqfEmPciWA33miuq/HWCXhaiDp53esrki0eJ+93g2tcgbZeVkdjXrveyu7z3zRL7
+         6KGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=/WcHqdHM8dnvu0KhL8XnDPtvYcltW68n+l5+9CRl2js=;
-        b=rx46IMAgp7aj9YVC92NGBAC4u+ehdsXEwGHiJx/nuYYR1As3on0IeIxj1Gn6TKNu9o
-         ibFmPADoZY0U06ePjnWjrdm9D2XWxJPmizV47MqUwGSleg6FjVLYmqjgm7Km1S0raiOi
-         hLozJJXkwvBFNYYI1xoBRBZFVIiTVkgDGtncYgNegtXteikKGwra5jIYJE6J9bN/LWGk
-         ireg294WYxhC6k4cSHs7iWQPVPjU5NXURfuDeABS+KyJHM9nfMl/XO9iVulsfT0ilimJ
-         PvCOWEU/FmEaZekRDx3fuyUELiS5XkQT5gwIRaTmxj7L/WDDsykko8HGubutxkKKwWbD
-         uISw==
-X-Gm-Message-State: ACgBeo0vzV7vIi3mAEtlgaA01khbXvOXlTo5rtv9F5cRPcd3sZRWhVMX
-        aU6PliTZtMAhwMEYgqP1/22NKj5/NTTrV8f3iavuAw==
-X-Google-Smtp-Source: AA6agR5+rTf9bfwfCt1fLupQFbPAbT6x+K2axID1pNI1aeS85ZPgfrTrkdqMwZuK2rOYbirjnMN4yqPTxMJw3wGhabM=
-X-Received: by 2002:a0d:ffc5:0:b0:341:6cc1:c589 with SMTP id
- p188-20020a0dffc5000000b003416cc1c589mr9842018ywf.418.1662675025716; Thu, 08
- Sep 2022 15:10:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <1662671917-17194-1-git-send-email-quic_khsieh@quicinc.com> <1662671917-17194-3-git-send-email-quic_khsieh@quicinc.com>
-In-Reply-To: <1662671917-17194-3-git-send-email-quic_khsieh@quicinc.com>
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=YvAdGykEq7nSKOvPWAG7qubexjgftEKGvB66ejdN5V4=;
+        b=tIXlaWtKe17zDb7DXSS7CBDxIuaRIT1jcxZZNC+WFrnh3uVMWwadIcLGTge1xVXVM+
+         BTX86nsDbZRXaCppowFt6DgnHQaT7wwx4VekjDrXxRG2D1x83/ov5/tGal57Jk2+aUr6
+         lsF+JakinSHK6Fgt+bKA1YqfEuAUNjlTJlAaY8GnYt4ppD8BSx8dsDZrD4Iv+LT2Ouz0
+         9YR3KN0RHRPSgP3XDxx5Tsnulzki45qhJJ8Wn3amT9rxrAMimhqZScD3qmEugkI7nGD0
+         R3Mx+NB9t4bDhoH0hLRwnxnEd4SlNdmUDBLeEu96V/gwOOR61cRMq7+dSnr6O+RG3psB
+         Sg1Q==
+X-Gm-Message-State: ACgBeo3g7+p5pkYw/Jaz3Muwa1LWDdKiyng9VgGw7ZULQrxe5L3qsC+X
+        AuF98Wl74iJa/sgR3CNSEWcuXQ==
+X-Google-Smtp-Source: AA6agR5gFZd9K+TjJzxW4w/9epOoQAtaBZFTY7CxP7psTafUfRrLOjEvwG3ZK5976Wm4Q9kkzMIjUw==
+X-Received: by 2002:a05:6512:68c:b0:492:2f73:6135 with SMTP id t12-20020a056512068c00b004922f736135mr3638882lfe.480.1662676131159;
+        Thu, 08 Sep 2022 15:28:51 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id a25-20020ac25e79000000b00497a3e11608sm1389078lfr.303.2022.09.08.15.28.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Sep 2022 15:28:50 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 9 Sep 2022 01:10:14 +0300
-Message-ID: <CAA8EJpoEPD7pvLcCOnH-r-J=zVxm5C=ZOvMYLBqfwv4ufSWmDA@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] drm/msm/dp: retry 3 times if set sink to D0 poweer
- state failed
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH v3 0/4] clk: qcom: add SM8450 Display clock controller support
+Date:   Fri,  9 Sep 2022 01:28:46 +0300
+Message-Id: <20220908222850.3552050-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,69 +75,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 9 Sept 2022 at 00:18, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
->
-> Bring sink out of D3 (power down) mode into D0 (normal operation) mode
-> by setting DP_SET_POWER_D0 bit to DP_SET_POWER dpcd register. This
-> patch will retry 3 times if written to DP_SET_POWER register failed.
->
-> Changes in v4:
-> -- split into two patches
->
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_link.c | 21 ++++++++++++---------
->  1 file changed, 12 insertions(+), 9 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-> index 36f0af0..7b5ecf5 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_link.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_link.c
-> @@ -49,23 +49,26 @@ static int dp_aux_link_power_up(struct drm_dp_aux *aux,
->                                         struct dp_link_info *link)
->  {
->         u8 value;
-> -       int err;
-> +       ssize_t len;
-> +       int i;
->
->         if (link->revision < 0x11)
->                 return 0;
->
-> -       err = drm_dp_dpcd_readb(aux, DP_SET_POWER, &value);
-> -       if (err < 0)
-> -               return err;
-> +       len = drm_dp_dpcd_readb(aux, DP_SET_POWER, &value);
-> +       if (len < 0)
-> +               return len;
+Add support for the Display clock controller found on SM8450 platform.
 
-This is a separate patch.
+Changes since v2:
+ - bindings: added missing gcc-sm8450.h include
 
->
->         value &= ~DP_SET_POWER_MASK;
->         value |= DP_SET_POWER_D0;
->
-> -       err = drm_dp_dpcd_writeb(aux, DP_SET_POWER, value);
-> -       if (err < 0)
-> -               return err;
-> -
-> -       usleep_range(1000, 2000);
-> +       /* retry for 1ms to give the sink time to wake up */
-> +       for (i = 0; i < 3; i++) {
-> +               len = drm_dp_dpcd_writeb(aux, DP_SET_POWER, value);
-> +               usleep_range(1000, 2000);
-> +               if (len == 1)
-> +                       break;
-> +       }
->
->         return 0;
->  }
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
->
+Changes since v1:
+ - Rebased on top of 6.0-rc
+ - Dropped clk-names in favour of using parent indices (Bjorn)
+ - Added GCC_DISP_AHB_CLK to dispcc node (Bjorn)
+ - Changed bindings licence to dual GPL+BSD (Bjorn)
+ - Removed zero clocks in dt bindings
+ - Fixed syntax issues
 
+Dmitry Baryshkov (4):
+  dt-bindings: clock: qcom: add bindings for dispcc on SM8450
+  clk: qcom: alpha-pll: add support for power off mode for lucid evo PLL
+  clk: qcom: Add support for Display Clock Controller on SM8450
+  arm64: dts: qcom: sm8450: add display clock controller
+
+ .../bindings/clock/qcom,sm8450-dispcc.yaml    |   98 +
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          |   28 +
+ drivers/clk/qcom/Kconfig                      |    9 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/clk-alpha-pll.c              |   40 +-
+ drivers/clk/qcom/clk-alpha-pll.h              |    1 +
+ drivers/clk/qcom/dispcc-sm8450.c              | 1829 +++++++++++++++++
+ .../dt-bindings/clock/qcom,sm8450-dispcc.h    |  103 +
+ 8 files changed, 2106 insertions(+), 3 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8450-dispcc.yaml
+ create mode 100644 drivers/clk/qcom/dispcc-sm8450.c
+ create mode 100644 include/dt-bindings/clock/qcom,sm8450-dispcc.h
 
 -- 
-With best wishes
-Dmitry
+2.35.1
+
