@@ -2,66 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CCDCB5B2A0E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 01:18:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 903E05B2A16
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 01:22:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229973AbiIHXR7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 19:17:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55082 "EHLO
+        id S229576AbiIHXWC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 19:22:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230001AbiIHXR5 (ORCPT
+        with ESMTP id S229551AbiIHXWB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 19:17:57 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D8CC10E86A;
-        Thu,  8 Sep 2022 16:17:54 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BB0F261E68;
-        Thu,  8 Sep 2022 23:17:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FBCFC433D7;
-        Thu,  8 Sep 2022 23:17:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1662679073;
-        bh=jR7gX2FL4TvSSe9zjk5NzIM3Z6U/ODSb9N8fZlm3LGk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Ytcu9eaTor6NqLceGIaIAtI1VKcS90xH8Bo/rw+7FVTktsXcjKikrKnOzZfT7V6N4
-         x6F0iiuSU2NRhN7wp+isjYguw/PZ1fFziX/GmhSdyfQWTBDVacNGeTM0+fl5PU+sNo
-         pgOMu58akHR08w0S85Pky41mP3UWoZup0ZILPM8I61PwKxHLusCTyI5UqGt3ztGuDn
-         Uz3IbnZSDTm74L04t889N3vgvJnhV/vAvqmoBSq2rNc10JD7A88ybNXd6WxY32aASM
-         dzu0WKyWUSWPoZ9aovAznmMKZIuzZ7xWNodOaWcyWoiV25Id9jXRsuXxuyfnk2wsHH
-         X+9XxDlxcIipA==
-Date:   Thu, 8 Sep 2022 18:17:49 -0500
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com
-Subject: Re: [PATCH v13 2/3] phy: qcom-snps: Add support for overriding phy
- tuning parameters
-Message-ID: <20220908231749.7mihn6yhkqpdeuee@builder.lan>
-References: <1662480933-12326-1-git-send-email-quic_kriskura@quicinc.com>
- <1662480933-12326-3-git-send-email-quic_kriskura@quicinc.com>
+        Thu, 8 Sep 2022 19:22:01 -0400
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FF6CEA63D;
+        Thu,  8 Sep 2022 16:21:59 -0700 (PDT)
+Received: by mail-pj1-f41.google.com with SMTP id o4so19229473pjp.4;
+        Thu, 08 Sep 2022 16:21:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=IcIdx+NSvtXOd2u1FXhN/9FgEH3qxdrtu1Uy/JavQ+U=;
+        b=193Y/1MHotF176kGuvfLJu9RF5xVdSEibBR8zKyjeAYZm0+36FThzIBzz+tymlvO/I
+         dTARKS1BeMfPBqZf7S592AadMlH2FmpInxhT/NcL56GTq4j2ujOMYjdgb3eClfTNeex1
+         kJWvLLP/pw1IPL7t993sENed6nwCziukkS+IYOr1I+7gbscAzLIfxFRI3qMdM5IrajnU
+         UHwpuwFyk/Rd5Dt1e6urZ4AheT7lfxojPYHI03FHzHRcfp7cJXEuX6WB2c5sUWjHslG0
+         QLbYh9r2nn0erQqweZVuRP0Z+/9+p7YlQ6u5YkRSwD5buy75ljR66/5pUd0W1nH0TNTx
+         firw==
+X-Gm-Message-State: ACgBeo1MWtkHYcOdibVR/LjGPMKTvyDPh5qmok3jlRF16fMc4SchOk4O
+        RY5mlifQv/kGH+K14ze6rCTDLuInT5c=
+X-Google-Smtp-Source: AA6agR6ptNBrkGSVDx1xoBYlxei8Js+quhxB2DSCO5HcywYLYGHOFV9xoV6KwzfniH7AvbtrzPysDw==
+X-Received: by 2002:a17:90b:3a8c:b0:1fd:e8a7:165 with SMTP id om12-20020a17090b3a8c00b001fde8a70165mr6487041pjb.179.1662679318451;
+        Thu, 08 Sep 2022 16:21:58 -0700 (PDT)
+Received: from ?IPV6:2620:15c:211:201:c18a:7410:112c:aa7c? ([2620:15c:211:201:c18a:7410:112c:aa7c])
+        by smtp.gmail.com with ESMTPSA id p2-20020a170902e74200b00176a2d23d1asm76536plf.56.2022.09.08.16.21.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 Sep 2022 16:21:57 -0700 (PDT)
+Message-ID: <e9fdb47c-3378-8571-d5cf-dcbcd148e5a6@acm.org>
+Date:   Thu, 8 Sep 2022 16:21:54 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1662480933-12326-3-git-send-email-quic_kriskura@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [RFC PATCH v3 2/4] ufs: core: mcq: Adds Multi-Circular Queue
+ support
+Content-Language: en-US
+To:     Asutosh Das <quic_asutoshd@quicinc.com>, quic_nguyenb@quicinc.com,
+        quic_xiaosenh@quicinc.com, stanley.chu@mediatek.com,
+        adrian.hunter@intel.com, avri.altman@wdc.com, mani@kernel.org,
+        quic_cang@quicinc.com, beanhuo@micron.com,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Jinyoung Choi <j-young.choi@samsung.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <cover.1662157846.git.quic_asutoshd@quicinc.com>
+ <04f4949e4dea991a93bdf6727bf12948ecc586be.1662157846.git.quic_asutoshd@quicinc.com>
+From:   Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <04f4949e4dea991a93bdf6727bf12948ecc586be.1662157846.git.quic_asutoshd@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -70,345 +75,222 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 06, 2022 at 09:45:32PM +0530, Krishna Kurapati wrote:
-> Add support for overriding electrical signal tuning parameters for
-> SNPS HS Phy.
-> 
+On 9/2/22 15:41, Asutosh Das wrote:
+> In v4.0, UFSHCI specification has added Multi-Circular Queue
+> support to enhance performance. It is backward compatible to
+> the legacy Single Doorbell mode.
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+The above may be confusing for someone who is not familiar with the 
+UFSHCI 4.0 specification. Consider changing the above text into the 
+following: "The UFSHCI 4.0 register interface defines two modes: (1) a 
+legacy mode that is compatible with UFSHCI 3.0 and (2) an MCQ mode in 
+which multiple submission and completion queues are supported. A 
+capability register indicates whether (1) and/or (2) are supported."
 
-Regards,
-Bjorn
-
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
->  drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 255 +++++++++++++++++++++++++-
->  1 file changed, 253 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-> index 5d20378..2502294 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-> @@ -52,6 +52,12 @@
->  #define USB2_SUSPEND_N				BIT(2)
->  #define USB2_SUSPEND_N_SEL			BIT(3)
->  
-> +#define USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X0		(0x6c)
-> +#define USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X1		(0x70)
-> +#define USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X2		(0x74)
-> +#define USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X3		(0x78)
-> +#define PARAM_OVRD_MASK				0xFF
-> +
->  #define USB2_PHY_USB_PHY_CFG0			(0x94)
->  #define UTMI_PHY_DATAPATH_CTRL_OVERRIDE_EN	BIT(0)
->  #define UTMI_PHY_CMN_CTRL_OVERRIDE_EN		BIT(1)
-> @@ -60,12 +66,47 @@
->  #define REFCLK_SEL_MASK				GENMASK(1, 0)
->  #define REFCLK_SEL_DEFAULT			(0x2 << 0)
->  
-> +#define HS_DISCONNECT_MASK			GENMASK(2, 0)
-> +#define SQUELCH_DETECTOR_MASK			GENMASK(7, 5)
-> +
-> +#define HS_AMPLITUDE_MASK			GENMASK(3, 0)
-> +#define PREEMPHASIS_DURATION_MASK		BIT(5)
-> +#define PREEMPHASIS_AMPLITUDE_MASK		GENMASK(7, 6)
-> +
-> +#define HS_RISE_FALL_MASK			GENMASK(1, 0)
-> +#define HS_CROSSOVER_VOLTAGE_MASK		GENMASK(3, 2)
-> +#define HS_OUTPUT_IMPEDANCE_MASK		GENMASK(5, 4)
-> +
-> +#define LS_FS_OUTPUT_IMPEDANCE_MASK		GENMASK(3, 0)
-> +
->  static const char * const qcom_snps_hsphy_vreg_names[] = {
->  	"vdda-pll", "vdda33", "vdda18",
->  };
->  
->  #define SNPS_HS_NUM_VREGS		ARRAY_SIZE(qcom_snps_hsphy_vreg_names)
->  
-> +struct override_param {
-> +	s32	value;
-> +	u8	reg_val;
-> +};
-> +
-> +struct override_param_map {
-> +	const char *prop_name;
-> +	const struct override_param *param_table;
-> +	u8 table_size;
-> +	u8 reg_offset;
-> +	u8 param_mask;
-> +};
-> +
-> +struct phy_override_seq {
-> +	bool	need_update;
-> +	u8	offset;
-> +	u8	value;
-> +	u8	mask;
-> +};
-> +
-> +#define NUM_HSPHY_TUNING_PARAMS	(9)
-> +
->  /**
->   * struct qcom_snps_hsphy - snps hs phy attributes
->   *
-> @@ -91,6 +132,7 @@ struct qcom_snps_hsphy {
->  
->  	bool phy_initialized;
->  	enum phy_mode mode;
-> +	struct phy_override_seq update_seq_cfg[NUM_HSPHY_TUNING_PARAMS];
->  };
->  
->  static inline void qcom_snps_hsphy_write_mask(void __iomem *base, u32 offset,
-> @@ -173,10 +215,158 @@ static int qcom_snps_hsphy_set_mode(struct phy *phy, enum phy_mode mode,
->  	return 0;
->  }
->  
-> +static const struct override_param hs_disconnect_sc7280[] = {
-> +	{ -272, 0 },
-> +	{ 0, 1 },
-> +	{ 317, 2 },
-> +	{ 630, 3 },
-> +	{ 973, 4 },
-> +	{ 1332, 5 },
-> +	{ 1743, 6 },
-> +	{ 2156, 7 },
-> +};
-> +
-> +static const struct override_param squelch_det_threshold_sc7280[] = {
-> +	{ -2090, 7 },
-> +	{ -1560, 6 },
-> +	{ -1030, 5 },
-> +	{ -530, 4 },
-> +	{ 0, 3 },
-> +	{ 530, 2 },
-> +	{ 1060, 1 },
-> +	{ 1590, 0 },
-> +};
-> +
-> +static const struct override_param hs_amplitude_sc7280[] = {
-> +	{ -660, 0 },
-> +	{ -440, 1 },
-> +	{ -220, 2 },
-> +	{ 0, 3 },
-> +	{ 230, 4 },
-> +	{ 440, 5 },
-> +	{ 650, 6 },
-> +	{ 890, 7 },
-> +	{ 1110, 8 },
-> +	{ 1330, 9 },
-> +	{ 1560, 10 },
-> +	{ 1780, 11 },
-> +	{ 2000, 12 },
-> +	{ 2220, 13 },
-> +	{ 2430, 14 },
-> +	{ 2670, 15 },
-> +};
-> +
-> +static const struct override_param preemphasis_duration_sc7280[] = {
-> +	{ 10000, 1 },
-> +	{ 20000, 0 },
-> +};
-> +
-> +static const struct override_param preemphasis_amplitude_sc7280[] = {
-> +	{ 10000, 1 },
-> +	{ 20000, 2 },
-> +	{ 30000, 3 },
-> +	{ 40000, 0 },
-> +};
-> +
-> +static const struct override_param hs_rise_fall_time_sc7280[] = {
-> +	{ -4100, 3 },
-> +	{ 0, 2 },
-> +	{ 2810, 1 },
-> +	{ 5430, 0 },
-> +};
-> +
-> +static const struct override_param hs_crossover_voltage_sc7280[] = {
-> +	{ -31000, 1 },
-> +	{ 0, 3 },
-> +	{ 28000, 2 },
-> +};
-> +
-> +static const struct override_param hs_output_impedance_sc7280[] = {
-> +	{ -2300000, 3 },
-> +	{ 0, 2 },
-> +	{ 2600000, 1 },
-> +	{ 6100000, 0 },
-> +};
-> +
-> +static const struct override_param ls_fs_output_impedance_sc7280[] = {
-> +	{ -1053, 15 },
-> +	{ -557, 7 },
-> +	{ 0, 3 },
-> +	{ 612, 1 },
-> +	{ 1310, 0 },
-> +};
-> +
-> +static const struct override_param_map sc7280_snps_7nm_phy[] = {
-> +	{
-> +		"qcom,hs-disconnect-bp",
-> +		hs_disconnect_sc7280,
-> +		ARRAY_SIZE(hs_disconnect_sc7280),
-> +		USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X0,
-> +		HS_DISCONNECT_MASK
-> +	},
-> +	{
-> +		"qcom,squelch-detector-bp",
-> +		squelch_det_threshold_sc7280,
-> +		ARRAY_SIZE(squelch_det_threshold_sc7280),
-> +		USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X0,
-> +		SQUELCH_DETECTOR_MASK
-> +	},
-> +	{
-> +		"qcom,hs-amplitude-bp",
-> +		hs_amplitude_sc7280,
-> +		ARRAY_SIZE(hs_amplitude_sc7280),
-> +		USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X1,
-> +		HS_AMPLITUDE_MASK
-> +	},
-> +	{
-> +		"qcom,pre-emphasis-duration-bp",
-> +		preemphasis_duration_sc7280,
-> +		ARRAY_SIZE(preemphasis_duration_sc7280),
-> +		USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X1,
-> +		PREEMPHASIS_DURATION_MASK,
-> +	},
-> +	{
-> +		"qcom,pre-emphasis-amplitude-bp",
-> +		preemphasis_amplitude_sc7280,
-> +		ARRAY_SIZE(preemphasis_amplitude_sc7280),
-> +		USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X1,
-> +		PREEMPHASIS_AMPLITUDE_MASK,
-> +	},
-> +	{
-> +		"qcom,hs-rise-fall-time-bp",
-> +		hs_rise_fall_time_sc7280,
-> +		ARRAY_SIZE(hs_rise_fall_time_sc7280),
-> +		USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X2,
-> +		HS_RISE_FALL_MASK
-> +	},
-> +	{
-> +		"qcom,hs-crossover-voltage-microvolt",
-> +		hs_crossover_voltage_sc7280,
-> +		ARRAY_SIZE(hs_crossover_voltage_sc7280),
-> +		USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X2,
-> +		HS_CROSSOVER_VOLTAGE_MASK
-> +	},
-> +	{
-> +		"qcom,hs-output-impedance-micro-ohms",
-> +		hs_output_impedance_sc7280,
-> +		ARRAY_SIZE(hs_output_impedance_sc7280),
-> +		USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X2,
-> +		HS_OUTPUT_IMPEDANCE_MASK,
-> +	},
-> +	{
-> +		"qcom,ls-fs-output-impedance-bp",
-> +		ls_fs_output_impedance_sc7280,
-> +		ARRAY_SIZE(ls_fs_output_impedance_sc7280),
-> +		USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X3,
-> +		LS_FS_OUTPUT_IMPEDANCE_MASK,
-> +	},
-> +	{},
-> +};
-> +
->  static int qcom_snps_hsphy_init(struct phy *phy)
->  {
->  	struct qcom_snps_hsphy *hsphy = phy_get_drvdata(phy);
-> -	int ret;
-> +	int ret, i;
->  
->  	dev_vdbg(&phy->dev, "%s(): Initializing SNPS HS phy\n", __func__);
->  
-> @@ -223,6 +413,14 @@ static int qcom_snps_hsphy_init(struct phy *phy)
->  	qcom_snps_hsphy_write_mask(hsphy->base, USB2_PHY_USB_PHY_HS_PHY_CTRL1,
->  					VBUSVLDEXT0, VBUSVLDEXT0);
->  
-> +	for (i = 0; i < ARRAY_SIZE(hsphy->update_seq_cfg); i++) {
-> +		if (hsphy->update_seq_cfg[i].need_update)
-> +			qcom_snps_hsphy_write_mask(hsphy->base,
-> +					hsphy->update_seq_cfg[i].offset,
-> +					hsphy->update_seq_cfg[i].mask,
-> +					hsphy->update_seq_cfg[i].value);
-> +	}
-> +
->  	qcom_snps_hsphy_write_mask(hsphy->base,
->  					USB2_PHY_USB_PHY_HS_PHY_CTRL_COMMON2,
->  					VREGBYPASS, VREGBYPASS);
-> @@ -280,7 +478,10 @@ static const struct phy_ops qcom_snps_hsphy_gen_ops = {
->  static const struct of_device_id qcom_snps_hsphy_of_match_table[] = {
->  	{ .compatible	= "qcom,sm8150-usb-hs-phy", },
->  	{ .compatible	= "qcom,usb-snps-hs-5nm-phy", },
-> -	{ .compatible	= "qcom,usb-snps-hs-7nm-phy", },
-> +	{
-> +		.compatible	= "qcom,usb-snps-hs-7nm-phy",
-> +		.data		= &sc7280_snps_7nm_phy,
-> +	},
->  	{ .compatible	= "qcom,usb-snps-femto-v2-phy",	},
->  	{ }
->  };
-> @@ -291,6 +492,55 @@ static const struct dev_pm_ops qcom_snps_hsphy_pm_ops = {
->  			   qcom_snps_hsphy_runtime_resume, NULL)
->  };
->  
-> +static void qcom_snps_hsphy_override_param_update_val(
-> +			const struct override_param_map map,
-> +			s32 dt_val, struct phy_override_seq *seq_entry)
+> +static int rw_queue_count_set(const char *val, const struct kernel_param *kp)
 > +{
-> +	int i;
+> +	unsigned int n;
+> +	int ret;
 > +
-> +	/*
-> +	 * Param table for each param is in increasing order
-> +	 * of dt values. We need to iterate over the list to
-> +	 * select the entry that matches the dt value and pick
-> +	 * up the corresponding register value.
-> +	 */
-> +	for (i = 0; i < map.table_size - 1; i++) {
-> +		if (map.param_table[i].value == dt_val)
-> +			break;
-> +	}
-> +
-> +	seq_entry->need_update = true;
-> +	seq_entry->offset = map.reg_offset;
-> +	seq_entry->mask = map.param_mask;
-> +	seq_entry->value = map.param_table[i].reg_val << __ffs(map.param_mask);
+> +	ret = kstrtouint(val, 10, &n);
+> +	if (ret)
+> +		return ret;
+> +	if (n > num_possible_cpus())
+> +		return -EINVAL;
+> +	return param_set_uint(val, kp);
 > +}
 > +
-> +static void qcom_snps_hsphy_read_override_param_seq(struct device *dev)
-> +{
-> +	struct device_node *node = dev->of_node;
-> +	s32 val;
-> +	int ret, i;
-> +	struct qcom_snps_hsphy *hsphy;
-> +	const struct override_param_map *cfg = of_device_get_match_data(dev);
+> +static const struct kernel_param_ops rw_queue_count_ops = {
+> +	.set = rw_queue_count_set,
+> +	.get = param_get_uint,
+> +};
 > +
-> +	if (!cfg)
-> +		return;
+> +static unsigned int rw_queues = 8;
+> +module_param_cb(rw_queues, &rw_queue_count_ops, &rw_queues, 0644);
+> +MODULE_PARM_DESC(rw_queues,
+> +		 "Number of interrupt driven I/O queues used for rw. Default value is 8");
+
+rw_queues should be >= 1 and <= 32. However, rw_queue_count_set() allows 
+to set this variable to zero and also to values above 32. I think this 
+needs to be improved.
+
+> +/* resources */
+> +static const struct ufshcd_res_info_t ufshcd_res_info[RES_MAX] = {
+> +	{"ufs_mem", NULL, NULL},
+> +	{"mcq", NULL, NULL},
+> +	{"mcq_sqd", NULL, NULL},
+> +	{"mcq_sqis", NULL, NULL},
+> +	{"mcq_cqd", NULL, NULL},
+> +	{"mcq_cqis", NULL, NULL},
+> +	{"mcq_vs", NULL, NULL},
+> +};
+
+Please make the above easier to verify by using designated initializers 
+([RES_MEM] = { .name = "ufs_mem" }, ...).
+
 > +
-> +	hsphy = dev_get_drvdata(dev);
-> +
-> +	for (i = 0; cfg[i].prop_name != NULL; i++) {
-> +		ret = of_property_read_s32(node, cfg[i].prop_name, &val);
-> +		if (ret)
-> +			continue;
-> +
-> +		qcom_snps_hsphy_override_param_update_val(cfg[i], val,
-> +					&hsphy->update_seq_cfg[i]);
-> +		dev_dbg(&hsphy->phy->dev, "Read param: %s dt_val: %d reg_val: 0x%x\n",
-> +			cfg[i].prop_name, val, hsphy->update_seq_cfg[i].value);
-> +
-> +	}
+> +/**
+> + * ufshcd_mcq_decide_queue_depth - decide the queue depth
+> + * @hba - per adapter instance
+> + *
+> + * MAC - Max. Active Command of the Host Controller (HC)
+> + * HC wouldn't send more than this commands to the device.
+
+wouldn't -> won't
+
+> +	/*  MAC is a 0 based value. */
+> +	mac += 1;
+> +	qd = min_t(u32, mac, hba->dev_info.bqueuedepth);
+> +	if (!qd)
+> +		qd = mac;
+
+Please use min_not_zero instead of open-coding it.
+
 > +}
 > +
->  static int qcom_snps_hsphy_probe(struct platform_device *pdev)
->  {
->  	struct device *dev = &pdev->dev;
-> @@ -352,6 +602,7 @@ static int qcom_snps_hsphy_probe(struct platform_device *pdev)
->  
->  	dev_set_drvdata(dev, hsphy);
->  	phy_set_drvdata(generic_phy, hsphy);
-> +	qcom_snps_hsphy_read_override_param_seq(dev);
->  
->  	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
->  	if (!IS_ERR(phy_provider))
-> -- 
-> 2.7.4
-> 
+> +/**
+> + * ufshcd_mcq_config_mac - Set the #Max Activ Cmds.
+> + * @hba - per adpater instance
+
+adpater -> adapter
+
+> + * @max_active_cmds - maximum # of active commands to the device at any time.
+> + *
+> + * The controller wouldn't send more than the max_active_cmds to the device at
+
+wouldn't -> won't
+
+> +/* ROP - Runtime and operation registers configuration */
+
+The above comment seems misleading to me. In the UFSHCI 4.0 
+specification the operation and runtime registers start with IS - 
+Interrupt Status while the definitions below are for the MCQ submission 
+and completion queue registers.
+
+> +#define MCQ_CFG_n(r, i) \
+> +	((r) + MCQ_QCFG_SIZE * (i))
+
+Please add a clear comment above this macro that explains its role and 
+also the meaning of its arguments. I assume that 'i' is the queue index?
+
+> +#define MCQ_ROP_OFFSET_n(p, i) \
+> +	(hba->mcq_rop[(p)].offset + hba->mcq_rop[(p)].stride * (i))
+
+Also for this macro, please explain its role. I assume that MCQ_CFG_n() 
+is used to calculate offsets of registers defined in the UFSHCI 4.0 
+specification and that MCQ_ROP_OFFSET_n() is used to calculate offsets 
+in the data structure with submission and completion queues?
+
+> +		/* Sbmission Qqueue Doorbell Address Offset */
+
+Sbmission -> Submission
+Qqueue -> Queue
+
+> +		/* Save the base addresses for quicker access */
+
+base -> head and tail?
+
+> +		/*
+> +		 * Submission Qeueue Enable|Size|Completion Queue ID to
+> +		 * Submission Queue Attribute
+> +		 */
+> +		ufsmcq_writel(hba, (1 << 31) | qsize | (i << 16),
+> +			      MCQ_CFG_n(REG_SQATTR, i));
+
+Qeueue -> Queue
+
+> +static void ufshcd_mcq_config_nr_queues(struct ufs_hba *hba)
+> +{
+> +	int i, rem;
+> +	u32 hbaq_cap, cmp;
+> +	struct Scsi_Host *host = hba->host;
+> +
+> +	hbaq_cap = hba->mcq_capabilities & 0xff;
+> +
+> +	rem = hbaq_cap - dev_cmd_queue;
+
+Please handle the case dev_cmd_queue > hbaq_cap (rem < 0) explicitly.
+
+> +	/* min() compares variables of same type */
+
+Please remove this comment. Every kernel developer should know this.
+
+> +	hba->nr_queues[HCTX_TYPE_DEFAULT] = min(hbaq_cap - dev_cmd_queue,
+> +						num_possible_cpus());
+> +	rem -= hba->nr_queues[HCTX_TYPE_DEFAULT];
+> +	if (rem <= 0)
+> +		goto out;
+> +	cmp = rem;
+> +	hba->nr_queues[HCTX_TYPE_POLL] = min(cmp, poll_queues);
+> +	rem -= hba->nr_queues[HCTX_TYPE_POLL];
+> +	if (rem <= 0)
+> +		goto out;
+> +	cmp = rem;
+> +	hba->nr_queues[HCTX_TYPE_READ] = min(cmp, read_queues);
+> +
+> +out:
+> +	for (i = 0; i < HCTX_MAX_TYPES; i++)
+> +		host->nr_hw_queues += hba->nr_queues[i];
+> +
+> +	hba->nr_hw_queues = host->nr_hw_queues + dev_cmd_queue;
+
+I think there are code paths in this function that can result in 
+host->nr_hw_queues becoming larger than the number of submission queues 
+supported by the controller. Please fix.
+
+> +static int ufshcd_mcq_get_tag(struct ufs_hba *hba,
+> +				     struct ufs_hw_queue *hwq,
+> +				     struct cq_entry *cqe)
+> +{
+> +	dma_addr_t dma_addr;
+> +
+> +	/* Bits 31:7 UCD base address, 6:5 are reserved, 4:0 is SQ ID */
+> +	dma_addr = ((u64)le32_to_cpu(cqe->command_desc_base_addr_hi) << 32) |
+> +		   (le32_to_cpu(cqe->command_desc_base_addr_lo) & CQE_UCD_BA);
+
+The above code would become faster if command_desc_base_addr_hi and 
+command_desc_base_addr_lo would be combined into a single __le64 member 
+variable. Has this been considered?
+
+> +static inline void ufshcd_inc_tp(struct ufs_hw_queue *q)
+> +{
+> +	u32 mask = q->max_entries - 1;
+> +	u32 val;
+> +
+> +	q->sq_tp_slot = (q->sq_tp_slot + 1) & mask;
+> +	val = q->sq_tp_slot * sizeof(struct utp_transfer_req_desc);
+> +	writel(val, q->mcq_sq_tp);
+> +}
+
+Please consider changing "tp" into "tail" or "tail_pointer" and "hp" 
+into "head" or "head_pointer" to improve code readability.
+
+> +EXPORT_SYMBOL_GPL(ufshcd_transfer_req_compl);
+
+Why has this function been exported?
+
+> +enum ufshcd_res {
+> +	RES_MEM,
+> +	RES_MCQ,
+> +	RES_MCQ_SQD,
+> +	RES_MCQ_SQIS,
+> +	RES_MCQ_CQD,
+> +	RES_MCQ_CQIS,
+> +	RES_MCQ_VS,
+> +	RES_MAX,
+> +};
+
+Please add a comment that explains the SQD, SQIS etc. acronyms.
+
+> +/* MCQ Runtime Operation Pointer info structure */
+> +struct ufshcd_mcq_rop_info_t {
+> +	unsigned long offset;
+> +	unsigned long stride;
+> +	void __iomem *base;
+> +};
+
+Please document the role of the members of this data structure.
+
+Thanks,
+
+Bart.
