@@ -2,160 +2,241 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 214625B1F73
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 15:42:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABBA75B1F7B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 15:44:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231600AbiIHNmY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 09:42:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60080 "EHLO
+        id S230083AbiIHNoH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 09:44:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231645AbiIHNmX (ORCPT
+        with ESMTP id S231124AbiIHNoG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 09:42:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FFEFED385
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 06:42:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1662644541;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=dY7UGDgAaThf/zGLCo78Nc7H8PVWh9/Q5L5/T8dTqWI=;
-        b=SBafUSy2xv9cv36vpCqcCiuza7uQRN2O+beUhrtDZzYc/sawdodZZlHC6T8CxD6oY2twc3
-        TwRQUQiOO/7fzG9+qvDfdu3XckynGygSSuc7N3oWdwEPVi9bJQvAznwzK0yEUqwpWu9PH/
-        Bodv7fXGbV+nKYbdHtMk3BHhT/tYyWc=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-563-bZCAKWYDPPquBLQX4VguSw-1; Thu, 08 Sep 2022 09:42:19 -0400
-X-MC-Unique: bZCAKWYDPPquBLQX4VguSw-1
-Received: by mail-ej1-f71.google.com with SMTP id xh12-20020a170906da8c00b007413144e87fso6383083ejb.14
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 06:42:19 -0700 (PDT)
+        Thu, 8 Sep 2022 09:44:06 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2101AB2DAD
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 06:44:05 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id q21so13573188lfo.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 06:44:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=ADjKcgU/7WVg1iZnEBOc24JneNzG+pamTo18hJi4qC4=;
+        b=W4Y4wSahcBGlxIwPOKy2A/5B/zitDUDrZKJ0i+Q5RM5SxqY1rIoWeLPC0sAnXVxVaL
+         ot30JkD4LVAxJepRJtzxf4DtAqjdAtlxnDpU4dgfc00elvrLyeTK8EKaNtzpPEB8P3cR
+         g3rkQpPHbexJX0X8wxpI5stKYCsWjh3RNZjZsqp1ArtvW9N67czMFf970ch2SYi6+Yls
+         f0IvHieCTQ1qjS7WL3dCZPFH1bpnNF7N5eij4Wk5T09+RJB0uXXVoY98XeBWvxe1ATFC
+         0e8FhXROxeRlnf6qgk/1B/C+MzrobDLalzN+bLrbmkGId/UFtoGDzwwMapilKe8b+yY8
+         KImw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=dY7UGDgAaThf/zGLCo78Nc7H8PVWh9/Q5L5/T8dTqWI=;
-        b=b0S2aoyOLOxkhpddwZzuSTWxhIBuooe24sbj77hnPVaTzBBwwaRrJYzBxiGyZgMeAx
-         PoZXGWlLamiZDNbuuqMEpK0pG8Vj/kwybV5iQXQ6aMbNr2PYN2dFza1JaY9bl1LSc0Cy
-         DzIRzY14GbFkxXv+bvlyU+Mx8LOtFQCux2SAfRhf8FkZdNuGx4PSxlLetNDjJaXPqkz7
-         +2eKMAKNzAqdqHBaEjJ68Cl0Bu1jNZQZl9q2E9vw1oTGnXwZn1kpnAsUwnRmTCCp38UF
-         z1PgQqCcCotwqLh/ts9KoJtrUFa7k7MjeZtiC9xCjzXTMvyw0ASVeoX98BL1QAxwN9iy
-         FftQ==
-X-Gm-Message-State: ACgBeo2nkK+G07w8snlN0y0BuPOt+/WLigx5xB/Rdny1OO+l8aTLapQw
-        873sNgYqwLBMwYwQLLYer9C8znSdw+J/klchHeALey75r1Iya35FeQGoANTJ8JFpgmmZAgFw0/C
-        aswzspFgXtnjzp6kV2U/BjIOXhA==
-X-Received: by 2002:a17:907:96a3:b0:740:a894:f with SMTP id hd35-20020a17090796a300b00740a894000fmr6136607ejc.460.1662644538479;
-        Thu, 08 Sep 2022 06:42:18 -0700 (PDT)
-X-Google-Smtp-Source: AA6agR5AC4iFP8kH6lKh83PspsOpkpVkUS6JN8xBfUD/yEuKwkju+iQLnwP+Y88hQIIWETucCSz8UQ==
-X-Received: by 2002:a17:907:96a3:b0:740:a894:f with SMTP id hd35-20020a17090796a300b00740a894000fmr6136591ejc.460.1662644538255;
-        Thu, 08 Sep 2022 06:42:18 -0700 (PDT)
-Received: from ?IPV6:2001:1c00:c1e:bf00:d69d:5353:dba5:ee81? (2001-1c00-0c1e-bf00-d69d-5353-dba5-ee81.cable.dynamic.v6.ziggo.nl. [2001:1c00:c1e:bf00:d69d:5353:dba5:ee81])
-        by smtp.gmail.com with ESMTPSA id bm9-20020a0564020b0900b0044ec76521a1sm5837844edb.55.2022.09.08.06.42.17
+        bh=ADjKcgU/7WVg1iZnEBOc24JneNzG+pamTo18hJi4qC4=;
+        b=BjDS+f0h16HVR/6IbEok6zoF7iTvZC89i64pU4n46qvIGsnCQNdvUkQ5F/WnYnjR71
+         7WnlXQSxsBHvmXr7FUNLADxXSEmnTkqn3l7lK8TwwdoF1AUQw5Mtv+bRICBA2J3MJEfC
+         gCEjjOewL+bfcwgQBCw2FWiUmMkC1m2OAe47pG/id6Jb7o3hE/cmbrZkk3my17etGo5+
+         2De0xDr5LRsfWvwzBrhUTOeeo70Yc7WhaRWdUZjJ9cZco5xkT50+Mvr+HSGdKAOAo90Y
+         UJZcDAKiUEpWmJlgZpKF2n1D8UR/En5zuKXs7OgzaqMXgLwJaGRqSxj7DGMilvgV9kxE
+         yzmA==
+X-Gm-Message-State: ACgBeo3rnaja6GiEVdWOoQuhUhn9u27hZvhcGVGXC9gl2aEEgYcJ2+cm
+        n4xNz+Y1u7SgV8D9fmX7A8JbhA==
+X-Google-Smtp-Source: AA6agR4wHBMp+HzD7UtYqVNqr/wulhee2bv18awY6dzHZIdtqfYE3uyvQV3OijHcTs/qKENgvxF/4g==
+X-Received: by 2002:a05:6512:3d06:b0:494:6871:639e with SMTP id d6-20020a0565123d0600b004946871639emr2734162lfv.227.1662644643456;
+        Thu, 08 Sep 2022 06:44:03 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id b28-20020ac247fc000000b004951c1beb4fsm2603188lfp.66.2022.09.08.06.44.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Sep 2022 06:42:17 -0700 (PDT)
-Message-ID: <767b4c6c-c860-b490-4e85-34c6677de456@redhat.com>
-Date:   Thu, 8 Sep 2022 15:42:17 +0200
+        Thu, 08 Sep 2022 06:44:02 -0700 (PDT)
+Message-ID: <92e18257-9a95-9366-ffff-416d27039c3b@linaro.org>
+Date:   Thu, 8 Sep 2022 15:44:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v2 8/8] efi/dev-path-parser: Refactor _UID handling to use
- acpi_dev_uid_to_integer()
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v6 06/12] dt-bindings: display/msm: split dpu-sc7180 into
+ DPU and MDSS parts
 Content-Language: en-US
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Mark Brown <broonie@kernel.org>, linux-acpi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-efi@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-spi@vger.kernel.org,
-        devel@acpica.org
-Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Len Brown <lenb@kernel.org>, Elie Morisse <syniurge@gmail.com>,
-        Nehal Shah <nehal-bakulchandra.shah@amd.com>,
-        Shyam Sundar S K <shyam-sundar.s-k@amd.com>,
-        Khalil Blaiech <kblaiech@nvidia.com>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Will Deacon <will@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Daniel Mack <daniel@zonque.org>,
-        Haojian Zhuang <haojian.zhuang@gmail.com>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Robert Moore <robert.moore@intel.com>,
-        Wolfram Sang <wsa@kernel.org>
-References: <20220908132910.62122-1-andriy.shevchenko@linux.intel.com>
- <20220908132910.62122-9-andriy.shevchenko@linux.intel.com>
-From:   Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <20220908132910.62122-9-andriy.shevchenko@linux.intel.com>
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Loic Poulain <loic.poulain@linaro.org>
+References: <20220901102312.2005553-1-dmitry.baryshkov@linaro.org>
+ <20220901102312.2005553-7-dmitry.baryshkov@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220901102312.2005553-7-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 9/8/22 15:29, Andy Shevchenko wrote:
-> ACPI utils provide acpi_dev_uid_to_integer() helper to extract _UID as
-> an integer. Use it instead of custom approach.
+On 01/09/2022 12:23, Dmitry Baryshkov wrote:
+> In order to make the schema more readable, split dpu-sc7180 into the DPU
+> and MDSS parts, each one describing just a single device binding.
 > 
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Thanks, patch looks good to me:
+Thank you for your patch. There is something to discuss/improve.
 
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+> -                           #address-cells = <1>;
+> -                           #size-cells = <0>;
+> -
+> -                           port@0 {
+> -                                   reg = <0>;
+> -                                   dpu_intf1_out: endpoint {
+> -                                                  remote-endpoint = <&dsi0_in>;
+> -                                   };
+> -                           };
+> -
+> -                            port@2 {
+> -                                    reg = <2>;
+> -                                    dpu_intf0_out: endpoint {
+> -                                                   remote-endpoint = <&dp_in>;
+> -                                    };
+> -                            };
+> -                   };
+> -         };
+> +    display-controller@ae01000 {
+> +               compatible = "qcom,sc7180-dpu";
+> +               reg = <0x0ae01000 0x8f000>,
 
-Regards,
+You need to fix up the indentation.
 
-Hans
+> +                     <0x0aeb0000 0x2008>;
+> +
+> +               reg-names = "mdp", "vbif";
+> +
+> +               clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
+> +                        <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +                        <&dispcc DISP_CC_MDSS_ROT_CLK>,
+> +                        <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
+> +                        <&dispcc DISP_CC_MDSS_MDP_CLK>,
+> +                        <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
+> +               clock-names = "bus", "iface", "rot", "lut", "core",
+> +                             "vsync";
+> +
+> +               interrupt-parent = <&mdss>;
+> +               interrupts = <0>;
+> +               power-domains = <&rpmhpd SC7180_CX>;
+> +               operating-points-v2 = <&mdp_opp_table>;
+> +
+> +               ports {
+> +                       #address-cells = <1>;
+> +                       #size-cells = <0>;
+> +
+> +                       port@0 {
+> +                               reg = <0>;
+> +                               dpu_intf1_out: endpoint {
+> +                                              remote-endpoint = <&dsi0_in>;
+> +                               };
+> +                       };
+> +
+> +                        port@2 {
+> +                                reg = <2>;
+> +                                dpu_intf0_out: endpoint {
+> +                                               remote-endpoint = <&dp_in>;
+> +                                };
+> +                        };
+> +               };
+>      };
+>  ...
+> diff --git a/Documentation/devicetree/bindings/display/msm/mdss-sc7180.yaml b/Documentation/devicetree/bindings/display/msm/mdss-sc7180.yaml
+> new file mode 100644
+> index 000000000000..27d944f0e471
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/msm/mdss-sc7180.yaml
+> @@ -0,0 +1,85 @@
+> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/msm/mdss-sc7180.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Display MDSS dt properties for SC7180 target
+> +
+> +maintainers:
+> +  - Krishna Manikandan <quic_mkrishn@quicinc.com>
+> +
+> +description: |
+> +  Device tree bindings for MSM Mobile Display Subsystem(MDSS) that encapsulates
+> +  sub-blocks like DPU display controller, DSI and DP interfaces etc. Device tree
+> +  bindings of MDSS are mentioned for SC7180 target.
+> +
+> +allOf:
+> +  - $ref: /schemas/display/msm/mdss-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - const: qcom,sc7180-mdss
+> +
+> +  clocks:
+> +    items:
+> +      - description: Display AHB clock from gcc
+> +      - description: Display AHB clock from dispcc
+> +      - description: Display core clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: iface
+> +      - const: ahb
+> +      - const: core
+> +
+> +  iommus:
+> +    maxItems: 1
+> +
+> +  interconnects:
+> +    maxItems: 1
+> +
+> +  interconnect-names:
+> +    maxItems: 1
+> +
+> +patternProperties:
+> +  "^display-controller@[0-9a-f]+$":
+> +    type: object
+> +    properties:
+> +      compatible:
+> +        const: qcom,sc7180-dpu
+
+You have now schema for qcom,sc7180-dpu so just reference it here instead.
+
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
+> +    #include <dt-bindings/clock/qcom,gcc-sc7180.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/interconnect/qcom,sdm845.h>
+> +    #include <dt-bindings/power/qcom-rpmpd.h>
+> +
+> +    display-subsystem@ae00000 {
+> +         #address-cells = <1>;
+
+Fix indentation to four spaces.
 
 
-> ---
->  drivers/firmware/efi/dev-path-parser.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/firmware/efi/dev-path-parser.c b/drivers/firmware/efi/dev-path-parser.c
-> index eb9c65f97841..f80d87c199c3 100644
-> --- a/drivers/firmware/efi/dev-path-parser.c
-> +++ b/drivers/firmware/efi/dev-path-parser.c
-> @@ -15,9 +15,11 @@
->  static long __init parse_acpi_path(const struct efi_dev_path *node,
->  				   struct device *parent, struct device **child)
->  {
-> -	char hid[ACPI_ID_LEN], uid[11]; /* UINT_MAX + null byte */
->  	struct acpi_device *adev;
->  	struct device *phys_dev;
-> +	char hid[ACPI_ID_LEN];
-> +	u64 uid;
-> +	int ret;
->  
->  	if (node->header.length != 12)
->  		return -EINVAL;
-> @@ -27,12 +29,12 @@ static long __init parse_acpi_path(const struct efi_dev_path *node,
->  		'A' + ((node->acpi.hid >>  5) & 0x1f) - 1,
->  		'A' + ((node->acpi.hid >>  0) & 0x1f) - 1,
->  			node->acpi.hid >> 16);
-> -	sprintf(uid, "%u", node->acpi.uid);
->  
->  	for_each_acpi_dev_match(adev, hid, NULL, -1) {
-> -		if (adev->pnp.unique_id && !strcmp(adev->pnp.unique_id, uid))
-> +		ret = acpi_dev_uid_to_integer(adev, &uid);
-> +		if (ret == 0 && node->acpi.uid == uid)
->  			break;
-> -		if (!adev->pnp.unique_id && node->acpi.uid == 0)
-> +		if (ret == -ENODATA && node->acpi.uid == 0)
->  			break;
->  	}
->  	if (!adev)
 
+Best regards,
+Krzysztof
