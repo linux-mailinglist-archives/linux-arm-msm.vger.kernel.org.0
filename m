@@ -2,75 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68FFE5B28ED
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 00:03:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B14555B290C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 00:10:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229609AbiIHWCy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 18:02:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60780 "EHLO
+        id S229787AbiIHWK2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 18:10:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229534AbiIHWCx (ORCPT
+        with ESMTP id S229544AbiIHWK2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 18:02:53 -0400
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31046226;
-        Thu,  8 Sep 2022 15:02:52 -0700 (PDT)
-Received: by mail-pj1-f42.google.com with SMTP id t6-20020a17090a950600b0020063f8f964so4295933pjo.0;
-        Thu, 08 Sep 2022 15:02:52 -0700 (PDT)
+        Thu, 8 Sep 2022 18:10:28 -0400
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B82EBB02B
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 15:10:26 -0700 (PDT)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-345528ceb87so124555897b3.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 15:10:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=/WcHqdHM8dnvu0KhL8XnDPtvYcltW68n+l5+9CRl2js=;
+        b=SkIfqdYOLK8R9nL8tGEdusHKauZ2yGxXEslcHgQHtVciNUS/jVWDcjmB3+hBBisgPv
+         4jvuzOhivKBk3kAn0wjyfdxZSzCHSZeRzRhXhofW31wAiQSccBgCDeVSqueT1dPMcvLm
+         /lcAaPhRKLufjVrLKefaGBQgHfVB5wVT4O1F6jDr2iQGdsC/or9SuLb9CRCPEaM0mIc4
+         rQTYfUi+Rg84zYOLbnUVLBzrUH9JhzhVCnVbwJVv05IhTOYk3i5o7aEc0HhyIYLQXcMZ
+         /RVQzgqwRNHvX13ec/twUcuqr5rlf6g0JwndelKboKm7502axGrsALyVS/71C1ZObF9a
+         uBIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=b12taMnIzdMKm4jddAntJRZjOPMuOvjwagtVtJORdzI=;
-        b=pq1zBUWfMR3nUFc4rN2pj6sxK5EUoYvSLnQlNAWedj6PaZR6LUZ7BRxohIpYGzRZI3
-         f1PMQwIkNnW+huLZSsP34rVpxdowygya+BHc0EA7TiYrhjezC4+h8dUnrMTFqi+4N2dW
-         IqV9lt1ax2dAPYkdSRK/UNLS8BYTCO2ewjeUqy9sKOJ3n4vNs8KRz8URIrHnJkb/tlKh
-         56pFJNLjimWb3xOQHx8JOmwHIp50bCk3T+eQx588kwp3t2AK6oxmvE5LUABh0y/rDig7
-         qmO60H1ujiAAWOv7zoX35LbxvWXFzkXFyMEe89RsJrzzowVYpiLiUnPgQrEsJG0JCn6g
-         b1kw==
-X-Gm-Message-State: ACgBeo0xyZK73aB8ZnzZVW9vHi5R0x2O/BzgFBAldNT9r9BwDpVdayKA
-        9zB/kISUdbv8uOrxsh18Xvk=
-X-Google-Smtp-Source: AA6agR6pTB2tPVoMwzw7k4ZKmtCcnvQ4r6tBR0MR1NlBGJdXUd+qKpMCTXAozXCSSiKuB1tqLquBXA==
-X-Received: by 2002:a17:90b:3a89:b0:200:5a01:e3a6 with SMTP id om9-20020a17090b3a8900b002005a01e3a6mr6334666pjb.64.1662674571626;
-        Thu, 08 Sep 2022 15:02:51 -0700 (PDT)
-Received: from ?IPV6:2620:15c:211:201:c18a:7410:112c:aa7c? ([2620:15c:211:201:c18a:7410:112c:aa7c])
-        by smtp.gmail.com with ESMTPSA id 201-20020a6217d2000000b0053e5daf1a25sm108199pfx.45.2022.09.08.15.02.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Sep 2022 15:02:50 -0700 (PDT)
-Message-ID: <877d782d-8fb1-44bc-6de9-1c3c7f8667f3@acm.org>
-Date:   Thu, 8 Sep 2022 15:02:47 -0700
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=/WcHqdHM8dnvu0KhL8XnDPtvYcltW68n+l5+9CRl2js=;
+        b=rx46IMAgp7aj9YVC92NGBAC4u+ehdsXEwGHiJx/nuYYR1As3on0IeIxj1Gn6TKNu9o
+         ibFmPADoZY0U06ePjnWjrdm9D2XWxJPmizV47MqUwGSleg6FjVLYmqjgm7Km1S0raiOi
+         hLozJJXkwvBFNYYI1xoBRBZFVIiTVkgDGtncYgNegtXteikKGwra5jIYJE6J9bN/LWGk
+         ireg294WYxhC6k4cSHs7iWQPVPjU5NXURfuDeABS+KyJHM9nfMl/XO9iVulsfT0ilimJ
+         PvCOWEU/FmEaZekRDx3fuyUELiS5XkQT5gwIRaTmxj7L/WDDsykko8HGubutxkKKwWbD
+         uISw==
+X-Gm-Message-State: ACgBeo0vzV7vIi3mAEtlgaA01khbXvOXlTo5rtv9F5cRPcd3sZRWhVMX
+        aU6PliTZtMAhwMEYgqP1/22NKj5/NTTrV8f3iavuAw==
+X-Google-Smtp-Source: AA6agR5+rTf9bfwfCt1fLupQFbPAbT6x+K2axID1pNI1aeS85ZPgfrTrkdqMwZuK2rOYbirjnMN4yqPTxMJw3wGhabM=
+X-Received: by 2002:a0d:ffc5:0:b0:341:6cc1:c589 with SMTP id
+ p188-20020a0dffc5000000b003416cc1c589mr9842018ywf.418.1662675025716; Thu, 08
+ Sep 2022 15:10:25 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [RFC PATCH v3 2/4] ufs: core: mcq: Adds Multi-Circular Queue
- support
-Content-Language: en-US
-To:     Bean Huo <huobean@gmail.com>,
-        Asutosh Das <quic_asutoshd@quicinc.com>,
-        quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
-        stanley.chu@mediatek.com, adrian.hunter@intel.com,
-        avri.altman@wdc.com, mani@kernel.org, quic_cang@quicinc.com,
-        beanhuo@micron.com, martin.petersen@oracle.com,
-        linux-scsi@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Jinyoung Choi <j-young.choi@samsung.com>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
-        open list <linux-kernel@vger.kernel.org>
-References: <cover.1662157846.git.quic_asutoshd@quicinc.com>
- <04f4949e4dea991a93bdf6727bf12948ecc586be.1662157846.git.quic_asutoshd@quicinc.com>
- <c3d2d8b307f7e11b7a2be751673220049b9a1a77.camel@gmail.com>
-From:   Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <c3d2d8b307f7e11b7a2be751673220049b9a1a77.camel@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <1662671917-17194-1-git-send-email-quic_khsieh@quicinc.com> <1662671917-17194-3-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1662671917-17194-3-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 9 Sep 2022 01:10:14 +0300
+Message-ID: <CAA8EJpoEPD7pvLcCOnH-r-J=zVxm5C=ZOvMYLBqfwv4ufSWmDA@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] drm/msm/dp: retry 3 times if set sink to D0 poweer
+ state failed
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,18 +72,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/5/22 09:27, Bean Huo wrote:
-> static read_queues is not initialized.
+On Fri, 9 Sept 2022 at 00:18, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>
+> Bring sink out of D3 (power down) mode into D0 (normal operation) mode
+> by setting DP_SET_POWER_D0 bit to DP_SET_POWER dpcd register. This
+> patch will retry 3 times if written to DP_SET_POWER register failed.
+>
+> Changes in v4:
+> -- split into two patches
+>
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_link.c | 21 ++++++++++++---------
+>  1 file changed, 12 insertions(+), 9 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
+> index 36f0af0..7b5ecf5 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_link.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_link.c
+> @@ -49,23 +49,26 @@ static int dp_aux_link_power_up(struct drm_dp_aux *aux,
+>                                         struct dp_link_info *link)
+>  {
+>         u8 value;
+> -       int err;
+> +       ssize_t len;
+> +       int i;
+>
+>         if (link->revision < 0x11)
+>                 return 0;
+>
+> -       err = drm_dp_dpcd_readb(aux, DP_SET_POWER, &value);
+> -       if (err < 0)
+> -               return err;
+> +       len = drm_dp_dpcd_readb(aux, DP_SET_POWER, &value);
+> +       if (len < 0)
+> +               return len;
 
-Hi Bean,
+This is a separate patch.
 
-The Linux kernel coding style guide does not allow to explicitly 
-initialize static variables to zero. The C standard requires that static 
-variables that are not initialized explicitly are initialized to zero. 
- From https://en.wikipedia.org/wiki/.bss: "In C, statically allocated 
-objects without an explicit initializer are initialized to zero (for 
-arithmetic types) or a null pointer (for pointer types)."
+>
+>         value &= ~DP_SET_POWER_MASK;
+>         value |= DP_SET_POWER_D0;
+>
+> -       err = drm_dp_dpcd_writeb(aux, DP_SET_POWER, value);
+> -       if (err < 0)
+> -               return err;
+> -
+> -       usleep_range(1000, 2000);
+> +       /* retry for 1ms to give the sink time to wake up */
+> +       for (i = 0; i < 3; i++) {
+> +               len = drm_dp_dpcd_writeb(aux, DP_SET_POWER, value);
+> +               usleep_range(1000, 2000);
+> +               if (len == 1)
+> +                       break;
+> +       }
+>
+>         return 0;
+>  }
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+>
 
-Thanks,
 
-Bart.
+-- 
+With best wishes
+Dmitry
