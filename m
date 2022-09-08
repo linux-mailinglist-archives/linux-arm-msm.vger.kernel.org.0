@@ -2,144 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB4C55B1792
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 10:47:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F29925B17CF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 10:55:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231735AbiIHIrW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 04:47:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57202 "EHLO
+        id S231318AbiIHIze (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 04:55:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231699AbiIHIq6 (ORCPT
+        with ESMTP id S231153AbiIHIzb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 04:46:58 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22C4EFD221;
-        Thu,  8 Sep 2022 01:46:43 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28887nmB011099;
-        Thu, 8 Sep 2022 08:46:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=qTr6NX0nU5Dt4X9zra8IX/RB9sp9h+qsIwTZ4S5p0Ms=;
- b=NK3PhQnkhVLJkzc9liQUjh8FbBta0FuoKsMD8suoK/LsSYuuuTZAcv9xaVFPlS3WNP+J
- ra/BeIG0E/PkHp/gh8Xqt5ge/9j8gAcxmhMtSZolAm1QS6KWywGuF2zIwxS5G0vgoSMQ
- j1Rll3s2ygOXniASN/GKrEYWPR2E7+31cJcEF33D0sKWpHwpgCQusVatm0Cbz3p0mDxd
- 1TUIs93FxYjdUk5R4cxx4Cz8kGi4700E5zn5mwaCte5cVlLhH5JP4ZjzHHbj9R61imgs
- GrSkmZz9kH3Fa64iB8TGML/6sucZoQDebpf3FSAofsDFDavWPcjV/7ZBed5SvIB8jdo8 Ug== 
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jenmjv9cp-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 08 Sep 2022 08:46:23 +0000
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 2888kKVp014080;
-        Thu, 8 Sep 2022 08:46:20 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3jc00m3e15-1;
-        Thu, 08 Sep 2022 08:46:20 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2888gNm6008440;
-        Thu, 8 Sep 2022 08:46:20 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-krichai-hyd.qualcomm.com [10.213.110.37])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 2888kJDl014065;
-        Thu, 08 Sep 2022 08:46:19 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 4058933)
-        id 0E08A44A2; Thu,  8 Sep 2022 14:16:19 +0530 (+0530)
-From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
-To:     helgaas@kernel.org
-Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mka@chromium.org,
-        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
-        swboyd@chromium.org, dmitry.baryshkov@linaro.org,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS)
-Subject: [PATCH v4 2/2] dt-bindings: pci: QCOM Add missing sc7280 aggre0, aggre1 clocks
-Date:   Thu,  8 Sep 2022 14:16:16 +0530
-Message-Id: <1662626776-19636-3-git-send-email-quic_krichai@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1662626776-19636-1-git-send-email-quic_krichai@quicinc.com>
-References: <1662626776-19636-1-git-send-email-quic_krichai@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: OkrfsiW35YNSxNOlCbI124ffix3nVzOJ
-X-Proofpoint-ORIG-GUID: OkrfsiW35YNSxNOlCbI124ffix3nVzOJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-08_06,2022-09-07_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- clxscore=1015 malwarescore=0 impostorscore=0 suspectscore=0
- mlxlogscore=999 mlxscore=0 bulkscore=0 spamscore=0 adultscore=0
- phishscore=0 priorityscore=1501 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2207270000 definitions=main-2209080031
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Thu, 8 Sep 2022 04:55:31 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAEFFC697A
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 01:55:27 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id p7so26603793lfu.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 01:55:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=C5KNVGsjWvUeDKSq3LjZlenEv9vb29toHV4Rmgebsro=;
+        b=qI6gupLwkGLXp4h61TVhWU/l08zkHVbj64MDbF8omA+94eQv3aL8aI2S6qWbEAVXsB
+         zqBZIVUkAJZIkg6AsjyNxPFRgh4YW5iHTR4mdzGmCB3k/fZ1M+ThVdBSzN6Vsw2TNylL
+         NK6xSYos3lrNGA9fdoAWEeHo/f1aJMOCcFFd5W83NmtYqbcLce9k5Y3GeYIWiLJlbP/6
+         DGnIF3mkMXjGhXsZKEP435xh84kWKPSdP1+aDPxx/3EoIYSfgd7I+KegGtPYqtq/pS7B
+         h2NVhreDcrHPlY/7Bt0hoXKyc+z7gGgVXS83TGoLHSrgOcxMUsJboBtV272XPRhMHZ9V
+         /9NA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=C5KNVGsjWvUeDKSq3LjZlenEv9vb29toHV4Rmgebsro=;
+        b=fbxIe5yBQj0qA56qR7d2UJ+iKkNyNDi6ojrQNRJTK/ICBUE2xLF9xAFXE61qqgv7ja
+         hzpuw2YMbMUeRe70DDrzM4q+V7O0KuRozZUOjYVLD7/nGNVemblnMcgA1GhrdeByAEny
+         iFmsyRAknU1AkvBaNSzD8hJFTwpaWMDDyIJEdK9bhh3aD6Pj4T8f9d6raL2r3Cd8Oar+
+         T+EmG1sZjA/hVQLnkixLPJxI++BsGfMybXKW43om4H4lnwdxM4wWQsOVs2BkJLJGPjXW
+         ZeNNowVQGwRrCoVn1Jbiga3bfJCyGYrF52jcGZDzCTgC8CigNU0DCPuPpxMhPux22bmZ
+         pVBQ==
+X-Gm-Message-State: ACgBeo1CYWrvkhhlHXfVtivXoaL67r3Wg89Tsb8Ojx5BJn13A/qqAG5s
+        0wLa2WmwoHWSDJ3zue9mwIWMtA==
+X-Google-Smtp-Source: AA6agR4YRFajrwiiGqsuxOEYNGDXHyymQaVlGyWoA0UE3adCCxSYJsz9ihBn42XerAKsW4kSjA7IVg==
+X-Received: by 2002:a05:6512:1694:b0:48a:9d45:763f with SMTP id bu20-20020a056512169400b0048a9d45763fmr2255149lfb.662.1662627325558;
+        Thu, 08 Sep 2022 01:55:25 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id w30-20020a197b1e000000b00497aa5852a9sm763306lfc.296.2022.09.08.01.55.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 Sep 2022 01:55:25 -0700 (PDT)
+Message-ID: <a9514c01-199d-80bc-46a1-f199f4f56196@linaro.org>
+Date:   Thu, 8 Sep 2022 10:55:24 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sc7280: Add cpu and llcc BWMON
+Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20220902043511.17130-1-quic_rjendra@quicinc.com>
+ <20220902043511.17130-5-quic_rjendra@quicinc.com>
+ <CAE-0n50x=h_rBaWAcTk_BBCMLpD=XQ6=BKLGp5+m8i4Lvn4fyg@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAE-0n50x=h_rBaWAcTk_BBCMLpD=XQ6=BKLGp5+m8i4Lvn4fyg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add missing aggre0 and aggre1 clocks.
+On 07/09/2022 23:33, Stephen Boyd wrote:
+> Quoting Rajendra Nayak (2022-09-01 21:35:11)
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> index 13d7f267b289..a839ba968d13 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> @@ -3275,6 +3275,82 @@
+>>                         };
+>>                 };
+>>
+>> +               pmu@9091000 {
+>> +                       compatible = "qcom,sc7280-llcc-bwmon";
+>> +                       reg = <0 0x9091000 0 0x1000>;
+>> +
+> [...]
+>> +                       };
+>> +               };
+>> +
+>> +               pmu@90b6000 {
+> 
+> This unit address
+> 
+>> +                       compatible = "qcom,sc7280-cpu-bwmon", "qcom,msm8998-bwmon";
+>> +                       reg = <0 0x090b6400 0 0x600>;
+> 
+> doesn't match this one. Please fix.
 
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
----
-changes since v3:
-	- Changed the order of the clocks.
----
- Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+Thanks for catching it. Patch was applied, so I will send a follow up.
 
-diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-index 22a2aac..54f0785 100644
---- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-+++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-@@ -56,11 +56,11 @@ properties:
-   # Platform constraints are described later.
-   clocks:
-     minItems: 3
--    maxItems: 12
-+    maxItems: 13
- 
-   clock-names:
-     minItems: 3
--    maxItems: 12
-+    maxItems: 13
- 
-   resets:
-     minItems: 1
-@@ -427,8 +427,8 @@ allOf:
-     then:
-       properties:
-         clocks:
--          minItems: 11
--          maxItems: 11
-+          minItems: 13
-+          maxItems: 13
-         clock-names:
-           items:
-             - const: pipe # PIPE clock
-@@ -442,6 +442,8 @@ allOf:
-             - const: slave_q2a # Slave Q2A clock
-             - const: tbu # PCIe TBU clock
-             - const: ddrss_sf_tbu # PCIe SF TBU clock
-+            - const: aggre0 # Aggre NoC PCIe CENTER SF AXI clock
-+            - const: aggre1 # Aggre NoC PCIe1 AXI clock
-         resets:
-           maxItems: 1
-         reset-names:
--- 
-2.7.4
-
+Best regards,
+Krzysztof
