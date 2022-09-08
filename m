@@ -2,84 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C25B5B1CE3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 14:25:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 31F335B1D25
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 14:35:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231722AbiIHMZs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 08:25:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55238 "EHLO
+        id S230298AbiIHMfS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 08:35:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231733AbiIHMZq (ORCPT
+        with ESMTP id S231723AbiIHMfD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 08:25:46 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B3D8C59FD
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 05:25:44 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id z8so24092426edb.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 05:25:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=NvItkbNfICcu7g1yVv4WgDTot4PnGzFSFa7/RC5e9pw=;
-        b=BqBdZOd1Iq5VKB5wOE7GYtx+R/htdT8tJs61gZ48R6LiLkBHqS3GYp7/3R5IN9JPxQ
-         TExYh3bomSJkoM1qQY6rq4cA2DBNBpxc3IiOtxopwgeLzUs+EYAoaMb7JVXEp4UIwNRv
-         8UcF/vC/Kn2YbOCQwwjmNA8H4vTnJKbhauT6CgmM+rU9fI/bS45HgWMQUDXfK+HavJhC
-         ZeRrl+P8mmZWh4sIPWn6v2setqsvxrMY2diGh2KH7GCsG5kEWhHu/EnwOLcQWK6B7p33
-         Dh6Od0GzXHg1FnmH5JZ49R8X7d9JkGULvWWxafb2FZb6GYaFWFekRwd7gY5uHcmBv/qS
-         9teg==
+        Thu, 8 Sep 2022 08:35:03 -0400
+Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B415948EBB;
+        Thu,  8 Sep 2022 05:35:02 -0700 (PDT)
+Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-1274ec87ad5so29014548fac.0;
+        Thu, 08 Sep 2022 05:35:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=NvItkbNfICcu7g1yVv4WgDTot4PnGzFSFa7/RC5e9pw=;
-        b=IK3GWqr+sF4tcWuAvIOdqmHQdkMgGzd2Pb3MMP6pPsiqvhJKzuJfr2sz4sxGoFXXps
-         ZbVrdF1Lc47d9ckivnU1groa/I6SjPE8VSj8W41pvV7vnchNv6lnIZ54K1Yl0fkWeFQ5
-         RL8DQ+D0ndAkoP4WVeZyEhovPmc64aBH0Ji5wXPTAvgMhOe4yanrVzX8OamLPEJW55D6
-         4prZZvN8FQbPfNTt057ItVTwnfGdo46keCAI+pGC60b65xo2JI1nRT4SpoqIBF/uxwKh
-         J6+8Qvga1DM/PdBA8rxh/Dr4BG1PmJRWg0kNO6xN2R6W5wOLhJXZnWIlIBtlS7uCWO/f
-         d+4Q==
-X-Gm-Message-State: ACgBeo1n14tPYZHflEFS+PYZn5jdCxD11YSyc+rE7wkH8kXopmr+IxXU
-        i/dfyzzMCQmd9pCwwm9+FR8M/QVa+u3kJ1NsDl8VwA==
-X-Google-Smtp-Source: AA6agR4wVuJKqlxz5De3pSNrkC69WW2AZaVznXq+MyCsaZdK6joVGRVpseWkWNce6A0VWt7oOOVqDsC/KDWvLV+t1a8=
-X-Received: by 2002:aa7:c84f:0:b0:446:2bfb:5a63 with SMTP id
- g15-20020aa7c84f000000b004462bfb5a63mr6979030edt.172.1662639942930; Thu, 08
- Sep 2022 05:25:42 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220830092232.168561-1-manivannan.sadhasivam@linaro.org> <Yw39qmuS3T+DLcfB@hovoldconsulting.com>
-In-Reply-To: <Yw39qmuS3T+DLcfB@hovoldconsulting.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 8 Sep 2022 14:25:31 +0200
-Message-ID: <CACRpkdZon4Z-bYeyA455pKRrDXshosNX7SjfF1igt+JnNyT+PA@mail.gmail.com>
-Subject: Re: [PATCH v3] pinctrl: qcom: spmi-gpio: Make irqchip immutable
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        bjorn.andersson@linaro.org, robimarko@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, maz@kernel.org,
-        johan+linaro@kernel.org, steev@kali.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        h=message-id:date:subject:references:in-reply-to:cc:to:from
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=oR89XIUSMxR/GNj2hiLhHDeN2pBkc9JmGP6t/dlgZIg=;
+        b=41uTD9c9Sb4teMRSgFlONiX+7ClJW7UxF9qg+UsanPwwDLjf/Re7XEPNAVNp9hlA9p
+         iRuF2TwqS0mtE8hw4ZHsGpDysopDLfWrsQvCv7FKYhrTSS9mASyBF/OKX+BwYjbz4nG3
+         5IsmdORqybJmkQRqgOIn/i7NoT544t4DaOspdimAoHRi8N/0F+1sJiIdSI50wRbIIPOW
+         38MlYpAImSR4PTiSWB8yoS2pFjeFFseHgCrg3SEVLUG72hNAPR+8M+W5iE2v2LQmHhoL
+         4RMLPpPfrfJOjWjBrlcgH7zAKlV3Pl5MXWhNgiuuKcgQ+SggpANiB394rYNPIke50MWk
+         E6iw==
+X-Gm-Message-State: ACgBeo1oOPRztiYpBKRDdIbYA04gaS6JfPh4zL/aabZ6oB1V54Tc0kd5
+        z+KAgHtKXFFtWkrJZGnzJV+LZeDMkg==
+X-Google-Smtp-Source: AA6agR46TYLmwq0cQXb1P70BXA1rNspo2AAAKrCxMS3RglYUz0YyWLcZEDAN6MN4PgzKQ7TcytH5lw==
+X-Received: by 2002:a05:6808:34d:b0:344:bb33:95bc with SMTP id j13-20020a056808034d00b00344bb3395bcmr1379118oie.202.1662640501330;
+        Thu, 08 Sep 2022 05:35:01 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id v8-20020a05687105c800b001267a921ae5sm7166501oan.34.2022.09.08.05.35.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Sep 2022 05:35:01 -0700 (PDT)
+Received: (nullmailer pid 2262533 invoked by uid 1000);
+        Thu, 08 Sep 2022 12:35:00 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     agross@kernel.org, Vinod Koul <vkoul@kernel.org>,
+        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org,
+        netdev@vger.kernel.org, bhupesh.linux@gmail.com,
+        Bjorn Andersson <andersson@kernel.org>,
+        David Miller <davem@davemloft.net>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+In-Reply-To: <20220907204924.2040384-2-bhupesh.sharma@linaro.org>
+References: <20220907204924.2040384-1-bhupesh.sharma@linaro.org> <20220907204924.2040384-2-bhupesh.sharma@linaro.org>
+Subject: Re: [PATCH 1/4] dt-bindings: net: qcom,ethqos: Convert bindings to yaml
+Date:   Thu, 08 Sep 2022 07:35:00 -0500
+Message-Id: <1662640500.274487.2262529.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 30, 2022 at 2:08 PM Johan Hovold <johan@kernel.org> wrote:
+On Thu, 08 Sep 2022 02:19:21 +0530, Bhupesh Sharma wrote:
+> Convert Qualcomm ETHQOS Ethernet devicetree binding to YAML.
+> 
+> Cc: Bjorn Andersson <andersson@kernel.org>
+> Cc: Rob Herring <robh@kernel.org>
+> Cc: Vinod Koul <vkoul@kernel.org>
+> Cc: David Miller <davem@davemloft.net>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>  .../devicetree/bindings/net/qcom,ethqos.txt   |  66 ---------
+>  .../devicetree/bindings/net/qcom,ethqos.yaml  | 139 ++++++++++++++++++
+>  2 files changed, 139 insertions(+), 66 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/net/qcom,ethqos.txt
+>  create mode 100644 Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+> 
 
-> > +     irq_chip_unmask_parent(data);
-> > +     gpiochip_enable_irq(gc, data->hwirq);
->
-> Could you set the IRQ-enabled flag before unmasking the parent here for
-> symmetry (and as most other implementations do)?
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-I fixed this up while applying so no need to resend.
+yamllint warnings/errors:
 
-Patch applied!
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/qcom,ethqos.example.dtb: ethernet@20000: compatible: ['qcom,sm8150-ethqos'] does not contain items matching the given schema
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/qcom,ethqos.example.dtb: ethernet@20000: reg: [[0, 131072], [0, 65536], [0, 221184], [0, 256]] is too long
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/qcom,ethqos.example.dtb: ethernet@20000: interrupt-names:1: 'eth_wake_irq' was expected
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/qcom,ethqos.example.dtb: ethernet@20000: Unevaluated properties are not allowed ('max-speed', 'snps,mtl-rx-config', 'snps,mtl-tx-config', 'snps,reset-active-low', 'snps,reset-delays-us' were unexpected)
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/qcom,ethqos.example.dtb: phy@7: '#phy-cells' is a required property
+	From schema: /usr/local/lib/python3.10/dist-packages/dtschema/schemas/phy/phy-provider.yaml
 
-Yours,
-Linus Walleij
+doc reference errors (make refcheckdocs):
+MAINTAINERS: Documentation/devicetree/bindings/net/qcom,ethqos.txt
+
+See https://patchwork.ozlabs.org/patch/
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
