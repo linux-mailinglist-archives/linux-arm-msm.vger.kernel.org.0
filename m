@@ -2,78 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 23E205B20F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 16:43:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 123105B211D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 16:48:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232038AbiIHOnU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 10:43:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38556 "EHLO
+        id S230435AbiIHOsB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 10:48:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231799AbiIHOnS (ORCPT
+        with ESMTP id S230316AbiIHOr5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 10:43:18 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA510C743F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 07:43:16 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id q7so28124599lfu.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 07:43:16 -0700 (PDT)
+        Thu, 8 Sep 2022 10:47:57 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F323C9F8EC
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 07:47:56 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id bt10so28135987lfb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 07:47:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=n8VGGC+7+I4IjFN0ib/PUjyurgUsEjooklHf6RmDYUg=;
-        b=ZxdGhDBFjbOpQmDm+bvokfEUhGG1h4jISBv5G5/iyMzHUYo7MnhY5DCOp8n4Is7E0Z
-         TQTTn9foxYpacFYzuB0/d1SJabnhH/mgJR82/CeiVTjvwgeQHI53w1FF2AL2D7UwIFGY
-         W2LUkr6K/RkMpBo8gNMhXcp4LiQSyz1W11dvTKUjs3+Ux4uh2UZTfG2vk7bkaCnY+eRm
-         jTT/Chbtx29UvPTz+OGPLt1w/xNbNEERAhEFW+5WAGTncArweLWKH/9D5pyl2efWhl3i
-         pIAhsH2AWnyEwLTYmujSexcgV4wPY/rtEZpEDVNeYcsz1uwAGG2Cc5lC2ROg/Z9A00TD
-         vFBA==
+        bh=UuieVaXEXts9HHmfzhbQi0/SaGvodhk9jcB1Qvi2Vfk=;
+        b=OVR1cCbGJE072hGoQUQmFQJ+kprUmprVLEtmSadFZzpbbM7QbSvFvlCIfSqryPYi1+
+         SD1skqQd1QH52qTt6B1S/BsqHmuHjpZH9S8UyJzmPe8Zx7lmJFsP6MLRxPjlD72Vew+F
+         b3lD9iUSQTOtSZCuSR/OZHMWl5KUpzR00UUcgkT49wx1fcv3qiGGhm3smwbpo3sqBOFZ
+         Z5hickhSir1Me8plctfVtkpBlKW0vRDxdoKVZ7W3hL2g2Jcf81GRGI863Xy7G+pj3Pp2
+         4oWiONVlaAsk50KQFObKyWirZF0osd3vjKUSXgBE+7K2LLcMQ4dOLD77ynoOtMcJFiKA
+         8gqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=n8VGGC+7+I4IjFN0ib/PUjyurgUsEjooklHf6RmDYUg=;
-        b=y414K8iGNEoXX4mjcBSsYenXf/cw8XpcNJWkke8tTiKVPCpfdPkkku7e6jjfF0uOsR
-         ceL9G+Q3ZR+xFdAxAw6DD0wJODru64jfUSCMEeltkkKSDx33kHQEZGYRhGnu0xa+Ud/T
-         kYEw+VorACrtQrgRkky+nXyAb4BPvrqkxgQOmoM0xYWlVs5cFzR5slWiHijWqEjMUqze
-         pQNe2ZnQeHrQaKEhoCPkLQP460as+Te87EvAQdJ9GRnj0VzKDnJ56HXHgZkejS8HkSAI
-         HU4Bbeg2LgoZfsY0vL9B1eoz/BNxU919zEAlccMP7ezX2zZ/djE1b+VurMLgU2j8P0rl
-         dOLQ==
-X-Gm-Message-State: ACgBeo08G4koLDL1fCi36tg6Gxqle7QyEuecunVTHrd92xnj7X2O2gsJ
-        m5b7UHrmxh3z71czg1UdQpS2BA==
-X-Google-Smtp-Source: AA6agR4vo2geJ+bD2HdOnszq/5/BOl1SbzOVNQ+QLutzfKR1QkYQv+a7YFX6i+H7RE1zgYN8hG1jsA==
-X-Received: by 2002:a05:6512:152a:b0:496:80f3:7fe0 with SMTP id bq42-20020a056512152a00b0049680f37fe0mr2823929lfb.579.1662648195222;
-        Thu, 08 Sep 2022 07:43:15 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id a6-20020a05651c010600b002688cceee44sm3221569ljb.132.2022.09.08.07.43.14
+        bh=UuieVaXEXts9HHmfzhbQi0/SaGvodhk9jcB1Qvi2Vfk=;
+        b=eUh5i8UdLg3XYgeUeX4CJnANZeZZISWzW1iQqrSs4PiGywDzsJLFJTK6OeOFTFcBJ7
+         uYDgREfE8IBlGb/mPYrmdkEPshfrX6p1g6bDwxu1ZgoY8/c+x7Wp2dr+OvSjR75ei05I
+         S5rwYhu2XiTqrX+SAPWWuq+x8ZXzEraj9vu4kMSzk7hkbu11ENQd13DrHoSW5w/YwPNo
+         4NyiGh4VPP6ZtWIE4QQr0bmEakhSnD4w62oewYABXouAdq7eyzPdgM3NeOSUmwbyQKL3
+         ofbFJ7/QctlFP6HzyElkYrHlHL8X6/94mpScYQOsGsrz2kEqKZFTbkF2n4UbrIRXvO5N
+         VIYQ==
+X-Gm-Message-State: ACgBeo2DJQ72FG4+pIbJM4HD7/xkx0ivGkYZ2JPVRage1Jfg7QA3YEy3
+        f/y50X67pMTwj2ctXlhAEOwYxA==
+X-Google-Smtp-Source: AA6agR7D86UKhJvdjGXOYNf76HQYlp2EoXMifqDRKaFOaRaCQAkypP44nETDFgPRIChEC/kucC5VjA==
+X-Received: by 2002:a05:6512:224e:b0:498:f21f:3500 with SMTP id i14-20020a056512224e00b00498f21f3500mr659945lfu.581.1662648475360;
+        Thu, 08 Sep 2022 07:47:55 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id a24-20020ac25e78000000b0048aee825e2esm788307lfr.282.2022.09.08.07.47.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Sep 2022 07:43:14 -0700 (PDT)
-Message-ID: <71d970bc-fe6f-91e7-80c1-711af1af5530@linaro.org>
-Date:   Thu, 8 Sep 2022 16:43:13 +0200
+        Thu, 08 Sep 2022 07:47:55 -0700 (PDT)
+Message-ID: <f1d8736c-2e05-885c-aebe-0e89e3139eb5@linaro.org>
+Date:   Thu, 8 Sep 2022 17:47:54 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH 4/4] dt-bindings: net: snps,dwmac: Update interrupt-names
-Content-Language: en-US
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        devicetree@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org, netdev@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        David Miller <davem@davemloft.net>
-References: <20220907204924.2040384-1-bhupesh.sharma@linaro.org>
- <20220907204924.2040384-5-bhupesh.sharma@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220907204924.2040384-5-bhupesh.sharma@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.1.2
+Subject: Re: [PATCH v6 1/4] drm/msm: clean event_thread->worker in case of an
+ error
+Content-Language: en-GB
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20220617233328.1143665-1-dmitry.baryshkov@linaro.org>
+ <20220617233328.1143665-2-dmitry.baryshkov@linaro.org>
+ <4f4862fd-4cbd-82ac-f162-e38c05c92423@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <4f4862fd-4cbd-82ac-f162-e38c05c92423@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,50 +83,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/09/2022 22:49, Bhupesh Sharma wrote:
-> As commit fc191af1bb0d ("net: stmmac: platform: Fix misleading
-> interrupt error msg") noted, not every stmmac based platform
-> makes use of the 'eth_wake_irq' or 'eth_lpi' interrupts.
+On 08/09/2022 03:08, Abhinav Kumar wrote:
 > 
-> So, update the 'interrupt-names' inside 'snps,dwmac' YAML
-> bindings to reflect the same.
 > 
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Rob Herring <robh@kernel.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: David Miller <davem@davemloft.net>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  Documentation/devicetree/bindings/net/snps,dwmac.yaml | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
+> On 6/17/2022 4:33 PM, Dmitry Baryshkov wrote:
+>> If worker creation fails, nullify the event_thread->worker, so that
+>> msm_drm_uninit() doesn't try accessing invalid memory location. While we
+>> are at it, remove duplicate assignment to the ret variable.
+>>
+>> Fixes: 1041dee2178f ("drm/msm: use kthread_create_worker instead of 
+>> kthread_run")
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
-> diff --git a/Documentation/devicetree/bindings/net/snps,dwmac.yaml b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-> index f89ca308d55f..4d7fe4ee3d87 100644
-> --- a/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-> +++ b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-> @@ -105,10 +105,12 @@ properties:
->  
->    interrupt-names:
->      minItems: 1
-> -    items:
-> -      - const: macirq
-> -      - const: eth_wake_irq
-> -      - const: eth_lpi
-> +    maxItems: 3
-> +    contains:
-> +      enum:
-> +        - macirq
-> +        - eth_wake_irq
-> +        - eth_lpi
->  
+> the change itself LGTM,
+> 
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> 
+> One minor nit below
+>> ---
+>>   drivers/gpu/drm/msm/msm_drv.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/msm_drv.c 
+>> b/drivers/gpu/drm/msm/msm_drv.c
+>> index 44485363f37a..1aab6bf86278 100644
+>> --- a/drivers/gpu/drm/msm/msm_drv.c
+>> +++ b/drivers/gpu/drm/msm/msm_drv.c
+>> @@ -436,7 +436,7 @@ static int msm_drm_init(struct device *dev, const 
+>> struct drm_driver *drv)
+>>           if (IS_ERR(priv->event_thread[i].worker)) {
+>>               ret = PTR_ERR(priv->event_thread[i].worker);
+>>               DRM_DEV_ERROR(dev, "failed to create crtc_event 
+>> kthread\n");
+> 
+> Can we print ret in this error message?
 
-This gives quite a flexibility, e.g. missing macirq. Instead should be
-probably a list with enums:
-items:
-  - const: macirq
-  - enum: [eth_wake_irq, eth_lpi]
-  - enum: [eth_wake_irq, eth_lpi]
+In a separate change. I'll add it to my todo list.
 
+> 
+>> -            ret = PTR_ERR(priv->event_thread[i].worker);
+>> +            priv->event_thread[i].worker = NULL;
+>>               goto err_msm_uninit;
+>>           }
 
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
+
