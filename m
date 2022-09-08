@@ -2,68 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB2135B1123
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 02:30:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BEED35B1158
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 02:35:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230183AbiIHA36 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Sep 2022 20:29:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41400 "EHLO
+        id S230446AbiIHAfF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Sep 2022 20:35:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230203AbiIHA34 (ORCPT
+        with ESMTP id S230451AbiIHAep (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Sep 2022 20:29:56 -0400
-Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B5852A27B
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Sep 2022 17:29:39 -0700 (PDT)
-Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-1279948d93dso20418151fac.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Sep 2022 17:29:39 -0700 (PDT)
+        Wed, 7 Sep 2022 20:34:45 -0400
+Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A408DD291B
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Sep 2022 17:33:49 -0700 (PDT)
+Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-12ab0eaa366so839957fac.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Sep 2022 17:33:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=cc:to:subject:message-id:date:user-agent:from:references
          :in-reply-to:mime-version:from:to:cc:subject:date;
-        bh=ozHfaly1J/Vj3NpHL8RULu2aTSSdx3cJPa3wiZPcUlw=;
-        b=lw3IWH3zeCUY+ZirNKCzUEH+Z2dV06zJUWskDo0vk9ET2/PbDMJf/UI8cF4gt79MbA
-         F2I/MRQSAjQVcOX+nukTBuy9RuWn64a4khUoRx2eQEF0PqOpsTdYg4YzXQcv/G+tjtLR
-         8Q9rRb6pgl/doFyiPb/K4yafWUP/yF2SUHZ4I=
+        bh=SFGgCNsVzP2hA8dRTmquL78fgGPuknySv3KSwNZNScI=;
+        b=Q81Rgt/ogZrNSDyvddYfuQRSJ8jdaEmayIg48nQ+NGWpxOPy5bVQ9ah81XgTqkGOVt
+         vvtqTSu1hPnXtNsXtdz4D9ZsmnuP7BNRLuvt4tPVIVe0t6uTOCq7mOFEC1plsBc4cXlz
+         75x15C7WUmzCKp7LopN4O6EJ3tLRy6ex56pxo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:user-agent:from:references
          :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=ozHfaly1J/Vj3NpHL8RULu2aTSSdx3cJPa3wiZPcUlw=;
-        b=CEEF5GZjQa1Ni4+kgsPNtPb8bLrMU6n7yftxVtbSfae04h4tOtaIhTrBgFu7scB5rb
-         yJYJ1iRPgfVKgYgaDnloMX69YV1kBf+6Fn9o3NjQ28PoBBKWgasVJEzs0XvdFjgmzitB
-         dxbXf0veY0cUCBdBP5or4CC6rik68oZJHSx33KFmc9W2Ai1mDu6dznSF+lSLLAYZrQmY
-         CCKlyXY9w8vijFk4VKp00lNbGv8f8uc0dStsh444J86SxMZP2rP9wUKalz9GsfUNTT7m
-         lczNxeoWC2AI95DOAzNRgOvcJjXkTuZ+6QbpOPmi83vBh4tM8eQrFFKIz+L3npbp8BeG
-         49gw==
-X-Gm-Message-State: ACgBeo1LgnqzgI52tuR+IUtws/Yrrl4Xc/3vEVIqZispYpGG/pYAo2rs
-        3sLVcoY7QlnbvVGGYjY5nAv7Tg3QU7PAphn+3WVFOA==
-X-Google-Smtp-Source: AA6agR49zGgntBFStbKHjweMvZ2AslFV8Et4HfRnp0kT8gW+7j/9O2dBm9cdrWlIDYLSeUJOBpgrG8JhSoMrfVpbtI8=
-X-Received: by 2002:a05:6870:e748:b0:127:dcb9:c59a with SMTP id
- t8-20020a056870e74800b00127dcb9c59amr537055oak.0.1662596966584; Wed, 07 Sep
- 2022 17:29:26 -0700 (PDT)
+        bh=SFGgCNsVzP2hA8dRTmquL78fgGPuknySv3KSwNZNScI=;
+        b=li0otmb4UD7a4/H/1IDa1UohXVw2Qb9cky/9kuRY11Nc39eb2bJAi7K7lS8ydqnhW4
+         EKkJj0htjDIDNNtL6ggy0/AVltgCWZctQsknhUONi4AsfECiqjL324Pp5QEe8gZD6QXw
+         KUWH+ij/kq5Cz6aKDnolqe96YXPS2bmxdyfyunJDNS15bQlrfxZQwOZ8mx1aUohoP+KN
+         ktr/AXgZrOvEb34QOnDGFFjaqTgx/maukJZRMhyn+V+b9dUeavEnlHAsqaDJLGSgzOQz
+         Lg8TBYPsMGcucBdKh1eV0wnGLWPOY5f0jw9ARrwHOTMu1NkGCP17j03G4+RypWCZFcek
+         FudA==
+X-Gm-Message-State: ACgBeo149vmusk962oFl+e4+vWgi323eD9QqfZ7KRbuWNQhpOPDlJ497
+        ePGVwoG5ixSqiwH+nzC/2V8Wth+4GPMcTyVWJX6a5g==
+X-Google-Smtp-Source: AA6agR7dUC9ALQ+u12QBqrhvXOl+Y8+jQSSUkiS/zvQgXKCMc/haJFKwxJsnCL7AvxTgEh5+PbXshQcguphmlfr92QM=
+X-Received: by 2002:a05:6808:bca:b0:344:ef42:930f with SMTP id
+ o10-20020a0568080bca00b00344ef42930fmr424759oik.0.1662597220632; Wed, 07 Sep
+ 2022 17:33:40 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 7 Sep 2022 19:29:25 -0500
+ HTTPREST; Wed, 7 Sep 2022 19:33:40 -0500
 MIME-Version: 1.0
-In-Reply-To: <1662580237-5684-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1662580237-5684-1-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <20220901091527.1992208-2-dmitry.baryshkov@linaro.org>
+References: <20220901091527.1992208-1-dmitry.baryshkov@linaro.org> <20220901091527.1992208-2-dmitry.baryshkov@linaro.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Wed, 7 Sep 2022 19:29:25 -0500
-Message-ID: <CAE-0n53ty_FPH4pyTrQkUb_RcDXQttvk8CZL0Skh+M6PZunFZg@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm/dp: cleared DP_DOWNSPREAD_CTRL register before
- start link training
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dianders@chromium.org, dmitry.baryshkov@linaro.org,
-        robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Date:   Wed, 7 Sep 2022 19:33:40 -0500
+Message-ID: <CAE-0n52jqAR7cQmYygx5h=bO7kNt33F3BR2nyKWO5mTBtHH=iw@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/3] drm/msm/dp: fold disable_irq into devm_request_irq
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, Johan Hovold <johan@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,107 +70,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2022-09-07 12:50:37)
-> DOWNSPREAD_CTRL (0x107) shall be cleared to 0 upon power-on reset or an
-> upstream device disconnect. This patch will enforce this rule by always
-> cleared DOWNPREAD_CTRL register to 0 before start link training. At rare
+Quoting Dmitry Baryshkov (2022-09-01 02:15:25)
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index bfd0aeff3f0d..3173e6962a78 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1251,13 +1251,12 @@ int dp_display_request_irq(struct msm_dp *dp_display)
+>
+>         rc = devm_request_irq(&dp->pdev->dev, dp->irq,
+>                         dp_display_irq_handler,
+> -                       IRQF_TRIGGER_HIGH, "dp_display_isr", dp);
+> +                       IRQF_TRIGGER_HIGH | IRQF_NO_AUTOEN, "dp_display_isr", dp);
+>         if (rc < 0) {
+>                 DRM_ERROR("failed to request IRQ%u: %d\n",
+>                                 dp->irq, rc);
+>                 return rc;
+>         }
+> -       disable_irq(dp->irq);
 
-DOWNSPREAD_CTRL
-
-> case that DP MSA timing parameters may be mis-interpreted by the sink
-> which causes audio sampling rate be calculated wrongly and cause audio
-> did not work at sink if DOWNSPREAD_CTRL register is not cleared to 0.
-> This patch also make sure bring sink out of D3 power-down mode into D0
-> (normal operation mode) successfully by retrying 3 times.
-
-Split it into two patches? Is 3 times determined by experiment or
-purely random?
-
->
-> Changes in v2:
-> 1) fix spelling at commit text
-> 2) merge ssc variable into encoding[0]
->
-> Fixes: 154b5a7da0fd ("drm/msm/dp: add displayPort driver support")
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_ctrl.c | 13 +++++--------
->  drivers/gpu/drm/msm/dp/dp_link.c | 17 +++++++++++------
->  2 files changed, 16 insertions(+), 14 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index ab6aa13..1b63220 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -1245,8 +1245,7 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
->  {
->         int ret = 0;
->         const u8 *dpcd = ctrl->panel->dpcd;
-> -       u8 encoding = DP_SET_ANSI_8B10B;
-> -       u8 ssc;
-> +       u8 encoding[2] = {0, DP_SET_ANSI_8B10B};
-
-Add space after { and before } please. Also, the 2 isn't necessary as
-it's implied.
-
->         u8 assr;
->         struct dp_link_info link_info = {0};
->
-> @@ -1258,13 +1257,11 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
->
->         dp_aux_link_configure(ctrl->aux, &link_info);
->
-> -       if (drm_dp_max_downspread(dpcd)) {
-> -               ssc = DP_SPREAD_AMP_0_5;
-> -               drm_dp_dpcd_write(ctrl->aux, DP_DOWNSPREAD_CTRL, &ssc, 1);
-> -       }
-> +       if (drm_dp_max_downspread(dpcd))
-> +               encoding[0] |= DP_SPREAD_AMP_0_5;
->
-> -       drm_dp_dpcd_write(ctrl->aux, DP_MAIN_LINK_CHANNEL_CODING_SET,
-> -                               &encoding, 1);
-> +       /* config DOWNSPREAD_CTRL and MAIN_LINK_CHANNEL_CODING_SET */
-> +       drm_dp_dpcd_write(ctrl->aux, DP_DOWNSPREAD_CTRL, encoding, 2);
-
-Please use ARRAY_SIZE(encoding) instead of '2' here.
-
->
->         if (drm_dp_alternate_scrambler_reset_cap(dpcd)) {
->                 assr = DP_ALTERNATE_SCRAMBLER_RESET_ENABLE;
-> diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-> index 36f0af0..3ad3826 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_link.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_link.c
-> @@ -49,7 +49,7 @@ static int dp_aux_link_power_up(struct drm_dp_aux *aux,
->                                         struct dp_link_info *link)
->  {
->         u8 value;
-> -       int err;
-> +       int i, err;
->
->         if (link->revision < 0x11)
->                 return 0;
-> @@ -61,11 +61,16 @@ static int dp_aux_link_power_up(struct drm_dp_aux *aux,
->         value &= ~DP_SET_POWER_MASK;
->         value |= DP_SET_POWER_D0;
->
-> -       err = drm_dp_dpcd_writeb(aux, DP_SET_POWER, value);
-> -       if (err < 0)
-> -               return err;
-> -
-> -       usleep_range(1000, 2000);
-> +       /*
-> +        * When turning on, we need to retry for 1ms to give the sink
-> +        * time to wake up.
-> +        */
-> +       for (i = 0; i < 3; i++) {
-> +               err = drm_dp_dpcd_writeb(aux, DP_SET_POWER, value);
-
-Can 'err' be ssize_t type? And also renamed to something like
-'bytes_written' so that the if condition reads easier?
-
-> +               usleep_range(1000, 2000);
-> +               if (err == 1)
-> +                       break;
-> +       }
->
+It would be better to not disable the irq at all and mask the irq in the
+hardware before requesting the irq. Can you add at least add a TODO for
+that?
