@@ -2,100 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C9E645B1EDF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 15:27:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 250A45B1EF1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 15:29:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231783AbiIHN1Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 09:27:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52422 "EHLO
+        id S232501AbiIHN27 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 09:28:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232403AbiIHN1J (ORCPT
+        with ESMTP id S232629AbiIHN2g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 09:27:09 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E42C5F7CA
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 06:26:42 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id f11so13705770lfa.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 06:26:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=VD+nOMHXMvV5AAmfRp26GJgaJ9o+VfNSHQ2AWOhkGws=;
-        b=r1pmBWIsWJq+K0n7rbneEnGiv+dLZbznCNV6ZYPcV2ap2wAZaAlBZT7SHNVpPbq1Fd
-         9CLivWMA/ICIU3zszxoDmnwFIKaktgBL+IHLfubNk4NxWU95AdBKKMxwxlZ1kJzOQ7HF
-         XmRJdiPATyk35Lpl6RzXk0acE1vNZzAmYw0JfiNdwL+l4D4kewMKFHH8NW3n96hQZh7K
-         4e5VvSyNvtnp6vv4e6chQE4tP7I9lGTxw5ELToMQxuXNx541mpDlC3Kc8xKx/7z2xtAQ
-         6Cfoq9YZ9030VD8hmlbzWCkvkL5s0818h8uj51xXQV+ltEOHSEdH+1FRWswCPo8IHlWm
-         8tLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=VD+nOMHXMvV5AAmfRp26GJgaJ9o+VfNSHQ2AWOhkGws=;
-        b=ctSVE9lTBuI6/qB8vTN6DexCA+YcmdpwCFI84xVL/Ah+n1pRhrna/SQyS4FK9J4fyP
-         s1xVQFpK9FjZ7TnLM9Pq1mW6RjnDC2Z0LuInqCiScPHNxpN+rpHT2VFW+qEG2+Vc9Xcu
-         zsqMKlO2qQwZkw1yPOxrllCLB4125smNsl2X9jYM3T7dDzOpOdDjNfGeTzCBuPiLnpYC
-         uWbsp6wJsR0PtfIkDYWHGE+tiz62OUeM0eK4YnC93eEGRFHV7K+Z5W7rbUqQdxYAIdcu
-         8kL3MVDG1IpflcgISKUHVtet/LJVm4OFnvwx5nmJTGZ0q/46w9XWNSAR4hCxmpPSrY7Q
-         0IbQ==
-X-Gm-Message-State: ACgBeo1fbChB5MSpd2OFRial/xUw/xKU/xwS9Vc6T6PUD3gC0vk/VGUK
-        xky8Cx3Dpe5YQh1cFi+TLFh3YA==
-X-Google-Smtp-Source: AA6agR4vSnp6D09fIExO0o9Vn/bvoYNuSPdREVzriruoBoo4kb6zOfs59Kz+utiYBTRFQkW6gAsl/Q==
-X-Received: by 2002:a05:6512:3f85:b0:492:c17e:d566 with SMTP id x5-20020a0565123f8500b00492c17ed566mr2567186lfa.341.1662643601022;
-        Thu, 08 Sep 2022 06:26:41 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id l4-20020a056512110400b00497aa190523sm875216lfg.248.2022.09.08.06.26.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Sep 2022 06:26:40 -0700 (PDT)
-Message-ID: <6cc3a526-8ff8-8000-d406-c4d8949c6f68@linaro.org>
-Date:   Thu, 8 Sep 2022 15:26:39 +0200
+        Thu, 8 Sep 2022 09:28:36 -0400
+Received: from mail.8bytes.org (mail.8bytes.org [85.214.250.239])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 0FFD512754D;
+        Thu,  8 Sep 2022 06:28:25 -0700 (PDT)
+Received: from 8bytes.org (p4ff2bb62.dip0.t-ipconnect.de [79.242.187.98])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mail.8bytes.org (Postfix) with ESMTPSA id 6ACB624069C;
+        Thu,  8 Sep 2022 15:28:23 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
+        s=default; t=1662643704;
+        bh=tDuhKm9wQfdx7sUd4hZrnBHJRGruWciJVuKdXgXOhg8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Nbzo8AaKCmLcJF6ywBTO/rjFGCww8jqPWoQ6WcBpBVILlVrrzm/ywTVSN6gtAJpvI
+         A4WA5AxpHDg5Sd62NU3n5V/Vi1+huBSshzEAQAZS7xn++DhH0oznzPGAGwNcfBbTfq
+         Twt1k1zJR6eHTY8BdmbO1Ww2bxQuZSP3YVyPip5R53rnIHglAbsB0bCYX0JzWlq5Om
+         M3nAYqpIKCggsduzZcJAnKN/jYWRx4aw2vg7FWSxO/QqqKt7N7pAfFXxtOG8goJGLV
+         xuiUyCTz0ghn5xX8vuVnC49wxhLLFEBrREVNPwdgKbdzr/ZwBoayTRYmgPniXvM4Pl
+         wZdcX65MXNFqw==
+Date:   Thu, 8 Sep 2022 15:28:22 +0200
+From:   Joerg Roedel <joro@8bytes.org>
+To:     Jason Gunthorpe <jgg@nvidia.com>
+Cc:     Nicolin Chen <nicolinc@nvidia.com>, will@kernel.org,
+        robin.murphy@arm.com, alex.williamson@redhat.com,
+        suravee.suthikulpanit@amd.com, marcan@marcan.st,
+        sven@svenpeter.dev, alyssa@rosenzweig.io, robdclark@gmail.com,
+        dwmw2@infradead.org, baolu.lu@linux.intel.com,
+        mjrosato@linux.ibm.com, gerald.schaefer@linux.ibm.com,
+        orsonzhai@gmail.com, baolin.wang@linux.alibaba.com,
+        zhang.lyra@gmail.com, thierry.reding@gmail.com, vdumpa@nvidia.com,
+        jonathanh@nvidia.com, jean-philippe@linaro.org, cohuck@redhat.com,
+        tglx@linutronix.de, shameerali.kolothum.thodi@huawei.com,
+        thunder.leizhen@huawei.com, christophe.jaillet@wanadoo.fr,
+        yangyingliang@huawei.com, jon@solid-run.com, iommu@lists.linux.dev,
+        linux-kernel@vger.kernel.org, asahi@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-s390@vger.kernel.org,
+        linux-tegra@vger.kernel.org,
+        virtualization@lists.linux-foundation.org, kvm@vger.kernel.org,
+        kevin.tian@intel.com
+Subject: Re: [PATCH v6 1/5] iommu: Return -EMEDIUMTYPE for incompatible
+ domain and device/group
+Message-ID: <Yxnt9uQTmbqul5lf@8bytes.org>
+References: <20220815181437.28127-1-nicolinc@nvidia.com>
+ <20220815181437.28127-2-nicolinc@nvidia.com>
+ <YxiRkm7qgQ4k+PIG@8bytes.org>
+ <Yxig+zfA2Pr4vk6K@nvidia.com>
+ <YxilZbRL0WBR97oi@8bytes.org>
+ <YxjQiVnpU0dr7SHC@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH v2 3/4] ASoC: qcom: sm8250: move some code to common
-Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        broonie@kernel.org
-Cc:     lgirdwood@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, bgoswami@quicinc.com,
-        perex@perex.cz, tiwai@suse.com, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220906165508.30801-1-srinivas.kandagatla@linaro.org>
- <20220906165508.30801-4-srinivas.kandagatla@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220906165508.30801-4-srinivas.kandagatla@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YxjQiVnpU0dr7SHC@nvidia.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/09/2022 18:55, Srinivas Kandagatla wrote:
-> SM8450 machine driver code can be reused across multiple Qualcomm SoCs,
-> atleast another 2 of them for now (SM8450 and SM8250XP).
+On Wed, Sep 07, 2022 at 02:10:33PM -0300, Jason Gunthorpe wrote:
+> Sure, rust has all sorts of nice things. But the kernel doesn't follow
+> rust idioms, and I don't think this is a great place to start
+> experimenting with them.
+
+It is actually a great place to start experimenting. The IOMMU
+interfaces are rather domain specific and if we get something wrong the
+damage is limited to a few callers. There are APIs much more exposed in
+the kernel which would be worse for that.
+
+But anyway, I am not insisting on it.
+
+> It has been 3 months since EMEDIUMTYPE was first proposed and 6
+> iterations of the series, don't you think it is a bit late in the game
+> to try to experiment with rust error handling idioms?
+
+If I am not mistaken, I am the person who gets blamed when crappy IOMMU
+code is sent upstream. So it is also up to me to decide in which state
+and how close to merging a given patch series is an whether it is
+already 'late in the game'.
+
+> So, again, would you be happy with a simple 
 > 
-> Move some of the common SoundWire stream specific code to common file
-> so that other drivers can use it instead of duplicating.
+>  #define IOMMU_EINCOMPATIBLE_DEVICE xx
 > 
-> This patch is to prepare the common driver to be able to add new SoCs support
-> with less dupication.
-> 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> ---
+> to make it less "re-using random error codes"?
 
+I am wondering if this can be solved by better defining what the return
+codes mean and adjust the call-back functions to match the definition.
+Something like:
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+	-ENODEV : Device not mapped my an IOMMU
+	-EBUSY  : Device attached and domain can not be changed
+	-EINVAL : Device and domain are incompatible
+	...
 
+That would be much more intuitive than using something obscure like
+EMEDIUMTYPE.
 
-Best regards,
-Krzysztof
+Regards,
+
+	Joerg
