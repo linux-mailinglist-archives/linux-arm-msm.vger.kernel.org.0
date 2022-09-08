@@ -2,133 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D9035B19DE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 12:25:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47B0E5B19E3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 12:26:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230333AbiIHKZf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 06:25:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49524 "EHLO
+        id S230352AbiIHK0K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 06:26:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230288AbiIHKZc (ORCPT
+        with ESMTP id S230430AbiIHK0J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 06:25:32 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99EAC54CAA
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 03:25:29 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id bt10so26965003lfb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 03:25:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=57yTkHiGXjWnkXGm6JlceeEsGo2P/r8hSMSqmu8svV0=;
-        b=YwlgSLTr0/Ej6GuBRvufQDVAhfDb/6pCyFGFegA1tIVWyKDSs32h1G8r4Usq7bFZlB
-         dstYY792pCGAa+M0pX4fmpj0iaSubvKljS1+NeWyl5seE6YSgv/k1U2YiCNWGtR1+H9Z
-         cQke2Ojj3knwbDDcIA5Lzsul9C67nRcVlE2iQPrWP8I9VVptC530eMKIX0rLofmlzlAl
-         Mbq7ZhmQYgfRroaFAxfU0irYDzqct7KpLgB5B9Bk4er1pqd88A8kTk6Kn7W6YeZiI4vz
-         n1j++6i5PKD8CqoG3JhGbade2mL/DwMH5zwctHGpnqIAz5QTxrBzGI7JBas90Gijox+b
-         C2lQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=57yTkHiGXjWnkXGm6JlceeEsGo2P/r8hSMSqmu8svV0=;
-        b=lYNWRsGlN9uM+qvNvtPl9SkhMMDSogf8jFGXWaamLS7wqCceQu2ssMAWkIG1yz+CA9
-         aQT9wz/Ek1a0mSefqgliK8237czbA80gtTUe4hNdyofMaWChBxDTexrj2dbTz9SU/7VL
-         kuz2aWYVlsfwQSyPqbr1HviHit9no2wnZRykFDozeegi1lkYfZPUeRmuGFf60JXOWAkw
-         OeFp5m4w7QKzMLXs6qojGe9BUpF4f678TxQfdD8dLY0K2rJvTCDvo2MlxRaMFIzMwgqC
-         RYeJrkQ4RCh0DcMC1RekXEaWycJnl4cg9cd7HC9sT8DJSfDJKUZHcUQWrk00sxO/zG1z
-         QOZQ==
-X-Gm-Message-State: ACgBeo1UbT8+Dy6ZMmX2oXh0qZN3C34/Ev2eykHWOtHx4LFAEDR8YrfZ
-        hRS+8DC0MGto/YPwomhH99ujEg==
-X-Google-Smtp-Source: AA6agR4X44BfrP900TazaipQinCvCxZnYsuB6qcR5lsq7VC5vKgXbEkDtPpQC7wM5j1HC9YWZDq5wQ==
-X-Received: by 2002:a05:6512:1322:b0:492:de5b:dc3c with SMTP id x34-20020a056512132200b00492de5bdc3cmr2357170lfu.503.1662632727392;
-        Thu, 08 Sep 2022 03:25:27 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id a3-20020a056512200300b0049306939413sm2973669lfb.211.2022.09.08.03.25.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Sep 2022 03:25:26 -0700 (PDT)
-Message-ID: <abad381a-dfe7-9337-ff35-f657bf373d44@linaro.org>
-Date:   Thu, 8 Sep 2022 12:25:25 +0200
+        Thu, 8 Sep 2022 06:26:09 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 9C9968A7D0;
+        Thu,  8 Sep 2022 03:26:08 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 94A8D14BF;
+        Thu,  8 Sep 2022 03:26:14 -0700 (PDT)
+Received: from [10.57.15.197] (unknown [10.57.15.197])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D059C3F71A;
+        Thu,  8 Sep 2022 03:25:52 -0700 (PDT)
+Message-ID: <7ef259b2-121e-643e-49c2-0b65923d392d@arm.com>
+Date:   Thu, 8 Sep 2022 11:25:46 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH v3] regulator: dt-bindings: qcom,rpmh: Indicate
- regulator-allow-set-load dependencies
-Content-Language: en-US
-To:     Andrew Halaney <ahalaney@redhat.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@somainline.org,
-        lgirdwood@gmail.com, broonie@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, dianders@chromium.org,
-        johan@kernel.org, Johan Hovold <johan+kernel@kernel.org>
-References: <20220907204924.173030-1-ahalaney@redhat.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220907204924.173030-1-ahalaney@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.1
+Subject: Re: [PATCH v6 1/5] iommu: Return -EMEDIUMTYPE for incompatible domain
+ and device/group
+Content-Language: en-GB
+To:     Jason Gunthorpe <jgg@nvidia.com>, Joerg Roedel <joro@8bytes.org>
+Cc:     Nicolin Chen <nicolinc@nvidia.com>, will@kernel.org,
+        alex.williamson@redhat.com, suravee.suthikulpanit@amd.com,
+        marcan@marcan.st, sven@svenpeter.dev, alyssa@rosenzweig.io,
+        robdclark@gmail.com, dwmw2@infradead.org, baolu.lu@linux.intel.com,
+        mjrosato@linux.ibm.com, gerald.schaefer@linux.ibm.com,
+        orsonzhai@gmail.com, baolin.wang@linux.alibaba.com,
+        zhang.lyra@gmail.com, thierry.reding@gmail.com, vdumpa@nvidia.com,
+        jonathanh@nvidia.com, jean-philippe@linaro.org, cohuck@redhat.com,
+        tglx@linutronix.de, shameerali.kolothum.thodi@huawei.com,
+        thunder.leizhen@huawei.com, christophe.jaillet@wanadoo.fr,
+        yangyingliang@huawei.com, jon@solid-run.com, iommu@lists.linux.dev,
+        linux-kernel@vger.kernel.org, asahi@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-s390@vger.kernel.org,
+        linux-tegra@vger.kernel.org,
+        virtualization@lists.linux-foundation.org, kvm@vger.kernel.org,
+        kevin.tian@intel.com
+References: <20220815181437.28127-1-nicolinc@nvidia.com>
+ <20220815181437.28127-2-nicolinc@nvidia.com> <YxiRkm7qgQ4k+PIG@8bytes.org>
+ <Yxig+zfA2Pr4vk6K@nvidia.com> <9f91f187-2767-13f9-68a2-a5458b888f00@arm.com>
+ <YxjOPo5FFqu2vE/g@nvidia.com> <0b466705-3a17-1bbc-7ef2-5adadc22d1ae@arm.com>
+ <Yxk6sR4JiAAn3Jf5@nvidia.com>
+From:   Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <Yxk6sR4JiAAn3Jf5@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-10.1 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/09/2022 22:49, Andrew Halaney wrote:
-> For RPMH regulators it doesn't make sense to indicate
-> regulator-allow-set-load without saying what modes you can switch to,
-> so be sure to indicate a dependency on regulator-allowed-modes.
+On 2022-09-08 01:43, Jason Gunthorpe wrote:
+> On Wed, Sep 07, 2022 at 08:41:13PM +0100, Robin Murphy wrote:
 > 
-> In general this is true for any regulators that are setting modes
-> instead of setting a load directly, for example RPMH regulators. A
-> counter example would be RPM based regulators, which set a load
-> change directly instead of a mode change. In the RPM case
-> regulator-allow-set-load alone is sufficient to describe the regulator
-> (the regulator can change its output current, here's the new load),
-> but in the RPMH case what valid operating modes exist must also be
-> stated to properly describe the regulator (the new load is this, what
-> is the optimum mode for this regulator with that load, let's change to
-> that mode now).
+>>>> FWIW, we're now very close to being able to validate dev->iommu against
+>>>> where the domain came from in core code, and so short-circuit ->attach_dev
+>>>> entirely if they don't match.
+>>>
+>>> I don't think this is a long term direction. We have systems now with
+>>> a number of SMMU blocks and we really are going to see a need that
+>>> they share the iommu_domains so we don't have unncessary overheads
+>>> from duplicated io page table memory.
+>>>
+>>> So ultimately I'd expect to pass the iommu_domain to the driver and
+>>> the driver will decide if the page table memory it represents is
+>>> compatible or not. Restricting to only the same iommu instance isn't
+>>> good..
+>>
+>> Who said IOMMU instance?
 > 
-> With this in place devicetree validation can catch issues like this:
+> Ah, I completely misunderstood what 'dev->iommu' was referring too, OK
+> I see.
 > 
->     /mnt/extrassd/git/linux-next/arch/arm64/boot/dts/qcom/sm8350-hdk.dtb: pm8350-rpmh-regulators: ldo5: 'regulator-allowed-modes' is a dependency of 'regulator-allow-set-load'
->             From schema: /mnt/extrassd/git/linux-next/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+>> Again, not what I was suggesting. In fact the nature of iommu_attach_group()
+>> already rules out bogus devices getting this far, so all a driver currently
+>> has to worry about is compatibility of a device that it definitely probed
+>> with a domain that it definitely allocated. Therefore, from a caller's point
+>> of view, if attaching to an existing domain returns -EINVAL, try another
+>> domain; multiple different existing domains can be tried, and may also
+>> return -EINVAL for the same or different reasons; the final attempt is to
+>> allocate a fresh domain and attach to that, which should always be nominally
+>> valid and *never* return -EINVAL. If any attempt returns any other error,
+>> bail out down the usual "this should have worked but something went wrong"
+>> path. Even if any driver did have a nonsensical "nothing went wrong, I just
+>> can't attach my device to any of my domains" case, I don't think it would
+>> really need distinguishing from any other general error anyway.
 > 
-> Where the RPMH regulator hardware is described as being settable, but
-> there are no modes described to set it to!
+> The algorithm you described is exactly what this series does, it just
+> used EMEDIUMTYPE instead of EINVAL. Changing it to EINVAL is not a
+> fundamental problem, just a bit more work.
 > 
-> Suggested-by: Johan Hovold <johan+kernel@kernel.org>
-> Reviewed-by: Johan Hovold <johan+kernel@kernel.org>
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-> ---
+> Looking at Nicolin's series there is a bunch of existing errnos that
+> would still need converting, ie EXDEV, EBUSY, EOPNOTSUPP, EFAULT, and
+> ENXIO are all returned as codes for 'domain incompatible with device'
+> in various drivers. So the patch would still look much the same, just
+> changing them to EINVAL instead of EMEDIUMTYPE.
 > 
-> v2: https://lore.kernel.org/linux-arm-msm/20220906201959.69920-1-ahalaney@redhat.com/
-> Changes since v2:
->   - Updated commit message to explain how this is a property of the
->     hardware, and why it only applies to certain regulators like RPMH
->     (Johan + Krzysztof recommendation)
->   - Added Johan + Douglas' R-B tags
+> That leaves the question of the remaining EINVAL's that Nicolin did
+> not convert to EMEDIUMTYPE.
+> 
+> eg in the AMD driver:
+> 
+> 	if (!check_device(dev))
+> 		return -EINVAL;
+> 
+> 	iommu = rlookup_amd_iommu(dev);
+> 	if (!iommu)
+> 		return -EINVAL;
+> 
+> These are all cases of 'something is really wrong with the device or
+> iommu, everything will fail'. Other drivers are using ENODEV for this
+> already, so we'd probably have an additional patch changing various
+> places like that to ENODEV.
+> 
+> This mixture of error codes is the basic reason why a new code was
+> used, because none of the existing codes are used with any
+> consistency.
+> 
+> But OK, I'm on board, lets use more common errnos with specific
+> meaning, that can be documented in a comment someplace:
+>   ENOMEM - out of memory
+>   ENODEV - no domain can attach, device or iommu is messed up
+>   EINVAL - the domain is incompatible with the device
+>   <others> - Same behavior as ENODEV, use is discouraged.
+> 
+> I think achieving consistency of error codes is a generally desirable
+> goal, it makes the error code actually useful.
+> 
+> Joerg this is a good bit of work, will you be OK with it?
+> 
+>> Thus as long as we can maintain that basic guarantee that attaching
+>> a group to a newly allocated domain can only ever fail for resource
+>> allocation reasons and not some spurious "incompatibility", then we
+>> don't need any obscure trickery, and a single, clear, error code is
+>> in fact enough to say all that needs to be said.
+> 
+> As above, this is not the case, drivers do seem to have error paths
+> that are unconditional on the domain. Perhaps they are just protective
+> assertions and never happen.
 
-You posted before we finished discussion so let me paste it here:
+Right, that's the gist of what I was getting at - I think it's worth 
+putting in the effort to audit and fix the drivers so that that *can* be 
+the case, then we can have a meaningful error API with standard codes 
+effectively for free, rather than just sighing at the existing mess and 
+building a slightly esoteric special case on top.
 
-The bindings don't express it, but the regulator core explicitly asks
-for set_mode with set_load callbacks in drms_uA_update(), which depends
-on REGULATOR_CHANGE_DRMS (toggled with regulator-allow-set-load).
+Case in point, the AMD checks quoted above are pointless, since it 
+checks the same things in ->probe_device, and if that fails then the 
+device won't get a group so there's no way for it to even reach 
+->attach_dev any more. I'm sure there's a *lot* of cruft that can be 
+cleared out now that per-device and per-domain ops give us this kind of 
+inherent robustness.
 
-drms_uA_update() later calls regulator_mode_constrain() which checks if
-mode changing is allowed (REGULATOR_CHANGE_MODE).
+Cheers,
+Robin.
 
-Therefore based on current implementation and meaning of
-set-load/allowed-modes properties, I would say that this applies to all
-regulators. I don't think that RPMh is special here.
-
-Best regards,
-Krzysztof
+> Regardless, it doesn't matter. If they return ENODEV or EINVAL the
+> VFIO side algorithm will continue to work fine, it just does alot more
+> work if EINVAL is permanently returned.
+> 
+> Thanks,
+> Jason
