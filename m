@@ -2,209 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 74AAE5B1EF5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 15:29:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D04C35B1EFA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 15:29:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231747AbiIHN3M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 09:29:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51414 "EHLO
+        id S232523AbiIHN3b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 09:29:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232243AbiIHN2y (ORCPT
+        with ESMTP id S232545AbiIHN3H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 09:28:54 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1230A753BC
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 06:28:49 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id q7so27747361lfu.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 06:28:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=doeIJUD+jbYQvgjjpe7u4ffnL59KvvLjqzzYR74mkK4=;
-        b=avEu5zd48R1MzFTlnzPIqcMco2yUpeclIORdLdB1h6dIPhw3W9n3hIfKj4vBe6WgX8
-         5rFJnL2HA5mXPxj0if1BujlwcgQd4J7FrrDPBDE91rBor7br/WgDZEmg4sUbIkQb72Ja
-         HW2OhkohN88xbyNgAY7NUrGdrtn7TtrjWAAOSExKah0Bc79IrkB2/XTPNYCrYS33DHMN
-         SBGEcEbqWoVvhcClDYrvxkjV0c/V9exuqZlBI5Vskm4qvQtBX7m15dHQYAykeFmpENNJ
-         6q+A2s6G+DaqfzXswG+tvbPl9V/UAae1UcQwJg7YQnmGxyruIttoaSAEINsWLWWCVsXS
-         sMYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=doeIJUD+jbYQvgjjpe7u4ffnL59KvvLjqzzYR74mkK4=;
-        b=gKsG1JCkGdM7fwPbB8DbZgVFP93J2Q3pwKwMzIJaKwe5oA1OHo9jAJlIXJnL0vHRzo
-         iA+GBT51s+gq9YrZl0dcq98lGREc/67xbXXfNwU9Rov94zKomWmJ4w3f2cvsfOZzckMS
-         bdHMcEUVgDBKHpfpuN956N70ZjO0qP3D57CiezNZ5AKglC/85f/muun7wr43HWldEGEu
-         vqKvRsIq0fw0MNp0TEjcf2gTBZWlZv4xDtWo0Drj8FI6QPWR6RvPULxlPZWUReNLXFcy
-         Yx4i43VYpxUaaTkViw6VU5wMpMsNHfihMoESf6HxEFZhz9lzqbt88sLE/vxlMXXpH61a
-         Bqgg==
-X-Gm-Message-State: ACgBeo1w/PjcsiLrf1+ChRitPsvlLS6JKz7aFz2vsHMTDfgNMtwx+7/h
-        QXTvYBhoQd+0tJxkAhq+5I2xQg==
-X-Google-Smtp-Source: AA6agR5o1oU6A4OKEEHP/k2hlu7V48w9qePdjFGLujZ7qiDXSsH25XhzKTy8J8+/xOIVxvGF3umaag==
-X-Received: by 2002:a05:6512:a8e:b0:492:b3e5:adcd with SMTP id m14-20020a0565120a8e00b00492b3e5adcdmr2723240lfu.374.1662643728120;
-        Thu, 08 Sep 2022 06:28:48 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id r7-20020ac25f87000000b00492c017de43sm3036675lfe.127.2022.09.08.06.28.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Sep 2022 06:28:47 -0700 (PDT)
-Message-ID: <7206917a-1250-8669-0b25-fe5c18bbc98f@linaro.org>
-Date:   Thu, 8 Sep 2022 15:28:46 +0200
+        Thu, 8 Sep 2022 09:29:07 -0400
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40A59129526;
+        Thu,  8 Sep 2022 06:29:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1662643744; x=1694179744;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=cb/38D5XgcJUt79hNwgcMMzRjj8ed28v6JTWv2P9Fig=;
+  b=ffm5Ke5mTn4foac7NX99JA/F6oZ1MVEWVQQ2eztpYs5my0LPLbocS4R4
+   9sBHSVuvRTF1jVoZd3nf6TpVhjDEdJWbn+0KzNZRmMAQeT4utvRHLqKUI
+   taJT3I6+UbIOj5oSnL0Wu+Y94t4Fi3rN+7r/1+YIPQQcxxf1HQh6qHISK
+   5QOLm3K57SdApa7Jb45FFtc4XVsl2yl9AbpLenKhQejfSCuvGWzqivZn2
+   O5/SYLFv3tt5Vh4ukwVUqoItSf7EE56ojdKsxxOVzqnKl44Is7n5aTduW
+   yB2Lru7rKB9hTISFMBvRaUaiwCxzA+RVU6xzywuwFm+sNjBvJU+Kxz70u
+   g==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10463"; a="361130140"
+X-IronPort-AV: E=Sophos;i="5.93,300,1654585200"; 
+   d="scan'208";a="361130140"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2022 06:29:03 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.93,300,1654585200"; 
+   d="scan'208";a="740671478"
+Received: from black.fi.intel.com ([10.237.72.28])
+  by orsmga004.jf.intel.com with ESMTP; 08 Sep 2022 06:28:56 -0700
+Received: by black.fi.intel.com (Postfix, from userid 1003)
+        id A4E43235; Thu,  8 Sep 2022 16:29:12 +0300 (EEST)
+From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Hans de Goede <hdegoede@redhat.com>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Ard Biesheuvel <ardb@kernel.org>,
+        Mark Brown <broonie@kernel.org>, linux-acpi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-efi@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-spi@vger.kernel.org,
+        devel@acpica.org
+Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        Len Brown <lenb@kernel.org>, Elie Morisse <syniurge@gmail.com>,
+        Nehal Shah <nehal-bakulchandra.shah@amd.com>,
+        Shyam Sundar S K <shyam-sundar.s-k@amd.com>,
+        Khalil Blaiech <kblaiech@nvidia.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Will Deacon <will@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Daniel Mack <daniel@zonque.org>,
+        Haojian Zhuang <haojian.zhuang@gmail.com>,
+        Robert Jarzmik <robert.jarzmik@free.fr>,
+        Robert Moore <robert.moore@intel.com>,
+        Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH v2 0/8] ACPI: unify _UID handling as integer
+Date:   Thu,  8 Sep 2022 16:29:02 +0300
+Message-Id: <20220908132910.62122-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH v2 4/4] ASoC: qcom: add machine driver for sc8280xp
-Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        broonie@kernel.org
-Cc:     lgirdwood@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, bgoswami@quicinc.com,
-        perex@perex.cz, tiwai@suse.com, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220906165508.30801-1-srinivas.kandagatla@linaro.org>
- <20220906165508.30801-5-srinivas.kandagatla@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220906165508.30801-5-srinivas.kandagatla@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Mailer: git-send-email 2.35.1
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/09/2022 18:55, Srinivas Kandagatla wrote:
-> Add machine driver for sc8280xp SoC.
-> 
-> This intial supports only includes WSA883x Speakers and WCD938x based headset.
-> 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> ---
->  sound/soc/qcom/Kconfig    |  11 +++
->  sound/soc/qcom/Makefile   |   2 +
->  sound/soc/qcom/sc8280xp.c | 157 ++++++++++++++++++++++++++++++++++++++
->  3 files changed, 170 insertions(+)
->  create mode 100644 sound/soc/qcom/sc8280xp.c
-> 
-> diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
-> index 750653404ba3..d0e59e07b1fc 100644
-> --- a/sound/soc/qcom/Kconfig
-> +++ b/sound/soc/qcom/Kconfig
-> @@ -173,6 +173,17 @@ config SND_SOC_SM8250
->  	  SM8250 SoC-based systems.
->  	  Say Y if you want to use audio device on this SoCs.
->  
-> +config SND_SOC_SC8280XP
-> +	tristate "SoC Machine driver for SC8280XP boards"
-> +	depends on QCOM_APR && SOUNDWIRE
+This series is about unification on how we handle ACPI _UID when
+it's known to be an integer-in-the-string.
 
-I think APR is not build time dependency, so:
-	depends on QCOM_APR || COMPILE_TEST
-	depends on SOUNDWIRE
+The idea of merging either all via ACPI tree, or taking ACPI stuff
+for the v6.1 while the rest may be picked up later on by respective
+maintainers separately (currently all depends on Wolfram, other
+patches have got the tags from the maintainers).
 
-> +	depends on COMMON_CLK
-> +	select SND_SOC_QDSP6
-> +	select SND_SOC_QCOM_COMMON
-> +	help
-> +	  To add support for audio on Qualcomm Technologies Inc.
-> +	  SC8280XP SoC-based systems.
-> +	  Say Y if you want to use audio device on this SoCs.
-> +
->  config SND_SOC_SC7180
->  	tristate "SoC Machine driver for SC7180 boards"
->  	depends on I2C && GPIOLIB
-> diff --git a/sound/soc/qcom/Makefile b/sound/soc/qcom/Makefile
-> index 8b7b876899a8..8b97172cf990 100644
-> --- a/sound/soc/qcom/Makefile
-> +++ b/sound/soc/qcom/Makefile
-> @@ -26,6 +26,7 @@ snd-soc-sc7180-objs := sc7180.o
->  snd-soc-sc7280-objs := sc7280.o
->  snd-soc-sdm845-objs := sdm845.o
->  snd-soc-sm8250-objs := sm8250.o
-> +snd-soc-sc8280xp-objs := sc8280xp.o
->  snd-soc-qcom-common-objs := common.o
->  
->  obj-$(CONFIG_SND_SOC_STORM) += snd-soc-storm.o
-> @@ -33,6 +34,7 @@ obj-$(CONFIG_SND_SOC_APQ8016_SBC) += snd-soc-apq8016-sbc.o
->  obj-$(CONFIG_SND_SOC_MSM8996) += snd-soc-apq8096.o
->  obj-$(CONFIG_SND_SOC_SC7180) += snd-soc-sc7180.o
->  obj-$(CONFIG_SND_SOC_SC7280) += snd-soc-sc7280.o
-> +obj-$(CONFIG_SND_SOC_SC8280XP) += snd-soc-sc8280xp.o
->  obj-$(CONFIG_SND_SOC_SDM845) += snd-soc-sdm845.o
->  obj-$(CONFIG_SND_SOC_SM8250) += snd-soc-sm8250.o
->  obj-$(CONFIG_SND_SOC_QCOM_COMMON) += snd-soc-qcom-common.o
-> diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
-> new file mode 100644
-> index 000000000000..ade44ad7c585
-> --- /dev/null
-> +++ b/sound/soc/qcom/sc8280xp.c
-> @@ -0,0 +1,157 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +// Copyright (c) 2022, Linaro Limited
-> +
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/of_device.h>
-> +#include <sound/soc.h>
-> +#include <sound/soc-dapm.h>
-> +#include <sound/pcm.h>
-> +#include <linux/soundwire/sdw.h>
-> +#include <sound/jack.h>
-> +#include <linux/input-event-codes.h>
-> +#include "qdsp6/q6afe.h"
-> +#include "common.h"
-> +
-> +#define DRIVER_NAME		"sc8280xp"
-> +
-> +struct sc8280xp_snd_data {
-> +	bool stream_prepared[AFE_PORT_MAX];
-> +	struct snd_soc_card *card;
-> +	struct sdw_stream_runtime *sruntime[AFE_PORT_MAX];
-> +	struct snd_soc_jack jack;
-> +	bool jack_setup;
-> +};
-> +
-> +static int sc8280xp_snd_init(struct snd_soc_pcm_runtime *rtd)
-> +{
-> +	struct sc8280xp_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
-> +
-> +	return qcom_snd_wcd_jack_setup(rtd, &data->jack, &data->jack_setup);
-> +}
-> +
-> +static int sc8280xp_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
-> +				     struct snd_pcm_hw_params *params)
-> +{
-> +	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-> +	struct snd_interval *rate = hw_param_interval(params,
-> +					SNDRV_PCM_HW_PARAM_RATE);
-> +	struct snd_interval *channels = hw_param_interval(params,
-> +					SNDRV_PCM_HW_PARAM_CHANNELS);
-> +
-> +	rate->min = rate->max = 48000;
-> +	channels->min = 2;
-> +	channels->max = 2;
-> +	switch (cpu_dai->id) {
-> +	case TX_CODEC_DMA_TX_0:
-> +	case TX_CODEC_DMA_TX_1:
-> +	case TX_CODEC_DMA_TX_2:
-> +	case TX_CODEC_DMA_TX_3:
-> +		channels->min = 1;
-> +		break;
-> +	default:
-> +		break;
-> +	}
-> +
-> +
+Partially compile-tested (x86-64).
 
-Just one blank line.
+Changelog v2:
+- rebased pxa2xx patch to be applied against current Linux kernel code
+- fixed uninitialized variable adev in use (mlxbf)
+- dropped unneeded temporary variable adev (qcom_l2_pmu)
+- changed type for ret in patch 8 (Hans)
+- swapped conditions to check ret == 0 first (Ard)
+- added tags (Mark, Ard, Hans)
 
+Andy Shevchenko (8):
+  ACPI: utils: Add acpi_dev_uid_to_integer() helper to get _UID as
+    integer
+  ACPI: LPSS: Refactor _UID handling to use acpi_dev_uid_to_integer()
+  ACPI: x86: Refactor _UID handling to use acpi_dev_uid_to_integer()
+  i2c: amd-mp2-plat: Refactor _UID handling to use
+    acpi_dev_uid_to_integer()
+  i2c: mlxbf: Refactor _UID handling to use acpi_dev_uid_to_integer()
+  perf: qcom_l2_pmu: Refactor _UID handling to use
+    acpi_dev_uid_to_integer()
+  spi: pxa2xx: Refactor _UID handling to use acpi_dev_uid_to_integer()
+  efi/dev-path-parser: Refactor _UID handling to use
+    acpi_dev_uid_to_integer()
 
-Best regards,
-Krzysztof
+ drivers/acpi/acpi_lpss.c               | 15 ++++++-----
+ drivers/acpi/utils.c                   | 24 ++++++++++++++++++
+ drivers/acpi/x86/utils.c               | 14 ++++++++---
+ drivers/firmware/efi/dev-path-parser.c | 10 +++++---
+ drivers/i2c/busses/i2c-amd-mp2-plat.c  | 27 +++++++-------------
+ drivers/i2c/busses/i2c-mlxbf.c         | 20 +++++----------
+ drivers/perf/qcom_l2_pmu.c             |  8 +++---
+ drivers/spi/spi-pxa2xx.c               | 35 +++++++-------------------
+ include/acpi/acpi_bus.h                |  1 +
+ include/linux/acpi.h                   |  5 ++++
+ 10 files changed, 81 insertions(+), 78 deletions(-)
+
+-- 
+2.35.1
+
