@@ -2,72 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D4DEB5B14AC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 08:35:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DBF335B14C1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 08:37:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230260AbiIHGfC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 02:35:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55580 "EHLO
+        id S229945AbiIHGhU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 02:37:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230333AbiIHGe7 (ORCPT
+        with ESMTP id S229716AbiIHGhT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 02:34:59 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6289E41D32
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Sep 2022 23:34:57 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id m17-20020a7bce11000000b003a5bedec07bso952547wmc.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Sep 2022 23:34:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=Gcq/MNox46vkVaOFbJDKt3RUNde615bJ744Z+6gObTw=;
-        b=TTPySrZhHQaWxIJnpAMRoxqM5yadpuBWk8tg2sXAMUe8IC08fXf45jBQY/CgY2cOvc
-         arIRcB50pk2gfo8fUQayZy5RdswZ33OtmRBloeA7NpSfKcJ9rO4ZZBVfN0F3JuJxe+Ys
-         SiW2R3Rk1ZkD067eP+SFJBY8T01lq6KZoh6fGaIafJA3deRqG96BZmrDUdAJ+Tq/uR22
-         0ERl2mf1z9Uqog8zmRxpIrKgUEHHQR8XMU/DfUrh+18uI8Q8aVS+Aw9ANYjp+9+WTk/0
-         CNdHIEOX/CXojqH5Vve0khwpgUdV+wqUFr3DjIhm1+JubAqAPI9BC/3MZC6RjC+QxjpS
-         Y5mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=Gcq/MNox46vkVaOFbJDKt3RUNde615bJ744Z+6gObTw=;
-        b=FwiiGIcRanBQQYRk6Pv2L/g5O2jg81skbi28nAA6O8Kkru2jDtBidf1TIMW0XFOYtu
-         0GYyyLLsjVwD6MEgEY1aK1T+629+fT0DWycTatcVLGC0ER77GXBlGIUi6ovfxlIlq3eE
-         3F8zKMZE6tqWIHPBFnNQotkMPcP1EZtLOBFsQIdYheVIn44br1Y1gjC+41HobCha00UO
-         evrE7GFMJ16emTB+9q3+L7RG4SQA95ReaxR3rGc2iurYAaGTV1hIqsO4vZkZrhcULUpn
-         ClOiyJojkICIFa+KtfLA6kfZvgsc4gvorQkV8PQVZmDepF4I5JlTb8EdUi8s/RrxB/NS
-         HgIA==
-X-Gm-Message-State: ACgBeo17OESkCXRheLMNeOAM/xprSjQS48/eZBjBYSKTZkrivh2+NoAg
-        reVd0K8fAkVYqwcdnx5jT0RvmQ==
-X-Google-Smtp-Source: AA6agR4SBoaoNC1cBNOfkprBs16dlcsy/HK8h5wYhvlGpi70UIHS5UMx5qdCLL3g1LvRnwtw1lhQuQ==
-X-Received: by 2002:a05:600c:22cd:b0:3a6:7b62:3778 with SMTP id 13-20020a05600c22cd00b003a67b623778mr1103454wmg.45.1662618895743;
-        Wed, 07 Sep 2022 23:34:55 -0700 (PDT)
-Received: from srini-hackbox.lan (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.gmail.com with ESMTPSA id m3-20020a05600c4f4300b003a2e92edeccsm1549598wmq.46.2022.09.07.23.34.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Sep 2022 23:34:55 -0700 (PDT)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     broonie@kernel.org
-Cc:     lgirdwood@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, bgoswami@quicinc.com,
-        perex@perex.cz, tiwai@suse.com, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH v3 4/4] ASoC: qcom: add machine driver for sc8280xp
-Date:   Thu,  8 Sep 2022 07:34:48 +0100
-Message-Id: <20220908063448.27102-5-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20220908063448.27102-1-srinivas.kandagatla@linaro.org>
-References: <20220908063448.27102-1-srinivas.kandagatla@linaro.org>
+        Thu, 8 Sep 2022 02:37:19 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCAE0C0BF9;
+        Wed,  7 Sep 2022 23:37:17 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2885iNxf013094;
+        Thu, 8 Sep 2022 06:37:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=nXVYlg3xTpD+OOFGG59ExVDCnz5VM9+NKgHes4yM1z0=;
+ b=ksbYRtEWVUmevEIKeYZCM5umOkz+X2GAYlUEtMhRezk2RxGT/h9XlFLIgVwidmKR4a7N
+ tCncaA/vP0fSkBL2zkxPW/G5Ni5zjSM+FNOfdU2swhcQPFphx1Agk43w9mNFrxNBXOuV
+ xdUuPIcqkw2DowdjPtGnGKU18sO8n4XFwRGc/dYQUWowuh4LOCzXwhVjOjKl+uqUXxw9
+ GhLBUBiIFWVaK2WsHcTng4oP76hnZsp8ggeVEek9QYg4d/zEXYsnLfYGfzKjChFIewJR
+ INk/pYYBqdMKboqiLa4CuR2YVYW5Aj0t1gDiSCJ4UZEuhRwqGUb2Dxup0t2CSoZbN/q0 qw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jerdpbma3-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 08 Sep 2022 06:37:02 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2886b1ON025512
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 8 Sep 2022 06:37:01 GMT
+Received: from [10.216.34.143] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 7 Sep 2022
+ 23:36:54 -0700
+Message-ID: <723916b2-7939-a41d-2b0f-421868c581dd@quicinc.com>
+Date:   Thu, 8 Sep 2022 12:06:51 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v3 1/3] PCI: qcom: Add sc7280 aggre0, aggre1 and ddr sf
+ tbu clocks in PCIe driver
+Content-Language: en-US
+To:     Bjorn Helgaas <helgaas@kernel.org>
+CC:     <linux-pci@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <mka@chromium.org>,
+        <quic_vbadigan@quicinc.com>, <quic_hemantk@quicinc.com>,
+        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <manivannan.sadhasivam@linaro.org>,
+        <swboyd@chromium.org>, <dmitry.baryshkov@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        "Rob Herring" <robh@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>
+References: <20220907184437.GA137711@bhelgaas>
+From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <20220907184437.GA137711@bhelgaas>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 5vHG0CipMuQfHpCVmSqwsMesmrqkPRUb
+X-Proofpoint-ORIG-GUID: 5vHG0CipMuQfHpCVmSqwsMesmrqkPRUb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-08_04,2022-09-07_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ lowpriorityscore=0 priorityscore=1501 suspectscore=0 clxscore=1015
+ adultscore=0 spamscore=0 bulkscore=0 mlxlogscore=870 malwarescore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2209080023
+X-Spam-Status: No, score=-7.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,223 +91,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add machine driver for sc8280xp SoC.
 
-This intial supports only includes WSA883x Speakers and WCD938x based headset.
+On 9/8/2022 12:14 AM, Bjorn Helgaas wrote:
+> On Sat, Sep 03, 2022 at 07:43:02AM +0530, Krishna chaitanya chundru wrote:
+>> Add missing aggre0, aggre1 and ddrs sf tbu clocks in PCIe driver.
+>>
+>> If these clocks are not presenti, the PCIe link goes down in system suspend
+>> and resume.
+> s/presenti/present/
+>
+> But the hardware clocks are present regardless of this driver change.
+>
+> I suspect the point of this is really that if the driver doesn't
+> clk_get() these clocks to increase the reference count, we don't know
+> that the clocks are in use, and since they appear unused, they get
+> turned off during suspend.
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- sound/soc/qcom/Kconfig    |  11 +++
- sound/soc/qcom/Makefile   |   2 +
- sound/soc/qcom/sc8280xp.c | 157 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 170 insertions(+)
- create mode 100644 sound/soc/qcom/sc8280xp.c
+Yes, these are present in the hardware. As we are not voting for these 
+clocks from
 
-diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
-index 750653404ba3..d0e59e07b1fc 100644
---- a/sound/soc/qcom/Kconfig
-+++ b/sound/soc/qcom/Kconfig
-@@ -173,6 +173,17 @@ config SND_SOC_SM8250
- 	  SM8250 SoC-based systems.
- 	  Say Y if you want to use audio device on this SoCs.
- 
-+config SND_SOC_SC8280XP
-+	tristate "SoC Machine driver for SC8280XP boards"
-+	depends on QCOM_APR && SOUNDWIRE
-+	depends on COMMON_CLK
-+	select SND_SOC_QDSP6
-+	select SND_SOC_QCOM_COMMON
-+	help
-+	  To add support for audio on Qualcomm Technologies Inc.
-+	  SC8280XP SoC-based systems.
-+	  Say Y if you want to use audio device on this SoCs.
-+
- config SND_SOC_SC7180
- 	tristate "SoC Machine driver for SC7180 boards"
- 	depends on I2C && GPIOLIB
-diff --git a/sound/soc/qcom/Makefile b/sound/soc/qcom/Makefile
-index 8b7b876899a8..8b97172cf990 100644
---- a/sound/soc/qcom/Makefile
-+++ b/sound/soc/qcom/Makefile
-@@ -26,6 +26,7 @@ snd-soc-sc7180-objs := sc7180.o
- snd-soc-sc7280-objs := sc7280.o
- snd-soc-sdm845-objs := sdm845.o
- snd-soc-sm8250-objs := sm8250.o
-+snd-soc-sc8280xp-objs := sc8280xp.o
- snd-soc-qcom-common-objs := common.o
- 
- obj-$(CONFIG_SND_SOC_STORM) += snd-soc-storm.o
-@@ -33,6 +34,7 @@ obj-$(CONFIG_SND_SOC_APQ8016_SBC) += snd-soc-apq8016-sbc.o
- obj-$(CONFIG_SND_SOC_MSM8996) += snd-soc-apq8096.o
- obj-$(CONFIG_SND_SOC_SC7180) += snd-soc-sc7180.o
- obj-$(CONFIG_SND_SOC_SC7280) += snd-soc-sc7280.o
-+obj-$(CONFIG_SND_SOC_SC8280XP) += snd-soc-sc8280xp.o
- obj-$(CONFIG_SND_SOC_SDM845) += snd-soc-sdm845.o
- obj-$(CONFIG_SND_SOC_SM8250) += snd-soc-sm8250.o
- obj-$(CONFIG_SND_SOC_QCOM_COMMON) += snd-soc-qcom-common.o
-diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
-new file mode 100644
-index 000000000000..ade44ad7c585
---- /dev/null
-+++ b/sound/soc/qcom/sc8280xp.c
-@@ -0,0 +1,157 @@
-+// SPDX-License-Identifier: GPL-2.0
-+// Copyright (c) 2022, Linaro Limited
-+
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+#include <linux/of_device.h>
-+#include <sound/soc.h>
-+#include <sound/soc-dapm.h>
-+#include <sound/pcm.h>
-+#include <linux/soundwire/sdw.h>
-+#include <sound/jack.h>
-+#include <linux/input-event-codes.h>
-+#include "qdsp6/q6afe.h"
-+#include "common.h"
-+
-+#define DRIVER_NAME		"sc8280xp"
-+
-+struct sc8280xp_snd_data {
-+	bool stream_prepared[AFE_PORT_MAX];
-+	struct snd_soc_card *card;
-+	struct sdw_stream_runtime *sruntime[AFE_PORT_MAX];
-+	struct snd_soc_jack jack;
-+	bool jack_setup;
-+};
-+
-+static int sc8280xp_snd_init(struct snd_soc_pcm_runtime *rtd)
-+{
-+	struct sc8280xp_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
-+
-+	return qcom_snd_wcd_jack_setup(rtd, &data->jack, &data->jack_setup);
-+}
-+
-+static int sc8280xp_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
-+				     struct snd_pcm_hw_params *params)
-+{
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct snd_interval *rate = hw_param_interval(params,
-+					SNDRV_PCM_HW_PARAM_RATE);
-+	struct snd_interval *channels = hw_param_interval(params,
-+					SNDRV_PCM_HW_PARAM_CHANNELS);
-+
-+	rate->min = rate->max = 48000;
-+	channels->min = 2;
-+	channels->max = 2;
-+	switch (cpu_dai->id) {
-+	case TX_CODEC_DMA_TX_0:
-+	case TX_CODEC_DMA_TX_1:
-+	case TX_CODEC_DMA_TX_2:
-+	case TX_CODEC_DMA_TX_3:
-+		channels->min = 1;
-+		break;
-+	default:
-+		break;
-+	}
-+
-+
-+	return 0;
-+}
-+
-+static int sc8280xp_snd_hw_params(struct snd_pcm_substream *substream,
-+				struct snd_pcm_hw_params *params)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct sc8280xp_snd_data *pdata = snd_soc_card_get_drvdata(rtd->card);
-+
-+	return qcom_snd_sdw_hw_params(substream, params, &pdata->sruntime[cpu_dai->id]);
-+}
-+
-+static int sc8280xp_snd_prepare(struct snd_pcm_substream *substream)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct sc8280xp_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
-+	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
-+
-+	return qcom_snd_sdw_prepare(substream, sruntime,
-+				    &data->stream_prepared[cpu_dai->id]);
-+}
-+
-+static int sc8280xp_snd_hw_free(struct snd_pcm_substream *substream)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct sc8280xp_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
-+
-+	return qcom_snd_sdw_hw_free(substream, sruntime,
-+				    &data->stream_prepared[cpu_dai->id]);
-+}
-+
-+static const struct snd_soc_ops sc8280xp_be_ops = {
-+	.hw_params = sc8280xp_snd_hw_params,
-+	.hw_free = sc8280xp_snd_hw_free,
-+	.prepare = sc8280xp_snd_prepare,
-+};
-+
-+static void sc8280xp_add_be_ops(struct snd_soc_card *card)
-+{
-+	struct snd_soc_dai_link *link;
-+	int i;
-+
-+	for_each_card_prelinks(card, i, link) {
-+		if (link->no_pcm == 1) {
-+			link->init = sc8280xp_snd_init;
-+			link->be_hw_params_fixup = sc8280xp_be_hw_params_fixup;
-+			link->ops = &sc8280xp_be_ops;
-+		}
-+	}
-+}
-+
-+static int sc8280xp_platform_probe(struct platform_device *pdev)
-+{
-+	struct snd_soc_card *card;
-+	struct sc8280xp_snd_data *data;
-+	struct device *dev = &pdev->dev;
-+	int ret;
-+
-+	card = devm_kzalloc(dev, sizeof(*card), GFP_KERNEL);
-+	if (!card)
-+		return -ENOMEM;
-+	card->owner = THIS_MODULE;
-+	/* Allocate the private data */
-+	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
-+	if (!data)
-+		return -ENOMEM;
-+
-+	card->dev = dev;
-+	dev_set_drvdata(dev, card);
-+	snd_soc_card_set_drvdata(card, data);
-+	ret = qcom_snd_parse_of(card);
-+	if (ret)
-+		return ret;
-+
-+	card->driver_name = DRIVER_NAME;
-+	sc8280xp_add_be_ops(card);
-+	return devm_snd_soc_register_card(dev, card);
-+}
-+
-+static const struct of_device_id snd_sc8280xp_dt_match[] = {
-+	{.compatible = "qcom,sc8280xp-sndcard",},
-+	{}
-+};
-+
-+MODULE_DEVICE_TABLE(of, snd_sc8280xp_dt_match);
-+
-+static struct platform_driver snd_sc8280xp_driver = {
-+	.probe  = sc8280xp_platform_probe,
-+	.driver = {
-+		.name = "snd-sc8280xp",
-+		.of_match_table = snd_sc8280xp_dt_match,
-+	},
-+};
-+module_platform_driver(snd_sc8280xp_driver);
-+MODULE_AUTHOR("Srinivas Kandagatla <srinivas.kandagatla@linaro.org");
-+MODULE_DESCRIPTION("SC8280XP ASoC Machine Driver");
-+MODULE_LICENSE("GPL v2");
--- 
-2.21.0
+our driver in the system suspend these clocks can be turn off.
 
+>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>> ---
+>>   drivers/pci/controller/dwc/pcie-qcom.c | 3 +++
+>>   1 file changed, 3 insertions(+)
+>>
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+>> index 2ea1375..a7202f0 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+>> @@ -1548,7 +1548,10 @@ static const struct qcom_pcie_cfg sm8450_pcie1_cfg = {
+>>   static const struct qcom_pcie_cfg sc7280_cfg = {
+>>   	.ops = &ops_1_9_0,
+>>   	.has_tbu_clk = true,
+>> +	.has_ddrss_sf_tbu_clk = true,
+>>   	.pipe_clk_need_muxing = true,
+>> +	.has_aggre0_clk = true,
+>> +	.has_aggre1_clk = true,
+>>   };
+>>   
+>>   static const struct qcom_pcie_cfg sc8180x_cfg = {
+>> -- 
+>> 2.7.4
+>>
