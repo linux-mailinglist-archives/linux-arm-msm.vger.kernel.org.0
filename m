@@ -2,90 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DC5A5B1B1B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 13:16:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC2565B1B5D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 13:26:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230092AbiIHLQf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 07:16:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58400 "EHLO
+        id S230526AbiIHL0U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 07:26:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229721AbiIHLQe (ORCPT
+        with ESMTP id S231225AbiIHL0S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 07:16:34 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4B45C6957
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 04:16:31 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id by6so19448615ljb.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 04:16:31 -0700 (PDT)
+        Thu, 8 Sep 2022 07:26:18 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFEBBCEB29
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 04:26:00 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id e20so25478255wri.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 04:26:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=WOxGa6HDdZTkz+qaFAMzvcgUAVFd9V45w/3KQDKwpCI=;
-        b=QgYMkiugBcSQvEwKtmTDnsQFAgT1NHRFpcgN00InVwjf0e/82PfGO/50/cgJJNG+UE
-         IDviNRSwAUJcjGNR848LdzZUgBzup5swhYKMCMMCulJwOo/fYt4s9SwobZGHP00rTU3G
-         umbLymyj2oL6g1n4BHPInwe8bmP5sevNDdGM/1ivTzPSWxkbGmoMhVSB4j4FYQ4rM40M
-         tlRjvhjm2EVqZiUHkC3QvZXzVqYJzDqpufO5x2fAYdrB6fVZJwGuGrqLTsU1rEHgPlrX
-         nchASRVod92uw74+Ep/B4Tn7dU0WDJgcPXJnLL/gLQgOC8FQO2GEbXfvc+vC46IiHFQ7
-         mDxg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=BltwYbntlLYN/FN8uiEra+3WKSK9lYLxa1C0HrhOCnE=;
+        b=agPG0wRVkNSPsr2ijP1u+dYhk7m1CU+FBiYasegVAw9GOlYop/ogCNcJCsxDLd0HRK
+         cnhY6yACzHv1akU3dOae5SxKC0WELIOW73KMkhmPao6UoVt5E6VQy9h7qcxWW09pmjzU
+         AaadtLOSdWeyRcP00yZtxSdRjuv2AnDBbCnafvgQeXDRrXh/+jqah4DyCXVa1Z4lK2qO
+         ct3iR2nEbxEBScwoAwponC6Uaz8WpLeUN9pcjo4EfygwHTm1xTUXcDNB6FqhWfuiRqcU
+         2rBQgboBfFdNk41bp886Jr9503moikmQ5Q+SD2cwEjGC08TElcBF9vGjvs52EGNm6nzy
+         9Jgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=WOxGa6HDdZTkz+qaFAMzvcgUAVFd9V45w/3KQDKwpCI=;
-        b=plgEjXkwj9MZQD/xcmMaPiRqjCdNeJmkJKbTtX4hpU9+PQidwoxaXl9UyjifDeedrk
-         ljBGsO8sJV/mAAnJX1eT4tV9aFTHvqsW3YOr9H7pWedejNMgftFozEEdfm2frbFtfk49
-         T8MbndDtcxui89A9g5QYg2u2RuOs/IMepV6A+ghz2CLiaP7KspreDKQt+TVH9iBQPYEP
-         M9CS2ktK0CmChH8nPIAxt077nOn90Q1Gq81QyMjOO9LnDMRqsP3EXAkwOOJdQArItStv
-         CXFXBH8oiFjcBgezlVe3iWNaM0EgFtA3KM2jhHA6Pyo9ymmFxXsLKS7DX0R09X3Yjn/1
-         PavA==
-X-Gm-Message-State: ACgBeo0O0kac/wxHuqMNHW6YCJsUhQCKsa5ysmalX8ti7uo2fsh7QYSI
-        86kVFywhC2iLHwV+WiKiJVKtFg==
-X-Google-Smtp-Source: AA6agR6kiJ4FX1LJJ/Uo44iVsHBip9Lv0pwLDM6D16vW1SGLhcD/fIU21n32DClqzX3EKl/GiPay4g==
-X-Received: by 2002:a05:651c:c86:b0:25e:7181:e1a5 with SMTP id bz6-20020a05651c0c8600b0025e7181e1a5mr2260875ljb.492.1662635789973;
-        Thu, 08 Sep 2022 04:16:29 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id a9-20020a196609000000b004946274b7d6sm2992129lfc.166.2022.09.08.04.16.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Sep 2022 04:16:29 -0700 (PDT)
-Message-ID: <35722313-6585-1748-6821-aebe0859ef6e@linaro.org>
-Date:   Thu, 8 Sep 2022 13:16:28 +0200
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=BltwYbntlLYN/FN8uiEra+3WKSK9lYLxa1C0HrhOCnE=;
+        b=1YZ0cp0sFTlsI5SZNP/9zwHoZZuebeqpq4j9yEaVoL6qHZNG8dR5KcSDjr5FDdv4CT
+         +QSNn48pufql8R9WJV60oDvxuiUBE07ey23EzCNNBHe+U6+X6bf5Y4bQsno5JKxDiMhq
+         /7jQu/cDTRVj1s2EuwH0effCoaKevqiyQXDhRweMa350sehb9FZysyw0wcTwTZ0TziwR
+         Y+FXxYAt3pGoIkNPeMitp28o7yB7b3KZLd3LXOwcOokZx3hrjown6CRubALFOIf7N4EB
+         GAq5cugrCQYotmLOZJ9byIpElByzOEYtoz1amsrrAbzoVBiZoHgeoZUJwiKa/5R487Vn
+         5u5Q==
+X-Gm-Message-State: ACgBeo3usKgomXpkg7JugZfFLqTFBJCbk0tmARvt5q4OeTpXX2Wu59IG
+        95NIFgHEVB6PuBi9udGuBtuxbA==
+X-Google-Smtp-Source: AA6agR4TRCqTC4FL1qQJeEVF54IaH6Me+t2QigoeEiXrJddugj0k1s/DbSrcLbvlPx8JMO918HgT5g==
+X-Received: by 2002:a5d:6088:0:b0:228:e0c5:da5f with SMTP id w8-20020a5d6088000000b00228e0c5da5fmr4577252wrt.221.1662636359065;
+        Thu, 08 Sep 2022 04:25:59 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id w10-20020a05600c474a00b003a608d69a64sm2582382wmo.21.2022.09.08.04.25.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Sep 2022 04:25:58 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, myungjoo.ham@samsung.com,
+        cw00.choi@samsung.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, gurus@codeaurora.org,
+        marijn.suijten@somainline.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     bryan.odonoghue@linaro.org
+Subject: [PATCH v4 0/2 RESEND] Fix pm8941-misc extcon interrupt dependency assumptions
+Date:   Thu,  8 Sep 2022 12:25:54 +0100
+Message-Id: <20220908112556.860343-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH v2 1/5] dt-bindings: net: Add generic Bluetooth controller
-Content-Language: en-US
-To:     Sven Peter <sven@svenpeter.dev>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Hector Martin <marcan@marcan.st>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        asahi@lists.linux.dev, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        Rocky Liao <rjliao@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org
-References: <20220907170935.11757-1-sven@svenpeter.dev>
- <20220907170935.11757-2-sven@svenpeter.dev>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220907170935.11757-2-sven@svenpeter.dev>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -94,65 +72,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/09/2022 19:09, Sven Peter wrote:
-> 
-> Bluetooth controllers share the common local-bd-address property.
-> Add a generic YAML schema to replace bluetooth.txt for those.
-> 
-> Signed-off-by: Sven Peter <sven@svenpeter.dev>
-> ---
-> changes from v1:
->   - removed blueetooth.txt instead of just replacing it with a
->     deprecation note
->   - replaced references to bluetooth.txt
-> 
-> checkpatch complains here because it thinks I do to many things at once,
-> I think it's better to replace bluetooth.txt in single commit though.
-> Let me know if you prefer this to be split into multiple commits
-> instead.
-> 
-> .../bindings/net/bluetooth-controller.yaml    | 30 +++++++++++++++++++
+V4:
+- Added suggested extra log text from Marjin to extcon patch
 
-I propose to keep it in net/bluetooth subdirectory. In next patch you
-can move there other files.
+V3:
+- Adds a cover-letter since we are now doing two patches a dt-bindings fix and
+  platform_get_irq_byname_optional fix.
+- Add Review-by -> Rob Herring, Marijn Suijten
+- Add additional patch to negate warning when one of usb_id or usb_vbus
+  is not declared in the platform DTS.
 
->  .../devicetree/bindings/net/bluetooth.txt     |  5 ----
->  .../bindings/net/qualcomm-bluetooth.yaml      |  4 +--
->  .../bindings/soc/qcom/qcom,wcnss.yaml         |  8 ++---
->  4 files changed, 35 insertions(+), 12 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/net/bluetooth-controller.yaml
->  delete mode 100644 Documentation/devicetree/bindings/net/bluetooth.txt
-> 
-> diff --git a/Documentation/devicetree/bindings/net/bluetooth-controller.yaml b/Documentation/devicetree/bindings/net/bluetooth-controller.yaml
-> new file mode 100644
-> index 000000000000..0ea8a20e30f9
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/net/bluetooth-controller.yaml
-> @@ -0,0 +1,30 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/net/bluetooth-controller.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Bluetooth Controller Generic Binding
-> +
-> +maintainers:
-> +  - Marcel Holtmann <marcel@holtmann.org>
-> +  - Johan Hedberg <johan.hedberg@gmail.com>
-> +  - Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-> +
-> +properties:
-> +  $nodename:
-> +    pattern: "^bluetooth(@.*)?$"
-> +
-> +  local-bd-address:
-> +    $ref: /schemas/types.yaml#/definitions/uint8-array
-> +    minItems: 6
+Bryan O'Donoghue (2):
+  dt-bindings: pm8941-misc: Fix usb_id and usb_vbus definitions
+  extcon: qcom-spmi: Switch to platform_get_irq_byname_optional
 
-No need for minitems.
+ .../devicetree/bindings/extcon/qcom,pm8941-misc.yaml | 12 ++++++++----
+ drivers/extcon/extcon-qcom-spmi-misc.c               |  4 ++--
+ 2 files changed, 10 insertions(+), 6 deletions(-)
 
+-- 
+2.36.1
 
-
-Best regards,
-Krzysztof
