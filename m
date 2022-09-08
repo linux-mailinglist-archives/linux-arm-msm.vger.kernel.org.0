@@ -2,139 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DEA8B5B285A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 23:19:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 670675B28E3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 00:00:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229582AbiIHVTD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 17:19:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41480 "EHLO
+        id S229552AbiIHWAt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 18:00:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229864AbiIHVTB (ORCPT
+        with ESMTP id S229918AbiIHWA2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 17:19:01 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A39305926C;
-        Thu,  8 Sep 2022 14:19:00 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 288JthSW031187;
-        Thu, 8 Sep 2022 21:18:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=72sdqr73NnwRqeKtiV3GcKUb48kBdTuBKpEsa7DdC98=;
- b=pLzWjL5f2M0P3kzyK0tUpAvJ3AHqa0rZ6jZwz2nAykOtT6Gl1EIjmnNjX1cGN9zQ7qsL
- cFj7Z3PjElpIw1aAMkm4fNJih+wuLJTiJxXScVegR/Pmyp7Dtd30HwQYpH5nmwQD2jOp
- PweAaZAoAS7s14hDetkhoYhOlqHcdr/26qdkWzsdURTZvX3s9yn/PrEtELm2JwAoxLJI
- DlvVDOqpqjfGaj4GOMFmsSntyjaA6UMYQ1eRiyLnHEJZaZ+l0t52hOQLUfvTcz7JsC39
- gR5gY/30Edqzfc7zaZqj6yy5ytJbDy4ARq5E6mXYQAtMVFVKHeTQdyizLKrYMo8idKTE CQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jfcpbt9kf-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 08 Sep 2022 21:18:54 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 288LIrcK000637
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 8 Sep 2022 21:18:53 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Thu, 8 Sep 2022 14:18:53 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <bjorn.andersson@linaro.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v4 2/2] drm/msm/dp: retry 3 times if set sink to D0 poweer state failed
-Date:   Thu, 8 Sep 2022 14:18:37 -0700
-Message-ID: <1662671917-17194-3-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1662671917-17194-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1662671917-17194-1-git-send-email-quic_khsieh@quicinc.com>
+        Thu, 8 Sep 2022 18:00:28 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72ACE1CC;
+        Thu,  8 Sep 2022 14:59:20 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id u22so483plq.12;
+        Thu, 08 Sep 2022 14:59:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=vMpxFnLbKz83gjzPIBTT7rCY9HADGWi0UqV/ZOOtUxw=;
+        b=pZDojHYG/x9U29bP9u/oeNrN1w0FegXosYS30fcaaZCyvC8zNM8SfSmse2U3yHQwkZ
+         Y6wWzYaHW7milsSsYq3h/n8jyqo6EJEh15xcY4oFL1PyBxqBf9klOLkqWJHIdNhNP9JI
+         GpRb3vj3LPvueDY8zvTshz+fbi2DGg16488AIwoM09aMdymQGSd/Pjr+VqD2fR89pdxN
+         YH9WV/Vjwuba6Oi+HHY2gjnJphaRFJvTUL8ojVhdb/z/167j+0FkS8rQEo+BePypSeUi
+         dQMBp5Bv6uuFEbmc+sgHclMfrXZZRTFZ45lm7Nea2rr5bm0l9jP9VLU/SLqwpjAnzvLx
+         VpDQ==
+X-Gm-Message-State: ACgBeo13HwBwwcTRaj9eO1dUlXTzalx3lHgXc/3r5qyKICRGHiZFc+TQ
+        FOMSXAvGVVEI01fY8xkm4kBNDMGX9Fg=
+X-Google-Smtp-Source: AA6agR43vj41RAVCljt/WpAvx7IYddgFALsXWp81BUtKTXP1upF2bCH63MoFFtddWxv7sCMJBHJ/1Q==
+X-Received: by 2002:a17:90b:390e:b0:202:5d4e:c1f2 with SMTP id ob14-20020a17090b390e00b002025d4ec1f2mr6251496pjb.45.1662674299082;
+        Thu, 08 Sep 2022 14:58:19 -0700 (PDT)
+Received: from ?IPV6:2620:15c:211:201:c18a:7410:112c:aa7c? ([2620:15c:211:201:c18a:7410:112c:aa7c])
+        by smtp.gmail.com with ESMTPSA id k15-20020a170902c40f00b00176d8e33601sm6560752plk.203.2022.09.08.14.58.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 Sep 2022 14:58:18 -0700 (PDT)
+Message-ID: <37d36dd9-f467-233c-babd-4e7c1c953c6c@acm.org>
+Date:   Thu, 8 Sep 2022 14:58:14 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: hzMCRlBOotSmcQLdrUwSIYqjV3iC_7u0
-X-Proofpoint-GUID: hzMCRlBOotSmcQLdrUwSIYqjV3iC_7u0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-08_12,2022-09-08_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
- clxscore=1015 bulkscore=0 mlxlogscore=999 lowpriorityscore=0
- malwarescore=0 mlxscore=0 impostorscore=0 spamscore=0 priorityscore=1501
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2209080076
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [RFC PATCH v3 1/4] ufs: core: prepare ufs for multi circular
+ queue support
+Content-Language: en-US
+To:     Asutosh Das <quic_asutoshd@quicinc.com>, quic_nguyenb@quicinc.com,
+        quic_xiaosenh@quicinc.com, stanley.chu@mediatek.com,
+        adrian.hunter@intel.com, avri.altman@wdc.com, mani@kernel.org,
+        quic_cang@quicinc.com, beanhuo@micron.com,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <cover.1662157846.git.quic_asutoshd@quicinc.com>
+ <757bbfe36629b7c31ef2630971f8678a7801223f.1662157846.git.quic_asutoshd@quicinc.com>
+From:   Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <757bbfe36629b7c31ef2630971f8678a7801223f.1662157846.git.quic_asutoshd@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Bring sink out of D3 (power down) mode into D0 (normal operation) mode
-by setting DP_SET_POWER_D0 bit to DP_SET_POWER dpcd register. This
-patch will retry 3 times if written to DP_SET_POWER register failed.
+On 9/2/22 15:41, Asutosh Das wrote:
+> Preparatory changes for upcoming multi circular queue.
 
-Changes in v4:
--- split into two patches
+One patch per change please and also describe each individual change. 
+ From 
+https://www.kernel.org/doc/html/latest/process/submitting-patches.html#split-changes: 
+"Separate each logical change into a separate patch".
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_link.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+Thanks,
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-index 36f0af0..7b5ecf5 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.c
-+++ b/drivers/gpu/drm/msm/dp/dp_link.c
-@@ -49,23 +49,26 @@ static int dp_aux_link_power_up(struct drm_dp_aux *aux,
- 					struct dp_link_info *link)
- {
- 	u8 value;
--	int err;
-+	ssize_t len;
-+	int i;
- 
- 	if (link->revision < 0x11)
- 		return 0;
- 
--	err = drm_dp_dpcd_readb(aux, DP_SET_POWER, &value);
--	if (err < 0)
--		return err;
-+	len = drm_dp_dpcd_readb(aux, DP_SET_POWER, &value);
-+	if (len < 0)
-+		return len;
- 
- 	value &= ~DP_SET_POWER_MASK;
- 	value |= DP_SET_POWER_D0;
- 
--	err = drm_dp_dpcd_writeb(aux, DP_SET_POWER, value);
--	if (err < 0)
--		return err;
--
--	usleep_range(1000, 2000);
-+	/* retry for 1ms to give the sink time to wake up */
-+	for (i = 0; i < 3; i++) {
-+	        len = drm_dp_dpcd_writeb(aux, DP_SET_POWER, value);
-+		usleep_range(1000, 2000);
-+		if (len == 1)
-+			break;
-+	}
- 
- 	return 0;
- }
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+Bart.
