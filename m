@@ -2,128 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 874E85B2643
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 20:51:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 446995B267A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Sep 2022 21:10:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232461AbiIHSvT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Sep 2022 14:51:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36072 "EHLO
+        id S231979AbiIHTKu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Sep 2022 15:10:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232441AbiIHSvR (ORCPT
+        with ESMTP id S229505AbiIHTKt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Sep 2022 14:51:17 -0400
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7B4F56B9F;
-        Thu,  8 Sep 2022 11:51:15 -0700 (PDT)
-Received: by mail-pg1-x529.google.com with SMTP id v4so17562381pgi.10;
-        Thu, 08 Sep 2022 11:51:15 -0700 (PDT)
+        Thu, 8 Sep 2022 15:10:49 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08433EB2F9
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Sep 2022 12:10:47 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id u18so17060899lfo.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Sep 2022 12:10:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=//ahTCx3bhYNJd5yPM2nHuiCGNaCYjPsuZnXD1+4jjc=;
-        b=MHMdLh0ved+WU+eOWTR4tEZ0DUZJkXuFx1lK8j881yoCK+dg6Hbvi4Y/NELQjjPfNg
-         KP1LuZVcsiK4shcEdgTJ9/Ui81qG3QoAp20rYz2CnAnp4H4nMhH2BhbUye9zUa5hqtOn
-         F2ch39sbPvqUO1sNJ3jklpOG3k+DcbM2IcnBrmwZGAImM9z4NyNUxwfFPkjcWQcz+bQ0
-         151l/353PhIZ1RZgmXrwBS7KYbyht5D5ogSnDKzUno98KiZHRXNbm35IGaljKaYSEMrM
-         qZcIsaDl2x8ZxP3l9w4e6Af1U0Ji5i2DNjJQ+O4Zo0LAgw8cRTXYXTZpBNWp44OBpcwq
-         Y2FQ==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=Z1/OP11GlLnDRJmthsHNyWrCSy9RTalgs4TnhcvtaBc=;
+        b=zHelYglSfbiBOl/MHigaMxHtV03GXhA+25+cn5kBD96M5f5O9JyCJbv9+sXejH0pCi
+         fqM7FQKP7m+WvigjHYPLve7N4juBdMFFeSysL7jJO1Lwma5BeB0M/SQnJeO2YkfeK/7D
+         XI0UN9KJA492tgn2UlSyCkw0QALrGpUkj/fjrs7qZ90WdclZfR75AgT3BjdUd9RHqVdX
+         vgiphnRGqFFyaRXFOZqQgb10zg04eg4swldr4NPYDxeqljEvA3n9quZ6NfMDC1AUb2aq
+         NcqvvfDpMwJ6iVBQLNYr/RAHCjzIR2jS1wYo5Ai1nXKKELG5SohYsZWOeGn/Bbz6Xich
+         GvDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=//ahTCx3bhYNJd5yPM2nHuiCGNaCYjPsuZnXD1+4jjc=;
-        b=a/WsmB8n5vzvFLrZoNQmvRZJBRYJ/uZSeGTtvQbDiyn3zN4o7FNcHvY6J3afHwqbbK
-         bnr6kSeqg1eO9zAwXAUBSt9s4MeaqyBiXzGNp2T2jqAqaQ84AhsJPWYK1QnaTf9MT1+M
-         /saMMQr13PVV96XwV1/2NuxdvHf2IObEwV6GVIccZQqU/2yZ9YAY1uyiaVzTEa+64F5E
-         K8H9jbWXSHuVpy+sU+gPqB89L2bZJc7O9aXM8ZgKNwZDrCsj7xvja+WHsH9rKhl6IZnh
-         DBNvDM6sKucdfAHM8v3ybIiTKyo2KyG7e0gfkUCbeSTgKIiF8NDbe4hitBEvirnyQbaX
-         uezg==
-X-Gm-Message-State: ACgBeo2iZyVFwJ/12qrzHcS9bpjyX15CPGYwkKydnikLqBM8fH6EaSZ7
-        MeUDL6CpxPE2X61W0vYUV70eBQGq/t1qC+Tg
-X-Google-Smtp-Source: AA6agR528LJU3DYP6R8ldvcXBcBCtWMQW/nj6if1gifReTsaEeEhycVZH6QkWiQ3KrMUKYhYauWlOQ==
-X-Received: by 2002:a63:f40e:0:b0:434:e565:3304 with SMTP id g14-20020a63f40e000000b00434e5653304mr8670112pgi.111.1662663075020;
-        Thu, 08 Sep 2022 11:51:15 -0700 (PDT)
-Received: from skynet-linux.local ([2406:7400:61:ce83:3779:42da:b5f7:bc9e])
-        by smtp.googlemail.com with ESMTPSA id 21-20020a170902c11500b001714c36a6e7sm8746030pli.284.2022.09.08.11.51.10
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=Z1/OP11GlLnDRJmthsHNyWrCSy9RTalgs4TnhcvtaBc=;
+        b=JJNMbVAT4eHqoUxIhJxGbyVU4ErF5C8MvCiPjubG+4w3pemi1OhtkSHOecxueSmv0p
+         BJuAoN+3f+O/AOUTxXzSNf1ZcgIVZcjYAeYLCmH2HSB8+b6Rd3QojFHLdA+fGWsKl3iI
+         ILT6SuP/thYQ8DZFnYtTNCCuuNzUf+zUkYBUyvqBY/HhekHe/5KCWg6C4rdzk8phBoXN
+         JOECeGyxTlixqevZJ9Lbp4Agfzmnd2se0yfFuGIpbK2LW9vCebDb1o2VEvoHarCQbtho
+         VdLA1pc16UJRgVHg0+0T+vFXpiewcE0HPM7LyYGJaHQYIsNWOdFSONoYUYjc+s44w34l
+         XbHw==
+X-Gm-Message-State: ACgBeo1hD0RcefCWA52mVBSO01E/8MEh8skgfAXSwcpQ2Oy02LqGrjvf
+        p57SQmjsiiln98PZdotV6jMydURdFaCtTw==
+X-Google-Smtp-Source: AA6agR62sFNq9FTxx9BBA64L192b2EXkbzrVmWXyATTRHjXuI1MJeVCylURlf81YIejbW3g+/P/ryw==
+X-Received: by 2002:ac2:4c35:0:b0:497:ae09:11b with SMTP id u21-20020ac24c35000000b00497ae09011bmr1942257lfq.507.1662664245344;
+        Thu, 08 Sep 2022 12:10:45 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id v17-20020a2e4811000000b0026ad316375esm634904lja.38.2022.09.08.12.10.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Sep 2022 11:51:13 -0700 (PDT)
-From:   Sireesh Kodali <sireeshkodali1@gmail.com>
-To:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     bjorn.andersson@linaro.org,
-        Sireesh Kodali <sireeshkodali1@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 08 Sep 2022 12:10:44 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 4/4] dt-bindings: remoteproc: qcom: wcnss: Add compatible for pronto v3
-Date:   Fri,  9 Sep 2022 00:19:25 +0530
-Message-Id: <20220908184925.2714098-5-sireeshkodali1@gmail.com>
-X-Mailer: git-send-email 2.37.2
-In-Reply-To: <20220908184925.2714098-1-sireeshkodali1@gmail.com>
-References: <20220908184925.2714098-1-sireeshkodali1@gmail.com>
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH v2 0/4] clk: qcom: add SM8450 Display clock controller support
+Date:   Thu,  8 Sep 2022 22:10:40 +0300
+Message-Id: <20220908191044.3538823-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The pronto v3 remoteproc is similar to pronto v2. It is found on the
-MSM8953 platform, which is used by SDM450, SDM625, SDM626, APQ8053 and
-other SoCs. Since the configuration is same on all SoCs, a single
-compatible is used.
+Add support for the Display clock controller found on SM8450 platform.
 
-Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
----
- .../bindings/remoteproc/qcom,wcnss-pil.yaml     | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+Changes since v1:
+ - Rebased on top of 6.0-rc
+ - Dropped clk-names in favour of using parent indices (Bjorn)
+ - Added GCC_DISP_AHB_CLK to dispcc node (Bjorn)
+ - Changed bindings licence to dual GPL+BSD (Bjorn)
+ - Removed zero clocks in dt bindings
+ - Fixed syntax issues
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-index 5e4a97e9d330..becd9c611798 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-@@ -22,6 +22,7 @@ properties:
-           - enum:
-               - qcom,pronto-v1-pil
-               - qcom,pronto-v2-pil
-+              - qcom,pronto-v3-pil
-           - enum:
-               - qcom,pronto
-       - items:
-@@ -200,6 +201,22 @@ allOf:
-         - power-domains
-         - power-domain-names
- 
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,pronto-v3-pil
-+    then:
-+      properties:
-+        vddpx-supply: false
-+        vddmx-supply: false
-+        vddcx-supply: false
-+
-+      required:
-+        - power-domains
-+        - power-domain-names
-+
- examples:
-   - |
-     #include <dt-bindings/interrupt-controller/arm-gic.h>
+Dmitry Baryshkov (4):
+  dt-bindings: clock: qcom: add bindings for dispcc on SM8450
+  clk: qcom: alpha-pll: add support for power off mode for lucid evo PLL
+  clk: qcom: Add support for Display Clock Controller on SM8450
+  arm64: dts: qcom: sm8450: add display clock controller
+
+ .../bindings/clock/qcom,sm8450-dispcc.yaml    |   97 +
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          |   28 +
+ drivers/clk/qcom/Kconfig                      |    9 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/clk-alpha-pll.c              |   40 +-
+ drivers/clk/qcom/clk-alpha-pll.h              |    1 +
+ drivers/clk/qcom/dispcc-sm8450.c              | 1829 +++++++++++++++++
+ .../dt-bindings/clock/qcom,sm8450-dispcc.h    |  103 +
+ 8 files changed, 2105 insertions(+), 3 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8450-dispcc.yaml
+ create mode 100644 drivers/clk/qcom/dispcc-sm8450.c
+ create mode 100644 include/dt-bindings/clock/qcom,sm8450-dispcc.h
+
 -- 
-2.37.2
+2.35.1
 
