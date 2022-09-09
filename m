@@ -2,109 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36AD45B3F70
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 21:24:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 821735B402C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 21:51:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230280AbiIITYE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 15:24:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36332 "EHLO
+        id S230141AbiIITvK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 15:51:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230218AbiIITYC (ORCPT
+        with ESMTP id S229710AbiIITvJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 15:24:02 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C67E6144963
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 12:24:01 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id c198so2525915pfc.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 12:24:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=1YL3JOnJhxMrmebag05eoFsKq7z4k+Mtpi8WQ+HWkBA=;
-        b=PFWHM6FNgcGzrNw+awdzUIJDCQyBKEQEKSlevJNyzCOj8tF/Q+hkpQjcpOciNhux9x
-         A0OdJumurQVQi1hUylldetn/Dicm6OGl1cwgvO1EgKFkc6h2YtJrmqHz464PBtcjGDSd
-         eXfyW4aqpypuN4Ldeon/6uequtYfihPaPzsVa1X9WircOCblJlS7alBk/5SPufUiqWWG
-         EE9cRuQcpwjPvVozrW4ItoU1r+I9X/Y931Cq70WNq2wfK1a3Bx0nUxLlNqF5Q6ev919z
-         q6vRtgguuTUyeeCPp2Bc4HBx070AZE40+M4agC1mW+twJFYyWDiT4mgb2YCdTMRCYVh+
-         plwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=1YL3JOnJhxMrmebag05eoFsKq7z4k+Mtpi8WQ+HWkBA=;
-        b=WEi1LfQ0VpJCJXJSUruFRxcZpPW9iGfoMkiOR5GASF2+GaXAveIdbYAcxFnshirXnf
-         y0MskAMMAaFJfxAIh8UFeIo5ABDMvsLD8KyUFXDAKQiN2GCoq5DSBGsDWbb47h5Sv7yU
-         z/xkfDsvYyxIt4KNsT5ZQJNv8YWDKVB0/Z0DRfXSgIp64Pbgoxoaq/0UOb36BEU1VBc/
-         kbr4GVzofSSYSCg+54xrEhNs+ib1YdGoLoDNbyWgQATJmaeKhfPfbYqhrpLDJZXBLelO
-         vaSePxq8zhU/wv5UIwexG3enfClNA+Q+uXAKmurUtp65Dxjor3xgZAu1I2wEaibbqa1k
-         7YYA==
-X-Gm-Message-State: ACgBeo0aaIGlDbxSLxGtUIrwUE58Bh8d4KS9JAhJ1d9HMNMcDHOVMvkE
-        i1B5aN4x1S0oVoOVf+TDYORV2w==
-X-Google-Smtp-Source: AA6agR5GxFgslNSJSVhP7jovTdqKbGSdAnXUIpR+aTUm3kfP3svOkUQ9KU1U48DF+jRxLqyIW2628g==
-X-Received: by 2002:a63:5526:0:b0:434:c99c:6fdc with SMTP id j38-20020a635526000000b00434c99c6fdcmr13521836pgb.558.1662751441109;
-        Fri, 09 Sep 2022 12:24:01 -0700 (PDT)
-Received: from p14s (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
-        by smtp.gmail.com with ESMTPSA id z8-20020a170903018800b001768452d4d7sm887925plg.14.2022.09.09.12.23.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Sep 2022 12:23:59 -0700 (PDT)
-Date:   Fri, 9 Sep 2022 13:23:57 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Maria Yu <quic_aiquny@quicinc.com>
-Cc:     bjorn.andersson@linaro.org, linux-remoteproc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_clew@quicinc.com
-Subject: Re: [PATCH v1] remoteproc: core: do pm relax when not first crash
-Message-ID: <20220909192357.GA319190@p14s>
-References: <1662712413-38233-1-git-send-email-quic_aiquny@quicinc.com>
+        Fri, 9 Sep 2022 15:51:09 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80FD12E6B9;
+        Fri,  9 Sep 2022 12:51:08 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 289IJ1NY018025;
+        Fri, 9 Sep 2022 19:40:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=wHW1vNz16ltIDMS+8hT4yCgVJQqCNH1NVloPPsitZoE=;
+ b=D0ZOzjw6MsK0FF4bC4oAi2TFPsNcj/9Cv01k0ryLfkE34BJaAC9qtWoQRdJzs56JH4yG
+ FcWCjtJFHA6LMWhhWdKlGtrkTnuNvWxX5SERreZxM+RP7CAUMu8U1VDUj2QFNSQK9YYs
+ 6L+PHxMLGa8dkzmIhwbkSq0aP8MMHjqANoTNhvYrZQhmxZl3Es0A0nBgbX+93qpaKfCC
+ MQYKMe+TLA5vQLzRkzZ8NaEszScAm08ki7NU2x9qA6nzj+c0eXk6oG7Whoq/DYw812Nv
+ OhH/SgGv58+oPvUxWGBISuwNhR1sODozS3purx7y70eOQQ8ibireAhR5BxyeDftC6+SB ig== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jfujq42ne-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 09 Sep 2022 19:40:16 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 289JeFb1019667
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 9 Sep 2022 19:40:15 GMT
+Received: from hu-amelende-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Fri, 9 Sep 2022 12:40:14 -0700
+From:   Anjelique Melendez <quic_amelende@quicinc.com>
+To:     <corbet@lwn.net>, <sre@kernel.org>, <robh+dt@kernel.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <quic_collinsd@quicinc.com>
+CC:     <krzysztof.kozlowski+dt@linaro.org>, <vkoul@kernel.org>,
+        <linux-doc@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Anjelique Melendez <quic_amelende@quicinc.com>
+Subject: [PATCH v5 0/2] add support for PON GEN3 device
+Date:   Fri, 9 Sep 2022 12:39:16 -0700
+Message-ID: <20220909193915.20057-1-quic_amelende@quicinc.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1662712413-38233-1-git-send-email-quic_aiquny@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Lt0PEa-5rPL6KHM2R1y1Ic2evwV-iM0u
+X-Proofpoint-GUID: Lt0PEa-5rPL6KHM2R1y1Ic2evwV-iM0u
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-09_09,2022-09-09_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1011
+ priorityscore=1501 lowpriorityscore=0 malwarescore=0 impostorscore=0
+ suspectscore=0 mlxlogscore=999 adultscore=0 spamscore=0 phishscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2209090069
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Maria,
+Changes from v4:
+  - Updated commit message for patch 1/2
 
-On Fri, Sep 09, 2022 at 04:33:33PM +0800, Maria Yu wrote:
-> Even if it is not first crash, need to relax the pm
-> wakelock otherwise the device will stay awake.
-> 
+Changes from v3:
+  - Addressed Krysztof's comments on patch 1/2
+    - Added missing minItems/maxItems
+    - Merged if statments with same constraints together
+    - Removed description from "reg-names"
+    
+Changes from v2:
+  - Added new "qcom,pmk8350-pon" compatible string as per Krysztof's
+    advice
+  - Updated dt logic to use comptaible strings to decide constraints
+    as per Krysztof's comment
+  - Added new patch (v3 2/2) to support new compatible string
 
-The goal is exactly to keep the device awake... 
+Changes from v1:
+  - Updated path which was missing Documentation/devicetree prefix
+  - Updated CC list
 
-> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
-> ---
->  drivers/remoteproc/remoteproc_core.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-> index e5279ed9a8d7..30078043e939 100644
-> --- a/drivers/remoteproc/remoteproc_core.c
-> +++ b/drivers/remoteproc/remoteproc_core.c
-> @@ -1956,6 +1956,7 @@ static void rproc_crash_handler_work(struct work_struct *work)
->  	if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE) {
->  		/* handle only the first crash detected */
->  		mutex_unlock(&rproc->lock);
-> +		pm_relax(rproc->dev.parent);
+New patch series to separate this patch from applied patches.
+Comments from original patch can be found
+https://lore.kernel.org/linux-arm-msm/27515993-18f3-8891-4835-9b6a8d7f86b0@quicinc.com/
 
-If we are here it means that rproc_crash_handler_work() has already been called
-_and_ that a recovery is in process.  When the first crash handler completes
-pm_relax() will be called and the device will go to sleep as expected.
+David Collins (1):
+  dt-bindings: power: reset: qcom-pon: Add new compatible
+    "qcom,pmk8350-pon"
 
-Thanks,
-Mathieu
+Anjelique Melendez (1):
+  power: reset: qcom-pon: add support for qcom,pmk8350-pon compatible string
 
->  		return;
->  	}
->  
-> -- 
-> 2.7.4
-> 
+ Documentation/devicetree/bindings/power/reset/qcom,pon.yaml | 50 +++++++++++++++++++++++++++---
+ drivers/power/reset/qcom-pon.c | 1 +
+ 2 file changed, 47 insertions(+), 4 deletions(-)
+-- 
+2.35.1
+
