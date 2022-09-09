@@ -2,141 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B356B5B31BD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 10:32:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38AB95B31C9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 10:33:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230142AbiIIIc2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 04:32:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36696 "EHLO
+        id S231494AbiIIIdw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 04:33:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230504AbiIIIc2 (ORCPT
+        with ESMTP id S231393AbiIIIdv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 04:32:28 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 839BA129C4B
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 01:32:26 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id y29so958823ljq.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 01:32:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=Dt/NonODblXlWQZIMmh1TH9Id6Q2KvLS2tY6Rp9x0GE=;
-        b=LK4ujKxMCcjrLILoyOq47tOhxHDFHBZJr36EmIG+DL7wfnOuez6UZpUub2DUzmpg8m
-         FjHIV2sFUEYAlQ7VZR06DLTacKmluOBeKpMaLpTYMKEy0xvviYoD4PIpIiLLmUMx9p1V
-         nXoNlnT0TPTvasr+2RnFNcZEnZF1lSIX/xb7PvEBvyM4Hmhggh0V59I/iQoPVXyk85CG
-         JQYe9ZolOTQlu9WNzqOd9SOJ5g+G5gzSp0FjWKqqBuKa8ZwzQDoSL3bDc4qVGRc5K+iW
-         JSkqxSxKg/A3VEClnK+mUmQOOGMH9ndOU69dWAfvGNfBLHNOyy0/EP7X3wC2izmSTrzT
-         RkFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=Dt/NonODblXlWQZIMmh1TH9Id6Q2KvLS2tY6Rp9x0GE=;
-        b=S2GzE8B8mdfG8/ynkI8g6sVuaJAWSzxEsa3QYBiLJZFfuT0u9/ulXsTLSUeP87SB6s
-         i4nX3Z0c0RgVgJfqmuYW2FkQiN/8aM3WJ2ce0k+P+dAHZGQyFHF5eYeEf1A+2Sa9BpGA
-         onDJQQCp9ysllTJ5iKaOzMnSuIheT3eZpp94Ok2GDaDrIMgNBhnxXY/3R5aprZ4txibF
-         nEBT7O1/+of74iQ4MXScX5ozj/rBkKx/HTnIT/DHIWQpFtrddNQTU++ycQptoWGlicnf
-         oL6Zvem4NHUbwEu8K9ZDGhtAxrGEzix8qAvrZHhdNybctijpJ+eWrq1BHmCDaxO0rItV
-         rYrg==
-X-Gm-Message-State: ACgBeo3rx7I+K2jkkoD6hzhfltlxBQeb/GsWiy9fObSJ9DWVECXTWbuH
-        9RUz1FOsj0+YxYEaTTElvUpp3A==
-X-Google-Smtp-Source: AA6agR4U5Ig5/kxVx3nY+DEyWJwNAL6wK5OfZHtNrtSiZqTbnHfa42gGKBTceXg6es7hDAr3AFPx1g==
-X-Received: by 2002:a2e:9e50:0:b0:261:e3fd:cdc5 with SMTP id g16-20020a2e9e50000000b00261e3fdcdc5mr3594611ljk.56.1662712344803;
-        Fri, 09 Sep 2022 01:32:24 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id b6-20020a05651c032600b0026acf2ae007sm192764ljp.89.2022.09.09.01.32.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Sep 2022 01:32:24 -0700 (PDT)
-Message-ID: <f8ff6cf5-8ec9-b3f3-bae9-e2690e810f6a@linaro.org>
-Date:   Fri, 9 Sep 2022 10:32:23 +0200
+        Fri, 9 Sep 2022 04:33:51 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D75B99836C;
+        Fri,  9 Sep 2022 01:33:50 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2897ow7G010173;
+        Fri, 9 Sep 2022 08:33:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=8jf/QpqBJviZyXzPRaKBkzbC7KaC8oXf6EYMyMbZqxE=;
+ b=HJX+PXl5RdPG9zDCy/f3VbI0/plsCv3MN8nKIBvzNBul5awSZ1DiuenljgQjGqPpZKPt
+ OzNvCCI5HovVx4RjiqLBhax2bi7v8Ybz7saQYMb860IvAVVdVtNvcNTfrYCLLwqM1NvV
+ S82/iSrMgz3mMjO2L8ULczzBWThhX+SXnS1N87WJqboAysu6fje2P3GJygqI/1DOpDFo
+ nrCBDcbQPJqOnSDsYjb14aLrhnn/L5zWbf9ywIPOPBBAxYSZvcbKrdt/6xlkxFxTNAk5
+ BDy/FMhLre+Q9/LOt+E8EgAyELpUEz9eqNtBOnarX4zEszXRCZZlobrMBBKJm1cI8TuN Sw== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jfdc74260-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 09 Sep 2022 08:33:49 +0000
+Received: from nasanex01a.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 2898XmJQ015379
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 9 Sep 2022 08:33:48 GMT
+Received: from ecbld-sh026-lnx.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Fri, 9 Sep 2022 01:33:46 -0700
+From:   Maria Yu <quic_aiquny@quicinc.com>
+To:     <bjorn.andersson@linaro.org>, <mathieu.poirier@linaro.org>
+CC:     Maria Yu <quic_aiquny@quicinc.com>,
+        <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_clew@quicinc.com>
+Subject: [PATCH v1] remoteproc: core: do pm relax when not first crash
+Date:   Fri, 9 Sep 2022 16:33:33 +0800
+Message-ID: <1662712413-38233-1-git-send-email-quic_aiquny@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: msm8953: add MDSS
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Luca Weiss <luca@z3ntu.xyz>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220906183334.203787-1-luca@z3ntu.xyz>
- <20220906183334.203787-4-luca@z3ntu.xyz>
- <CAA8EJpqjnafKyUrd1ntYFeGTDtRxgEUSu0Mg9wNGxObJ3wF0Kw@mail.gmail.com>
- <12049260.O9o76ZdvQC@g550jk>
- <ab80670a-267a-45d8-92d0-750e7dce5682@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <ab80670a-267a-45d8-92d0-750e7dce5682@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 4_1pdN4IQ5tBXZuxpRFRv6cWUxblEB7y
+X-Proofpoint-ORIG-GUID: 4_1pdN4IQ5tBXZuxpRFRv6cWUxblEB7y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-09_04,2022-09-09_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ priorityscore=1501 lowpriorityscore=0 suspectscore=0 mlxlogscore=999
+ spamscore=0 phishscore=0 clxscore=1015 adultscore=0 bulkscore=0
+ impostorscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2209090028
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/09/2022 18:13, Dmitry Baryshkov wrote:
->>>>
->>>> +               mdss: mdss@1a00000 {
->>>> +                       compatible = "qcom,mdss";
->>>> +
->>>> +                       reg = <0x1a00000 0x1000>,
->>>> +                             <0x1ab0000 0x1040>;
->>>> +                       reg-names = "mdss_phys",
->>>> +                                   "vbif_phys";
->>>> +
->>>> +                       power-domains = <&gcc MDSS_GDSC>;
->>>> +                       interrupts = <GIC_SPI 72 IRQ_TYPE_LEVEL_HIGH>;
->>>> +
->>>> +                       interrupt-controller;
->>>> +                       #interrupt-cells = <1>;
->>>> +
->>>> +                       clocks = <&gcc GCC_MDSS_AHB_CLK>,
->>>> +                                <&gcc GCC_MDSS_AXI_CLK>,
->>>> +                                <&gcc GCC_MDSS_VSYNC_CLK>,
->>>> +                                <&gcc GCC_MDSS_MDP_CLK>;
->>>> +                       clock-names = "iface",
->>>> +                                     "bus",
->>>> +                                     "vsync",
->>>> +                                     "core";
->>>> +
->>>> +                       #address-cells = <1>;
->>>> +                       #size-cells = <1>;
->>>> +                       ranges;
->>>> +
->>>> +                       status = "disabled";
->>>> +
->>>> +                       mdp: mdp@1a01000 {
->>>> +                               compatible = "qcom,mdp5";
->>>
->>> Could you please change this to "qcom,msm8953-mdp5", "qcom,mdp5".
->>
->> This would be the first dtsi using the two compatibles then, correct? Are there
->> any plans to adjust other SoCs?
-> 
-> Yes, this is a long-going plan. Having just "qcom,mdp5" doesn't allow 
-> switching between mdp5 and dpu1 drivers. Thus I'd ask to add per-SoC 
-> compat strings.
-> 
-> It's up to you (and Rob/Krzysztof) whether to leave just one compat 
-> string or have both of them: a per-soc one and a generic one.
+Even if it is not first crash, need to relax the pm
+wakelock otherwise the device will stay awake.
 
-If device can bind to generic fallback ("qcom,mdp5") and still work
-somehow, then the fallback is OK. However if generic "qcom,mdp5" does
-not work at all, let's just choose something which is matching current
-patterns.
+Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
+---
+ drivers/remoteproc/remoteproc_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Best regards,
-Krzysztof
+diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+index e5279ed9a8d7..30078043e939 100644
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -1956,6 +1956,7 @@ static void rproc_crash_handler_work(struct work_struct *work)
+ 	if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE) {
+ 		/* handle only the first crash detected */
+ 		mutex_unlock(&rproc->lock);
++		pm_relax(rproc->dev.parent);
+ 		return;
+ 	}
+ 
+-- 
+2.7.4
+
