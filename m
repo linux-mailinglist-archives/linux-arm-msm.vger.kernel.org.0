@@ -2,70 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0495F5B35AA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 12:52:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6AC45B3649
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 13:26:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229940AbiIIKvu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 06:51:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57612 "EHLO
+        id S230199AbiIILZm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 07:25:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230094AbiIIKvp (ORCPT
+        with ESMTP id S230134AbiIILZl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 06:51:45 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDCEED0237
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 03:51:42 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id w8so1979306lft.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 03:51:42 -0700 (PDT)
+        Fri, 9 Sep 2022 07:25:41 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E9A6F56C9
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 04:25:38 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id bx38so1420160ljb.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 04:25:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=5hRjVhtmA/1LGQ0J4v1L+rPfsNLzeir0jildbKGOmB8=;
-        b=feGsyXDEga227yZTGak08wrLIRhLQAOgESWyvVXpDWhPlSjHYfu8FoDuSpk1AjW41e
-         Lac9KmD5U+ysr4wZdMCWQ4JMmn3ZzB8Bpp7qKLtQSxzT71Wb/3YWSZ4N/TrLYequWDAs
-         ciMHx3LRIz1mVtZyzptCg9NwvJsXK5WlRDhL1Y4rHl7Jyc481922d2guzFufkDLyGdtt
-         3U82vtp5vToXTCPbaxte/p1K3QylKqXKyJy4fQwBrU84gC/4YP/dKCVHJUantEHuZw3y
-         tphuMrI6QLFHJZtS1yElJpptKL+gD/YfQLDRx0HHYOHR4hxwWwvGHXh/LqlT2TnVY+nj
-         osWg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=GeuxYakK9Jxo4XzlUulPeGlv4dypsXJd6AyF0HZjyCU=;
+        b=XR+svUy8wJX+E1XngVFtHZ7lCkOTAjvHGnfmSztRAeMWwd2eDy62FB2cOsAI3mcLQ9
+         YCJBAx70Wtt6rCWbqlUnDIYoccsgPlOjpZnALcAbGuazhdrwDw/vQ4v4+8HjDaf0poyz
+         OAud1Ao1xVL9N7o14/PBy2sg8IqqoelVH7TcL6XrBXCc7zoFzJUi+Wy6C7gY+1Q6Wp23
+         6f5oYQL+jT7Bb219lfMzvVi+FXxZuAalmb+cN8ez0WJNXfHQYAby2pDuTiSiywgbtaMX
+         EsFfUrJrtI5zNTypps1qIULcknT3pKxhJTzsfp2WfdbhB6N8mPWMsoFYHkzV/oMdFhT0
+         7MIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=5hRjVhtmA/1LGQ0J4v1L+rPfsNLzeir0jildbKGOmB8=;
-        b=2NU3kbiBRkQ2iCicZZnzlXx2QBxHrqw6jGapBKh9qvCRK808J0nuGrIB2OvPPZRzDe
-         szu+/hK7w9LiA0e3PrZz4W99zoCAJnYT+y4sxs4JGclTjDNxFEmEmh8VHn3IlSgz/o0S
-         QxGw4GaHXg2nLriqVhBnIqsOldifX+Gjt7lM8t4cV+pKLISsEH2quxgQy+eIsSxWmkNh
-         B6fWPZgzqvnPFFbBqTNwPNZOf5iScGVb8huOiZeSnaV1cdv304MpPeiuHRIjOad5+jNh
-         Kj+KecBuazIFau46yQjb+AgmpSOkXffv1cY+LBwD4xa7Qh1P0Eskpg+KRB3hllRBrr6F
-         Uqiw==
-X-Gm-Message-State: ACgBeo39NDl8wOLXWNYDqwJsF0k98R1WNGzhjZa7kXHkwV54wDRGNHrK
-        KhEb3nilgj4/sxBwnuJYZWugNg==
-X-Google-Smtp-Source: AA6agR6DxmOyspd/lZfs/9PqO2TzdxA6lPpV4O1XJPFo2mrnZsJuocF4vdxpGEymMqY07VWcSeezIA==
-X-Received: by 2002:ac2:5602:0:b0:497:adb7:1270 with SMTP id v2-20020ac25602000000b00497adb71270mr3254670lfd.353.1662720700753;
-        Fri, 09 Sep 2022 03:51:40 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id u4-20020a05651220c400b004949903efdcsm25428lfr.287.2022.09.09.03.51.40
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=GeuxYakK9Jxo4XzlUulPeGlv4dypsXJd6AyF0HZjyCU=;
+        b=MZPcJK1HuIrshh34HaC/xFPyoUJlCmWhR3c544zx448+MMQUecEI7gJnZL4zBaw11A
+         FFB+bH/PcuHFnwQbem11Q6qwWFzZvQYYEWK73Lh0jeCfIbA8tBirmxB1rHeX3JGwql46
+         sLKyXOog9u3aLBEQDG99Ri/Nvqsg69UIJ6GjIHhucqAsaURoEVbliNsJqHhsT3TaPqcr
+         Jehu+iP+jx6EZ2n3tzlOGqz2xXFA8leaUa5JCX/a4tZuCQOBBeo83uPfOc8+UWZkXdUq
+         vNC3opvfXXENom/CmaCt/AF0eLadYF0syi7/hCPnc00zHxldluMdEPAUlfpRh1vMXGlg
+         R4Gw==
+X-Gm-Message-State: ACgBeo1lY6HKCavxL9Q2SjjyPwpfyOgoRgKAZiFrCA0o2sioIkrPdXdw
+        MgnHLBdYSxM7cTs2MtJsAzp/tA==
+X-Google-Smtp-Source: AA6agR7tTlNHrdb1qgr7wZSpLphy8PI1ZK4l+a+w9yoVNjzi4BNIm2+yHbBLoLx5Pjfa6X6ELMXkmw==
+X-Received: by 2002:a05:651c:210d:b0:266:26b8:31ba with SMTP id a13-20020a05651c210d00b0026626b831bamr3633883ljq.149.1662722736394;
+        Fri, 09 Sep 2022 04:25:36 -0700 (PDT)
+Received: from fedora.ideon.se ([85.235.10.227])
+        by smtp.gmail.com with ESMTPSA id x23-20020ac24897000000b004946aef1814sm45469lfc.137.2022.09.09.04.25.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Sep 2022 03:51:40 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Fri, 09 Sep 2022 04:25:36 -0700 (PDT)
+From:   Linus Walleij <linus.walleij@linaro.org>
+To:     Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>
+Cc:     linux-kernel@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        stable@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH v2 5/5] ARM: dts: qcom-msm8660: fix node names for fixed clocks
-Date:   Fri,  9 Sep 2022 13:51:36 +0300
-Message-Id: <20220909105136.3733919-6-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220909105136.3733919-1-dmitry.baryshkov@linaro.org>
-References: <20220909105136.3733919-1-dmitry.baryshkov@linaro.org>
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH] regulator: qcom_rpm: Fix circular deferral regression
+Date:   Fri,  9 Sep 2022 13:25:29 +0200
+Message-Id: <20220909112529.239143-1-linus.walleij@linaro.org>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -78,49 +73,95 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix node names for three fixed clocks to follow the
-no-underscores-in-name rule. To remain compatible with the drivers
-expecting to find the old clock names, add clock-output-names
-properties.
+On recent kernels, the PM8058 L16 (or any other PM8058 LDO-regulator)
+does not come up if they are supplied by an SMPS-regulator. This
+is not very strange since the regulators are registered in a long
+array and the L-regulators are registered before the S-regulators,
+and if an L-regulator defers, it will never get around to registering
+the S-regulator that it needs.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+See arch/arm/boot/dts/qcom-apq8060-dragonboard.dts:
+
+pm8058-regulators {
+    (...)
+    vdd_l13_l16-supply = <&pm8058_s4>;
+    (...)
+
+Ooops.
+
+Fix this by moving the PM8058 S-regulators first in the array.
+
+Do the same for the PM8901 S-regulators (though this is currently
+not causing any problems with out device trees) so that the pattern
+of registration order is the same on all PMnnnn chips.
+
+Fixes: 087a1b5cdd55 ("regulator: qcom: Rework to single platform device")
+Cc: stable@vger.kernel.org
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc: linux-arm-msm@vger.kernel.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 ---
- arch/arm/boot/dts/qcom-msm8660.dtsi | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/regulator/qcom_rpm-regulator.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom-msm8660.dtsi b/arch/arm/boot/dts/qcom-msm8660.dtsi
-index 153156f48421..4f0a8ff2ab61 100644
---- a/arch/arm/boot/dts/qcom-msm8660.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8660.dtsi
-@@ -50,22 +50,25 @@ cpu-pmu {
- 	};
+diff --git a/drivers/regulator/qcom_rpm-regulator.c b/drivers/regulator/qcom_rpm-regulator.c
+index 7f9d66ac37ff..3c41b71a1f52 100644
+--- a/drivers/regulator/qcom_rpm-regulator.c
++++ b/drivers/regulator/qcom_rpm-regulator.c
+@@ -802,6 +802,12 @@ static const struct rpm_regulator_data rpm_pm8018_regulators[] = {
+ };
  
- 	clocks {
--		cxo_board: cxo_board {
-+		cxo_board: cxo-board-clk {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
- 			clock-frequency = <19200000>;
-+			clock-output-names = "cxo_board";
- 		};
+ static const struct rpm_regulator_data rpm_pm8058_regulators[] = {
++	{ "s0",   QCOM_RPM_PM8058_SMPS0,  &pm8058_smps, "vdd_s0" },
++	{ "s1",   QCOM_RPM_PM8058_SMPS1,  &pm8058_smps, "vdd_s1" },
++	{ "s2",   QCOM_RPM_PM8058_SMPS2,  &pm8058_smps, "vdd_s2" },
++	{ "s3",   QCOM_RPM_PM8058_SMPS3,  &pm8058_smps, "vdd_s3" },
++	{ "s4",   QCOM_RPM_PM8058_SMPS4,  &pm8058_smps, "vdd_s4" },
++
+ 	{ "l0",   QCOM_RPM_PM8058_LDO0,   &pm8058_nldo, "vdd_l0_l1_lvs"	},
+ 	{ "l1",   QCOM_RPM_PM8058_LDO1,   &pm8058_nldo, "vdd_l0_l1_lvs" },
+ 	{ "l2",   QCOM_RPM_PM8058_LDO2,   &pm8058_pldo, "vdd_l2_l11_l12" },
+@@ -829,12 +835,6 @@ static const struct rpm_regulator_data rpm_pm8058_regulators[] = {
+ 	{ "l24",  QCOM_RPM_PM8058_LDO24,  &pm8058_nldo, "vdd_l23_l24_l25" },
+ 	{ "l25",  QCOM_RPM_PM8058_LDO25,  &pm8058_nldo, "vdd_l23_l24_l25" },
  
--		pxo_board: pxo_board {
-+		pxo_board: pxo-board-clk {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
- 			clock-frequency = <27000000>;
-+			clock-output-names = "pxo_board";
- 		};
+-	{ "s0",   QCOM_RPM_PM8058_SMPS0,  &pm8058_smps, "vdd_s0" },
+-	{ "s1",   QCOM_RPM_PM8058_SMPS1,  &pm8058_smps, "vdd_s1" },
+-	{ "s2",   QCOM_RPM_PM8058_SMPS2,  &pm8058_smps, "vdd_s2" },
+-	{ "s3",   QCOM_RPM_PM8058_SMPS3,  &pm8058_smps, "vdd_s3" },
+-	{ "s4",   QCOM_RPM_PM8058_SMPS4,  &pm8058_smps, "vdd_s4" },
+-
+ 	{ "lvs0", QCOM_RPM_PM8058_LVS0, &pm8058_switch, "vdd_l0_l1_lvs" },
+ 	{ "lvs1", QCOM_RPM_PM8058_LVS1, &pm8058_switch, "vdd_l0_l1_lvs" },
  
--		sleep_clk {
-+		sleep-clk {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
- 			clock-frequency = <32768>;
-+			clock-output-names = "sleep_clk";
- 		};
- 	};
+@@ -843,6 +843,12 @@ static const struct rpm_regulator_data rpm_pm8058_regulators[] = {
+ };
  
+ static const struct rpm_regulator_data rpm_pm8901_regulators[] = {
++	{ "s0",   QCOM_RPM_PM8901_SMPS0, &pm8901_ftsmps, "vdd_s0" },
++	{ "s1",   QCOM_RPM_PM8901_SMPS1, &pm8901_ftsmps, "vdd_s1" },
++	{ "s2",   QCOM_RPM_PM8901_SMPS2, &pm8901_ftsmps, "vdd_s2" },
++	{ "s3",   QCOM_RPM_PM8901_SMPS3, &pm8901_ftsmps, "vdd_s3" },
++	{ "s4",   QCOM_RPM_PM8901_SMPS4, &pm8901_ftsmps, "vdd_s4" },
++
+ 	{ "l0",   QCOM_RPM_PM8901_LDO0, &pm8901_nldo, "vdd_l0" },
+ 	{ "l1",   QCOM_RPM_PM8901_LDO1, &pm8901_pldo, "vdd_l1" },
+ 	{ "l2",   QCOM_RPM_PM8901_LDO2, &pm8901_pldo, "vdd_l2" },
+@@ -851,12 +857,6 @@ static const struct rpm_regulator_data rpm_pm8901_regulators[] = {
+ 	{ "l5",   QCOM_RPM_PM8901_LDO5, &pm8901_pldo, "vdd_l5" },
+ 	{ "l6",   QCOM_RPM_PM8901_LDO6, &pm8901_pldo, "vdd_l6" },
+ 
+-	{ "s0",   QCOM_RPM_PM8901_SMPS0, &pm8901_ftsmps, "vdd_s0" },
+-	{ "s1",   QCOM_RPM_PM8901_SMPS1, &pm8901_ftsmps, "vdd_s1" },
+-	{ "s2",   QCOM_RPM_PM8901_SMPS2, &pm8901_ftsmps, "vdd_s2" },
+-	{ "s3",   QCOM_RPM_PM8901_SMPS3, &pm8901_ftsmps, "vdd_s3" },
+-	{ "s4",   QCOM_RPM_PM8901_SMPS4, &pm8901_ftsmps, "vdd_s4" },
+-
+ 	{ "lvs0", QCOM_RPM_PM8901_LVS0, &pm8901_switch, "lvs0_in" },
+ 	{ "lvs1", QCOM_RPM_PM8901_LVS1, &pm8901_switch, "lvs1_in" },
+ 	{ "lvs2", QCOM_RPM_PM8901_LVS2, &pm8901_switch, "lvs2_in" },
 -- 
-2.35.1
+2.37.3
 
