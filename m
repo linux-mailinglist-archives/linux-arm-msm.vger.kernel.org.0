@@ -2,395 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E2655B3DFA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 19:31:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5889D5B3E09
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 19:37:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230291AbiIIRb0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 13:31:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39174 "EHLO
+        id S230526AbiIIRhA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 13:37:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230098AbiIIRbZ (ORCPT
+        with ESMTP id S229892AbiIIRg6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 13:31:25 -0400
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07938E9039
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 10:31:23 -0700 (PDT)
-Received: by mail-il1-x12d.google.com with SMTP id k9so1147925ils.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 10:31:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=/eGKaEiCZjmPKanslXnnh3bHkTJzXk05/PwLm46dbac=;
-        b=J3BYQ2voGu2035nikaOERZPk2oYzwR5jLu0PzFbfb4H81EJGqng5ycF/gUXLR74lrG
-         o8UjQXNj8LpP+pXhAAMtn4wqdO5DfCoAu0rzgDku4TKkuRqsbXCr/jdGEK97AmBJs5un
-         s29OAS3EuCsKKcV1KJZsCYUiyZfOVHttJ+51s=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=/eGKaEiCZjmPKanslXnnh3bHkTJzXk05/PwLm46dbac=;
-        b=ZPcZ/YWwXIaK6cpzcEYY57+CF3L6rtxqP6zKottCXZoIc0rbq+7CiOB2tCPh+mBudN
-         flND5C5WFitecsUQhHWhjF3LdVk4a3BkvDwikt1Nu1H0x0QIk2EwT30bsDLaFP6+9kk6
-         /EJmOmrDrozpY1z9XnX0z/FRUmzdDZ6w4I39XtGmoWiSOcOHSTWhBYgffdRu6OHwps6P
-         R27WxFpHeImg11fTpGh4zAeeya/d0t64jG0OfUooBld/kiMM+49IPZ1S3BGpLslypVri
-         E7lCbfDsZ2YO2GIt9JApj5s+7zB3Uky73WkswUy18ZhsGg988H/38RTpQlvg8P5LDkrG
-         W2IA==
-X-Gm-Message-State: ACgBeo001hhBLgArywTDM4se/qCBSi7vUS7tv4eyfeuw+C6jxcsJrc/5
-        3NKfpMBRLhdtLLXasHs7Ydu4bA==
-X-Google-Smtp-Source: AA6agR7U3yApdA2FaHgvc2+dRTl09DrAsaQPpPZDvzDtWiHx9T7uWd5chKfHz5dV2sZIHl3nxOPX3w==
-X-Received: by 2002:a92:d5cf:0:b0:2e9:4cb4:57e4 with SMTP id d15-20020a92d5cf000000b002e94cb457e4mr4652825ilq.224.1662744682356;
-        Fri, 09 Sep 2022 10:31:22 -0700 (PDT)
-Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
-        by smtp.gmail.com with UTF8SMTPSA id f14-20020a926a0e000000b002eae2ef6924sm372166ilc.7.2022.09.09.10.31.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Sep 2022 10:31:20 -0700 (PDT)
-Date:   Fri, 9 Sep 2022 17:31:18 +0000
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
-        swboyd@chromium.org, dmitry.baryshkov@linaro.org,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>
-Subject: Re: [PATCH v6 1/5] PCI: qcom: Add system suspend and resume support
-Message-ID: <Yxt4Zv2ocKW1/Bf+@google.com>
-References: <1662713084-8106-1-git-send-email-quic_krichai@quicinc.com>
- <1662713084-8106-2-git-send-email-quic_krichai@quicinc.com>
+        Fri, 9 Sep 2022 13:36:58 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6039B135D7B;
+        Fri,  9 Sep 2022 10:36:57 -0700 (PDT)
+Received: from [192.168.2.145] (109-252-119-13.nat.spd-mgts.ru [109.252.119.13])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: dmitry.osipenko)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 0A45E6601FC6;
+        Fri,  9 Sep 2022 18:36:51 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1662745015;
+        bh=8xgN4e43LGiBPVdQ7GyKB5jQBCWxBspXnT50kSaZfdc=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=E1pvbfsh4mhx8kHsaeEx5+wdORPcsEFHoldFIWWyXseblN1dtO3m2LKuSoqgihlSa
+         mvxWcvwfAY63jSB7DnN7yOeJIhOmHYkexHRg9C30PT7fBMeLWfUKCiYOa08B86oCUs
+         ccnMOiQ/eemk3IQI6BMX/oXA+OGKrl0rBatDrO8+JSqXCkTd/fI+qJU/40kfFMc89g
+         t0gQ9aaRRLRYPyQEByTuKyml5hlPtBl1GC6RbbKtZL44FqTg2qeA3KCDga5aZ0jHda
+         scJFjauo2KMswJRJK5d6rTZTggJc5SFIdfQTgNU1j3sp7y+V1qH4Ha2hAFB1s341R4
+         qnfx/6JJNgQIg==
+Message-ID: <588ff12e-d030-0db0-e248-1afd0dee4ae1@collabora.com>
+Date:   Fri, 9 Sep 2022 20:36:48 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1662713084-8106-2-git-send-email-quic_krichai@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v4 06/21] drm/i915: Prepare to dynamic dma-buf locking
+ specification
+Content-Language: en-US
+To:     "Ruhl, Michael J" <michael.j.ruhl@intel.com>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        "Vivi, Rodrigo" <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        =?UTF-8?Q?Thomas_Hellstr=c3=b6m?= <thomas_os@shipmail.org>,
+        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        Chris Wilson <chris@chris-wilson.co.uk>
+Cc:     "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+        "linaro-mm-sig@lists.linaro.org" <linaro-mm-sig@lists.linaro.org>,
+        "amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>,
+        "intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>,
+        "kernel@collabora.com" <kernel@collabora.com>,
+        "virtualization@lists.linux-foundation.org" 
+        <virtualization@lists.linux-foundation.org>,
+        "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Gurchetan Singh <gurchetansingh@chromium.org>,
+        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Daniel Almeida <daniel.almeida@collabora.com>,
+        Gert Wollny <gert.wollny@collabora.com>,
+        Gustavo Padovan <gustavo.padovan@collabora.com>,
+        Daniel Stone <daniel@fooishbar.org>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Rob Clark <robdclark@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Qiang Yu <yuq825@gmail.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Jason Gunthorpe <jgg@ziepe.ca>,
+        Leon Romanovsky <leon@kernel.org>,
+        "Gross, Jurgen" <jgross@suse.com>,
+        Stefano Stabellini <sstabellini@kernel.org>,
+        Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>
+References: <20220831153757.97381-1-dmitry.osipenko@collabora.com>
+ <20220831153757.97381-7-dmitry.osipenko@collabora.com>
+ <DM5PR11MB1324088635FDE00B0D957816C17B9@DM5PR11MB1324.namprd11.prod.outlook.com>
+ <760b999f-b15d-102e-8bc7-c3e69f07f43f@gmail.com>
+ <c89680d0-30ee-f5d7-be68-fa84458df04d@gmail.com>
+ <DM5PR11MB1324EDC7A97DE98C2DC6EDA8C17A9@DM5PR11MB1324.namprd11.prod.outlook.com>
+From:   Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <DM5PR11MB1324EDC7A97DE98C2DC6EDA8C17A9@DM5PR11MB1324.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 09, 2022 at 02:14:40PM +0530, Krishna chaitanya chundru wrote:
-> Add suspend and resume syscore ops.
+On 9/2/22 19:26, Ruhl, Michael J wrote:
+>> 02.09.2022 13:31, Dmitry Osipenko пишет:
+>>> 01.09.2022 17:02, Ruhl, Michael J пишет:
+>>> ...
+>>>>> --- a/drivers/gpu/drm/i915/gem/i915_gem_object.c
+>>>>> +++ b/drivers/gpu/drm/i915/gem/i915_gem_object.c
+>>>>> @@ -331,7 +331,19 @@ static void __i915_gem_free_objects(struct
+>>>>> drm_i915_private *i915,
+>>>>> 			continue;
+>>>>> 		}
+>>>>>
+>>>>> +		/*
+>>>>> +		 * dma_buf_unmap_attachment() requires reservation to be
+>>>>> +		 * locked. The imported GEM shouldn't share reservation lock,
+>>>>> +		 * so it's safe to take the lock.
+>>>>> +		 */
+>>>>> +		if (obj->base.import_attach)
+>>>>> +			i915_gem_object_lock(obj, NULL);
+>>>>
+>>>> There is a lot of stuff going here.  Taking the lock may be premature...
+>>>>
+>>>>> 		__i915_gem_object_pages_fini(obj);
+>>>>
+>>>> The i915_gem_dmabuf.c:i915_gem_object_put_pages_dmabuf is where
+>>>> unmap_attachment is actually called, would it make more sense to make
+>>>> do the locking there?
+>>>
+>>> The __i915_gem_object_put_pages() is invoked with a held reservation
+>>> lock, while freeing object is a special time when we know that GEM is
+>>> unused.
+>>>
+>>> The __i915_gem_free_objects() was taking the lock two weeks ago until
+>>> the change made Chris Wilson [1] reached linux-next.
+>>>
+>>> [1]
+>>> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-
+>> next.git/commit/?id=2826d447fbd60e6a05e53d5f918bceb8c04e315c
+>>>
+>>> I don't think we can take the lock within
+>>> i915_gem_object_put_pages_dmabuf(), it may/should deadlock other code
+>> paths.
+>>
+>> On the other hand, we can check whether the GEM's refcount number is
+>> zero in i915_gem_object_put_pages_dmabuf() and then take the lock if
+>> it's zero.
+>>
+>> Also, seems it should be possible just to bail out from
+>> i915_gem_object_put_pages_dmabuf() if refcount=0. The further
+>> drm_prime_gem_destroy() will take care of unmapping. Perhaps this could
+>> be the best option, I'll give it a test.
 > 
-> When system suspends and if the link is in L1ss, disable the clocks
-> and power down the phy so that system enters into low power state to
-> save the maximum power. And when the system resumes, enable the clocks
-> back and power on phy if they are disabled in the suspend path.
+> i915_gem_object_put_pages() is uses the SG, and the usage for
+> drm_prim_gem_destroy()
 > 
-> we are doing this only when link is in l1ss but not in L2/L3 as
-> nowhere we are forcing link to L2/L3 by sending PME turn off.
+> from __i915_gem_free_objects() doesn't use the SG because it has been "freed"
+> already, I am not sure if that would work...
 > 
-> is_suspended flag indicates if the clocks are disabled in the suspend
-> path or not.
+> Hmm.. with that in mind, maybe moving the base.import_attach check to 
+> __i915_gem_object_put_pages with your attach check?
+
+I see you meant __i915_gem_object_pages_fini() here.
+
+> 	atomic_set(&obj->mm.pages_pin_count, 0);
+> 	if (obj->base.import)
+> 		i915_gem_object_lock(obj, NULL);
 > 
-> There is access to Ep PCIe space to mask MSI/MSIX after pm suspend ops
-> (getting hit by affinity changes while making CPUs offline during suspend,
-> this will happen after devices are suspended (all phases of suspend ops)).
-> When registered with pm ops there is a crash due to un-clocked access,
-> as in the pm suspend op clocks are disabled. So, registering with syscore
-> ops which will called after making CPUs offline.
-
-My knowledge of PCI is limited, but given the issues you are seeing which
-don't seem to impact other DWC drivers I wonder if keeping the link in
-l1ss is the right thing to do. The intel, tegra and imx6 drivers all turn
-the PME off, which IIUC results in the link to transition ot L2 or L3.
-Shouldn't the QC driver do the same?
-
-Some more comments inline, for if the current approach moves forward.
-
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> ---
-> changes since v5:
-> 	- Rebasing the code and replaced pm ops with syscore ops as
-> 	  we are getting acciess to pci region after pm ops. syscore ops
-> 	  will called after disabling non boot cpus and there is no pci
-> 	  access after that.
-> Changes since v4:
-> 	- Rebasing the code and removed the supports_system_suspend flag
-> 	- in the resume path as is_suspended will serve its purpose.
-> Changes since v3:
-> 	- Powering down the phy in suspend and powering it on resume to
-> 	  acheive maximum power savings.
-> Changes since v2:
-> 	- Replaced the enable, disable clks ops with suspend and resume
-> 	- Renamed support_pm_opsi flag  with supports_system_suspend.
-> Changes since v1:
-> 	- Fixed compilation errors.
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 140 ++++++++++++++++++++++++++++++++-
->  1 file changed, 139 insertions(+), 1 deletion(-)
+> 	__i915_gem_object_put_pages(obj);
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 39ca06f..6e04d0d 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -27,6 +27,7 @@
->  #include <linux/reset.h>
->  #include <linux/slab.h>
->  #include <linux/types.h>
-> +#include <linux/syscore_ops.h>
->  
->  #include "../../pci.h"
->  #include "pcie-designware.h"
-> @@ -44,6 +45,9 @@
->  #define PCIE20_PARF_PM_CTRL			0x20
->  #define REQ_NOT_ENTR_L1				BIT(5)
->  
-> +#define PCIE20_PARF_PM_STTS			0x24
-> +#define PCIE20_PARF_PM_STTS_LINKST_IN_L1SUB	BIT(8)
-> +
->  #define PCIE20_PARF_PHY_CTRL			0x40
->  #define PHY_CTRL_PHY_TX0_TERM_OFFSET_MASK	GENMASK(20, 16)
->  #define PHY_CTRL_PHY_TX0_TERM_OFFSET(x)		((x) << 16)
-> @@ -122,6 +126,8 @@
->  
->  #define QCOM_PCIE_CRC8_POLYNOMIAL (BIT(2) | BIT(1) | BIT(0))
->  
-> +static LIST_HEAD(qcom_pcie_list);
-> +
->  struct qcom_pcie_resources_2_1_0 {
->  	struct clk_bulk_data clks[QCOM_PCIE_2_1_0_MAX_CLOCKS];
->  	struct reset_control *pci_reset;
-> @@ -211,13 +217,21 @@ struct qcom_pcie_ops {
->  	void (*post_deinit)(struct qcom_pcie *pcie);
->  	void (*ltssm_enable)(struct qcom_pcie *pcie);
->  	int (*config_sid)(struct qcom_pcie *pcie);
-> +	int (*suspend)(struct qcom_pcie *pcie);
-> +	int (*resume)(struct qcom_pcie *pcie);
->  };
->  
->  struct qcom_pcie_cfg {
->  	const struct qcom_pcie_ops *ops;
-> +	/*
-> +	 * Flag ensures which devices will turn off clks, phy
-> +	 * in system suspend.
-> +	 */
-> +	unsigned int supports_system_suspend:1;
->  };
->  
->  struct qcom_pcie {
-> +	struct list_head list;	/* list to probed instances */
->  	struct dw_pcie *pci;
->  	void __iomem *parf;			/* DT parf */
->  	void __iomem *elbi;			/* DT elbi */
-> @@ -225,10 +239,14 @@ struct qcom_pcie {
->  	struct phy *phy;
->  	struct gpio_desc *reset;
->  	const struct qcom_pcie_cfg *cfg;
-> +	unsigned int is_suspended:1;
->  };
->  
->  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
->  
-> +static int __maybe_unused qcom_pcie_syscore_op_suspend(void);
-> +static void __maybe_unused qcom_pcie_syscore_op_resume(void);
-> +
->  static void qcom_ep_reset_assert(struct qcom_pcie *pcie)
->  {
->  	gpiod_set_value_cansleep(pcie->reset, 1);
-> @@ -1301,6 +1319,28 @@ static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
->  	regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
->  }
->  
-> +static int qcom_pcie_resume_2_7_0(struct qcom_pcie *pcie)
-> +{
-> +	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-> +	int ret;
-> +
-> +	ret = clk_bulk_prepare_enable(res->num_clks, res->clks);
-> +
-> +	phy_power_on(pcie->phy);
-> +
-> +	return ret;
-> +}
-> +
-> +static int qcom_pcie_suspend_2_7_0(struct qcom_pcie *pcie)
-> +{
-> +	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-> +
-> +	phy_power_off(pcie->phy);
-> +
-> +	clk_bulk_disable_unprepare(res->num_clks, res->clks);
-> +	return 0;
-> +}
-> +
->  static int qcom_pcie_get_resources_2_9_0(struct qcom_pcie *pcie)
->  {
->  	struct qcom_pcie_resources_2_9_0 *res = &pcie->res.v2_9_0;
-> @@ -1594,6 +1634,8 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
->  	.deinit = qcom_pcie_deinit_2_7_0,
->  	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
->  	.config_sid = qcom_pcie_config_sid_sm8250,
-> +	.suspend = qcom_pcie_suspend_2_7_0,
-> +	.resume = qcom_pcie_resume_2_7_0,
->  };
->  
->  /* Qcom IP rev.: 2.9.0  Synopsys IP rev.: 5.00a */
-> @@ -1613,6 +1655,11 @@ static const struct qcom_pcie_cfg cfg_1_9_0 = {
->  	.ops = &ops_1_9_0,
->  };
->  
-> +static const struct qcom_pcie_cfg sc7280_cfg = {
-> +	.ops = &ops_1_9_0,
-> +	.supports_system_suspend = true,
-> +};
-> +
->  static const struct qcom_pcie_cfg cfg_2_1_0 = {
->  	.ops = &ops_2_1_0,
->  };
-> @@ -1642,6 +1689,23 @@ static const struct dw_pcie_ops dw_pcie_ops = {
->  	.start_link = qcom_pcie_start_link,
->  };
->  
-> +/*
-> + * There is access to Ep PCIe space to mask MSI/MSIX after pm suspend
-> + * ops.(getting hit by affinity changes while making CPUs offline during
-> + * suspend, this will happen after devices are suspended
-> + * (all phases of suspend ops)).
-> + *
-> + * When registered with pm ops there is a crash due to un-clocked access,
-> + * as in the pm suspend op clocks are disabled.
-> + *
-> + * So, registering with syscore ops which will called after making
-> + * CPU's offline.
-> + */
-> +static struct syscore_ops qcom_pcie_syscore_ops = {
-> +	.suspend = qcom_pcie_syscore_op_suspend,
-> +	.resume = qcom_pcie_syscore_op_resume,
-> +};
-> +
->  static int qcom_pcie_probe(struct platform_device *pdev)
->  {
->  	struct device *dev = &pdev->dev;
-> @@ -1720,6 +1784,17 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  		goto err_phy_exit;
->  	}
->  
-> +	/* Register for syscore ops only when first instance probed */
-> +	if (list_empty(&qcom_pcie_list))
-> +		register_syscore_ops(&qcom_pcie_syscore_ops);
-> +
-> +	/*
-> +	 * Add the qcom_pcie list of each PCIe instance probed to
-> +	 * the global list so that we use it iterate through each PCIe
-> +	 * instance in the syscore ops.
-> +	 */
-> +	list_add_tail(&pcie->list, &qcom_pcie_list);
-> +
->  	return 0;
->  
->  err_phy_exit:
-> @@ -1731,6 +1806,69 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  	return ret;
->  }
->  
-> +static int __maybe_unused qcom_pcie_pm_suspend(struct qcom_pcie *pcie)
-> +{
-> +	u32 val;
-> +	struct dw_pcie *pci = pcie->pci;
-> +	struct device *dev = pci->dev;
-> +
-> +	if (!pcie->cfg->supports_system_suspend)
-> +		return 0;
-
-This check could be done in qcom_pcie_syscore_op_suspend()
-
-> +
-> +	/* if the link is not active turn off clocks */
-> +	if (!dw_pcie_link_up(pci)) {
-> +		dev_info(dev, "Link is not active\n");
-
-level info seems to verbose, it's not particularly interesting that the
-link is not active, except for debugging.
-
-> +		goto suspend;
-> +	}
-> +
-> +	/* if the link is not in l1ss don't turn off clocks */
-> +	val = readl(pcie->parf + PCIE20_PARF_PM_STTS);
-> +	if (!(val & PCIE20_PARF_PM_STTS_LINKST_IN_L1SUB)) {
-> +		dev_warn(dev, "Link is not in L1ss\n");
-> +		return 0;
-> +	}
-
-I think the following would be clearer:
-
-  	if (dw_pcie_link_up(pci)) {
-		/* if the link is not in l1ss don't turn off clocks */
-		val = readl(pcie->parf + PCIE20_PARF_PM_STTS);
-		if (!(val & PCIE20_PARF_PM_STTS_LINKST_IN_L1SUB)) {
-			dev_warn(dev, "Link is not in L1ss\n");
-			return 0;
-		}
-	} else {
-		dev_dbg(dev, "Link is not active\n");
-	}
-
-> +
-> +suspend:
-> +	if (pcie->cfg->ops->suspend)
-> +		pcie->cfg->ops->suspend(pcie);
-> +
-> +	pcie->is_suspended = true;
-> +
-> +	return 0;
-> +}
-> +
-> +static int __maybe_unused qcom_pcie_pm_resume(struct qcom_pcie *pcie)
-> +{
-> +	if (!pcie->is_suspended)
-> +		return 0;
-> +
-> +	if (pcie->cfg->ops->resume)
-> +		pcie->cfg->ops->resume(pcie);
-> +
-> +	pcie->is_suspended = false;
-> +
-> +	return 0;
-> +}
-> +
-> +static int __maybe_unused qcom_pcie_syscore_op_suspend(void)
-> +{
-> +	struct qcom_pcie *qcom_pcie;
-> +
-> +	list_for_each_entry(qcom_pcie, &qcom_pcie_list, list) {
-> +		qcom_pcie_pm_suspend(qcom_pcie);
-> +	}
-> +	return 0;
-> +}
-> +
-> +static void __maybe_unused qcom_pcie_syscore_op_resume(void)
-> +{
-> +	struct qcom_pcie *qcom_pcie;
-> +
-> +	list_for_each_entry(qcom_pcie, &qcom_pcie_list, list) {
-> +		qcom_pcie_pm_resume(qcom_pcie);
-> +	}
-> +}
-> +
->  static const struct of_device_id qcom_pcie_match[] = {
->  	{ .compatible = "qcom,pcie-apq8064", .data = &cfg_2_1_0 },
->  	{ .compatible = "qcom,pcie-apq8084", .data = &cfg_1_0_0 },
-> @@ -1742,7 +1880,7 @@ static const struct of_device_id qcom_pcie_match[] = {
->  	{ .compatible = "qcom,pcie-msm8996", .data = &cfg_2_3_2 },
->  	{ .compatible = "qcom,pcie-qcs404", .data = &cfg_2_4_0 },
->  	{ .compatible = "qcom,pcie-sa8540p", .data = &cfg_1_9_0 },
-> -	{ .compatible = "qcom,pcie-sc7280", .data = &cfg_1_9_0 },
-> +	{ .compatible = "qcom,pcie-sc7280", .data = &sc7280_cfg },
->  	{ .compatible = "qcom,pcie-sc8180x", .data = &cfg_1_9_0 },
->  	{ .compatible = "qcom,pcie-sc8280xp", .data = &cfg_1_9_0 },
->  	{ .compatible = "qcom,pcie-sdm845", .data = &cfg_2_7_0 },
-> -- 
-> 2.7.4
+> 	if (obj->base.import)
+> 		i915_gem_object_unlock(obj, NULL);
+> 	GEM_BUG_ON(i915_gem_object_has_pages(obj));
 > 
+> Pretty much one step up from the dmabuf interface, but we are guaranteed to
+> not have any pinned pages?
+
+Importer shouldn't hold pages outside of dma-buf API, otherwise it
+should be a bug.
+
+> The other caller of __i915_gem_object_pages_fini is the i915_ttm move_notify
+> which should not conflict (export side, not import side).
+> 
+> Since it appears that not locking during the clean up is desirable, trying to make sure take the lock
+> is taken at the last moment might be the right path?
+
+Reducing the scope of locking usually is preferred more. Yours
+suggestion works okay, I couldn't spot any problems at least for a
+non-TTM code paths.
+
+It's indeed a bit not nice that __i915_gem_object_pages_fini() is used
+by TTM, but should be safe for imported objects. Will be great if anyone
+from i915 maintainers could ack this variant.
+
+-- 
+Best regards,
+Dmitry
