@@ -2,132 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E87D75B3AA8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 16:27:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A6555B3AD9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 16:40:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230161AbiIIO1M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 10:27:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35172 "EHLO
+        id S231758AbiIIOj7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 10:39:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229989AbiIIO1L (ORCPT
+        with ESMTP id S232043AbiIIOj5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 10:27:11 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FBC8A6C5C
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 07:27:10 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id x10so2046356ljq.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 07:27:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=vS8NN1SUQ8F9Jl53WhEY2WMgjKxug+uunu0jICrTAKg=;
-        b=zIjjPPvlnmTPc5FDPSTG76Jj0rMCNlhgUXnpXbjwcXqBaxSlDUyCfJScNSYw1ZD3V7
-         woXRSwbu0kkmv3Skst2LiD8JVV062pJcqxDBj0Y+3x2EswdW4oBXIkM7oxV9NLpog0Mt
-         zecjn/zT53zPFk6WY/PZp9IlOUKULakNRWOPN8X7uABLIwWIQJJTx9S9eruSkT9iIJi+
-         ZOa2jG3Ij04wkNN7pg2x6LuaN9p/buix/KIsGDMZPS45KKkqbT8VQPjvywkIgzHmS1Ew
-         TUa8TqwAqxF3vkdB6WQJd/Z38/2NVmhVJGDyZK/9X1phGhHpWH25oLuWQ/rELwxeP4/F
-         xCWw==
+        Fri, 9 Sep 2022 10:39:57 -0400
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D639F2DAB9;
+        Fri,  9 Sep 2022 07:39:52 -0700 (PDT)
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-12803ac8113so4383119fac.8;
+        Fri, 09 Sep 2022 07:39:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=vS8NN1SUQ8F9Jl53WhEY2WMgjKxug+uunu0jICrTAKg=;
-        b=btBxoMn0natBrLFgO1gV1OPmzgNcGEuwhkKFKscRps0YMgkyMBFaJ0zaRC5Eab74g3
-         AGg5z0PE/HSwPSq4jSpAeoEZv1EKPOYO+m7wxdQ9gGwx+EiUAEHbJPqFpwDwOtou5Nbb
-         er3CzRt+qVW5HUr5LBhBbeKdxnD7XVq+B57xRetdTGzEi3WecqSgIS/jFosZC38y8UaS
-         nWfxguCPTb74Dc4+72xcewPXYmZJoT7QUBiOb6E8P4h+9Drz5utBxv3wYuo3X6sNUUKI
-         +GI9kVMn3CJ+Bs7gla5KDEDE+yOrhuPUytSYoqqWSGImnhdICWjv95zy1wRyDqDVyepY
-         HfDw==
-X-Gm-Message-State: ACgBeo1P0Muz4E4clCz7wLhzhVq8vQtGFDBtvktmMFrSSUdhLXgW9BVg
-        TS0+H8P04syLNvDWDuuGaYKaJQ==
-X-Google-Smtp-Source: AA6agR5SrbyuPO9DPBYrEoAYClWpli+q1NtHHUxrB83JUOSWw2oldd5yNGgndvxVOleE6MiDCp1K8A==
-X-Received: by 2002:a2e:1f01:0:b0:25f:ea3a:4ef0 with SMTP id f1-20020a2e1f01000000b0025fea3a4ef0mr3888377ljf.330.1662733628873;
-        Fri, 09 Sep 2022 07:27:08 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id t2-20020a2e9c42000000b0025e4ab170e0sm108849ljj.3.2022.09.09.07.27.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Sep 2022 07:27:08 -0700 (PDT)
-Message-ID: <d2fcb546-16b6-6a7a-9a42-e602421baa1e@linaro.org>
-Date:   Fri, 9 Sep 2022 17:27:07 +0300
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=ftf0UiBiLz6oFjDNarvElWVwFaQsvk8ZXx/a/CGTdUA=;
+        b=glcYjFQn/spcxFV3Xbqgd1TpuMc+lKgGTMDl/afa5uuSuN9Hqk3gsmqQ/a71Z+Zzin
+         vxsJXgeltKUv0GrQNHv+yS9IHGJHVAkKzscA+99dS32t25oaA5oN9S5lKTA8yMrnRcdX
+         S3qJHTgamA1onWuW/VWt58hnEwLyZ2z7mKuLIl/NpH6cbUB4Ni5Z56p39u0bJu0ZoW+Z
+         +WH0YTyxL1XQMyPRJpUNwGQhrCbAZYL/pe2B49iJBTSRoTsRsXUor9qF0nJAa2lESmr3
+         dBuJMPeu19jEYJCEyr1G4gKOz00fv2ieRH0vylSGv4QMuayTjyF05u7JJmtYuOdClunY
+         hvjA==
+X-Gm-Message-State: ACgBeo12AK38bKgxJ8W0Zy66aZGTo7J0Van8MAz9sMVJuVPzEO5RwUfD
+        9eGn6PWAL/0+b8BjUofqCg==
+X-Google-Smtp-Source: AA6agR5sH9jO7ewRPhu2gd//ThcK3OpubXNqMdFFa9cMj5yim/Bj6Us12fZJ2x/42Jw0BfKu1F4DjA==
+X-Received: by 2002:a05:6808:152a:b0:344:c8d1:27e1 with SMTP id u42-20020a056808152a00b00344c8d127e1mr3922484oiw.294.1662734391944;
+        Fri, 09 Sep 2022 07:39:51 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id 19-20020a9d0113000000b006391bdbb361sm340925otu.31.2022.09.09.07.39.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Sep 2022 07:39:51 -0700 (PDT)
+Received: (nullmailer pid 1025314 invoked by uid 1000);
+        Fri, 09 Sep 2022 14:39:50 -0000
+Date:   Fri, 9 Sep 2022 09:39:50 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v2] dt-bindings: qcom,pdc: convert to YAML
+Message-ID: <20220909143950.GA992904-robh@kernel.org>
+References: <20220103074348.6039-1-luca.weiss@fairphone.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.1.2
-Subject: Re: [PATCH 02/16] phy: qcom-qmp-combo: drop unused defines
-Content-Language: en-GB
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-References: <20220907110728.19092-1-johan+linaro@kernel.org>
- <20220907110728.19092-3-johan+linaro@kernel.org>
- <7370ba1d-472c-b036-4155-f86ca13f9824@linaro.org>
- <Yxs9rCf/JTL5BA1S@hovoldconsulting.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <Yxs9rCf/JTL5BA1S@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220103074348.6039-1-luca.weiss@fairphone.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/09/2022 16:20, Johan Hovold wrote:
-> On Fri, Sep 09, 2022 at 12:21:12PM +0300, Dmitry Baryshkov wrote:
->> On 07/09/2022 14:07, Johan Hovold wrote:
->>> Drop defines and enums that are unused since the QMP driver split.
->>>
->>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
->>> ---
->>>    drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 15 ---------------
->>>    1 file changed, 15 deletions(-)
->>>
->>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
->>> index 9ce2ab56be4c..838f7e328b55 100644
->>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
->>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
->>> @@ -28,16 +28,11 @@
->>>    #define SW_RESET				BIT(0)
->>>    /* QPHY_POWER_DOWN_CONTROL */
->>>    #define SW_PWRDN				BIT(0)
->>> -#define REFCLK_DRV_DSBL				BIT(1)
->>>    /* QPHY_START_CONTROL bits */
->>>    #define SERDES_START				BIT(0)
->>>    #define PCS_START				BIT(1)
->>> -#define PLL_READY_GATE_EN			BIT(3)
->>>    /* QPHY_PCS_STATUS bit */
->>>    #define PHYSTATUS				BIT(6)
->>> -#define PHYSTATUS_4_20				BIT(7)
->>> -/* QPHY_PCS_READY_STATUS & QPHY_COM_PCS_READY_STATUS bit */
->>> -#define PCS_READY				BIT(0)
->>
->> I think these defines, describing registers and bits, can go to the
->> common header instead.
+On Mon, Jan 03, 2022 at 08:43:48AM +0100, Luca Weiss wrote:
+> Convert the PDC interrupt controller bindings to YAML.
 > 
-> Adding those to a common header can be done later if needed at all (and
-> would include adding a proper prefix etc).
-
-Ack, let's sort them out later, if Vinod agrees with this.
-
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> ---
+> Changes since v1:
+> * Adjust description of second reg-name as suggested by Maulik Shah
 > 
->> For the rest of the patch:
->>
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> @Rob Herring: Hope it's ok to keep your R-b given the above changes
 > 
-> Johan
+> This patch depends on the following patch, which fixed sm8250 & sm8350
+> compatibles and adds sm6350.
+> https://lore.kernel.org/linux-arm-msm/20211213082614.22651-4-luca.weiss@fairphone.com/
+> 
+>  .../interrupt-controller/qcom,pdc.txt         | 77 -----------------
+>  .../interrupt-controller/qcom,pdc.yaml        | 86 +++++++++++++++++++
+>  2 files changed, 86 insertions(+), 77 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.txt
+>  create mode 100644 Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
 
--- 
-With best wishes
-Dmitry
+In checking top compatibles without schemas[1][2], I found this. Now 
+applied with sm8150 compatible which was the only change since this.
 
+Rob
+
+[1] https://gitlab.com/robherring/linux-dt/-/jobs/3005191129
+[2] https://gitlab.com/robherring/linux-dt/-/jobs/3005191129/artifacts/file/all-compatible-warnings.log
