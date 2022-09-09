@@ -2,73 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D52365B3469
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 11:50:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DDC45B34FE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 12:17:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231643AbiIIJsz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 05:48:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35182 "EHLO
+        id S230284AbiIIKQv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 06:16:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232026AbiIIJsx (ORCPT
+        with ESMTP id S230287AbiIIKQp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 05:48:53 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31C1B113C44
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 02:48:51 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id bs13so1165143ljb.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 02:48:51 -0700 (PDT)
+        Fri, 9 Sep 2022 06:16:45 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B59612D19A
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 03:16:43 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id l12so1238331ljg.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 03:16:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=WancZI8YP8VSBJAFL6bEJwq5YWTwAf+vMCt1jVIkDpI=;
-        b=c/DmfEX3Jnhh+mQTSH6JbH+SMCc4p+AoYmc3hYG/O7E55Ha0yMLz0LyHjH4BBA9h7P
-         YwSD50JRjdW2rpXjQVFTdSHT+OkvV8DUFPjZrmhMsjyzOpbL6H1XGyo5ookN1wEA7C/A
-         +iI6tKzRSuLL2mO5re+U9nkTNEq5tWIqmMJOfh06fW/yHtBbXTgLrgauEL4OIb+vt94Z
-         C3BheGp56c4OUqj6H2vGytcBKd/QaePsJHYGJllGCgUay3NAANXzJPQGOLsPphaKat39
-         utwY+/tHIOdD6F38N1H8k76MOvpNA4cqHJwzvEAnhX5j1wugGQKXoJ6meKM9lbfrjpNc
-         qnfw==
+        bh=0hHJbDJozeiOdflyzPme+RUJuaG9ou6Dad/+xNPiITI=;
+        b=B9WaXRC6b0pg9snfXwe0yY0B8pjF+5zrlbpTJEHG3Hb5Ctcxp2qKsv6hT4I8aUrlrA
+         Ub24plFv/JQoiMb/0+7Tqk566mLb3XpPu2rFnHuF8xezKgqKiWYqQa8w+P6Qbeh7OhAd
+         PpKY+soP4LDbhzzhAo+o7O+wq+FE23aYSjtLMqMkfy8IpBjD/wIDTFdP3e4GLH+GEFy3
+         u5dRSqKj/eUEEqFnJbLttFe10eqSkoFhG3vCkY1Glv4IcGhF6x/GAKOAlPtM52jTHJkD
+         raVuQi+Ue/FbN5sCk5tBIZlwUXKDzuJoqm1kSMy9j+UghooMEB4dHIgIGRliQ56/jDWF
+         ZKmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=WancZI8YP8VSBJAFL6bEJwq5YWTwAf+vMCt1jVIkDpI=;
-        b=ZAF8ae2YtXeTCVAwbtH17K9/wmFsp2BBLVgTk1vhAuddFlhiUebpJuzJEWaLbw28d1
-         +mV3dPnJ35U8dRDlKuLnAnff0h9KC7DGjlu0anpZn8SGFkEsJclEig7XVoR2cGNBsCPw
-         5CvABNi3KWymxUWiZgZT+EQqpT/W/yBe8x0L0M8K4g78B7/a0+/y2qWziKok9wEM6C1C
-         g166vRWp2+GAXWI0+YzPxqM2u2qEuNS25wppnDxCjzEZKi8V3fv5Rc69Hf/OjIWGeolW
-         nZmIpWfVnoKO3czVtpKRZC//0K3hbs6QI9A/A07h2btV3jwTlx57H/OSnu00c22H5O5j
-         B0LQ==
-X-Gm-Message-State: ACgBeo1UQF96cXzJC/SdCJzotupH4o2o2Nx5FiI5R1q7lobOPsu/tVrd
-        r0xMco8+VC7kiiaC66fmJoacUQ==
-X-Google-Smtp-Source: AA6agR5kHxbAlNJlHm7H2K0r9upPb4NqqNY6jgApbJ1GdX2iE/bsEdx4ndsCr2/DKqvXVTOk656snQ==
-X-Received: by 2002:a05:651c:1a1e:b0:25f:e7bd:6a4e with SMTP id by30-20020a05651c1a1e00b0025fe7bd6a4emr3995212ljb.362.1662716929326;
-        Fri, 09 Sep 2022 02:48:49 -0700 (PDT)
+        bh=0hHJbDJozeiOdflyzPme+RUJuaG9ou6Dad/+xNPiITI=;
+        b=veIoNB92Hr91faEy8feI7y4uyYKms07dV7m6OBX9iX/UUJykENtnFk23Q5V7tb4eP4
+         xYt3BWIOfBBF1dfLSjQxaBXlsB4TeeCZSpM0exbZ+RjCk2cD2OwXeIp6DLjnQj++pFRa
+         D2SDwzn/UexOGt5R1c+a+2zOVzCeJf4RPCo62hEbddMBTKYb8hhBsTH7vQARx7clMY2I
+         XyZppnnfvDfUKdxg3eLy2+a2dfvTWYCozea4qQEsu4H+LYBKnWMy6gWem3ue41cxZnOg
+         /unyKQco5apIY6T7VhT+Evops4IW+2aHIEgrDaDv5fboR0BhkRncfFhME6SgqHHCShEr
+         Aavg==
+X-Gm-Message-State: ACgBeo0n3io8ARCjbqamp2Aa/GTNIppncI8QZ6QvKwgDyJVteZDePJWd
+        wmBQqTO2sAGESvRYBa8iC4eW+g==
+X-Google-Smtp-Source: AA6agR5KrrFFOiQVW89EmX5vGuFt0DXTOis53C0E/66tuD+7a3B8NxZR221OVuzaSBYeNnZ2qqlzAA==
+X-Received: by 2002:a2e:a176:0:b0:26a:cb67:c392 with SMTP id u22-20020a2ea176000000b0026acb67c392mr4040350ljl.451.1662718601361;
+        Fri, 09 Sep 2022 03:16:41 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id p21-20020a2eb7d5000000b0026b96b8ecb6sm3814ljo.111.2022.09.09.02.48.48
+        by smtp.gmail.com with ESMTPSA id e9-20020a05651236c900b0048a7c162bbesm13459lfs.279.2022.09.09.03.16.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Sep 2022 02:48:49 -0700 (PDT)
-Message-ID: <03814cce-4b48-0570-7638-a84bd84c6f7a@linaro.org>
-Date:   Fri, 9 Sep 2022 12:48:48 +0300
+        Fri, 09 Sep 2022 03:16:40 -0700 (PDT)
+Message-ID: <a7bd2a82-4015-7899-47ed-da7a5ce6141c@linaro.org>
+Date:   Fri, 9 Sep 2022 13:16:40 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.1.2
-Subject: Re: [PATCH 16/16] phy: qcom-qmp-usb: shorten function prefixes
+Subject: Re: [PATCH 00/15] clk: qcom: use parent_hws/_data for APQ8064 clocks
 Content-Language: en-GB
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-References: <20220907110728.19092-1-johan+linaro@kernel.org>
- <20220907110728.19092-17-johan+linaro@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220907110728.19092-17-johan+linaro@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20220623120418.250589-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220623120418.250589-1-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,45 +81,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/09/2022 14:07, Johan Hovold wrote:
-> The driver function prefix has gotten unnecessarily long and hurts
-> readability.
+On 23/06/2022 15:04, Dmitry Baryshkov wrote:
+> This series converts the APQ8064/MSM8960 clock drivers, bindings and DTs
+> to use parent_hws/_data and excplicit clock binding in DT.
 > 
-> Shorten "qcom_qmp_phy_" to "qmp_" (which likely stands for "Qualcomm
-> Multi PHY" or similar anyway).
+> Dependencies: [1] (whole series), [2], [3]
 > 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c |   3 +-
->   drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 121 ++++++++++++------------
->   2 files changed, 60 insertions(+), 64 deletions(-)
+> [1] https://lore.kernel.org/linux-arm-msm/20220521151437.1489111-1-dmitry.baryshkov@linaro.org/
+> [2] https://lore.kernel.org/linux-arm-msm/20220617122922.769562-2-dmitry.baryshkov@linaro.org/
+> [3] https://lore.kernel.org/linux-arm-msm/20220617122922.769562-3-dmitry.baryshkov@linaro.org/
 > 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> index b020409b92e0..4d0eee620f37 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> @@ -1105,8 +1105,7 @@ static const struct phy_ops qcom_qmp_ufs_ops = {
->   	.owner		= THIS_MODULE,
->   };
->   
-> -static
-> -int qmp_ufs_create(struct device *dev, struct device_node *np, int id,
-> +static int qmp_ufs_create(struct device *dev, struct device_node *np, int id,
->   			void __iomem *serdes, const struct qmp_phy_cfg *cfg)
 
-This likely should go to the previous patch.
+Bjorn, Gracious ping for this patchset
 
-Otherwise:
+> Dmitry Baryshkov (15):
+>    dt-bindings: clocks: qcom,gcc-apq8064: define clocks/-names properties
+>    dt-bindings: clocks: qcom,mmcc: define clocks/clock-names for MSM8960
+>    clk: qcom: gcc-msm8960: use ARRAY_SIZE instead of specifying
+>      num_parents
+>    clk: qcom: gcc-msm8960: use parent_hws/_data instead of parent_names
+>    clk: qcom: lcc-msm8960: use macros to implement mi2s clocks
+>    clk: qcom: lcc-msm8960: use parent_hws/_data instead of parent_names
+>    clk: qcom: mmcc-msm8960: use ARRAY_SIZE instead of specifying
+>      num_parents
+>    clk: qcom: mmcc-msm8960: move clock parent tables down
+>    clk: qcom: mmcc-msm8960: use parent_hws/_data instead of parent_names
+>    ARM: dts: qcom: apq8064: add clocks to the LCC device node
+>    ARM: dts: qcom: msm8960: add clocks to the LCC device node
+>    ARM: dts: qcom: apq8064: add clocks to the GCC device node
+>    ARM: dts: qcom: msm8960: add clocks to the GCC device node
+>    ARM: dts: qcom: apq8064: add clocks to the MMCC device node
+>    ARM: dts: qcom: msm8960: add clocks to the MMCC device node
+> 
+>   .../bindings/clock/qcom,gcc-apq8064.yaml      |   9 +
+>   .../devicetree/bindings/clock/qcom,mmcc.yaml  |  31 ++
+>   arch/arm/boot/dts/qcom-apq8064.dtsi           |  35 ++
+>   arch/arm/boot/dts/qcom-msm8960.dtsi           |  39 +-
+>   drivers/clk/qcom/gcc-msm8960.c                | 436 ++++++++++-------
+>   drivers/clk/qcom/lcc-msm8960.c                | 211 +++-----
+>   drivers/clk/qcom/mmcc-msm8960.c               | 454 +++++++++++-------
+>   7 files changed, 713 insertions(+), 502 deletions(-)
+> 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-
->   {
->   	struct qcom_qmp *qmp = dev_get_drvdata(dev);
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-> index 08e0799e8832..41635c21e3ca 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
 -- 
 With best wishes
 Dmitry
