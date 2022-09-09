@@ -2,86 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DA3D5B3505
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 12:19:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 788755B3517
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 12:24:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230257AbiIIKS2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 06:18:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45652 "EHLO
+        id S230380AbiIIKVV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 06:21:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229943AbiIIKS0 (ORCPT
+        with ESMTP id S230320AbiIIKVS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 06:18:26 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B000129C6C
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 03:18:25 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id a8so1849938lff.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 03:18:25 -0700 (PDT)
+        Fri, 9 Sep 2022 06:21:18 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93412BC80F
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 03:21:14 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id i26so1872173lfp.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 03:21:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=/VudPBuUg8Yi2H0fyp4XXItQAWSGnhKI9+QIvSj4aPo=;
-        b=SjK8642m+kC7L50jtrJprb6TubEpjuGV5QEEpGgw68uKQnlmEOHp0TpvHh5bZpVNEr
-         rcO5WBcWwwONmzk1ETvAo+E7YImhsx7Kc3GR8qgDXM+MtXgUCFDVynI9eSqiNbAo5j5K
-         iUE5CPFt5lMkjgbRv0Ryjp2qqWKSWHtOxTy4o62eplLuFo6GDYn74kkFZEwS4kR/Y6XS
-         wH6la7j11eYaOK9DXmLzs0IVy5ooCLNv8uluaXu/Z74F3Fn4Ny2epqwSXSEOH42dtmT0
-         +6SgKOkTAo8m3FiBSLCprgCQ2pSDKXey2HUG1wx+EiwaeSk0jZvdfDSmWdF0z3YtYn8I
-         WLSw==
+        bh=zUB8uWjMZ9Kzi3Xhi5MGjyPEcHDT/J37v121kbTKAs0=;
+        b=NjvgFR7Ds/kojRmf+l9yslnoK1X+teEYx5BRECTod7HHiEnmQsk1CjuYpLKlrZRjuL
+         a5nQuqtii0QaN1WsKUVZojlJxZkgUT6WMkxzLoH3+JqbFVmq5lK+lNK8R9uHz7Lj0vjR
+         TAUUTvj25uIcLq9mjFB2ZqkzY2cujnMzjwroYFC1iJ7DAiNemJMT3MrWXNljoWOHh1Qk
+         MdofxSW/JdaoDuE7g/zHcfYvY13oMdhCZekAJBkR5tkRNBxpY+XpWHi096kzwsk6yyhf
+         ilM07HFRF5X2vRp6yTma4s2C70FfEr5rQXmxQe/lnKwwqFDQ1LH8iPMgvQ7TRs4UZcsc
+         6ugQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=/VudPBuUg8Yi2H0fyp4XXItQAWSGnhKI9+QIvSj4aPo=;
-        b=vz1rLE8J1m0YgFYdJAjQqKVmYDF9cUl1hpLt5taoDidTI2/d+ZX6nh+rAm7ZQtRGt8
-         OqKu7iidBvA7mBGLdQQEDQYT+EdlO7cozEKFy/xFW58DXHtLr2Go/vJWrGo4uwZKAeGw
-         +bJkwC3/+VmC5TMs9+88P10yoAMMyve+UhfhzklGXEkobnDhARVDwaBGE2uJPR6tZBwr
-         0ijjLNIxcPTJ9sS87fu69GeDYU1S8s9FQMTuBfsu8BDXpBzO3UBdxq4eJsGcBZKWxE6z
-         INuk6u9f6DgiHmoiZ0+bcHY2yX0jNY8tCDvPS6bNz15DqUNLQ3WLkdEsU/6mQdiYiX77
-         AmKg==
-X-Gm-Message-State: ACgBeo1jo0QpYfTRH60UshUt1GGO7w5+y2IDVoCdU3PbgZL4ANSYy1xP
-        18yVyIqy5P/067I2qQY/Hc0nBg==
-X-Google-Smtp-Source: AA6agR7TrZ2dYc7MCPiwqkYmLv9B4ObWokWYVKngs6cXjyE23B6nKRTFuKspSwXlWLoWmEatMQ/LOg==
-X-Received: by 2002:a05:6512:159a:b0:492:d0c8:aec1 with SMTP id bp26-20020a056512159a00b00492d0c8aec1mr4455606lfb.275.1662718703748;
-        Fri, 09 Sep 2022 03:18:23 -0700 (PDT)
+        bh=zUB8uWjMZ9Kzi3Xhi5MGjyPEcHDT/J37v121kbTKAs0=;
+        b=5tFy8CHUbuNkIJe/XrIYoya84kPRGAEmHCNGzBfga3oJkxhSYojOC5jI4uX3tn8ugb
+         OjC2SEGuTPjGygZuaIOtcw41VjiDsO8xJl9XI8fAFf4PIL1/dczMKwFLTm4SIBh9XWGh
+         l/5jtfhn0j7/m06XWR8zFJMH51TEtI5UqY9kFNwTdzcGu4WvRTAJGuvmDA/3mhdovPz7
+         O6sUKz0q/0oPiuD0X3PS//q+BfVq5NDyN24bqNryyij6xQZuHe1BsAu6bjvkeZBx4TR2
+         hahXTmbX70nlUwlSwcVQX4EdZ9s0a1Cg84j0kjIlYGAAls5QAQIpKp6BR57+njfB/oyV
+         o5cA==
+X-Gm-Message-State: ACgBeo2w2lWSTRKbT35kCOu4TWjAToFY4J/uE7wyalaDMErwR4NnQqKp
+        1vdxbiemVxfIJQing+/qj0W3oA==
+X-Google-Smtp-Source: AA6agR62K4FYaWudkHtGOyLDVc3PgvQAHrh3Xe4BqkRov8z1AWdsKLnFG8SiQfpdRWHIu1AHM8MI9Q==
+X-Received: by 2002:a05:6512:3194:b0:494:716d:34e2 with SMTP id i20-20020a056512319400b00494716d34e2mr3929339lfe.147.1662718872877;
+        Fri, 09 Sep 2022 03:21:12 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id h27-20020a2eb0fb000000b00261b9ccb18esm27383ljl.10.2022.09.09.03.18.23
+        by smtp.gmail.com with ESMTPSA id e14-20020ac2546e000000b00494a603953dsm26860lfn.89.2022.09.09.03.21.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Sep 2022 03:18:23 -0700 (PDT)
-Message-ID: <7f002ba4-1e1e-300d-062e-db93390b0461@linaro.org>
-Date:   Fri, 9 Sep 2022 13:18:22 +0300
+        Fri, 09 Sep 2022 03:21:12 -0700 (PDT)
+Message-ID: <5ed95787-ce10-94e0-eaec-9b7406d0d561@linaro.org>
+Date:   Fri, 9 Sep 2022 13:21:11 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.1.2
-Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: msm8996: add #clock-cells and XO
- clock to the HDMI PHY node
+Subject: Re: [PATCH 0/6] clk: qcom: msm8996-cpu: Cleanup and migrate to
+ parent_data
 Content-Language: en-GB
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Yassine Oudjana <yassine.oudjana@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>, linux-phy@lists.infradead.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20220704161148.814510-1-dmitry.baryshkov@linaro.org>
- <20220704161148.814510-4-dmitry.baryshkov@linaro.org>
- <6474b61e-69d8-dbcb-f638-7729ec3dee31@linaro.org>
-In-Reply-To: <6474b61e-69d8-dbcb-f638-7729ec3dee31@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220621160621.24415-1-y.oudjana@protonmail.com>
+ <Ys85+7rYjQOSPvD/@builder.lan>
+ <463723ee-f155-3bd9-7180-fb0271a19eb6@linaro.org>
+In-Reply-To: <463723ee-f155-3bd9-7180-fb0271a19eb6@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,44 +92,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/08/2022 17:25, Dmitry Baryshkov wrote:
-> On 04/07/2022 19:11, Dmitry Baryshkov wrote:
->> Add #clock-cells property to the HDMI PHY device node to let other nodes
->> resolve the hdmipll clock. While we are at it, also add the XO clock to
->> the device node.
+On 14/07/2022 13:06, Dmitry Baryshkov wrote:
+> On 14/07/2022 00:32, Bjorn Andersson wrote:
+>> On Tue 21 Jun 11:06 CDT 2022, Yassine Oudjana wrote:
 >>
->> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> Bjorn, I'm picking the patches 1,2 into msm-next. Could you please pick 
-> this patch into your dts-for-6.1?
-
-Again, gracious ping.
-
-> 
->> ---
->>   arch/arm64/boot/dts/qcom/msm8996.dtsi | 8 ++++++--
->>   1 file changed, 6 insertions(+), 2 deletions(-)
+>>> This series includes some cleanup of the MSM8996 CPU clock driver, as 
+>>> well as
+>>> migration from parent_names to parent_data for all of its clocks. The 
+>>> DT schema
+>>> is also fixed in this series to show the actual clocks consumed by 
+>>> the clock
+>>> controller and pass checks.
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi 
->> b/arch/arm64/boot/dts/qcom/msm8996.dtsi
->> index 25d6b26fab60..b72385ffecc6 100644
->> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
->> @@ -1049,9 +1049,13 @@ hdmi_phy: hdmi-phy@9a0600 {
->>                           "hdmi_phy";
->>                   clocks = <&mmcc MDSS_AHB_CLK>,
->> -                     <&gcc GCC_HDMI_CLKREF_CLK>;
->> +                     <&gcc GCC_HDMI_CLKREF_CLK>,
->> +                     <&xo_board>;
->>                   clock-names = "iface",
->> -                          "ref";
->> +                          "ref",
->> +                          "xo";
->> +
->> +                #clock-cells = <0>;
->>                   status = "disabled";
->>               };
+>> This series looks almost ready to be merged, could you (or Dmitry?)
+>> update the two outstanding items?
+> 
+> I have acked the patch 2 and sent the slightly updated revision of 
+> patch6 (together with the rest of small changes).
+
+Bjorn, could you please pick up patches 1-5?
+
+> 
+>>
+>> Thanks,
+>> Bjorn
+>>
+>>>
+>>> Yassine Oudjana (6):
+>>>    clk: qcom: msm8996-cpu: Rename DIV_2_INDEX to SMUX_INDEX
+>>>    clk: qcom: msm8996-cpu: Statically define PLL dividers
+>>>    clk: qcom: msm8996-cpu: Unify cluster order
+>>>    clk: qcom: msm8996-cpu: Convert secondary muxes to clk_regmap_mux
+>>>    dt-bindings: clock: qcom,msm8996-apcc: Fix clocks
+>>>    clk: qcom: msm8996-cpu: Use parent_data for all clocks
+>>>
+>>>   .../bindings/clock/qcom,msm8996-apcc.yaml     |  15 +-
+>>>   drivers/clk/qcom/clk-cpu-8996.c               | 235 ++++++++++--------
+>>>   2 files changed, 140 insertions(+), 110 deletions(-)
+>>>
+>>> -- 
+>>> 2.36.1
+>>>
+> 
 > 
 
 -- 
