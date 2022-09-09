@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EF115B33FD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 11:31:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FAB05B3414
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 11:37:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229781AbiIIJ25 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 05:28:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36010 "EHLO
+        id S230026AbiIIJhD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 05:37:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231137AbiIIJ2A (ORCPT
+        with ESMTP id S229437AbiIIJhC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 05:28:00 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22B7C136CDF
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 02:26:33 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id m15so1665882lfl.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 02:26:33 -0700 (PDT)
+        Fri, 9 Sep 2022 05:37:02 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 667FF95ACF
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 02:37:01 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id z20so1154439ljq.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 02:37:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=JjJ2bXHWNy1h23bWYiukTnz4zT7qJyO8e7mPmA7xDqw=;
-        b=okowFfxwkVz+T51v63z85m1dbtbd+lvWkXHquv2G6Pf1OfM7+VVVn8XYPkY9btaZJd
-         /PO4lpqgAmAsoU+CeIqde3VoemznHwCHfPAexRT2lkuzMxU9dLdyTwIDQuNnXo5C56xs
-         17aaMcCog/sUD3EyDhUNFOJ+eqgVkH1SFI1TJ4pcruje6kbs9t/qpS/d7Mpjfnp1XUG9
-         QHfuutZTuJqHjNCFfDz0I4EOaGB4BBZWiExicxJLvVjJ1fHndBnZLeIISx6vweLSLs+Z
-         uhjzbBX9tH9lRNMvYs0VzEpn0CnPiYFUX+3wy39Q1oCyE9dbpDFfKWirRPcbgqeq2Zfi
-         f2zg==
+        bh=jJHZh3XOc0dD8msZ4f9CzmXSU1jFvF34HN6njLtaCUI=;
+        b=fn5vyPQIwEzVacy8ihq1WYzE4mGJbBxwXPqAaJW1j0oEYUG0RHS+BK23giYaTgXKOW
+         d3qEI7aCH5SQVntmQiMZV+JAl5xpgBA8nRg2NX3/LPxwLoFahmPgm5kNu1PetJrdq6Hb
+         8dNbHvWvFkVI2OXQHmyWSx2P2Z+mOl/SbLfku0ZjEUnMYaU4tJ23fNJu9awue06bdZN7
+         g7rba1E81GFYD25q/g973heKK+2qnFjppuJdTwBNqsiOBJDW12E9rihay0gNsf8a7Xys
+         I19bgGqN5F1Qh2hPRVDe/1b1NGV7g9h57Ft3ZFRnXf32+xltowN816qusWPU6HNC2h+J
+         vR7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=JjJ2bXHWNy1h23bWYiukTnz4zT7qJyO8e7mPmA7xDqw=;
-        b=0yz3aX1ckJbNTptBfH/zCCnzIkiSnG22TpQTRAChhxK2b6xmJrzSlvcXvYrxEor1l+
-         2ckpSkgZbvIy4q2fedgDdWo9fqEdaQYHrMOJNcVSvfBvHphkoxcyymRCUUKwUScwPCw/
-         jMiQbq1AhEIy+vTzQUBrupWZW3wcUPn21+/FssAYWePOxMtVgssl06pOjPWvuOtIDwER
-         VTA6E+CzJgmWOTNogfJD7AC2X7gXzkAJVdSFm3rM7JTB9EMaq+50qss2ZijMFFF7zVaI
-         042yF9+IZboNbfj+an+tpMI2KNxSEe/2QBrKgSzG42oxcLR7QHUPjMwG7iO8S7nXD5Px
-         3sBw==
-X-Gm-Message-State: ACgBeo20pTLygaEqNMnlw1/rAJaZyywHYuxvwlY0XKLVyNv8RMtFH4rh
-        k6RGg8GY+rN2zqr38LIK/55W8g==
-X-Google-Smtp-Source: AA6agR5Y1MFRwzKmNwuArQtFnCj2umTMcyMQc2YMMzOZ5vT1WO0wVcRNIHCDqKKHxXoM0jlN5/X5Pw==
-X-Received: by 2002:a05:6512:903:b0:494:a3b9:8022 with SMTP id e3-20020a056512090300b00494a3b98022mr3882789lft.288.1662715591530;
-        Fri, 09 Sep 2022 02:26:31 -0700 (PDT)
+        bh=jJHZh3XOc0dD8msZ4f9CzmXSU1jFvF34HN6njLtaCUI=;
+        b=OcA2qYXdZ2ChgMXAKidea4diIyFvLWhvfUF7EeG+/IflzHUtX1lhr0MIYvxjrrtqKQ
+         XpgmiM2BK2+laGY23bUEBd/er7yozaOmByqmEth9vT9oUoC34ALyoWeMFfvqsu9tQRYZ
+         ujVFdXhGJwQLUiGyLyQYmsBrrEklPmyPYcbGhIc85QI8GD2t7KNKas/1Kyj99X79GPAp
+         fxLOEmSfmB8REdzkvr9w2nZ5EFiu2nfMain97lmJrNAEJug1nckCvZrhjw13J74e87Jp
+         cUT/8HXa/GczQNT1WRDjAb7vEG1+rnyX29lbMjut7H9sLfpiSTJyMkwSGkpKyzbHNGOC
+         i8dA==
+X-Gm-Message-State: ACgBeo25+92pDboLOAEQZ4FHTp2dK4V+l0a3/sb+6KHIijF4AvzNRjyI
+        w+/1sv04rHW6tLlIyspDgFttQg==
+X-Google-Smtp-Source: AA6agR4ce1I8gV2VI14mW0UHj3BF7vtBvvaXsUhX5rocfFkNQz4SoWCWb//HltaeKRppDFlBoR3bpA==
+X-Received: by 2002:a2e:bc20:0:b0:26a:b0b1:85b6 with SMTP id b32-20020a2ebc20000000b0026ab0b185b6mr3855069ljf.118.1662716219768;
+        Fri, 09 Sep 2022 02:36:59 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id z17-20020a2e4c11000000b002682754293fsm10833lja.1.2022.09.09.02.26.30
+        by smtp.gmail.com with ESMTPSA id bd23-20020a05651c169700b0026be7a4fa49sm655ljb.99.2022.09.09.02.36.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Sep 2022 02:26:31 -0700 (PDT)
-Message-ID: <167201e9-b9dc-5dca-ac37-b0593974ebc8@linaro.org>
-Date:   Fri, 9 Sep 2022 12:26:30 +0300
+        Fri, 09 Sep 2022 02:36:59 -0700 (PDT)
+Message-ID: <1a083979-c92e-3b32-fa2f-606359b93ac0@linaro.org>
+Date:   Fri, 9 Sep 2022 12:36:58 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.1.2
-Subject: Re: [PATCH 01/16] phy: qcom-qmp-combo: disable runtime PM on unbind
+Subject: Re: [PATCH 03/16] phy: qcom-qmp-pcie: drop unused runtime PM
+ implementation
 Content-Language: en-GB
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Vinod Koul <vkoul@kernel.org>
@@ -66,9 +67,9 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org
 References: <20220907110728.19092-1-johan+linaro@kernel.org>
- <20220907110728.19092-2-johan+linaro@kernel.org>
+ <20220907110728.19092-4-johan+linaro@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220907110728.19092-2-johan+linaro@kernel.org>
+In-Reply-To: <20220907110728.19092-4-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,50 +83,24 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 07/09/2022 14:07, Johan Hovold wrote:
-> Make sure to disable runtime PM also on driver unbind.
-
-Nit: technically the subject is misleading: you switched the code to use 
-devres- helpers rather than manually disabling the runtime PM.
+> Drop the unused and incomplete runtime PM implementation, which was
+> only used by USB PHYs before splitting the QMP driver.
+> 
+> Note that the runtime PM was never disabled (and state restored) on
+> driver unbind.
+> 
+> This effectively reverts commit ac0d239936bd ("phy: qcom-qmp: Add
+> support for runtime PM").
+> 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> 
-> Fixes: ac0d239936bd ("phy: qcom-qmp: Add support for runtime PM").
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 7 +++----
->   1 file changed, 3 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> index af608c4dc869..9ce2ab56be4c 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> @@ -2930,7 +2930,9 @@ static int qcom_qmp_phy_combo_probe(struct platform_device *pdev)
->   		return -ENOMEM;
->   
->   	pm_runtime_set_active(dev);
-> -	pm_runtime_enable(dev);
-> +	ret = devm_pm_runtime_enable(dev);
-> +	if (ret)
-> +		return ret;
->   	/*
->   	 * Prevent runtime pm from being ON by default. Users can enable
->   	 * it using power/control in sysfs.
-> @@ -2987,13 +2989,10 @@ static int qcom_qmp_phy_combo_probe(struct platform_device *pdev)
->   	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
->   	if (!IS_ERR(phy_provider))
->   		dev_info(dev, "Registered Qcom-QMP phy\n");
-> -	else
-> -		pm_runtime_disable(dev);
->   
->   	return PTR_ERR_OR_ZERO(phy_provider);
->   
->   err_node_put:
-> -	pm_runtime_disable(dev);
->   	of_node_put(child);
->   	return ret;
->   }
 
+> ---
+>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 38 ------------------------
+>   1 file changed, 38 deletions(-)
+> 
 -- 
 With best wishes
 Dmitry
