@@ -2,127 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6ED6C5B313F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 10:01:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51E0D5B315D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 10:11:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230108AbiIIIBC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 04:01:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52770 "EHLO
+        id S231126AbiIIIKs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 04:10:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229819AbiIIIA7 (ORCPT
+        with ESMTP id S231163AbiIIIKq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 04:00:59 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6907B399CB
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 01:00:56 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id x14so1342423lfu.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 01:00:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=Wo4DqrKCOn9J9SykBsjnKnwSi1oBgr19YyA+wr5qBa4=;
-        b=nVBvS4l6sJxLcvJQYoxB0cERu66pIf2Qxv0xKbN3ug1kN1Z3/J3/keGqRSGCfn4efX
-         nNAOWa016GrcviyLjxnIUP8ASyWO5/1SGYppTM8EZG148/WrrrgZBo4xRTp6DdSE6S5N
-         7Fwt5JAgyLIkOYmjq04Wdsi7lqvLa1gFfrbp88eb0V5tQtn9XBlqPYsHJKPC0mRE8mZ5
-         0WuQnuir81mKaIQ9NZlHqDuNEfH1+WhQ8OQV9oBo4WOTGACmuvrZgzKbKget5DFiaUg7
-         rerpoRomwSpnrZ8dC52oJD0ux5J6iqRk5/4cUHYYGJ1dH6XOEcxnSa/ek06CiRLnzOEZ
-         9YsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=Wo4DqrKCOn9J9SykBsjnKnwSi1oBgr19YyA+wr5qBa4=;
-        b=yaA1Y5WgNnA4woLz1eFFH1uImxp2HawOtkeCKWgxzPz4h7oF6yG4VgiLaaM0kfiEMZ
-         lPZ8AKwat3zanrmd/DzAXFmme/0iD+YpNDSg0z2p6+VVkVwtBro4Iwr9AuSZT1bD2rFf
-         iiGGXe8qwTl5CqSLD1UzqS1xdMmqVAFfsIvI446SMrJDJKqK/CAKHPzZoGNMBV0OgNSq
-         iGX+4YU/5dDonET8cV6iaHzcrI5DS9cIO7KdwNVPmgQddVm6+pUXfj055qP6C+ACIi6t
-         SDVQF58QtphYeIUvVFRTjqbnxwQxSzyEAF30apqTB+2nOZD5EharovtutmGVArXvF8i4
-         cvWA==
-X-Gm-Message-State: ACgBeo1UtDBVFDq99sZo9UMSUMNhPOkZo8ILhsCQzJiYdSCk7FZ5MwvY
-        q6+CpI3srA5McgPRM3MOMAXEwg==
-X-Google-Smtp-Source: AA6agR6+OIBDfTt6JSaD2DVqJzJptP/yRxtLvHazcVBhYGL8a+j+JtCVaqC8z0eeJsJV/Gz9N7JxVg==
-X-Received: by 2002:ac2:4bc7:0:b0:494:74d4:80a2 with SMTP id o7-20020ac24bc7000000b0049474d480a2mr3937377lfq.490.1662710454805;
-        Fri, 09 Sep 2022 01:00:54 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id f27-20020a2eb5bb000000b00264b292232asm176386ljn.63.2022.09.09.01.00.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Sep 2022 01:00:54 -0700 (PDT)
-Message-ID: <ec73f713-2e42-3282-2e04-97a5db367702@linaro.org>
-Date:   Fri, 9 Sep 2022 10:00:53 +0200
+        Fri, 9 Sep 2022 04:10:46 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBEF66D9D5;
+        Fri,  9 Sep 2022 01:10:45 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2897o5Nd007560;
+        Fri, 9 Sep 2022 08:10:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=58/S1/E7WdYZacOEayRrVuVyfjN37qCIf7i0CMngiXc=;
+ b=SYGEB32JXNQsNcB8EAImnq+kJ7pVknpCZgTY6mCkNneTiR8IctFDYqr/zMlM993ySZgY
+ XjTyYO0HY7QChTgNK+Wjmht2wlpmQKNEaSeLdLC8S4lTXj4fPedNurWh9yc2N0eoSaHl
+ +1caVch5WajEOnMQJ3KSAjb0UPVMTzlXBziJFnOZI3l/UpeGaCMsrgh3D4KD2rjk0yro
+ swUkDUfaTuj3jxHy01T1QNkHo+17gSvhQ/Zg059XC9V9LT6IHE2QplV/fdyIGey3HdFA
+ d0lfSw2bmWZcip+Qa4RwZVhLde2SuhqdwsSrGBDYd7mjWOJ8nkw/kE6+ZPSiWUVqafCV MA== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jfdc73vv3-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 09 Sep 2022 08:10:43 +0000
+Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28985gAU028269
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 9 Sep 2022 08:05:42 GMT
+Received: from ecbld-sh026-lnx.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Fri, 9 Sep 2022 01:05:41 -0700
+From:   Maria Yu <quic_aiquny@quicinc.com>
+To:     <bjorn.andersson@linaro.org>, <mathieu.poirier@linaro.org>
+CC:     Maria Yu <quic_aiquny@quicinc.com>,
+        <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_clew@quicinc.com>
+Subject: [PATCH] remoteproc: core: do pm relax when not first crash
+Date:   Fri, 9 Sep 2022 16:05:31 +0800
+Message-ID: <1662710731-57212-1-git-send-email-quic_aiquny@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH v2 2/4] dt-bindings: remoteproc: qcom: Convert wcnss
- documentation to YAML
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>,
-        Sireesh Kodali <sireeshkodali1@gmail.com>
-Cc:     linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-References: <20220908184925.2714098-1-sireeshkodali1@gmail.com>
- <20220908184925.2714098-3-sireeshkodali1@gmail.com>
- <1662671776.543526.3355395.nullmailer@robh.at.kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1662671776.543526.3355395.nullmailer@robh.at.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: wdmo4nApRUkWj3jFe47bQtolwmHX3B67
+X-Proofpoint-ORIG-GUID: wdmo4nApRUkWj3jFe47bQtolwmHX3B67
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-09_04,2022-09-09_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ priorityscore=1501 lowpriorityscore=0 suspectscore=0 mlxlogscore=999
+ spamscore=0 phishscore=0 clxscore=1011 adultscore=0 bulkscore=0
+ impostorscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2209090027
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/09/2022 23:16, Rob Herring wrote:
-> On Fri, 09 Sep 2022 00:19:23 +0530, Sireesh Kodali wrote:
->> This is a direct conversion of the existing txt documentation to YAML.
->> It is in preparation for the addition of pronto-v3 to the docs. This
->> patch doesn't document any of the existing subnodes/properties that are
->> not documented in the existing txt file. That is done in a separate
->> patch.
->>
->> Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
->> ---
->>  .../bindings/remoteproc/qcom,wcnss-pil.yaml   | 263 ++++++++++++++++++
->>  1 file changed, 263 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
->>
-> 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.example.dtb: pronto@a21b000: iris: 'vddxo-supply' is a required property
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.example.dtb: pronto@a21b000: iris: 'vddrfa-supply' is a required property
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.example.dtb: pronto@a21b000: iris: 'vddpa-supply' is a required property
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.example.dtb: pronto@a21b000: iris: 'vdddig-supply' is a required property
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.example.dtb: wcnss: 'bt' does not match any of the regexes: 'pinctrl-[0-9]+'
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml
-> 
+Even if it is not first crash, need to relax the pm
+wakelock otherwise the device will stay awake.
 
-This needs to be fixed.
+Change-Id: I26bfeb44871aab0b57837a77a6243b2086f94473
+Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
+---
+ drivers/remoteproc/remoteproc_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Please run `make dt_binding_check` (see
-Documentation/devicetree/bindings/writing-schema.rst for instructions).
+diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+index e5279ed9a8d7..30078043e939 100644
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -1956,6 +1956,7 @@ static void rproc_crash_handler_work(struct work_struct *work)
+ 	if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE) {
+ 		/* handle only the first crash detected */
+ 		mutex_unlock(&rproc->lock);
++		pm_relax(rproc->dev.parent);
+ 		return;
+ 	}
+ 
+-- 
+2.7.4
 
-
-Best regards,
-Krzysztof
