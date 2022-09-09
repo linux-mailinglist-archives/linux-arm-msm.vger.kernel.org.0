@@ -2,100 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 51E0D5B315D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 10:11:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 157B75B316F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 10:15:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231126AbiIIIKs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 04:10:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46624 "EHLO
+        id S231220AbiIIIN2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 04:13:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231163AbiIIIKq (ORCPT
+        with ESMTP id S231164AbiIIIN0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 04:10:46 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBEF66D9D5;
-        Fri,  9 Sep 2022 01:10:45 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2897o5Nd007560;
-        Fri, 9 Sep 2022 08:10:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=58/S1/E7WdYZacOEayRrVuVyfjN37qCIf7i0CMngiXc=;
- b=SYGEB32JXNQsNcB8EAImnq+kJ7pVknpCZgTY6mCkNneTiR8IctFDYqr/zMlM993ySZgY
- XjTyYO0HY7QChTgNK+Wjmht2wlpmQKNEaSeLdLC8S4lTXj4fPedNurWh9yc2N0eoSaHl
- +1caVch5WajEOnMQJ3KSAjb0UPVMTzlXBziJFnOZI3l/UpeGaCMsrgh3D4KD2rjk0yro
- swUkDUfaTuj3jxHy01T1QNkHo+17gSvhQ/Zg059XC9V9LT6IHE2QplV/fdyIGey3HdFA
- d0lfSw2bmWZcip+Qa4RwZVhLde2SuhqdwsSrGBDYd7mjWOJ8nkw/kE6+ZPSiWUVqafCV MA== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jfdc73vv3-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 09 Sep 2022 08:10:43 +0000
-Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28985gAU028269
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 9 Sep 2022 08:05:42 GMT
-Received: from ecbld-sh026-lnx.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Fri, 9 Sep 2022 01:05:41 -0700
-From:   Maria Yu <quic_aiquny@quicinc.com>
-To:     <bjorn.andersson@linaro.org>, <mathieu.poirier@linaro.org>
-CC:     Maria Yu <quic_aiquny@quicinc.com>,
-        <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_clew@quicinc.com>
-Subject: [PATCH] remoteproc: core: do pm relax when not first crash
-Date:   Fri, 9 Sep 2022 16:05:31 +0800
-Message-ID: <1662710731-57212-1-git-send-email-quic_aiquny@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Fri, 9 Sep 2022 04:13:26 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87DD710040F
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 01:13:24 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id m15so1388540lfl.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 01:13:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=S2fum64ByqkOeJl+LO3V1LaGVG9omN46/lj7osptdj4=;
+        b=WGdxn4I64th6g1EPMDsoEgyfOQN2uuuDDHA8YIje0WGJdVKSbENbHgKD4X5N3mXAV6
+         JcJVCiUyVyH2aibywApaaOfCHOwvnVxo/h2eRLPneeiEQJcvmd8tSXDMZn9XdfRk4Dsk
+         6rcTrGRezO2QywnQzU4WKhA+kBA9KouTt5jThrRWjYpYxgEP+jpoX/I2sVG0EMRPIBHP
+         GNdUt935U53+e986SQDqdAb5nnr1xt84VYdw/6bFcNJFUpAAs+9YV7Lp4ruePhoidtnx
+         UAEm6vIN3zsAHZap6kFQBIJvoKBYOCJz2ysrYCGmYJutP00mix3FxoM3pmiO4qO7HpNZ
+         XceA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=S2fum64ByqkOeJl+LO3V1LaGVG9omN46/lj7osptdj4=;
+        b=C0+yqYsMkIK5uqhDWfDCJ6oblmrAuBURzMrI6NdA1yklDixc8XIB0RlS0hOIWJPFAy
+         Vnv+V78HaTNhhrMLnENPZdNr8MLjW54J2Bg0eTqLM0468jOSaWN2t3H/tMFZblKUMPdJ
+         Pb4PgejCIXrX30lz5Qwka/tyVzRy9hUOTWaajP4ppRr7XvP5Yqkhe45NSudnA2ejI9gV
+         vsn087UBcGvwBdrsTNEblJPjwAhFSo/9de5g7ndN3AZvQI9a31cm6k2PxFk1Ei4la1Bj
+         kLwHChl3H6J1CgLspDNHc4fN7uNf8A1NlGU5x6XHUeMPwxaH5HeVmpiKuMRwK0U0NpNj
+         y+JA==
+X-Gm-Message-State: ACgBeo2nU3i+dupK3S+4htwC0ls8UMhSHV190qzNR4Wiv3c8FrWPD9mE
+        soFfFwu2rKUChvmIwTgDiZHG1Q==
+X-Google-Smtp-Source: AA6agR44SozBclTc6GLHAKXHxkjnOVy5XY214P2T5ZXYza2eZE8wISfmmRLMYgXu5N0qeK628rQHug==
+X-Received: by 2002:a05:6512:3403:b0:48c:9727:50b0 with SMTP id i3-20020a056512340300b0048c972750b0mr3780115lfr.309.1662711202905;
+        Fri, 09 Sep 2022 01:13:22 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id m18-20020a195212000000b00492d270db5esm168834lfb.242.2022.09.09.01.13.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Sep 2022 01:13:22 -0700 (PDT)
+Message-ID: <1e0505c4-d98f-03bf-468e-43226d20cc77@linaro.org>
+Date:   Fri, 9 Sep 2022 10:13:21 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: wdmo4nApRUkWj3jFe47bQtolwmHX3B67
-X-Proofpoint-ORIG-GUID: wdmo4nApRUkWj3jFe47bQtolwmHX3B67
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-09_04,2022-09-09_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- priorityscore=1501 lowpriorityscore=0 suspectscore=0 mlxlogscore=999
- spamscore=0 phishscore=0 clxscore=1011 adultscore=0 bulkscore=0
- impostorscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2209090027
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v2 9/9] arm64: dts: qcom: sm4250: Add support for
+ oneplus-billie2
+Content-Language: en-US
+To:     Iskren Chernev <iskren.chernev@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kees Cook <keescook@chromium.org>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Colin Cross <ccross@android.com>,
+        Tony Luck <tony.luck@intel.com>, linux-kernel@vger.kernel.org
+References: <20220903174150.3566935-1-iskren.chernev@gmail.com>
+ <20220903174150.3566935-10-iskren.chernev@gmail.com>
+ <e655cddd-677b-f277-667f-48107671db2a@linaro.org>
+ <843b8280-5e71-c008-0ca2-4d289ca6e7da@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <843b8280-5e71-c008-0ca2-4d289ca6e7da@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Even if it is not first crash, need to relax the pm
-wakelock otherwise the device will stay awake.
+On 08/09/2022 19:52, Iskren Chernev wrote:
+> 
+> 
+> On 9/6/22 11:33, Krzysztof Kozlowski wrote:
+>> On 03/09/2022 19:41, Iskren Chernev wrote:
+>>> Remaining issues from make dtbs_check:
+>>> - rpm-requests: it doesn't like the pm6125-regulators subnode. Every other
+>>>   DTS I checked is written in this way.
+>>
+>> Yes, I sent patches for it, already merged, so please rebase on linux-next.
+>>
+>> https://lore.kernel.org/all/20220828084341.112146-1-krzysztof.kozlowski@linaro.org/
+>>
+>> Please rebase and test with
+>> Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+> 
+> It looks like this patch covers SPMI regulators. In most devices RPM/H (i.e
+> indirect) regulators are used, so this doesn't fix it for me.
 
-Change-Id: I26bfeb44871aab0b57837a77a6243b2086f94473
-Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
----
- drivers/remoteproc/remoteproc_core.c | 1 +
- 1 file changed, 1 insertion(+)
+Indeed, but I got good news! The SMD/RPM was fixed here:
+https://lore.kernel.org/all/20220901093243.134288-1-krzysztof.kozlowski@linaro.org/
 
-diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index e5279ed9a8d7..30078043e939 100644
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -1956,6 +1956,7 @@ static void rproc_crash_handler_work(struct work_struct *work)
- 	if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE) {
- 		/* handle only the first crash detected */
- 		mutex_unlock(&rproc->lock);
-+		pm_relax(rproc->dev.parent);
- 		return;
- 	}
- 
--- 
-2.7.4
+Although anyway you Cc old addresses here, so you need to rebase on next
+and use get_maintainers.pl.
 
+Bjorn,
+Can we get the schemas merged?
+
+Best regards,
+Krzysztof
