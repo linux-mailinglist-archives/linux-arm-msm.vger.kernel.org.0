@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58FD65B313C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 10:01:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2CAB5B312D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 10:01:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230450AbiIIH7S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 03:59:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44138 "EHLO
+        id S230038AbiIIIAE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 04:00:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230466AbiIIH7C (ORCPT
+        with ESMTP id S230226AbiIIH7o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 03:59:02 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 411EE125B06
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 00:57:53 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id f14so382444lfg.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 00:57:53 -0700 (PDT)
+        Fri, 9 Sep 2022 03:59:44 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A1092B268
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 00:59:15 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id bx38so862500ljb.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 00:59:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=wygukOl8i/HPyLsY11Rs2ZxExJGU0+uocDld7aZ7GbA=;
-        b=QT6icU9vIyeCa567TOlGxMBCIpGy4/8/UOIixR5YBeaIjuwn4u/tDQddXTwRJ5RprJ
-         DTuO4Ho50oYf38S39HuhXZaa9x0kLQ/7fsHJcYAMSUE8pfEC71Rp+N1tQZICXZIzb9bj
-         hbdUW/SXy2qen/houJbZYhigBwfrZL0nD4Io0i34Vh9jF4nEJfd+Up5ZcRCebzPI2ztE
-         KoIeceiAx3G7xIglOhmVOquB1SuJxwf+SiqCS3WSgpotCWIc4IbLIoXHsmG4qxqL/jpo
-         Le8oMFd5poC6W23yaF3MWe91xDQInJz5e5x0wVmxZINGOhRSi+B+/Jj81PhFezuzEQxt
-         CRyw==
+        bh=ffJDJLXz/yzwZQ2DKmnKWl6OWAzq8nCfRYuV0HB+NMk=;
+        b=GeRYE3sSRQAq/+OLNbiJtAOLbM9XV0f00I+m+B6EcfwQiQRVNGpsqR/EurBsI3hn72
+         4gzyR2FD2o7x+p0MfCO6LFryVha/FPHXFj9WroOChVs9nVB3J0jCQpWKwAa3fk9OZ53s
+         Lt3Tvy08r7p6X6wKZxeTOp+kZMjws0t9M6GoFwuhS/GvsmDNXxLhGqHTM3MaTLrFqSq+
+         8Z1oAEfQRJjPy+1ouiNjL0ww2Y1E5mfO56SM2gRBoqILjps8Pf1676Dkn0Hm6h49Jkkj
+         qTo1CQtX+rNHpOIruDVvIdkc85MAd68pRB77sunmTwvGqdlqs5VM+Ty7po+96/+6PeMX
+         rbGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=wygukOl8i/HPyLsY11Rs2ZxExJGU0+uocDld7aZ7GbA=;
-        b=FDJlgXpyG1MU2H3eol/2pUzmFPnzfmJoeR6KqPxl+eyon3W1LEm6zjxutLdkVWGkG2
-         pjYZgGQ30UmY0Pj0sA1pzpO6IuHWnK+MKfcrKvWkWl8f/njBgnJr3zd42KL9l1Dl4Pz+
-         Tl5B6qpWULiz99kDL4XUBmGode2m484YWG2i6du9X5TQ3E2AQIaRwRWxbuzf4VKo+pUc
-         194otnLC3C4Byi3Ba2+JwZTlBToUm6L1J3KQpwC2+y4H2hO2HKWYijLnr29BHYaQXxNG
-         /0TSqN6SYKUkallHat3iePgglxT+bcA52t7rSYNh/WffS4w+PoK+LdjKXS5JYyk7D7Je
-         vPug==
-X-Gm-Message-State: ACgBeo0MUICut+2bheOB/GBx9wovoymCBd4nXc4xC3zwINhZqwJEEDXQ
-        VUuhfYxZckTp0bFAJgUAOClUlA==
-X-Google-Smtp-Source: AA6agR5xMNSOZ3u7aA5rNUci374+LvDxP0r+OCliuWHoHu8+tTWvd1Hp3J5LAylJ+GtbC4ZJypj0zg==
-X-Received: by 2002:a19:5e50:0:b0:497:a331:91d9 with SMTP id z16-20020a195e50000000b00497a33191d9mr4031794lfi.162.1662710271816;
-        Fri, 09 Sep 2022 00:57:51 -0700 (PDT)
+        bh=ffJDJLXz/yzwZQ2DKmnKWl6OWAzq8nCfRYuV0HB+NMk=;
+        b=Vlvqr1iAIzUfjK/4vWy0nSQNM1TLr6O3g3akQDP4WLWXuR7+wyc7UG+jxlTM5mAulm
+         qMJVhcTDb3m9v/KxEzeWVqdtsUDx3m4R+Z2ikwRi0PAh2T3CCQzaReC2n3iW/TLUoQxv
+         vqzBSvbK28s4AvNNqvfvGHLNuirJq3eJujOp5clL+BEPkKhkM6omgHNsnc+SCBqxlhsJ
+         pq4AvpD7UdlJbZa/8bMp7Biz8H+QyFCpl9KxI7xq+KKUC5Ebn2x6t8bzCRN2hiJ7LjcZ
+         yNPRZsX8XkTboa0kZtr1mEq3i5CawaZG6P8ooNxZASlYFvtXT6P5gb9y75wVZnspac3G
+         hPfA==
+X-Gm-Message-State: ACgBeo31QLtKj0NUOjUAPmb7x/o4yQuyy2d5Ex8ES/uXpNsEfXt+rfZG
+        rkxBck4MqSUowtm2qh2/Q9F6CA==
+X-Google-Smtp-Source: AA6agR52OFVa+ktPZDO+qgN/DSvk0bsijOkKngfrrvDrXhnk2k1lAmzEHS2UVMO2OlcNveUJ4nn4eA==
+X-Received: by 2002:a2e:b608:0:b0:26a:d179:8ecd with SMTP id r8-20020a2eb608000000b0026ad1798ecdmr2864266ljn.405.1662710353294;
+        Fri, 09 Sep 2022 00:59:13 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id z8-20020a2e7e08000000b0025e4e7c016dsm184412ljc.16.2022.09.09.00.57.50
+        by smtp.gmail.com with ESMTPSA id c6-20020a19e346000000b0048af4dc964asm177635lfk.73.2022.09.09.00.59.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Sep 2022 00:57:51 -0700 (PDT)
-Message-ID: <643e8223-f88f-9258-dc36-1732dfa8bb19@linaro.org>
-Date:   Fri, 9 Sep 2022 09:57:50 +0200
+        Fri, 09 Sep 2022 00:59:12 -0700 (PDT)
+Message-ID: <932d68ce-0c14-3fda-8247-f5fe34b2f8b0@linaro.org>
+Date:   Fri, 9 Sep 2022 09:59:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
@@ -90,8 +90,160 @@ On 08/09/2022 20:49, Sireesh Kodali wrote:
 > patch doesn't document any of the existing subnodes/properties that are
 > not documented in the existing txt file. That is done in a separate
 > patch.
+> 
+> Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
+> ---
+>  .../bindings/remoteproc/qcom,wcnss-pil.yaml   | 263 ++++++++++++++++++
+>  1 file changed, 263 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
+> new file mode 100644
+> index 000000000000..bc18139fdb91
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
+> @@ -0,0 +1,263 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/remoteproc/qcom,wcnss-pil.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm WCNSS Peripheral Image Loader
+> +
+> +maintainers:
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
 
-There is no conversion here... Just adding new bindings.
+Use email from maintainers entry.
+
+> +
+> +description:
+> +  This document defines the binding for a component that loads and boots
+> +  firmware on the Qualcomm WCNSS core.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,riva-pil
+> +      - qcom,pronto-v1-pil
+> +      - qcom,pronto-v2-pil
+> +
+> +  reg:
+> +    maxItems: 3
+> +    description:
+> +      The base address and size of the CCU, DXE and PMU register blocks
+> +
+> +  reg-names:
+> +    items:
+> +      - const: ccu
+> +      - const: dxe
+> +      - const: pmu
+> +
+> +  interrupts:
+> +    minItems: 2
+> +    maxItems: 5
+> +
+> +  interrupt-names:
+> +    minItems: 2
+> +    items:
+> +      - const: wdog
+> +      - const: fatal
+> +      - const: ready
+> +      - const: handover
+> +      - const: stop-ack
+> +
+> +  firmware-name:
+> +    $ref: /schemas/types.yaml#/definitions/string
+> +    description:
+> +      Relative firmware image path for the WCNSS core. Defaults to
+> +      "wcnss.mdt".
+> +
+> +  vddpx-supply:
+> +    description:
+> +      PX regulator to be held on behalf of the booting of the WCNSS core
+> +
+> +  vddmx-supply:
+> +    description:
+> +      MX regulator to be held on behalf of the booting of the WCNSS core.
+> +
+> +  vddcx-supply:
+> +    description:
+> +      CX regulator to be held on behalf of the booting of the WCNSS core.
+> +
+> +  power-domains:
+> +    maxItems: 2
+> +
+> +  power-domain-names:
+> +    items:
+> +      - const: cx
+> +      - const: mx
+> +
+> +  qcom,smem-states:
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> +    description:
+> +      States used by the AP to signal the WCNSS core that it should shutdown
+> +    items:
+> +      - description: Stop the modem
+> +
+> +  qcom,smem-state-names:
+> +    description: The names of the state bits used for SMP2P output
+> +    items:
+> +      - const: stop
+> +
+> +  memory-region:
+> +    maxItems: 1
+> +    description: reserved-memory for the WCNSS core
+> +
+> +  smd-edge:
+> +    $ref: /schemas/remoteproc/qcom,smd-edge.yaml#
+> +    description:
+> +      Qualcomm Shared Memory subnode which represents communication edge,
+> +      channels and devices related to the ADSP.
+> +
+> +  iris:
+> +    type: object
+> +    description:
+> +      The iris subnode of the WCNSS PIL is used to describe the attached RF module
+> +      and its resource dependencies.
+> +
+additionalProperties false on this level.
+
+> +    properties:
+> +      compatible:
+> +        enum:
+> +          - qcom,wcn3620
+> +          - qcom,wcn3660
+> +          - qcom,wcn3660b
+> +          - qcom,wcn3680
+> +
+> +      clocks:
+> +        minItems: 1
+> +        items:
+> +          - description: XO clock
+> +          - description: RF clock
+> +
+> +      clock-names:
+> +        minItems: 1
+> +        items:
+> +          - const: xo
+> +          - const: rf
+> +
+> +      vddxo-supply:
+> +        description:
+> +          Reference to the regulator to be held on behalf of the booting WCNSS
+> +          core
+> +
+> +      vddrfa-supply:
+> +        description:
+> +          Reference to the regulator to be held on behalf of the booting WCNSS
+> +          core
+> +
+> +      vddpa-supply:
+> +        description:
+> +          Reference to the regulator to be held on behalf of the booting WCNSS
+> +          core
+> +
+> +      vdddig-supply:
 
 Best regards,
 Krzysztof
