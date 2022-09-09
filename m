@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EDE45B38D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 15:22:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F14C15B38D8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 15:24:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229598AbiIINWc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 09:22:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52370 "EHLO
+        id S229478AbiIINXA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 09:23:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbiIINWb (ORCPT
+        with ESMTP id S229589AbiIINW7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 09:22:31 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F17A710BA74;
-        Fri,  9 Sep 2022 06:22:30 -0700 (PDT)
+        Fri, 9 Sep 2022 09:22:59 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26E5A10B578;
+        Fri,  9 Sep 2022 06:22:59 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E428F61FE5;
-        Fri,  9 Sep 2022 13:22:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350D2C433D6;
-        Fri,  9 Sep 2022 13:22:29 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B6DCF61FE6;
+        Fri,  9 Sep 2022 13:22:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A0CC433C1;
+        Fri,  9 Sep 2022 13:22:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1662729749;
-        bh=rJJ1FESy6OScB8OBsKbaugGMcKV7Z8WhZKhscbndiYw=;
+        s=k20201202; t=1662729778;
+        bh=KEhtKNgdp8JDc/KUsE48MzFDBa4h3l0bmyTow/HSYM0=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=RDSdt6zc+1g/A7sfIYRWPlDC5e4rYVyOeaZD3D/4Yk5Qe1y3TjMY09jBxtXemOfsj
-         mDO/9kUq01+i3NhU7i5Euecm/i0GlQvs54e6ZrD5PDjcZNpLhI9qZMCMbaRklNv+WC
-         EDU2CGabAyrj29qcy5ZTDuyq/M+FRJrYNy/UD20Yee+8O7LWTTa6T14jU9GnWHkJ6X
-         5xiZdEIxquovz1io3dLXe5MFsV8Y/Z3R99t31hChVxbVbfZ+qvn0vp3u/5RGuJyOA1
-         7f6t/oeuAEsEysg7yw3BwqNH/6KqPYRYB+W3tSpYcIy7N4WvTy3eEWueDMV+ARU38j
-         2sJZ5Hyuo/TUw==
+        b=gDWhPJ176Axn7v/bTfnHYLtTZ26sh/MnsZca+jKdo0zl+aXS5fdh0uD62JoICX0wf
+         X0lAnzMxkbMOIpRQLFaw6Mv+kJ+4RZHhPoXkYpr14eanZ9qz8vTiF8WqElojh38UwL
+         YhwrF0QvoLrLWqvip6bvqtpNoRS2UPkm/bh86sTSNQ1YxEZTkdPwJwN1W1IjCKYqYD
+         iTmnFFbJiAv1eGCwJIIBd8v9JljGbxLB8zQtt1Q1W0XUe9lVIfAmV7wtABSOGp/8bI
+         gyPLapOIa2u0gVk1u3+hMYPDy3R/6562JnDXlZ3yIE8FTB/QdKVGU5D48S7/xjME99
+         fRz6hAcX/zqfw==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1oWdxv-00025M-Bw; Fri, 09 Sep 2022 15:22:39 +0200
-Date:   Fri, 9 Sep 2022 15:22:39 +0200
+        id 1oWdyO-00025e-3x; Fri, 09 Sep 2022 15:23:08 +0200
+Date:   Fri, 9 Sep 2022 15:23:08 +0200
 From:   Johan Hovold <johan@kernel.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Johan Hovold <johan+linaro@kernel.org>,
@@ -45,15 +45,15 @@ Cc:     Johan Hovold <johan+linaro@kernel.org>,
         Kishon Vijay Abraham I <kishon@ti.com>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 01/16] phy: qcom-qmp-combo: disable runtime PM on unbind
-Message-ID: <Yxs+H8di+GLNRI6w@hovoldconsulting.com>
+Subject: Re: [PATCH 09/16] phy: qcom-qmp-usb: disable runtime PM on unbind
+Message-ID: <Yxs+PLMvqbuZ3242@hovoldconsulting.com>
 References: <20220907110728.19092-1-johan+linaro@kernel.org>
- <20220907110728.19092-2-johan+linaro@kernel.org>
- <167201e9-b9dc-5dca-ac37-b0593974ebc8@linaro.org>
+ <20220907110728.19092-10-johan+linaro@kernel.org>
+ <1e502a39-6ba4-079c-576f-10fff260d131@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <167201e9-b9dc-5dca-ac37-b0593974ebc8@linaro.org>
+In-Reply-To: <1e502a39-6ba4-079c-576f-10fff260d131@linaro.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -64,16 +64,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 09, 2022 at 12:26:30PM +0300, Dmitry Baryshkov wrote:
+On Fri, Sep 09, 2022 at 12:45:43PM +0300, Dmitry Baryshkov wrote:
 > On 07/09/2022 14:07, Johan Hovold wrote:
 > > Make sure to disable runtime PM also on driver unbind.
+> > 
+> > Fixes: ac0d239936bd ("phy: qcom-qmp: Add support for runtime PM").
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
+> >   drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 7 +++----
+> >   1 file changed, 3 insertions(+), 4 deletions(-)
 > 
-> Nit: technically the subject is misleading: you switched the code to use 
-> devres- helpers rather than manually disabling the runtime PM.
-
-I disagree. I'm summarising what the patch is doing, not how I
-implemented it.
-
 > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+> Nit from the patch 01 applies too.
+
+Still very much disagree with you on that.
 
 Johan
