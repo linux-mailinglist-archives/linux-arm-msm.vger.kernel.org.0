@@ -2,77 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97CE85B3791
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 14:23:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FA055B3813
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 14:46:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229780AbiIIMXo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 08:23:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54076 "EHLO
+        id S230020AbiIIMps (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 08:45:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231147AbiIIMXS (ORCPT
+        with ESMTP id S229486AbiIIMpp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 08:23:18 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ABCF1098C8
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 05:22:08 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id v6so1654045ljj.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 05:22:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=VeCVev6JRkF0fILhhxR4f7k8RVgJJHglXUA1RDYH9oo=;
-        b=Rec0AlVqDR12djEEP1hx102YHNght8n8dZGMt5nz2eCzYMQqOvh+lBswI0ot9q1VeO
-         Wf0vHhz/SOmC6ioYEPPT6qiHdbmB5gwIiydxA0iO/ABZHizp25BibFA1JjCwRFYwvXBO
-         38KZhB/2qa0W3SLNo5eFdjlaOWgGON/rs1+YZ7WH0+XqtUJwyRrVTRO7q2nDEvSoD5BB
-         afu9lDTcgT/EOtA2gi/ucO7cMFtJj0wIdo04GpDakAKamkdVEruyLA2ZmdQThTyCTPVu
-         J1BADXaN/i0WinEw/HvqDvM275czDHmPS6whIItSwOVCapv2FJzi5SA3iWp6xtbhUl9g
-         c63Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=VeCVev6JRkF0fILhhxR4f7k8RVgJJHglXUA1RDYH9oo=;
-        b=g1YESrQ3Bl2wWD+sz5g9lZOaaeHliJkKrq7myA1xABOW1roMoJFd4IBir9/qiqg6k+
-         A6877AG7a2tC6SHtuP0KdWnlvLwe6mKjriypV/em/Vmr5TZL2E25NmkRTdaJWxS/YkRq
-         F2rprXBlHSvwUVqHNEZCFBa3L0gnbXfGDpi5TYeJ+h76gfj8xEohCslcKb59IBs8GkW9
-         DNx3E8CRAKEUhxKAaQnaJtxd6zv3sro9Ba7J+ArA+SNQOe65MnSzU6Y37IwwVVArcDIh
-         jmCoMYIRjkrcT56DUOTDkLknuKOi4bUlTs2f51H5aLvUhQ3b5iRP3Nhaf0Tkta1WQnX7
-         Avuw==
-X-Gm-Message-State: ACgBeo2JDvJVqdwU6iR6ZhUFJhlwucolxyZOFHyhahcB3ymXlWB5Ma9S
-        8DCCy0knuyzNHVAQ+Np86txozA==
-X-Google-Smtp-Source: AA6agR5lXR8yxhVZdUuw1UBWIm3PxMyGTH+43HbjTVfR6oBVo7dFGyvpomIDSHxnZ4rel5W5mGcFDg==
-X-Received: by 2002:a05:651c:d1:b0:26b:66d3:21f2 with SMTP id 17-20020a05651c00d100b0026b66d321f2mr2482373ljr.59.1662726126582;
-        Fri, 09 Sep 2022 05:22:06 -0700 (PDT)
-Received: from [192.168.1.102] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id c7-20020ac25f67000000b0049462af8614sm61329lfc.145.2022.09.09.05.22.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Sep 2022 05:22:05 -0700 (PDT)
-Message-ID: <8bfa851f-6db6-47f1-35e7-806dd51666b4@linaro.org>
-Date:   Fri, 9 Sep 2022 15:22:04 +0300
+        Fri, 9 Sep 2022 08:45:45 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D04933ECC3;
+        Fri,  9 Sep 2022 05:45:42 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 289B976h015111;
+        Fri, 9 Sep 2022 12:45:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ar7A4xWY39x5TIOEoGnLC7/u6KWTqMdjPSb48DbJUdM=;
+ b=No7oYQ3UXStB8XUQJ+FJhTFKnXAzrEMfzjJNcUjCturF+/8+POUsqx5rao7ueLzgOWC6
+ s9amxi7gjsO4ZP/tyf+uhBGlsj8dE2bxy9LSQPq9sGm4OeTCA14sN/pnCAylNt5wACrI
+ ooNhcSSZxuGj0P1O+pHcFxEagVTwdBmh+T0dQfTsGLNkKne3DpQXVArLL0BJJ2Rd82hZ
+ aJJXqPZL2X7VF4JACx9NzjYAJ6ksA1SUTdjunJfcmpCMZayRUFSFFdi0vM3lwCjxm1Jf
+ TxGDy7dn+VJaT+2nS2dQyG/VQZ4HzO4rnLkocFb6eR1SwHYCHF/KeuETkSTki91HXOcu FQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jfuwwanj8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 09 Sep 2022 12:45:36 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 289CjZPK003514
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 9 Sep 2022 12:45:35 GMT
+Received: from [10.216.47.92] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Fri, 9 Sep 2022
+ 05:45:31 -0700
+Message-ID: <1e89f2c8-1deb-3772-7cb7-52b2e4370a1f@quicinc.com>
+Date:   Fri, 9 Sep 2022 18:15:27 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.0.2
-Subject: Re: [PATCH 0/2] media: camss: Simplify and improve power management
- of VFEs
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: correct CPU BWMON unit address
 Content-Language: en-US
-From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-To:     Hans Verkuil <hans.verkuil@cisco.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Robert Foss <robert.foss@linaro.org>
-References: <20220704221548.629302-1-vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20220704221548.629302-1-vladimir.zapolskiy@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     Stephen Boyd <swboyd@chromium.org>
+References: <20220908085830.39141-1-krzysztof.kozlowski@linaro.org>
+From:   Rajendra Nayak <quic_rjendra@quicinc.com>
+In-Reply-To: <20220908085830.39141-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: JtOtAhnJUqKxtKr0OrWEE_KPmB7vzdQ8
+X-Proofpoint-ORIG-GUID: JtOtAhnJUqKxtKr0OrWEE_KPmB7vzdQ8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-09_07,2022-09-09_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ malwarescore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0
+ mlxscore=0 clxscore=1011 bulkscore=0 phishscore=0 mlxlogscore=999
+ suspectscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2207270000 definitions=main-2209090044
+X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,36 +85,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/5/22 01:15, Vladimir Zapolskiy wrote:
-> Since a rework of CAMSS power domain management for newer platforms done in
-> commit 2f6f8af67203 ("media: camss: Refactor VFE power domain toggling"),
-> all operations over CAMSS imply enablement of all power domains described
-> in the correspondent device tree node. Apparently it's too excessive and it's
-> quite a complicated scheme to allow simple addition of newer platforms with
-> even more power domains.
-> 
-> I would appreciate, if somebody can test the changes on db820 for any probable
-> regressions.
-> 
-> The change is based on changes in clock framework [1] and on a recent fix-up [2]
-> in camss.
-> 
-> [1] https://lore.kernel.org/linux-clk/20220519214133.1728979-1-vladimir.zapolskiy@linaro.org/
-> [2] https://lore.kernel.org/linux-media/20220704220814.629130-1-vladimir.zapolskiy@linaro.org/
-> 
-> Vladimir Zapolskiy (2):
->    media: camss: Collect information about a number of lite VFEs
->    media: camss: Split power domain management
-> 
->   .../media/platform/qcom/camss/camss-vfe-170.c | 20 +++++++-
->   .../media/platform/qcom/camss/camss-vfe-480.c | 20 +++++++-
->   drivers/media/platform/qcom/camss/camss.c     | 50 ++++++++++---------
->   drivers/media/platform/qcom/camss/camss.h     |  1 +
->   4 files changed, 66 insertions(+), 25 deletions(-)
-> 
 
-Gentle ping, I hope the changes are good to be included.
 
---
-Best wishes,
-Vladimir
+On 9/8/2022 2:28 PM, Krzysztof Kozlowski wrote:
+> Correct CPU BWMON unit address to match the "reg" property.
+> 
+> Reported-by: Stephen Boyd <swboyd@chromium.org>
+> Fixes: b2f3eac1b77c ("arm64: dts: qcom: sc7280: Add cpu and llcc BWMON")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Thanks for catching this,
+Acked-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+
+> 
+> ---
+> 
+> Fixes tag for commit in current Bjorn's for-next.
+> ---
+>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index ad04025a8a1a..a58916009281 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -3328,7 +3328,7 @@ opp-7 {
+>   			};
+>   		};
+>   
+> -		pmu@90b6000 {
+> +		pmu@90b6400 {
+>   			compatible = "qcom,sc7280-cpu-bwmon", "qcom,msm8998-bwmon";
+>   			reg = <0 0x090b6400 0 0x600>;
+>   
