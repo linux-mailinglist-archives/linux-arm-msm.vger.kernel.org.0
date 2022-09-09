@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A07915B335B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 11:18:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 024A65B3348
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 11:18:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231649AbiIIJOo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 05:14:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57066 "EHLO
+        id S232090AbiIIJOr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 05:14:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230360AbiIIJOl (ORCPT
+        with ESMTP id S232037AbiIIJOm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 05:14:41 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AAFC18E33
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 02:14:37 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id z25so1666723lfr.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 02:14:37 -0700 (PDT)
+        Fri, 9 Sep 2022 05:14:42 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F5911F628
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 02:14:38 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id m15so1619465lfl.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 02:14:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=mVdK7E4cY7cM5XQpQxkxfa74Zdst6+MVrVvVyV2J/ME=;
-        b=sZTsC4qmG3N4ZhlzVNgf2Cz+mT4hmqeYeHoq0nJoM+mtNj+UGnELed8RQwGArniXGR
-         YT9Drrj/vOf/DSssfXMSE211vG/ihKDBViaRjNiEpGO9pIeUUiYub+PDfqW10dQ+C0py
-         2BEL1Yb/Zo8uwUWeGfnpindD02vrpbHpLVnK357UV1+FcHf0s5kcQQ08NQQ+2o1qOV3N
-         MUfeRM4760T01DkPlrMv3oKimoShLhvcFMPvRS9M+dRcDB1FMK2qAR0KMLsBtdtrmA4a
-         YAMH3dXwNG8yld04wcA/oN14eueK+WkHgGD88tHHUV9Q0AgvI2wq6NPzvia/BLaVXk9J
-         21dQ==
+        bh=yo3fzEL2MH9/Z5sCPMvSryXTswiCiE4zCueiwPbmMJw=;
+        b=I09q540wNgASCcfzkVQFssE8sMbveIIhcA6Z09GplrHWUYsk8KFZbvf43Zird/1nn2
+         zNSKcIXJwooz5QySJVxaAH9LJuCgA+il9evcpFbs4IydwQAgjKAbjt4sRdWA6hZ+Rm3U
+         dTkNUUBAypaE1sovauis+U2JEbyKS9BRsp3qc+nLNqpPqMWtwlKZwX9OYhIzK9qAatCM
+         ESrGoRMHVsJ6o78GhTHdh1+EAo0sYG3FyrQ6uMtU1g+mozXzySNZSlIUGeKVgC8sohTt
+         tIcu9lqyAoXZLKdcVe6cujzu5u7Xuym/XtKohvMSknSDAtjfKSmvsPDYEutGx57AX7AO
+         fOSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=mVdK7E4cY7cM5XQpQxkxfa74Zdst6+MVrVvVyV2J/ME=;
-        b=pCaysXjegEnVzMHZO52poiOti6RkuTPBf2UDVBKYI7Y0rO/c2DZJ4hMS2frWssnZt/
-         oeKwln+MCqorxRoFmLgBM8ER07+dpkl7uL85rdMutFCJEO8j3qfBwsORCKKGmZEpLdtz
-         rvkzUDWozVgef3wwxe9ft8ilUyILWBdlbsBT8JR9ZvP/JaOCo63MgwfbzMUJaF2Od6pO
-         68uAiIeBs5mzJeoqCTubjP4KR+5LWFzXi/S6cLY32+PybUOxp1Igj7tnJd3aq0OUBZFE
-         lFTuzqAGccu3vsQR+ngFlXHRSPYIRD7QBWDCt8FXnrYP2QIj4iBmR3F3JmFyl6Cgpik9
-         OQ9Q==
-X-Gm-Message-State: ACgBeo22kelWmsZI8vJq6GGs5Fb/KhSfR81p3To0ziICQyMuijhxh2Z2
-        QxNzqZkQVWRcI+E+YPhWnfDDjg==
-X-Google-Smtp-Source: AA6agR5GLSJc2/tZgMKnpxjUZbHhfQBcV4ocohEfkZI2hZeRI0rEjw/VZNAQ/8PcktlxZLsGQWYFYg==
-X-Received: by 2002:a05:6512:1115:b0:497:cd1:463 with SMTP id l21-20020a056512111500b004970cd10463mr3896511lfg.24.1662714875565;
-        Fri, 09 Sep 2022 02:14:35 -0700 (PDT)
+        bh=yo3fzEL2MH9/Z5sCPMvSryXTswiCiE4zCueiwPbmMJw=;
+        b=m/R9DCAjD+3PNKWvdu4O+hYZMDFeX6jagez08Du4DVMFarnwW2IqWOym0OO57rOh4p
+         etWt+kv5Fsc5awrDsBAl30H0vs96Yx9uy717CGZu4mG15cGzpbJso1aZ1zx6+vTRbn/v
+         m3TNMu2AgMap+xaVB4/miil413I0ZZv/K3wKTLEYEw+A19nZ99jgrmtaE4ZRIaxdxrE3
+         lKzTnzn6oQgXlKb9ZGr+VBT51ltQdCyUn4I9XFmLxZcP4SE6bspT52OZ51KuTekwZiVW
+         xCYD9kU4fCpIrK0ymV1nmXmo4tslo7AaQCwHnEnUG1Iq1bj+CNyiMrUTkFy1SPLOX4xT
+         wybA==
+X-Gm-Message-State: ACgBeo3eUaNHU0eQCDKfJzA+0vAzxXAek8mWSroEe4LTibLCsxWbm9kv
+        0UVaG6KKe8YnotJ3N9mlFnkN5Q==
+X-Google-Smtp-Source: AA6agR7zjwZxZLgPdwIfmRIGIY6qewPODEd+YdPLR/bq/XdiO2fld+WmNT11SsXRIBXgOfiXe4ZTjw==
+X-Received: by 2002:a05:6512:b11:b0:492:edb9:9d74 with SMTP id w17-20020a0565120b1100b00492edb99d74mr4000341lfu.663.1662714876660;
+        Fri, 09 Sep 2022 02:14:36 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id z26-20020a2e4c1a000000b0026acbb6ed1asm201615lja.66.2022.09.09.02.14.34
+        by smtp.gmail.com with ESMTPSA id z26-20020a2e4c1a000000b0026acbb6ed1asm201615lja.66.2022.09.09.02.14.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Sep 2022 02:14:34 -0700 (PDT)
+        Fri, 09 Sep 2022 02:14:35 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -64,9 +64,9 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-pci@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: [PATCH v3 1/9] phy: define submodes for PCIe PHYs
-Date:   Fri,  9 Sep 2022 12:14:25 +0300
-Message-Id: <20220909091433.3715981-2-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 2/9] phy: qcom-qmp-pcie: drop if (table) conditions
+Date:   Fri,  9 Sep 2022 12:14:26 +0300
+Message-Id: <20220909091433.3715981-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220909091433.3715981-1-dmitry.baryshkov@linaro.org>
 References: <20220909091433.3715981-1-dmitry.baryshkov@linaro.org>
@@ -82,33 +82,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Define two submodes to be used for the PCIe PHYs, where required.
+Drop unused if (table) conditions, since the function
+qcom_qmp_phy_pcie_configure_lane() has this check anyway.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- include/linux/phy/phy.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
 
-diff --git a/include/linux/phy/phy.h b/include/linux/phy/phy.h
-index b1413757fcc3..bd60c1a72988 100644
---- a/include/linux/phy/phy.h
-+++ b/include/linux/phy/phy.h
-@@ -45,6 +45,15 @@ enum phy_mode {
- 	PHY_MODE_DP
- };
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+index 3ddbb8e89f04..536a6ac835c1 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+@@ -1930,8 +1930,7 @@ static int qcom_qmp_phy_pcie_serdes_init(struct qmp_phy *qphy)
+ 	int serdes_tbl_num = cfg->serdes_tbl_num;
  
-+/*
-+ * Submodes for the PHY_MODE_PCIE, allowing the host to select between RC (Root
-+ * Complex) and EP (End Point) PHY modes.
-+ */
-+enum {
-+	PHY_SUBMODE_PCIE_RC,
-+	PHY_SUBMODE_PCIE_EP,
-+};
-+
- enum phy_media {
- 	PHY_MEDIA_DEFAULT,
- 	PHY_MEDIA_SR,
+ 	qcom_qmp_phy_pcie_configure(serdes, cfg->regs, serdes_tbl, serdes_tbl_num);
+-	if (cfg->serdes_tbl_sec)
+-		qcom_qmp_phy_pcie_configure(serdes, cfg->regs, cfg->serdes_tbl_sec,
++	qcom_qmp_phy_pcie_configure(serdes, cfg->regs, cfg->serdes_tbl_sec,
+ 				       cfg->serdes_tbl_num_sec);
+ 
+ 	return 0;
+@@ -2037,44 +2036,38 @@ static int qcom_qmp_phy_pcie_power_on(struct phy *phy)
+ 	/* Tx, Rx, and PCS configurations */
+ 	qcom_qmp_phy_pcie_configure_lane(tx, cfg->regs,
+ 				    cfg->tx_tbl, cfg->tx_tbl_num, 1);
+-	if (cfg->tx_tbl_sec)
+-		qcom_qmp_phy_pcie_configure_lane(tx, cfg->regs, cfg->tx_tbl_sec,
++	qcom_qmp_phy_pcie_configure_lane(tx, cfg->regs, cfg->tx_tbl_sec,
+ 					    cfg->tx_tbl_num_sec, 1);
+ 
+ 	/* Configuration for other LANE for USB-DP combo PHY */
+ 	if (cfg->is_dual_lane_phy) {
+ 		qcom_qmp_phy_pcie_configure_lane(qphy->tx2, cfg->regs,
+ 					    cfg->tx_tbl, cfg->tx_tbl_num, 2);
+-		if (cfg->tx_tbl_sec)
+-			qcom_qmp_phy_pcie_configure_lane(qphy->tx2, cfg->regs,
++		qcom_qmp_phy_pcie_configure_lane(qphy->tx2, cfg->regs,
+ 						    cfg->tx_tbl_sec,
+ 						    cfg->tx_tbl_num_sec, 2);
+ 	}
+ 
+ 	qcom_qmp_phy_pcie_configure_lane(rx, cfg->regs,
+ 				    cfg->rx_tbl, cfg->rx_tbl_num, 1);
+-	if (cfg->rx_tbl_sec)
+-		qcom_qmp_phy_pcie_configure_lane(rx, cfg->regs,
++	qcom_qmp_phy_pcie_configure_lane(rx, cfg->regs,
+ 					    cfg->rx_tbl_sec, cfg->rx_tbl_num_sec, 1);
+ 
+ 	if (cfg->is_dual_lane_phy) {
+ 		qcom_qmp_phy_pcie_configure_lane(qphy->rx2, cfg->regs,
+ 					    cfg->rx_tbl, cfg->rx_tbl_num, 2);
+-		if (cfg->rx_tbl_sec)
+-			qcom_qmp_phy_pcie_configure_lane(qphy->rx2, cfg->regs,
++		qcom_qmp_phy_pcie_configure_lane(qphy->rx2, cfg->regs,
+ 						    cfg->rx_tbl_sec,
+ 						    cfg->rx_tbl_num_sec, 2);
+ 	}
+ 
+ 	qcom_qmp_phy_pcie_configure(pcs, cfg->regs, cfg->pcs_tbl, cfg->pcs_tbl_num);
+-	if (cfg->pcs_tbl_sec)
+-		qcom_qmp_phy_pcie_configure(pcs, cfg->regs, cfg->pcs_tbl_sec,
++	qcom_qmp_phy_pcie_configure(pcs, cfg->regs, cfg->pcs_tbl_sec,
+ 				       cfg->pcs_tbl_num_sec);
+ 
+ 	qcom_qmp_phy_pcie_configure(pcs_misc, cfg->regs, cfg->pcs_misc_tbl,
+ 			       cfg->pcs_misc_tbl_num);
+-	if (cfg->pcs_misc_tbl_sec)
+-		qcom_qmp_phy_pcie_configure(pcs_misc, cfg->regs, cfg->pcs_misc_tbl_sec,
++	qcom_qmp_phy_pcie_configure(pcs_misc, cfg->regs, cfg->pcs_misc_tbl_sec,
+ 				       cfg->pcs_misc_tbl_num_sec);
+ 
+ 	/*
 -- 
 2.35.1
 
