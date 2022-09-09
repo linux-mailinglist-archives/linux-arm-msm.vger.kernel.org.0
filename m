@@ -2,78 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 874E15B3453
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 11:47:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C0AA5B3464
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 11:47:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229480AbiIIJpt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 05:45:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56604 "EHLO
+        id S231674AbiIIJqD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 05:46:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231431AbiIIJpr (ORCPT
+        with ESMTP id S231431AbiIIJp6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 05:45:47 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A52BA6AF6
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 02:45:46 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id z25so1787543lfr.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 02:45:46 -0700 (PDT)
+        Fri, 9 Sep 2022 05:45:58 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F396B6024
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 02:45:56 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id c11so1778074wrp.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 02:45:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=Z11oNrAMyfwkdQgEo2IKDmAHGDHQObgXCjX2GBbA6qE=;
-        b=ppz5LPOoVAmzg0sY6VW3WjXkDjCmiLqRG4ZXdoHSQScqin1sZ66GIM7yEOo3Yi+ajy
-         pJMNWLlhfNVC1OTp7I9rBSqjXhJ771dnb5vPngiTeRnh1meLCjP7tkA8W60I+zYIKAys
-         7q3iVNd5eZlplPO1WAF9NyYMs2VO/rL4SBUKq9swl6Sp7rkWN1tbjj9F+C4Y9uvTjDxl
-         PO3+Vr+6WV0wRTLFXAVD9nYGTU8LU+7iM/RJHRh9HuBFjlW25CJEBIFIQqTaOg/bERXZ
-         ZQbOglmRs3GlVVWYUzrwiVKjzx2ki+O4FAt28otMTF3yuVIMKJrob71db5VbT02U+Jlv
-         k7bA==
+        bh=VpThbe8guKkTwpHrdYNBDJk5GWCovHFUSJ8RnnMnk6g=;
+        b=Tn08c/5JrTkDYxf9JP+BQRqJAKtzTBpuTTVsrsWIfFmY3BKIup/asMRrLQSoChOYHp
+         tNhuNH1d0f3+4ufoQZ/irHZNIpXh18tmWUHTRuV8lR7Hqb2BuTPDMM6+lpEQGxaxqt9j
+         PIc0kk+FesFhVgmL091Fkdz4NQROCzjXAdHxdAJExzgjO21FFUwmSkHzysyhIXRyxOwR
+         cwoSbhj2S74bTWf6SLGSMEWOHaTgLEDJKUDYLgmDWdwZXsdcc3PfB7iejktrwWceAf9f
+         xyZ0l/7/sHQuIQvNk7rT78nRUAMWyV9M4xlwhnOax4HGvUpB46cCRWcck9Tb493iNgDz
+         LsMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=Z11oNrAMyfwkdQgEo2IKDmAHGDHQObgXCjX2GBbA6qE=;
-        b=5onSVv7dX4vir3hmfSzQ96Y94DLC0jPSkNDRvLIdUbfxthnoH3y0dpCKPqWtbTfPjl
-         qDsLtkkuJYzwo31mSIDKa4VWJj4Mpm+yomUVxWrgmmgBTxRH0gBdwmtMttjNnTbVwZti
-         v/t8ETQN6M56rGEXjBZRFUR3M/lydihQw6Q1/BVRaR2ZVv9YduUl8UDCBNpBiVVANRjB
-         WM4PpERoVDesvBdbxhVcW4eO4mVyPIBEGufNJdJk9NxsoNSRrk6H22UPoMyywGOUg0eF
-         /UV5h/0/Y244VqjEt0sdlBLXohiBnek1Qs/UTmiKVWeGgDJ7j1GIBbnnjZKP3Wh0x81a
-         l6Lw==
-X-Gm-Message-State: ACgBeo30tPENC5a0B1Evb9yQ8h8Ejy1X+7mg39kPTutDY3mLVNNGzcGd
-        Styhh9/WPDlQuFS4STsEv86+5g==
-X-Google-Smtp-Source: AA6agR5Xl4LdiqD9+wRA2Q5p3CphYbxz7NQLx99BzCBC4UOdxyvS0cZ7IXkQkv96RqFN8oLfORv27w==
-X-Received: by 2002:a05:6512:3502:b0:496:272:6258 with SMTP id h2-20020a056512350200b0049602726258mr3789933lfs.429.1662716744900;
-        Fri, 09 Sep 2022 02:45:44 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id f28-20020a2eb5bc000000b00264b292232asm7757ljn.63.2022.09.09.02.45.44
+        bh=VpThbe8guKkTwpHrdYNBDJk5GWCovHFUSJ8RnnMnk6g=;
+        b=FHdPsK9o7uvJMz3JM552TZt92ixFNwVTcmLuKm1K8Xmbu9UQeCoz8m/l/6i8r+Xj0X
+         qjD7q75pGOHPowOzoK8i8668qU2gLkKvEt2Duin8mkoZgfDIXdLCrl5XnYQoeGSYdktm
+         AnZ0E/ht0aVTuXIZ0Jgxxc6zzRXp2+kmCLbI3weFOIHYvSfKp4phTPQR8pZp+e2OxkS3
+         lUzJy9jr75T8nrATN0zK/kvs7xcSB7kiL/yKeMRJaQHnCReBLJJ2+LfwHheEkCMECdD6
+         7HNhykvMe91pgacAok2aEuDOVa2/dOWvzHVHdhY5sne6qagsIGcM9XVK5bdJL7tH1jKG
+         mNRQ==
+X-Gm-Message-State: ACgBeo27ZxYaaAzLQn9bayXXkS68To5OHIeSxWsSA/WoCk7l2aozHSTC
+        qhDRsXMP9At0cG4+acfXEkkocw==
+X-Google-Smtp-Source: AA6agR5w63EZsxEPD4It3zid2cpGCTqxvsFLMwsJC8Y+tyuxAZb7LkaKpwpIWBOYGI+L0ngJVJME7w==
+X-Received: by 2002:a05:6000:10d2:b0:228:d60b:6d5a with SMTP id b18-20020a05600010d200b00228d60b6d5amr7168864wrx.146.1662716754958;
+        Fri, 09 Sep 2022 02:45:54 -0700 (PDT)
+Received: from [192.168.86.238] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.googlemail.com with ESMTPSA id k4-20020a5d4284000000b002286670bafasm82563wrq.48.2022.09.09.02.45.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Sep 2022 02:45:44 -0700 (PDT)
-Message-ID: <1e502a39-6ba4-079c-576f-10fff260d131@linaro.org>
-Date:   Fri, 9 Sep 2022 12:45:43 +0300
+        Fri, 09 Sep 2022 02:45:53 -0700 (PDT)
+Message-ID: <1b4084bc-2ec6-e2fe-5a0c-40a3409b7b9b@linaro.org>
+Date:   Fri, 9 Sep 2022 10:45:52 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.1.2
-Subject: Re: [PATCH 09/16] phy: qcom-qmp-usb: disable runtime PM on unbind
-Content-Language: en-GB
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2 3/9] dt-bindings: nvmem: Add SoC compatible for sm6115
+Content-Language: en-US
+To:     Iskren Chernev <iskren.chernev@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-kernel@vger.kernel.org
-References: <20220907110728.19092-1-johan+linaro@kernel.org>
- <20220907110728.19092-10-johan+linaro@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220907110728.19092-10-johan+linaro@kernel.org>
+References: <20220903174150.3566935-1-iskren.chernev@gmail.com>
+ <20220903174150.3566935-4-iskren.chernev@gmail.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20220903174150.3566935-4-iskren.chernev@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,20 +83,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/09/2022 14:07, Johan Hovold wrote:
-> Make sure to disable runtime PM also on driver unbind.
+
+
+On 03/09/2022 18:41, Iskren Chernev wrote:
+> Document SoC compatible for sm6115.
 > 
-> Fixes: ac0d239936bd ("phy: qcom-qmp: Add support for runtime PM").
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
 > ---
->   drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 7 +++----
->   1 file changed, 3 insertions(+), 4 deletions(-)
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Applied thanks,
 
-Nit from the patch 01 applies too.
-
--- 
-With best wishes
-Dmitry
-
+--srini
+>   Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> index dede8892ee01..54053e16b8fd 100644
+> --- a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> +++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+> @@ -26,6 +26,7 @@ properties:
+>             - qcom,sc7180-qfprom
+>             - qcom,sc7280-qfprom
+>             - qcom,sdm845-qfprom
+> +          - qcom,sm6115-qfprom
+>         - const: qcom,qfprom
+>   
+>     reg:
