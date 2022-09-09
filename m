@@ -2,79 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 73CEC5B3B60
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 17:03:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E51905B3BE1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 17:30:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229631AbiIIPDT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 11:03:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60352 "EHLO
+        id S229478AbiIIPaB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 11:30:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229480AbiIIPDS (ORCPT
+        with ESMTP id S231638AbiIIP36 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 11:03:18 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECE1413A079
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 08:03:16 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id f9so2435094lfr.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 08:03:16 -0700 (PDT)
+        Fri, 9 Sep 2022 11:29:58 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F3236550
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 08:29:22 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id t14so3360683wrx.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 08:29:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=Vmqll87fgXtVSsw5dDmsHLc4RXFQEKzpyOW1jQCzE+c=;
-        b=iY411gwIt+9peHpUPGegqHIUg+1PiWLZb0HyXiE3QEUMW9/803x2Mbhk9yy8ZFhu10
-         mKjIUfR+HlAozp5T5YDJiYOLP6sQJR+ttRnyMfnkDZ1vTKicPpvn8mUWEGlOGwel1GmR
-         tl6fVjCrieqdr+ZkbBD42sS/QfU8xY5eZr5IuS7AAJa5mQ+h832L3bOMnKp0Asoz8NI7
-         AFVQObumPfNuTOm8IygKx+w+v/9rCOQEqTnEY0HJaipW28ByI82IlHa8K+IY0ck8ezqS
-         YqMHGuIJ4loLZpji7Oz2mj9+V/c1ypk+CxEojY3HTAhiJLDGgweOpqwq76YcmLXyHlKO
-         IMvQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=x5KrfZMUqk39SoEPHLkAPrMFfPRI1D3FajlqzTwrI2w=;
+        b=oSYpl/Gb1s9dRqBo3A5bgCA72v4jIqY5p2bmNk/vF4s4Z3Ej+MlZWJsUyTGVNwZ/yL
+         80TFASgEwfo3yvcFMYRdBstqzyu3kpN57pNe+DqjU8T1t5aIe6g+UheTJwf4quTfGohg
+         dIECs/DMEDAnA6Z/89eBhe+EPGIjU3BGLmeGSbWEHr/afbL8jo2GOosPz7te/ia1zXqc
+         ViZLMeW/bckHzNGye3KqZHyv26ATnWeXHJ9RDz7Ar1pQyEhVa1XXJ98OQvOJ2T5Y8pRs
+         005yXvVrRb7ofk+0Y56L42BjxJn4xzM7xbGKTY9PgS/MXHUxNbbPkdkU5aut49H1VH18
+         fRgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=Vmqll87fgXtVSsw5dDmsHLc4RXFQEKzpyOW1jQCzE+c=;
-        b=hkjOguwwxq5/IQ5O47Sxty4r2efwyLoN5+cArCkapGWwwY5mg8bdXf8EZTeg+sIAGD
-         GDyaABE7y2IO1yIs+owW2EKeteX7YwbUXe8Q9CcYkQNzLpTtEAmAKkqlHMO0/thl+fVb
-         +aQtUlzT0cMxSszjfVqZ9pAPzVEpY+RySv87hj2tcOXVMVhBLwl/mX6bgTfBNlElJqHo
-         vdLvEEMeW4+oVaOsJnLGpg7IP10Q3YXwIQc+HAlNSpw9mc2pb5so29ZaglXboPmyUdQj
-         0RqZMGg3MHnaLGdGFHb4KPBxpEQrLTcRPteEIgzxMOhcOWfCQT4H5e7RV840XYcE2Lty
-         Sx6w==
-X-Gm-Message-State: ACgBeo2jSMqd9IuwJc8xH5a0mKqDQTYD2LvnF8nQe/lO/FgNcjWH2pyU
-        fZm2jR0vHdHuCnA8mrsreGIM6g==
-X-Google-Smtp-Source: AA6agR4bGw6VYraARGB5bgxJrO2WZfHyY5MJ9ZBdMbJR+yrevj/QUf63tb6GKqtB1BYu2TF2jkgEPw==
-X-Received: by 2002:a05:6512:1686:b0:491:3199:d407 with SMTP id bu6-20020a056512168600b004913199d407mr4648076lfb.476.1662735795141;
-        Fri, 09 Sep 2022 08:03:15 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id 22-20020ac25f56000000b0048a891e4d88sm109926lfz.193.2022.09.09.08.03.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Sep 2022 08:03:14 -0700 (PDT)
-Message-ID: <59242592-4e3d-b7c2-e0bb-b39df780c26b@linaro.org>
-Date:   Fri, 9 Sep 2022 18:03:14 +0300
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=x5KrfZMUqk39SoEPHLkAPrMFfPRI1D3FajlqzTwrI2w=;
+        b=RF2NIvgqk7TBbFUjpkpo+UiVFOW0xygNUibGUDgwcJodv4Ns6KOeL6RvTUJs9CClac
+         OkebRsvBpgXxS6tXmrebqvMduswLWjR4iy4VrZtRQhgXdJFqgq8ZUp99tLvPw64XKfXW
+         Pe+7II6u+ZnBbrQfLw1uX2m4qYQqjXESEZCKhEfZ2q86oEFLWnO8dO8ilko342Ev4+4z
+         5ZeoQ+Dwt9iXDJLt2EohtEc2xupZ9Jbq083YdBaTY/TZ7zXWZ4k3bTe70tth5HvnIPHK
+         nZfTGP7ejNkdqwa9w56fTae06D1WvOQPjSG9xakgDXI4QGppkPCdnElx7W34mJ3cNU+V
+         Aj7w==
+X-Gm-Message-State: ACgBeo1LDj4WsAmrZBZ8d0JmoGH2Dxoch5V3aVYcvRnNTWAFHmXroYus
+        HuohIfoI2eFMb5YmqsSRTM71Dg==
+X-Google-Smtp-Source: AA6agR6wb87riPAljaE4mS1gw1MnP9z5tVpez/1x2jPhB3Ig+9QVEo4MAY76WVxvchFw/nzKIBqD1w==
+X-Received: by 2002:a5d:6481:0:b0:228:dc1f:4f95 with SMTP id o1-20020a5d6481000000b00228dc1f4f95mr8415352wri.298.1662737351151;
+        Fri, 09 Sep 2022 08:29:11 -0700 (PDT)
+Received: from radium.lan ([88.160.162.107])
+        by smtp.gmail.com with ESMTPSA id o12-20020a5d4a8c000000b002285f73f11dsm956931wrq.81.2022.09.09.08.29.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Sep 2022 08:29:10 -0700 (PDT)
+From:   Fabien Parent <fabien.parent@linaro.org>
+To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org
+Cc:     airlied@linux.ie, daniel@ffwll.ch, dianders@chromium.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Fabien Parent <fabien.parent@linaro.org>
+Subject: [PATCH] drm/msm/mdp5: fix kernel panic during shutdown
+Date:   Fri,  9 Sep 2022 17:28:56 +0200
+Message-Id: <20220909152856.149291-1-fabien.parent@linaro.org>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.1.2
-Subject: Re: [PATCH 1/6] dt-bindings: phy: qcom,hdmi-phy-other: use pxo clock
-Content-Language: en-GB
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Vinod Koul <vkoul@kernel.org>, linux-phy@lists.infradead.org,
-        Kishon Vijay Abraham I <kishon@ti.com>
-References: <20220909132010.3814817-1-dmitry.baryshkov@linaro.org>
- <20220909132010.3814817-2-dmitry.baryshkov@linaro.org>
- <d72fc00c-85ba-8b48-1fcf-42fe9e8daeee@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <d72fc00c-85ba-8b48-1fcf-42fe9e8daeee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,58 +71,108 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/09/2022 16:30, Krzysztof Kozlowski wrote:
-> On 09/09/2022 15:20, Dmitry Baryshkov wrote:
->> Add pxo clock to the 8960 bindings (used by the HDMI PLL)
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   .../bindings/phy/qcom,hdmi-phy-other.yaml     | 23 ++++++++++++++++---
->>   1 file changed, 20 insertions(+), 3 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-other.yaml b/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-other.yaml
->> index fdb277edebeb..2c21e120ff8d 100644
->> --- a/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-other.yaml
->> +++ b/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-other.yaml
->> @@ -53,7 +53,6 @@ allOf:
->>             contains:
->>               enum:
->>                 - qcom,hdmi-phy-8660
->> -              - qcom,hdmi-phy-8960
->>       then:
->>         properties:
->>           clocks:
->> @@ -63,6 +62,24 @@ allOf:
->>               - const: slave_iface
->>           vddio-supply: false
->>   
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - qcom,hdmi-phy-8960
->> +    then:
->> +      properties:
->> +        clocks:
->> +          minItems: 1
->> +          maxItems: 2
->> +        clock-names:
->> +          minItems: 1
->> +          items:
->> +            - const: slave_iface
->> +            - const: pxo
-> 
-> Why pxo is optional? Commit msg does not say much here.
+The kernel is panicking when rebooting on MSM8939:
 
-It's optional as it is not present in current DT files. The driver will 
-fallback to 'pxo_board' if the clock is not present.
+	# reboot -f
+	[   87.280853] Unable to handle kernel write to read-only memory at virtual address ffff800008ed5810
+	...
+	snip
+	...
+	[   87.445142] Call trace:
+	[   87.452253]  mutex_lock+0x1c/0x50
+	[   87.454511]  msm_drv_shutdown+0x28/0x40
+	[   87.457984]  platform_shutdown+0x28/0x40
+	[   87.461629]  device_shutdown+0x14c/0x240
+	[   87.465796]  __do_sys_reboot+0x180/0x274
+	[   87.469703]  __arm64_sys_reboot+0x28/0x3c
+	[   87.473608]  invoke_syscall+0x54/0x124
+	[   87.477515]  el0_svc_common.constprop.0+0x44/0xec
+	[   87.481163]  do_el0_svc+0x90/0xe0
+	[   87.485934]  el0_svc+0x50/0xa4
+	[   87.489232]  el0t_64_sync_handler+0x11c/0x150
+	[   87.492185]  el0t_64_sync+0x190/0x194
+	[   87.496618] Code: f9800011 c85ffc03 ca010064 b5000064 (c8047c02)
+	[   87.500264] ---[ end trace 0000000000000000 ]---
+	Segmentation fault
 
-> It seems you also miss the DTS change adding the clock.
+The issue comes from the fact that mdp5_init() is calling
+platform_set_drvdata() and consequently overwriting the driver data
+previously set by msm_drv_probe.
+msm_drv_shutdown was casting the driver data as "struct msm_drm_private"
+while it was actually a "struct mdp5_kms".
 
-Oh, I'll add it to v2.
+This commit fixes the issue by having mdp5_init() not override the
+platform driver data, and instead use a series of
+to_mdp5_kms(to_mdp_kms(priv->kms)) to retrieve the mdp5_kms from the
+pdata.
 
+Fixes: 54199009958f ("drm/msm: Fix shutdown")
+Signed-off-by: Fabien Parent <fabien.parent@linaro.org>
+---
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+index d2a48caf9d27..17aeabeedfeb 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+@@ -634,7 +634,8 @@ static int mdp5_kms_init(struct drm_device *dev)
+ 
+ static void mdp5_destroy(struct platform_device *pdev)
+ {
+-	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
++	struct msm_drm_private *priv = platform_get_drvdata(pdev);
++	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
+ 	int i;
+ 
+ 	if (mdp5_kms->ctlm)
+@@ -797,7 +798,8 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+ 		goto fail;
+ 	}
+ 
+-	platform_set_drvdata(pdev, mdp5_kms);
++	/* set uninit-ed kms */
++	priv->kms = &mdp5_kms->base.base;
+ 
+ 	spin_lock_init(&mdp5_kms->resource_lock);
+ 
+@@ -890,13 +892,13 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+ 	if (ret)
+ 		goto fail;
+ 
+-	/* set uninit-ed kms */
+-	priv->kms = &mdp5_kms->base.base;
+-
+ 	return 0;
+ fail:
+ 	if (mdp5_kms)
+ 		mdp5_destroy(pdev);
++
++	priv->kms = NULL;
++
+ 	return ret;
+ }
+ 
+@@ -956,7 +958,8 @@ static int mdp5_dev_remove(struct platform_device *pdev)
+ static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
+ {
+ 	struct platform_device *pdev = to_platform_device(dev);
+-	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
++	struct msm_drm_private *priv = platform_get_drvdata(pdev);
++	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
+ 
+ 	DBG("");
+ 
+@@ -966,7 +969,8 @@ static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
+ static __maybe_unused int mdp5_runtime_resume(struct device *dev)
+ {
+ 	struct platform_device *pdev = to_platform_device(dev);
+-	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
++	struct msm_drm_private *priv = platform_get_drvdata(pdev);
++	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
+ 
+ 	DBG("");
+ 
 -- 
-With best wishes
-Dmitry
+2.37.2
 
