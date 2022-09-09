@@ -2,87 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C8C45B3D48
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 18:47:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 390C95B3D73
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 18:51:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231302AbiIIQrX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 12:47:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35660 "EHLO
+        id S230358AbiIIQvp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 12:51:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230302AbiIIQrL (ORCPT
+        with ESMTP id S232000AbiIIQvP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 12:47:11 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F523145FEB
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 09:47:09 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id a8so3642996lff.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 09:47:09 -0700 (PDT)
+        Fri, 9 Sep 2022 12:51:15 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC4DD3DBC6
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 09:50:51 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id l12so2542381ljg.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 09:50:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=bfzSyFF46ifX38zUWogpF3ZN9XCyY5YdKQPWMnyMhBA=;
-        b=sJJTDn+167/60KxVXAwetrvS/mBKJoT3XImW/Vfc/qXtGFmQuTCRrLT/O/aQk9xAty
-         joJ5DfSi0sNJKiOcAHDbpyBeCAye7jEbTFUE4mmN1n2vnpjdN2bzgptwDbH9fEpNSTie
-         djeuXrjvicS9qrhZ2GQ21UavYKjxgd6l0/PqBcUrI3QFgT6M5Jqb5gPGB63Fj+wyS2rv
-         io3d51+VcUDIjuVY81wCjgWCdbNSeU5dNY+t5gr8YV39A2Omp39aqSRLrPwy7K4UwvN1
-         MRBHOMQNLP212iGcGosG3hkhW1nBRKSae0ILeutt4I7ANtl5OVk2OvBI0C3RgUqfQFDp
-         a3qQ==
+        bh=O9FowbIs62g6VcoOUNjt1bKmyMiLJOoWtlkCshtX0Fg=;
+        b=HxfxZkCrYWrP5oC/dAO7XCw0lY9M6rHKMudvwSVsQfpO6bWusxC2iZUY2+gi4OXpWw
+         JifIGrWiP4kq1vy0hBAx8QYqpa8LqeEkqtnQj63e/E/Ncx7+QIWkfsL/xgRKpJVv5awB
+         O7q1TIIYjXLqu/seLPO3qOjB7rFZog+yeHdEe88EoKtKrrKVj9kQ20IL6FBcwAGZ3zwL
+         WZangDDIiz75B563jQ2ITB3lxszPM+JvDTQdWqthTOhGqPfaf/ekpTQ49GjsxKCqBy6N
+         gNjZlQ1bsD7ESAacfi5s4RMwMgoWvAXSm7is8Em53Ij3SMnTRLIMt+0DUJZplHB6jHfV
+         lXMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=bfzSyFF46ifX38zUWogpF3ZN9XCyY5YdKQPWMnyMhBA=;
-        b=akfjksuj38yrG8kRPz6LWCHjBImBmGGPGpBmJ2ng0J0V1u1O/ogfu3d8xfSjkiOYUv
-         4wkaQiFHD8ACooPZeL0XIxtupLgmNcNgaUWuE+AAQWp6tfrn+0tWyiHUlpMSlaUje/mw
-         CZCMemrhU5GyhiLjcNk4CwK8DVFPf4vxqjA23bQvwYkoYQ6VkzEBFDklBUBuPrJ5rMxq
-         3raiEnex3ozdeSVIDF7m3y0oy5XGVa/W55brkuKjMuEdOspB1uKTVQgm1i5dIKGD7aDb
-         DuuPGW2LKPUgGJQdISzDuP2XZYZ4Gr19ieyVpGHReL2y+QPFNNEdag7fxrXv67xsxBhy
-         LU6A==
-X-Gm-Message-State: ACgBeo3LiECV8/g1V7jev4Z5O3TF2fDdBWw3cv5DN75kbBPoW2Ughv6S
-        N8Bgeh56UmMirhrqIqlFnBtuHfM7tjluyQ==
-X-Google-Smtp-Source: AA6agR7bcvO0BR4pZ0MnbFrfWtX1i6iP5cbbfLMKgpNbni1L64U+WaI1aRzDr1cdZOoKa1QjRfA80g==
-X-Received: by 2002:a05:6512:310:b0:496:a0ca:1613 with SMTP id t16-20020a056512031000b00496a0ca1613mr5201154lfp.394.1662742028039;
-        Fri, 09 Sep 2022 09:47:08 -0700 (PDT)
+        bh=O9FowbIs62g6VcoOUNjt1bKmyMiLJOoWtlkCshtX0Fg=;
+        b=oiQRWwvYJh+1Ce1NFneIWUlfYUAYa0jBDJtBy1JNBOjQVKuHybOVFDrXrZXhAAOjeX
+         VqFGtnjTe15/eDz8NxwlG0LzW8QN84kb0CN8iUFshXxY7AJ5auihF/Ypp76mC1nyG9aL
+         ZoO6Gi74zYIEkOX8EF9RDkWkZ+QS/Bw+S1Hvr73u7xs0pMtbdzngsK9oRixHz7vVb0nd
+         3CbT+a1ZtOpWBV0JsMK1/mgjYoi3kseKvlvfzUWjGWyulECpLosWtsoVapmuXjJgxWTu
+         EMiN4pdaM6ibmnbXvOmcTNEM+t2iGnRUBNZxq3c/DVDMV5jUECdLSGy0p1hsEp39C/lU
+         HHnA==
+X-Gm-Message-State: ACgBeo37HxQE0vBp7q959ulRvav6bwa2MfAL5sTIVmQM0A1WpzpZjJd1
+        HHRQ0SkiHo7fH6hI+vBGmVmaGQ==
+X-Google-Smtp-Source: AA6agR7nLZO3mdmBv9Mmtc1qPnXOMQHqwzHQeSIz2JK3SZX4Ex5MDsmolP63sATF1fuETKuLJilslw==
+X-Received: by 2002:a05:651c:1044:b0:26b:ece0:b1f3 with SMTP id x4-20020a05651c104400b0026bece0b1f3mr100866ljm.526.1662742249694;
+        Fri, 09 Sep 2022 09:50:49 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id c6-20020a197606000000b004947844e277sm142654lff.178.2022.09.09.09.47.06
+        by smtp.gmail.com with ESMTPSA id m13-20020a056512358d00b00497ad9ae486sm151829lfr.62.2022.09.09.09.50.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Sep 2022 09:47:07 -0700 (PDT)
-Message-ID: <ded53a2a-e4ea-7675-d9c1-eb080e317b6c@linaro.org>
-Date:   Fri, 9 Sep 2022 18:47:06 +0200
+        Fri, 09 Sep 2022 09:50:49 -0700 (PDT)
+Message-ID: <2a5fe53e-4bc2-c2f5-44d1-3cb7bd0c71ef@linaro.org>
+Date:   Fri, 9 Sep 2022 18:50:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
-Subject: Re: [PATCH] dt-bindings: remoteproc: qcom,smd-edge: Add APR/FastRPC
+Subject: Re: [PATCH] regulator: qcom_rpm: Fix circular deferral regression
 Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-        devicetree@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+To:     Linus Walleij <linus.walleij@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, stable@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "open list:REMOTE PROCESSOR (REMOTEPROC) SUBSYSTEM" 
-        <linux-remoteproc@vger.kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-References: <20220908181432.458900-1-stephan.gerhold@kernkonzept.com>
- <20220909161652.GA1448908-robh@kernel.org>
- <CAL_JsqKVb54yckiky79mK5FdEf-Vf7SyVU01Jdpo9whOqq0spQ@mail.gmail.com>
- <0b6f5b4b-247e-7573-04fd-05d037533aa3@linaro.org>
- <YxttwK1FMCMZ+CyS@gerhold.net>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org
+References: <20220909112529.239143-1-linus.walleij@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <YxttwK1FMCMZ+CyS@gerhold.net>
+In-Reply-To: <20220909112529.239143-1-linus.walleij@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -90,18 +80,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/09/2022 18:45, Stephan Gerhold wrote:
->>> And dropped for Krzysztof's series instead.
->>
->> Technically Stephan was first and his patch solves it in partial way,
->> yet still self-contained way. I am fine rebasing my patchset on top of it.
->>
+On 09/09/2022 13:25, Linus Walleij wrote:
+> On recent kernels, the PM8058 L16 (or any other PM8058 LDO-regulator)
+> does not come up if they are supplied by an SMPS-regulator. This
+> is not very strange since the regulators are registered in a long
+> array and the L-regulators are registered before the S-regulators,
+> and if an L-regulator defers, it will never get around to registering
+> the S-regulator that it needs.
 > 
-> Feel free to skip this patch if your series contains equivalent changes.
-> I mainly submitted this to unblock my qcom,msm8916-mss-pil.yaml series
-> so I'm fine as long as equivalent changes have been applied. :)
+> See arch/arm/boot/dts/qcom-apq8060-dragonboard.dts:
+> 
+> pm8058-regulators {
+>     (...)
+>     vdd_l13_l16-supply = <&pm8058_s4>;
+>     (...)
+> 
+> Ooops.
+> 
+> Fix this by moving the PM8058 S-regulators first in the array.
+> 
+> Do the same for the PM8901 S-regulators (though this is currently
+> not causing any problems with out device trees) so that the pattern
+> of registration order is the same on all PMnnnn chips.
+> 
+> Fixes: 087a1b5cdd55 ("regulator: qcom: Rework to single platform device")
+> Cc: stable@vger.kernel.org
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <andersson@kernel.org>
+> Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+> ---
+>  drivers/regulator/qcom_rpm-regulator.c | 24 ++++++++++++------------
+>  1 file changed, 12 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/regulator/qcom_rpm-regulator.c b/drivers/regulator/qcom_rpm-regulator.c
+> index 7f9d66ac37ff..3c41b71a1f52 100644
+> --- a/drivers/regulator/qcom_rpm-regulator.c
+> +++ b/drivers/regulator/qcom_rpm-regulator.c
+> @@ -802,6 +802,12 @@ static const struct rpm_regulator_data rpm_pm8018_regulators[] = {
+>  };
+>  
+>  static const struct rpm_regulator_data rpm_pm8058_regulators[] = {
+> +	{ "s0",   QCOM_RPM_PM8058_SMPS0,  &pm8058_smps, "vdd_s0" },
+> +	{ "s1",   QCOM_RPM_PM8058_SMPS1,  &pm8058_smps, "vdd_s1" },
+> +	{ "s2",   QCOM_RPM_PM8058_SMPS2,  &pm8058_smps, "vdd_s2" },
+> +	{ "s3",   QCOM_RPM_PM8058_SMPS3,  &pm8058_smps, "vdd_s3" },
+> +	{ "s4",   QCOM_RPM_PM8058_SMPS4,  &pm8058_smps, "vdd_s4" },
+> +
 
-Thanks Stephan! Your work is much appreciated!
+Would be great to have here a comment like "S-regulators (being used as
+supplies) must come before the rest".
+
+Same also in second table.
+
+We like to re-order some things from time to time and no one would think
+about checking Git history for any issues with it.
 
 Best regards,
 Krzysztof
