@@ -2,75 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 19B7B5B33A8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 11:22:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E3165B33CE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 11:26:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232267AbiIIJVs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 05:21:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45142 "EHLO
+        id S231818AbiIIJWm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 05:22:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231219AbiIIJVO (ORCPT
+        with ESMTP id S231530AbiIIJWR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 05:21:14 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9781112E183
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 02:21:01 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id y18so1074048ljh.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 02:21:00 -0700 (PDT)
+        Fri, 9 Sep 2022 05:22:17 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BED8136CD1
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 02:21:26 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id f9so938197lfr.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 02:21:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=Yb2tg6NLcz0SjyT+zhbpZCCAWG7Bnyw4PloKDdxoVAU=;
-        b=f/7QeSSps5TESCFk8jMvoH4gZ+ybCQsYE2/4pGB5NK22t1fLqB1HRBruOnRDqC1/9o
-         vvoHjMR8vSLvEHyJqvYJHtLNAwICFDq2lY0is6u1vshVHoEZPh9ILUitiMVr33ns9uUk
-         F77D9r3kykYxlkVNFYJaUt4y1UnzFy5GkAzzF+bS6glstvqVK3J1OKf7JF/yDCTSRLPV
-         X510QS+7XE7FZYFtroemve6D2B5qJC60i4mrxhK2JLES6Cvg/V0Io177YdJLT/HQddsc
-         /O5I0WWlYxMxzKqitQIhOK0f6H2dKfDwX06mNtjUwMRCCnTGjkIQbEcCTeNH9o5m4kdu
-         Iorw==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=5C5lLPWXo2PEugtUTd2/amAX/cOIrsmkGvZKcxLNXv8=;
+        b=FjVvfjC4Qeanl9HJy1Wx0CDHchT64ls67ctXS3tW53xX37jJcTi0bJ0T8efnLOgred
+         dC15271al2nKmj0OGleXVqNIEwnGhWfh7YLZYvONOCHBX1yTnlntuymCC/6jd6WcSYtc
+         FHMsbFGKU/mpAINtvgEPyY++uCrQW47hJ75Sgl206LvZPHbtsmqhOONUoqZmOcE2Cqgk
+         8/C28GxQMxs7S3CMX8zSlWeADy5SNwGkiMMLfHB51glfXKmoL0UDtXw5njLAS/qJWBGG
+         iBCZxpw1Gwf4/zv5RK90wWztLUuvjKfdRwEWLde6spzua/n3Eqz2e6VwAhPmupfNSC8R
+         UL9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=Yb2tg6NLcz0SjyT+zhbpZCCAWG7Bnyw4PloKDdxoVAU=;
-        b=Wzgpwaj9X2Iot00CgxPhE6wirk4aitk553hJAm8Bsl/9yXL36T/qTE0ufTKD7fHoL8
-         C2AqkiSCNVB61G6TN1xxERrmVX+edxgYLoW4VYYS9+X/RA+SmIe6sDyV2xUKM9pfJt7Z
-         SrUbH0eY/9M9pg101B1jdNJdu11QV1ucjiMCzWD0/XkV61opCvNXYjYN2t0onCWu52zJ
-         Hx57FJKePjQBhKs5aHUUL3/XHF4/B1SeUBPTz+5aRdAgoM7WKy6/hAkcnDYjvI8QgEDZ
-         hA/vd0AI45Gjg2a5ME8OsvpIZC/RoWi4XYOzfs9N/SgdXsVVFVRg259djReKro0kX9md
-         BnFQ==
-X-Gm-Message-State: ACgBeo1Q1xGZLvtC9ZxTE2RN08a+YNdr+dGzmQV2dXeSCVRQ8fzH+HKK
-        o2QUQAYulSyitERe+RzRoj1POw==
-X-Google-Smtp-Source: AA6agR4L8LIUifZts/uFRSogq6G/TlU4lexPTUJbQgl5rZWDaWwSt/lS1G4J1EhJjypzzo4lvAyZmQ==
-X-Received: by 2002:a2e:a234:0:b0:26a:a85e:f782 with SMTP id i20-20020a2ea234000000b0026aa85ef782mr3625115ljm.74.1662715259166;
-        Fri, 09 Sep 2022 02:20:59 -0700 (PDT)
-Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id s6-20020a056512214600b00498fe38ea0fsm2170lfr.174.2022.09.09.02.20.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Sep 2022 02:20:58 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=5C5lLPWXo2PEugtUTd2/amAX/cOIrsmkGvZKcxLNXv8=;
+        b=I7qFy8I+FRsNbCcWuFKCt6/5aHiD9Qw35EufTTVyYKOCWGu4QuGRUONTaWwIaMbehB
+         W8zHS2BlBCAG1aW/tWsm5/YGCrwd4pxSbyAov6G4XtAjaa4nkzmsg3pMqDtLFssbPNrb
+         XY/O84JMWIgQ5WJa++BfiNr2eDTDx5+mA/fpaB4t+PkpkMTykPQsWEBt9jlu2vpxUJ8t
+         uov36A+ekgjRUXimTewS0L5uAJ+1ao63ogDE6yftZ98/okgQtonsFZZgZgHWJjRmrn7I
+         bxrx/RDLQLAH9VWvknaEMX+dPTTQiMnEG6EWitES2CNt9knZWcecSOXFkExtQFU/+auJ
+         pPxg==
+X-Gm-Message-State: ACgBeo1nbG6VsqiO3gDkGZQTxTeqBv6fFpo7+nslfWkV+VwtIq2moS5M
+        fgGrSccauTQ/FlyGeC/Hi613vA==
+X-Google-Smtp-Source: AA6agR4yyCDK3ccYh+WDpIf9g7K8b0E/jVJyesR/aOpi2YHy8mnAnvD5r6xvAlgzq4ZTZOOdwrtHWQ==
+X-Received: by 2002:a05:6512:1694:b0:48a:9d45:763f with SMTP id bu20-20020a056512169400b0048a9d45763fmr3886463lfb.662.1662715273122;
+        Fri, 09 Sep 2022 02:21:13 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id u23-20020a05651c131700b0026ac8c94022sm207044lja.119.2022.09.09.02.21.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Sep 2022 02:21:12 -0700 (PDT)
+Message-ID: <7370ba1d-472c-b036-4155-f86ca13f9824@linaro.org>
+Date:   Fri, 9 Sep 2022 12:21:12 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.1.2
+Subject: Re: [PATCH 02/16] phy: qcom-qmp-combo: drop unused defines
+Content-Language: en-GB
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v3 15/15] ARM: dts: qcom: msm8226: switch TCSR mutex to MMIO
-Date:   Fri,  9 Sep 2022 11:20:35 +0200
-Message-Id: <20220909092035.223915-16-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220909092035.223915-1-krzysztof.kozlowski@linaro.org>
-References: <20220909092035.223915-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+References: <20220907110728.19092-1-johan+linaro@kernel.org>
+ <20220907110728.19092-3-johan+linaro@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220907110728.19092-3-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,51 +81,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The TCSR mutex bindings allow device to be described only with address
-space (so it uses MMIO, not syscon regmap).  This seems reasonable as
-TCSR mutex is actually a dedicated IO address space and it also fixes DT
-schema checks:
+On 07/09/2022 14:07, Johan Hovold wrote:
+> Drop defines and enums that are unused since the QMP driver split.
+> 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 15 ---------------
+>   1 file changed, 15 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> index 9ce2ab56be4c..838f7e328b55 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> @@ -28,16 +28,11 @@
+>   #define SW_RESET				BIT(0)
+>   /* QPHY_POWER_DOWN_CONTROL */
+>   #define SW_PWRDN				BIT(0)
+> -#define REFCLK_DRV_DSBL				BIT(1)
+>   /* QPHY_START_CONTROL bits */
+>   #define SERDES_START				BIT(0)
+>   #define PCS_START				BIT(1)
+> -#define PLL_READY_GATE_EN			BIT(3)
+>   /* QPHY_PCS_STATUS bit */
+>   #define PHYSTATUS				BIT(6)
+> -#define PHYSTATUS_4_20				BIT(7)
+> -/* QPHY_PCS_READY_STATUS & QPHY_COM_PCS_READY_STATUS bit */
+> -#define PCS_READY				BIT(0)
 
-  qcom-msm8226-samsung-s3ve3g.dtb: hwlock: 'reg' is a required property
-  qcom-msm8226-samsung-s3ve3g.dtb: hwlock: 'syscon' does not match any of the regexes: 'pinctrl-[0-9]+'
+I think these defines, describing registers and bits, can go to the 
+common header instead.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm/boot/dts/qcom-msm8226.dtsi | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+For the rest of the patch:
 
-diff --git a/arch/arm/boot/dts/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom-msm8226.dtsi
-index 0b5effdb269a..efb5d1edc3a8 100644
---- a/arch/arm/boot/dts/qcom-msm8226.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8226.dtsi
-@@ -44,13 +44,6 @@ scm {
- 		};
- 	};
- 
--	tcsr_mutex: hwlock {
--		compatible = "qcom,tcsr-mutex";
--		syscon = <&tcsr_mutex_block 0 0x80>;
--
--		#hwlock-cells = <1>;
--	};
--
- 	reserved-memory {
- 		#address-cells = <1>;
- 		#size-cells = <1>;
-@@ -508,9 +501,10 @@ rpm_msg_ram: memory@fc428000 {
- 			reg = <0xfc428000 0x4000>;
- 		};
- 
--		tcsr_mutex_block: syscon@fd484000 {
--			compatible = "syscon";
--			reg = <0xfd484000 0x2000>;
-+		tcsr_mutex: hwlock@fd484000 {
-+			compatible = "qcom,msm8226-tcsr-mutex", "qcom,tcsr-mutex";
-+			reg = <0xfd484000 0x1000>;
-+			#hwlock-cells = <1>;
- 		};
- 	};
- 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+>   
+>   /* QPHY_V3_DP_COM_RESET_OVRD_CTRL register bits */
+>   /* DP PHY soft reset */
+> @@ -71,8 +66,6 @@
+>   #define POWER_DOWN_DELAY_US_MIN			10
+>   #define POWER_DOWN_DELAY_US_MAX			11
+>   
+> -#define MAX_PROP_NAME				32
+> -
+>   /* Define the assumed distance between lanes for underspecified device trees. */
+>   #define QMP_PHY_LEGACY_LANE_STRIDE		0x400
+>   
+> @@ -115,22 +108,14 @@ struct qmp_phy_init_tbl {
+>   
+>   /* set of registers with offsets different per-PHY */
+>   enum qphy_reg_layout {
+> -	/* Common block control registers */
+> -	QPHY_COM_SW_RESET,
+> -	QPHY_COM_POWER_DOWN_CONTROL,
+> -	QPHY_COM_START_CONTROL,
+> -	QPHY_COM_PCS_READY_STATUS,
+>   	/* PCS registers */
+>   	QPHY_SW_RESET,
+>   	QPHY_START_CTRL,
+> -	QPHY_PCS_READY_STATUS,
+>   	QPHY_PCS_STATUS,
+>   	QPHY_PCS_AUTONOMOUS_MODE_CTRL,
+>   	QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR,
+>   	QPHY_PCS_LFPS_RXTERM_IRQ_STATUS,
+>   	QPHY_PCS_POWER_DOWN_CONTROL,
+> -	/* PCS_MISC registers */
+> -	QPHY_PCS_MISC_TYPEC_CTRL,
+>   	/* Keep last to ensure regs_layout arrays are properly initialized */
+>   	QPHY_LAYOUT_SIZE
+>   };
+
 -- 
-2.34.1
+With best wishes
+Dmitry
 
