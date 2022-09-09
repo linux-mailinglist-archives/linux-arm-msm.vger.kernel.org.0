@@ -2,67 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C7D65B32D0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 11:06:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AEE15B3314
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 11:13:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231883AbiIIJGL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 05:06:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58070 "EHLO
+        id S232053AbiIIJLJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 05:11:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230385AbiIIJFp (ORCPT
+        with ESMTP id S232081AbiIIJLD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 05:05:45 -0400
-Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A0CA915EE
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 02:05:05 -0700 (PDT)
-Received: by mail-yb1-xb2a.google.com with SMTP id 130so1716887ybw.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 02:05:05 -0700 (PDT)
+        Fri, 9 Sep 2022 05:11:03 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D087C135D5D
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 02:11:01 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id f9so897978lfr.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 02:11:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=e9oyM6c9eO+oX1i0ikmglldoQMouIxTI5tr1NuI9GT8=;
-        b=da8jwOMfsx5H05oRncihV5aFvyzpldWnjk6VRzdiJdjoiXpY+fCe9JssN6Nz9r+L+j
-         l9E4JVcp5pgWrIuipD6Pi6wcKO+xD+VxeNwfuFt6elE6UHvSev+WLO0vDrW/tLIznTIL
-         pDhzZzNph135gYHY2wx3yRTUBfbkz92m+AjchB4HbzuOoSIKq8dgKb1WAhflDbgHEbXY
-         ftwjMPa5bH9X96v79lvW7Je1K0OWgSPjvuOcjVadzfvMMakdATI1M68Gg6PzbT1hBWxD
-         jvBtOUUvWy5eJT0Fdxqw789DmY2q4uFclRA5L54De5cA0Z1HPHPMcwjpwr5m28TWxGz6
-         s6Hg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=Ru7Sx5i9RvgY3g7fyc0DntX2hhZQfjQ93TQ69JqCe9Q=;
+        b=Qkpoucx28Duq+NWHjpWycxiETGjowchu+jAIp4OPfbnygiILEsjNGFgiRLH/4QoFvB
+         de+MBz7CCHm4zXvnhMyLGxUc9jYkb/B029h5fWWApL3nE0Q6U0fXLcAhDJ8WUCuFpUBO
+         h7pxc4i32kGOvf2FPvk7vkFJrOMJL3kFsKzN0FUU/lsSmnkBICPE9Tm/pvOb3/CFXcOW
+         EFLcESJOlinIWR8IGZGtwa3biq92p+gxHvtswCI9Mmd/UF4hvAwTvHvIZpOHUCSNRsOt
+         S+f5YJJOmMJClItubheGV3tkFExxsu8J0u91JJeOKZfnm13MNrUK968/Fy29g9R6mp6Y
+         uE2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=e9oyM6c9eO+oX1i0ikmglldoQMouIxTI5tr1NuI9GT8=;
-        b=zRJoSu/1hVPKEr1Num3A4hdeEIG/6fuE6JKZA4NyzDk3MjeuaVRTETwWW7fyf/kyYf
-         ulHYoBPV0jdX6gnUQMlpuZwXOQ5zE1paG9rGquHe/LTZQB11xnfWMsm80wi2q9hxF8+8
-         N+VrXt1tTXYrrz4oKH9IWH8ICpz+ACVA81Lg5PVP+WiqYoPSzU+se5kTHmhL2ghCPwXc
-         ixXNbbP+jBJePq/4p5ODOq7T1mDpLjMFYevlZUJJeH3z0jeVxrd4PsmwbeiUVbm/QzDD
-         2KKsEiELuMHEh6xkcjqa96yre/CT6bQk+FlkAlDMC41N6H9rOtAWtBQ3td9jF8gpsN80
-         dE0g==
-X-Gm-Message-State: ACgBeo2kmb8hII0BbVP4eNWDggW+PSroFdLWV89Xw5TMM+gnHmbdIL2I
-        fcsEbm7oE5J0SlBlw/RxXPudoTsDjTB/Jes/G2VU7A==
-X-Google-Smtp-Source: AA6agR60pT17TAOcus3ljp/+P1MMns0B4aTuhcTv8h8i4eJsYnX9f8UfuOksTxp7JfFCNnxnPWwh0eKuRzEoeHEZjnk=
-X-Received: by 2002:a25:5c3:0:b0:6a9:90fb:c9e6 with SMTP id
- 186-20020a2505c3000000b006a990fbc9e6mr10891297ybf.152.1662714304890; Fri, 09
- Sep 2022 02:05:04 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=Ru7Sx5i9RvgY3g7fyc0DntX2hhZQfjQ93TQ69JqCe9Q=;
+        b=IdBcG6U7XNBMuFCD1as0NTHa/TEG1zwYY6b2Gn86mrmsRyRCh71Dua1vxhVsu5r5BW
+         x+knRsIUuRBZrwm+R1X+EMrdPKQcxDk1Whr3enSoS/rWrCelGPh+ESRexYqL5ya93sFe
+         4tSdlIMTiHy8FJWW0WwSSByz5OUxPCVdBhedx8dKbIx//wcZXRnN0dEd7NdmXonKWauv
+         wGUMGkdmR9LQmy5MuqK3PBU3uIc511xQg7Cgfy9N7AV63f8use7v1FUn30C+XX11OKvt
+         ukZBqrOLfYGYJsVuFLc6kGo0ghnvwnbv/c0Lo8eej9PqsGjQmHgqv3n81brJIFKZaaFu
+         xh0Q==
+X-Gm-Message-State: ACgBeo0ALiwD9TGfrOyn1/VS+suQ9tJM9aFpoIe6zZtSK4sJDzIuUxb3
+        4vPW1N+IZdyz6531nr4PXfoPjelL2MPjzg==
+X-Google-Smtp-Source: AA6agR7+f0ARlXM0jJUnvsVkrZZApw52MJnuOH4zi76ULJbHUHYUwamJBsE5yP9Jqf98yR788MdsSQ==
+X-Received: by 2002:ac2:5bd2:0:b0:498:909:9c81 with SMTP id u18-20020ac25bd2000000b0049809099c81mr2509172lfn.120.1662714660020;
+        Fri, 09 Sep 2022 02:11:00 -0700 (PDT)
+Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id o16-20020a05651238b000b0049602a81111sm2758lft.107.2022.09.09.02.10.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Sep 2022 02:10:59 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3] dt-bindings: mfd: qcom,tcsr: drop simple-mfd from IPQ6018
+Date:   Fri,  9 Sep 2022 11:10:56 +0200
+Message-Id: <20220909091056.128949-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <1662713084-8106-1-git-send-email-quic_krichai@quicinc.com> <1662713084-8106-4-git-send-email-quic_krichai@quicinc.com>
-In-Reply-To: <1662713084-8106-4-git-send-email-quic_krichai@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 9 Sep 2022 12:04:53 +0300
-Message-ID: <CAA8EJppgaAuEDU44ePOt+ZWK0_rNsXHnE3WOEc9F-n=VE=3aVQ@mail.gmail.com>
-Subject: Re: [PATCH v6 3/5] phy: core: Add support for phy power down & power up
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, quic_vbadigan@quicinc.com,
-        quic_hemantk@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
-        manivannan.sadhasivam@linaro.org, swboyd@chromium.org,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        "open list:GENERIC PHY FRAMEWORK" <linux-phy@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -73,124 +73,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 9 Sept 2022 at 11:45, Krishna chaitanya chundru
-<quic_krichai@quicinc.com> wrote:
->
-> Introducing phy power down/up callbacks for allowing to park the
-> link-state in L1ss without holding any PCIe resources during
-> system suspend.
->
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> ---
->  drivers/phy/phy-core.c  | 30 ++++++++++++++++++++++++++++++
->  include/linux/phy/phy.h | 20 ++++++++++++++++++++
->  2 files changed, 50 insertions(+)
->
-> diff --git a/drivers/phy/phy-core.c b/drivers/phy/phy-core.c
-> index d93ddf1..1b0b757 100644
-> --- a/drivers/phy/phy-core.c
-> +++ b/drivers/phy/phy-core.c
-> @@ -441,6 +441,36 @@ int phy_set_speed(struct phy *phy, int speed)
->  }
->  EXPORT_SYMBOL_GPL(phy_set_speed);
->
-> +int phy_power_down(struct phy *phy)
-> +{
-> +       int ret;
-> +
-> +       if (!phy || !phy->ops->power_down)
-> +               return 0;
-> +
-> +       mutex_lock(&phy->mutex);
-> +       ret = phy->ops->power_down(phy);
-> +       mutex_unlock(&phy->mutex);
-> +
-> +       return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(phy_power_down);
-> +
-> +int phy_power_up(struct phy *phy)
-> +{
-> +       int ret;
-> +
-> +       if (!phy || !phy->ops->power_up)
-> +               return 0;
-> +
-> +       mutex_lock(&phy->mutex);
-> +       ret = phy->ops->power_up(phy);
-> +       mutex_unlock(&phy->mutex);
-> +
-> +       return ret;
-> +}
+Commit 7677ed11e9fa ("dt-bindings: mfd: qcom,tcsr: Convert to dtschema")
+converted bindings to DT schema literally - including the
+qcom,tcsr-ipq6018 expecting syscon and simple-mfd.  Such configuration
+is not used in DTS and there is no actual need of it.  The TCSR block is
+purely configuration block and should not have children.  Any child
+device should be simply moved outside of TCSR syscon block.
 
-As it can be seen from the phy_power_off(), the PHY can be a shared
-resource, with the power_count counting the number of users that
-requested the PHY to be powered up. By introducing suc calls you break
-directly into this by allowing a single user to power down the PHY, no
-matter how many other users have requested the PHY to stay alive.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-> +EXPORT_SYMBOL_GPL(phy_power_up);
-> +
->  int phy_reset(struct phy *phy)
->  {
->         int ret;
-> diff --git a/include/linux/phy/phy.h b/include/linux/phy/phy.h
-> index b141375..3a45f4d 100644
-> --- a/include/linux/phy/phy.h
-> +++ b/include/linux/phy/phy.h
-> @@ -76,6 +76,8 @@ union phy_configure_opts {
->   * @set_mode: set the mode of the phy
->   * @set_media: set the media type of the phy (optional)
->   * @set_speed: set the speed of the phy (optional)
-> + * @power_down: parking the phy in power down state
-> + * @power_up: pulling back the phy from power down
->   * @reset: resetting the phy
->   * @calibrate: calibrate the phy
->   * @release: ops to be performed while the consumer relinquishes the PHY
-> @@ -89,6 +91,8 @@ struct phy_ops {
->         int     (*set_mode)(struct phy *phy, enum phy_mode mode, int submode);
->         int     (*set_media)(struct phy *phy, enum phy_media media);
->         int     (*set_speed)(struct phy *phy, int speed);
-> +       int     (*power_down)(struct phy *phy);
-> +       int     (*power_up)(struct phy *phy);
->
->         /**
->          * @configure:
-> @@ -226,6 +230,8 @@ int phy_init(struct phy *phy);
->  int phy_exit(struct phy *phy);
->  int phy_power_on(struct phy *phy);
->  int phy_power_off(struct phy *phy);
-> +int phy_power_down(struct phy *phy);
-> +int phy_power_up(struct phy *phy);
->  int phy_set_mode_ext(struct phy *phy, enum phy_mode mode, int submode);
->  #define phy_set_mode(phy, mode) \
->         phy_set_mode_ext(phy, mode, 0)
-> @@ -349,6 +355,20 @@ static inline int phy_power_off(struct phy *phy)
->         return -ENOSYS;
->  }
->
-> +static inline int phy_power_down(struct phy *phy)
-> +{
-> +       if (!phy)
-> +               return 0;
-> +       return -ENOSYS;
-> +}
-> +
-> +static inline int phy_power_up(struct phy *phy)
-> +{
-> +       if (!phy)
-> +               return 0;
-> +       return -ENOSYS;
-> +}
-> +
->  static inline int phy_set_mode_ext(struct phy *phy, enum phy_mode mode,
->                                    int submode)
->  {
-> --
-> 2.7.4
->
+---
 
+Changes since v2
+================
+1. Rebase on current MFD changes.
+2. Split from the series. Nothing depends on it, AFAIK.
+v2: https://lore.kernel.org/all/20220817145901.865977-2-krzysztof.kozlowski@linaro.org/
+---
+ .../devicetree/bindings/mfd/qcom,tcsr.yaml    | 46 +++++++++----------
+ 1 file changed, 21 insertions(+), 25 deletions(-)
 
+diff --git a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+index d3c25daa995e..b12809b5cc22 100644
+--- a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+@@ -15,31 +15,27 @@ description:
+ 
+ properties:
+   compatible:
+-    oneOf:
+-      - items:
+-          - enum:
+-              - qcom,msm8998-tcsr
+-              - qcom,qcs404-tcsr
+-              - qcom,sc7180-tcsr
+-              - qcom,sc7280-tcsr
+-              - qcom,sdm630-tcsr
+-              - qcom,sdm845-tcsr
+-              - qcom,sm8150-tcsr
+-              - qcom,tcsr-apq8064
+-              - qcom,tcsr-apq8084
+-              - qcom,tcsr-ipq8064
+-              - qcom,tcsr-mdm9615
+-              - qcom,tcsr-msm8660
+-              - qcom,tcsr-msm8916
+-              - qcom,tcsr-msm8953
+-              - qcom,tcsr-msm8960
+-              - qcom,tcsr-msm8974
+-              - qcom,tcsr-msm8996
+-          - const: syscon
+-      - items:
+-          - const: qcom,tcsr-ipq6018
+-          - const: syscon
+-          - const: simple-mfd
++    items:
++      - enum:
++          - qcom,msm8998-tcsr
++          - qcom,qcs404-tcsr
++          - qcom,sc7180-tcsr
++          - qcom,sc7280-tcsr
++          - qcom,sdm630-tcsr
++          - qcom,sdm845-tcsr
++          - qcom,sm8150-tcsr
++          - qcom,tcsr-apq8064
++          - qcom,tcsr-apq8084
++          - qcom,tcsr-ipq6018
++          - qcom,tcsr-ipq8064
++          - qcom,tcsr-mdm9615
++          - qcom,tcsr-msm8660
++          - qcom,tcsr-msm8916
++          - qcom,tcsr-msm8953
++          - qcom,tcsr-msm8960
++          - qcom,tcsr-msm8974
++          - qcom,tcsr-msm8996
++      - const: syscon
+ 
+   reg:
+     maxItems: 1
 -- 
-With best wishes
-Dmitry
+2.34.1
+
