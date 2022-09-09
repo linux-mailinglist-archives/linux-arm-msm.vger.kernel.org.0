@@ -2,83 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 004745B3AFB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 16:45:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 194425B3B2D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 16:54:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231858AbiIIOoi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 10:44:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43108 "EHLO
+        id S232218AbiIIOyO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 10:54:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232195AbiIIOoU (ORCPT
+        with ESMTP id S232283AbiIIOyJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 10:44:20 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1012E123EF8
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 07:44:16 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id bn9so2095970ljb.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 07:44:16 -0700 (PDT)
+        Fri, 9 Sep 2022 10:54:09 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EC5E135D4C
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 07:54:07 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id f9so2385816lfr.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 07:54:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=QRbJ2ooLdimMcCfJ9oyWLU6O612w08VbsijCYMzYCY4=;
-        b=K8lxF0W6occELPfMaX72DS47qyq9RcaoR6MzPntGsL4CBOOwZuuSbdUq01bJhoW2Tr
-         bCzl8eaBl8oHe5nY3tfpcf6SommdKR2CzjbW47w136RJKjC8NckR1fsagIz2afNQD5AI
-         TreraNJze4MdxXTOP4Ua+x2xv3HoZ+6b7XBzPE/NJ5vU2wiCNAOkkMMH6rErcGIa9TxH
-         v8ZLgeeYhsWAmkGQ7Yfwaw9pLnyLD/xaoZZkhKRz4wtvOaDZNDd3Jekmk4KdpGiLcW4y
-         gCP5FhWLZBRuDhrkmd8czvhsc6myMnMiZpnTxz3Pq/qfZNYOGKCuXedt4YpICCKLQs6s
-         HGeg==
+        bh=GPlNanxZzyuYXr2dtLtbddcEoggsRN1YPrp6j3a0MDo=;
+        b=C/DIu35Vp3ob2CKDtOGnRKh9EVot0EOnfj6O/skxYStU6gmntAgL1OT/KU/ePN/n5z
+         +0elYmIDvGaXjM+Jx8tDCnQCPQKjuGFhtuFo9rCApafv+yBuez9oNZwtRcKxWjxfhL/e
+         4arA9A7k4yUkAkb8V9uXcmyA40lHPkQlU01isnFAQMvKDd8Wx5bqcn6/IGc+eksMeRXW
+         mv5GEF9Opi3FtVhYFKQ1x4bVh6MJrxcLdnTxJEGompeShtKuS9bCosTyRSebPmHDK12Y
+         vIZVxPniTeZYWba6zUYiSK2ON6Wvkap88VyRKEbFY68/gpWOiluKx3X/l1ieC+j8wlvg
+         qJtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=QRbJ2ooLdimMcCfJ9oyWLU6O612w08VbsijCYMzYCY4=;
-        b=GHz/ZyWwRkdcFOlCeEh0CRIDR81iHsYmN0OdLpa8NVXIH/iRtByfcG4Jp9FHUpkzWB
-         aUSEow6ex42ExCEHjA5fCYfDjJHPC+jpSywPaDcVnoJSBLyMydKp+sOtIGF08F4eJAX5
-         UPdKCNBOjowKT67Wol+5Ml5tpv4OIJQKfFCCbgwCM4MRqy1h3781tvNAnDUpI6xk6vxN
-         j4dQeJnLqKwEyaXLpcWsXHMUGvDdxPIB8RrgXdPRDFXgrBT8eY3bnMjeTCJsg3ghMSBA
-         k0iJU44Ls1ThsSCKE/ZumT44ROI8hhmjDnc5BnJhfGVTLRWzOKM30ze+A0jkHJSrMNjM
-         LCeg==
-X-Gm-Message-State: ACgBeo0AvKRT+WviAPcXYDr+qd9nVzLd8er9GWdj9qX/nlwm3J2bEo+p
-        kW+d0DpC/M1cTSVjV6JVQoXUWw==
-X-Google-Smtp-Source: AA6agR7rt6NoM3HYa1SElcUM6vShvP82xGgOkPHH1v8eQ/6KkjSJf/qcew+8kTF5ZhbE6gxoqRPTYA==
-X-Received: by 2002:a05:651c:12cb:b0:25e:44ef:8bfa with SMTP id 11-20020a05651c12cb00b0025e44ef8bfamr4169995lje.324.1662734654792;
-        Fri, 09 Sep 2022 07:44:14 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id o28-20020ac25e3c000000b0048cc076a03dsm101021lfg.237.2022.09.09.07.44.13
+        bh=GPlNanxZzyuYXr2dtLtbddcEoggsRN1YPrp6j3a0MDo=;
+        b=nFQGkSIH3SEUooZoaAWJXd1MYFV1AjF6ZeeC0GyjGPUTKgxyFMtSQJ7HAAWDTYgR0x
+         MyXArIDU7FmrDXM1GybrRC1TpC/0ZSyteUnsEvqL508UU0ywr2O0zGM22E5qEcra0/SS
+         kZqW4BpJMS582SkVVGvCtV0bzZm5BMmuCfFDuSfwV27/vLKb47cvFNi+yjpNNLpXk4H8
+         LRyoyR4O0q3HUhjw82FUM3SAPVI6CmEKJmPpgOaEQVibVamsfcYiwnY3dDvw7gXad5Bo
+         ORrkIkiRtDwfkh5Ugh9X0dBy12pA3TU4sxS4X8774QzaEaiYJJLkhnHCt+XF4NUpOVAk
+         dGmw==
+X-Gm-Message-State: ACgBeo2+YyWhDZnp+YtlwNIl8ys+RuSb1piF/jhguInrW80hZWs9Sc9D
+        bMcPFOq2mDChfBMQfGO6DSmLQhUK/JCq5w==
+X-Google-Smtp-Source: AA6agR6w16Dxz7ZrLFTW9h5UOAyWLkUApXlkYVCjtabyy/rkrbseXdXRD9R+4nLXvx1OiGo3/E+q+g==
+X-Received: by 2002:a05:6512:31d5:b0:498:f3dc:dd2 with SMTP id j21-20020a05651231d500b00498f3dc0dd2mr1940875lfe.101.1662735245157;
+        Fri, 09 Sep 2022 07:54:05 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id br1-20020a056512400100b00492df78f311sm113814lfb.57.2022.09.09.07.54.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Sep 2022 07:44:14 -0700 (PDT)
-Message-ID: <ac64332d-e095-f8df-688b-e757874c6137@linaro.org>
-Date:   Fri, 9 Sep 2022 16:44:12 +0200
+        Fri, 09 Sep 2022 07:54:04 -0700 (PDT)
+Message-ID: <e752fd61-2807-381c-78ab-a6af8ad9b8d6@linaro.org>
+Date:   Fri, 9 Sep 2022 17:54:04 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH v3 03/10] dt-bindings: misc: fastrpc: Document
- memory-region property
-Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh@kernel.org>,
-        Ekansh Gupta <ekangupt@qti.qualcomm.com>,
-        Bharath Kumar <bkumar@qti.qualcomm.com>,
-        Himateja Reddy <hmreddy@quicinc.com>,
-        Anirudh Raghavendra <araghave@quicinc.com>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org
-References: <20220909133938.3518520-1-abel.vesa@linaro.org>
- <20220909133938.3518520-4-abel.vesa@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220909133938.3518520-4-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.1.2
+Subject: Re: [PATCH 3/3] thermal: qcom: tsens: Add data for MSM8909
+Content-Language: en-GB
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220627131415.2868938-1-stephan.gerhold@kernkonzept.com>
+ <20220627131415.2868938-4-stephan.gerhold@kernkonzept.com>
+ <e5c7b34e-2a1a-840a-7f3f-652d8027fa4d@linaro.org>
+ <YxtEtDLVEAGP8sGE@gerhold.net>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <YxtEtDLVEAGP8sGE@gerhold.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -90,16 +87,146 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/09/2022 15:39, Abel Vesa wrote:
-> Add memory-region property to the list of optional properties, specify
-> the value type and a definition. This property is used to specify the
-> memory region which should be used for remote heap CMA.
+On 09/09/2022 16:51, Stephan Gerhold wrote:
+> On Thu, Sep 08, 2022 at 11:57:41PM +0300, Dmitry Baryshkov wrote:
+>> On 27/06/2022 16:14, Stephan Gerhold wrote:
+>>> The MSM8909 SoC has 5 thermal sensors in a TSENS v0.1 block similar to
+>>> MSM8916, except that the bit offsets in the qfprom were changed.
+>>> Also, some fixed correction factors are needed as workaround because the
+>>> factory calibration apparently was not reliable enough.
+>>>
+>>> Add the defines and calibration function for MSM8909 in the existing
+>>> tsens-v0_1.c driver to make the thermal sensors work on MSM8909.
+>>> The changes are derived from the original msm-3.18 kernel [1] from
+>>> Qualcomm but cleaned up and adapted to the driver in mainline.
+>>>
+>>> [1]: https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LA.UM.7.7.c26-08600-8x09.0/drivers/thermal/msm-tsens.c
+>>>
+>>> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+>>> ---
+>>>    drivers/thermal/qcom/tsens-v0_1.c | 119 +++++++++++++++++++++++++++++-
+>>>    drivers/thermal/qcom/tsens.c      |   3 +
+>>>    drivers/thermal/qcom/tsens.h      |   2 +-
+>>>    3 files changed, 122 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
+>>> index f136cb350238..e17c4f9d9aa5 100644
+>>> --- a/drivers/thermal/qcom/tsens-v0_1.c
+>>> +++ b/drivers/thermal/qcom/tsens-v0_1.c
+>>> @@ -15,6 +15,48 @@
+>>>    #define TM_Sn_STATUS_OFF			0x0030
+>>>    #define TM_TRDY_OFF				0x005c
+>>> +/* eeprom layout data for 8909 */
+>>> +#define MSM8909_CAL_SEL_MASK	0x00070000
+>>> +#define MSM8909_CAL_SEL_SHIFT	16
+>>> +
+>>> +#define MSM8909_BASE0_MASK	0x000000ff
+>>> +#define MSM8909_BASE1_MASK	0x0000ff00
+>>> +#define MSM8909_BASE0_SHIFT	0
+>>> +#define MSM8909_BASE1_SHIFT	8
+>>> +
+>>> +#define MSM8909_S0_P1_MASK	0x0000003f
+>>> +#define MSM8909_S1_P1_MASK	0x0003f000
+>>> +#define MSM8909_S2_P1_MASK	0x3f000000
+>>> +#define MSM8909_S3_P1_MASK	0x000003f0
+>>> +#define MSM8909_S4_P1_MASK	0x003f0000
+>>> +
+>>> +#define MSM8909_S0_P2_MASK	0x00000fc0
+>>> +#define MSM8909_S1_P2_MASK	0x00fc0000
+>>> +#define MSM8909_S2_P2_MASK_0_1	0xc0000000
+>>> +#define MSM8909_S2_P2_MASK_2_5	0x0000000f
+>>> +#define MSM8909_S3_P2_MASK	0x0000fc00
+>>> +#define MSM8909_S4_P2_MASK	0x0fc00000
+>>> +
+>>> +#define MSM8909_S0_P1_SHIFT	0
+>>> +#define MSM8909_S1_P1_SHIFT	12
+>>> +#define MSM8909_S2_P1_SHIFT	24
+>>> +#define MSM8909_S3_P1_SHIFT	4
+>>> +#define MSM8909_S4_P1_SHIFT	16
+>>> +
+>>> +#define MSM8909_S0_P2_SHIFT	6
+>>> +#define MSM8909_S1_P2_SHIFT	18
+>>> +#define MSM8909_S2_P2_SHIFT_0_1	30
+>>> +#define MSM8909_S2_P2_SHIFT_2_5	2
+>>> +#define MSM8909_S3_P2_SHIFT	10
+>>> +#define MSM8909_S4_P2_SHIFT	22
+>>> +
+>>> +#define MSM8909_D30_WA_S1	10
+>>> +#define MSM8909_D30_WA_S3	9
+>>> +#define MSM8909_D30_WA_S4	8
+>>> +#define MSM8909_D120_WA_S1	6
+>>> +#define MSM8909_D120_WA_S3	9
+>>> +#define MSM8909_D120_WA_S4	10
+>>> +
+>>>    /* eeprom layout data for 8916 */
+>>>    #define MSM8916_BASE0_MASK	0x0000007f
+>>>    #define MSM8916_BASE1_MASK	0xfe000000
+>>> @@ -223,6 +265,68 @@
+>>>    #define MDM9607_CAL_SEL_MASK	0x00700000
+>>>    #define MDM9607_CAL_SEL_SHIFT	20
+>>> +static int calibrate_8909(struct tsens_priv *priv)
+>>> +{
+>>> +	u32 *qfprom_cdata, *qfprom_csel;
+>>> +	int base0, base1, mode, i;
+>>> +	u32 p1[5], p2[5];
+>>> +
+>>> +	qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
+>>> +	if (IS_ERR(qfprom_cdata))
+>>> +		return PTR_ERR(qfprom_cdata);
+>>> +
+>>> +	qfprom_csel = (u32 *)qfprom_read(priv->dev, "calib_sel");
+>>> +	if (IS_ERR(qfprom_csel)) {
+>>> +		kfree(qfprom_cdata);
+>>> +		return PTR_ERR(qfprom_csel);
+>>> +	}
+>>> +
+>>> +	mode = (qfprom_csel[0] & MSM8909_CAL_SEL_MASK) >> MSM8909_CAL_SEL_SHIFT;
+>>> +	dev_dbg(priv->dev, "calibration mode is %d\n", mode);
+>>> +
+>>> +	switch (mode) {
+>>> +	case TWO_PT_CALIB:
+>>> +		base1 = (qfprom_csel[0] & MSM8909_BASE1_MASK) >> MSM8909_BASE1_SHIFT;
+>>> +		p2[0] = (qfprom_cdata[0] & MSM8909_S0_P2_MASK) >> MSM8909_S0_P2_SHIFT;
+>>> +		p2[1] = (qfprom_cdata[0] & MSM8909_S1_P2_MASK) >> MSM8909_S1_P2_SHIFT;
+>>> +		p2[2] = (qfprom_cdata[0] & MSM8909_S2_P2_MASK_0_1) >> MSM8909_S2_P2_SHIFT_0_1;
+>>> +		p2[2] |= (qfprom_cdata[1] & MSM8909_S2_P2_MASK_2_5) << MSM8909_S2_P2_SHIFT_2_5;
+>>> +		p2[3] = (qfprom_cdata[1] & MSM8909_S3_P2_MASK) >> MSM8909_S3_P2_SHIFT;
+>>> +		p2[4] = (qfprom_cdata[1] & MSM8909_S4_P2_MASK) >> MSM8909_S4_P2_SHIFT;
+>>
+>> Please use nvmem_cell_read_* to read these values. This would allow you to
+>> push all the possible si_pi definitions into the DT and use mode to switch
+>> between them. And mode can be read using the nvmem_cell_read_* too.
 > 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Thanks for the suggestion.
+> 
+> I agree that this would have been nicer if this had been implemented
+> that way for all the existing platforms supported by the tsens driver.
+> But now we already have 7+ platforms using exactly the approach I'm
+> using in this patch, with existing bindings and existing device trees
+> that must stay supported.
+> 
+> My msm8909.dtsi is actually mostly just a simple overlay on top of
+> msm8916.dtsi, so I would like to keep these platforms consistent
+> wherever possible. We could change all the existing platforms as well
+> but in my opinion this would just make the driver and bindings a lot
+> more complicated because the old approach still must be supported.
+> 
+> Also, I think the main benefit of having all the points as separate
+> NVMEM cells would be to allow having a generic qcom,tsens-v0.1
+> compatible, without SoC-specific code required in the driver. However,
+> subtle differences in the way the calibration points are used (e.g. the
+> fixed correction offsets in this patch) will likely make SoC-specific
+> code necessary anyway. And then it doesn't matter much if the bit masks
+> are in the driver like all existing code or end up being put into the DT.
+> 
+> TL;DR: I would prefer to keep this as-is to keep the driver simple and
+> consistent across all the supported platforms.
 
+At least let's change the driver to use FIELD_GET, this will allow us to 
+remove SHIFT defines. I will take a look in the next few days if we can 
+switch to nvmem_cell in a sensible manner.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+-- 
+With best wishes
+Dmitry
 
-
-Best regards,
-Krzysztof
