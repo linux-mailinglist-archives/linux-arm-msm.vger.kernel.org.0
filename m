@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3AA725B3391
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 11:21:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 625F45B33A0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 11:22:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232185AbiIIJVF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 05:21:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43818 "EHLO
+        id S230489AbiIIJVK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 05:21:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231607AbiIIJVC (ORCPT
+        with ESMTP id S232146AbiIIJVD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 05:21:02 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 751F1D6B9D
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 02:20:52 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id v6so1145858ljj.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 02:20:52 -0700 (PDT)
+        Fri, 9 Sep 2022 05:21:03 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3198F827E
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 02:20:53 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id y29so1090053ljq.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 02:20:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=Xww6smUMHoeYSoc1lrk/iGogtyIyA10+5kx+EaqITKI=;
-        b=axgj027VZK/9LTcRstZXmGjqQrxxZO8RTNvBGF6IU/WY+0mj2up3ACNP822VBaxgSs
-         ab8ZoZt+9ANDzZKR4ps5JACwMSvyprgkElGz+J6s4FJ8O4ctU8HPCjftBW/R19MOwjYY
-         nMXggXdiiv57Xwavo/OoVdqnFmFCpryPd2GP5Nl6ho8Hq6nNqISyMxtikRB8TGnMMUMT
-         BLhsWSeov2XrBkIlVTC7d0BlFhaNcXQBdnJ9lz3jdB+D+cWOtNY2W0FzkVpybK7iRZZ3
-         2BjznfqDPHqpTNk7ILwo370EcJQbt1doy2zgqtjWiDsCqtx5aTQyyVjjbm6AFg/PiT5B
-         1vjQ==
+        bh=fC7hlheaTm5w1H34Wr2YOUv8Ed7fsZ6b8bVojzbwAbY=;
+        b=pIObONZD7zS+FEkOpRNNF3wwUHbQSQw3yUd1TaBlpCip1Mo7KE87exDgXzDtSm2+ME
+         RQc1k7D+9HIhJ1xaeIf6RHVBGxWwcH0CrSxuDOtS39kzyO+TbvlXo8MUzq0aVqhuP9A7
+         7nJcJ4mIeoI0oxn/gj7+67FX1Twno3V97uPmdm0XZ4BWG9GHSVxtI5ANq9yR0SYY9JYW
+         010fGpt8261IJmBGS/alKp2VJiAcN+5Ch+3/USbe2bcGu6/UvPsByocRLobis3CN79kM
+         tYt/6s38ZJufzbHKo43Uz8EMmJQ2LskkN8CclQV7ZxW5UO8Pp71NonX2ZUc3CvHsjUnm
+         CHXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=Xww6smUMHoeYSoc1lrk/iGogtyIyA10+5kx+EaqITKI=;
-        b=ENsIDovLIorynspPSDghWpL14O+7vSf9l2dmxn7pqLHKnQ53d0lq+q5e8ViF6LC72A
-         QsY+WgVAp/JpcY3OsRSiYS8I3JgbMkdV6/IXUqkoH5jCjjnQbBzCl9b9lo4w5zs3H7wG
-         8hO5xL0wV2LDiOTDnuETaI3+L5yBhtikclGRdYuZ4ApkFQrIHQJiugWrTxSpwhuskPgK
-         S//Gvqd2w2K7cOA7s75EZWK4lqJKfmTntWzYLtAhjYtQ1QLSchF69eD+bCDGhYx44QST
-         YzDijqj7d3nD5kCx9/0bwHQ6a84gWk/4ClyzgeTYt6GC2kqg2mazRWRjntv5PD7Sx3pA
-         RnNg==
-X-Gm-Message-State: ACgBeo0O070KfTM7D9e+yjqmh0eMdwWeBBqlYkVE46GPIdLZnvM+XFWH
-        pXJhrtd5dUax2Oqz9oKuTbAX0g==
-X-Google-Smtp-Source: AA6agR6PNk/JNhXt2yxGcmOjGpyxlNllnpEuxz1Qz33adqPEclQdVh1XbpFhqvZapeDqiUw/lrf05g==
-X-Received: by 2002:a2e:bc86:0:b0:26a:ce95:681 with SMTP id h6-20020a2ebc86000000b0026ace950681mr3111518ljf.107.1662715251847;
-        Fri, 09 Sep 2022 02:20:51 -0700 (PDT)
+        bh=fC7hlheaTm5w1H34Wr2YOUv8Ed7fsZ6b8bVojzbwAbY=;
+        b=whsbXdwReCPepbOws/eXTGMRaxCYZT7WHsbT4jmGDqwdz53Cp4KYULctAQMbAzI5vd
+         jcmhwmV+XQMBR8+N8PCd+E49UH7TcTJ4dq1lIXSFmpBUvMjGYV6mN8IQTQ3v2YF6/Dn3
+         QI/x+plCrzK+J+izGxsrWehboaIzorb9yftw5FkrY9surt8441YnzoEmF//2PUb/cwZM
+         ptrucns+3z+jXc5mxKww5whPfvdW68Pmnz9FmnNpgR3bCebmVfRU91hYWWQwXexFTrgq
+         4Hzh4ovedI4evAU3ws7O1BEgXDpo6GulbQiWCmkS28mUzU1fdfo899aF9ZqIWYd37wWt
+         qfeA==
+X-Gm-Message-State: ACgBeo3OxtJV7JnRmOgy/M0lp8LefxYn0NwfEbyFIcxmT+ZTXPMRgfpI
+        cw/x53eutfprFxeUKEDsK2Iqhg==
+X-Google-Smtp-Source: AA6agR4lRiN+pt2U3r6zcbvaPHFuFfqrQQsFBg6kH2oNet/v1pyWHaUU3+qCHNCjn8MFqE1V7eOkvA==
+X-Received: by 2002:a2e:b5d3:0:b0:267:4da0:ce3b with SMTP id g19-20020a2eb5d3000000b002674da0ce3bmr3465949ljn.420.1662715253120;
+        Fri, 09 Sep 2022 02:20:53 -0700 (PDT)
 Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id s6-20020a056512214600b00498fe38ea0fsm2170lfr.174.2022.09.09.02.20.50
+        by smtp.gmail.com with ESMTPSA id s6-20020a056512214600b00498fe38ea0fsm2170lfr.174.2022.09.09.02.20.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Sep 2022 02:20:51 -0700 (PDT)
+        Fri, 09 Sep 2022 02:20:52 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -61,9 +61,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v3 09/15] ARM: dts: qcom: msm8974: add missing TCSR syscon compatible
-Date:   Fri,  9 Sep 2022 11:20:29 +0200
-Message-Id: <20220909092035.223915-10-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 10/15] ARM: dts: qcom: msm8974: split TCSR halt regs out of mutex
+Date:   Fri,  9 Sep 2022 11:20:30 +0200
+Message-Id: <20220909092035.223915-11-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220909092035.223915-1-krzysztof.kozlowski@linaro.org>
 References: <20220909092035.223915-1-krzysztof.kozlowski@linaro.org>
@@ -71,7 +71,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,25 +79,130 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-TCSR syscon node should come with dedicated compatible.
+The TCSR halt regs are next to TCSR mutex, so before converting the TCSR
+mutex into device with address space, we need to split the halt regs to
+its own syscon device.  This also describes more accurately the devices
+and their IO address space.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm/boot/dts/qcom-msm8974.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/qcom-apq8074-dragonboard.dts        |  2 +-
+ .../boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts   |  2 +-
+ arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi |  2 +-
+ arch/arm/boot/dts/qcom-msm8974.dtsi                   | 11 ++++++++---
+ arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts   |  2 +-
+ arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts    |  2 +-
+ .../qcom-msm8974pro-sony-xperia-shinano-castor.dts    |  2 +-
+ 7 files changed, 14 insertions(+), 9 deletions(-)
 
+diff --git a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
+index 3051a861ff0c..2709a99e5c4c 100644
+--- a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
++++ b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
+@@ -38,7 +38,7 @@ &otg {
+ 	status = "okay";
+ 
+ 	phys = <&usb_hs2_phy>;
+-	phy-select = <&tcsr 0xb000 1>;
++	phy-select = <&tcsr_2 0xb000 1>;
+ 	extcon = <&smbb>, <&usb_id>;
+ 	vbus-supply = <&chg_otg>;
+ 	hnp-disable;
+diff --git a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
+index ec5d340562b6..5fd94dd6a427 100644
+--- a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
++++ b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
+@@ -251,7 +251,7 @@ &otg {
+ 	status = "okay";
+ 
+ 	phys = <&usb_hs1_phy>;
+-	phy-select = <&tcsr 0xb000 0>;
++	phy-select = <&tcsr_2 0xb000 0>;
+ 
+ 	extcon = <&charger>, <&usb_id>;
+ 	vbus-supply = <&usb_otg_vbus>;
+diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
+index 5a70683d9103..118b231f3137 100644
+--- a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
++++ b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
+@@ -136,7 +136,7 @@ &otg {
+ 	status = "okay";
+ 
+ 	phys = <&usb_hs1_phy>;
+-	phy-select = <&tcsr 0xb000 0>;
++	phy-select = <&tcsr_2 0xb000 0>;
+ 	extcon = <&smbb>, <&usb_id>;
+ 	vbus-supply = <&chg_otg>;
+ 
 diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-index 8baca2a77717..90a6d4b7605c 100644
+index 90a6d4b7605c..ada232bed2c8 100644
 --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
 +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-@@ -1234,7 +1234,7 @@ tcsr_mutex_block: syscon@fd484000 {
+@@ -1189,7 +1189,7 @@ remoteproc_mss: remoteproc@fc880000 {
+ 			resets = <&gcc GCC_MSS_RESTART>;
+ 			reset-names = "mss_restart";
+ 
+-			qcom,halt-regs = <&tcsr_mutex_block 0x1180 0x1200 0x1280>;
++			qcom,halt-regs = <&tcsr_1 0x180 0x200 0x280>;
+ 
+ 			qcom,smem-states = <&modem_smp2p_out 0>;
+ 			qcom,smem-state-names = "stop";
+@@ -1230,10 +1230,15 @@ smd-edge {
+ 
+ 		tcsr_mutex_block: syscon@fd484000 {
+ 			compatible = "syscon";
+-			reg = <0xfd484000 0x2000>;
++			reg = <0xfd484000 0x1000>;
  		};
  
- 		tcsr: syscon@fd4a0000 {
--			compatible = "syscon";
+-		tcsr: syscon@fd4a0000 {
++		tcsr_1: syscon@fd485000 {
 +			compatible = "qcom,tcsr-msm8974", "syscon";
++			reg = <0xfd485000 0x1000>;
++		};
++
++		tcsr_2: syscon@fd4a0000 {
+ 			compatible = "qcom,tcsr-msm8974", "syscon";
  			reg = <0xfd4a0000 0x10000>;
  		};
+diff --git a/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts b/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
+index ff6e0066768b..c264d17e0953 100644
+--- a/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
++++ b/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
+@@ -89,7 +89,7 @@ &otg {
+ 	status = "okay";
+ 
+ 	phys = <&usb_hs1_phy>;
+-	phy-select = <&tcsr 0xb000 0>;
++	phy-select = <&tcsr_2 0xb000 0>;
+ 	extcon = <&smbb>, <&usb_id>;
+ 	vbus-supply = <&chg_otg>;
+ 
+diff --git a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
+index 983e10c3d863..2691a6dbbb8b 100644
+--- a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
++++ b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
+@@ -379,7 +379,7 @@ &otg {
+ 	status = "okay";
+ 
+ 	phys = <&usb_hs1_phy>;
+-	phy-select = <&tcsr 0xb000 0>;
++	phy-select = <&tcsr_2 0xb000 0>;
+ 
+ 	hnp-disable;
+ 	srp-disable;
+diff --git a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
+index 3f45f5c5d37b..d2bef3896c82 100644
+--- a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
++++ b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
+@@ -216,7 +216,7 @@ &otg {
+ 	status = "okay";
+ 
+ 	phys = <&usb_hs1_phy>;
+-	phy-select = <&tcsr 0xb000 0>;
++	phy-select = <&tcsr_2 0xb000 0>;
+ 	extcon = <&smbb>, <&usb_id>;
+ 	vbus-supply = <&chg_otg>;
  
 -- 
 2.34.1
