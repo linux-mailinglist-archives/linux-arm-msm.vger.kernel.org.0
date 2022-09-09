@@ -2,78 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D61055B3363
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 11:19:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17C455B336E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 11:21:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232155AbiIIJTA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 05:19:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37676 "EHLO
+        id S231181AbiIIJUq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 05:20:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232006AbiIIJSy (ORCPT
+        with ESMTP id S230186AbiIIJUo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 05:18:54 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE54212E18B
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 02:18:53 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id y18so1067963ljh.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 02:18:53 -0700 (PDT)
+        Fri, 9 Sep 2022 05:20:44 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B13A1B2851
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 02:20:42 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id v6so1145240ljj.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 02:20:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=kuIhzSkq3fDg9/NxRNM5sLOQILPo0CbgosVBQmELZ3s=;
-        b=Q5xo/72AqUs037hXFiKMXBWP9qQ0QCQQ5+liSy7CDb+vWuxmBFg9ZenRUPHYDJ+3LS
-         jZpyw2Fta5BxclW0Wr0sNrNL7aBK4EPIICj1rbzZ22Akx+mgm+/mPR31xaIzWWvSuf3y
-         gDfn1rzYrs+7VJeFQjypK4x+vyzr8nhRtQrxMZQeu2Ng8GjE3uBZgWOFxRUruFl7kuPc
-         Sr15nYY4iSg64vSH6bSSLtMdCU8zDYONnPixDlkpaSPJXabM+vWDe8y83SQaFavRO823
-         bHshACNkpvcKdHJ42YyFwZnX/UZQj04vtCy8/cGvMyEuwCOv8l/rR87/x5jwUQ+G6+RX
-         8mCg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=XnkhLW1ejx8tTO+Y2Pwl+ZHC58noV7Cx6HucpRux/vI=;
+        b=QQojFVc2k9PcGOvKHHr5y1k4LCqtHDtgix461+LEA/MpWC9FdGdDFNqg+lJ3TH2guI
+         6qIc/txqs0RA8Um0J4kMYH8vFwQ+knr9QJ2ynb2Zh+n+7eRdEIj/rNAEgcC2lnofGeGo
+         FI+7DjM4wQc6RcRWGiKaVrt85uQD7zygPWc0hcJ5rb/saMZPSvx2oK0IhPUIfTdMw1ju
+         Bk5I96ljFe99+T06ENoi6nLiYtbcn3TyBdVCBcBGYlOE6tXgSSHQ+2S8LdRhNNvIWHY9
+         M6+tug9yOui5mUn0EzbHBQAR3+trhCV+TR0ri886ivgMC55AXBDa6XeQrEbrK8yUL0pu
+         8UAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=kuIhzSkq3fDg9/NxRNM5sLOQILPo0CbgosVBQmELZ3s=;
-        b=bRs48FHbF2Nqy73Fp21/FB6f8G2xqg7zAAxPcHgC15a3GuCkxX9oc213ZuQC7sdgwE
-         2Z8i5CyG/tSHHD/ho0YkAykZzMPcNy5kXNsM+7M2faknC5bGCbxAvT1f6IkEl4ij8nyN
-         QFbfjzD12UQQKDdxOLn0VlqJ3PFjReswenlpAP8PqRO6fUu+IJcfFp63paLgZ9TP6tla
-         Wgj99aPpq9Qjydnvtgfzd4d4tXDxUm1xBDW4cvPC+mpDQrNfO3IwFShNB6PcV21wRNY8
-         YoM97F+QhevhsgUEM7Xj9SlmzVnfXe7KNSq+CrX1jkfYe4AZ+VPlIpZ5dBVxdE28O5Iq
-         ROgQ==
-X-Gm-Message-State: ACgBeo3Ds8woYp4ZuAffQqXV5qfNcKHrA14WtgQyYvWmxtP9KV9AItls
-        iUJe+MG9d0mouJkcDJJxWoDRzQ==
-X-Google-Smtp-Source: AA6agR4dZ40n+zYZc3ZCFRVBIqM5e2s9DGInqydOWBOPLjVazMP238WR4ZOgRpQsHcPHjYnMs4DiRA==
-X-Received: by 2002:a2e:50b:0:b0:26a:b7ec:59ea with SMTP id 11-20020a2e050b000000b0026ab7ec59eamr3860803ljf.312.1662715132031;
-        Fri, 09 Sep 2022 02:18:52 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id r24-20020ac24d18000000b004949f7cbb6esm6928lfi.79.2022.09.09.02.18.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Sep 2022 02:18:51 -0700 (PDT)
-Message-ID: <9a6c7419-a636-4af3-b4fc-d33b06c89505@linaro.org>
-Date:   Fri, 9 Sep 2022 12:18:51 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.1.2
-Subject: Re: [PATCH 3/3] phy: qcom-qmp: drop dual-lane comments
-Content-Language: en-GB
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=XnkhLW1ejx8tTO+Y2Pwl+ZHC58noV7Cx6HucpRux/vI=;
+        b=dZCKoOgE+jk3JPhdeOPWo4NzS/riIQZQpRwzkIV2M/h8ydPQWUaWelCFa++AXQug0M
+         cVzwRcBhfaOFtM/UwY+G53VAUvNTX6IsnKy9EmqVd0EpDdnVkOKyu+vrWKajSUqOqCv3
+         Gpjw829Xb3gRMMHsiw+A2MwZnKekZS++bctbpT0PY/H3sHJZXG6GgzByzlfjglqCSh93
+         4pfIdAutjhTh/OE9Q/6lFW09mpvhoyac0ZBKXljEqNpLsYH1G/0sWgfAqT2/m0UDWr+d
+         XYPQOhzQOXYhnVnqgMiYvuEm3jriHNZ0G3nNV3O+aDfEuccJnBuFxgHUXZOB+GYFFbdW
+         /GVg==
+X-Gm-Message-State: ACgBeo1RTknSNzGGASBgM3k5+RTO+rbcRbwaqi7mraGx+Y35g7a4iTRg
+        JWa2/kwI2aCTZnXDlSVqxgpDKQ==
+X-Google-Smtp-Source: AA6agR4/MECLtPUrG3w1cE3tpTg0G0bj6Q2BTrm9q5W4QM1J3Sxu7sA6FekYdA5+1DR+QEB22UhYBw==
+X-Received: by 2002:a2e:8518:0:b0:26a:cfb4:5d47 with SMTP id j24-20020a2e8518000000b0026acfb45d47mr3163880lji.22.1662715240709;
+        Fri, 09 Sep 2022 02:20:40 -0700 (PDT)
+Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id s6-20020a056512214600b00498fe38ea0fsm2170lfr.174.2022.09.09.02.20.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Sep 2022 02:20:40 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20220906074550.4383-1-johan+linaro@kernel.org>
- <20220906074550.4383-4-johan+linaro@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220906074550.4383-4-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 00/15] ARM/hwlock: qcom: switch TCSR mutex to MMIO
+Date:   Fri,  9 Sep 2022 11:20:20 +0200
+Message-Id: <20220909092035.223915-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,22 +76,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/09/2022 10:45, Johan Hovold wrote:
-> Drop the obsolete and misleading dual-lane comments which gave the
-> impression that only combo PHYs have a second lane.
-> 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Hi,
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Switch older Qualcomm SoCs to use MMIO-based method instead of syscon.
 
-> ---
->   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 1 -
->   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c  | 1 -
->   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c   | 1 -
->   drivers/phy/qualcomm/phy-qcom-qmp-usb.c   | 1 -
->   4 files changed, 4 deletions(-)
+Not tested on hardware. Please kindly provide tests.
+
+Changes since v2
+================
+1. Rebase on current MFD changes.
+2. Add Rb tag.
+3. Split MFD patch to separate patchset:
+https://lore.kernel.org/linux-devicetree/20220909091056.128949-1-krzysztof.kozlowski@linaro.org/T/#u
+
+Changes since v1
+================
+1. Use existing qcom,tcsr-msm8974 compatible.
+2. Fix few other TCSR syscon compatibles (new patches: ipq6018, msm8953,
+   qcs404, msm8996).
+3. New patch: dt-bindings: mfd: qcom,tcsr: drop simple-mfd from IPQ6018
+4. New patch: dt-bindings: mfd: qcom,tcsr: add QCS404
+
+Dependencies
+============
+1. DT bindings and driver patches can go via hwlock. DTS via Bjorn/Qualcomm.
+
+2. The last five DTS commits (ARM and arm64) named "switch TCSR mutex to MMIO"
+   depend on driver support. The changes are not bisectable, just like
+   previously such changes were not bisectable:
+   https://lore.kernel.org/all/20200622075956.171058-5-bjorn.andersson@linaro.org/
+   Therefore these changes could wait for next release.
+
+Best regards,
+Krzysztof
+
+Krzysztof Kozlowski (15):
+  dt-bindings: hwlock: qcom-hwspinlock: add support for MMIO on older
+    SoCs
+  dt-bindings: hwlock: qcom-hwspinlock: correct example indentation
+  hwspinlock: qcom: correct MMIO max register for newer SoCs
+  hwspinlock: qcom: add support for MMIO on older SoCs
+  arm64: dts: qcom: ipq6018: add missing TCSR syscon compatible
+  arm64: dts: qcom: msm8953: add missing TCSR syscon compatible
+  arm64: dts: qcom: qcs404: add missing TCSR syscon compatible
+  arm64: dts: qcom: msm8996: add missing TCSR syscon compatible
+  ARM: dts: qcom: msm8974: add missing TCSR syscon compatible
+  ARM: dts: qcom: msm8974: split TCSR halt regs out of mutex
+  arm64: dts: qcom: ipq6018: switch TCSR mutex to MMIO
+  arm64: dts: qcom: msm8994: switch TCSR mutex to MMIO
+  ARM: dts: qcom: msm8974: switch TCSR mutex to MMIO
+  ARM: dts: qcom: apq8084: switch TCSR mutex to MMIO
+  ARM: dts: qcom: msm8226: switch TCSR mutex to MMIO
+
+ .../bindings/hwlock/qcom-hwspinlock.yaml      | 25 +++++++----
+ .../arm/boot/dts/qcom-apq8074-dragonboard.dts |  2 +-
+ arch/arm/boot/dts/qcom-apq8084.dtsi           | 11 ++---
+ arch/arm/boot/dts/qcom-msm8226.dtsi           | 14 ++-----
+ .../qcom-msm8974-lge-nexus5-hammerhead.dts    |  2 +-
+ .../dts/qcom-msm8974-sony-xperia-rhine.dtsi   |  2 +-
+ arch/arm/boot/dts/qcom-msm8974.dtsi           | 25 ++++++-----
+ .../dts/qcom-msm8974pro-fairphone-fp2.dts     |  2 +-
+ .../boot/dts/qcom-msm8974pro-samsung-klte.dts |  2 +-
+ ...-msm8974pro-sony-xperia-shinano-castor.dts |  2 +-
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi         | 15 +++----
+ arch/arm64/boot/dts/qcom/msm8953.dtsi         |  2 +-
+ arch/arm64/boot/dts/qcom/msm8994.dtsi         | 13 ++----
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |  2 +-
+ arch/arm64/boot/dts/qcom/qcs404.dtsi          |  2 +-
+ drivers/hwspinlock/qcom_hwspinlock.c          | 42 ++++++++++++++-----
+ 16 files changed, 86 insertions(+), 77 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.34.1
 
