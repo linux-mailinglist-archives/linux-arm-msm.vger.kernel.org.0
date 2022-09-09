@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 376D05B38C1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 15:20:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 689E45B38C5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Sep 2022 15:20:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230238AbiIINUS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 09:20:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47200 "EHLO
+        id S231159AbiIINUU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Sep 2022 09:20:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230464AbiIINUR (ORCPT
+        with ESMTP id S230510AbiIINUS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 09:20:17 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAF9352803
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 06:20:15 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id z20so1807544ljq.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 06:20:15 -0700 (PDT)
+        Fri, 9 Sep 2022 09:20:18 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D6985F7ED
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 06:20:16 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id y29so1791236ljq.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 06:20:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=Wd0dLX4RoIQz4F553heILe9/hGLsfSdsBsSpc437liA=;
-        b=o61kjP3KIBTm0M3eAdFlAoiGyJBMm5g72Syq4C1anFkLNdLpCuBwguA+kMm1SnFqjd
-         0eteJIq+IUxAqS8lBGfNPCjMp9K3r3MC6oHF8ycFsPcJCUliQbHKADQhn2b4ER7FVXUI
-         rpjU2UcBdo2Mds6ezQijKdbxojMVwwm0CN0SnRewO5FWb9/fw99glpuvr9QMCCEO12I9
-         qCPQg9aRyr0A1U0H7E9qTDPvol6Nwnl5rnz3iQtR5V20DOhrEOTcThxAKmSa1O3cHVu1
-         J3HpCwdlae92sYet3G+Fb17tt3dEnYwTuWmCNi0ok9O/RFuTAP8VCsXi2+ZRPSAUQVjV
-         X7kw==
+        bh=em1iMz9Ryn69lAbyqnPUyMJ8hWxDsU/s62VVW2GYYt0=;
+        b=REuDz7DMRiW5wABhl0JqQ/5R+KnNYf1nJ1z5zFvfWQy5UAeds1UVPHB9xRz2mCNpaw
+         pe0kEFj43iG7V1ZV6c7uVxXD8U+EvQ5SZS3gtIBx8N7GxnxLFJYeC0U2nWvOUPBwT62p
+         2Wi40KByuV/tfM718iO1rxrwQMwwfFaOrzBt2BUdsYkv86YMAdtFesaz+OQYViu2ptJS
+         4ddOWffRcrx1wqZfXp8l49E+VmUL44LXQJBhpxQynXjl6HnA7BviVMA6oA+1rEnbOqnn
+         EAac3LXPgRyC8tTCn/82/LqrdecqVYZQhePEmSCTNUPzoCvKAm92YuNdNSNzjzOu2CcF
+         KKXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=Wd0dLX4RoIQz4F553heILe9/hGLsfSdsBsSpc437liA=;
-        b=05I1BmxBE/ld9SaY11nNRS9bhPNw3QOdgtWTQD1LHeMbP008etedzTw3jN6qF+NNts
-         XkMJgSJQXWo99pDH7wZaejYLJSBfQj3dxJxFThTJ9nZe0yEt+dSXV5T5TAyUwxQ0TD5m
-         Zq8j5vclNwqof2FYFTc/HveYHBeLTCOfJvXKPZGGpx1adsIeKUO72vLS9fiFfe3iWxWv
-         u9GkVUzzWQV4yM2HBa2yftJj4SyVd6OPKP99I23Tf/cifVWSSJjJfpLJrBLsTxqM6PXH
-         ldMaGwIFxNY8zjxbThW5ip3LiLLtt2tTOrlkLWROf49A7frHNNwtETdclxkq19lA693d
-         UE4g==
-X-Gm-Message-State: ACgBeo1yzX6zTyVOylYdeX7Sbqs6bOC1tLmiCwmsHwP0iXHjfFKZbjrm
-        eYkEyUvkhVUNo96B9jvFXR5c0w==
-X-Google-Smtp-Source: AA6agR4IN0U9QlG9nGkTzwgl9TIcf7+DA9SPXWjc9Rx6V3Wt3cYbPH63oqkMVR31jHDWSuRwlESccA==
-X-Received: by 2002:a2e:b04a:0:b0:26b:da87:8a72 with SMTP id d10-20020a2eb04a000000b0026bda878a72mr2446280ljl.233.1662729613945;
-        Fri, 09 Sep 2022 06:20:13 -0700 (PDT)
+        bh=em1iMz9Ryn69lAbyqnPUyMJ8hWxDsU/s62VVW2GYYt0=;
+        b=K0oBEkQSpT+4X7j4is02B7bi7RSM16TY8UkuzPa8RLf2d5R9jH9DfRkSClMmm4h+tZ
+         SkuAWwkIA3B0eg7EDJan+9gvv39cffdmMpKpP4quAH+pSux0pEJykhFSgXl6E1OVlxWe
+         8K5AJiUDW/XWRXJrJoL7mok1274UK9uqy08kw/2Yhi7ITTv32D/Gr//l6UXqe4L/zRgq
+         6J+F2GTHyQpihMHVS6I9HM0/jsjT2DpOOTGW+sYkDIyf0PEcHUJsOvXEhBgtUqK3oIQG
+         utwDuCrbclhWW+WEJYHiCvyGnRsVe4gnenVNsy6S53DEPVBnRzEV9+azhc4x4Au1er/W
+         g3qA==
+X-Gm-Message-State: ACgBeo0Penalyb5+c4QkEOp/A5AEPLPvBsYtgMk4S9SAqbl/OA94+vlH
+        Q4jhwKS9q0+eRo++8ofYGCwedQ==
+X-Google-Smtp-Source: AA6agR4kWFPWbWXMl17g4rhRlcM8PGb4uJi9blQLcd4LCHuCk74fJzGlU9hn80Pozqd0mpqFWLIX9g==
+X-Received: by 2002:a2e:bc06:0:b0:266:23b7:283d with SMTP id b6-20020a2ebc06000000b0026623b7283dmr4225886ljf.151.1662729614960;
+        Fri, 09 Sep 2022 06:20:14 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v10-20020a056512348a00b00498ff4ae746sm71729lfr.294.2022.09.09.06.20.13
+        by smtp.gmail.com with ESMTPSA id v10-20020a056512348a00b00498ff4ae746sm71729lfr.294.2022.09.09.06.20.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Sep 2022 06:20:13 -0700 (PDT)
+        Fri, 09 Sep 2022 06:20:14 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -58,9 +58,9 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Vinod Koul <vkoul@kernel.org>, linux-phy@lists.infradead.org,
         Kishon Vijay Abraham I <kishon@ti.com>
-Subject: [PATCH 3/6] drm/msm/hdmi: switch hdmi_pll_8960 to use parent_data
-Date:   Fri,  9 Sep 2022 16:20:07 +0300
-Message-Id: <20220909132010.3814817-4-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 4/6] drm/msm/hdmi: make hdmi_phy_8960 OF clk provider
+Date:   Fri,  9 Sep 2022 16:20:08 +0300
+Message-Id: <20220909132010.3814817-5-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220909132010.3814817-1-dmitry.baryshkov@linaro.org>
 References: <20220909132010.3814817-1-dmitry.baryshkov@linaro.org>
@@ -76,37 +76,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Replace parent_names usage with parent_data. Note, that this makes the
-PLL default to board's `pxo_board' clock rather than just `pxo' clock,
-as we are on a way to deprecate the global cxo/pxo clocks.
+On MSM8960 the HDMI PHY provides the PLL clock to the MMCC. As we are
+preparing to convert the MSM8960 to use DT clocks properties (rather
+than global clock names), register the OF clock provider.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c b/drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c
-index be4b0b67e797..c3e7ff45e52a 100644
+index c3e7ff45e52a..cb35a297afbd 100644
 --- a/drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c
 +++ b/drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c
-@@ -406,14 +406,14 @@ static const struct clk_ops hdmi_pll_ops = {
- 	.set_rate = hdmi_pll_set_rate,
- };
+@@ -422,8 +422,7 @@ int msm_hdmi_pll_8960_init(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct hdmi_pll_8960 *pll;
+-	struct clk *clk;
+-	int i;
++	int i, ret;
  
--static const char * const hdmi_pll_parents[] = {
--	"pxo",
-+static const struct clk_parent_data hdmi_pll_parents[] = {
-+	{ .fw_name = "pxo", .name = "pxo_board" },
- };
+ 	/* sanity check: */
+ 	for (i = 0; i < (ARRAY_SIZE(freqtbl) - 1); i++)
+@@ -443,10 +442,16 @@ int msm_hdmi_pll_8960_init(struct platform_device *pdev)
+ 	pll->pdev = pdev;
+ 	pll->clk_hw.init = &pll_init;
  
- static struct clk_init_data pll_init = {
- 	.name = "hdmi_pll",
- 	.ops = &hdmi_pll_ops,
--	.parent_names = hdmi_pll_parents,
-+	.parent_data = hdmi_pll_parents,
- 	.num_parents = ARRAY_SIZE(hdmi_pll_parents),
- 	.flags = CLK_IGNORE_UNUSED,
- };
+-	clk = devm_clk_register(dev, &pll->clk_hw);
+-	if (IS_ERR(clk)) {
++	ret = devm_clk_hw_register(dev, &pll->clk_hw);
++	if (ret < 0) {
+ 		DRM_DEV_ERROR(dev, "failed to register pll clock\n");
+-		return -EINVAL;
++		return ret;
++	}
++
++	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, &pll->clk_hw);
++	if (ret) {
++		DRM_DEV_ERROR(dev, "%s: failed to register clk provider: %d\n", __func__, ret);
++		return ret;
+ 	}
+ 
+ 	return 0;
 -- 
 2.35.1
 
