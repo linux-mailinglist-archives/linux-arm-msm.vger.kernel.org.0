@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD1365B4499
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Sep 2022 08:32:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9640E5B449C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Sep 2022 08:32:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229955AbiIJGcr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Sep 2022 02:32:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45048 "EHLO
+        id S231338AbiIJGcz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Sep 2022 02:32:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230298AbiIJGc2 (ORCPT
+        with ESMTP id S229810AbiIJGcf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Sep 2022 02:32:28 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45AD9A0301
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 23:32:14 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id n17-20020a05600c3b9100b003b3235574dbso3218655wms.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 23:32:14 -0700 (PDT)
+        Sat, 10 Sep 2022 02:32:35 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B03DAE21B
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 23:32:22 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id d2so6607670wrn.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 23:32:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=qIqmnnPPd/w9PevtCzz3I9Xl0se/j1JE8K0DzKiojlg=;
-        b=q59Aqmj65oNIISK1rl2pZRTujcgyNmFG+KMRLvIIrNpSLuYSTUMlxcAC0y9HTW6dIP
-         6tfiJiPidBdHD8i+G0u9j3xPddfn1GeQivetpwlB4y9pt7sBnKRaVEhub9+V5feCa0J0
-         77xhtfsa5HRznnqYrujUbN4PHPDeUh++y3fSjV6JmUAr1+FqM/DccWNOG1n9T6qGwWup
-         DsvbumDa9kbBr42gBdRf3DGBkhgDkC9fI2eCUkzLhOJ4vLiqFRxW6U4K8Bs7xGF+KnVx
-         JN2OadJP50ESUbdKqsD3gwACjkFHU5npwkXcxtarNAKpdM/BL8h2zxUtFom5e3F0VU5T
-         0lQw==
+        bh=g2cRg6vja1xVLyvuk31wUicvTsmqZJjRGy3zZQep69w=;
+        b=gPdrnmuPn77o8HVG6IUn596O9hfZI6jr9wJlrxIwXr4tn9LE/Rwikk6FDJ+MiH8c3L
+         bimiHBpWLM2YeP+wV4JB7R4YCmRKyWQeDjjcqkfoV8+eTRs2u1aq9VaZ8bwglBHcPKNK
+         1XATRAXX8ds5H76/g9PhMrY6YE3Lw6o3AgVeklmmrpvAh2sXBR5aBMt4YRtrX6iJWULF
+         JadGls0oPbJdgBdq4CPEaVnAU4HmXWk6nANY59XxiSAQ6pxDXvqdFiRVazf229Jja8yt
+         eq+KURMPSdqFPmFZg/PsO8FFGBKmGie/8KdQ6lNv/GntocxrkY+p0lbZOITS9Ks7PfDf
+         3crA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=qIqmnnPPd/w9PevtCzz3I9Xl0se/j1JE8K0DzKiojlg=;
-        b=EXBffYL9ZxmHE+31E+IjvLCaTeE+yZG5F0eDkuhotjCtFaCCcBWe8rQEfrfhLAUuaL
-         H19myxiYftEE9b8xdJxQ/SIwqfKoc+se4lcQVvz2AnSEH5FluLFXes+/EGUmUw6eYwji
-         8qzqrU5IEfMK4k2BGoX3tYexgTLctjNrbU/EJprdlqfl3fw4yk3oNerQdoNz4N3vQR+K
-         yciopZVNBGWYr1AHFAPWYJbJQSA8KNAtwAHx8GsBaG9XF8E78gcSAO0yCTKakQPQch+K
-         MIZThoHl05g9QGqD5rpsPZSWH16tH4fcCu35hcf/I5tfGW3GZ1by/KxxQA2LBj+GvUie
-         yxPg==
-X-Gm-Message-State: ACgBeo2EqsJmbSZsVaahxVHS04TVvt9WqQmhHczbiTaJAqUGUbU+QlVv
-        qKo3elHU2GyK8O/71GnswPn4
-X-Google-Smtp-Source: AA6agR73+dIsl2dTBdfX0mv220WTfqzFz8Oe5rFjI2mgdLRAnzrw1DseWA44GgJcpqGu3/vZsCJ1wQ==
-X-Received: by 2002:a1c:f709:0:b0:3a6:3452:fcbe with SMTP id v9-20020a1cf709000000b003a63452fcbemr7618282wmh.164.1662791532608;
-        Fri, 09 Sep 2022 23:32:12 -0700 (PDT)
+        bh=g2cRg6vja1xVLyvuk31wUicvTsmqZJjRGy3zZQep69w=;
+        b=xlAvFMbFlFmFblR4NX4eqeg69Gc4idxiDvhcWAFevPm7ucWH+DU3ZidiJiAbrIb8JG
+         zgbOfzXtK1Ci/TLpT13wzyZuk30V7weXl3uwbJSySFK8qXbLVeWYOlHM06J0vvDaGakr
+         3N5c3kudRVM6QpyVpQFE7+jTOToqCakn2ZJ+hhTSsh8XhSs1voOA1jp4d8C0xZeyMGdR
+         IRrU5wH6v+cpnin4/DNQoIhlLiJZ+VvzQ4uqx1PVxfbkKcOTfPqJdMlOhXwQym8d+esR
+         tEq1J9AzRe5Thxfx7jGpzEraIFx4RLx/MElioSLTqL2dXiL4jpwKdw1e+OKOkeoCFSDb
+         CSww==
+X-Gm-Message-State: ACgBeo2Q335x0LM85w7lDK8W53dm7dsPLoV7pA6PYCe9FEHwVPrE1d1r
+        mHktvw21s9xcfvXVQOweMCLJ
+X-Google-Smtp-Source: AA6agR6TKT1M3WAffPM55QUeI+tz68QvLvb4lXO9kJncgFLfYcQTyMeTv4jjCZKc/7CV92cfLG/mHg==
+X-Received: by 2002:a05:6000:136b:b0:22a:3b92:4c05 with SMTP id q11-20020a056000136b00b0022a3b924c05mr3775896wrz.183.1662791540600;
+        Fri, 09 Sep 2022 23:32:20 -0700 (PDT)
 Received: from localhost.localdomain ([117.217.182.47])
-        by smtp.gmail.com with ESMTPSA id n16-20020a05600c4f9000b003a5c7a942edsm2828122wmq.28.2022.09.09.23.32.05
+        by smtp.gmail.com with ESMTPSA id n16-20020a05600c4f9000b003a5c7a942edsm2828122wmq.28.2022.09.09.23.32.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Sep 2022 23:32:12 -0700 (PDT)
+        Fri, 09 Sep 2022 23:32:20 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     lpieralisi@kernel.org, robh@kernel.org, andersson@kernel.org
 Cc:     kw@linux.com, bhelgaas@google.com, linux-pci@vger.kernel.org,
@@ -57,9 +57,9 @@ Cc:     kw@linux.com, bhelgaas@google.com, linux-pci@vger.kernel.org,
         krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
         dmitry.baryshkov@linaro.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v3 09/12] PCI: qcom-ep: Make PERST separation optional
-Date:   Sat, 10 Sep 2022 12:00:42 +0530
-Message-Id: <20220910063045.16648-10-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 10/12] dt-bindings: PCI: qcom-ep: Define clocks per platform
+Date:   Sat, 10 Sep 2022 12:00:43 +0530
+Message-Id: <20220910063045.16648-11-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20220910063045.16648-1-manivannan.sadhasivam@linaro.org>
 References: <20220910063045.16648-1-manivannan.sadhasivam@linaro.org>
@@ -75,46 +75,91 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-PERST separation is an optional debug feature used to collect the crash
-dump from the PCIe endpoint devices by the PCIe host when the endpoint
-crashes. This feature keeps the PCIe link up by separating the PCIe IP
-block from the SoC reset logic.
-
-Hence, make the property optional in the driver.
+In preparation of adding the bindings for future SoCs, let's define the
+clocks per platform.
 
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom-ep.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ .../devicetree/bindings/pci/qcom,pcie-ep.yaml | 50 ++++++++++++-------
+ 1 file changed, 31 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-index 40f75a6c55df..92140a09aac5 100644
---- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-@@ -220,8 +220,10 @@ static int qcom_pcie_ep_core_reset(struct qcom_pcie_ep *pcie_ep)
-  */
- static void qcom_pcie_ep_configure_tcsr(struct qcom_pcie_ep *pcie_ep)
- {
--	regmap_write(pcie_ep->perst_map, pcie_ep->perst_en, 0);
--	regmap_write(pcie_ep->perst_map, pcie_ep->perst_sep_en, 0);
-+	if (pcie_ep->perst_map) {
-+		regmap_write(pcie_ep->perst_map, pcie_ep->perst_en, 0);
-+		regmap_write(pcie_ep->perst_map, pcie_ep->perst_sep_en, 0);
-+	}
- }
+diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+index b728ede3f09f..bb8e982e69be 100644
+--- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
++++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+@@ -9,9 +9,6 @@ title: Qualcomm PCIe Endpoint Controller binding
+ maintainers:
+   - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
  
- static int qcom_pcie_dw_link_up(struct dw_pcie *pci)
-@@ -478,8 +480,8 @@ static int qcom_pcie_ep_get_io_resources(struct platform_device *pdev,
+-allOf:
+-  - $ref: "pci-ep.yaml#"
+-
+ properties:
+   compatible:
+     const: qcom,sdx55-pcie-ep
+@@ -35,24 +32,10 @@ properties:
+       - const: mmio
  
- 	syscon = of_parse_phandle(dev->of_node, "qcom,perst-regs", 0);
- 	if (!syscon) {
--		dev_err(dev, "Failed to parse qcom,perst-regs\n");
--		return -EINVAL;
-+		dev_dbg(dev, "PERST separation not available\n");
-+		return 0;
- 	}
+   clocks:
+-    items:
+-      - description: PCIe Auxiliary clock
+-      - description: PCIe CFG AHB clock
+-      - description: PCIe Master AXI clock
+-      - description: PCIe Slave AXI clock
+-      - description: PCIe Slave Q2A AXI clock
+-      - description: PCIe Sleep clock
+-      - description: PCIe Reference clock
++    maxItems: 7
  
- 	pcie_ep->perst_map = syscon_node_to_regmap(syscon);
+   clock-names:
+-    items:
+-      - const: aux
+-      - const: cfg
+-      - const: bus_master
+-      - const: bus_slave
+-      - const: slave_q2a
+-      - const: sleep
+-      - const: ref
++    maxItems: 7
+ 
+   qcom,perst-regs:
+     description: Reference to a syscon representing TCSR followed by the two
+@@ -112,6 +95,35 @@ required:
+   - reset-names
+   - power-domains
+ 
++allOf:
++  - $ref: pci-ep.yaml#
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sdx55-pcie-ep
++    then:
++      properties:
++        clocks:
++          items:
++            - description: PCIe Auxiliary clock
++            - description: PCIe CFG AHB clock
++            - description: PCIe Master AXI clock
++            - description: PCIe Slave AXI clock
++            - description: PCIe Slave Q2A AXI clock
++            - description: PCIe Sleep clock
++            - description: PCIe Reference clock
++        clock-names:
++          items:
++            - const: aux
++            - const: cfg
++            - const: bus_master
++            - const: bus_slave
++            - const: slave_q2a
++            - const: sleep
++            - const: ref
++
+ unevaluatedProperties: false
+ 
+ examples:
 -- 
 2.25.1
 
