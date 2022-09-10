@@ -2,155 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DFDE5B466D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Sep 2022 14:55:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0A315B46AF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Sep 2022 16:32:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229451AbiIJMzJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Sep 2022 08:55:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49488 "EHLO
+        id S229541AbiIJOcQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Sep 2022 10:32:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229492AbiIJMzI (ORCPT
+        with ESMTP id S229464AbiIJOcP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Sep 2022 08:55:08 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5211525EBC
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Sep 2022 05:55:07 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-3454b0b1b6dso48725627b3.4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Sep 2022 05:55:07 -0700 (PDT)
+        Sat, 10 Sep 2022 10:32:15 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7BCF3BC72;
+        Sat, 10 Sep 2022 07:32:13 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id i203-20020a1c3bd4000000b003b3df9a5ecbso2344640wma.1;
+        Sat, 10 Sep 2022 07:32:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=H9+aEqiuPXTD/0BZaNY7OkRWAFHFJteXc5O3Y0RlriU=;
-        b=mBHDGwsHzU8tUV9CsDzMvAXPhxljy4Z/pZKGE4kQymHkgT8ih+5G40SzDLbN0kydlr
-         2tjDhbT4XnoRojq0JPdXDKumG2iQzpTlod5jENB0Cm9jPsLf+C8Pno1eaDHvK2vv0B94
-         kEwzHuGm9EWHRfiL5Mi+LeccMdIBUaH3HdQCPcpJFiQLybFtiFFgow+Hb4LrlXukH5Jk
-         6MQn8oaQF5MsKJZ/DHvGM+7k+ekMr/btC25EG+mB3XqY74ddKV4jEin1nU1so8g744At
-         T1F+z15ipWU2Fji4Ho5ed+7xdgKVX6OvR6gIkUvrdVIsEDmRHc3wpW8aeTJmAwBVbZke
-         a44w==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=QDNuJYzL/VhMdJ5vK4I9kC932Hs8rjQfwYKlPo/J23I=;
+        b=DLRDfD6DMxEq6IhkKp/cXYLikMX+Crv9liN035gNEl1vfwqqjI5XpTsNvklQOnLVII
+         B5ORs78iiQa36BE1Jv/oZ56qFK1KOCa6wybCpcwdD4CILuIl8bsY/ZsUL45vlTYp0H+g
+         k5DPPrLeoKl/cOXRrNA4aCuWbUwNhzBvhOd/WacvZx0Z4Rz4KVSN6xGL/07UDf915r4q
+         53h0CauAyfNc7aoZ8nh8Ld3p+W5+mYN9E6vrXK8iX7rTpkP3/c2Gng/ZfF2p1bnY2l5E
+         BtZJdHGt/zb1wJIfCnEaz1RmFyD6h7rlVCSGDXzYHSVbwk6zxZP7Xz8vqcQMZBWM8usQ
+         EwbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=H9+aEqiuPXTD/0BZaNY7OkRWAFHFJteXc5O3Y0RlriU=;
-        b=a3kSMYjPxLeJDjQunQkvsyLrSo6Xhl0oppiMrRB2wjDqauY9KUzAHchD3HORnbl8NP
-         AMn46HJAWdFiPSs+2GgiNsE0AW64eq5g2j0pcciKZxZEKaihUKoRyuFpcwqlFb9aH9Ts
-         5cte3t9ChVImQphVlgWdz5Ocf7bwB7JxkuClpo0GZSPKYWkTxLulE+JsF8nMFxesFotl
-         FYCuSA/Mc2KmeGlgs6PwVLId/tpaZxT06L0s9d+ojNkvbCk39dLCp9qJSwy1VFoIev7v
-         0Y1UiG5+HUr98ocDv6ISU25caETdalGro/MxnaawKVbBo30JCU7gNGtagSzjoxHrhajv
-         xc+Q==
-X-Gm-Message-State: ACgBeo3WuUBIywa4i/wCwO+PlDoDMThuD2XeLJu2tY+z6qTJozXz0Xg/
-        gbHz2qTLnxUh+JNLE8SZidP0cGZH6g4wEoCTw2wFtQ==
-X-Google-Smtp-Source: AA6agR5M01fLD1dnWRcihDf9ksYjlQdjkT0J9p3TdYpAK/1HdHOcbQhPoqH8kNrR1WJrJnAvY1r3ksR1w8AubJ+eWUI=
-X-Received: by 2002:a0d:ffc5:0:b0:341:6cc1:c589 with SMTP id
- p188-20020a0dffc5000000b003416cc1c589mr15944568ywf.418.1662814506532; Sat, 10
- Sep 2022 05:55:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220901102312.2005553-1-dmitry.baryshkov@linaro.org>
- <20220901102312.2005553-2-dmitry.baryshkov@linaro.org> <3e525135-d205-eddc-ff2d-98c8321386e3@linaro.org>
- <20220908193705.GA3002673-robh@kernel.org> <1ebe64a3-fab9-1dd7-517a-01001a176d9f@linaro.org>
- <CAL_JsqLkV_fnUnc4cS=cdTvP3rKYAS011_+KZYiBGhXDx-pHnA@mail.gmail.com> <2204eab4-b22d-8ee7-4595-49139cb387a8@linaro.org>
-In-Reply-To: <2204eab4-b22d-8ee7-4595-49139cb387a8@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 10 Sep 2022 15:54:55 +0300
-Message-ID: <CAA8EJpqHL-gO=zSG6Ek=-y4njGF5R66z0MwLeKZ9U4Ag1j51Og@mail.gmail.com>
-Subject: Re: [PATCH v6 01/12] dt-bindings: display/msm: split qcom,mdss bindings
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=QDNuJYzL/VhMdJ5vK4I9kC932Hs8rjQfwYKlPo/J23I=;
+        b=Pvp6BgQ+Dgl9vbNfJzfOuX18RfmRaZv3ls1+wiOg7twqVtnzLBnsxmnPlEpITckiL8
+         fH9LUj/Qjnp6J50oRWxHT+qwRoA7WIpi00r2HBiYNgHYRZrHBRIQ7jZfY7TxRVBAWFwv
+         z7pmAd17MBKeDpOJYe2FlsZSOZYyMGimLWGcAQEXNSTO6Rf/X6rncgyXkK9mKY2QJrSl
+         tTs6ZniQCZ2qxO0uAri3GuvoNuPtmnJw+XiU4lFbHNncHL8DlxMbLx7CeoOzyWABPAxR
+         eQtOGpONuNKru8JO1o0Uud0ZtBp3/g8NXUY3ELpQ7WPwwJdh5i960I5+DmhTJ8vw+XCa
+         vM/w==
+X-Gm-Message-State: ACgBeo06KV1okUR1yZHQqg43QXJbTeCg8Dz+lFU6CpbOS86mOCvtTXTf
+        hlwz8MXOT0Lv0/AV4APgdUo=
+X-Google-Smtp-Source: AA6agR5hcmS10jAeK44BMM8W3qdeX0C4lAGHuYzM+mgI+s7DsqVOUd8oczlkiO9NvpI6THNVYf47Hg==
+X-Received: by 2002:a05:600c:1d9a:b0:3a6:248:1440 with SMTP id p26-20020a05600c1d9a00b003a602481440mr8935687wms.196.1662820332154;
+        Sat, 10 Sep 2022 07:32:12 -0700 (PDT)
+Received: from localhost ([77.78.20.135])
+        by smtp.gmail.com with ESMTPSA id e19-20020a05600c4e5300b003a62bc1735asm4052743wmq.9.2022.09.10.07.32.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 10 Sep 2022 07:32:11 -0700 (PDT)
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, Loic Poulain <loic.poulain@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-Content-Type: text/plain; charset="UTF-8"
+        Rob Herring <robh+dt@kernel.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Iskren Chernev <iskren.chernev@gmail.com>
+Subject: [PATCH v3 0/9] Add support for sm6115,4250 and OnePlus Nord N100
+Date:   Sat, 10 Sep 2022 17:32:04 +0300
+Message-Id: <20220910143213.477261-1-iskren.chernev@gmail.com>
+X-Mailer: git-send-email 2.37.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 10 Sept 2022 at 11:45, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 10/09/2022 00:23, Rob Herring wrote:
-> >>>>
-> >>>> This should be ref to dsi-controller-main.yaml... or based on previous
-> >>>> Rob's feedback you dropped it everywhere in children?
-> >>>
-> >>> I don't think I said. I thought about it some, as yes, we normally have
-> >>> done as you suggested. The downside is with a ref we'll do the whole
-> >>> validation of the child node twice (unless the referenced schema has a
-> >>> 'select: false') whereas here only 'compatible' is validated twice. This
-> >>> way also complicates checking for unevaluatedProperties/additionalProperties.
-> >>>
-> >>> So maybe better to keep with the 'normal' way and make this a ref.
-> >>
-> >> Well.. I tried using $ref in the previous iteration, but then I faced
-> >> the fact that I can not use it. Using the $ref the node gets validated
-> >> even if it is disabled, and we do not want to do this. The nodes are
-> >> usually split in way that regulators are specified in the board DT file.
-> >> Thus disabled dsi/dsi-phy nodes do not get all the required regulators.
-> >> And dt-validate happily dumps tons of warnings for disabled nodes. Thus
-> >> I ended up with the compatible rather than $ref.
-> >
-> > Only warnings about required properties? Those are supposed to get
-> > filtered out if the node is disabled. Maybe being in a $ref doesn't
-> > work.
->
-> This seems to break regardless it is in $ref or when you directly
-> reference the schema.
->
-> I tested display/msm/dpu-sc7180.yaml on modified DTB when a required
-> property is missing (I removed reg-names) and:
->
-> 1. When node is enabled:
->
-> c7180-idp.dtb: display-controller@ae01000: 'reg-names' is a required
-> property
->
->         Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
->
-> rch/arm64/boot/dts/qcom/sc7180-idp.dtb: display-controller@ae01000:
-> Unevaluated properties are not allowed ('interrupt-parent',
-> 'interrupts', 'operating-points-v2', 'opp-table', 'ports',
-> 'power-domains' were unexpected)
->
->
-> 2. When node is disabled the first error disappears (so no clue which
-> one is missing) but schema does not pass:
->
-> qcom/sc7180-idp.dtb: display-controller@ae01000: Unevaluated properties
-> are not allowed ('interrupt-parent', 'interrupts',
-> 'operating-points-v2', 'opp-table', 'ports', 'power-domains' were
-> unexpected)
->
->         From schema: Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml
->
->
-> However I think there is no such problem, as Dmitry said, that ref
-> changes anything. There will be always failure - either from parent
-> schema (using $ref) or from device child schema (the one which actually
-> misses the property).
+Changes from v2
+---------------
+v2: https://lore.kernel.org/all/20220903174150.3566935-1-iskren.chernev@gmail.com/
+- fix ufs bindings to follow sdm845
+- drop nvmem, firmware, reserved-range patches (merged)
+- add patch that fixes sm6115-dwc3 bindings (4/9)
+- add patch that fixes qcom,sm6115-sdhci bindings (5/9)
+- add patch that fixes qcom,sm6115-qmp-ufs-phy bindings (6/9)
+- drop dynamic reserved memory regions
+- drop clock-output-names
+- drop frequency for timer
+- fix mmc pinctrl regression in v2
+- move board clock freqs in relative scope
+- fix indentation to please Konrad
+- reorder some DT props (reg, status, compatible)
 
-Initially I stumbled upon this issue with the dsi and dsi_phy nodes
-for msm8996 devices. If I have $ref here, dsi1/dsi1_phy nodes will
-emit warnings regarding the missing -supply properties despite nodes
-being disabled. If I use `compatible' here, the schema checks pass.
-Thus I'd prefer to leave `compatible' here. Not to mention that it
-also allows specifying a tighter binding than just using the $ref.
+Changes from v1
+---------------
+v1: https://lore.kernel.org/all/20220901072414.1923075-1-iskren.chernev@gmail.com/
+- merge dtsi patches in one
+- fix ufs binding (allow ice register)
+- fix dt schema issues (to the best of my ability)
+- add a few necessary bindings (compats)
+- some comments on remaining schema issues after commit msg (patch 7 and 9)
+
+This series adds support for sm6115 (clocks, pinctrl, usb, ufs, sdhc),
+sm4250 (mostly empty shell on top of sm6115) and finally basic OnePlus Nord
+N100 (codename billie2), including the above mentiond items plus simple
+framebuffer.
+
+Please note that this series depends on [1] (driver compat and bindings).
+
+[1] https://lore.kernel.org/linux-devicetree/20220815100952.23795-1-a39.skl@gmail.com/
+
+Iskren Chernev (9):
+  dt-bindings: ufs: qcom: Add sm6115 binding
+  dt-bindings: arm: cpus: Add kryo240 compatible
+  dt-bindings: arm: qcom: Add compatible for oneplus,billie2 phone
+  dt-bindings: usb: qcom,dwc3: Fix SM6115 clocks, irqs
+  dt-bindings: mmc: sdhci-msm: Add pinctrl-1 property
+  dt-bindings: phy: qcom,qmp-ufs: Fix SM6115 clocks, regs
+  arm64: dts: qcom: sm6115: Add basic soc dtsi
+  arm64: dts: qcom: sm4250: Add soc dtsi
+  arm64: dts: qcom: sm4250: Add support for oneplus-billie2
+
+ .../devicetree/bindings/arm/cpus.yaml         |   1 +
+ .../devicetree/bindings/arm/qcom.yaml         |   7 +
+ .../devicetree/bindings/mmc/sdhci-msm.yaml    |   4 +
+ .../bindings/phy/qcom,qmp-ufs-phy.yaml        |   3 +-
+ .../devicetree/bindings/ufs/qcom,ufs.yaml     |  26 +
+ .../devicetree/bindings/usb/qcom,dwc3.yaml    |   3 +-
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/sm4250-oneplus-billie2.dts  | 241 +++++
+ arch/arm64/boot/dts/qcom/sm4250.dtsi          |  38 +
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          | 857 ++++++++++++++++++
+ 10 files changed, 1179 insertions(+), 2 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sm4250.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sm6115.dtsi
 
 -- 
-With best wishes
-Dmitry
+2.37.2
+
