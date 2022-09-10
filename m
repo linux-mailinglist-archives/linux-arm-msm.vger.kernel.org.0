@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F0C8E5B4A00
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Sep 2022 23:25:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3F165B49D6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Sep 2022 23:24:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231221AbiIJVZb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Sep 2022 17:25:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44596 "EHLO
+        id S230340AbiIJVYT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Sep 2022 17:24:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231424AbiIJVYL (ORCPT
+        with ESMTP id S230527AbiIJVXf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Sep 2022 17:24:11 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BFD14E863;
-        Sat, 10 Sep 2022 14:20:31 -0700 (PDT)
+        Sat, 10 Sep 2022 17:23:35 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0C191ADA8;
+        Sat, 10 Sep 2022 14:19:41 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 36A52B80959;
-        Sat, 10 Sep 2022 21:19:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1728C433D7;
-        Sat, 10 Sep 2022 21:19:23 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A043360EDF;
+        Sat, 10 Sep 2022 21:19:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC5D5C433B5;
+        Sat, 10 Sep 2022 21:19:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1662844764;
-        bh=ctclM3JBJrkIeibqeVrapq86rbugeEMyPRRRmJnwhBU=;
+        s=k20201202; t=1662844781;
+        bh=2HvLPQ0g5T8ddpdD+yRBeKrwMCuKVLDYV2jEiR1DsAI=;
         h=From:To:Cc:Subject:Date:From;
-        b=nxNAlAKioFR1/sFRXmsZ9XigiQuoNa+e12xWF7oae2aJC2CXp5WIQ6bYOV397IU9b
-         FzVa1Te+6c8j80ZytxhvdHN53FoFol98o7Aoyeqj6FZHnxcQ+Mn/zBxbl5evwn1zlJ
-         G/Qbl13SkO44mv2mWbiy58VjvrWsxkhUCV36e+OJJTWEFqUfRKgF3mzh9MvpRr1g/6
-         oGUb12ctypRA3rH23BKv9kef1uficGGqvcv//Y4fqJuXCsV08fa62uq0FPTAd5bVvV
-         koJdBly/70IZb+qrBgJdDL9b+aT7+7OzYLXBH9rSu6HpAafKbi42Mxm1Uj0XUPYHPy
-         wkPlcWxhWRogQ==
+        b=YXQqYqGRDryFvWh/hN8EqVQu7L+i+6Gw5yn03L3g9zLaMkAh9L6JimF50h/GmezBs
+         0iQOCIAyDjKzSYWCQqTeKUkBMJm5DkGfkVNs0TeztYSFWyVbDgaJhIoMDlGJXsy2jL
+         uH1pgJ7JFK3av9oRkndZtq0eO6laMM95Z9fzJPBMtpAXRTQrbd2vewZGwYBotASzSy
+         ZoGUiibgnfkbsUkr7PODnKJjwW+5hbnn1/UM6i7OGrqc+uZVIxWduveGacCijnfgXl
+         XsEFi4PsPeH8Yg5/0mfx6jaS63M5Ffo+cIew9bXtDig4xjXPa6gtZkw3Sd/qwiyIae
+         KDpFZhWBoWrLw==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Rob Clark <robdclark@chromium.org>,
@@ -39,9 +39,9 @@ Cc:     Rob Clark <robdclark@chromium.org>,
         quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
         airlied@linux.ie, daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 4.19 1/8] drm/msm/rd: Fix FIFO-full deadlock
-Date:   Sat, 10 Sep 2022 17:19:14 -0400
-Message-Id: <20220910211921.70891-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 1/5] drm/msm/rd: Fix FIFO-full deadlock
+Date:   Sat, 10 Sep 2022 17:19:33 -0400
+Message-Id: <20220910211938.70997-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 X-stable: review
@@ -75,10 +75,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 3 insertions(+)
 
 diff --git a/drivers/gpu/drm/msm/msm_rd.c b/drivers/gpu/drm/msm/msm_rd.c
-index d4cc5ceb22d01..bb65aab49c214 100644
+index bdce1c9434c6c..54891cbf4f50f 100644
 --- a/drivers/gpu/drm/msm/msm_rd.c
 +++ b/drivers/gpu/drm/msm/msm_rd.c
-@@ -199,6 +199,9 @@ static int rd_open(struct inode *inode, struct file *file)
+@@ -193,6 +193,9 @@ static int rd_open(struct inode *inode, struct file *file)
  	file->private_data = rd;
  	rd->open = true;
  
