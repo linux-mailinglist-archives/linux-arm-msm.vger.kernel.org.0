@@ -2,104 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FAD25B477E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Sep 2022 18:32:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DF5C5B4791
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Sep 2022 19:02:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229569AbiIJQcZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Sep 2022 12:32:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55120 "EHLO
+        id S229589AbiIJRC2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Sep 2022 13:02:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229527AbiIJQcX (ORCPT
+        with ESMTP id S229459AbiIJRC0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Sep 2022 12:32:23 -0400
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BD624A83E;
-        Sat, 10 Sep 2022 09:32:22 -0700 (PDT)
-Received: by mail-yb1-f177.google.com with SMTP id f131so6899551ybf.7;
-        Sat, 10 Sep 2022 09:32:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=GkMFjVtDr0W10OJLyjB1PHKjRI7ZFioNTd0VYLRMl94=;
-        b=ThoRLvkIbjrCWL0q+TFVOHf3eGbii09QgZZ8+fnloYa65GmvZoYZxXRfi4dIf/o3/X
-         CHxXNCVetlaCzlNPH7RHeluIxXBW9UaWGxJbq44/RtWKjnWMdCJeIjeGpTxtZk7sC3XY
-         FC1+bATa/yirJyG/f0TfPtNbPuBdAW51Y4xNJXJOabOT0rud7KCnxWelfVT3WcqdnVvi
-         S/MvEcHpaC+v+YF47p1//uEddmEbtpH4EW44HoPAx6nua0qW6qe+AO4eBtEhW/IhMKDt
-         EtzYW5sIUxU/qV5nqC5OKkZTZ9vMESj0n6S0HZwEROc08lB3wnnH38cngZo5+KpEIQns
-         iUaQ==
-X-Gm-Message-State: ACgBeo09Bstel6aHIS4x5EoDtJZ7DCW8jizVZ0Jd0dyvtaTwHiRyqD8t
-        l7KDxBTL2gsd8LWoF2CLf5zUIJz+v4ZKxTCZ4bs=
-X-Google-Smtp-Source: AA6agR4n7pXTzaWGoZwbXMPbML7j3aWjxBABW4Ue2CuqwFbK1YnZzMiGo3Y8jNXuTBWAX9gMGWr6mCabLDZaslxS/Ik=
-X-Received: by 2002:a25:2f0c:0:b0:6a8:f230:12ed with SMTP id
- v12-20020a252f0c000000b006a8f23012edmr15745127ybv.633.1662827541557; Sat, 10
- Sep 2022 09:32:21 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220908132910.62122-1-andriy.shevchenko@linux.intel.com> <YxnwMLvgQAPOkeeK@smile.fi.intel.com>
-In-Reply-To: <YxnwMLvgQAPOkeeK@smile.fi.intel.com>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Sat, 10 Sep 2022 18:32:10 +0200
-Message-ID: <CAJZ5v0j5FO+OcX6VdiR-tuDCrHFwErquxzZGUu3ZLQ1G57T-+Q@mail.gmail.com>
-Subject: Re: [PATCH v2 0/8] ACPI: unify _UID handling as integer
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc:     Hans de Goede <hdegoede@redhat.com>,
-        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-efi <linux-efi@vger.kernel.org>,
-        linux-i2c <linux-i2c@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-spi <linux-spi@vger.kernel.org>,
-        "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Len Brown <lenb@kernel.org>, Elie Morisse <syniurge@gmail.com>,
-        Nehal Shah <nehal-bakulchandra.shah@amd.com>,
-        Shyam Sundar S K <shyam-sundar.s-k@amd.com>,
-        Khalil Blaiech <kblaiech@nvidia.com>,
+        Sat, 10 Sep 2022 13:02:26 -0400
+Received: from mx1.riseup.net (mx1.riseup.net [198.252.153.129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C33693F33D;
+        Sat, 10 Sep 2022 10:02:24 -0700 (PDT)
+Received: from fews2.riseup.net (fews2-pn.riseup.net [10.0.1.84])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
+         client-signature RSA-PSS (2048 bits) client-digest SHA256)
+        (Client CN "mail.riseup.net", Issuer "R3" (not verified))
+        by mx1.riseup.net (Postfix) with ESMTPS id 4MPzgM60DhzDqvN;
+        Sat, 10 Sep 2022 17:02:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
+        t=1662829344; bh=40CNOPy3Zf9G7CPKUjgzQ5b0AiIYJrWS6ye7Qa6omZo=;
+        h=From:To:Cc:Subject:Date:From;
+        b=TV4fw4wzJlZjZIr7WONiIIE6dNAsUsTx5ntrqKSg/PaBo0ATN7H5ny0OUxdW06luV
+         jS2gJwMq45AOPCPcWTT5OLiaE0IcQ+6Ir5f2lZxuFaRPkwCR6YfL3AA453C/OQHpl1
+         YBIiXnMzZyDNfDg9X8YGM53O5NrqHWr4+Ihtb4W4=
+X-Riseup-User-ID: 6F74CD9EDEECAE30F2DB5A65239CCBA773B5255B67D994F2842D6A0BD7DB0A28
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+         by fews2.riseup.net (Postfix) with ESMTPSA id 4MPzgJ2gkcz1xwy;
+        Sat, 10 Sep 2022 17:02:20 +0000 (UTC)
+From:   Dang Huynh <danct12@riseup.net>
+To:     Dang Huynh <danct12@riseup.net>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Will Deacon <will@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Daniel Mack <daniel@zonque.org>,
-        Haojian Zhuang <haojian.zhuang@gmail.com>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Robert Moore <robert.moore@intel.com>,
-        Wolfram Sang <wsa@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] clk: qcom: sm6115: Select QCOM_GDSC
+Date:   Sun, 11 Sep 2022 00:02:07 +0700
+Message-Id: <20220910170207.1592220-1-danct12@riseup.net>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 8, 2022 at 3:38 PM Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
->
-> On Thu, Sep 08, 2022 at 04:29:02PM +0300, Andy Shevchenko wrote:
-> > This series is about unification on how we handle ACPI _UID when
-> > it's known to be an integer-in-the-string.
-> >
-> > The idea of merging either all via ACPI tree, or taking ACPI stuff
-> > for the v6.1 while the rest may be picked up later on by respective
-> > maintainers separately
->
-> >(currently all depends on Wolfram, other
-> > patches have got the tags from the maintainers).
->
-> I stand corrected, the perf patch is not tagged yet.
->
-> > Partially compile-tested (x86-64).
+While working on the Fxtec Pro1X device, this error shows up with
+my own minimal configuration:
 
-Tentatively applied as 6.1 material.
+gcc-sm6115: probe of 1400000.clock-controller failed with error -38
 
-If there are updates, we'll make changes as they go.
+The clock driver depends on CONFIG_QCOM_GDSC and after enabling
+that, the driver probes successfully.
 
-Thanks!
+Signed-off-by: Dang Huynh <danct12@riseup.net>
+---
+ drivers/clk/qcom/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index 1cf1ef70e347..d566fbdebdf9 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -645,6 +645,7 @@ config SM_DISPCC_6350
+ 
+ config SM_GCC_6115
+ 	tristate "SM6115 and SM4250 Global Clock Controller"
++	select QCOM_GDSC
+ 	help
+ 	  Support for the global clock controller on SM6115 and SM4250 devices.
+ 	  Say Y if you want to use peripheral devices such as UART, SPI,
+-- 
+2.37.3
+
