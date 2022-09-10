@@ -2,96 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ACF5E5B471E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Sep 2022 16:54:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FAD25B477E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Sep 2022 18:32:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229455AbiIJOyN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Sep 2022 10:54:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40260 "EHLO
+        id S229569AbiIJQcZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Sep 2022 12:32:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbiIJOyE (ORCPT
+        with ESMTP id S229527AbiIJQcX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Sep 2022 10:54:04 -0400
-Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 011364457C;
-        Sat, 10 Sep 2022 07:54:01 -0700 (PDT)
-Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-11e9a7135easo11480343fac.6;
-        Sat, 10 Sep 2022 07:54:00 -0700 (PDT)
+        Sat, 10 Sep 2022 12:32:23 -0400
+Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BD624A83E;
+        Sat, 10 Sep 2022 09:32:22 -0700 (PDT)
+Received: by mail-yb1-f177.google.com with SMTP id f131so6899551ybf.7;
+        Sat, 10 Sep 2022 09:32:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=message-id:date:subject:references:in-reply-to:cc:to:from
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=ifo6TqrA2757G8HR38HLney0ZLAz01R6aY9dPCdXl3Y=;
-        b=k0oVd3dbSdyuqmjUmykogS9H32fNgp02tCg8uSK/Pm7zpEhuzUMoD0BMQUXkyF3Oxk
-         racPEyEATactf+oomg5iqQffKDRI186EqjQ4t+j41XyRe8gF5858VpOD6I7MMlaHWBBr
-         7Wz1DPA7S0PFNsXDu8TXc6IdJ98SDtd2yA5T5hOuQsZLTFBTyRSIZg2khzYz4mEy21LV
-         +mcmtQump+NLXvO1KA5q+1iz7VkS5/4bmVuQpcla8FbeqZBIL6u+BbAAJmRlYFjfDDJw
-         WUZsaZWss8Nq6hB15mE+XqmIzXJfxU5PdFwFQFsDhJJ5UU8UVG+w6f9BJe6LVXSdYlCA
-         MBwg==
-X-Gm-Message-State: ACgBeo0mKW5dIy1VeNfFUb1rXbuxejim0+EJbhZm3Pr4qjNzgi67TLri
-        3cvPDpkaprGpBSJueYKIwA==
-X-Google-Smtp-Source: AA6agR6hmwMiw/lR9B81JNdMbO+Ia+MDJeL8CcqEriha2MtNkYuBKBnxij76O3KxYU3E3dSWcCANaw==
-X-Received: by 2002:a05:6808:e8e:b0:34d:7829:135 with SMTP id k14-20020a0568080e8e00b0034d78290135mr5211741oil.252.1662821640212;
-        Sat, 10 Sep 2022 07:54:00 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id b9-20020a4aba09000000b0044b125e5dabsm1292104oop.35.2022.09.10.07.53.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Sep 2022 07:53:59 -0700 (PDT)
-Received: (nullmailer pid 34703 invoked by uid 1000);
-        Sat, 10 Sep 2022 14:53:55 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     andersson@kernel.org, robh+dt@kernel.org,
-        devicetree@vger.kernel.org, lpieralisi@kernel.org,
-        linux-arm-msm@vger.kernel.org, konrad.dybcio@somainline.org,
-        krzysztof.kozlowski+dt@linaro.org, bhelgaas@google.com,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        dmitry.baryshkov@linaro.org, kw@linux.com
-In-Reply-To: <20220910063045.16648-12-manivannan.sadhasivam@linaro.org>
-References: <20220910063045.16648-1-manivannan.sadhasivam@linaro.org> <20220910063045.16648-12-manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH v3 11/12] dt-bindings: PCI: qcom-ep: Add support for SM8450 SoC
-Date:   Sat, 10 Sep 2022 09:53:55 -0500
-Message-Id: <1662821635.191877.34702.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=GkMFjVtDr0W10OJLyjB1PHKjRI7ZFioNTd0VYLRMl94=;
+        b=ThoRLvkIbjrCWL0q+TFVOHf3eGbii09QgZZ8+fnloYa65GmvZoYZxXRfi4dIf/o3/X
+         CHxXNCVetlaCzlNPH7RHeluIxXBW9UaWGxJbq44/RtWKjnWMdCJeIjeGpTxtZk7sC3XY
+         FC1+bATa/yirJyG/f0TfPtNbPuBdAW51Y4xNJXJOabOT0rud7KCnxWelfVT3WcqdnVvi
+         S/MvEcHpaC+v+YF47p1//uEddmEbtpH4EW44HoPAx6nua0qW6qe+AO4eBtEhW/IhMKDt
+         EtzYW5sIUxU/qV5nqC5OKkZTZ9vMESj0n6S0HZwEROc08lB3wnnH38cngZo5+KpEIQns
+         iUaQ==
+X-Gm-Message-State: ACgBeo09Bstel6aHIS4x5EoDtJZ7DCW8jizVZ0Jd0dyvtaTwHiRyqD8t
+        l7KDxBTL2gsd8LWoF2CLf5zUIJz+v4ZKxTCZ4bs=
+X-Google-Smtp-Source: AA6agR4n7pXTzaWGoZwbXMPbML7j3aWjxBABW4Ue2CuqwFbK1YnZzMiGo3Y8jNXuTBWAX9gMGWr6mCabLDZaslxS/Ik=
+X-Received: by 2002:a25:2f0c:0:b0:6a8:f230:12ed with SMTP id
+ v12-20020a252f0c000000b006a8f23012edmr15745127ybv.633.1662827541557; Sat, 10
+ Sep 2022 09:32:21 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220908132910.62122-1-andriy.shevchenko@linux.intel.com> <YxnwMLvgQAPOkeeK@smile.fi.intel.com>
+In-Reply-To: <YxnwMLvgQAPOkeeK@smile.fi.intel.com>
+From:   "Rafael J. Wysocki" <rafael@kernel.org>
+Date:   Sat, 10 Sep 2022 18:32:10 +0200
+Message-ID: <CAJZ5v0j5FO+OcX6VdiR-tuDCrHFwErquxzZGUu3ZLQ1G57T-+Q@mail.gmail.com>
+Subject: Re: [PATCH v2 0/8] ACPI: unify _UID handling as integer
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc:     Hans de Goede <hdegoede@redhat.com>,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+        Ard Biesheuvel <ardb@kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-efi <linux-efi@vger.kernel.org>,
+        linux-i2c <linux-i2c@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-spi <linux-spi@vger.kernel.org>,
+        "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Len Brown <lenb@kernel.org>, Elie Morisse <syniurge@gmail.com>,
+        Nehal Shah <nehal-bakulchandra.shah@amd.com>,
+        Shyam Sundar S K <shyam-sundar.s-k@amd.com>,
+        Khalil Blaiech <kblaiech@nvidia.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Will Deacon <will@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Daniel Mack <daniel@zonque.org>,
+        Haojian Zhuang <haojian.zhuang@gmail.com>,
+        Robert Jarzmik <robert.jarzmik@free.fr>,
+        Robert Moore <robert.moore@intel.com>,
+        Wolfram Sang <wsa@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 10 Sep 2022 12:00:44 +0530, Manivannan Sadhasivam wrote:
-> Add devicetree bindings support for SM8450 SoC. Only the clocks are
-> different on this platform, rest is same as SDX55.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  .../devicetree/bindings/pci/qcom,pcie-ep.yaml | 39 +++++++++++++++++--
->  1 file changed, 36 insertions(+), 3 deletions(-)
-> 
+On Thu, Sep 8, 2022 at 3:38 PM Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
+>
+> On Thu, Sep 08, 2022 at 04:29:02PM +0300, Andy Shevchenko wrote:
+> > This series is about unification on how we handle ACPI _UID when
+> > it's known to be an integer-in-the-string.
+> >
+> > The idea of merging either all via ACPI tree, or taking ACPI stuff
+> > for the v6.1 while the rest may be picked up later on by respective
+> > maintainers separately
+>
+> >(currently all depends on Wolfram, other
+> > patches have got the tags from the maintainers).
+>
+> I stand corrected, the perf patch is not tagged yet.
+>
+> > Partially compile-tested (x86-64).
 
-Running 'make dtbs_check' with the schema in this patch gives the
-following warnings. Consider if they are expected or the schema is
-incorrect. These may not be new warnings.
+Tentatively applied as 6.1 material.
 
-Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-This will change in the future.
+If there are updates, we'll make changes as they go.
 
-Full log is available here: https://patchwork.ozlabs.org/patch/
-
-
-pcie-ep@40000000: qcom,perst-regs:0: [27] is too short
-	arch/arm/boot/dts/qcom-sdx55-mtp.dtb
-
-pcie-ep@40000000: qcom,perst-regs:0: [28] is too short
-	arch/arm/boot/dts/qcom-sdx55-t55.dtb
-	arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dtb
-
-pcie-ep@40000000: Unevaluated properties are not allowed ('qcom,perst-regs' was unexpected)
-	arch/arm/boot/dts/qcom-sdx55-mtp.dtb
-	arch/arm/boot/dts/qcom-sdx55-t55.dtb
-	arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dtb
-
+Thanks!
