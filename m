@@ -2,63 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C0A315B46AF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Sep 2022 16:32:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CEB015B46B1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Sep 2022 16:32:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229541AbiIJOcQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Sep 2022 10:32:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32840 "EHLO
+        id S229583AbiIJOcS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Sep 2022 10:32:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229464AbiIJOcP (ORCPT
+        with ESMTP id S229464AbiIJOcR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Sep 2022 10:32:15 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7BCF3BC72;
-        Sat, 10 Sep 2022 07:32:13 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id i203-20020a1c3bd4000000b003b3df9a5ecbso2344640wma.1;
-        Sat, 10 Sep 2022 07:32:13 -0700 (PDT)
+        Sat, 10 Sep 2022 10:32:17 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B4733BC6B;
+        Sat, 10 Sep 2022 07:32:16 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id c2-20020a1c3502000000b003b2973dafb7so7069902wma.2;
+        Sat, 10 Sep 2022 07:32:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date;
-        bh=QDNuJYzL/VhMdJ5vK4I9kC932Hs8rjQfwYKlPo/J23I=;
-        b=DLRDfD6DMxEq6IhkKp/cXYLikMX+Crv9liN035gNEl1vfwqqjI5XpTsNvklQOnLVII
-         B5ORs78iiQa36BE1Jv/oZ56qFK1KOCa6wybCpcwdD4CILuIl8bsY/ZsUL45vlTYp0H+g
-         k5DPPrLeoKl/cOXRrNA4aCuWbUwNhzBvhOd/WacvZx0Z4Rz4KVSN6xGL/07UDf915r4q
-         53h0CauAyfNc7aoZ8nh8Ld3p+W5+mYN9E6vrXK8iX7rTpkP3/c2Gng/ZfF2p1bnY2l5E
-         BtZJdHGt/zb1wJIfCnEaz1RmFyD6h7rlVCSGDXzYHSVbwk6zxZP7Xz8vqcQMZBWM8usQ
-         EwbA==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=tfOkC7rAMPVTo8l6wnriy72fNtCnhfwJaZ8s4WJI0B8=;
+        b=n8nSAEALjBXhAavns6HFURS85wmN13q1y+qmsxBjPJ43v0PqEFfsAxQuR5Iy8/x0zl
+         cITDJVfWws8ULaiLz4tW7YHqAOq9+Bd7n3gCv1EPSjffN6Fcx2ct04zEVy6BQVgceuv9
+         N8ujhqW90A6JjdfxknLAJA7yMSIpEz3BUNw6uai9Yj+JcvxrSCGlDxz+OXQnyaC419Bb
+         O6QV2S8ig6X0CoOrnH7pHGJde4ewvxTQ4d466DUW4Vn4GLoMtQ3mqlzHPw5I4vGpmzSP
+         LjUoipfIO5s8MXvO3w0hyeOmxbg7jYN3xUjBKw3XxXuqZI5p5CsnYbGOSxoUqF29kQ7K
+         CyJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=QDNuJYzL/VhMdJ5vK4I9kC932Hs8rjQfwYKlPo/J23I=;
-        b=Pvp6BgQ+Dgl9vbNfJzfOuX18RfmRaZv3ls1+wiOg7twqVtnzLBnsxmnPlEpITckiL8
-         fH9LUj/Qjnp6J50oRWxHT+qwRoA7WIpi00r2HBiYNgHYRZrHBRIQ7jZfY7TxRVBAWFwv
-         z7pmAd17MBKeDpOJYe2FlsZSOZYyMGimLWGcAQEXNSTO6Rf/X6rncgyXkK9mKY2QJrSl
-         tTs6ZniQCZ2qxO0uAri3GuvoNuPtmnJw+XiU4lFbHNncHL8DlxMbLx7CeoOzyWABPAxR
-         eQtOGpONuNKru8JO1o0Uud0ZtBp3/g8NXUY3ELpQ7WPwwJdh5i960I5+DmhTJ8vw+XCa
-         vM/w==
-X-Gm-Message-State: ACgBeo06KV1okUR1yZHQqg43QXJbTeCg8Dz+lFU6CpbOS86mOCvtTXTf
-        hlwz8MXOT0Lv0/AV4APgdUo=
-X-Google-Smtp-Source: AA6agR5hcmS10jAeK44BMM8W3qdeX0C4lAGHuYzM+mgI+s7DsqVOUd8oczlkiO9NvpI6THNVYf47Hg==
-X-Received: by 2002:a05:600c:1d9a:b0:3a6:248:1440 with SMTP id p26-20020a05600c1d9a00b003a602481440mr8935687wms.196.1662820332154;
-        Sat, 10 Sep 2022 07:32:12 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=tfOkC7rAMPVTo8l6wnriy72fNtCnhfwJaZ8s4WJI0B8=;
+        b=8Ce5IWwIojGPwVWlFkUzFvXTEifqD0hsi7kXThJ7cnHlf6wioDmiULsTS1yfW+JSAd
+         bfAbx8xvBJ6s3Wm/8uP+0InPES1btupFQe6i1wSmy1XpP7TIwnbNtlxvpK9mdHeu64UH
+         7FXOhtZW9hEGEe1PkgUIqiYPPZyaIu5uGln9qoy8R6vhnJ6/wFGO81ovhWi5rvaPQ27s
+         EIKB9M3Ki/dbi1qOSFaPXknWN57+IoVmWk/UDWGsTtXmzSbB00gCC7XF+vA1j+q/KPBo
+         NbYkhbZMWV6y/w7YITF1At9w8yNO4QHjyMP/yF2At8PIYXsw5cfouqvTBmtgfSkzsW6C
+         8acQ==
+X-Gm-Message-State: ACgBeo0q3dybNvJtbrVDbQcN6K9SHuyb0e2jhu0Hi6uaEBo6+gxWzLyx
+        b+o3WpcnFN+M/Syf0NZZO68=
+X-Google-Smtp-Source: AA6agR5SLFVky//jqgsiUiCiDK8+7Q9F7etZ5Dju4IdzM2C0i5p0RF+Jz0PV1oGZtEbYLqEXJujqQw==
+X-Received: by 2002:a05:600c:2181:b0:3b4:74e4:16f8 with SMTP id e1-20020a05600c218100b003b474e416f8mr1394617wme.174.1662820334801;
+        Sat, 10 Sep 2022 07:32:14 -0700 (PDT)
 Received: from localhost ([77.78.20.135])
-        by smtp.gmail.com with ESMTPSA id e19-20020a05600c4e5300b003a62bc1735asm4052743wmq.9.2022.09.10.07.32.10
+        by smtp.gmail.com with ESMTPSA id v11-20020adff68b000000b0021e5adb92desm2939565wrp.60.2022.09.10.07.32.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 10 Sep 2022 07:32:11 -0700 (PDT)
+        Sat, 10 Sep 2022 07:32:14 -0700 (PDT)
 From:   Iskren Chernev <iskren.chernev@gmail.com>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>
 Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Iskren Chernev <iskren.chernev@gmail.com>
-Subject: [PATCH v3 0/9] Add support for sm6115,4250 and OnePlus Nord N100
-Date:   Sat, 10 Sep 2022 17:32:04 +0300
-Message-Id: <20220910143213.477261-1-iskren.chernev@gmail.com>
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 1/9] dt-bindings: ufs: qcom: Add sm6115 binding
+Date:   Sat, 10 Sep 2022 17:32:05 +0300
+Message-Id: <20220910143213.477261-2-iskren.chernev@gmail.com>
 X-Mailer: git-send-email 2.37.2
+In-Reply-To: <20220910143213.477261-1-iskren.chernev@gmail.com>
+References: <20220910143213.477261-1-iskren.chernev@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -71,66 +81,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Changes from v2
----------------
-v2: https://lore.kernel.org/all/20220903174150.3566935-1-iskren.chernev@gmail.com/
-- fix ufs bindings to follow sdm845
-- drop nvmem, firmware, reserved-range patches (merged)
-- add patch that fixes sm6115-dwc3 bindings (4/9)
-- add patch that fixes qcom,sm6115-sdhci bindings (5/9)
-- add patch that fixes qcom,sm6115-qmp-ufs-phy bindings (6/9)
-- drop dynamic reserved memory regions
-- drop clock-output-names
-- drop frequency for timer
-- fix mmc pinctrl regression in v2
-- move board clock freqs in relative scope
-- fix indentation to please Konrad
-- reorder some DT props (reg, status, compatible)
+Add SM6115 UFS to DT schema.
 
-Changes from v1
----------------
-v1: https://lore.kernel.org/all/20220901072414.1923075-1-iskren.chernev@gmail.com/
-- merge dtsi patches in one
-- fix ufs binding (allow ice register)
-- fix dt schema issues (to the best of my ability)
-- add a few necessary bindings (compats)
-- some comments on remaining schema issues after commit msg (patch 7 and 9)
+Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+---
+ .../devicetree/bindings/ufs/qcom,ufs.yaml     | 26 +++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-This series adds support for sm6115 (clocks, pinctrl, usb, ufs, sdhc),
-sm4250 (mostly empty shell on top of sm6115) and finally basic OnePlus Nord
-N100 (codename billie2), including the above mentiond items plus simple
-framebuffer.
-
-Please note that this series depends on [1] (driver compat and bindings).
-
-[1] https://lore.kernel.org/linux-devicetree/20220815100952.23795-1-a39.skl@gmail.com/
-
-Iskren Chernev (9):
-  dt-bindings: ufs: qcom: Add sm6115 binding
-  dt-bindings: arm: cpus: Add kryo240 compatible
-  dt-bindings: arm: qcom: Add compatible for oneplus,billie2 phone
-  dt-bindings: usb: qcom,dwc3: Fix SM6115 clocks, irqs
-  dt-bindings: mmc: sdhci-msm: Add pinctrl-1 property
-  dt-bindings: phy: qcom,qmp-ufs: Fix SM6115 clocks, regs
-  arm64: dts: qcom: sm6115: Add basic soc dtsi
-  arm64: dts: qcom: sm4250: Add soc dtsi
-  arm64: dts: qcom: sm4250: Add support for oneplus-billie2
-
- .../devicetree/bindings/arm/cpus.yaml         |   1 +
- .../devicetree/bindings/arm/qcom.yaml         |   7 +
- .../devicetree/bindings/mmc/sdhci-msm.yaml    |   4 +
- .../bindings/phy/qcom,qmp-ufs-phy.yaml        |   3 +-
- .../devicetree/bindings/ufs/qcom,ufs.yaml     |  26 +
- .../devicetree/bindings/usb/qcom,dwc3.yaml    |   3 +-
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../boot/dts/qcom/sm4250-oneplus-billie2.dts  | 241 +++++
- arch/arm64/boot/dts/qcom/sm4250.dtsi          |  38 +
- arch/arm64/boot/dts/qcom/sm6115.dtsi          | 857 ++++++++++++++++++
- 10 files changed, 1179 insertions(+), 2 deletions(-)
- create mode 100644 arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sm4250.dtsi
- create mode 100644 arch/arm64/boot/dts/qcom/sm6115.dtsi
-
+diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+index f2d6298d926c..b517d76215e3 100644
+--- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
++++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+@@ -28,6 +28,7 @@ properties:
+           - qcom,msm8998-ufshc
+           - qcom,sc8280xp-ufshc
+           - qcom,sdm845-ufshc
++          - qcom,sm6115-ufshc
+           - qcom,sm6350-ufshc
+           - qcom,sm8150-ufshc
+           - qcom,sm8250-ufshc
+@@ -178,6 +179,31 @@ allOf:
+           minItems: 1
+           maxItems: 1
+ 
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sm6115-ufshc
++    then:
++      properties:
++        clocks:
++          minItems: 8
++          maxItems: 8
++        clock-names:
++          items:
++            - const: core_clk
++            - const: bus_aggr_clk
++            - const: iface_clk
++            - const: core_clk_unipro
++            - const: ref_clk
++            - const: tx_lane0_sync_clk
++            - const: rx_lane0_sync_clk
++            - const: ice_core_clk
++        reg:
++          minItems: 2
++          maxItems: 2
++
+     # TODO: define clock bindings for qcom,msm8994-ufshc
+ 
+ unevaluatedProperties: false
 -- 
 2.37.2
 
