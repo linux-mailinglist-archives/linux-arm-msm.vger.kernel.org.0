@@ -2,66 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 51A375B43AE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Sep 2022 03:42:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D0425B443F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Sep 2022 07:32:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229599AbiIJBmN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Sep 2022 21:42:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51192 "EHLO
+        id S229727AbiIJFcd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Sep 2022 01:32:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229607AbiIJBmM (ORCPT
+        with ESMTP id S229601AbiIJFcd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Sep 2022 21:42:12 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7902F7A751
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 18:42:11 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id o25so5875564wrf.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 18:42:11 -0700 (PDT)
+        Sat, 10 Sep 2022 01:32:33 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E44C857E0
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Sep 2022 22:32:31 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id v1so3628334plo.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Sep 2022 22:32:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=UDIQkC2ms264gTGFxnmfmclKEemKDBECbA2lZM/6kdo=;
-        b=gcW1kZw6a6GiKsTL150Mz2Bpwe8UjVLyN7DsTkbpz/IPhRj32gL8q66Wix+Jc6OV5q
-         Yr0HibEp8lA7hb8nLRVMpQTAgxMf7Y3B07klgbRYwHZ/yAnTw6L+EBrN3Ni0+W5erRBO
-         Slv45CJw6r4G8yF5ts/5LgymcXlnTK5C0HQiL1KayNGcVWuEVKcFk04NsCBOBPL/BkUx
-         3vz84G8Y0D6bW7MBrELFKhiHUGiGlt/UmDY+lPe7O190S1jsKz+9MlcY6ORMfFNiWHOC
-         oUv2LbZ9k67+Ee0xKQkRuZOsCubOC+B6ht8LBGVdgrqVm/HxNbIzgbapZOQ4dxzhOy3S
-         V4TA==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date;
+        bh=jopVdw1qVzMqLHMV5Kp3Rupq060qHXjQXADwkK30rz4=;
+        b=eeS/MEMm9J39rEErbUPkkXnO6ez1WJCIfr9Pzn/7oqs+SkKNmGk0RPDSxbAhyAv5l6
+         RS0j3nySz6wF1jKb+3TENiMFuXiJ6l2wC5f3+MIeZffgCw9rv2YSNUZ1LjUsnkilxu7x
+         Hsy0uiPtutJCDCD7j/jXxwC/R9djhJ6qwcIpvLr9JrGrTd6sYVUAcI5Y9RWySCAOHZ4O
+         rkRnucf299w/3lYJgFhE3JevVlSX5WGMRAyIxxF24VZXnQyaJO/OU2G74lhS9JVS/a+Q
+         rCDUaALXX7LLQxU8EgxbTDlYRm7PXTVX+aT1oFSJ8mOfbmWDIX/ufmP6YO602y+4Ev2N
+         RcLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=UDIQkC2ms264gTGFxnmfmclKEemKDBECbA2lZM/6kdo=;
-        b=7wEwp/8KtGT5gWmph5LYAddg4+PqF4Jc7Ks94wMdtL8/Sk7jm0wgyfdAlnQ1DRGEWf
-         m9yIvEq9wWMEeViP6aPQ5IQtmiiC3Kyp92523Dm4vpwLWZso/z0oXBim+SO0HsuL6r31
-         j+FsEJZYGxh90p326C3juA7HkLnkgi9aQ6BDaQI1w3I4+pgyr9FjNTVbL1sxLS1DSNDC
-         9N0eg6MjhXmHDSHjgqVMG9UpSZMBmCUHj7lZoEngE+Y27O/MDVCUpCbaw+MwOwbhmbBF
-         pURIT50Xn7OIv54qGD+FT7GVVjaDQc7j+9PoNAD4Uxv43bAr8BGKSAqgsHmWP8ALT6m3
-         8yyQ==
-X-Gm-Message-State: ACgBeo01iGnNaD/o7OfLquwHoJWMujrHGSQSlkDbStRZCoMDQ+4srWu+
-        VAxsFNHHFPd7S6re0CkPDmXJVg==
-X-Google-Smtp-Source: AA6agR4A3uAkZnwfWr+B70Bhxrm/cGUVMICHkrtQXyMQXuot0E2VBOK1nib8BJsfwaZyN6b7pCRFzA==
-X-Received: by 2002:adf:e199:0:b0:228:60f6:f775 with SMTP id az25-20020adfe199000000b0022860f6f775mr9290646wrb.478.1662774130058;
-        Fri, 09 Sep 2022 18:42:10 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id j24-20020a05600c1c1800b003a8434530bbsm2420910wms.13.2022.09.09.18.42.09
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=jopVdw1qVzMqLHMV5Kp3Rupq060qHXjQXADwkK30rz4=;
+        b=L1LY5SYAbKO9emTd6Sw3Q6u+nXJ/qahNbOiWb6enhj5l/1uty16kmvWN5KBHMPmC3Q
+         249wVusIRtxWoZzhkHTP8oqyrvXqX3WwtvMBiaNu7Tl99K3FMQf2Ez+7e5KQQ0UR31Lx
+         y8BEp0NI7rmK4Li25+vBTkk8I0yYfv5wzEpO8uSn5izMYwMdiPlvRURR31hYuWvXmFgj
+         PZqaJx51A56ffAEL5W3hPKC6q6Ghwmgo3sfVVbNrF3PAWQLI6uZ6juTbK5+xYdolbAJK
+         d6UHIzKvScRK7flwFj9FN3+mwpmzmym9DWaq4db3yjalBtTG2zOs7LMfCZrsiwqpitM4
+         o1DA==
+X-Gm-Message-State: ACgBeo0MYflca9aDloqn8hpazbUxAsR8eSOjzuja3ihAuosQG3eu0A+R
+        SyaumgDLnmnY9NmZerdrNgoQ8iclmIwSY+o=
+X-Google-Smtp-Source: AA6agR6bv5hkoOm8hmADD807C9+UIEnADoVaBd5Fa8GNi3P+GB9022gFH/ArKkjuKaUH722GpF0bjw==
+X-Received: by 2002:a17:902:d2ce:b0:178:7b5:c070 with SMTP id n14-20020a170902d2ce00b0017807b5c070mr6317692plc.58.1662787950619;
+        Fri, 09 Sep 2022 22:32:30 -0700 (PDT)
+Received: from thinkpad ([117.217.182.47])
+        by smtp.gmail.com with ESMTPSA id s2-20020a625e02000000b00528c066678csm728570pfb.72.2022.09.09.22.32.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Sep 2022 18:42:09 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc:     bryan.odonoghue@linaro.org
-Subject: [PATCH v2 1/1] ASoC: dt-bindings: Mark old binding qcom,cpu-lpass-apq8016 as deprecated
-Date:   Sat, 10 Sep 2022 02:42:06 +0100
-Message-Id: <20220910014206.1101962-2-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20220910014206.1101962-1-bryan.odonoghue@linaro.org>
-References: <20220910014206.1101962-1-bryan.odonoghue@linaro.org>
+        Fri, 09 Sep 2022 22:32:30 -0700 (PDT)
+Date:   Sat, 10 Sep 2022 11:02:22 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     kernel test robot <lkp@intel.com>
+Cc:     lpieralisi@kernel.org, robh@kernel.org, andersson@kernel.org,
+        kbuild-all@lists.01.org, kw@linux.com, bhelgaas@google.com,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        devicetree@vger.kernel.org, dmitry.baryshkov@linaro.org
+Subject: Re: [PATCH v2 04/11] PCI: qcom-ep: Add eDMA support
+Message-ID: <20220910053222.GA8299@thinkpad>
+References: <20220830165817.183571-5-manivannan.sadhasivam@linaro.org>
+ <202209031046.rOZKOVqT-lkp@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <202209031046.rOZKOVqT-lkp@intel.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -72,41 +78,106 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We've had some discongruity in the compatible string of the lpass for 8916
-for a while.
+On Sat, Sep 03, 2022 at 10:36:53AM +0800, kernel test robot wrote:
+> Hi Manivannan,
+> 
+> I love your patch! Yet something to improve:
+> 
+> [auto build test ERROR on robh/for-next]
+> [also build test ERROR on linus/master v6.0-rc3 next-20220901]
+> [cannot apply to helgaas-pci/next]
+> [If your patch is applied to the wrong git tree, kindly drop us a note.
+> And when submitting patch, we suggest to use '--base' as documented in
+> https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> 
+> url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam/Improvements-to-the-Qcom-PCIe-Endpoint-driver/20220831-010315
+> base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+> config: arm-allyesconfig (https://download.01.org/0day-ci/archive/20220903/202209031046.rOZKOVqT-lkp@intel.com/config)
+> compiler: arm-linux-gnueabi-gcc (GCC) 12.1.0
+> reproduce (this is a W=1 build):
+>         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+>         chmod +x ~/bin/make.cross
+>         # https://github.com/intel-lab-lkp/linux/commit/dec4c93b2077408cecddd53950905bf2411019b0
+>         git remote add linux-review https://github.com/intel-lab-lkp/linux
+>         git fetch --no-tags linux-review Manivannan-Sadhasivam/Improvements-to-the-Qcom-PCIe-Endpoint-driver/20220831-010315
+>         git checkout dec4c93b2077408cecddd53950905bf2411019b0
+>         # save the config file
+>         mkdir build_dir && cp config build_dir/.config
+>         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash
+> 
+> If you fix the issue, kindly add following tag where applicable
+> Reported-by: kernel test robot <lkp@intel.com>
+> 
+> All errors (new ones prefixed by >>):
+> 
+>    drivers/pci/controller/dwc/pcie-qcom-ep.c: In function 'qcom_pcie_ep_probe':
+> >> drivers/pci/controller/dwc/pcie-qcom-ep.c:672:21: error: 'struct dw_pcie' has no member named 'edma'
+>      672 |         pcie_ep->pci.edma.nr_irqs = 1;
 
-Mark the old compat as deprecated. New SoC additions such as msm8936 and
-msm8939 should use the compat string "qcom,apq8016-lpass-cpu".
+This patch depends on the eDMA series from Sergey (Sorry, I forgot to mention
+this in cover letter):
+[PATCH RESEND v5 00/24] dmaengine: dw-edma: Add RP/EP local DMA controllers support
 
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- .../devicetree/bindings/sound/qcom,lpass-cpu.yaml   | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+But the eDMA series is still getting reviews and I don't hear any news about
+respin. So in the next revision I'm gonna drop this patch.
 
-diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-index ef18a572a1ff3..e2c0f573a3084 100644
---- a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-@@ -18,11 +18,14 @@ description: |
- 
- properties:
-   compatible:
--    enum:
--      - qcom,lpass-cpu
--      - qcom,apq8016-lpass-cpu
--      - qcom,sc7180-lpass-cpu
--      - qcom,sc7280-lpass-cpu
-+    oneOf:
-+      - enum:
-+        - qcom,lpass-cpu
-+        - qcom,apq8016-lpass-cpu
-+        - qcom,sc7180-lpass-cpu
-+        - qcom,sc7280-lpass-cpu
-+      - const: qcom,lpass-cpu-apq8016
-+        deprecated: true
- 
-   reg:
-     minItems: 1
+Thanks,
+Mani
+
+>          |                     ^
+> 
+> 
+> vim +672 drivers/pci/controller/dwc/pcie-qcom-ep.c
+> 
+>    658	
+>    659	static int qcom_pcie_ep_probe(struct platform_device *pdev)
+>    660	{
+>    661		struct device *dev = &pdev->dev;
+>    662		struct qcom_pcie_ep *pcie_ep;
+>    663		int ret;
+>    664	
+>    665		pcie_ep = devm_kzalloc(dev, sizeof(*pcie_ep), GFP_KERNEL);
+>    666		if (!pcie_ep)
+>    667			return -ENOMEM;
+>    668	
+>    669		pcie_ep->pci.dev = dev;
+>    670		pcie_ep->pci.ops = &pci_ops;
+>    671		pcie_ep->pci.ep.ops = &pci_ep_ops;
+>  > 672		pcie_ep->pci.edma.nr_irqs = 1;
+>    673		platform_set_drvdata(pdev, pcie_ep);
+>    674	
+>    675		ret = qcom_pcie_ep_get_resources(pdev, pcie_ep);
+>    676		if (ret)
+>    677			return ret;
+>    678	
+>    679		ret = qcom_pcie_enable_resources(pcie_ep);
+>    680		if (ret) {
+>    681			dev_err(dev, "Failed to enable resources: %d\n", ret);
+>    682			return ret;
+>    683		}
+>    684	
+>    685		ret = dw_pcie_ep_init(&pcie_ep->pci.ep);
+>    686		if (ret) {
+>    687			dev_err(dev, "Failed to initialize endpoint: %d\n", ret);
+>    688			goto err_disable_resources;
+>    689		}
+>    690	
+>    691		ret = qcom_pcie_ep_enable_irq_resources(pdev, pcie_ep);
+>    692		if (ret)
+>    693			goto err_disable_resources;
+>    694	
+>    695		return 0;
+>    696	
+>    697	err_disable_resources:
+>    698		qcom_pcie_disable_resources(pcie_ep);
+>    699	
+>    700		return ret;
+>    701	}
+>    702	
+> 
+> -- 
+> 0-DAY CI Kernel Test Service
+> https://01.org/lkp
+
 -- 
-2.37.3
-
+மணிவண்ணன் சதாசிவம்
