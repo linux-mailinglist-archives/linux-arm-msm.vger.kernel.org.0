@@ -2,75 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42C895B47BB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Sep 2022 19:36:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D0965B48FE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Sep 2022 23:16:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229544AbiIJRgD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Sep 2022 13:36:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52008 "EHLO
+        id S229718AbiIJVQe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Sep 2022 17:16:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229529AbiIJRgC (ORCPT
+        with ESMTP id S229622AbiIJVQc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Sep 2022 13:36:02 -0400
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76D4846603
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Sep 2022 10:35:58 -0700 (PDT)
-Received: by mail-yb1-xb34.google.com with SMTP id 130so7035650ybw.8
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Sep 2022 10:35:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=gLVbshsHa2sc404y0Bd85BoPJIDMSkXF3ZFiG5HMn+4=;
-        b=WlvDmqLKsIVj30dGxIVC9LhXEdbTCn+OGriYlT7pW7q942pY/vT3Vh1MBnPzh4VXUd
-         5C7oARpyRLFbfR7nfG+FABVt4wFjprwC3Q1+r9VXPU3Qdt/GD5kOsJEHBQKFl38Sk7ZS
-         UGPxUu+5dIlc/ObzcpgsUGh7sRLrpQmwcbmLjGpsplcfqJIvdxO8AiirFB5bmVxqgPd3
-         qQMnIRb//ZehSiZPrFuhbFKnig3w43cXyt4PhrzODi7YDmNNCkepLGGgvMln8f2qU9/L
-         8Qekk0lg/Od+vS4l7kX/CgiZrbF5/7RRIZNcRynWEyssNMvr2wizBMiaKI8p3zfqaxWA
-         V5sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=gLVbshsHa2sc404y0Bd85BoPJIDMSkXF3ZFiG5HMn+4=;
-        b=7lh11R+9/4YfaATUmzrjXvzJwZPfOzbdPUE76sj8PzFYXE4OYf1A68jekKhjiNMu8K
-         dzvvrKSxQgec1qM+PihkITUMH+9DwJbgobcmCfvnTasxnV4ipfqjs0bjygXr+BFKl27h
-         Ku6u/E+UHKKIt3K6eOn5dHv8GWhy+t1x9YOPduOnFovTYeEBhpRLZ5kzrFzhGeEKTJM3
-         2mboPAPa+F5EYxyyusZyLW0QLFl5L14F2b/WmxuU6eo5q/OE1Vf/2CvCXmMcEDbluDgP
-         /fkOTHZcCbL0QAmlB8xcH7ROeqkOllycf4IlGVhRuL6JmK1OvOiOEO4CXMONcVTPaBsR
-         8guw==
-X-Gm-Message-State: ACgBeo2zYJO1jKxJivScnYYPdjU7wiGS6U4nABVSyuwW851TE23IFVBg
-        qvORw36zRnHrcoUg9DTELyGA73hp0jlKdjbYx5yEeg==
-X-Google-Smtp-Source: AA6agR5AKI4RoJD/lniyBNi6dwnQ+x/GZD3aL6I194xxeHfqq8Es1K9B3NYX0w9ok2xr1U4BTU6tp2vsBDJY2p6J0L0=
-X-Received: by 2002:a25:af13:0:b0:6ae:3166:1aee with SMTP id
- a19-20020a25af13000000b006ae31661aeemr11400657ybh.288.1662831357675; Sat, 10
- Sep 2022 10:35:57 -0700 (PDT)
+        Sat, 10 Sep 2022 17:16:32 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F5564BA50;
+        Sat, 10 Sep 2022 14:16:31 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 2AD79B8085B;
+        Sat, 10 Sep 2022 21:16:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC4D8C433D7;
+        Sat, 10 Sep 2022 21:16:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1662844589;
+        bh=/Z5VauDP6NZb5Qbbk5QtyDSUJrRx1CVHUG5+Lgr4zrw=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=Nw0v9aomqumUWn5giZ68z91Qmodd/XRCiDBLIvtHgCaxY8W/8SiiycTOM4/EbyoHo
+         47NyUSeUjTz2IoLP4QQiiM+P0s1JpkFaSo3yUc0euX7ovG6JExOpcL3dzN4vNomJGD
+         CfrT2OJQH0x5Q25F+d/6w/0Oa4iFE7LkgX63pL4hF3u7q640vc0rbA+EzxgnBQUryK
+         8+vRNsX9aW7xEyKR6hcQ5Y6fslp32vG+h+eKI44Ma6O840ICsWZ8gfDJOohUSp79gD
+         vKaZkErFiQmI5UQPz/hKPCs79AyzhM/E9g9XE3h2OohS1tJTWm/U8MqgheH1Qc4hUk
+         ahHn8NkwvbTcQ==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Sasha Levin <sashal@kernel.org>, robdclark@gmail.com,
+        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
+        airlied@linux.ie, daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 5.19 03/38] drm/msm/rd: Fix FIFO-full deadlock
+Date:   Sat, 10 Sep 2022 17:15:48 -0400
+Message-Id: <20220910211623.69825-3-sashal@kernel.org>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220910211623.69825-1-sashal@kernel.org>
+References: <20220910211623.69825-1-sashal@kernel.org>
 MIME-Version: 1.0
-References: <20220727100615.638072-1-dmitry.baryshkov@linaro.org>
- <CAL_JsqJjLn8ypBo+bBoO+CE-si7gemP02fi8EWk97QRPPpNoVg@mail.gmail.com>
- <CAK7LNARXbXZFpxiHuLhzjJ4YahfV6z3dNPAdkkmeOXONBx8u3w@mail.gmail.com>
- <CAA8EJprM4WAgfVTJ15azFtSH6POL5uuseHO=zVxRd44RmqKZjw@mail.gmail.com>
- <CAK7LNAQU42fpqPqUipZYx+685B+Rc8JGdaKcP3TdfQWUept1nQ@mail.gmail.com>
- <CAA8EJprMsEE-fkpP=QGgpCga5rb9_mJF51cvRjeWsG7NBeijSA@mail.gmail.com> <CAL_JsqLptaL_Uv++dEzUx83n3c+AAu9rYUv6Zbb7sLbJE35wWA@mail.gmail.com>
-In-Reply-To: <CAL_JsqLptaL_Uv++dEzUx83n3c+AAu9rYUv6Zbb7sLbJE35wWA@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 10 Sep 2022 20:35:46 +0300
-Message-ID: <CAA8EJprBAtdWAGG=a7BYc_Zwx9B5Dqsy4n3dhvP5cA40agR8ew@mail.gmail.com>
-Subject: Re: [PATCH] kbuild: take into account DT_SCHEMA_FILES changes while
- checking dtbs
-To:     Rob Herring <robh+dt@kernel.org>
-Cc:     Masahiro Yamada <masahiroy@kernel.org>,
-        Michal Marek <michal.lkml@markovi.net>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,113 +59,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 4 Aug 2022 at 18:27, Rob Herring <robh+dt@kernel.org> wrote:
->
-> On Fri, Jul 29, 2022 at 1:46 AM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > On Fri, 29 Jul 2022 at 10:05, Masahiro Yamada <masahiroy@kernel.org> wrote:
-> > >
-> > > On Fri, Jul 29, 2022 at 3:53 PM Dmitry Baryshkov
-> > > <dmitry.baryshkov@linaro.org> wrote:
-> > > >
-> > > > On Fri, 29 Jul 2022 at 08:55, Masahiro Yamada <masahiroy@kernel.org> wrote:
-> > > > >
-> > > > > On Thu, Jul 28, 2022 at 2:36 AM Rob Herring <robh+dt@kernel.org> wrote:
-> > > > > >
-> > > > > > On Wed, Jul 27, 2022 at 4:06 AM Dmitry Baryshkov
-> > > > > > <dmitry.baryshkov@linaro.org> wrote:
-> > > > > > >
-> > > > > > > It is useful to be able to recheck dtbs files against a limited set of
-> > > > > > > DT schema files. This can be accomplished by using differnt
-> > > > > > > DT_SCHEMA_FILES argument values while rerunning make dtbs_check. However
-> > > > > > > for some reason if_changed_rule doesn't pick up the rule_dtc changes
-> > > > > > > (and doesn't retrigger the build).
-> > > > > > >
-> > > > > > > Fix this by changing if_changed_rule to if_changed_dep and squashing DTC
-> > > > > > > and dt-validate into a single new command. Then if_changed_dep triggers
-> > > > > > > on DT_SCHEMA_FILES changes and reruns the build/check.
-> > > > > > >
-> > > > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > > > ---
-> > > > > > >  scripts/Makefile.lib | 14 ++++++--------
-> > > > > > >  1 file changed, 6 insertions(+), 8 deletions(-)
-> > > > > > >
-> > > > > > > diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
-> > > > > > > index c88b98b5dc44..3df470289382 100644
-> > > > > > > --- a/scripts/Makefile.lib
-> > > > > > > +++ b/scripts/Makefile.lib
-> > > > > > > @@ -383,17 +383,15 @@ DT_CHECKER_FLAGS ?= $(if $(DT_SCHEMA_FILES),-l $(DT_SCHEMA_FILES),-m)
-> > > > > > >  DT_BINDING_DIR := Documentation/devicetree/bindings
-> > > > > > >  DT_TMP_SCHEMA := $(objtree)/$(DT_BINDING_DIR)/processed-schema.json
-> > > > > > >
-> > > > > > > -quiet_cmd_dtb_check =  CHECK   $@
-> > > > > > > -      cmd_dtb_check =  $(DT_CHECKER) $(DT_CHECKER_FLAGS) -u $(srctree)/$(DT_BINDING_DIR) -p $(DT_TMP_SCHEMA) $@ || true
-> > > > > > > +quiet_cmd_dtb =        DTC/CHECK   $@
-> > > > > >
-> > > > > > This is supposed to be 7 chars or less. DTCCHK or DTC_CHK perhaps. Or
-> > > > > > always do just 'DTC'. I can fixup when applying.
-> > > > > >
-> > > > > > I'll give it a few days for other comments.
-> > > > >
-> > > > >
-> > > > >
-> > > > > When you change DT_SCHEMA_FILES, re-running dt-validate should be enough.
-> > > > > You do not need to re-run dtc.
-> > > > >
-> > > > > I guess the strangeness comes from the fact that you are trying to do the
-> > > > >  two different things in a single rule.
-> > > >
-> > > > The issue is that with the current rules the dt-validate isn't
-> > > > re-executed on DT_SCHEMA_FILES changes. Thus comes my proposal.
-> > >
-> > > Correct.
-> > >
-> > > What I said is like this.
-> > >
-> > > # touch the timestamp file, %.dtb.checked
-> > > $(obj)/%.dtb.checked: $(obj)/%.dtb $(DT_TMP_SCHEMA) FORCE
->
-> Not really a fan of the thousands of files that creates. Maybe if it
-> was turned into something useful like a list of schemas that apply to
-> the dtb. IOW, a dependency list. That would speed up re-running after
-> a schema change. Though if a schema change created new dependencies,
-> that wouldn't work.
->
-> > >         $(call if_changed_rule,dtb_check)
-> > >
-> > > $(obj)/%.dtb: $(src)/%.dts $(DTC) $FORCE
-> > >         $(call if_changed_rule,dtc)
-> > >
-> > > $(obj)/%.dtbo: $(src)/%.dts $(DTC) FORCE
-> > >         $(call if_changed_dep,dtc)
-> > >
-> > >
-> > > With the dtc/check split, we can avoid unneeded regeneration of
-> > > %.dtb when DT_TMP_SCHEMA or DT_SCHEMA_FILES is
-> > > changed.
-> > >
-> > >
-> > > One drawback is we track %.dtb.checked and and %.dtb separately,
-> > > so something like 53182e81f47d4ea0c727c49ad23cb782173ab849
-> > > may come back.
-> >
-> > It's up to you and Rob, but I'd really prefer a simpler solution here.
-> > Regenerating dtbs sounds like a minor pain compared to hacking the
-> > top-level Makefile again. What I really like is that if one has
-> > CHECK_DTBS=y (for whatever reason), he can not generate dtb without
-> > validation.
->
-> I lean towards just rebuilding the dtbs. That's pretty quick and
-> ensures we get dtc warnings with schema warnings. In the long run, I
-> would like to make the schema checks not optional to run. The
-> impediment to doing that is lots of warnings (but not not some
-> platforms), adding a tool dependency, and validation time.
+From: Rob Clark <robdclark@chromium.org>
 
-Rob, Masahiro, do we have any conclusion here? I can change my patch,
-but I'd like to understand in which way I should change it.
-Fixing/testing yaml changes is a bit painful w/o this change.
+[ Upstream commit 174974d8463b77c2b4065e98513adb204e64de7d ]
 
+If the previous thing cat'ing $debugfs/rd left the FIFO full, then
+subsequent open could deadlock in rd_write() (because open is blocked,
+not giving a chance for read() to consume any data in the FIFO).  Also
+it is generally a good idea to clear out old data from the FIFO.
+
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Patchwork: https://patchwork.freedesktop.org/patch/496706/
+Link: https://lore.kernel.org/r/20220807160901.2353471-2-robdclark@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/msm/msm_rd.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/gpu/drm/msm/msm_rd.c b/drivers/gpu/drm/msm/msm_rd.c
+index a92ffde53f0b3..db2f847c8535f 100644
+--- a/drivers/gpu/drm/msm/msm_rd.c
++++ b/drivers/gpu/drm/msm/msm_rd.c
+@@ -196,6 +196,9 @@ static int rd_open(struct inode *inode, struct file *file)
+ 	file->private_data = rd;
+ 	rd->open = true;
+ 
++	/* Reset fifo to clear any previously unread data: */
++	rd->fifo.head = rd->fifo.tail = 0;
++
+ 	/* the parsing tools need to know gpu-id to know which
+ 	 * register database to load.
+ 	 *
 -- 
-With best wishes
-Dmitry
+2.35.1
+
