@@ -2,79 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A854B5B4F22
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Sep 2022 15:38:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 56C005B4F26
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Sep 2022 15:39:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230091AbiIKNiQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 11 Sep 2022 09:38:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54420 "EHLO
+        id S230298AbiIKNjA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 11 Sep 2022 09:39:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230184AbiIKNiP (ORCPT
+        with ESMTP id S230184AbiIKNi6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 11 Sep 2022 09:38:15 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6E18F18
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 06:38:13 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id l12so7625736ljg.9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 06:38:13 -0700 (PDT)
+        Sun, 11 Sep 2022 09:38:58 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 685D22ED74
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 06:38:57 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id y18so7609159ljh.12
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 06:38:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=ZRxI/s6Zz71Tid6e7oxzqHOX6TOjJ4mXR4nM2d5M1Gs=;
-        b=KsFZTp1yBcbnEAfSPlp8rx05rFnqvl+wA9WY6IogNAN+PRfFxGP+EHKfleRKk66WPA
-         /jwwC+XEMESGUAcDtYeye9zce8hFQwFxXO7vN3PC6UYEeaEkT6GIy/w+CpKgafEdc0Rz
-         pXa8IIEt+titd9xoSPzIkAGvT/PON2tc2uYCeQTkAmIgbAk3Mv0yIlAfWBfcsCENabVj
-         5hRFRRgqIr74vbURpx8F1hirC5xnsn8Db+5W3oBabJDu63uh5+B/Yt1e6KtH0PgY/6Rr
-         Gi9ZO2/Takyd0kunk2ZAUGd2uWhK1e6HS1hlZUM20CHtGZ+9HJyBLQ0aF/YhHZrrcz7A
-         UVsw==
+        bh=byDoEC5c96PKF/XCpwCssrTaiIUZpq7t1dBkW6DDvOI=;
+        b=EDxmFX0aXLLqtay8aHXtdtQFX1R+h0YxS2HUjABJXc3pRNsHs0QTRvmGkg6pbUpFYc
+         0kARHVhKsY30imN1VNmY4pbW3cQIm5sbkJaOKVYlv6yRfoWiJh1xEyZVT7txaJj9+VEn
+         gnzcdRGmZRph8EotCRB7Oj5QHRkhFORzZll8RJkepQilubALxKrGEdunSg3fpVHbFPA1
+         scGuf/w1nhnyVwR4T6+V3cfvcS47pYvqHftyFTxoB0aUjvyNUQ0zi+IHUgsLxNB0/izK
+         kuDtYXdqJo/RRP2I/A+iEnkV7QokMjwb7uaBb95T0yVPsVP5Xq5vRXDFj1R+imki6ehu
+         b2XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=ZRxI/s6Zz71Tid6e7oxzqHOX6TOjJ4mXR4nM2d5M1Gs=;
-        b=AcIJ4FIpwHgMiMiR0LVw5NGsWjMws9TyfhuUYaaVIhF3pj7YitugEvYZRO1H2P0gaO
-         wn8y1AszL6B+SJRwQHX0D4PEe/gAqzoUvWUqp5zYV6wcq39e8HcsV1pWqTaAzlfKfXpm
-         xVshw+q61MGRKWY4QPceYEnQKd+hjCGlTn72oSUAwkoTNaSgci3drO1u2FqgkW8ZK+EX
-         SirAmqsrnn+NoN4tO58lUvYXUbuhUeU1apD9NKyY72BldD/H0YduhnuaZQsyPoe8re0b
-         RjinGkoH/jIL9lgt8nhDxyITHaNpMzRTwmb1haAoDr7cdRFIaxR+sjMjyp8FBt4Zmvo/
-         kK0g==
-X-Gm-Message-State: ACgBeo17OW5y99pPaqbKXmAtK6HwJnb5VRLtdhThjLP1QdUUTp3TxURH
-        JcNqCmxlL5FX0Lp1NU12uhBm+w==
-X-Google-Smtp-Source: AA6agR5XSysgbYN2VoKXqQuzjEN64v1Iu40Kz4k6P94mG4gsYF5ZgArS1iG6UEFhR7+MF8XBCWMiKA==
-X-Received: by 2002:a2e:2244:0:b0:26b:e1c0:8ae8 with SMTP id i65-20020a2e2244000000b0026be1c08ae8mr3639525lji.146.1662903492076;
-        Sun, 11 Sep 2022 06:38:12 -0700 (PDT)
+        bh=byDoEC5c96PKF/XCpwCssrTaiIUZpq7t1dBkW6DDvOI=;
+        b=2kHIYqiVc6drH0kZUmrsHjavmVOS2s5i6ACWpnpQcfg1FHq2sUwg1RB9/OVEFj7XD9
+         r0IA6F/2I9tSl5AwComOZNSIs/xiWQwcjres07i/nYmvNaberGJn7JVHZOuaR0csI7O2
+         h+OvhHiFhu/q2wccqq/xn/JgTIAHJQQi8oN4Dss8okQDPGtlToHTbDIyYgW/Owo2TaYb
+         Lnkg3PeEkYL+zjtfRq99hfdTNdGPNyGhNpd36R8dj2/Kfu7YWNaYr5fKvpREhpv9yorE
+         QeSIRcLCzLyNLiOgucf0VUE0XmL0tM7i7hPbSO5VWMSDx+xMN2rpr0R0KFAPvPrAiVBf
+         bRJw==
+X-Gm-Message-State: ACgBeo3fQxkvCiJd2HzwvXlsqg+8WoHRXGIEe+/ayKtjmYEwL0fiu07+
+        kGzc/wuRIc6QWOzugdX/Od0zSg==
+X-Google-Smtp-Source: AA6agR4fLp2WzkQVw6qAg8wHdybfJTr4eKnFEPkRlmI7lukKgwOozcaG1ZnhY1ALW6WWkLoCcJMRRA==
+X-Received: by 2002:a2e:80c8:0:b0:26b:fbc2:350c with SMTP id r8-20020a2e80c8000000b0026bfbc2350cmr1450892ljg.508.1662903535802;
+        Sun, 11 Sep 2022 06:38:55 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id o1-20020a05651205c100b0048b0099f40fsm608607lfo.216.2022.09.11.06.38.10
+        by smtp.gmail.com with ESMTPSA id o5-20020ac25e25000000b00492b0d23d24sm610632lfg.247.2022.09.11.06.38.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 11 Sep 2022 06:38:11 -0700 (PDT)
-Message-ID: <bde2b924-024c-761a-c487-e56b9dd9cc7e@linaro.org>
-Date:   Sun, 11 Sep 2022 15:38:10 +0200
+        Sun, 11 Sep 2022 06:38:55 -0700 (PDT)
+Message-ID: <7f132784-a324-c9d0-f22b-1d18ef1894ce@linaro.org>
+Date:   Sun, 11 Sep 2022 15:38:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
-Subject: Re: [RFC PATCH 09/10] arm64: dts: qcom: msm8916: specify per-sensor
- calibration cells
+Subject: Re: [PATCH v3 10/12] dt-bindings: PCI: qcom-ep: Define clocks per
+ platform
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20220910124701.4060321-1-dmitry.baryshkov@linaro.org>
- <20220910124701.4060321-10-dmitry.baryshkov@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        lpieralisi@kernel.org, robh@kernel.org, andersson@kernel.org
+Cc:     kw@linux.com, bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
+        dmitry.baryshkov@linaro.org
+References: <20220910063045.16648-1-manivannan.sadhasivam@linaro.org>
+ <20220910063045.16648-11-manivannan.sadhasivam@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220910124701.4060321-10-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220910063045.16648-11-manivannan.sadhasivam@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,17 +81,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/09/2022 14:47, Dmitry Baryshkov wrote:
-> Specify pre-parsed per-sensor calibration nvmem cells in the tsens
-> device node rather than parsing the whole data blob in the driver.
+On 10/09/2022 08:30, Manivannan Sadhasivam wrote:
+> In preparation of adding the bindings for future SoCs, let's define the
+> clocks per platform.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-You should describe the dependencies - the patchset is non-bisectable as
-it depends on the driver changes and DTS cannot go along with DTS in the
-same branch.
 
-This must wait for next release.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 
 Best regards,
 Krzysztof
