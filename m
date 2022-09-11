@@ -2,108 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DBC5F5B5769
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 11:48:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55A195B585F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 12:29:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229824AbiILJsH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 05:48:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44478 "EHLO
+        id S230241AbiILK2r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 06:28:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229549AbiILJsG (ORCPT
+        with ESMTP id S230162AbiILK2m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 05:48:06 -0400
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9ECEE33E16
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 02:48:05 -0700 (PDT)
-Received: by mail-yb1-xb29.google.com with SMTP id a67so11863909ybb.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 02:48:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=9KAyBQijTc3CpY3EfApFNAsttaB3kwx6DpC0Y5jtA9Q=;
-        b=fI/oQ91V3UMq7QHATLIhT0zngzZqANMZEIEEmkW6IwtVd+qww7q05/SSYvkZsS09Fa
-         a2KLEkxHBAEakzuv3pd8jxX41/WPFudaKChaHl6Fn39fJf92BNtfqLuQq1+PHZsTxBVr
-         AowhUfAjnZF7s+NNlloEscq7OVj0UKnwYO97QeFF0aYkyfk099UhUG72/J6Vxp3uMQuw
-         nf3o8xMnm9tJN/4VM8qiP19yc5SPPZHQWYFhsoLcufSREaE8Tvk7zC8S/2vvYmEbW0Kc
-         EEC8J6R9verapZnJv+DYCu2WM3TCF67OkrN7wjqp/jHD1EswGh6mRlGuhTK7xYEhdrbP
-         R1PQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=9KAyBQijTc3CpY3EfApFNAsttaB3kwx6DpC0Y5jtA9Q=;
-        b=P6BHptAHl1RrZMPrGrE+rnLl/D5ZdzaWUwS1qbejoFvR2X8DLAZyHrsFxTZEJTteIT
-         +yuMv8kfStS4s7OQ5oLSmR+Pt9HMNQ2Q2hImkV1y8G52p6D8tSFxxsGZI4SJ8IVfXFtN
-         vkpQUxNiEHtEhxSqSS0DxiTtA4ScnOkTt0sfRF9GeG5Kyt7SDmeHkSCw81imjE2nrT7c
-         f3hM4WfdhyU5JQj3TbAppIahJtnH0XQxHlCWMiypj9RlL0zEcUbLO1a3qrtA0YC7FpW0
-         4pnk0dr/H51HjnZYhhH3e14xSlbqvCa7zC7TkwZQlGe9ChEP+EjoJrWzUbqIbXtjsv/O
-         6NKQ==
-X-Gm-Message-State: ACgBeo1hqZ0vZuDD6z8npQU+1NQy15iPWG0T5Vf3B2LAvv2gtJBzepgg
-        fP9ALsPABwH6JUNwubyWDoVn2/K3Y8o7EbI7O2fF6w==
-X-Google-Smtp-Source: AA6agR7wVfHaKMVKYT9CgXHm7YdGWzLQ+Ye4BLq4wSI4z3lFIir4B/5e7qryW0ODuTaziLs0IC/XisQ4sSDzl76fwoQ=
-X-Received: by 2002:a05:6902:1029:b0:6af:2c99:4630 with SMTP id
- x9-20020a056902102900b006af2c994630mr3352655ybt.516.1662976084730; Mon, 12
- Sep 2022 02:48:04 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220910124701.4060321-1-dmitry.baryshkov@linaro.org>
- <20220910124701.4060321-7-dmitry.baryshkov@linaro.org> <c397e8e7-3126-c1f9-8d0e-4b3181e5c5e0@collabora.com>
-In-Reply-To: <c397e8e7-3126-c1f9-8d0e-4b3181e5c5e0@collabora.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 12 Sep 2022 12:47:53 +0300
-Message-ID: <CAA8EJpot=sRtw6XaGmXy0bFe7KTzhCrDZxV0Na0w4Rigp09svg@mail.gmail.com>
-Subject: Re: [RFC PATCH 06/10] thermal/drivers/tsens: use generic calibration
- routine for msm8976
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-arm-msm@vger.kernel.org,
+        Mon, 12 Sep 2022 06:28:42 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AB40386A2;
+        Mon, 12 Sep 2022 03:28:41 -0700 (PDT)
+Received: from mercury (unknown [185.122.133.20])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
+        (No client certificate requested)
+        (Authenticated sender: sre)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id DF34E6601FE8;
+        Mon, 12 Sep 2022 11:28:37 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1662978518;
+        bh=uNMLlgZMTYcC5mzrst0fDY2xiMV9lFyKj19odG4H/ko=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=e4YH8PA2z+L5Ko4pHG9kgmhpitFfNDSbDDISQ80oKXc99bYtm5NF2jCieDrRAPQvD
+         oPk1JD/+oGt+Y17TMDGyUKlP+cyplznLl+X4QAsXzR1UAMyw+ZX3EuhJtLQ3kxXAr0
+         NST/dL16r9meU7jEGAX/jeXivDKdDLI+iW/vZ9kpu0A5LMIMxlUVZ/j5ylCsh4gnuH
+         shsHxDQoE2g7j4qE9PXLj0gz2i9+WmPZbWmV/zkvoqW5dWOOwsAK72AuyjFiZvtEnR
+         2kPCunh+CpnxJlcDTov/Mox/MyshlvaY/ghHqIFZt/FT0W08iKj0jpYF7net1DzTnl
+         k1X/zSz+2ce+w==
+Received: by mercury (Postfix, from userid 1000)
+        id 9885D1063356; Sun, 11 Sep 2022 14:18:43 +0200 (CEST)
+Date:   Sun, 11 Sep 2022 14:18:43 +0200
+From:   Sebastian Reichel <sebastian.reichel@collabora.com>
+To:     Anjelique Melendez <quic_amelende@quicinc.com>
+Cc:     corbet@lwn.net, robh+dt@kernel.org, agross@kernel.org,
+        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        vkoul@kernel.org, linux-doc@vger.kernel.org,
         linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_collinsd@quicinc.com
+Subject: Re: [RESEND PATCH v5 0/2] add support for PON GEN3 device
+Message-ID: <20220911121843.k4appu2fszeeilkc@mercury.elektranox.org>
+References: <20220909204207.15820-1-quic_amelende@quicinc.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="igpyojxumu3a3dio"
+Content-Disposition: inline
+In-Reply-To: <20220909204207.15820-1-quic_amelende@quicinc.com>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DATE_IN_PAST_12_24,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+
+--igpyojxumu3a3dio
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
 Hi,
 
-On Mon, 12 Sept 2022 at 11:57, AngeloGioacchino Del Regno
-<angelogioacchino.delregno@collabora.com> wrote:
->
-> Il 10/09/22 14:46, Dmitry Baryshkov ha scritto:
-> > According to msm-3.10, msm8976 uses the same routine for processing
-> > calibration data as other platforms. Drop the msm8976-specific
-> > compute_intercept_slope_8976() and use compute_intercept_slope().
-> >
-> > Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
-> > Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
-> As far as I remember, at least some MSM8976 versions don't have the slope
-> fuses populated and/or the values are bad. This is the reason why slopes
-> are hardcoded.
->
-> This commit would break support for MSM8976.
-> Cc'ing Marijn, as he should be able to re-test this.
+On Fri, Sep 09, 2022 at 01:42:07PM -0700, Anjelique Melendez wrote:
+>  Resent with fixed path for dt-bindings.
+>=20
+> Changes from v4:
+>   - Updated commit message for patch 1/2
+>=20
+> Changes from v3:
+>   - Addressed Krysztof's comments on patch 1/2
+>     - Added missing minItems/maxItems
+>     - Merged if statments with same constraints together
+>     - Removed description from "reg-names"
+>    =20
+> Changes from v2:
+>   - Added new "qcom,pmk8350-pon" compatible string as per Krysztof's
+>     advice
+>   - Updated dt logic to use comptaible strings to decide constraints
+>     as per Krysztof's comment
+>   - Added new patch (v3 2/2) to support new compatible string
+>=20
+> Changes from v1:
+>   - Updated path which was missing Documentation/devicetree prefix
+>   - Updated CC list
+>=20
+> New patch series to separate this patch from applied patches.
+> Comments from original patch can be found
+> https://lore.kernel.org/linux-arm-msm/27515993-18f3-8891-4835-9b6a8d7f86b=
+0@quicinc.com/
+>=20
+> David Collins (1):
+>   dt-bindings: power: reset: qcom-pon: Add new compatible
+>     "qcom,pmk8350-pon"
+>=20
+> Anjelique Melendez (1):
+>   power: reset: qcom-pon: add support for qcom,pmk8350-pon compatible str=
+ing
+>=20
+>  Documentation/devicetree/bindings/power/reset/qcom,pon.yaml | 50 +++++++=
+++++++++++++++++++++---
+>  drivers/power/reset/qcom-pon.c | 1 +
+>  2 file changed, 47 insertions(+), 4 deletions(-)
 
-Thanks! I was not sure, granted that the downstream seems to use
-standard procedure. The details/retesting would be appreciated.
+Thanks, I queued both patches.
 
+-- Sebastian
 
--- 
-With best wishes
-Dmitry
+--igpyojxumu3a3dio
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmMd0iIACgkQ2O7X88g7
++prrIw//duIMpV+No1Iwxa9UAzrbknmcZBWNwAm6tm23uRklakcfkj5dzCLtd8lG
+kQf9RROKa08Yp8mhuOhOe2NAR9gp0stXj7rywJRKmLJhJjqaAsXYKqAO/rqdMS4b
+lnDSbtQxJBHReLVT7oezDaKMtuqDBdpJ5FM4Q+SUt8/dJSTVog6Hyai1AwfZtItR
+ndK0IpISd5Kj7wbqdhMK2yP8VFUsH5JdRKgMBCb0UQN9wKKLrgFJOiE9JzhfmKDn
+M+xJ31QRj3/rxNS02p2BtFid0+VgSwAwcsvWsdWFhGkk0kFlo0mgqtnTI1pYX4PY
+ymKQ/8tMjBqKs5GK7FxKFxvHGlqOEW+wAH8L21M4jZSP8vuXhbieYHneRIu3VQJs
+D9LNyM/SVHb9BQ4ICAWZZevFmM6IqxNP7t3qghazu5GlB6GoGEdTtWot6Xcvf0WV
+e5ubn+0bSQ4sorRA+Pw1RYBpB9ivqIYgg3ZCZq8e4SF4G79pzu1c6oqJQUwi1And
+FiDKGyx2Pp8nej+MEGuBOIsL3bVIvc369IiKJ+tJUiIbRlTTRn0o8fmk6sq/dqNk
+SSI2+paNsjzsO/N+Pc8uvmaxMQfSFYHbFSCWnDkbiQOIiHXWURULs+wFHQ+7yhFI
+dX0ubIXKYNAQ9xn3xpS6h05Xrb5ZAiRH4qG4S2ZJd7KLlfxqXfI=
+=4XS6
+-----END PGP SIGNATURE-----
+
+--igpyojxumu3a3dio--
