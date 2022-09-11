@@ -2,68 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5891F5B51BC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 01:01:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D2EF5B51C5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 01:08:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229616AbiIKXB1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 11 Sep 2022 19:01:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46944 "EHLO
+        id S229488AbiIKXIK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 11 Sep 2022 19:08:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229777AbiIKXBX (ORCPT
+        with ESMTP id S229517AbiIKXIJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 11 Sep 2022 19:01:23 -0400
-Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6569B2656E
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 16:01:21 -0700 (PDT)
-Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-127d10b4f19so18998225fac.9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 16:01:21 -0700 (PDT)
+        Sun, 11 Sep 2022 19:08:09 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E01E41B789
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 16:08:07 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id t14so12700205wrx.8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 16:08:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=to:subject:message-id:date:user-agent:from:references:in-reply-to
-         :mime-version:from:to:cc:subject:date;
-        bh=6zz4KZBW7Xf3j2wSfJkLMRtj9pzF2Gk+JSNytD8QvQo=;
-        b=KImd/fj3U/QgmbidNljOQB0iad08e+8tC7mEvjqEkvixNow+Z+wnVSTmbZV23CPKc0
-         HVBqKaWCkJGIcrZIoRXaBlNToBktSydSGjlVRnEZNW0TQpsTqVtdIUtF/c4W/YXoR8L6
-         uT5mXj7nfc2hX+QoF4xeHytsBybIIg2LF5SlM=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=cRrFKmXDZ9IOFnRsVuTkSaaU7nKJPrfY26C+G9unL/k=;
+        b=lWbAV3OKWJUcGgJWDHNKQGgXBKdn7ng7mBIMP4SAnYJC1lnJ4SNFvswGYY+mouYU6S
+         6zkDMJFMnxEWQjnswJzavYDf2M1UnF0LiR9N8iz3N0EPHzh9HF1EFclxO8M1QKjGJTMG
+         eb9DRT4Nmx9SHsiolCss3GBvZjWqfTOX3ejfLrGFKEdIM2DwIgUfXPNOkcQ875h8Onv5
+         587R3WRfhGHA5Pm26OR7jTBoEVhNMo7/ZlEuWSUzoWXsn2K6EEIYCq+4bh1uiktDzTLn
+         usNoOIh3xWviMTHAiOkTt3kRWThUOgdSvwWlAA5kwZga4ByodU2awDBvZ3Nh9ooz4ODu
+         d4gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:user-agent:from:references:in-reply-to
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=6zz4KZBW7Xf3j2wSfJkLMRtj9pzF2Gk+JSNytD8QvQo=;
-        b=Bq9GR8Nu3XQAQWaxpsxxVyPYRgq0vZOOaYdb3YbVz6ucanDe7e3P0H4mPBde2WZlE8
-         TeWGL6tbUWL9NGXKonGvEc2oThepkkgIAqeoriVXhYZ/PDFVCmZfWOyQRKl0FeYq7UG1
-         y5piwRXYXQ8rpPDrUPMMAQuSRz+1+NIYTRDhBKod9kvQXgEb0SUPX7mEANbSvI9V/olF
-         WZG67IwRxaCPFHX5CVpgdljUOM+bSaOX3TdxFWuRKqUpPQigjhYjqQ0BaVnTSF9Sytws
-         MmuweuPq941Vm52+aaSAMaSPO07iuo0diys4qzGHaJk12n93aBI5MeX47iyv76HhnMpC
-         9yzg==
-X-Gm-Message-State: ACgBeo3yUFOJBW3W0dhplz3EAdbGsuArFsTMRyIBIKAMhA5kFInx3LZG
-        kupCI1ObyrImVPgWjxsSVyLJwRMghikPARK+UlZy/w==
-X-Google-Smtp-Source: AA6agR4/09plFX0OTLhhwmmwNv2ATAUGQVcnLBvFUcpfLX90f+vdiRH8e94cVQoAUJ+DNnBqf83WSMN07J4bpj24cxM=
-X-Received: by 2002:a05:6808:1142:b0:343:86a0:dedc with SMTP id
- u2-20020a056808114200b0034386a0dedcmr8186288oiu.44.1662937280713; Sun, 11 Sep
- 2022 16:01:20 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 11 Sep 2022 18:01:20 -0500
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=cRrFKmXDZ9IOFnRsVuTkSaaU7nKJPrfY26C+G9unL/k=;
+        b=ffiMUSvreJYXzsAJyWCdHXjnN8Iwl+VksYHBB8BuhDQ1raEmjDDQ7ogI+5QZagzyeb
+         xRWS+35CxG54jlo8YrHhopZBTTCxRLNort2sBF3mwIOzJ/OxH0u6ScJ0kH042T1uLCp/
+         v08MV5fEMZ8vKegiaLAegP44aibCxO113tkmVtSjlvdbr9vA0tRi+czRG6kjLZA0XQ6G
+         yO/jCIe5ppGx/RYv6RmVNnZ0iGpks+70rkY5c9U3bterGi7ecJBufQLZr6zQC4PHzsTF
+         4DZ6BC5/E/scDHOTKueVKAg3nn94skItoLc/vIl9G/PA8A8NRa10ZWl15CYL6zNZfXuq
+         Yx1w==
+X-Gm-Message-State: ACgBeo3g7eFrDa0RZI4++zudvqqMeFVLDPQTGYyLLLST8Gj+tdUNR84Y
+        F+Kl+3GhjyEhJXCAYyO0y+Znyw==
+X-Google-Smtp-Source: AA6agR6FW6q30/h+Pq/9mvfzXr2fr8M5UhDFXOT1qJ7w+Kd2sZF6Fk0GpBAa9gqLN60nXhiI2WKtHg==
+X-Received: by 2002:a05:6000:1a8b:b0:222:cac3:769a with SMTP id f11-20020a0560001a8b00b00222cac3769amr12911589wry.120.1662937686495;
+        Sun, 11 Sep 2022 16:08:06 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id h11-20020adff18b000000b00228daaa84aesm5780656wro.25.2022.09.11.16.08.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 11 Sep 2022 16:08:06 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     bryan.odonoghue@linaro.org
+Subject: [PATCH v3 0/1] Update apq8016 lpass-cpu compat string
+Date:   Mon, 12 Sep 2022 00:08:02 +0100
+Message-Id: <20220911230803.1286202-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-In-Reply-To: <1662643422-14909-8-git-send-email-quic_srivasam@quicinc.com>
-References: <1662643422-14909-1-git-send-email-quic_srivasam@quicinc.com> <1662643422-14909-8-git-send-email-quic_srivasam@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Sun, 11 Sep 2022 18:01:20 -0500
-Message-ID: <CAE-0n53CUPAW2P5uC-4fN+qPw0PLCaz4Dfom7htYOTT9-o+A9Q@mail.gmail.com>
-Subject: Re: [PATCH v6 7/8] remoteproc: qcom: Add support for memory sandbox
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        agross@kernel.org, bgoswami@quicinc.com,
-        bjorn.andersson@linaro.org, broonie@kernel.org,
-        devicetree@vger.kernel.org, judyhsiao@chromium.org,
-        lgirdwood@gmail.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        perex@perex.cz, quic_plai@quicinc.com, quic_rohkumar@quicinc.com,
-        robh+dt@kernel.org, srinivas.kandagatla@linaro.org, tiwai@suse.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,87 +69,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivasa Rao Mandadapu (2022-09-08 06:23:41)
-> diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-> index ccb5592..e55d593 100644
-> --- a/drivers/remoteproc/qcom_q6v5_adsp.c
-> +++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-> @@ -9,6 +9,7 @@
->  #include <linux/firmware.h>
->  #include <linux/interrupt.h>
->  #include <linux/io.h>
-> +#include <linux/iommu.h>
->  #include <linux/iopoll.h>
->  #include <linux/kernel.h>
->  #include <linux/mfd/syscon.h>
-> @@ -48,6 +49,8 @@
->  #define LPASS_PWR_ON_REG               0x10
->  #define LPASS_HALTREQ_REG              0x0
->
-> +#define SID_MASK_DEFAULT        0xF
-> +
->  #define QDSP6SS_XO_CBCR                0x38
->  #define QDSP6SS_CORE_CBCR      0x20
->  #define QDSP6SS_SLEEP_CBCR     0x3c
-> @@ -333,6 +336,42 @@ static int adsp_load(struct rproc *rproc, const struct firmware *fw)
->         return 0;
->  }
->
-> +static void adsp_unmap_smmu(struct rproc *rproc)
-> +{
-> +       struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
+V3:
+- Fixes indentation splat I missed in global yaml check
 
-Drop the cast, it's unnecessary.
+V2:
+- I polled Krzysztof about the right way to do this and then completely
+  forgot to implement it like we discussed. Here's V2 the way we agreed. 
 
-> +
-> +       iommu_unmap(rproc->domain, adsp->mem_phys, adsp->mem_size);
-> +}
-> +
-[..]
-> @@ -343,9 +382,17 @@ static int adsp_start(struct rproc *rproc)
->         if (ret)
->                 return ret;
->
-> +       if (adsp->has_iommu) {
-> +               ret = adsp_map_smmu(adsp, rproc);
-> +               if (ret) {
-> +                       dev_err(adsp->dev, "ADSP smmu mapping failed\n");
-> +                       goto disable_irqs;
-> +               }
-> +       }
-> +
->         ret = clk_prepare_enable(adsp->xo);
->         if (ret)
-> -               goto disable_irqs;
-> +               goto adsp_smmu_unmap;
->
->         ret = qcom_rproc_pds_enable(adsp, adsp->proxy_pds,
->                                     adsp->proxy_pd_count);
-> @@ -401,6 +448,9 @@ static int adsp_start(struct rproc *rproc)
->         qcom_rproc_pds_disable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
->  disable_xo_clk:
->         clk_disable_unprepare(adsp->xo);
-> +adsp_smmu_unmap:
-> +       if (adsp->has_iommu)
-> +               adsp_unmap_smmu(rproc);
+V1:
+Per discussion with Krzysztof on this yesterday:
+https://lore.kernel.org/linux-arm-msm/20220908105720.857294-1-bryan.odonoghue@linaro.org/T/#mb16386b0b6d45de6a7d7e01733d5b6a7d0b85c25
 
-Why not pass adsp directly to adsp_unmap_smmu()? And even better would
-be to make it a no-op when adsp->has_iommu is false, so that the code
-reads straight-line otherwise.
+Mark the old lpass compat string as deprecated in yaml and leave a comment
+in the commit log to explain new SoC additions should use the corrected
+version.
 
->  disable_irqs:
->         qcom_q6v5_unprepare(&adsp->q6v5);
->
-> @@ -429,6 +479,9 @@ static int adsp_stop(struct rproc *rproc)
->         if (ret)
->                 dev_err(adsp->dev, "failed to shutdown: %d\n", ret);
->
-> +       if (adsp->has_iommu)
-> +               adsp_unmap_smmu(rproc);
-> +
->         handover = qcom_q6v5_unprepare(&adsp->q6v5);
->         if (handover)
->                 qcom_adsp_pil_handover(&adsp->q6v5);
-> --
-> 2.7.4
->
+Bryan O'Donoghue (1):
+  ASoC: dt-bindings: Mark old binding qcom,cpu-lpass-apq8016 as
+    deprecated
+
+ .../devicetree/bindings/sound/qcom,lpass-cpu.yaml   | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
+
+-- 
+2.37.3
+
