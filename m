@@ -2,117 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 452445B4E63
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Sep 2022 13:27:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 820365B4EA9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Sep 2022 14:04:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230026AbiIKL1Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 11 Sep 2022 07:27:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40538 "EHLO
+        id S230284AbiIKMD5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 11 Sep 2022 08:03:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229992AbiIKL1X (ORCPT
+        with ESMTP id S230247AbiIKMD4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 11 Sep 2022 07:27:23 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C83E2DAB8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 04:27:22 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id w8so10376287lft.12
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 04:27:22 -0700 (PDT)
+        Sun, 11 Sep 2022 08:03:56 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7288232EE5;
+        Sun, 11 Sep 2022 05:03:55 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id az24-20020a05600c601800b003a842e4983cso5253182wmb.0;
+        Sun, 11 Sep 2022 05:03:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=KGB5KUhs9u6/qzvDEhLDSbwJvVi3lKOIpjk/q5kI8ps=;
-        b=CvzseaMTpNL08WWmVX7s3adcuwcccnU2QXIj11rOrS5xBKcte8icpKZSdxt+W5mDI+
-         nzMKVSj23s+VXWlO8qp7UAPs6IZ5j/A1SHXhkYbeoGiWMgkwasVB4Gczn5tGMfiwg4lI
-         eCOFAVNsasfejci1H1HzfAqlI/eoK8kZvtivnoYvUCY30TJVPiFWCCZM6HSW4f9f1WwZ
-         So/3MC4k1WF+frmTweMhT0k/co2JYR1+l1nRUYph97ouFJB8pGUzz5NEWU85jI8naW1e
-         tnG0Gc42pm3lSoAS6IEDubhMwuY9PPFa31YAZ7uXdEhm3hAH/Xf+yPsL9Bg8ZYwjjVm0
-         hMfw==
+        bh=7zlEymvc9Jpu/8aSqNHdifkcQlrGNPSUjCxSE+zsZ/M=;
+        b=g4sEw3AkhJIDFoZlYq8OHVw/hFBRICQFM0YpU97c0QFBnu4i5xRlxcwissOON8eC0E
+         p3YS2rEiGqHLIiip0+fshOjDkp2JW2VpU+VXfrM9GD/nOYvlYea7Vdwov2F/FkxnY2Nh
+         skTAtZE/UNQUPAJXEUUMHmeN0+qmmTD+QDgzk0UJ8HQIm3dUJQrdUVHIQhghWyQEdmQB
+         sn+Ejg7v/AHO4cj2ULKl/xN6QygCQrZlv7iUzb5q2K6tevjS5+c8xnlG+2x4eNWDKNHK
+         pSvRjC+ivRcWY5Iqb3qyXdYnAQWsMR3UPUbQg1LkYtqV5eu9maZPVlZ00Z5WgKQCLeku
+         x6uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=KGB5KUhs9u6/qzvDEhLDSbwJvVi3lKOIpjk/q5kI8ps=;
-        b=l8GjHal3y2GgXsw++b79U/DTnd9eEGNjMImngbEhniwGnbBi7Ra3fDIOaZxuYzRj1f
-         wiHB/ChP6Sz26JSmEOH+GMCPqn0U+MXD8Y4X5DN8tGE97UTAXxAlKpCaNYvHg54xFypq
-         24vGp8tvQSkbYeNLEZ7SJ05fw9SwzVh/tVP2bcr89Ssl8YWomKGv8Ky1vxvc3FJaTORK
-         +5TWaFRwQAkrHQbtT3BqDRwfAR2fUQqgej6SumvVoYVmoxdKlsgcLxwO3k79vhDjc5Lo
-         mUdlj6CcT+CV3gE9DsPK7r+blth9+Deic8AdHuTpasbOZYHFHuMOdybQMebbvyz6cV1q
-         +lbQ==
-X-Gm-Message-State: ACgBeo3j37VfvNGvl4fUEkw5v/+unrgi0Qyz3YqiCFblbDLnG6Suxn9N
-        mriv1GR03+uuoXfpKxfQNU0emw==
-X-Google-Smtp-Source: AA6agR6Ieg2VRvFOnyVF8oScDNythHwnCyh+ZOet0x7Oy3fi/OrUTbQyS4vyq9fOqLHqHoepI/i8EA==
-X-Received: by 2002:a05:6512:1283:b0:499:d0a3:3ca8 with SMTP id u3-20020a056512128300b00499d0a33ca8mr1706981lfs.665.1662895640833;
-        Sun, 11 Sep 2022 04:27:20 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id y26-20020a05651c221a00b0026ad1da0dc3sm618756ljq.122.2022.09.11.04.27.19
+        bh=7zlEymvc9Jpu/8aSqNHdifkcQlrGNPSUjCxSE+zsZ/M=;
+        b=QDQ/4k7IgG0PRxw0ClAAPZbWQ6B4IfMTKNjbkvoRs7OS8oEdkzLhwPRQPDO6FUfC3T
+         TgCISqtiYqGwuMRmPuIfyiJQbzMqXdhq3FFXJ2f+uiGHpLgbu8MQQl/0CZ/dwEGO43uE
+         d0JvCpurJHrS2xeJ80bjGRzAYlLG9HTDSe+QRyefYQpNbWwb1Qp9zmlY/KJwcMbFpzvH
+         o5KV6DemT0VKai0+U40aTht/ATwEkvy/HztbuDEk/sCAL8e6SrcfRwU49baK7jvdrgdh
+         CQwvMnDMP1QkWtkVHhCzlCvRjsGaJQG8LCvq/U1FQCzANniRSITuXJCkaFXEnaStGpBN
+         DVhA==
+X-Gm-Message-State: ACgBeo2wdlbjHO2QptFYU/Pqlnjq1Zg9PJDSSra6Tc1YvFOXqvJWxbg9
+        7HGpwj+56MFeVUTM8pNafjk=
+X-Google-Smtp-Source: AA6agR6y4Dzcndiz6luxNrPZhnU4yeRX8EyYbm/xMaE7wql1Uxn69/IrGUbXyZR6yyqil1KmVEWwGQ==
+X-Received: by 2002:a05:600c:3509:b0:3a6:1888:a4bd with SMTP id h9-20020a05600c350900b003a61888a4bdmr10978670wmq.191.1662897833896;
+        Sun, 11 Sep 2022 05:03:53 -0700 (PDT)
+Received: from [192.168.74.101] ([77.78.20.135])
+        by smtp.gmail.com with ESMTPSA id bg14-20020a05600c3c8e00b003a840690609sm8334531wmb.36.2022.09.11.05.03.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 11 Sep 2022 04:27:20 -0700 (PDT)
-Message-ID: <e7a132e7-a819-ebe2-e6e5-c01cbfacef15@linaro.org>
-Date:   Sun, 11 Sep 2022 13:27:19 +0200
+        Sun, 11 Sep 2022 05:03:53 -0700 (PDT)
+Message-ID: <b40191c8-227f-e49d-b30c-6e4dc43a24a9@gmail.com>
+Date:   Sun, 11 Sep 2022 15:03:58 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH v6 01/12] dt-bindings: display/msm: split qcom,mdss
- bindings
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v3 7/9] arm64: dts: qcom: sm6115: Add basic soc dtsi
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, Loic Poulain <loic.poulain@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-References: <20220901102312.2005553-1-dmitry.baryshkov@linaro.org>
- <20220901102312.2005553-2-dmitry.baryshkov@linaro.org>
- <3e525135-d205-eddc-ff2d-98c8321386e3@linaro.org>
- <20220908193705.GA3002673-robh@kernel.org>
- <1ebe64a3-fab9-1dd7-517a-01001a176d9f@linaro.org>
- <CAL_JsqLkV_fnUnc4cS=cdTvP3rKYAS011_+KZYiBGhXDx-pHnA@mail.gmail.com>
- <2204eab4-b22d-8ee7-4595-49139cb387a8@linaro.org>
- <CAA8EJpqHL-gO=zSG6Ek=-y4njGF5R66z0MwLeKZ9U4Ag1j51Og@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAA8EJpqHL-gO=zSG6Ek=-y4njGF5R66z0MwLeKZ9U4Ag1j51Og@mail.gmail.com>
+        linux-kernel@vger.kernel.org
+References: <20220910143213.477261-1-iskren.chernev@gmail.com>
+ <20220910143213.477261-8-iskren.chernev@gmail.com>
+ <d51b0a89-a151-dd5b-b026-4291031fe1ea@linaro.org>
+ <ad940df1-6876-0c38-81c8-7d7ca97046de@gmail.com>
+ <7e5eb29f-913a-7540-c618-fb6c5a493d5d@linaro.org>
+ <cdb756fc-6a4f-3853-9570-f02b8cb03990@gmail.com>
+ <6f2ec41a-a6fa-dce7-66ee-e9ac3d3ab6f5@linaro.org>
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+In-Reply-To: <6f2ec41a-a6fa-dce7-66ee-e9ac3d3ab6f5@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/09/2022 14:54, Dmitry Baryshkov wrote:
+
+
+On 9/11/22 13:26, Krzysztof Kozlowski wrote:
+> On 11/09/2022 12:22, Iskren Chernev wrote:
+>>         basic-state { // this matches the first state in oneOf
+>>             pins: "gpio1";
+>>             funciton: "normal";
+>>         };
 >>
->> However I think there is no such problem, as Dmitry said, that ref
->> changes anything. There will be always failure - either from parent
->> schema (using $ref) or from device child schema (the one which actually
->> misses the property).
-> 
-> Initially I stumbled upon this issue with the dsi and dsi_phy nodes
-> for msm8996 devices. If I have $ref here, dsi1/dsi1_phy nodes will
-> emit warnings regarding the missing -supply properties despite nodes
-> being disabled. If I use `compatible' here, the schema checks pass.
-> Thus I'd prefer to leave `compatible' here. Not to mention that it
-> also allows specifying a tighter binding than just using the $ref.
+>>         nested-state {
+>>             some-pins { // this matches the second state in oneOf
+>>                 pins: "gpio1";
+>>                 funciton: "normal";
+>>             };
+>>             other-pins {
+>>                 pins: "gpio2"
+>>                 funciton: "normal";
+>>             };
+>>         }
+>>
+>>         // but also, matching second state in oneOf
+>>         nested-basic-state {
+>>             pinconf {
+>>                 pins: "gpio1";
+>>                 funciton: "normal";
+>>             };
+>>         };
+>>     };
+>>
+>> So I'm saying, we should either choose basic-state and nested-state, in which
+>> case we don't need the "^pinconf$" variant, or we can have nested-state and
+>> nested-basic-state, in which case we don't need the 1st case of the oneOf.
+>
+> Ah, I get it.
+>
+>>
+>> Otherwise people have to choose between basic-state and nested-basic-state,
+>> which are equivalent in semantics.
+>
+> Yeah, I can drop pinconf. I put it in the PMIC because it was used, but
+> I don't find it for TLMM pinctrl nodes.
 
-I don't think we understood each other. I claim that error will be there
-anyway, just from different schema. So your change fixes nothing in
-total schema check...
+Frankly I'm not sure which is better, to drop pinconf, or to use it (and drop
+basic case). You probably have more experience and taste regarding that.
+Another thing is that you normally specify one pin at a time in the nested
+case, so having -pins is a bit confusing. Maybe it should allow -pin and -pins.
 
+I understand that you technically can't change existing bindings (because
+they're immutable), but at least for the future you can pick something that
+will stand, so I wouldn't be too concerned about existing ones :)
 
-Best regards,
-Krzysztof
+>>
+>> On a tangent -- why specifying the .* regex of pinctrl subnodes has effect on
+>> pinctrl references in other nodes. I.e I don't understand why this fix fixes
+>> the issue (but it does).
+>
+> Because it works on DTB and finds linux,phandle. This might be some bug
+> in dtschema, but anyway better to have a bit stricter patterns in bindings.
+
+I see, the phandle node appears only when you use a reference, not when you
+define it... there should be a way to handle that more precisely. phandle is
+a very special case. Also `additional-properties` is smart enough to allow it.
+
+>
+> Best regards,
+> Krzysztof
