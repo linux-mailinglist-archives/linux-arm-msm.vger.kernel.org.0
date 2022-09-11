@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 767225B50BF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Sep 2022 20:56:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5486B5B50D6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Sep 2022 21:19:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229630AbiIKS4G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 11 Sep 2022 14:56:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45206 "EHLO
+        id S229659AbiIKTTk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 11 Sep 2022 15:19:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229522AbiIKS4F (ORCPT
+        with ESMTP id S229643AbiIKTTj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 11 Sep 2022 14:56:05 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4A621A046
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 11:56:00 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id z23so8215869ljk.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 11:56:00 -0700 (PDT)
+        Sun, 11 Sep 2022 15:19:39 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13A6E2DF8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 12:19:37 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id bt10so11581495lfb.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 12:19:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=RPQy1aNVD24fj2brehWpaN5iIeVrcdsDrdD2wAGWJbw=;
-        b=c75Vojp6jAAIpodeHlqPi0GJc4HMYQ5s4cTSvzo5PjQO2eaDN+Y8J294PC1o/W1Mh1
-         7rJkE/pTpxM+OVoq/75nokUTo+OB5oPdKt0pd+v6NKiNM+aiHrN+0QPW7Nocpvt7Ns+X
-         dixVgW8RsCGSdey2Ot5IOqy1BVePjs0mufrNarMJch+192iMV44lLqUEvsCfnKr+P8O9
-         YchsFXgqg9leGJO+/nfFqxOD01IZpocXxcRjBt+TrAJ4SC7ZnnimbF3kdLHtgqVXVRtM
-         LkI4b+oWGMzBUaDArYKQud1rHpXu5yk80gIVS8LklPOaGdWE/0e0Et0uD4u8r0xrt2md
-         Hz1g==
+        bh=apzG3xku8I3ZdvmAyq4e50tGVV+Ky/wz//4vHO1DJgc=;
+        b=uHlWNh9ubEWHL2dHypDQKfqR1vRoY/u3L3VnE52MFf9bJn5LGd5ehhYXJt4m/PlbkA
+         CtfIVcb3pu57WkiF8DjEesF+PUeUqeqypzKQv9x/xL0alQnOgPA6+9E6iMqbuzmIP/vR
+         hpc0sh2T/OoVBKPl6RqUDE2cYXhJOVZ5Yl37F103A5WJxwE+lAY/EpDBLvt8uaHYVx4c
+         ZBp4gmvoNaCkEVgaBlB3H1Om6APfYRccQwZvrjsdULChjMmqfF6ECNwGKTElkN0m3jbF
+         XUx1Zth+D30LLZucO386T9b+3KJF6q1A5w7HnBpc39zXCVtUOu4NBN0ZeVCXnqoRWfj0
+         UM1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=RPQy1aNVD24fj2brehWpaN5iIeVrcdsDrdD2wAGWJbw=;
-        b=RtOOr25zNeFeEKbOCHQ2QMSUrGT4k40ZqkbWckxXR4KCD52tEtOnsWRzEWxG/p0I7h
-         8hnKDVV+MKdCRUll7nkYNX59UQIwLASn/lsoYDwjLX/NcrRDd19AXOifUXcxqfT8ib/G
-         LEr+ocOcoD2gfu78adBxMxShNTVHn2VJnaCXuTGjq8LpMdi8QaEVoz9tGQKA8QuUny3l
-         3BcUjK+buvNwD2tz57x6cfn71wSZpfszNlZqfcy/eJBBpgTRo8yAn3knU3/vafu1ocjJ
-         olgpMt4feTd08+MVUdpjorVVUbxoHtUnsRO/Zkflo2E7MjOvS56fLXpio9vWk+u5vM9t
-         i6/w==
-X-Gm-Message-State: ACgBeo3IlSvEHV5Uiv+hg7zK1hi1DrJHVsNBewsuXAH7qVdLyoC1kky1
-        btTO23b00RCyLM335fYeTJKgtA==
-X-Google-Smtp-Source: AA6agR5kw9mbNFc8XSl/zb4xnABTaoglXNP4qJenxxMNT/Dy+78GH+uJdblCn8w8V3fRV1ow1HficA==
-X-Received: by 2002:a2e:be28:0:b0:25f:d901:16ef with SMTP id z40-20020a2ebe28000000b0025fd90116efmr7159410ljq.126.1662922558995;
-        Sun, 11 Sep 2022 11:55:58 -0700 (PDT)
+        bh=apzG3xku8I3ZdvmAyq4e50tGVV+Ky/wz//4vHO1DJgc=;
+        b=uXUKn8KQlMn2st9A9KS45Xg4si/FsNV52fBnWe64zYjjCXSaa+8dZEqEcW72mau1lZ
+         Oh/K51US321WVwaT3LtviATXAgMuBYAn/1INgzWzpxQbZN8vWtBbKU5I9gtGvhKVUod7
+         jWbxjgRX844BejR5yXuThV4l91x1DFitfaYpbqqDLUa79icYXQ09jL4uqyNMlXBhnsC9
+         7nZ9Zlv5Th9bl0rMHkV82pD055R1lym0EqcRx+1MCP3fNgb/qnYOUOb54CQ+tk0kNwlq
+         N1VOwqkTogOI+SJxM5aPVwYhZkbssNApbZsPfbZh6uYiYaT+yH701LTxhM2wiybUSOfy
+         95vA==
+X-Gm-Message-State: ACgBeo2aLoAYFW05kcBqgkKWVfcRXS4jG7m0dlxec3++tqJaXJdEZk2f
+        DuI8wwhuxlcuUz8ohTJLn0B4Yg==
+X-Google-Smtp-Source: AA6agR7HkDM6NL+ZQ3n6KFtN5GzDUUVIGgl3PFqUw1Fy7FX4FxHrVRhX6lvmxFhkZYmEKyoUD/zzow==
+X-Received: by 2002:a05:6512:15a5:b0:49a:84f4:9284 with SMTP id bp37-20020a05651215a500b0049a84f49284mr1115466lfb.477.1662923975359;
+        Sun, 11 Sep 2022 12:19:35 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id w1-20020ac25d41000000b004991437990esm704068lfd.11.2022.09.11.11.55.52
+        by smtp.gmail.com with ESMTPSA id h6-20020ac25966000000b004949ea5480fsm703756lfp.97.2022.09.11.12.19.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 11 Sep 2022 11:55:58 -0700 (PDT)
-Message-ID: <7cf581a6-0602-7d6d-1518-7ae62a89031e@linaro.org>
-Date:   Sun, 11 Sep 2022 20:55:46 +0200
+        Sun, 11 Sep 2022 12:19:34 -0700 (PDT)
+Message-ID: <2b4ab827-28aa-5e3f-951a-0bf43d1eb7b9@linaro.org>
+Date:   Sun, 11 Sep 2022 21:19:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
@@ -103,20 +103,15 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 11/09/2022 20:36, Krzysztof Kozlowski wrote:
 
->> /home/krzk/dev/linux/linux/out/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dtb:
->> dsi@c994000: 'vdda-supply' does not match any of the regexes:
->> 'pinctrl-[0-9]+'
->>
->>
->>
 >> If your child schema fails, the referencing schema fails as well...
 > 
 > 
 > Although now with DSI-PHY I cannot reproduce it and I am pretty sure I
 > reproduced it with DPU controllers after modifying the DTS to lack a
 > property... Hmmm
-> 
-I think I have a fix for this in DT schema.
+
+https://github.com/devicetree-org/dt-schema/pull/82
+
 
 Best regards,
 Krzysztof
