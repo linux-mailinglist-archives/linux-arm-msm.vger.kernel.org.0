@@ -2,59 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 59A1D5B4D01
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Sep 2022 11:31:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70DE15B4D28
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Sep 2022 12:07:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229577AbiIKJbW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 11 Sep 2022 05:31:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56884 "EHLO
+        id S230053AbiIKKH4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 11 Sep 2022 06:07:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbiIKJbV (ORCPT
+        with ESMTP id S230008AbiIKKHy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 11 Sep 2022 05:31:21 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A793D25E99;
-        Sun, 11 Sep 2022 02:31:19 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 2ED33B80AFD;
-        Sun, 11 Sep 2022 09:31:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9DDC433C1;
-        Sun, 11 Sep 2022 09:31:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1662888676;
-        bh=onrx/VfMWRlqA5VQAt3JkDr5rEpPhLtH56ehL+XsUmY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=osLIxzE+0FD1Ft+iZT4rWvKoO3/F0gfUDsbzIPsgVR08sO9eqQE6JeSHcZBAhXxuv
-         i26ZBqWOB5LcdikOEHB6dwlsBL1uLT568r6+4PXp29YkP78rJa7NjMQxeb+o4ZgW5b
-         FRb1CdORknuycjgxtYYy7F0fb09dIcxTlaaBX98uRCdBlYx293qL4tlxRvsICH3SOS
-         mvWe5nN9ZCnsHjAuVRepksGra7Fnb3G7V3oLgb0MXMpe9PAmuab7wAlikFXOzSkvPX
-         sfotqljp2P3Hv8V+rfY3aJcq9fsBME1AMA4gmb+sqvYZCCy5Nvp4IxpmWsHELoGRLq
-         zLlZBEUnfTq3Q==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oXJJD-0005c1-DD; Sun, 11 Sep 2022 11:31:23 +0200
-Date:   Sun, 11 Sep 2022 11:31:23 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Sasha Levin <sashal@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        srinivas.kandagatla@linaro.org, amahesh@qti.qualcomm.com,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH AUTOSEL 5.19 33/38] misc: fastrpc: increase maximum
- session count
-Message-ID: <Yx2q6zgypevyXEto@hovoldconsulting.com>
-References: <20220910211623.69825-1-sashal@kernel.org>
- <20220910211623.69825-33-sashal@kernel.org>
+        Sun, 11 Sep 2022 06:07:54 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 701CA2BB02
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 03:07:52 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id bq23so10218350lfb.7
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 03:07:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=eX+5//Qd0qiSGwhAdD53iMPOZ01D21SlUbjRrzVLFVc=;
+        b=h0koii7fb1oT1Vgdrhf0gQ9jd9ilSYjBDM8UqO5+Cm+C0BHn1/1fmWk/ljpw6QiPVY
+         Gkvm8OhkNcO/nz20CcNvR0eELLUZaWUJYeuNQycAIBTC4NPVRlebf40qNQqcT8Q+YaM+
+         uEKWgHoX8XPzmTSdLEO7h+l53zjL1pJcEndP2KWHiifv7XLZtasW1bSVxEuEPMb1dZtn
+         1kuYB//4c7MYGIZ29UbP6RnWRBdaZ+IRlO2gBqz6Ho3vG21dTzvGRg1EepZwDLmcztpk
+         bFsy76jngPxmmFiY8mhQnISFcNmQTXJkWxIVmQR7zlOO5bEVMwF5xzrvN8NhwI75ngeO
+         p3kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=eX+5//Qd0qiSGwhAdD53iMPOZ01D21SlUbjRrzVLFVc=;
+        b=OdxBVMHnat3tyGUuP4HtmOQs8Oq/pq563WLMzxqL6yiiSlyAe4/sA3h/+qGu9P6EDx
+         TjOEGDg86NHItL1+EK7aGwYiBKN0CjufK23u6i9GEP2l7ALz0/XKYUGsybv3yzFHrQ+o
+         1a+zUGMpWGyRmJdcUYrsxZOcRKRAydzhIgGYnyWgxeK4KNB2sXzCP3azooNKalhuY/Uz
+         /HdFkJN0XUXHqtvoCr7VAa1FZJKuSa07EP+K3zjxrXGvW5J4GOItxEQc8wLqK40N12Nl
+         CsQaIiAVYABdiyrBxubhfxuFNfv/cudlJhOvHWGlbMwvwMdDc/53NJfm8J4L4WWO4RQj
+         iQTw==
+X-Gm-Message-State: ACgBeo2BssuLswxz74rZ86C6JH0dOwloOQQ8TbAEoX2P5M01htfefAB1
+        X1ZN6cx3n2h2zm3rd3NQrbYYAQ==
+X-Google-Smtp-Source: AA6agR6A1V3CcXvwvEZeblw1I30gk4e6QrGX06JYml79blEXygiH9sh4/BbGUWmJnqZGus5TWgAb7w==
+X-Received: by 2002:a05:6512:a87:b0:498:fbeb:daea with SMTP id m7-20020a0565120a8700b00498fbebdaeamr3993625lfu.632.1662890870806;
+        Sun, 11 Sep 2022 03:07:50 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id s12-20020a056512214c00b0049480c8e7bcsm558548lfr.176.2022.09.11.03.07.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 11 Sep 2022 03:07:50 -0700 (PDT)
+Message-ID: <7e5eb29f-913a-7540-c618-fb6c5a493d5d@linaro.org>
+Date:   Sun, 11 Sep 2022 12:07:49 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220910211623.69825-33-sashal@kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v3 7/9] arm64: dts: qcom: sm6115: Add basic soc dtsi
+Content-Language: en-US
+To:     Iskren Chernev <iskren.chernev@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-kernel@vger.kernel.org
+References: <20220910143213.477261-1-iskren.chernev@gmail.com>
+ <20220910143213.477261-8-iskren.chernev@gmail.com>
+ <d51b0a89-a151-dd5b-b026-4291031fe1ea@linaro.org>
+ <ad940df1-6876-0c38-81c8-7d7ca97046de@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <ad940df1-6876-0c38-81c8-7d7ca97046de@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -62,40 +84,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Sep 10, 2022 at 05:16:18PM -0400, Sasha Levin wrote:
-> From: Johan Hovold <johan+linaro@kernel.org>
+On 11/09/2022 11:09, Iskren Chernev wrote:
 > 
-> [ Upstream commit 689a2d9f9332a27b1379ef230396e944f949a72b ]
 > 
-> The SC8280XP platform uses 14 sessions for the compute DSP so increment
-> the maximum session count.
+> On 9/11/22 11:40, Krzysztof Kozlowski wrote:
+>> On 10/09/2022 16:32, Iskren Chernev wrote:
+>>> Add support for Qualcomm SM6115 SoC. This includes:
+>>> - GCC
+>>> - Pinctrl
+>>> - RPM (CC+PD)
+>>> - USB
+>>> - MMC
+>>> - UFS
+>>>
+>>> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+>>> ---
+>>> pending issues with dtschema:
+>>> - for some reason, using pinctrl phandles (in mmc) breaks the pinctrl
+>>>   schema (4 times)
+>>>       .output/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dtb: pinctrl@500000: sdc1-on-state: 'oneOf' conditional failed, one must be fixed:
+>>>             'pins' is a required property
+>>>             'clk', 'cmd', 'data', 'rclk' do not match any of the regexes: 'pinctrl-[0-9]+'
+>>>             [[26]] is not of type 'object'
+>>>             From schema: /home/iskren/src/pmos/linux-postmarketos/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-pinctrl.yaml
+>>
+>> It's the same as 06367559766b7c9bd96d2baef8bfc5a9bb451e25. I propose to
+>> fix it the same way. I can do a biger change for all pinctrls, so here
+>> you would need to add "-pins" prefix to entries (see patch
+>> 4fcdaf4b0320f93d0ccb4d36b795ed258fb07b27).
 > 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> Link: https://lore.kernel.org/r/20220829080531.29681-4-johan+linaro@kernel.org
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> OK, that makes sense. One thing that is a bit odd -- the current pattern
+> "(pinconf|-pins)$" matches anything that ends in pinconf OR -pins (so it could
+> be sth-pinconf). 
 
-SC8280XP was not added until 6.0 so the stable tag was left out on
-purpose (as usual).
+Yeah, I am fixing it to ^(pinconf|.*-pins)$
 
-Please drop.
+> Also, if you only have a single block, isn't the idea to just
+> list it in the -states node.  I mean we either force everybody to nest with
+> a pinconf, or we allow -pins for nested stuff and directly in -state for the
+> non-nested. Just my 2c.
 
-> ---
->  drivers/misc/fastrpc.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 93ebd174d8487..08032a207c1c0 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -25,7 +25,7 @@
->  #define SDSP_DOMAIN_ID (2)
->  #define CDSP_DOMAIN_ID (3)
->  #define FASTRPC_DEV_MAX		4 /* adsp, mdsp, slpi, cdsp*/
-> -#define FASTRPC_MAX_SESSIONS	13 /*12 compute, 1 cpz*/
-> +#define FASTRPC_MAX_SESSIONS	14
->  #define FASTRPC_MAX_VMIDS	16
->  #define FASTRPC_ALIGN		128
->  #define FASTRPC_MAX_FDLIST	16
+I didn't get this one... We allow exactly this, don't we (in PMIC GPIOs)?
 
-Johan
+
+Best regards,
+Krzysztof
