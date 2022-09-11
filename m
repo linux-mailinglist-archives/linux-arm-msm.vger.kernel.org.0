@@ -2,43 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D0CD5B4CFF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Sep 2022 11:29:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 59A1D5B4D01
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Sep 2022 11:31:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229907AbiIKJ3S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 11 Sep 2022 05:29:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52918 "EHLO
+        id S229577AbiIKJbW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 11 Sep 2022 05:31:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbiIKJ3R (ORCPT
+        with ESMTP id S229437AbiIKJbV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 11 Sep 2022 05:29:17 -0400
-Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 887C2248C9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 02:29:15 -0700 (PDT)
-Received: from kwepemi500012.china.huawei.com (unknown [172.30.72.55])
-        by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4MQPWk5VqqzHnmn;
-        Sun, 11 Sep 2022 17:27:14 +0800 (CST)
-Received: from cgs.huawei.com (10.244.148.83) by
- kwepemi500012.china.huawei.com (7.221.188.12) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Sun, 11 Sep 2022 17:29:13 +0800
-From:   Gaosheng Cui <cuigaosheng1@huawei.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@somainline.org>, <cuigaosheng1@huawei.com>,
-        <eberman@codeaurora.org>
-CC:     <linux-arm-msm@vger.kernel.org>
-Subject: [PATCH] firmware: qcom: scm: remove unused __qcom_scm_init declaration
-Date:   Sun, 11 Sep 2022 17:29:12 +0800
-Message-ID: <20220911092912.3219132-1-cuigaosheng1@huawei.com>
-X-Mailer: git-send-email 2.25.1
+        Sun, 11 Sep 2022 05:31:21 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A793D25E99;
+        Sun, 11 Sep 2022 02:31:19 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 2ED33B80AFD;
+        Sun, 11 Sep 2022 09:31:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9DDC433C1;
+        Sun, 11 Sep 2022 09:31:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1662888676;
+        bh=onrx/VfMWRlqA5VQAt3JkDr5rEpPhLtH56ehL+XsUmY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=osLIxzE+0FD1Ft+iZT4rWvKoO3/F0gfUDsbzIPsgVR08sO9eqQE6JeSHcZBAhXxuv
+         i26ZBqWOB5LcdikOEHB6dwlsBL1uLT568r6+4PXp29YkP78rJa7NjMQxeb+o4ZgW5b
+         FRb1CdORknuycjgxtYYy7F0fb09dIcxTlaaBX98uRCdBlYx293qL4tlxRvsICH3SOS
+         mvWe5nN9ZCnsHjAuVRepksGra7Fnb3G7V3oLgb0MXMpe9PAmuab7wAlikFXOzSkvPX
+         sfotqljp2P3Hv8V+rfY3aJcq9fsBME1AMA4gmb+sqvYZCCy5Nvp4IxpmWsHELoGRLq
+         zLlZBEUnfTq3Q==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oXJJD-0005c1-DD; Sun, 11 Sep 2022 11:31:23 +0200
+Date:   Sun, 11 Sep 2022 11:31:23 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Sasha Levin <sashal@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        srinivas.kandagatla@linaro.org, amahesh@qti.qualcomm.com,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH AUTOSEL 5.19 33/38] misc: fastrpc: increase maximum
+ session count
+Message-ID: <Yx2q6zgypevyXEto@hovoldconsulting.com>
+References: <20220910211623.69825-1-sashal@kernel.org>
+ <20220910211623.69825-33-sashal@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.244.148.83]
-X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
- kwepemi500012.china.huawei.com (7.221.188.12)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220910211623.69825-33-sashal@kernel.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -47,28 +62,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-__qcom_scm_init has been removed since
-commit 9a434cee773a ("firmware: qcom_scm: Dynamically support
-SMCCC and legacy conventions"), so remove it.
+On Sat, Sep 10, 2022 at 05:16:18PM -0400, Sasha Levin wrote:
+> From: Johan Hovold <johan+linaro@kernel.org>
+> 
+> [ Upstream commit 689a2d9f9332a27b1379ef230396e944f949a72b ]
+> 
+> The SC8280XP platform uses 14 sessions for the compute DSP so increment
+> the maximum session count.
+> 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> Link: https://lore.kernel.org/r/20220829080531.29681-4-johan+linaro@kernel.org
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
 
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
----
- drivers/firmware/qcom_scm.h | 2 --
- 1 file changed, 2 deletions(-)
+SC8280XP was not added until 6.0 so the stable tag was left out on
+purpose (as usual).
 
-diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
-index 0d51eef2472f..db3d08a01209 100644
---- a/drivers/firmware/qcom_scm.h
-+++ b/drivers/firmware/qcom_scm.h
-@@ -129,8 +129,6 @@ extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
- #define QCOM_SCM_SMMU_CONFIG_ERRATA1		0x03
- #define QCOM_SCM_SMMU_CONFIG_ERRATA1_CLIENT_ALL	0x02
- 
--extern void __qcom_scm_init(void);
--
- /* common error codes */
- #define QCOM_SCM_V2_EBUSY	-12
- #define QCOM_SCM_ENOMEM		-5
--- 
-2.25.1
+Please drop.
 
+> ---
+>  drivers/misc/fastrpc.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index 93ebd174d8487..08032a207c1c0 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -25,7 +25,7 @@
+>  #define SDSP_DOMAIN_ID (2)
+>  #define CDSP_DOMAIN_ID (3)
+>  #define FASTRPC_DEV_MAX		4 /* adsp, mdsp, slpi, cdsp*/
+> -#define FASTRPC_MAX_SESSIONS	13 /*12 compute, 1 cpz*/
+> +#define FASTRPC_MAX_SESSIONS	14
+>  #define FASTRPC_MAX_VMIDS	16
+>  #define FASTRPC_ALIGN		128
+>  #define FASTRPC_MAX_FDLIST	16
+
+Johan
