@@ -2,117 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D9F1B5B4F63
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Sep 2022 16:15:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA0915B5011
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Sep 2022 18:47:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230336AbiIKOO7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 11 Sep 2022 10:14:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42632 "EHLO
+        id S229547AbiIKQru (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 11 Sep 2022 12:47:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230390AbiIKOO6 (ORCPT
+        with ESMTP id S229512AbiIKQrt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 11 Sep 2022 10:14:58 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6606AAE48
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 07:14:57 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id x10so7692512ljq.4
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 07:14:57 -0700 (PDT)
+        Sun, 11 Sep 2022 12:47:49 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1DD62250D;
+        Sun, 11 Sep 2022 09:47:48 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id u18so11155286lfo.8;
+        Sun, 11 Sep 2022 09:47:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=ddlxEjUCTa5p+PAW4T51jeoxEb5xm1//QtVZS2B2ZgI=;
-        b=Pm5lgItTseorDVzE7EcLBSIE7xajSLwpFiaQ7ZXfo/QmOGxopfTWQiCuzwkc5Vee5n
-         hYqVXFbIFAxcKLG8SKRBEzvjCblPH0Em4s0y3JyZN/7qHdE8sH12SsLjtMYPfZloGC9H
-         r2TXYqW6LvWmJSLNFuPo4Wt2WXUuA78oOJ78yE5B/xgjE4bsW7nLG/ZAuxcA+0QL5feZ
-         zV9ou4IIxW7ZdOrVRQFlIZDyjn4pYiQKysTmnzxGInc4d3JgIYfHEFIrLkErn7wOZSjV
-         b9PBLy11MqGtddV6ZnyNFN7dPnbFtHyyDRiNOJSJSzCT7L/V4YPWNLyqq94x5304S+SG
-         lbIA==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=HA8nCOkAXI5pWr8NFRVcvP55LL8wQ30TATKKXBfMRyc=;
+        b=DxbH2ZufBCubLKCARbp0AtY6qiRL3bqH90OBBrqcb+7cKV487M+lN8gndTCeRd8meK
+         UMZ53331umiv8/SxccsV9+wuA5LkqQ7COuQhPuKnWd6gQ8PszLUUurtcYeRR9vw00j9E
+         bUmlSe7rFOl2fCIWIum4A0daapmr4XuKCMeAw1XBRjpP8MgJPw92OOkZ7wDbza/bHI6h
+         EOa2jouzLHuGYONrOLfjvY7EJ3IfKhKlkLkzN8VKYCeEmr/jN7BZdXvjIKmTksrhP1Ti
+         kuUogtc+Bmh59ACeZvHDB97JBJghXwAVDk7zP1+g4eS4kzUQJcvsatbx749NISqmbz/l
+         h/IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=ddlxEjUCTa5p+PAW4T51jeoxEb5xm1//QtVZS2B2ZgI=;
-        b=hdw0isPL/u4MC+wk/YP3fvLkmdko8Vn0HrPslxKg8trk9cPFYnlyxX4WqvNgkccZ7X
-         K+ivX+Mds+r7eRXkSg8SBvYmf9u8ckDjnuIY6AVSBvWz6pciqhSZsnOxsmwJrqWE1KQS
-         Klfxg6zfDByA/ideJ/XzJ83LKIdrb+eX80yWphTaeAwFUA7o772O8r9Pt7P+4ZckTPlm
-         1GqbfFveur7O0vkzV9NKYUtdNBzc0rYB4Pza2n5NMdKonsqhiacmarCuMYPzgBE/H+iP
-         zgt8zmViVvw37jQzHCCJ2tnrEi4SbPnoqXHNe5JHItmQ0KwHzzOrFDlOZmNuTaanL5/J
-         cPsQ==
-X-Gm-Message-State: ACgBeo2LHan4KyheVNT/nJtpiyF8JwmB3RK2AXZFNsFESt3fs3nbIW1X
-        g4UwxEsxDzpaMa/1LJq8Nynpbg==
-X-Google-Smtp-Source: AA6agR6/WvcfCz+aB6nzGKHOQzd/f18YPvf0ok5/H1DGcGun+eLMBpR7AZ8TZeI7MuUlFXNCufiC2Q==
-X-Received: by 2002:a2e:9b91:0:b0:26a:ce59:c517 with SMTP id z17-20020a2e9b91000000b0026ace59c517mr6117571lji.181.1662905695793;
-        Sun, 11 Sep 2022 07:14:55 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id c9-20020ac25309000000b0049488c97d39sm617989lfh.212.2022.09.11.07.14.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 11 Sep 2022 07:14:55 -0700 (PDT)
-Message-ID: <11e61fa5-f770-9c9f-23b9-3d1dcb205bc5@linaro.org>
-Date:   Sun, 11 Sep 2022 16:14:54 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH] dt-bindings: pci: qcom,pcie-ep: correct qcom,perst-regs
-Content-Language: en-US
-To:     Manivannan Sadhasivam <mani@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=HA8nCOkAXI5pWr8NFRVcvP55LL8wQ30TATKKXBfMRyc=;
+        b=tCRXQj1YWJs+4EXelaBV+JDydqBLP+HOOy3/CB2JlpD6FEC0xSMiziy/7Spj3ETV81
+         icd4sh9C2Mx2QavBnSYxbmw4pmfXucMyxwgRSrd6aXMNqz1W33jcEuscQKERAZcKzlss
+         /VuPzJo8IKwWvxGJRyQH9jLVAzZ09D4z4izTbD2F3Hq5bSTVRmizvyKVrDDx0UsDXdE9
+         9/DZM8vHm99ulX1UdKthbPgZOOo5lkMHLXW5VbOyQQ40msvl4+AO2jPnkzH26uurr3NZ
+         RZOJry0u4rZynNdAEw1eE2dXQOBFdPFFLr/CA4ekcEn3G5coANYuk0xi4xpRiDfNBcKW
+         sjVw==
+X-Gm-Message-State: ACgBeo1mBlZ0FBQu72+GTkaQv35Sp8f7G28Vry8YmHWlA2PS+xppsI1I
+        OGypErEs+Vz65ATY0FpxB/HWHXJRuUUOMA==
+X-Google-Smtp-Source: AA6agR6jPn7ZnXiofy86/eT+/HFxp4+3XPCj9LGowRvuJFpj0MicEk1o403HrgX83+C7lcmEZWf5Rw==
+X-Received: by 2002:ac2:4e10:0:b0:49a:d44b:426 with SMTP id e16-20020ac24e10000000b0049ad44b0426mr144007lfr.234.1662914867090;
+        Sun, 11 Sep 2022 09:47:47 -0700 (PDT)
+Received: from localhost.localdomain (adld177.neoplus.adsl.tpnet.pl. [79.185.7.177])
+        by smtp.gmail.com with ESMTPSA id h1-20020a0565123c8100b004979e231fafsm664501lfv.38.2022.09.11.09.47.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 11 Sep 2022 09:47:46 -0700 (PDT)
+From:   Adam Skladowski <a39.skl@gmail.com>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Adam Skladowski <a39.skl@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-References: <20220911135547.23106-1-krzysztof.kozlowski@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220911135547.23106-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Subject: [PATCH v3 0/2] Add DISPCC driver for SM6115
+Date:   Sun, 11 Sep 2022 18:46:17 +0200
+Message-Id: <20220911164635.182973-1-a39.skl@gmail.com>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/09/2022 15:55, Krzysztof Kozlowski wrote:
-> qcom,perst-regs is an phandle array of one item with a phandle and its
-> arguments.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> index 3d23599e5e91..077e002b07d3 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> @@ -60,8 +60,10 @@ properties:
->                   enable registers
->      $ref: "/schemas/types.yaml#/definitions/phandle-array"
->      items:
-> -      minItems: 3
-> -      maxItems: 3
-> +      - items:
-> +          - description: Syscon to TCSR system registers
-> +          - description: Perst enable offset
-> +          - description: Perst separateion enable offset
+This patch series introduce support for SM6115 display clock controller,
+this driver is based on QCM2290 one.
 
-Unfortunately this still complains:
+Changes since v1
+================
+1. Changed bindings file names to Vendor,SoC-IP format.
+2. Changed include in dispcc-sm6115 to reflect name change of bindings.
 
-qcom-sdx55-t55.dtb: pcie-ep@40000000: qcom,perst-regs:0: [28] is too short
+Changes since v2
+================
+1. Changed maintainer email.
+2. Converted driver to use .index instead of fw_name.
+3. Removed parents which had no passed clock.
+4. Updated YAML to reflect changes above.
+5. Adjusted driver based on Bjorn's feedback.
 
+Adam Skladowski (2):
+  dt-bindings: clock: add QCOM SM6115 display clock bindings
+  clk: qcom: Add display clock controller driver for SM6115
 
-where 28 is the phandle...
+ .../bindings/clock/qcom,sm6115-dispcc.yaml    |  70 ++
+ drivers/clk/qcom/Kconfig                      |   9 +
+ drivers/clk/qcom/Makefile                     |   1 +
+ drivers/clk/qcom/dispcc-sm6115.c              | 608 ++++++++++++++++++
+ .../dt-bindings/clock/qcom,sm6115-dispcc.h    |  36 ++
+ 5 files changed, 724 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm6115-dispcc.yaml
+ create mode 100644 drivers/clk/qcom/dispcc-sm6115.c
+ create mode 100644 include/dt-bindings/clock/qcom,sm6115-dispcc.h
 
+-- 
+2.25.1
 
-Best regards,
-Krzysztof
