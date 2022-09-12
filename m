@@ -2,112 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 69CAF5B588C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 12:39:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 752105B58B2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 12:47:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229779AbiILKjN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 06:39:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37704 "EHLO
+        id S229531AbiILKrT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 06:47:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229496AbiILKjL (ORCPT
+        with ESMTP id S229697AbiILKrR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 06:39:11 -0400
-Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CAED21241;
-        Mon, 12 Sep 2022 03:39:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1662979151; x=1694515151;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=w3vFwdYLxWsQ9bEvrr+2hHC3zOoyKWcZ+8GtDAo7dCU=;
-  b=FUx8SQDi+VRECKMNKEnrPkpJ8h77lUkDB8/1EhzRLRgCAce1DSqj4Ind
-   BPryJaJGJCURHbm3FycsO0pHttBthL2JYA3Gc3pyWRDDVwFzFM057WQ/0
-   q5e6cwGM4zx5BpkcOPdjxOeoA9PF0iigpQA+r5z5sc18qGcSg7Yxi+Lvs
-   02wmm6NEf9vXY/qVbeDUhq6JUtaIxBdRlMjKO2DYAH3LZfb+aLw9OE1B8
-   xcOSLczz7hBLTMW+a9Akn5SICrseaiOI62IR4CP3zubvMvh3b6Qoh2Ku7
-   M2uIDcFwt2hl7feJvxAJDH/pr7tI4wMYII6D4GU7+zKl+blDsBia4UnCg
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10467"; a="359558492"
-X-IronPort-AV: E=Sophos;i="5.93,310,1654585200"; 
-   d="scan'208";a="359558492"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Sep 2022 03:39:10 -0700
-X-IronPort-AV: E=Sophos;i="5.93,310,1654585200"; 
-   d="scan'208";a="719712154"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Sep 2022 03:39:04 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.96)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1oXgqC-001Irg-2C;
-        Mon, 12 Sep 2022 13:39:00 +0300
-Date:   Mon, 12 Sep 2022 13:39:00 +0300
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     Hans de Goede <hdegoede@redhat.com>,
-        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-efi <linux-efi@vger.kernel.org>,
-        linux-i2c <linux-i2c@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-spi <linux-spi@vger.kernel.org>,
-        "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>,
-        Len Brown <lenb@kernel.org>, Elie Morisse <syniurge@gmail.com>,
-        Nehal Shah <nehal-bakulchandra.shah@amd.com>,
-        Shyam Sundar S K <shyam-sundar.s-k@amd.com>,
-        Khalil Blaiech <kblaiech@nvidia.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Will Deacon <will@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Daniel Mack <daniel@zonque.org>,
-        Haojian Zhuang <haojian.zhuang@gmail.com>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Robert Moore <robert.moore@intel.com>,
-        Wolfram Sang <wsa@kernel.org>
-Subject: Re: [PATCH v2 0/8] ACPI: unify _UID handling as integer
-Message-ID: <Yx8MRPxPrNG1XRqV@smile.fi.intel.com>
-References: <20220908132910.62122-1-andriy.shevchenko@linux.intel.com>
- <YxnwMLvgQAPOkeeK@smile.fi.intel.com>
- <CAJZ5v0j5FO+OcX6VdiR-tuDCrHFwErquxzZGUu3ZLQ1G57T-+Q@mail.gmail.com>
+        Mon, 12 Sep 2022 06:47:17 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBA2931235
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 03:47:15 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id k10so14141271lfm.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 03:47:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=bS7LDsVs3qcnyEA5WCUeLMEdHfGdR6OQ6NC7pdWEKCo=;
+        b=v9C7GeUH/ntRNwKKZ1I7TT6BQcjJBRkVZ1XpH6mXDdIGqsu2oqlY8NR6ikeS2VHyL8
+         7XoeJToQeSx7WIMqvu9S5zhL+/zdPWkCJ/xRvKy5UYL5moSuGoTzW/rT+uXwRSG6Eiic
+         vRv3Oy4PyY5Y4nPRruZEaZcvpvxM6lCfMQ0gzcT4tFsasIVkJa+3D6W6V8K+hfLskejA
+         LNX5aQQbJSTAfgk7Upg8DIPsy+QVWFepdmlC4bDE/vck/eapbQzWJPan/jIBh9yCxMTn
+         xdGGkKSLDDM4Cf8yXZKpajXEJTCiwphjC+CcMOkntC3mGhoodSx7fPj7QXXQPJ79Il6x
+         BM5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=bS7LDsVs3qcnyEA5WCUeLMEdHfGdR6OQ6NC7pdWEKCo=;
+        b=5KVsvsr7XUvMdAhWxnlPKzko8VxRrmy2p/Uy+GAhQBy73NPp5uWs1OO2+AoICTsgL4
+         FQN8l83XusJw1RQxPTrnAGUZ4zPT0d0qy3WIqhIFlekw2b+UAiFFKcPBEdI4RSsd5s/G
+         PqMYDuRuhhiHKzDGquPZPEvzF4DzIzIG9Et8dFKFPzfmYqkJ9E2EY9+epsXafRyJtlrS
+         Kz19OZL/E2nTn/mFJZzg3Of/TjkMdiO/scQSfhfyjUo3wjcQkt0VsuMydi4BKHki2cLS
+         DA3mwodMS4pgf3GckeikSqIJo8151tDRYaCAWBJEKsSTFpW0c9icLLS35XpH2EFxmBIW
+         /xcg==
+X-Gm-Message-State: ACgBeo0QEoBY18I0z2ryU4KuK+XsQeofOUS9glaYgUysAqklFM5Xjj6L
+        B7Q2h4LfKMGPbByoGOjIgeXGsg==
+X-Google-Smtp-Source: AA6agR5+jaTiqHAiQpzt1KGZYW6NOWDU4UIg3cF3n4GCh9g7ACcWMJRrb7wrqPm8IlRGzsNs5ZLcOA==
+X-Received: by 2002:a05:6512:3f8c:b0:492:b392:bb84 with SMTP id x12-20020a0565123f8c00b00492b392bb84mr8267929lfa.368.1662979633605;
+        Mon, 12 Sep 2022 03:47:13 -0700 (PDT)
+Received: from [10.129.96.84] ([109.232.243.34])
+        by smtp.gmail.com with ESMTPSA id p8-20020a2eb7c8000000b0026c111ac7bcsm188263ljo.86.2022.09.12.03.47.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Sep 2022 03:47:13 -0700 (PDT)
+Message-ID: <79c11b6a-8f34-a5ee-373d-f88d5a980039@linaro.org>
+Date:   Mon, 12 Sep 2022 12:47:09 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAJZ5v0j5FO+OcX6VdiR-tuDCrHFwErquxzZGUu3ZLQ1G57T-+Q@mail.gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v2 3/4] dt-bindings: remoteproc: qcom: wcnss: Add
+ qcom,pronto compatible
+Content-Language: en-US
+To:     Sireesh Kodali <sireeshkodali1@gmail.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Cc:     bjorn.andersson@linaro.org, Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20220908184925.2714098-1-sireeshkodali1@gmail.com>
+ <20220908184925.2714098-4-sireeshkodali1@gmail.com>
+ <ad201ee7-d83c-9ebc-3619-64632f1f266e@linaro.org>
+ <CMU3V4NK164X.1D3TDJPALGIDD@skynet-linux>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CMU3V4NK164X.1D3TDJPALGIDD@skynet-linux>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Sep 10, 2022 at 06:32:10PM +0200, Rafael J. Wysocki wrote:
-> On Thu, Sep 8, 2022 at 3:38 PM Andy Shevchenko
-> <andriy.shevchenko@linux.intel.com> wrote:
+On 12/09/2022 05:33, Sireesh Kodali wrote:
+> On Fri Sep 9, 2022 at 1:30 PM IST, Krzysztof Kozlowski wrote:
+>> On 08/09/2022 20:49, Sireesh Kodali wrote:
+>>> The qcom,pronto compatible is used in the wcn36xx driver to determine
+>>> which register to access. However, this compatible was not documented.
+>>> This patch documents the existing compatible as is, since it isn't
+>>> immediately clear why the wcn36xx driver uses this extra compatible,
+>>> rather than relying directly on the regular compatible string.
+>>
+>> The patch does much more - messes entirely all compatibles...
+> 
+> Is there another preferred way to handle this?
 
-...
+The one which does not introduces any other changes than what you wrote
+here. You wrote here, that qcom,pronto is being added, so why some
+things are changed to oneOf or to enums?
 
-> Tentatively applied as 6.1 material.
-
-Thanks!
-
-> If there are updates, we'll make changes as they go.
-
-There is one at least to fix a warning in the perf patch. Should I resend
-a fixed patch, just a fix, or entire series with a fixed patch?
-
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+Best regards,
+Krzysztof
