@@ -2,96 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E746F5B5B41
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 15:33:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C4D15B5B7B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 15:42:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229905AbiILNdc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 09:33:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48782 "EHLO
+        id S229777AbiILNmo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 09:42:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229926AbiILNda (ORCPT
+        with ESMTP id S229473AbiILNmm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 09:33:30 -0400
-Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00B1E30F6E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 06:33:26 -0700 (PDT)
-Received: by mail-yb1-xb2e.google.com with SMTP id 202so12739707ybe.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 06:33:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=otGb4AwYTfhIb4lKpfRenMAoPDU49k1ZwLwvH7P8lco=;
-        b=oSnDlq+OCQ/AA+yITuOTcepJuxj6xvCZxw0N5R5P9qmL163t3H2HLzasOd5N0qFdXa
-         aeE6KYgW4Gn6DNc+ftjU0SIDgy/vDzwRSAh7n/TffeO0zEdp7js0b5/yfFCQnyRUwJ4s
-         Svi/gN54DZ0MkDW5HHCVum2hlI8RK0wC3yXo2vsfYC1sucOpHj8P4wI4XYK00Oj/xobo
-         IBs1krtBJDHqiTsX2EP74bwEvhUlB5LyxDSLSS+v8ey3wNgtK88elLZJXWIOWNeK7t7t
-         3tI5wH0BqKV9FKliDAHstgaifLIjIdUHx++kBXGaRnLI1H3l/rMamyTBurTzwKiKcGUp
-         BRuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=otGb4AwYTfhIb4lKpfRenMAoPDU49k1ZwLwvH7P8lco=;
-        b=p/tJxrlz1xyAO5q5fiIKolyDcimDrVtvyN36gc9wD3BjMKVt8MQtq/wnx+/858xx2v
-         XSc58wiPgLQetHPhQCsOB3jFYMtBRSDUWT4tumkMTdT6t51lNn9NIz5CW6lHv2p5s3Cj
-         zSLol5d0S1XSg8p3i8xZLZ+P0beJnmneaIsNDvyV9cXM2V412jnTuW8ezDLbQ1c9rBZx
-         LZfDRnM4rslCTbf37qB8z0wIRNji99gZapTwf/wJntkUlxHsIqmnWAZhbJHTybmMMCK8
-         ZjTmafq/XJ6ykNBW+5AxuJBlueBDANkfWm2S/IB7XdcMfmxuHK6O0EmOCVVXizYIlQR3
-         NWEA==
-X-Gm-Message-State: ACgBeo195fL1L6upwqY781iL3aLAEb6zusVDu9iaV85zMAyAeFUag71l
-        n05T2jcRwYpyKzFMgR8Icw2uFQ67HnUguiri500V8Q==
-X-Google-Smtp-Source: AA6agR6zrEM49/wYG3jG8qpjvQyM5sg73lbnKFExy/6Q0tgOLI8rFalUyzIkO8PSye6Hy4pcCfvfBnZXy7mqihPmj+M=
-X-Received: by 2002:a25:ba45:0:b0:67a:6298:7bac with SMTP id
- z5-20020a25ba45000000b0067a62987bacmr23760581ybj.194.1662989606018; Mon, 12
- Sep 2022 06:33:26 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220910170207.1592220-1-danct12@riseup.net>
-In-Reply-To: <20220910170207.1592220-1-danct12@riseup.net>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 12 Sep 2022 16:33:15 +0300
-Message-ID: <CAA8EJppKzZqGm6fSwpobOXoGNkPGy==w-XbFXLwFEMRTVgpRpA@mail.gmail.com>
-Subject: Re: [PATCH] clk: qcom: sm6115: Select QCOM_GDSC
-To:     Dang Huynh <danct12@riseup.net>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Mon, 12 Sep 2022 09:42:42 -0400
+Received: from mail-4018.proton.ch (mail-4018.proton.ch [185.70.40.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62E9E30564;
+        Mon, 12 Sep 2022 06:42:41 -0700 (PDT)
+Date:   Mon, 12 Sep 2022 13:42:34 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
+        s=protonmail; t=1662990159; x=1663249359;
+        bh=4VpvV4OBkDK69iCd91VlPdJGjR5kcBrkOVjMljOVhXE=;
+        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
+         References:Feedback-ID:From:To:Cc:Date:Subject:Reply-To:
+         Feedback-ID:Message-ID;
+        b=WREbsSlNT5mV1GEMq+8anEibl/Y3aoJGcDNiivvU6TJqqr52WhxXILaQG4KCIY1xk
+         oW6vlmDLSVZL2XaCc3qchOxkNQ1CowortXBW4wpDGwUodFGHk2wdOiVmWXsjYRj3LJ
+         8IPPNNCeZFjZE+2nmQO0S6MiQm2fzvZqOIBBxTnI=
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From:   Caleb Connolly <caleb@connolly.tech>
+Cc:     Dang Huynh <danct12@riseup.net>,
+        Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Reply-To: Caleb Connolly <caleb@connolly.tech>
+Subject: Re: [PATCH] clk: qcom: sm6115: Select QCOM_GDSC
+Message-ID: <6f2ac542-90dc-ec85-d25d-9ba713de8796@connolly.tech>
+In-Reply-To: <CAA8EJpr4_G_uK5oj9Y0j_tE_LsnqDHKaU1D_nhXOiL0sA=aMnQ@mail.gmail.com>
+References: <20220910170207.1592220-1-danct12@riseup.net> <0a2bb48f-c67d-0544-5037-d02f658a3351@connolly.tech> <CAA8EJpr4_G_uK5oj9Y0j_tE_LsnqDHKaU1D_nhXOiL0sA=aMnQ@mail.gmail.com>
+Feedback-ID: 10753939:user:proton
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 10 Sept 2022 at 20:02, Dang Huynh <danct12@riseup.net> wrote:
+
+
+On 12/09/2022 14:32, Dmitry Baryshkov wrote:
+> On Mon, 12 Sept 2022 at 16:17, Caleb Connolly <caleb@connolly.tech> wrote=
+:
+>>
+>>
+>>
+>> On 10/09/2022 18:02, Dang Huynh wrote:
+>>> While working on the Fxtec Pro1X device, this error shows up with
+>>> my own minimal configuration:
+>>>
+>>> gcc-sm6115: probe of 1400000.clock-controller failed with error -38
+>>>
+>>> The clock driver depends on CONFIG_QCOM_GDSC and after enabling
+>>> that, the driver probes successfully.
+>>>
+>>> Signed-off-by: Dang Huynh <danct12@riseup.net>
+>>> ---
+>>>    drivers/clk/qcom/Kconfig | 1 +
+>>>    1 file changed, 1 insertion(+)
+>>>
+>>> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+>>> index 1cf1ef70e347..d566fbdebdf9 100644
+>>> --- a/drivers/clk/qcom/Kconfig
+>>> +++ b/drivers/clk/qcom/Kconfig
+>>> @@ -645,6 +645,7 @@ config SM_DISPCC_6350
+>>>
+>>>    config SM_GCC_6115
+>>>        tristate "SM6115 and SM4250 Global Clock Controller"
+>>> +     select QCOM_GDSC
+>>
+>>          depends on QCOM_GDSC
 >
-> While working on the Fxtec Pro1X device, this error shows up with
-> my own minimal configuration:
+> All other Qualcomm clock drivers select the GDSC if required, so I'd
+> tend to disagree.
+
+Ah, in that case please disregard, sorry for the noise.
 >
-> gcc-sm6115: probe of 1400000.clock-controller failed with error -38
 >
-> The clock driver depends on CONFIG_QCOM_GDSC and after enabling
-> that, the driver probes successfully.
->
-> Signed-off-by: Dang Huynh <danct12@riseup.net>
+> --
+> With best wishes
+> Dmitry
 
-Fixes: cbe63bfdc54f ("clk: qcom: Add Global Clock controller (GCC)
-driver for SM6115")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+--
+Kind Regards,
+Caleb
 
-> ---
->  drivers/clk/qcom/Kconfig | 1 +
->  1 file changed, 1 insertion(+)
-
-
-
--- 
-With best wishes
-Dmitry
