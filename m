@@ -2,86 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF6555B631E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 23:56:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 803915B6337
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 00:00:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229575AbiILV4J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 17:56:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42916 "EHLO
+        id S230131AbiILWAc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 18:00:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229693AbiILV4I (ORCPT
+        with ESMTP id S229849AbiILWAb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 17:56:08 -0400
-Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6554C4D248
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 14:56:06 -0700 (PDT)
-Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-127ba06d03fso27106332fac.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 14:56:06 -0700 (PDT)
+        Mon, 12 Sep 2022 18:00:31 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B560D474ED
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 15:00:28 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id f9so16362340lfr.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 15:00:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
+        d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=cLLzL9vbrWOmXEMD5t4FcHNyuufYLeZfdASc1WjWjII=;
-        b=Aajun28E2jbV3q6QZZCZGGP6KuCziXvmeYsaOeiaf7yhSJdtBHSpKt4Z0FmZaF2gD4
-         6yOkUwVyvjt9Htp5jPmm9YbdsQPbPAW8OE8Q8VCL1S/Roh++pQvj4wStZQ+PuN8TaAoU
-         2X1W+zltFgSFvaxDqn4JtYNPI+ICtl8k15k8IU8+OGzPS7gHgnE8i6UrxFXHwdNO6vxA
-         16XK4CbbPFQO2aWWB10YysxHdVIphwVHa1M2Bk2ZaR8qwPmhTqcv/+vDII6CdJtqPey3
-         cF98dDIstCia36oYbP1Ruo9AouGtrlvs1VL+W4h3KWWEN2IpNdOOUcnVcwugQSwT6x1/
-         QidA==
+        bh=AyY1pS1gIoihV9h/TOHQQzSTghwaQhWl/8N88+vxDvY=;
+        b=WQRN/VO2MUAPdhBeT6WWJnL7tyU8NFnCcS90ahHnIrwcx9G1LuvV+3Y498rgIqbKlY
+         YmqUqekXgv1zkVD6PzVK2c9iLBNhh1Cm9Iw4EW717UaUYJaZdrP/m5Zl3gpuce0Haca+
+         XrHDHoCR/KqzWdeB3iPWpMh6Qx4yZliP1Ma/BiNc+WNhHjnGPFNmcUhIT+HJnX6XYo+i
+         lgq2yF+hxPW+3cFtVjerChY2tSBAe2jv1YiTchv/6CZUDXqH1Hqnlozns1FwdbmDCDxc
+         qfaOFpD6IModzjrzui8NlB/ktycOlhMXYXnc2oosVtkaNboE4yKK85uxa252LlFB8Ghh
+         JL6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=cLLzL9vbrWOmXEMD5t4FcHNyuufYLeZfdASc1WjWjII=;
-        b=NxwSgbeUDK19kGvVMGMdZf3R+3gCDiQ/Ade0CBaEkk1SwKoJpZzUm8Buh3eizS6Z46
-         4sjeGq7shFIfVV19nf+onngML/HKt9a+XefRPHf7xePRtJEp6deGaDBOSbgX5bmsYpUs
-         od8toJB1Yz3mreJHYLdsIa0F9QpAIREr7GNYTvDuPCIQDSSayK82CVlfhb0MvA9tg850
-         yEDBViVHq0xS8M+1L+swPMz5to/BZsUSH6K7icy+v0junWlY2nZBzsdgcQZrbWRqcNpC
-         KzoQyZ+o6vsO3bxZ4PiV4J1My/q3nzNiPTFM5wvOnsjWUGzfAeYkYyXasvkPM7hwV5sV
-         jzeg==
-X-Gm-Message-State: ACgBeo0F7lV1Iq8igtyWR7QaVDKBatzMeifV4uzNQyOCcn4AjUu9SQuA
-        aiGRYu2t5qZBx8e9tDxQntzgVQ==
-X-Google-Smtp-Source: AA6agR7rNeCdm2/Yxkrqxs/SGMhUcYmEcNl/SkoT6344JEdtaxUrI+SevtXMnWUIAgrc5WE9MhE2sA==
-X-Received: by 2002:a05:6808:148e:b0:343:77fc:b7d2 with SMTP id e14-20020a056808148e00b0034377fcb7d2mr185362oiw.128.1663019765587;
-        Mon, 12 Sep 2022 14:56:05 -0700 (PDT)
-Received: from [192.168.11.16] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id k6-20020a4ad106000000b00448a3ecdc9dsm4643175oor.22.2022.09.12.14.56.02
+        bh=AyY1pS1gIoihV9h/TOHQQzSTghwaQhWl/8N88+vxDvY=;
+        b=Q3Nqmpv31bXPN7qmrXdIJJLlV33o7PwmVhdy5Ax2sX4rTn2g1+zihEr+sZC/nt7E7k
+         X4F352D88Te+/k+uRxc/R0eihEFVX4UF1pzX5UMoBhXRcwWRd7ksTsXUJc9XHQcc3kue
+         Gm81wrW9CoQPhET1eoMOOZctxJyDNrxmfBIBQ91NrPo7+2v+ELCDY7QkOKKowZy9ht3z
+         ax/gKv9K/dooUCZjHBIvpiltJ4RlKaillwRDMqb3g9qWhECq1PJ9eLbVnZCFgjk2n9bf
+         MQ6CI6+60UKIjtAPVuurtzZUJT+FocUC6JNqdniq47qFToIL85+tNyathsk9BVAPONT/
+         iXGg==
+X-Gm-Message-State: ACgBeo0K8veugiLGH3rZsOVMJtK82mR16Pnl2r4kors6L//egbxcDIEM
+        Z+AyIKYrX5/b9+lnd4+MapWdYQ==
+X-Google-Smtp-Source: AA6agR7EKL31HEne7c+QEs97qL44is6/wEkfX62OvNB/cmAa5ZN6XISKO26CdeTItkKMytdiDGts0w==
+X-Received: by 2002:a05:6512:3b20:b0:498:d7bc:28af with SMTP id f32-20020a0565123b2000b00498d7bc28afmr7408563lfv.65.1663020026956;
+        Mon, 12 Sep 2022 15:00:26 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id o25-20020ac25e39000000b00492d270db5esm1288184lfg.242.2022.09.12.15.00.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Sep 2022 14:56:05 -0700 (PDT)
-Message-ID: <69526798-93df-a4f9-c385-c9bf490cc709@kali.org>
-Date:   Mon, 12 Sep 2022 16:55:58 -0500
+        Mon, 12 Sep 2022 15:00:26 -0700 (PDT)
+Message-ID: <09c3d23a-a6f1-b5ec-bff9-3636fcdfca50@linaro.org>
+Date:   Tue, 13 Sep 2022 01:00:25 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.13.0
-Subject: Re: [PATCH 4/7] drm/msm/dp: fix aux-bus EP lifetime
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>
-Cc:     Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org
-References: <20220912154046.12900-1-johan+linaro@kernel.org>
- <20220912154046.12900-5-johan+linaro@kernel.org>
- <e60f0053-3801-bf33-5841-69f16215fa00@linaro.org>
-From:   Steev Klimaszewski <steev@kali.org>
-In-Reply-To: <e60f0053-3801-bf33-5841-69f16215fa00@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.1
+Subject: Re: [PATCH v2 1/2] thermal: Introduce CONFIG_QCOM_THERMAL in Makefile
+ and qcom/Kconfig
+Content-Language: en-GB
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     bhupesh.linux@gmail.com, andersson@kernel.org,
+        linux-arm-msm@vger.kernel.org, daniel.lezcano@linaro.org,
+        rafael@kernel.org, Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>
+References: <20220912194028.3584378-1-bhupesh.sharma@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220912194028.3584378-1-bhupesh.sharma@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -92,150 +79,94 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 12/09/2022 22:40, Bhupesh Sharma wrote:
+> Introduce CONFIG_QCOM_THERMAL to allow better control
+> over selection of various Qualcomm Thermal drivers
+> available inside qcom/ directory.
+> 
+> This is a preparatory change to allow new drivers to
+> be added inside qcom/ directory in a more structured
+> fashion later-on.
+> 
+> Cc: Bjorn Andersson <andersson@kernel.org>
+> Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
+> Cc: Amit Kucheria <amitk@kernel.org>
+> Cc: Thara Gopinath <thara.gopinath@gmail.com>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+> - v1 can be viewed here: https://www.spinics.net/lists/kernel/msg4510793.html
+> - Fixed review comments from Dmitry received in v1.
+> 
+>   drivers/thermal/Makefile     |  2 +-
+>   drivers/thermal/qcom/Kconfig | 12 ++++++++++++
+>   2 files changed, 13 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/thermal/Makefile b/drivers/thermal/Makefile
+> index def8e1a0399c..2506c6c8ca83 100644
+> --- a/drivers/thermal/Makefile
+> +++ b/drivers/thermal/Makefile
+> @@ -52,7 +52,7 @@ obj-$(CONFIG_DA9062_THERMAL)	+= da9062-thermal.o
+>   obj-y				+= intel/
+>   obj-$(CONFIG_TI_SOC_THERMAL)	+= ti-soc-thermal/
+>   obj-y				+= st/
+> -obj-$(CONFIG_QCOM_TSENS)	+= qcom/
+> +obj-y				+= qcom/
+>   obj-y				+= tegra/
+>   obj-$(CONFIG_HISI_THERMAL)     += hisi_thermal.o
+>   obj-$(CONFIG_MTK_THERMAL)	+= mtk_thermal.o
+> diff --git a/drivers/thermal/qcom/Kconfig b/drivers/thermal/qcom/Kconfig
+> index 2c7f3f9a26eb..ccfd090273c1 100644
+> --- a/drivers/thermal/qcom/Kconfig
+> +++ b/drivers/thermal/qcom/Kconfig
+> @@ -1,8 +1,17 @@
+>   # SPDX-License-Identifier: GPL-2.0-only
+> +
+> +config QCOM_THERMAL
+> +	tristate "Thermal drivers on Qualcomm Snapdragon series of SoCs"
+> +	help
+> +	  Support for thermal drivers on Qualcomm Snapdragon series of SoCs.
+> +	  There are several thermal sensors available on the Qualcomm Socs
+> +	  which can be used for thermal mitigation purposes.
+> +
+>   config QCOM_TSENS
+>   	tristate "Qualcomm TSENS Temperature Alarm"
+>   	depends on NVMEM_QCOM_QFPROM
+>   	depends on ARCH_QCOM || COMPILE_TEST
+> +	select QCOM_THERMAL
 
-On 9/12/22 1:10 PM, Dmitry Baryshkov wrote:
-> On 12/09/2022 18:40, Johan Hovold wrote:
->> Device-managed resources allocated post component bind must be tied to
->> the lifetime of the aggregate DRM device or they will not necessarily be
->> released when binding of the aggregate device is deferred.
->>
->> This can lead resource leaks or failure to bind the aggregate device
->> when binding is later retried and a second attempt to allocate the
->> resources is made.
->>
->> For the DP aux-bus, an attempt to populate the bus a second time will
->> simply fail ("DP AUX EP device already populated").
->>
->> Fix this by amending the DP aux interface and tying the lifetime of the
->> EP device to the DRM device rather than DP controller platform device.
->
-> Doug, could you please take a look?
->
-> For me this is another reminder/pressure point that we should populate 
-> the AUX BUS from the probe(), before binding the components together.
->
->>
->> Fixes: c3bf8e21b38a ("drm/msm/dp: Add eDP support via aux_bus")
->> Cc: stable@vger.kernel.org      # 5.19
->> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
->> ---
->>   drivers/gpu/drm/bridge/parade-ps8640.c   | 2 +-
->>   drivers/gpu/drm/display/drm_dp_aux_bus.c | 5 +++--
->>   drivers/gpu/drm/msm/dp/dp_display.c      | 3 ++-
->>   include/drm/display/drm_dp_aux_bus.h     | 6 +++---
->>   4 files changed, 9 insertions(+), 7 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/bridge/parade-ps8640.c 
->> b/drivers/gpu/drm/bridge/parade-ps8640.c
->> index d7483c13c569..6127979370cb 100644
->> --- a/drivers/gpu/drm/bridge/parade-ps8640.c
->> +++ b/drivers/gpu/drm/bridge/parade-ps8640.c
->> @@ -719,7 +719,7 @@ static int ps8640_probe(struct i2c_client *client)
->>       if (ret)
->>           return ret;
->>   -    ret = devm_of_dp_aux_populate_bus(&ps_bridge->aux, 
->> ps8640_bridge_link_panel);
->> +    ret = devm_of_dp_aux_populate_bus(dev, &ps_bridge->aux, 
->> ps8640_bridge_link_panel);
->>         /*
->>        * If devm_of_dp_aux_populate_bus() returns -ENODEV then it's 
->> up to
->> diff --git a/drivers/gpu/drm/display/drm_dp_aux_bus.c 
->> b/drivers/gpu/drm/display/drm_dp_aux_bus.c
->> index f5741b45ca07..2706f2cf82f7 100644
->> --- a/drivers/gpu/drm/display/drm_dp_aux_bus.c
->> +++ b/drivers/gpu/drm/display/drm_dp_aux_bus.c
->> @@ -322,6 +322,7 @@ static void of_dp_aux_depopulate_bus_void(void 
->> *data)
->>     /**
->>    * devm_of_dp_aux_populate_bus() - devm wrapper for 
->> of_dp_aux_populate_bus()
->> + * @dev: Device to tie the lifetime of the EP devices to
->>    * @aux: The AUX channel whose device we want to populate
->>    * @done_probing: Callback functions to call after EP device 
->> finishes probing.
->>    *                Will not be called if there are no EP devices and 
->> this
->> @@ -333,7 +334,7 @@ static void of_dp_aux_depopulate_bus_void(void 
->> *data)
->>    *         no children. The done_probing() function won't be called 
->> in that
->>    *         case.
->>    */
->> -int devm_of_dp_aux_populate_bus(struct drm_dp_aux *aux,
->> +int devm_of_dp_aux_populate_bus(struct device *dev, struct 
->> drm_dp_aux *aux,
->>                   int (*done_probing)(struct drm_dp_aux *aux))
->>   {
->>       int ret;
->> @@ -342,7 +343,7 @@ int devm_of_dp_aux_populate_bus(struct drm_dp_aux 
->> *aux,
->>       if (ret)
->>           return ret;
->>   -    return devm_add_action_or_reset(aux->dev,
->> +    return devm_add_action_or_reset(dev,
->>                       of_dp_aux_depopulate_bus_void, aux);
->>   }
->>   EXPORT_SYMBOL_GPL(devm_of_dp_aux_populate_bus);
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
->> b/drivers/gpu/drm/msm/dp/dp_display.c
->> index ba557328710a..e1aa6355bbf6 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> @@ -1559,7 +1559,8 @@ static int dp_display_get_next_bridge(struct 
->> msm_dp *dp)
->>            * panel driver is probed asynchronously but is the best we
->>            * can do without a bigger driver reorganization.
->>            */
->> -        rc = devm_of_dp_aux_populate_ep_devices(dp_priv->aux);
->> +        rc = devm_of_dp_aux_populate_ep_devices(dp->drm_dev->dev,
->> +                            dp_priv->aux);
->>           of_node_put(aux_bus);
->>           if (rc)
->>               goto error;
->> diff --git a/include/drm/display/drm_dp_aux_bus.h 
->> b/include/drm/display/drm_dp_aux_bus.h
->> index 8a0a486383c5..a4063aa7fc40 100644
->> --- a/include/drm/display/drm_dp_aux_bus.h
->> +++ b/include/drm/display/drm_dp_aux_bus.h
->> @@ -47,7 +47,7 @@ static inline struct dp_aux_ep_driver 
->> *to_dp_aux_ep_drv(struct device_driver *dr
->>   int of_dp_aux_populate_bus(struct drm_dp_aux *aux,
->>                  int (*done_probing)(struct drm_dp_aux *aux));
->>   void of_dp_aux_depopulate_bus(struct drm_dp_aux *aux);
->> -int devm_of_dp_aux_populate_bus(struct drm_dp_aux *aux,
->> +int devm_of_dp_aux_populate_bus(struct device *dev, struct 
->> drm_dp_aux *aux,
->>                   int (*done_probing)(struct drm_dp_aux *aux));
->>     /* Deprecated versions of the above functions. To be removed when 
->> no callers. */
->> @@ -61,11 +61,11 @@ static inline int 
->> of_dp_aux_populate_ep_devices(struct drm_dp_aux *aux)
->>       return (ret != -ENODEV) ? ret : 0;
->>   }
->>   -static inline int devm_of_dp_aux_populate_ep_devices(struct 
->> drm_dp_aux *aux)
->> +static inline int devm_of_dp_aux_populate_ep_devices(struct device 
->> *dev, struct drm_dp_aux *aux)
->>   {
->>       int ret;
->>   -    ret = devm_of_dp_aux_populate_bus(aux, NULL);
->> +    ret = devm_of_dp_aux_populate_bus(dev, aux, NULL);
->>         /* New API returns -ENODEV for no child case; adapt to old 
->> assumption */
->>       return (ret != -ENODEV) ? ret : 0;
->
-This breaks builds which have ti-sn65dsi86 included:
+What's the point of QCOM_THERMAL if other drivers are `select'ing it? 
+I'd have understood if it would be a menuconfig guarding all Qualcomm 
+thermal drivers.
 
-drivers/gpu/drm/bridge/ti-sn65dsi86.c:628:50: error: passing argument 1 
-of 'devm_of_dp_aux_populate_ep_devices' from incompatible argument type.
+>   	help
+>   	  This enables the thermal sysfs driver for the TSENS device. It shows
+>   	  up in Sysfs as a thermal zone with multiple trip points. Disabling the
+> @@ -15,6 +24,7 @@ config QCOM_SPMI_ADC_TM5
+>   	depends on OF && SPMI && IIO
+>   	select REGMAP_SPMI
+>   	select QCOM_VADC_COMMON
+> +	select QCOM_THERMAL
+>   	help
+>   	  This enables the thermal driver for the ADC thermal monitoring
+>   	  device. It shows up as a thermal zone with multiple trip points.
+> @@ -25,6 +35,7 @@ config QCOM_SPMI_TEMP_ALARM
+>   	tristate "Qualcomm SPMI PMIC Temperature Alarm"
+>   	depends on OF && SPMI && IIO
+>   	select REGMAP_SPMI
+> +	select QCOM_THERMAL
+>   	help
+>   	  This enables a thermal sysfs driver for Qualcomm plug-and-play (QPNP)
+>   	  PMIC devices. It shows up in sysfs as a thermal sensor with multiple
+> @@ -35,6 +46,7 @@ config QCOM_SPMI_TEMP_ALARM
+>   config QCOM_LMH
+>   	tristate "Qualcomm Limits Management Hardware"
+>   	depends on ARCH_QCOM && QCOM_SCM
+> +	select QCOM_THERMAL
+>   	help
+>   	  This enables initialization of Qualcomm limits management
+>   	  hardware(LMh). LMh allows for hardware-enforced mitigation for cpus based on
 
-As well,
-
-drivers/gpu/drm/bridge/ti-sn65dsi86.c:628:15: error: too few arguments 
-to function 'devm_of_dp_aux_populate_ep_devices'
-
-
---steev
-
+-- 
+With best wishes
+Dmitry
 
