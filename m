@@ -2,57 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83FA95B534B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 06:33:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 577C95B53D8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 08:17:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229607AbiILEdZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 00:33:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33644 "EHLO
+        id S229601AbiILGR5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 02:17:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbiILEdY (ORCPT
+        with ESMTP id S229531AbiILGR4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 00:33:24 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D9DC2494F;
-        Sun, 11 Sep 2022 21:33:23 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 17FE8B80BA8;
-        Mon, 12 Sep 2022 04:33:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35F5BC4314D;
-        Mon, 12 Sep 2022 04:33:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1662957200;
-        bh=S2TI/EtxQqFBH8LeQLbIhmIX+coZeNUose9GD+Vdcws=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=kNabnSf0wY45ysxAws+9viKiB8NcNk1I5kWO7s8IBHVhBV/EQ9gK+SSUmq6f7ZU6s
-         Eu7ybRYWZRfOcN0HOGF3DjjrImQ7yY0k5Rpj1SJ0GBOmAsyyaJ9nLe11e5bf8xaGaB
-         jKHeI7YRQFNXSg1skZ25be5NRP07lCxag2CtWoi1aGGIsn/TcafxKMxGGCUr7H7/p5
-         ETwGCRo2yHuq0H6MGq8ZXZhkEfHEE7kd9PME6wbBjMdNKEYHVbKhKSZlr085xZjGIZ
-         diMRnu+pS63W1fmmaKSOs/6LclggaV5KoFQOig7dCDAJjJ8i+M8zxxrqN0huD3jd5S
-         +u5FIZaDwXUfw==
-Date:   Mon, 12 Sep 2022 10:03:16 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Anjelique Melendez <quic_amelende@quicinc.com>
-Cc:     corbet@lwn.net, sre@kernel.org, robh+dt@kernel.org,
-        agross@kernel.org, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-doc@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_collinsd@quicinc.com
-Subject: Re: [RESEND PATCH v5 2/2] power: reset: qcom-pon: add support for
- qcom,pmk8350-pon compatible string
-Message-ID: <Yx62jJX++/8xweb5@matsya>
-References: <20220909204207.15820-1-quic_amelende@quicinc.com>
- <20220909204207.15820-3-quic_amelende@quicinc.com>
+        Mon, 12 Sep 2022 02:17:56 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08C392612C
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 23:17:54 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id a3so1165872lfk.9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Sep 2022 23:17:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=2Irm+03uhKOe8J1NFtHyiJKs5L7CSgbnyfN7vSggVVc=;
+        b=nQiZpj3w7cKDOPwUM7AsGzko5yPxX9BtuLDI/XcTS+uSiHNuc4ynG/iQ26hvDPi5Tr
+         69Wjki+ofu8R94Hr4uE0SM3yuW2GGnbkJnUhvOazGL2mvnSnn9+mEPwyc9No8nqFZFnI
+         jixLr6engymS7yAXuiSWR2WApEcJbei+I9UbP8RZCL/xe9lv6+p5uVeB3BzcAeUU7zUu
+         oLlRsNEn6SAN5nezaZAW3S6Bl6T+nrr3s09jJ+cGhA6RTchu2nbfyZ4C1IbVS9+lAoRD
+         SctUyMsxyduqjMictD/+PIOsN2LcR2JQQt6lzBHrXwtyq4e5z/BNUY05Jh/ruzPgJ5fO
+         lh6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=2Irm+03uhKOe8J1NFtHyiJKs5L7CSgbnyfN7vSggVVc=;
+        b=X/YMdde6JgYbF2cIRygyoIzXtw4IKjR4xR/UlI5xH5cR76I0tMVlFh7pm0uhMPcn/R
+         LXWvvSQDRV5wHenXL8BlhnjkzCmhCTQn6G9MOYL61AAAV6whH8+tZEXPNmt3vXk7QzKv
+         tB2QXKWlTRuLL+pmhWJzCfFuKYn9RloRbcfVF1V7uBkNNZ4TObnOxmoheE9Lh7vhLVDy
+         OJFOHVrmvNN2U5mSNAikNFhcC2uJd+Ot7VrNTdwNwIZZyqzyfqBMXB6MbbU0eZUGPND9
+         0ZRfb7MOWJOEaW3tPk3Q7uJED5MlSPKvofYAeKSwM6Q06yQOe6p9vNhNhCEQmuS+Nv3C
+         dXgw==
+X-Gm-Message-State: ACgBeo1PU5kBtIufPogLf+xcOygKaGiF8c1RHTXtOy//Ro35FiS8Ouq4
+        m1y6bhWQkpl4FS82PFkuqb7muw==
+X-Google-Smtp-Source: AA6agR7qJ1X/6P3NkfO19vsTT12nuDAiH0l9Ei1o2OBikOqXOcAtxU3Ukwy6/MAOK+ms83abcb+U2w==
+X-Received: by 2002:a05:6512:10cd:b0:498:fe5b:8ab3 with SMTP id k13-20020a05651210cd00b00498fe5b8ab3mr4970209lfg.613.1662963472311;
+        Sun, 11 Sep 2022 23:17:52 -0700 (PDT)
+Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id t19-20020ac24c13000000b004996fbfd75esm876805lfq.71.2022.09.11.23.17.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 11 Sep 2022 23:17:51 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        Martin Botka <martin.botka@somainline.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 00/40] pinctrl/arm64: qcom: fix some of Qualcomm pinctrl schema warnings
+Date:   Mon, 12 Sep 2022 08:17:06 +0200
+Message-Id: <20220912061746.6311-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220909204207.15820-3-quic_amelende@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -60,31 +77,102 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09-09-22, 13:42, Anjelique Melendez wrote:
-> Add support for the new "qcom,pmk8350-pon" comptaible string.
+Hi,
 
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
+That's a set for some of arm64 pinctrl bindings fixing most common warnings.  I
+have a plan to continue this for remaining arm64 (sm8250 needs updates) and for
+arm.
 
-> 
-> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
-> ---
->  drivers/power/reset/qcom-pon.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/power/reset/qcom-pon.c b/drivers/power/reset/qcom-pon.c
-> index 4a688741a88a..16bc01738be9 100644
-> --- a/drivers/power/reset/qcom-pon.c
-> +++ b/drivers/power/reset/qcom-pon.c
-> @@ -82,6 +82,7 @@ static const struct of_device_id pm8916_pon_id_table[] = {
->  	{ .compatible = "qcom,pm8916-pon", .data = (void *)GEN1_REASON_SHIFT },
->  	{ .compatible = "qcom,pms405-pon", .data = (void *)GEN1_REASON_SHIFT },
->  	{ .compatible = "qcom,pm8998-pon", .data = (void *)GEN2_REASON_SHIFT },
-> +	{ .compatible = "qcom,pmk8350-pon", .data = (void *)GEN2_REASON_SHIFT },
->  	{ }
->  };
->  MODULE_DEVICE_TABLE(of, pm8916_pon_id_table);
-> -- 
-> 2.35.1
+Changes since v1
+================
+1. Correct commit msg in commits "fix matching pin config".
+2. Correct commit msg in commit #2 .
+3. Add Rb tags.
+
+Dependencies
+============
+1. dt-bindings are independent of DTS patches.
+
+Best regards,
+Krzysztof
+
+Krzysztof Kozlowski (40):
+  dt-bindings: pinctrl: qcom,sm6115-pinctrl: fix matching pin config
+  dt-bindings: pinctrl: qcom,sm6115-pinctrl: require function on GPIOs
+  dt-bindings: pinctrl: qcom,sm6115-pinctrl: fix indentation in example
+  dt-bindings: pinctrl: qcom,sm6125-pinctrl: fix matching pin config
+  dt-bindings: pinctrl: qcom,sm6125-pinctrl: do not require function on
+    non-GPIOs
+  dt-bindings: pinctrl: qcom,sm6125-pinctrl: extend example
+  dt-bindings: pinctrl: qcom,sm6350-pinctrl: fix matching pin config
+  dt-bindings: pinctrl: qcom,sm6350-pinctrl: do not require function on
+    non-GPIOs
+  dt-bindings: pinctrl: qcom,sm6350-pinctrl: fix indentation in example
+  dt-bindings: pinctrl: qcom,sm6375-pinctrl: fix matching pin config
+  dt-bindings: pinctrl: qcom,sm6375-pinctrl: do not require function on
+    non-GPIOs
+  dt-bindings: pinctrl: qcom,sm6375-pinctrl: fix indentation in example
+  dt-bindings: pinctrl: qcom,sm8250-pinctrl: do not require function on
+    non-GPIOs
+  dt-bindings: pinctrl: qcom,sm8250-pinctrl: reference tlmm common pins
+  dt-bindings: pinctrl: qcom,sm8250-pinctrl: fix indentation in example
+  dt-bindings: pinctrl: qcom,sm8350-pinctrl: fix matching pin config
+  dt-bindings: pinctrl: qcom,sm8350-pinctrl: fix indentation in example
+  dt-bindings: pinctrl: qcom,sm8350-pinctrl: do not require function on
+    non-GPIOs
+  dt-bindings: pinctrl: qcom,sm8450-pinctrl: fix matching pin config
+  dt-bindings: pinctrl: qcom,sm8450-pinctrl: fix indentation in example
+  dt-bindings: pinctrl: qcom,sm8450-pinctrl: do not require function on
+    non-GPIOs
+  dt-bindings: pinctrl: qcom,sm8450-pinctrl: add gpio-line-names
+  dt-bindings: pinctrl: qcom,sc7280-pinctrl: correct number of GPIOs
+  dt-bindings: pinctrl: qcom,sc7280-pinctrl: do not require function on
+    non-GPIOs
+  dt-bindings: pinctrl: qcom,sc7280-pinctrl: add gpio-line-names
+  dt-bindings: pinctrl: qcom,sc7280-pinctrl: reference tlmm schema
+  dt-bindings: pinctrl: qcom,sc7280-pinctrl: fix indentation in example
+  dt-bindings: pinctrl: qcom,sc8180x-pinctrl: fix matching pin config
+  dt-bindings: pinctrl: qcom,sc8180x-pinctrl: do not require function on
+    non-GPIOs
+  dt-bindings: pinctrl: qcom,sc8180x-pinctrl: fix indentation in example
+  dt-bindings: pinctrl: qcom,sc8280xp-pinctrl: fix matching pin config
+  dt-bindings: pinctrl: qcom,sc8280xp-pinctrl: do not require function
+    on non-GPIOs
+  dt-bindings: pinctrl: qcom,sc8280xp-pinctrl: fix indentation in
+    example
+  arm64: dts: qcom: sm6125: align TLMM pin configuration with DT schema
+  arm64: dts: qcom: sm6350: align TLMM pin configuration with DT schema
+  arm64: dts: qcom: sm8350-sagami: correct TS pin property
+  arm64: dts: qcom: sm8350: align TLMM pin configuration with DT schema
+  arm64: dts: qcom: sm8450: align TLMM pin configuration with DT schema
+  arm64: dts: qcom: sc7280: align TLMM pin configuration with DT schema
+  arm64: dts: qcom: sc7280-herobrine: correct TLMM gpio-line-names
+
+ .../bindings/pinctrl/qcom,sc7280-pinctrl.yaml |  55 +--
+ .../pinctrl/qcom,sc8180x-pinctrl.yaml         |  79 +++--
+ .../pinctrl/qcom,sc8280xp-pinctrl.yaml        |  73 ++--
+ .../bindings/pinctrl/qcom,sm6115-pinctrl.yaml |  94 +++---
+ .../bindings/pinctrl/qcom,sm6125-pinctrl.yaml |  61 +++-
+ .../bindings/pinctrl/qcom,sm6350-pinctrl.yaml |  73 ++--
+ .../bindings/pinctrl/qcom,sm6375-tlmm.yaml    |  73 ++--
+ .../bindings/pinctrl/qcom,sm8250-pinctrl.yaml |  41 ++-
+ .../bindings/pinctrl/qcom,sm8350-pinctrl.yaml |  73 ++--
+ .../bindings/pinctrl/qcom,sm8450-pinctrl.yaml |  82 +++--
+ .../boot/dts/qcom/sc7280-herobrine-crd.dts    |   2 -
+ .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  44 +--
+ .../arm64/boot/dts/qcom/sc7280-idp-ec-h1.dtsi |   8 +-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi      |  20 +-
+ arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi    |  14 +-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          | 316 +++++++++---------
+ .../qcom/sm6125-sony-xperia-seine-pdx201.dts  |   4 +-
+ arch/arm64/boot/dts/qcom/sm6125.dtsi          |  10 +-
+ arch/arm64/boot/dts/qcom/sm6350.dtsi          |  14 +-
+ .../dts/qcom/sm8350-sony-xperia-sagami.dtsi   |   4 +-
+ arch/arm64/boot/dts/qcom/sm8350.dtsi          |  44 +--
+ .../qcom/sm8450-sony-xperia-nagara-pdx223.dts |  12 +-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          | 152 ++++-----
+ 23 files changed, 733 insertions(+), 615 deletions(-)
 
 -- 
-~Vinod
+2.34.1
+
