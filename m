@@ -2,59 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7896C5B5B3A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 15:32:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E746F5B5B41
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 15:33:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229851AbiILNcY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 09:32:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48152 "EHLO
+        id S229905AbiILNdc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 09:33:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbiILNcW (ORCPT
+        with ESMTP id S229926AbiILNda (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 09:32:22 -0400
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C41C622B2A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 06:32:18 -0700 (PDT)
-Received: by mail-yb1-xb2d.google.com with SMTP id b136so12806629yba.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 06:32:18 -0700 (PDT)
+        Mon, 12 Sep 2022 09:33:30 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00B1E30F6E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 06:33:26 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id 202so12739707ybe.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 06:33:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date;
-        bh=WvP/x+fCZxYCMiNOMMw6Im5i56naXzsqIQAk9GCt+2c=;
-        b=N5Yc8JvZu0ZC1+InYD0uhXoRkbBXkfd9RS4qb8IqrlfR146XTCBR9WjqAXpXsfnBUX
-         etqPpV6vNrXg1tjEayXCP/Ks/qdgFiFS3LQ/UHlY2Pz/UMuDbZ6C4WMHKPJCUhdwtXY3
-         ogk6oBVpUP4bsK9XOcGrgF/gbeIcCq6fk2dYC0OEE3g0pg1xpjOJCjjBxFkDNxrfcjJ0
-         k22J30ZwZIWttJo6XPbQKb2/Vo/PXUs/9X7dxST0rI4NS0CI3lXoNXREXs4Pv8LdusQq
-         cRtcNzZBqdG5b7uCKRNVDI3tEbO7VWXDW79iCOT9MGGl3LH7nB6lHOp1PqH6V++K9nsz
-         jd0A==
+        bh=otGb4AwYTfhIb4lKpfRenMAoPDU49k1ZwLwvH7P8lco=;
+        b=oSnDlq+OCQ/AA+yITuOTcepJuxj6xvCZxw0N5R5P9qmL163t3H2HLzasOd5N0qFdXa
+         aeE6KYgW4Gn6DNc+ftjU0SIDgy/vDzwRSAh7n/TffeO0zEdp7js0b5/yfFCQnyRUwJ4s
+         Svi/gN54DZ0MkDW5HHCVum2hlI8RK0wC3yXo2vsfYC1sucOpHj8P4wI4XYK00Oj/xobo
+         IBs1krtBJDHqiTsX2EP74bwEvhUlB5LyxDSLSS+v8ey3wNgtK88elLZJXWIOWNeK7t7t
+         3tI5wH0BqKV9FKliDAHstgaifLIjIdUHx++kBXGaRnLI1H3l/rMamyTBurTzwKiKcGUp
+         BRuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=WvP/x+fCZxYCMiNOMMw6Im5i56naXzsqIQAk9GCt+2c=;
-        b=Gzbuiy3vq996WZCB7pAAMG19kGfYD5QYysVEVEkEKsUl8JlYTYmNLstRdbRd2oWzRJ
-         JbyJtLswBdE8rKJsR/43jZz2qFhyplKIf2Oilqk1MiF978zBifbl+BtJhfvfSQYWvipD
-         oAwvvEL01wKNIvnZFdsuboiYYdT1Lb8AThU/voX8+OzY8FH+7YNHF2wEnbchSorKH/BZ
-         sOJW0QEngdju3JPl4c5IYbwZLbxL4gw4n5S9BMGAz1h2VBViHM6v40U1eBvNmoAlncQF
-         N1rnsAQM5fAOY1PjsUglOsqDQy9gtlQrxCglZlgUMV/aynCq7OE8Q6CHWc24nnvXNpOb
-         SCaQ==
-X-Gm-Message-State: ACgBeo0g7UbkSbbYZObq80Jhv3FWZcslth8UUBLNmpXsYaFTOzx2APdd
-        3xVCqWOW4s4RMIV+H1KqlRT/26xsERGRiMJ9I2v7ww==
-X-Google-Smtp-Source: AA6agR6R+jK3kreNZKXAI1lHh3Mfck+8y0IA1Ml+8+hw5jJge/fH6yBe8CDqGJ8wEob4KZqomXaiJ+WGELAhXUgwYm0=
+        bh=otGb4AwYTfhIb4lKpfRenMAoPDU49k1ZwLwvH7P8lco=;
+        b=p/tJxrlz1xyAO5q5fiIKolyDcimDrVtvyN36gc9wD3BjMKVt8MQtq/wnx+/858xx2v
+         XSc58wiPgLQetHPhQCsOB3jFYMtBRSDUWT4tumkMTdT6t51lNn9NIz5CW6lHv2p5s3Cj
+         zSLol5d0S1XSg8p3i8xZLZ+P0beJnmneaIsNDvyV9cXM2V412jnTuW8ezDLbQ1c9rBZx
+         LZfDRnM4rslCTbf37qB8z0wIRNji99gZapTwf/wJntkUlxHsIqmnWAZhbJHTybmMMCK8
+         ZjTmafq/XJ6ykNBW+5AxuJBlueBDANkfWm2S/IB7XdcMfmxuHK6O0EmOCVVXizYIlQR3
+         NWEA==
+X-Gm-Message-State: ACgBeo195fL1L6upwqY781iL3aLAEb6zusVDu9iaV85zMAyAeFUag71l
+        n05T2jcRwYpyKzFMgR8Icw2uFQ67HnUguiri500V8Q==
+X-Google-Smtp-Source: AA6agR6zrEM49/wYG3jG8qpjvQyM5sg73lbnKFExy/6Q0tgOLI8rFalUyzIkO8PSye6Hy4pcCfvfBnZXy7mqihPmj+M=
 X-Received: by 2002:a25:ba45:0:b0:67a:6298:7bac with SMTP id
- z5-20020a25ba45000000b0067a62987bacmr23756170ybj.194.1662989537861; Mon, 12
- Sep 2022 06:32:17 -0700 (PDT)
+ z5-20020a25ba45000000b0067a62987bacmr23760581ybj.194.1662989606018; Mon, 12
+ Sep 2022 06:33:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220910170207.1592220-1-danct12@riseup.net> <0a2bb48f-c67d-0544-5037-d02f658a3351@connolly.tech>
-In-Reply-To: <0a2bb48f-c67d-0544-5037-d02f658a3351@connolly.tech>
+References: <20220910170207.1592220-1-danct12@riseup.net>
+In-Reply-To: <20220910170207.1592220-1-danct12@riseup.net>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 12 Sep 2022 16:32:06 +0300
-Message-ID: <CAA8EJpr4_G_uK5oj9Y0j_tE_LsnqDHKaU1D_nhXOiL0sA=aMnQ@mail.gmail.com>
+Date:   Mon, 12 Sep 2022 16:33:15 +0300
+Message-ID: <CAA8EJppKzZqGm6fSwpobOXoGNkPGy==w-XbFXLwFEMRTVgpRpA@mail.gmail.com>
 Subject: Re: [PATCH] clk: qcom: sm6115: Select QCOM_GDSC
-To:     Caleb Connolly <caleb@connolly.tech>
-Cc:     Dang Huynh <danct12@riseup.net>,
-        Bjorn Andersson <andersson@kernel.org>,
+To:     Dang Huynh <danct12@riseup.net>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Michael Turquette <mturquette@baylibre.com>,
@@ -71,38 +70,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 12 Sept 2022 at 16:17, Caleb Connolly <caleb@connolly.tech> wrote:
+On Sat, 10 Sept 2022 at 20:02, Dang Huynh <danct12@riseup.net> wrote:
 >
+> While working on the Fxtec Pro1X device, this error shows up with
+> my own minimal configuration:
 >
+> gcc-sm6115: probe of 1400000.clock-controller failed with error -38
 >
-> On 10/09/2022 18:02, Dang Huynh wrote:
-> > While working on the Fxtec Pro1X device, this error shows up with
-> > my own minimal configuration:
-> >
-> > gcc-sm6115: probe of 1400000.clock-controller failed with error -38
-> >
-> > The clock driver depends on CONFIG_QCOM_GDSC and after enabling
-> > that, the driver probes successfully.
-> >
-> > Signed-off-by: Dang Huynh <danct12@riseup.net>
-> > ---
-> >   drivers/clk/qcom/Kconfig | 1 +
-> >   1 file changed, 1 insertion(+)
-> >
-> > diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> > index 1cf1ef70e347..d566fbdebdf9 100644
-> > --- a/drivers/clk/qcom/Kconfig
-> > +++ b/drivers/clk/qcom/Kconfig
-> > @@ -645,6 +645,7 @@ config SM_DISPCC_6350
-> >
-> >   config SM_GCC_6115
-> >       tristate "SM6115 and SM4250 Global Clock Controller"
-> > +     select QCOM_GDSC
+> The clock driver depends on CONFIG_QCOM_GDSC and after enabling
+> that, the driver probes successfully.
 >
->         depends on QCOM_GDSC
+> Signed-off-by: Dang Huynh <danct12@riseup.net>
 
-All other Qualcomm clock drivers select the GDSC if required, so I'd
-tend to disagree.
+Fixes: cbe63bfdc54f ("clk: qcom: Add Global Clock controller (GCC)
+driver for SM6115")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> ---
+>  drivers/clk/qcom/Kconfig | 1 +
+>  1 file changed, 1 insertion(+)
+
 
 
 -- 
