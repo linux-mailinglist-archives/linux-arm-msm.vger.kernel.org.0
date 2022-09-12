@@ -2,243 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B45205B6139
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 20:41:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B24E15B614C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 20:53:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229698AbiILSly (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 14:41:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57906 "EHLO
+        id S229577AbiILSxv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 14:53:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230244AbiILSlw (ORCPT
+        with ESMTP id S229913AbiILSxu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 14:41:52 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48ABEB2C;
-        Mon, 12 Sep 2022 11:41:51 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28CGNLgY028605;
-        Mon, 12 Sep 2022 18:41:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=tV4inXm/yrbGu0Hp/u24RULvsY73E22mjF5+EChHio0=;
- b=WuxLiLdP8k+yWHDMIQxh5S/nKyt/lUwNHtpO5s1UbRSm7vQWFhixnlm2DaYrixC4NErW
- rpajfG6DtB6RLXnNH8gCQ3SqLPmlsLjkxT98TEx/abVaYWL1TyNiXJvcRRqs48zv0jIm
- rqxLoFo20wlbTMaBHFkbQEixJbj+AYYXwrELdoawDpoPTkR5VfrMtfrM8VCWZrtH84RW
- NswdFIH8W1uZzWUO7T3QwZcapk5lP9fOd1Ttr1KmHDJmF+dmUW6Kp35j+HYO9x+uIF74
- E1khzOCQiG0Jr22YhjvxISLK4y1A6OC79yzWZgKBTN3ZyXuKTTe/xT2Eh+xct1+8ZLtB xA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jgk6kd1s8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Sep 2022 18:41:43 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28CIfgnR013182
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Sep 2022 18:41:42 GMT
-Received: from hu-gokukris-sd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Mon, 12 Sep 2022 11:41:42 -0700
-From:   Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Trilok Soni" <quic_tsoni@quicinc.com>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        "Elliot Berman" <quic_eberman@quicinc.com>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
-Subject: [PATCH v1 2/2] soc: qcom: mdt_loader: Move the memory allocation into mdt loader
-Date:   Mon, 12 Sep 2022 11:41:32 -0700
-Message-ID: <2ba262668e86e58acb086c64fc759ba02b39a525.1663007783.git.quic_gokukris@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1663007783.git.quic_gokukris@quicinc.com>
-References: <cover.1663007783.git.quic_gokukris@quicinc.com>
+        Mon, 12 Sep 2022 14:53:50 -0400
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D59C1901E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 11:53:49 -0700 (PDT)
+Received: by mail-pg1-x52f.google.com with SMTP id c24so9105790pgg.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 11:53:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=eu+Y0GxqpAYk/blE6b6eAg2V++css9z9LTCv5OV58Iw=;
+        b=itTP2g8kQuP+En3k3FWdKM7MuG2mB8+HmOuv4jvVRnEupfn0/dVq41Rf2pcrexOJVD
+         /VCUMeem5Kh52IvYayTLE6K+sYTKq81CShFxm0ksahAIhL5b0X2UZAUaRIApZYClYW4A
+         D9uDIZ1IYn/+gz8MWx6860tvmEOr1du8pDU+7hCbpKUF33gEJeOlxOyicPjGPL5vqZ6K
+         dhHeNuGwxjCxT0fAvHniKJSO5KnhAOmO07VR4DRCH2iYOi3zPDzsDgALJ4ZGMJ6wzh2T
+         J9MMWXBwBRHJsEaxLa6ywP1NtUGP1TtZFqydNvE4BGPWnZQF/IVZ+QhzLOsMfobggWJE
+         2bXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=eu+Y0GxqpAYk/blE6b6eAg2V++css9z9LTCv5OV58Iw=;
+        b=wGftb3NPL4SUQoDjmi9y6v2E06CTmUxBSNfUvpvhxugyP6xWOxpDT5+245TyIJLTT5
+         b3b6aSCmtJH72OhnjdHx0r2y3FjIyI3WU+M4N8Npvb3qxT3IvzC0zCysDBDn9eXHYapC
+         AfgcWKKCrrzA+ItlYxJwWyXjk468DfB3t3bUg00ClLBjpxbg480DorvLngonAX1GA+DE
+         KUrMo5JRF2o3fQ6u3RP9Jnz3F63rEAXlQP9I/0B6sAlyBnaE1cEim8i8RBAQeVafy1sx
+         izROsapRZTOAsRWHI+X9RQTdxtXamIXHC1WPvH3m3un7YapHYhwyxQGll0ZYkrdNH0eV
+         dCjw==
+X-Gm-Message-State: ACgBeo3ULLBsJDpBWv4oixgE0iQ4Mjs5OEVNAyObVijKGEIHKxRZJWG7
+        SCWJAYF7itwbJz1nVVVQzgOXZA==
+X-Google-Smtp-Source: AA6agR58cC1Ep7n6UweoDOxuW+z7oY73tW/YVyeR/I5tQtNtY/F2m9g02EzS5c1w6qxs7ZTsBDD7wQ==
+X-Received: by 2002:a63:1f0e:0:b0:438:5cd8:8d60 with SMTP id f14-20020a631f0e000000b004385cd88d60mr18709989pgf.70.1663008828733;
+        Mon, 12 Sep 2022 11:53:48 -0700 (PDT)
+Received: from ?IPV6:2401:4900:1c60:5362:9d7f:2354:1d0a:78e3? ([2401:4900:1c60:5362:9d7f:2354:1d0a:78e3])
+        by smtp.gmail.com with ESMTPSA id j3-20020a170902da8300b001714e7608fdsm6414843plx.256.2022.09.12.11.53.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Sep 2022 11:53:48 -0700 (PDT)
+Message-ID: <46087486-bacd-c408-7ead-5b120412412b@linaro.org>
+Date:   Tue, 13 Sep 2022 00:23:42 +0530
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: JJhdhFDNRAOmZLrjiyAHI3TGLRNNoQA0
-X-Proofpoint-ORIG-GUID: JJhdhFDNRAOmZLrjiyAHI3TGLRNNoQA0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-12_12,2022-09-12_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 adultscore=0
- mlxscore=0 suspectscore=0 priorityscore=1501 phishscore=0 bulkscore=0
- lowpriorityscore=0 clxscore=1015 impostorscore=0 spamscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2209120064
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH 3/4] dt-bindings: net: snps,dwmac: Update reg maxitems
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        devicetree@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org, netdev@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        David Miller <davem@davemloft.net>
+References: <20220907204924.2040384-1-bhupesh.sharma@linaro.org>
+ <20220907204924.2040384-4-bhupesh.sharma@linaro.org>
+ <da383499-fe9f-816e-8180-a9661a9c0496@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+In-Reply-To: <da383499-fe9f-816e-8180-a9661a9c0496@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-By moving the memory allocation to mdt loader we can simplify the scm
-call, by just packing arguments provided to it from the clients for
-making secuer world calls. We can also simplify the memory allocation
-for the qcom metadata, by just doing one memory allocation in the
-mdt loader.
+On 9/8/22 8:11 PM, Krzysztof Kozlowski wrote:
+> On 07/09/2022 22:49, Bhupesh Sharma wrote:
+>> Since the Qualcomm dwmac based ETHQOS ethernet block
+>> supports 64-bit register addresses, update the
+>> reg maxitems inside snps,dwmac YAML bindings.
+> 
+> Please wrap commit message according to Linux coding style / submission
+> process:
+> https://elixir.bootlin.com/linux/v5.18-rc4/source/Documentation/process/submitting-patches.rst#L586
+> 
+>>
+>> Cc: Bjorn Andersson <andersson@kernel.org>
+>> Cc: Rob Herring <robh@kernel.org>
+>> Cc: Vinod Koul <vkoul@kernel.org>
+>> Cc: David Miller <davem@davemloft.net>
+>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>> ---
+>>   Documentation/devicetree/bindings/net/snps,dwmac.yaml | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/net/snps,dwmac.yaml b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+>> index 2b6023ce3ac1..f89ca308d55f 100644
+>> --- a/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+>> +++ b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+>> @@ -94,7 +94,7 @@ properties:
+>>   
+>>     reg:
+>>       minItems: 1
+>> -    maxItems: 2
+>> +    maxItems: 4
+> 
+> Qualcomm ETHQOS schema allows only 2 in reg-names, so this does not make
+> sense for Qualcomm and there are no users of 4 items.
 
-Signed-off-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
----
- drivers/remoteproc/qcom_q6v5_mss.c  |  2 +-
- drivers/soc/qcom/mdt_loader.c       | 41 ++++++++++++++++++++++++++++---------
- include/linux/soc/qcom/mdt_loader.h |  5 +++--
- 3 files changed, 35 insertions(+), 13 deletions(-)
+On this platform the two reg spaces are 64-bit, whereas for other
+platforms based on dwmmac, for e.g. stm32 have 32-bit address space.
 
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index fddb63c..1919bfc 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -947,7 +947,7 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
- 	int ret;
- 	int i;
- 
--	metadata = qcom_mdt_read_metadata(fw, &size, fw_name, qproc->dev);
-+	metadata = qcom_mdt_read_metadata(fw, &size, fw_name, qproc->dev, NULL);
- 	if (IS_ERR(metadata))
- 		return PTR_ERR(metadata);
- 
-diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-index 8d06125..e730413 100644
---- a/drivers/soc/qcom/mdt_loader.c
-+++ b/drivers/soc/qcom/mdt_loader.c
-@@ -16,6 +16,7 @@
- #include <linux/sizes.h>
- #include <linux/slab.h>
- #include <linux/soc/qcom/mdt_loader.h>
-+#include <linux/dma-mapping.h>
- 
- static bool mdt_phdr_valid(const struct elf32_phdr *phdr)
- {
-@@ -110,6 +111,7 @@ EXPORT_SYMBOL_GPL(qcom_mdt_get_size);
-  * @data_len:	length of the read metadata blob
-  * @fw_name:	name of the firmware, for construction of segment file names
-  * @dev:	device handle to associate resources with
-+ * @mdata_phys:	phys address for the assigned metadata buffer
-  *
-  * The mechanism that performs the authentication of the loading firmware
-  * expects an ELF header directly followed by the segment of hashes, with no
-@@ -124,11 +126,13 @@ EXPORT_SYMBOL_GPL(qcom_mdt_get_size);
-  * Return: pointer to data, or ERR_PTR()
-  */
- void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
--			     const char *fw_name, struct device *dev)
-+			     const char *fw_name, struct device *dev,
-+			     dma_addr_t *mdata_phys)
- {
- 	const struct elf32_phdr *phdrs;
- 	const struct elf32_hdr *ehdr;
- 	unsigned int hash_segment = 0;
-+	struct device *scm_dev = NULL;
- 	size_t hash_offset;
- 	size_t hash_size;
- 	size_t ehdr_size;
-@@ -160,9 +164,18 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
- 	ehdr_size = phdrs[0].p_filesz;
- 	hash_size = phdrs[hash_segment].p_filesz;
- 
--	data = kmalloc(ehdr_size + hash_size, GFP_KERNEL);
--	if (!data)
--		return ERR_PTR(-ENOMEM);
-+	/*
-+	 * During the scm call memory protection will be enabled for the meta
-+	 * data blob, so make sure it's physically contiguous, 4K aligned and
-+	 * non-cachable to avoid XPU violations.
-+	 */
-+	scm_dev = qcom_get_scm_device();
-+	data = dma_alloc_coherent(scm_dev, ehdr_size + hash_size, mdata_phys,
-+				       GFP_KERNEL);
-+	if (!data) {
-+		dev_err(dev, "Allocation of metadata buffer failed.\n");
-+		return NULL;
-+	}
- 
- 	/* Copy ELF header */
- 	memcpy(data, fw->data, ehdr_size);
-@@ -179,7 +192,7 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
- 		/* Hash is in its own segment, beyond the loaded file */
- 		ret = mdt_load_split_segment(data + ehdr_size, phdrs, hash_segment, fw_name, dev);
- 		if (ret) {
--			kfree(data);
-+			dma_free_coherent(scm_dev, ehdr_size + hash_size, data, mdata_phys);
- 			return ERR_PTR(ret);
- 		}
- 	}
-@@ -209,10 +222,11 @@ int qcom_mdt_pas_init(struct device *dev, const struct firmware *fw,
- 	const struct elf32_phdr *phdr;
- 	const struct elf32_hdr *ehdr;
- 	phys_addr_t min_addr = PHYS_ADDR_MAX;
-+	struct device *scm_dev = NULL;
- 	phys_addr_t max_addr = 0;
- 	dma_addr_t mdata_phys;
- 	size_t metadata_len;
--	void *metadata;
-+	void *mdata_buf;
- 	int ret;
- 	int i;
- 
-@@ -232,15 +246,22 @@ int qcom_mdt_pas_init(struct device *dev, const struct firmware *fw,
- 			max_addr = ALIGN(phdr->p_paddr + phdr->p_memsz, SZ_4K);
- 	}
- 
--	metadata = qcom_mdt_read_metadata(fw, &metadata_len, fw_name, dev);
--	if (IS_ERR(metadata)) {
--		ret = PTR_ERR(metadata);
-+	mdata_buf = qcom_mdt_read_metadata(fw, &metadata_len, fw_name, dev, &mdata_phys);
-+	if (IS_ERR(mdata_buf)) {
-+		ret = PTR_ERR(mdata_buf);
- 		dev_err(dev, "error %d reading firmware %s metadata\n", ret, fw_name);
- 		goto out;
- 	}
- 
- 	ret = qcom_scm_pas_init_image(pas_id, mdata_phys);
--	kfree(metadata);
-+	if (ret || !ctx) {
-+		dma_free_coherent(scm_dev, metadata_len, mdata_buf, mdata_phys);
-+	} else if (ctx) {
-+		ctx->ptr = mdata_buf;
-+		ctx->phys = mdata_phys;
-+		ctx->size = metadata_len;
-+	}
-+
- 	if (ret) {
- 		/* Invalid firmware metadata */
- 		dev_err(dev, "error %d initializing firmware %s\n", ret, fw_name);
-diff --git a/include/linux/soc/qcom/mdt_loader.h b/include/linux/soc/qcom/mdt_loader.h
-index 9e8e604..d438442 100644
---- a/include/linux/soc/qcom/mdt_loader.h
-+++ b/include/linux/soc/qcom/mdt_loader.h
-@@ -28,7 +28,8 @@ int qcom_mdt_load_no_init(struct device *dev, const struct firmware *fw,
- 			  phys_addr_t mem_phys, size_t mem_size,
- 			  phys_addr_t *reloc_base);
- void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
--			     const char *fw_name, struct device *dev);
-+			     const char *fw_name, struct device *dev,
-+			     dma_addr_t *mdata_phys);
- 
- #else /* !IS_ENABLED(CONFIG_QCOM_MDT_LOADER) */
- 
-@@ -64,7 +65,7 @@ static inline int qcom_mdt_load_no_init(struct device *dev,
- 
- static inline void *qcom_mdt_read_metadata(const struct firmware *fw,
- 					   size_t *data_len, const char *fw_name,
--					   struct device *dev)
-+					   struct device *dev, dma_addr_t *mdata_phys)
- {
- 	return ERR_PTR(-ENODEV);
- }
--- 
-2.7.4
+Without this fix I was getting the following error with 'make dtbs_check':
 
+Documentation/devicetree/bindings/net/qcom,ethqos.example.dtb: 
+ethernet@20000: reg: [[0, 131072], [0, 65536], [0, 221184], [0, 256]] is 
+too long
+	From schema: 
+/home/bhsharma/code/upstream/linux-bckup/linux/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+
+Thanks.
