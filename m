@@ -2,123 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F194F5B6298
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 23:14:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B1645B62AF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 23:23:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229668AbiILVOw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 17:14:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44250 "EHLO
+        id S229777AbiILVXd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 17:23:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229553AbiILVOv (ORCPT
+        with ESMTP id S229765AbiILVXb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 17:14:51 -0400
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78F70CE26;
-        Mon, 12 Sep 2022 14:14:49 -0700 (PDT)
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-1274ec87ad5so26907197fac.0;
-        Mon, 12 Sep 2022 14:14:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=fiSD7aHOomub7Bw8jMO+JVKqU+yrc5sM1nDH0VKG+Bk=;
-        b=4Uj4ik5X2LxDVs4JTGjAZT3+KYmANEpAdywG1kFMYpxXa9j+8NoD0aM/k2fNKoZlWE
-         wdentr+dLvFMGhrtb1494liM8yfR8Ko2Mf01Px9uUvYIdR7LGHBXhYbe67aQKuVopFaC
-         qrxx4HSkiVI3EbFf7KjeGB7x1Qa/Wf02f+TCWXC7aA8QEW4Vr+FzKxXkJuB4DYymhr/w
-         Bd+gK20fd8xa/fTRmoq9pQ6Y05GE8llxxWZ9JCTPhc2j6ek6CV4L+++yEpbR0QlQpviU
-         5WyqCuREqD6X2jlCWS9GKo2OZ5GVzjG11insEKlAs9u+JI5tUMf9yGGYug2jF5URN78C
-         t2uQ==
-X-Gm-Message-State: ACgBeo0sVTdtdXHoAh9xBTww6WANphNgRNliGVVtOJpmr7nyPv0GE02C
-        rdppOO/CC9hJQOi/8909jnJ8Ro2BeQ==
-X-Google-Smtp-Source: AA6agR56LXac0gKGPNWMMY2CmdvxpOvzzadUO9D9Xr0ldGtCxf/0sjBd37ze5CYxEn3iCv9kikW/XA==
-X-Received: by 2002:a05:6808:25a:b0:34d:8e1d:771f with SMTP id m26-20020a056808025a00b0034d8e1d771fmr117255oie.185.1663017288667;
-        Mon, 12 Sep 2022 14:14:48 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id w12-20020a056870338c00b0012769122387sm1500443oae.54.2022.09.12.14.14.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Sep 2022 14:14:48 -0700 (PDT)
-Received: (nullmailer pid 1886514 invoked by uid 1000);
-        Mon, 12 Sep 2022 21:14:47 -0000
-Date:   Mon, 12 Sep 2022 16:14:47 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        David Miller <davem@davemloft.net>
-Subject: Re: [PATCH 3/4] dt-bindings: net: snps,dwmac: Update reg maxitems
-Message-ID: <20220912211447.GB1847448-robh@kernel.org>
-References: <20220907204924.2040384-1-bhupesh.sharma@linaro.org>
- <20220907204924.2040384-4-bhupesh.sharma@linaro.org>
- <da383499-fe9f-816e-8180-a9661a9c0496@linaro.org>
- <46087486-bacd-c408-7ead-5b120412412b@linaro.org>
+        Mon, 12 Sep 2022 17:23:31 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13D432AC65;
+        Mon, 12 Sep 2022 14:23:31 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28CK9kg1019828;
+        Mon, 12 Sep 2022 21:23:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=c9DTEOEAoIHa2Rx+Yrnut8hcKibcNfTWoF6L03kLu6c=;
+ b=i1rgvzQlHFJMUdOK8o7jAnylBTVIGFUmNYsCsb9CPuR6Iao1YUUOeh+7JSg4uwM2L6bo
+ k9D1l85aC33+5hRroSVXDkO1UBfNUsA7KLSNCYpzfSVBEwvIFvyJuOnFpivBy0q8/M6p
+ 6isYGKr2iA7KevDxsSb0UwSFx9rphqUuIWzsu+YGvpBlxsVs8lGO2Ng4y+CI9uuXoRro
+ PS4lUYYt/YjD9ebVDQ/eRFFNkl6XsXxnt90z/QFm0fyVqeSdZeZCy+bE+8ZMfnfGCtic
+ +L50rguxuE3RCZajyOk8S3SY7xMZE54KnYVtwXs+5YS08VtJJ3fetyEt9vxlptfYH6ju XA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jgk635c2u-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 12 Sep 2022 21:23:24 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28CLNNmt028792
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 12 Sep 2022 21:23:23 GMT
+Received: from [10.110.52.115] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 12 Sep
+ 2022 14:23:22 -0700
+Message-ID: <ec1858fe-753f-c63a-4580-35851241fbcf@quicinc.com>
+Date:   Mon, 12 Sep 2022 14:23:21 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <46087486-bacd-c408-7ead-5b120412412b@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH 1/4] thermal: qcom: qmi_cooling: Add skeletal qmi cooling
+ driver
+Content-Language: en-US
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+CC:     <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <daniel.lezcano@linaro.org>, <robh@kernel.org>,
+        <andersson@kernel.org>, <rafael@kernel.org>,
+        <bhupesh.linux@gmail.com>
+References: <20220912085049.3517140-1-bhupesh.sharma@linaro.org>
+ <20220912085049.3517140-2-bhupesh.sharma@linaro.org>
+From:   Jeff Johnson <quic_jjohnson@quicinc.com>
+In-Reply-To: <20220912085049.3517140-2-bhupesh.sharma@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ij52ES8FZx2aawaEB_j-N9x_HPeFTn15
+X-Proofpoint-ORIG-GUID: ij52ES8FZx2aawaEB_j-N9x_HPeFTn15
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-12_14,2022-09-12_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ priorityscore=1501 impostorscore=0 suspectscore=0 bulkscore=0
+ clxscore=1011 adultscore=0 phishscore=0 spamscore=0 mlxscore=0
+ mlxlogscore=999 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2207270000 definitions=main-2209120073
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 13, 2022 at 12:23:42AM +0530, Bhupesh Sharma wrote:
-> On 9/8/22 8:11 PM, Krzysztof Kozlowski wrote:
-> > On 07/09/2022 22:49, Bhupesh Sharma wrote:
-> > > Since the Qualcomm dwmac based ETHQOS ethernet block
-> > > supports 64-bit register addresses, update the
-> > > reg maxitems inside snps,dwmac YAML bindings.
-> > 
-> > Please wrap commit message according to Linux coding style / submission
-> > process:
-> > https://elixir.bootlin.com/linux/v5.18-rc4/source/Documentation/process/submitting-patches.rst#L586
-> > 
-> > > 
-> > > Cc: Bjorn Andersson <andersson@kernel.org>
-> > > Cc: Rob Herring <robh@kernel.org>
-> > > Cc: Vinod Koul <vkoul@kernel.org>
-> > > Cc: David Miller <davem@davemloft.net>
-> > > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > > ---
-> > >   Documentation/devicetree/bindings/net/snps,dwmac.yaml | 2 +-
-> > >   1 file changed, 1 insertion(+), 1 deletion(-)
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/net/snps,dwmac.yaml b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-> > > index 2b6023ce3ac1..f89ca308d55f 100644
-> > > --- a/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-> > > +++ b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-> > > @@ -94,7 +94,7 @@ properties:
-> > >     reg:
-> > >       minItems: 1
-> > > -    maxItems: 2
-> > > +    maxItems: 4
-> > 
-> > Qualcomm ETHQOS schema allows only 2 in reg-names, so this does not make
-> > sense for Qualcomm and there are no users of 4 items.
+On 9/12/2022 1:50 AM, Bhupesh Sharma wrote:
+> Add a skeleton driver for supporting Qualcomm QMI thermal mitigation
+> (TMD) cooling devices.
 > 
-> On this platform the two reg spaces are 64-bit, whereas for other
-> platforms based on dwmmac, for e.g. stm32 have 32-bit address space.
-
-The schema for reg is how many addr/size entries regardless of cell 
-sizes.
-
-> Without this fix I was getting the following error with 'make dtbs_check':
+> The QMI TMD cooling devices are used for various mitigations for
+> remote subsystem(s) including remote processor mitigation, rail
+> voltage restriction etc. This driver uses kernel QMI interface
+> to send the message to remote subsystem(s).
 > 
-> Documentation/devicetree/bindings/net/qcom,ethqos.example.dtb:
-> ethernet@20000: reg: [[0, 131072], [0, 65536], [0, 221184], [0, 256]] is too
-> long
-> 	From schema: /home/bhsharma/code/upstream/linux-bckup/linux/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+> Each child node of the QMI TMD devicetree node should represent
+> each remote subsystem and each child of this subsystem represents
+> separate cooling devices.
+> 
+> Cc: daniel.lezcano@linaro.org
+> Cc: rafael@kernel.org
+> Cc: andersson@kernel.org
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>   .../qcom/qmi_cooling/qcom_qmi_cooling.c       | 632 ++++++++++++++++++
+>   .../qcom/qmi_cooling/qcom_tmd_services.c      | 352 ++++++++++
+>   .../qcom/qmi_cooling/qcom_tmd_services.h      | 120 ++++
+>   3 files changed, 1104 insertions(+)
+>   create mode 100644 drivers/thermal/qcom/qmi_cooling/qcom_qmi_cooling.c
+>   create mode 100644 drivers/thermal/qcom/qmi_cooling/qcom_tmd_services.c
+>   create mode 100644 drivers/thermal/qcom/qmi_cooling/qcom_tmd_services.h
+> 
+> diff --git a/drivers/thermal/qcom/qmi_cooling/qcom_qmi_cooling.c b/drivers/thermal/qcom/qmi_cooling/qcom_qmi_cooling.c
+> new file mode 100644
+> index 000000000000..4cb601533b9d
+> --- /dev/null
+> +++ b/drivers/thermal/qcom/qmi_cooling/qcom_qmi_cooling.c
 
-The default cell sizes for examples is 1 for addr/size. If you want it 
-to be 2, you have to write your own parent node. But why? It's just an 
-example. Use 1 cell like the example originally had.
+[snip]
 
-Rob
+> +static char device_clients[][QMI_CLIENT_NAME_LENGTH] = {
+
+can/should this be const?
+can/should this use designated initializers?
+
+> +	{"pa"},
+> +	{"pa_fr1"},
+> +	{"cx_vdd_limit"},
+> +	{"modem"},
+> +	{"modem_current"},
+> +	{"modem_skin"},
+
+[snip]
+
+> diff --git a/drivers/thermal/qcom/qmi_cooling/qcom_tmd_services.c b/drivers/thermal/qcom/qmi_cooling/qcom_tmd_services.c
+> new file mode 100644
+> index 000000000000..5b950b8952f0
+> --- /dev/null
+> +++ b/drivers/thermal/qcom/qmi_cooling/qcom_tmd_services.c
+> @@ -0,0 +1,352 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2022, Linaro Limited
+> + */
+> +
+> +#include <linux/soc/qcom/qmi.h>
+> +
+> +#include "qcom_tmd_services.h"
+> +
+> +static struct qmi_elem_info tmd_mitigation_dev_id_type_v01_ei[] = {
+
+note that commit ff6d365898d ("soc: qcom: qmi: use const for struct
+qmi_elem_info") allows QMI message encoding/decoding rules to be const
+
+<https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?h=for-next&id=ff6d365898d4d31bd557954c7fc53f38977b491c>
+
+I'm waiting for that to land in the soc tree before I submit my changes 
+to all of the existing drivers, but you can do this now for the new driver
+
+> +	{
+> +		.data_type      = QMI_STRING,
+> +		.elem_len       = QMI_TMD_MITIGATION_DEV_ID_LENGTH_MAX_V01 + 1,
+> +		.elem_size      = sizeof(char),
+> +		.array_type     = NO_ARRAY,
+> +		.tlv_type       = 0,
+> +		.offset         = offsetof(
+> +					struct tmd_mitigation_dev_id_type_v01,
+> +					mitigation_dev_id),
+> +	},
+> +	{
+> +		.data_type      = QMI_EOTI,
+> +		.array_type     = NO_ARRAY,
+> +		.tlv_type       = QMI_COMMON_TLV_TYPE,
+> +	},
+> +};
+
+[snip]
+
+> diff --git a/drivers/thermal/qcom/qmi_cooling/qcom_tmd_services.h b/drivers/thermal/qcom/qmi_cooling/qcom_tmd_services.h
+> new file mode 100644
+> index 000000000000..8af0bfd7eb48
+> --- /dev/null
+> +++ b/drivers/thermal/qcom/qmi_cooling/qcom_tmd_services.h
+
+[snip]
+
+> +extern struct qmi_elem_info tmd_get_mitigation_device_list_req_msg_v01_ei[];
+
+don't forget to make the externs const as well
+
