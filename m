@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BCAE75B5FA4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 19:56:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB0095B5FAE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 19:59:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229459AbiILR4C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 13:56:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41382 "EHLO
+        id S229742AbiILR7J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 13:59:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229520AbiILR4B (ORCPT
+        with ESMTP id S229709AbiILR7H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 13:56:01 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B6E12CDD9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 10:55:58 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id l12so11496484ljg.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 10:55:58 -0700 (PDT)
+        Mon, 12 Sep 2022 13:59:07 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B6A53CBF8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 10:59:06 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id by6so11474162ljb.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 10:59:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=NTG+R3pZlLIJPHgeXX/mlsOSFnC3Jz44r7bWUfR9fC8=;
-        b=mn6GNMHa20/DYriyrEhhJEDF8TnJJbvn85MIaRgq0xW9zcyRvLhUggYtbw6deGduUZ
-         s1af/ENhlHoCCvz5f2yTfRZj+4X2gI3lc0uvUoj0LSKXnRzc+19YEQfVqEt3l8/W46Ok
-         taDa26uQw2XRRbe0UhdCbQWCxXwe8ICQRfsYc7zs+nXtVcVezM+QnTw1X0DegV9Nw18X
-         mb0o/l7LGCv7vkQ4u7M2jbBWjG2UjWQttcA+1MUtCdmTTw+/uC1oc9DvtK89tdRVAZNn
-         ZDxXzGUyXgobsP7Jb6+v3aQ7TCrWm/GKHgA82SEyCWZym9jrVW+P0d+Djsp3pEyLlmOY
-         Ov3w==
+        bh=gY3yxu1ESuLTH+rFoedO2iickM2TO6Q0hqHsiCe2Ku4=;
+        b=wYpcprvARNdYcXgSJt3ZWMMwP1MsNWeiJhjE1d1nRwLzuWDJzFFJ9P5TPtcaRAsgvi
+         8rBqiBy05mg1wceEso9dDYtdMo1v+zDsFdbISALDSwEv+z8A6pcfkeQn+pbUAsEOlveJ
+         F1YxtO90PtnKuD02p2YH/uI7JJhkAxR5DBSXQ3aFOrGZ3myQO2Gh3ShInwLxQFoJnDkW
+         SBmbgKTzmBLaCv7uwIge4yGuMx8yq2qYiOVPyNkT8QoOWUK+BKtZeR6zerNogFU66zRz
+         9H91hFfyr4WABE3FE7mmqbv4/7S/Qw7u7p926bvMROK4uuLpPcjO/xMF0eCSoplyHOME
+         8AMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=NTG+R3pZlLIJPHgeXX/mlsOSFnC3Jz44r7bWUfR9fC8=;
-        b=aJUSBGuEZnBmAK/3lPqSvMJJ+IsRFvLdrkHqZFSlyM6C8C/SHsBKQBtNGQ6lvqbpRJ
-         ++muemtkFpb8MkNnq59tb28S+VEkvxhQpE+ilPet5kRBoAir/BB+qwMhBCRI70WfE43W
-         oAgONX5eAuDhnxAwNlkWv8kUuffvPWdF/atLZNYUIhfaoc+uF6Bj4W+FtmkqXiQVS+W5
-         DXXk3OPCnvvBIcS9k1xKA+Qwch1erpOGaGZwL0INIJ5d9yLWKWxd1mqRujBGdNFg5VPT
-         j4P77J4sctBjSm9f8gwQKLltITXtwWB6gbGZzzdY7xdAajnmMxlxw/wGo9ffN7RuPe6C
-         mGtA==
-X-Gm-Message-State: ACgBeo2vZja8pEwG0W9gCQxJWty72R7l6NPwOX00zjTgx4dMPrRNSGIa
-        lTiYfaZa9BPFgwtpXiNcFkbkfg==
-X-Google-Smtp-Source: AA6agR4GFFFTyu756+XgH+YACjOPHmjMUpJ2tnva1s9mF5M7PhSwHXHQLDUHgLLaaLh1uu5GZ88soA==
-X-Received: by 2002:a05:651c:12ca:b0:261:df67:b76f with SMTP id 10-20020a05651c12ca00b00261df67b76fmr7562930lje.421.1663005356911;
-        Mon, 12 Sep 2022 10:55:56 -0700 (PDT)
+        bh=gY3yxu1ESuLTH+rFoedO2iickM2TO6Q0hqHsiCe2Ku4=;
+        b=nMi9wbwOuMsoW5sQsD+5A+bA1QAXd1wpdV9wkpzJJsyxziRSb6BpPsK9IU1E4dMKpx
+         McVf+BzUP2XN3ZkokJlpvNMYLDAkyskPTWBStCDr3+Nxbe+sg0MNTbnGD6JLyQz06Trk
+         Vdu2fasQCxzDnKrPtLd3mjVdx0AC8RDdLA5DR7pAxWb2b23soV3e1vVdoZVKqXfp2hyQ
+         MpMcTjGCZU7+17R9krd1l0pue8eNuqI2QvMN7FdhFJR8N3lRFbrazDJHuUbQ8QT8iqBZ
+         50wwVYb+9jBV4K+7CPcrnlSSkGu1N78hOYQdnPsoJlGTy80q2LKtENesdTjX6NrjmEen
+         iFYg==
+X-Gm-Message-State: ACgBeo2uukeclJen4M7OsKbc1Fkvxyj06+bHae8FhFRlYF5N9T+V/D8f
+        zm5pDpFXHoGYaJDr3CeoGGhOmg==
+X-Google-Smtp-Source: AA6agR4VksOY8OzBgoRlszD2ydAjq5P8zmjOf9DeDDMq1Ex1NRMA9d8g9FQjBRLjWR/w5X/3ahn7Dg==
+X-Received: by 2002:a2e:9681:0:b0:261:c515:2b13 with SMTP id q1-20020a2e9681000000b00261c5152b13mr8229151lji.210.1663005544796;
+        Mon, 12 Sep 2022 10:59:04 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v23-20020a056512349700b00499d70c0310sm1022316lfr.3.2022.09.12.10.55.56
+        by smtp.gmail.com with ESMTPSA id b2-20020a05651c032200b002618e5c2664sm1176437ljp.103.2022.09.12.10.59.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Sep 2022 10:55:56 -0700 (PDT)
-Message-ID: <1f2dbfae-a29a-d654-0ad6-10125c6b6e0b@linaro.org>
-Date:   Mon, 12 Sep 2022 20:55:55 +0300
+        Mon, 12 Sep 2022 10:59:04 -0700 (PDT)
+Message-ID: <5aac31ea-fdf0-268e-5c6a-bd89b3dad79a@linaro.org>
+Date:   Mon, 12 Sep 2022 20:59:03 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.1
-Subject: Re: [PATCH 2/7] drm/msm: fix memory corruption with too many bridges
+Subject: Re: [PATCH 6/7] drm/msm/hdmi: fix IRQ lifetime
 Content-Language: en-GB
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Douglas Anderson <dianders@chromium.org>,
@@ -75,14 +75,14 @@ Cc:     Andrzej Hajda <andrzej.hajda@intel.com>,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
         stable@vger.kernel.org
 References: <20220912154046.12900-1-johan+linaro@kernel.org>
- <20220912154046.12900-3-johan+linaro@kernel.org>
+ <20220912154046.12900-7-johan+linaro@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220912154046.12900-3-johan+linaro@kernel.org>
+In-Reply-To: <20220912154046.12900-7-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,81 +91,40 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 12/09/2022 18:40, Johan Hovold wrote:
-> Add the missing sanity checks on the bridge counter to avoid corrupting
-> data beyond the fixed-sized bridge array in case there are ever more
-> than eight bridges.
+> Device-managed resources allocated post component bind must be tied to
+> the lifetime of the aggregate DRM device or they will not necessarily be
+> released when binding of the aggregate device is deferred.
 > 
-> a3376e3ec81c ("drm/msm: convert to drm_bridge")
-> ab5b0107ccf3 ("drm/msm: Initial add eDP support in msm drm driver (v5)")
-> a689554ba6ed ("drm/msm: Initial add DSI connector support")
-
-Most probably you've missed the Fixes: here.
-
-> Fixes: 8a3b4c17f863 ("drm/msm/dp: employ bridge mechanism for display enable and disable")
-> Cc: stable@vger.kernel.org	# 3.12
+> This is specifically true for the HDMI IRQ, which will otherwise remain
+> requested so that the next bind attempt fails when requesting the IRQ a
+> second time.
+> 
+> Fix this by tying the device-managed lifetime of the HDMI IRQ to the DRM
+> device so that it is released when bind fails.
+> 
+> Fixes: 067fef372c73 ("drm/msm/hdmi: refactor bind/init")
+> Cc: stable@vger.kernel.org      # 3.19
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 > ---
->   drivers/gpu/drm/msm/dp/dp_display.c | 6 ++++++
->   drivers/gpu/drm/msm/dsi/dsi.c       | 6 ++++++
->   drivers/gpu/drm/msm/hdmi/hdmi.c     | 5 +++++
-
-Could you please split this into respective dp/dsi/hdmi patches. This 
-will assist both the review and the stable team.
-
-Otherwise LGTM.
-
->   3 files changed, 17 insertions(+)
+>   drivers/gpu/drm/msm/hdmi/hdmi.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 3e284fed8d30..fbe950edaefe 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -1604,6 +1604,12 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
->   		return -EINVAL;
->   
->   	priv = dev->dev_private;
-> +
-> +	if (priv->num_bridges == ARRAY_SIZE(priv->bridges)) {
-> +		DRM_DEV_ERROR(dev->dev, "too many bridges\n");
-> +		return -ENOSPC;
-> +	}
-> +
->   	dp_display->drm_dev = dev;
->   
->   	dp_priv = container_of(dp_display, struct dp_display_private, dp_display);
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
-> index 39bbabb5daf6..8a95c744972a 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.c
-> @@ -218,6 +218,12 @@ int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device *dev,
->   		return -EINVAL;
->   
->   	priv = dev->dev_private;
-> +
-> +	if (priv->num_bridges == ARRAY_SIZE(priv->bridges)) {
-> +		DRM_DEV_ERROR(dev->dev, "too many bridges\n");
-> +		return -ENOSPC;
-> +	}
-> +
->   	msm_dsi->dev = dev;
->   
->   	ret = msm_dsi_host_modeset_init(msm_dsi->host, dev);
 > diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
-> index 93fe61b86967..a0ed6aa8e4e1 100644
+> index a0ed6aa8e4e1..f28fb21e3891 100644
 > --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
 > +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
-> @@ -300,6 +300,11 @@ int msm_hdmi_modeset_init(struct hdmi *hdmi,
->   	struct platform_device *pdev = hdmi->pdev;
->   	int ret;
+> @@ -344,7 +344,7 @@ int msm_hdmi_modeset_init(struct hdmi *hdmi,
+>   		goto fail;
+>   	}
 >   
-> +	if (priv->num_bridges == ARRAY_SIZE(priv->bridges)) {
-> +		DRM_DEV_ERROR(dev->dev, "too many bridges\n");
-> +		return -ENOSPC;
-> +	}
-> +
->   	hdmi->dev = dev;
->   	hdmi->encoder = encoder;
->   
+> -	ret = devm_request_irq(&pdev->dev, hdmi->irq,
+> +	ret = devm_request_irq(dev->dev, hdmi->irq,
+>   			msm_hdmi_irq, IRQF_TRIGGER_HIGH,
+>   			"hdmi_isr", hdmi);
+>   	if (ret < 0) {
 
 -- 
 With best wishes
