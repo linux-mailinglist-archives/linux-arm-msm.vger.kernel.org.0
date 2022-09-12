@@ -2,77 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F0F545B5F2A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 19:22:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 682E65B5F47
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 19:28:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229724AbiILRVo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 13:21:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55458 "EHLO
+        id S229861AbiILR2O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 13:28:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229728AbiILRVn (ORCPT
+        with ESMTP id S229809AbiILR2M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 13:21:43 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 986053F337
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 10:21:41 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id go6so4532735pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 10:21:41 -0700 (PDT)
+        Mon, 12 Sep 2022 13:28:12 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93821228
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 10:28:11 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id l10so9230521plb.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 10:28:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=user-agent:in-reply-to:content-transfer-encoding
-         :content-disposition:mime-version:references:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date;
-        bh=8omfsmP1AXfXjnxGxM02yiToDjwPr5oGBetF8GZ8Gwo=;
-        b=UymwzJMzKZGvgG4wWFyAidoZLx/3/MFqOGgUk2pPWIqsT2w3bhGoT1aZRLc/z+0i4C
-         Iw+WvLcI6T5d6ujicxBOfU6/mgtnCfI4beWHhi7e8gyCzC6KOQpFCHR7ZqocjXw928/4
-         94XfwSXSWTIFkidkMjoN7nJbxQMXgpuYJ0AC5WXdCbVa+PVRNV93/nnQ6Q6riosWpSL3
-         iFx5j9SjF0HbDXiW2e0z4z8DDI64G3O97M2Bq4ipl8yVYEsX0hTYHLsuqWPq7tFPXW17
-         nNgOfw0aipxV/WMy+l9MvFdU3lQeTpSyK2bFTycUBr/O64VcprKDVOzYRTrC8MhvdqIy
-         3Y/A==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=91oC9L+UtoW1ZWkUlTRm+aOVzjaXiSmvCYM3CW0SV5A=;
+        b=DpkaFJXL4q/e0JqF78ATfIH44tH4AYQYRVnxwp3FVGChnh8eNpFBWUYA5vSmAOipXs
+         llyTVZEfdupq1a+BwJ2yoiE26U/wDX+lUhySOOJSPi3jFx4kEyuRHcSlXcwkOwD4/ohb
+         EPXq9cG7aDzb7MFtuS0rOhCz3FgOGsj7m3BnIutVG+vL0cK5cfdZlCevUJobDyhwLj3Q
+         kAVgSfyIGz14FRgZ7S4kzPGvmiXYP6Lfa/qCNuSXzFiFdnp42aT/xmR8Za30gB4HX23+
+         ehgHnx25icf77xTh5khnBVHwooFDNtApDqcZDcKwtJ7LuljSiDru/ys/KURGj51/E8/5
+         zkhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=user-agent:in-reply-to:content-transfer-encoding
-         :content-disposition:mime-version:references:message-id:subject:cc
-         :to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=8omfsmP1AXfXjnxGxM02yiToDjwPr5oGBetF8GZ8Gwo=;
-        b=otUlyQRRxVSNnDc4vptbRUGAKGoR1/RyqaovupTo8iNfNFFu0FabhSXSxjJG/oS2mS
-         3ixvZJLa+pboVcb6Fcq5DzXvFA+Wi3IL1JIJ2+iSO/O2PzVtJcYEpisrOSCzjMbtEjf0
-         pC4ep+4YSvwSQHr4QHkwr6tP7B6iQwzt0sNU4JzRTV0RIJjFgAanH2aanmYr3tSRs3Xf
-         6REq5LlBQXeSy45/u7ypI+mqWcqrPvu58dmBL3r7azEDxK3+IfrwSHbX/iHjJgA2gVPr
-         PzMF/B9+9M3PZ8Y1XymK8qT3qHZw7bDjSN8epeF4eAamMO/R5Xa4OemLyij0InsS2iQ7
-         jA3A==
-X-Gm-Message-State: ACgBeo1ofUePblVM5/TMUatoxXMeKihBXOW82R4hfTM61qq/N+oFGyU2
-        Gza9rWWXorrWiMZ+lnx6nnYE49Brg1xR+4E=
-X-Google-Smtp-Source: AA6agR5asszcZ71zyiNjcSyvWK8TtaEaE997jarGwHUI8RjDIXhh00O1ui19e3GpE6sURmPGkJqxgQ==
-X-Received: by 2002:a17:902:7c05:b0:178:1f92:288e with SMTP id x5-20020a1709027c0500b001781f92288emr11118902pll.92.1663003300577;
-        Mon, 12 Sep 2022 10:21:40 -0700 (PDT)
-Received: from workstation ([117.202.184.122])
-        by smtp.gmail.com with ESMTPSA id s6-20020a170902ea0600b00174ce512262sm6373814plg.182.2022.09.12.10.21.36
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Sep 2022 10:21:39 -0700 (PDT)
-Date:   Mon, 12 Sep 2022 22:51:34 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bjorn Helgaas <helgaas@kernel.org>
-Cc:     Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mka@chromium.org,
-        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, swboyd@chromium.org,
-        dmitry.baryshkov@linaro.org
-Subject: Re: [PATCH v6 0/5] PCI: qcom: Add system suspend & resume support
-Message-ID: <20220912172134.GA25849@workstation>
-References: <af79fc4d-4996-bb2c-7388-2d9afd991e7a@quicinc.com>
- <20220912170806.GA512933@bhelgaas>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=91oC9L+UtoW1ZWkUlTRm+aOVzjaXiSmvCYM3CW0SV5A=;
+        b=LotBLxWWmGZiUHq3U++sHAFiZVONtzN9Yv90c5BcmygIHFjjkQkkt36shJfrpLF8FV
+         xNemnfZovixZWb5JJ9qBqs+iptXJzpR5Jg0Q8l6VzOodDTZ0rQ2ayneMeu05+6dh/tSj
+         I9cqO+BJnajB3hB6bvplyBrKlTTwVGldGxQ0wTbmn1hsaLkdWm9ZjGciwU8eSfxwqJMJ
+         Gg68R6mBAgROasA+6obDhX4x3PgcSAqJK+CLItkSl1d2StTBQWZoHp6RSN5TQ8f/0o51
+         69WYIXSLkDZhqXGquS1TblZQV3xdIqTE+mr2HbPOBfLP3AUMpguxiygoCWskMtCkE9I+
+         eErw==
+X-Gm-Message-State: ACgBeo0CozljaswYdjEZXjLbJgsHDSg0Jqu9It346GkjeBDRtYcWEz0T
+        gwBFw33r3iQzbFuHRtzOXhbzvw==
+X-Google-Smtp-Source: AA6agR6JVrI1vxKXP0TpK4SZRUSh6xzH/vGwaEnEjYby+4LmJniiB2X7aP7+jnaLMODaujw7gHAMFA==
+X-Received: by 2002:a17:90b:4d81:b0:202:d535:d324 with SMTP id oj1-20020a17090b4d8100b00202d535d324mr5578277pjb.133.1663003691020;
+        Mon, 12 Sep 2022 10:28:11 -0700 (PDT)
+Received: from ?IPV6:2401:4900:1c60:5362:9d7f:2354:1d0a:78e3? ([2401:4900:1c60:5362:9d7f:2354:1d0a:78e3])
+        by smtp.gmail.com with ESMTPSA id c12-20020aa7952c000000b0052e987c64efsm6012062pfp.174.2022.09.12.10.28.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Sep 2022 10:28:10 -0700 (PDT)
+Message-ID: <ccd6f6c2-458d-832a-7299-d9d9ffb652a8@linaro.org>
+Date:   Mon, 12 Sep 2022 22:58:05 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220912170806.GA512933@bhelgaas>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH 1/4] dt-bindings: net: qcom,ethqos: Convert bindings to
+ yaml
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        devicetree@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org, netdev@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        David Miller <davem@davemloft.net>
+References: <20220907204924.2040384-1-bhupesh.sharma@linaro.org>
+ <20220907204924.2040384-2-bhupesh.sharma@linaro.org>
+ <dcf449f5-ad28-d262-98d5-72c6ba2b7aea@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+In-Reply-To: <dcf449f5-ad28-d262-98d5-72c6ba2b7aea@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,95 +83,239 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 12, 2022 at 12:08:06PM -0500, Bjorn Helgaas wrote:
-> On Mon, Sep 12, 2022 at 09:40:30PM +0530, Krishna Chaitanya Chundru wrote:
-> > On 9/10/2022 1:21 AM, Bjorn Helgaas wrote:
-> > > On Fri, Sep 09, 2022 at 02:14:39PM +0530, Krishna chaitanya chundru wrote:
-> > > > Add suspend and resume syscore ops.
-> > > > 
-> > > > When system suspends, and if the link is in L1ss, disable the clocks
-> > > > and power down the phy so that system enters into low power state by
-> > > > parking link in L1ss to save the maximum power. And when the system
-> > > > resumes, enable the clocks back and power on phy if they are disabled
-> > > > in the suspend path.
-> > > > 
-> > > > we are doing this only when link is in l1ss but not in L2/L3 as
-> > > > nowhere we are forcing link to L2/L3 by sending PME turn off.
-> > > > 
-> > > > is_suspended flag indicates if the clocks are disabled in the suspend
-> > > > path or not.
-> > > > 
-> > > > There is access to Ep PCIe space to mask MSI/MSIX after pm suspend ops
-> > > > (getting hit by affinity changes while making CPUs offline during suspend,
-> > > > this will happen after devices are suspended (all phases of suspend ops)).
-> > > > When registered with pm ops there is a crash due to un-clocked access,
-> > > > as in the pm suspend op clocks are disabled. So, registering with syscore
-> > > > ops which will called after making CPUs offline.
-> > > > 
-> > > > Make GDSC always on to ensure controller and its dependent clocks
-> > > > won't go down during system suspend.
-> > > > 
-> > > > Krishna chaitanya chundru (5):
-> > > >    PCI: qcom: Add system suspend and resume support
-> > > >    PCI: qcom: Add retry logic for link to be stable in L1ss
-> > > >    phy: core: Add support for phy power down & power up
-> > > >    phy: qcom: Add power down/up callbacks to pcie phy
-> > > >    clk: qcom: Alwaya on pcie gdsc
-> > >
-> > > This seems fairly ugly because it doesn't fit nicely into the PM
-> > > framework.  Why is this a qcom-specific thing?  What about other
-> > > DWC-based controllers?
-> >
-> > We wanted to allow system S3 state by turning off all PCIe clocks
-> > but at the same time retaining NVMe device in D0 state and PCIe link
-> > in l1ss state.
-> >
-> > Here nothing really specific to DWC as PCIe controller remains intact.
-> > 
-> > And the Qcom PHY allows this scheme  (that is to retain the link
-> > state in l1ss even though all pcie clocks are turned off).
-> 
-> Is there somewhere in the PCIe spec I can read about how a link with
-> clocks turned off can remain in L1.1 or L1.2?
-> 
+Hi Krzysztof,
 
-This part is Qcom specific. On Qcom platforms there are two power domains used,
-CX and MX. CX domain is sourcing the PCIe controller and MX is sourcing PCIe
-PHY.
+Thanks for your comments.
 
-Both PCIe and PHY drivers don't control MX domain and only control CX.
-So even though this patch is turning off all of the PCIe clocks, that
-only helps in powering down the CX domain for achieving the low power
-usecase while still keeping MX domain powered on.
+On 9/8/22 8:08 PM, Krzysztof Kozlowski wrote:
+> On 07/09/2022 22:49, Bhupesh Sharma wrote:
+>> Convert Qualcomm ETHQOS Ethernet devicetree binding to YAML.
+>>
+>> Cc: Bjorn Andersson <andersson@kernel.org>
+>> Cc: Rob Herring <robh@kernel.org>
+>> Cc: Vinod Koul <vkoul@kernel.org>
+>> Cc: David Miller <davem@davemloft.net>
+>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> 
+> Thank you for your patch. There is something to discuss/improve.
+> 
+>> ---
+>>   .../devicetree/bindings/net/qcom,ethqos.txt   |  66 ---------
+>>   .../devicetree/bindings/net/qcom,ethqos.yaml  | 139 ++++++++++++++++++
+> 
+> You need to update maintainers - old path.
 
-So at the end of suspend, the PCIe controller would've turned off but
-the link stays in L1SS state due to it being backed by MX.
+Sure, my bad. Will do in v2.
 
-> > Since clocks are completely managed by qcom platform driver, we are
-> > trying to manage them during S3/S0 transitions with PM callbacks.
+>>   2 files changed, 139 insertions(+), 66 deletions(-)
+>>   delete mode 100644 Documentation/devicetree/bindings/net/qcom,ethqos.txt
+>>   create mode 100644 Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.txt b/Documentation/devicetree/bindings/net/qcom,ethqos.txt
+>> deleted file mode 100644
+>> index 1f5746849a71..000000000000
+>> --- a/Documentation/devicetree/bindings/net/qcom,ethqos.txt
+>> +++ /dev/null
+>> @@ -1,66 +0,0 @@
+>> -Qualcomm Ethernet ETHQOS device
+>> -
+>> -This documents dwmmac based ethernet device which supports Gigabit
+>> -ethernet for version v2.3.0 onwards.
+>> -
+>> -This device has following properties:
+>> -
+>> -Required properties:
+>> -
+>> -- compatible: Should be one of:
+>> -		"qcom,qcs404-ethqos"
+>> -		"qcom,sm8150-ethqos"
+>> -
+>> -- reg: Address and length of the register set for the device
+>> -
+>> -- reg-names: Should contain register names "stmmaceth", "rgmii"
+>> -
+>> -- clocks: Should contain phandle to clocks
+>> -
+>> -- clock-names: Should contain clock names "stmmaceth", "pclk",
+>> -		"ptp_ref", "rgmii"
+>> -
+>> -- interrupts: Should contain phandle to interrupts
+>> -
+>> -- interrupt-names: Should contain interrupt names "macirq", "eth_lpi"
+>> -
+>> -Rest of the properties are defined in stmmac.txt file in same directory
+>> -
+>> -
+>> -Example:
+>> -
+>> -ethernet: ethernet@7a80000 {
+>> -	compatible = "qcom,qcs404-ethqos";
+>> -	reg = <0x07a80000 0x10000>,
+>> -		<0x07a96000 0x100>;
+>> -	reg-names = "stmmaceth", "rgmii";
+>> -	clock-names = "stmmaceth", "pclk", "ptp_ref", "rgmii";
+>> -	clocks = <&gcc GCC_ETH_AXI_CLK>,
+>> -		<&gcc GCC_ETH_SLAVE_AHB_CLK>,
+>> -		<&gcc GCC_ETH_PTP_CLK>,
+>> -		<&gcc GCC_ETH_RGMII_CLK>;
+>> -	interrupts = <GIC_SPI 56 IRQ_TYPE_LEVEL_HIGH>,
+>> -			<GIC_SPI 55 IRQ_TYPE_LEVEL_HIGH>;
+>> -	interrupt-names = "macirq", "eth_lpi";
+>> -	snps,reset-gpio = <&tlmm 60 GPIO_ACTIVE_LOW>;
+>> -	snps,reset-active-low;
+>> -
+>> -	snps,txpbl = <8>;
+>> -	snps,rxpbl = <2>;
+>> -	snps,aal;
+>> -	snps,tso;
+>> -
+>> -	phy-handle = <&phy1>;
+>> -	phy-mode = "rgmii";
+>> -
+>> -	mdio {
+>> -		#address-cells = <0x1>;
+>> -		#size-cells = <0x0>;
+>> -		compatible = "snps,dwmac-mdio";
+>> -		phy1: phy@4 {
+>> -			device_type = "ethernet-phy";
+>> -			reg = <0x4>;
+>> -		};
+>> -	};
+>> -
+>> -};
+>> diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+>> new file mode 100644
+>> index 000000000000..f05df9b0d106
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+>> @@ -0,0 +1,139 @@
+>> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Ethernet ETHQOS device
+>> +
+>> +maintainers:
+>> +  - Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>> +
+>> +description:
+>> +  This binding describes the dwmmac based Qualcomm ethernet devices which
+>> +  support Gigabit ethernet (version v2.3.0 onwards).
+>> +
+>> +  So, this file documents platform glue layer for dwmmac stmmac based Qualcomm
+>> +  ethernet devices.
+>> +
+>> +allOf:
+>> +  - $ref: "snps,dwmac.yaml#"
 > 
-> I'm looking at this text in PCIe r6.0, sec 5.4.1:
-> 
->   Components in the D0 state (i.e., fully active state) normally keep
->   their Upstream Link in the active L0 state, as defined in § Section
->   5.3.2 . ASPM defines a protocol for components in the D0 state to
->   reduce Link power by placing their Links into a low power state and
->   instructing the other end of the Link to do likewise. This
->   capability allows hardware-autonomous, dynamic Link power reduction
->   beyond what is achievable by software-only controlled (i.e., PCI-PM
->   software driven) power management.
-> 
-> How does this qcom software management of clocks fit into this scheme?
-> It seems to me that if you need software to turn clocks off and on,
-> that is no longer ASPM.
-> 
+> No need for quotes.
 
-The PCIe link automatically transitions to L1SS if there is no activity
-on the link but still the clocks sourced to the PCIe controller needs to be
-turned off. PCIe spec only covers the link specifics and the controller is
-platform dependent.
+Ok.
+
+>> +
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - qcom,qcs404-ethqos
+>> +      - qcom,sm8150-ethqos
+>> +
+>> +  reg: true
+> 
+> I think both devices use two reg spaces.
+
+On this platform the two reg spaces are 64-bit, whereas for other
+platforms based on dwmmac, for e.g. stm32 have 32-bit address space.
+
+>> +
+>> +  reg-names:
+>> +    minItems: 1
+> 
+> Why allowing only one item?
+
+Ok, let me remove this in v2.
+
+>> +    items:
+>> +      - const: stmmaceth
+>> +      - const: rgmii
+>> +
+>> +  interrupts: true
+> 
+> This should be specific/fixed.
+> 
+>> +
+>> +  interrupt-names: true
+> 
+> This should be specific/fixed.
+
+These are same as in $ref: "snps,dwmac.yaml#", so
+do we really need to specify them here? I remember on the sdhci-msm
+YAML patch review, Rob mentioned that we should just set the property to 
+true, in such cases.
+
+Am I missing something here?
+
+>> +
+>> +  clocks:
+>> +    minItems: 1
+>> +    maxItems: 4
+> 
+> Why such flexibility?
+
+Ok, let me just keep 'maxItems: 4' here for now.
+
+>> +
+>> +  clock-names:
+>> +    minItems: 1
+>> +    items:
+>> +      - const: stmmaceth
+>> +      - const: pclk
+>> +      - const: ptp_ref
+>> +      - const: rgmii
+>> +
+>> +  iommus:
+>> +    minItems: 1
+>> +    maxItems: 2
+> 
+> Aren't we using only one MMU?
+
+It was just for future compatibility, but I get your point.
+Let me keep the 'maxItems: 1' here for now.
+
+>> +
+>> +  mdio: true
+>> +
+>> +  phy-handle: true
+>> +
+>> +  phy-mode: true
+>> +
+>> +  snps,reset-gpio: true
+>> +
+>> +  snps,tso:
+>> +    $ref: /schemas/types.yaml#/definitions/flag
+>> +    description:
+>> +      Enables the TSO feature otherwise it will be managed by MAC HW capability register.
+>> +
+>> +  power-domains: true
+>> +
+>> +  resets: true
+>> +
+>> +  rx-fifo-depth: true
+>> +
+>> +  tx-fifo-depth: true
+> 
+> You do not list all these properties, because you use
+> unevaluatedProperties. Drop all of these "xxx :true".
+
+Same query as above. May be I am missing something here.
+
+>> +
+>> +required:
+>> +  - compatible
+>> +  - clocks
+>> +  - clock-names
 
 Thanks,
-Mani
+Bhupesh
 
-> Bjorn
