@@ -2,87 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 566AD5B5FF6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 20:11:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20D835B6005
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 20:14:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229894AbiILSLT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 14:11:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33622 "EHLO
+        id S229844AbiILSOP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 14:14:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229670AbiILSLS (ORCPT
+        with ESMTP id S229765AbiILSOO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 14:11:18 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B89B41998
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 11:11:12 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id a14so9425111ljj.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 11:11:12 -0700 (PDT)
+        Mon, 12 Sep 2022 14:14:14 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54CA041998
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 11:14:12 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id s6so4994145lfo.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 11:14:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=svtvmckgsYFdMY08rsKItgup1eFeNNMS18fXK1hp66E=;
-        b=AoFIEtHDHD4hpTZCOqlLzU2TQD+HdICYhbIBWNKx52yIiE9oaKvktDi0T89regh44I
-         kRdc8nPGc6t1zHNic+8Lgsi9MvlWwSSnmMmq+5nbcQH8W7JoUSnVLQ4bllAPqmcZyq4j
-         cqeCqhBWnTjraAzZcd0BlT2zWVxcJliL5mQ+HyUKPpA7J5m59uy7ViYv3E6H1NEaS++4
-         PD1et0+flfvh+XvYkrLv/JGkBnDTXgF+lS4S9WSK+GUFIl/FBK5MDQFG1hWliEg3bgWH
-         Sidrcc8IhjVd6dhyjBtXn8/j3ijCJm5wy80V1D09j/UFSJIR0mopNtT9AgS+yndKKaw6
-         outw==
+        bh=pphKVd2FpUZgthqe9J2k6pHmxdMAUCIqGEtgJJp9FHk=;
+        b=MnO4fO2yLp8hCzWCwoN7+8I58BSrXzRDQtX2oBr5plpQqW3iCcpJER5OzI32hb/Po3
+         Pfk1xc4f1fyM5i2YiwsZfbZfChnvmtg0FOjhvAyhxL7j6jU7QNnVZSFCqYdHuWxD6W5I
+         ByeZ71lZN7P7d3aW4/kMuNhdiQ1eCjzqI0FA40iQUECBVxpXomjqZdBgPfSsTjoT7Zsn
+         jLtXai7D1pGYD25MRXnuTREMMtBJDpyx+xZt2lh07d6PmygFOXTYvdwzurS0zyumFT0i
+         A0sagUXCDQxjQa7lxDT+SVm6l4mvf53SecGCdYl4jiyl45EWo+qulv1l8zhsa05LTADu
+         HbZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=svtvmckgsYFdMY08rsKItgup1eFeNNMS18fXK1hp66E=;
-        b=d/ZJmZqWHuIAwKeESFrkgycBDlQhMh4WRlGoavQzfEvASGOl+tiq/1dCW3kgHfbkr8
-         xcaIexQJ6gFYfEqcIdvAx4I1qDuba/05yM8UbNJltLB1hOr7jWt8ENOA7IiMYXPun0/L
-         3FsrgZib3uGEXCfS4EJ1sHAvd+5xoS48aqQGrDGReSipZ1GK2s/WLtEZqq+kV+F+x6O/
-         nVuC/RoNONCjDRpjc6HfHvIOA6u9Lx3yL4d3bSDDK8g7Nd86C9qdFoicd3wd5TYLkXFE
-         hxX9zsP0lM+1/6yePHkGV8pVUMIjvr58fPtzbehJw6ZdPdoue6VS6xMgMcyNBLtJBsA/
-         UJAw==
-X-Gm-Message-State: ACgBeo1dQb3XKysWLVVNJFZ+F5TYgAZFa1TCeocHvMLADgpYeb5a25bS
-        kJ3iaFdklY3XI1g/7ddzFR8nGA==
-X-Google-Smtp-Source: AA6agR5MdYOsAHV0xTW6UI5WZTq5FY2Oa2CfhbJX4nzqV7j3wNaZCke1O+5Fm1Xam32l3i3sy3WrsQ==
-X-Received: by 2002:a05:651c:1587:b0:261:b558:b6ab with SMTP id h7-20020a05651c158700b00261b558b6abmr7936511ljq.204.1663006270513;
-        Mon, 12 Sep 2022 11:11:10 -0700 (PDT)
+        bh=pphKVd2FpUZgthqe9J2k6pHmxdMAUCIqGEtgJJp9FHk=;
+        b=soU1tjZjBAoMovGJ2+wkUSSuFNaIacJvW1+FwcNTiUzsZUunPY/7/EyOph78Qkzsmf
+         nByDlFNaA1h3e77NB2CauHekMWd6JNNeFHebaz3yndL/iR8nHlJQzhIQ6X/PtZi4zcUh
+         g8tGft8L44aUYcNYG4fYX29zD56+3KnVyVyWaynUbcDAEi4NvR+6SHVQGWw30AmMZ8se
+         /qVCN26RAXO67unqV+0tRf0Umfk6vQI5u79hR1uNCjzDkwq30o8FLiVAhiGdZ0FM+k9y
+         66XYt5tjinOH9jyk7qv15P0o9XWqUty1/JBQcgJJ6GjU+LV9siYq+W472mXPcy+u+4I3
+         ZVFA==
+X-Gm-Message-State: ACgBeo0tEs9ecVj4x3uBRQrjkJL7jYWUvzat9WBERb17U90FM4bFs4VG
+        3DXC4JXt4PeswzNFC1piMzKRhA==
+X-Google-Smtp-Source: AA6agR5CudFSUa17zwUnzqBC9l/1i9sEoxDOfEdCr8sclosfn/oqi/m5pbihf9dVim/I0WqX2R/6Gw==
+X-Received: by 2002:a05:6512:3c88:b0:499:c78:5bb1 with SMTP id h8-20020a0565123c8800b004990c785bb1mr4872822lfv.503.1663006450720;
+        Mon, 12 Sep 2022 11:14:10 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id a18-20020a2eb172000000b0025ebaef9570sm1225602ljm.40.2022.09.12.11.11.09
+        by smtp.gmail.com with ESMTPSA id y26-20020a05651c221a00b0026ad1da0dc3sm1205812ljq.122.2022.09.12.11.14.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Sep 2022 11:11:10 -0700 (PDT)
-Message-ID: <75540907-6981-5798-efe3-04fe0466da31@linaro.org>
-Date:   Mon, 12 Sep 2022 21:11:09 +0300
+        Mon, 12 Sep 2022 11:14:10 -0700 (PDT)
+Message-ID: <2f658a69-a49c-67be-26b9-421095cde2b7@linaro.org>
+Date:   Mon, 12 Sep 2022 21:14:09 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.1
-Subject: Re: [PATCH 5/7] drm/msm/dp: fix bridge lifetime
+Subject: Re: [PATCH 1/2] thermal: Introduce CONFIG_QCOM_THERMAL in Makefile
+ and qcom/Kconfig
 Content-Language: en-GB
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>
-Cc:     Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org
-References: <20220912154046.12900-1-johan+linaro@kernel.org>
- <20220912154046.12900-6-johan+linaro@kernel.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bhupesh.linux@gmail.com, andersson@kernel.org,
+        linux-arm-msm@vger.kernel.org, daniel.lezcano@linaro.org,
+        rafael@kernel.org, Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>
+References: <20220911184232.3198957-1-bhupesh.sharma@linaro.org>
+ <CAA8EJpoM5nW=pVJB4zy4Jh9Q3gE4KOju2QVy_WtmUokKMyXtuw@mail.gmail.com>
+ <75a5789e-9100-b398-1df2-50d49823831c@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220912154046.12900-6-johan+linaro@kernel.org>
+In-Reply-To: <75a5789e-9100-b398-1df2-50d49823831c@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -90,91 +81,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/09/2022 18:40, Johan Hovold wrote:
-> Device-managed resources allocated post component bind must be tied to
-> the lifetime of the aggregate DRM device or they will not necessarily be
-> released when binding of the aggregate device is deferred.
+On 12/09/2022 20:11, Bhupesh Sharma wrote:
 > 
-> This can lead resource leaks or failure to bind the aggregate device
-> when binding is later retried and a second attempt to allocate the
-> resources is made.
 > 
-> For the DP bridges, previously allocated bridges will leak on probe
-> deferral.
+> On 9/12/22 1:08 AM, Dmitry Baryshkov wrote:
+>> On Sun, 11 Sept 2022 at 21:42, Bhupesh Sharma 
+>> <bhupesh.sharma@linaro.org> wrote:
+>>>
+>>> Introduce CONFIG_QCOM_THERMAL to allow better control
+>>> over selection of various Qualcomm Thermal drivers
+>>> available inside qcom/ directory.
+>>>
+>>> This is a preparatory change to allow new drivers to
+>>> be added inside qcom/ directory in a more structured
+>>> fashion.
+>>>
+>>> Cc: Bjorn Andersson <andersson@kernel.org>
+>>> Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
+>>> Cc: Amit Kucheria <amitk@kernel.org>
+>>> Cc: Thara Gopinath <thara.gopinath@gmail.com>
+>>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>>> ---
+>>>   drivers/thermal/Makefile     |  2 +-
+>>>   drivers/thermal/qcom/Kconfig | 12 ++++++++++++
+>>>   2 files changed, 13 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/thermal/Makefile b/drivers/thermal/Makefile
+>>> index def8e1a0399c..a12b647be0d1 100644
+>>> --- a/drivers/thermal/Makefile
+>>> +++ b/drivers/thermal/Makefile
+>>> @@ -52,7 +52,7 @@ obj-$(CONFIG_DA9062_THERMAL)  += da9062-thermal.o
+>>>   obj-y                          += intel/
+>>>   obj-$(CONFIG_TI_SOC_THERMAL)   += ti-soc-thermal/
+>>>   obj-y                          += st/
+>>> -obj-$(CONFIG_QCOM_TSENS)       += qcom/
+>>> +obj-$(CONFIG_QCOM_THERMAL)     += qcom/
+>>
+>> Following other platforms around qcom, I think just `obj-y += qcom/`
+>> would work well enough.
 > 
-> Fix this by amending the DP parser interface and tying the lifetime of
-> the bridge device to the DRM device rather than DP platform device.
-> 
-> Fixes: c3bf8e21b38a ("drm/msm/dp: Add eDP support via aux_bus")
-> Cc: stable@vger.kernel.org      # 5.19
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> I have no strong opinion on using `obj-y += qcom/` here, but I would
+> still like us to define a CONFIG_QCOM_THERMAL like flag in the 
+> qcom/Kconfig, similar to the ST platforms which use similar selection 
+> mechanism via 'CONFIG_ST_THERMAL'.
 
-Seems logical enough.
+`QCOM_THERMAL' is fine for me.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-> ---
->   drivers/gpu/drm/msm/dp/dp_display.c | 2 +-
->   drivers/gpu/drm/msm/dp/dp_parser.c  | 6 +++---
->   drivers/gpu/drm/msm/dp/dp_parser.h  | 5 +++--
->   3 files changed, 7 insertions(+), 6 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index e1aa6355bbf6..393af1ea9ed8 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -1576,7 +1576,7 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
->   	 * For DisplayPort interfaces external bridges are optional, so
->   	 * silently ignore an error if one is not present (-ENODEV).
->   	 */
-> -	rc = dp_parser_find_next_bridge(dp_priv->parser);
-> +	rc = devm_dp_parser_find_next_bridge(dp->drm_dev->dev, dp_priv->parser);
->   	if (!dp->is_edp && rc == -ENODEV)
->   		return 0;
->   
-> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
-> index dd732215d55b..dcbe893d66d7 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_parser.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
-> @@ -240,12 +240,12 @@ static int dp_parser_clock(struct dp_parser *parser)
->   	return 0;
->   }
->   
-> -int dp_parser_find_next_bridge(struct dp_parser *parser)
-> +int devm_dp_parser_find_next_bridge(struct device *dev, struct dp_parser *parser)
->   {
-> -	struct device *dev = &parser->pdev->dev;
-> +	struct platform_device *pdev = parser->pdev;
->   	struct drm_bridge *bridge;
->   
-> -	bridge = devm_drm_of_get_bridge(dev, dev->of_node, 1, 0);
-> +	bridge = devm_drm_of_get_bridge(dev, pdev->dev.of_node, 1, 0);
->   	if (IS_ERR(bridge))
->   		return PTR_ERR(bridge);
->   
-> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
-> index 866c1a82bf1a..d30ab773db46 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_parser.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_parser.h
-> @@ -138,8 +138,9 @@ struct dp_parser {
->   struct dp_parser *dp_parser_get(struct platform_device *pdev);
->   
->   /**
-> - * dp_parser_find_next_bridge() - find an additional bridge to DP
-> + * devm_dp_parser_find_next_bridge() - find an additional bridge to DP
->    *
-> + * @dev: device to tie bridge lifetime to
->    * @parser: dp_parser data from client
->    *
->    * This function is used to find any additional bridge attached to
-> @@ -147,6 +148,6 @@ struct dp_parser *dp_parser_get(struct platform_device *pdev);
->    *
->    * Return: 0 if able to get the bridge, otherwise negative errno for failure.
->    */
-> -int dp_parser_find_next_bridge(struct dp_parser *parser);
-> +int devm_dp_parser_find_next_bridge(struct device *dev, struct dp_parser *parser);
->   
->   #endif
+> Thanks.
+> 
+>>>   obj-y                          += tegra/
+>>>   obj-$(CONFIG_HISI_THERMAL)     += hisi_thermal.o
+>>>   obj-$(CONFIG_MTK_THERMAL)      += mtk_thermal.o
+>>
 
 -- 
 With best wishes
