@@ -2,43 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 433565B5D24
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 17:30:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EFC725B5D23
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 17:30:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229883AbiILPax (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 11:30:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55138 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229965AbiILPaw (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S230083AbiILPaw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 12 Sep 2022 11:30:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55132 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229883AbiILPav (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 12 Sep 2022 11:30:51 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 783A42251B;
-        Mon, 12 Sep 2022 08:30:51 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1461924F2F;
+        Mon, 12 Sep 2022 08:30:50 -0700 (PDT)
 Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28CF5hkp012145;
-        Mon, 12 Sep 2022 15:30:43 GMT
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28CEVpJ8015695;
+        Mon, 12 Sep 2022 15:30:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
  subject : date : message-id : in-reply-to : references : mime-version :
  content-type; s=qcppdkim1;
- bh=Ij81E1OQlgZvSM3xquEVml12KCb9/5N2KS1Kns1QJh4=;
- b=YKEvUmcaeNrbyaaKdROwNIBIXvchZJ/MAS8v0lg6fc7FyRsByAQEL34VbuVSgYlKcGxy
- 4p6VqwQHznhfmBJWyM8ti49bxzc0PAMs2Kvgq+rhLRyAi+SBA0irYC3KhIwIikif+mD2
- wK6XdEIVIpweV8NfEkrh0RTtQk/+Z9/cHV9UK0lLQN8PPv1xZtCfeJqAIne4baezpEQR
- 0ACjtsmuqYg4KS5+28pH+Cj0ejLP7lklH5KM87D4zx57L5tAF1yp7bC7wavJBQhWB9UD
- T9/PMeVa07S6GpAAcg5tNhBIOccABQvhn97vm47E2LR6Jpi9kfll04krSyw0BQpwu0aW kQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jgk634fy3-1
+ bh=uIUmkWWChmCj4RYxmInTFl1FXN/vdFc07v8DqwHSnI4=;
+ b=fYZ5PFRJI9CPc35POa++KwO6JJNBoadyUZ8xYGI3423gIjBSm7vZ6wWAb9RhOdI1kdv2
+ YYQbFQgMuq2TPDO8l0lcjJ0KhTWWlGLqFeJlIdalFLR5BvZBO7BWfOfSF9ao672bm8b8
+ S2by8XBS4OGmAEYB4Y0b4+rjTNXFSL2i06DgIQrbGkiHV8/2xZ8pEjCNM2Pqfp/3U2Kw
+ jTovLbIMHj3ouaj1LcAWm06eePO4z6yXk7J7FBsagnBC1dkA+g/x2aTUjWzOJj43IITq
+ ZO1FKnv0+Odk8I6mKX8Ur/m9iisTK9oNbOC0MommBl4DQ9E5PALKE8vXUcA2pwlx0ZNI wA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jgk634fy4-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Sep 2022 15:30:42 +0000
+        Mon, 12 Sep 2022 15:30:44 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28CFUfHg010242
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28CFUh3s004508
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Sep 2022 15:30:41 GMT
+        Mon, 12 Sep 2022 15:30:43 GMT
 Received: from hu-gokukris-sd.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Mon, 12 Sep 2022 08:30:41 -0700
+ 15.2.986.29; Mon, 12 Sep 2022 08:30:43 -0700
 From:   Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -53,9 +53,9 @@ CC:     <linux-arm-msm@vger.kernel.org>,
         "Elliot Berman" <quic_eberman@quicinc.com>,
         Guru Das Srinagesh <quic_gurus@quicinc.com>,
         Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
-Subject: [PATCH v1 1/3] remoteproc: qcom: q6v5: Send subdevice notifications before panic
-Date:   Mon, 12 Sep 2022 08:30:27 -0700
-Message-ID: <842a6b6307d26874959d29f2065aad544ff0b86c.1662995608.git.quic_gokukris@quicinc.com>
+Subject: [PATCH v1 2/3] remoteproc: qcom: q6v5: Do not report crash if SSR is disabled
+Date:   Mon, 12 Sep 2022 08:30:28 -0700
+Message-ID: <1a548f4e7373c12159f8d866dc0e12d224460036.1662995608.git.quic_gokukris@quicinc.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <cover.1662995608.git.quic_gokukris@quicinc.com>
 References: <cover.1662995608.git.quic_gokukris@quicinc.com>
@@ -66,15 +66,15 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: rH8S5i5tDBUTXa49tWc_uM5agFKPdzPE
-X-Proofpoint-ORIG-GUID: rH8S5i5tDBUTXa49tWc_uM5agFKPdzPE
+X-Proofpoint-GUID: R0Wxpm_zeXyE6_HDV-O5lhIw1m4gIQfT
+X-Proofpoint-ORIG-GUID: R0Wxpm_zeXyE6_HDV-O5lhIw1m4gIQfT
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
  definitions=2022-09-12_10,2022-09-12_02,2022-06-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
  priorityscore=1501 impostorscore=0 suspectscore=0 bulkscore=0
  clxscore=1015 adultscore=0 phishscore=0 spamscore=0 mlxscore=0
- mlxlogscore=999 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ mlxlogscore=937 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.12.0-2207270000 definitions=main-2209120052
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
@@ -86,101 +86,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Subdevice notifications after a remoteproc has crashed are useful to any
-clients that might want to preserve data pertaining to the driver after the
-remoteproc crashed. Sending subdevice notifications before triggering a
-kernel panic gives these drivers the time to do collect this information.
+In case recovery is disabled, do not report the rproc crash
+to the framework. If recovery is enabled after we start the
+crash handler we may end up in a weird state by informing
+clients of a crash twice, resulting in undefined behaviour.
 
-Change-Id: Id6e55fb038b70f54ff5854d2adff72b74b6a9570
+Change-Id: If0d9bf5aa2c6f9e25adcefaca14b2de60fcb1a7a
 Signed-off-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
 ---
- drivers/remoteproc/qcom_q6v5.c | 31 +++++++++++++++++++++++++++++++
- drivers/remoteproc/qcom_q6v5.h |  2 ++
- 2 files changed, 33 insertions(+)
+ drivers/remoteproc/qcom_q6v5.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
-index 497acfb..89f5384 100644
+index 89f5384..1b9e1e1 100644
 --- a/drivers/remoteproc/qcom_q6v5.c
 +++ b/drivers/remoteproc/qcom_q6v5.c
-@@ -15,6 +15,7 @@
- #include <linux/soc/qcom/smem.h>
- #include <linux/soc/qcom/smem_state.h>
- #include <linux/remoteproc.h>
-+#include <linux/delay.h>
- #include "qcom_common.h"
- #include "qcom_q6v5.h"
+@@ -103,6 +103,8 @@ static void qcom_q6v5_crash_handler_work(struct work_struct *work)
  
-@@ -94,6 +95,29 @@ int qcom_q6v5_unprepare(struct qcom_q6v5 *q6v5)
- }
- EXPORT_SYMBOL_GPL(qcom_q6v5_unprepare);
+ 	mutex_lock(&rproc->lock);
  
-+static void qcom_q6v5_crash_handler_work(struct work_struct *work)
-+{
-+	struct qcom_q6v5 *q6v5 = container_of(work, struct qcom_q6v5, crash_handler);
-+	struct rproc *rproc = q6v5->rproc;
-+	struct rproc_subdev *subdev;
++	rproc->state = RPROC_CRASHED;
 +
-+	mutex_lock(&rproc->lock);
-+
-+	list_for_each_entry_reverse(subdev, &rproc->subdevs, node) {
-+		if (subdev->stop)
-+			subdev->stop(subdev, true);
-+	}
-+
-+	mutex_unlock(&rproc->lock);
-+
-+	/*
-+	 * Temporary workaround until ramdump userspace application calls
-+	 * sync() and fclose() on attempting the dump.
-+	 */
-+	msleep(100);
-+	panic("Panicking, remoteproc %s crashed\n", q6v5->rproc->name);
-+}
-+
- static irqreturn_t q6v5_wdog_interrupt(int irq, void *data)
- {
- 	struct qcom_q6v5 *q6v5 = data;
-@@ -113,6 +137,9 @@ static irqreturn_t q6v5_wdog_interrupt(int irq, void *data)
- 		dev_err(q6v5->dev, "watchdog without message\n");
- 
+ 	list_for_each_entry_reverse(subdev, &rproc->subdevs, node) {
+ 		if (subdev->stop)
+ 			subdev->stop(subdev, true);
+@@ -139,8 +141,8 @@ static irqreturn_t q6v5_wdog_interrupt(int irq, void *data)
  	q6v5->running = false;
-+	if (q6v5->rproc->recovery_disabled)
-+		schedule_work(&q6v5->crash_handler);
-+
- 	rproc_report_crash(q6v5->rproc, RPROC_WATCHDOG);
+ 	if (q6v5->rproc->recovery_disabled)
+ 		schedule_work(&q6v5->crash_handler);
+-
+-	rproc_report_crash(q6v5->rproc, RPROC_WATCHDOG);
++	else
++		rproc_report_crash(q6v5->rproc, RPROC_WATCHDOG);
  
  	return IRQ_HANDLED;
-@@ -134,6 +161,9 @@ static irqreturn_t q6v5_fatal_interrupt(int irq, void *data)
- 		dev_err(q6v5->dev, "fatal error without message\n");
- 
+ }
+@@ -163,8 +165,8 @@ static irqreturn_t q6v5_fatal_interrupt(int irq, void *data)
  	q6v5->running = false;
-+	if (q6v5->rproc->recovery_disabled)
-+		schedule_work(&q6v5->crash_handler);
-+
- 	rproc_report_crash(q6v5->rproc, RPROC_FATAL_ERROR);
+ 	if (q6v5->rproc->recovery_disabled)
+ 		schedule_work(&q6v5->crash_handler);
+-
+-	rproc_report_crash(q6v5->rproc, RPROC_FATAL_ERROR);
++	else
++		rproc_report_crash(q6v5->rproc, RPROC_FATAL_ERROR);
  
  	return IRQ_HANDLED;
-@@ -354,6 +384,7 @@ int qcom_q6v5_init(struct qcom_q6v5 *q6v5, struct platform_device *pdev,
- 	if (IS_ERR(q6v5->path))
- 		return dev_err_probe(&pdev->dev, PTR_ERR(q6v5->path),
- 				     "failed to acquire interconnect path\n");
-+	INIT_WORK(&q6v5->crash_handler, qcom_q6v5_crash_handler_work);
- 
- 	return 0;
  }
-diff --git a/drivers/remoteproc/qcom_q6v5.h b/drivers/remoteproc/qcom_q6v5.h
-index 5a859c4..b1654be 100644
---- a/drivers/remoteproc/qcom_q6v5.h
-+++ b/drivers/remoteproc/qcom_q6v5.h
-@@ -29,6 +29,8 @@ struct qcom_q6v5 {
- 	int handover_irq;
- 	int stop_irq;
- 
-+	struct work_struct crash_handler;
-+
- 	bool handover_issued;
- 
- 	struct completion start_done;
 -- 
 2.7.4
 
