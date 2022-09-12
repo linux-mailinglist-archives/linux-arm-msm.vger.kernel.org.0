@@ -2,83 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AF475B61A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 21:26:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 023805B61C9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 21:40:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230020AbiILT0V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 15:26:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48830 "EHLO
+        id S229582AbiILTkl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 15:40:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229677AbiILT0U (ORCPT
+        with ESMTP id S229456AbiILTkk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 15:26:20 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89D4C43E7F;
-        Mon, 12 Sep 2022 12:26:19 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28CFkXrJ032110;
-        Mon, 12 Sep 2022 19:26:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=rkNjMNHOv/NYMM/1RaZBcC4DunJrDyumUuvelfbNDUo=;
- b=gCYr3NZP7mPs0JwUmRZMSyy/bJOtb4CaIUf5/CPZywNWnqMOJpIno75gazkokHjoP50l
- X/RboO2ZHBSnCETxHVOzRzapw7FIxpPYsrTlNw7/R2PQc/eI/WtXOVNRAPHd3Wwgb8af
- iI2trXIls/di9FjMvnAKlacwTN8fmHjZZyFTFIsLF52hcTEJgk8x0Bo2l5XP/meV/sSq
- IkpKE18I8dO/TqacDtPqVFLPkPT825nGiGT60gFQ045u85adylKcvVHC2qnf4IIBPMUE
- FrpeyUFaq+sqMvtNhLE8BCqZjhE1k1RSFsc7bXzWXuyXnvj3su1vcgg4uwBC6wTftMCY Tg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jgk43p574-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Sep 2022 19:26:05 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28CJQ4rC017147
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Sep 2022 19:26:04 GMT
-Received: from [10.110.24.172] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 12 Sep
- 2022 12:26:03 -0700
-Message-ID: <61d591ff-c5d8-a032-9eaa-6ab4c535a679@quicinc.com>
-Date:   Mon, 12 Sep 2022 12:26:03 -0700
+        Mon, 12 Sep 2022 15:40:40 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47577476C1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 12:40:39 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id u22so9544675plq.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 12:40:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=reN5wXnTuCLuDR5wNe7lt3rMw3sDp5Q+m6oxec1H4aw=;
+        b=u5z/DuJdUpoI7Umw7soQw8TEWGOLi4554arXzKxejigplqHvL52rV6NeeEm1Y6q/qf
+         9eR+wU+u3R+6fv1CYpF9nvOXKtW/vpOsv/zONSZCIyUlyH6SuneWJfBp2GEiGi4wWOEy
+         yhNT6PXSmggbCDmWrsEKICRLAh6+qzu4xeVd7LtySAgghcXvqQbnubqHnkSh7xaqF081
+         QWLGDDrJbMj96g/FMzlPgKetfubG/xyfXxWxaMZGUvp2kCYKFEUhor06iawK/Lp1t5Ts
+         tCGyyaljcvrGLMZFkcf7Jo+p5PpkZw5hiMC1Fr2At3Hu+RbtEhrnE+4zcW7RB4ZSb9Cn
+         B+nA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=reN5wXnTuCLuDR5wNe7lt3rMw3sDp5Q+m6oxec1H4aw=;
+        b=xtEhcnrCY6Y+RCu4km5eSbmZ9QyHAr+sWjuv/Fx20jc3571rNp82zn3Z5eBMhbGZwQ
+         J/AbtNF4b5/lvXEIIy9Rwwd5S+xjIYVvV3ozJccuqYKAJ8yo5ZiclQsV81kSGvZ1Iw51
+         /LIpDXmeiiD2wpRQcTekuljmBQ0e3FirySfg8OjtTXXdXONnOiHtxcYLnjWHdDkf77RB
+         /NLAMddSQNtLG11g+NfOb1EkGiK4yxyLlhNOpN1AfjpwhKz4fb32+mquR1ZeBZLlA6IA
+         rwPouUKDPFqLvu2wV7PWQwxh+DZODB3DY6ajG5a8n+woyKgLqBV3BOoDqbBb28SbOrC1
+         KxiA==
+X-Gm-Message-State: ACgBeo0N/Jj3x/PNKOhCARFVvT4iacp6HDDtS74V3jYrK2X9VzS8tFKZ
+        88qXjXeStnf39vMSZyZQ7GTC5w==
+X-Google-Smtp-Source: AA6agR4Tdr5zJtzIUmmf8yiuX910IgZMhxBKKfK9LZzZLlliGnAAuB8NPee/ijCNolN+ifeWZ81XEw==
+X-Received: by 2002:a17:902:db0a:b0:178:2636:b6de with SMTP id m10-20020a170902db0a00b001782636b6demr10521516plx.58.1663011638725;
+        Mon, 12 Sep 2022 12:40:38 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1c60:5362:9d7f:2354:1d0a:78e3])
+        by smtp.gmail.com with ESMTPSA id x12-20020a170902ec8c00b001709b9d292esm6486362plg.268.2022.09.12.12.40.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Sep 2022 12:40:38 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        andersson@kernel.org, linux-arm-msm@vger.kernel.org,
+        daniel.lezcano@linaro.org, rafael@kernel.org,
+        dmitry.baryshkov@linaro.org, Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>
+Subject: [PATCH v2 1/2] thermal: Introduce CONFIG_QCOM_THERMAL in Makefile and qcom/Kconfig
+Date:   Tue, 13 Sep 2022 01:10:27 +0530
+Message-Id: <20220912194028.3584378-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH v5 3/3] drm/msm/dp: retry 3 times if set sink to D0 poweer
- state failed
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
-        <agross@kernel.org>, <bjorn.andersson@linaro.org>
-CC:     <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1662999830-13916-1-git-send-email-quic_khsieh@quicinc.com>
- <1662999830-13916-4-git-send-email-quic_khsieh@quicinc.com>
- <067c7bc0-4746-f714-db56-a3c9e4f25588@linaro.org>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <067c7bc0-4746-f714-db56-a3c9e4f25588@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9nVmejWZCrRQ_evv2KlVzd7WHkceDug0
-X-Proofpoint-ORIG-GUID: 9nVmejWZCrRQ_evv2KlVzd7WHkceDug0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-12_13,2022-09-12_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 clxscore=1015
- mlxscore=0 priorityscore=1501 impostorscore=0 phishscore=0 bulkscore=0
- malwarescore=0 adultscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2207270000
- definitions=main-2209120065
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,58 +71,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Introduce CONFIG_QCOM_THERMAL to allow better control
+over selection of various Qualcomm Thermal drivers
+available inside qcom/ directory.
 
-On 9/12/2022 11:37 AM, Dmitry Baryshkov wrote:
-> On 12/09/2022 19:23, Kuogee Hsieh wrote:
->> Bring sink out of D3 (power down) mode into D0 (normal operation) mode
->> by setting DP_SET_POWER_D0 bit to DP_SET_POWER dpcd register. This
->> patch will retry 3 times if written to DP_SET_POWER register failed.
->
-> Could you please elaborate this change? Can the sink succeed in 
-> reading the DP_SET_POWER, but fail writing DP_SET_POWER?
+This is a preparatory change to allow new drivers to
+be added inside qcom/ directory in a more structured
+fashion later-on.
 
-yes, there is possible since it is not only set local sink device but 
-also all downstream sink devices to D0 state.
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc: Amit Kucheria <amitk@kernel.org>
+Cc: Thara Gopinath <thara.gopinath@gmail.com>
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+- v1 can be viewed here: https://www.spinics.net/lists/kernel/msg4510793.html
+- Fixed review comments from Dmitry received in v1.
 
->
->>
->> Changes in v5:
->> -- split into two patches
->>
->> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/dp/dp_link.c | 13 ++++++++-----
->>   1 file changed, 8 insertions(+), 5 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/dp/dp_link.c 
->> b/drivers/gpu/drm/msm/dp/dp_link.c
->> index 9d5381d..4360728 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_link.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_link.c
->> @@ -50,6 +50,7 @@ static int dp_aux_link_power_up(struct drm_dp_aux 
->> *aux,
->>   {
->>       u8 value;
->>       ssize_t len;
->> +    int i;
->>         if (link->revision < 0x11)
->>           return 0;
->> @@ -61,11 +62,13 @@ static int dp_aux_link_power_up(struct drm_dp_aux 
->> *aux,
->>       value &= ~DP_SET_POWER_MASK;
->>       value |= DP_SET_POWER_D0;
->>   -    len = drm_dp_dpcd_writeb(aux, DP_SET_POWER, value);
->> -    if (len < 0)
->> -        return len;
->> -
->> -    usleep_range(1000, 2000);
->> +    /* retry for 1ms to give the sink time to wake up */
->> +    for (i = 0; i < 3; i++) {
->> +        len = drm_dp_dpcd_writeb(aux, DP_SET_POWER, value);
->> +        usleep_range(1000, 2000);
->> +        if (len == 1)
->> +            break;
->> +    }
->>         return 0;
->>   }
->
+ drivers/thermal/Makefile     |  2 +-
+ drivers/thermal/qcom/Kconfig | 12 ++++++++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/thermal/Makefile b/drivers/thermal/Makefile
+index def8e1a0399c..2506c6c8ca83 100644
+--- a/drivers/thermal/Makefile
++++ b/drivers/thermal/Makefile
+@@ -52,7 +52,7 @@ obj-$(CONFIG_DA9062_THERMAL)	+= da9062-thermal.o
+ obj-y				+= intel/
+ obj-$(CONFIG_TI_SOC_THERMAL)	+= ti-soc-thermal/
+ obj-y				+= st/
+-obj-$(CONFIG_QCOM_TSENS)	+= qcom/
++obj-y				+= qcom/
+ obj-y				+= tegra/
+ obj-$(CONFIG_HISI_THERMAL)     += hisi_thermal.o
+ obj-$(CONFIG_MTK_THERMAL)	+= mtk_thermal.o
+diff --git a/drivers/thermal/qcom/Kconfig b/drivers/thermal/qcom/Kconfig
+index 2c7f3f9a26eb..ccfd090273c1 100644
+--- a/drivers/thermal/qcom/Kconfig
++++ b/drivers/thermal/qcom/Kconfig
+@@ -1,8 +1,17 @@
+ # SPDX-License-Identifier: GPL-2.0-only
++
++config QCOM_THERMAL
++	tristate "Thermal drivers on Qualcomm Snapdragon series of SoCs"
++	help
++	  Support for thermal drivers on Qualcomm Snapdragon series of SoCs.
++	  There are several thermal sensors available on the Qualcomm Socs
++	  which can be used for thermal mitigation purposes.
++
+ config QCOM_TSENS
+ 	tristate "Qualcomm TSENS Temperature Alarm"
+ 	depends on NVMEM_QCOM_QFPROM
+ 	depends on ARCH_QCOM || COMPILE_TEST
++	select QCOM_THERMAL
+ 	help
+ 	  This enables the thermal sysfs driver for the TSENS device. It shows
+ 	  up in Sysfs as a thermal zone with multiple trip points. Disabling the
+@@ -15,6 +24,7 @@ config QCOM_SPMI_ADC_TM5
+ 	depends on OF && SPMI && IIO
+ 	select REGMAP_SPMI
+ 	select QCOM_VADC_COMMON
++	select QCOM_THERMAL
+ 	help
+ 	  This enables the thermal driver for the ADC thermal monitoring
+ 	  device. It shows up as a thermal zone with multiple trip points.
+@@ -25,6 +35,7 @@ config QCOM_SPMI_TEMP_ALARM
+ 	tristate "Qualcomm SPMI PMIC Temperature Alarm"
+ 	depends on OF && SPMI && IIO
+ 	select REGMAP_SPMI
++	select QCOM_THERMAL
+ 	help
+ 	  This enables a thermal sysfs driver for Qualcomm plug-and-play (QPNP)
+ 	  PMIC devices. It shows up in sysfs as a thermal sensor with multiple
+@@ -35,6 +46,7 @@ config QCOM_SPMI_TEMP_ALARM
+ config QCOM_LMH
+ 	tristate "Qualcomm Limits Management Hardware"
+ 	depends on ARCH_QCOM && QCOM_SCM
++	select QCOM_THERMAL
+ 	help
+ 	  This enables initialization of Qualcomm limits management
+ 	  hardware(LMh). LMh allows for hardware-enforced mitigation for cpus based on
+-- 
+2.37.1
+
