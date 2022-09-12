@@ -2,73 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F8E55B5F75
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 19:37:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 399F85B5F9E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 19:53:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229742AbiILRhv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 13:37:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48714 "EHLO
+        id S229536AbiILRxD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 13:53:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229511AbiILRhu (ORCPT
+        with ESMTP id S229770AbiILRwt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 13:37:50 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 547B029CB7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 10:37:49 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id u132so9309978pfc.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 10:37:49 -0700 (PDT)
+        Mon, 12 Sep 2022 13:52:49 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F372F3F33B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 10:52:47 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id k10so16111610lfm.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 10:52:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=rDSb8wBkava5eJX1NDUA2GSRdCj2vETP+h2CNX/Jsas=;
-        b=zid13Oa92HtzMnA32QRfh2V53dl3pMFmtq47ObgaNEWfIMYFalfim0e9lrFkJFYuu+
-         /G6U2No3QUsfUeJhSLinRAudXTDfo52ev29lh2uiP4FyZuKt0Xmg4WiPG9zAc+aLHyIF
-         uriKINcJ3tdoVNZeqKwpIHC8qiyreEcyJ+tAw2HkCsHu4qsetsVBKtmoa/2MX8ZHs5oe
-         Ciww/EJDUHkLBeHM41n9wKRCSrjQ5rRqSGIJvSt585itKEdLIiSmP3okgiWDsbQ0Dlkw
-         CKqMqMEsS4D5tzHDW4uxMAxnO8ZCi56RqnuTgXWCtvlrQM8qUNPeL45q/Hol8JmdYyk+
-         95Bg==
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=XI0KQ8q7PFkFGP0DABWmIIcFsiDPrqSNCN4sbyFUatc=;
+        b=zfaxxC5hscfj2i6FJ63hXlCZ02ftU84yLDoSWWK3pMIfqcAOk0lfJ8g9V9MQ57cc7S
+         LXhqgILB3CTzBl6YbJaGZBhQeLi5CupsiCKLmsTZXJMNHkIVz+tE65jLGZjhxr3UzhEr
+         LJ12NAzoLkt+3OKVwzPYos7aPoY9tCl31cGYy/V19u0/onROlQwINcPQQMHq1Otg9Jqy
+         iGvuG0p+QNbs0qpXSJ0kFbWVNJ6Me5XFsxTPakWVFntoyXESNNCYBqGwuddC4grJoBgx
+         6JP9y6CqhmdoubaNUVL70rb9wVzVfpI0gvLECNIR1KYNr1iZNz8HK9QDrFh6Fkbv2WWz
+         8hMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=rDSb8wBkava5eJX1NDUA2GSRdCj2vETP+h2CNX/Jsas=;
-        b=sRBqGoPbupPLnerKjbUYSIMEKNizDuDulA8XFkkAxnjMeNnBp3ZjWnmxc8lM2IMpKG
-         w5VdTrcFZIeU8fQE9l8UQ3y5E3g/d5M7a8e3Q34FmnDzYmXAdcbXPWwz8n2psSsr86gY
-         p/MNR+2hj9SwE38T1y7N/PGfssdSdwpQFwfsziAPqt8XD1YzWjJVWcJlNhtg3bHI32YT
-         iROJbTPsbSpkEx398ojIbB+mUaqoG3QEcGpK9t4qQw0m7pjn8Cq0ArA08A7mJVO9nZnl
-         zJq35w0oneYo3I+rdGRuNUHKCS2XZZ0vKXCAbx06WL3I4r1s63MTUNc94hsqy1IaGhLZ
-         FuEA==
-X-Gm-Message-State: ACgBeo21SmhOG8DXAUb6woZs+bn73ASOIsGGA4NqDtV0IhYe89ks1W1m
-        5/zjUetemqO+pWu9dxpy3cuF
-X-Google-Smtp-Source: AA6agR4l3pM0O1E/J+Y4AXeoLROuvig+uKorFygfak4fjEPRdVYtXmMT6bcOpodc5WOyYIQWlBdH4Q==
-X-Received: by 2002:a65:6e0c:0:b0:438:a981:aea7 with SMTP id bd12-20020a656e0c000000b00438a981aea7mr12291165pgb.144.1663004268806;
-        Mon, 12 Sep 2022 10:37:48 -0700 (PDT)
-Received: from workstation ([117.202.184.122])
-        by smtp.gmail.com with ESMTPSA id y65-20020a62ce44000000b00536816c0d4asm6003024pfg.147.2022.09.12.10.37.44
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Sep 2022 10:37:47 -0700 (PDT)
-Date:   Mon, 12 Sep 2022 23:07:42 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mka@chromium.org, quic_vbadigan@quicinc.com,
-        quic_hemantk@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
-        swboyd@chromium.org, dmitry.baryshkov@linaro.org
-Subject: Re: [PATCH v6 0/5] PCI: qcom: Add system suspend & resume support
-Message-ID: <20220912173742.GC25849@workstation>
-References: <1662713084-8106-1-git-send-email-quic_krichai@quicinc.com>
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=XI0KQ8q7PFkFGP0DABWmIIcFsiDPrqSNCN4sbyFUatc=;
+        b=k+lcsuhCmb7hepiYfBSbpZZ9vqaQiEdDvWYzwVsiFAD+LDwm6Fomrew5UnbTjC4bOl
+         WhlKasjQxlZIqVVWQ8L/+cPwa1nYR+9/N7ibrEKSWLiM8ETfJeFF7fyBNeijqAp886yj
+         5oYfmhuU+KHGD8HXT2yPmc4X1jq+lnmtr5iLhH2LZlREgmhLoOzfAPDT/68GyxzJmlCo
+         He/8XgiL0C8IMR2zqfIOOgW4KWFQxYL24DbCZ6oKzNMvumOUF/opZ23niBHP9F0Ks2E7
+         GXAwMkgm+5kftGMulewdh2vVzBA77cgMv1Of+oDfP1Nc4lv1oQm+kBFMdVKmAB5H+MHI
+         518A==
+X-Gm-Message-State: ACgBeo04YnGmG3K3HzoDockzTkg4OHBx31DmCCWK7So96HBH6iebi1fg
+        4QuOeZBkvRq6zDeHikQcTyuJ/w==
+X-Google-Smtp-Source: AA6agR58ddpzRviculgzcBsEBBSueupQl4jo1hgZZERI2CZncjlF8Iz+Ts2+bJzkmZw/T9tGQdi85w==
+X-Received: by 2002:a05:6512:6d5:b0:494:990f:a820 with SMTP id u21-20020a05651206d500b00494990fa820mr9906341lff.536.1663005166350;
+        Mon, 12 Sep 2022 10:52:46 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id q24-20020a2eb4b8000000b0026acd11cd51sm1216736ljm.59.2022.09.12.10.52.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Sep 2022 10:52:45 -0700 (PDT)
+Message-ID: <518564a8-5206-80cc-8306-50296de43abf@linaro.org>
+Date:   Mon, 12 Sep 2022 20:52:44 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1662713084-8106-1-git-send-email-quic_krichai@quicinc.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.1
+Subject: Re: [PATCH 1/7] drm/msm: fix use-after-free on probe deferral
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@gmail.com>
+Cc:     Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org
+References: <20220912154046.12900-1-johan+linaro@kernel.org>
+ <20220912154046.12900-2-johan+linaro@kernel.org>
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220912154046.12900-2-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,57 +90,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 09, 2022 at 02:14:39PM +0530, Krishna chaitanya chundru wrote:
-> Add suspend and resume syscore ops.
+On 12/09/2022 18:40, Johan Hovold wrote:
+> The bridge counter was never reset when tearing down the DRM device so
+> that stale pointers to deallocated structures would be accessed on the
+> next tear down (e.g. after a second late bind deferral).
 > 
-> When system suspends, and if the link is in L1ss, disable the clocks
-> and power down the phy so that system enters into low power state by
-> parking link in L1ss to save the maximum power. And when the system
-> resumes, enable the clocks back and power on phy if they are disabled
-> in the suspend path.
+> Given enough bridges and a few probe deferrals this could currently also
+> lead to data beyond the bridge array being corrupted.
 > 
+> Fixes: d28ea556267c ("drm/msm: properly add and remove internal bridges")
+> Cc: stable@vger.kernel.org      # 5.19
 
-You need to mention that you are only turning off the PCIe controller
-clocks and PHY is still powered by a separate domain (MX) so the link
-statys intact.
+Fixes: a3376e3ec81c ("drm/msm: convert to drm_bridge")
+Cc: stable@vger.kernel.org # 3.12
 
-> we are doing this only when link is in l1ss but not in L2/L3 as
-> nowhere we are forcing link to L2/L3 by sending PME turn off.
-> 
-> is_suspended flag indicates if the clocks are disabled in the suspend
-> path or not.
-> 
-> There is access to Ep PCIe space to mask MSI/MSIX after pm suspend ops
-> (getting hit by affinity changes while making CPUs offline during suspend,
-> this will happen after devices are suspended (all phases of suspend ops)).
-> When registered with pm ops there is a crash due to un-clocked access,
-> as in the pm suspend op clocks are disabled. So, registering with syscore
-> ops which will called after making CPUs offline.
-> 
-> Make GDSC always on to ensure controller and its dependent clocks
-> won't go down during system suspend.
-> 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Where is the changelog? You seem to have added PHY and CLK patches to
-this series. You need to comment on that.
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>   drivers/gpu/drm/msm/msm_drv.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index 391d86b54ded..d254fe2507ec 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -241,6 +241,7 @@ static int msm_drm_uninit(struct device *dev)
+>   
+>   	for (i = 0; i < priv->num_bridges; i++)
+>   		drm_bridge_remove(priv->bridges[i]);
+> +	priv->num_bridges = 0;
+>   
+>   	pm_runtime_get_sync(dev);
+>   	msm_irq_uninstall(ddev);
 
-Thanks,
-Mani
+-- 
+With best wishes
+Dmitry
 
-> Krishna chaitanya chundru (5):
->   PCI: qcom: Add system suspend and resume support
->   PCI: qcom: Add retry logic for link to be stable in L1ss
->   phy: core: Add support for phy power down & power up
->   phy: qcom: Add power down/up callbacks to pcie phy
->   clk: qcom: Alwaya on pcie gdsc
-> 
->  drivers/clk/qcom/gcc-sc7280.c            |   2 +-
->  drivers/pci/controller/dwc/pcie-qcom.c   | 156 ++++++++++++++++++++++++++++++-
->  drivers/phy/phy-core.c                   |  30 ++++++
->  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c |  50 ++++++++++
->  include/linux/phy/phy.h                  |  20 ++++
->  5 files changed, 256 insertions(+), 2 deletions(-)
-> 
-> -- 
-> 2.7.4
-> 
