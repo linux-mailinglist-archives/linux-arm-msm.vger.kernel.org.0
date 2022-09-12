@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECE105B6114
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 20:36:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 159375B6115
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 20:37:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231134AbiILSgg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 14:36:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49062 "EHLO
+        id S230185AbiILShD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 14:37:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231147AbiILSgT (ORCPT
+        with ESMTP id S230196AbiILSgo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 14:36:19 -0400
-Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAF76491D1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 11:32:11 -0700 (PDT)
-Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-1279948d93dso25634833fac.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 11:32:11 -0700 (PDT)
+        Mon, 12 Sep 2022 14:36:44 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AAAA4A83F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 11:32:30 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id h9-20020a9d5549000000b0063727299bb4so6456486oti.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 11:32:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date;
-        bh=zpbDl2VRI0jEyf87pDBReXUMtBgWCD1C0nyYDSr/ErQ=;
-        b=L0q09VYXhO9Z7vI+bvaNu/YjVjM7QHirWRa9UZYPNcq5g71v1YvRUzIYDTL+VcC0G8
-         8LZ4wzg2kFU/TUuAKXmuJNFOo1fqt7hlaMJGh3MHMoO5pZOYlWmJwXDUukhhjp1MJ8iw
-         tTTEqQFLx1Z6HtkOHDx0iQZf1GINQRMpDm4dZMfUF1zNwb/Hw07ZzhLePKh2Mos0ck/t
-         /OsmEL7j8kClhAdICdRLh6ctjfE9I0HmNnH3EdQ7rmc20d5gE+x8EQxa2PPqeOhAoyba
-         PejEPXFDSnatPmuWTfBTIy1KWAX/nj+X7S5khfptujRFqOJSZlyBOp5L08WrBf01/Caq
-         CqzQ==
+        bh=5QwFkDMgKkbP/GEnUP+j+PWxyG7UMzMduL0spMsTzY4=;
+        b=IyPq9/rQc/4J6tpC42BGlD+iy0z9rDaY7GrfGcwgZPRM/HkiuqLd+I8eV5ob39LVrw
+         J6ZpOdB2UroMhJbvApIMS0YdzNEQ/Zxm7ax7lHIqtMfGdz4EW4eUOqTE+caQEnrF7EiQ
+         Uz41Zs/09El0sOYEF6AmyLYhLEqkDv5iSS6+Rd1mwskJ9xVrM6b75p+Ku/eU4EewP1uB
+         Xn0LXIkwTQBAbfY4LNlrRNfyyZNKSYukKl1Cl+kd4tOIwSfB4UdkZFOFT/CeyGp0trvr
+         DSPPlnuM3Y1v7ITk04D7o9cU/WVp6mm1Dx8zERP0r0N+OxleEWRSZxX7YCTns7Vnrpu4
+         nCXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=zpbDl2VRI0jEyf87pDBReXUMtBgWCD1C0nyYDSr/ErQ=;
-        b=JhhCzyeNv3b5BNDeokFdgJ6AMBijnLGpAEYZ0TPOgZyCQmvfDeDRKl73A0+o5fByWV
-         iT3NOri3lBgTsTlJKN5Ypd2Cf4hhVGM6taTvnoXA1POgjID8sAc6KSyol4DG9de/silI
-         N8K2DIEq5n4ySLn0M4U9tKeuLvTTYAzNoJ0aTIPxmUZdlabEUr1GiEygFYiCQOC6ROIJ
-         6ScZ9t039xCzsR5Q9ad+fSu9mEyNBfCqpy6r11sE9Dz6L840m6+WOLV/Yf8FzLHMX5Dw
-         ctk9Bc4fsFqUF+2nUe/vPykzXoPQv9ffntXqDVj2xRTUmL68INsbFWiEb9ZjSL9IotM3
-         Tdxw==
-X-Gm-Message-State: ACgBeo0yZRm/XRFGW/MXOSOOEGbHlGj7b1l0KnUYzPfYwnHCPLzXMZGB
-        t5uHRd7eNS88ifyDWtJzgXEQGPEuLLe9a9MsFux91qLN
-X-Google-Smtp-Source: AA6agR6GnImjTj9JSjWMVZx/NyAr25mw2+kIGF6biUaSjd1wf5WUIxb0AWaugopgce/Jg2M4tKdZhNOZBcTvumd4ts4=
-X-Received: by 2002:a05:6871:14e:b0:127:3f08:4599 with SMTP id
- z14-20020a056871014e00b001273f084599mr12351803oab.183.1663007529847; Mon, 12
- Sep 2022 11:32:09 -0700 (PDT)
+        bh=5QwFkDMgKkbP/GEnUP+j+PWxyG7UMzMduL0spMsTzY4=;
+        b=xZ/QDaTRJwOWW3DfG85Aq6WdzSi1Wa6rY0gMoMbicrdIi0V+kI7scuGXsvmgH1PM5l
+         TXJOj/d42J5R2HDZO7ptbVlEoukuqg+9s5FkI+btdoyTG3W9khrXq1YA0mowJwPZGJUU
+         LSJegfdsoxLQnVJGwcg0QXpm+eReHxaJswKstbH7/Rxhdq3GIpA7QEvpcQXoYfAJhJjI
+         h45aC/EqTVkfxnJ2WudTG6k6tRP8R4YhfaVTEUhfQaExLXxRU/sL9pROOUODkRyGooYL
+         HPmzOfZK6Nbx41rdulfnZql4scRvfeoJELCtFgTiN8qmeC6Xz+G6kDY2vUkYZy96fNBw
+         EFZw==
+X-Gm-Message-State: ACgBeo1BpGSAD5JtM9bZ9KkbdQmL2qfkFGqSx97MgIa98mpkMqzokGxc
+        wtAyD3engvr00KhoRfkT2ltNlZW5vsaJbOG0AwTfeV8zV+g=
+X-Google-Smtp-Source: AA6agR4IEITK4XqV1UYLjZnckajF/8GH/zLGK1yVGOGpJwosNlVweOu+YFyCZGOQtqONc/vp/LjjKvc5q7/J2BsD9cA=
+X-Received: by 2002:a05:6830:3101:b0:655:c143:80e2 with SMTP id
+ b1-20020a056830310100b00655c14380e2mr4872980ots.22.1663007548366; Mon, 12 Sep
+ 2022 11:32:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220901203422.217-1-quic_jesszhan@quicinc.com> <20220901203422.217-2-quic_jesszhan@quicinc.com>
-In-Reply-To: <20220901203422.217-2-quic_jesszhan@quicinc.com>
+References: <20220901203422.217-1-quic_jesszhan@quicinc.com> <20220901203422.217-3-quic_jesszhan@quicinc.com>
+In-Reply-To: <20220901203422.217-3-quic_jesszhan@quicinc.com>
 From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 12 Sep 2022 11:32:00 -0700
-Message-ID: <CAF6AEGu1X6aPn8d-sE98PnmhkDEm6sJ6zT=yFN+h7Vum8TspgQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] drm/msm/dpu: Add support for XR30 format
+Date:   Mon, 12 Sep 2022 11:32:18 -0700
+Message-ID: <CAF6AEGuRCeCcrnhWWTKL7+kxdqb5Uifj3ChOP7-RsRFUMLZnzA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] drm/msm/dpu: Add support for P010 format
 To:     Jessica Zhang <quic_jesszhan@quicinc.com>
 Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, seanpaul@chromium.org,
@@ -70,7 +70,7 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Thu, Sep 1, 2022 at 1:34 PM Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
 >
-> Add support for XR30 color format. This supports both linear and
+> Add support for P010 color format. This adds support for both linear and
 > compressed formats.
 >
 > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
@@ -78,68 +78,77 @@ On Thu, Sep 1, 2022 at 1:34 PM Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
 Reviewed-by: Rob Clark <robdclark@gmail.com>
 
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c    | 7 +++++++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 ++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 1 +
->  3 files changed, 10 insertions(+)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c    | 17 ++++++++++++++++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  1 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      |  1 +
+>  3 files changed, 18 insertions(+), 1 deletion(-)
 >
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> index f436a1f3419d..57971c08f57c 100644
+> index 57971c08f57c..d95540309d4d 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> @@ -524,6 +524,12 @@ static const struct dpu_format dpu_format_map_ubwc[] = {
->                 true, 4, DPU_FORMAT_FLAG_DX | DPU_FORMAT_FLAG_COMPRESSED,
->                 DPU_FETCH_UBWC, 2, DPU_TILE_HEIGHT_UBWC),
+> @@ -434,6 +434,12 @@ static const struct dpu_format dpu_format_map[] = {
+>                 DPU_CHROMA_H2V1, DPU_FORMAT_FLAG_YUV,
+>                 DPU_FETCH_LINEAR, 2),
 >
-> +       INTERLEAVED_RGB_FMT_TILED(XRGB2101010,
-> +               COLOR_8BIT, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
-> +               C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA, 4,
-> +               true, 4, DPU_FORMAT_FLAG_DX | DPU_FORMAT_FLAG_COMPRESSED,
-> +               DPU_FETCH_UBWC, 2, DPU_TILE_HEIGHT_UBWC),
+> +       PSEUDO_YUV_FMT_LOOSE(P010,
+> +               0, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
+> +               C1_B_Cb, C2_R_Cr,
+> +               DPU_CHROMA_420, DPU_FORMAT_FLAG_DX | DPU_FORMAT_FLAG_YUV,
+> +               DPU_FETCH_LINEAR, 2),
 > +
->         PSEUDO_YUV_FMT_TILED(NV12,
+>         INTERLEAVED_YUV_FMT(VYUY,
 >                 0, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
->                 C1_B_Cb, C2_R_Cr,
-> @@ -571,6 +577,7 @@ static int _dpu_format_get_media_color_ubwc(const struct dpu_format *fmt)
->                 {DRM_FORMAT_XBGR8888, COLOR_FMT_RGBA8888_UBWC},
->                 {DRM_FORMAT_XRGB8888, COLOR_FMT_RGBA8888_UBWC},
->                 {DRM_FORMAT_ABGR2101010, COLOR_FMT_RGBA1010102_UBWC},
-> +               {DRM_FORMAT_XRGB2101010, COLOR_FMT_RGBA1010102_UBWC},
->                 {DRM_FORMAT_XBGR2101010, COLOR_FMT_RGBA1010102_UBWC},
->                 {DRM_FORMAT_BGR565, COLOR_FMT_RGB565_UBWC},
->         };
+>                 C2_R_Cr, C0_G_Y, C1_B_Cb, C0_G_Y,
+> @@ -536,6 +542,14 @@ static const struct dpu_format dpu_format_map_ubwc[] = {
+>                 DPU_CHROMA_420, DPU_FORMAT_FLAG_YUV |
+>                                 DPU_FORMAT_FLAG_COMPRESSED,
+>                 DPU_FETCH_UBWC, 4, DPU_TILE_HEIGHT_NV12),
+> +
+> +       PSEUDO_YUV_FMT_TILED(P010,
+> +               0, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
+> +               C1_B_Cb, C2_R_Cr,
+> +               DPU_CHROMA_420, DPU_FORMAT_FLAG_DX |
+> +                               DPU_FORMAT_FLAG_YUV |
+> +                               DPU_FORMAT_FLAG_COMPRESSED,
+> +               DPU_FETCH_UBWC, 4, DPU_TILE_HEIGHT_UBWC),
+>  };
+>
+>  /* _dpu_get_v_h_subsample_rate - Get subsample rates for all formats we support
+> @@ -584,7 +598,8 @@ static int _dpu_format_get_media_color_ubwc(const struct dpu_format *fmt)
+>         int color_fmt = -1;
+>         int i;
+>
+> -       if (fmt->base.pixel_format == DRM_FORMAT_NV12) {
+> +       if (fmt->base.pixel_format == DRM_FORMAT_NV12 ||
+> +           fmt->base.pixel_format == DRM_FORMAT_P010) {
+>                 if (DPU_FORMAT_IS_DX(fmt)) {
+>                         if (fmt->unpack_tight)
+>                                 color_fmt = COLOR_FMT_NV12_BPP10_UBWC;
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index 0239a811d5ec..53b6edb2f563 100644
+> index 53b6edb2f563..199a2f755db4 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -156,6 +156,7 @@ static const uint32_t plane_formats[] = {
->         DRM_FORMAT_RGBX8888,
->         DRM_FORMAT_BGRX8888,
->         DRM_FORMAT_XBGR8888,
-> +       DRM_FORMAT_XRGB2101010,
->         DRM_FORMAT_RGB888,
->         DRM_FORMAT_BGR888,
->         DRM_FORMAT_RGB565,
-> @@ -184,6 +185,7 @@ static const uint32_t plane_formats_yuv[] = {
->         DRM_FORMAT_RGBA8888,
->         DRM_FORMAT_BGRX8888,
->         DRM_FORMAT_BGRA8888,
-> +       DRM_FORMAT_XRGB2101010,
->         DRM_FORMAT_XRGB8888,
->         DRM_FORMAT_XBGR8888,
->         DRM_FORMAT_RGBX8888,
+> @@ -210,6 +210,7 @@ static const uint32_t plane_formats_yuv[] = {
+>         DRM_FORMAT_RGBX4444,
+>         DRM_FORMAT_BGRX4444,
+>
+> +       DRM_FORMAT_P010,
+>         DRM_FORMAT_NV12,
+>         DRM_FORMAT_NV21,
+>         DRM_FORMAT_NV16,
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index a617a3d8b1bc..60ea834dc8d6 100644
+> index 60ea834dc8d6..f130bf783081 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -69,6 +69,7 @@ static const uint32_t qcom_compressed_supported_formats[] = {
->         DRM_FORMAT_ARGB8888,
->         DRM_FORMAT_XBGR8888,
->         DRM_FORMAT_XRGB8888,
-> +       DRM_FORMAT_XRGB2101010,
+> @@ -73,6 +73,7 @@ static const uint32_t qcom_compressed_supported_formats[] = {
 >         DRM_FORMAT_BGR565,
 >
 >         DRM_FORMAT_NV12,
+> +       DRM_FORMAT_P010,
+>  };
+>
+>  /**
 > --
 > 2.35.1
 >
