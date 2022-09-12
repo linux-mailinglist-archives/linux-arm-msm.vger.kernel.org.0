@@ -2,210 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 31A985B642A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 01:31:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D93B95B6446
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 01:43:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229670AbiILXbE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 19:31:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34098 "EHLO
+        id S229630AbiILXnL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 19:43:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229616AbiILXbD (ORCPT
+        with ESMTP id S229482AbiILXnL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 19:31:03 -0400
+        Mon, 12 Sep 2022 19:43:11 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C631117E19;
-        Mon, 12 Sep 2022 16:31:02 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28CN1iBG030048;
-        Mon, 12 Sep 2022 23:30:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=H4gkJ7lGhBwpNvavzob6IRQ3LblFZ9KJi9jYLAfVmVY=;
- b=IGCH03/PZYff36omPoq29fAZzh2ANWlX+NkoE3xvnUY393/m8F6dUmldCp8Lohdnhymk
- hM5tbvpv3vcoNm0Y1EL2mLTYcq787vNyGBYbTRLqR9t+bs/WF0elcmCDNXpyWLlO93pc
- mk8h0q33i9cQTGktMcuaw0o5ZCnyDHkLXhU1YqGZGC/C1qebwxoLKZLON58e2kX4R+7y
- /IISJfDxDgmjtJv3M2WBO/ffK/GmGfao0wqI0YUjvnRHEFNbWZRS0fazqOOtiOUD4MoZ
- 3qbNi8Fnx8TvAE9ESuO1UYw/OlRPOIF9zcwH5GN0U5V/zXMwXotpQ+BJ3c7fnbcxPXlQ VQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jgk2axmgu-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9608550070;
+        Mon, 12 Sep 2022 16:43:09 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28CMZZAQ026715;
+        Mon, 12 Sep 2022 23:42:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=MrdPCVKJW19ifdLWsUR1qiE5pu616/8/sWAfZWiWc8E=;
+ b=mmwoAt8rS+Kgx0FvSWUvy6a6LQ+dQKKOB5/U7ZAsFTK0J+EiORRsb2cFqDKNIRoqypa6
+ Tf+qMRxtl2HMJCbapi8x9+/M02FBTwHj7VAifC76BQBY1KSpfV3+0QUz6hhxAW3msAux
+ XK32daV8s0WzCQ55nbLyjWfgt3OvO62uZQKE6v8PP/e/IGdDbLKt1xH9gYrv/mlcpoZD
+ SyYt802uADQdpuHWUKjbY/nN+5KQ6cwFC/crGAM58qt99t+BiTn/6fQ+0Bnqi06qIChP
+ OOQD+0+XGUye/yzSAKdnFN354ZXjli6PpAd89xVdcgoRedZPTWf31jtdmg8J8tLgNuJ7 FQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jgk0denwc-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Sep 2022 23:30:48 +0000
-Received: from pps.filterd (NALASPPMTA02.qualcomm.com [127.0.0.1])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 28CNPk2t027949;
-        Mon, 12 Sep 2022 23:25:46 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by NALASPPMTA02.qualcomm.com (PPS) with ESMTPS id 3jj1ubtpb8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Sep 2022 23:25:46 +0000
-Received: from NALASPPMTA02.qualcomm.com (NALASPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 28CNPkcO027944;
-        Mon, 12 Sep 2022 23:25:46 GMT
+        Mon, 12 Sep 2022 23:42:58 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (PPS) with ESMTPS id 28CNPkZl027943
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28CNgvl1008893
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Sep 2022 23:25:46 +0000
-Received: from quicinc.com (10.49.16.6) by nalasex01a.na.qualcomm.com
+        Mon, 12 Sep 2022 23:42:57 GMT
+Received: from [10.111.167.172] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 12 Sep
- 2022 16:25:46 -0700
-From:   Jeff Johnson <quic_jjohnson@quicinc.com>
-To:     Alex Elder <elder@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        "Paolo Abeni" <pabeni@redhat.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Kalle Valo <kvalo@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <linux-kernel@vger.kernel.org>,
-        Jeff Johnson <quic_jjohnson@quicinc.com>
-Subject: [PATCH 4/4] soc: qcom: pdr: Make QMI message rules const
-Date:   Mon, 12 Sep 2022 16:25:26 -0700
-Message-ID: <20220912232526.27427-5-quic_jjohnson@quicinc.com>
-X-Mailer: git-send-email 2.37.0
-In-Reply-To: <20220912232526.27427-4-quic_jjohnson@quicinc.com>
-References: <20220912232526.27427-1-quic_jjohnson@quicinc.com>
- <20220912232526.27427-2-quic_jjohnson@quicinc.com>
- <20220912232526.27427-3-quic_jjohnson@quicinc.com>
- <20220912232526.27427-4-quic_jjohnson@quicinc.com>
+ 2022 16:42:55 -0700
+Message-ID: <94e0ae94-c8f8-8aa5-606d-68e3abca5a9e@quicinc.com>
+Date:   Mon, 12 Sep 2022 16:42:53 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH] drm/msm/mdp5: fix kernel panic during shutdown
+Content-Language: en-US
+To:     Fabien Parent <fabien.parent@linaro.org>, <robdclark@gmail.com>,
+        <dmitry.baryshkov@linaro.org>
+CC:     <airlied@linux.ie>, <daniel@ffwll.ch>, <dianders@chromium.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20220909152856.149291-1-fabien.parent@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220909152856.149291-1-fabien.parent@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
-X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: z-_hmi1uk3OBcBIMU3qatUe_bQW--Boe
-X-Proofpoint-GUID: z-_hmi1uk3OBcBIMU3qatUe_bQW--Boe
+X-Proofpoint-GUID: 9JoVC6nU3aG-uDALZdha683VO2jdYV2f
+X-Proofpoint-ORIG-GUID: 9JoVC6nU3aG-uDALZdha683VO2jdYV2f
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
  definitions=2022-09-12_14,2022-09-12_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- malwarescore=0 bulkscore=0 suspectscore=0 spamscore=0 clxscore=1015
- priorityscore=1501 mlxscore=0 adultscore=0 impostorscore=0 phishscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 impostorscore=0
+ suspectscore=0 bulkscore=0 adultscore=0 spamscore=0 mlxlogscore=999
+ phishscore=0 priorityscore=1501 mlxscore=0 malwarescore=0
  lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2209120082
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+ engine=8.12.0-2207270000 definitions=main-2209120083
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Commit ff6d365898d ("soc: qcom: qmi: use const for struct
-qmi_elem_info") allows QMI message encoding/decoding rules to be
-const, so do that for QCOM PDR.
+Hi Fabien
 
-Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
----
- drivers/soc/qcom/pdr_internal.h | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+Thanks for the patch.
 
-diff --git a/drivers/soc/qcom/pdr_internal.h b/drivers/soc/qcom/pdr_internal.h
-index a30422214943..03c282b7f17e 100644
---- a/drivers/soc/qcom/pdr_internal.h
-+++ b/drivers/soc/qcom/pdr_internal.h
-@@ -28,7 +28,7 @@ struct servreg_location_entry {
- 	u32 instance;
- };
- 
--static struct qmi_elem_info servreg_location_entry_ei[] = {
-+static const struct qmi_elem_info servreg_location_entry_ei[] = {
- 	{
- 		.data_type      = QMI_STRING,
- 		.elem_len       = SERVREG_NAME_LENGTH + 1,
-@@ -74,7 +74,7 @@ struct servreg_get_domain_list_req {
- 	u32 domain_offset;
- };
- 
--static struct qmi_elem_info servreg_get_domain_list_req_ei[] = {
-+static const struct qmi_elem_info servreg_get_domain_list_req_ei[] = {
- 	{
- 		.data_type      = QMI_STRING,
- 		.elem_len       = SERVREG_NAME_LENGTH + 1,
-@@ -116,7 +116,7 @@ struct servreg_get_domain_list_resp {
- 	struct servreg_location_entry domain_list[SERVREG_DOMAIN_LIST_LENGTH];
- };
- 
--static struct qmi_elem_info servreg_get_domain_list_resp_ei[] = {
-+static const struct qmi_elem_info servreg_get_domain_list_resp_ei[] = {
- 	{
- 		.data_type      = QMI_STRUCT,
- 		.elem_len       = 1,
-@@ -199,7 +199,7 @@ struct servreg_register_listener_req {
- 	char service_path[SERVREG_NAME_LENGTH + 1];
- };
- 
--static struct qmi_elem_info servreg_register_listener_req_ei[] = {
-+static const struct qmi_elem_info servreg_register_listener_req_ei[] = {
- 	{
- 		.data_type      = QMI_UNSIGNED_1_BYTE,
- 		.elem_len       = 1,
-@@ -227,7 +227,7 @@ struct servreg_register_listener_resp {
- 	enum servreg_service_state curr_state;
- };
- 
--static struct qmi_elem_info servreg_register_listener_resp_ei[] = {
-+static const struct qmi_elem_info servreg_register_listener_resp_ei[] = {
- 	{
- 		.data_type      = QMI_STRUCT,
- 		.elem_len       = 1,
-@@ -263,7 +263,7 @@ struct servreg_restart_pd_req {
- 	char service_path[SERVREG_NAME_LENGTH + 1];
- };
- 
--static struct qmi_elem_info servreg_restart_pd_req_ei[] = {
-+static const struct qmi_elem_info servreg_restart_pd_req_ei[] = {
- 	{
- 		.data_type      = QMI_STRING,
- 		.elem_len       = SERVREG_NAME_LENGTH + 1,
-@@ -280,7 +280,7 @@ struct servreg_restart_pd_resp {
- 	struct qmi_response_type_v01 resp;
- };
- 
--static struct qmi_elem_info servreg_restart_pd_resp_ei[] = {
-+static const struct qmi_elem_info servreg_restart_pd_resp_ei[] = {
- 	{
- 		.data_type      = QMI_STRUCT,
- 		.elem_len       = 1,
-@@ -300,7 +300,7 @@ struct servreg_state_updated_ind {
- 	u16 transaction_id;
- };
- 
--static struct qmi_elem_info servreg_state_updated_ind_ei[] = {
-+static const struct qmi_elem_info servreg_state_updated_ind_ei[] = {
- 	{
- 		.data_type      = QMI_SIGNED_4_BYTE_ENUM,
- 		.elem_len       = 1,
-@@ -336,7 +336,7 @@ struct servreg_set_ack_req {
- 	u16 transaction_id;
- };
- 
--static struct qmi_elem_info servreg_set_ack_req_ei[] = {
-+static const struct qmi_elem_info servreg_set_ack_req_ei[] = {
- 	{
- 		.data_type      = QMI_STRING,
- 		.elem_len       = SERVREG_NAME_LENGTH + 1,
-@@ -362,7 +362,7 @@ struct servreg_set_ack_resp {
- 	struct qmi_response_type_v01 resp;
- };
- 
--static struct qmi_elem_info servreg_set_ack_resp_ei[] = {
-+static const struct qmi_elem_info servreg_set_ack_resp_ei[] = {
- 	{
- 		.data_type      = QMI_STRUCT,
- 		.elem_len       = 1,
--- 
-2.37.0
+I believe this issue should get resolved with 
+https://patchwork.freedesktop.org/patch/490326/ as this avoids the override.
 
+I have acked that change and will pick it up for the next fixes.
+
+Thanks
+
+Abhinav
+
+
+On 9/9/2022 8:28 AM, Fabien Parent wrote:
+> The kernel is panicking when rebooting on MSM8939:
+> 
+> 	# reboot -f
+> 	[   87.280853] Unable to handle kernel write to read-only memory at virtual address ffff800008ed5810
+> 	...
+> 	snip
+> 	...
+> 	[   87.445142] Call trace:
+> 	[   87.452253]  mutex_lock+0x1c/0x50
+> 	[   87.454511]  msm_drv_shutdown+0x28/0x40
+> 	[   87.457984]  platform_shutdown+0x28/0x40
+> 	[   87.461629]  device_shutdown+0x14c/0x240
+> 	[   87.465796]  __do_sys_reboot+0x180/0x274
+> 	[   87.469703]  __arm64_sys_reboot+0x28/0x3c
+> 	[   87.473608]  invoke_syscall+0x54/0x124
+> 	[   87.477515]  el0_svc_common.constprop.0+0x44/0xec
+> 	[   87.481163]  do_el0_svc+0x90/0xe0
+> 	[   87.485934]  el0_svc+0x50/0xa4
+> 	[   87.489232]  el0t_64_sync_handler+0x11c/0x150
+> 	[   87.492185]  el0t_64_sync+0x190/0x194
+> 	[   87.496618] Code: f9800011 c85ffc03 ca010064 b5000064 (c8047c02)
+> 	[   87.500264] ---[ end trace 0000000000000000 ]---
+> 	Segmentation fault
+> 
+> The issue comes from the fact that mdp5_init() is calling
+> platform_set_drvdata() and consequently overwriting the driver data
+> previously set by msm_drv_probe.
+> msm_drv_shutdown was casting the driver data as "struct msm_drm_private"
+> while it was actually a "struct mdp5_kms".
+> 
+> This commit fixes the issue by having mdp5_init() not override the
+> platform driver data, and instead use a series of
+> to_mdp5_kms(to_mdp_kms(priv->kms)) to retrieve the mdp5_kms from the
+> pdata.
+> 
+> Fixes: 54199009958f ("drm/msm: Fix shutdown")
+> Signed-off-by: Fabien Parent <fabien.parent@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 18 +++++++++++-------
+>   1 file changed, 11 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> index d2a48caf9d27..17aeabeedfeb 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> @@ -634,7 +634,8 @@ static int mdp5_kms_init(struct drm_device *dev)
+>   
+>   static void mdp5_destroy(struct platform_device *pdev)
+>   {
+> -	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
+> +	struct msm_drm_private *priv = platform_get_drvdata(pdev);
+> +	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
+>   	int i;
+>   
+>   	if (mdp5_kms->ctlm)
+> @@ -797,7 +798,8 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+>   		goto fail;
+>   	}
+>   
+> -	platform_set_drvdata(pdev, mdp5_kms);
+> +	/* set uninit-ed kms */
+> +	priv->kms = &mdp5_kms->base.base;
+>   
+>   	spin_lock_init(&mdp5_kms->resource_lock);
+>   
+> @@ -890,13 +892,13 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+>   	if (ret)
+>   		goto fail;
+>   
+> -	/* set uninit-ed kms */
+> -	priv->kms = &mdp5_kms->base.base;
+> -
+>   	return 0;
+>   fail:
+>   	if (mdp5_kms)
+>   		mdp5_destroy(pdev);
+> +
+> +	priv->kms = NULL;
+> +
+>   	return ret;
+>   }
+>   
+> @@ -956,7 +958,8 @@ static int mdp5_dev_remove(struct platform_device *pdev)
+>   static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
+>   {
+>   	struct platform_device *pdev = to_platform_device(dev);
+> -	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
+> +	struct msm_drm_private *priv = platform_get_drvdata(pdev);
+> +	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
+>   
+>   	DBG("");
+>   
+> @@ -966,7 +969,8 @@ static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
+>   static __maybe_unused int mdp5_runtime_resume(struct device *dev)
+>   {
+>   	struct platform_device *pdev = to_platform_device(dev);
+> -	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
+> +	struct msm_drm_private *priv = platform_get_drvdata(pdev);
+> +	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
+>   
+>   	DBG("");
+>   
