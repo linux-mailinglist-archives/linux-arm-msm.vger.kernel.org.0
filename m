@@ -2,64 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 41F1D5B5FDC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 20:07:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A9405B5FF0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 20:10:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229888AbiILSHT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 14:07:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52608 "EHLO
+        id S230049AbiILSKO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 14:10:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229903AbiILSG4 (ORCPT
+        with ESMTP id S230072AbiILSKG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 14:06:56 -0400
+        Mon, 12 Sep 2022 14:10:06 -0400
 Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF7F64056C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 11:06:49 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id o2so14016442lfc.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 11:06:49 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFF6B24951
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 11:10:03 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id k10so16185890lfm.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 11:10:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=YId2qFc2g35/E70lSaVSWi+LP5D0a4HgnSmJlhd/KK8=;
-        b=jHsdErwX5dPLdoPW3dgGmcCoDgcakypIm+495tvOKtQL9QPtt8V7/gJ1h9q5lB7rwn
-         6gFbbO3m+ZzJRGyxQO6lM6CRqm6uPwUTtqDDolmemItUbKsGh2vKuFIvy+y1ec4MzufQ
-         Cx05prXleITG2xd7YWduVE4k3k/9CSrk6Z3j8KvYuCSKeLDMMn79fHpxx7lHh1qvslW7
-         SHfTyc96VKkN0HTMzfYoEUfkLuFU180L8Z0D8gv8moFUpOcMTNAeBeTzQHCkPUziVQvW
-         YHlm2eCYkTORmbcUMbmlWYl0Psi3+D/Xv68JwW69eh2CrkfN7klNFNe1zWZUXdHxSWbM
-         L8GQ==
+        bh=pNFaQgI/Wpk+RRqWm6LUGSleWuKJ6k1nYQ3l4ywMTD4=;
+        b=bORY4LjZaSaDGxQoTcPmNSrz0G5bhG/Pe216SBbJdiI7Nc/07Ly/IUmtQBt7D7rBkK
+         YqzT8lVcPnV15b03E6XKDAL8zJ4yHl5KvDaeswnqbiwK7qxNafhL2gRDzSMfIJEJ4EAp
+         8E2gZpA8z467e5PI7zL8dRltZ2NjO7veaLISkIn569GetV3E4990u+4ftaYmR3mBZBk/
+         CdzVeOIYmEtm2J8Go24MOL1BqF8/Z0juvLP8jmfJ8tBzEt5izeORdmqI6c+Eruz3ZNUJ
+         eNSOEZ/Jjl4z/ytolF4M1rj7oh62Ey/ToeZhYwTd4E9ipiFYxvTD9V4Ye5Sjzme2EFyr
+         1bDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=YId2qFc2g35/E70lSaVSWi+LP5D0a4HgnSmJlhd/KK8=;
-        b=5DLLAna7EtMbZnGYtxk/m3LFPPfpLTRVoF7qnOgxOIHyszyDaseKm3g3xNVVKF8kO0
-         olaxVTBit+HN4UG4vygNohZrmzAkphft/+rLYG2w5H3MxaqHaNZnMJsytcu5PNCUPHt1
-         L1/yXPTiG+Tht9tUj9MydQ4ShOi0Lkoc2IcqryZSFB0ZX/8HHOHkd2QSbanTABhPI8FJ
-         pUH1xKw7QVlulK01vD83gxWfGcmN6p2euBPZGzVGtnkjO43yuKUMbyvG2XOEagc6CGq+
-         Cvdtz8GyQl5Mn8RaGKvJX5d95F6UjESl1RzsT6IPxr+atpROOY+QPUnAz9l7EOwAYoYZ
-         br/w==
-X-Gm-Message-State: ACgBeo2FRLI8/DAzZ5LC64G327RgUbq1hb0AdO406rtyLD7UeCdrZ3gn
-        Vp7S1hYHjB2RAjvUoIQAkrn8wA==
-X-Google-Smtp-Source: AA6agR72bENrYaV3AGytGeVqlM0eFcCOub+TVap9NDCtWO6DvsFG7u89q0BJcB/dxfhSP2zC9MhO2A==
-X-Received: by 2002:a05:6512:1044:b0:48b:49b1:cc85 with SMTP id c4-20020a056512104400b0048b49b1cc85mr9327400lfb.57.1663006009387;
-        Mon, 12 Sep 2022 11:06:49 -0700 (PDT)
+        bh=pNFaQgI/Wpk+RRqWm6LUGSleWuKJ6k1nYQ3l4ywMTD4=;
+        b=tDYCMWLscKW+pDdPfMoeiRWwYU2XfpZgLkfe1UBmlY9vvrnS9IG4jwHY38XUj19bsS
+         TbOaTLhGPwDlUDeem1rlIMFfERUmVVBEQNLrjqZ8dySyU3Rs75kzsbrTHtvYo6kX4PFl
+         /y7eJRne0gwrBdty8Mu2PbJlfJZqcRRizlW3/v2MVVAXUWgw10qF6mNyza+dMQAuKqzh
+         qHDyP4UOXd/iOTCF5buHVNRb4YNIXHpZPkQWxmes7Wwc+m8q91CWy3LHHkViPQ3VBteJ
+         +RSN45F1muWYKYnHJl5LC0DCgiCI97DwQ3S3QGpmbfw8zaVWjajbnOttw9jKTLgbALCC
+         viSQ==
+X-Gm-Message-State: ACgBeo0Q1CkIYxwp4d8ZazKH2SrerOGZKDYgGgcfYa8DfH/9mZ8LDcHr
+        pRvE88/njJO1IHx28TPbu94hgg==
+X-Google-Smtp-Source: AA6agR5nn0P4MDu8RVZ2eI1kzc3OQfQYodK0aWq3EVa9jnyZHQgpamGf0QZN86jHooMmqzYjjNgLrw==
+X-Received: by 2002:ac2:5462:0:b0:49b:8aee:3535 with SMTP id e2-20020ac25462000000b0049b8aee3535mr542834lfn.410.1663006202087;
+        Mon, 12 Sep 2022 11:10:02 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id e27-20020a05651c039b00b0026bf04aafd2sm1141288ljp.9.2022.09.12.11.06.48
+        by smtp.gmail.com with ESMTPSA id c4-20020a05651221a400b00496693860dcsm1196546lft.232.2022.09.12.11.10.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Sep 2022 11:06:48 -0700 (PDT)
-Message-ID: <9ac13738-ea89-e2de-6316-ab8020580569@linaro.org>
-Date:   Mon, 12 Sep 2022 21:06:47 +0300
+        Mon, 12 Sep 2022 11:10:01 -0700 (PDT)
+Message-ID: <e60f0053-3801-bf33-5841-69f16215fa00@linaro.org>
+Date:   Mon, 12 Sep 2022 21:10:00 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.1
-Subject: Re: [PATCH 3/7] drm/msm/dp: fix IRQ lifetime
+Subject: Re: [PATCH 4/7] drm/msm/dp: fix aux-bus EP lifetime
 Content-Language: en-GB
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Douglas Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>
+        Rob Clark <robdclark@gmail.com>,
+        Douglas Anderson <dianders@chromium.org>
 Cc:     Andrzej Hajda <andrzej.hajda@intel.com>,
         Neil Armstrong <neil.armstrong@linaro.org>,
         Robert Foss <robert.foss@linaro.org>,
@@ -75,14 +76,14 @@ Cc:     Andrzej Hajda <andrzej.hajda@intel.com>,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
         stable@vger.kernel.org
 References: <20220912154046.12900-1-johan+linaro@kernel.org>
- <20220912154046.12900-4-johan+linaro@kernel.org>
+ <20220912154046.12900-5-johan+linaro@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220912154046.12900-4-johan+linaro@kernel.org>
+In-Reply-To: <20220912154046.12900-5-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -95,40 +96,116 @@ On 12/09/2022 18:40, Johan Hovold wrote:
 > the lifetime of the aggregate DRM device or they will not necessarily be
 > released when binding of the aggregate device is deferred.
 > 
-> This is specifically true for the DP IRQ, which will otherwise remain
-> requested so that the next bind attempt fails when requesting the IRQ a
-> second time.
+> This can lead resource leaks or failure to bind the aggregate device
+> when binding is later retried and a second attempt to allocate the
+> resources is made.
 > 
-> Since commit c3bf8e21b38a ("drm/msm/dp: Add eDP support via aux_bus")
-> this can happen when the aux-bus panel driver has not yet been loaded so
-> that probe is deferred.
+> For the DP aux-bus, an attempt to populate the bus a second time will
+> simply fail ("DP AUX EP device already populated").
 > 
-> Fix this by tying the device-managed lifetime of the DP IRQ to the DRM
-> device so that it is released when bind fails.
+> Fix this by amending the DP aux interface and tying the lifetime of the
+> EP device to the DRM device rather than DP controller platform device.
+
+Doug, could you please take a look?
+
+For me this is another reminder/pressure point that we should populate 
+the AUX BUS from the probe(), before binding the components together.
+
 > 
-> Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
-> Cc: stable@vger.kernel.org      # 5.10
+> Fixes: c3bf8e21b38a ("drm/msm/dp: Add eDP support via aux_bus")
+> Cc: stable@vger.kernel.org      # 5.19
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
 > ---
->   drivers/gpu/drm/msm/dp/dp_display.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   drivers/gpu/drm/bridge/parade-ps8640.c   | 2 +-
+>   drivers/gpu/drm/display/drm_dp_aux_bus.c | 5 +++--
+>   drivers/gpu/drm/msm/dp/dp_display.c      | 3 ++-
+>   include/drm/display/drm_dp_aux_bus.h     | 6 +++---
+>   4 files changed, 9 insertions(+), 7 deletions(-)
 > 
+> diff --git a/drivers/gpu/drm/bridge/parade-ps8640.c b/drivers/gpu/drm/bridge/parade-ps8640.c
+> index d7483c13c569..6127979370cb 100644
+> --- a/drivers/gpu/drm/bridge/parade-ps8640.c
+> +++ b/drivers/gpu/drm/bridge/parade-ps8640.c
+> @@ -719,7 +719,7 @@ static int ps8640_probe(struct i2c_client *client)
+>   	if (ret)
+>   		return ret;
+>   
+> -	ret = devm_of_dp_aux_populate_bus(&ps_bridge->aux, ps8640_bridge_link_panel);
+> +	ret = devm_of_dp_aux_populate_bus(dev, &ps_bridge->aux, ps8640_bridge_link_panel);
+>   
+>   	/*
+>   	 * If devm_of_dp_aux_populate_bus() returns -ENODEV then it's up to
+> diff --git a/drivers/gpu/drm/display/drm_dp_aux_bus.c b/drivers/gpu/drm/display/drm_dp_aux_bus.c
+> index f5741b45ca07..2706f2cf82f7 100644
+> --- a/drivers/gpu/drm/display/drm_dp_aux_bus.c
+> +++ b/drivers/gpu/drm/display/drm_dp_aux_bus.c
+> @@ -322,6 +322,7 @@ static void of_dp_aux_depopulate_bus_void(void *data)
+>   
+>   /**
+>    * devm_of_dp_aux_populate_bus() - devm wrapper for of_dp_aux_populate_bus()
+> + * @dev: Device to tie the lifetime of the EP devices to
+>    * @aux: The AUX channel whose device we want to populate
+>    * @done_probing: Callback functions to call after EP device finishes probing.
+>    *                Will not be called if there are no EP devices and this
+> @@ -333,7 +334,7 @@ static void of_dp_aux_depopulate_bus_void(void *data)
+>    *         no children. The done_probing() function won't be called in that
+>    *         case.
+>    */
+> -int devm_of_dp_aux_populate_bus(struct drm_dp_aux *aux,
+> +int devm_of_dp_aux_populate_bus(struct device *dev, struct drm_dp_aux *aux,
+>   				int (*done_probing)(struct drm_dp_aux *aux))
+>   {
+>   	int ret;
+> @@ -342,7 +343,7 @@ int devm_of_dp_aux_populate_bus(struct drm_dp_aux *aux,
+>   	if (ret)
+>   		return ret;
+>   
+> -	return devm_add_action_or_reset(aux->dev,
+> +	return devm_add_action_or_reset(dev,
+>   					of_dp_aux_depopulate_bus_void, aux);
+>   }
+>   EXPORT_SYMBOL_GPL(devm_of_dp_aux_populate_bus);
 > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index fbe950edaefe..ba557328710a 100644
+> index ba557328710a..e1aa6355bbf6 100644
 > --- a/drivers/gpu/drm/msm/dp/dp_display.c
 > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -1258,7 +1258,7 @@ int dp_display_request_irq(struct msm_dp *dp_display)
->   		return -EINVAL;
->   	}
+> @@ -1559,7 +1559,8 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
+>   		 * panel driver is probed asynchronously but is the best we
+>   		 * can do without a bigger driver reorganization.
+>   		 */
+> -		rc = devm_of_dp_aux_populate_ep_devices(dp_priv->aux);
+> +		rc = devm_of_dp_aux_populate_ep_devices(dp->drm_dev->dev,
+> +							dp_priv->aux);
+>   		of_node_put(aux_bus);
+>   		if (rc)
+>   			goto error;
+> diff --git a/include/drm/display/drm_dp_aux_bus.h b/include/drm/display/drm_dp_aux_bus.h
+> index 8a0a486383c5..a4063aa7fc40 100644
+> --- a/include/drm/display/drm_dp_aux_bus.h
+> +++ b/include/drm/display/drm_dp_aux_bus.h
+> @@ -47,7 +47,7 @@ static inline struct dp_aux_ep_driver *to_dp_aux_ep_drv(struct device_driver *dr
+>   int of_dp_aux_populate_bus(struct drm_dp_aux *aux,
+>   			   int (*done_probing)(struct drm_dp_aux *aux));
+>   void of_dp_aux_depopulate_bus(struct drm_dp_aux *aux);
+> -int devm_of_dp_aux_populate_bus(struct drm_dp_aux *aux,
+> +int devm_of_dp_aux_populate_bus(struct device *dev, struct drm_dp_aux *aux,
+>   				int (*done_probing)(struct drm_dp_aux *aux));
 >   
-> -	rc = devm_request_irq(&dp->pdev->dev, dp->irq,
-> +	rc = devm_request_irq(dp_display->drm_dev->dev, dp->irq,
->   			dp_display_irq_handler,
->   			IRQF_TRIGGER_HIGH, "dp_display_isr", dp);
->   	if (rc < 0) {
+>   /* Deprecated versions of the above functions. To be removed when no callers. */
+> @@ -61,11 +61,11 @@ static inline int of_dp_aux_populate_ep_devices(struct drm_dp_aux *aux)
+>   	return (ret != -ENODEV) ? ret : 0;
+>   }
+>   
+> -static inline int devm_of_dp_aux_populate_ep_devices(struct drm_dp_aux *aux)
+> +static inline int devm_of_dp_aux_populate_ep_devices(struct device *dev, struct drm_dp_aux *aux)
+>   {
+>   	int ret;
+>   
+> -	ret = devm_of_dp_aux_populate_bus(aux, NULL);
+> +	ret = devm_of_dp_aux_populate_bus(dev, aux, NULL);
+>   
+>   	/* New API returns -ENODEV for no child case; adapt to old assumption */
+>   	return (ret != -ENODEV) ? ret : 0;
 
 -- 
 With best wishes
