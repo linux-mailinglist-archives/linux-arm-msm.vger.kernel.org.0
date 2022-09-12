@@ -2,116 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5927B5B5D27
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 17:30:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C68835B5D60
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 17:38:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230138AbiILPay (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 11:30:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55176 "EHLO
+        id S230449AbiILPij (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 11:38:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230123AbiILPax (ORCPT
+        with ESMTP id S230386AbiILPiY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 11:30:53 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDFF92251B;
-        Mon, 12 Sep 2022 08:30:52 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28CDF7ca012907;
-        Mon, 12 Sep 2022 15:30:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=x/heB6q2D/lSJBzQsR7Yoo/qqho43QjYowbw3qAX/6k=;
- b=U2m4SSt45Qa50N480od+7gV6ris+DGTQZByS0kE2WB2dztKirfKNuawphNoJsllt0KTK
- psSGg9OSVmfDk7Sv17fFNo94oCWA8nRchURZgudM3ceJGOWp73FfJRcrNCACXictgFTf
- pLNn1vjHYqsWXfhGn1/q+7Xh8+iRsfeqOalfGG+d1SC+TQ6ngKpm8KCgsgnbnvw/cEfB
- abDlj3Ig4QaUuJof1A+YAtP9QXauIRon45DLcrH5pgXLhj9XQYEzaehk6lByJ2zqjc0d
- K//1/Xf5tp+BLNlk3KLg53pVw3GN/gJV8g56XigmosQwD7WkIew8dVgVhIYKdS9JnWzR KQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jgk0dd9wm-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Sep 2022 15:30:46 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28CFUjYA004613
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Sep 2022 15:30:45 GMT
-Received: from hu-gokukris-sd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Mon, 12 Sep 2022 08:30:44 -0700
-From:   Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        "linux-kernel @ vger . kernel . org--cc=Trilok Soni" 
-        <quic_tsoni@quicinc.com>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        "Elliot Berman" <quic_eberman@quicinc.com>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
-Subject: [PATCH v1 3/3] remoteproc: qcom: q6v5: Avoid setting smem bit in case of crash shutdown
-Date:   Mon, 12 Sep 2022 08:30:29 -0700
-Message-ID: <9e549a54e2a6ede3e413de933fd1725c660993c3.1662995608.git.quic_gokukris@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1662995608.git.quic_gokukris@quicinc.com>
-References: <cover.1662995608.git.quic_gokukris@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8yxR3Vrk68vVrsdnQzIDAlsmj3tEkTx1
-X-Proofpoint-ORIG-GUID: 8yxR3Vrk68vVrsdnQzIDAlsmj3tEkTx1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-12_10,2022-09-12_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- suspectscore=0 bulkscore=0 adultscore=0 spamscore=0 mlxlogscore=863
- phishscore=0 priorityscore=1501 mlxscore=0 malwarescore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2209120052
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        Mon, 12 Sep 2022 11:38:24 -0400
+Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D954A38693;
+        Mon, 12 Sep 2022 08:38:17 -0700 (PDT)
+Received: by mail-ot1-f48.google.com with SMTP id p15-20020a056830130f00b006544f5228e3so6137872otq.2;
+        Mon, 12 Sep 2022 08:38:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=message-id:date:subject:references:in-reply-to:cc:to:from
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=a25yavm4T3/wy75F/lXl3Zv2sYUZapqJNpfJrj3sw9M=;
+        b=NIlmTwCdmCuBzJ/pL2V1vmkf0e+xiwJrYuBBh9kpTvfavz0YPA8e3EcWW0VVN/qJ+r
+         sqEOc6HY//2G7Gke8ZBoO7RwKA/S6OHK0xhdwcdUIton3IuRRBoDHk8TofRIS+JvYZRj
+         kaefILYYStYOHlAx5CGvQJX1GZkxUuu7YpYyBGdBKRna/9++kbF20WyxaS34kn2pss9e
+         e2ZSqQis30ClHl85mV2Ci065s77OmwqYLbHqxLqIjYBmzYC9r0Ha7n2tW4EQR8D58rDI
+         XZ1OFV1rVNkmV3XpO4ZEvDKKvLylipSu8LvCYYEZDJsUE4XAvnVwuV9LrBJETu3Xm9rS
+         vRfw==
+X-Gm-Message-State: ACgBeo2T2SaBWJly2VRCFIJ69bGH0Mj3EldYxQ8+feRvLxK+m+GYuTaX
+        HS7QJ65ZDnQJFXXqcCsLCw==
+X-Google-Smtp-Source: AA6agR40YLfHysBKsNn0RPEoPnwyWujca3ESVSwkwCC/stqY2qeM4q+R36/DqLyx+1UAXTU09JpIwQ==
+X-Received: by 2002:a05:6830:2644:b0:638:9e31:89d2 with SMTP id f4-20020a056830264400b006389e3189d2mr10907859otu.117.1662997096476;
+        Mon, 12 Sep 2022 08:38:16 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id b9-20020a4aba09000000b0044b125e5dabsm4217474oop.35.2022.09.12.08.38.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Sep 2022 08:38:16 -0700 (PDT)
+Received: (nullmailer pid 1345585 invoked by uid 1000);
+        Mon, 12 Sep 2022 15:38:15 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     daniel.lezcano@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, andersson@kernel.org, agross@kernel.org,
+        bhupesh.linux@gmail.com, rafael@kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20220912085049.3517140-4-bhupesh.sharma@linaro.org>
+References: <20220912085049.3517140-1-bhupesh.sharma@linaro.org> <20220912085049.3517140-4-bhupesh.sharma@linaro.org>
+Subject: Re: [PATCH 3/4] dt-bindings: thermal: Add qcom,qmi-tmd-device and qcom,tmd-device yaml bindings
+Date:   Mon, 12 Sep 2022 10:38:15 -0500
+Message-Id: <1662997095.474707.1345584.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Avoid setting smem bit in case of crash shutdown, as remote
-processor is not able to send the ack back.
+On Mon, 12 Sep 2022 14:20:48 +0530, Bhupesh Sharma wrote:
+> Add qcom,qmi-tmd-device and qcom,tmd-device yaml bindings.
+> 
+> Qualcomm QMI based TMD cooling device(s) are used for various
+> mitigations for remote subsystem(s) including remote processor
+> mitigation, rail voltage restriction etc.
+> 
+> Each child node represents one remote subsystem and each child
+> of this subsystem in-turn represents separate TMD cooling device.
+> 
+> Cc: daniel.lezcano@linaro.org
+> Cc: rafael@kernel.org
+> Cc: andersson@kernel.org
+> Cc: robh@kernel.org
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>  .../bindings/thermal/qcom,qmi-tmd-device.yaml |  78 +++++++++++
+>  .../bindings/thermal/qcom,tmd-device.yaml     | 122 ++++++++++++++++++
+>  include/dt-bindings/thermal/qcom,tmd.h        |  14 ++
+>  3 files changed, 214 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/thermal/qcom,qmi-tmd-device.yaml
+>  create mode 100644 Documentation/devicetree/bindings/thermal/qcom,tmd-device.yaml
+>  create mode 100644 include/dt-bindings/thermal/qcom,tmd.h
+> 
 
-Change-Id: I33f19087627e5a7fe2c3bcce377b51b903574bc4
-Signed-off-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
----
- drivers/remoteproc/qcom_q6v5.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
-index 1b9e1e1..569427a 100644
---- a/drivers/remoteproc/qcom_q6v5.c
-+++ b/drivers/remoteproc/qcom_q6v5.c
-@@ -237,8 +237,10 @@ int qcom_q6v5_request_stop(struct qcom_q6v5 *q6v5, struct qcom_sysmon *sysmon)
- 
- 	q6v5->running = false;
- 
--	/* Don't perform SMP2P dance if sysmon already shut down the remote */
--	if (qcom_sysmon_shutdown_acked(sysmon))
-+	/* Don't perform SMP2P dance if sysmon already shut
-+	 * down the remote or if it isn't running
-+	 */
-+	if (q6v5->rproc->state != RPROC_RUNNING || qcom_sysmon_shutdown_acked(sysmon))
- 		return 0;
- 
- 	qcom_smem_state_update_bits(q6v5->state,
--- 
-2.7.4
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,adsp.example.dtb: adsp: 'qcom,instance-id' is a required property
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/thermal/qcom,tmd-device.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,adsp.example.dtb: adsp: 'clock-names', 'clocks', 'compatible', 'cx-supply', 'interrupt-names', 'interrupts-extended', 'memory-region', 'qcom,smem-state-names', 'qcom,smem-states', 'smd-edge' do not match any of the regexes: '^tmd-device[0-9]?$', 'pinctrl-[0-9]+'
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/thermal/qcom,tmd-device.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
 
