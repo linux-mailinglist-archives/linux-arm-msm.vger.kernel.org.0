@@ -2,63 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 207C45B56B1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 10:51:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25AC75B56BF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 10:52:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230369AbiILIvi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 04:51:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55654 "EHLO
+        id S230248AbiILIwm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 04:52:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230284AbiILIvd (ORCPT
+        with ESMTP id S230136AbiILIwl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 04:51:33 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7789E2C12D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 01:51:21 -0700 (PDT)
-Received: from [192.168.1.111] (91-158-154-79.elisa-laajakaista.fi [91.158.154.79])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id E1AC359D;
-        Mon, 12 Sep 2022 10:51:16 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1662972678;
-        bh=Od/d6LlBW2xnygl0iW1ZsBhY+OTpV2C+JIgmzV9Gc7s=;
+        Mon, 12 Sep 2022 04:52:41 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F5CA2AE28;
+        Mon, 12 Sep 2022 01:52:40 -0700 (PDT)
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: kholk11)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 8BB0C6601D9A;
+        Mon, 12 Sep 2022 09:52:37 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1662972758;
+        bh=7f8rv5NrDbI8FzOJIfOFLtaF6m6zncvjLeOxNvrNntY=;
         h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=Rid4kBnbJuvDOmk0F8kB4FS8PIwA7Cgs/BfZN/e8B58pecCJpnvVGO1cU4E4quMDQ
-         Xv+K7YygTYWAnNM8yo+K67jQVcrbEEY5oz/TA6MwO7QQUZzOUxFPpU8Hman4qBMXi9
-         9MuWQYEI9+5ebkg95AGME9CC2ac1+15Dgqo9j5ZU=
-Message-ID: <87f178f6-0abe-7e5c-5a70-05c2bab94991@ideasonboard.com>
-Date:   Mon, 12 Sep 2022 11:51:14 +0300
+        b=Q4m95uyrF2e5NQf3rgUNndX1tSWmGtbnIfqaD7/3Dnkw9R3I9OBHTiT6frONenwqK
+         CM0OJu2Idh9ftssB+g6yY0gX8NakpR3r/tt2HINd3QjsZm3XHYgd1aShlmkE1RRQT2
+         Ckfy+HXGYpalVO+apg7X1iBvdVGkk4XTZ1FPuQ8ypW4FYNOhL1CDLg20AaNp83yMJa
+         NyDZzmMGWI8VRMyTwFsjww/hyKe14mFzgHjZDrcUTeXAd1VW+f8srUWOGLmtaY1jxE
+         60boN+crRAl3ezHnThu6NlIpC4BkFF1RHtRjrq0yqJHmTEhoHDaxPsu5lno13Uxbbd
+         Y6jGvMRLwSqzQ==
+Message-ID: <4a4f2ea4-eb90-14ce-267d-89cc3034feeb@collabora.com>
+Date:   Mon, 12 Sep 2022 10:52:34 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v1 0/7] drm/bridge_connector: perform HPD enablement
- automatically
-Content-Language: en-US
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [RFC PATCH 05/10] thermal/drivers/tsens: drop msm8976-specific
+ defines
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-References: <20220429185157.3673633-1-dmitry.baryshkov@linaro.org>
-From:   Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-In-Reply-To: <20220429185157.3673633-1-dmitry.baryshkov@linaro.org>
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20220910124701.4060321-1-dmitry.baryshkov@linaro.org>
+ <20220910124701.4060321-6-dmitry.baryshkov@linaro.org>
+Content-Language: en-US
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <20220910124701.4060321-6-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_PASS,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -67,38 +70,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 29/04/2022 21:51, Dmitry Baryshkov wrote:
->  From all the drivers using drm_bridge_connector only iMX/dcss and OMAP
-> DRM driver do a proper work of calling
-> drm_bridge_connector_en/disable_hpd() in right places. Rather than
-> teaching each and every driver how to properly handle
-> drm_bridge_connector's HPD, make that automatic.
+Il 10/09/22 14:46, Dmitry Baryshkov ha scritto:
+> Drop msm8976-specific defines, which duplicate generic ones.
 > 
-> Add two additional drm_connector helper funcs: enable_hpd() and
-> disable_hpd(). Make drm_kms_helper_poll_* functions call them (as this
-> is the time where the drm_bridge_connector's functions are called by the
-> drivers too).
+> Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-09077bc3116581f4d1cb961ec359ad56586e370b ("drm/bridge_connector: enable 
-HPD by default if supported") was merged in March, but I think that one 
-is  bit broken 
-(https://lore.kernel.org/all/a28a4858-c66a-6737-a9fc-502f591ba2d5@ideasonboard.com/). 
-To get omapdrm work without WARNs we could just revert that commit, but 
-I think this series makes things cleaner.
+The duplication is useless indeed... However, should you add a Fixes tag here?
 
-There's one small problem with this series: in drm_bridge_connector.c 
-the drm_bridge_hpd_disable() function is called from 
-_drm_bridge_connector_disable_hpd() and from 
-drm_bridge_connector_destroy(). This causes two hpd_disable calls when 
-removing the driver modules. I think the call from 
-drm_bridge_connector_destroy() could be removed, as 
-_drm_bridge_connector_disable_hpd() should always get called when 
-removing the drivers.
+0e580290170d ("thermal: qcom: tsens-v1: Add support for MSM8956 and MSM8976")
 
-Dmitry, are you still interested in this series? Can you rebase on top 
-of current upstream, and revert 09077bc3116581f4d1cb961ec359ad56586e370b 
-first?
+Anyway, for the code:
 
-  Tomi
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+
+Cheers,
+Angelo
