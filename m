@@ -2,84 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D5E8E5B616F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 21:05:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F12DA5B6180
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Sep 2022 21:08:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230003AbiILTF4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 15:05:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55370 "EHLO
+        id S229671AbiILTIs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 15:08:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbiILTFq (ORCPT
+        with ESMTP id S230054AbiILTIr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 15:05:46 -0400
-Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C20B3402D7;
-        Mon, 12 Sep 2022 12:05:45 -0700 (PDT)
-Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-11e9a7135easo25939229fac.6;
-        Mon, 12 Sep 2022 12:05:45 -0700 (PDT)
+        Mon, 12 Sep 2022 15:08:47 -0400
+Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1FF142AF8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 12:08:46 -0700 (PDT)
+Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-324ec5a9e97so112919237b3.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 12:08:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=PBuxdMIJGedDZd05zs/f/jp8HdD4J0iF/zmnT1wLkM8=;
+        b=PyqBbUve7IYKpQ6eXW4wKk9nSq88BRzddnMBlWWuiACKDVm9VowwZeYqUV0i8VNs0F
+         BXXZVU8QXfNUWTYmwURUzXLXJDwg3NdS9NvM+tUlEbS4Qtxog6NTJfy+suhgmC8rbaXU
+         p3y0dqzyZIdvDqZCUUkb0NZRitK5wwiaYsOaVuE/ygAE46iIi4Mu2bCKNlNPrJZruaNG
+         Z7wavJMndgsIYtA+h6eU8hYfHhfpoqfP1qetmCD+SuQ5LO1ljrWEHwD+t028JlYNpwcT
+         gFX2DLWgWIPbIuHjspJ+l7a2gq8EFe65RvhNre/5rNqaBzlO1SyqpAPyQzmv1NRd5nNB
+         56YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=uI4DbGbAM0PwjRpMrOblwrt+romR1rmxVbvdKQ75a3g=;
-        b=iBN/UKu4z7gotgnRJsgczB5GMQmRya6ar8tSAcayeQWulBRM0y5IMJ8jCkWQrHaDrf
-         RzFJ8zkXogcgG6IH3uZMHhr/PG+DKPksJ5woKfr5H1WCTn/gY+j3I9HJUrnq8oB6+c4c
-         Lr6qZ7TfWS6USrkd9rcyLyF0X4kMxy9WHu4IM1bhOxKa4k3JTHgWVFjke0lkRZthjqhr
-         byRUpkBRhkwel76NhrYN7frUB3FuFB2HDK5/kBTKVSm86IiE+xv9w+3a1Xxyf4eyPBM6
-         6/KXdiIKBmQyBuC2dq91xilI7JikABFNDco556P2c/9a+2GngPq8kQro6//vOKwP2pMZ
-         qKDg==
-X-Gm-Message-State: ACgBeo3XlkFVetJb+hWOQEDaJ4Er2qCcDYYfavafVC4R5GXJ6KK1m/ON
-        B7s7DK8k0M8/8ciGaA47NA==
-X-Google-Smtp-Source: AA6agR6wKZLkyzDqxAkDrRQa7TDbXFNIvobcMLRTkCNkT+mXdN79cG0z+B7nutrnVbtasLONO+iHAg==
-X-Received: by 2002:a05:6808:1248:b0:34d:f86d:4ac9 with SMTP id o8-20020a056808124800b0034df86d4ac9mr7147955oiv.203.1663009544939;
-        Mon, 12 Sep 2022 12:05:44 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id o10-20020a54478a000000b00344eb5a9416sm4330740oic.55.2022.09.12.12.05.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Sep 2022 12:05:44 -0700 (PDT)
-Received: (nullmailer pid 1658600 invoked by uid 1000);
-        Mon, 12 Sep 2022 19:05:43 -0000
-Date:   Mon, 12 Sep 2022 14:05:43 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>
-Subject: Re: [PATCH] dt-bindings: remoteproc: Add missing
- (unevaluated|additional)Properties on child nodes
-Message-ID: <20220912190543.GA1658366-robh@kernel.org>
-References: <20220823145649.3118479-10-robh@kernel.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=PBuxdMIJGedDZd05zs/f/jp8HdD4J0iF/zmnT1wLkM8=;
+        b=o8Z66i7OVcsagI2rEfiTI7iJNeIKfuAvkNiqt4SUpai/XeSpx/9R7NTn7cQdOhaKIa
+         Q7cZhwXDYoNQiL5Qq3qFAobpX5Do+Ge4nICG8d7kk5SySbiKCyAHbcWzdvk558mZuqZu
+         M4zLtJSx/QLzBdAkoevK/iEBUX4YzOabXsJElhUCPabDS+YMwvtVsR2bjygqRazKtPBh
+         Bn6kIWXXjCHWGL+xe3uzUbhhdm7lfumyrD+EmD93TNBB0K702HYjGaGjdm2uj7eA7jqg
+         CbbDvG4j7x9b0KnUtG7/oUQoCc2uCXp7IsY9+DmeMBG5b29AAQ1ijtlyDgM6I+3AOU3/
+         9a7A==
+X-Gm-Message-State: ACgBeo2jDKQIOOSP1Wkj9cPzBbf/9G8jBaHCk10hCHSI/2vN3JGp2NL4
+        dWq8H4cqO50L8EqJfcvS9E3BcJX2JsC6fVjUnUzZGQ==
+X-Google-Smtp-Source: AA6agR7WT+jTNvariBjRh8IzBKOFyY8T7XsX4dwLbBG3JRqM+O0AgFncsTP9h73X8XTUz/PkgpZvL0c4PgFs6vFTGFg=
+X-Received: by 2002:a81:6954:0:b0:344:e73e:5fde with SMTP id
+ e81-20020a816954000000b00344e73e5fdemr23603847ywc.37.1663009725802; Mon, 12
+ Sep 2022 12:08:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220823145649.3118479-10-robh@kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+References: <20220911184232.3198957-1-bhupesh.sharma@linaro.org>
+ <CAA8EJpoM5nW=pVJB4zy4Jh9Q3gE4KOju2QVy_WtmUokKMyXtuw@mail.gmail.com>
+ <75a5789e-9100-b398-1df2-50d49823831c@linaro.org> <2f658a69-a49c-67be-26b9-421095cde2b7@linaro.org>
+In-Reply-To: <2f658a69-a49c-67be-26b9-421095cde2b7@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Tue, 13 Sep 2022 00:38:34 +0530
+Message-ID: <CAH=2NtyBCbrK-K4WEYeDg3UJ976q7818mvDwR2j3HCUNi6vAnA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] thermal: Introduce CONFIG_QCOM_THERMAL in Makefile
+ and qcom/Kconfig
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bhupesh.linux@gmail.com, andersson@kernel.org,
+        linux-arm-msm@vger.kernel.org, daniel.lezcano@linaro.org,
+        rafael@kernel.org, Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 23 Aug 2022 09:56:41 -0500, Rob Herring wrote:
-> In order to ensure only documented properties are present, node schemas
-> must have unevaluatedProperties or additionalProperties set to false
-> (typically).
-> 
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
->  .../devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml      | 1 +
->  .../devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml      | 1 +
->  .../devicetree/bindings/remoteproc/qcom,sc7280-wpss-pil.yaml     | 1 +
->  3 files changed, 3 insertions(+)
-> 
+On Mon, 12 Sept 2022 at 23:44, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On 12/09/2022 20:11, Bhupesh Sharma wrote:
+> >
+> >
+> > On 9/12/22 1:08 AM, Dmitry Baryshkov wrote:
+> >> On Sun, 11 Sept 2022 at 21:42, Bhupesh Sharma
+> >> <bhupesh.sharma@linaro.org> wrote:
+> >>>
+> >>> Introduce CONFIG_QCOM_THERMAL to allow better control
+> >>> over selection of various Qualcomm Thermal drivers
+> >>> available inside qcom/ directory.
+> >>>
+> >>> This is a preparatory change to allow new drivers to
+> >>> be added inside qcom/ directory in a more structured
+> >>> fashion.
+> >>>
+> >>> Cc: Bjorn Andersson <andersson@kernel.org>
+> >>> Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
+> >>> Cc: Amit Kucheria <amitk@kernel.org>
+> >>> Cc: Thara Gopinath <thara.gopinath@gmail.com>
+> >>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> >>> ---
+> >>>   drivers/thermal/Makefile     |  2 +-
+> >>>   drivers/thermal/qcom/Kconfig | 12 ++++++++++++
+> >>>   2 files changed, 13 insertions(+), 1 deletion(-)
+> >>>
+> >>> diff --git a/drivers/thermal/Makefile b/drivers/thermal/Makefile
+> >>> index def8e1a0399c..a12b647be0d1 100644
+> >>> --- a/drivers/thermal/Makefile
+> >>> +++ b/drivers/thermal/Makefile
+> >>> @@ -52,7 +52,7 @@ obj-$(CONFIG_DA9062_THERMAL)  += da9062-thermal.o
+> >>>   obj-y                          += intel/
+> >>>   obj-$(CONFIG_TI_SOC_THERMAL)   += ti-soc-thermal/
+> >>>   obj-y                          += st/
+> >>> -obj-$(CONFIG_QCOM_TSENS)       += qcom/
+> >>> +obj-$(CONFIG_QCOM_THERMAL)     += qcom/
+> >>
+> >> Following other platforms around qcom, I think just `obj-y += qcom/`
+> >> would work well enough.
+> >
+> > I have no strong opinion on using `obj-y += qcom/` here, but I would
+> > still like us to define a CONFIG_QCOM_THERMAL like flag in the
+> > qcom/Kconfig, similar to the ST platforms which use similar selection
+> > mechanism via 'CONFIG_ST_THERMAL'.
+>
+> `QCOM_THERMAL' is fine for me.
 
-Applied, thanks!
+Sure, let me send v2 accordingly.
+
+Thanks,
+Bhupesh
