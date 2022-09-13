@@ -2,89 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BA025B65AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 04:37:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FEDA5B6646
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 05:48:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229969AbiIMCho (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 22:37:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50412 "EHLO
+        id S229852AbiIMDsE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 23:48:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230020AbiIMChn (ORCPT
+        with ESMTP id S229569AbiIMDr7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 22:37:43 -0400
-X-Greylist: delayed 438 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 12 Sep 2022 19:37:41 PDT
-Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 7E3EFE014
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Sep 2022 19:37:40 -0700 (PDT)
-Received: from localhost.localdomain (unknown [124.16.138.126])
-        by APP-05 (Coremail) with SMTP id zQCowADn7t4u6x9j3KQRAg--.35577S2;
-        Tue, 13 Sep 2022 10:30:12 +0800 (CST)
-From:   Jiasheng Jiang <jiasheng@iscas.ac.cn>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Subject: [PATCH] soc: qcom: apr: Add check for idr_alloc
-Date:   Tue, 13 Sep 2022 10:30:03 +0800
-Message-Id: <20220913023003.1677467-1-jiasheng@iscas.ac.cn>
-X-Mailer: git-send-email 2.25.1
+        Mon, 12 Sep 2022 23:47:59 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EECF94A11F;
+        Mon, 12 Sep 2022 20:47:58 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id A4DACB80DEC;
+        Tue, 13 Sep 2022 03:47:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26096C433D6;
+        Tue, 13 Sep 2022 03:47:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663040876;
+        bh=DOqZmbK92BrZad5DB9KgLPgPMZouFoLcfUHuamLgC5w=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=loQ+dvMYSIJCjX5QUcTAC67lXUpsyYHxM77d/ZV9H/P4UrrEmjSNuIV5vJ1Gr5f61
+         km9hsry850L+Lw9y0BMYyJxJe5n8pb+POAIFwApknJrKUtSmbkkJuxzWkTLEBO9ig2
+         OEmzf6X44BGNE1j71+CVc4oYgs3PApOLZ3xDfGx8a8Gg/N/CkpTThoxKVtu3WL3eWf
+         Ibu4JMB41Fw+rPEAi1O8suag+ySZlAPop0d2t0eGdLaYyvKhC+Xujtk+BtqgMPCZ9b
+         CDkTGPCGL/sVay0lKUB2nHLPt4eRRMxdpfJubBxj57fCaTXYsbw+U08uoWxupChb+X
+         bqrkh8i2gWTVQ==
+Date:   Mon, 12 Sep 2022 22:47:53 -0500
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Richard Acayan <mailingradian@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <tdas@codeaurora.org>, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Caleb Connolly <caleb@connolly.tech>,
+        Joel Selvaraj <jo@jsfamily.in>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v3 1/3] dt-bindings: clock: gcc-sdm845: add sdm670 global
+ clocks
+Message-ID: <20220913034753.gmdcnm54x5lw7bxc@builder.lan>
+References: <20220908231224.209020-1-mailingradian@gmail.com>
+ <20220908231224.209020-2-mailingradian@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: zQCowADn7t4u6x9j3KQRAg--.35577S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7Jw4rGF47CF17Wr48Wr4rKrg_yoWDGwbEkF
-        s09r97Xr4UCrWfWw4UJw1fur9YyF4qqw18Za1Iqas3Ja4UAFn7tF1DZr1fW34fur4UCr1U
-        GF90v3s2yr1IqjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-        9fnUUIcSsGvfJTRUUUbzAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2IYs7xG
-        6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
-        A2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j
-        6F4UJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v26F
-        4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv
-        7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r
-        1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCF04k20xvY0x0E
-        wIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E74
-        80Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0
-        I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04
-        k26cxKx2IYs7xG6rW3Jr0E3s1lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY
-        1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjfU5WlkUUUUU
-X-Originating-IP: [124.16.138.126]
-X-CM-SenderInfo: pmld2xxhqjqxpvfd2hldfou0/
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220908231224.209020-2-mailingradian@gmail.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As idr_alloc() can return negative numbers,
-it should be better to check the return value and
-deal with the exception.
+On Thu, Sep 08, 2022 at 07:12:22PM -0400, Richard Acayan wrote:
+[..]
+> +allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: qcom,gcc-sdm670
+> +    then:
+> +      properties:
+> +        clocks:
+> +          items:
+> +            - description: Board XO source
+> +            - description: Board active XO source
+> +            - description: Sleep clock source
+> +        clock-names:
+> +          items:
+> +            - const: bi_tcxo
+> +            - const: bi_tcxo_ao
+> +            - const: sleep_clk
+> +
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: qcom,gcc-sdm845
+> +    then:
+> +      properties:
+> +        clocks:
+> +          items:
+> +            - description: Board XO source
+> +            - description: Board active XO source
+> +            - description: Sleep clock source
+> +            - description: PCIE 0 Pipe clock source
+> +            - description: PCIE 1 Pipe clock source
+> +        clock-names:
+> +          items:
+> +            - const: bi_tcxo
+> +            - const: bi_tcxo_ao
+> +            - const: sleep_clk
+> +            - const: pcie_0_pipe_clk
+> +            - const: pcie_1_pipe_clk
+> +
 
-Fixes: 6adba21eb434 ("soc: qcom: Add APR bus driver")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
----
- drivers/soc/qcom/apr.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Series looks good to me, but linux-next has 0f71ae945730 ("dt-bindings:
+clk: qcom,gcc-*: use qcom,gcc.yaml") which conflicts with this addition.
+Can you please rebase on top of linux-next, retest and submit a new
+version?
 
-diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
-index b4046f393575..1b73ce9b4f9a 100644
---- a/drivers/soc/qcom/apr.c
-+++ b/drivers/soc/qcom/apr.c
-@@ -454,8 +454,12 @@ static int apr_add_device(struct device *dev, struct device_node *np,
- 	adev->dev.driver = NULL;
- 
- 	spin_lock(&apr->svcs_lock);
--	idr_alloc(&apr->svcs_idr, svc, svc_id, svc_id + 1, GFP_ATOMIC);
-+	ret = idr_alloc(&apr->svcs_idr, svc, svc_id, svc_id + 1, GFP_ATOMIC);
- 	spin_unlock(&apr->svcs_lock);
-+	if (ret < 0) {
-+		kfree(adev);
-+		return ret;
-+	}
- 
- 	of_property_read_string_index(np, "qcom,protection-domain",
- 				      1, &adev->service_path);
--- 
-2.25.1
-
+Thanks,
+Bjorn
