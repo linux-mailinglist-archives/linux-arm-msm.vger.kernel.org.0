@@ -2,77 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0425A5B77CD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 19:24:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F7145B766C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 18:25:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232910AbiIMRX0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 13:23:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52046 "EHLO
+        id S232064AbiIMQZt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 12:25:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232809AbiIMRXE (ORCPT
+        with ESMTP id S231837AbiIMQZ3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 13:23:04 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15D4546601;
-        Tue, 13 Sep 2022 09:10:19 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 48D22B80EF7;
-        Tue, 13 Sep 2022 15:14:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 455FAC433D6;
-        Tue, 13 Sep 2022 15:14:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663082053;
-        bh=psJfDRHpoMuZdeioB0y5ST0RSTAXOKEZZykJ7BXBqD8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=WqJjEdvmLxIEnHSzgulW/soDVczfpbdOoMtXBdi+1HgTgM8cExb9GF1Rz0O3tIHym
-         ATRnXvnTY9j3Ld4XSaXe47PKtErAxaDHmX++KjTJ+yEj7oNJY2pjBiWr2koO/2m8vo
-         cbnp0kPZT3M2m/mvkShtVyu/45Qgn7036csi6/j/9ODYT6e97NIzJnz8PG5+YC62WF
-         hhO0i0/2moQ4+uDk7wTpssjlsgzYagfHF85uu12Kys0AYHDUZ6kc0wK5QyZqp1AybH
-         EN/qDnv2+bw4nKZ5b/FqYvZ029jfpyBdKhE6Uv4t5E4wD73R7mBMm2iuyS11kRwIzi
-         7uT9y3cajd3OA==
-Date:   Tue, 13 Sep 2022 20:44:09 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
+        Tue, 13 Sep 2022 12:25:29 -0400
+Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F9E6AA3D5;
+        Tue, 13 Sep 2022 08:20:23 -0700 (PDT)
+Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-1280590722dso33033116fac.1;
+        Tue, 13 Sep 2022 08:20:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=qtPsc16qIbDcI3G+/gbDV3y7UrOWZm6PWbygdH/NtPg=;
+        b=cV3myExGtLPEefkx9i9RZJl/5WRAzt1qYt78pnSgTPfvGZyPJDMnRo7SyzlRqkcmaV
+         IuzC4rkSrL935Y9ncqcNy48l1JS4/IhNaFRSkzRols7f4mlFSZZaigJvsflEI5NLS50X
+         1dcNAwsBvBxxvsDwGo38AX8jDQoMDHOZMNQwVAC6m2Q6YkYArx+t26b2FlneT39EBCMc
+         FYQIGK6q0XNKesIKGjpbCmVqFm32XGX9CHwLN14mQjLW9JhNzdEEaZjv4D4lk0WuUIKk
+         7ZuuXE3liiLPzlRRqIhOo2/Tf+E/p3OY1rwK1FE6x/OFpMKu+4SxFwInKIl7Pm3m0uaB
+         V7rA==
+X-Gm-Message-State: ACgBeo2RnxYhNDkcLT5xi3B9pMoRgAHCit/6X7E/s692UtG/3t8bBcfX
+        4Zso0b3tJyJXnWtSaTs/hCz+iNpGuw==
+X-Google-Smtp-Source: AA6agR5IEPb/y5rUqNpsdbihXxs5UXn2eIiCKF17hUbkqKgbrPa5sijj6sjT+wD9iKKJUAn1jK6zPg==
+X-Received: by 2002:a05:6808:2124:b0:347:cab2:a5d8 with SMTP id r36-20020a056808212400b00347cab2a5d8mr1624741oiw.71.1663082259771;
+        Tue, 13 Sep 2022 08:17:39 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id k6-20020a056870818600b0010d7242b623sm7128471oae.21.2022.09.13.08.17.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Sep 2022 08:17:39 -0700 (PDT)
+Received: (nullmailer pid 3731413 invoked by uid 1000);
+        Tue, 13 Sep 2022 15:17:38 -0000
+Date:   Tue, 13 Sep 2022 10:17:38 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-gpio@vger.kernel.org,
+        Martin Botka <martin.botka@somainline.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com
-Subject: Re: [PATCH v13 0/3] Add QCOM SNPS PHY overriding params support
-Message-ID: <YyCeQUfsVfpI1Z+k@matsya>
-References: <1662480933-12326-1-git-send-email-quic_kriskura@quicinc.com>
+        linux-kernel@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>
+Subject: Re: [PATCH 02/40] dt-bindings: pinctrl: qcom,sm6115-pinctrl: fix
+ matching SD card pins
+Message-ID: <20220913151738.GA3731343-robh@kernel.org>
+References: <20220911111200.199182-1-krzysztof.kozlowski@linaro.org>
+ <20220911111200.199182-3-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1662480933-12326-1-git-send-email-quic_kriskura@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20220911111200.199182-3-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06-09-22, 21:45, Krishna Kurapati wrote:
-> Added support for overriding tuning parameters in QCOM SNPS PHY
-> from device tree. This parameter tuning is required to tune the
-> hs signal on dp/dm lines for electrical compliance to be successful.
+On Sun, 11 Sep 2022 13:11:22 +0200, Krzysztof Kozlowski wrote:
+> SD card pins do not have function, so do not require it:
+> 
+>   pinctrl@500000: sdc2-off-state: 'oneOf' conditional failed, one must be fixed:
+>     'pins' is a required property
+>     'bias-disable;' is a required property
+>     'clk-pins' does not match any of the regexes: 'pinctrl-[0-9]+'
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../bindings/pinctrl/qcom,sm6115-pinctrl.yaml         | 11 ++++++++++-
+>  1 file changed, 10 insertions(+), 1 deletion(-)
+> 
 
-Applied 1-2 to phy-next, thanks
-
--- 
-~Vinod
+Acked-by: Rob Herring <robh@kernel.org>
