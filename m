@@ -2,82 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 874185B7C75
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 23:07:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91BB35B7CB9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 23:30:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229498AbiIMVHK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 17:07:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52138 "EHLO
+        id S229635AbiIMVaO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 17:30:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229649AbiIMVHJ (ORCPT
+        with ESMTP id S229630AbiIMVaN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 17:07:09 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5B1861B13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 14:07:06 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id y29so15861941ljq.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 14:07:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date;
-        bh=db6jhugLmxE55A+/ymDHt7+Ug/NDn30xnxeXJYgKLnU=;
-        b=Cy8jbgkaLCJx75T2VRoT1IbL0o1452xZZ//DICii3BfVkjcA+R6yPYnaN8QQftePNH
-         UYlB35mkVQIuqO3jEcfyJw5dbb+SX//WxISRH3jCuPZdqwstj3YQDfPBHRHAt2jYmUJt
-         hGdvRgtV3jM2mVc70lQf7Q0ANasEBgqPdQW22fE4Z4LV84UJvKMGngbviVq6mm4WYUzA
-         hr6LxG087XugzrOkuv3DuUgi+G37JzHwDDJeI1dPZTXenuKlj0SB4pQblj2OYzpMnqeN
-         xspc3FF6ZMxYuSfhksdY7yLBS7oORVBmD+JjZeYtJncfU8+H3SefW9W4L8FIBHBIyHbZ
-         hLqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=db6jhugLmxE55A+/ymDHt7+Ug/NDn30xnxeXJYgKLnU=;
-        b=jJFOKOD7wfMAImVJe/9dRrQypLi1xjW5Fa1TenqdIYw48CHSZUHn+iEngfVk1tBT8/
-         PAzZW3SB9JS1oB6J9WbdW15/r7Q0rAOgA/g2OxOLLoL72xvdM92CgEZKNY+7xFyD4lmR
-         OiXYA3OQHPh9nLUCWxO+C9bEY95RLA/t34l+YXqVVczUBmK2ZJ6BFI1wv//Pf8xY6Rbk
-         Cftg4/uD3aWVQNNiMiL4LSj7viB3p8L8j/AriS9M9CnFDpg5QkQM+6AvLSkTrpcE1EC1
-         8LTivs+PDTohivdwlDY4deXOV4pU8BOLZ/rEYN9ocNyVeuBOe+Z9DPMj/+WSS8wSzlJP
-         q8kw==
-X-Gm-Message-State: ACgBeo2wcWy0OyP92Zoo7fD9OeK5qRo/aOQ7IX2IusekF6LFShuHgctg
-        pXShi6ASr0H3QH4Wl4GgbtOCyQ==
-X-Google-Smtp-Source: AA6agR7cYSBsV1KgiAid4kpNw5OD6nXEWqWSpv3RzuJl0MkQJrfqXvgv8QUrdBn1FPsozd+Et2JQIQ==
-X-Received: by 2002:a2e:bd12:0:b0:264:7373:3668 with SMTP id n18-20020a2ebd12000000b0026473733668mr9080468ljq.18.1663103224929;
-        Tue, 13 Sep 2022 14:07:04 -0700 (PDT)
-Received: from [127.0.0.1] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id h12-20020a05651c124c00b0026bda31c10fsm1915792ljh.61.2022.09.13.14.07.03
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Sep 2022 14:07:04 -0700 (PDT)
-Date:   Wed, 14 Sep 2022 00:07:00 +0300
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Amit Kucheria <amitk@kernel.org>
-CC:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Tue, 13 Sep 2022 17:30:13 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23E9850078;
+        Tue, 13 Sep 2022 14:30:11 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 563E9615CD;
+        Tue, 13 Sep 2022 21:30:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC8DC433B5;
+        Tue, 13 Sep 2022 21:30:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663104610;
+        bh=Zl+H9wn8tNQcuqY+u/39q2o9zAh6YN3JsvPLJz2NN/A=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=No4oZ6UQUVrpCT/GNJRpOnh4G6oMPwYbbO9pCW8w09def5UqD+XAoUTEc6rtH54ej
+         0ef2CO+iQ3TP/MHuz/KmD828xb1JnV/ulbs7onBmQCY4zLeLSU0iuN2uSGERWbZTDZ
+         QBGXCVRzSUD5gsiUQ/NwmVjVuMDl625HqEyXxMZzSUwLR2bcU/SnR8RRsS3YPK7mJd
+         MohBmknVTaayr51hYgbb1Tb/Y3ACCWsoXMQ9hfFyd4AcxhpkGCjcuU1TfYxZ1+BEqq
+         000sNl0NgVJKKVIpBS7zdCoJFbdVNffnFGw2CWingwsggKMPDR1PoeQk63AqwVoqTR
+         sxxCcURMV/rWw==
+Date:   Tue, 13 Sep 2022 16:30:07 -0500
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Iskren Chernev <iskren.chernev@gmail.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
-Subject: =?US-ASCII?Q?Re=3A_=5BRFC_PATCH_02/10=5D_thermal/drivers/tsens=3A_?= =?US-ASCII?Q?Support_using_nvmem_cells_for_calibration_data?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <CAHLCerPhxGEUfpabu6dpnrkSL0Aab7qrthaffWn69Wz_z8aFDQ@mail.gmail.com>
-References: <20220910124701.4060321-1-dmitry.baryshkov@linaro.org> <20220910124701.4060321-3-dmitry.baryshkov@linaro.org> <CAHLCerPhxGEUfpabu6dpnrkSL0Aab7qrthaffWn69Wz_z8aFDQ@mail.gmail.com>
-Message-ID: <26FAA9B7-F4D7-4668-ABD8-A56BCEC817BB@linaro.org>
+        Kees Cook <keescook@chromium.org>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Colin Cross <ccross@android.com>,
+        Tony Luck <tony.luck@intel.com>, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 9/9] arm64: dts: qcom: sm4250: Add support for
+ oneplus-billie2
+Message-ID: <20220913213007.gdk27nxjzmagbdzn@builder.lan>
+References: <20220910143213.477261-1-iskren.chernev@gmail.com>
+ <20220910143213.477261-10-iskren.chernev@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220910143213.477261-10-iskren.chernev@gmail.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,185 +65,148 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sat, Sep 10, 2022 at 05:32:13PM +0300, Iskren Chernev wrote:
+> Add initial support for OnePlus Nord N100, based on SM4250. Currently
+> working:
+> - boots
+> - usb
+> - buildin flash storage (UFS)
+> - SD card reader
+> 
+> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../boot/dts/qcom/sm4250-oneplus-billie2.dts  | 241 ++++++++++++++++++
+>  2 files changed, 242 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index f4126f7e7640..5d2570b600e0 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -137,6 +137,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-polaris.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-shift-axolotl.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sm4250-oneplus-billie2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm6350-sony-xperia-lena-pdx213.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm7225-fairphone-fp4.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
+> new file mode 100644
+> index 000000000000..b9094f1efca0
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
+> @@ -0,0 +1,241 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
 
+Would it be possible for you to dual license this?
 
-On 13 September 2022 22:18:48 GMT+03:00, Amit Kucheria <amitk@kernel=2Eorg=
-> wrote:
->Hi Dmitry,
->
->I like this clean up=2E
->
->On Sat, Sep 10, 2022 at 6:17 PM Dmitry Baryshkov
-><dmitry=2Ebaryshkov@linaro=2Eorg> wrote:
->>
->> Add a unified function using nvmem cells for parsing the calibration
->> data rather than parsing the calibration blob manually=2E
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
->> ---
->>  drivers/thermal/qcom/tsens-v0_1=2Ec | 15 ++++++++
->>  drivers/thermal/qcom/tsens-v1=2Ec   |  6 ++-
->>  drivers/thermal/qcom/tsens=2Ec      | 62 +++++++++++++++++++++++++++++=
-++
->>  drivers/thermal/qcom/tsens=2Eh      |  4 ++
->>  4 files changed, 86 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/thermal/qcom/tsens-v0_1=2Ec b/drivers/thermal/qcom=
-/tsens-v0_1=2Ec
->> index f136cb350238=2E=2E2974eea578f4 100644
->> --- a/drivers/thermal/qcom/tsens-v0_1=2Ec
->> +++ b/drivers/thermal/qcom/tsens-v0_1=2Ec
->> @@ -229,6 +229,11 @@ static int calibrate_8916(struct tsens_priv *priv)
->>         u32 p1[5], p2[5];
->>         int mode =3D 0;
->>         u32 *qfprom_cdata, *qfprom_csel;
->> +       int ret;
->> +
->> +       ret =3D tsens_calibrate_nvmem(priv, 3);
->> +       if (!ret)
->> +               return 0;
->>
->>         qfprom_cdata =3D (u32 *)qfprom_read(priv->dev, "calib");
->>         if (IS_ERR(qfprom_cdata))
->> @@ -286,6 +291,11 @@ static int calibrate_8939(struct tsens_priv *priv)
->>         int mode =3D 0;
->>         u32 *qfprom_cdata;
->>         u32 cdata[6];
->> +       int ret;
->> +
->> +       ret =3D tsens_calibrate_nvmem(priv, 2);
->> +       if (!ret)
->> +               return 0;
->>
->>         qfprom_cdata =3D (u32 *)qfprom_read(priv->dev, "calib");
->>         if (IS_ERR(qfprom_cdata))
->> @@ -491,6 +501,11 @@ static int calibrate_9607(struct tsens_priv *priv)
->>         u32 p1[5], p2[5];
->>         int mode =3D 0;
->>         u32 *qfprom_cdata;
->> +       int ret;
->> +
->> +       ret =3D tsens_calibrate_nvmem(priv, 2);
->> +       if (!ret)
->> +               return 0;
->>
->>         qfprom_cdata =3D (u32 *)qfprom_read(priv->dev, "calib");
->>         if (IS_ERR(qfprom_cdata))
->> diff --git a/drivers/thermal/qcom/tsens-v1=2Ec b/drivers/thermal/qcom/t=
-sens-v1=2Ec
->> index 573e261ccca7=2E=2E868d7b4c9e36 100644
->> --- a/drivers/thermal/qcom/tsens-v1=2Ec
->> +++ b/drivers/thermal/qcom/tsens-v1=2Ec
->> @@ -172,7 +172,11 @@ static int calibrate_v1(struct tsens_priv *priv)
->>         u32 p1[10], p2[10];
->>         u32 mode =3D 0, lsb =3D 0, msb =3D 0;
->>         u32 *qfprom_cdata;
->> -       int i;
->> +       int i, ret;
->> +
->> +       ret =3D tsens_calibrate_nvmem(priv, 2);
->> +       if (!ret)
->> +               return 0;
->>
->>         qfprom_cdata =3D (u32 *)qfprom_read(priv->dev, "calib");
->>         if (IS_ERR(qfprom_cdata))
->> diff --git a/drivers/thermal/qcom/tsens=2Ec b/drivers/thermal/qcom/tsen=
-s=2Ec
->> index e49f58e83513=2E=2E8331b924325a 100644
->> --- a/drivers/thermal/qcom/tsens=2Ec
->> +++ b/drivers/thermal/qcom/tsens=2Ec
->> @@ -70,6 +70,68 @@ char *qfprom_read(struct device *dev, const char *cn=
-ame)
->>         return ret;
->>  }
->>
->> +int tsens_calibrate_nvmem(struct tsens_priv *priv, int shift)
->> +{
->> +       u32 mode;
->> +       u32 base1, base2;
->> +       u32 p1[MAX_SENSORS], p2[MAX_SENSORS];
->> +       char name[] =3D "sX_pY";
->> +       int i, ret;
->> +
->> +       if (priv->num_sensors > MAX_SENSORS)
->> +               return -EINVAL;
->> +
->> +       ret =3D nvmem_cell_read_variable_le_u32(priv->dev, "mode", &mod=
-e);
->> +       if (ret =3D=3D -ENOENT)
->> +               dev_warn(priv->dev, "Please migrate to sepate nvmem cel=
-ls for calibration data\n");
->
->typo: separate
+> +/*
+> + * Copyright (c) 2021, Iskren Chernev <iskren.chernev@gmail.com>
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sm4250.dtsi"
+> +
+> +/ {
+> +	model = "OnePlus Nord N100";
+> +	compatible = "oneplus,billie2", "qcom,sm4250";
+> +
+> +	/* required for bootloader to select correct board */
+> +	qcom,msm-id = <0x1a1 0x10000 0x1bc 0x10000>;
+> +	qcom,board-id = <0x1000b 0x00>;
+> +
+> +	aliases {
+> +	};
+> +
+> +	chosen {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		stdout-path = "framebuffer0";
+> +
+> +		framebuffer0: framebuffer@9d400000 {
+> +			compatible = "simple-framebuffer";
+> +			reg = <0 0x5c000000 0 (1600 * 720 * 4)>;
+> +			width = <720>;
+> +			height = <1600>;
+> +			stride = <(720 * 4)>;
+> +			format = "a8r8g8b8";
+> +		};
+> +	};
+> +};
+> +
+> +&xo_board {
+> +	clock-frequency = <19200000>;
+> +};
+> +
+> +&sleep_clk {
+> +	clock-frequency = <32764>;
+> +};
+> +
+> +&reserved_memory {
 
-Ack=2E
+As the number of nodes grow it would be nice if these were sorted
+alphabetically.
 
+> +	bootloader_log_mem: memory@5fff7000 {
+> +		reg = <0x00 0x5fff7000 0x00 0x8000>;
+> +		no-map;
+> +	};
+> +
+> +	ramoops@cbe00000 {
+> +		compatible = "ramoops";
+> +		reg = <0x0 0xcbe00000 0x0 0x400000>;
+> +		record-size = <0x40000>;
+> +		pmsg-size = <0x200000>;
+> +		console-size = <0x40000>;
+> +		ftrace-size = <0x40000>;
+> +	};
+> +
+> +	param_mem: memory@cc200000 {
+> +		reg = <0x00 0xcc200000 0x00 0x100000>;
+> +		no-map;
+> +	};
+> +
+> +	mtp_mem: memory@cc300000 {
+> +		reg = <0x00 0xcc300000 0x00 0xb00000>;
+> +		no-map;
+> +	};
+> +};
+> +
+> +&usb3 {
+> +	status = "okay";
+> +};
+[..]
+> +&rpm_requests {
+> +	regulators-0 {
 
->
->> +       if (ret < 0)
->> +               return ret;
->> +
->> +       dev_dbg(priv->dev, "calibration mode is %d\n", mode);
->> +
->> +       ret =3D nvmem_cell_read_variable_le_u32(priv->dev, "base1", &ba=
-se1);
->> +       if (ret < 0)
->> +               return ret;
->> +
->> +       ret =3D nvmem_cell_read_variable_le_u32(priv->dev, "base2", &ba=
-se2);
->> +       if (ret < 0)
->> +               return ret;
->> +
->> +       for (i =3D 0; i < priv->num_sensors; i++) {
->> +               ret =3D snprintf(name, sizeof(name), "s%d_p1", i);
->> +               if (ret < 0)
->> +                       return ret;
->> +
->> +               ret =3D nvmem_cell_read_variable_le_u32(priv->dev, name=
-, &p1[i]);
->> +               if (ret)
->> +                       return ret;
->> +
->> +               p1[i] =3D (base1 + p1[i]) << shift;
->> +
->> +               ret =3D snprintf(name, sizeof(name), "s%d_p2", i);
->> +               if (ret < 0)
->> +                       return ret;
->> +
->> +               ret =3D nvmem_cell_read_variable_le_u32(priv->dev, name=
-, &p2[i]);
->> +               if (ret)
->> +                       return ret;
->> +
->> +               p2[i] =3D (base2 + p2[i]) << shift;
->
->Have you verified that the p1 and p2 arrays end up with identical
->values before and after this conversion?
+Is there a reason why you don't call this node pm6125-regulators ?
 
-Yes=2E I have verified that the calibration values are unchanged on db410c=
-(apq8016, v0_1) and qcs404-evb (v1)=2E
+> +		compatible = "qcom,rpm-pm6125-regulators";
+> +
+> +		vreg_s6a: s6 {
+> +			regulator-min-microvolt = <320000>;
+> +			regulator-max-microvolt = <1456000>;
+> +		};
+[..]
+> +		vreg_l24a: l24 {
+> +			regulator-min-microvolt = <2704000>;
+> +			regulator-max-microvolt = <3544000>;
+> +		};
 
+Just as a heads up, by not ensuring that your regulators are in
+high-power-mode you risk seeing brown-outs - something we keep running
+into for e.g. SD-cards.
 
->
->
->> +       }
->> +
->> +       if (mode =3D=3D NO_PT_CALIB) {
->> +               dev_dbg(priv->dev, "calibrationless mode\n");
->> +               for (i =3D 0; i < priv->num_sensors; i++) {
->> +                       p1[i] =3D 500;
->> +                       p2[i] =3D 780;
->> +               }
->> +       }
->> +
->> +       compute_intercept_slope(priv, p1, p2, mode);
->> +
->> +       return 0;
->> +}
->> +
->>  /*
+Regards,
+Bjorn
 
---=20
-With best wishes
-Dmitry
+> +	};
+> +};
+> -- 
+> 2.37.2
+> 
