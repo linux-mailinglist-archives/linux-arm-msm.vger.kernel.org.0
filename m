@@ -2,63 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34FDC5B7675
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 18:28:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB3715B7686
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 18:33:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230264AbiIMQ17 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 12:27:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55020 "EHLO
+        id S231816AbiIMQdK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 12:33:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231269AbiIMQ1h (ORCPT
+        with ESMTP id S231709AbiIMQcw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 12:27:37 -0400
-Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD6767B2A4;
-        Tue, 13 Sep 2022 08:23:03 -0700 (PDT)
-Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-1280590722dso33060295fac.1;
-        Tue, 13 Sep 2022 08:23:03 -0700 (PDT)
+        Tue, 13 Sep 2022 12:32:52 -0400
+Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB238B1B9A;
+        Tue, 13 Sep 2022 08:27:50 -0700 (PDT)
+Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-127f5411b9cso33055144fac.4;
+        Tue, 13 Sep 2022 08:27:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=Wk/p18xJMNComokJnouExLqevPYgY3WIuHduT5z5UaE=;
-        b=LvEbm9VDVkG57pyliYr6qu0De9+H17QoDeY+ZGiTfH19xl10WNxXLxba7i6CPwUIan
-         K4bTqo9D/He0ijMI+02PCSsz+36dBeCcRdafk0kbElEuWjq2xpjJxh19v8UX9bPlQDay
-         N5j/92B0l23KVyMii0cXI6fkWqtuhEiTkMfXp6tRFvioO4euFe2CA9o2VBjmqYYGbrDM
-         qBZoSjn8B8VH5224e/xoinAZRLHl3Rrtm7PcRJvWNErMX1vgZuedNXyBASwAEfLQJQ3n
-         RZnaDI2mtJYdbaFIEIjQYjmMiBTe6c7F5cLGpLhPLmssUZIbapoZQGMDcmR4sjB6TRvc
-         K2nw==
-X-Gm-Message-State: ACgBeo2lH+htSpQuuVXVXyuBqzXpqmEf0OpBByKl2PTWNEy5472M0uDX
-        QvMSG2EztCdS9L+FH74RdHJZTOxiJg==
-X-Google-Smtp-Source: AA6agR7r0TwDiXVOXUGXZmyD9bayxsvjxqO1u/v0jvdTZFJic4WcZ4cxjERsdWDjKKY/rvsSto9+nA==
-X-Received: by 2002:a05:6870:170b:b0:127:6654:6768 with SMTP id h11-20020a056870170b00b0012766546768mr2004800oae.256.1663082455510;
-        Tue, 13 Sep 2022 08:20:55 -0700 (PDT)
+        bh=VVZjlnn+THkJqyJoRk9RBQPIt/3qGui9L2xBWv1no4A=;
+        b=DYXOx2epFovfGFJTyFufOREnqZSd/pnX/KWK7PnZ3qLZURRyDlndYPqJl/ADpBT900
+         mX0Fa0EIkc92ZJbud+WnwTiICsiTfN89X5NDDGDDpXTpXWCLtCJI3hHa1ZiEqdr5L1jX
+         zAtG895Q3mXXM8Lhq4ZAB1cB9001BqqkCGfGzVaRlNlWBiij8Gb3tfGS+U0gwWITIfBe
+         pmEbnzj7i1g1oT4+R+2vcJBkJgl7U36Ui88oyHE+Q7ilMKiZDq4rWKXQ4sfXHOQ+b6ri
+         +kJlbZO2c5CiF1PwstzVIa4iiLuXKZa13AI31x3Qobk1BZIXxEsyjzTiBFjxtoIrCubP
+         G9bw==
+X-Gm-Message-State: ACgBeo32xxELQbZK/Mwz/SXs2D6hf9n9jBYgXu8c5STJPKQ/U3MH2Sfb
+        mGXd6Nf8peegEYc6nDjB1w==
+X-Google-Smtp-Source: AA6agR6Xeph40B/AphNQeHOSVdWolS1Sqe/wRlZeFUjKP/k/ZntbKo+PcwJJyVFs2nGsVh70g3Qr4w==
+X-Received: by 2002:a05:6870:4727:b0:126:e6:3848 with SMTP id b39-20020a056870472700b0012600e63848mr2027523oaq.60.1663082781782;
+        Tue, 13 Sep 2022 08:26:21 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id i34-20020a056870892200b0012644cc4feasm7055376oao.55.2022.09.13.08.20.54
+        by smtp.gmail.com with ESMTPSA id x88-20020a9d20e1000000b00637032a39a3sm5977109ota.6.2022.09.13.08.26.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Sep 2022 08:20:55 -0700 (PDT)
-Received: (nullmailer pid 3752130 invoked by uid 1000);
-        Tue, 13 Sep 2022 15:20:54 -0000
-Date:   Tue, 13 Sep 2022 10:20:54 -0500
+        Tue, 13 Sep 2022 08:26:21 -0700 (PDT)
+Received: (nullmailer pid 3767287 invoked by uid 1000);
+        Tue, 13 Sep 2022 15:26:20 -0000
+Date:   Tue, 13 Sep 2022 10:26:20 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+To:     Adam Skladowski <a39.skl@gmail.com>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH] dt-bindings: pci: qcom,pcie-ep: correct qcom,perst-regs
-Message-ID: <20220913152054.GA3736444-robh@kernel.org>
-References: <20220911135547.23106-1-krzysztof.kozlowski@linaro.org>
- <11e61fa5-f770-9c9f-23b9-3d1dcb205bc5@linaro.org>
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 1/2] dt-bindings: clock: add QCOM SM6115 display clock
+ bindings
+Message-ID: <20220913152620.GA3762864-robh@kernel.org>
+References: <20220911164635.182973-1-a39.skl@gmail.com>
+ <20220911164635.182973-2-a39.skl@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <11e61fa5-f770-9c9f-23b9-3d1dcb205bc5@linaro.org>
+In-Reply-To: <20220911164635.182973-2-a39.skl@gmail.com>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
@@ -70,38 +71,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Sep 11, 2022 at 04:14:54PM +0200, Krzysztof Kozlowski wrote:
-> On 11/09/2022 15:55, Krzysztof Kozlowski wrote:
-> > qcom,perst-regs is an phandle array of one item with a phandle and its
-> > arguments.
-> > 
-> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > ---
-> >  Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml | 6 ++++--
-> >  1 file changed, 4 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> > index 3d23599e5e91..077e002b07d3 100644
-> > --- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> > @@ -60,8 +60,10 @@ properties:
-> >                   enable registers
-> >      $ref: "/schemas/types.yaml#/definitions/phandle-array"
-> >      items:
-> > -      minItems: 3
-> > -      maxItems: 3
-> > +      - items:
-> > +          - description: Syscon to TCSR system registers
-> > +          - description: Perst enable offset
-> > +          - description: Perst separateion enable offset
+On Sun, Sep 11, 2022 at 06:46:18PM +0200, Adam Skladowski wrote:
+> Add device tree bindings for display clock controller for
+> Qualcomm Technology Inc's SM6115 SoC.
 > 
-> Unfortunately this still complains:
+> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+> ---
+>  .../bindings/clock/qcom,sm6115-dispcc.yaml    | 70 +++++++++++++++++++
+>  .../dt-bindings/clock/qcom,sm6115-dispcc.h    | 36 ++++++++++
+>  2 files changed, 106 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm6115-dispcc.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,sm6115-dispcc.h
 > 
-> qcom-sdx55-t55.dtb: pcie-ep@40000000: qcom,perst-regs:0: [28] is too short
-> 
-> 
-> where 28 is the phandle...
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm6115-dispcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm6115-dispcc.yaml
+> new file mode 100644
+> index 000000000000..a6bf363b5015
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sm6115-dispcc.yaml
+> @@ -0,0 +1,70 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,sm6115-dispcc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Display Clock Controller Binding for SM6115
 
-Meaning the dt is wrong or there's a tooling issue?
+s/Binding //
 
-Rob
+> +
+> +maintainers:
+> +  - Bjorn Andersson <andersson@kernel.org>
+> +
+> +description: |
+
+Don't need '|' when no formatting to preserve.
+
+With those fixes,
+
+Reviewed-by: Rob Herring <robh@kernel.org>
