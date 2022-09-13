@@ -2,57 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 994325B7C04
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 22:11:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F8BE5B7C10
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 22:13:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229555AbiIMULH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 16:11:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43928 "EHLO
+        id S229690AbiIMUNC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 16:13:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229551AbiIMULH (ORCPT
+        with ESMTP id S229510AbiIMUNB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 16:11:07 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50F30642D3;
-        Tue, 13 Sep 2022 13:11:06 -0700 (PDT)
+        Tue, 13 Sep 2022 16:13:01 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC99A642D3;
+        Tue, 13 Sep 2022 13:13:00 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E114B61585;
-        Tue, 13 Sep 2022 20:11:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70EEEC433D6;
-        Tue, 13 Sep 2022 20:11:04 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 77EC2B810B0;
+        Tue, 13 Sep 2022 20:12:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D4B8C433D6;
+        Tue, 13 Sep 2022 20:12:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663099865;
-        bh=4+HGjp25/cN2z21/49nNWSVIRVlNUxdlMA9fDjagpzw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=MmmWGxWOh91Qvorm6crbMaDED/E6pwg9MJXGkmKnBVe0Q6DkfBMStUAMjl0nMuqFc
-         lacaMubCGeElgsMLia23xkFVUqqC+yqTLsI1aj5Kqi1jG2znDk29BJitQMA51BLHPD
-         AKuWv7+vAeLd/N7VJEMSGHMcS9sNz325cYXDiqY4hI00z62jLY9SFz61GUcAgift3o
-         Sr8Bk4/rrywPwIui3Me/clCh/lowVBH/pZ6Fkq+4o/zgDlDUnzFypZrSbN9sESvdm9
-         Hyy5eeKChEFdrCz9lfTebap9Paj/c/gQe86NkaUsQx2rp9DHXqV/sRsWJ6RXf/2HKG
-         SCI9ZDZ1TgyRg==
-Date:   Tue, 13 Sep 2022 15:11:02 -0500
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
+        s=k20201202; t=1663099978;
+        bh=OoU2B4RsRfA9DUfDB/pYptFOgRvPjtc5VBMN/lNgZk8=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=On6Z8T7idhEC6JEh9I9R68lgW+Obr5rWb8751JQlKeY46BeQNrEgbAhtpa6CoEgTv
+         gkcByWe1rWPywL/+dH5TSp7UAVJdIgyFrGsopyfn99DZEZBJOenPdzLLDiJQjZ6o2H
+         fTpgOhke53ncQlfCsOiBxNNzgcQG96eRUgHZabVxxQDpNrcZeDxL7Dk6qojKoMH7RQ
+         9m+HmVKKnYoUGQNq6s1DndBz7ECuDE1ZGvf+8TBjqulo9Ao9IDe3jHUbKbmCo/F7qO
+         75c9OfSqyDHQ5Oi76JdBNw7wOgBipqUCirizynYfuGeEE9DPFX3Vpzxj0yzgUz1mrB
+         DWSCIy76s6L1g==
+Date:   Tue, 13 Sep 2022 15:12:56 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     lpieralisi@kernel.org, robh@kernel.org, andersson@kernel.org,
+        kw@linux.com, bhelgaas@google.com, linux-pci@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>
-Subject: Re: [PATCH v1 2/2] soc: qcom: mdt_loader: Move the memory allocation
- into mdt loader
-Message-ID: <20220913201102.mjmtvsx5xyfcr5cw@builder.lan>
-References: <cover.1663007783.git.quic_gokukris@quicinc.com>
- <2ba262668e86e58acb086c64fc759ba02b39a525.1663007783.git.quic_gokukris@quicinc.com>
+        konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
+        dmitry.baryshkov@linaro.org
+Subject: Re: [PATCH v3 02/12] PCI: qcom-ep: Do not use hardcoded clks in
+ driver
+Message-ID: <20220913201256.GA620427@bhelgaas>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2ba262668e86e58acb086c64fc759ba02b39a525.1663007783.git.quic_gokukris@quicinc.com>
+In-Reply-To: <20220910063045.16648-3-manivannan.sadhasivam@linaro.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -63,73 +58,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 12, 2022 at 11:41:32AM -0700, Gokul krishna Krishnakumar wrote:
-> By moving the memory allocation to mdt loader we can simplify the scm
-> call, by just packing arguments provided to it from the clients for
-> making secuer world calls. We can also simplify the memory allocation
-> for the qcom metadata, by just doing one memory allocation in the
-> mdt loader.
-> 
-> Signed-off-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
-> ---
->  drivers/remoteproc/qcom_q6v5_mss.c  |  2 +-
->  drivers/soc/qcom/mdt_loader.c       | 41 ++++++++++++++++++++++++++++---------
->  include/linux/soc/qcom/mdt_loader.h |  5 +++--
->  3 files changed, 35 insertions(+), 13 deletions(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-> index fddb63c..1919bfc 100644
-> --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> @@ -947,7 +947,7 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
->  	int ret;
->  	int i;
->  
-> -	metadata = qcom_mdt_read_metadata(fw, &size, fw_name, qproc->dev);
-> +	metadata = qcom_mdt_read_metadata(fw, &size, fw_name, qproc->dev, NULL);
+On Sat, Sep 10, 2022 at 12:00:35PM +0530, Manivannan Sadhasivam wrote:
+> Generally, device drivers should just rely on the platform data like
+> devicetree to supply the clocks required for the functioning of the
+> peripheral. There is no need to hardcode the clk info in the driver.
+> So get rid of the static clk info and obtain the platform supplied
+> clks.
 
-At the end of this function we invoke kfree(metadata), which would be
-bad if that comes from dma_alloc_coherent().
+Possibly reword the subject line to say what this does instead of what
+it does not do?  E.g., "Rely on devicetree 'clock-names' instead of
+hard-coding" or whatever.
 
->  	if (IS_ERR(metadata))
->  		return PTR_ERR(metadata);
->  
-> diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-[..]
-> @@ -160,9 +164,18 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
->  	ehdr_size = phdrs[0].p_filesz;
->  	hash_size = phdrs[hash_segment].p_filesz;
->  
-> -	data = kmalloc(ehdr_size + hash_size, GFP_KERNEL);
-> -	if (!data)
-> -		return ERR_PTR(-ENOMEM);
-> +	/*
-> +	 * During the scm call memory protection will be enabled for the meta
-> +	 * data blob, so make sure it's physically contiguous, 4K aligned and
-> +	 * non-cachable to avoid XPU violations.
-> +	 */
-> +	scm_dev = qcom_get_scm_device();
-
-As LKP points out, I don't seem to have this function.
-
-> +	data = dma_alloc_coherent(scm_dev, ehdr_size + hash_size, mdata_phys,
-> +				       GFP_KERNEL);
-
-I am not thrilled about the idea of doing dma_alloc_coherent() in this
-file and dma_free_coherent() in the scm driver. Similarly, I consider
-these functions to operate in the context of the caller, so operating on
-the scm device's struct device isn't so nice.
-
-
-After trying various models I came to the conclusion that it was better
-to try to keep the MDT loader to just load MDT files, and move the
-SCM/PAS interaction out of that. Unfortunately we have a number of
-client drivers that would then need to (essentially) duplicate the
-content of qcom_mdt_pas_init() - so I left that in there.
-
-I still believe that keeping the MDT loader focused on loading MDTs is a
-good idea, but I'm open to any suggestions for improvements in the
-interaction between these different components.
-
-Regards,
 Bjorn
