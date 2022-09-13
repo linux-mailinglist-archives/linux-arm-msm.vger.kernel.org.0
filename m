@@ -2,156 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 405FD5B6BDD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 12:45:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C284A5B6BFD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 12:55:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231722AbiIMKp4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 06:45:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51716 "EHLO
+        id S231751AbiIMKzJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 06:55:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231734AbiIMKpx (ORCPT
+        with ESMTP id S231743AbiIMKzI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 06:45:53 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC43252FEA;
-        Tue, 13 Sep 2022 03:45:51 -0700 (PDT)
-Received: from mercury (unknown [185.122.133.20])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: sre)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 5E566660201C;
-        Tue, 13 Sep 2022 11:45:50 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1663065950;
-        bh=XWn2qZ896q9hiNdpJzo3kQstEZh6ow+Bn3ZdhaKw+ac=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=NxYSH/wwoOVu7eMsDEbZCJptFfclJd1uiCHQy7w/ifFfgHvtr4p2qQTH04DvcJw6E
-         Z3GrA/gQGdoDc4amz9GXE8VtzqvnnYTluPrMzp8/lCOP74rvXVeRL66hkwbb+LSAoO
-         ybL47dYOZJxZZGEMaPCHroXU4XK2pK4wbqU5OTaUeA4lumToYy+T4YZz1NKTqD3GKx
-         4mozVf3zRlxy0rJHp0QApTSvQY3gANJR3hjXKW6c/So7ENXIBFKz3fLg86be/wBrqQ
-         5rhDuooxBXe7odVCugfzWXnqmYpFXh7E24qY6vnSag0xmT3btzJOQMbE+ejqq3EoSn
-         v52OSHcxqM0Ow==
-Received: by mercury (Postfix, from userid 1000)
-        id 3A2B7106084A; Tue, 13 Sep 2022 12:45:45 +0200 (CEST)
-Date:   Tue, 13 Sep 2022 12:45:45 +0200
-From:   Sebastian Reichel <sebastian.reichel@collabora.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Lee Jones <lee@kernel.org>, dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH 2/2] power: supply: Add Lenovo Yoga C630 EC driver
-Message-ID: <20220913104545.2u6mcyy3bg4dp6ly@mercury.elektranox.org>
-References: <20220810030500.2793882-1-bjorn.andersson@linaro.org>
- <20220810030500.2793882-3-bjorn.andersson@linaro.org>
+        Tue, 13 Sep 2022 06:55:08 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B58C18395
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 03:55:06 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id bz13so20157880wrb.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 03:55:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=vD7gsQSG7/RgR3U6tGxQtB/SQTavqkLOmUPnntEGd4E=;
+        b=jt+wJKTVrcmFj8OWdLPvhkTkzPsR9PN/4e/XbHWKqDY6v0qBCJN4iv/oSSgN0faDVb
+         YXJONA517G998oOCtker3S2TLWjvAewYECjPXVi4andCnKSPFeiavMrV2GKCn3SSBlMJ
+         K3guPSwAUXBCYZEh5QaJFkMBV6VLzu1mkKN1OA1Nx66C0Bg+w8cXpa740NBOp8TJ+f+1
+         OkAMFHqdZvIMpw+2UHq87cH7xCsfG+6t3UWuQAD2qBPCvKCeUov/nCZSlzw7nIn/jCRz
+         a+UAjpj74f5M6iPkuqnQskRreJ2mtap8aBgWwLGwAxtK4KjIfiwEIt4eFsSpUk1wxLDS
+         2ccA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=vD7gsQSG7/RgR3U6tGxQtB/SQTavqkLOmUPnntEGd4E=;
+        b=gJqNsANgTC7iGkGVNH9RQpldlejFGf3tfMHs0THDIsfuIsg+gaEWJRVvLfxyBHHZaD
+         JRdfh9sJoBj9hv1H3OvLYWU79kP4wN3qnvfdbr0iBVAY/xPgOayLGqbDcNOkBI2IQAI8
+         qz0CL4uy6ets/rpbBEMmT1iR2lONMgUNsOtQ+vgM64YNXPXXZir132xC4Y0exgoQfAZA
+         V1aP1pk7SvnmrtFbfmfSscvxymrwG/JdxWnObOQ5hXozQmZAnUAwt5YqziYgHR33Ykuo
+         DRJ6T1iiiad9lwsZ30hzgeRHv8HA5P80DMSDWU8KZ0HdvrEvc0ejAIUMBshaLe8FoFlJ
+         rlnA==
+X-Gm-Message-State: ACgBeo1HKsn6BwPTcLmM9bT5RJrvSuVDGHoS+6MUI9+RH8FmXe1YHq/9
+        M55sTybtyIsaPgi+D0HwJEx8+w==
+X-Google-Smtp-Source: AA6agR5iiGGH0zXFnAmQCnQ/uaNzWRKbpCbE3lwpN5hm9PAilmAZEHWU1o4i3t817frheSLazfrg0A==
+X-Received: by 2002:a5d:6609:0:b0:22a:3965:d5ad with SMTP id n9-20020a5d6609000000b0022a3965d5admr12993616wru.62.1663066504694;
+        Tue, 13 Sep 2022 03:55:04 -0700 (PDT)
+Received: from [10.119.22.201] ([89.101.193.70])
+        by smtp.gmail.com with ESMTPSA id k42-20020a05600c1caa00b003b4868eb71bsm7273342wms.25.2022.09.13.03.55.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Sep 2022 03:55:03 -0700 (PDT)
+Message-ID: <26324afa-e106-d623-38a5-3cb8263ccd3a@linaro.org>
+Date:   Tue, 13 Sep 2022 12:55:03 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="6ur2qv5grzx22o5g"
-Content-Disposition: inline
-In-Reply-To: <20220810030500.2793882-3-bjorn.andersson@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v2 4/4] dt-bindings: qcom-pmic-gpio: Add PM7250B and
+ PM8450 bindings
+Content-Language: en-US
+To:     Anjelique Melendez <quic_amelende@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, linus.walleij@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     konrad.dybcio@somainline.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_collinsd@quicinc.com,
+        quic_jprakash@quicinc.com
+References: <20220912210624.4527-1-quic_amelende@quicinc.com>
+ <20220912210624.4527-5-quic_amelende@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220912210624.4527-5-quic_amelende@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 12/09/2022 23:06, Anjelique Melendez wrote:
+> Update the Qualcomm Technologies, Inc. PMIC GPIO binding documentation
+> to include compatible strings for PM7250B and PM8450 PMICs.
+> 
+> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
 
---6ur2qv5grzx22o5g
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[+Cc Lee Jones, DRI devel]
-
-On Tue, Aug 09, 2022 at 10:05:00PM -0500, Bjorn Andersson wrote:
-> The Qualcomm Snapdragon-based Lenovo Yoga C630 has some sort of EC
-> providing AC-adapter and battery status, as well as USB Type-C altmode
-> notifications for Displayport operation.
->=20
-> The Yoga C630 ships with Windows, where these operations primarily are
-> implemented in ACPI, but due to various issues with the hardware
-> representation therein it's not possible to run Linux on this
-> information. As such this is a best-effort re-implementation of these
-> operations, based on the register map expressed in ACPI and a fair
-> amount of trial and error.
->=20
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
-> [...]
-> +	val =3D yoga_c630_ec_read8(ec, LENOVO_EC_BAT_ATTRIBUTES);
-> +	if (val < 0)
-> +		goto out_unlock;
-> +	ec->unit_ma =3D val & LENOVO_EC_BAT_ATTR_UNIT_IS_MA;
-> +	if (!ec->unit_ma)
-> +		ec->scale =3D 1000;
-> +	else
-> +		ec->scale =3D 1;
-
-Since I'm not sure how much of information was gained by reverse
-engineering: Is this really milliamps vs microamps and not milliamps
-vs milliwatt? SBS batteries usually report either mA or mW.
-
-> [...]
-> +	case POWER_SUPPLY_PROP_SERIAL_NUMBER:
-> +		val->strval =3D "05072018";
-> +		break;
-
-why is this hardcoded? :)
-
-> [...]
-> +	device_for_each_child_node(dev, fwnode) {
-> +		ret =3D fwnode_property_read_u32(fwnode, "reg", &port);
-> +		if (ret < 0)
-> +			continue;
-> +
-> +		/* Got multiple ports, but altmode is only possible on port 1 */
-> +		if (port !=3D 1)
-> +			continue;
-> +
-> +		ec->bridge.funcs =3D &yoga_c630_ec_bridge_funcs;
-> +		ec->bridge.of_node =3D to_of_node(fwnode);
-> +		ec->bridge.ops =3D DRM_BRIDGE_OP_HPD;
-> +		ec->bridge.type =3D DRM_MODE_CONNECTOR_USB;
-> +
-> +		ret =3D devm_drm_bridge_add(dev, &ec->bridge);
-> +		if (ret) {
-> +			dev_err(dev, "failed to register drm bridge\n");
-> +			fwnode_handle_put(fwnode);
-> +			return ret;
-> +		}
-
-I wonder if DRM people want to see this in drivers/gpu/drm/bridge.
-Maybe it's better to make this a MFD driver?
-
-> [...]
-
--- Sebastian
-
---6ur2qv5grzx22o5g
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmMgX1QACgkQ2O7X88g7
-+pr5vQ//fDjgrXSthbPeBloXcYtJikgwQMMWl0FwW5NYB29nx5TezAmEzspHNNIM
-0gldgNtpsQeNWKmkjvXwdBAs2KaApf9kxIEZJx/CxLO1bgm8FtWmqkCVdevXMonr
-Xyg+JF+nmbQsV9tYGNljoGsA/OxfjzKPEZKGSxZaA+8o9LPZYYssvJJFJ7BId+/8
-HVc1Ac5ODJWSeNseyzM93BTQb62EsaQFj4Rvi01CCSGVQdEWkHPEirNlwlCx4IKf
-8vZ5IHiELU7YwRJ9pTJHUvrioD49+n1UdewOAvVHdpo+jDpxIpSKotfsY1AaZw+n
-Ls7mS8wPJRoy22+Ooo53FdrdYY5pRKLCMSJOoSnvuixkhBEL+2NTb5dDjDjIJ15x
-M5fOQvWs5xavZbEjaiF63gXL+4dvzXVZ6hKhULrZYSPtEvjeg4ThND2HkzyO8M/x
-MZ1qVYdFx9Ux86gBD6gEeFajnXpFqTDPq8zskHqZje3+5VmJUtX3wZJyhuixHfSb
-0kThEoByuJsRjEpldK0kp5jnX4MNkBAMPDGKu0zdjUppJh1ixB6gqelNj/eUHdr0
-iYm2KVlx6oLvMqmBTf7TgFZdAF6hjYee43eLnwBVN9UxLcT4CRgmQbll/MEDeuN8
-OHK9qivKSMUQQ6q/dr7tUu3sAg6WOPfBFh8m4LdEjPIAVDkPd3c=
-=jQoj
------END PGP SIGNATURE-----
-
---6ur2qv5grzx22o5g--
+Best regards,
+Krzysztof
