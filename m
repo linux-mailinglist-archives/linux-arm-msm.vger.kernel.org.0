@@ -2,72 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC3175B6C16
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 12:58:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 576135B6C24
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 13:03:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231841AbiIMK61 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 06:58:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40382 "EHLO
+        id S231825AbiIMLDo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 07:03:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231926AbiIMK6G (ORCPT
+        with ESMTP id S231828AbiIMLDk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 06:58:06 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A0885F22F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 03:57:54 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id m3so10913564pjo.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 03:57:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=oecofVMrcCfLyVCVWoV6+PgNwd31Jhh4K2JgKw6ALKM=;
-        b=OU5BpUXJqwh+x0q2JoTTulUldi4JBs6zIF1xVeSxip7z3hA5lNh8JhLOKACWiot3MM
-         NBR1IzVqsO4wAzVa3Pp6/RE1sRrrWqQFZnYm3fg/tJr2jdi2kxjreMsL1TX1wl9yxTRw
-         rKF7Xvy96vhado2/ZPEOM1uItzyHiZx1OwvxKllFcDTkqD2/zCIm+ta/JkvVqkesf4Cc
-         cav5Uro0qKwyjYRfTtyYlXT81COF6IHi4jGv1XKSqXCAmtYzKIh2D6Wa2uKQ3i4nVG8u
-         FyYlUl2HT3ToQh2qFTH0JjkZWdpswOmSIFz9Gyw2p5mLoD6AsPclzh2eqok6Z4thjApY
-         8QMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=oecofVMrcCfLyVCVWoV6+PgNwd31Jhh4K2JgKw6ALKM=;
-        b=dSoAJ4Wi8LX1DDNfz13Dt339Prh9qSB+tEndWfGlFsBp9MqzRk8opPFPdvsz90VPAd
-         LN5RAbUVj3eeh1K7EwplP7OqTF1PczLqc+CyY5SKTKLSvIL8BP5zh9wqL7KyF3PKkIPj
-         54wY9K9Pe0Jsra3yUcLkmdLW9gs0azTF36z4SMi6Dw9ubJaRjOhmiy/+Ds+ETzpFFGPy
-         CVhHAKbuXAPlZAmmr/EQHoaE0EdsLyO9hzwg0zFlQq6BmlcNKrdF1PPzvYEXECyA5OQh
-         Bsmux8o9f/UTiHmkzrPi2Hpl0BdyaY7h1h4HzPqBrpp4eWRJMcdCPBiACJVpPdte0U1a
-         764w==
-X-Gm-Message-State: ACgBeo0TuGZsfCwtTjk1h2ODGQTssP6YgKcy5FECQuy4WW2U1XHMM/sy
-        iydvzXCH+JSjn7b9uzg2vGIE
-X-Google-Smtp-Source: AA6agR54HVbJgY27UAeqFdFj6GgyYH6g+KFP3wrsO5pAbNf0KTIemd7XibKY7hR/Tk//NhRD5prcxQ==
-X-Received: by 2002:a17:90b:380d:b0:202:56b2:4ef8 with SMTP id mq13-20020a17090b380d00b0020256b24ef8mr3508672pjb.2.1663066662120;
-        Tue, 13 Sep 2022 03:57:42 -0700 (PDT)
-Received: from workstation ([117.202.184.122])
-        by smtp.gmail.com with ESMTPSA id c21-20020aa79535000000b0052dfe83e19csm7720788pfp.16.2022.09.13.03.57.37
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 13 Sep 2022 03:57:39 -0700 (PDT)
-Date:   Tue, 13 Sep 2022 16:27:34 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, johan+linaro@kernel.org,
-        steev@kali.org
-Subject: Re: [PATCH] arm64: dts: qcom: thinkpad-x13s: Update firmware location
-Message-ID: <20220913105734.GD25849@workstation>
-References: <20220913054030.3234-1-manivannan.sadhasivam@linaro.org>
- <YyBWZOMz3mKlje05@hovoldconsulting.com>
+        Tue, 13 Sep 2022 07:03:40 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2438757E1F;
+        Tue, 13 Sep 2022 04:03:38 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28DB3M0l014719;
+        Tue, 13 Sep 2022 11:03:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=iEZPpVJ0lXSE+nq3+oJbCw0rEfLkRL88PiwT3XcNp9o=;
+ b=G9zzIlSY78GkYInUjdSGkvN23gv5nqI6f1SgafPROU9DzOJUJ70OM+73ojh7d8Zpwm7h
+ QB5R3mAkt1p1lnhUqr2HAuLqZmkOZ6cx8NWClGoD/wBrp6pq74hMdIAv3yo3OLkHnB3Z
+ knEnXDHUFPBtU6YI36pXd+r5VwqcxPffaFc1WN0dPI9mhnPWyrRED1AtG2LuXlnHrgwm
+ bZ/TNMDfFBRhHGzC7NI7S3DKtPMvZMVJMnyJPL4vADB+qM/6n9k04/X73BVpn5R1Lfiq
+ RWFRaRRoXiXn6+Y5ojJtmN9D6CoKORceOz6a4/9t3eTj3Lvoua++KR6E2v14H1IofOI5 qA== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jgk63726x-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 13 Sep 2022 11:03:37 +0000
+Received: from nasanex01a.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28DB3aGh005068
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 13 Sep 2022 11:03:36 GMT
+Received: from [10.239.133.73] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 13 Sep
+ 2022 04:03:35 -0700
+Message-ID: <128dc161-8949-1146-bf8b-310aa33c06a8@quicinc.com>
+Date:   Tue, 13 Sep 2022 19:03:32 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YyBWZOMz3mKlje05@hovoldconsulting.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+Subject: Re: [PATCH v1] remoteproc: core: do pm relax when not first crash
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>
+CC:     <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_clew@quicinc.com>
+References: <1662712413-38233-1-git-send-email-quic_aiquny@quicinc.com>
+ <20220909192357.GA319190@p14s>
+From:   "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
+In-Reply-To: <20220909192357.GA319190@p14s>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ATGqns5SvN0DWDMBmPGvdstxN1Rh8YXU
+X-Proofpoint-ORIG-GUID: ATGqns5SvN0DWDMBmPGvdstxN1Rh8YXU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-13_03,2022-09-13_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ priorityscore=1501 impostorscore=0 suspectscore=0 bulkscore=0
+ clxscore=1015 adultscore=0 phishscore=0 spamscore=0 mlxscore=0
+ mlxlogscore=999 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2207270000 definitions=main-2209130049
+X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,66 +80,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 13, 2022 at 12:07:32PM +0200, Johan Hovold wrote:
-> [ Resend with Bjorn's address updated as the Linaro one now bounces. ]
-> 
-> On Tue, Sep 13, 2022 at 11:10:30AM +0530, Manivannan Sadhasivam wrote:
-> > The firmware location in linux-firmware has been changed to include the
-> > SoC name. So use the updated location in Thinkpad devicetree.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> I guess we should pick a commit prefix that we stick to for changes to
-> this driver.
-> 
-> 	arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s:
-> 
-> is arguably unnecessarily long even if it follows the pattern of some
-> other qcom dts.
-> 
-> Shall we just use
-> 
-> 	arm64: dts: qcom: sc8280xp-x13s:
+Hi Mathieu,
 
-This looks looks better. I did look into the earlier commits but I found
-the prefix to be too long, so went with the last commit prefix.
+pm_awake and pm_relax needed to be used as a pair. There is chance that 
+pm_relax is not being called, and make the device always in cannot 
+suspend state.
 
+On 9/10/2022 3:23 AM, Mathieu Poirier wrote:
+> Hi Maria,
 > 
-> which matches sc8280xp-crd? Or stick "lenovo" in there as well? Or just
-> keep the whole thing unchanged?
+> On Fri, Sep 09, 2022 at 04:33:33PM +0800, Maria Yu wrote:
+>> Even if it is not first crash, need to relax the pm
+>> wakelock otherwise the device will stay awake.
+>>
 > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> > index c379650e52b1..3b7943d6e164 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> > @@ -554,13 +554,13 @@ keyboard@68 {
-> >  };
-> >  
-> >  &remoteproc_adsp {
-> > -	firmware-name = "qcom/LENOVO/21BX/qcadsp8280.mbn";
-> > +	firmware-name = "qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn";
-> >  
-> >  	status = "okay";
-> >  };
-> >  
-> >  &remoteproc_nsp0 {
-> > -	firmware-name = "qcom/LENOVO/21BX/qccdsp8280.mbn";
-> > +	firmware-name = "qcom/sc8280xp/LENOVO/21BX/qccdsp8280.mbn";
-> >  
-> >  	status = "okay";
-> >  };
+> The goal is exactly to keep the device awake...
 > 
-> Change itself looks good otherwise:
+>> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
+>> ---
+>>   drivers/remoteproc/remoteproc_core.c | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+>> index e5279ed9a8d7..30078043e939 100644
+>> --- a/drivers/remoteproc/remoteproc_core.c
+>> +++ b/drivers/remoteproc/remoteproc_core.c
+>> @@ -1956,6 +1956,7 @@ static void rproc_crash_handler_work(struct work_struct *work)
+>>   	if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE) {
+>>   		/* handle only the first crash detected */
+>>   		mutex_unlock(&rproc->lock);
+>> +		pm_relax(rproc->dev.parent);
 > 
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> 
+> If we are here it means that rproc_crash_handler_work() has already been called
+> _and_ that a recovery is in process.  When the first crash handler completes
+> pm_relax() will be called and the device will go to sleep as expected.
+If the rproc->state cannot be changed to running state, the device will 
+always be awake from this return.
+Also APROC_OFFLINE state can be given in other path like an shutdown 
+request is issued.
 
-Thanks! I will respin with the agreed prefix.
+While this patch is not considering carefully as well, I think I need to 
+upload a new patchset with an ordered workqueue to make each work have 
+each pm_relax before return.
+what do you think?
+> 
+> Thanks,
+> Mathieu
+> 
+>>   		return;
+>>   	}
+>>   
+>> -- 
+>> 2.7.4
+>>
 
-Regards,
-Mani
 
-> Johan
+-- 
+Thx and BRs,
+Aiqun(Maria) Yu
