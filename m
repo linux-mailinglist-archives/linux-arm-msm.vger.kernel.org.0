@@ -2,70 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F8BE5B6A05
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 10:58:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 660765B6A4A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 11:08:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231521AbiIMI6b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 04:58:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37128 "EHLO
+        id S231423AbiIMJIb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 05:08:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231477AbiIMI6Y (ORCPT
+        with ESMTP id S231430AbiIMJIa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 04:58:24 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E5585B074;
-        Tue, 13 Sep 2022 01:58:23 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D53C761363;
-        Tue, 13 Sep 2022 08:58:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB048C4315A;
-        Tue, 13 Sep 2022 08:58:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663059500;
-        bh=hrVvbXZI3Rtg13D3GQsc7u6t7rwPKk9Y9RWbu9u6KlM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=unmVFMd/dGOGh2PApm3PDyWQrBxL1xdvk35PijR18DwwcNW4H727qG6HywOtia2G2
-         an8mZSsqIbYsjx7668w2wSRihZ+TOZk0wbnLpgVhA84QJsUt7Mf9OazIDIHQbvx8RA
-         VGO+U0ddf3DHcr4r+i3jQv7zqXaXJOO5Huf2SFMYYixc586UzpcYleH6GsMFkAz32Z
-         HDaH19Ek5MYXTqDLSUnLW4drfC15K1hC/dInzytrumqJumgk4zEXx/Dgn7N3eHacrJ
-         Z8phApq3E6e67RMzA9Z9XfUf+fLj6acdta1bs96nRDXe2EgtZF3uX517FevoEzerlI
-         fNnsMqDjz2NSw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1oY1kJ-0002HO-5t; Tue, 13 Sep 2022 10:58:19 +0200
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Douglas Anderson <dianders@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Steev Klimaszewski <steev@kali.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v2 10/10] drm/msm/dsi: drop modeset sanity checks
-Date:   Tue, 13 Sep 2022 10:53:20 +0200
-Message-Id: <20220913085320.8577-11-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220913085320.8577-1-johan+linaro@kernel.org>
-References: <20220913085320.8577-1-johan+linaro@kernel.org>
+        Tue, 13 Sep 2022 05:08:30 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A2F1558E8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 02:08:28 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id n17-20020a05600c501100b003a84bf9b68bso9043885wmr.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 02:08:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=TTwyWPBlC2nq54/plFBOskLhs9iNQkcq2izDuthcGZo=;
+        b=EVbXz/COmLDDnayLaWDmCDTed4QDwYcFW9tXmbl51O1CGK8hI3C0mGI0ar+OIAXxel
+         nKTPGkZ17SDl5w3odiF8JKOAkBYFglYVAju2PPYHW9ue0YauePy7g4KXnkR92kvDAwsl
+         +ykzDuu6LZSSsk85hVic7elSrucs3RxWxEr/DRDdp4L7/1v11FGaIB/994852kFCtQv1
+         99vHYursVGu/o+IAJ2UvyWwYFaijUetqzYcLYUNprGPo9R0vHwq47G9aVuRusfR6Dl8D
+         CnGI5MsRctvqPUZ57oWccXt6PNjLJBhP1ea8KXJ5IhmjHSCWeb1P/mSu8tgnAIpKSoTj
+         +H3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=TTwyWPBlC2nq54/plFBOskLhs9iNQkcq2izDuthcGZo=;
+        b=ZYYm0fYkA1oPx+VfrdKKDdj8Hh9M1LA6JS3v0NAPYtKXB3EWoF8fObmuTOiG00vSy9
+         kJslxEkkartW2Dje+Ek4uYCi+oNpkWLYW0c39FCwTHvudluATYGDYGfbdAZe3fE4b5ku
+         UPCh4lVYBfRv3dYj/Sf92UDp8KFO+e+yXeRq/RigZlfBDkR1DNdNaUSpizr2Xf4zecDg
+         TYmOH64qHuAfWcR4uyYrY2hGOxskgOUlYGYFphEULxIVzHTEj3XykDEnMXw7COhabchW
+         LNcbu19eJIzTS4eV9Iae1WWPn2QorJP4MdzjuaCwdL4/gqvN4qeFqHQebQVRNIDdcfsq
+         0Crw==
+X-Gm-Message-State: ACgBeo11UzfNMLfouImVLcD391NLzjpy58EeE5oVCx1QHtI2Rfbl3In/
+        gxEcyF2zA6IxmPjeDSKLrOFJdg==
+X-Google-Smtp-Source: AA6agR6MS0ohvt3dRo5ZeiC0fhkxAEld5LpHSpFEL7u4/Ny/JfV4trZR/bAn5Ie8U9zgpAjIaPp5VQ==
+X-Received: by 2002:a05:600c:4fd4:b0:3a6:2694:e3bc with SMTP id o20-20020a05600c4fd400b003a62694e3bcmr1563171wmq.60.1663060106741;
+        Tue, 13 Sep 2022 02:08:26 -0700 (PDT)
+Received: from [10.119.22.201] ([89.101.193.70])
+        by smtp.gmail.com with ESMTPSA id y4-20020adfd084000000b002206203ed3dsm9756730wrh.29.2022.09.13.02.08.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Sep 2022 02:08:26 -0700 (PDT)
+Message-ID: <bf9c7756-22ec-9900-b280-dcdf1e102178@linaro.org>
+Date:   Tue, 13 Sep 2022 11:08:24 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v3 00/14] ASoC/qcom/arm64: Qualcomm ADSP DTS and binding
+ fixes
+Content-Language: en-US
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220908091946.44800-1-krzysztof.kozlowski@linaro.org>
+ <Yx9IKU4+SjQJGuP1@sirena.org.uk>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <Yx9IKU4+SjQJGuP1@sirena.org.uk>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,35 +85,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Drop the overly defensive modeset sanity checks of function parameters
-which have already been checked or used by the callers.
+On 12/09/2022 16:54, Mark Brown wrote:
+> On Thu, Sep 08, 2022 at 11:19:32AM +0200, Krzysztof Kozlowski wrote:
+> 
+>> Dependencies/merging
+>> ====================
+>> 1. The DTS patches are independent.
+>> 2. The binding patches should come together, because of context changes. Could
+>>    be one of: Qualcomm SoC, ASoC or DT tree.
+> 
+> I'm happy to pick them up if people are happy with that, they
+> look to be mostly ASoC changes?
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/gpu/drm/msm/dsi/dsi.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+Hi Mark,
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
-index 8a95c744972a..31fdee2052be 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi.c
-@@ -211,14 +211,9 @@ void __exit msm_dsi_unregister(void)
- int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device *dev,
- 			 struct drm_encoder *encoder)
- {
--	struct msm_drm_private *priv;
-+	struct msm_drm_private *priv = dev->dev_private;
- 	int ret;
- 
--	if (WARN_ON(!encoder) || WARN_ON(!msm_dsi) || WARN_ON(!dev))
--		return -EINVAL;
--
--	priv = dev->dev_private;
--
- 	if (priv->num_bridges == ARRAY_SIZE(priv->bridges)) {
- 		DRM_DEV_ERROR(dev->dev, "too many bridges\n");
- 		return -ENOSPC;
--- 
-2.35.1
+This sounds reasonable, please go ahead. Just take note that I sent a v4
+with minor changes (re-order for better bisectability and one new patch
+ in the set).
 
+Best regards,
+Krzysztof
