@@ -2,171 +2,333 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC8575B69A4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 10:36:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 917E95B69E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 10:50:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231473AbiIMIgP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 04:36:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36342 "EHLO
+        id S229575AbiIMIuw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 04:50:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231483AbiIMIgL (ORCPT
+        with ESMTP id S229926AbiIMIuu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 04:36:11 -0400
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2085.outbound.protection.outlook.com [40.107.92.85])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F9D841984;
-        Tue, 13 Sep 2022 01:36:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=I6fcNLQCTXAfO2c/6ba0PdDWAZAGqBPyGNFDudQ9V2sEjU3ip9iasv1fQ2BBG7uXS0LufHHLH7z+z5IuvpWeOZLbPw3RheqqJ6my3HHxcYfwHznPgu/C8hPqJByh/jFV8YPPx3xFhhEJTN08eGObkSo1Uo9eePVejlZ3mHHU9Vb2Vs8CKFnWAwRi+YRoNJuKqWBNWGG+ezn+nVsvzx+wTDp/FeAP/RbYB9JU7Ay9VJhVEr1N8+guOe96axkpXDa4MklcL9enX0pmwYqPrJ3/RKk2IJFybcgD+rz5IRk4peXkMkRgfoG5N9UiiFyKFnmGD4B4OXf8WcX0PtwndszDvA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HFx5cipRighv2yQgnm23/UfY2GbsW+9HHM+VYfD3Trg=;
- b=mUt1LO27si3h5rNU0K+EJNL5SENjSAIpnHlIJ54QF+Kj8shR6Rxr4aQnu3EFnJIB/EgrGrtbIRAJPO9XK4BefoeuPn6g78EFnKZsHOj0GQnqaC7DQmnf1EoF+dSXn846SuqBPhKbakaf5JI1Ph2kMYPyDu04SfKUVIh86Evw4o5SPhrqilwBR+YsVmPJhmZfjWw+WqDcVZoSilQ0Uo5MQ+8yX3zf6W08QaA9vHTqEGW0VolQlC5Uqkqqgb9ERBsm81A1u650dMTlY/krG6bbBMppexnECZrDdKe4GZL6M7brn8slYE5piiRFgrZ3BN02HA9hQKB32KPzv7szTw53GQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 12.22.5.234) smtp.rcpttodomain=marcan.st smtp.mailfrom=nvidia.com; dmarc=pass
- (p=reject sp=reject pct=100) action=none header.from=nvidia.com; dkim=none
- (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HFx5cipRighv2yQgnm23/UfY2GbsW+9HHM+VYfD3Trg=;
- b=PdmLWu8JpW19M1i0/Z4gBrDjmtUIPQ9GZYBOUPFKon/PbXjExRpSQcWyGLJd84nd4FJu9CYv1UY035MkiCiQ/fnFs20YLioI3D3ExOGF5i9hp/Xkp38IQgXVmwemUFIioK+P2vyKg+Ppy9KoRsPROcYZJaEbeG0v+x93EVY9qvAT7qKmiCkDQc7CUKJXSWW+pYDoX/V/N4Ik3y6sdrS8H0wbAr5c1eVXGt88n4rIzHWfz3nUSYgozDkqro6plXJRSEOQvgP/s9K1a4MwR+4TlVBBTfJ2dpLhXApAmdaT3nBZeL5cbpHEm8NFdGyzEmm37QfcALZd+Kzwux4TXFzGDw==
-Received: from BN1PR13CA0020.namprd13.prod.outlook.com (2603:10b6:408:e2::25)
- by BN9PR12MB5164.namprd12.prod.outlook.com (2603:10b6:408:11d::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5612.12; Tue, 13 Sep
- 2022 08:36:07 +0000
-Received: from BN8NAM11FT087.eop-nam11.prod.protection.outlook.com
- (2603:10b6:408:e2:cafe::46) by BN1PR13CA0020.outlook.office365.com
- (2603:10b6:408:e2::25) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5632.12 via Frontend
- Transport; Tue, 13 Sep 2022 08:36:07 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 12.22.5.234)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 12.22.5.234 as permitted sender) receiver=protection.outlook.com;
- client-ip=12.22.5.234; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (12.22.5.234) by
- BN8NAM11FT087.mail.protection.outlook.com (10.13.177.24) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.20.5612.13 via Frontend Transport; Tue, 13 Sep 2022 08:36:06 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by DRHQMAIL101.nvidia.com
- (10.27.9.10) with Microsoft SMTP Server (TLS) id 15.0.1497.38; Tue, 13 Sep
- 2022 08:36:05 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 13 Sep
- 2022 01:36:04 -0700
-Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com (10.129.68.8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29 via Frontend
- Transport; Tue, 13 Sep 2022 01:36:02 -0700
-Date:   Tue, 13 Sep 2022 01:36:01 -0700
-From:   Nicolin Chen <nicolinc@nvidia.com>
-To:     "Tian, Kevin" <kevin.tian@intel.com>
-CC:     Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        "Jason Gunthorpe" <jgg@nvidia.com>,
-        "will@kernel.org" <will@kernel.org>,
-        "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
-        "suravee.suthikulpanit@amd.com" <suravee.suthikulpanit@amd.com>,
-        "marcan@marcan.st" <marcan@marcan.st>,
-        "sven@svenpeter.dev" <sven@svenpeter.dev>,
-        "alyssa@rosenzweig.io" <alyssa@rosenzweig.io>,
-        "robdclark@gmail.com" <robdclark@gmail.com>,
-        "dwmw2@infradead.org" <dwmw2@infradead.org>,
-        "baolu.lu@linux.intel.com" <baolu.lu@linux.intel.com>,
-        "mjrosato@linux.ibm.com" <mjrosato@linux.ibm.com>,
-        "gerald.schaefer@linux.ibm.com" <gerald.schaefer@linux.ibm.com>,
-        "orsonzhai@gmail.com" <orsonzhai@gmail.com>,
-        "baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>,
-        "zhang.lyra@gmail.com" <zhang.lyra@gmail.com>,
-        "thierry.reding@gmail.com" <thierry.reding@gmail.com>,
-        "vdumpa@nvidia.com" <vdumpa@nvidia.com>,
-        "jonathanh@nvidia.com" <jonathanh@nvidia.com>,
-        "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
-        "cohuck@redhat.com" <cohuck@redhat.com>,
-        "tglx@linutronix.de" <tglx@linutronix.de>,
-        "shameerali.kolothum.thodi@huawei.com" 
-        <shameerali.kolothum.thodi@huawei.com>,
-        "thunder.leizhen@huawei.com" <thunder.leizhen@huawei.com>,
-        "christophe.jaillet@wanadoo.fr" <christophe.jaillet@wanadoo.fr>,
-        "yangyingliang@huawei.com" <yangyingliang@huawei.com>,
-        "jon@solid-run.com" <jon@solid-run.com>,
-        "iommu@lists.linux.dev" <iommu@lists.linux.dev>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "asahi@lists.linux.dev" <asahi@lists.linux.dev>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-s390@vger.kernel.org" <linux-s390@vger.kernel.org>,
-        "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
-        "virtualization@lists.linux-foundation.org" 
-        <virtualization@lists.linux-foundation.org>,
-        "kvm@vger.kernel.org" <kvm@vger.kernel.org>
-Subject: Re: [PATCH v6 1/5] iommu: Return -EMEDIUMTYPE for incompatible
- domain and device/group
-Message-ID: <YyBA8ZQ2jBK6euYM@Asurada-Nvidia>
-References: <YxiRkm7qgQ4k+PIG@8bytes.org>
- <Yxig+zfA2Pr4vk6K@nvidia.com>
- <9f91f187-2767-13f9-68a2-a5458b888f00@arm.com>
- <YxjOPo5FFqu2vE/g@nvidia.com>
- <0b466705-3a17-1bbc-7ef2-5adadc22d1ae@arm.com>
- <Yxk6sR4JiAAn3Jf5@nvidia.com>
- <BN9PR11MB52763FAD3E7545CC26C0DE908C409@BN9PR11MB5276.namprd11.prod.outlook.com>
- <YxnbRq5vaP/OL0ra@nvidia.com>
- <Yx0fVJpaojM5RNR4@Asurada-Nvidia>
- <BN9PR11MB52761E126D797ED865DC3E8B8C479@BN9PR11MB5276.namprd11.prod.outlook.com>
+        Tue, 13 Sep 2022 04:50:50 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18060578B3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 01:50:47 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id bq9so19633418wrb.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 01:50:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=Ohjc9dEdH44oeiSaUzXYNAwgxLv5Lg5idMppRaZ9XgA=;
+        b=H808Dg3rwQCarMzG/PWEUqyNlqs2cBSV17PuIMFqjM3kvWX45qIqUmhvWUU4v04vXS
+         0eJroHx8Kdni1sh7tVSm9UXlpW5kpdCGAO1krmaBES063TG628AYqm139SIne85TKeYv
+         ItPvqqmnsktPAlPmNZUmB7wXEe4ZwSDtZeaanDdV52Mp8yYScAuDg3SZtSIG0d6Jxxrx
+         8g6vbtffCehAae/JJ/eaTXBkNzVo9hgNCLia3fM8O1jVdHSQHgRCJfvfRH5F88kFzhjV
+         oVbt3qDSM0KmLwlbv3r17rs9tgX6gUBtI+BE1sr7+t0qG484rKgw7Cs3B8uATWIJSJ1c
+         rUwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=Ohjc9dEdH44oeiSaUzXYNAwgxLv5Lg5idMppRaZ9XgA=;
+        b=nHbAjw2zowJtUqgws9btdkwp2XvWiAVYXYrZlZ2WoRxF2gWw/GCE4ODgTuDHEsfpdq
+         aXtuQGKp3x68DTUX8p+NHDheJ6KzwEIPhJRse4AUMPXkgmkkJGxVrFGmfw2azfTkNvDL
+         fiykg5X7JNeGDp5G5gdZf/f5FiIAC4Zzr0bqZLuCtWVXXMP8MFU2+2Rw4iqlPbV0MGNI
+         22ZHkCu6hz6d3pRpTMIqQC8cJLtvtXUFjcx2ZIaYtOwUvxzc/vVBimOTqQ/3fLDsu+jR
+         bBIbOHvjKstw3uyWB7tnGuCsQEWLqNU6IlpI2uQ3tJudIAQcU767Arzh/EVquljFykMA
+         2sDw==
+X-Gm-Message-State: ACgBeo0isWThqWPwysaKWz7oLzKVxm1FjCFOKKpNTkF5ezSkZhaNvU/v
+        R77897SfUcfgpqYBVbrjayXcMg==
+X-Google-Smtp-Source: AA6agR4hv6qBRnUNqNnuJw0oXOGkLN22P0OlaGd2jb4dYMuQ1e1O4+iJDjQISHd8l/vJyW+uxepzSA==
+X-Received: by 2002:a5d:6c63:0:b0:22a:4247:1e7c with SMTP id r3-20020a5d6c63000000b0022a42471e7cmr10784681wrz.625.1663059045577;
+        Tue, 13 Sep 2022 01:50:45 -0700 (PDT)
+Received: from [10.119.22.201] ([89.101.193.70])
+        by smtp.gmail.com with ESMTPSA id o19-20020a05600c4fd300b003b3180551c8sm12549252wmq.40.2022.09.13.01.50.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Sep 2022 01:50:45 -0700 (PDT)
+Message-ID: <1a683d12-eee9-e35b-3808-4856fe4dc0f2@linaro.org>
+Date:   Tue, 13 Sep 2022 10:50:44 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <BN9PR11MB52761E126D797ED865DC3E8B8C479@BN9PR11MB5276.namprd11.prod.outlook.com>
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN8NAM11FT087:EE_|BN9PR12MB5164:EE_
-X-MS-Office365-Filtering-Correlation-Id: e18d6e0f-4de6-4dc5-092f-08da9563009b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: LIh40H8pbOhVq1+wmMdNfEkrGiJ8gFVTZcbj3d4K6iDZ3fcOp4jOYjaP2WQiGE0MCW/VHkvNao3wg5Dv35BtK0RKWotMIY6XILyTFQ15W6edyXQJkTrTJmzX8zjvWqzhgAzzH3zd5vzg2eQWNzWvYFw1TMpzjofC9bA+UzvM/CN2pK+eZjZOmB8SHoTRuw8Hyw3PnQckizaVfUVzx55HsHPuwHw3lbbIKZWdzh8lgEO46AnLoWWAgTcNP/AzLDackJY8Eh6oIMDc1c01bJCoDom6DqBkNy3FDxN/4av2aml9RMSK09N6dLnZvzeTeYbc2C+ViJus3YAR66qQyfQN1R8YNs6jHmy0sDLEpPibPnuBIWqHpYr9X5UyexVcDDWL5S8JNLF891OUIrOCBwak77p08dTWwokeASq1j6sfSXqkfn/ALqDcJ4WRLC1pFfbV4CLzCsiw1F6e1UCujofSawntD7c4l1Xw7XFlGtvNhxr/4ixOL++WnNKV1k3UHnLuBUVMaioNYB3ybBadFub+iLiwhTJyVCJMo6giy5ZUtUY+ZjFemaouPt51RG7midb7597OApMtmckk8TFquKsnEdZvihh6gxCNKCsCn2N0/3R2//LGnF8lSCVOupu1hUOQk92goZqr7JjkHsncssHC3WHVddjOQ9HxEN1PYHPO9+5ahU+SGQCqWKNNKGh2L+ko4mUIcxMtAHCK2UgPcgCdjhfA8QPUucTQr3PvvphmjWpkTyAs93R12sa2ZzhQPxaeM3dONovnT83bau+OqDNxkyZbXEOh0CS/B4I4UfuP8RaQvx4u+Zb9H6vTNjSvcZ09eD1Ju5Qa/Mdc/6qXMfrAcXQFAq64ATRXxP2pIEUa4GBBQ1KyQsX/fjEhPJivXLiV
-X-Forefront-Antispam-Report: CIP:12.22.5.234;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:InfoNoRecords;CAT:NONE;SFS:(13230022)(4636009)(376002)(346002)(136003)(39860400002)(396003)(451199015)(36840700001)(40470700004)(46966006)(966005)(316002)(33716001)(86362001)(83380400001)(41300700001)(47076005)(82740400003)(82310400005)(336012)(426003)(7406005)(478600001)(5660300002)(81166007)(2906002)(186003)(356005)(8936002)(6916009)(70206006)(7416002)(70586007)(8676002)(4744005)(36860700001)(40460700003)(4326008)(55016003)(9686003)(26005)(40480700001)(54906003)(36900700001);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Sep 2022 08:36:06.8932
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e18d6e0f-4de6-4dc5-092f-08da9563009b
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[12.22.5.234];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN8NAM11FT087.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN9PR12MB5164
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH 1/4] dt-bindings: net: qcom,ethqos: Convert bindings to
+ yaml
+Content-Language: en-US
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        devicetree@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org, netdev@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        David Miller <davem@davemloft.net>
+References: <20220907204924.2040384-1-bhupesh.sharma@linaro.org>
+ <20220907204924.2040384-2-bhupesh.sharma@linaro.org>
+ <dcf449f5-ad28-d262-98d5-72c6ba2b7aea@linaro.org>
+ <ccd6f6c2-458d-832a-7299-d9d9ffb652a8@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <ccd6f6c2-458d-832a-7299-d9d9ffb652a8@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Kevin,
-
-On Tue, Sep 13, 2022 at 02:24:27AM +0000, Tian, Kevin wrote:
-> > I wonder if it would be safe to just treat a pm_runtime_get_sync()
-> > failure as -ENODEV, since a PM resume() mostly occurs to the IOMMU
-> > that an IOMMU client/master device is behind, while an iommu_domain
-> > rarely intervenes.
+On 12/09/2022 19:28, Bhupesh Sharma wrote:
+> Hi Krzysztof,
 > 
-> Yes, this is a condition preventing the device from being attached by
-> a domain hence converting -EINVAL to -ENODEV probably makes sense.
-> But as replied in another we might want to keep other errno's as is.
+> Thanks for your comments.
+> 
+> On 9/8/22 8:08 PM, Krzysztof Kozlowski wrote:
+>> On 07/09/2022 22:49, Bhupesh Sharma wrote:
+>>> Convert Qualcomm ETHQOS Ethernet devicetree binding to YAML.
+>>>
+>>> Cc: Bjorn Andersson <andersson@kernel.org>
+>>> Cc: Rob Herring <robh@kernel.org>
+>>> Cc: Vinod Koul <vkoul@kernel.org>
+>>> Cc: David Miller <davem@davemloft.net>
+>>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>>
+>> Thank you for your patch. There is something to discuss/improve.
+>>
+>>> ---
+>>>   .../devicetree/bindings/net/qcom,ethqos.txt   |  66 ---------
+>>>   .../devicetree/bindings/net/qcom,ethqos.yaml  | 139 ++++++++++++++++++
+>>
+>> You need to update maintainers - old path.
+> 
+> Sure, my bad. Will do in v2.
+> 
+>>>   2 files changed, 139 insertions(+), 66 deletions(-)
+>>>   delete mode 100644 Documentation/devicetree/bindings/net/qcom,ethqos.txt
+>>>   create mode 100644 Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.txt b/Documentation/devicetree/bindings/net/qcom,ethqos.txt
+>>> deleted file mode 100644
+>>> index 1f5746849a71..000000000000
+>>> --- a/Documentation/devicetree/bindings/net/qcom,ethqos.txt
+>>> +++ /dev/null
+>>> @@ -1,66 +0,0 @@
+>>> -Qualcomm Ethernet ETHQOS device
+>>> -
+>>> -This documents dwmmac based ethernet device which supports Gigabit
+>>> -ethernet for version v2.3.0 onwards.
+>>> -
+>>> -This device has following properties:
+>>> -
+>>> -Required properties:
+>>> -
+>>> -- compatible: Should be one of:
+>>> -		"qcom,qcs404-ethqos"
+>>> -		"qcom,sm8150-ethqos"
+>>> -
+>>> -- reg: Address and length of the register set for the device
+>>> -
+>>> -- reg-names: Should contain register names "stmmaceth", "rgmii"
+>>> -
+>>> -- clocks: Should contain phandle to clocks
+>>> -
+>>> -- clock-names: Should contain clock names "stmmaceth", "pclk",
+>>> -		"ptp_ref", "rgmii"
+>>> -
+>>> -- interrupts: Should contain phandle to interrupts
+>>> -
+>>> -- interrupt-names: Should contain interrupt names "macirq", "eth_lpi"
+>>> -
+>>> -Rest of the properties are defined in stmmac.txt file in same directory
+>>> -
+>>> -
+>>> -Example:
+>>> -
+>>> -ethernet: ethernet@7a80000 {
+>>> -	compatible = "qcom,qcs404-ethqos";
+>>> -	reg = <0x07a80000 0x10000>,
+>>> -		<0x07a96000 0x100>;
+>>> -	reg-names = "stmmaceth", "rgmii";
+>>> -	clock-names = "stmmaceth", "pclk", "ptp_ref", "rgmii";
+>>> -	clocks = <&gcc GCC_ETH_AXI_CLK>,
+>>> -		<&gcc GCC_ETH_SLAVE_AHB_CLK>,
+>>> -		<&gcc GCC_ETH_PTP_CLK>,
+>>> -		<&gcc GCC_ETH_RGMII_CLK>;
+>>> -	interrupts = <GIC_SPI 56 IRQ_TYPE_LEVEL_HIGH>,
+>>> -			<GIC_SPI 55 IRQ_TYPE_LEVEL_HIGH>;
+>>> -	interrupt-names = "macirq", "eth_lpi";
+>>> -	snps,reset-gpio = <&tlmm 60 GPIO_ACTIVE_LOW>;
+>>> -	snps,reset-active-low;
+>>> -
+>>> -	snps,txpbl = <8>;
+>>> -	snps,rxpbl = <2>;
+>>> -	snps,aal;
+>>> -	snps,tso;
+>>> -
+>>> -	phy-handle = <&phy1>;
+>>> -	phy-mode = "rgmii";
+>>> -
+>>> -	mdio {
+>>> -		#address-cells = <0x1>;
+>>> -		#size-cells = <0x0>;
+>>> -		compatible = "snps,dwmac-mdio";
+>>> -		phy1: phy@4 {
+>>> -			device_type = "ethernet-phy";
+>>> -			reg = <0x4>;
+>>> -		};
+>>> -	};
+>>> -
+>>> -};
+>>> diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+>>> new file mode 100644
+>>> index 000000000000..f05df9b0d106
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+>>> @@ -0,0 +1,139 @@
+>>> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> +
+>>> +title: Qualcomm Ethernet ETHQOS device
+>>> +
+>>> +maintainers:
+>>> +  - Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>>> +
+>>> +description:
+>>> +  This binding describes the dwmmac based Qualcomm ethernet devices which
+>>> +  support Gigabit ethernet (version v2.3.0 onwards).
+>>> +
+>>> +  So, this file documents platform glue layer for dwmmac stmmac based Qualcomm
+>>> +  ethernet devices.
+>>> +
+>>> +allOf:
+>>> +  - $ref: "snps,dwmac.yaml#"
+>>
+>> No need for quotes.
+> 
+> Ok.
+> 
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    enum:
+>>> +      - qcom,qcs404-ethqos
+>>> +      - qcom,sm8150-ethqos
+>>> +
+>>> +  reg: true
+>>
+>> I think both devices use two reg spaces.
+> 
+> On this platform the two reg spaces are 64-bit, whereas for other
+> platforms based on dwmmac, for e.g. stm32 have 32-bit address space.
 
-Thanks for the reply and helps. I've sent a new IOMMU series:
-https://lore.kernel.org/linux-iommu/20220913082448.31120-1-nicolinc@nvidia.com/
+Then for this platform this should be made specific/constrained, so it
+must be two items.
 
-Sorry I forgot to put you in CC, for I plainly copied the send
-list from the get_maintainer.pl script :(
+> 
+>>> +
+>>> +  reg-names:
+>>> +    minItems: 1
+>>
+>> Why allowing only one item?
+> 
+> Ok, let me remove this in v2.
 
-Hope you can still find these emails.
+And then as well you allow only one item... This should be specific. If
+not - why?
+
+> 
+>>> +    items:
+>>> +      - const: stmmaceth
+>>> +      - const: rgmii
+>>> +
+>>> +  interrupts: true
+>>
+>> This should be specific/fixed.
+>>
+>>> +
+>>> +  interrupt-names: true
+>>
+>> This should be specific/fixed.
+> 
+> These are same as in $ref: "snps,dwmac.yaml#", so
+> do we really need to specify them here? I remember on the sdhci-msm
+> YAML patch review, Rob mentioned that we should just set the property to 
+> true, in such cases.
+
+But it is not specific in dwmac.yaml. You use "xxx: true" when you want
+to accept property from other schema, assuming it is defined there
+properly. However the snps,dwmac does not define it in specific way
+because it expects specific implementation to narrow the details.
+
+> 
+> Am I missing something here?
+> 
+>>> +
+>>> +  clocks:
+>>> +    minItems: 1
+>>> +    maxItems: 4
+>>
+>> Why such flexibility?
+> 
+> Ok, let me just keep 'maxItems: 4' here for now.
+> 
+>>> +
+>>> +  clock-names:
+>>> +    minItems: 1
+>>> +    items:
+>>> +      - const: stmmaceth
+>>> +      - const: pclk
+>>> +      - const: ptp_ref
+>>> +      - const: rgmii
+>>> +
+>>> +  iommus:
+>>> +    minItems: 1
+>>> +    maxItems: 2
+>>
+>> Aren't we using only one MMU?
+> 
+> It was just for future compatibility, but I get your point.
+> Let me keep the 'maxItems: 1' here for now.
+> 
+>>> +
+>>> +  mdio: true
+>>> +
+>>> +  phy-handle: true
+>>> +
+>>> +  phy-mode: true
+>>> +
+>>> +  snps,reset-gpio: true
+>>> +
+>>> +  snps,tso:
+>>> +    $ref: /schemas/types.yaml#/definitions/flag
+>>> +    description:
+>>> +      Enables the TSO feature otherwise it will be managed by MAC HW capability register.
+>>> +
+>>> +  power-domains: true
+>>> +
+>>> +  resets: true
+>>> +
+>>> +  rx-fifo-depth: true
+>>> +
+>>> +  tx-fifo-depth: true
+>>
+>> You do not list all these properties, because you use
+>> unevaluatedProperties. Drop all of these "xxx :true".
+> 
+> Same query as above. May be I am missing something here.
+
+You do not list any properties:true from other schema, if you use
+unevaluatedProperties:false.
+
+
+Best regards,
+Krzysztof
