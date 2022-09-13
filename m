@@ -2,111 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB3715B7686
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 18:33:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35D075B76B1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 18:48:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231816AbiIMQdK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 12:33:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35736 "EHLO
+        id S231814AbiIMQr6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 12:47:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231709AbiIMQcw (ORCPT
+        with ESMTP id S231496AbiIMQra (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 12:32:52 -0400
-Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB238B1B9A;
-        Tue, 13 Sep 2022 08:27:50 -0700 (PDT)
-Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-127f5411b9cso33055144fac.4;
-        Tue, 13 Sep 2022 08:27:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=VVZjlnn+THkJqyJoRk9RBQPIt/3qGui9L2xBWv1no4A=;
-        b=DYXOx2epFovfGFJTyFufOREnqZSd/pnX/KWK7PnZ3qLZURRyDlndYPqJl/ADpBT900
-         mX0Fa0EIkc92ZJbud+WnwTiICsiTfN89X5NDDGDDpXTpXWCLtCJI3hHa1ZiEqdr5L1jX
-         zAtG895Q3mXXM8Lhq4ZAB1cB9001BqqkCGfGzVaRlNlWBiij8Gb3tfGS+U0gwWITIfBe
-         pmEbnzj7i1g1oT4+R+2vcJBkJgl7U36Ui88oyHE+Q7ilMKiZDq4rWKXQ4sfXHOQ+b6ri
-         +kJlbZO2c5CiF1PwstzVIa4iiLuXKZa13AI31x3Qobk1BZIXxEsyjzTiBFjxtoIrCubP
-         G9bw==
-X-Gm-Message-State: ACgBeo32xxELQbZK/Mwz/SXs2D6hf9n9jBYgXu8c5STJPKQ/U3MH2Sfb
-        mGXd6Nf8peegEYc6nDjB1w==
-X-Google-Smtp-Source: AA6agR6Xeph40B/AphNQeHOSVdWolS1Sqe/wRlZeFUjKP/k/ZntbKo+PcwJJyVFs2nGsVh70g3Qr4w==
-X-Received: by 2002:a05:6870:4727:b0:126:e6:3848 with SMTP id b39-20020a056870472700b0012600e63848mr2027523oaq.60.1663082781782;
-        Tue, 13 Sep 2022 08:26:21 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id x88-20020a9d20e1000000b00637032a39a3sm5977109ota.6.2022.09.13.08.26.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Sep 2022 08:26:21 -0700 (PDT)
-Received: (nullmailer pid 3767287 invoked by uid 1000);
-        Tue, 13 Sep 2022 15:26:20 -0000
-Date:   Tue, 13 Sep 2022 10:26:20 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Adam Skladowski <a39.skl@gmail.com>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] dt-bindings: clock: add QCOM SM6115 display clock
- bindings
-Message-ID: <20220913152620.GA3762864-robh@kernel.org>
-References: <20220911164635.182973-1-a39.skl@gmail.com>
- <20220911164635.182973-2-a39.skl@gmail.com>
+        Tue, 13 Sep 2022 12:47:30 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BA52BD1CB;
+        Tue, 13 Sep 2022 08:41:40 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BD3236148A;
+        Tue, 13 Sep 2022 15:39:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F939C433C1;
+        Tue, 13 Sep 2022 15:39:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663083561;
+        bh=hdzbMLB+OJ8cSYqpFPdtuabfUwCyTVksg9R5H7w1rxY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=u1B1fl67g266hqwu9fyDgpcc5qq+LxmYN+nz3ADp6ysgt/uXn8K+ZiIa7907dCy1p
+         gqdsag6VJtsW2qIPJCKxLRAFSnW0CephlAfhYQKbSyyrqsK3r3Yd8yre1yJ+yZiccZ
+         uZiejsrrYo1te3jO4kDp7HTFkmvd+s9ouvCSFW1mBHNM2ruXpp8rOKOj6wiEEe0h32
+         3AozQ/ZNMofA+h11rH9LLL4iir3sHjzojSNMM3nnSPTCMNqjep5OUiz6x3PVEzeVDx
+         R5vzu8XPqwI83WUCxronnovJvaAWY/iYzanVOXTmPVU5ENUUWioQWtHjy85tKrVZwS
+         v4lz3nvTIRJaA==
+Date:   Tue, 13 Sep 2022 10:39:18 -0500
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Jeff Johnson <quic_jjohnson@quicinc.com>
+Cc:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, daniel.lezcano@linaro.org,
+        robh@kernel.org, rafael@kernel.org, bhupesh.linux@gmail.com
+Subject: Re: [PATCH 1/4] thermal: qcom: qmi_cooling: Add skeletal qmi cooling
+ driver
+Message-ID: <20220913153918.e2bckss5htpjuuhw@builder.lan>
+References: <20220912085049.3517140-1-bhupesh.sharma@linaro.org>
+ <20220912085049.3517140-2-bhupesh.sharma@linaro.org>
+ <ec1858fe-753f-c63a-4580-35851241fbcf@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220911164635.182973-2-a39.skl@gmail.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <ec1858fe-753f-c63a-4580-35851241fbcf@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Sep 11, 2022 at 06:46:18PM +0200, Adam Skladowski wrote:
-> Add device tree bindings for display clock controller for
-> Qualcomm Technology Inc's SM6115 SoC.
+On Mon, Sep 12, 2022 at 02:23:21PM -0700, Jeff Johnson wrote:
+> On 9/12/2022 1:50 AM, Bhupesh Sharma wrote:
+[..]
+> > diff --git a/drivers/thermal/qcom/qmi_cooling/qcom_qmi_cooling.c b/drivers/thermal/qcom/qmi_cooling/qcom_qmi_cooling.c
+[..]
+> > +static struct qmi_elem_info tmd_mitigation_dev_id_type_v01_ei[] = {
 > 
-> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
-> ---
->  .../bindings/clock/qcom,sm6115-dispcc.yaml    | 70 +++++++++++++++++++
->  .../dt-bindings/clock/qcom,sm6115-dispcc.h    | 36 ++++++++++
->  2 files changed, 106 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm6115-dispcc.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,sm6115-dispcc.h
+> note that commit ff6d365898d ("soc: qcom: qmi: use const for struct
+> qmi_elem_info") allows QMI message encoding/decoding rules to be const
 > 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm6115-dispcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm6115-dispcc.yaml
-> new file mode 100644
-> index 000000000000..a6bf363b5015
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sm6115-dispcc.yaml
-> @@ -0,0 +1,70 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/clock/qcom,sm6115-dispcc.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Display Clock Controller Binding for SM6115
+> <https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?h=for-next&id=ff6d365898d4d31bd557954c7fc53f38977b491c>
+> 
+> I'm waiting for that to land in the soc tree before I submit my changes to
+> all of the existing drivers, but you can do this now for the new driver
+> 
 
-s/Binding //
+I did merge your patch recently, so you should be able to fetch
+linux-next and continue this work:
 
-> +
-> +maintainers:
-> +  - Bjorn Andersson <andersson@kernel.org>
-> +
-> +description: |
+https://patchwork.kernel.org/project/linux-arm-msm/patch/20220822153435.7856-1-quic_jjohnson@quicinc.com/
 
-Don't need '|' when no formatting to preserve.
-
-With those fixes,
-
-Reviewed-by: Rob Herring <robh@kernel.org>
+Looking forward to the continuation,
+Bjorn
