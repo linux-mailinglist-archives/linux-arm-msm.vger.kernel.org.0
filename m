@@ -2,127 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 784D65B688E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 09:20:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D2E65B68B1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 09:31:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230160AbiIMHUq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 03:20:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54262 "EHLO
+        id S230460AbiIMHb2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 03:31:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230124AbiIMHUo (ORCPT
+        with ESMTP id S230479AbiIMHbY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 03:20:44 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F3413B962;
-        Tue, 13 Sep 2022 00:20:43 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 90DC861336;
-        Tue, 13 Sep 2022 07:20:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09D6C433C1;
-        Tue, 13 Sep 2022 07:20:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663053642;
-        bh=8E4O++2S6FWEnxjwuILlmwZ5txcSLR8D7sk53WBMDXQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=DbfN+Zsij52xBRMio9UjMnddcvrW6l9KE1bas+PuyClOTdyacgCwG7an4RMBeFzgq
-         ZkmufTzGX5eXiWuUaeu60mAi6OuZ/eofEFLww/gnvV28K02ZOqeVzU1jDiJpgZ+kBR
-         e4HsovoyZhSSU7WfsnpwNEsRFJ7OS+J9NTRwS1lbBnN8a+QkUCKdK+uqAN5pmLwPbL
-         RahtWxI+J/aAuBwYRPhi449p37AjDnVGuSGY2ZtO2qDn8fW4E9HxEOJLwPc6qg9vZJ
-         1n/dpiaPWA9L2Qy6akJJFp424t4k9GnNptI+XZHTxWnqTc7YsFCa71oldb5vsEgiQ5
-         29EgLxVTHYqIA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oY0Do-0000nJ-Jh; Tue, 13 Sep 2022 09:20:40 +0200
-Date:   Tue, 13 Sep 2022 09:20:40 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org
-Subject: Re: [PATCH 4/7] drm/msm/dp: fix aux-bus EP lifetime
-Message-ID: <YyAvSKTBGdVIjaHW@hovoldconsulting.com>
-References: <20220912154046.12900-1-johan+linaro@kernel.org>
- <20220912154046.12900-5-johan+linaro@kernel.org>
- <e60f0053-3801-bf33-5841-69f16215fa00@linaro.org>
- <69526798-93df-a4f9-c385-c9bf490cc709@kali.org>
+        Tue, 13 Sep 2022 03:31:24 -0400
+Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 2084458B5C;
+        Tue, 13 Sep 2022 00:31:21 -0700 (PDT)
+Received: from localhost.localdomain (unknown [124.16.138.126])
+        by APP-05 (Coremail) with SMTP id zQCowACnrdXFMSBjLRMnAg--.42567S2;
+        Tue, 13 Sep 2022 15:31:17 +0800 (CST)
+From:   Jiasheng Jiang <jiasheng@iscas.ac.cn>
+To:     quic_jjohnson@quicinc.co, agross@kernel.org,
+        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Subject: [PATCH v2] soc: qcom: apr: Add check for idr_alloc
+Date:   Tue, 13 Sep 2022 15:31:10 +0800
+Message-Id: <20220913073110.1730357-1-jiasheng@iscas.ac.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <69526798-93df-a4f9-c385-c9bf490cc709@kali.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-CM-TRANSID: zQCowACnrdXFMSBjLRMnAg--.42567S2
+X-Coremail-Antispam: 1UD129KBjvdXoW7Jw4rGF47XF1fur45Jw4ktFb_yoWkZFgEkF
+        Z09ry7Xr4UCrWfG3yUJw4rZr9YkFsFqw10va1xtas3J3y5AFn7JF1DZr1fWryruw4UAw1U
+        GF90v34xAr1F9jkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+        9fnUUIcSsGvfJTRUUUbcxFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
+        6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
+        A2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
+        Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
+        0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
+        jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
+        1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkIecxEwVAFwVW8CwCF
+        04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r
+        18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vI
+        r41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr
+        1lIxAIcVCF04k26cxKx2IYs7xG6rW3Jr0E3s1lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAI
+        cVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7VUbhiSPUUUUU==
+X-Originating-IP: [124.16.138.126]
+X-CM-SenderInfo: pmld2xxhqjqxpvfd2hldfou0/
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 12, 2022 at 04:55:58PM -0500, Steev Klimaszewski wrote:
-> 
-> On 9/12/22 1:10 PM, Dmitry Baryshkov wrote:
-> > On 12/09/2022 18:40, Johan Hovold wrote:
-> >> Device-managed resources allocated post component bind must be tied to
-> >> the lifetime of the aggregate DRM device or they will not necessarily be
-> >> released when binding of the aggregate device is deferred.
-> >>
-> >> This can lead resource leaks or failure to bind the aggregate device
-> >> when binding is later retried and a second attempt to allocate the
-> >> resources is made.
-> >>
-> >> For the DP aux-bus, an attempt to populate the bus a second time will
-> >> simply fail ("DP AUX EP device already populated").
-> >>
-> >> Fix this by amending the DP aux interface and tying the lifetime of the
-> >> EP device to the DRM device rather than DP controller platform device.
-> >
-> > Doug, could you please take a look?
-> >
-> > For me this is another reminder/pressure point that we should populate 
-> > the AUX BUS from the probe(), before binding the components together.
-> >
-> >>
-> >> Fixes: c3bf8e21b38a ("drm/msm/dp: Add eDP support via aux_bus")
-> >> Cc: stable@vger.kernel.org      # 5.19
-> >> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> >> ---
-> >>   drivers/gpu/drm/bridge/parade-ps8640.c   | 2 +-
-> >>   drivers/gpu/drm/display/drm_dp_aux_bus.c | 5 +++--
-> >>   drivers/gpu/drm/msm/dp/dp_display.c      | 3 ++-
-> >>   include/drm/display/drm_dp_aux_bus.h     | 6 +++---
-> >>   4 files changed, 9 insertions(+), 7 deletions(-)
+As idr_alloc() can return negative numbers,
+it should be better to check the return value and
+deal with the exception.
 
-> This breaks builds which have ti-sn65dsi86 included:
-> 
-> drivers/gpu/drm/bridge/ti-sn65dsi86.c:628:50: error: passing argument 1 
-> of 'devm_of_dp_aux_populate_ep_devices' from incompatible argument type.
-> 
-> As well,
-> 
-> drivers/gpu/drm/bridge/ti-sn65dsi86.c:628:15: error: too few arguments 
-> to function 'devm_of_dp_aux_populate_ep_devices'
+Fixes: 6adba21eb434 ("soc: qcom: Add APR bus driver")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+---
+Changelog:
 
-Thanks for reporting this. I messed up and apparently only grepped for
-devm_of_dp_aux_populate_bus() and not the
-devm_of_dp_aux_populate_ep_devices() wrapper when searching for users.
+v1 -> v2:
 
-Johan
+1. Add dev_err and put_device in order to maintain the code consistency.
+---
+ drivers/soc/qcom/apr.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
+index b4046f393575..5fef2750623a 100644
+--- a/drivers/soc/qcom/apr.c
++++ b/drivers/soc/qcom/apr.c
+@@ -454,8 +454,14 @@ static int apr_add_device(struct device *dev, struct device_node *np,
+ 	adev->dev.driver = NULL;
+ 
+ 	spin_lock(&apr->svcs_lock);
+-	idr_alloc(&apr->svcs_idr, svc, svc_id, svc_id + 1, GFP_ATOMIC);
++	ret = idr_alloc(&apr->svcs_idr, svc, svc_id, svc_id + 1, GFP_ATOMIC);
+ 	spin_unlock(&apr->svcs_lock);
++	if (ret < 0) {
++		dev_err(dev, "idr_alloc failed: %d\n", ret);
++		put_device(&adev->dev);
++		kfree(adev);
++		return ret;
++	}
+ 
+ 	of_property_read_string_index(np, "qcom,protection-domain",
+ 				      1, &adev->service_path);
+-- 
+2.25.1
+
