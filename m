@@ -2,79 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 93C4A5B7747
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 19:06:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C63E35B7816
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 19:36:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232388AbiIMRGM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 13:06:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38158 "EHLO
+        id S233137AbiIMRgO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 13:36:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232391AbiIMRFq (ORCPT
+        with ESMTP id S233141AbiIMRf4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 13:05:46 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C04DBFEA5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 08:55:38 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28DDvEt1018625;
-        Tue, 13 Sep 2022 15:54:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=3mz+DIWbAv2lJtq7oCMQc/sw/N2SOx9zzz4TQU/xQ78=;
- b=lqBW2RWSEOFTktKoaXL0hoUfOi1CwnLF1WBtDSgaNh+5QmK4WiOzRdgedCTZ5ZsMrlgc
- egUC7LUwL4dcf3iJyeCLIRTKiqAv3DXovscT0AKhzts0q/a0aRqP69fGa1nGplKaykwB
- xdoLJ+4Tf1Xuu6L2QKwEAc+M+EjLTdmKp/2p7V2Jh4N06wYFbTTPKlavXYRof9fWDQoO
- laOc96g+5JDPts3y6oDAcuGpiMmfvj/12YF7U26nrUmaJJx/gIQFHKx80LNk21gkW/rY
- Rv9NJIawOMFEfLKO9gz92DCSGfmy/pweRN0HtIisSScZPZGZnS7u65jwWTipsN7i40jb hA== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jjh9tjwqh-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Sep 2022 15:54:18 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28DFsHVt004993
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Sep 2022 15:54:17 GMT
-Received: from [10.71.111.188] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 13 Sep
- 2022 08:54:17 -0700
-Message-ID: <24b05be6-1aac-a136-3746-a349b2fefa6c@quicinc.com>
-Date:   Tue, 13 Sep 2022 08:54:16 -0700
+        Tue, 13 Sep 2022 13:35:56 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E08398A4B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 09:25:52 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id d12-20020a05600c34cc00b003a83d20812fso9879508wmq.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 09:25:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=OKN8VlLuCDfiERxzI2+XM2BCjDBYdD0WSU7txH+oqhI=;
+        b=uRznjyTYGrqXpXwIJzlmIXQ25Hr8qtCVtmJMwp9zvx6YIJSIMRaU/ApNl1dXzKSlzW
+         0w7L46c0OJH/XxX4AhBDD787JHuoELtjuw9GFV9TNVSpTtMqjE2hv11kLsWh4x9lJi46
+         GCI5qDKHEkgq4wIkv4LFBTQI8XgOvZYLVUFBLgWQzJCfybmM2/c1yr8tmNZNt2mLTmp/
+         iKydIWrpBpYUJ+jbpPurldzcH6O58vXw8ZTyBiewsQf14tYfyG6fMDeVgjC+RPcNh+rp
+         jEJ3MltDE1TvhrOtSyl7FwOIzXHqyx/zOI8df8TiE70WlsO1W5jz5FY2Gp1JnQFMpyFt
+         bVWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=OKN8VlLuCDfiERxzI2+XM2BCjDBYdD0WSU7txH+oqhI=;
+        b=gDKIMvI9hTbJo9MM8zzP8DcnmvnrEcqoRZdL7+GlW6unL4WWjaw0ITu0Wmp5KNEXLe
+         B9Q3pTiE89SYCaAY//jRm5MAlH5HeYRj1P8rky1fzfJ7HrJ6x3N3Rmw+QXvWghRGHPjq
+         wdLWUK1ZHgEicVjGfA7cbE6/eYF4q9zAeUQNrSNcjQZtYzcV8I8fgZ/gfJdc0gFr2h0g
+         v4ZZmaywR1cnEaLnFdbVsTE7e+VOpe6FEbLMHD+ShLdzPzHo5dFMwhxz5aJiinuVzBXT
+         2lnqAiDyM/ybgWzs8YVevb30HOs0Hnu0FHWU5z5YmsTsa4f1QwvtBxd/9xgzAtW7KOJD
+         kRWQ==
+X-Gm-Message-State: ACgBeo1jT/g1XyLv1z3XrehF038D+RXCuxQWPAHh5OyVDwj2jqwsRxEg
+        GBM7ppej2sUbSD4uapdA89uDPw==
+X-Google-Smtp-Source: AA6agR6m+cKtfWYfmOldGwLugLA9gLJ2qT8xWuOhJD/1NmvBke6ThGWFcraQyfDokvJeknozSLV1tg==
+X-Received: by 2002:a7b:c84f:0:b0:3b4:84c1:1e7 with SMTP id c15-20020a7bc84f000000b003b484c101e7mr125429wml.12.1663086351164;
+        Tue, 13 Sep 2022 09:25:51 -0700 (PDT)
+Received: from [10.119.22.201] ([89.101.193.68])
+        by smtp.gmail.com with ESMTPSA id i12-20020a1c540c000000b003b47ff3807fsm9364257wmb.5.2022.09.13.09.25.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Sep 2022 09:25:50 -0700 (PDT)
+Message-ID: <d22ed818-1a8d-4af8-d41d-2268806f3dea@linaro.org>
+Date:   Tue, 13 Sep 2022 18:25:49 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [Freedreno] [PATCH 0/2] Add support for HDR color formats
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <freedreno@lists.freedesktop.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <quic_abhinavk@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <swboyd@chromium.org>,
-        <robdclark@gmail.com>, <seanpaul@chromium.org>
-References: <20220901203422.217-1-quic_jesszhan@quicinc.com>
- <f3083bc5-fd56-b017-5cdf-c72e730a987e@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH] dt-bindings: pci: qcom,pcie-ep: correct qcom,perst-regs
 Content-Language: en-US
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <f3083bc5-fd56-b017-5cdf-c72e730a987e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: korJaAmV5dj8ILBtiwhV1_qwfxEceDt2
-X-Proofpoint-GUID: korJaAmV5dj8ILBtiwhV1_qwfxEceDt2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-13_09,2022-09-13_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
- adultscore=0 lowpriorityscore=0 malwarescore=0 mlxlogscore=999 spamscore=0
- priorityscore=1501 clxscore=1015 bulkscore=0 impostorscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2207270000
- definitions=main-2209130072
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+To:     Rob Herring <robh@kernel.org>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+References: <20220911135547.23106-1-krzysztof.kozlowski@linaro.org>
+ <11e61fa5-f770-9c9f-23b9-3d1dcb205bc5@linaro.org>
+ <20220913152054.GA3736444-robh@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220913152054.GA3736444-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,40 +84,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
-
-On 9/12/2022 11:33 AM, Dmitry Baryshkov wrote:
-> On 01/09/2022 23:34, Jessica Zhang wrote:
->> Add support for HDR color formats.
+On 13/09/2022 17:20, Rob Herring wrote:
+> On Sun, Sep 11, 2022 at 04:14:54PM +0200, Krzysztof Kozlowski wrote:
+>> On 11/09/2022 15:55, Krzysztof Kozlowski wrote:
+>>> qcom,perst-regs is an phandle array of one item with a phandle and its
+>>> arguments.
+>>>
+>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>> ---
+>>>  Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml | 6 ++++--
+>>>  1 file changed, 4 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+>>> index 3d23599e5e91..077e002b07d3 100644
+>>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+>>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+>>> @@ -60,8 +60,10 @@ properties:
+>>>                   enable registers
+>>>      $ref: "/schemas/types.yaml#/definitions/phandle-array"
+>>>      items:
+>>> -      minItems: 3
+>>> -      maxItems: 3
+>>> +      - items:
+>>> +          - description: Syscon to TCSR system registers
+>>> +          - description: Perst enable offset
+>>> +          - description: Perst separateion enable offset
 >>
->> XR30 linear/compressed format has been validated with null_platform_test
->> on SC7180, and P010 linear has been validated with plane_test (also on
->> SC7180).
+>> Unfortunately this still complains:
+>>
+>> qcom-sdx55-t55.dtb: pcie-ep@40000000: qcom,perst-regs:0: [28] is too short
+>>
+>>
+>> where 28 is the phandle...
 > 
-> Are they supported on sdm845? On msm8998?
+> Meaning the dt is wrong or there's a tooling issue?
 
-Yes for both. AFAIK XR30 and P010 are supported on all DPU boards.
+I think tooling issue. I looked at this many times and code (schema and
+DTS) seems to be correct, but tool doesn't like it.
 
-Thanks,
 
-Jessica Zhang
-
-> 
->>
->> Jessica Zhang (2):
->>    drm/msm/dpu: Add support for XR30 format
->>    drm/msm/dpu: Add support for P010 format
->>
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c   | 24 ++++++++++++++++++-
->>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  3 +++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     |  2 ++
->>   3 files changed, 28 insertions(+), 1 deletion(-)
->>
->> -- 
->> 2.35.1
->>
-> 
-> -- 
-> With best wishes
-> Dmitry
-> 
+Best regards,
+Krzysztof
