@@ -2,56 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 47AA75B76FD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 19:00:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91F4B5B76D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 18:54:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231881AbiIMQ7X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 12:59:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53408 "EHLO
+        id S230083AbiIMQx4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 12:53:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231931AbiIMQ7C (ORCPT
+        with ESMTP id S230249AbiIMQxf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 12:59:02 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E627B530A;
-        Tue, 13 Sep 2022 08:50:57 -0700 (PDT)
+        Tue, 13 Sep 2022 12:53:35 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7DB6419B9;
+        Tue, 13 Sep 2022 08:46:42 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id B4F1DB80FF4;
-        Tue, 13 Sep 2022 14:35:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB0E4C433C1;
-        Tue, 13 Sep 2022 14:35:38 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 4100DB80F00;
+        Tue, 13 Sep 2022 14:40:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0417C433B5;
+        Tue, 13 Sep 2022 14:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663079739;
-        bh=gHtSpBRJsCnESx+CayMi4+wi3MLvP1nBbt0jgudGcb0=;
+        s=k20201202; t=1663080050;
+        bh=HyzFvV/ai3qVeVlc4NIL38TdfZeCLo45wfqTqYKrY8s=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KT7JJaXONwENE/J0cMDX8w8EzH5DVOKvDagK9zNtJy7siD6i42v0Utw/L9SaMiO+B
-         qyRcrmL4U+5O//MWQ3mqRYGDEht5qCz/jrDrn0NvYrx66WMiSgOmTvFu9SnSBWjb3u
-         7N9KQ/K8NjktevfXodVY9aTsf43LwiGnuHNGVxjtlxIS3yxgT8jJ1HaMpC1o9UY4lK
-         Wzn3aTo5zesxswtXiZpndF59fjAfmiDPS22q1p63LLgJQAnZyJCB4x39QPbcucTN2O
-         o8QzMgBgaS1e7OA8Lx3V6dIrBTjOqhcHdT1tWiEyOWaQHWqMFD4YLm1C9ejojTEia5
-         TYI0l9Uu5qjww==
-Date:   Tue, 13 Sep 2022 20:05:35 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        b=mh6qI5NIG9vc5398YfHNRC2o5MXdDMcUGG92/ROmuu7UG23FV82AsQCiPxHL7zmiB
+         Hr5gJg7kUHEheAif+QfcBX6SDdXV/VY6UdZg1yApSWhkehfM4w9NR96zC9qan528Ms
+         oTpP8rvWt1s86G9WN7chzZAAkFFCFPpasWPdVPU89ffJ8Dlzmgz6jwLJjvoseowQZp
+         ttlBJrgIzURJUMzsSl0VgRIORsfWe2bIApN6Zwc3RRfHwUU+aWmI+jCzm0mH/b6h51
+         qqE9cywt1BzrztNQf0oNHKh5aqst1AVfI/Qs+o47G7yfSrKAPAae/ROonmAcZp6YgY
+         8xctbP/iqQOIQ==
+Date:   Tue, 13 Sep 2022 09:40:47 -0500
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Judy Hsiao <judyhsiao@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] dt-bindings: phy: qcom,qmp: add missing
- power-domains properties
-Message-ID: <YyCVN2W/98FKi5ew@matsya>
-References: <20220902080705.12050-1-johan+linaro@kernel.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        dianders@chromium.org, mka@chromium.org, cychiang@google.com,
+        judyhsiao@google.com, swboyd@chromium.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: Re: [PATCH v4] arm64: dts: qcom: sc7280: Fix Dmic no sound on
+ villager-r1
+Message-ID: <20220913144047.bdeow6lgegcunl2r@builder.lan>
+References: <20220826065621.2255795-1-judyhsiao@chromium.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220902080705.12050-1-johan+linaro@kernel.org>
+In-Reply-To: <20220826065621.2255795-1-judyhsiao@chromium.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -62,11 +63,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02-09-22, 10:07, Johan Hovold wrote:
-> The new SC8280XP USB PHYs require a power domain to be specified so
-> amend the bindings.
+On Fri, Aug 26, 2022 at 06:56:21AM +0000, Judy Hsiao wrote:
+> Fix the DMIC no sound issue of villager-r1 by using "PP1800_L2C" as the
+> DMIC power source to match the hardware schematic.
+> 
+> This patch:
+>    1. set vdd-micb-supply to PP1800_L2C as the MIC Bias voltage regulator.
+>    2. In audio-routing, set VA DMIC01~VA DMIC03 to use the vdd-micb-supply
+>       setting.
+> 
+> Co-developed-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
+> ---
+> Changes since V3:
+>   -- Update the commit message and fix extra blank line.
+> Changes since V2:
+>   -- Update the commit message.
+> Changes since V1:
+>   -- Update the commit message.
+> 
+> This patch depends on:
+> arm64: dts: qcom: sc7280: Add herobrine-villager-r1. [1]
+> 
+> [1] https://patchwork.kernel.org/patch/12929106
 
-Applied, thanks
+With [1] applied this patch applies cleanly, but it doesn't built.
 
--- 
-~Vinod
+What am I missing?
+
+Regards,
+Bjorn
+
+> 
+> .../dts/qcom/sc7280-herobrine-villager-r1.dts | 27 +++++++++++++++++++
+>  1 file changed, 27 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
+> index c03b3ae4de50..fd202a8f6a33 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dts
+> @@ -12,3 +12,30 @@ / {
+>  	model = "Google Villager (rev1+)";
+>  	compatible = "google,villager", "qcom,sc7280";
+>  };
+> +
+> +&lpass_va_macro {
+> +	vdd-micb-supply = <&pp1800_l2c>;
+> +};
+> +
+> +&sound {
+> +	audio-routing =
+> +			"IN1_HPHL", "HPHL_OUT",
+> +			"IN2_HPHR", "HPHR_OUT",
+> +			"AMIC1", "MIC BIAS1",
+> +			"AMIC2", "MIC BIAS2",
+> +			"VA DMIC0", "vdd-micb",
+> +			"VA DMIC1", "vdd-micb",
+> +			"VA DMIC2", "vdd-micb",
+> +			"VA DMIC3", "vdd-micb",
+> +			"TX SWR_ADC0", "ADC1_OUTPUT",
+> +			"TX SWR_ADC1", "ADC2_OUTPUT",
+> +			"TX SWR_ADC2", "ADC3_OUTPUT",
+> +			"TX SWR_DMIC0", "DMIC1_OUTPUT",
+> +			"TX SWR_DMIC1", "DMIC2_OUTPUT",
+> +			"TX SWR_DMIC2", "DMIC3_OUTPUT",
+> +			"TX SWR_DMIC3", "DMIC4_OUTPUT",
+> +			"TX SWR_DMIC4", "DMIC5_OUTPUT",
+> +			"TX SWR_DMIC5", "DMIC6_OUTPUT",
+> +			"TX SWR_DMIC6", "DMIC7_OUTPUT",
+> +			"TX SWR_DMIC7", "DMIC8_OUTPUT";
+> +};
+> -- 
+> 2.37.2.672.g94769d06f0-goog
+> 
