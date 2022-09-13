@@ -2,90 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F7145B766C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 18:25:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17CEE5B776F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 19:14:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232064AbiIMQZt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 12:25:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55642 "EHLO
+        id S232552AbiIMRMi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 13:12:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231837AbiIMQZ3 (ORCPT
+        with ESMTP id S232565AbiIMRMH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 12:25:29 -0400
-Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F9E6AA3D5;
-        Tue, 13 Sep 2022 08:20:23 -0700 (PDT)
-Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-1280590722dso33033116fac.1;
-        Tue, 13 Sep 2022 08:20:23 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=qtPsc16qIbDcI3G+/gbDV3y7UrOWZm6PWbygdH/NtPg=;
-        b=cV3myExGtLPEefkx9i9RZJl/5WRAzt1qYt78pnSgTPfvGZyPJDMnRo7SyzlRqkcmaV
-         IuzC4rkSrL935Y9ncqcNy48l1JS4/IhNaFRSkzRols7f4mlFSZZaigJvsflEI5NLS50X
-         1dcNAwsBvBxxvsDwGo38AX8jDQoMDHOZMNQwVAC6m2Q6YkYArx+t26b2FlneT39EBCMc
-         FYQIGK6q0XNKesIKGjpbCmVqFm32XGX9CHwLN14mQjLW9JhNzdEEaZjv4D4lk0WuUIKk
-         7ZuuXE3liiLPzlRRqIhOo2/Tf+E/p3OY1rwK1FE6x/OFpMKu+4SxFwInKIl7Pm3m0uaB
-         V7rA==
-X-Gm-Message-State: ACgBeo2RnxYhNDkcLT5xi3B9pMoRgAHCit/6X7E/s692UtG/3t8bBcfX
-        4Zso0b3tJyJXnWtSaTs/hCz+iNpGuw==
-X-Google-Smtp-Source: AA6agR5IEPb/y5rUqNpsdbihXxs5UXn2eIiCKF17hUbkqKgbrPa5sijj6sjT+wD9iKKJUAn1jK6zPg==
-X-Received: by 2002:a05:6808:2124:b0:347:cab2:a5d8 with SMTP id r36-20020a056808212400b00347cab2a5d8mr1624741oiw.71.1663082259771;
-        Tue, 13 Sep 2022 08:17:39 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id k6-20020a056870818600b0010d7242b623sm7128471oae.21.2022.09.13.08.17.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Sep 2022 08:17:39 -0700 (PDT)
-Received: (nullmailer pid 3731413 invoked by uid 1000);
-        Tue, 13 Sep 2022 15:17:38 -0000
-Date:   Tue, 13 Sep 2022 10:17:38 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Iskren Chernev <iskren.chernev@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-gpio@vger.kernel.org,
-        Martin Botka <martin.botka@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-kernel@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>
-Subject: Re: [PATCH 02/40] dt-bindings: pinctrl: qcom,sm6115-pinctrl: fix
- matching SD card pins
-Message-ID: <20220913151738.GA3731343-robh@kernel.org>
-References: <20220911111200.199182-1-krzysztof.kozlowski@linaro.org>
- <20220911111200.199182-3-krzysztof.kozlowski@linaro.org>
+        Tue, 13 Sep 2022 13:12:07 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03D4F895E3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 09:00:34 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 21708B80FC6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 15:17:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C287C433D7;
+        Tue, 13 Sep 2022 15:17:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663082265;
+        bh=2zLxjCLM6UeLhSU5tzlKlSPAgGP7CcA8XxJ+JXsksLc=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=lbgxbxU9dnhLwe+acozuZTOl+Oon3NdU7x65YfYU6jBhm8ssYDowjMoZ5IYvlltFN
+         moLoW6b73Ca3ETFWGpYgEe1TvfV99LBbmaLTC1UHvdv4jdR/4mrTptxWjYwtOnfOkC
+         4imGnH5TOtofQy0ebc7ZnmGIl38F+ZCTkkQrTx+4V/w7+f+b9dc5ptfPDoWVpYVVmZ
+         s1FQBGPY+7E/OPwmHCBW+3vWwDtGmoN9cLHIIsxKv+ocu7BBqBts3dLrzgLWhuGoCz
+         wTQ+IC5Mx3yyLpdXPn42gazmfcwbh344qiQKp18Xt0OqahGvIS4XJq6N9jJkPa1g5q
+         Y5a2b3GJt3OMg==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     linus.walleij@linaro.org, linux-arm-msm@vger.kernel.org,
+        konrad.dybcio@somainline.org, agross@kernel.org
+Cc:     me@herrie.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: (subset) [PATCH 1/3] ARM: dts: qcom-msm8660: Add GSBI1 SPI bus
+Date:   Tue, 13 Sep 2022 10:17:44 -0500
+Message-Id: <166308226034.636601.507373671800779471.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.37.1
+In-Reply-To: <20220913132846.305716-1-linus.walleij@linaro.org>
+References: <20220913132846.305716-1-linus.walleij@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220911111200.199182-3-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 11 Sep 2022 13:11:22 +0200, Krzysztof Kozlowski wrote:
-> SD card pins do not have function, so do not require it:
+On Tue, 13 Sep 2022 15:28:44 +0200, Linus Walleij wrote:
+> GSBI1 can be used to enable an external SPI bus on e.g. the
+> APQ8060. On the DragonBoard APQ8060 this SPI bus is used to
+> talk to the LCD display.
 > 
->   pinctrl@500000: sdc2-off-state: 'oneOf' conditional failed, one must be fixed:
->     'pins' is a required property
->     'bias-disable;' is a required property
->     'clk-pins' does not match any of the regexes: 'pinctrl-[0-9]+'
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../bindings/pinctrl/qcom,sm6115-pinctrl.yaml         | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
 > 
 
-Acked-by: Rob Herring <robh@kernel.org>
+Applied, thanks!
+
+[1/3] ARM: dts: qcom-msm8660: Add GSBI1 SPI bus
+      commit: affa747d36aa81b2285fe0221e2624b0afaa3482
+[2/3] ARM: dts: qcom-msm8660: Add GSBI3 I2C bus
+      commit: 77012a11c36e4609f2c0e0ff0bf215a8448d9033
+[3/3] ARM: dts: qcom: Add TMA340 to APQ8060 DragonBoard
+      commit: 2aac1179717d2bf7ed2747a823c104c918d37a80
+
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
