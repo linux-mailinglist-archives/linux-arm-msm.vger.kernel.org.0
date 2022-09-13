@@ -2,83 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 624845B6DAD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 14:51:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF6D85B6E09
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 15:14:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231823AbiIMMvz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 08:51:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38674 "EHLO
+        id S229547AbiIMNOg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 09:14:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232220AbiIMMvo (ORCPT
+        with ESMTP id S229853AbiIMNOf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 08:51:44 -0400
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F66F550BA;
-        Tue, 13 Sep 2022 05:51:36 -0700 (PDT)
-Received: by mail-oo1-f43.google.com with SMTP id u3-20020a4ab5c3000000b0044b125e5d9eso1907440ooo.12;
-        Tue, 13 Sep 2022 05:51:36 -0700 (PDT)
+        Tue, 13 Sep 2022 09:14:35 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52CFC103B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 06:14:32 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id y29so14314227ljq.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 06:14:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=AYTfQ/8q3iOQdS6L9K3xlP1uJArjxjNbvxSZu1MZ7EM=;
+        b=lRrz3GkDbD4TxHnjuoqCBPRZOr1Mxb1x7Zl8/uUpFnYBknsuXIdXe78tDX7FVQxlga
+         gUnzM4dt9uaO3d5IftuEQ3oUoSVbufhrz5ZMmDZw9eFcBUKmRGZkByeK/nTtJkczz46r
+         4NfQP/6sRNFi3bYZnR356Avxx8zh9Wz9SDX+gHXMLFJ+NEto9MEKdKclZytWBoKGP7ga
+         K1UmjlHskeL2wbi0iXXCcVdUdk4wUl9E4KGDAwCxPvWJBk1OpEpz26KRJirDZwhMLEWQ
+         C35ldYv3nispJKDX1s2oZmTIR/v0sgKZU21LO2D3XvhBsLzoSQemqTMUEywu4Ze+8fhs
+         rIcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=rCib1oPKNeqwhjgyZPg5qrlZWJuZ4oIqDxh1dHYtZ8M=;
-        b=YJjNmBeGRepVHpfk/808zSHgzfVr/6Pjd6Wj6cVcjvwYe6gOt+26O8AiG0oGHamVaW
-         XEMv/8BqrLrc16Py4Sr9WOZpp9AKec7Hg73KgcO97Nk3hLlfe1nwWX/LHEa6VmkrJ22o
-         2SXtJA67ll516pZ2iv5IbVIiqydlqs6ay/l+MbKjkkSkdCCti13udJ8q4KMNEdG0EQmt
-         wLDzTy1569VnyO7O9A81xJYBb3Fx6g2dQV6LO+wHR6Xt1AUBVhX2W3u2wcZ1sxVh69wT
-         OO87Knpoh5JqjVA1jbn0xZ2mJlKBEfXlwabXqzD+gN9kkVIhIt0PPNLW7DebvMn/26NC
-         IhUg==
-X-Gm-Message-State: ACgBeo2VueXRyRv9Kj7VjJVXJWZJPRlTyayTfgvWeLtCuvkESXPJzLDS
-        Xqqfa3ZRQARBOFqCR5CgyQ==
-X-Google-Smtp-Source: AA6agR5mi7Jah20YgSuPWfVOtUnnTXJ+PFtSuNgGWRT9VPeGRubhOqoZaY45lklY7gFU99uh/CFu1w==
-X-Received: by 2002:a4a:ae01:0:b0:44d:fb9b:ecfd with SMTP id z1-20020a4aae01000000b0044dfb9becfdmr10935773oom.64.1663073495394;
-        Tue, 13 Sep 2022 05:51:35 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id w8-20020a9d5388000000b00616e2d2204csm5879427otg.21.2022.09.13.05.51.34
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=AYTfQ/8q3iOQdS6L9K3xlP1uJArjxjNbvxSZu1MZ7EM=;
+        b=NYk2gMra+MbBmxyB9rd5MpH36aSDmkuhDDzUozsVQyauX130XYfeqEDq/TIuF05esc
+         /x+D69N2JR1LRYuB4XzQQ7Wo7RAwvqGDOjj9ZwLpKjqqQs8fklKtGhf45TLLpJEvNvjZ
+         DU09k4xzQXViUhYyRohVYJMruyTLVVikqkcC4dLE9XsBLllYIwxqdv1yS0vJQu0t4tqh
+         XqTCSM/2+i4t19BoCpeihlCQifZvrx/Nr5uYLow9aTGwMQCQOhVrCpD4QA+uPq7N8/Jh
+         aYnoz4IVp8RocTglZ680wfon3NJ4Uh9ra9VV7WUz8sY9iJS0eVm+0H54UBPpvzyiS43m
+         XIKg==
+X-Gm-Message-State: ACgBeo0DjDnt5hC3WBvAZaLkD81c5xbr2deVmMkUqGKALEQVcL00LNgg
+        BcKn0FqJBYyyeJ3UTSpZN39M0Yj4RHLBtg==
+X-Google-Smtp-Source: AA6agR4uKOApQ7WOXaFOnodnLebBEqOFd2k5vgd5QImfjiO/IWNQeU9a9+0mt5wu/o+h1BXYKMzNvw==
+X-Received: by 2002:a2e:be9b:0:b0:25f:e027:4999 with SMTP id a27-20020a2ebe9b000000b0025fe0274999mr9514661ljr.395.1663074870524;
+        Tue, 13 Sep 2022 06:14:30 -0700 (PDT)
+Received: from fedora.ideon.se ([85.235.10.227])
+        by smtp.gmail.com with ESMTPSA id m25-20020a05651202f900b00492f5ad0ae7sm1703255lfq.43.2022.09.13.06.14.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Sep 2022 05:51:35 -0700 (PDT)
-Received: (nullmailer pid 3472863 invoked by uid 1000);
-        Tue, 13 Sep 2022 12:51:34 -0000
-Date:   Tue, 13 Sep 2022 07:51:34 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 02/15] dt-bindings: hwlock: qcom-hwspinlock: correct
- example indentation
-Message-ID: <20220913125134.GA3472817-robh@kernel.org>
-References: <20220909092035.223915-1-krzysztof.kozlowski@linaro.org>
- <20220909092035.223915-3-krzysztof.kozlowski@linaro.org>
+        Tue, 13 Sep 2022 06:14:30 -0700 (PDT)
+From:   Linus Walleij <linus.walleij@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     linux-arm-kernel@lists.infradead.org,
+        Herman van Hazendonk <me@herrie.org>,
+        Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 1/3] ARM: dts: qcom-msm8660: Add GSBI1 SPI bus
+Date:   Tue, 13 Sep 2022 15:14:21 +0200
+Message-Id: <20220913131423.304804-1-linus.walleij@linaro.org>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220909092035.223915-3-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 09 Sep 2022 11:20:22 +0200, Krzysztof Kozlowski wrote:
-> Use some consistent indentation (4-space) for DTS example.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../devicetree/bindings/hwlock/qcom-hwspinlock.yaml    | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
-> 
+GSBI1 can be used to enable an external SPI bus on e.g. the
+APQ8060. On the DragonBoard APQ8060 this SPI bus is used to
+talk to the LCD display.
 
-Acked-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+---
+ arch/arm/boot/dts/qcom-msm8660.dtsi | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom-msm8660.dtsi b/arch/arm/boot/dts/qcom-msm8660.dtsi
+index 63a501c63cf8..5640c02db852 100644
+--- a/arch/arm/boot/dts/qcom-msm8660.dtsi
++++ b/arch/arm/boot/dts/qcom-msm8660.dtsi
+@@ -131,6 +131,31 @@ gcc: clock-controller@900000 {
+ 			reg = <0x900000 0x4000>;
+ 		};
+ 
++		gsbi1: gsbi@16000000 {
++			compatible = "qcom,gsbi-v1.0.0";
++			cell-index = <12>;
++			reg = <0x16000000 0x100>;
++			clocks = <&gcc GSBI1_H_CLK>;
++			clock-names = "iface";
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++			status = "disabled";
++
++			syscon-tcsr = <&tcsr>;
++
++			gsbi1_spi: spi@16080000 {
++				compatible = "qcom,spi-qup-v1.1.1";
++				reg = <0x16080000 0x1000>;
++				interrupts = <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GSBI1_QUP_CLK>, <&gcc GSBI1_H_CLK>;
++				clock-names = "core", "iface";
++				status = "disabled";
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++		};
++
+ 		gsbi6: gsbi@16500000 {
+ 			compatible = "qcom,gsbi-v1.0.0";
+ 			cell-index = <12>;
+-- 
+2.37.3
+
