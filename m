@@ -2,192 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0465B5B6E5A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 15:29:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A04BB5B6EB1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 15:58:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232246AbiIMN3O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 09:29:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32946 "EHLO
+        id S232353AbiIMN6i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 09:58:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232301AbiIMN27 (ORCPT
+        with ESMTP id S232347AbiIMN6f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 09:28:59 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96B8D57579
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 06:28:57 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id k10so20090224lfm.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 06:28:57 -0700 (PDT)
+        Tue, 13 Sep 2022 09:58:35 -0400
+Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 894FE501A1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 06:58:32 -0700 (PDT)
+Received: by mail-oo1-xc31.google.com with SMTP id h1-20020a4aa741000000b004756c611188so1024008oom.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 06:58:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=LIzkEbGu39kfxmsoJvSbR7jzHjkXlGS1st2Otx8Z+Yk=;
-        b=j0ld7oXn5YEH3X23Ub3P5cchqyY7k+ESyah18CBTfPT/X4OjwMAXYJyjEnz1Tt6Mqw
-         AjYcDLEWKIOnrQsnpU5vdK/K2+oPPnV2BG0ZrEFP4PEdRMKs8i2PT4Qk64smrAsGYZEb
-         umIMu/7toz61L7+phwE5T0GAEbBhJUxMDXHW21hAAix6HZlMGMLV/+/t5ZjYKRBkXhLd
-         lxH4qzAd+vOhBgQEllvCoYtnXgOU4kZJaAUBnHGUTfDRKsntnPSK7UYAQc7inm+v6i6H
-         GQ5k3gl3K5l1bzd0NV6haN8N5SX5Nith3OlBiLe4WIxq5kXn2mW87Y6gq46F5IIhWAS6
-         IbBg==
+        d=ieee.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=j4b3AwKXnbNOc68U591Ba49SYpbjEmsPStwHugruFXY=;
+        b=IY8xOwXpGjE0SdIJPzybMxmP4m2T8KAbKGM7JrPns4diuJRzQQdTrR9uBMLZMZ1lZO
+         K/HcgHm2G7ER+vdjQDjBa7FWLUTbtkNCQz2jT5oIF9qIbknckvE+l63mEgLKqMIJlf5J
+         fC+8+JnPKboKqHH/11hZPFYExWokI2U45amkI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=LIzkEbGu39kfxmsoJvSbR7jzHjkXlGS1st2Otx8Z+Yk=;
-        b=WvH1ED2TQIe12pH90vmAukSmNN0H2ijocR5MPK0gJWk2q7FZ9anTHhcn+2C8TxfYQV
-         umC5Qg/cSy48pi1NBxFwU7H5YRjmIhq/h5NnX2hq8aAiHiIwoVza/SW2foZ2DugN0GcK
-         9XFUKtVPUze2Y9deFoxTyahCBEIwvHIjqTz/acdseUVrHQn9V4nlnlV+lnGTR3WW9cCY
-         IT3n6LmnVQGFuVqPAVmU5EEX7JGr+8K4DSwihRJ9gWt8OFMRXmrUeeWXHwtfehXcj1Qa
-         vvS5eSFNbd35Hz9pFwFhNWuS2wOZRZ18qE5P9lcOj9wtRa3GK+pT+lOghB+YMThs73xI
-         63jg==
-X-Gm-Message-State: ACgBeo24xI0uYfdtLVNVCRrr+CgF38nvjtAGrhTAAcFUJAPi+VoH1nsN
-        QOjEUp73vhjOiEGkbVftUXmVXgNqTc0BfQ==
-X-Google-Smtp-Source: AA6agR5dBB6rkRQJB3Azm5z5hOc7rcPEK/7qD+YwZMJVMTqpGkJQX9gW5oo+JmaADY9zRPeJtzWTug==
-X-Received: by 2002:a05:6512:3c88:b0:499:c78:5bb1 with SMTP id h8-20020a0565123c8800b004990c785bb1mr6096209lfv.503.1663075735188;
-        Tue, 13 Sep 2022 06:28:55 -0700 (PDT)
-Received: from fedora.ideon.se ([85.235.10.227])
-        by smtp.gmail.com with ESMTPSA id b15-20020a056512024f00b00498f871f33fsm1713802lfo.86.2022.09.13.06.28.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Sep 2022 06:28:54 -0700 (PDT)
-From:   Linus Walleij <linus.walleij@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     linux-arm-kernel@lists.infradead.org,
-        Herman van Hazendonk <me@herrie.org>,
-        Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 3/3] ARM: dts: qcom: Add TMA340 to APQ8060 DragonBoard
-Date:   Tue, 13 Sep 2022 15:28:46 +0200
-Message-Id: <20220913132846.305716-3-linus.walleij@linaro.org>
-X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20220913132846.305716-1-linus.walleij@linaro.org>
-References: <20220913132846.305716-1-linus.walleij@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=j4b3AwKXnbNOc68U591Ba49SYpbjEmsPStwHugruFXY=;
+        b=baT0Ue0Ss1eo2YrVsL3TT/vx8HyI1FXxPABAxk9aOznP1pSQwlb4f8zYpl8qebhIVK
+         Eunnzjv/Zjnqlp9XBMZxMYavUclRY8T80Aelg9RIt8FnDYz90Mmz4FwH7lFd3y0UcNHo
+         y7Xq465UrWqlLPdtErT59whZh+MKt19PcQ8VpVPFFwEpTqIqWWLoJ/YqaLB3YvsPrI0B
+         GQiFV4Zc+ghvsvRRpIubbSYdmVEQNhd/WFm2xzc0baCk5AmdWjT0gjXgFBZTLfhN+5tO
+         6NyA7oavWSjcOjCzDJ+sRCW3PQxL9fdeolVMwII+DsdGG0Lvv2SJVOuOvEzROY6mMq55
+         MN0A==
+X-Gm-Message-State: ACgBeo0tqFj3Bep95t+65fSm4mjkpxxZSqMT91MV3xTxWWM478WzpVe8
+        2Gw5qJs+HbAVk4fEQ0D3tktIKw==
+X-Google-Smtp-Source: AA6agR6Tr6upEAKirqfcck1pCLrIPjxxEXBfXhURgmYde0fXkAmfIiiM2LtbTbWlyIGlUU6Bd09Etg==
+X-Received: by 2002:a4a:8e81:0:b0:475:811f:3f9e with SMTP id p1-20020a4a8e81000000b00475811f3f9emr2603836ook.35.1663077511837;
+        Tue, 13 Sep 2022 06:58:31 -0700 (PDT)
+Received: from [172.22.22.4] ([98.61.227.136])
+        by smtp.googlemail.com with ESMTPSA id k26-20020a056808069a00b0033a11fcb23bsm5212658oig.27.2022.09.13.06.58.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Sep 2022 06:58:31 -0700 (PDT)
+Message-ID: <f2fa19a1-4854-b270-0776-38993dece03f@ieee.org>
+Date:   Tue, 13 Sep 2022 08:58:29 -0500
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 0/4] Make QMI message rules const
+Content-Language: en-US
+To:     Jeff Johnson <quic_jjohnson@quicinc.com>,
+        Alex Elder <elder@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Kalle Valo <kvalo@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org
+References: <20220912232526.27427-1-quic_jjohnson@quicinc.com>
+From:   Alex Elder <elder@ieee.org>
+In-Reply-To: <20220912232526.27427-1-quic_jjohnson@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This adds the CY8CTMA340 Touchscreen to the APQ8060 DragonBoard.
+On 9/12/22 6:25 PM, Jeff Johnson wrote:
+> Change ff6d365898d ("soc: qcom: qmi: use const for struct
+> qmi_elem_info") allows QMI message encoding/decoding rules to be
+> const. So now update the definitions in the various client to take
+> advantage of this. Patches for ath10k and ath11k were perviously sent
+> separately.
 
-Tested without display by issuing cat /dev/input/input/event3
-which produces appropriate noise and interrupts on the dedicated
-GPIO line.
+I have had this on my "to-do list" for ages.
+The commit you mention updates the code to be
+explicit about not modifying this data, which
+is great.
 
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
----
- .../arm/boot/dts/qcom-apq8060-dragonboard.dts | 71 ++++++++++++++++++-
- 1 file changed, 70 insertions(+), 1 deletion(-)
+I scanned over the changes, and I assume that
+all you did was make every object having the
+qmi_elem_info structure type be defined as
+constant.
 
-diff --git a/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts b/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
-index 70a1dd629c7a..b07a0ba9e734 100644
---- a/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
-+++ b/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
-@@ -159,6 +159,19 @@ data {
- 				};
- 			};
- 
-+			dragon_gsbi3_i2c_pins: gsbi3_i2c {
-+				mux {
-+					pins = "gpio43", "gpio44";
-+					function = "gsbi3";
-+				};
-+				pinconf {
-+					pins = "gpio43", "gpio44";
-+					drive-strength = <8>;
-+					/* These have external pull-up 2.2kOhm to 1.8V */
-+					bias-disable;
-+				};
-+			};
-+
- 			dragon_gsbi8_i2c_pins: gsbi8_i2c {
- 				mux {
- 					pins = "gpio64", "gpio65";
-@@ -240,6 +253,22 @@ irq {
- 					bias-pull-up;
- 				};
- 			};
-+
-+			dragon_tma340_gpios: tma340 {
-+				reset {
-+					/* RESET line, TS_ATTN, WAKE_CTP */
-+					pins = "gpio58";
-+					function = "gpio";
-+					drive-strength = <6>;
-+					bias-disable;
-+				};
-+				irq {
-+					pins = "gpio61"; /* IRQ line */
-+					function = "gpio";
-+					drive-strength = <2>;
-+					bias-pull-up;
-+				};
-+			};
- 		};
- 
- 		qcom,ssbi@500000 {
-@@ -444,6 +473,45 @@ led@133 {
- 			};
- 		};
- 
-+		gsbi@16200000 {
-+			status = "okay";
-+			qcom,mode = <GSBI_PROT_I2C>;
-+
-+			gsbi3_i2c: i2c@16280000 {
-+				status = "okay";
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&dragon_gsbi3_i2c_pins>;
-+
-+				touchscreen@24 {
-+					compatible = "cypress,cy8ctma340";
-+					reg = <0x24>;
-+					/* Certainly we can do at least 400 kHz */
-+					clock-frequency = <400000>;
-+					/* IRQ on GPIO61 called /CTP_INT */
-+					interrupt-parent = <&tlmm>;
-+					interrupts = <61 IRQ_TYPE_EDGE_FALLING>;
-+					/*
-+					 * The I2C bus is using a PCA9306 level translator from L16A
-+					 * to L2B so these two voltages are needed and L16A is
-+					 * kind of the IO voltage, however L16Aisn't really fed to
-+					 * the TMA340, which relies entirely on L2B (PM8901 L2).
-+					 */
-+					vcpin-supply = <&pm8058_l16>;
-+					vdd-supply = <&pm8901_l2>;
-+					/* GPIO58, called WAKE_CTP */
-+					reset-gpios = <&tlmm 58 GPIO_ACTIVE_LOW>;
-+					touchscreen-size-x = <480>;
-+					touchscreen-size-y = <800>;
-+					active-interval-ms = <0>;
-+					touch-timeout-ms = <255>;
-+					lowpower-interval-ms = <10>;
-+					bootloader-key = /bits/ 8 <0x00 0x01 0x02 0x03 0x04 0x05 0x06 0x07>;
-+					pinctrl-names = "default";
-+					pinctrl-0 = <&dragon_tma340_gpios>;
-+				};
-+			};
-+		};
-+
- 		gsbi@19800000 {
- 			status = "okay";
- 			qcom,mode = <GSBI_PROT_I2C>;
-@@ -634,7 +702,8 @@ l1 {
- 					bias-pull-down;
- 				};
- 				l2 {
--					regulator-min-microvolt = <2850000>;
-+					/* TMA340 requires strictly 3.3V */
-+					regulator-min-microvolt = <3300000>;
- 					regulator-max-microvolt = <3300000>;
- 					bias-pull-down;
- 				};
--- 
-2.37.3
+Why aren't you changing the "ei_array" field in
+the qmi_elem_info structure to be const?  Or the
+"ei" field of the qmi_msg_handler structure?  And
+the qmi_response_type_v01_ei array (and so on)?
+
+I like what you're doing, but can you comment
+on what your plans are beyond this series?
+Do you intend to make the rest of these fields
+const?
+
+Thanks.
+
+					-Alex
+
+> This series depends upon:
+> https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?h=for-next&id=ff6d365898d4d31bd557954c7fc53f38977b491c
+> 
+> This is in the for-next banch of:
+> git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git
+> 
+> Hence this series is also based upon that tree/branch.
+> 
+> Jeff Johnson (4):
+>    net: ipa: Make QMI message rules const
+>    remoteproc: sysmon: Make QMI message rules const
+>    slimbus: qcom-ngd-ctrl: Make QMI message rules const
+>    soc: qcom: pdr: Make QMI message rules const
+> 
+>   drivers/net/ipa/ipa_qmi_msg.c    | 20 ++++++++++----------
+>   drivers/net/ipa/ipa_qmi_msg.h    | 20 ++++++++++----------
+>   drivers/remoteproc/qcom_sysmon.c |  8 ++++----
+>   drivers/slimbus/qcom-ngd-ctrl.c  |  8 ++++----
+>   drivers/soc/qcom/pdr_internal.h  | 20 ++++++++++----------
+>   5 files changed, 38 insertions(+), 38 deletions(-)
+> 
 
