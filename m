@@ -2,199 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D93B95B6446
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 01:43:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1E415B64A4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 02:49:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229630AbiILXnL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Sep 2022 19:43:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46854 "EHLO
+        id S229533AbiIMAtD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Sep 2022 20:49:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbiILXnL (ORCPT
+        with ESMTP id S229518AbiIMAtC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Sep 2022 19:43:11 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9608550070;
-        Mon, 12 Sep 2022 16:43:09 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28CMZZAQ026715;
-        Mon, 12 Sep 2022 23:42:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=MrdPCVKJW19ifdLWsUR1qiE5pu616/8/sWAfZWiWc8E=;
- b=mmwoAt8rS+Kgx0FvSWUvy6a6LQ+dQKKOB5/U7ZAsFTK0J+EiORRsb2cFqDKNIRoqypa6
- Tf+qMRxtl2HMJCbapi8x9+/M02FBTwHj7VAifC76BQBY1KSpfV3+0QUz6hhxAW3msAux
- XK32daV8s0WzCQ55nbLyjWfgt3OvO62uZQKE6v8PP/e/IGdDbLKt1xH9gYrv/mlcpoZD
- SyYt802uADQdpuHWUKjbY/nN+5KQ6cwFC/crGAM58qt99t+BiTn/6fQ+0Bnqi06qIChP
- OOQD+0+XGUye/yzSAKdnFN354ZXjli6PpAd89xVdcgoRedZPTWf31jtdmg8J8tLgNuJ7 FQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jgk0denwc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Sep 2022 23:42:58 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28CNgvl1008893
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Sep 2022 23:42:57 GMT
-Received: from [10.111.167.172] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 12 Sep
- 2022 16:42:55 -0700
-Message-ID: <94e0ae94-c8f8-8aa5-606d-68e3abca5a9e@quicinc.com>
-Date:   Mon, 12 Sep 2022 16:42:53 -0700
+        Mon, 12 Sep 2022 20:49:02 -0400
+Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC4775073A;
+        Mon, 12 Sep 2022 17:49:01 -0700 (PDT)
+Received: by mail-oo1-f43.google.com with SMTP id l40-20020a4a94eb000000b00472717928b5so1693279ooi.1;
+        Mon, 12 Sep 2022 17:49:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=Kl+mcyI7K+bHUEe8mEiULT1Uqn9PVfiU+o79MQhfZdY=;
+        b=lKYBsafwI8XBWS1UWKmAu76LFpogrMMBsqXR6pfJxTwzd+gP1qTBL3vGYUbyYV2epe
+         VJkSQr7j4bdDQFUcwyQf9XmF5DY4o1BCFE2Fzku0k61hjNbGIVi26o8G/j5rY8PyYq5q
+         3zH51+bUE6nWFQMTqScaRd0WGEXK8a2B5qpkc8QGzFrP2utVK4v6Gwk8O9uk+XBMwMXY
+         n/5LGn+pcCUIwEn5g198HfuCfSYr2sCyNzDm/FsiP/T68o20mX0oNMb6IMTfk3Ru7ltF
+         Py6VBnD2TcfHbPWhCkOULUeU/dtjQM5Z/CwHJHv+t0KXkguYhR210UZwE9M4Km9j7dzE
+         fpSg==
+X-Gm-Message-State: ACgBeo2HqBqQvofRZJoIuo/BQDiLBpmsyV9RhPHhZlh3C4kSti4ylKU4
+        3ypCwDRRRRuzWzvv6OrD+A==
+X-Google-Smtp-Source: AA6agR4nz4mIBICAeW9Ftda30sK3EAo1oFyMsp1Q0xTr4HubZ/xyLCNfO2RWksWaiAL5s15+nEOQXw==
+X-Received: by 2002:a4a:bc90:0:b0:475:67a4:2bb7 with SMTP id m16-20020a4abc90000000b0047567a42bb7mr3049206oop.20.1663030140971;
+        Mon, 12 Sep 2022 17:49:00 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id o6-20020a4ae586000000b0044afc1ba91asm4768492oov.44.2022.09.12.17.48.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Sep 2022 17:49:00 -0700 (PDT)
+Received: (nullmailer pid 2215651 invoked by uid 1000);
+        Tue, 13 Sep 2022 00:48:59 -0000
+Date:   Mon, 12 Sep 2022 19:48:59 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Tao Zhang <quic_taozha@quicinc.com>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
+Subject: Re: [PATCH 1/9] dt-bindings: arm: Add support for DSB element
+Message-ID: <20220913004859.GA1948424-robh@kernel.org>
+References: <1662626705-13097-1-git-send-email-quic_taozha@quicinc.com>
+ <1662626705-13097-2-git-send-email-quic_taozha@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH] drm/msm/mdp5: fix kernel panic during shutdown
-Content-Language: en-US
-To:     Fabien Parent <fabien.parent@linaro.org>, <robdclark@gmail.com>,
-        <dmitry.baryshkov@linaro.org>
-CC:     <airlied@linux.ie>, <daniel@ffwll.ch>, <dianders@chromium.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20220909152856.149291-1-fabien.parent@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220909152856.149291-1-fabien.parent@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9JoVC6nU3aG-uDALZdha683VO2jdYV2f
-X-Proofpoint-ORIG-GUID: 9JoVC6nU3aG-uDALZdha683VO2jdYV2f
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-12_14,2022-09-12_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 impostorscore=0
- suspectscore=0 bulkscore=0 adultscore=0 spamscore=0 mlxlogscore=999
- phishscore=0 priorityscore=1501 mlxscore=0 malwarescore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2209120083
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1662626705-13097-2-git-send-email-quic_taozha@quicinc.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Fabien
+On Thu, Sep 08, 2022 at 04:44:57PM +0800, Tao Zhang wrote:
+> Add property "qcom,dsb-elem-size" to support DSB element for TPDA.
+> Specifies the DSB element size supported by each monitor connected
+> to the aggregator on each port. Should be specified in pairs (port,
+> dsb element size).
 
-Thanks for the patch.
+What is DSB?
 
-I believe this issue should get resolved with 
-https://patchwork.freedesktop.org/patch/490326/ as this avoids the override.
-
-I have acked that change and will pick it up for the next fixes.
-
-Thanks
-
-Abhinav
-
-
-On 9/9/2022 8:28 AM, Fabien Parent wrote:
-> The kernel is panicking when rebooting on MSM8939:
 > 
-> 	# reboot -f
-> 	[   87.280853] Unable to handle kernel write to read-only memory at virtual address ffff800008ed5810
-> 	...
-> 	snip
-> 	...
-> 	[   87.445142] Call trace:
-> 	[   87.452253]  mutex_lock+0x1c/0x50
-> 	[   87.454511]  msm_drv_shutdown+0x28/0x40
-> 	[   87.457984]  platform_shutdown+0x28/0x40
-> 	[   87.461629]  device_shutdown+0x14c/0x240
-> 	[   87.465796]  __do_sys_reboot+0x180/0x274
-> 	[   87.469703]  __arm64_sys_reboot+0x28/0x3c
-> 	[   87.473608]  invoke_syscall+0x54/0x124
-> 	[   87.477515]  el0_svc_common.constprop.0+0x44/0xec
-> 	[   87.481163]  do_el0_svc+0x90/0xe0
-> 	[   87.485934]  el0_svc+0x50/0xa4
-> 	[   87.489232]  el0t_64_sync_handler+0x11c/0x150
-> 	[   87.492185]  el0t_64_sync+0x190/0x194
-> 	[   87.496618] Code: f9800011 c85ffc03 ca010064 b5000064 (c8047c02)
-> 	[   87.500264] ---[ end trace 0000000000000000 ]---
-> 	Segmentation fault
-> 
-> The issue comes from the fact that mdp5_init() is calling
-> platform_set_drvdata() and consequently overwriting the driver data
-> previously set by msm_drv_probe.
-> msm_drv_shutdown was casting the driver data as "struct msm_drm_private"
-> while it was actually a "struct mdp5_kms".
-> 
-> This commit fixes the issue by having mdp5_init() not override the
-> platform driver data, and instead use a series of
-> to_mdp5_kms(to_mdp_kms(priv->kms)) to retrieve the mdp5_kms from the
-> pdata.
-> 
-> Fixes: 54199009958f ("drm/msm: Fix shutdown")
-> Signed-off-by: Fabien Parent <fabien.parent@linaro.org>
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 18 +++++++++++-------
->   1 file changed, 11 insertions(+), 7 deletions(-)
+>  Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml | 9 +++++++++
+>  1 file changed, 9 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> index d2a48caf9d27..17aeabeedfeb 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> @@ -634,7 +634,8 @@ static int mdp5_kms_init(struct drm_device *dev)
->   
->   static void mdp5_destroy(struct platform_device *pdev)
->   {
-> -	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
-> +	struct msm_drm_private *priv = platform_get_drvdata(pdev);
-> +	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
->   	int i;
->   
->   	if (mdp5_kms->ctlm)
-> @@ -797,7 +798,8 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
->   		goto fail;
->   	}
->   
-> -	platform_set_drvdata(pdev, mdp5_kms);
-> +	/* set uninit-ed kms */
-> +	priv->kms = &mdp5_kms->base.base;
->   
->   	spin_lock_init(&mdp5_kms->resource_lock);
->   
-> @@ -890,13 +892,13 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
->   	if (ret)
->   		goto fail;
->   
-> -	/* set uninit-ed kms */
-> -	priv->kms = &mdp5_kms->base.base;
-> -
->   	return 0;
->   fail:
->   	if (mdp5_kms)
->   		mdp5_destroy(pdev);
-> +
-> +	priv->kms = NULL;
-> +
->   	return ret;
->   }
->   
-> @@ -956,7 +958,8 @@ static int mdp5_dev_remove(struct platform_device *pdev)
->   static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
->   {
->   	struct platform_device *pdev = to_platform_device(dev);
-> -	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
-> +	struct msm_drm_private *priv = platform_get_drvdata(pdev);
-> +	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
->   
->   	DBG("");
->   
-> @@ -966,7 +969,8 @@ static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
->   static __maybe_unused int mdp5_runtime_resume(struct device *dev)
->   {
->   	struct platform_device *pdev = to_platform_device(dev);
-> -	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
-> +	struct msm_drm_private *priv = platform_get_drvdata(pdev);
-> +	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
->   
->   	DBG("");
->   
+> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
+> index eb9bfc5..1bb3fdf 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
+> @@ -40,6 +40,13 @@ properties:
+>      minItems: 1
+>      maxItems: 2
+>  
+> +  qcom,dsb-elem-size:
+> +    description: |
+> +      Specifies the DSB element size supported by each monitor
+> +      connected to the aggregator on each port. Should be specified
+> +      in pairs (port, dsb element size).
+> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+The binding (not yet upstream) says there is just 1 port (port 0). So 
+why do you need more than a single uint32?
+
+Rob
