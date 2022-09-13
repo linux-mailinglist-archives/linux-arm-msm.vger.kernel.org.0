@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F8BE5B7C10
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 22:13:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90A085B7C15
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 22:13:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229690AbiIMUNC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 16:13:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44860 "EHLO
+        id S229759AbiIMUNl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 16:13:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbiIMUNB (ORCPT
+        with ESMTP id S229586AbiIMUNg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 16:13:01 -0400
+        Tue, 13 Sep 2022 16:13:36 -0400
 Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC99A642D3;
-        Tue, 13 Sep 2022 13:13:00 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0658E67CAA;
+        Tue, 13 Sep 2022 13:13:31 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 77EC2B810B0;
-        Tue, 13 Sep 2022 20:12:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D4B8C433D6;
-        Tue, 13 Sep 2022 20:12:57 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 6D867B810B0;
+        Tue, 13 Sep 2022 20:13:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72FFCC433C1;
+        Tue, 13 Sep 2022 20:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663099978;
-        bh=OoU2B4RsRfA9DUfDB/pYptFOgRvPjtc5VBMN/lNgZk8=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=On6Z8T7idhEC6JEh9I9R68lgW+Obr5rWb8751JQlKeY46BeQNrEgbAhtpa6CoEgTv
-         gkcByWe1rWPywL/+dH5TSp7UAVJdIgyFrGsopyfn99DZEZBJOenPdzLLDiJQjZ6o2H
-         fTpgOhke53ncQlfCsOiBxNNzgcQG96eRUgHZabVxxQDpNrcZeDxL7Dk6qojKoMH7RQ
-         9m+HmVKKnYoUGQNq6s1DndBz7ECuDE1ZGvf+8TBjqulo9Ao9IDe3jHUbKbmCo/F7qO
-         75c9OfSqyDHQ5Oi76JdBNw7wOgBipqUCirizynYfuGeEE9DPFX3Vpzxj0yzgUz1mrB
-         DWSCIy76s6L1g==
-Date:   Tue, 13 Sep 2022 15:12:56 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
+        s=k20201202; t=1663100008;
+        bh=apKo7oAdYEvR3sMQNHuXRqarXZ9Tnm+ayX2PNm24ovU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ImH0UvRP5y3IfbvNWxZ757gzD1KuTu1N9FeLY6prae5JnPXQJeFzgA15XWCZtGWEh
+         NAUpNn9pcwL0RFAGIjxkqO1snf1l9US4nt0g+18BqBBy99n0ZGWueNzsuEBq5rvm3J
+         NQjxo6SFY1ju6wR2HtIvfDvqgro8jJTHRw/W0zNrnRzwX+9lx2r7B0utIeRGn0zLjd
+         KhU9TxIB4yf/TlVfL6lb1s8byL+jbAg+A5gwF6w1TNTsJJGkKn8LLzsHUvp2ybGc7M
+         zf92BroyNq8VkRHV9+46+voqoLR638GqWDB9H+Foc4XNO8rb2BsqRcWpzWvOoWJ+Zo
+         cyjLwrJrvcQ6g==
+Date:   Tue, 13 Sep 2022 15:13:25 -0500
+From:   Bjorn Andersson <andersson@kernel.org>
 To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     lpieralisi@kernel.org, robh@kernel.org, andersson@kernel.org,
-        kw@linux.com, bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
-        dmitry.baryshkov@linaro.org
-Subject: Re: [PATCH v3 02/12] PCI: qcom-ep: Do not use hardcoded clks in
- driver
-Message-ID: <20220913201256.GA620427@bhelgaas>
+Cc:     Johan Hovold <johan@kernel.org>, konrad.dybcio@somainline.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        johan+linaro@kernel.org, steev@kali.org
+Subject: Re: [PATCH] arm64: dts: qcom: thinkpad-x13s: Update firmware location
+Message-ID: <20220913201325.ip66pzu7owm4t33h@builder.lan>
+References: <20220913054030.3234-1-manivannan.sadhasivam@linaro.org>
+ <YyBWZOMz3mKlje05@hovoldconsulting.com>
+ <20220913105734.GD25849@workstation>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220910063045.16648-3-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20220913105734.GD25849@workstation>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -58,15 +58,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Sep 10, 2022 at 12:00:35PM +0530, Manivannan Sadhasivam wrote:
-> Generally, device drivers should just rely on the platform data like
-> devicetree to supply the clocks required for the functioning of the
-> peripheral. There is no need to hardcode the clk info in the driver.
-> So get rid of the static clk info and obtain the platform supplied
-> clks.
+On Tue, Sep 13, 2022 at 04:27:34PM +0530, Manivannan Sadhasivam wrote:
+> On Tue, Sep 13, 2022 at 12:07:32PM +0200, Johan Hovold wrote:
+> > [ Resend with Bjorn's address updated as the Linaro one now bounces. ]
+> > 
+> > On Tue, Sep 13, 2022 at 11:10:30AM +0530, Manivannan Sadhasivam wrote:
+> > > The firmware location in linux-firmware has been changed to include the
+> > > SoC name. So use the updated location in Thinkpad devicetree.
+> > > 
+> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 4 ++--
+> > >  1 file changed, 2 insertions(+), 2 deletions(-)
+> > 
+> > I guess we should pick a commit prefix that we stick to for changes to
+> > this driver.
+> > 
+> > 	arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s:
+> > 
+> > is arguably unnecessarily long even if it follows the pattern of some
+> > other qcom dts.
+> > 
+> > Shall we just use
+> > 
+> > 	arm64: dts: qcom: sc8280xp-x13s:
+> 
+> This looks looks better. I did look into the earlier commits but I found
+> the prefix to be too long, so went with the last commit prefix.
+> 
 
-Possibly reword the subject line to say what this does instead of what
-it does not do?  E.g., "Rely on devicetree 'clock-names' instead of
-hard-coding" or whatever.
++1
 
-Bjorn
+> > 
+> > which matches sc8280xp-crd? Or stick "lenovo" in there as well? Or just
+> > keep the whole thing unchanged?
+> > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > > index c379650e52b1..3b7943d6e164 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > > @@ -554,13 +554,13 @@ keyboard@68 {
+> > >  };
+> > >  
+> > >  &remoteproc_adsp {
+> > > -	firmware-name = "qcom/LENOVO/21BX/qcadsp8280.mbn";
+> > > +	firmware-name = "qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn";
+> > >  
+> > >  	status = "okay";
+> > >  };
+> > >  
+> > >  &remoteproc_nsp0 {
+> > > -	firmware-name = "qcom/LENOVO/21BX/qccdsp8280.mbn";
+> > > +	firmware-name = "qcom/sc8280xp/LENOVO/21BX/qccdsp8280.mbn";
+> > >  
+> > >  	status = "okay";
+> > >  };
+> > 
+> > Change itself looks good otherwise:
+> > 
+> > Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> > 
+> 
+> Thanks! I will respin with the agreed prefix.
+> 
+> Regards,
+> Mani
+> 
+> > Johan
