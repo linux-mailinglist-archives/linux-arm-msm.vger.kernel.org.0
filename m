@@ -2,82 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83D655B6A51
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 11:09:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B20FA5B6A78
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 11:14:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231500AbiIMJJe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 05:09:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57854 "EHLO
+        id S231676AbiIMJOm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 05:14:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231514AbiIMJJc (ORCPT
+        with ESMTP id S231597AbiIMJOf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 05:09:32 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 033FDFED
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 02:09:31 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id bo13so3168613wrb.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 02:09:30 -0700 (PDT)
+        Tue, 13 Sep 2022 05:14:35 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D990B3D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 02:14:29 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id c11so19681637wrp.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 02:14:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=NvnQM5buFIVGm1zsvKpl99RN8W6xF+d62qjWE2z+Spo=;
-        b=yeAEcf9BIb2Tytfh/GgUgT7KsaSxOS90fj/ZVzqZDtR6K+/gyQYzNg/9xhQwJdH9KJ
-         L3uIwiEDaUaOiMJ5ZzS/yGlhugRODPMMoFEvBVRKmUvaYJD9OPactVG7GQd0ZAqXSl3N
-         AqqycrzFQtXR/CpwLgA2awRXK0pcRaGtgmy1GxAzBDNW8IDTo2Xj//oLALS/RqcAxcz8
-         A2IfzHL+gNT23UdIbsR7yo2WNN6a+y0id+xaw8F5V1gQJbG0zvCDJH5dmYl227ZTgTrI
-         z93LLPq3R1mq5HscsTh7Jz+X6RVXZ0oNQbCzBLWqMW/JR0LYFXQs4S7PeMQxTekBDRuP
-         rsew==
+        bh=ADz4EBdBTL8CxlxcJQ2l0DOmRa/FEd/FQSURLghGpKs=;
+        b=f7R8DlwEZd+tCooYZH9pOzPPuWNwzxLAmGOoHpyAk7FgxtE53aygIe2nTIU4u2wH3J
+         OLbrCrlezxA469SUjDpv7kDkKecIS52WB+vTsKM3Gv2s8DCkI6s1aTboKymqoqo8bk+g
+         3bdGfGAe5wcTPqGlg1bRxmc4LoTKK3uegVHP8sgVbuUqvkB20r6SWYdOaakAE7ACLxOL
+         /YtPk1snmd8Lv/ZxdF+ubALF1lV4FT3XOJgU8a3wKY8QwqcYgdNZoQwLP/gveenCLFge
+         R3K6UIhSFnacip5JMkF0mQmidkwhuG5kbpqkEJpx09Td4QlDxows5PASKZjwn2weGBrl
+         QpaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=NvnQM5buFIVGm1zsvKpl99RN8W6xF+d62qjWE2z+Spo=;
-        b=4BDCCJCh6dgUBX+1OwjsEuaHF4hMIsfERRWHd52JSmm+c2DOJzEShT+Ynd4CLFajMD
-         MYB4MaKyoYi0OfEcK+OeIMc4jxSpgSBWFH0ID6f3tUjIteXlqS2uWc0spMMVC4RJqpCd
-         EVm/2kIaq9Qu+52RsCDalzErgsA0/1niU65Jfil7kLd1VkBF/lMzupIb/SCIZR0p3mmH
-         95GkN2FSnnl8wjHNHu+upSxmiMg7Htw7fQJmbdul0STfZKD9PYAkwAt3KykSER4k3MB1
-         Dzh/q4DhFAXULFSwVSkSVqQ0danDl3xEgSesYLbUpUtbo90lsYm146D1oqeHfQ37etSu
-         KyiQ==
-X-Gm-Message-State: ACgBeo2zg4eKIfd/U2vzC5UG/p3mu+gWk7rcMGLVejchUxwk07EApjDA
-        9YqCwjlGESey+tR9nQoKDmEMCA==
-X-Google-Smtp-Source: AA6agR4IDhwR/1J/cHRJ9ZZQ0i6GQLw5921b8xdbaeP6XrAcjmbRTEAzcmGEopFWB980sfRqsLTogQ==
-X-Received: by 2002:a5d:584c:0:b0:22a:2c6c:617a with SMTP id i12-20020a5d584c000000b0022a2c6c617amr15168377wrf.532.1663060169508;
-        Tue, 13 Sep 2022 02:09:29 -0700 (PDT)
+        bh=ADz4EBdBTL8CxlxcJQ2l0DOmRa/FEd/FQSURLghGpKs=;
+        b=51cs2hDPl++GBcpYwKKGOJYJ6UpBdawDiUTZwrJZ/omFZdmOMnoICXZnSbIhWwjf7T
+         BNmYKGCCab4eRfysssbTpF5CUR0zZH0EOqYXnXsvt/prettyxjSwf4YyfjGMNLp73BK1
+         VOQSwBEm6vcS2FM5lwQmRMMZYouOIRslJoswemZFVoLpesDXHxvstrQlGzGWoLUDDiXu
+         +ZKjV/EUhTmWyr2ZQtmbfCnQB6H75Zi+Wq7RxzCea38EklndHP1iF6+Nq0vSs0Z0okng
+         6gtNLI1vmK+rD3ewfwqTk4HyDcG+F38A7XQ08HDiD0iiS/Y5Ew/glRS70Mv1Q6rzqapJ
+         X2NQ==
+X-Gm-Message-State: ACgBeo1/Lvl2fWeDb2+zo+PSqrCS8ibm3y0GX4elGjqDsQ5o53dwk/k6
+        W7waxpS0LLQqzyzpZNGYXVwTKA==
+X-Google-Smtp-Source: AA6agR6Qr1pIfesmTtiNwQNYRA8A2/+UWJlxlqNWlabOoxIAkS34EAXifLCa+9zBL82ePYUykfhrTQ==
+X-Received: by 2002:a5d:5644:0:b0:22a:6b69:27f0 with SMTP id j4-20020a5d5644000000b0022a6b6927f0mr6897479wrw.650.1663060468233;
+        Tue, 13 Sep 2022 02:14:28 -0700 (PDT)
 Received: from [10.119.22.201] ([89.101.193.70])
-        by smtp.gmail.com with ESMTPSA id q3-20020adff783000000b0021f15514e7fsm11734887wrp.0.2022.09.13.02.09.28
+        by smtp.gmail.com with ESMTPSA id r5-20020a1c4405000000b003a2e92edeccsm12968611wma.46.2022.09.13.02.14.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Sep 2022 02:09:28 -0700 (PDT)
-Message-ID: <9ebbe240-09ac-42bd-661d-f6b1aaac414e@linaro.org>
-Date:   Tue, 13 Sep 2022 11:09:27 +0200
+        Tue, 13 Sep 2022 02:14:27 -0700 (PDT)
+Message-ID: <83c499c0-9600-5b41-6fa6-e1f8328bd66a@linaro.org>
+Date:   Tue, 13 Sep 2022 11:14:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
-Subject: Re: [PATCH v4 10/15] ASoC: dt-bindings: qcom,q6asm: convert to
- dtschema
+Subject: Re: [PATCH 1/9] dt-bindings: arm: Add support for DSB element
 Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+To:     Tao Zhang <quic_taozha@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, alsa-devel@alsa-project.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220910091428.50418-1-krzysztof.kozlowski@linaro.org>
- <20220910091428.50418-11-krzysztof.kozlowski@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
+References: <1662626705-13097-1-git-send-email-quic_taozha@quicinc.com>
+ <1662626705-13097-2-git-send-email-quic_taozha@quicinc.com>
+ <e015754f-2f33-ab7d-4f18-e1bef39a8390@linaro.org>
+ <05c64748-6a3b-fb0b-e6b7-3715f77de14f@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220910091428.50418-11-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <05c64748-6a3b-fb0b-e6b7-3715f77de14f@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,33 +93,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/09/2022 11:14, Krzysztof Kozlowski wrote:
-> Convert Qualcomm Audio Stream Manager (Q6ASM) bindings to DT schema.
-> 
-> The original bindings documented:
-> 1. APR service node with compatibles: "qcom,q6asm" and
->    "qcom,q6asm-v<MAJOR-NUMBER>.<MINOR-NUMBER>",
-> 2. actual DAIs child node with compatible "qcom,q6asm-dais".
-> 
-> The conversion entirely drops (1) because the compatible is already
-> documented in bindings/soc/qcom/qcom,apr.yaml.  The
-> "qcom,q6asm-v<MAJOR-NUMBER>.<MINOR-NUMBER>" on the other hand is not
-> used at all - neither in existing DTS, nor in downstream sources - so
-> versions seems to be fully auto-detectable.
-> 
-> Another change done in conversion is adding "iommus" property, which is
-> already used in DTS and Linux driver.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Changes since v3:
-> 1. Re-order patches, so the change to apr.yaml happens here and we can
->    avoid early `make dt_binding_check` warning.
+On 13/09/2022 09:00, Tao Zhang wrote:
 
-v3 was reviewed by Rob after I sent it, so let me paste here:
-Reviewed-by: Rob Herring <robh@kernel.org>
+>>> +  qcom,dsb-elem-size:
+>>> +    description: |
+>>> +      Specifies the DSB element size supported by each monitor
+>>> +      connected to the aggregator on each port. Should be specified
+>>> +      in pairs (port, dsb element size).
+>>> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+>> So it is rather uint32-matrix (need to describe the items subschema).
+>> What about maxItems?
+>>
+>> Best regards,
+>> Krzysztof
+> 
+> Yes, indeed it should be uint32-matrix here. I will update in the next 
+> release.
+> 
+> The "maxItems" cannot be known explicitly because it depends on how many 
+> DSB subunit TPDMs are connected to the TPDA input ports.
+> 
+> Usually the number of the items is 1 to several, but there is no limit 
+> to its maximum value.
+
+OK, thanks.
 
 
 Best regards,
