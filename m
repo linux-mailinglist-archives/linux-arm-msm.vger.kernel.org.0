@@ -2,68 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 96E465B685E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 09:08:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 917D35B6882
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Sep 2022 09:18:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229887AbiIMHIm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 03:08:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38086 "EHLO
+        id S231175AbiIMHSo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 03:18:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229627AbiIMHIl (ORCPT
+        with ESMTP id S231174AbiIMHS0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 03:08:41 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFE6511C19
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 00:08:40 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id x1so10895152plv.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 00:08:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=mvmuLsSAKf6NFlks0U+6xfWp1Ez97s8X79X4CqxYQyc=;
-        b=tSMTDdnP+rodHt16YIhNWSeH6jTmhIUNFsSUyqyW4VOSX1aEycQ8N625T/4WaA4j70
-         37ssDFg80n5PlJ9Uu376GShkjgQfUwqJeaZv027jIz5aVMjWcnQ1Nm2BSjB+0OJfcwGn
-         3qDw+4gUe/IpTaP2LGdWrH1gpJ6sJoPl2s/MNFZO4Y8t21uAvkVz1X/uqXMS2EhoOltt
-         q7mKndYb88lXgfHAbnVsXz4bK4ub7ARV7lroG40T3wFjRdHw3DTE/aATy8kjwyLOBAZD
-         s/RZwalHP3Ov6f6IHGFv8bF36+HwBUh3LpTn1Rs6998OxQLjHEL+kVpEOhBUmvu8gzbr
-         gOFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=mvmuLsSAKf6NFlks0U+6xfWp1Ez97s8X79X4CqxYQyc=;
-        b=Nw1rqjuyUiwuKeh84SKkPVVeVO/czxKDLEGudC8gJ4Qd4McycpWIDEaErW0bZnPJNX
-         uBJqVUcA/RnonyBkj++qWUIGRzQdrTKEbVfVhI1oQXvPuF4tI3o+xbezuyZrr2NZPQw+
-         WWEHjr0WSkZcftslhw4biiwFJUmycPDXugBg0hwGWrxaCvNTbDOwyb99ODzh+WCXoYjx
-         pYe1w60mobbPGYdho4IG0ZLO1H2H0wIMP46VQv/kBVxw2bMcGrp6LCSKi4EdxdWGymXf
-         ulvcsSwH/cv7294wXtTK83PNZb96M/3l8QAnAXQbm3awnnSKiPeZdDHZM6H5ATd0wGou
-         DX8Q==
-X-Gm-Message-State: ACgBeo0KW5HtC0bWA+0qKc0Gvx6FfAYUtJYpXvOCOmuV92r9hgtxHbW9
-        xHUOHKDBCnpWs0IdJN9MXQy31Q==
-X-Google-Smtp-Source: AA6agR5PgbUtdW6ugx5JM1ibGxaJ2oK46ZcXQKSQSQHweAIzkqqN8tBb8c5sTchHxjpZ1HHffSq6Bw==
-X-Received: by 2002:a17:90b:1e0f:b0:200:61cb:c718 with SMTP id pg15-20020a17090b1e0f00b0020061cbc718mr2467018pjb.36.1663052920108;
-        Tue, 13 Sep 2022 00:08:40 -0700 (PDT)
-Received: from leoy-huanghe.lan (173.242.123.178.16clouds.com. [173.242.123.178])
-        by smtp.gmail.com with ESMTPSA id jj15-20020a170903048f00b001769ee307d8sm7404651plb.59.2022.09.13.00.08.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Sep 2022 00:08:39 -0700 (PDT)
-Date:   Tue, 13 Sep 2022 15:08:34 +0800
-From:   Leo Yan <leo.yan@linaro.org>
-To:     Huang Yiwei <quic_hyiwei@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, djakov@kernel.org,
-        dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] interconnect: qcom: Add the missing MODULE_LICENSE
-Message-ID: <YyAscuyA1pKmEDH1@leoy-huanghe.lan>
-References: <20220913062721.5986-1-quic_hyiwei@quicinc.com>
+        Tue, 13 Sep 2022 03:18:26 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B08B4BD30;
+        Tue, 13 Sep 2022 00:18:22 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 9EF8AB80DC2;
+        Tue, 13 Sep 2022 07:18:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B9A0C433B5;
+        Tue, 13 Sep 2022 07:18:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663053499;
+        bh=FC9a9cUyZ6tKHf4RlLIdqtcJUM8pTZqYprxyD5qXv7Q=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=S3A9nfZgG47jTHHLHmXmbPEuZC2AludnQHnTqUXcqG150oeHp4MzYpHZ5QEnaEe+J
+         hOMFjatPLS5ji11A3qfoG1B5R7Mh6j4u2oHbpctM5uFWbijuq8ECMmmsDzUBwCEvol
+         zppyt6HorKW/b5mwvMgdzcIkGK90dajcR97tB/oxo/AF21knSWrJToJ12WRTN0DQy/
+         BnMGbc+AdwBBmBQLJFLVFRYO6WpA/ihe1nSbBbJIvdjykxVoKcI7rXQDGd66XXWEES
+         4fXU9zP4Ez9pI4X1G0hr4ejXDyMBZP4cMZjoo+OTrLAqSbfAnb5x1U1UjxLuACw3YB
+         a2f9UKGgifaGQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oY0BV-0000lx-1z; Tue, 13 Sep 2022 09:18:17 +0200
+Date:   Tue, 13 Sep 2022 09:18:17 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "# 4.0+" <stable@vger.kernel.org>
+Subject: Re: [PATCH 4/7] drm/msm/dp: fix aux-bus EP lifetime
+Message-ID: <YyAuuTlDoLAntrO6@hovoldconsulting.com>
+References: <20220912154046.12900-1-johan+linaro@kernel.org>
+ <20220912154046.12900-5-johan+linaro@kernel.org>
+ <e60f0053-3801-bf33-5841-69f16215fa00@linaro.org>
+ <CAD=FV=U8_bjPm3NEOWqzehrx0xFV4U771nTuhhOiM9gKDVCo5g@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220913062721.5986-1-quic_hyiwei@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <CAD=FV=U8_bjPm3NEOWqzehrx0xFV4U771nTuhhOiM9gKDVCo5g@mail.gmail.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -72,23 +77,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Yiwei,
+On Tue, Sep 13, 2022 at 07:35:15AM +0100, Doug Anderson wrote:
+> Hi,
+> 
+> On Mon, Sep 12, 2022 at 7:10 PM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > On 12/09/2022 18:40, Johan Hovold wrote:
+> > > Device-managed resources allocated post component bind must be tied to
+> > > the lifetime of the aggregate DRM device or they will not necessarily be
+> > > released when binding of the aggregate device is deferred.
+> > >
+> > > This can lead resource leaks or failure to bind the aggregate device
+> > > when binding is later retried and a second attempt to allocate the
+> > > resources is made.
+> > >
+> > > For the DP aux-bus, an attempt to populate the bus a second time will
+> > > simply fail ("DP AUX EP device already populated").
+> > >
+> > > Fix this by amending the DP aux interface and tying the lifetime of the
+> > > EP device to the DRM device rather than DP controller platform device.
+> >
+> > Doug, could you please take a look?
+> >
+> > For me this is another reminder/pressure point that we should populate
+> > the AUX BUS from the probe(), before binding the components together.
+> 
+> Aside from the kernel robot complaints, I'm not necessarily convinced.
+> I think we know that the AUX DP stuff in MSM-DP is fragile right now
+> and Qualcomm has promised to clean it up. This really feels like a
+> band-aid and is really a sign that we're populating the AUX DP bus in
+> the wrong place in Qualcomm's code. As you said, if we moved this to
+> probe(), which is the plan in the promised cleanup, then it wouldn't
+> be a problem.
 
-On Tue, Sep 13, 2022 at 02:27:21PM +0800, Huang Yiwei wrote:
-> Since icc-common.c can be compiled as module, add the missing
-> MODULE_LICENSE to avoid compile errors.
+Right, but that appears to be non-trivial judging from the discussions
+you had back when the offending patch was merged:
 
-Just curious how you can enable config INTERCONNECT_QCOM as "m"
-(module)?
+	https://lore.kernel.org/lkml/CAD=FV=X+QvjwoT2zGP82KW4kD0oMUY6ZgCizSikNX_Uj8dNDqA@mail.gmail.com/t/#u
 
-I checked the config INTERCONNECT_QCOM which is dependent on
-INTERCONNECT, and INTERCONNECT has below dependency:
+> As far as I know Qualcomm has queued this cleanup behind their current
+> PSR work (though it's never been clear why both can't be worked on at
+> the same time) and the PSR work was stalled because they couldn't
+> figure out what caused the glitching I reported. It's still on my nag
+> list that I bring up with them every week...
+> 
+> In any case, if a band-aid is urgent, maybe you could just call
+> of_dp_aux_populate_bus() directly in Qualcomm code and you could add
+> your own devm_add_action_or_reset() on the DRM device.
 
-  - DRM_TEGRA [=n] && HAS_IOMEM [=y] && (ARCH_TEGRA [=y] || ARM && COMPILE_TEST [=n]) && COMMON_CLK [=y] && DRM [=m] && OF [=y]
-  - TEGRA_MC [=n] && MEMORY [=y] && (ARCH_TEGRA [=y] || COMPILE_TEST [=n] && COMMON_CLK [=y])
+Yeah, that's probably better. I apparently missed a bunch of users of
+devm_of_dp_aux_populate_ep_devices() after searching for
+devm_of_dp_aux_populate_bus() instead. Judging from a quick glance all
+of these populate the bus at probe, so Qualcomm indeed appears to be
+the odd bird here.
 
-Seems to me, it's impossible to enable INTERCONNECT as "m" because the
-dependency ARCH_TEGRA/OF/COMMON_CLK cannot be configured as "m".
+But the bug is real, in mainline and needs to be fixed, so rolling a
+custom devm action indeed should to be the right thing to do here (if
+only to have a smaller fix).
 
-Thanks,
-Leo
+Johan
