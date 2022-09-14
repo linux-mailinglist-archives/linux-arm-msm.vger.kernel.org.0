@@ -2,84 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E3325B856C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 11:46:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D22B35B8579
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 11:49:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229896AbiINJqH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Sep 2022 05:46:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44346 "EHLO
+        id S230519AbiINJtw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Sep 2022 05:49:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229877AbiINJqG (ORCPT
+        with ESMTP id S230367AbiINJtu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Sep 2022 05:46:06 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1320F61718;
-        Wed, 14 Sep 2022 02:46:03 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28E9T8S7002005;
-        Wed, 14 Sep 2022 09:45:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=subject : to :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=guhL3O6ImPZ+HTuGT/P6lnT7Op7WWDU+WfpjFmZYUy4=;
- b=DC8c6SAznRFpZ5qi4ZjCd/1S5MWT7BKTAaOGdrMK9ISYW/7q/GRa7PZRf0EQEN2qp44X
- wNtjF4CAJMZV8Tun4wmhlqqu+Nu2UAP17vaITaHOTF9UtZrj/+ilwILpUBqmexqaz6sC
- KeEkzLapqpnwrLy+r94Q2/XF495O0IT5kTHFCgGzxTm1BPSsODIkCadhZ3ixil8u4vHo
- A1oOqDKHV49MyfiJnTGImrBQjU0n2UnwrUGzwa/2Z889Xm2TCV+FXMTqXMG23zwf+GQ/
- qy3R/YPMF/xRhbrpq3SHb8w7PxRT+qRWI1wRJHs6xUoS0VXJMh7AmBAkeMbEamC+GUF6 QA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jjy0ghs6e-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Sep 2022 09:45:23 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28E9jMSJ006867
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Sep 2022 09:45:22 GMT
-Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 14 Sep
- 2022 02:45:17 -0700
-Subject: Re: [PATCH v6 8/8] remoteproc: qcom: Update QDSP6 out-of-reset
- timeout value
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        <linux-remoteproc@vger.kernel.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>, <devicetree@vger.kernel.org>
-References: <1662643422-14909-1-git-send-email-quic_srivasam@quicinc.com>
- <1662643422-14909-9-git-send-email-quic_srivasam@quicinc.com>
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-Message-ID: <5dbdf924-784d-9cf1-84d5-a03f18f98768@quicinc.com>
-Date:   Wed, 14 Sep 2022 15:15:14 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Wed, 14 Sep 2022 05:49:50 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3BF0E019
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Sep 2022 02:49:48 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id c11so24780127wrp.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Sep 2022 02:49:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=bbq4/4T4JjPGUfth20drkaf18DSxlzxy1kFL2s5Skkk=;
+        b=ExcJVlbc0ZagiH+Rt7hA0bIVbTU/NxhHDjFnmOG97vfk7AfET8oP8YY+6s84+Q+Kob
+         AJ5rZVaCR4FSyyotJ+Um7fBWBWoMhnq6QmyyFF+rO62RqwDs2N4Cn46ksL+KGnpwh78j
+         S9EN8XhjlqB4zz8tP/9vhz/LY6UjBPfju8CSPIQ4BAqdnZkjw88ejZd09ya3aFzcPlFx
+         1+nPK7TEXW2EAEnjLYIuPT+P98eFpC+AhVnQvUCuPinG4F1UA1iUwSzMXBNZ6rOAIuA5
+         rt96dfG3b4g5SHEDUERGZ840y1RY/kPx0dSau+lT3vebZafJpjfn+RBOIRHaCUGx6/1o
+         JI8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=bbq4/4T4JjPGUfth20drkaf18DSxlzxy1kFL2s5Skkk=;
+        b=DzffC9G29TOiFPBRqFs068gP53CkNghkx6z51OiExxJE1sfgU2rdrymralPYlONXfk
+         Jq8BY0QE0IIqIv41PVom6gijUPOgW7w24NHF52NrSF/CQ+toD6+7AddlhQkboz1zDYug
+         FuS9VvCvvnw4an5Idek4muRCUezIY3Q0PQ2wc05tZPgBbAQBsCMt9bgnEnhvvXh3GALi
+         H/7VVBRy8ZyIJF/DaAfUGCTq/oObuM5uY8tquSnKO0LQaoVyH/trh+gYu6UHzbDtrXjm
+         kBdAjV6zWtkVZIHXRAw59cm/XgLqakkhrR6UtZXfs4FLfZLIDg/muzXaa88pwA8KV92O
+         rMFQ==
+X-Gm-Message-State: ACgBeo2MyQq+jj3uiPu8/XId/yn4pzeIVA387syKpzJsX4oPrVFbtlzb
+        JrZVysyUexZD44CYR6aNMyCJwA==
+X-Google-Smtp-Source: AA6agR44NE7mkRWSZbkSxz7tUVdtOhV3Q3E9t0A41MbdOWdyWfvzOmpa8UdB3Zu6U/6tZw10e5zx/A==
+X-Received: by 2002:adf:e199:0:b0:228:60f6:f775 with SMTP id az25-20020adfe199000000b0022860f6f775mr20581130wrb.478.1663148987482;
+        Wed, 14 Sep 2022 02:49:47 -0700 (PDT)
+Received: from myrica (cpc92880-cmbg19-2-0-cust679.5-4.cable.virginm.net. [82.27.106.168])
+        by smtp.gmail.com with ESMTPSA id v12-20020adfe4cc000000b00228c8ed21c8sm13192128wrm.17.2022.09.14.02.49.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Sep 2022 02:49:47 -0700 (PDT)
+Date:   Wed, 14 Sep 2022 10:49:42 +0100
+From:   Jean-Philippe Brucker <jean-philippe@linaro.org>
+To:     Jason Gunthorpe <jgg@nvidia.com>
+Cc:     Nicolin Chen <nicolinc@nvidia.com>, joro@8bytes.org,
+        suravee.suthikulpanit@amd.com, will@kernel.org,
+        robin.murphy@arm.com, robdclark@gmail.com, dwmw2@infradead.org,
+        baolu.lu@linux.intel.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
+        matthias.bgg@gmail.com, heiko@sntech.de, orsonzhai@gmail.com,
+        baolin.wang@linux.alibaba.com, zhang.lyra@gmail.com,
+        thierry.reding@gmail.com, sricharan@codeaurora.org,
+        yong.wu@mediatek.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
+        tglx@linutronix.de, shameerali.kolothum.thodi@huawei.com,
+        thunder.leizhen@huawei.com, christophe.jaillet@wanadoo.fr,
+        yangyingliang@huawei.com, jon@solid-run.com, iommu@lists.linux.dev,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
+        virtualization@lists.linux-foundation.org
+Subject: Re: [PATCH 4/5] iommu: Regulate errno in ->attach_dev callback
+ functions
+Message-ID: <YyGjtsB2Yq4fQICS@myrica>
+References: <20220913082448.31120-1-nicolinc@nvidia.com>
+ <20220913082448.31120-5-nicolinc@nvidia.com>
+ <YyB3F/o3RfymqiFW@myrica>
+ <YyGaqsXSDMn8R12R@nvidia.com>
 MIME-Version: 1.0
-In-Reply-To: <1662643422-14909-9-git-send-email-quic_srivasam@quicinc.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: fNNkQFqrZNDs09HN57U8kZG3Ab63zVpy
-X-Proofpoint-GUID: fNNkQFqrZNDs09HN57U8kZG3Ab63zVpy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-14_03,2022-09-14_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- priorityscore=1501 bulkscore=0 impostorscore=0 mlxlogscore=999 spamscore=0
- malwarescore=0 suspectscore=0 clxscore=1015 adultscore=0 phishscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2208220000 definitions=main-2209140047
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YyGaqsXSDMn8R12R@nvidia.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,52 +88,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Sep 14, 2022 at 06:11:06AM -0300, Jason Gunthorpe wrote:
+> On Tue, Sep 13, 2022 at 01:27:03PM +0100, Jean-Philippe Brucker wrote:
+> > I think in the future it will be too easy to forget about the constrained
+> > return value of attach() while modifying some other part of the driver,
+> > and let an external helper return EINVAL. So I'd rather not propagate ret
+> > from outside of viommu_domain_attach() and finalise().
+> 
+> Fortunately, if -EINVAL is wrongly returned it only creates an
+> inefficiency, not a functional problem. So we do not need to be
+> precise here.
 
+Ah fair. In that case the attach_dev() documentation should indicate that
+EINVAL is a hint, so that callers don't rely on it (currently words "must"
+and "exclusively" indicate that returning EINVAL for anything other than
+device-domain incompatibility is unacceptable). The virtio-iommu
+implementation may well return EINVAL from the virtio stack or from the
+host response.
 
-On 9/8/22 6:53 PM, Srinivasa Rao Mandadapu wrote:
-> Update QDSP6 out-of-reset timeout value to 1 second, as sometimes
-> ADSP boot failing on SC7280 based platforms with existing value.
-> Also add few micro seconds sleep after enabling boot core
-> start register.
-
-Please do check if the timeout that you hit is due to lack of
-required clock/bus scaling. If so increasing the timeout would
-be just an interim hack and might stop working in the future.
+Thanks,
+Jean
 
 > 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->   drivers/remoteproc/qcom_q6v5_adsp.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
+> > Since we can't guarantee that APIs like virtio or ida won't ever return
+> > EINVAL, we should set all return values:
 > 
-> diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-> index e55d593..4414e23 100644
-> --- a/drivers/remoteproc/qcom_q6v5_adsp.c
-> +++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-> @@ -34,7 +34,7 @@
->   /* time out value */
->   #define ACK_TIMEOUT			1000
->   #define ACK_TIMEOUT_US			1000000
-> -#define BOOT_FSM_TIMEOUT		10000
-> +#define BOOT_FSM_TIMEOUT		1000000
->   /* mask values */
->   #define EVB_MASK			GENMASK(27, 4)
->   /*QDSP6SS register offsets*/
-> @@ -422,13 +422,14 @@ static int adsp_start(struct rproc *rproc)
->   
->   	/* De-assert QDSP6 stop core. QDSP6 will execute after out of reset */
->   	writel(LPASS_BOOT_CORE_START, adsp->qdsp6ss_base + CORE_START_REG);
-> +	usleep_range(100, 110);
->   
->   	/* Trigger boot FSM to start QDSP6 */
->   	writel(LPASS_BOOT_CMD_START, adsp->qdsp6ss_base + BOOT_CMD_REG);
->   
->   	/* Wait for core to come out of reset */
->   	ret = readl_poll_timeout(adsp->qdsp6ss_base + BOOT_STATUS_REG,
-> -			val, (val & BIT(0)) != 0, 10, BOOT_FSM_TIMEOUT);
-> +			val, (val & BIT(0)) != 0, 100, BOOT_FSM_TIMEOUT);
->   	if (ret) {
->   		dev_err(adsp->dev, "failed to bootup adsp\n");
->   		goto disable_adsp_clks;
+> I dislike this alot, it squashes all return codes to try to optimize
+> an obscure failure path :(
 > 
+> Jason
