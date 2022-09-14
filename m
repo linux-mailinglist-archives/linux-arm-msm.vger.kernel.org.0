@@ -2,117 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F9A15B88F3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 15:18:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA8495B89C6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 16:02:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229598AbiINNSN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Sep 2022 09:18:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53918 "EHLO
+        id S229976AbiINOCu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Sep 2022 10:02:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229603AbiINNSK (ORCPT
+        with ESMTP id S229965AbiINOCP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Sep 2022 09:18:10 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A93265F7C5;
-        Wed, 14 Sep 2022 06:18:09 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id dv25so34584572ejb.12;
-        Wed, 14 Sep 2022 06:18:09 -0700 (PDT)
+        Wed, 14 Sep 2022 10:02:15 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCBC378BD5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Sep 2022 07:01:24 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id a2so1359225lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Sep 2022 07:01:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date;
-        bh=kfvXVqNudd9zQNwj3Mp5VEuCU5yPNKUN+snJhZsLeSQ=;
-        b=j94l6scxrToyKCIM6uPXoTKDQ6I4H8d7FiqIj9zUF6jHLHhH0Ion/AzPU7Ey8zpfmn
-         hEMxeqZlCOuXR7iKC5mTZgwYe4hscjC0QRP2fwhqH2qcUlWVqysSgSCNltZ2Ahtu2uqz
-         ifxe6VGB0QN1jSZJNvOADRFNuGx4FcdRReEMSCgzAX9RNeyop70A8wkYWI5qdi8X/1ev
-         A773F19gEAQUpENXY5ajU9g8BKBqywjwmlLXSVbzBc0Q5RykTJCn31gXZXixajCx60Iz
-         /5veokORb4acRXBSoHXoH7mjKADms40V2R10OjPfk0b62wxmU8Qkzic/S7pGunderW5q
-         xJlg==
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=tkQ2gij3IWVpYWf59I81AFLezwcjvGUELvmkiUnZplU=;
+        b=DFsG/LkzdyNq1ygpJt5ZhZ/qbXe9ZrqRf+2XsUYliUGNaapd3HjPRYqrrFDHkpuP8U
+         KDKCf2COGFoasFQC/T+eL9HTpvJqCw8QuOtrfwaM+2d7GN5DoEwic9ggsc3s+ST97nlB
+         9OE8ywg4y3gncpe8jvI0Xd6FkFE/MepNk5idJYeKKcVuFDvH7IfaV+aEqhMaP9YC8YXO
+         6I9vCkqbZgZ7zYbICIMNdCod5B8N2084jF+WlOdNm3pfBLfeWC/V0VYe2fkGMQVkF9dF
+         LRywsPVL7WlsFAI1OH0bP+LbU1nLX9uzYoxQBJMD3N/i7FjZPVN6pZmXuAX0YzwFwjli
+         KiDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=kfvXVqNudd9zQNwj3Mp5VEuCU5yPNKUN+snJhZsLeSQ=;
-        b=IX9YJjW7uWgpkvtSh/9ndrkWvcOq7NXH5RaOVN+qdV1VyuJgNQLauViopIJJ1xFC/A
-         OWYypS3UlVTFxaQUuZTRoxVWMgCgD3Rt1k/MNnqwBqkezWL7wYUkmjVcYzI1xYOQtZfX
-         TEN+fDrTLUVrYFT220qgSPcqJtfXuxxH+/QqgX11CKwI/h01zuwO4I89AOTikG7ejlB/
-         FyFlFro8qBO0tQf/FYNBE22Wv4xj3557l7EPe16Mmm+T/DkDhnzAts2tiBNJ4J9XdhRg
-         CgoH9gs/1QRkL7imS8PtC5vzDAXPxt5408wG9YKo6OzuCFDZRuol67nqJl7v3wMyOnAd
-         r/KQ==
-X-Gm-Message-State: ACgBeo2P5FJ7sx+gAo+wwahwga51XlLDiBSzXQ/IgOdLPI/cqlH1gaKt
-        gphNQootWm/2fe8laRHi7U0=
-X-Google-Smtp-Source: AA6agR4c2MGPtrs7DkzAaXLU4BBWOq7igq5HDD1YDWc7U8OxUkMZfpGVdNcZYVgQumw0KlYG5ZEzZQ==
-X-Received: by 2002:a17:906:a219:b0:6e4:86a3:44ea with SMTP id r25-20020a170906a21900b006e486a344eamr26380836ejy.385.1663161487898;
-        Wed, 14 Sep 2022 06:18:07 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-134.ip85.fastwebnet.it. [93.42.70.134])
-        by smtp.gmail.com with ESMTPSA id 1-20020a170906200100b00774f2fbfcbbsm7718964ejo.38.2022.09.14.06.18.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Sep 2022 06:18:07 -0700 (PDT)
-Message-ID: <6321d48f.170a0220.cae01.31e6@mx.google.com>
-X-Google-Original-Message-ID: <YyHUjb80SRyFN3cY@Ansuel-xps.>
-Date:   Wed, 14 Sep 2022 15:18:05 +0200
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v7 1/4] dt-bindings: clock: add pcm reset for ipq806x lcc
-References: <20220724182329.9891-1-ansuelsmth@gmail.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=tkQ2gij3IWVpYWf59I81AFLezwcjvGUELvmkiUnZplU=;
+        b=0wT3DyF3szZnhxfFr4i5UIOvKQ0Gaazr8lABx5Kf/gpa5RnkpeugSThb1H968XQ18n
+         rciz45RTjC13T6tXBkJKBAyI1KinGICGY4IbHWA5oKlLZRcF41kHZRc6qd8YnnogKKDC
+         C3rH2TSNupnEOUEnfiZcawrAZbgRI4NYB6atBgSN+95+b9yaj94bvCXYHIPmtvMl33Sm
+         uPc6Sa1smmvvkZX6x5HGtPrIsBuXALxO2aytqBBwdHIRXYCFeHwtpE9JjJlnhUwOUc8q
+         /HDUZCz9cr0jwAP3vFE+JWqCJt7pNyWJ7tO1vqploKVEYJCYA55zFpnhToz+wQlv9OSr
+         ebZw==
+X-Gm-Message-State: ACgBeo268eVdSGUFfWT9vWoZ8Dg6Yf7pKbHRb4N1aKAeDv2IxfPkueQQ
+        nOt3RXH0dy/t+gjiBAHriHgXGQGrJRsZCaOuzEiwIA==
+X-Google-Smtp-Source: AA6agR7X61E5vyWoRMVEAMnwI7yhahS3J9/2twMcEzs8aFUjVsC6q4tksh5kS0GIjvek6Xxz9vgbIFRwYNfpaT7SPTY=
+X-Received: by 2002:ac2:4c42:0:b0:497:9dfe:e870 with SMTP id
+ o2-20020ac24c42000000b004979dfee870mr11527722lfk.184.1663164083141; Wed, 14
+ Sep 2022 07:01:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220724182329.9891-1-ansuelsmth@gmail.com>
+References: <20220910143213.477261-1-iskren.chernev@gmail.com> <20220910143213.477261-6-iskren.chernev@gmail.com>
+In-Reply-To: <20220910143213.477261-6-iskren.chernev@gmail.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Wed, 14 Sep 2022 16:00:46 +0200
+Message-ID: <CAPDyKFp5kLF2kkFg3n5ZNzp3oX7hU-SAj9iSoJKDX7PAQxU75A@mail.gmail.com>
+Subject: Re: [PATCH v3 5/9] dt-bindings: mmc: sdhci-msm: Add pinctrl-1 property
+To:     Iskren Chernev <iskren.chernev@gmail.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jul 24, 2022 at 08:23:26PM +0200, Christian Marangi wrote:
-> Add pcm reset define for ipq806x lcc.
-> 
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Acked-by: Rob Herring <robh@kernel.org>
+On Sat, 10 Sept 2022 at 16:32, Iskren Chernev <iskren.chernev@gmail.com> wrote:
+>
+> Most mmc blocks contain two pinctrls, default and sleep. But then
+> dt-schema complains about pinctrl-1 not being defined.
+>
+> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
 
-Any news for this? All the series have review tag. Can we make progress
-on this?
+Applied for next, thanks!
+
+Kind regards
+Uffe
+
 
 > ---
-> v3:
->  - Added review tag
->  - Added ack tag
-> v2:
->  - Fix Sob tag
-> 
->  include/dt-bindings/clock/qcom,lcc-ipq806x.h | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/include/dt-bindings/clock/qcom,lcc-ipq806x.h b/include/dt-bindings/clock/qcom,lcc-ipq806x.h
-> index 25b92bbf0ab4..e0fb4acf4ba8 100644
-> --- a/include/dt-bindings/clock/qcom,lcc-ipq806x.h
-> +++ b/include/dt-bindings/clock/qcom,lcc-ipq806x.h
-> @@ -19,4 +19,6 @@
->  #define SPDIF_CLK			10
->  #define AHBIX_CLK			11
->  
-> +#define LCC_PCM_RESET			0
+>  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> index a792fa5574a0..775476d7f9f0 100644
+> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> @@ -97,6 +97,10 @@ properties:
+>      description:
+>        Should specify pin control groups used for this controller.
+>
+> +  pinctrl-1:
+> +    description:
+> +      Should specify sleep pin control groups used for this controller.
 > +
->  #endif
-> -- 
-> 2.36.1
-> 
-
--- 
-	Ansuel
+>    resets:
+>      maxItems: 1
+>
+> --
+> 2.37.2
+>
