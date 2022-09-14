@@ -2,129 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D6305B7E39
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 03:23:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD1F45B7E70
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 03:39:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229815AbiINBXD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 21:23:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54102 "EHLO
+        id S229743AbiINBjv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 21:39:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbiINBXC (ORCPT
+        with ESMTP id S229489AbiINBju (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 21:23:02 -0400
-Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 5464365578;
-        Tue, 13 Sep 2022 18:23:00 -0700 (PDT)
-Received: from localhost.localdomain (unknown [124.16.138.126])
-        by APP-05 (Coremail) with SMTP id zQCowABnb9ftLCFjifl0Ag--.6344S2;
-        Wed, 14 Sep 2022 09:22:53 +0800 (CST)
-From:   Jiasheng Jiang <jiasheng@iscas.ac.cn>
-To:     quic_jjohnson@quicinc.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Subject: [PATCH v4] soc: qcom: apr: Add check for idr_alloc and of_property_read_string_index
-Date:   Wed, 14 Sep 2022 09:22:52 +0800
-Message-Id: <20220914012252.1747659-1-jiasheng@iscas.ac.cn>
-X-Mailer: git-send-email 2.25.1
+        Tue, 13 Sep 2022 21:39:50 -0400
+Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65BCF1C906;
+        Tue, 13 Sep 2022 18:39:49 -0700 (PDT)
+Received: by mail-il1-x131.google.com with SMTP id x2so955719ill.10;
+        Tue, 13 Sep 2022 18:39:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=gc4ViA0757Ur6oAHyaazQsLXAPbtcxQzDNaQriprPag=;
+        b=bxnpgkqlRUNUZboG7C/f9IIqf963Gpy59Bp1ol6c+u+nPPQxY9UFWQ82Bn0GrykBea
+         woQ1tWc3fntjtCEZEgJz3m4H8BpZt5pKsih+y+KJ9sQIRwFMVg3uuByIVNOWnTdmY/IH
+         9bDPe+QrJLdy8CVLlsfvrqojBazjZylnI2pQABNJRBS94gPz2kFTB9po3QS0lii7g4No
+         YjwkeNYK5ON1wjM4WCbAz6jFlf7NsVA2QOb6j999pO4WSZyLKCbmtm6KTLBWta+TCm3z
+         yduMHH++m9ry4YPlKu1Mk64hKatnVj5BjS/YUzgwuCjfeAKV+oEUwrkzBoT2af61qcs3
+         iIuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=gc4ViA0757Ur6oAHyaazQsLXAPbtcxQzDNaQriprPag=;
+        b=U+AWmKy75pSgSDovau7RFEevP/unhPvEOT4gNCmliU2ciKNrvBBbyNNHxCLl3zwuzF
+         KFl0bc8Aw4xZQv+D8c2k3PJ9nndLa/zB69Hb33+Fa0Knxjk2FHnxeb7m7bX+v9+xaCCg
+         y1nRPtdRWUyhcPE2ZLsJvja03JHWGZRv/rYCD39nqqJT3vBYpvCH/0oJ8tXQXTzt8diG
+         bfmmQ1cX1Nv0gqD3A0woj1IDyw1xcRD2/RR+zIRSZMyyvpjzdkXVkajbqoJfKW9CBv/P
+         bOFddCqmKbE8IY8K8V9HAjiVW8sysRf/jDKKnWQ3OkXwBtn7B5XWL4L0CQAz7OZS9RQ/
+         X2UA==
+X-Gm-Message-State: ACgBeo17qo01sqRuoUDwa2myJ7dckQ0QD5D2gDX350xApgOeaGue009C
+        2TZmrk2GmSjoEShoo/pAWDU2mVUxXbs=
+X-Google-Smtp-Source: AA6agR67A2pNBPfMY2V6TB3nF16ohA3kI2P/VgZ+CzkGAvFpXTDErc0W1tp5VrNKLGUSp4nGLqrrlg==
+X-Received: by 2002:a05:6e02:544:b0:2eb:1024:3a04 with SMTP id i4-20020a056e02054400b002eb10243a04mr12521139ils.222.1663119588159;
+        Tue, 13 Sep 2022 18:39:48 -0700 (PDT)
+Received: from localhost ([2607:fea8:a2e2:2d00::af41])
+        by smtp.gmail.com with UTF8SMTPSA id w14-20020a02b0ce000000b0035a09ad2d87sm4016002jah.99.2022.09.13.18.39.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Sep 2022 18:39:47 -0700 (PDT)
+From:   Richard Acayan <mailingradian@gmail.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Caleb Connolly <caleb@connolly.tech>,
+        Joel Selvaraj <jo@jsfamily.in>
+Subject: [PATCH v4 0/3] SDM670 Global Clocks
+Date:   Tue, 13 Sep 2022 21:39:19 -0400
+Message-Id: <20220914013922.198778-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: zQCowABnb9ftLCFjifl0Ag--.6344S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7Ar43Xw48GFy5XF47Kry7trb_yoW8CFyxpa
-        1avas8Zry8JFs3ury3Cr1kWa4Yga1xtaykW397G3429rn8XF1SyrnrtFy09rW5CFZ7Aa1U
-        Xr13Xas5CF4UWFJanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDU0xBIdaVrnRJUUUkm14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-        rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-        1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
-        6F4UM28EF7xvwVC2z280aVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr
-        1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv
-        7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r
-        1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY02Avz4vE14v_
-        KwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r
-        1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij
-        64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr
-        0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6rW3Jr0E3s1lIxAIcVC2z280aVAFwI0_Jr0_Gr1l
-        IxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjfUOMKZDUUUU
-X-Originating-IP: [124.16.138.126]
-X-CM-SenderInfo: pmld2xxhqjqxpvfd2hldfou0/
-X-Spam-Status: No, score=1.4 required=5.0 tests=BAYES_00,RCVD_IN_SBL_CSS,
-        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Level: *
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As idr_alloc() and of_property_read_string_index() can return negative
-numbers, it should be better to check the return value and deal with
-the exception.
-Therefore, it should be better to use goto statement to deal with the
-exception.
+Changes since v3:
+ - rebase onto next-20220913
+ - accumulate review tags
 
-Fixes: 6adba21eb434 ("soc: qcom: Add APR bus driver")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
----
-Changelog:
+Changes since v2:
+ - drop GCC_SDCC1_BCR reset
+ - reorder gcc-sdm845 and gcc-sdm670 if statements in bindings
+ - add space
+ - accumulate review tags
 
-v3 -> v4:
+Changes since v1:
+ - regenerate patches to fixed malformed patch
+ - fix schema so that the parent clocks are specified correctly
+ - remove core_bi_test_pll_se from new parent_data to match array sizes
+ - reference correct frequency table for gcc_sdm670_cpuss_rbcpr_clk_src
+ - set correct index for sdcc1_ice_core_clk_src
 
-1. Change the title and remove the kfree.
+This patch series adds global clocks essential for features of the Qualcomm
+Snapdragon 670 (hopefully) cleanly into the SDM845 driver without doing
+runtime fixups like in Google's bonito kernel (see patch 3).
 
-v2 -> v3:
+This series (mostly patch 2) affects kernels made for Snapdragon 845 and
+might need some further testing on SDM845 devices. I do not have a
+Snapdragon 845-based device so someone else will have to double check if
+necessary.
 
-1. Change the title and use goto statement to deal with the exception.
+ .../devicetree/bindings/clock/qcom,gcc-sdm845.yaml |  59 ++-
+ drivers/clk/qcom/Kconfig                           |   4 +-
+ drivers/clk/qcom/gcc-sdm845.c                      | 400 ++++++++++++++++++++-
+ include/dt-bindings/clock/qcom,gcc-sdm845.h        |   1 +
+ 4 files changed, 447 insertions(+), 17 deletions(-)
 
-v1 -> v2:
-
-1. Add dev_err and put_device in order to maintain the code consistency.
----
- drivers/soc/qcom/apr.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
-index b4046f393575..8101b92e352c 100644
---- a/drivers/soc/qcom/apr.c
-+++ b/drivers/soc/qcom/apr.c
-@@ -454,20 +454,33 @@ static int apr_add_device(struct device *dev, struct device_node *np,
- 	adev->dev.driver = NULL;
- 
- 	spin_lock(&apr->svcs_lock);
--	idr_alloc(&apr->svcs_idr, svc, svc_id, svc_id + 1, GFP_ATOMIC);
-+	ret = idr_alloc(&apr->svcs_idr, svc, svc_id, svc_id + 1, GFP_ATOMIC);
- 	spin_unlock(&apr->svcs_lock);
-+	if (ret < 0) {
-+		dev_err(dev, "idr_alloc failed: %d\n", ret);
-+		goto error;
-+	}
- 
--	of_property_read_string_index(np, "qcom,protection-domain",
--				      1, &adev->service_path);
-+	ret = of_property_read_string_index(np, "qcom,protection-domain",
-+					    1, &adev->service_path);
-+	if (ret < 0) {
-+		dev_err(dev, "of_property_read_string_index failed: %d\n", ret);
-+		goto error;
-+	}
- 
- 	dev_info(dev, "Adding APR/GPR dev: %s\n", dev_name(&adev->dev));
- 
- 	ret = device_register(&adev->dev);
- 	if (ret) {
- 		dev_err(dev, "device_register failed: %d\n", ret);
--		put_device(&adev->dev);
-+		goto error;
- 	}
- 
-+	goto end;
-+
-+error:
-+	put_device(&adev->dev);
-+end:
- 	return ret;
- }
- 
--- 
-2.25.1
 
