@@ -2,115 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 790E35B8288
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 09:59:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E27E5B82A4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 10:11:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229520AbiINH7E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Sep 2022 03:59:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57760 "EHLO
+        id S229472AbiINILi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Sep 2022 04:11:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230352AbiINH6h (ORCPT
+        with ESMTP id S230080AbiINILe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Sep 2022 03:58:37 -0400
-Received: from mx07-00178001.pphosted.com (mx07-00178001.pphosted.com [185.132.182.106])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BFE174E3B;
-        Wed, 14 Sep 2022 00:57:49 -0700 (PDT)
-Received: from pps.filterd (m0288072.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28E4sgwN002109;
-        Wed, 14 Sep 2022 09:57:43 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=selector1;
- bh=Xlzg64QRBaiX7YQJMdWekhVdnuffDMFxutuEyxGiUOE=;
- b=KlyXtALnOjF4lB+D2sBzHEIaeHxVRgatiNGi8/PryhjGY6LPvY4fcyzwLrC1VEhDqY9b
- zQwOnTE0KrDaJ4kRi1dGJPh3vjDfxl0cNj4/8ZaKVGlNBe8yxNzrhCuAUqWO47rZFucH
- wz70D9VFK42D/PzlhOchLyIIIab+O9ZgOoydKfwcz1L5rfMNfqMPFDpyMeM/37dpS5ZA
- ZjmwFz+YiLTT1E5Qf19tmu+5I7tu93SLs30JV9eMYTyfbsqVfDyZ1ioH4tAWP7t/4krA
- 7le3cHmIic9Z2ZkmsT7J3uSqJgcbcEYYV9HFHzeaaQJQVnP66Blvi/dqVvOWtUcLOo2D 8g== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3jjxxxkdev-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Sep 2022 09:57:43 +0200
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id E1932100038;
-        Wed, 14 Sep 2022 09:57:30 +0200 (CEST)
-Received: from Webmail-eu.st.com (eqndag1node5.st.com [10.75.129.134])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id DCDEC214D1F;
-        Wed, 14 Sep 2022 09:57:30 +0200 (CEST)
-Received: from [10.201.22.245] (10.75.127.122) by EQNDAG1NODE5.st.com
- (10.75.129.134) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2375.31; Wed, 14 Sep
- 2022 09:57:30 +0200
-Message-ID: <37d5a6e0-4b98-55c0-8209-98c032eaf646@foss.st.com>
-Date:   Wed, 14 Sep 2022 09:57:29 +0200
+        Wed, 14 Sep 2022 04:11:34 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41B905281B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Sep 2022 01:11:29 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id r20so5057334ljj.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Sep 2022 01:11:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=iZWQ5Y5Hi8CWhQBH1f5b8elpMACX9kHtiFs5cgZXWnU=;
+        b=pTTW6wt42ZbuGip9KqG9W/2VYWHhw9uRUsEbJ71hITKbzWz8HMrDBeXeN+lTXP9sEZ
+         qQoWJEAnxO1ATDIv/Y3BSxD+OBY8UMg3gmoO2spFVBt+Xy7ntJGhAjla8OZh/nP+h0Xn
+         lDTGqERssXYy/TcUzunBFj8dLoefb8mF3afS0HGohD6t4l60XchdN0IIHckT44xo8hOn
+         JhL/5FQcq9k/9eTq0BLqXU1IXFn9RCGhNgHcObSmv16LIgvQwijupPFm48RCP5iCQ/dk
+         lBIoSywTcHRE7mELJet68lYb8ym8aatv0cT0wTFh+bQ8qNnDyGgumgP5DVBCr3p+rowc
+         ZH6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=iZWQ5Y5Hi8CWhQBH1f5b8elpMACX9kHtiFs5cgZXWnU=;
+        b=KdQiBZYcqSkhkg7iX4Gj46IOLF6Fs2EGrNvhJWESPwmvwkFECxQPanIANWK8ho3F98
+         kVhYjCCB9eXVZ/rlMVpGiSKoWpjPVFadHiu4OXXyPvjcMpAU06sshBYMr4csdlA0RmiH
+         3UmAKu5BwtDzvoW1/cl7ti26enpIfqAvOGIl1GCWFX3+WcQDXT416ZhLlEehEvFfl2rl
+         XBNrJhUjPJlyG4uBJvnhRUINCGvGy/Ub+FPwfMigaprwxQLGkG6tt3/wLBcT16mIDUMd
+         tsDpiklin4AYZLkNAlP5xdrgYbja0i7kUwA32VVbkK7ogm2GS/aq1F45QMWGlbuOKeVT
+         vaxQ==
+X-Gm-Message-State: ACgBeo134lLtvcxI2983RcqfgXfVbynz2P8e6l5xnWL52Uk7Z5IW756F
+        6FqbzuSUxUZogH0WCe5vMcIVgg==
+X-Google-Smtp-Source: AA6agR7KVYLe94RDe7L+HNI/gTnXhrOM85yrUN8V96og/vOzDi3rBrNsY1d49OC2TJJcwr2NURMcBw==
+X-Received: by 2002:a2e:9410:0:b0:26c:170e:e107 with SMTP id i16-20020a2e9410000000b0026c170ee107mr2483758ljh.455.1663143087450;
+        Wed, 14 Sep 2022 01:11:27 -0700 (PDT)
+Received: from fedora.ideon.se ([85.235.10.227])
+        by smtp.gmail.com with ESMTPSA id g12-20020ac24d8c000000b0048cc076a03dsm2265290lfe.237.2022.09.14.01.11.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Sep 2022 01:11:26 -0700 (PDT)
+From:   Linus Walleij <linus.walleij@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>
+Subject: Re: [PATCH v2 1/5] dt-bindings: clock: qcom,gcc-msm8660: separate GCC bindings for MSM8660
+Date:   Wed, 14 Sep 2022 10:11:24 +0200
+Message-Id: <20220914081124.350266-1-linus.walleij@linaro.org>
+X-Mailer: git-send-email 2.37.3
+In-Reply-To: <20220909105136.3733919-2-dmitry.baryshkov@linaro.org>
+References: <20220909105136.3733919-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH V3 2/2] rpmsg: glink: Add lock to rpmsg_ctrldev_remove
-Content-Language: en-US
-To:     Deepak Kumar Singh <quic_deesin@quicinc.com>,
-        <bjorn.andersson@linaro.org>, <swboyd@chromium.org>,
-        <quic_clew@quicinc.com>, <mathieu.poirier@linaro.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>
-References: <1663002336-11809-1-git-send-email-quic_deesin@quicinc.com>
- <1663002336-11809-3-git-send-email-quic_deesin@quicinc.com>
-From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-In-Reply-To: <1663002336-11809-3-git-send-email-quic_deesin@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.75.127.122]
-X-ClientProxiedBy: GPXDAG2NODE4.st.com (10.75.127.68) To EQNDAG1NODE5.st.com
- (10.75.129.134)
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-14_03,2022-09-13_01,2022-06-22_01
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-replace "glink" by "ctrl" in subject
+Hi Dmitry!
 
-On 9/12/22 19:05, Deepak Kumar Singh wrote:
-> Call to rpmsg_ctrldev_ioctl() and rpmsg_ctrldev_remove() must be synchronized.
-> In present code rpmsg_ctrldev_remove() is not protected with lock, therefore
-> new char device creation can succeed through rpmsg_ctrldev_ioctl() call. At the
-> same time call to rpmsg_ctrldev_remove() funtion for ctrl device removal will
-> free associated rpdev device. As char device creation already succeeded, user
-> space is free to issue open() call which maps to rpmsg_create_ept() in kernel.
-> rpmsg_create_ept() function tries to reference rpdev which has already been
-> freed through rpmsg_ctrldev_remove(). Issue is predominantly seen in aggressive
-> reboot tests where rpmsg_ctrldev_ioctl() and rpmsg_ctrldev_remove() can race with
-> each other.
-> 
-> Adding lock in rpmsg_ctrldev_remove() avoids any new char device creation
-> throught rpmsg_ctrldev_ioctl() while remove call is already in progress.
-> 
-> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
-> ---
->  drivers/rpmsg/rpmsg_ctrl.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/rpmsg/rpmsg_ctrl.c b/drivers/rpmsg/rpmsg_ctrl.c
-> index 107da70..4332538 100644
-> --- a/drivers/rpmsg/rpmsg_ctrl.c
-> +++ b/drivers/rpmsg/rpmsg_ctrl.c
-> @@ -194,10 +194,12 @@ static void rpmsg_ctrldev_remove(struct rpmsg_device *rpdev)
->  	struct rpmsg_ctrldev *ctrldev = dev_get_drvdata(&rpdev->dev);
->  	int ret;
->  
-> +	mutex_lock(&ctrldev->ctrl_lock);
->  	/* Destroy all endpoints */
->  	ret = device_for_each_child(&ctrldev->dev, NULL, rpmsg_chrdev_eptdev_destroy);
->  	if (ret)
->  		dev_warn(&rpdev->dev, "failed to nuke endpoints: %d\n", ret);
-> +	mutex_unlock(&ctrldev->ctrl_lock);
->  
->  	cdev_device_del(&ctrldev->cdev, &ctrldev->dev);
->  	put_device(&ctrldev->dev);
+Overall this looks very good, I suppose we follow up with
+adding PXO and CXO to the device tree(s).
+
+> Create a separate DT bindings for Global Clock Controller on MSM8660
+> platform.
+>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+(...)
+> +examples:
+> +  # Example for GCC for MSM8974:
+
+I think that should be "for MSM8660" now?
+
+With that nitpick:
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+
+Yours,
+Linus Walleij
