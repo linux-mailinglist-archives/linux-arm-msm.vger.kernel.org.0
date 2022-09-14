@@ -2,86 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 282485B7EAA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 03:48:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 916065B7EED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 04:26:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230075AbiINBsx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 21:48:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37158 "EHLO
+        id S229659AbiINC0C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 22:26:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229742AbiINBsv (ORCPT
+        with ESMTP id S229564AbiINC0B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 21:48:51 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 999E86DFB5;
-        Tue, 13 Sep 2022 18:48:50 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28E0vYIB004764;
-        Wed, 14 Sep 2022 01:48:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=AnD8zG5EexPMoRYMrIEs798ifwPJnxwt5mBmLeK1BDk=;
- b=lsFznRVWyfIbHhNmIWTVXbHbnTp59oI0+vIKba3W88Aq7I0We8NQz+Cx4y0ZSDZ+ppQ/
- L66S8mLuUGjIE1foxGAKwOqPXwFOH71Juga9XXd6/D/JNzjZEGB2Wdpq9k7sY4mAnXsm
- AUkpx21zJw1Qovjw3f1L9IQxg1d3iX+Zhwox5M08E6JwYj21KjyD3q7fSIg0kf6IuE4U
- 5CoG4vXZy/JnxcGVBRzEhSYxvC8forZvNX1m8F5JhbkBGqp9mu/jZThzDw9ylnJHh5Gx
- R0ocMgJAXCrCMC+1bahWu9s0s2f8zLXbitE1mB8QXYmry2xXoBpw4U/8mhCjosuNevEF OQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jjy06gnsc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Sep 2022 01:48:44 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28E1mhmF011512
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Sep 2022 01:48:43 GMT
-Received: from [10.216.1.65] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 13 Sep
- 2022 18:48:35 -0700
-Message-ID: <847a3838-90b4-7368-9632-223bbd2468cc@quicinc.com>
-Date:   Wed, 14 Sep 2022 07:18:32 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v6 5/5] clk: qcom: Alwaya on pcie gdsc
-Content-Language: en-US
-To:     Bjorn Helgaas <helgaas@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC:     <quic_rjendra@quicinc.com>, <linux-pci@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <mka@chromium.org>, <quic_vbadigan@quicinc.com>,
-        <quic_hemantk@quicinc.com>, <quic_nitegupt@quicinc.com>,
-        <quic_skananth@quicinc.com>, <quic_ramkri@quicinc.com>,
-        <swboyd@chromium.org>, <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Andy Gross" <agross@kernel.org>,
+        Tue, 13 Sep 2022 22:26:01 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8277840E1D;
+        Tue, 13 Sep 2022 19:26:00 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 8173BB811DC;
+        Wed, 14 Sep 2022 02:25:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AACEC433C1;
+        Wed, 14 Sep 2022 02:25:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663122357;
+        bh=ypi1T8jHvwWwBxXnENqUAtcBLV9q8tDsMtTn4h1v1y0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=aNPDXAm0zIADuzN/bbf7JIL5qmdqNFqhKW/cGGGnQi1Yb6erf1pZPuXmfJrn+Jsoq
+         TVGLBpzTU2LEvGjnBprZlXVNfh8cUkyZSszdfy8QXIm8fNVlhG+eW8jm/E/Og9bdFw
+         3TAD+M2wyF8TYeA726nvWE+wfeuOhAxszaNMPsJfecgjjeyXnfCXrSD/vrosYvVI62
+         yfuIFQ1bqvzWVy/2WLyL/RVKAdEweHq/DOx/PrDvvE2HBnvap4c39ougCaLkospvFZ
+         ZzMUTaD+Tja3fLuGByDHQ/g2zWWtuE6QRm0Pk7DTOIKhNrQBZOADOP0dToMIbVFV+Z
+         WAWWJG2SVSUFw==
+Date:   Tue, 13 Sep 2022 21:25:54 -0500
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Richard Acayan <mailingradian@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>
-References: <20220913163424.GA602259@bhelgaas>
-From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20220913163424.GA602259@bhelgaas>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: SGsqD8RfEsjDjXsE12JNmUG-xY_FQ856
-X-Proofpoint-ORIG-GUID: SGsqD8RfEsjDjXsE12JNmUG-xY_FQ856
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-13_12,2022-09-13_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
- lowpriorityscore=0 priorityscore=1501 impostorscore=0 adultscore=0
- spamscore=0 mlxlogscore=958 clxscore=1015 suspectscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2208220000 definitions=main-2209140006
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: add sdm670 pinctrl
+Message-ID: <20220914022554.ev2gkrh7z6favn33@builder.lan>
+References: <20220914014404.199505-1-mailingradian@gmail.com>
+ <20220914014404.199505-2-mailingradian@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220914014404.199505-2-mailingradian@gmail.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -90,24 +60,171 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Sep 13, 2022 at 09:44:03PM -0400, Richard Acayan wrote:
+> There is a new driver for the Snapdragon 670 TLMM (Top-Level Mode
+> Multiplexer). Document it.
+> 
+> Adapted from qcom,sm6350-pinctrl.yaml in the same directory at
+> commit c09acbc499e8 ("dt-bindings: pinctrl: use pinctrl.yaml").
+> 
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> ---
+>  .../bindings/pinctrl/qcom,sdm670-pinctrl.yaml | 128 ++++++++++++++++++
+>  1 file changed, 128 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdm670-pinctrl.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdm670-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdm670-pinctrl.yaml
+> new file mode 100644
+> index 000000000000..28a690bfd348
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdm670-pinctrl.yaml
+> @@ -0,0 +1,128 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,sdm670-pinctrl.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. SDM670 TLMM block
+> +
+> +maintainers:
+> +  - Richard Acayan <mailingradian@gmail.com>
+> +
+> +description: |
+> +  This binding describes the Top Level Mode Multiplexer (TLMM) block found
+> +  in the SDM670 platform.
+> +
+> +allOf:
+> +  - $ref: "pinctrl.yaml#"
+> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sdm670-pinctrl
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts: true
+> +  interrupt-controller: true
+> +  '#interrupt-cells': true
+> +  gpio-controller: true
+> +  gpio-reserved-ranges: true
+> +  '#gpio-cells': true
+> +  gpio-ranges: true
+> +  wakeup-parent: true
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+> +
+> +patternProperties:
+> +  '-state$':
+> +    oneOf:
+> +      - $ref: "#/$defs/qcom-sdm670-tlmm-state"
+> +      - patternProperties:
+> +          ".*":
 
-On 9/13/2022 10:04 PM, Bjorn Helgaas wrote:
-> On Mon, Sep 12, 2022 at 10:34:37PM +0530, Manivannan Sadhasivam wrote:
->> + Rajendra
->>
->> On Fri, Sep 09, 2022 at 02:14:44PM +0530, Krishna chaitanya chundru wrote:
->>> Make GDSC always on to ensure controller and its dependent clocks
->>> won't go down during system suspend.
->> You need to mention the SoC name in subject, otherwise one cannot know for
->> which platform this patch applies to.
-> Also:
->
-> s/Alwaya/Always/
-> s/pcie/PCIe/
-> s/gdsc/GDSC/ as you did in commit log
->
-> I might use "ALWAYS_ON" in the subject to make clear this refers to a
-> specific flag, not a change in the code logic, e.g.,
->
->    clk: qcom: gcc-sc7280: Mark PCIe GDSC clock ALWAYS_ON
-ok I will update the subject in next patch.
+Please see
+https://lore.kernel.org/linux-arm-msm/20220912061746.6311-2-krzysztof.kozlowski@linaro.org/
+
+> +            $ref: "#/$defs/qcom-sdm670-tlmm-state"
+> +
+> +$defs:
+> +  qcom-sdm670-tlmm-state:
+> +    type: object
+> +    description:
+> +      Pinctrl node's client devices use subnodes for desired pin configuration.
+> +      Client device subnodes use below standard properties.
+> +    $ref: "qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state"
+> +
+> +    properties:
+> +      pins:
+> +        description:
+> +          List of gpio pins affected by the properties specified in this
+> +          subnode.
+> +        items:
+> +          oneOf:
+> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-4][0-9]|15[01])$"
+
+You only have gpio0 through gpio149 in the implementation, so the last
+15[01] is not applicable.
+
+> +            - enum: [ sdc1_rclk, sdc1_clk, sdc1_cmd, sdc1_data, sdc2_clk,
+> +                      sdc2_cmd, sdc2_data ]
+
+You're missing ufs_reset in this list.
+
+> +        minItems: 1
+> +        maxItems: 36
+> +
+> +      function:
+
+Please see
+https://lore.kernel.org/linux-arm-msm/20220912061746.6311-6-krzysztof.kozlowski@linaro.org/
+
+Regards,
+Bjorn
+
+> +        description:
+> +          Specify the alternative function to be configured for the specified
+> +          pins.
+> +
+> +        enum: [ adsp_ext, agera_pll, atest_char, atest_tsens, atest_tsens2, atest_usb1, atest_usb10,
+> +                atest_usb11, atest_usb12, atest_usb13, atest_usb2, atest_usb20, atest_usb21,
+> +                atest_usb22, atest_usb23, cam_mclk, cci_async, cci_i2c, cci_timer0, cci_timer1,
+> +                cci_timer2, cci_timer3, cci_timer4, copy_gp, copy_phase, dbg_out, ddr_bist,
+> +                ddr_pxi0, ddr_pxi1, ddr_pxi2, ddr_pxi3, edp_hot, edp_lcd, gcc_gp1, gcc_gp2, gcc_gp3,
+> +                gp_pdm0, gp_pdm1, gp_pdm2, gpio, gps_tx, jitter_bist, ldo_en, ldo_update,
+> +                lpass_slimbus, m_voc, mdp_vsync, mdp_vsync0, mdp_vsync1, mdp_vsync2, mdp_vsync3,
+> +                mss_lte, nav_pps, pa_indicator, pci_e0, pci_e1, phase_flag, pll_bist, pll_bypassnl,
+> +                pll_reset, pri_mi2s, pri_mi2s_ws, prng_rosc, qdss_cti, qdss, qlink_enable,
+> +                qlink_request, qua_mi2s, qup0, qup1, qup10, qup11, qup12, qup13, qup14, qup15, qup2,
+> +                qup3, qup4, qup5, qup6, qup7, qup8, qup9, qup_l4, qup_l5, qup_l6, sdc4_clk,
+> +                sdc4_cmd, sdc4_data, sd_write, sec_mi2s, ter_mi2s, tgu_ch0, tgu_ch1, tgu_ch2,
+> +                tgu_ch3, tsif1_clk, tsif1_data, tsif1_en, tsif1_error, tsif1_sync, tsif2_clk,
+> +                tsif2_data, tsif2_en, tsif2_error, tsif2_sync, uim1_clk, uim1_data, uim1_present,
+> +                uim1_reset, uim2_clk, uim2_data, uim2_present, uim2_reset, uim_batt, usb_phy, vfr_1,
+> +                vsense_trigger, wlan1_adc0, wlan1_adc1, wlan2_adc0, wlan2_adc1, wsa_clk, wsa_data, ]
+> +
+> +
+> +      bias-disable: true
+> +      bias-pull-down: true
+> +      bias-pull-up: true
+> +      drive-strength: true
+> +      input-enable: true
+> +      output-high: true
+> +      output-low: true
+> +
+> +    required:
+> +      - pins
+> +      - function
+> +
+> +    additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +        pinctrl@3400000 {
+> +                compatible = "qcom,sdm670-pinctrl";
+> +                reg = <0x03400000 0x300000>;
+> +                interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+> +                gpio-controller;
+> +                #gpio-cells = <2>;
+> +                interrupt-controller;
+> +                #interrupt-cells = <2>;
+> +                gpio-ranges = <&tlmm 0 0 151>;
+> +
+> +                qup-i2c9-state {
+> +                        pinmux {
+> +                                pins = "gpio6", "gpio7";
+> +                                function = "qup9";
+> +                        };
+> +                };
+> +        };
+> +...
+> -- 
+> 2.37.3
+> 
