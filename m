@@ -2,80 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B69F45B8600
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 12:11:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 408105B8616
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 12:19:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229569AbiINKL1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Sep 2022 06:11:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60240 "EHLO
+        id S229663AbiINKTJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Sep 2022 06:19:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229511AbiINKL0 (ORCPT
+        with ESMTP id S229633AbiINKTH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Sep 2022 06:11:26 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E826C27CE9;
-        Wed, 14 Sep 2022 03:11:24 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28EA6UeT001093;
-        Wed, 14 Sep 2022 10:10:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=subject : to :
+        Wed, 14 Sep 2022 06:19:07 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CB89786DE;
+        Wed, 14 Sep 2022 03:19:06 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28EAEmUd001145;
+        Wed, 14 Sep 2022 10:18:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=subject : to : cc :
  references : from : message-id : date : mime-version : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=PqegGpNl0qJyiVy3o716TPoEjNN3fwQINyxJgf9bHko=;
- b=hH0l4vGVvCyI5B3eAGYn/Ki7Ne3B+X2+UmDkLfG1w4BWkwaGmhW222yduKmVFPXHbLfK
- 3X5+cBr//p4bXcS37cKmp8gJlkQN6q5Y29Tv4rUReR5jMxjKNiBNPQBGNjawY6oCp+tm
- Qr1okHQoR5l1IwjuD8tnxC2LOyHuM/+jxfrXlTqHM+4pWO6RbcAHCWt27lq1hfu3+1vD
- mqFe6FTts/xi8gHSkZ8DUW/s/iR1dOueoabah1TvhM5g6N0Y4FsBub3BqkSrIoEgtDF0
- 889WWApMG6z8Y9NbNjD9ukT0zXz6SvscTvIblerGOYrLEDKSkbjSFvThRJxFn9Qg8+cd qw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jjy06htkg-1
+ bh=TauJo4S33vubiSKMJ8vkdsBpJE36madk8or1JdPhPtE=;
+ b=owEMl6AOMvp0gM+XCVPA+DAuIvwts+9qcvs5p0+ATTATOxq5gsI042eFqY3LtH6lW817
+ pazqUs6PZly1aKhS4XTQj4/EABeCeCyOVKdSWEjDXgPazjGeEg4yj56VdilzP5ljGKdE
+ ThPo8/22y9trmcxzqg9tGSqoKXG5pnFV8zKgPD30+NLaYTedY+PvDwTZGWfG2DZXD7xT
+ zIDZnjpNumcuFIDG8S7r1EHd8ypefjrlt5B5cW1bgu+yeZqjX7pQd8ZLuxY8pDp9mxxA
+ 4kVSo6jOk2c9mcBvUUIAPSmx9RRr25DzMe1mFj4idKfc78UTMEwagkaBpGGb1HpJSMNw aw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jjxyva6be-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Sep 2022 10:10:42 +0000
+        Wed, 14 Sep 2022 10:18:52 +0000
+Received: from pps.filterd (NALASPPMTA05.qualcomm.com [127.0.0.1])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 28EAIp5D031835;
+        Wed, 14 Sep 2022 10:18:51 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 3jjqbt4rfh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Sep 2022 10:18:51 +0000
+Received: from NALASPPMTA05.qualcomm.com (NALASPPMTA05.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 28EAIpIO031830;
+        Wed, 14 Sep 2022 10:18:51 GMT
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28EAAfux002847
+        by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 28EAIooi031829
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Sep 2022 10:10:41 GMT
+        Wed, 14 Sep 2022 10:18:50 +0000
 Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 14 Sep
- 2022 03:10:36 -0700
-Subject: Re: [PATCH v6 7/8] remoteproc: qcom: Add support for memory sandbox
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        <linux-remoteproc@vger.kernel.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>, <devicetree@vger.kernel.org>
-References: <1662643422-14909-1-git-send-email-quic_srivasam@quicinc.com>
- <1662643422-14909-8-git-send-email-quic_srivasam@quicinc.com>
+ 2022 03:18:46 -0700
+Subject: Re: [PATCH 4/4] soc: qcom: pdr: Make QMI message rules const
+To:     Jeff Johnson <quic_jjohnson@quicinc.com>,
+        Alex Elder <elder@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        "Mathieu Poirier" <mathieu.poirier@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Kalle Valo <kvalo@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Konrad Dybcio" <konrad.dybcio@somainline.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20220912232526.27427-1-quic_jjohnson@quicinc.com>
+ <20220912232526.27427-2-quic_jjohnson@quicinc.com>
+ <20220912232526.27427-3-quic_jjohnson@quicinc.com>
+ <20220912232526.27427-4-quic_jjohnson@quicinc.com>
+ <20220912232526.27427-5-quic_jjohnson@quicinc.com>
 From:   Sibi Sankar <quic_sibis@quicinc.com>
-Message-ID: <3c951582-070c-675f-14c7-ca033ca347b6@quicinc.com>
-Date:   Wed, 14 Sep 2022 15:40:33 +0530
+Message-ID: <f8f43b22-bb13-71ff-15fc-a323d0b56ead@quicinc.com>
+Date:   Wed, 14 Sep 2022 15:48:43 +0530
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <1662643422-14909-8-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <20220912232526.27427-5-quic_jjohnson@quicinc.com>
 Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
+X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: vLI_AbPmfzToR8czebEypD7BNlSF5HO0
-X-Proofpoint-ORIG-GUID: vLI_AbPmfzToR8czebEypD7BNlSF5HO0
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: bMVDI2dAzz-eh0sNk3DHpUhUOHYrziiX
+X-Proofpoint-ORIG-GUID: bMVDI2dAzz-eh0sNk3DHpUhUOHYrziiX
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
  definitions=2022-09-14_03,2022-09-14_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
- lowpriorityscore=0 priorityscore=1501 impostorscore=0 adultscore=0
- spamscore=0 mlxlogscore=999 clxscore=1015 suspectscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2208220000 definitions=main-2209140049
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ mlxlogscore=999 suspectscore=0 mlxscore=0 bulkscore=0 spamscore=0
+ phishscore=0 priorityscore=1501 clxscore=1011 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2208220000 definitions=main-2209140050
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -88,139 +108,111 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 9/8/22 6:53 PM, Srinivasa Rao Mandadapu wrote:
-> Update pil driver with SMMU mapping for allowing authorised
-> memory access to ADSP firmware, by carveout reserved adsp memory
-> region from device tree file.
+On 9/13/22 4:55 AM, Jeff Johnson wrote:
+> Commit ff6d365898d ("soc: qcom: qmi: use const for struct
+> qmi_elem_info") allows QMI message encoding/decoding rules to be
+> const, so do that for QCOM PDR.
 > 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+
+Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
+
 > ---
-> Changes since V5:
-> 	-- Remove adsp_rproc_unmap_smmu, adsp_of_unmap_smmu, adsp_of_map_smmu and
-> 	   adsp_rproc_map_smmu functions.
-> 	-- Remove find_loaded_rsc_table call back initialization.
-> 	-- Rename adsp_sandbox_needed to has_iommu.
-> Changes since V4:
-> 	-- Split the code and add appropriate APIs for resource allocation and free.
-> 	-- Update adsp_unmap_smmu with missing free ops call.
-> 	-- Update normalizing length value in adsp_of_unmap_smmu.
-> Changes since V3:
-> 	-- Rename is_adsp_sb_needed to adsp_sandbox_needed.
-> 	-- Add smmu unmapping in error case and in adsp stop.
-> Changes since V2:
-> 	-- Replace platform_bus_type with adsp->dev->bus.
-> 	-- Use API of_parse_phandle_with_args() instead of of_parse_phandle_with_fixed_args().
-> 	-- Replace adsp->is_wpss with adsp->is_adsp.
-> 	-- Update error handling in adsp_start().
+>   drivers/soc/qcom/pdr_internal.h | 20 ++++++++++----------
+>   1 file changed, 10 insertions(+), 10 deletions(-)
 > 
->   drivers/remoteproc/qcom_q6v5_adsp.c | 55 ++++++++++++++++++++++++++++++++++++-
->   1 file changed, 54 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-> index ccb5592..e55d593 100644
-> --- a/drivers/remoteproc/qcom_q6v5_adsp.c
-> +++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-> @@ -9,6 +9,7 @@
->   #include <linux/firmware.h>
->   #include <linux/interrupt.h>
->   #include <linux/io.h>
-> +#include <linux/iommu.h>
->   #include <linux/iopoll.h>
->   #include <linux/kernel.h>
->   #include <linux/mfd/syscon.h>
-> @@ -48,6 +49,8 @@
->   #define LPASS_PWR_ON_REG		0x10
->   #define LPASS_HALTREQ_REG		0x0
+> diff --git a/drivers/soc/qcom/pdr_internal.h b/drivers/soc/qcom/pdr_internal.h
+> index a30422214943..03c282b7f17e 100644
+> --- a/drivers/soc/qcom/pdr_internal.h
+> +++ b/drivers/soc/qcom/pdr_internal.h
+> @@ -28,7 +28,7 @@ struct servreg_location_entry {
+>   	u32 instance;
+>   };
 >   
-> +#define SID_MASK_DEFAULT        0xF
-> +
->   #define QDSP6SS_XO_CBCR		0x38
->   #define QDSP6SS_CORE_CBCR	0x20
->   #define QDSP6SS_SLEEP_CBCR	0x3c
-> @@ -333,6 +336,42 @@ static int adsp_load(struct rproc *rproc, const struct firmware *fw)
->   	return 0;
->   }
+> -static struct qmi_elem_info servreg_location_entry_ei[] = {
+> +static const struct qmi_elem_info servreg_location_entry_ei[] = {
+>   	{
+>   		.data_type      = QMI_STRING,
+>   		.elem_len       = SERVREG_NAME_LENGTH + 1,
+> @@ -74,7 +74,7 @@ struct servreg_get_domain_list_req {
+>   	u32 domain_offset;
+>   };
 >   
-> +static void adsp_unmap_smmu(struct rproc *rproc)
-> +{
-> +	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
-> +
-> +	iommu_unmap(rproc->domain, adsp->mem_phys, adsp->mem_size);
-> +}
-> +
-> +static int adsp_map_smmu(struct qcom_adsp *adsp, struct rproc *rproc)
-
-you could perhaps name the func to adsp_map_carveout/adsp_unmap_carveout
-
-
-> +{
-> +	struct of_phandle_args args;
-> +	long long sid;
-> +	unsigned long iova;
-> +	int ret;
-> +
-> +	if (!rproc->domain)
-> +		return -EINVAL;
-> +
-> +	ret = of_parse_phandle_with_args(adsp->dev->of_node, "iommus", "#iommu-cells", 0, &args);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	sid = args.args[0] & SID_MASK_DEFAULT;
-> +
-> +	/* Add SID configuration for ADSP Firmware to SMMU */
-> +	iova =  adsp->mem_phys | (sid << 32);
-> +
-> +	ret = iommu_map(rproc->domain, iova, adsp->mem_phys,
-> +			adsp->mem_size,	IOMMU_READ | IOMMU_WRITE);
-> +	if (ret) {
-> +		dev_err(adsp->dev, "Unable to map ADSP Physical Memory\n");
-> +		return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->   static int adsp_start(struct rproc *rproc)
->   {
->   	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
-> @@ -343,9 +382,17 @@ static int adsp_start(struct rproc *rproc)
->   	if (ret)
->   		return ret;
+> -static struct qmi_elem_info servreg_get_domain_list_req_ei[] = {
+> +static const struct qmi_elem_info servreg_get_domain_list_req_ei[] = {
+>   	{
+>   		.data_type      = QMI_STRING,
+>   		.elem_len       = SERVREG_NAME_LENGTH + 1,
+> @@ -116,7 +116,7 @@ struct servreg_get_domain_list_resp {
+>   	struct servreg_location_entry domain_list[SERVREG_DOMAIN_LIST_LENGTH];
+>   };
 >   
-> +	if (adsp->has_iommu) {
-> +		ret = adsp_map_smmu(adsp, rproc);
-> +		if (ret) {
-> +			dev_err(adsp->dev, "ADSP smmu mapping failed\n");
-> +			goto disable_irqs;
-> +		}
-> +	}
-> +
->   	ret = clk_prepare_enable(adsp->xo);
->   	if (ret)
-> -		goto disable_irqs;
-> +		goto adsp_smmu_unmap;
+> -static struct qmi_elem_info servreg_get_domain_list_resp_ei[] = {
+> +static const struct qmi_elem_info servreg_get_domain_list_resp_ei[] = {
+>   	{
+>   		.data_type      = QMI_STRUCT,
+>   		.elem_len       = 1,
+> @@ -199,7 +199,7 @@ struct servreg_register_listener_req {
+>   	char service_path[SERVREG_NAME_LENGTH + 1];
+>   };
 >   
->   	ret = qcom_rproc_pds_enable(adsp, adsp->proxy_pds,
->   				    adsp->proxy_pd_count);
-> @@ -401,6 +448,9 @@ static int adsp_start(struct rproc *rproc)
->   	qcom_rproc_pds_disable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
->   disable_xo_clk:
->   	clk_disable_unprepare(adsp->xo);
-> +adsp_smmu_unmap:
-> +	if (adsp->has_iommu)
-> +		adsp_unmap_smmu(rproc);
->   disable_irqs:
->   	qcom_q6v5_unprepare(&adsp->q6v5);
+> -static struct qmi_elem_info servreg_register_listener_req_ei[] = {
+> +static const struct qmi_elem_info servreg_register_listener_req_ei[] = {
+>   	{
+>   		.data_type      = QMI_UNSIGNED_1_BYTE,
+>   		.elem_len       = 1,
+> @@ -227,7 +227,7 @@ struct servreg_register_listener_resp {
+>   	enum servreg_service_state curr_state;
+>   };
 >   
-> @@ -429,6 +479,9 @@ static int adsp_stop(struct rproc *rproc)
->   	if (ret)
->   		dev_err(adsp->dev, "failed to shutdown: %d\n", ret);
+> -static struct qmi_elem_info servreg_register_listener_resp_ei[] = {
+> +static const struct qmi_elem_info servreg_register_listener_resp_ei[] = {
+>   	{
+>   		.data_type      = QMI_STRUCT,
+>   		.elem_len       = 1,
+> @@ -263,7 +263,7 @@ struct servreg_restart_pd_req {
+>   	char service_path[SERVREG_NAME_LENGTH + 1];
+>   };
 >   
-> +	if (adsp->has_iommu)
-> +		adsp_unmap_smmu(rproc);
-> +
->   	handover = qcom_q6v5_unprepare(&adsp->q6v5);
->   	if (handover)
->   		qcom_adsp_pil_handover(&adsp->q6v5);
+> -static struct qmi_elem_info servreg_restart_pd_req_ei[] = {
+> +static const struct qmi_elem_info servreg_restart_pd_req_ei[] = {
+>   	{
+>   		.data_type      = QMI_STRING,
+>   		.elem_len       = SERVREG_NAME_LENGTH + 1,
+> @@ -280,7 +280,7 @@ struct servreg_restart_pd_resp {
+>   	struct qmi_response_type_v01 resp;
+>   };
+>   
+> -static struct qmi_elem_info servreg_restart_pd_resp_ei[] = {
+> +static const struct qmi_elem_info servreg_restart_pd_resp_ei[] = {
+>   	{
+>   		.data_type      = QMI_STRUCT,
+>   		.elem_len       = 1,
+> @@ -300,7 +300,7 @@ struct servreg_state_updated_ind {
+>   	u16 transaction_id;
+>   };
+>   
+> -static struct qmi_elem_info servreg_state_updated_ind_ei[] = {
+> +static const struct qmi_elem_info servreg_state_updated_ind_ei[] = {
+>   	{
+>   		.data_type      = QMI_SIGNED_4_BYTE_ENUM,
+>   		.elem_len       = 1,
+> @@ -336,7 +336,7 @@ struct servreg_set_ack_req {
+>   	u16 transaction_id;
+>   };
+>   
+> -static struct qmi_elem_info servreg_set_ack_req_ei[] = {
+> +static const struct qmi_elem_info servreg_set_ack_req_ei[] = {
+>   	{
+>   		.data_type      = QMI_STRING,
+>   		.elem_len       = SERVREG_NAME_LENGTH + 1,
+> @@ -362,7 +362,7 @@ struct servreg_set_ack_resp {
+>   	struct qmi_response_type_v01 resp;
+>   };
+>   
+> -static struct qmi_elem_info servreg_set_ack_resp_ei[] = {
+> +static const struct qmi_elem_info servreg_set_ack_resp_ei[] = {
+>   	{
+>   		.data_type      = QMI_STRUCT,
+>   		.elem_len       = 1,
 > 
