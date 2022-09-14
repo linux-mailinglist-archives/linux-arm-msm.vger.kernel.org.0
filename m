@@ -2,71 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 212E65B900D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 23:23:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81F745B9065
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 00:05:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229716AbiINVXG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Sep 2022 17:23:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51664 "EHLO
+        id S229565AbiINWFd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Sep 2022 18:05:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229665AbiINVXF (ORCPT
+        with ESMTP id S229495AbiINWFc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Sep 2022 17:23:05 -0400
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA9E0861EE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Sep 2022 14:23:03 -0700 (PDT)
-Received: by mail-io1-xd31.google.com with SMTP id c4so13429633iof.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Sep 2022 14:23:03 -0700 (PDT)
+        Wed, 14 Sep 2022 18:05:32 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F8A54E84C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Sep 2022 15:05:30 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id x94so6986983ede.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Sep 2022 15:05:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=LIXlP1rfY2EhQ9T11PO6g9BCCdTts3DBlnC9m4eeMEc=;
-        b=g+GFnQF5Dn86BDPhwGcmFY3IalM8SsjmzwYSoXYvsdyg9zzOSVvzT2QEjKfU97xvk5
-         3oS4wPql1JZ2VeXkfe563tzYS024U2KbS+wOU2nNNUb0ITj6XGTpTZHNadTFNiTLJkHX
-         13ap+3WC2XDSBdjF3MacvOI3yXQxEiOwJBPO4=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=Holejv5x4Ja/Ig/81V4R1f7COb2CYNqjVPz0cAvGiCM=;
+        b=ayCgX547FpPpZErSYJpswnBRNBxPeCchdn1sDtuf7WpoN6yxA6wfPKh/7XzmSdtryk
+         SDd3hv6hg6FZEgVnjWHg+z3GMhGjUQLVYMe0mx7GEn3K7Sk0nOfK1sL0m92yr1L8p+iv
+         YxSvHYNlDlZJe/MVbYHBpiWPMSS4ISSG1m/mAyaHJczvfFmqgSaehrwbqIJ3GPLlFExf
+         I9yeHzlEnPkd0RvqCa1vMIJFE4yy64YhBP314+l7jaSPoUbeoc2LtN0UFSaNtWAi0Y1n
+         gKoHu+iUukFsQsFDwNB+wJzFqdcQWgdjlmM7YsK7kOQtRxQVzGYf6lVMpQyWLliIKiWg
+         zQnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=LIXlP1rfY2EhQ9T11PO6g9BCCdTts3DBlnC9m4eeMEc=;
-        b=JQiL52fZJlXGYAu1FmJSnW5g5jIuuolbbp5quXLFT23GTEt4GiIr05VzpirNkYChzz
-         KD7lNj6xqul4E6IBdop8BMwyGXP31lFKvbcLI1svGQXVcTNtqmTaLOkf63mz78c50vjq
-         q889xD72hBAiUy97b1YPuaJaO08hLQ0V4zivE5HJbsymgRo+TRq9HsSdpbMY1WaWx8oN
-         C7K8Nt/ydpVlCnXO74JdnmEzEH1ePz6A3f0Zvs6aaSSr8l1cNwZmQwBHQv4aCn7/pLUf
-         VKSJx0ZuLbiM7oi7AIyWv/0wDcpi2p3mLJGXAl7EQfbaRsz8IjTNtJA923LI0SstVCl+
-         ZLnw==
-X-Gm-Message-State: ACgBeo1aTGoaApRXpA8GZQWLYW2Bo1nC+LolFj187TUOMbC2PZO+SvHu
-        8SooJa/HL3NZaCW4fnmofedQAQ==
-X-Google-Smtp-Source: AA6agR4l0z8vb27/FApSfdN8Ue3XNHhBUvJHkgplPQNM3zH0WUtp9KQ+YA3BSuJiV/el2bkFGOtNvw==
-X-Received: by 2002:a05:6638:2607:b0:35a:4772:be26 with SMTP id m7-20020a056638260700b0035a4772be26mr7094923jat.267.1663190583105;
-        Wed, 14 Sep 2022 14:23:03 -0700 (PDT)
-Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
-        by smtp.gmail.com with UTF8SMTPSA id k2-20020a02a702000000b0034a5993e1b5sm146786jam.113.2022.09.14.14.23.01
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=Holejv5x4Ja/Ig/81V4R1f7COb2CYNqjVPz0cAvGiCM=;
+        b=pQlfv1P+ZqUboVodxvwpr45IgAvcjTkCOZpxXfnSoYiLxxsTR0XX1h227aoIbGRCuA
+         CBN8cnNLKHZL4N4sjhi5xZZ2wqBlOpqj2ZY7KcXOk4DTn7+Tzjn5mklw4ytL0MkQSIRp
+         O8RPEDJXNgQSxHVOG6tYGk8Zl0XWBf8fgoGSYXhP/Pu9/cCNydosXqg1lNAgsF2Vchd4
+         NdLCjVlTCk6awMwicWlubjDlAcWXqnCFNDTb9zoR3dkxQnguO0M1ie4NAv0c/Nb+zA2V
+         /E+0xpA50z9VrOCWhshBdrCfTNz/GKmKg9Fd8elEU0oTQx/HFHwb336rVCMLrUCpbLa2
+         CQxg==
+X-Gm-Message-State: ACgBeo3Rju4zKxBhlAyvNyAX07t3VdME1MCroGH9VHFneeklASA/t46i
+        zkaHDy7kT/5vOr+ylBTWOHs8R11hUN+IPg==
+X-Google-Smtp-Source: AA6agR6Um7EfAcKc/t5rmUVVmOpNYFWZ91NjX/7J8A4VMMJRacru6lx+Hj7znbWDiHemUG5SbN4LcA==
+X-Received: by 2002:a05:6402:90a:b0:443:8b10:bcad with SMTP id g10-20020a056402090a00b004438b10bcadmr32096151edz.416.1663193129021;
+        Wed, 14 Sep 2022 15:05:29 -0700 (PDT)
+Received: from [192.168.1.9] (hst-221-107.medicom.bg. [84.238.221.107])
+        by smtp.googlemail.com with ESMTPSA id gu2-20020a170906f28200b00718e4e64b7bsm8021631ejb.79.2022.09.14.15.05.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Sep 2022 14:23:02 -0700 (PDT)
-Date:   Wed, 14 Sep 2022 21:23:01 +0000
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>, andersson@kernel.org,
-        agross@kernel.org, konrad.dybcio@somainline.org,
-        mturquette@baylibre.com, sboyd@kernel.org, johan+linaro@kernel.org,
-        quic_kriskura@quicinc.com, dianders@chromium.org,
-        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/3] clk: qcom: gcc-sc7280: Update the .pwrsts for usb
- gdsc
-Message-ID: <YyJGNR33JbHxWWYD@google.com>
-References: <20220901101756.28164-1-quic_rjendra@quicinc.com>
- <20220901101756.28164-3-quic_rjendra@quicinc.com>
- <YxDYJ+ONryLROBhL@google.com>
- <YyF+5CQqcLQlXvzV@hovoldconsulting.com>
+        Wed, 14 Sep 2022 15:05:28 -0700 (PDT)
+Message-ID: <5beecec3-b2f0-861e-d8bc-4f81ed355b6a@linaro.org>
+Date:   Thu, 15 Sep 2022 01:05:27 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YyF+5CQqcLQlXvzV@hovoldconsulting.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH] MAINTAINERS: Add Vikash as VENUS video driver
+ co-maintainer
+Content-Language: en-US
+To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
+        linux-media@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <1663070940-8165-1-git-send-email-quic_vgarodia@quicinc.com>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+In-Reply-To: <1663070940-8165-1-git-send-email-quic_vgarodia@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,28 +76,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 14, 2022 at 09:12:36AM +0200, Johan Hovold wrote:
-> On Thu, Sep 01, 2022 at 09:04:55AM -0700, Matthias Kaehlcke wrote:
-> > On Thu, Sep 01, 2022 at 03:47:56PM +0530, Rajendra Nayak wrote:
-> > > USB on sc7280 cannot support wakeups from low power states
-> > > if the GDSC is turned OFF. Update the .pwrsts for usb GDSC so it
-> > > only transitions to RET in low power.
-> > > 
-> > > Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> > 
-> > Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-> > Tested-by: Matthias Kaehlcke <mka@chromium.org>
+Hi Vikash,
+
+On 9/13/22 15:09, Vikash Garodia wrote:
+> For the past several amendments in video driver, I have been working
+> with Stanimir in multiple design discussions or handling a given
+> issue. With this, adding myself as a co-maintainer.
+
+I'd like to thank you for all your work on the Venus driver.
+
 > 
-> Did you confirm that you actually hit the retention state?
+> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> ---
+>  MAINTAINERS | 1 +
+>  1 file changed, 1 insertion(+)
 
-No, how would I do that?
+Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 
-> IIUC, this series is equivalent to using ALWAYS_ON unless CX is actually
-> powered off during suspend.
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 936490d..d3ef64f 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -16969,6 +16969,7 @@ F:	drivers/thermal/qcom/
+>  
+>  QUALCOMM VENUS VIDEO ACCELERATOR DRIVER
+>  M:	Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> +M:	Vikash Garodia <quic_vgarodia@quicinc.com>
+>  L:	linux-media@vger.kernel.org
+>  L:	linux-arm-msm@vger.kernel.org
+>  S:	Maintained
 
-The count in /sys/kernel/debug/qcom_stats/cxsd increses with each suspend,
-however it also does that with the GDSC configured as ALWAYS_ON and with
-Rajendra's "arm64: dts: qcom: sc7280: Add required-opps for USB" [1], so
-I guess that isn't the correct signal.
-
-https://patchwork.kernel.org/project/linux-arm-msm/patch/20220914053017.23617-1-quic_rjendra@quicinc.com/
+-- 
+regards,
+Stan
