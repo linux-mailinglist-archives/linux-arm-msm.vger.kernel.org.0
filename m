@@ -2,118 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 91FB55B7DE0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 02:23:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D6305B7E39
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 03:23:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229844AbiINAXF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Sep 2022 20:23:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48224 "EHLO
+        id S229815AbiINBXD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Sep 2022 21:23:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbiINAXD (ORCPT
+        with ESMTP id S229489AbiINBXC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Sep 2022 20:23:03 -0400
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 308616C11B;
-        Tue, 13 Sep 2022 17:23:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1663114982; x=1694650982;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=BEZbqskRU3Qqoaap6epCX9f3SVPC24cLFK4ZgsHlh98=;
-  b=fk6V6L8TyH685FCTW2RkKrZiGJW0katNyIWSU2jbeutzlbVripC1EymN
-   FTDxlSBN7b2FprA1K7Azxhx7ZvzsK21HyZ1RGZlPcacMwBsWSeg7ovAzs
-   zxQSvnaZ026oyWJ8FuaLJ5UXRf6fzVN5WoSLCkNxfvlWFu1cvXeDsEyuX
-   eL592D4LgX21gzo24MYWJhEnOc+LaWrrGGizFqWkehfZc+Y0QsS2wITTg
-   MptdFB4TY924ttPbnYZJxXe9XMiUbz3aFeKSESN1jOYsnAmIyps/xooG+
-   4DE3zKUC+5Kt7c5pt0hrJFV6stVqktrdir4/kX6YGlbyOCPeRKNk3SAzc
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10469"; a="285334574"
-X-IronPort-AV: E=Sophos;i="5.93,313,1654585200"; 
-   d="scan'208";a="285334574"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Sep 2022 17:23:01 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.93,313,1654585200"; 
-   d="scan'208";a="792130674"
-Received: from lkp-server02.sh.intel.com (HELO 4011df4f4fd3) ([10.239.97.151])
-  by orsmga005.jf.intel.com with ESMTP; 13 Sep 2022 17:22:58 -0700
-Received: from kbuild by 4011df4f4fd3 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1oYGB7-00049f-1f;
-        Wed, 14 Sep 2022 00:22:57 +0000
-Date:   Wed, 14 Sep 2022 08:22:09 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     kbuild-all@lists.01.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        daniel.lezcano@linaro.org, devicetree@vger.kernel.org,
-        robh@kernel.org, andersson@kernel.org, rafael@kernel.org,
-        bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
-        linux-arm-kernel@lists.infradead.org, catalin.marinas@arm.com,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: sm8150: Add qmi cooling device
- nodes
-Message-ID: <202209140842.dk0QBtpI-lkp@intel.com>
-References: <20220912091643.3537857-2-bhupesh.sharma@linaro.org>
+        Tue, 13 Sep 2022 21:23:02 -0400
+Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 5464365578;
+        Tue, 13 Sep 2022 18:23:00 -0700 (PDT)
+Received: from localhost.localdomain (unknown [124.16.138.126])
+        by APP-05 (Coremail) with SMTP id zQCowABnb9ftLCFjifl0Ag--.6344S2;
+        Wed, 14 Sep 2022 09:22:53 +0800 (CST)
+From:   Jiasheng Jiang <jiasheng@iscas.ac.cn>
+To:     quic_jjohnson@quicinc.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Subject: [PATCH v4] soc: qcom: apr: Add check for idr_alloc and of_property_read_string_index
+Date:   Wed, 14 Sep 2022 09:22:52 +0800
+Message-Id: <20220914012252.1747659-1-jiasheng@iscas.ac.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220912091643.3537857-2-bhupesh.sharma@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: zQCowABnb9ftLCFjifl0Ag--.6344S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Ar43Xw48GFy5XF47Kry7trb_yoW8CFyxpa
+        1avas8Zry8JFs3ury3Cr1kWa4Yga1xtaykW397G3429rn8XF1SyrnrtFy09rW5CFZ7Aa1U
+        Xr13Xas5CF4UWFJanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDU0xBIdaVrnRJUUUkm14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+        rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+        1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+        6F4UM28EF7xvwVC2z280aVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr
+        1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv
+        7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r
+        1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY02Avz4vE14v_
+        KwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r
+        1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij
+        64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr
+        0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6rW3Jr0E3s1lIxAIcVC2z280aVAFwI0_Jr0_Gr1l
+        IxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjfUOMKZDUUUU
+X-Originating-IP: [124.16.138.126]
+X-CM-SenderInfo: pmld2xxhqjqxpvfd2hldfou0/
+X-Spam-Status: No, score=1.4 required=5.0 tests=BAYES_00,RCVD_IN_SBL_CSS,
+        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bhupesh,
+As idr_alloc() and of_property_read_string_index() can return negative
+numbers, it should be better to check the return value and deal with
+the exception.
+Therefore, it should be better to use goto statement to deal with the
+exception.
 
-Thank you for the patch! Yet something to improve:
+Fixes: 6adba21eb434 ("soc: qcom: Add APR bus driver")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+---
+Changelog:
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on arm64/for-next/core clk/clk-next rockchip/for-next shawnguo/for-next soc/for-next xilinx-xlnx/master linus/master v6.0-rc5 next-20220913]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+v3 -> v4:
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Bhupesh-Sharma/arm64-qcom-Introduce-Qualcomm-Cooling-Driver-suppport/20220912-171936
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-config: arm64-allyesconfig (https://download.01.org/0day-ci/archive/20220914/202209140842.dk0QBtpI-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/34ee1e982e105446a5f8ec8d41381f38a9c8bf0b
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Bhupesh-Sharma/arm64-qcom-Introduce-Qualcomm-Cooling-Driver-suppport/20220912-171936
-        git checkout 34ee1e982e105446a5f8ec8d41381f38a9c8bf0b
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash
+1. Change the title and remove the kfree.
 
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
+v2 -> v3:
 
-All errors (new ones prefixed by >>):
+1. Change the title and use goto statement to deal with the exception.
 
-   In file included from arch/arm64/boot/dts/qcom/sa8155p-adp.dts:10:
->> arch/arm64/boot/dts/qcom/sm8150.dtsi:16:10: fatal error: dt-bindings/thermal/qcom,tmd.h: No such file or directory
-      16 | #include <dt-bindings/thermal/qcom,tmd.h>
-         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   compilation terminated.
+v1 -> v2:
 
+1. Add dev_err and put_device in order to maintain the code consistency.
+---
+ drivers/soc/qcom/apr.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-vim +16 arch/arm64/boot/dts/qcom/sm8150.dtsi
-
-  > 16	#include <dt-bindings/thermal/qcom,tmd.h>
-    17	#include <dt-bindings/thermal/thermal.h>
-    18	
-
+diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
+index b4046f393575..8101b92e352c 100644
+--- a/drivers/soc/qcom/apr.c
++++ b/drivers/soc/qcom/apr.c
+@@ -454,20 +454,33 @@ static int apr_add_device(struct device *dev, struct device_node *np,
+ 	adev->dev.driver = NULL;
+ 
+ 	spin_lock(&apr->svcs_lock);
+-	idr_alloc(&apr->svcs_idr, svc, svc_id, svc_id + 1, GFP_ATOMIC);
++	ret = idr_alloc(&apr->svcs_idr, svc, svc_id, svc_id + 1, GFP_ATOMIC);
+ 	spin_unlock(&apr->svcs_lock);
++	if (ret < 0) {
++		dev_err(dev, "idr_alloc failed: %d\n", ret);
++		goto error;
++	}
+ 
+-	of_property_read_string_index(np, "qcom,protection-domain",
+-				      1, &adev->service_path);
++	ret = of_property_read_string_index(np, "qcom,protection-domain",
++					    1, &adev->service_path);
++	if (ret < 0) {
++		dev_err(dev, "of_property_read_string_index failed: %d\n", ret);
++		goto error;
++	}
+ 
+ 	dev_info(dev, "Adding APR/GPR dev: %s\n", dev_name(&adev->dev));
+ 
+ 	ret = device_register(&adev->dev);
+ 	if (ret) {
+ 		dev_err(dev, "device_register failed: %d\n", ret);
+-		put_device(&adev->dev);
++		goto error;
+ 	}
+ 
++	goto end;
++
++error:
++	put_device(&adev->dev);
++end:
+ 	return ret;
+ }
+ 
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.25.1
+
