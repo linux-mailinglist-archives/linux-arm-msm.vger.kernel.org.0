@@ -2,162 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3716F5B8654
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 12:26:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCB485B8701
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 13:08:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229713AbiINK0k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Sep 2022 06:26:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32968 "EHLO
+        id S229565AbiINLIK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Sep 2022 07:08:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229812AbiINK0i (ORCPT
+        with ESMTP id S229456AbiINLIJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Sep 2022 06:26:38 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 779BE6AA22;
-        Wed, 14 Sep 2022 03:26:34 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28E9mte0007852;
-        Wed, 14 Sep 2022 10:26:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=YEISDO6tRN2BKZmf1zGjPFjG8txfCf6PeSIqZVu3kcM=;
- b=TL5yKDVh/yaeYS9WmvGBBuEyLl7zxW1h1w2itMnTjp2MMbbmyNtNDRpAOQT4fD6oUGrX
- QusZ9K7oSTLIhWKOGalS9GhZUnznWfW2ue695Jfatf4geR8N5ykLIPgzh/fsu3BqFgwU
- c4NTv5FiyFG0YpITSt6y9dPdAqPktgjGJaDIgzDzvXCdgFzi5kvzzxprZSW9iysxAHwF
- ycxg2o+DVxOMNu2oK2n3wVmCZwBYDpD/D+CMVv3uAAlT1VMUF0ezrXdpjmNDd9udhU/Y
- sh6TK6FnTZv+CXS5MMmnRvduwKigOCGxXDvxNAqT9xR5wWmNWTyIq7bO7ZSRh1XGlSYD Dg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jjxys27r0-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Sep 2022 10:26:23 +0000
-Received: from pps.filterd (NALASPPMTA03.qualcomm.com [127.0.0.1])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 28EAQLXV008247;
-        Wed, 14 Sep 2022 10:26:22 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by NALASPPMTA03.qualcomm.com (PPS) with ESMTPS id 3jh430w719-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Sep 2022 10:26:21 +0000
-Received: from NALASPPMTA03.qualcomm.com (NALASPPMTA03.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 28EAQLQD008237;
-        Wed, 14 Sep 2022 10:26:21 GMT
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (PPS) with ESMTPS id 28EAQLa0008236
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Sep 2022 10:26:21 +0000
-Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 14 Sep
- 2022 03:26:17 -0700
-Subject: Re: [PATCH 3/4] slimbus: qcom-ngd-ctrl: Make QMI message rules const
-To:     Jeff Johnson <quic_jjohnson@quicinc.com>,
-        Alex Elder <elder@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        "Mathieu Poirier" <mathieu.poirier@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Kalle Valo <kvalo@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Konrad Dybcio" <konrad.dybcio@somainline.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20220912232526.27427-1-quic_jjohnson@quicinc.com>
- <20220912232526.27427-2-quic_jjohnson@quicinc.com>
- <20220912232526.27427-3-quic_jjohnson@quicinc.com>
- <20220912232526.27427-4-quic_jjohnson@quicinc.com>
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-Message-ID: <7237445c-98fa-ef2b-8cdb-75656a724422@quicinc.com>
-Date:   Wed, 14 Sep 2022 15:56:14 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-In-Reply-To: <20220912232526.27427-4-quic_jjohnson@quicinc.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: iaPqmHGDL_hzox27I1LdgUEUrqf183jx
-X-Proofpoint-GUID: iaPqmHGDL_hzox27I1LdgUEUrqf183jx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-14_03,2022-09-14_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
- priorityscore=1501 malwarescore=0 suspectscore=0 impostorscore=0
- adultscore=0 mlxlogscore=999 spamscore=0 clxscore=1015 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2208220000 definitions=main-2209140050
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Wed, 14 Sep 2022 07:08:09 -0400
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAF69237E5;
+        Wed, 14 Sep 2022 04:08:05 -0700 (PDT)
+Received: by mail-ot1-f50.google.com with SMTP id d25-20020a9d72d9000000b00655d70a1aeaso6986053otk.3;
+        Wed, 14 Sep 2022 04:08:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=message-id:date:subject:references:in-reply-to:cc:to:from
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=2rmXNTNBwGY5J4a4h3i1VzHJdXFIlmwnn+zGBAD+UYI=;
+        b=Voga5yjRNeRKMKvtfqtn9e6+REzfgIMAzk6dRoGr6m2+vsPBBqddq/9rEmrnWJF0vg
+         Jv1GvmiCOv1p3olpf9I4LPhYl0elUA7OU0L931o5cj6W1fBgncTCF0R4Ocpts+tRCIWg
+         aT3tuyzXTWo2PBuUw8K1ZSoXnY2bjjz1LifQiznu/C1w9AduLc/FI2u4ZKDn2xPCuONG
+         Y0slGq0QazjdvYQI+Ad4fTqFRO4tSOPq/rbktFqxcIcpybt4yR2qfZwEQfXRvyiT3SPF
+         UVVIpAmn7VCnG2OUyXvjfgv0hitaxv651ZhVjXi9a8jpK25TdI7pWfNW+xQN/CJES55T
+         cw8Q==
+X-Gm-Message-State: ACgBeo1RPY7+Pit1by72NRYl66U196G8sE0mJ/ikY7SBkPAb0opUAIhg
+        rTXzm5MCX28O2G4bAflc6w==
+X-Google-Smtp-Source: AA6agR7RJKKKW2Pa1sGiCmQlgDBTlugnTg1bEE7BTI+sHywTNfckweBkJxzjZb0uy0FBTY6AHWBJYA==
+X-Received: by 2002:a05:6830:204b:b0:656:6b6e:fa77 with SMTP id f11-20020a056830204b00b006566b6efa77mr2632435otp.141.1663153684884;
+        Wed, 14 Sep 2022 04:08:04 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id 93-20020a9d0be6000000b00636ee04e7aesm7016797oth.67.2022.09.14.04.08.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Sep 2022 04:08:04 -0700 (PDT)
+Received: (nullmailer pid 1742267 invoked by uid 1000);
+        Wed, 14 Sep 2022 11:08:03 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        andersson@kernel.org, manivannan.sadhasivam@linaro.org,
+        konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
+        jassisinghbrar@gmail.com, agross@kernel.org
+In-Reply-To: <1663135386-26270-2-git-send-email-quic_sibis@quicinc.com>
+References: <1663135386-26270-1-git-send-email-quic_sibis@quicinc.com> <1663135386-26270-2-git-send-email-quic_sibis@quicinc.com>
+Subject: Re: [PATCH 1/2] dt-bindings: mailbox: Add dt binding for QTI CPUCP mailbox controller
+Date:   Wed, 14 Sep 2022 06:08:03 -0500
+Message-Id: <1663153683.714744.1742263.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 9/13/22 4:55 AM, Jeff Johnson wrote:
-> Commit ff6d365898d ("soc: qcom: qmi: use const for struct
-> qmi_elem_info") allows QMI message encoding/decoding rules to be
-> const, so do that for qcom-ngd-ctrl.
+On Wed, 14 Sep 2022 11:33:05 +0530, Sibi Sankar wrote:
+> Add devicetree binding for CPUSS Control Processor (CPUCP) mailbox
+> controller.
 > 
-> Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-
-Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
-
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
 > ---
->   drivers/slimbus/qcom-ngd-ctrl.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+>  .../bindings/mailbox/qcom,cpucp-mbox.yaml          | 51 ++++++++++++++++++++++
+>  1 file changed, 51 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
 > 
-> diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-> index 0aa8408464ad..931ab6317467 100644
-> --- a/drivers/slimbus/qcom-ngd-ctrl.c
-> +++ b/drivers/slimbus/qcom-ngd-ctrl.c
-> @@ -220,7 +220,7 @@ struct slimbus_power_resp_msg_v01 {
->   	struct qmi_response_type_v01 resp;
->   };
->   
-> -static struct qmi_elem_info slimbus_select_inst_req_msg_v01_ei[] = {
-> +static const struct qmi_elem_info slimbus_select_inst_req_msg_v01_ei[] = {
->   	{
->   		.data_type  = QMI_UNSIGNED_4_BYTE,
->   		.elem_len   = 1,
-> @@ -262,7 +262,7 @@ static struct qmi_elem_info slimbus_select_inst_req_msg_v01_ei[] = {
->   	},
->   };
->   
-> -static struct qmi_elem_info slimbus_select_inst_resp_msg_v01_ei[] = {
-> +static const struct qmi_elem_info slimbus_select_inst_resp_msg_v01_ei[] = {
->   	{
->   		.data_type  = QMI_STRUCT,
->   		.elem_len   = 1,
-> @@ -284,7 +284,7 @@ static struct qmi_elem_info slimbus_select_inst_resp_msg_v01_ei[] = {
->   	},
->   };
->   
-> -static struct qmi_elem_info slimbus_power_req_msg_v01_ei[] = {
-> +static const struct qmi_elem_info slimbus_power_req_msg_v01_ei[] = {
->   	{
->   		.data_type  = QMI_UNSIGNED_4_BYTE,
->   		.elem_len   = 1,
-> @@ -324,7 +324,7 @@ static struct qmi_elem_info slimbus_power_req_msg_v01_ei[] = {
->   	},
->   };
->   
-> -static struct qmi_elem_info slimbus_power_resp_msg_v01_ei[] = {
-> +static const struct qmi_elem_info slimbus_power_resp_msg_v01_ei[] = {
->   	{
->   		.data_type  = QMI_STRUCT,
->   		.elem_len   = 1,
-> 
+
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.example.dtb: mailbox@17400000: reg: [[0, 398458880], [0, 16], [0, 408486656], [0, 1792]] is too long
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
