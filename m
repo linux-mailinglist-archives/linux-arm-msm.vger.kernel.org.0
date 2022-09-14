@@ -2,119 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 603225B819D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 08:46:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AE245B81A3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 08:48:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230084AbiINGqx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Sep 2022 02:46:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37208 "EHLO
+        id S229543AbiINGsp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Sep 2022 02:48:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229683AbiINGqw (ORCPT
+        with ESMTP id S229777AbiINGsm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Sep 2022 02:46:52 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA05661726;
-        Tue, 13 Sep 2022 23:46:51 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28E5Srxg027254;
-        Wed, 14 Sep 2022 06:46:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=AuScgmf+yQRTkwCCiVpiVM6yswtDLALs1OxjrZvXMT0=;
- b=iLaL5UMBxIMHBRG5K97Eqfz9PXYMFSalx+z14jumepRe2h6O6KBUxLg93wQR1zWE+gjM
- 1gL2XCTf99kfE7WMaOl+Wiq3DoKRkvMCEAU3EEgEyUQ2oL4jBjao1YzgRheDMYTP0NCH
- N5TqPSt5OCVE++k2/eZy8qnci3buoW1oXbEJ1NrM9ckfODR1b6LF4re/UKHLTZdnMcca
- sgGkzEcNMwilE8xXdRCdFvt3qrYwiF4JZTWHo+NU2+Svo+Ru2wS3Hl40Sr5H6byucPvy
- zFjGapCtxaGT7OkvLlgvPYpskv2MtWjuCJI29m1lYS3spvxo/+H0E/085X39hY/IalNb nw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jjxymhkcr-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Sep 2022 06:46:45 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28E6fiBj028769
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Sep 2022 06:41:44 GMT
-Received: from hyiwei-gv.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Tue, 13 Sep 2022 23:41:41 -0700
-From:   Huang Yiwei <quic_hyiwei@quicinc.com>
-To:     <djakov@kernel.org>, <agross@kernel.org>,
-        <konrad.dybcio@somainline.org>
-CC:     <dmitry.baryshkov@linaro.org>, <leo.yan@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Huang Yiwei <quic_hyiwei@quicinc.com>
-Subject: [PATCH v2] interconnect: qcom: Kconfig: Make INTERCONNECT_QCOM tristate
-Date:   Wed, 14 Sep 2022 14:41:22 +0800
-Message-ID: <20220914064122.16222-1-quic_hyiwei@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+        Wed, 14 Sep 2022 02:48:42 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80B126BD77;
+        Tue, 13 Sep 2022 23:48:41 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 095AF6185D;
+        Wed, 14 Sep 2022 06:48:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BB5AC433D6;
+        Wed, 14 Sep 2022 06:48:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663138120;
+        bh=e/RiAwC60v7qXBvmpwe09GemDUBtLQTXY1Qpe8RuHhg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=B6pYCs5EZJSCT4I8r0325I8QPVckkHKxR5UNb1RcdhI5VmOrPF6/7hPTrpSoeuY+Z
+         o5WPHIce0bGsRiFT93UI8P5cqquxb6qMhVQoc8bcAmKk7EDuAstiHllm2WCAX/Fj78
+         vgb+6x3CeXb8LnjYjn4KE/Rqn6cvIDdMHCf73XZUPEfFz4hSwFAzkuXAtXnG4QmWs8
+         d0z8wRAj+64cl2o43kec6bSO/A7iaVzI2sQZdTlnVMM4Uxd5l179XdSq/Ez2Au38lM
+         BMnDdSRN3l69TPCstRotorWmO8Ib/9xfb26YSTdZSjxuyRLmLBOvnVnqHXaIyfrB5m
+         BAvUe/2TblRFg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oYMCO-00038b-6y; Wed, 14 Sep 2022 08:48:40 +0200
+Date:   Wed, 14 Sep 2022 08:48:40 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org
+Subject: Re: [PATCH v3 0/9] PCI: qcom: Support using the same PHY for both RC
+ and EP
+Message-ID: <YyF5SJASdCJWcPaX@hovoldconsulting.com>
+References: <20220909091433.3715981-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: DDcETp6igTbk_BHTxGnJanqr0GuayL-p
-X-Proofpoint-GUID: DDcETp6igTbk_BHTxGnJanqr0GuayL-p
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-14_02,2022-09-13_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 malwarescore=0 bulkscore=0 adultscore=0 impostorscore=0
- mlxscore=0 mlxlogscore=800 lowpriorityscore=0 phishscore=0 suspectscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2208220000 definitions=main-2209140032
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220909091433.3715981-1-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Make INTERCONNECT_QCOM tristate so that icc-common.c can be
-compiled as a module.
+On Fri, Sep 09, 2022 at 12:14:24PM +0300, Dmitry Baryshkov wrote:
+> Programming of QMP PCIe PHYs slightly differs between RC and EP modes.
+> 
+> Currently both qcom and qcom-ep PCIe controllers setup the PHY in the
+> default mode, making it impossible to select at runtime whether the PHY
+> should be running in RC or in EP modes. Usually this is not an issue,
+> since for most devices only the RC mode is used. Some devices (SDX55)
+> currently support only the EP mode without supporting the RC mode (at
+> this moment).
+> 
+> Nevertheless some of the Qualcomm platforms (e.g. the aforementioned
+> SDX55) would still benefit from being able to switch between RC and EP
+> depending on the driver being used. While it is possible to use
+> different compat strings for the PHY depending on the mode, it seems
+> like an incorrect approach, since the PHY doesn't differ between
+> usecases. It's the PCIe controller, who should decide how to configure
+> the PHY.
+> 
+> This patch series implements the ability to select between RC and EP
+> modes, by allowing the PCIe QMP PHY driver to switch between
+> programming tables.
+> 
+> Unlike previous iterations, this series brings in the dependecy from
+> PCI parts onto the first patch. Merging of PHY and PCI parts should be
+> coordinated by the maintainers (e.g. by putting the first patch into the
+> immutable branch).
+> 
+> Changes since v2:
+> - Added PHY_SUBMODE_PCIE_RC/EP defines (Vinod),
+> - Changed `primary' table name to `main', added extra comments
+>   describing that `secondary' are the additional tables, not required in
+>   most of the cases (following the suggestion by Johan to rename
+>   `primary' table),
 
-Signed-off-by: Huang Yiwei <quic_hyiwei@quicinc.com>
----
- drivers/interconnect/qcom/Kconfig      | 2 +-
- drivers/interconnect/qcom/icc-common.c | 3 +++
- 2 files changed, 4 insertions(+), 1 deletion(-)
+This wasn't really what I suggested. "main" is in itself is no more
+understandable than "primary".
 
-diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qcom/Kconfig
-index 25d5b4baf6f6..1a1c941635a2 100644
---- a/drivers/interconnect/qcom/Kconfig
-+++ b/drivers/interconnect/qcom/Kconfig
-@@ -1,6 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0-only
- config INTERCONNECT_QCOM
--	bool "Qualcomm Network-on-Chip interconnect drivers"
-+	tristate "Qualcomm Network-on-Chip interconnect drivers"
- 	depends on ARCH_QCOM
- 	help
- 	  Support for Qualcomm's Network-on-Chip interconnect hardware.
-diff --git a/drivers/interconnect/qcom/icc-common.c b/drivers/interconnect/qcom/icc-common.c
-index 0822ce207b5d..f27f4fdc4531 100644
---- a/drivers/interconnect/qcom/icc-common.c
-+++ b/drivers/interconnect/qcom/icc-common.c
-@@ -5,6 +5,7 @@
- 
- #include <linux/of.h>
- #include <linux/slab.h>
-+#include <linux/module.h>
- 
- #include "icc-common.h"
- 
-@@ -32,3 +33,5 @@ struct icc_node_data *qcom_icc_xlate_extended(struct of_phandle_args *spec, void
- 	return ndata;
- }
- EXPORT_SYMBOL_GPL(qcom_icc_xlate_extended);
-+
-+MODULE_LICENSE("GPL");
--- 
-2.17.1
+Please take another look at:
 
+	https://lore.kernel.org/all/Yw2+aVbqBfMSUcWq@hovoldconsulting.com/
+
+Johan
