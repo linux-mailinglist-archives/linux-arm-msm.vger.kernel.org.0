@@ -2,65 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 666B85B81B8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 09:00:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05DF15B81CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 09:09:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229604AbiING75 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Sep 2022 02:59:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51404 "EHLO
+        id S229703AbiINHJY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Sep 2022 03:09:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229480AbiING7z (ORCPT
+        with ESMTP id S229484AbiINHJY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Sep 2022 02:59:55 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B2B72BB29;
-        Tue, 13 Sep 2022 23:59:53 -0700 (PDT)
+        Wed, 14 Sep 2022 03:09:24 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E37C5A8A7;
+        Wed, 14 Sep 2022 00:09:23 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id EF6EEB815C8;
-        Wed, 14 Sep 2022 06:59:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94BE4C433C1;
-        Wed, 14 Sep 2022 06:59:50 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9E655617C2;
+        Wed, 14 Sep 2022 07:09:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F179FC433D6;
+        Wed, 14 Sep 2022 07:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663138790;
-        bh=Whs4IM7U0IGGXZo3pyOaHLLggtXyRjQJNmPd9HwSIX0=;
+        s=k20201202; t=1663139362;
+        bh=4qaiOzRX06Dcp86Qw4AyJXoFbpAVDJ6myGvrqmUKEVM=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=cmUukbaAhnYWX2B+yqopCAhZOaftArJ6p2kTJWhqv3KTJtD16jAfR3xk6MQDZq6vl
-         NNyXjyeT6dz90ag2MXDg5vW3BswGsy+VIBrtH6qUqqOn+W9zTGzwWD4d9NEgF+6SiE
-         U0sUxG+LrEyRrdjSLZWsGMXeNIwDBoY0kG3Qm/wmOjLBRAXFLONnxhHURq3RKc29ws
-         pafB7jYlKAmqSSg3gcVESvZ1Oy7+yTJcFRbUqxIdoaXr2idxg+DqOFSq7FBH9kXBM5
-         931CoIl9oAOPjtAd87jLkL0aUANcbVbPABKAJjXgnTHyFVg1WedvYXuITmOB93RUcY
-         obam+Ivgx6dSw==
+        b=G9WzKer3Fcmv9pO/0wa7orIhM29sqOtc5CKviBsgf8TZ6WMDjGK7YybhHooprjrDQ
+         CKqyXLvhL2EqsEosAFSk9v1+9ohcxB6uC2ZhpCE8c8MiR8IhJnsWcYZtJR8ELn+oaG
+         J8kNucIEkvZk+JGmZ8uRKbOx49w7gEyhvZX4SAiLmGXHJVyOq4DsJLJpRT80j8vtKy
+         EUtAd1n/MNVtQUlpXlmdHwT3Th/if1G/cHRacpi+ekzzuXbfQFXms8FN2FajNCkxhq
+         I/gTvEDFpTBalSIygYF6vzX03gbFGbZWIjujZNYFAeOlrNnDC6hglY4B0u21mWMGuw
+         8NjTOcju0bz2w==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1oYMND-0003Cj-16; Wed, 14 Sep 2022 08:59:51 +0200
-Date:   Wed, 14 Sep 2022 08:59:51 +0200
+        id 1oYMWQ-0003Go-2T; Wed, 14 Sep 2022 09:09:22 +0200
+Date:   Wed, 14 Sep 2022 09:09:22 +0200
 From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org
-Subject: Re: [PATCH v3 5/9] phy: qcom-qmp-pcie: turn secondary programming
- table into a pointer
-Message-ID: <YyF757ZdlqW4NfYN@hovoldconsulting.com>
-References: <20220909091433.3715981-1-dmitry.baryshkov@linaro.org>
- <20220909091433.3715981-6-dmitry.baryshkov@linaro.org>
+To:     Rajendra Nayak <quic_rjendra@quicinc.com>
+Cc:     andersson@kernel.org, agross@kernel.org,
+        konrad.dybcio@somainline.org, mturquette@baylibre.com,
+        sboyd@kernel.org, mka@chromium.org, johan+linaro@kernel.org,
+        quic_kriskura@quicinc.com, dianders@chromium.org,
+        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/3] clk: qcom: gcc-sc7280: Update the .pwrsts for usb
+ gdsc
+Message-ID: <YyF+IuoDjBZzEQxO@hovoldconsulting.com>
+References: <20220901101756.28164-1-quic_rjendra@quicinc.com>
+ <20220901101756.28164-3-quic_rjendra@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220909091433.3715981-6-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220901101756.28164-3-quic_rjendra@quicinc.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -71,17 +63,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 09, 2022 at 12:14:29PM +0300, Dmitry Baryshkov wrote:
-> Having a complete struct qmp_phy_cfg_tables as a secondary field in the
-> struct qmp_phy_cfg wastes memory, since most of the PHY configuration
-> tables do not have the secondary table. Change it to be a pointer to
-> lower the amount of wasted memory.
+On Thu, Sep 01, 2022 at 03:47:56PM +0530, Rajendra Nayak wrote:
+> USB on sc7280 cannot support wakeups from low power states
+> if the GDSC is turned OFF. Update the .pwrsts for usb GDSC so it
+> only transitions to RET in low power.
 
-Please be a bit more specific.
+It seems this isn't just needed for wakeup to work. On both sc7280 and
+sc8280xp the controller doesn't resume properly if the domain has been
+powered off (i.e. regardless of whether wakeup is enabled or not).
 
-We're talking about four pointers per configuration and there are
-currently about 15 configurations.
+Are you sure there's no state that needs to be retained regardless of
+the wakeup setting?
 
-Is the added complexity really worth saving 400 bytes on 64-bit?
+> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+> ---
+>  drivers/clk/qcom/gcc-sc7280.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/clk/qcom/gcc-sc7280.c b/drivers/clk/qcom/gcc-sc7280.c
+> index 7ff64d4d5920..de29a034e725 100644
+> --- a/drivers/clk/qcom/gcc-sc7280.c
+> +++ b/drivers/clk/qcom/gcc-sc7280.c
+> @@ -3126,7 +3126,7 @@ static struct gdsc gcc_usb30_prim_gdsc = {
+>  	.pd = {
+>  		.name = "gcc_usb30_prim_gdsc",
+>  	},
+> -	.pwrsts = PWRSTS_OFF_ON,
+> +	.pwrsts = PWRSTS_RET_ON,
+>  	.flags = VOTABLE,
+>  };
+
+And what about gcc_usb30_sec_gdsc?
 
 Johan
