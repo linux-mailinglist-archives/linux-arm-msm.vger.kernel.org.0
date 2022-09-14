@@ -2,111 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 81F745B9065
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 00:05:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 99F475B9128
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 01:48:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229565AbiINWFd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Sep 2022 18:05:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41748 "EHLO
+        id S229604AbiINXso (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Sep 2022 19:48:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229495AbiINWFc (ORCPT
+        with ESMTP id S230008AbiINXsW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Sep 2022 18:05:32 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F8A54E84C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Sep 2022 15:05:30 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id x94so6986983ede.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Sep 2022 15:05:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=Holejv5x4Ja/Ig/81V4R1f7COb2CYNqjVPz0cAvGiCM=;
-        b=ayCgX547FpPpZErSYJpswnBRNBxPeCchdn1sDtuf7WpoN6yxA6wfPKh/7XzmSdtryk
-         SDd3hv6hg6FZEgVnjWHg+z3GMhGjUQLVYMe0mx7GEn3K7Sk0nOfK1sL0m92yr1L8p+iv
-         YxSvHYNlDlZJe/MVbYHBpiWPMSS4ISSG1m/mAyaHJczvfFmqgSaehrwbqIJ3GPLlFExf
-         I9yeHzlEnPkd0RvqCa1vMIJFE4yy64YhBP314+l7jaSPoUbeoc2LtN0UFSaNtWAi0Y1n
-         gKoHu+iUukFsQsFDwNB+wJzFqdcQWgdjlmM7YsK7kOQtRxQVzGYf6lVMpQyWLliIKiWg
-         zQnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=Holejv5x4Ja/Ig/81V4R1f7COb2CYNqjVPz0cAvGiCM=;
-        b=pQlfv1P+ZqUboVodxvwpr45IgAvcjTkCOZpxXfnSoYiLxxsTR0XX1h227aoIbGRCuA
-         CBN8cnNLKHZL4N4sjhi5xZZ2wqBlOpqj2ZY7KcXOk4DTn7+Tzjn5mklw4ytL0MkQSIRp
-         O8RPEDJXNgQSxHVOG6tYGk8Zl0XWBf8fgoGSYXhP/Pu9/cCNydosXqg1lNAgsF2Vchd4
-         NdLCjVlTCk6awMwicWlubjDlAcWXqnCFNDTb9zoR3dkxQnguO0M1ie4NAv0c/Nb+zA2V
-         /E+0xpA50z9VrOCWhshBdrCfTNz/GKmKg9Fd8elEU0oTQx/HFHwb336rVCMLrUCpbLa2
-         CQxg==
-X-Gm-Message-State: ACgBeo3Rju4zKxBhlAyvNyAX07t3VdME1MCroGH9VHFneeklASA/t46i
-        zkaHDy7kT/5vOr+ylBTWOHs8R11hUN+IPg==
-X-Google-Smtp-Source: AA6agR6Um7EfAcKc/t5rmUVVmOpNYFWZ91NjX/7J8A4VMMJRacru6lx+Hj7znbWDiHemUG5SbN4LcA==
-X-Received: by 2002:a05:6402:90a:b0:443:8b10:bcad with SMTP id g10-20020a056402090a00b004438b10bcadmr32096151edz.416.1663193129021;
-        Wed, 14 Sep 2022 15:05:29 -0700 (PDT)
-Received: from [192.168.1.9] (hst-221-107.medicom.bg. [84.238.221.107])
-        by smtp.googlemail.com with ESMTPSA id gu2-20020a170906f28200b00718e4e64b7bsm8021631ejb.79.2022.09.14.15.05.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Sep 2022 15:05:28 -0700 (PDT)
-Message-ID: <5beecec3-b2f0-861e-d8bc-4f81ed355b6a@linaro.org>
-Date:   Thu, 15 Sep 2022 01:05:27 +0300
+        Wed, 14 Sep 2022 19:48:22 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A7188990A;
+        Wed, 14 Sep 2022 16:48:06 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28ENMMnK031977;
+        Wed, 14 Sep 2022 23:47:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding : content-type; s=qcppdkim1;
+ bh=iqLzBmzE5BTockw4Tp6odyPOa+19hELeK9FqxRjRgxc=;
+ b=gzYq7UrDtsYVNJXHvQKuzqKmBR51ViQODhcB36JPDvdR3vC5dPmXr+mJEnO49JalqgSc
+ ZfR7DPnagVhQh/Zqxr87W9hIotDoAohh5rDQebv+r0Vu4/xczZayK+hK1qKQ6R2yASxu
+ IQ2kSNugyXR17cnQLFc1BhX/ZOltvWUQBiiATzpRuDgkzB/G9Wkz8JMo1l/yIZFo5vVp
+ Ap+ovt3uSOi+8k+AMXCC7D53T0x6lXLg/uecDj8BqtJKn3oeZlj7dSnpiVIl382lzGW/
+ k8qZt9v8AGjUfPXoop4SA9cXlD31Kaj7vukxB0xFSKkGC8It+QPs/OAyQUc8lL4On4DJ UQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jjxys4ayq-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Sep 2022 23:47:25 +0000
+Received: from pps.filterd (NALASPPMTA05.qualcomm.com [127.0.0.1])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 28ENlOar030181;
+        Wed, 14 Sep 2022 23:47:24 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 3jjqbt76e1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Sep 2022 23:47:24 +0000
+Received: from NALASPPMTA05.qualcomm.com (NALASPPMTA05.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 28ENlOjG030176;
+        Wed, 14 Sep 2022 23:47:24 GMT
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 28ENlOE1030175
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Sep 2022 23:47:24 +0000
+Received: from quicinc.com (10.49.16.6) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 14 Sep
+ 2022 16:47:24 -0700
+From:   Jeff Johnson <quic_jjohnson@quicinc.com>
+To:     Alex Elder <elder@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        "Paolo Abeni" <pabeni@redhat.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Kalle Valo <kvalo@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <linux-kernel@vger.kernel.org>,
+        Jeff Johnson <quic_jjohnson@quicinc.com>
+Subject: [PATCH v2 0/4] Make QMI message rules const
+Date:   Wed, 14 Sep 2022 16:47:01 -0700
+Message-ID: <20220914234705.28405-1-quic_jjohnson@quicinc.com>
+X-Mailer: git-send-email 2.37.0
+In-Reply-To: <20220912232526.27427-1-quic_jjohnson@quicinc.com>
+References: <20220912232526.27427-1-quic_jjohnson@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH] MAINTAINERS: Add Vikash as VENUS video driver
- co-maintainer
-Content-Language: en-US
-To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
-        linux-media@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <1663070940-8165-1-git-send-email-quic_vgarodia@quicinc.com>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-In-Reply-To: <1663070940-8165-1-git-send-email-quic_vgarodia@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: arZCbROUhuHu0e98sanOCBuW30PwvKB4
+X-Proofpoint-GUID: arZCbROUhuHu0e98sanOCBuW30PwvKB4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-14_09,2022-09-14_04,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
+ priorityscore=1501 malwarescore=0 suspectscore=0 impostorscore=0
+ adultscore=0 mlxlogscore=716 spamscore=0 clxscore=1015 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2208220000 definitions=main-2209140113
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vikash,
+Commit ff6d365898d4 ("soc: qcom: qmi: use const for struct
+qmi_elem_info") allows QMI message encoding/decoding rules to be
+const. So now update the definitions in the various clients to take
+advantage of this. Patches for ath10k and ath11k were previously sent
+separately.
 
-On 9/13/22 15:09, Vikash Garodia wrote:
-> For the past several amendments in video driver, I have been working
-> with Stanimir in multiple design discussions or handling a given
-> issue. With this, adding myself as a co-maintainer.
+This series depends upon:
+https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?h=for-next&id=ff6d365898d4d31bd557954c7fc53f38977b491c
 
-I'd like to thank you for all your work on the Venus driver.
+This is in the for-next branch of:
+git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git
 
-> 
-> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-> ---
->  MAINTAINERS | 1 +
->  1 file changed, 1 insertion(+)
+Hence this series is also based upon that tree/branch.
 
-Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Changes in v2 (applied to all 4 patches in the series):
+- Fixed the truncated hash ff6d365898d ==> ff6d365898d4
+- Added RB tags
 
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 936490d..d3ef64f 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -16969,6 +16969,7 @@ F:	drivers/thermal/qcom/
->  
->  QUALCOMM VENUS VIDEO ACCELERATOR DRIVER
->  M:	Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> +M:	Vikash Garodia <quic_vgarodia@quicinc.com>
->  L:	linux-media@vger.kernel.org
->  L:	linux-arm-msm@vger.kernel.org
->  S:	Maintained
+Jeff Johnson (4):
+  net: ipa: Make QMI message rules const
+  remoteproc: sysmon: Make QMI message rules const
+  slimbus: qcom-ngd-ctrl: Make QMI message rules const
+  soc: qcom: pdr: Make QMI message rules const
+
+ drivers/net/ipa/ipa_qmi_msg.c    | 20 ++++++++++----------
+ drivers/net/ipa/ipa_qmi_msg.h    | 20 ++++++++++----------
+ drivers/remoteproc/qcom_sysmon.c |  8 ++++----
+ drivers/slimbus/qcom-ngd-ctrl.c  |  8 ++++----
+ drivers/soc/qcom/pdr_internal.h  | 20 ++++++++++----------
+ 5 files changed, 38 insertions(+), 38 deletions(-)
 
 -- 
-regards,
-Stan
+2.37.0
+
