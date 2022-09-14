@@ -2,62 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 806375B8736
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 13:24:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFF795B8763
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 13:43:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229997AbiINLYG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Sep 2022 07:24:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59458 "EHLO
+        id S229802AbiINLnB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Sep 2022 07:43:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229881AbiINLXx (ORCPT
+        with ESMTP id S229670AbiINLnA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Sep 2022 07:23:53 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B596D6525A;
-        Wed, 14 Sep 2022 04:23:47 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 5D3B1B81A5B;
-        Wed, 14 Sep 2022 11:23:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBDBC433D6;
-        Wed, 14 Sep 2022 11:23:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663154625;
-        bh=rospQRd01AkN2gJUmUr22fajGKIcwYulhJwV6VJLFOI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=jSzSk/akGXmI6A/Szevs3K7j5JrGCFq1vhUkoXLB16FgUZi7uGKdThmVonAXyG329
-         W9kiXbpbTiB02IbvLvBp21sDOQsZ4AfkRrIBpzTcxZY9klwRsXGZJErnpBPdb7YFGp
-         5fgHGmpNPVJccWQfF2xt6pBuR/cze6U4Uudt6wXV1mHTDwZzGshxlA6LHfqSkqMz20
-         b5iHPBhpHp3G0DV1uR+gEXES4mtiuMCdKOFDSBEiN/9YHgNAxHVASCnPzdyaw7nCWa
-         ercs03qaNVfiyjnseeSaT0VoBMk2hI6TTH5+57NEZHNP435XPd3waHXWgpaMskqJdn
-         xmKZgP6MQtZEA==
-Date:   Wed, 14 Sep 2022 16:53:41 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     David Collins <quic_collinsd@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        David Dai <daidavid1@codeaurora.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 0/2] spmi: pmic-arb: Add support for PMIC v7
-Message-ID: <YyG5vRgsejk7Y0DH@matsya>
-References: <20220201134108.2677578-1-vkoul@kernel.org>
- <YhUVAwtfjuIdKrRQ@matsya>
- <1c66890b-6736-61ef-7d16-619f90ced4a0@linaro.org>
- <4f1ae43c-0f22-19fe-0794-3cc268104396@linaro.org>
- <20220829222601.47241C433C1@smtp.kernel.org>
- <Yw2TsARPfuCLvDg0@matsya>
- <20220830211129.6D60EC433C1@smtp.kernel.org>
+        Wed, 14 Sep 2022 07:43:00 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3C8B5A2E2;
+        Wed, 14 Sep 2022 04:42:55 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28EBSxeD020543;
+        Wed, 14 Sep 2022 11:42:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=XikydJb6L4KpQ5cTZXh1weE6/Yjs8UUhmLflXXlDdlY=;
+ b=BwLta5X+tw0JUz4jxvNGbG77FaliJ2/FNRhBsG0DRTgiB9u42HgfSWTfiF2sXBkFMlYW
+ FxW+jPfBzIuyZipsc2KqjvaUxSCtb0GhQmnAI9N3vUaHOqOSH6TF3bRdE26uU1C/Gb27
+ D8ivDihSI3R8E7/JuiDHWhKIbyQCivH8yyIqPmhUr6EDwwVlAQwm/OaLJ95oscBSRVAv
+ jklEKkBG3xk7CpgESFDjIDhGsLCFF8+B5H/8uMQozGed8eXXo54FPoNGbCq2Aw8jmYwN
+ wpf56V3V2n+2OhbGZhy9pl3viZRZGvH0ciH0u5TWxgEj7DocQPUHMtwnP3Uv3c1GBwWb sw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jjxyuact4-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Sep 2022 11:42:47 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28EBgkFl013987
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Sep 2022 11:42:46 GMT
+Received: from [10.216.31.23] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 14 Sep
+ 2022 04:42:42 -0700
+Message-ID: <1b0ffb68-d437-1148-4ee9-47b6dd51db7f@quicinc.com>
+Date:   Wed, 14 Sep 2022 17:12:39 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220830211129.6D60EC433C1@smtp.kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH 3/3] clk: qcom: gcc-sc7280: Update the .pwrsts for usb
+ gdsc
+Content-Language: en-US
+To:     Johan Hovold <johan@kernel.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+CC:     <andersson@kernel.org>, <agross@kernel.org>,
+        <konrad.dybcio@somainline.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <mka@chromium.org>, <johan+linaro@kernel.org>,
+        <dianders@chromium.org>, <linux-clk@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20220901101756.28164-1-quic_rjendra@quicinc.com>
+ <20220901101756.28164-3-quic_rjendra@quicinc.com>
+ <YyF+IuoDjBZzEQxO@hovoldconsulting.com>
+ <33af27a0-85b9-4301-62d9-24132989e26e@quicinc.com>
+ <32211aef-6b87-ab5b-637b-7cf9610f6926@quicinc.com>
+ <YyGZ2D9LYYyF31Ug@hovoldconsulting.com>
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <YyGZ2D9LYYyF31Ug@hovoldconsulting.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 7NQOtdRxCcxZ81V_PNN-PVwA1rjQb4FI
+X-Proofpoint-ORIG-GUID: 7NQOtdRxCcxZ81V_PNN-PVwA1rjQb4FI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-14_05,2022-09-14_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 bulkscore=0
+ clxscore=1015 adultscore=0 mlxscore=0 suspectscore=0 malwarescore=0
+ spamscore=0 impostorscore=0 priorityscore=1501 phishscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2208220000 definitions=main-2209140057
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -66,44 +89,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30-08-22, 14:11, Stephen Boyd wrote:
-> Quoting Vinod Koul (2022-08-29 21:36:00)
-> > On 29-08-22, 15:25, Stephen Boyd wrote:
-> > > Quoting Dmitry Baryshkov (2022-06-18 08:29:58)
-> > > > On 01/05/2022 22:41, Dmitry Baryshkov wrote:
-> > > > > On 22/02/2022 19:53, Vinod Koul wrote:
-> > > > >> On 01-02-22, 19:11, Vinod Koul wrote:
-> > > > >>> Hello,
-> > > > >>>
-> > > > >>> The is version 3 of support for PMIC v7. I have added a new property
-> > > > >>> qcom,bus-id for supporting v7 and then add driver changes for v7
-> > > > >>>
-> > > > >>> This depends on yaml conversion patch:
-> > > > >>> https://lore.kernel.org/linux-arm-msm/20211227170151.73116-1-david@ixit.cz/ 
-> > > > >>>
-> > > > >>
-> > > > >> Any feedback on this...
-> > > > > 
-> > > > > Another gracious reminder about these patches. At this moment this is 
-> > > > > one of the important pieces lacking for the full SM8450 support in the 
-> > > > > upstream kernel.
-> > > > 
-> > > > Stephen, yet another ping. This is the blocking point for the further 
-> > > > SM8450 progress.
-> > > > 
-> > > 
-> > > Sorry I completely missed this one as it fell off the end of my inbox
-> > > into the abyss.
-> > 
-> > Thanks for the reply. Is this applied now or you have some feedback for
-> > me to address..
-> > 
+
+
+On 9/14/2022 2:37 PM, Johan Hovold wrote:
+> [ Please try to wrap your replies at 72 columns or so. ]
 > 
-> Does it apply along with the series from qcom[1]? I have to check and
-> make sure they both work together.
+> On Wed, Sep 14, 2022 at 02:28:31PM +0530, Rajendra Nayak wrote:
+>>
+>> On 9/14/2022 2:07 PM, Krishna Kurapati PSSNV wrote:
+>>>
+>>>
+>>> On 9/14/2022 12:39 PM, Johan Hovold wrote:
+>>>> On Thu, Sep 01, 2022 at 03:47:56PM +0530, Rajendra Nayak wrote:
+>>>>> USB on sc7280 cannot support wakeups from low power states
+>>>>> if the GDSC is turned OFF. Update the .pwrsts for usb GDSC so it
+>>>>> only transitions to RET in low power.
+>>>>
+>>>> It seems this isn't just needed for wakeup to work. On both sc7280 and
+>>>> sc8280xp the controller doesn't resume properly if the domain has been
+>>>> powered off (i.e. regardless of whether wakeup is enabled or not).
+>>>>
+>>> Hi Johan,
+>>>
+>>>     I believe you are referring to the reinit that happens in xhci resume path after wakeup happens:
+>>>
+>>> [   48.675839] xhci-hcd xhci-hcd.14.auto: xHC error in resume, USBSTS 0x411, Reinit
+>>>
+>>> I see that when USB GDSC is not in retention, we don't retain controller state and go for reinit and re-enum of connected devices. We are seeing an additional delay of around ~0.7 sec (in chromebooks running on SC7280) in the wakeup path for re-enumeration of connected USB devices. To avoid this, we wanted to put GDSC in retention during PM suspend.
+>>
+>> ok, so perhaps the commit msg should be updated to something like
+>>
+>> 'USB on sc7280 needs to prevent the GDSC from being turned OFF for a couple of reasons
+>> 1. To prevent re-init and re-enumeration of all connected devices resulting in additional delay coming out of low power states
+>> 2. To support wakeups from connected devices from low power states'
+> 
+> The fundamental issue here is that state is lost during suspend which
+> the driver doesn't currently (or can not) restore. Doesn't hurt to
+> mention the specific consequences you list above as well.
+> 
+>>>> Are you sure there's no state that needs to be retained regardless of
+>>>> the wakeup setting?
+>>>>
+>>>>> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+>>>>> ---
+>>>>>    drivers/clk/qcom/gcc-sc7280.c | 2 +-
+>>>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>>
+>>>>> diff --git a/drivers/clk/qcom/gcc-sc7280.c b/drivers/clk/qcom/gcc-sc7280.c
+>>>>> index 7ff64d4d5920..de29a034e725 100644
+>>>>> --- a/drivers/clk/qcom/gcc-sc7280.c
+>>>>> +++ b/drivers/clk/qcom/gcc-sc7280.c
+>>>>> @@ -3126,7 +3126,7 @@ static struct gdsc gcc_usb30_prim_gdsc = {
+>>>>>        .pd = {
+>>>>>            .name = "gcc_usb30_prim_gdsc",
+>>>>>        },
+>>>>> -    .pwrsts = PWRSTS_OFF_ON,
+>>>>> +    .pwrsts = PWRSTS_RET_ON,
+>>>>>        .flags = VOTABLE,
+>>>>>    };
+>>>>
+>>>> And what about gcc_usb30_sec_gdsc?
+>>>
+>>> Currently wakeup is not enabled on secondary controller as its not required for end product platform (herobrine variant). So leaving the usb30_sec_gdsc as it is for now.
+>>
+>> It perhaps makes sense to update that as well, and given this is a compute specific chipset and we dont have to worry about
+>> USB in device mode, its safe to assume if and when that controller is used (in future designs) it would only support host mode?
+> 
+> What would be the problem when using the controller in peripheral mode?
+> Don't you want to retain the controller state when suspended also in
+> that case?
+> 
+Hi Johan. You're right. When peripheral bus suspend lands in, we might 
+need to keep GDSC ON in device mode as well.
 
-There were conflicts, I have resolved, tested on top of spmi/next again
-and posted the v4 now.. Hope this would get in.
-
--- 
-~Vinod
+Regards,
+Krishna,
