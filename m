@@ -2,98 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CCB485B8701
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 13:08:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2785B5B8727
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 13:21:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229565AbiINLIK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Sep 2022 07:08:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40064 "EHLO
+        id S229673AbiINLVz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Sep 2022 07:21:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbiINLIJ (ORCPT
+        with ESMTP id S229585AbiINLVy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Sep 2022 07:08:09 -0400
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAF69237E5;
-        Wed, 14 Sep 2022 04:08:05 -0700 (PDT)
-Received: by mail-ot1-f50.google.com with SMTP id d25-20020a9d72d9000000b00655d70a1aeaso6986053otk.3;
-        Wed, 14 Sep 2022 04:08:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=message-id:date:subject:references:in-reply-to:cc:to:from
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=2rmXNTNBwGY5J4a4h3i1VzHJdXFIlmwnn+zGBAD+UYI=;
-        b=Voga5yjRNeRKMKvtfqtn9e6+REzfgIMAzk6dRoGr6m2+vsPBBqddq/9rEmrnWJF0vg
-         Jv1GvmiCOv1p3olpf9I4LPhYl0elUA7OU0L931o5cj6W1fBgncTCF0R4Ocpts+tRCIWg
-         aT3tuyzXTWo2PBuUw8K1ZSoXnY2bjjz1LifQiznu/C1w9AduLc/FI2u4ZKDn2xPCuONG
-         Y0slGq0QazjdvYQI+Ad4fTqFRO4tSOPq/rbktFqxcIcpybt4yR2qfZwEQfXRvyiT3SPF
-         UVVIpAmn7VCnG2OUyXvjfgv0hitaxv651ZhVjXi9a8jpK25TdI7pWfNW+xQN/CJES55T
-         cw8Q==
-X-Gm-Message-State: ACgBeo1RPY7+Pit1by72NRYl66U196G8sE0mJ/ikY7SBkPAb0opUAIhg
-        rTXzm5MCX28O2G4bAflc6w==
-X-Google-Smtp-Source: AA6agR7RJKKKW2Pa1sGiCmQlgDBTlugnTg1bEE7BTI+sHywTNfckweBkJxzjZb0uy0FBTY6AHWBJYA==
-X-Received: by 2002:a05:6830:204b:b0:656:6b6e:fa77 with SMTP id f11-20020a056830204b00b006566b6efa77mr2632435otp.141.1663153684884;
-        Wed, 14 Sep 2022 04:08:04 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id 93-20020a9d0be6000000b00636ee04e7aesm7016797oth.67.2022.09.14.04.08.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Sep 2022 04:08:04 -0700 (PDT)
-Received: (nullmailer pid 1742267 invoked by uid 1000);
-        Wed, 14 Sep 2022 11:08:03 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        andersson@kernel.org, manivannan.sadhasivam@linaro.org,
-        konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
-        jassisinghbrar@gmail.com, agross@kernel.org
-In-Reply-To: <1663135386-26270-2-git-send-email-quic_sibis@quicinc.com>
-References: <1663135386-26270-1-git-send-email-quic_sibis@quicinc.com> <1663135386-26270-2-git-send-email-quic_sibis@quicinc.com>
-Subject: Re: [PATCH 1/2] dt-bindings: mailbox: Add dt binding for QTI CPUCP mailbox controller
-Date:   Wed, 14 Sep 2022 06:08:03 -0500
-Message-Id: <1663153683.714744.1742263.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        Wed, 14 Sep 2022 07:21:54 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11D9DFC0;
+        Wed, 14 Sep 2022 04:21:54 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id B99D3B81A2E;
+        Wed, 14 Sep 2022 11:21:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B25C433D6;
+        Wed, 14 Sep 2022 11:21:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663154511;
+        bh=sAdPmyq+D3P0BT3CpUgtjd2Swtf0rHKdzk9Al2evg/E=;
+        h=From:To:Cc:Subject:Date:From;
+        b=eWDbRHkZ+8RiN15xf7dWOj40FoPbmLJiIYmy5nPl805zna+2jjN4ShdSEpTYeZ8Av
+         hnkHlZKmS4VMggpABarVh9JXSigL/6RmtU7PLBbOOwzcbJRY9xQX/Ob8mS/VcWiNtd
+         eWQbxlve7aOmtnI8O4d6lkVIc74pEVaDLynX3+j8bh07udFJcgoOojBmAny0IgVAxk
+         Gt8R6Hvg2m0KKPtAIO9ckqIJBIk0y6vuujSf9UM9qBWy4UfqJjSMln3YO0Svybrgne
+         TmZuxF5+r8CIX92LfPFayyFKyyTOEX7Sbmo/gasrOmwB3Gha7JIGivNHXN7fcxN2s5
+         VxdECMgnrrj8w==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-kernel@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org
+Subject: [PATCH v4 0/2] spmi: pmic-arb: Add support for PMIC v7
+Date:   Wed, 14 Sep 2022 16:51:37 +0530
+Message-Id: <20220914112139.3680354-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.37.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 14 Sep 2022 11:33:05 +0530, Sibi Sankar wrote:
-> Add devicetree binding for CPUSS Control Processor (CPUCP) mailbox
-> controller.
-> 
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
->  .../bindings/mailbox/qcom,cpucp-mbox.yaml          | 51 ++++++++++++++++++++++
->  1 file changed, 51 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
-> 
+Hello,
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+The is version 4 of support for PMIC v7. I have added a new property
+qcom,bus-id for supporting v7 and then add driver changes for v7
 
-yamllint warnings/errors:
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.example.dtb: mailbox@17400000: reg: [[0, 398458880], [0, 16], [0, 408486656], [0, 1792]] is too long
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
+Changes since v4:
+ - rebase on spmi/next
 
-doc reference errors (make refcheckdocs):
+David Dai (1):
+  spmi: pmic-arb: Add support for PMIC v7
 
-See https://patchwork.ozlabs.org/patch/
+Vinod Koul (1):
+  dt-bindings: spmi: Add qcom,bus-id
 
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
+ .../bindings/spmi/qcom,spmi-pmic-arb.yaml     |  11 +
+ drivers/spmi/spmi-pmic-arb.c                  | 242 ++++++++++++++++--
+ 2 files changed, 232 insertions(+), 21 deletions(-)
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
+-- 
+2.37.3
 
