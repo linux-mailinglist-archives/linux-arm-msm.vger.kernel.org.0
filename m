@@ -2,83 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 091605B852F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 11:39:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 249E15B8549
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 11:41:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229899AbiINJi7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Sep 2022 05:38:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46164 "EHLO
+        id S230222AbiINJlJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Sep 2022 05:41:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231620AbiINJih (ORCPT
+        with ESMTP id S230423AbiINJkr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Sep 2022 05:38:37 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1217518B21;
-        Wed, 14 Sep 2022 02:38:10 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28E9FMYd011454;
-        Wed, 14 Sep 2022 09:37:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=subject : to :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=qu4GLI/njJfKV0SI3uET3HyX+CffqV0m05wMLvzRqEM=;
- b=L7J4s4CTqqn3Hf24PqCpCvpajIRDsB6CgIDeb+f9+4FO3nn4L1J7rjrCjlbazAbaKMyu
- 1xMCHKDT2crJBZlOc8l5F7XUYH9DbknLjfMlhkwvkD2MvufV0G577e4GDFV0Vb/HunDd
- 3992H1oQbh0fXOZ5Jgk7xjmEpH//B21ZjvaCuILBVg9mLOgFSDLYIoUaGWX0vSm6zFE7
- kFh3aOo4YRtMxBHzxO0oBsVmkr9+CmN5Do3KhTU+uFxa/4lcx6+5bbX2zbbw9JycWgdH
- Tx84ng8LxdsjW7HiK5A5Fei/O+AnEE5uQRszlysHMVwnkiuzNK7F4aQ0ZKXAUJ0MX9y2 Ug== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jjxymj2fq-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Sep 2022 09:37:27 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28E9bR9f016195
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Sep 2022 09:37:27 GMT
-Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 14 Sep
- 2022 02:37:22 -0700
-Subject: Re: [PATCH v6 5/8] remoteproc: qcom: Replace hard coded values with
- macros
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        <linux-remoteproc@vger.kernel.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>, <devicetree@vger.kernel.org>
-References: <1662643422-14909-1-git-send-email-quic_srivasam@quicinc.com>
- <1662643422-14909-6-git-send-email-quic_srivasam@quicinc.com>
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-Message-ID: <34b232a7-6f94-8f72-dde5-0a2dc2320ebb@quicinc.com>
-Date:   Wed, 14 Sep 2022 15:07:19 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        Wed, 14 Sep 2022 05:40:47 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15EB050065;
+        Wed, 14 Sep 2022 02:40:25 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 64A5661ADA;
+        Wed, 14 Sep 2022 09:40:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D843BC433D6;
+        Wed, 14 Sep 2022 09:40:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663148423;
+        bh=ui4a4307ErOPtFPrDWbQDs8itl5K/H0TZiMAW9g5cJI=;
+        h=From:To:In-Reply-To:References:Subject:Date:From;
+        b=RthdDpg8Xyhwd8u568+xgwUj4PRMmUv1XKg3xc8PdASGHU+uUxe14wwHqaWJpS6ta
+         K7XeTMClkmYEYrgKm2bV545GrJBBt9O3mojUMp2vLChm6V/vF58NJS5CCHYpUxkosF
+         NBZj59B7f86GS2gZFB2hmkTHafjnAXwlaauUdvhYc/c0WCDJFLhlGS6qDrgU1YMtvv
+         88enqTA5Na95PY9YuWoFLh8PfiC9cFccKr2H3fYpPJPZWCNTv4KJ3T9xMEps6+BuKZ
+         czA+Zljc43KaXqoHoErBR8b0oIhLHkrKlxospBPSTKuF7/2xLlmatFyJix+HMJKUA/
+         7o+S6SZUIs+Zw==
+From:   Mark Brown <broonie@kernel.org>
+To:     Banajit Goswami <bgoswami@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>, alsa-devel@alsa-project.org,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+In-Reply-To: <20220910090856.49271-1-krzysztof.kozlowski@linaro.org>
+References: <20220910090856.49271-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH] ASoC: dt-bindings: qcom,q6afe: remove binding
+Message-Id: <166314842061.314266.11703491169387696036.b4-ty@kernel.org>
+Date:   Wed, 14 Sep 2022 10:40:20 +0100
 MIME-Version: 1.0
-In-Reply-To: <1662643422-14909-6-git-send-email-quic_srivasam@quicinc.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 9Zc2hkvspJ6jsLysYZQSvI1DEm7HW9IB
-X-Proofpoint-GUID: 9Zc2hkvspJ6jsLysYZQSvI1DEm7HW9IB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-14_03,2022-09-14_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 malwarescore=0 bulkscore=0 adultscore=0 impostorscore=0
- mlxscore=0 mlxlogscore=999 lowpriorityscore=0 phishscore=0 suspectscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2208220000 definitions=main-2209140045
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.10.0-dev-7dade
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,47 +63,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 9/8/22 6:53 PM, Srinivasa Rao Mandadapu wrote:
-> Replace hard coded values of QDSP6 boot control reg params
-> with appropriate macro names.
+On Sat, 10 Sep 2022 11:08:56 +0200, Krzysztof Kozlowski wrote:
+> qcom,q6afe is already documented in soc/qcom/qcom,apr.yaml.  The
+> version-based compatibles ("qcom,q6afe-v<MAJOR-NUMBER>.<MINOR-NUMBER>")
+> are not used (neither in upstream nor in downstream DTS).
 > 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-
-Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
-
-> ---
->   drivers/remoteproc/qcom_q6v5_adsp.c | 7 +++++--
->   1 file changed, 5 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-> index 207270d4..389b2c0 100644
-> --- a/drivers/remoteproc/qcom_q6v5_adsp.c
-> +++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-> @@ -54,6 +54,9 @@
->   
->   #define QCOM_Q6V5_RPROC_PROXY_PD_MAX	3
->   
-> +#define LPASS_BOOT_CORE_START	BIT(0)
-> +#define LPASS_BOOT_CMD_START	BIT(0)
-> +
->   struct adsp_pil_data {
->   	int crash_reason_smem;
->   	const char *firmware_name;
-> @@ -366,10 +369,10 @@ static int adsp_start(struct rproc *rproc)
->   	writel(adsp->mem_phys >> 4, adsp->qdsp6ss_base + RST_EVB_REG);
->   
->   	/* De-assert QDSP6 stop core. QDSP6 will execute after out of reset */
-> -	writel(0x1, adsp->qdsp6ss_base + CORE_START_REG);
-> +	writel(LPASS_BOOT_CORE_START, adsp->qdsp6ss_base + CORE_START_REG);
->   
->   	/* Trigger boot FSM to start QDSP6 */
-> -	writel(0x1, adsp->qdsp6ss_base + BOOT_CMD_REG);
-> +	writel(LPASS_BOOT_CMD_START, adsp->qdsp6ss_base + BOOT_CMD_REG);
->   
->   	/* Wait for core to come out of reset */
->   	ret = readl_poll_timeout(adsp->qdsp6ss_base + BOOT_STATUS_REG,
-> 
+
+Applied to
+
+   broonie/sound.git for-next
+
+Thanks!
+
+[1/1] ASoC: dt-bindings: qcom,q6afe: remove binding
+      commit: 1c2d23fc6134fa72b040a36ae953e1a6614844f4
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
