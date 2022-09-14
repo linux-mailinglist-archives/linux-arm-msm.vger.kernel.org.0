@@ -2,111 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A4505B821D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 09:39:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 56BAA5B8242
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 09:51:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229568AbiINHjf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Sep 2022 03:39:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35896 "EHLO
+        id S230058AbiINHvL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Sep 2022 03:51:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229784AbiINHje (ORCPT
+        with ESMTP id S230036AbiINHvI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Sep 2022 03:39:34 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EDBE25F2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Sep 2022 00:39:32 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id b23so14071362pfp.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Sep 2022 00:39:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date;
-        bh=dkrAiZKiDO/9nfcsU0K36RdgA1owqPLGrCcpfF5b/r8=;
-        b=wiYSOZnaqj/mhAkHPl20Mmv2JOT+FocOwx8IUKGls+woSRX089vc35qNc4jc+M7Gvr
-         RqXJ4VRk8sNXmkHe36IwFMIJ/95dptQWR6OQ7fBDl/EXoNieKw002sxxvspWtKl2MPLo
-         DN136BmfTTFUVOxnjBi91hA/RM3aiOzfuO6WiwiXkG7VvMk3gpajMwYzqZrY3RUfsLx2
-         oJYX2DyjD9SSEDJB/QDBMeZhU1jVWRA5TdV2shQOnytGj/sqfQbcMPr+MgE2HbV4S4SS
-         IUVJjNYaVN8IEvJqR5U3Yk6JifNYAxysCD0rKaGvCzIauDvJ+cKUHjNCv3p4hmj/6IfS
-         4qzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=dkrAiZKiDO/9nfcsU0K36RdgA1owqPLGrCcpfF5b/r8=;
-        b=fNtLNEvceB1DdxrNQCLUb6ldlVEOtXjbsdSqQmQdYig486EM2R4b4wVTFuef2fwgvZ
-         07LB2+M4FQYJxR1llwp62eQkScV+wKmQUPcmrh5EsTooBJ+97XLJ2Q459q9c7n7XEBYQ
-         P84fdGrmmCV6yLMl0jUg1DlT33xsVCmR1aFbALdCX6bKpOlhgC3W01ClVtcGSaYMv9NL
-         IO2mrIEH7vVfRhlF0IlPVN4JBBn8d1qzV9vwQQYVzx/H8xbSA95HCuzwW3yN9jcx96Cc
-         ACu0JhlQE1KlZnS6hhNgxBd77XT8yn5V/61GedzmZjXurB+ROMYPT0lIgoEMo9LVmG59
-         iMug==
-X-Gm-Message-State: ACgBeo1qAZOx/xktkmApSLX/9kC+xMy4AAImtzuk44vLlLQdku0crhNH
-        Fu5InUZsBFpPUpBJskxyqglc
-X-Google-Smtp-Source: AA6agR5gXbHlyticYxP7CDAwLn2JYlZI3h+Vec58aZjrSwErvkDa/qxiiMvD6wIRPB5mbwe2V+gH0Q==
-X-Received: by 2002:a62:1bc8:0:b0:546:c62e:e84 with SMTP id b191-20020a621bc8000000b00546c62e0e84mr4599725pfb.45.1663141171987;
-        Wed, 14 Sep 2022 00:39:31 -0700 (PDT)
-Received: from localhost.localdomain ([117.202.184.122])
-        by smtp.gmail.com with ESMTPSA id mg20-20020a17090b371400b00200b14eb067sm8530542pjb.44.2022.09.14.00.39.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Sep 2022 00:39:30 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     andersson@kernel.org
-Cc:     konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, johan+linaro@kernel.org,
-        steev@kali.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v2] arm64: dts: qcom: sc8280xp-x13s: Update firmware location
-Date:   Wed, 14 Sep 2022 13:09:22 +0530
-Message-Id: <20220914073922.7145-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        Wed, 14 Sep 2022 03:51:08 -0400
+Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF04A2A266;
+        Wed, 14 Sep 2022 00:50:59 -0700 (PDT)
+Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28E55ft8013611;
+        Wed, 14 Sep 2022 09:50:53 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=selector1;
+ bh=pYGgu5rOLOhul9DJXw1aqoaq6vf4xJjwRWFbMfPDlA0=;
+ b=5OYcofgipre4PQWTMHddfC2faViTEibm/LEh/ls+7gvgxCWS8t/P6K6M5jzOSunKImJb
+ TZZJ1aVKW7PepdVZsaaGq9mqCXGAl2ViGpQ3T6+v6z04+maihAsf3kON+f7WOerDepLk
+ cvpsXznQmRXWUAP1jqstXeduWHAc3/Bjn9jwKS50UlfI/1mrMdnhiY4EsrL6QGoJHRc8
+ 3OKI/ZI8a1h5PtDXzGFO8/XBNWT03BmioH6RNc94RSVZ0Xyq19Eize61Rshl2o0U7HxW
+ N1oryXHBORrvvatx44eH/LcUyTazJ2VuCQIdbaAlqf2CZgke1JPJOiakNugHJqt+bElr Mw== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3jjxxckgyh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Sep 2022 09:50:53 +0200
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id DE1C010002A;
+        Wed, 14 Sep 2022 09:50:49 +0200 (CEST)
+Received: from Webmail-eu.st.com (eqndag1node5.st.com [10.75.129.134])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id D946F2138FF;
+        Wed, 14 Sep 2022 09:50:49 +0200 (CEST)
+Received: from [10.201.22.245] (10.75.127.121) by EQNDAG1NODE5.st.com
+ (10.75.129.134) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2375.31; Wed, 14 Sep
+ 2022 09:50:49 +0200
+Message-ID: <74224354-8543-559b-240b-0eda4d68fc52@foss.st.com>
+Date:   Wed, 14 Sep 2022 09:50:48 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH V3 0/3] rpmsg signaling/flowcontrol patches
+Content-Language: en-US
+To:     Deepak Kumar Singh <quic_deesin@quicinc.com>,
+        <bjorn.andersson@linaro.org>, <swboyd@chromium.org>,
+        <quic_clew@quicinc.com>, <mathieu.poirier@linaro.org>
+CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>
+References: <1663133102-10671-1-git-send-email-quic_deesin@quicinc.com>
+From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
+In-Reply-To: <1663133102-10671-1-git-send-email-quic_deesin@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.75.127.121]
+X-ClientProxiedBy: GPXDAG2NODE4.st.com (10.75.127.68) To EQNDAG1NODE5.st.com
+ (10.75.129.134)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-14_02,2022-09-13_01,2022-06-22_01
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The firmware location in linux-firmware has been changed to include the
-SoC name. So use the updated location in Thinkpad devicetree.
+Hi Deepak,
 
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Steev Klimaszewski <steev@kali.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
+On 9/14/22 07:24, Deepak Kumar Singh wrote:
+> [Changes from V2]:
+> Trivial review comment fixes.
+> Avoid TIOCM_DTR etc signals in glink layer, use native signal macros only.
+> Glink layer to provide only flowcontrol on/off interface, no specific signal passing/receiving to client.
 
-Changes in v2:
 
- * Used "sc8280xp-x13s" prefix in subject
- * Collected tags
+Please, could you have a look to my series that implements
+your proposed interface for the virtio rpmsg [1]?
+It would be nice that your API takes into account update to
+support of the rpmsg virtio implementation proposed in [08/10] rpmsg: Add the
+destination address in rpmsg_set_flow_control[2]
 
- arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Thanks,
+Arnaud
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index c379650e52b1..3b7943d6e164 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -554,13 +554,13 @@ keyboard@68 {
- };
- 
- &remoteproc_adsp {
--	firmware-name = "qcom/LENOVO/21BX/qcadsp8280.mbn";
-+	firmware-name = "qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn";
- 
- 	status = "okay";
- };
- 
- &remoteproc_nsp0 {
--	firmware-name = "qcom/LENOVO/21BX/qccdsp8280.mbn";
-+	firmware-name = "qcom/sc8280xp/LENOVO/21BX/qccdsp8280.mbn";
- 
- 	status = "okay";
- };
--- 
-2.25.1
+[1] https://lore.kernel.org/lkml/e54bcfcb-8e37-9caa-b330-a7411820b7ce@foss.st.com/T/
+[2]https://lore.kernel.org/lkml/e54bcfcb-8e37-9caa-b330-a7411820b7ce@foss.st.com/T/#m7340a8e70fb0d8935869c4cef96863abda555c96
 
+> 
+> Deepak Kumar Singh (3):
+>   rpmsg: core: Add signal API support
+>   rpmsg: glink: Add support to handle signals command
+>   rpmsg: char: Add TIOCMGET/TIOCMSET ioctl support
+> 
+>  drivers/rpmsg/qcom_glink_native.c | 63 +++++++++++++++++++++++++++++++++++++++
+>  drivers/rpmsg/rpmsg_char.c        | 60 ++++++++++++++++++++++++++++++++-----
+>  drivers/rpmsg/rpmsg_core.c        | 20 +++++++++++++
+>  drivers/rpmsg/rpmsg_internal.h    |  2 ++
+>  include/linux/rpmsg.h             | 15 ++++++++++
+>  5 files changed, 152 insertions(+), 8 deletions(-)
+> 
