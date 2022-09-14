@@ -2,76 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D82505B8A7B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 16:28:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30B445B8AEE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 16:47:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229765AbiINO2v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Sep 2022 10:28:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47378 "EHLO
+        id S229703AbiINOrx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Sep 2022 10:47:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230085AbiINO2h (ORCPT
+        with ESMTP id S229538AbiINOrx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Sep 2022 10:28:37 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D100446615
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Sep 2022 07:28:35 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id l14so35166634eja.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Sep 2022 07:28:35 -0700 (PDT)
+        Wed, 14 Sep 2022 10:47:53 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CC03659EE;
+        Wed, 14 Sep 2022 07:47:52 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id y17so30241143ejo.6;
+        Wed, 14 Sep 2022 07:47:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=7FXZIB5r2QHuGv36+dxkQHgOBeT7MiFKwzm4Bz7OlsM=;
-        b=gci4cmI8iUvjj6uqnkssrpEgSrL2tuueBA9uAmsi2VlkOSjxh4M7LjM02rs1zZnl3g
-         ZElH6j/IoUnh4hSRSUvaqQxcHJgtRbzMI7UDpZJ9xy0dhguyggn95JsArmL/GPl1h4VA
-         Jffzk0tCq4EaGThCrSjvL6fZsR1GV/YEKoJbw=
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=y0tx4iXEt6rtKpQ7JfJuD84UB0Bf5IVCRu8OAnpgQxs=;
+        b=F4doHotWLWUSfD3H6nxU9wHelCDt5FuEFgfpisf/KHiEVlxit1EN2h52YJ0B5Z7NLg
+         jf1BIFET+hvXkpn8Vb6OToIUyAQn1H7SkXCfQTuph9wnNssGHV/rgXdV9zXZpFoQfc/y
+         VD7kIS8JqMwyXFyelZbMZFpVwbhI8lU7SDiz6yy4uakTycvdOjCUkwhHXPIBZ0wxUXFg
+         SxbwYWcHFkFS/vgZ2akRRNENy04tpQOLM6uBdqBrOAbjyJnUK1rMgbiRjiDauC16t3EN
+         Tg4qSlTsMNaVoISwIoIvVfhZROA7/d7LKnijVl+0eKfFoAUoYFiJMjkLsjFOW5+4TLDd
+         c7ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=7FXZIB5r2QHuGv36+dxkQHgOBeT7MiFKwzm4Bz7OlsM=;
-        b=uT7BswYq9FNTE6QLTjlaZI5h3b9gIRWSODGYCP7EePyZQwrZISdX7jW7KskOG31O9b
-         xHzo9fbAEuCsADRKCWyTk8AcSS5fdAkm8a2s9hXCDsLE4Wtzgah0DTja+sKigH3UbcP2
-         n3jU/ijMQq30Q9V4EoQI3OvCOLTsuYFF3Z/4TfBB5tgSGdMypXI6H4JsgEcKxv6wU9BF
-         U/IGToUWiNstVOZA7Zvc3R0viwBrmjH3bPyjLnJFZ+UxrpcUis+BHdvSWBwFLGzlw0cQ
-         aA57b3Dbfs8ln1EVOAPCQygBVIgpJMLzxQiAdBAEeNNreQxU5HLjeNhDn9c0BqpUoHEg
-         wqJg==
-X-Gm-Message-State: ACgBeo1e65NzweXwifGjo5HBy2BvceCEM2uthZryvLo+fIWhfJC20GK/
-        gekvYxiifQ+NahbLFJN69MXHYa0Rj+dt/ZKdZIDUaw==
-X-Google-Smtp-Source: AA6agR4IMX4D2vN/g8nezL/LZ5bc5r/c5LjAfvrvD3/AJ05vt1JS6e3muRvPfwHTOSV9LnFbI4XTU0do5zNGU9mlNL0=
-X-Received: by 2002:a17:906:9b8a:b0:77d:8add:3074 with SMTP id
- dd10-20020a1709069b8a00b0077d8add3074mr10470334ejc.251.1663165714173; Wed, 14
- Sep 2022 07:28:34 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=y0tx4iXEt6rtKpQ7JfJuD84UB0Bf5IVCRu8OAnpgQxs=;
+        b=qnPD80dWz52KeiVFAN/Yby/6BybphMzRUqPNcpRgjjKVZH47+YyzLuwiBsGc3ISZv/
+         AkwnGBdJEqDexpQ6I3m6+3NEAjPMyZwpWd1gtjt+97aKHH7RrhWl5E23i6Mse7Swo0AK
+         jUVzY2NoKsR7KDYFXFEX3YPeD4eiLpOjDdgTTDUgb0jq1azk/YvnHPki5HpZyKvGZj6/
+         2CIcuFwrd8hJdJJiWaXKQDZkNPzNbogEYbxOE92NhEzNBkQMBzTCEd0+rxn1NT78q//L
+         M+G+4iAwhrjr5+Gx8QqvRKghrvhOQryrv9d/XLDSygoC9E3+rasNGR4ju62dICE0njMJ
+         JGhQ==
+X-Gm-Message-State: ACgBeo3kq5Xsqk2qm8KPl9BLMtfiL/8vvMwddJe8e0EHL5Q0wI2ljSRl
+        AxjkL+mD0Qk4NvOpZcTOj64=
+X-Google-Smtp-Source: AA6agR7TCG6qJgnxms9eWwvhts2s5/ovjaT5lWQx3UyShlI9J/b3cee8fmDf8c6CPxU2yTEE/mXYug==
+X-Received: by 2002:a17:906:5a6a:b0:77c:2c7f:bd69 with SMTP id my42-20020a1709065a6a00b0077c2c7fbd69mr13308438ejc.283.1663166870614;
+        Wed, 14 Sep 2022 07:47:50 -0700 (PDT)
+Received: from localhost.localdomain (93-42-70-134.ip85.fastwebnet.it. [93.42.70.134])
+        by smtp.googlemail.com with ESMTPSA id 6-20020a170906300600b0073ae9ba9ba8sm7601484ejz.3.2022.09.14.07.47.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Sep 2022 07:47:50 -0700 (PDT)
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Christian Marangi <ansuelsmth@gmail.com>
+Subject: [PATCH v2 1/2] clk: introduce (devm_)hw_register_mux_parent_data_table API
+Date:   Wed, 14 Sep 2022 16:47:42 +0200
+Message-Id: <20220914144743.17369-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-References: <20220721083849.1571744-1-judyhsiao@chromium.org>
-In-Reply-To: <20220721083849.1571744-1-judyhsiao@chromium.org>
-From:   Judy Hsiao <judyhsiao@chromium.org>
-Date:   Wed, 14 Sep 2022 22:28:20 +0800
-Message-ID: <CAJXt+b_2XR6GEaAysYe=P_HsRjkmn5GeRi9s1RXTS-Od9RqbFA@mail.gmail.com>
-Subject: Re: [PATCH v4 0/3] Add dtsi for sc7280 herobrine boards that using
-To:     Andy Gross <agross@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        dianders@chromium.org, mka@chromium.org, cychiang@google.com,
-        judyhsiao@google.com, swboyd@chromium.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The dependencies of this series were just landed, please help to apply
-this series as well.
+Introduce (devm_)hw_register_mux_parent_data_table new API. We have
+basic support for clk_register_mux using parent_data but we lack any API
+to provide a custom parent_map. Add these 2 new API to correctly handle
+these special configuration instead of using the generic
+__(devm_)clk_hw_register_mux API.
 
-Thanks!
-Best regards,
-Judy
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+---
+v2:
+- Rebase on top of linux-next/master
+
+ include/linux/clk-provider.h | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
+index 1615010aa0ec..65b70f0d62c5 100644
+--- a/include/linux/clk-provider.h
++++ b/include/linux/clk-provider.h
+@@ -974,6 +974,13 @@ struct clk *clk_register_mux_table(struct device *dev, const char *name,
+ 	__clk_hw_register_mux((dev), NULL, (name), (num_parents), NULL, NULL, \
+ 			      (parent_data), (flags), (reg), (shift),	      \
+ 			      BIT((width)) - 1, (clk_mux_flags), NULL, (lock))
++#define clk_hw_register_mux_parent_data_table(dev, name, parent_data,	      \
++					      num_parents, flags, reg, shift, \
++					      width, clk_mux_flags, table,    \
++					      lock)			      \
++	__clk_hw_register_mux((dev), NULL, (name), (num_parents), NULL, NULL, \
++			      (parent_data), (flags), (reg), (shift),	      \
++			      BIT((width)) - 1, (clk_mux_flags), table, (lock))
+ #define devm_clk_hw_register_mux(dev, name, parent_names, num_parents, flags, reg, \
+ 			    shift, width, clk_mux_flags, lock)		      \
+ 	__devm_clk_hw_register_mux((dev), NULL, (name), (num_parents),	      \
+@@ -987,6 +994,13 @@ struct clk *clk_register_mux_table(struct device *dev, const char *name,
+ 				   (parent_hws), NULL, (flags), (reg),        \
+ 				   (shift), BIT((width)) - 1,		      \
+ 				   (clk_mux_flags), NULL, (lock))
++#define devm_clk_hw_register_mux_parent_data_table(dev, name, parent_data,    \
++					      num_parents, flags, reg, shift, \
++					      width, clk_mux_flags, table,    \
++					      lock)			      \
++	__devm_clk_hw_register_mux((dev), NULL, (name), (num_parents), NULL,  \
++			      NULL, (parent_data), (flags), (reg), (shift),   \
++			      BIT((width)) - 1, (clk_mux_flags), table, (lock))
+ 
+ int clk_mux_val_to_index(struct clk_hw *hw, const u32 *table, unsigned int flags,
+ 			 unsigned int val);
+-- 
+2.37.2
+
