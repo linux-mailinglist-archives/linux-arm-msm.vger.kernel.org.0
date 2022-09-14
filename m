@@ -2,174 +2,211 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E9C65B8001
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 06:07:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 834D75B8089
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 07:14:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229585AbiINEHu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Sep 2022 00:07:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54556 "EHLO
+        id S229601AbiINFNc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Sep 2022 01:13:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbiINEHt (ORCPT
+        with ESMTP id S229521AbiINFMz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Sep 2022 00:07:49 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC7B551A0C;
-        Tue, 13 Sep 2022 21:07:47 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28E472eT028147;
-        Wed, 14 Sep 2022 04:07:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=cg5hk0sMZbzTKba6Tn/22wSERoQIy9AMI7eBhSapFRw=;
- b=h+rrwWEw3pFVPrmouDQliC8tjQ1WplNytVMappcNEY8x9i75Yt6OKsj5ZZXkVLdVWlD8
- sFCppdssRNltDkQtwvo0w9BrgjBiqARUpfUOucL/pnfJdfmx11oTKCFh6iaoQnyim7XW
- LVx74IqEn/wwtOLP13OvlprUS/aE1BRQ5L63WZl30TSMqfPZcRR/FImRFTQBk9RabW81
- 4qPd/70OpzxbTHF6F/8wp1b/VvWGDSeDWFjNscdIy6n3iAKWxxi6bfP9s3Cg9m97L0Ep
- pSL4BN1H5EH5ow2GhriXlwnDhWHbXZZkDCJQr4cYl3WsJex4kfvqObKYLGSFobKSgFQW 2w== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jjxymh5ag-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Sep 2022 04:07:38 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28E47b56008932
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Sep 2022 04:07:37 GMT
-Received: from [10.216.15.227] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 13 Sep
- 2022 21:07:32 -0700
-Message-ID: <273d4d8d-8ffd-8d7f-ef82-4287d6256fcc@quicinc.com>
-Date:   Wed, 14 Sep 2022 09:37:29 +0530
+        Wed, 14 Sep 2022 01:12:55 -0400
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2041.outbound.protection.outlook.com [40.107.220.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 084EA46605;
+        Tue, 13 Sep 2022 22:12:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=b8Q0KynZ9pHWl/oLZhuWD58YLjB/snepBQltfvm2meDfPwN2HGSw0h5+rQYd7DYFnHaZCkWOTaOsqfDB7rnb8hR3TBEZic7EhLopu9tsB6qDsS15vtnVTj9jSSCVJ+cEX5/hi32L1biGfMu4hAZh/JKTfvt4rkOVzUdNVk+cpxAayipq1N0CyXKoMRsWFO4+lIFUy1FHKsDCZeBS9jeD+dT6k+8fkVqC2ez2mgHnLf/dLBHX2zOKUiHB7wzAjW+52y2H1djK6Vg6syxa80191al0YzRYySPz8CllsweYxsIT3C3U2lIkpzjifodlM/gF3VGaHhJ80XdG5mJtQsHghA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lE2hIVWhfjTEpuJG/EQ8E2pJreIJ8xNfuDZvqSktzVE=;
+ b=gbijA2r/nMzHrDZd1nQe4Vw+BRPqN4BQf56Y7UJWE2iUY8SWWYcGsPtLzFwYfdh0O9PJ/b1yJitO0e/RgjYfyXHVhkjpjLV/3eKNsOxcrA6He5v7nQIqqF/yzg03xMQRLe+Z1Ezf7hbaI4FcR4s4+melX2ygM2N3Vm4idLtcjt+/amypvZ8Sf5Z8BvAzzoeqwjMvfaxdxIaLTmUkWjZw+HpoLzQzJCmOwj/G6TCp5MMqahZjAus/wrD6o2V+CJhMa1VEHO/99baGuKPddbna63ODechdcQeHtBerdSnHXeCDgG0PDmrhu1GVJyI7OlkrUjOZsy1Wnhfn1G3IKe2GjA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=8bytes.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lE2hIVWhfjTEpuJG/EQ8E2pJreIJ8xNfuDZvqSktzVE=;
+ b=USTaB1YS4GHcOa657piQfpo38jnF3iiexlmFHoyguqAadOBHndClATA8uc2Y1BSPfHwbYvUIj6hxEriuhlUCDxmPLsOLqMYjuNPLDQdpowi2ERzlBTqMG1GfpPh+nJp2jmEza3IawHBBenh4WkgN5sHtbMycNCxW+lo+GfKCvZzCoRLvXxJy/qKWmJFc5xwKlDvPKsUrFGuVdq5TcqTX05dh9THKEw+is0r1PNqdlxJgK0QOmKO760RSDRNHORtnI3yx1t3RNlIRzp9AM5pYE85lTJXksefnhzHKgz3k7HM8Gh+KJ6iS+Q25Kf0G8Pyx1NmEIv6bT18v+9OF9eqEfg==
+Received: from BN9PR03CA0085.namprd03.prod.outlook.com (2603:10b6:408:fc::30)
+ by DM6PR12MB4107.namprd12.prod.outlook.com (2603:10b6:5:218::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5612.16; Wed, 14 Sep
+ 2022 05:12:53 +0000
+Received: from BN8NAM11FT056.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:408:fc:cafe::db) by BN9PR03CA0085.outlook.office365.com
+ (2603:10b6:408:fc::30) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5612.19 via Frontend
+ Transport; Wed, 14 Sep 2022 05:12:52 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ BN8NAM11FT056.mail.protection.outlook.com (10.13.177.26) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5632.12 via Frontend Transport; Wed, 14 Sep 2022 05:12:52 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Tue, 13 Sep
+ 2022 22:12:36 -0700
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ rnnvmail201.nvidia.com (10.129.68.8) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Tue, 13 Sep 2022 22:12:36 -0700
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Tue, 13 Sep 2022 22:12:36 -0700
+Received: from Asurada-Nvidia.nvidia.com (10.127.8.11) by mail.nvidia.com
+ (10.126.190.180) with Microsoft SMTP Server id 15.2.986.29 via Frontend
+ Transport; Tue, 13 Sep 2022 22:12:34 -0700
+From:   Nicolin Chen <nicolinc@nvidia.com>
+To:     <joro@8bytes.org>, <suravee.suthikulpanit@amd.com>,
+        <will@kernel.org>, <robin.murphy@arm.com>, <robdclark@gmail.com>,
+        <dwmw2@infradead.org>, <baolu.lu@linux.intel.com>,
+        <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <konrad.dybcio@somainline.org>, <matthias.bgg@gmail.com>,
+        <heiko@sntech.de>, <orsonzhai@gmail.com>,
+        <baolin.wang@linux.alibaba.com>, <zhang.lyra@gmail.com>,
+        <thierry.reding@gmail.com>, <jean-philippe@linaro.org>,
+        <jgg@nvidia.com>, <sricharan@codeaurora.org>
+CC:     <yong.wu@mediatek.com>, <vdumpa@nvidia.com>,
+        <jonathanh@nvidia.com>, <tglx@linutronix.de>,
+        <shameerali.kolothum.thodi@huawei.com>,
+        <thunder.leizhen@huawei.com>, <christophe.jaillet@wanadoo.fr>,
+        <yangyingliang@huawei.com>, <jon@solid-run.com>,
+        <iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-rockchip@lists.infradead.org>,
+        <linux-tegra@vger.kernel.org>,
+        <virtualization@lists.linux-foundation.org>,
+        <kevin.tian@intel.com>, <quic_jjohnson@quicinc.com>
+Subject: [PATCH v2 00/13] iommu: Define EINVAL as device/domain incompatibility
+Date:   Tue, 13 Sep 2022 22:12:33 -0700
+Message-ID: <20220914051234.10006-1-nicolinc@nvidia.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH 1/3] clk: qcom: gdsc: Fix the handling of PWRSTS_RET
- support
-Content-Language: en-US
-To:     <andersson@kernel.org>, <agross@kernel.org>,
-        <konrad.dybcio@somainline.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <mka@chromium.org>
-CC:     <johan+linaro@kernel.org>, <quic_kriskura@quicinc.com>,
-        <dianders@chromium.org>, <linux-clk@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "Krishna chaitanya chundru" <quic_krichai@quicinc.com>
-References: <20220901101756.28164-1-quic_rjendra@quicinc.com>
-From:   Rajendra Nayak <quic_rjendra@quicinc.com>
-In-Reply-To: <20220901101756.28164-1-quic_rjendra@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: qjEILI_Ma_qUFtxfHSk9ir22duknpOkv
-X-Proofpoint-GUID: qjEILI_Ma_qUFtxfHSk9ir22duknpOkv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-13_12,2022-09-13_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 malwarescore=0 bulkscore=0 adultscore=0 impostorscore=0
- mlxscore=0 mlxlogscore=999 lowpriorityscore=0 phishscore=0 suspectscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2208220000 definitions=main-2209140018
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN8NAM11FT056:EE_|DM6PR12MB4107:EE_
+X-MS-Office365-Filtering-Correlation-Id: 00f1f3f1-e9cb-4b66-4acf-08da960fc6ab
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?MDMHSQINcu3hNZLEpSHEggsqvNOC55e9B2UkrRtNaSyH77qfHoJuNzZq8rrr?=
+ =?us-ascii?Q?F/B8vwsC4h6IxScLBQJ4bG7PzAg9G26rYBWCUYioecklgh6G6crJtqaM6pVt?=
+ =?us-ascii?Q?sL/vpAu+4Vxjg/7Zl9WCr72+0YhANWEeRiFp5fnV/xCrjGb0fra1kCz4SLSe?=
+ =?us-ascii?Q?R9Zbu0HfhzQQo0YjA4kHhuGSVGA8s5+17ukvwwJrxJqumSokg8iBzocLAnTK?=
+ =?us-ascii?Q?7Hdp3zTWjKiLRFQ6AN7oIKhXIN9k3N7KNuMJ/JzSv2B9KRrSO1LhrKLHcazq?=
+ =?us-ascii?Q?/JkOkQPncb5663xzHOMC8zl/MKIyTnz9U3Q6UYo27QIGhtBhsfsc7spMNIkf?=
+ =?us-ascii?Q?Kgodk/+8fE3kxks06DxrX7VXNuLj2Uvq54OG3tWDAsrvsvescg3Gszf+lH6K?=
+ =?us-ascii?Q?hnDyJ6Jv8m7P1nAfnqRN/p5SPN6LpXO/Ap8Yl4FO+MvrFkHs3HghvZu/NCSt?=
+ =?us-ascii?Q?cmw9jUOp1Wt27n+qzFmqXTUYyACK4JbUbi1nZq+tyZiLl7Hjhn0B1cHU8uf2?=
+ =?us-ascii?Q?wije5dC1ghnFxexb6joETnw5jSdcFDVtb8eBnji7WpeeRMK6TXCoNaZmTC2n?=
+ =?us-ascii?Q?/rlnzhFn7lCyvZISuhjAsK4BAI8p9XIsVykMCZDHGFfQSyy+QeTabV/hWp9j?=
+ =?us-ascii?Q?3STNzNrM6sliPgJWmKiOpYh9xkUtXEMgrQCwNxuZDEEwMmSU2SMu/lpyk/+/?=
+ =?us-ascii?Q?6gN0rHMvejoEVg1fyxAvU5ViG489uu2KgGZYYr4zDJZb+TeKE5LEfNIQ7vuh?=
+ =?us-ascii?Q?mg18xOFIVbX1F3WADLGC3bPrOgTlt41+mhc+Wu6wVoJTyhhdU7hfsBW1VDNV?=
+ =?us-ascii?Q?aSr3iR+hiprSG7nwaWLv255HND3OUkeo0I6mL3cV6SsolClQRoek9FW6Fvma?=
+ =?us-ascii?Q?3NgMlIGQgf/yzCkfUMgjPgeHYsnVWy2wHrDVHIhV3Sy4+0jQwU4Q8OCLL9TY?=
+ =?us-ascii?Q?7zHitjGKxWhW+LY5Fy4RkA=3D=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230022)(4636009)(376002)(396003)(39860400002)(136003)(346002)(451199015)(36840700001)(46966006)(40470700004)(82310400005)(8676002)(36860700001)(40460700003)(316002)(70586007)(47076005)(36756003)(478600001)(336012)(8936002)(41300700001)(2616005)(1076003)(110136005)(54906003)(966005)(40480700001)(7696005)(2906002)(26005)(82740400003)(4326008)(921005)(426003)(7416002)(7406005)(5660300002)(186003)(86362001)(83380400001)(70206006)(356005)(7636003)(2101003)(83996005);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2022 05:12:52.6105
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 00f1f3f1-e9cb-4b66-4acf-08da960fc6ab
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN8NAM11FT056.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4107
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series is to replace the previous EMEDIUMTYPE patch in a VFIO series:
+https://lore.kernel.org/kvm/Yxnt9uQTmbqul5lf@8bytes.org/
 
-On 9/1/2022 3:47 PM, Rajendra Nayak wrote:
-> GDSCs cannot be transitioned into a Retention state in SW.
-> When either the RETAIN_MEM bit, or both the RETAIN_MEM and
-> RETAIN_PERIPH bits are set, and the GDSC is left ON, the HW
-> takes care of retaining the memory/logic for the domain when
-> the parent domain transitions to low power state.
-> The existing logic handling the PWRSTS_RET seems to set the
-> RETAIN_MEM/RETAIN_PERIPH bits but then explicitly turns the
-> GDSC OFF as part of _gdsc_disable(). Fix that by leaving the
-> GDSC in ON state.
+The purpose is to regulate all existing ->attach_dev callback functions to
+use EINVAL exclusively for an incompatibility error between a device and a
+domain. This allows VFIO and IOMMUFD to detect such a soft error, and then
+try a different domain with the same device.
 
-Any thoughts on this patch? We now have at-least one more user,
-PCIe [1] that wants to follow in the footsteps of USB and use RET
-state to support wake-ups from low power state.
+Among all the patches, the first two are preparatory changes. And then one
+patch to update kdocs and the rest of them are per-driver changes.
 
-[1] https://lore.kernel.org/lkml/20220913164233.GF25849@workstation/
+Although it might be ideal to merge the previous VFIO series together with
+this series, given the number of new changes, the review in the IOMMU list
+might need a couple of rounds to finalize. Also, considering that v6.0 is
+at rc5 now, perhaps we could merge this IOMMU series and the VFIO one in
+different cycles to avoid merge conflicts. If there's less concern for it,
+I can respin the finalized version with VFIO to merge into the VFIO tree.
 
-> 
-> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> ---
-> There are a few existing users of PWRSTS_RET and I am not
-> sure if they would be impacted with this change
-> 
-> 1. mdss_gdsc in mmcc-msm8974.c, I am expecting that the
-> gdsc is actually transitioning to OFF and might be left
-> ON as part of this change, atleast till we hit system wide
-> low power state.
-> If we really leak more power because of this
-> change, the right thing to do would be to update .pwrsts for
-> mdss_gdsc to PWRSTS_OFF_ON instead of PWRSTS_RET_ON
-> I dont have a msm8974 hardware, so if anyone who has can report
-> any issues I can take a look further on how to fix it.
-> 
-> 2. gpu_gx_gdsc in gpucc-msm8998.c and
->     gpu_gx_gdsc in gpucc-sdm660.c
-> Both of these seem to add support for 3 power state
-> OFF, RET and ON, however I dont see any logic in gdsc
-> driver to handle 3 different power states.
-> So I am expecting that these are infact just transitioning
-> between ON and OFF and RET state is never really used.
-> The ideal fix for them would be to just update their resp.
-> .pwrsts to PWRSTS_OFF_ON only.
-> 
->   drivers/clk/qcom/gdsc.c | 10 ++++++++++
->   drivers/clk/qcom/gdsc.h |  5 +++++
->   2 files changed, 15 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> index d3244006c661..ccf63771e852 100644
-> --- a/drivers/clk/qcom/gdsc.c
-> +++ b/drivers/clk/qcom/gdsc.c
-> @@ -368,6 +368,16 @@ static int _gdsc_disable(struct gdsc *sc)
->   	if (sc->pwrsts & PWRSTS_OFF)
->   		gdsc_clear_mem_on(sc);
->   
-> +	/*
-> +	 * If the GDSC supports only a Retention state, apart from ON,
-> +	 * leave it in ON state.
-> +	 * There is no SW control to transition the GDSC into
-> +	 * Retention state. This happens in HW when the parent
-> +	 * domain goes down to a Low power state
-> +	 */
-> +	if (sc->pwrsts == PWRSTS_RET_ON)
-> +		return 0;
-> +
->   	ret = gdsc_toggle_logic(sc, GDSC_OFF);
->   	if (ret)
->   		return ret;
-> diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
-> index 5de48c9439b2..981a12c8502d 100644
-> --- a/drivers/clk/qcom/gdsc.h
-> +++ b/drivers/clk/qcom/gdsc.h
-> @@ -49,6 +49,11 @@ struct gdsc {
->   	const u8			pwrsts;
->   /* Powerdomain allowable state bitfields */
->   #define PWRSTS_OFF		BIT(0)
-> +/*
-> + * There is no SW control to transition a GDSC into
-> + * PWRSTS_RET. This happens in HW when the parent
-> + * domain goes down to a low power state
-> + */
->   #define PWRSTS_RET		BIT(1)
->   #define PWRSTS_ON		BIT(2)
->   #define PWRSTS_OFF_ON		(PWRSTS_OFF | PWRSTS_ON)
+This series is also available on Github:
+https://github.com/nicolinc/iommufd/commits/iommu_attach_dev-v2
+
+Changelog
+v2:
+ * Fixed kdocs format
+ * Grouped with the virtio patch from Jean (with a small change)
+ * Separated previous ENODEV and EINVAL changes to per-driver ones
+ * Redone some of the changes to have explicit return values in the
+   ->attach_dev() callback functions or their direct sub-functions.
+v1: https://lore.kernel.org/linux-iommu/20220913082448.31120-1-nicolinc@nvidia.com/
+
+Thanks!
+
+Jean-Philippe Brucker (1):
+  iommu/virtio: Constrain return value of ->attach_dev()
+
+Nicolin Chen (12):
+  iommu/msm: Add missing __disable_clocks calls
+  iommu/amd: Drop unnecessary checks in amd_iommu_attach_device()
+  iommu: Add return value rules to attach_dev op
+  iommu/arm: Constrain return value of ->attach_dev()
+  iommu/fsl: Constrain return value of ->attach_dev()
+  iommu/intel: Constrain return value of ->attach_dev()
+  iommu/ipmmu-vmsa: Constrain return value of ->attach_dev()
+  iommu/mtk: Constrain return value of ->attach_dev()
+  iommu/omap: Constrain return value of ->attach_dev()
+  iommu/rockchip: Constrain return value of ->attach_dev()
+  iommu/sprd: Constrain return value of ->attach_dev()
+  iommu/tegra: Constrain return value of ->attach_dev()
+
+ drivers/iommu/amd/iommu.c                   | 12 ++----------
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 13 ++-----------
+ drivers/iommu/arm/arm-smmu/arm-smmu.c       |  7 ++-----
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c     |  9 ++-------
+ drivers/iommu/fsl_pamu_domain.c             | 12 ++++++++----
+ drivers/iommu/intel/iommu.c                 | 17 +++++++++--------
+ drivers/iommu/ipmmu-vmsa.c                  | 10 +++++-----
+ drivers/iommu/msm_iommu.c                   |  2 ++
+ drivers/iommu/mtk_iommu.c                   |  9 +++++++--
+ drivers/iommu/omap-iommu.c                  |  7 ++++---
+ drivers/iommu/rockchip-iommu.c              |  4 +++-
+ drivers/iommu/sprd-iommu.c                  |  4 +---
+ drivers/iommu/tegra-gart.c                  |  2 +-
+ drivers/iommu/tegra-smmu.c                  |  6 ++++--
+ drivers/iommu/virtio-iommu.c                | 13 ++++++-------
+ include/linux/iommu.h                       | 11 +++++++++++
+ 16 files changed, 69 insertions(+), 69 deletions(-)
+
+-- 
+2.17.1
+
