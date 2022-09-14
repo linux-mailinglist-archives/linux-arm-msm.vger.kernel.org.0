@@ -2,313 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B2495B8E5B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 19:53:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1474B5B8E69
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 19:59:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229616AbiINRw6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Sep 2022 13:52:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49914 "EHLO
+        id S229605AbiINR67 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Sep 2022 13:58:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229604AbiINRw5 (ORCPT
+        with ESMTP id S229449AbiINR65 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Sep 2022 13:52:57 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B0C95A3EB;
-        Wed, 14 Sep 2022 10:52:56 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C75E861DD7;
-        Wed, 14 Sep 2022 17:52:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B818C433C1;
-        Wed, 14 Sep 2022 17:52:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663177975;
-        bh=HeLb0PSEPdMlPdt0BvwuNwA91/LK651bWFP9X8dViMs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=NOtbFvXSu1VLWNnTDSkc/RiJVln3eBw71smBHIBXZOIMkayZoI4T10HLXyKDxxyrx
-         d0qUNRinLuQmOTtLXFqhtV1ratutULKqVUrfXr0fsjANiVuzBNwkSTBuD24G7QzGox
-         BLwTYt/SlFprvLLfGTSVtDMeqFKgb2ehDWqJNOCIiTdskPqfRaE18+6xE4xyXXIWyG
-         wVchSFfJ18bBc62Hg7AMbnwV3Exk+mALKfmJdWzDddjtipC3eAhOD1lCXZ3a7toVLu
-         UglIHGVLTig20xcl7VMa1KAPAZgHplWzKMp/13Ax/usXLYaBE6pjLn2Rm+3YvinS7Y
-         JsRQW4h098gaA==
-Date:   Wed, 14 Sep 2022 12:52:52 -0500
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
-        jassisinghbrar@gmail.com, manivannan.sadhasivam@linaro.org,
-        agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        konrad.dybcio@somainline.org, Gaurav Kohli <gkohli@codeaurora.org>
-Subject: Re: [PATCH 2/2] mailbox: Add support for QTI CPUCP mailbox controller
-Message-ID: <20220914175252.2cpe4tzfw2n7vpjt@builder.lan>
-References: <1663135386-26270-1-git-send-email-quic_sibis@quicinc.com>
- <1663135386-26270-3-git-send-email-quic_sibis@quicinc.com>
+        Wed, 14 Sep 2022 13:58:57 -0400
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2056.outbound.protection.outlook.com [40.107.223.56])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBB8983BC8;
+        Wed, 14 Sep 2022 10:58:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=SmNdax0qEWkAxfcr/I8C+sjwFrnbTeqp9W7ighHJIcPx5YgsRq4NDXfU2IPw7uBwWRBI8Hno6xlKqiN7AtYnjJPZHMArUGExHdtqk6Xr4PiAFRMHqTY4hfOmUonYCvrvqFEx9zVf+KL83HEzxInjAD5FESyHR5wi9HSBpH1BJqDaSnXYaoxFjqBSvY6seootFu73v9eP/4rmo0J7NbAN+n2ikDMqSMVLr+t1/Os/p0o444MNu7ydpjLOkFg7sehO8BbohYNXBdjhDvPUZdBY4rYHSL/Q6SGeJRx9V9lkHcFq6HF9w2QIw3Cl9BSKAs4w9AvZoVBMiyCuyhWUP/QfFQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=YhEDLnyAed1XbDWQZvuwYdpfPEqiEn+SuWCDdfZC7Bo=;
+ b=RMIhmXJBcp3ZLtZ0AFePnCbKqQIX+LwS7XEomk/DRkSiYHQTwP4iztb8R1tiick2PgQVT+yx10JaEvRfIvzmEOkq8aBKKd+VgErhbQE2mV55Pxx/kRU3MEgrWD1Jo7gGErRf5lWlKhQBwaLk+WdisvOhpJj2EqKIivesQxAibLI7I04T49M0w2al0IKfATENpkBsu1RrrBj+z6lujC0qOIrb5Pyc2VpH53gmQuK3ulyBm5wH/epm/gP4FjH6E383tDaQYXacr143cUQa20ZvaU2c1GVQYdLr73+g18c5LXY8j3JwmNUGpIgIUxz6dsDdXtF5hYJEbRyZMKVHZa1OrQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=8bytes.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YhEDLnyAed1XbDWQZvuwYdpfPEqiEn+SuWCDdfZC7Bo=;
+ b=knLEzMLNTbpBNjFGBsc9QdsMPC5wGfDv1f87L23XytJFf97rnOgQqrdOXayXg0omfUg4J6ryrE7qsRgjWCZp3zvpv0dBuMd1FwoEmYN1j9oMU0jcJ7Zj9ijrr+MEt2OenXEmm2A7csijTdhqyLGapC/gADK7imd/EQev9cKbuzvUiCkXrDWq1QxwrZ9WTWl/T/xwE92t4PPQMh/IT+mJ90kEk42raQ5n+EIaYiuUrCzzF1rYe9nQ93iARjXcY2jXgBNOysXdhRweCk7gpASjaruHZgtPOR+dnckaFGdRE07Q2cvVOhekXfRM/Y2abXYKLjN4+o2hkbtGh4KG0rCpfw==
+Received: from BN0PR04CA0048.namprd04.prod.outlook.com (2603:10b6:408:e8::23)
+ by PH8PR12MB7349.namprd12.prod.outlook.com (2603:10b6:510:217::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5612.22; Wed, 14 Sep
+ 2022 17:58:52 +0000
+Received: from BN8NAM11FT009.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:408:e8:cafe::76) by BN0PR04CA0048.outlook.office365.com
+ (2603:10b6:408:e8::23) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5612.14 via Frontend
+ Transport; Wed, 14 Sep 2022 17:58:52 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ BN8NAM11FT009.mail.protection.outlook.com (10.13.176.65) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5632.12 via Frontend Transport; Wed, 14 Sep 2022 17:58:50 +0000
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Wed, 14 Sep
+ 2022 10:58:30 -0700
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ rnnvmail202.nvidia.com (10.129.68.7) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Wed, 14 Sep 2022 10:58:30 -0700
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Wed, 14 Sep 2022 10:58:30 -0700
+Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com
+ (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29 via Frontend
+ Transport; Wed, 14 Sep 2022 10:58:28 -0700
+Date:   Wed, 14 Sep 2022 10:58:27 -0700
+From:   Nicolin Chen <nicolinc@nvidia.com>
+To:     Jason Gunthorpe <jgg@nvidia.com>,
+        Jean-Philippe Brucker <jean-philippe@linaro.org>
+CC:     <joro@8bytes.org>, <suravee.suthikulpanit@amd.com>,
+        <will@kernel.org>, <robin.murphy@arm.com>, <robdclark@gmail.com>,
+        <dwmw2@infradead.org>, <baolu.lu@linux.intel.com>,
+        <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <konrad.dybcio@somainline.org>, <matthias.bgg@gmail.com>,
+        <heiko@sntech.de>, <orsonzhai@gmail.com>,
+        <baolin.wang@linux.alibaba.com>, <zhang.lyra@gmail.com>,
+        <thierry.reding@gmail.com>, <sricharan@codeaurora.org>,
+        <yong.wu@mediatek.com>, <vdumpa@nvidia.com>,
+        <jonathanh@nvidia.com>, <tglx@linutronix.de>,
+        <shameerali.kolothum.thodi@huawei.com>,
+        <thunder.leizhen@huawei.com>, <christophe.jaillet@wanadoo.fr>,
+        <yangyingliang@huawei.com>, <jon@solid-run.com>,
+        <iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-rockchip@lists.infradead.org>,
+        <linux-tegra@vger.kernel.org>,
+        <virtualization@lists.linux-foundation.org>
+Subject: Re: [PATCH 4/5] iommu: Regulate errno in ->attach_dev callback
+ functions
+Message-ID: <YyIWQ6rX6AR9KX5E@Asurada-Nvidia>
+References: <20220913082448.31120-1-nicolinc@nvidia.com>
+ <20220913082448.31120-5-nicolinc@nvidia.com>
+ <YyB3F/o3RfymqiFW@myrica>
+ <YyGaqsXSDMn8R12R@nvidia.com>
+ <YyGjtsB2Yq4fQICS@myrica>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <1663135386-26270-3-git-send-email-quic_sibis@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <YyGjtsB2Yq4fQICS@myrica>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN8NAM11FT009:EE_|PH8PR12MB7349:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4c649da3-c755-4818-22ab-08da967ac7ea
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 0u1Gd2VASnQoiNDd/j4N1JkMz4Zq6CkhssDo7b8L8D5IeSfUyoXVzPddWGghC1lw60liB1SahMCBP2NYAY6IiTP7ms18KbqH3lIqupnkM8Imgci5hw5ZYV2BNsOzRbERD9eTxU1IFNzwPPGpNPa2yYFPpMSLDBWS6tqDII00boRmhI3PIkgT0YRtpwwupHnXYQTmLDE+VBC9zOmO2RtrMGdE26o8JsFKJyFmbV8jxmI4xO7RCT19gs5Cpl3rihGdciF0uhj+hvprG4jT13L2Gj4UaoPC2rA7QCb19FOvpo9mMQDUAsw0tGHj8BCbOvcFP1Z9yvJeDEQtr3jwlCfvCEelrByiZ7iBw1VY/p2RcsmB99WS76mhNe0SRBSz2YBIc8XG2CokyVQ8JXSKcifr5+JEUMpWvO1k89Qt2lPZRgdDzoZ3Bb7lvqO/mxEjIa0izB+NEmy4uCsLwnfZdPcGAx+iPMBp3HV1Sa8b23xQbiBYfOC9Er4xd6C7UhKR+N6/s7PrrigMLR20ctYtJ+bOhk1RhddEoypJah1A4KMcIcutm4qfknJjIxMbu/kpO+FAa2ddAs8iGM45DV5WPIWorssHXgurO0us+jnzSkWMsdVClySorgIk2Hfa4TtHKmVY95359LRbNQwR3/Hl4XXWXfwE6jo4wSu2ZDEuYGB80y9MRP5VhN5cPq3JJhxr1JPp/kAWPdPV3OgRVMvYmFKc9nj6exkwNF32/TbXY5ZDwQKSwQn2t//3vEuonp0XKf8yrI64SnOb/CrZ3PMg2TWJig==
+X-Forefront-Antispam-Report: CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230022)(4636009)(396003)(376002)(136003)(346002)(39860400002)(451199015)(40470700004)(36840700001)(46966006)(82740400003)(54906003)(55016003)(7416002)(356005)(82310400005)(70206006)(7636003)(40480700001)(7406005)(8676002)(186003)(478600001)(5660300002)(47076005)(83380400001)(316002)(4326008)(9686003)(70586007)(8936002)(36860700001)(336012)(40460700003)(86362001)(110136005)(41300700001)(2906002)(26005)(33716001)(426003);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2022 17:58:50.8502
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4c649da3-c755-4818-22ab-08da967ac7ea
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN8NAM11FT009.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7349
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 14, 2022 at 11:33:06AM +0530, Sibi Sankar wrote:
-> Add support for CPUSS Control Processor (CPUCP) mailbox controller,
-> this driver enables communication between AP and CPUCP by acting as
-> a doorbell between them.
+On Wed, Sep 14, 2022 at 10:49:42AM +0100, Jean-Philippe Brucker wrote:
+> External email: Use caution opening links or attachments
 > 
-> Signed-off-by: Gaurav Kohli <gkohli@codeaurora.org>
-> [sibis: moved to mailbox and misc. cleanups]
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
->  drivers/mailbox/Kconfig           |   9 ++
->  drivers/mailbox/Makefile          |   2 +
->  drivers/mailbox/qcom-cpucp-mbox.c | 176 ++++++++++++++++++++++++++++++++++++++
->  3 files changed, 187 insertions(+)
->  create mode 100644 drivers/mailbox/qcom-cpucp-mbox.c
 > 
-> diff --git a/drivers/mailbox/Kconfig b/drivers/mailbox/Kconfig
-> index 05d6fae800e3..7766e0ad2f12 100644
-> --- a/drivers/mailbox/Kconfig
-> +++ b/drivers/mailbox/Kconfig
-> @@ -284,6 +284,15 @@ config SPRD_MBOX
->  	  to send message between application processors and MCU. Say Y here if
->  	  you want to build the Spreatrum mailbox controller driver.
->  
-> +config QCOM_CPUCP_MBOX
-> +	tristate "Qualcomm Technologies, Inc. CPUCP mailbox driver"
-> +	depends on ARCH_QCOM || COMPILE_TEST
-> +	help
-> +	  Qualcomm Technologies, Inc. CPUSS Control Processor (CPUCP) mailbox
-> +	  controller driver enables communication between AP and CPUCP by
-> +	  acting as a doorbell between them. Say Y here if you want to build
-> +	  this driver.
-
-What will consume this interface?
-
-Given that there's a single channel, is there any benefit of separating
-the interrupt handling out of the single client driver?
-
-> +
->  config QCOM_IPCC
->  	tristate "Qualcomm Technologies, Inc. IPCC driver"
->  	depends on ARCH_QCOM || COMPILE_TEST
-> diff --git a/drivers/mailbox/Makefile b/drivers/mailbox/Makefile
-> index fc9376117111..195b7e40541f 100644
-> --- a/drivers/mailbox/Makefile
-> +++ b/drivers/mailbox/Makefile
-> @@ -59,6 +59,8 @@ obj-$(CONFIG_SUN6I_MSGBOX)	+= sun6i-msgbox.o
->  
->  obj-$(CONFIG_SPRD_MBOX)		+= sprd-mailbox.o
->  
-> +obj-$(CONFIG_QCOM_CPUCP_MBOX)	+= qcom-cpucp-mbox.o
-> +
->  obj-$(CONFIG_QCOM_IPCC)		+= qcom-ipcc.o
->  
->  obj-$(CONFIG_APPLE_MAILBOX)	+= apple-mailbox.o
-> diff --git a/drivers/mailbox/qcom-cpucp-mbox.c b/drivers/mailbox/qcom-cpucp-mbox.c
-> new file mode 100644
-> index 000000000000..063bb2d80f3e
-> --- /dev/null
-> +++ b/drivers/mailbox/qcom-cpucp-mbox.c
-> @@ -0,0 +1,176 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/interrupt.h>
-> +#include <linux/irq.h>
-> +#include <linux/irqdomain.h>
-> +#include <linux/mailbox_controller.h>
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +
-> +/* CPUCP Register offsets */
-> +#define CPUCP_INTR_CLEAR_REG		0x8
-> +#define CPUCP_INTR_STATUS_REG		0xC
-> +#define CPUCP_SEND_IRQ_REG		0xC
-> +
-> +#define CPUCP_IRQ_CLEAR			BIT(3)
-> +#define CPUCP_IRQ_STATUS_ASSERTED	BIT(3)
-> +#define CPUCP_SEND_IRQ			BIT(28)
-> +
-> +/**
-> + * struct qcom_cpucp_mbox - Holder for the mailbox driver
-> + * @mbox:			The mailbox controller
-> + * @chan:			The mailbox channel
-> + * @tx_base:			Base address of the CPUCP tx registers
-> + * @rx_base:			Base address of the CPUCP rx registers
-> + * @dev:			Device associated with this instance
-> + * @lock:			Lock protecting private
-> + * @irq:			CPUCP to AP irq
-> + */
-> +struct qcom_cpucp_mbox {
-> +	struct mbox_controller mbox;
-> +	struct mbox_chan chan;
-> +	void __iomem *tx_base;
-> +	void __iomem *rx_base;
-> +	struct device *dev;
-> +	int irq;
-> +
-> +	/* control access to the chan private data */
-> +	spinlock_t lock;
-> +};
-> +
-> +static inline struct qcom_cpucp_mbox *to_qcom_cpucp_mbox(struct mbox_controller *mbox)
-> +{
-> +	return container_of(mbox, struct qcom_cpucp_mbox, mbox);
-> +}
-> +
-> +static irqreturn_t qcom_cpucp_mbox_irq_fn(int irq, void *data)
-> +{
-> +	struct qcom_cpucp_mbox *cpucp = data;
-> +	unsigned long flags;
-> +	u32 val;
-> +
-> +	val = readl(cpucp->rx_base + CPUCP_INTR_STATUS_REG);
-> +	if (val & CPUCP_IRQ_STATUS_ASSERTED) {
-> +		writel(CPUCP_IRQ_CLEAR, cpucp->rx_base + CPUCP_INTR_CLEAR_REG);
-> +
-> +		spin_lock_irqsave(&cpucp->lock, flags);
-> +		if (cpucp->chan.con_priv)
-> +			mbox_chan_received_data(&cpucp->chan, NULL);
-
-Afaict this will deliver a data-less message to the mailbox receiver to
-communicate an incoming interrupt.
-
-I would prefer that you represent this as an irq_chip, like we've done
-for similar designs previously.
-
-> +		spin_unlock_irqrestore(&cpucp->lock, flags);
-> +	}
-> +
-> +	return IRQ_HANDLED;
-> +}
-> +
-> +static int qcom_cpucp_mbox_send_data(struct mbox_chan *chan, void *data)
-> +{
-> +	struct qcom_cpucp_mbox *cpucp = to_qcom_cpucp_mbox(chan->mbox);
-> +
-> +	writel(CPUCP_SEND_IRQ, cpucp->tx_base + CPUCP_SEND_IRQ_REG);
-> +
-> +	return 0;
-> +}
-> +
-> +static void qcom_cpucp_mbox_shutdown(struct mbox_chan *chan)
-> +{
-> +	struct qcom_cpucp_mbox *cpucp = to_qcom_cpucp_mbox(chan->mbox);
-> +	unsigned long flags;
-> +
-> +	spin_lock_irqsave(&cpucp->lock, flags);
-> +	chan->con_priv = NULL;
-> +	spin_unlock_irqrestore(&cpucp->lock, flags);
-> +}
-> +
-> +static const struct mbox_chan_ops cpucp_mbox_chan_ops = {
-> +	.send_data = qcom_cpucp_mbox_send_data,
-> +	.shutdown = qcom_cpucp_mbox_shutdown
-> +};
-> +
-> +static struct mbox_chan *qcom_cpucp_mbox_xlate(struct mbox_controller *mbox,
-> +					       const struct of_phandle_args *ph)
-> +{
-> +	struct qcom_cpucp_mbox *cpucp = to_qcom_cpucp_mbox(mbox);
-> +
-> +	if (ph->args_count != 0)
-> +		return ERR_PTR(-EINVAL);
-> +
-> +	if (mbox->chans[0].con_priv)
-> +		return ERR_PTR(-EBUSY);
-> +
-> +	mbox->chans[0].con_priv = cpucp;
-> +
-> +	return &mbox->chans[0];
-> +}
-> +
-> +static int qcom_cpucp_mbox_probe(struct platform_device *pdev)
-> +{
-> +	struct qcom_cpucp_mbox *cpucp;
-> +	struct mbox_controller *mbox;
-> +	int ret;
-> +
-> +	cpucp = devm_kzalloc(&pdev->dev, sizeof(*cpucp), GFP_KERNEL);
-> +	if (!cpucp)
-> +		return -ENOMEM;
-> +
-> +	spin_lock_init(&cpucp->lock);
-> +	cpucp->dev = &pdev->dev;
-> +
-> +	cpucp->tx_base = devm_platform_ioremap_resource(pdev, 0);
-> +	if (IS_ERR(cpucp->tx_base))
-> +		return PTR_ERR(cpucp->tx_base);
-> +
-> +	cpucp->rx_base = devm_platform_ioremap_resource(pdev, 1);
-> +	if (IS_ERR(cpucp->rx_base))
-> +		return PTR_ERR(cpucp->rx_base);
-> +
-> +	cpucp->irq = platform_get_irq(pdev, 0);
-> +	if (cpucp->irq < 0)
-> +		return cpucp->irq;
-> +
-> +	mbox = &cpucp->mbox;
-> +	mbox->dev = cpucp->dev;
-> +	mbox->num_chans = 1;
-> +	mbox->chans = &cpucp->chan;
-> +	mbox->ops = &cpucp_mbox_chan_ops;
-> +	mbox->of_xlate = qcom_cpucp_mbox_xlate;
-> +	mbox->txdone_irq = false;
-> +	mbox->txdone_poll = false;
-> +
-> +	ret = devm_mbox_controller_register(&pdev->dev, mbox);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = devm_request_irq(&pdev->dev, cpucp->irq, qcom_cpucp_mbox_irq_fn,
-> +			       IRQF_TRIGGER_HIGH | IRQF_NO_SUSPEND, "qcom_cpucp_mbox", cpucp);
-
-Please rely on trigger from Devicetree.
-
-> +	if (ret < 0) {
-> +		dev_err(&pdev->dev, "Failed to register the irq: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	platform_set_drvdata(pdev, cpucp);
-
-drvdata seems to be unused.
-
-Regards,
-Bjorn
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct of_device_id qcom_cpucp_mbox_of_match[] = {
-> +	{ .compatible = "qcom,cpucp-mbox"},
-> +	{}
-> +};
-> +MODULE_DEVICE_TABLE(of, qcom_cpucp_mbox_of_match);
-> +
-> +static struct platform_driver qcom_cpucp_mbox_driver = {
-> +	.probe = qcom_cpucp_mbox_probe,
-> +	.driver = {
-> +		.name = "qcom_cpucp_mbox",
-> +		.of_match_table = qcom_cpucp_mbox_of_match,
-> +	},
-> +};
-> +module_platform_driver(qcom_cpucp_mbox_driver);
-> +
-> +MODULE_AUTHOR("Gaurav Kohli <gkohli@codeaurora.org>");
-> +MODULE_AUTHOR("Sibi Sankar <quic_sibis@qti.qualcomm.com>");
-> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. CPUSS Control Processor Mailbox driver");
-> +MODULE_LICENSE("GPL");
-> -- 
-> 2.7.4
+> On Wed, Sep 14, 2022 at 06:11:06AM -0300, Jason Gunthorpe wrote:
+> > On Tue, Sep 13, 2022 at 01:27:03PM +0100, Jean-Philippe Brucker wrote:
+> > > I think in the future it will be too easy to forget about the constrained
+> > > return value of attach() while modifying some other part of the driver,
+> > > and let an external helper return EINVAL. So I'd rather not propagate ret
+> > > from outside of viommu_domain_attach() and finalise().
+> >
+> > Fortunately, if -EINVAL is wrongly returned it only creates an
+> > inefficiency, not a functional problem. So we do not need to be
+> > precise here.
 > 
+> Ah fair. In that case the attach_dev() documentation should indicate that
+> EINVAL is a hint, so that callers don't rely on it (currently words "must"
+> and "exclusively" indicate that returning EINVAL for anything other than
+> device-domain incompatibility is unacceptable). The virtio-iommu
+> implementation may well return EINVAL from the virtio stack or from the
+> host response.
+
+How about this?
+
++ * * EINVAL    - mainly, device and domain are incompatible, or something went
++ *               wrong with the domain. It's suggested to avoid kernel prints
++ *               along with this errno. And it's better to convert any EINVAL
++ *               returned from kAPIs to ENODEV if it is device-specific, or to
++ *               some other reasonable errno being listed below
+
+> > > Since we can't guarantee that APIs like virtio or ida won't ever return
+> > > EINVAL, we should set all return values:
+> >
+> > I dislike this alot, it squashes all return codes to try to optimize
+> > an obscure failure path :(
+
+Hmm...should I revert all the driver changes back to this version?
