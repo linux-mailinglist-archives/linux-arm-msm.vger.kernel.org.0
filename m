@@ -2,135 +2,223 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 354175B80F3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 07:31:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3F6A5B8126
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Sep 2022 07:59:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229936AbiINFbX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Sep 2022 01:31:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59756 "EHLO
+        id S229758AbiINF7N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Sep 2022 01:59:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229889AbiINFbU (ORCPT
+        with ESMTP id S229533AbiINF7M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Sep 2022 01:31:20 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A127F6E88B;
-        Tue, 13 Sep 2022 22:31:03 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28E4enP5000529;
-        Wed, 14 Sep 2022 05:30:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=n5rJAvQhwCq2T6m4EtpG3+YaK2yUFaiiXGtnycNXHnI=;
- b=B47aktkwtgcbR2tJHPgD0dcBXJkplB4VijJdrEI4fcbHF0r7NV/M7WUe2lnSQrcpjeB7
- l/wjXykSbc0835yPjHUqxmF6Fh+oVGLm9HaHt0acRmVG2KHg+Pubo0gI/kfOqO8wn29N
- K+7/QF6KX56c0FagRpyRsaoUv28tJyE6sa6oMNZLqpHRGNNxcUdUAqm3MEg1mJTpIVRr
- VSUMzVqJfut2Bodx082IiHBMWOUwAX6jzQ7CgKz3nWKD2Z97ndysgo2ujl9Gr6T8GMKj
- 0C1E5YkqG3snKEPx9hFy+9Eoz0GtHIxYtSUfmzvT7C/2k7NCspndlJccFaYNo79OSdjL dg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jjxyv9c37-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Sep 2022 05:30:56 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28E5UtK3025975
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Sep 2022 05:30:55 GMT
-Received: from blr-ubuntu-173.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Tue, 13 Sep 2022 22:30:51 -0700
-From:   Rajendra Nayak <quic_rjendra@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@somainline.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <sboyd@kernel.org>,
-        <mka@chromium.org>, <johan+linaro@kernel.org>,
-        <quic_kriskura@quicinc.com>, <dianders@chromium.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-Subject: [PATCH] arm64: dts: qcom: sc7280: Add required-opps for USB
-Date:   Wed, 14 Sep 2022 11:00:17 +0530
-Message-ID: <20220914053017.23617-1-quic_rjendra@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+        Wed, 14 Sep 2022 01:59:12 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 289795E564
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 22:59:11 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id q63so13369637pga.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Sep 2022 22:59:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=eMk4zk5vK2iwFc2VFHW23TYqcWJOpXNjrfrjLjJHErA=;
+        b=z4NDsKsVw4P66Krj3J90B516nWyfGRMibREHJ80gYp2Vo/IqAe/GkzK2e7SWgcYK5h
+         /IoaR/1FXLyivfzpzh/oLgFlti6k9GhohCBiVDueqQE/QXo4q1Wr1W4LmxmtiMFd66e4
+         JsT1wnm6gY8VWO1Upp1Gqtj808uGWRnaHQZ87ncDoQebY8byftyttQoKJN9vdTwuTXVo
+         QE9/VTWsm/Wu75LVqruIDbaCWE+aXGj2esqfDfzZc7+QD9fSge0FYQPMEC4MxG1cw8Za
+         b7+xFB32RXRlKLilBO9/JCDGwVfBNd+ZZZntjfnQHqsKYXEhQIuK3zIh7gSiNWePZpgq
+         3wJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=eMk4zk5vK2iwFc2VFHW23TYqcWJOpXNjrfrjLjJHErA=;
+        b=ULtCKzCb6IIXn8eANfGjxlmzTh68LQ4pd4bLJzbex0TXusK7cPdtUXgwbhyj6MbEyj
+         ZmMmTmlTFlNuaCJS+OGrY1M8Czf24jyrfhF+dZ77N6GcKBqFgYvs6fYGTnViSZ3Z9z2W
+         CPRiLV5aOuuq1jVLx1a1jqjZfLzNgahi0HqViaM6N3ymKbdEtKGPuMQZhu3x5YYODCuT
+         E/mnhMZIVDmkBB+6XfCGj6mRFdzsPHZKAwIll/I4yowM8RwLcCvfIA3r4pDQ4kepAVAt
+         jXO47YlVrT8bkT+otHjUfyyqOFtvglsesmtX6XQir++SiidzmKF57RUfu1iZF1g2oZzh
+         zHUA==
+X-Gm-Message-State: ACgBeo0k6/Pl38AJgmiKwT/fcQ15P+FDwwfYpJ6b7E+hM1B08Cexvd5F
+        feKx4QYyQOtncDlLyNJNp+Hi
+X-Google-Smtp-Source: AA6agR44+dAqnrvrvPDqeZZ5OA60zl5uM/1c1fW3PIK7UOKM99NllRgE3f89AzEZNePFxLVxWfBHQQ==
+X-Received: by 2002:a63:6b02:0:b0:430:3876:95b4 with SMTP id g2-20020a636b02000000b00430387695b4mr31509123pgc.233.1663135150500;
+        Tue, 13 Sep 2022 22:59:10 -0700 (PDT)
+Received: from workstation ([117.202.184.122])
+        by smtp.gmail.com with ESMTPSA id x5-20020aa79405000000b0053e4296e1d3sm9094176pfo.198.2022.09.13.22.59.04
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 13 Sep 2022 22:59:09 -0700 (PDT)
+Date:   Wed, 14 Sep 2022 11:29:02 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+Cc:     Bjorn Helgaas <helgaas@kernel.org>, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, quic_vbadigan@quicinc.com,
+        quic_hemantk@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
+        swboyd@chromium.org, dmitry.baryshkov@linaro.org,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>
+Subject: Re: [PATCH v6 2/5] PCI: qcom: Add retry logic for link to be stable
+ in L1ss
+Message-ID: <20220914055902.GA16459@workstation>
+References: <20220909195000.GA310621@bhelgaas>
+ <7310fc0c-5f87-87a6-4484-d60970ce3285@quicinc.com>
+ <20220912173346.GB25849@workstation>
+ <e9c5d29a-f1a7-46c8-a456-6c75c129876f@quicinc.com>
+ <20220913163921.GE25849@workstation>
+ <51be0ae5-8f48-fc6e-0246-810018326594@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: gb9cfLVGYkngCQiQw-ipGUC39ZD52gXD
-X-Proofpoint-ORIG-GUID: gb9cfLVGYkngCQiQw-ipGUC39ZD52gXD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-14_02,2022-09-13_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- mlxlogscore=999 suspectscore=0 mlxscore=0 bulkscore=0 spamscore=0
- phishscore=0 priorityscore=1501 clxscore=1015 malwarescore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2208220000 definitions=main-2209140026
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <51be0ae5-8f48-fc6e-0246-810018326594@quicinc.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-USB has a requirement to put a performance state vote on 'cx'
-while active. Use 'required-opps' to pass this information from
-device tree, and since all the GDSCs in GCC (including USB) are
-sub-domains of cx, we also add cx as a power-domain for GCC.
-Now when any of the consumers of the GDSCs (in this case USB)
-votes on a perforamance state, genpd framework can identify that
-the GDSC itself does not support a performance state and it
-then propogates the vote to the parent, which in this case is cx.
+On Wed, Sep 14, 2022 at 07:15:35AM +0530, Krishna Chaitanya Chundru wrote:
+> 
+> On 9/13/2022 10:09 PM, Manivannan Sadhasivam wrote:
+> > On Tue, Sep 13, 2022 at 07:54:22PM +0530, Krishna Chaitanya Chundru wrote:
+> > > On 9/12/2022 11:03 PM, Manivannan Sadhasivam wrote:
+> > > > On Mon, Sep 12, 2022 at 09:39:36PM +0530, Krishna Chaitanya Chundru wrote:
+> > > > > On 9/10/2022 1:20 AM, Bjorn Helgaas wrote:
+> > > > > > On Fri, Sep 09, 2022 at 02:14:41PM +0530, Krishna chaitanya chundru wrote:
+> > > > > > > Some specific devices are taking time to settle the link in L1ss.
+> > > > > > > So added a retry logic before returning from the suspend op.
+> > > > > > "L1ss" is not a state.  If you mean "L1.1" or "L1.2", say that.  Also
+> > > > > > in code comments below.
+> > > > > Yes L1ss means L1.2 and L1.2 We will update it next patch
+> > > > > > s/So added a/Add/
+> > > > > > 
+> > > > > > What are these specific devices?  Is this a qcom controller defect?
+> > > > > > An endpoint defect that should be addressed via some kind of generic
+> > > > > > quirk?
+> > > > > This is depending up on the endpoint devices and it varies to device to
+> > > > > device.
+> > > > > 
+> > > > Can we identify the source of the traffic? Is the NVMe driver not
+> > > > flushing it's queues correctly?
+> > > We found that it is not from nvme data, we are seeing some physical layer
+> > > activity on the
+> > > 
+> > > protocol analyzer.
+> > > 
+> > Okay
+> > 
+> > > > > We are thinking this is not a defect if there is some traffic in the link
+> > > > > the link will
+> > > > > 
+> > > > > not go to L1ss .
+> > > > > 
+> > > > Is this hack still required even after switching to syscore ops?
+> > > > 
+> > > > Thanks,
+> > > > Mani
+> > > Yes, mani it is still required. And just before this sycore ops there will
+> > > be a pci transaction to
+> > > 
+> > > mask msix interrupts.
+> > > 
+> > Hmm. I'm getting slightly confused here. What really happens when you do
+> > the resource teardown during suspend and the link has not entered L1SS?
+> > 
+> > Since PHY is powered by MX domain, I'm wondering why we should wait for
+> > the link to be in L1SS?
+> > 
+> > Thanks,
+> > Mani
+> 
+> Mani, we need to turn off the link only after link entered in to L1ss. If we
+> do before that
+> 
+> some transactions will be disturbed and we see a link down.
+> 
+> Mx power rail will control digital logic of the PHY and tries to retain the
+> link state only,
+> 
+> The analog logic is controlled by the CX rail only, so when the link is in
+> L1ss only we turn off
+> 
+> clks and phy.
+> 
 
-This change would also mean that any GDSC in GCC thats left enabled
-during low power state (perhaps because its marked with a
-ALWAYS_ON flag) can prevent the system from entering low power
-since that would prevent cx from transitioning to low power.
-Ideally any consumers that would need to have their devices
-(partially) powered to support wakeups should look at making the
-resp. GDSCs transtion to a Retention (PWRSTS_RET) state instead
-of leaving them ALWAYS_ON.
+Okay, thanks for the clarification. Please add this info as a comment just above
+the change.
 
-Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
----
-* This patch is a follow up based on the discussion on the previously
-  posted version to support USB performance state voting [1]
+Thanks,
+Mani
 
-* Another patch that this approach depends on is the one to fix the
-  handling of PWRSTS_RET in the GDSC driver [2] so we can have USB
-  GDSC transtion to a RET state instead of marking it ALWAYS_ON
-
-[1] https://lore.kernel.org/linux-usb/YTduDqCO9aUyAsw1@ripper/
-[2] https://lore.kernel.org/all/20220901101756.28164-1-quic_rjendra@quicinc.com/#t
-
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index ad04025a8a1a..8a21446738bf 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -828,6 +828,7 @@
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
-+			power-domains = <&rpmhpd SC7280_CX>;
- 		};
- 
- 		ipcc: mailbox@408000 {
-@@ -3456,6 +3457,7 @@
- 					  "ss_phy_irq";
- 
- 			power-domains = <&gcc GCC_USB30_PRIM_GDSC>;
-+			required-opps = <&rpmhpd_opp_svs>;
- 
- 			resets = <&gcc GCC_USB30_PRIM_BCR>;
- 
--- 
-2.17.1
-
+> > > > > > > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> > > > > > > ---
+> > > > > > >     drivers/pci/controller/dwc/pcie-qcom.c | 36 +++++++++++++++++++++++-----------
+> > > > > > >     1 file changed, 25 insertions(+), 11 deletions(-)
+> > > > > > > 
+> > > > > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > > > > index 6e04d0d..15c2067 100644
+> > > > > > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > > > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > > > > @@ -1809,26 +1809,40 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+> > > > > > >     static int __maybe_unused qcom_pcie_pm_suspend(struct qcom_pcie *pcie)
+> > > > > > >     {
+> > > > > > >     	u32 val;
+> > > > > > > +	ktime_t timeout, start;
+> > > > > > >     	struct dw_pcie *pci = pcie->pci;
+> > > > > > >     	struct device *dev = pci->dev;
+> > > > > > >     	if (!pcie->cfg->supports_system_suspend)
+> > > > > > >     		return 0;
+> > > > > > > -	/* if the link is not active turn off clocks */
+> > > > > > > -	if (!dw_pcie_link_up(pci)) {
+> > > > > > > -		dev_info(dev, "Link is not active\n");
+> > > > > > > -		goto suspend;
+> > > > > > > -	}
+> > > > > > > +	start = ktime_get();
+> > > > > > > +	/* Wait max 200 ms */
+> > > > > > > +	timeout = ktime_add_ms(start, 200);
+> > > > > > > -	/* if the link is not in l1ss don't turn off clocks */
+> > > > > > > -	val = readl(pcie->parf + PCIE20_PARF_PM_STTS);
+> > > > > > > -	if (!(val & PCIE20_PARF_PM_STTS_LINKST_IN_L1SUB)) {
+> > > > > > > -		dev_warn(dev, "Link is not in L1ss\n");
+> > > > > > > -		return 0;
+> > > > > > > +	while (1) {
+> > > > > > > +
+> > > > > > > +		if (!dw_pcie_link_up(pci)) {
+> > > > > > > +			dev_warn(dev, "Link is not active\n");
+> > > > > > > +			break;
+> > > > > > > +		}
+> > > > > > > +
+> > > > > > > +		/* if the link is not in l1ss don't turn off clocks */
+> > > > > > > +		val = readl(pcie->parf + PCIE20_PARF_PM_STTS);
+> > > > > > > +		if ((val & PCIE20_PARF_PM_STTS_LINKST_IN_L1SUB)) {
+> > > > > > > +			dev_dbg(dev, "Link enters L1ss after %d  ms\n",
+> > > > > > > +					ktime_to_ms(ktime_get() - start));
+> > > > > > > +			break;
+> > > > > > > +		}
+> > > > > > > +
+> > > > > > > +		if (ktime_after(ktime_get(), timeout)) {
+> > > > > > > +			dev_warn(dev, "Link is not in L1ss\n");
+> > > > > > > +			return 0;
+> > > > > > > +		}
+> > > > > > > +
+> > > > > > > +		udelay(1000);
+> > > > > > >     	}
+> > > > > > > -suspend:
+> > > > > > >     	if (pcie->cfg->ops->suspend)
+> > > > > > >     		pcie->cfg->ops->suspend(pcie);
+> > > > > > > -- 
+> > > > > > > 2.7.4
+> > > > > > > 
