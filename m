@@ -2,95 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4146A5BA27A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 23:56:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9850E5BA312
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 01:19:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229497AbiIOV4h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Sep 2022 17:56:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53426 "EHLO
+        id S229663AbiIOXTp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Sep 2022 19:19:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229554AbiIOV4h (ORCPT
+        with ESMTP id S229473AbiIOXTn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Sep 2022 17:56:37 -0400
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 555958A1D2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 14:56:36 -0700 (PDT)
-Received: by mail-yb1-xb32.google.com with SMTP id g5so29753192ybg.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 14:56:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=JX9fTkq4tugLO6FL9ET8mX9f3rZGcI9uwJUlh9oT3XY=;
-        b=Srf1ZQSyBr19coh7nj2aTvsXsaOIS/oIKx2DhWYMjU2NKDO7WQxtuGTyglZAyVrbnA
-         Uj/QMJC9CSd/l8iFJ01p0tKtEQ2U3EQ1koMIPvAMFp+bkgD9LSk2v4N5YUW6f0QaOtV6
-         wNOeA+4BkU6iyumZrZM3oEk9Yms7pfcFdJ7lv4GYqYCQBlPSjMBmN6poh4GpTuqPLFkC
-         xxET9x6krRs2nQphspUHs/BSeGBOUacsRnu37Feuj4i2VWkopcNB2lmCowlOYbuR2oZg
-         gQvY4ekhDQBXCFgg95GiWFo5hGHp0lFHQSZtNZWxf7ljc1wHsjtg9RZCCXOCFcGiMF5X
-         ANqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=JX9fTkq4tugLO6FL9ET8mX9f3rZGcI9uwJUlh9oT3XY=;
-        b=XvZIn8vWJU6rPXTQBMtIWV2NhzYxdYNdiDchQF4IxA0K6BMTBtwxmnZ/nNk3s/O0U2
-         rtTyrSwNrCoeJ/E6ypL9dog6NxDIJKPBGMlVKWmFzpV9t1ZahX9psn8NXXg7hBOBOfH9
-         vkDpOfOHu0RLxPjNwVp9V00txfIh2KellL90XrdpNC23s6iMb95jlANeRoqkreySb2Lz
-         WD+NGLPPe9zQL9LIBxVMYqg3rcLV8S5BvfdxlhH5JLedC4qd1hWZIdgHIbG5touCHWS2
-         49uPekAlRG5bUflcVod+NcPgjNU9n1mAQOuQAemhMCwDysErGAd/Hu4iIuRgdPrAZSvw
-         NpIg==
-X-Gm-Message-State: ACrzQf2Sa7bTCyoSF/IJbCVh5bZBUny0d06xGgxcxXOSLh0PI3xtO3VU
-        mPaUafELPacZvdFCyU3Omn5S2MrzyO+OTfap1125cw==
-X-Google-Smtp-Source: AMsMyM7v2nmvHmfbjX5rLUALCSTtuecAYdmFE+aJnXkmcOJa5iDWlDanh9g4UOjwuvBWDm4ZbJzoju1oeXo/moiWjjc=
-X-Received: by 2002:a25:af13:0:b0:6ae:3166:1aee with SMTP id
- a19-20020a25af13000000b006ae31661aeemr1717295ybh.288.1663278995367; Thu, 15
- Sep 2022 14:56:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220915204844.3838-1-ansuelsmth@gmail.com>
-In-Reply-To: <20220915204844.3838-1-ansuelsmth@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 16 Sep 2022 00:56:24 +0300
-Message-ID: <CAA8EJprvxZrK2b1ctP5dtgK7eKFTj09K_H0=2tgA5--oVkR1ew@mail.gmail.com>
-Subject: Re: [PATCH] dmaengine: qcom-adm: fix wrong sizeof config in slave_config
-To:     Christian Marangi <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Thu, 15 Sep 2022 19:19:43 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D172812D26;
+        Thu, 15 Sep 2022 16:19:38 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28FNEsOY021206;
+        Thu, 15 Sep 2022 23:19:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=3eNqrWuty5XAyPkQV8Kv1KzzmfzgtAgTf0Qy29Mqfro=;
+ b=WDNYO3IeHAEkh1OXNhQWNpE3DGiw+rKn7d2OAtr3oHfP17XRFiSDg9IdfjMy0VrueTtK
+ 76nwO3FZsPI/wS2K2QljCw24A7Z6CrOMkjvB5s/3zj5z4xJNSe5VxhjqCc4CBqwkXKiJ
+ qcCGPUflkNzDSU2HnR/wcCy5FJbphL/ZOHROhmbK/ql54/NvGbqlsOSyK8DvqkO5XFEp
+ 9vbUdKzJfzwh3MiW2tR9hPuNwvBkjo9qL6VIwuQrBMJ0p5uCBjIbRvDzqW9I58MlPLDG
+ tEUGkWKsv3xqzWWBUxTMCkpEF+rpF7hHQt9KDlmI5QdzygRgEEC/BXIQItnWim5tG5Tj IA== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jm950rvk5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Sep 2022 23:19:31 +0000
+Received: from nasanex01b.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28FNJUWI005576
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Sep 2022 23:19:30 GMT
+Received: from hu-collinsd-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Thu, 15 Sep 2022 16:19:30 -0700
+From:   David Collins <quic_collinsd@quicinc.com>
+To:     Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     David Collins <quic_collinsd@quicinc.com>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>, Mark Brown <broonie@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH 0/3] thermal: qcom-spmi-temp-alarm: add support for new TEMP_ALARM subtypes
+Date:   Thu, 15 Sep 2022 16:18:47 -0700
+Message-ID: <cover.1663282895.git.quic_collinsd@quicinc.com>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: snAeLPAspRKV1tBgpLuIhDDItK-KzjK_
+X-Proofpoint-ORIG-GUID: snAeLPAspRKV1tBgpLuIhDDItK-KzjK_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-15_10,2022-09-14_04,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
+ impostorscore=0 malwarescore=0 adultscore=0 mlxscore=0 mlxlogscore=999
+ priorityscore=1501 spamscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2209130000
+ definitions=main-2209150148
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 15 Sept 2022 at 23:49, Christian Marangi <ansuelsmth@gmail.com> wrote:
->
-> Fix broken slave_config function that uncorrectly compare the
-> peripheral_size with the size of the config pointer instead of the size
-> of the config struct. This cause the crci value to be ignored and cause
-> a kernel panic on any slave that use adm driver.
->
-> To fix this, compare to the size of the struct and NOT the size of the
-> pointer.
->
-> Fixes: 03de6b273805 ("dmaengine: qcom-adm: stop abusing slave_id config")
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> Cc: stable@vger.kernel.org # v5.17+
+Add support in the qcom-spmi-temp-alarm driver for the new PMIC
+TEMP_ALARM peripheral subtypes: GEN2 rev 2 and LITE.  The GEN2 rev 2
+subtype provides greater flexibility in temperature threshold
+specification by using an independent register value to configure
+each of the three thresholds.  The LITE subtype utilizes a simplified
+set of control registers to configure two thresholds: warning and
+shutdown.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Also add support to avoid a potential issue on certain versions of
+the TEMP_ALARM GEN2 subtype when automatic stage 2 partial shutdown
+is disabled.
 
-> ---
->  drivers/dma/qcom/qcom_adm.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+David Collins (3):
+  thermal: qcom-spmi-temp-alarm: enable stage 2 shutdown when required
+  thermal: qcom-spmi-temp-alarm: add support for GEN2 rev 2 PMIC
+    peripherals
+  thermal: qcom-spmi-temp-alarm: add support for LITE PMIC peripherals
 
+ drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 407 +++++++++++++++++++-
+ 1 file changed, 391 insertions(+), 16 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.25.1
+
