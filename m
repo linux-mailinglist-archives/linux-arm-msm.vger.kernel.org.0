@@ -2,52 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C8335B9B61
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 14:56:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA4855B9B62
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 14:56:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229673AbiIOM4W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Sep 2022 08:56:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58324 "EHLO
+        id S229932AbiIOM4Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Sep 2022 08:56:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229544AbiIOM4V (ORCPT
+        with ESMTP id S229711AbiIOM4X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Sep 2022 08:56:21 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D2DF51A09
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 05:56:19 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id c11so30735059wrp.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 05:56:19 -0700 (PDT)
+        Thu, 15 Sep 2022 08:56:23 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0CD25142E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 05:56:21 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id t7so30711566wrm.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 05:56:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date;
-        bh=G2rHbxpP60TFR+zumNeCiSf5mCfJRZI93xLQZOWnmYY=;
-        b=aVuw7Ao9bWSdWPOAkXlAvUrgWFm15T6IzL4j33izpIsPodrX+PYSvVVf/rqlm5EoE1
-         mq5MEwJQK1Z6sbxzTRTLnSwp6EAI6ZM+5RnT7wjeGdoNJQpGo8RMsuRIntHhbL7NeD95
-         JTGroguJ/fNT85NG9v2QXJb6FSJG/pZLnc/xmQAtqkmHHpIFaDMR50b2JQdp0z/atNzY
-         QGLz3jEsnW9hc9Sl/JrPYus1AaPo1IU/GNDCB3Nb6gyU5jsrtkxwalvLaaqpy5S1UIj7
-         BGt2TTRXaSws+aRn2IdFvkUkFQdRCWRtrnZ1roMj5XlABrefNzvccOPo87IJmjgVjoVx
-         xE7g==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=lGIzKCCzT9Z91pOhcVsZGKjotZcXBUNtgUUXIg8kGbo=;
+        b=VuXecdGbo5H0WHk/RI9HLQXwwK1vUUhREBkhtGiX3Jl6fOuDuNBLg6iChSdEnTkLg0
+         wpN4E6AlnnbShqjmEJdh3MuUsz3tYbi2QZHlhulQ+ulv40Y1oVEwYV5sqhHXq83Zi9zs
+         V1ApSMiZTdrs7OAvZulaHbZGim0JP/oa9n795R1sQqHTBjb+jr08YiccC0bYxz3frWRH
+         ClWncZXoh2F31AWcO/Q5BNvvBa1XeJPyZbnBdZp/KrUWTEPxwtt6AiH14ZHPEKc/naqC
+         qAQqbQlhyHOaRUO13xSqkNIh4XQVkO1UG9mMEU2Bb49H2OU3RFOzSntKCXXlF6OjOLBa
+         sCZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=G2rHbxpP60TFR+zumNeCiSf5mCfJRZI93xLQZOWnmYY=;
-        b=wXmBYyKenvSoOdnWDzL4yLwa+CipDi7Un5oecxBZ3kpLMstlW/4zk0bMTI4dL98UU6
-         7ZtqphJAqKdAUCExcxTmD29T4Qyx3nynS/3oBQJCeU6Lgs+1eo7bJgPKCKGVW5ZjPAED
-         Q2GFi71MJJ0U5LjaKEvKx1+37tth05hgrokTvWlPP128Lk3Hfrm8AVRLpQm4/DpWFEWh
-         wQb0U9RfRNQmCrkrSfVoK1qnHeMwAlFte868ETuhYK2zXTV+rGXDTFECkw6E+Db/rwyd
-         jM+1mPxPTwo96Pm6qupZLOIdBsmYTS6hHajtJB0G7jcNQI7l6NfXUUSyF+2k3qY/b0pg
-         kT2A==
-X-Gm-Message-State: ACrzQf3o/+K5hXoGIZ+oH89oLqjgPUdWFbI+fNmsV+kXoQbtomi0QY7f
-        8KJqMgKvh8AkvvJ2u8hlwho1oQ==
-X-Google-Smtp-Source: AMsMyM76KrIHzxT8CDfHmA6sOIBVAkTVLDe0LL3YIWLSTze54PfuHSmOXH1+RYNH95t9DQIYTSbC3w==
-X-Received: by 2002:adf:f509:0:b0:22a:cbe3:3da8 with SMTP id q9-20020adff509000000b0022acbe33da8mr4053421wro.532.1663246577950;
-        Thu, 15 Sep 2022 05:56:17 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=lGIzKCCzT9Z91pOhcVsZGKjotZcXBUNtgUUXIg8kGbo=;
+        b=VC7ysgWlPmjm5YBRmn+qpS7amcvqvMD0vMa7WOP/eyb0UKnjwmIUnzp6DH6ug/paWa
+         hlsgGAoClesOiAdeuVLGk2rTEs03WNgAnyvQs6r+7+skvxijqYTqTifYrZif7Fn/Sauz
+         I3oFM/1asgwe+pW9qMtPjrv+MgtDN0LhtFazswBJl4DLyvyHKVJJxpjWX/bBTzy2xOnp
+         8ZvhKhOeWoAhX9TQt+fgYUxxrlMHXZt3D/+WegBTltlFxR3ljQtK8TRMJNm1hlJjQhIr
+         8yeayRSlX/tgujqPeT34svUUy2GTBXxQ+DtKLWKP7W3LOssoWkijaXJ3WCazOUp1iJ6B
+         rfaA==
+X-Gm-Message-State: ACgBeo0JwEzjDEHLCQeIZXIxrmCYQAPKhBQIJccO0vrd0fACcNMHeX77
+        6IebJN8BD/jIYS8IcQOCX33sHg==
+X-Google-Smtp-Source: AA6agR5NfkgxbpXSZo002+Ikyd38sNhGJGQI6H3P46uFW0Rvglr5n1hmYSs9SZy7Ecb4Ie0qv80k7A==
+X-Received: by 2002:adf:fa83:0:b0:205:c0cb:33c6 with SMTP id h3-20020adffa83000000b00205c0cb33c6mr25811807wrr.39.1663246580396;
+        Thu, 15 Sep 2022 05:56:20 -0700 (PDT)
 Received: from srini-hackbox.lan (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.gmail.com with ESMTPSA id o11-20020a05600c510b00b003a845621c5bsm2764776wms.34.2022.09.15.05.56.16
+        by smtp.gmail.com with ESMTPSA id o11-20020a05600c510b00b003a845621c5bsm2764776wms.34.2022.09.15.05.56.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Sep 2022 05:56:17 -0700 (PDT)
+        Thu, 15 Sep 2022 05:56:18 -0700 (PDT)
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 To:     broonie@kernel.org
 Cc:     lgirdwood@gmail.com, robh+dt@kernel.org,
@@ -55,11 +56,14 @@ Cc:     lgirdwood@gmail.com, robh+dt@kernel.org,
         perex@perex.cz, tiwai@suse.com, linux-arm-msm@vger.kernel.org,
         alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH v4 0/4] ASoC: qcom: add support for sc8280xp machine
-Date:   Thu, 15 Sep 2022 13:56:07 +0100
-Message-Id: <20220915125611.22473-1-srinivas.kandagatla@linaro.org>
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v4 1/4] ASoC: qcom: common: use EXPORT_SYMBOL_GPL instead of EXPORT_SYMBOL
+Date:   Thu, 15 Sep 2022 13:56:08 +0100
+Message-Id: <20220915125611.22473-2-srinivas.kandagatla@linaro.org>
 X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20220915125611.22473-1-srinivas.kandagatla@linaro.org>
+References: <20220915125611.22473-1-srinivas.kandagatla@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -71,39 +75,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patchset adds support for SC8280XP SoC machine driver.
+qcom_snd_parse_of depends on ASoC EXPORT_SYMBOL_GPL functions,
+so make qcom_snd_parse_of and EXPORT_SYMBOL_GPL.
 
-First patch moves some of the commonly used code to common from sm8250 machine driver
-and the follow on code adds minimal support for sc8280xp.
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ sound/soc/qcom/common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Currently this driver is only tested with SmartSpeakers and Headset
-on Lenovo Thinkpad X13s.
-
-Support for sm8450 is tested and I will post the patches soon.
-
-Thanks,
-Srini
-
-Changes since v3:
-	- fixed few spellings in commit log
-	- removed build dependency with APR
-
-Srinivas Kandagatla (4):
-  ASoC: qcom: common: use EXPORT_SYMBOL_GPL instead of EXPORT_SYMBOL
-  ASoC: dt-bindings: qcom,sm8250: add compatibles for sm8450 and sm8250
-  ASoC: qcom: sm8250: move some code to common
-  ASoC: qcom: add machine driver for sc8280xp
-
- .../bindings/sound/qcom,sm8250.yaml           |   2 +
- sound/soc/qcom/Kconfig                        |  12 ++
- sound/soc/qcom/Makefile                       |   2 +
- sound/soc/qcom/common.c                       | 173 +++++++++++++++++-
- sound/soc/qcom/common.h                       |  35 ++++
- sound/soc/qcom/sc8280xp.c                     | 157 ++++++++++++++++
- sound/soc/qcom/sm8250.c                       | 152 +--------------
- 7 files changed, 387 insertions(+), 146 deletions(-)
- create mode 100644 sound/soc/qcom/sc8280xp.c
-
+diff --git a/sound/soc/qcom/common.c b/sound/soc/qcom/common.c
+index c407684ce1a2..e53ad84f8ff5 100644
+--- a/sound/soc/qcom/common.c
++++ b/sound/soc/qcom/common.c
+@@ -175,6 +175,6 @@ int qcom_snd_parse_of(struct snd_soc_card *card)
+ 	of_node_put(np);
+ 	return ret;
+ }
+-EXPORT_SYMBOL(qcom_snd_parse_of);
++EXPORT_SYMBOL_GPL(qcom_snd_parse_of);
+ 
+ MODULE_LICENSE("GPL v2");
 -- 
 2.21.0
 
