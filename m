@@ -2,48 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 829A75B9329
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 05:37:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55EAD5B932C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 05:37:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230258AbiIODhK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Sep 2022 23:37:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52988 "EHLO
+        id S230266AbiIODhN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Sep 2022 23:37:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230165AbiIODhI (ORCPT
+        with ESMTP id S229553AbiIODhM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Sep 2022 23:37:08 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AFE090188;
-        Wed, 14 Sep 2022 20:37:08 -0700 (PDT)
+        Wed, 14 Sep 2022 23:37:12 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA50C90188;
+        Wed, 14 Sep 2022 20:37:10 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DD2006206E;
+        by ams.source.kernel.org (Postfix) with ESMTPS id 91CB9B81D75;
+        Thu, 15 Sep 2022 03:37:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86DA7C43140;
         Thu, 15 Sep 2022 03:37:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8984DC433D6;
-        Thu, 15 Sep 2022 03:37:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663213027;
-        bh=aD5/tvc2gPQ3YPDDUEU03mu/6ZXtQc2W7QvZYVUpWP0=;
+        s=k20201202; t=1663213028;
+        bh=Gvyk/SWdp3y76yHv4Si3MDoRW3QEYPbCruPd8bBJkkA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=t2DJ6qnUp/nZZJESuB071I74ukQMrc0o0csEUy5dnd6HzsUAmIdIxWtkZtFXUZ8us
-         JqSfD6eUS4EUuFG1fc3vNsMFq2kmEi51Fu+IUwexJFf77V4mYrvaC6gSiJhOmzKpFX
-         iiuGxa8dZNUOXfThRfwEJlipxqRMXvGDL+JPpzjPWkSbdmFqrWQF/ECj1eRwq7xp8O
-         4Q34zEAhc0Iesiuvi/8OlIw/G/4F3/wPU/gvWTKQ/URxBQgsoOUjUjJqPaD3i/X0Sw
-         lnjbAZ2SKEfZAsGiC2aue8ZXUXVQTwif0wdg2Cq/BbNGgoIq0hEJruvN9slVsYz6Vl
-         UsMe3u0vGl+cA==
+        b=o1zxrBI266Ktw+9MqdykBQZ7Tdx5QiCDK8cUwW/JBBYGqu5lEFacP6exwyh2drYID
+         wgYnfhiQHhQqfQJRQ0uO2xLUm/J5CLQilP7SB2+I+986AbuWuHWrmp+cgBXsPSH97k
+         BHC3svEDhN3pKYnq96mrxVtvloIOvIfB2mygr5MJFdACNKQgYmAQQgaJ6gWR0Cg4pc
+         29G0OVyooYkbJCDfwJW5+CUtLyUZAdAGxebe5ovb0h/PKSWLcKb7aoWS2nPYMhFgE8
+         yfJuZ5rD7eSoJGQivGhaJE7gXdM/13QPH18dIDPhR2odYqzrBtQ0E2rm02p3xXUYMB
+         E6TOZuk8wBFog==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>, dianders@chromium.org
-Cc:     agross@kernel.org, jinghung.chen3@hotmail.com,
-        konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
-        robh+dt@kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: (subset) [PATCH 1/2] dt-bindings: arm: qcom: Adjust LTE SKUs for sc7280-villager
-Date:   Wed, 14 Sep 2022 22:36:50 -0500
-Message-Id: <166321302062.788007.3846750146820051620.b4-ty@kernel.org>
+To:     mturquette@baylibre.com, agross@kernel.org, quic_tdas@quicinc.com,
+        Bjorn Andersson <andersson@kernel.org>,
+        dmitry.baryshkov@linaro.org, robh+dt@kernel.org,
+        swboyd@chromium.org, krzysztof.kozlowski+dt@linaro.org
+Cc:     linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: (subset) [PATCH 00/15] clk: qcom: use parent_hws/_data for APQ8064 clocks
+Date:   Wed, 14 Sep 2022 22:36:51 -0500
+Message-Id: <166321302052.788007.14469840237160862340.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20220829084732.1.I9ef7f8b909a7afbef9ff2251a98c67033f37b516@changeid>
-References: <20220829084732.1.I9ef7f8b909a7afbef9ff2251a98c67033f37b516@changeid>
+In-Reply-To: <20220623120418.250589-1-dmitry.baryshkov@linaro.org>
+References: <20220623120418.250589-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -57,23 +58,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 29 Aug 2022 08:48:23 -0700, Douglas Anderson wrote:
-> There have been a few changes since the patch ("dt-bindings: arm:
-> qcom: document sc7280 and villager board").
-> * New firmware reports LTE boards as "SKU 512" now. Old firmware will
->   still report "SKU 0", but that's all pre-production and everyone
->   will update.
-> * It's been relaized that no "-rev0" boards were ever built that were
->   WiFi-only. Thus we don't two entries for -rev0.
+On Thu, 23 Jun 2022 15:04:03 +0300, Dmitry Baryshkov wrote:
+> This series converts the APQ8064/MSM8960 clock drivers, bindings and DTs
+> to use parent_hws/_data and excplicit clock binding in DT.
+> 
+> Dependencies: [1] (whole series), [2], [3]
+> 
+> [1] https://lore.kernel.org/linux-arm-msm/20220521151437.1489111-1-dmitry.baryshkov@linaro.org/
+> [2] https://lore.kernel.org/linux-arm-msm/20220617122922.769562-2-dmitry.baryshkov@linaro.org/
+> [3] https://lore.kernel.org/linux-arm-msm/20220617122922.769562-3-dmitry.baryshkov@linaro.org/
 > 
 > [...]
 
 Applied, thanks!
 
-[1/2] dt-bindings: arm: qcom: Adjust LTE SKUs for sc7280-villager
-      commit: ff0ea86a538e80879243364bcf1a42e2d0eb6254
-[2/2] arm64: dts: qcom: sc7280-villager: Adjust LTE SKUs
-      commit: 68aa834823e09a540a23374129326a51efe877a3
+[10/15] ARM: dts: qcom: apq8064: add clocks to the LCC device node
+        commit: 30f17249c171c9ac50e9f6d51c0bb5db1f5b2403
+[11/15] ARM: dts: qcom: msm8960: add clocks to the LCC device node
+        commit: 6e9b4595609adf4ee97970a84a6eaeb1610aacb3
+[12/15] ARM: dts: qcom: apq8064: add clocks to the GCC device node
+        commit: 85ddc865219b04ea7930a8107943fe3c2e3af886
+[13/15] ARM: dts: qcom: msm8960: add clocks to the GCC device node
+        commit: 80787e417f3058c6ea59af726e803ca307b67867
+[14/15] ARM: dts: qcom: apq8064: add clocks to the MMCC device node
+        commit: f79742da254e47d38ea934813fb44a91aa834ee9
+[15/15] ARM: dts: qcom: msm8960: add clocks to the MMCC device node
+        commit: 2e312b3429244eae1b105cb942550f2e5282f887
 
 Best regards,
 -- 
