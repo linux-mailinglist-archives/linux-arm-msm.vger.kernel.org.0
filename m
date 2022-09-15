@@ -2,51 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 156165B933E
+	by mail.lfdr.de (Postfix) with ESMTP id 908245B933F
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 05:37:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230280AbiIODhT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Sep 2022 23:37:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53176 "EHLO
+        id S230222AbiIODhW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Sep 2022 23:37:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230283AbiIODhQ (ORCPT
+        with ESMTP id S230118AbiIODhR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Sep 2022 23:37:16 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BEB092F7E;
-        Wed, 14 Sep 2022 20:37:14 -0700 (PDT)
+        Wed, 14 Sep 2022 23:37:17 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9A34901AB;
+        Wed, 14 Sep 2022 20:37:15 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 7EFABB81D75;
-        Thu, 15 Sep 2022 03:37:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF13EC4347C;
-        Thu, 15 Sep 2022 03:37:09 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id C221FB81D84;
+        Thu, 15 Sep 2022 03:37:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769E6C433C1;
+        Thu, 15 Sep 2022 03:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663213031;
-        bh=KxdZUKe1FhFDeqYOXN6BYRfxXZGj21xAg5hE3J+Cd5k=;
+        s=k20201202; t=1663213032;
+        bh=Gb7t8DiH7SOhhau6IWe9thIcIHW6pfAjHKJqNetuUHk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=kWKUEfmG+e/tYxbHra/T7k7GOJ/jZCv4yTs8pwDMCc2cibgNiws5zwPshLWp3CQF1
-         DL6zmPDYq/RtwvemGwmWY9EoHq7DySOQaBpOOMWpHSnhTWH9QpWx3Zj2oNa8fllGBU
-         mYO3fslzKWCE2akRA45YWXL6Z4xDBngzO/tvyniiE7iQFkwSm/3C9CLmUnURbN7kJx
-         KxPNrLv9ynMVsDDNUVEunM3SnqTOBEakbcBw6vvhSLKm1eB6vY8T77zhoUL7+OaKis
-         X/ESlHNH1+bFH6WcjtVHyjPm09L3F7vPLSzJ3gxjOSPF1AVXU8TnN/9XvIg426mOVI
-         ZOp1J9HTH6qQA==
+        b=EOnnpxSeD1il8bNSK66nnMYDooGtB7mwUiRrmPZHqYgk0tF4iN9W08Ta5ORUc2phH
+         KD0ESXUd5gAWB3MdSeK0SJfRbBkOvkWPVlTW9TMN1YyrguGzn2vwTwb08kKJLLTSZ5
+         3VjGSbViJ5FO6VZz1ZoOfhWzSaAOk07P0j/pzkU2KWvltwE26ZP/Qnw840U6hP7F2+
+         lCrtwr0o9T6hqQX2SYt1t8schzsp24DjGuG0TRD989wNxLYQMgjBfLU4kCm0D5XjKF
+         GLxdDmaG5q1TZMF1vDdusA03OFHHyVyG5OHeszMH9A0EA3lWs7ATmtvCis+lKt7K2X
+         FahWQAg3ioenw==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     agross@kernel.org, Bjorn Andersson <andersson@kernel.org>,
-        dmitry.baryshkov@linaro.org, robh+dt@kernel.org,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     linux-phy@lists.infradead.org, dri-devel@lists.freedesktop.org,
-        swboyd@chromium.org, airlied@linux.ie, vkoul@kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        daniel@ffwll.ch, kishon@ti.com, linux-arm-msm@vger.kernel.org
-Subject: Re: (subset) [PATCH v3 0/3] drm/msm/hdmi: turn MSM8996 HDMI PHY into OF clock provider
-Date:   Wed, 14 Sep 2022 22:36:53 -0500
-Message-Id: <166321302054.788007.13905269452519533105.b4-ty@kernel.org>
+To:     ~postmarketos/upstreaming@lists.sr.ht, konrad.dybcio@somainline.org
+Cc:     agross@kernel.org, angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, rnayak@codeaurora.org,
+        jamipkettunen@somainline.org, krzysztof.kozlowski+dt@linaro.org,
+        martin.botka@somainline.org, robh+dt@kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: (subset) [PATCH 1/2] dt-bindings: power: rpmpd: Add SM6375 power domains
+Date:   Wed, 14 Sep 2022 22:36:54 -0500
+Message-Id: <166321302060.788007.3857501388494145309.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20220704161148.814510-1-dmitry.baryshkov@linaro.org>
-References: <20220704161148.814510-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220716193201.455728-1-konrad.dybcio@somainline.org>
+References: <20220716193201.455728-1-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -60,21 +59,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 4 Jul 2022 19:11:45 +0300, Dmitry Baryshkov wrote:
-> On MSM8996 the HDMI PHY is the QMP PHY, it provides an HDMI PLL clock
-> used by the MMCC. Add support for providing this clock to the OF
-> framework by registerding the clock provider and adding #clock-cells
-> property to the DT node.
+On Sat, 16 Jul 2022 21:32:00 +0200, Konrad Dybcio wrote:
+> Add the bindings for SM6375 RPMPDs.
 > 
-> The dt-bindings from this series depends on changes from [1] (part of
-> linux-next, but not of the msm-next yet).
 > 
-> [...]
 
 Applied, thanks!
 
-[3/3] arm64: dts: qcom: msm8996: add #clock-cells and XO clock to the HDMI PHY node
-      commit: 157b615066288f84e1812964a439603cfe8c1a19
+[1/2] dt-bindings: power: rpmpd: Add SM6375 power domains
+      commit: 2d48e6ea3080ef7b2424dabfb500e29b030129d6
+[2/2] soc: qcom: rpmpd: Add SM6375 support
+      commit: df646a17f103c6f18ab85c5e3773763d18dc528b
 
 Best regards,
 -- 
