@@ -2,79 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D5105B9D36
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 16:34:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48FB55B9D68
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 16:37:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229864AbiIOOeJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Sep 2022 10:34:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49012 "EHLO
+        id S230292AbiIOOg3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Sep 2022 10:36:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229786AbiIOOeI (ORCPT
+        with ESMTP id S230242AbiIOOfj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Sep 2022 10:34:08 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B87F8A1D2;
-        Thu, 15 Sep 2022 07:34:07 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28FETS4k023581;
-        Thu, 15 Sep 2022 14:34:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=RYPfsoQxc06tcZQunrZJdvK12bl48t2xonjXL0dWddA=;
- b=jAj97wuU6LLfMwPGukrYpX2ecSRup0exDAWVLxSS1xANT7oUtkrD90mxoxxIrL3TUFkl
- gBOj3aqKanwP72zHaNgAJWSf+rQHlgFyRH75gPq/col6OsMlhnpLrOp+LhLYOyccTJS+
- sdk5pWlBvlbIRgxxwfOOT2SIO/SkGM7p4OFUDFg11Q7iohFwG9qKPISEtEC5xKs9oujl
- kfa+7dDUtKpyS+2qm3IjoxrHZBafodssxq9FIAPSowo6atZ8nUO96EFZiZ/JGFVwj/PC
- fv8PSbGCynT/XRSzGLoqBQSqS9jQirHHI2Nu28zahhgyeTF/fAuguiS8gQHc4QdsRmdW ig== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jm2r88g6r-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 15 Sep 2022 14:34:03 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28FEY2Wo032605
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 15 Sep 2022 14:34:02 GMT
-Received: from [10.110.52.115] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 15 Sep
- 2022 07:34:01 -0700
-Message-ID: <643bcf80-111e-d8b3-8965-2a27b9c6d642@quicinc.com>
-Date:   Thu, 15 Sep 2022 07:34:00 -0700
+        Thu, 15 Sep 2022 10:35:39 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6BC673904;
+        Thu, 15 Sep 2022 07:35:01 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 182DAB82108;
+        Thu, 15 Sep 2022 14:35:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F71C433D6;
+        Thu, 15 Sep 2022 14:34:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663252498;
+        bh=MBEuRB4+zVxwIj+Pghot4ZhJxcst/TbsIw8jjymioF0=;
+        h=From:To:Cc:Subject:Date:From;
+        b=gmtJtNs8ZOB1r4cxXaWG4juoTtBhPPZIQ53ZQ2DVpOlfUatCxNQcU7i9hbFo9XeuU
+         5/DaHWwkQEWaK0pUMPT7plOJCOdLe8eHmWi8lNlfpfAGW4pLidggxmyGHylstVEkXp
+         1e/OhA+qjllUV0dT4kKG/oZzQBcm6XQVQ5cmHjS80jrWWhn9c5qkVnuIsWufyXwrM4
+         2QKPRg7XM3B1denglydAWs0itGudVz6ekbaPxa0DVXv2GWL+3PTcJ1yJqL0RND+QzF
+         8sYDx02ahVpYycq22zc5r01qF9vWk0Qjc0YXLzaQ1I39Iue/12s9UF/sOsAydnMn7/
+         OEBnZxgeMb4sg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1oYpxG-0005AW-Cc; Thu, 15 Sep 2022 16:35:02 +0200
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 1/2] arm64: dts: qcom: ipq8074: fix PCIe PHY serdes size
+Date:   Thu, 15 Sep 2022 16:34:30 +0200
+Message-Id: <20220915143431.19842-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH V4 2/2] rpmsg: ctrl: Add lock to rpmsg_ctrldev_remove
-Content-Language: en-US
-To:     Deepak Kumar Singh <quic_deesin@quicinc.com>,
-        <bjorn.andersson@linaro.org>, <arnaud.pouliquen@foss.st.com>,
-        <swboyd@chromium.org>, <quic_clew@quicinc.com>,
-        <mathieu.poirier@linaro.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>
-References: <1663235055-3081-1-git-send-email-quic_deesin@quicinc.com>
- <1663235055-3081-3-git-send-email-quic_deesin@quicinc.com>
-From:   Jeff Johnson <quic_jjohnson@quicinc.com>
-In-Reply-To: <1663235055-3081-3-git-send-email-quic_deesin@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 1BiQdjyP1E_ao1gkSu2_Aa8CdsOv3D9x
-X-Proofpoint-GUID: 1BiQdjyP1E_ao1gkSu2_Aa8CdsOv3D9x
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-15_08,2022-09-14_04,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- adultscore=0 spamscore=0 priorityscore=1501 impostorscore=0 mlxscore=0
- malwarescore=0 mlxlogscore=999 phishscore=0 clxscore=1011
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2208220000 definitions=main-2209150084
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,46 +59,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/15/2022 2:44 AM, Deepak Kumar Singh wrote:
-> Call to rpmsg_ctrldev_ioctl() and rpmsg_ctrldev_remove() must be synchronized.
-> In present code rpmsg_ctrldev_remove() is not protected with lock, therefore
-> new char device creation can succeed through rpmsg_ctrldev_ioctl() call. At the
-> same time call to rpmsg_ctrldev_remove() funtion for ctrl device removal will
+The size of the PCIe PHY serdes register region is 0x1c4 and the
+corresponding 'reg' property should specifically not include the
+adjacent regions that are defined in the child node (e.g. tx and rx).
 
-nit: s/funtion/function/
+Fixes: 33057e1672fe ("ARM: dts: ipq8074: Add pcie nodes")
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+---
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> free associated rpdev device. As char device creation already succeeded, user
-> space is free to issue open() call which maps to rpmsg_create_ept() in kernel.
-> rpmsg_create_ept() function tries to reference rpdev which has already been
-> freed through rpmsg_ctrldev_remove(). Issue is predominantly seen in aggressive
-> reboot tests where rpmsg_ctrldev_ioctl() and rpmsg_ctrldev_remove() can race with
-> each other.
-> 
-> Adding lock in rpmsg_ctrldev_remove() avoids any new char device creation
-> throught rpmsg_ctrldev_ioctl() while remove call is already in progress.
-
-nit: s/throught/through/
-> 
-> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
-> ---
->   drivers/rpmsg/rpmsg_ctrl.c | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/rpmsg/rpmsg_ctrl.c b/drivers/rpmsg/rpmsg_ctrl.c
-> index 107da70..4332538 100644
-> --- a/drivers/rpmsg/rpmsg_ctrl.c
-> +++ b/drivers/rpmsg/rpmsg_ctrl.c
-> @@ -194,10 +194,12 @@ static void rpmsg_ctrldev_remove(struct rpmsg_device *rpdev)
->   	struct rpmsg_ctrldev *ctrldev = dev_get_drvdata(&rpdev->dev);
->   	int ret;
->   
-> +	mutex_lock(&ctrldev->ctrl_lock);
->   	/* Destroy all endpoints */
->   	ret = device_for_each_child(&ctrldev->dev, NULL, rpmsg_chrdev_eptdev_destroy);
->   	if (ret)
->   		dev_warn(&rpdev->dev, "failed to nuke endpoints: %d\n", ret);
-> +	mutex_unlock(&ctrldev->ctrl_lock);
->   
->   	cdev_device_del(&ctrldev->cdev, &ctrldev->dev);
->   	put_device(&ctrldev->dev);
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+index d53675fc1595..b9bf43215ada 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+@@ -199,7 +199,7 @@ qusb_phy_0: phy@79000 {
+ 
+ 		pcie_qmp0: phy@86000 {
+ 			compatible = "qcom,ipq8074-qmp-pcie-phy";
+-			reg = <0x00086000 0x1000>;
++			reg = <0x00086000 0x1c4>;
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+ 			ranges;
+@@ -227,7 +227,7 @@ pcie_phy0: phy@86200 {
+ 
+ 		pcie_qmp1: phy@8e000 {
+ 			compatible = "qcom,ipq8074-qmp-pcie-phy";
+-			reg = <0x0008e000 0x1000>;
++			reg = <0x0008e000 0x1c4>;
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+ 			ranges;
+-- 
+2.35.1
 
