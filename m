@@ -2,66 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B36895B91E6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 02:46:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E362A5B9229
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 03:33:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230216AbiIOAqo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Sep 2022 20:46:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58658 "EHLO
+        id S229832AbiIOBdt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Sep 2022 21:33:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229873AbiIOAqm (ORCPT
+        with ESMTP id S229738AbiIOBds (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Sep 2022 20:46:42 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE71E4C613
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Sep 2022 17:46:41 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id 13so9557183ejn.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Sep 2022 17:46:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=WgZixTRxTWoDkCtULJb0cXzPEDep5TgMZR2wDcQQdOw=;
-        b=Kg+1UZzlDU50pcnzV1o05HTamlrToevhWcGaP84OVJsseY3AhIhNhwicDxakzx5zQO
-         W7HZ1yWfcO696l161SYZhn+PCzNXzc1jy5DgAJFhVBcg1Q2wVas/GrD/F87VOavB801q
-         1SiQDMUdU6HpX4x5oSDoCEz5kxjQU8EyeCuyk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=WgZixTRxTWoDkCtULJb0cXzPEDep5TgMZR2wDcQQdOw=;
-        b=DU5/thzvRYWruNze+XNJRzJrjgCOKN9ABVxT2C9lslShSuyFuZWL9ox+0+t4EfNhRG
-         FI2R8cf1Pm6GnbIqMiY3jhVdpeEKb3eKasf+rrthkwWxbRV3VvT61mOlT3uxkRQgbDH4
-         ItQaUDRZhEsOiPF9K9YLo0d94uLNcv8blWAjRTZFqaWCuDPuVA8QOKr6XkmkrguOryAq
-         jJ6zj9d3ouw5IbOJMpn34I4M3MDppf5DxEUaYp1Truj7AzKotrOsl6bClsY1qhBUib37
-         1JXgGatTr3JFaQ1YMH8m0rqhwTkWtaS7FNyvW6i7Ab37/wMoTJdw7QWau75MVmdoqHlt
-         BoiA==
-X-Gm-Message-State: ACgBeo2a2dGVkejTbT0SrTuAGPfnjxCxatgQklJon0wQPFph6ULN+ouc
-        VoI2ASihK6v11J7xo4tBgu/7ieXXHpSNFtEL2WrXFj6SzGSTwA==
-X-Google-Smtp-Source: AA6agR54zdmn7Yw5OAkEnKI6FIl0BrR5R5qoYvJoVPX6e0a0Ba7VGgMA3ek/Ii7ijMcFUlJ3KBZn+g4zCLbdbONkGRU=
-X-Received: by 2002:a17:906:401:b0:73d:af73:b78 with SMTP id
- d1-20020a170906040100b0073daf730b78mr27986527eja.122.1663202800297; Wed, 14
- Sep 2022 17:46:40 -0700 (PDT)
+        Wed, 14 Sep 2022 21:33:48 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5922C792DE;
+        Wed, 14 Sep 2022 18:33:44 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28F0ZueQ017536;
+        Thu, 15 Sep 2022 01:33:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=LRBFs3XrfWaoGBTNqSmEzJ2c04tlJ8Rh82eU+9eVUuw=;
+ b=CwLYmIockp2hO1HIFAmLCwql+ZIz8z79i7hCI1ceXHtX9LT8mlv9Y2vkMxBR2texMvL9
+ m5u67dlx/JJjuUTe75kta+ZQEV9StCCW/J8KPBFhpRK/Foo7wlrgd//7giu4Pptb/Ffp
+ uqwbvJvmxpdGDsU5WCaGncSj/tqC1dnFndiQK58hz+vjSpLfvCsVr9OE7abtGwf9hwt/
+ ddhaB+HMixJXtTgTQ27Cr7uAL8c+ojHR1Dd8QWClv+8DftUR5Ziv2HfFnM4ucXspLLvm
+ i1k2h/gOD97gjMn1iM0ebvqiZFdtjUcSuHCKUqkZueTZBzABIOdxucLdSJy3Vf4z2x4j JQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jkp8arh6q-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Sep 2022 01:33:11 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28F1XAPk023301
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Sep 2022 01:33:11 GMT
+Received: from [10.79.43.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Wed, 14 Sep
+ 2022 18:33:07 -0700
+Subject: Re: [PATCH 2/2] mailbox: Add support for QTI CPUCP mailbox controller
+To:     Trilok Soni <quic_tsoni@quicinc.com>, <andersson@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <robh+dt@kernel.org>,
+        <jassisinghbrar@gmail.com>, <manivannan.sadhasivam@linaro.org>
+CC:     <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <konrad.dybcio@somainline.org>,
+        Gaurav Kohli <gkohli@codeaurora.org>
+References: <1663135386-26270-1-git-send-email-quic_sibis@quicinc.com>
+ <1663135386-26270-3-git-send-email-quic_sibis@quicinc.com>
+ <b8e0cbb4-8d4e-1208-0fa0-8f9178b6d85f@quicinc.com>
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+Message-ID: <04d046aa-59c8-46c5-d957-5d2e48f25d72@quicinc.com>
+Date:   Thu, 15 Sep 2022 07:03:04 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-References: <20220826065621.2255795-1-judyhsiao@chromium.org> <166308148206.625876.8801069802083923195.b4-ty@kernel.org>
-In-Reply-To: <166308148206.625876.8801069802083923195.b4-ty@kernel.org>
-From:   Judy Hsiao <judyhsiao@chromium.org>
-Date:   Thu, 15 Sep 2022 08:46:29 +0800
-Message-ID: <CAJXt+b90z32L3ZYh22Vnxo4=DbETJZjf+rx9X7ZuqqmaBDggfQ@mail.gmail.com>
-Subject: Re: [PATCH v4] arm64: dts: qcom: sc7280: Fix Dmic no sound on villager-r1
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     quic_srivasam@quicinc.com, judyhsiao@google.com,
-        cychiang@google.com, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        mka@chromium.org, Rob Herring <robh+dt@kernel.org>,
-        swboyd@chromium.org, dianders@chromium.org,
-        devicetree@vger.kernel.org,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-kernel@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+In-Reply-To: <b8e0cbb4-8d4e-1208-0fa0-8f9178b6d85f@quicinc.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: aVU5gjC4oydM2V8ZopPTFBLGNHmETNjq
+X-Proofpoint-ORIG-GUID: aVU5gjC4oydM2V8ZopPTFBLGNHmETNjq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-14_11,2022-09-14_04,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
+ mlxscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0 mlxlogscore=794
+ clxscore=1015 phishscore=0 malwarescore=0 priorityscore=1501 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2208220000
+ definitions=main-2209150002
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,T_SCC_BODY_TEXT_LINE,T_SPF_TEMPERROR autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,31 +85,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Please help to apply
-Add dtsi for sc7280 herobrine boards that using rt5682 codec (v4)
-https://patchwork.kernel.org/project/linux-arm-msm/list/?series=661760
-It's dependencies are landed.
+Hey Trilok,
+Thanks for taking time to review the patch.
 
-Thanks & Regards
+On 9/14/22 11:08 PM, Trilok Soni wrote:
+> Hi Sibi,
+> 
+>> +
+>> +MODULE_AUTHOR("Gaurav Kohli <gkohli@codeaurora.org>");
+>> +MODULE_AUTHOR("Sibi Sankar <quic_sibis@qti.qualcomm.com>");
+> 
+> Email address should be quic_sibi@quicinc.com.
+> 
+> codeaurora.org is any way deprecated, so we should we keep it ? I know 
+> giving the credit is important, but above address will not be reachable 
+> anyways.
+Ack my bad.
 
-On Tue, Sep 13, 2022 at 11:04 PM Bjorn Andersson <andersson@kernel.org> wrote:
->
-> On Fri, 26 Aug 2022 06:56:21 +0000, Judy Hsiao wrote:
-> > Fix the DMIC no sound issue of villager-r1 by using "PP1800_L2C" as the
-> > DMIC power source to match the hardware schematic.
-> >
-> > This patch:
-> >    1. set vdd-micb-supply to PP1800_L2C as the MIC Bias voltage regulator.
-> >    2. In audio-routing, set VA DMIC01~VA DMIC03 to use the vdd-micb-supply
-> >       setting.
-> >
-> > [...]
->
-> Applied, thanks!
->
-> [1/1] arm64: dts: qcom: sc7280: Fix Dmic no sound on villager-r1
->       commit: 61a301ca83736afeeeb307b931c59f107067da3c
->
-> Best regards,
-> --
-> Bjorn Andersson <andersson@kernel.org>
+> 
+> ---Trilok Soni
