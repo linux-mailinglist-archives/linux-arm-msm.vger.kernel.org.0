@@ -2,117 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE25A5B9871
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 12:04:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C48E5B9896
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 12:14:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229586AbiIOKEc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Sep 2022 06:04:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51988 "EHLO
+        id S230009AbiIOKOZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Sep 2022 06:14:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229541AbiIOKEb (ORCPT
+        with ESMTP id S229701AbiIOKOY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Sep 2022 06:04:31 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49BF8B68;
-        Thu, 15 Sep 2022 03:04:27 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28F5jlvb030887;
-        Thu, 15 Sep 2022 10:04:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=Zd5FJR3/2b2i9zCMWP/ALmP4REaiFxNaIZ1vKdn5YWg=;
- b=mN5GbLG/yewRDO2ogBu4SiYt9tpUZlFgDryJc9+668o+WfI8Cmw6RXjqOwMkxfuqS/yg
- Aue/gtyOAmyn3dzdXI72akcTt7HyPyZYJ5LAB3B4bSKke90VrAk28jtX2p4Tdj1H/jsR
- AszQet3+2thsti+GIsNfkFmwjgfZ9L3rtjh0DVxgQriFWaVFru4WJU/4D8juEe4ph+Yd
- 1aJQh63Z48+XY+MhEmIPRsukc5cckCfiVrIdf741sFqnNDuYeCooaDYQBukVb+eACzbt
- i8RauCFSfe4h3L2TvrOwHJSpqayaJcjnR3j1ZlnVzHzwPKbyUVZ6kYgv9Wt0mt5eRzMS aw== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jkwjerrqk-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 15 Sep 2022 10:04:26 +0000
-Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28FA4QdK003583
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 15 Sep 2022 10:04:26 GMT
-Received: from ecbld-sh026-lnx.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Thu, 15 Sep 2022 03:04:23 -0700
-From:   Maria Yu <quic_aiquny@quicinc.com>
-To:     <mathieu.poirier@linaro.org>
-CC:     Maria Yu <quic_aiquny@quicinc.com>,
-        <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_clew@quicinc.com>
-Subject: [PATCH v2] remoteproc: core: do pm relax when in RPROC_OFFLINE
-Date:   Thu, 15 Sep 2022 18:04:16 +0800
-Message-ID: <1663236256-52289-1-git-send-email-quic_aiquny@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <128dc161-8949-1146-bf8b-310aa33c06a8@quicinc.com>
-References: <128dc161-8949-1146-bf8b-310aa33c06a8@quicinc.com>
+        Thu, 15 Sep 2022 06:14:24 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D164183070;
+        Thu, 15 Sep 2022 03:14:22 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C99431692;
+        Thu, 15 Sep 2022 03:14:28 -0700 (PDT)
+Received: from [10.57.48.93] (unknown [10.57.48.93])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DECA23F73B;
+        Thu, 15 Sep 2022 03:14:19 -0700 (PDT)
+Message-ID: <c39b704a-ceae-9db8-7f4f-81d9cfee8495@arm.com>
+Date:   Thu, 15 Sep 2022 11:14:18 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: GUcUaCA29oXrTBSkGSr235y_pnjGUpIH
-X-Proofpoint-GUID: GUcUaCA29oXrTBSkGSr235y_pnjGUpIH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-15_06,2022-09-14_04,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
- priorityscore=1501 mlxlogscore=945 clxscore=1015 impostorscore=0
- adultscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0 mlxscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2208220000 definitions=main-2209150055
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.13.0
+Subject: Re: [PATCH 2/9] coresight-tpda: Add DSB dataset support
+To:     Tao Zhang <quic_taozha@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>
+Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
+References: <1662626705-13097-1-git-send-email-quic_taozha@quicinc.com>
+ <1662626705-13097-3-git-send-email-quic_taozha@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <1662626705-13097-3-git-send-email-quic_taozha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-8.7 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-RPROC_OFFLINE state indicate there is no recovery process
-is in progress and no chance to do the pm_relax.
-Because when recovering from crash, rproc->lock is hold and
-state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
-and then unlock rproc->lock.
-When the state is in RPROC_OFFLINE it means separate request
-of rproc_stop was done and no need to hold the wakeup source
-in crash handler to recover any more.
+Hi Tao
 
-Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
----
- drivers/remoteproc/remoteproc_core.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+On 08/09/2022 09:44, Tao Zhang wrote:
+> Read the DSB element size from the device tree. Set the register
+> bit that controls the DSB element size of the corresponding port.
+> 
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> ---
+>   drivers/hwtracing/coresight/coresight-tpda.c | 62 ++++++++++++++++++++++++++++
+>   drivers/hwtracing/coresight/coresight-tpda.h |  4 ++
+>   2 files changed, 66 insertions(+)
+> 
+> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/hwtracing/coresight/coresight-tpda.c
+> index c8bbc75..76636a1 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpda.c
+> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
+> @@ -37,6 +37,15 @@ static void tpda_enable_port(struct tpda_drvdata *drvdata, int port)
+>   	u32 val;
+>   
+>   	val = readl_relaxed(drvdata->base + TPDA_Pn_CR(port));
+> +	/*
+> +	 * Configure aggregator port n DSB data set element size
+> +	 * Set the bit to 0 if the size is 32
+> +	 * Set the bit to 1 if the size is 64
+> +	 */
+> +	if (drvdata->dsb_esize[port] == 32)
+> +		val &= ~TPDA_Pn_CR_DSBSIZE;
+> +	else if (drvdata->dsb_esize[port] == 64)
+> +		val |= TPDA_Pn_CR_DSBSIZE;
+>   	/* Enable the port */
+>   	val |= TPDA_Pn_CR_ENA;
+>   	writel_relaxed(val, drvdata->base + TPDA_Pn_CR(port));
+> @@ -105,6 +114,55 @@ static const struct coresight_ops tpda_cs_ops = {
+>   	.link_ops	= &tpda_link_ops,
+>   };
+>   
+> +static int tpda_parse_dsb(struct tpda_drvdata *drvdata)
+> +{
+> +	int len, port, i;
+> +	const __be32 *prop;
+> +	struct device_node *node = drvdata->dev->of_node;
+> +
+> +	/* Read the size of DSB element */
+> +	prop = of_get_property(node, "qcom,dsb-elem-size", &len);
+> +	if (prop) {
+> +		len /= sizeof(__be32);
+> +		/*
+> +		 * The read set of data is port and size, so the number of data
+> +		 * is a multiple of two. And the number of data will not exceed
+> +		 * two times that of the TPDA inpurts number.
+> +		 */
+> +		if (len < 2 || len >= (2 * TPDA_MAX_INPORTS) || len % 2 != 0) {
+> +			dev_err(drvdata->dev,
+> +				"Dataset DSB width entries are wrong\n");
+> +			return -EINVAL;
+> +		}
+> +
+> +		for (i = 0; i < len; i++) {
 
-diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index e5279ed9a8d7..247ced6b0655 100644
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -1956,6 +1956,17 @@ static void rproc_crash_handler_work(struct work_struct *work)
- 	if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE) {
- 		/* handle only the first crash detected */
- 		mutex_unlock(&rproc->lock);
-+		/*
-+		 * RPROC_OFFLINE state indicate there is no recovery process
-+		 * is in progress and no chance to have pm_relax in place.
-+		 * Because when recovering from crash, rproc->lock is hold and
-+		 * state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
-+		 * and then unlock rproc->lock.
-+		 * RPROC_OFFLINE is only an intermediate state in recovery
-+		 * process.
-+		 */
-+		if (rproc->state == RPROC_OFFLINE)
-+			pm_relax(rproc->dev.parent);
- 		return;
- 	}
- 
--- 
-2.7.4
+Please could we be explicit here that we are dealing with 2 entries
+in an iteration. i.e,
 
+		for (i = 0; i < len; i += 2) {
+> +			port = be32_to_cpu(prop[i++]);
+
+			port = be32_to_cpu(prop[i]);
+
+> +			if (port >= TPDA_MAX_INPORTS) {
+> +				dev_err(drvdata->dev,
+> +					"Wrong port specified for DSB\n");
+> +				return -EINVAL;
+> +			}
+> +			/* Set DSB element size for corresponding port to dsb_esize*/
+> +			drvdata->dsb_esize[port] = be32_to_cpu(prop[i]);
+
+		drvdata->dsb_esize[port] = be32_to_cpu(prop[i + 1]);
+
+> +		}
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int tpda_parse_of_data(struct tpda_drvdata *drvdata)
+> +{
+> +	int ret;
+> +
+> +	ret = tpda_parse_dsb(drvdata);
+> +	if (ret) {
+> +		dev_err(drvdata->dev, "Fail to get DSB data set element size\n");
+> +		return -EINVAL;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+>   static int tpda_init_default_data(struct tpda_drvdata *drvdata)
+>   {
+>   	int atid;
+> @@ -148,6 +206,10 @@ static int tpda_probe(struct amba_device *adev, const struct amba_id *id)
+>   
+>   	spin_lock_init(&drvdata->spinlock);
+>   
+> +	ret = tpda_parse_of_data(drvdata);
+> +	if (ret)
+> +		return ret;
+> +
+>   	ret = tpda_init_default_data(drvdata);
+>   	if (ret)
+>   		return ret;
+> diff --git a/drivers/hwtracing/coresight/coresight-tpda.h b/drivers/hwtracing/coresight/coresight-tpda.h
+> index 4beb332..ecc7869 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpda.h
+> +++ b/drivers/hwtracing/coresight/coresight-tpda.h
+> @@ -10,6 +10,8 @@
+>   #define TPDA_Pn_CR(n)		(0x004 + (n * 4))
+>   /* Aggregator port enable bit */
+>   #define TPDA_Pn_CR_ENA		BIT(0)
+> +/* Aggregator port DSB data set element size bit */
+> +#define TPDA_Pn_CR_DSBSIZE		BIT(8)
+>   
+>   #define TPDA_MAX_INPORTS	32
+>   
+> @@ -23,6 +25,7 @@
+>    * @csdev:      component vitals needed by the framework.
+>    * @spinlock:   lock for the drvdata value.
+>    * @enable:     enable status of the component.
+> + * @dsb_esize   DSB element size
+
+super minor nit: Missing ":", consistent with the other fields.
+
+>    */
+>   struct tpda_drvdata {
+>   	void __iomem		*base;
+> @@ -30,6 +33,7 @@ struct tpda_drvdata {
+>   	struct coresight_device	*csdev;
+>   	spinlock_t		spinlock;
+>   	u8			atid;
+> +	u32			dsb_esize[TPDA_MAX_INPORTS];
+>   };
+>   
+>   #endif  /* _CORESIGHT_CORESIGHT_TPDA_H */
+
+Suzuki
