@@ -2,178 +2,241 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AA135B93AC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 06:32:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CAE435B93CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 07:05:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229512AbiIOEcp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Sep 2022 00:32:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53668 "EHLO
+        id S229491AbiIOFFA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Sep 2022 01:05:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229479AbiIOEcn (ORCPT
+        with ESMTP id S229436AbiIOFE7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Sep 2022 00:32:43 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DF458E4E4;
-        Wed, 14 Sep 2022 21:32:42 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28F46hSA018202;
-        Thu, 15 Sep 2022 04:32:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=iOyl1ZRSLD3l7RdXgKTCXz7qYTdfN8+bAFd8DLwJ2ws=;
- b=ijXPEVBqSBNagt4dqsDDW+MMepB36KZyXbSSewJ3bFRRjHW1RJlCN/ShQUFoD54tqr7C
- XhnI1wJqYwPHdgsnkaHHIbB8UloY7HMhFXK9z7qifd9vdXEN8/moFP0Uy0ZoNhmMDOwO
- /oXFARsgODGaW3v/pHgfq7EnB2n/BwQbdw8O19KsTyR/yy/AIDqGqsF+npcJVfkYfBPG
- Pa5r5rYc4ZIxRzyeMG60eRic7kzFBcy9tux4RZzZ083Lq+NjSrlf7GnTR7PxH26Koy81
- TzlN8wQPx2zi8V0pvDmCxH3PBLktQgGTYc7wHkU7xCGX08qWCpQ9SBtBhkTDccZnFmAN kg== 
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jkvr302fa-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 15 Sep 2022 04:32:34 +0000
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 28F4WTbd017055;
-        Thu, 15 Sep 2022 04:32:29 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3jh4506nwv-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 15 Sep 2022 04:32:29 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 28F4WSXC017050;
-        Thu, 15 Sep 2022 04:32:29 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-krichai-hyd.qualcomm.com [10.213.110.37])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 28F4WSpS017048;
-        Thu, 15 Sep 2022 04:32:28 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 4058933)
-        id 994E044C6; Thu, 15 Sep 2022 10:02:27 +0530 (+0530)
-From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
-To:     helgaas@kernel.org
-Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mka@chromium.org,
-        quic_vbadigan@quicinc.com, quic_hemantk@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, manivannan.sadhasivam@linaro.org,
-        swboyd@chromium.org, dmitry.baryshkov@linaro.org,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        "Saheed O. Bolarinwa" <refactormyself@gmail.com>,
-        Rajat Jain <rajatja@google.com>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>
-Subject: [RESEND PATCH v6] PCI/ASPM: Update LTR threshold based upon reported max latencies
-Date:   Thu, 15 Sep 2022 10:02:06 +0530
-Message-Id: <1663216335-9311-1-git-send-email-quic_krichai@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 5LhTohYuskcrg8pzDVA8OK3mzoQ2ScXT
-X-Proofpoint-GUID: 5LhTohYuskcrg8pzDVA8OK3mzoQ2ScXT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-15_02,2022-09-14_04,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
- priorityscore=1501 mlxlogscore=999 spamscore=0 bulkscore=0 adultscore=0
- malwarescore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2208220000 definitions=main-2209150022
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Thu, 15 Sep 2022 01:04:59 -0400
+X-Greylist: delayed 445 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 14 Sep 2022 22:04:56 PDT
+Received: from condef-10.nifty.com (condef-10.nifty.com [202.248.20.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69A9B1AD8A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Sep 2022 22:04:55 -0700 (PDT)
+Received: from conssluserg-02.nifty.com ([10.126.8.81])by condef-10.nifty.com with ESMTP id 28F4pw7F017772
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 13:51:58 +0900
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49]) (authenticated)
+        by conssluserg-02.nifty.com with ESMTP id 28F4pJsh012735;
+        Thu, 15 Sep 2022 13:51:20 +0900
+DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-02.nifty.com 28F4pJsh012735
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
+        s=dec2015msa; t=1663217480;
+        bh=LokpXFM+jKjnxi3CKS4674Efn0BVYhL63eu/XEV6zfo=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=ZRmdAKrFegaRJAVTjyJd+dXa6SuuzpxvPgtblIdRYwewtVbS8kflY7ZQWEMqd43Sw
+         V59IapXq5RnGXiodLwuHTkY/D9/I+e02jd3RwIC8cJj86s1opWTH1W66GQBqTDDU4g
+         PLsFB9jZVBJoLNd82pm1B0ZuwcFutUnKTHeZKpJ+Oas8BC39iqmXSVF238u8VPtFdJ
+         GZzBwjcct/0aa3n4FnfNTKDh+GsBCa2/Cii0s0A/jKUHYaiwHlvIpa+VorK+Oa/uhj
+         Ci50p+kT2E2HgJV5yh4YBSs1GtPiVGvprmZd0Hzb/qcjBKp74pwEsZziscRbiBvYfA
+         CTV4yKdTHZR8g==
+X-Nifty-SrcIP: [209.85.210.49]
+Received: by mail-ot1-f49.google.com with SMTP id v14-20020a9d69ce000000b00658f339b0a3so411038oto.1;
+        Wed, 14 Sep 2022 21:51:20 -0700 (PDT)
+X-Gm-Message-State: ACgBeo3MYNTOLyWULnBbpKJE1KjY/kCDi7dRYtTXUuBXHv5gwo46qAxx
+        EcLGQPy2cB8Xo9Bmqtk7Ch2TLS+dKF4Zjvp8TKY=
+X-Google-Smtp-Source: AA6agR49F9OnVykDVvTYWEHonilGPnu1xqf+S3Mf77s9iGVXAiFgX06TR8u3Z8OijDUueGQprpmXtzz8+2/xr+C/yxA=
+X-Received: by 2002:a05:6830:658b:b0:63b:3501:7167 with SMTP id
+ cn11-20020a056830658b00b0063b35017167mr16204558otb.343.1663217479180; Wed, 14
+ Sep 2022 21:51:19 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220727100615.638072-1-dmitry.baryshkov@linaro.org>
+ <CAL_JsqJjLn8ypBo+bBoO+CE-si7gemP02fi8EWk97QRPPpNoVg@mail.gmail.com>
+ <CAK7LNARXbXZFpxiHuLhzjJ4YahfV6z3dNPAdkkmeOXONBx8u3w@mail.gmail.com>
+ <CAA8EJprM4WAgfVTJ15azFtSH6POL5uuseHO=zVxRd44RmqKZjw@mail.gmail.com>
+ <CAK7LNAQU42fpqPqUipZYx+685B+Rc8JGdaKcP3TdfQWUept1nQ@mail.gmail.com>
+ <CAA8EJprMsEE-fkpP=QGgpCga5rb9_mJF51cvRjeWsG7NBeijSA@mail.gmail.com>
+ <CAL_JsqLptaL_Uv++dEzUx83n3c+AAu9rYUv6Zbb7sLbJE35wWA@mail.gmail.com> <CAA8EJprBAtdWAGG=a7BYc_Zwx9B5Dqsy4n3dhvP5cA40agR8ew@mail.gmail.com>
+In-Reply-To: <CAA8EJprBAtdWAGG=a7BYc_Zwx9B5Dqsy4n3dhvP5cA40agR8ew@mail.gmail.com>
+From:   Masahiro Yamada <masahiroy@kernel.org>
+Date:   Thu, 15 Sep 2022 13:50:43 +0900
+X-Gmail-Original-Message-ID: <CAK7LNARpPvBH0i55nD0v+8KDeqy2eK996TRhwE-KNAF+8mG3xQ@mail.gmail.com>
+Message-ID: <CAK7LNARpPvBH0i55nD0v+8KDeqy2eK996TRhwE-KNAF+8mG3xQ@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: take into account DT_SCHEMA_FILES changes while
+ checking dtbs
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Michal Marek <michal.lkml@markovi.net>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_SOFTFAIL,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In ASPM driver, LTR threshold scale and value are updated based on
-tcommon_mode and t_poweron values. In kioxia NVMe L1.2 is failing due to
-LTR threshold scale and value are greater values than max snoop/non-snoop
-value.
+On Sun, Sep 11, 2022 at 2:36 AM Dmitry Baryshkov
 
-Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when
-reported snoop/no-snoop values is greather than or equal to
-LTR_L1.2_THRESHOLD value.
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Thu, 4 Aug 2022 at 18:27, Rob Herring <robh+dt@kernel.org> wrote:
+> >
+> > On Fri, Jul 29, 2022 at 1:46 AM Dmitry Baryshkov
+> > <dmitry.baryshkov@linaro.org> wrote:
+> > >
+> > > On Fri, 29 Jul 2022 at 10:05, Masahiro Yamada <masahiroy@kernel.org> wrote:
+> > > >
+> > > > On Fri, Jul 29, 2022 at 3:53 PM Dmitry Baryshkov
+> > > > <dmitry.baryshkov@linaro.org> wrote:
+> > > > >
+> > > > > On Fri, 29 Jul 2022 at 08:55, Masahiro Yamada <masahiroy@kernel.org> wrote:
+> > > > > >
+> > > > > > On Thu, Jul 28, 2022 at 2:36 AM Rob Herring <robh+dt@kernel.org> wrote:
+> > > > > > >
+> > > > > > > On Wed, Jul 27, 2022 at 4:06 AM Dmitry Baryshkov
+> > > > > > > <dmitry.baryshkov@linaro.org> wrote:
+> > > > > > > >
+> > > > > > > > It is useful to be able to recheck dtbs files against a limited set of
+> > > > > > > > DT schema files. This can be accomplished by using differnt
+> > > > > > > > DT_SCHEMA_FILES argument values while rerunning make dtbs_check. However
+> > > > > > > > for some reason if_changed_rule doesn't pick up the rule_dtc changes
+> > > > > > > > (and doesn't retrigger the build).
+> > > > > > > >
+> > > > > > > > Fix this by changing if_changed_rule to if_changed_dep and squashing DTC
+> > > > > > > > and dt-validate into a single new command. Then if_changed_dep triggers
+> > > > > > > > on DT_SCHEMA_FILES changes and reruns the build/check.
+> > > > > > > >
+> > > > > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > > > > > ---
+> > > > > > > >  scripts/Makefile.lib | 14 ++++++--------
+> > > > > > > >  1 file changed, 6 insertions(+), 8 deletions(-)
+> > > > > > > >
+> > > > > > > > diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
+> > > > > > > > index c88b98b5dc44..3df470289382 100644
+> > > > > > > > --- a/scripts/Makefile.lib
+> > > > > > > > +++ b/scripts/Makefile.lib
+> > > > > > > > @@ -383,17 +383,15 @@ DT_CHECKER_FLAGS ?= $(if $(DT_SCHEMA_FILES),-l $(DT_SCHEMA_FILES),-m)
+> > > > > > > >  DT_BINDING_DIR := Documentation/devicetree/bindings
+> > > > > > > >  DT_TMP_SCHEMA := $(objtree)/$(DT_BINDING_DIR)/processed-schema.json
+> > > > > > > >
+> > > > > > > > -quiet_cmd_dtb_check =  CHECK   $@
+> > > > > > > > -      cmd_dtb_check =  $(DT_CHECKER) $(DT_CHECKER_FLAGS) -u $(srctree)/$(DT_BINDING_DIR) -p $(DT_TMP_SCHEMA) $@ || true
+> > > > > > > > +quiet_cmd_dtb =        DTC/CHECK   $@
+> > > > > > >
+> > > > > > > This is supposed to be 7 chars or less. DTCCHK or DTC_CHK perhaps. Or
+> > > > > > > always do just 'DTC'. I can fixup when applying.
+> > > > > > >
+> > > > > > > I'll give it a few days for other comments.
+> > > > > >
+> > > > > >
+> > > > > >
+> > > > > > When you change DT_SCHEMA_FILES, re-running dt-validate should be enough.
+> > > > > > You do not need to re-run dtc.
+> > > > > >
+> > > > > > I guess the strangeness comes from the fact that you are trying to do the
+> > > > > >  two different things in a single rule.
+> > > > >
+> > > > > The issue is that with the current rules the dt-validate isn't
+> > > > > re-executed on DT_SCHEMA_FILES changes. Thus comes my proposal.
+> > > >
+> > > > Correct.
+> > > >
+> > > > What I said is like this.
+> > > >
+> > > > # touch the timestamp file, %.dtb.checked
+> > > > $(obj)/%.dtb.checked: $(obj)/%.dtb $(DT_TMP_SCHEMA) FORCE
+> >
+> > Not really a fan of the thousands of files that creates. Maybe if it
+> > was turned into something useful like a list of schemas that apply to
+> > the dtb. IOW, a dependency list. That would speed up re-running after
+> > a schema change. Though if a schema change created new dependencies,
+> > that wouldn't work.
+> >
+> > > >         $(call if_changed_rule,dtb_check)
+> > > >
+> > > > $(obj)/%.dtb: $(src)/%.dts $(DTC) $FORCE
+> > > >         $(call if_changed_rule,dtc)
+> > > >
+> > > > $(obj)/%.dtbo: $(src)/%.dts $(DTC) FORCE
+> > > >         $(call if_changed_dep,dtc)
+> > > >
+> > > >
+> > > > With the dtc/check split, we can avoid unneeded regeneration of
+> > > > %.dtb when DT_TMP_SCHEMA or DT_SCHEMA_FILES is
+> > > > changed.
+> > > >
+> > > >
+> > > > One drawback is we track %.dtb.checked and and %.dtb separately,
+> > > > so something like 53182e81f47d4ea0c727c49ad23cb782173ab849
+> > > > may come back.
+> > >
+> > > It's up to you and Rob, but I'd really prefer a simpler solution here.
+> > > Regenerating dtbs sounds like a minor pain compared to hacking the
+> > > top-level Makefile again. What I really like is that if one has
+> > > CHECK_DTBS=y (for whatever reason), he can not generate dtb without
+> > > validation.
+> >
+> > I lean towards just rebuilding the dtbs. That's pretty quick and
+> > ensures we get dtc warnings with schema warnings. In the long run, I
+> > would like to make the schema checks not optional to run. The
+> > impediment to doing that is lots of warnings (but not not some
+> > platforms), adding a tool dependency, and validation time.
+>
+> Rob, Masahiro, do we have any conclusion here? I can change my patch,
+> but I'd like to understand in which way I should change it.
+> Fixing/testing yaml changes is a bit painful w/o this change.
+>
+> --
+> With best wishes
+> Dmitry
 
-Signed-off-by: Prasad Malisetty  <quic_pmaliset@quicinc.com>
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
 
-I am taking this patch forward as prasad is no more working with our org.
-changes since v5:
-	- no changes, just reposting as standalone patch instead of reply to
-	  previous patch.
-Changes since v4:
-	- Replaced conditional statements with min and max.
-changes since v3:
-	- Changed the logic to include this condition "snoop/nosnoop
-	  latencies are not equal to zero and lower than LTR_L1.2_THRESHOLD"
-Changes since v2:
-	- Replaced LTRME logic with max snoop/no-snoop latencies check.
-Changes since v1:
-	- Added missing variable declaration in v1 patch
----
- drivers/pci/pcie/aspm.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
 
-diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-index a96b742..676c03e 100644
---- a/drivers/pci/pcie/aspm.c
-+++ b/drivers/pci/pcie/aspm.c
-@@ -461,14 +461,36 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
- {
- 	struct pci_dev *child = link->downstream, *parent = link->pdev;
- 	u32 val1, val2, scale1, scale2;
-+	u32 max_val, max_scale, max_snp_scale, max_snp_val, max_nsnp_scale, max_nsnp_val;
- 	u32 t_common_mode, t_power_on, l1_2_threshold, scale, value;
- 	u32 ctl1 = 0, ctl2 = 0;
- 	u32 pctl1, pctl2, cctl1, cctl2;
- 	u32 pl1_2_enables, cl1_2_enables;
-+	u16 ltr;
-+	u16 max_snoop_lat, max_nosnoop_lat;
- 
- 	if (!(link->aspm_support & ASPM_STATE_L1_2_MASK))
- 		return;
- 
-+	ltr = pci_find_ext_capability(child, PCI_EXT_CAP_ID_LTR);
-+	if (!ltr)
-+		return;
-+
-+	pci_read_config_word(child, ltr + PCI_LTR_MAX_SNOOP_LAT, &max_snoop_lat);
-+	pci_read_config_word(child, ltr + PCI_LTR_MAX_NOSNOOP_LAT, &max_nosnoop_lat);
-+
-+	max_snp_scale = (max_snoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
-+	max_snp_val = max_snoop_lat & PCI_LTR_VALUE_MASK;
-+
-+	max_nsnp_scale = (max_nosnoop_lat & PCI_LTR_SCALE_MASK) >> PCI_LTR_SCALE_SHIFT;
-+	max_nsnp_val = max_nosnoop_lat & PCI_LTR_VALUE_MASK;
-+
-+	/* choose the greater max scale value between snoop and no snoop value*/
-+	max_scale = max(max_snp_scale, max_nsnp_scale);
-+
-+	/* choose the greater max value between snoop and no snoop scales */
-+	max_val = max(max_snp_val, max_nsnp_val);
-+
- 	/* Choose the greater of the two Port Common_Mode_Restore_Times */
- 	val1 = (parent_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
- 	val2 = (child_l1ss_cap & PCI_L1SS_CAP_CM_RESTORE_TIME) >> 8;
-@@ -501,6 +523,14 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
- 	 */
- 	l1_2_threshold = 2 + 4 + t_common_mode + t_power_on;
- 	encode_l12_threshold(l1_2_threshold, &scale, &value);
-+
-+	/*
-+	 * Based on PCIe r4.1, sec 5.5.1, L1.2 substate must be entered when reported
-+	 * snoop/no-snoop values are greather than or equal to LTR_L1.2_THRESHOLD value.
-+	 */
-+	scale = min(scale, max_scale);
-+	value = min(value, max_val);
-+
- 	ctl1 |= t_common_mode << 8 | scale << 29 | value << 16;
- 
- 	/* Some broken devices only support dword access to L1 SS */
--- 
-2.7.4
 
+I am fine with the patch as long as you fix DTC/CHECK to DTC.
+
+
+
+
+
+Another idea is to re-check the schema every time,
+like this:
+
+
+
+diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
+index 3fb6a99e78c4..9fc9f39fb12e 100644
+--- a/scripts/Makefile.lib
++++ b/scripts/Makefile.lib
+@@ -375,13 +375,9 @@ quiet_cmd_dtb_check =      CHECK   $@
+       cmd_dtb_check =  $(DT_CHECKER) $(DT_CHECKER_FLAGS) -u
+$(srctree)/$(DT_BINDING_DIR) -p $(DT_TMP_SCHEMA
+) $@ || true
+ endif
+
+-define rule_dtc
+-       $(call cmd_and_fixdep,dtc)
+-       $(call cmd,dtb_check)
+-endef
+-
+ $(obj)/%.dtb: $(src)/%.dts $(DTC) $(DT_TMP_SCHEMA) FORCE
+-       $(call if_changed_rule,dtc)
++       $(call if_changed_dep,dtc)
++       $(call cmd,dtb_check)
+
+ $(obj)/%.dtbo: $(src)/%.dts $(DTC) FORCE
+        $(call if_changed_dep,dtc)
+
+
+
+
+
+Whatever.
+
+
+
+
+
+--
+Best Regards
+Masahiro Yamada
