@@ -2,124 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 43E2E5B9A42
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 14:01:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1DAD5B9AF2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 14:38:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229777AbiIOMBA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Sep 2022 08:01:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59266 "EHLO
+        id S229796AbiIOMiw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Sep 2022 08:38:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229483AbiIOMA7 (ORCPT
+        with ESMTP id S229501AbiIOMiv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Sep 2022 08:00:59 -0400
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68E7E4B0FF;
-        Thu, 15 Sep 2022 05:00:58 -0700 (PDT)
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-11e9a7135easo47131341fac.6;
-        Thu, 15 Sep 2022 05:00:58 -0700 (PDT)
+        Thu, 15 Sep 2022 08:38:51 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9376C80498
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 05:38:49 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id o20-20020a05600c4fd400b003b4a516c479so3201148wmq.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 05:38:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=kbiyzXIrqqVnS3Or15etF5uykJHCKO1KdtudfrmDI3U=;
+        b=iA0FYP2uzJZ+HGL/O25lhf8+gT/9xEuMkiR6ptAaSuYurAgUKJoi2GlBXiQSKUAF+p
+         hZzzJb2lM7JVSh4E4n9RncjJCGh/Sq3IZMRnSekPPzXm6v6A0C2V+7UoucrHUuT30oUs
+         G7kqul1+r7dFC6HjbQ1fQpa4uCOwJCFgrtNemj3ne4UWjzmyLLG/bakhiqMgjI4jV6oy
+         5z76jiwsRZNmrU3i0M+ollZj7mpsmtIcdC58n+Su9zer/wZouWmiuZZ+xEApDNwRh/Vq
+         t7RrrX8/07LJKtAv3J72NgS21tZIMhH9FS3Au/pLQYraYGX5RK77b7bh9vwvXf64J1Sc
+         x1tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=Ibj0ymzRR4GUJoYQ24/tVkDs+sr69Nrlxd/BPWsb0Y8=;
-        b=hfcqZB7eeOHUKALpnyiZ/0gy4uSU9AjijBqlGz6pVt9TUd9KtVooQxXqBgXrwOH/bf
-         THqGPmtlZRkf/tAYouUEK8T4XfpvYhXG+kuYT5WxBcenqAHXGj9SZdEdX/Ua9daAGfWP
-         wmTivsYfCoo0Ahp7rOgkJp09uSpyvs121na68zfGJRqrTVn/HWV46yHNf5dgCZc7Oi9j
-         mr06AXfr1sL1F6fj3OORFLVegyy4Xfj+DagBOjtaSHun7i13rDh4i9wuLrhtXt84KXX/
-         KcuoDo2g5WqKp0ee009/bvOyw4BsOK91B/M1MRQW989feWXPXp/aZHKZvAQtWcpKlrj6
-         Yn2A==
-X-Gm-Message-State: ACgBeo3TxIRc0TblYG9SJ+4nMsAuu42Zpds91UDytuAyewUo+U0dFajv
-        YPgvTCUq/Akfu0iAtgM68g==
-X-Google-Smtp-Source: AA6agR7pNMbq3j3o61DIlxtKFdHspY+N6pgmXWZtv/LHrDFYftbEP9a2x/r5eoiQ/3IuAf3pu1gqHQ==
-X-Received: by 2002:a05:6870:2049:b0:127:927a:bf40 with SMTP id l9-20020a056870204900b00127927abf40mr4992974oad.248.1663243257253;
-        Thu, 15 Sep 2022 05:00:57 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id l2-20020a056808020200b00344f28a7a4csm7609592oie.22.2022.09.15.05.00.56
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=kbiyzXIrqqVnS3Or15etF5uykJHCKO1KdtudfrmDI3U=;
+        b=RUSa6T9xWMz1ry8Ab9UqKgW784Cn5JaNtCkuulbFVMAY/P0JpBNTKAUkqstKKBrMR+
+         gY80MQBCv2YFJYwaijOjUc9Oe1hCa6sx9RR3Fv31nzEzhYLmNx9ZKZCOid8oU/h8Pngi
+         LnE1m2CnARUk4HBnyeap1ZNT7xy1oNMFpfWNHmbjssKjrV+xs9OubVW7wLqqYV874mJW
+         xxKhzVh9t55Oa9JotocGaSuFlMrMv0qQ/m4zU5Y2UfEiZuNSyD1ve8ktcWV9Fbhaoty8
+         QLdrtVVfS/woqsjFC4jpwGf9b9GVJSeIpYXvgbqjqV8q5iYjd+6/F9Bd4nX+KGwkRMP/
+         A+Sw==
+X-Gm-Message-State: ACgBeo2piF0cWO93nJzkw4QLm06WTTkrnOe0kKnHvLaquIIFt9ezWQt5
+        aQS2nanTWKONjMb8zbwXTGU0qg==
+X-Google-Smtp-Source: AA6agR6t0LuD3GiIL8CcC5TW8J+oqLST9RZTztmt9uvAY+Da6RjXdnyIFXn4IYzPghMsYlExxPiL+w==
+X-Received: by 2002:a05:600c:19cc:b0:3b4:adca:a821 with SMTP id u12-20020a05600c19cc00b003b4adcaa821mr1715121wmq.37.1663245528107;
+        Thu, 15 Sep 2022 05:38:48 -0700 (PDT)
+Received: from srini-hackbox.lan (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.gmail.com with ESMTPSA id bg13-20020a05600c3c8d00b003a5f4fccd4asm3112559wmb.35.2022.09.15.05.38.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Sep 2022 05:00:56 -0700 (PDT)
-Received: (nullmailer pid 989368 invoked by uid 1000);
-        Thu, 15 Sep 2022 12:00:56 -0000
-Date:   Thu, 15 Sep 2022 07:00:56 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org, Alex Elder <elder@ieee.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        vkoul@kernel.org, Rajendra Nayak <quic_rjendra@quicinc.com>,
-        devicetree@vger.kernel.org, Sibi Sankar <quic_sibis@quicinc.com>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH V9 1/7] dt-bindings: Added the yaml bindings for DCC
-Message-ID: <20220915120056.GA988392-robh@kernel.org>
-References: <cover.1663173477.git.quic_schowdhu@quicinc.com>
- <41b94746e1560d63f16fb5dc965042ec496aeaf1.1663173478.git.quic_schowdhu@quicinc.com>
- <20220915093715.ednaqtx7ko6f5zlw@krzk-bin>
- <00b01df4-232b-24d4-7339-0fcfa6b210a9@quicinc.com>
+        Thu, 15 Sep 2022 05:38:46 -0700 (PDT)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     broonie@kernel.org
+Cc:     lgirdwood@gmail.com, bgoswami@quicinc.com, perex@perex.cz,
+        tiwai@suse.com, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 0/9] ASoC: qdsp6: audioreach: add multi-port, SAL and MFC support
+Date:   Thu, 15 Sep 2022 13:38:28 +0100
+Message-Id: <20220915123837.11591-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <00b01df4-232b-24d4-7339-0fcfa6b210a9@quicinc.com>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 15, 2022 at 05:06:29PM +0530, Souradeep Chowdhury wrote:
-> 
-> On 9/15/2022 3:07 PM, Krzysztof Kozlowski wrote:
-> > On Wed, 14 Sep 2022 22:31:11 +0530, Souradeep Chowdhury wrote:
-> > > Documentation for Data Capture and Compare(DCC) device tree bindings
-> > > in yaml format.
-> > > 
-> > > Reviewed-by: Rob Herring <robh@kernel.org>
-> > > Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> > > ---
-> > >   .../devicetree/bindings/arm/msm/qcom,dcc.yaml      | 43 ++++++++++++++++++++++
-> > >   1 file changed, 43 insertions(+)
-> > >   create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml
-> > > 
-> > My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> > on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> > 
-> > yamllint warnings/errors:
-> > 
-> > dtschema/dtc warnings/errors:
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/renesas,rzn1-dmamux.example.dtb: dma-router@a0: dma-masters:0: [4294967295, 4294967295] is too long
-> > 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/dma-router.yaml
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/renesas,rzn1-dmamux.example.dtb: dma-router@a0: dma-masters:0: [4294967295, 4294967295] is too long
-> > 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/renesas,rzn1-dmamux.yaml
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/st,stm32-dmamux.example.dtb: dma-router@40020800: dma-masters:0: [4294967295, 4294967295] is too long
-> > 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/dma-router.yaml
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/st,stm32-dmamux.example.dtb: dma-router@40020800: dma-masters:0: [4294967295, 4294967295] is too long
-> > 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/st,stm32-dmamux.yaml
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/st,stm32-dmamux.example.dtb: dma-router@40020800: Unevaluated properties are not allowed ('dma-channels', 'dma-masters', 'dma-requests' were unexpected)
-> > 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/st,stm32-dmamux.yaml
-> > 
-> > doc reference errors (make refcheckdocs):
-> > 
-> > See https://patchwork.ozlabs.org/patch/
-> > 
-> > This check can fail if there are any dependencies. The base for a patch
-> > series is generally the most recent rc1.
-> > 
-> > If you already ran 'make dt_binding_check' and didn't see the above
-> > error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> > date:
-> > 
-> > pip3 install dtschema --upgrade
-> > 
-> > Please check and re-submit.
-> This reported error is unrelated to my yaml file. Kindly check from your
-> end.
+This patchset adds support to multi-port connections between AudioReach Modules
+which is required for sophisticated graphs like ECNS or Speaker Protection.
+Also as part of ECNS testing new module support for SAL and MFC are added.
 
-Yes, you can ignore it.
 
-Rob
+Tested on SM8450 with ECNS.
+
+Thanks,
+Srini
+
+Srinivas Kandagatla (9):
+  ASoC: qdsp6: audioreach: topology use idr_alloc_u32
+  ASoC: qdsp6: audioreach: remove unused connection_list
+  ASoC: qdsp6: audioreach: update dapm kcontrol private data
+  ASoC: qdsp6: audioreach: Simplify handing FE and BE graph connections
+  ASoC: qdsp6: audioreach: simplify module_list sz calculation
+  ASoC: qdsp6: audioreach: add support for more port connections
+  ASoC: qdsp6: audioreach: add support to enable SAL Module
+  ASoC: qdsp6: audioreach: add support for MFC Module
+  ASoC: qdsp6: audioreach: add support to enable module command
+
+ include/uapi/sound/snd_ar_tokens.h |  27 +++
+ sound/soc/qcom/qdsp6/audioreach.c  | 298 ++++++++++++++++++++---------
+ sound/soc/qcom/qdsp6/audioreach.h  |  47 +++--
+ sound/soc/qcom/qdsp6/q6apm.c       |  84 +-------
+ sound/soc/qcom/qdsp6/q6apm.h       |   6 +-
+ sound/soc/qcom/qdsp6/topology.c    | 242 +++++++++++++++++++----
+ 6 files changed, 480 insertions(+), 224 deletions(-)
+
+-- 
+2.21.0
 
