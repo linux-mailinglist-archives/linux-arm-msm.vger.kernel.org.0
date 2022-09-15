@@ -2,117 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5456E5B9843
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 11:54:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE25A5B9871
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 12:04:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229946AbiIOJyq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Sep 2022 05:54:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57824 "EHLO
+        id S229586AbiIOKEc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Sep 2022 06:04:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230410AbiIOJxv (ORCPT
+        with ESMTP id S229541AbiIOKEb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Sep 2022 05:53:51 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7DF19A94D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 02:51:08 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id g3so9084483wrq.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 02:51:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=L9S2V0KF4UdbSZ+qAlnGEJsbuMqREsUyJSrjlKWQqqA=;
-        b=ZO0tDmosBU3RHS2fdoy1mJ9nSyilD9I11uK5fg++kJDpIM8sFxIxSXULtogOU/A7+a
-         wdJHpKfTa0/FUeDbtl5brg7WaQ5cRapYf0XdJjM05GfkMKUZCXs3EgJB6oPcPIcv0MLE
-         Hvk8/KPYv1hZbEzz1s4dEKt8YnIjByL8HtGGOmKA1F+da5RPK9vf5VqRLjkQJ98NayfR
-         zEclJmNpXglRkuePR6/ZF5/ujDho6+X9qIIe78IsO0pGuguMp4FmZFwJEJHm0icpinLa
-         GoXb+42HZT6koHQS7JEwTvcNJvSrDJXlT6jodP4yB56P6eIuZpGIW55O54ld1lWZMPvs
-         +3QQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=L9S2V0KF4UdbSZ+qAlnGEJsbuMqREsUyJSrjlKWQqqA=;
-        b=Oa+K4W5jRLNS7MkvlH3gc23gH1+WpnGb1MVNN0NcwR4Hy9OkM1WWm7mwms4CicIwBE
-         0QHVeNsFeJ046ZybMqblxioxfSPOw3+syA11H5tlY/aq/7pgg9J1IGWCBS5z+MmUjfq9
-         0/eNj89gASqBCdsABmGWLYUv0ajqAA7/Qcz0LAmynqDAOL4mj5DQ9PemVT9Bb887ogjM
-         yb/YolsOjgj6xPHZzWlE8FIhBN4jDWuliBAYLQQZxkyK/c0Ls/HhBknk+yJBXJQyNwym
-         SySetOcG8XHy3gVQiW/fTR1MyOMvoSpniOTwW69SQyvgiK1BpxR1A4tdrly/zjd0n7g9
-         XzaQ==
-X-Gm-Message-State: ACgBeo1e9aT/Vka+Qo2NclEXPkp6ITaKP6BnJAH+lk1wye+tqfiaaZc2
-        yG0P2LLUz1j1+SUfturtHGFL8Q==
-X-Google-Smtp-Source: AA6agR6nLIzIT7Eqbc095Tt2vG+E8xg+XEJmDTEF1rmC/eYII0W7xxLVHNrErRC8vVdkQWyVqVpZoQ==
-X-Received: by 2002:adf:f44c:0:b0:228:8686:552f with SMTP id f12-20020adff44c000000b002288686552fmr22977859wrp.587.1663235465802;
-        Thu, 15 Sep 2022 02:51:05 -0700 (PDT)
-Received: from krzk-bin ([89.101.193.73])
-        by smtp.gmail.com with ESMTPSA id f5-20020a7bc8c5000000b003b49aa8083esm2054322wml.42.2022.09.15.02.51.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Sep 2022 02:51:05 -0700 (PDT)
-Date:   Thu, 15 Sep 2022 10:51:03 +0100
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Rob Herring <robh@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v5 1/2] dt-bindings: spmi: Add qcom,bus-id
-Message-ID: <20220915095103.7qys3ixd6yyngkzs@krzk-bin>
-References: <20220914165212.3705892-1-vkoul@kernel.org>
- <20220914165212.3705892-2-vkoul@kernel.org>
+        Thu, 15 Sep 2022 06:04:31 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49BF8B68;
+        Thu, 15 Sep 2022 03:04:27 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28F5jlvb030887;
+        Thu, 15 Sep 2022 10:04:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type; s=qcppdkim1;
+ bh=Zd5FJR3/2b2i9zCMWP/ALmP4REaiFxNaIZ1vKdn5YWg=;
+ b=mN5GbLG/yewRDO2ogBu4SiYt9tpUZlFgDryJc9+668o+WfI8Cmw6RXjqOwMkxfuqS/yg
+ Aue/gtyOAmyn3dzdXI72akcTt7HyPyZYJ5LAB3B4bSKke90VrAk28jtX2p4Tdj1H/jsR
+ AszQet3+2thsti+GIsNfkFmwjgfZ9L3rtjh0DVxgQriFWaVFru4WJU/4D8juEe4ph+Yd
+ 1aJQh63Z48+XY+MhEmIPRsukc5cckCfiVrIdf741sFqnNDuYeCooaDYQBukVb+eACzbt
+ i8RauCFSfe4h3L2TvrOwHJSpqayaJcjnR3j1ZlnVzHzwPKbyUVZ6kYgv9Wt0mt5eRzMS aw== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jkwjerrqk-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Sep 2022 10:04:26 +0000
+Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28FA4QdK003583
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Sep 2022 10:04:26 GMT
+Received: from ecbld-sh026-lnx.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Thu, 15 Sep 2022 03:04:23 -0700
+From:   Maria Yu <quic_aiquny@quicinc.com>
+To:     <mathieu.poirier@linaro.org>
+CC:     Maria Yu <quic_aiquny@quicinc.com>,
+        <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_clew@quicinc.com>
+Subject: [PATCH v2] remoteproc: core: do pm relax when in RPROC_OFFLINE
+Date:   Thu, 15 Sep 2022 18:04:16 +0800
+Message-ID: <1663236256-52289-1-git-send-email-quic_aiquny@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <128dc161-8949-1146-bf8b-310aa33c06a8@quicinc.com>
+References: <128dc161-8949-1146-bf8b-310aa33c06a8@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220914165212.3705892-2-vkoul@kernel.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: GUcUaCA29oXrTBSkGSr235y_pnjGUpIH
+X-Proofpoint-GUID: GUcUaCA29oXrTBSkGSr235y_pnjGUpIH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-15_06,2022-09-14_04,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ priorityscore=1501 mlxlogscore=945 clxscore=1015 impostorscore=0
+ adultscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2208220000 definitions=main-2209150055
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 14 Sep 2022 22:22:11 +0530, Vinod Koul wrote:
-> For PMIC arbiter version 7 and beyond we need to define if we are using
-> primary or secondary bus, so add a new property of qcom,bus-id
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> Acked-by: Rob Herring <robh@kernel.org>
-> ---
->  .../devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml   | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
+RPROC_OFFLINE state indicate there is no recovery process
+is in progress and no chance to do the pm_relax.
+Because when recovering from crash, rproc->lock is hold and
+state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
+and then unlock rproc->lock.
+When the state is in RPROC_OFFLINE it means separate request
+of rproc_stop was done and no need to hold the wakeup source
+in crash handler to recover any more.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
+---
+ drivers/remoteproc/remoteproc_core.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-yamllint warnings/errors:
+diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+index e5279ed9a8d7..247ced6b0655 100644
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -1956,6 +1956,17 @@ static void rproc_crash_handler_work(struct work_struct *work)
+ 	if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE) {
+ 		/* handle only the first crash detected */
+ 		mutex_unlock(&rproc->lock);
++		/*
++		 * RPROC_OFFLINE state indicate there is no recovery process
++		 * is in progress and no chance to have pm_relax in place.
++		 * Because when recovering from crash, rproc->lock is hold and
++		 * state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
++		 * and then unlock rproc->lock.
++		 * RPROC_OFFLINE is only an intermediate state in recovery
++		 * process.
++		 */
++		if (rproc->state == RPROC_OFFLINE)
++			pm_relax(rproc->dev.parent);
+ 		return;
+ 	}
+ 
+-- 
+2.7.4
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/st,stm32-dmamux.example.dtb: dma-router@40020800: dma-masters:0: [4294967295, 4294967295] is too long
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/st,stm32-dmamux.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/st,stm32-dmamux.example.dtb: dma-router@40020800: Unevaluated properties are not allowed ('dma-channels', 'dma-masters', 'dma-requests' were unexpected)
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/st,stm32-dmamux.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/st,stm32-dmamux.example.dtb: dma-router@40020800: dma-masters:0: [4294967295, 4294967295] is too long
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/dma-router.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/renesas,rzn1-dmamux.example.dtb: dma-router@a0: dma-masters:0: [4294967295, 4294967295] is too long
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/dma-router.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/renesas,rzn1-dmamux.example.dtb: dma-router@a0: dma-masters:0: [4294967295, 4294967295] is too long
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/renesas,rzn1-dmamux.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
