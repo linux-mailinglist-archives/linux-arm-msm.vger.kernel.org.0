@@ -2,119 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C72F5B9772
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 11:31:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 744355B9781
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 11:34:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229786AbiIOJbX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Sep 2022 05:31:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49732 "EHLO
+        id S229785AbiIOJeQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Sep 2022 05:34:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229548AbiIOJbW (ORCPT
+        with ESMTP id S229738AbiIOJeM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Sep 2022 05:31:22 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDB359675F;
-        Thu, 15 Sep 2022 02:31:20 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 88CCC62245;
-        Thu, 15 Sep 2022 09:31:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F950C433C1;
-        Thu, 15 Sep 2022 09:31:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663234280;
-        bh=b3yoajN2tS9K2V4FVmNAQPYuhL3f6oCbNn9iOEv9S7o=;
-        h=From:To:In-Reply-To:References:Subject:Date:From;
-        b=kPQp6MOmi56yTOqy4z9eaTamTfWOQYv2XAwbLjY//ynzz2xIMog5rT3dGytTm76g8
-         14UVrIAYYINPsuwezbjiaTjoT2D8Eltkv41YNOzovoP2v+UDeUZ7N2Z4GDNqBMuoKq
-         EMatOaYkQhHAt9NeiK4N7GVO+6qTpwl0ZM28xgSYs0ta8oMYPrJ3059R0F/VcBenUO
-         VkyXhL8o3IlxA6Od+YCas7G8Pn7xp0QUHdc+NbH7O/PQyzg4w5hXvhVATaWLLEv51Q
-         33w7OhpUlwDy9UfRnNghWakMaTJhA97ESC4vI6SsrVpwIPXQw9GQQT6dch6UTJu1uW
-         WhBem6d7ZxB2A==
-From:   Mark Brown <broonie@kernel.org>
-To:     devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Thu, 15 Sep 2022 05:34:12 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EB5096FEF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 02:34:10 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id t7so29869425wrm.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 02:34:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=nx/BhNRVvudK8AcmKzKEeABUr5hW6bgb4H8HtATz2WQ=;
+        b=anPZy6RR5haz9Hh899sAj1/aToTK2d8Fu7rSqVKSWtwJ1R40ymJpj00ARQHKEjDaBX
+         P2TBldrxNF3yZTpsA14Lu0bosAM04VyKBblBBV6VppGzZdV5MOFzqrMx/3+0vhahlfTs
+         jEEGe3D8sM/Pa0z7OcRoLr74jLfcKbwv6XjAVRXcU/6qHcZf9SIAZm3mNgwoDvkmgnrU
+         Zx6mGUbEnAG7iSjnm6T69Ma0jszGLBUEWO38F7NsdZdAJiEYOkBrwVyQs9hdAW8Hl4Ze
+         4dQVZGo+yKfO9lvKI09cWKdahSCKn8GChwgdNK/dfk3Bi5TsUO001xU7zvzBskeM+rvF
+         Dp2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=nx/BhNRVvudK8AcmKzKEeABUr5hW6bgb4H8HtATz2WQ=;
+        b=mF9aMjY1hqGG4Rt9mX1xv8FcuiDrrPAZyL9HqFyL6tJK95r/rBaVAEv5Nmy/pvRh/S
+         OO343603bcqMjmrmB98IfzKU/J4IaZavEoUn6YXjJnETgP7z9+RiIIjq2sko6j2bBjmi
+         Ray0FQ+paUJzsEhxFHdlvpuKyHV9OG8LHIpYAspnAbu5t+U6aQQyRaeToLGYEGEL4Ga9
+         gPdKIyW2JN/DGAdTf5UA/roJRQWitKEH7kA3Q/Mq9Vk3ngRy1UYHEGahlysE4aA3AOPw
+         D8dm4mz3Ld8xYnAkDgwaG162HJkHEvFYqQiQbTbTSDNqbuMrfrV7TJi/gpMJ0tVFOv8o
+         g0tQ==
+X-Gm-Message-State: ACgBeo2Zxu2+KviOAy6/YMCUj7uzhyAvwGnpexDgEc7wlgceTLL988ab
+        4Ktm2IbC6oIPK98Zwu57/CCgTaFyOc+y6vAG
+X-Google-Smtp-Source: AA6agR5klBkZDS5PPlrsrMthFDbg2IRjfgTscq/lu3jeVteIuoFZcP2H2deWMucrrK89u9SZcvzzNQ==
+X-Received: by 2002:a5d:6190:0:b0:228:6972:fd14 with SMTP id j16-20020a5d6190000000b002286972fd14mr24575588wru.114.1663234448802;
+        Thu, 15 Sep 2022 02:34:08 -0700 (PDT)
+Received: from krzk-bin ([89.101.193.73])
+        by smtp.gmail.com with ESMTPSA id d13-20020adff2cd000000b00228dcf471e8sm2080450wrp.56.2022.09.15.02.34.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Sep 2022 02:34:08 -0700 (PDT)
+Date:   Thu, 15 Sep 2022 10:34:06 +0100
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Alexey Dobriyan <adobriyan@gmail.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        linux-clk@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        James Smart <jsmart2021@gmail.com>,
+        Andy Gross <agross@kernel.org>, Takashi Iwai <tiwai@suse.de>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Christian Brauner <brauner@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org,
+        Justin Tee <justin.tee@broadcom.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220910091428.50418-1-krzysztof.kozlowski@linaro.org>
-References: <20220910091428.50418-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: (subset) [PATCH v4 00/15] ASoC/qcom/arm64: Qualcomm ADSP DTS and binding fixes
-Message-Id: <166323427717.2395893.6929759615552147148.b4-ty@kernel.org>
-Date:   Thu, 15 Sep 2022 10:31:17 +0100
+        linux-kernel@vger.kernel.org,
+        Marc Herbert <marc.herbert@intel.com>,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v5 3/5] dt-bindings: arm: msm: Rework kpss-gcc driver
+ Documentation to yaml
+Message-ID: <20220915093406.lwss7frqqidor357@krzk-bin>
+References: <20220914142256.28775-1-ansuelsmth@gmail.com>
+ <20220914142256.28775-4-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.10.0-dev-7dade
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220914142256.28775-4-ansuelsmth@gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 10 Sep 2022 11:14:13 +0200, Krzysztof Kozlowski wrote:
-> Dependencies/merging
-> ====================
-> 1. The DTS patches are independent.
-> 2. The binding patches should come together, because of context changes. Could
->    be one of: Qualcomm SoC, ASoC or DT tree.
+On Wed, 14 Sep 2022 16:22:54 +0200, Christian Marangi wrote:
+> Rework kpss-gcc driver Documentation to yaml Documentation.
+> The current kpss-gcc Documentation have major problems and can't be
+> converted directly. Introduce various changes to the original
+> Documentation.
 > 
-> Changes since v3
-> ================
-> 1. Patch 9-10: re-order, so first apr.yaml is corrected and then we convert to
->    DT schema. This makes patchset fully bisectable in expense of changing the same
->    lines twice.
-> 2. Patch 11: New patch.
+> Add #clock-cells additional binding as this clock outputs a static clk
+> named acpu_l2_aux with supported compatible.
+> Only some compatible require and outputs a clock, for the others, set
+> only the reg as a required binding to correctly export the kpss-gcc
+> registers. As the reg is shared also add the required syscon compatible.
 > 
-> [...]
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> ---
+>  .../bindings/arm/msm/qcom,kpss-gcc.txt        | 44 ---------
+>  .../bindings/arm/msm/qcom,kpss-gcc.yaml       | 90 +++++++++++++++++++
+>  2 files changed, 90 insertions(+), 44 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
+>  create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
+> 
 
-Applied to
+Running 'make dtbs_check' with the schema in this patch gives the
+following warnings. Consider if they are expected or the schema is
+incorrect. These may not be new warnings.
 
-   broonie/sound.git for-next
+Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+This will change in the future.
 
-Thanks!
+Full log is available here: https://patchwork.ozlabs.org/patch/
 
-[09/15] dt-bindings: soc: qcom: apr: correct service children
-        commit: b2496de1dfdddfceb87e7a7b791c3a249c860682
-[10/15] ASoC: dt-bindings: qcom,q6asm: convert to dtschema
-        commit: 7b0ad4629d1fb719ae71a8f2968e8c6268ab1709
-[11/15] ASoC: dt-bindings: qcom,q6adm: convert to dtschema
-        commit: 301628d805019999f1ae9764aadfcface9c4e309
-[12/15] ASoC: dt-bindings: qcom,q6dsp-lpass-ports: cleanup example
-        commit: 0630efc3b849f65ef3bad803b84bc0819591dac9
-[13/15] ASoC: dt-bindings: qcom,q6dsp-lpass-clocks: cleanup example
-        commit: 7af18f4efd85c2e85458e3f504e129a97f6baaf2
-[14/15] ASoC: dt-bindings: qcom,q6apm-dai: adjust indentation in example
-        commit: 5f170e21fe96fbd1f81ace9ec6e6b695e1098733
-[15/15] dt-bindings: soc: qcom: apr: add missing properties
-        commit: b2d7616e13c4eb766f5e2f6568c2e746e76b7b53
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+clock-controller@2011000: clock-names: False schema does not allow ['pll8_vote', 'pxo']
+	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
+	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+clock-controller@2011000: 'clock-output-names' does not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
+	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+clock-controller@2011000: compatible:0: 'qcom,kpss-gcc' is not one of ['qcom,kpss-gcc-ipq8064', 'qcom,kpss-gcc-apq8064', 'qcom,kpss-gcc-msm8974', 'qcom,kpss-gcc-msm8960', 'qcom,kpss-gcc-msm8660', 'qcom,kpss-gcc-mdm9615']
+	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dtb
+	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dtb
+	arch/arm/boot/dts/qcom-apq8064-ifc6410.dtb
+	arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dtb
+	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
+	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb
+	arch/arm/boot/dts/qcom-msm8960-cdp.dtb
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+clock-controller@2011000: compatible:1: 'qcom,kpss-gcc' was expected
+	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dtb
+	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dtb
+	arch/arm/boot/dts/qcom-apq8064-ifc6410.dtb
+	arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dtb
+	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
+	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb
+	arch/arm/boot/dts/qcom-msm8960-cdp.dtb
 
-Thanks,
-Mark
+clock-controller@2011000: compatible: ['qcom,kpss-gcc', 'syscon'] is too short
+	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dtb
+	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dtb
+	arch/arm/boot/dts/qcom-apq8064-ifc6410.dtb
+	arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dtb
+	arch/arm/boot/dts/qcom-ipq8064-ap148.dtb
+	arch/arm/boot/dts/qcom-ipq8064-rb3011.dtb
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dtb
+	arch/arm/boot/dts/qcom-msm8960-cdp.dtb
+
+clock-controller@2082000: compatible:0: 'qcom,kpss-gcc' is not one of ['qcom,kpss-gcc-ipq8064', 'qcom,kpss-gcc-apq8064', 'qcom,kpss-gcc-msm8974', 'qcom,kpss-gcc-msm8960', 'qcom,kpss-gcc-msm8660', 'qcom,kpss-gcc-mdm9615']
+	arch/arm/boot/dts/qcom-apq8060-dragonboard.dtb
+	arch/arm/boot/dts/qcom-msm8660-surf.dtb
+
+clock-controller@2082000: compatible:1: 'qcom,kpss-gcc' was expected
+	arch/arm/boot/dts/qcom-apq8060-dragonboard.dtb
+	arch/arm/boot/dts/qcom-msm8660-surf.dtb
+
+clock-controller@2082000: compatible: ['qcom,kpss-gcc', 'syscon'] is too short
+	arch/arm/boot/dts/qcom-apq8060-dragonboard.dtb
+	arch/arm/boot/dts/qcom-msm8660-surf.dtb
