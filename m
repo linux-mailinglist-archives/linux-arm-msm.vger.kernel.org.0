@@ -2,241 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CAE435B93CD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 07:05:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4958A5B955D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 09:28:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229491AbiIOFFA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Sep 2022 01:05:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57790 "EHLO
+        id S229970AbiIOH1y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Sep 2022 03:27:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbiIOFE7 (ORCPT
+        with ESMTP id S229975AbiIOH1S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Sep 2022 01:04:59 -0400
-X-Greylist: delayed 445 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 14 Sep 2022 22:04:56 PDT
-Received: from condef-10.nifty.com (condef-10.nifty.com [202.248.20.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69A9B1AD8A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Sep 2022 22:04:55 -0700 (PDT)
-Received: from conssluserg-02.nifty.com ([10.126.8.81])by condef-10.nifty.com with ESMTP id 28F4pw7F017772
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 13:51:58 +0900
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49]) (authenticated)
-        by conssluserg-02.nifty.com with ESMTP id 28F4pJsh012735;
-        Thu, 15 Sep 2022 13:51:20 +0900
-DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-02.nifty.com 28F4pJsh012735
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
-        s=dec2015msa; t=1663217480;
-        bh=LokpXFM+jKjnxi3CKS4674Efn0BVYhL63eu/XEV6zfo=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=ZRmdAKrFegaRJAVTjyJd+dXa6SuuzpxvPgtblIdRYwewtVbS8kflY7ZQWEMqd43Sw
-         V59IapXq5RnGXiodLwuHTkY/D9/I+e02jd3RwIC8cJj86s1opWTH1W66GQBqTDDU4g
-         PLsFB9jZVBJoLNd82pm1B0ZuwcFutUnKTHeZKpJ+Oas8BC39iqmXSVF238u8VPtFdJ
-         GZzBwjcct/0aa3n4FnfNTKDh+GsBCa2/Cii0s0A/jKUHYaiwHlvIpa+VorK+Oa/uhj
-         Ci50p+kT2E2HgJV5yh4YBSs1GtPiVGvprmZd0Hzb/qcjBKp74pwEsZziscRbiBvYfA
-         CTV4yKdTHZR8g==
-X-Nifty-SrcIP: [209.85.210.49]
-Received: by mail-ot1-f49.google.com with SMTP id v14-20020a9d69ce000000b00658f339b0a3so411038oto.1;
-        Wed, 14 Sep 2022 21:51:20 -0700 (PDT)
-X-Gm-Message-State: ACgBeo3MYNTOLyWULnBbpKJE1KjY/kCDi7dRYtTXUuBXHv5gwo46qAxx
-        EcLGQPy2cB8Xo9Bmqtk7Ch2TLS+dKF4Zjvp8TKY=
-X-Google-Smtp-Source: AA6agR49F9OnVykDVvTYWEHonilGPnu1xqf+S3Mf77s9iGVXAiFgX06TR8u3Z8OijDUueGQprpmXtzz8+2/xr+C/yxA=
-X-Received: by 2002:a05:6830:658b:b0:63b:3501:7167 with SMTP id
- cn11-20020a056830658b00b0063b35017167mr16204558otb.343.1663217479180; Wed, 14
- Sep 2022 21:51:19 -0700 (PDT)
+        Thu, 15 Sep 2022 03:27:18 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DBB38FD62;
+        Thu, 15 Sep 2022 00:27:00 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28F7MlpL002809;
+        Thu, 15 Sep 2022 07:26:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=goc2CvMB7xVbUlia39i3ox3mDrYzyU+LKXINBSITg+Y=;
+ b=hkSPf9Y0Xe6680HYOovI2R0fhVBHRZbT8EtAP2mQxqgd1jJHymYOSdld+/Cp6o570dAQ
+ 6wP1gP2XyPJ39yzwIjGhe3B0aggp7HrB1Fh7M6CWw5NZ1m8htFMpHe0khqq5ZWbCJlHq
+ isrdG8YlZPnU1X2RXOUrjN39Xdw4RAstY/P0Tg4P2VjdWmoL2j4n5smOvpgOqaXEplqN
+ 0Qqeo1Yz3aK7o7c/A9rifYjU/ddd4xIrkB49v/DbusKJPOK8AmpKdf+mlA2BNRbVUA0w
+ INTjf5ERu58SxqlEGVDnHmRkHBe170NFyihfEmCHwwtHg359broLaSJDys54vxh3l5sl Gg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jkp8ashyk-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Sep 2022 07:26:12 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28F7QCFu023313
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 15 Sep 2022 07:26:12 GMT
+Received: from [10.216.56.33] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 15 Sep
+ 2022 00:26:07 -0700
+Message-ID: <4490d181-7bf2-791c-1778-1102e9adbc25@quicinc.com>
+Date:   Thu, 15 Sep 2022 12:55:58 +0530
 MIME-Version: 1.0
-References: <20220727100615.638072-1-dmitry.baryshkov@linaro.org>
- <CAL_JsqJjLn8ypBo+bBoO+CE-si7gemP02fi8EWk97QRPPpNoVg@mail.gmail.com>
- <CAK7LNARXbXZFpxiHuLhzjJ4YahfV6z3dNPAdkkmeOXONBx8u3w@mail.gmail.com>
- <CAA8EJprM4WAgfVTJ15azFtSH6POL5uuseHO=zVxRd44RmqKZjw@mail.gmail.com>
- <CAK7LNAQU42fpqPqUipZYx+685B+Rc8JGdaKcP3TdfQWUept1nQ@mail.gmail.com>
- <CAA8EJprMsEE-fkpP=QGgpCga5rb9_mJF51cvRjeWsG7NBeijSA@mail.gmail.com>
- <CAL_JsqLptaL_Uv++dEzUx83n3c+AAu9rYUv6Zbb7sLbJE35wWA@mail.gmail.com> <CAA8EJprBAtdWAGG=a7BYc_Zwx9B5Dqsy4n3dhvP5cA40agR8ew@mail.gmail.com>
-In-Reply-To: <CAA8EJprBAtdWAGG=a7BYc_Zwx9B5Dqsy4n3dhvP5cA40agR8ew@mail.gmail.com>
-From:   Masahiro Yamada <masahiroy@kernel.org>
-Date:   Thu, 15 Sep 2022 13:50:43 +0900
-X-Gmail-Original-Message-ID: <CAK7LNARpPvBH0i55nD0v+8KDeqy2eK996TRhwE-KNAF+8mG3xQ@mail.gmail.com>
-Message-ID: <CAK7LNARpPvBH0i55nD0v+8KDeqy2eK996TRhwE-KNAF+8mG3xQ@mail.gmail.com>
-Subject: Re: [PATCH] kbuild: take into account DT_SCHEMA_FILES changes while
- checking dtbs
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Michal Marek <michal.lkml@markovi.net>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_SOFTFAIL,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH 3/3] clk: qcom: gcc-sc7280: Update the .pwrsts for usb
+ gdsc
+Content-Language: en-US
+To:     Matthias Kaehlcke <mka@chromium.org>,
+        Johan Hovold <johan@kernel.org>
+CC:     <andersson@kernel.org>, <agross@kernel.org>,
+        <konrad.dybcio@somainline.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <johan+linaro@kernel.org>,
+        <quic_kriskura@quicinc.com>, <dianders@chromium.org>,
+        <linux-clk@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20220901101756.28164-1-quic_rjendra@quicinc.com>
+ <20220901101756.28164-3-quic_rjendra@quicinc.com>
+ <YxDYJ+ONryLROBhL@google.com> <YyF+5CQqcLQlXvzV@hovoldconsulting.com>
+ <YyJGNR33JbHxWWYD@google.com>
+From:   Rajendra Nayak <quic_rjendra@quicinc.com>
+In-Reply-To: <YyJGNR33JbHxWWYD@google.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: nhvtnoVQYw09joTXs-KiNOTCtXuV1eRH
+X-Proofpoint-ORIG-GUID: nhvtnoVQYw09joTXs-KiNOTCtXuV1eRH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-15_04,2022-09-14_04,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
+ mlxscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0 mlxlogscore=702
+ clxscore=1015 phishscore=0 malwarescore=0 priorityscore=1501 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2208220000
+ definitions=main-2209150039
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Sep 11, 2022 at 2:36 AM Dmitry Baryshkov
-
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Thu, 4 Aug 2022 at 18:27, Rob Herring <robh+dt@kernel.org> wrote:
-> >
-> > On Fri, Jul 29, 2022 at 1:46 AM Dmitry Baryshkov
-> > <dmitry.baryshkov@linaro.org> wrote:
-> > >
-> > > On Fri, 29 Jul 2022 at 10:05, Masahiro Yamada <masahiroy@kernel.org> wrote:
-> > > >
-> > > > On Fri, Jul 29, 2022 at 3:53 PM Dmitry Baryshkov
-> > > > <dmitry.baryshkov@linaro.org> wrote:
-> > > > >
-> > > > > On Fri, 29 Jul 2022 at 08:55, Masahiro Yamada <masahiroy@kernel.org> wrote:
-> > > > > >
-> > > > > > On Thu, Jul 28, 2022 at 2:36 AM Rob Herring <robh+dt@kernel.org> wrote:
-> > > > > > >
-> > > > > > > On Wed, Jul 27, 2022 at 4:06 AM Dmitry Baryshkov
-> > > > > > > <dmitry.baryshkov@linaro.org> wrote:
-> > > > > > > >
-> > > > > > > > It is useful to be able to recheck dtbs files against a limited set of
-> > > > > > > > DT schema files. This can be accomplished by using differnt
-> > > > > > > > DT_SCHEMA_FILES argument values while rerunning make dtbs_check. However
-> > > > > > > > for some reason if_changed_rule doesn't pick up the rule_dtc changes
-> > > > > > > > (and doesn't retrigger the build).
-> > > > > > > >
-> > > > > > > > Fix this by changing if_changed_rule to if_changed_dep and squashing DTC
-> > > > > > > > and dt-validate into a single new command. Then if_changed_dep triggers
-> > > > > > > > on DT_SCHEMA_FILES changes and reruns the build/check.
-> > > > > > > >
-> > > > > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > > > > ---
-> > > > > > > >  scripts/Makefile.lib | 14 ++++++--------
-> > > > > > > >  1 file changed, 6 insertions(+), 8 deletions(-)
-> > > > > > > >
-> > > > > > > > diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
-> > > > > > > > index c88b98b5dc44..3df470289382 100644
-> > > > > > > > --- a/scripts/Makefile.lib
-> > > > > > > > +++ b/scripts/Makefile.lib
-> > > > > > > > @@ -383,17 +383,15 @@ DT_CHECKER_FLAGS ?= $(if $(DT_SCHEMA_FILES),-l $(DT_SCHEMA_FILES),-m)
-> > > > > > > >  DT_BINDING_DIR := Documentation/devicetree/bindings
-> > > > > > > >  DT_TMP_SCHEMA := $(objtree)/$(DT_BINDING_DIR)/processed-schema.json
-> > > > > > > >
-> > > > > > > > -quiet_cmd_dtb_check =  CHECK   $@
-> > > > > > > > -      cmd_dtb_check =  $(DT_CHECKER) $(DT_CHECKER_FLAGS) -u $(srctree)/$(DT_BINDING_DIR) -p $(DT_TMP_SCHEMA) $@ || true
-> > > > > > > > +quiet_cmd_dtb =        DTC/CHECK   $@
-> > > > > > >
-> > > > > > > This is supposed to be 7 chars or less. DTCCHK or DTC_CHK perhaps. Or
-> > > > > > > always do just 'DTC'. I can fixup when applying.
-> > > > > > >
-> > > > > > > I'll give it a few days for other comments.
-> > > > > >
-> > > > > >
-> > > > > >
-> > > > > > When you change DT_SCHEMA_FILES, re-running dt-validate should be enough.
-> > > > > > You do not need to re-run dtc.
-> > > > > >
-> > > > > > I guess the strangeness comes from the fact that you are trying to do the
-> > > > > >  two different things in a single rule.
-> > > > >
-> > > > > The issue is that with the current rules the dt-validate isn't
-> > > > > re-executed on DT_SCHEMA_FILES changes. Thus comes my proposal.
-> > > >
-> > > > Correct.
-> > > >
-> > > > What I said is like this.
-> > > >
-> > > > # touch the timestamp file, %.dtb.checked
-> > > > $(obj)/%.dtb.checked: $(obj)/%.dtb $(DT_TMP_SCHEMA) FORCE
-> >
-> > Not really a fan of the thousands of files that creates. Maybe if it
-> > was turned into something useful like a list of schemas that apply to
-> > the dtb. IOW, a dependency list. That would speed up re-running after
-> > a schema change. Though if a schema change created new dependencies,
-> > that wouldn't work.
-> >
-> > > >         $(call if_changed_rule,dtb_check)
-> > > >
-> > > > $(obj)/%.dtb: $(src)/%.dts $(DTC) $FORCE
-> > > >         $(call if_changed_rule,dtc)
-> > > >
-> > > > $(obj)/%.dtbo: $(src)/%.dts $(DTC) FORCE
-> > > >         $(call if_changed_dep,dtc)
-> > > >
-> > > >
-> > > > With the dtc/check split, we can avoid unneeded regeneration of
-> > > > %.dtb when DT_TMP_SCHEMA or DT_SCHEMA_FILES is
-> > > > changed.
-> > > >
-> > > >
-> > > > One drawback is we track %.dtb.checked and and %.dtb separately,
-> > > > so something like 53182e81f47d4ea0c727c49ad23cb782173ab849
-> > > > may come back.
-> > >
-> > > It's up to you and Rob, but I'd really prefer a simpler solution here.
-> > > Regenerating dtbs sounds like a minor pain compared to hacking the
-> > > top-level Makefile again. What I really like is that if one has
-> > > CHECK_DTBS=y (for whatever reason), he can not generate dtb without
-> > > validation.
-> >
-> > I lean towards just rebuilding the dtbs. That's pretty quick and
-> > ensures we get dtc warnings with schema warnings. In the long run, I
-> > would like to make the schema checks not optional to run. The
-> > impediment to doing that is lots of warnings (but not not some
-> > platforms), adding a tool dependency, and validation time.
->
-> Rob, Masahiro, do we have any conclusion here? I can change my patch,
-> but I'd like to understand in which way I should change it.
-> Fixing/testing yaml changes is a bit painful w/o this change.
->
-> --
-> With best wishes
-> Dmitry
 
 
+On 9/15/2022 2:53 AM, Matthias Kaehlcke wrote:
+> On Wed, Sep 14, 2022 at 09:12:36AM +0200, Johan Hovold wrote:
+>> On Thu, Sep 01, 2022 at 09:04:55AM -0700, Matthias Kaehlcke wrote:
+>>> On Thu, Sep 01, 2022 at 03:47:56PM +0530, Rajendra Nayak wrote:
+>>>> USB on sc7280 cannot support wakeups from low power states
+>>>> if the GDSC is turned OFF. Update the .pwrsts for usb GDSC so it
+>>>> only transitions to RET in low power.
+>>>>
+>>>> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+>>>
+>>> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+>>> Tested-by: Matthias Kaehlcke <mka@chromium.org>
+>>
+>> Did you confirm that you actually hit the retention state?
+> 
+> No, how would I do that?
+> 
+>> IIUC, this series is equivalent to using ALWAYS_ON unless CX is actually
+>> powered off during suspend.
+> 
+> The count in /sys/kernel/debug/qcom_stats/cxsd increses with each suspend,
+> however it also does that with the GDSC configured as ALWAYS_ON and with
+> Rajendra's "arm64: dts: qcom: sc7280: Add required-opps for USB" [1], so
 
+hmm, that's really not expected. With my above patch and with the GDSC as
+ALWAYS_ON there is a cx vote in suspend preventing cxsd so the counter
+should not go up.
 
-I am fine with the patch as long as you fix DTC/CHECK to DTC.
-
-
-
-
-
-Another idea is to re-check the schema every time,
-like this:
-
-
-
-diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
-index 3fb6a99e78c4..9fc9f39fb12e 100644
---- a/scripts/Makefile.lib
-+++ b/scripts/Makefile.lib
-@@ -375,13 +375,9 @@ quiet_cmd_dtb_check =      CHECK   $@
-       cmd_dtb_check =  $(DT_CHECKER) $(DT_CHECKER_FLAGS) -u
-$(srctree)/$(DT_BINDING_DIR) -p $(DT_TMP_SCHEMA
-) $@ || true
- endif
-
--define rule_dtc
--       $(call cmd_and_fixdep,dtc)
--       $(call cmd,dtb_check)
--endef
--
- $(obj)/%.dtb: $(src)/%.dts $(DTC) $(DT_TMP_SCHEMA) FORCE
--       $(call if_changed_rule,dtc)
-+       $(call if_changed_dep,dtc)
-+       $(call cmd,dtb_check)
-
- $(obj)/%.dtbo: $(src)/%.dts $(DTC) FORCE
-        $(call if_changed_dep,dtc)
-
-
-
-
-
-Whatever.
-
-
-
-
-
---
-Best Regards
-Masahiro Yamada
+> I guess that isn't the correct signal.
+> 
+> https://patchwork.kernel.org/project/linux-arm-msm/patch/20220914053017.23617-1-quic_rjendra@quicinc.com/
