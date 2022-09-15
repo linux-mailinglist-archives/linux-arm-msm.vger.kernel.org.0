@@ -2,296 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CFF085B9B6D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 14:56:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AE325B9B9D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 15:10:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230145AbiIOM4l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Sep 2022 08:56:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58854 "EHLO
+        id S229536AbiIONK1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Sep 2022 09:10:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230094AbiIOM4j (ORCPT
+        with ESMTP id S229852AbiIONKZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Sep 2022 08:56:39 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A976F9C2C6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 05:56:29 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id v185-20020a1cacc2000000b003b42e4f278cso14642094wme.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 05:56:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=QFHrDBmOgjQNltcQ0NOpoAX3KMBSQJ+P+IQdQCe6YjM=;
-        b=i94W9vPeB3iQhYc0u0wLbmyX6MEeuNaog5wfMu/+9uiNqJij2rVE5ujaeb7vKGnT27
-         uIkiF6ac1jMX8W8HH9TUmsFtRxvmvuMna0QcIXpL5b2ZoTtgvFZm9vb3jTmR/qFRit30
-         56sV4vbdwPu5ZLH/+3hidYwfcUELJBqKox5mkenv8ecjBj4Wv91ccIDgWtocreT/s400
-         wXPbCGcUq47+M5jHbG0A5blADigUSFIMq/Ui6eWJa77/96Nf9w6KjEtNJvOO675XrAHk
-         GavwW+zDncMOvNECfqi774Tk7tsCIag2C+HR/JGe07b5dHxl7IPQ8FvcpnKFNkr3zH4A
-         XEEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=QFHrDBmOgjQNltcQ0NOpoAX3KMBSQJ+P+IQdQCe6YjM=;
-        b=Rdgfdey6yNb/KFmpt99b8Upj/GsQOTfwRlTEz5wkNGCuactx2Cv1ljUrF0V/jzW2ig
-         3O9EHU0cDXe3BkcTG59/k3P534zt7u0oN8Y9QHgLo8pH/KJivV6SNLVztg0PK/WOkzHT
-         BFqExzHvCCpovYyQt3wFD8e7G+RaLO8p4Fauubmyww8E/IP9HoKKViKeT1y8kBE/1qji
-         /JxBK3VV26YOY8QxQwgNbiA1UE4LI6smAmfyimV8aFy0V0FMdQ4fpefrKp1vNDy/hEOd
-         AO2xjXc6cRHFj+Gs3fSAbi2MYkNQuW7DpvtwgP/3zTmRy2mn3kZDG6HfjV2gKYB+39mU
-         dczw==
-X-Gm-Message-State: ACgBeo3tpspbFj0rY47gd/RAqcQRcfPWM4ybL/MBJUUdwmk7BoM/eoAH
-        QitoMfXELNzL3TNF0aHoT94ytmux3p2/gg==
-X-Google-Smtp-Source: AA6agR5wQmDS9NVIm/Fef48EtgUk61VlJBe8+Luu17wFjPkahhU72GwomXl2CggvRhgQPqnUs9ax5Q==
-X-Received: by 2002:a7b:ca53:0:b0:3b4:90c4:e07 with SMTP id m19-20020a7bca53000000b003b490c40e07mr6827104wml.150.1663246587778;
-        Thu, 15 Sep 2022 05:56:27 -0700 (PDT)
-Received: from srini-hackbox.lan (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.gmail.com with ESMTPSA id o11-20020a05600c510b00b003a845621c5bsm2764776wms.34.2022.09.15.05.56.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Sep 2022 05:56:27 -0700 (PDT)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     broonie@kernel.org
-Cc:     lgirdwood@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, bgoswami@quicinc.com,
-        perex@perex.cz, tiwai@suse.com, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH v4 4/4] ASoC: qcom: add machine driver for sc8280xp
-Date:   Thu, 15 Sep 2022 13:56:11 +0100
-Message-Id: <20220915125611.22473-5-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20220915125611.22473-1-srinivas.kandagatla@linaro.org>
-References: <20220915125611.22473-1-srinivas.kandagatla@linaro.org>
+        Thu, 15 Sep 2022 09:10:25 -0400
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2E272E9CC;
+        Thu, 15 Sep 2022 06:10:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1663247423; x=1694783423;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=HoCpplRGmLa8NMZ/Auv5ElmwuTYU4eLsbnw+GC1f8LU=;
+  b=GDMbYg/7ty3Pnn48jYjN0+yMkqkSwD7PinOogk+POn/HTD8unqr/uy6d
+   GAj26ots8CjQuvk/PXCCy0czqaA5weVyeKQQzp3t5cdsbwLn7gEOL7lZ+
+   wuH9ZCnmRXodRdP10T2buzXhaFzu7YRnBTlENk708uUVqxAGHuewLlfSM
+   b1sF/sy0NZvwNSCkj0ttnmgk/Zfi4lARn83uWpIidpC2vGsr3vJhCym5/
+   50M7OtmkhdycOtaG1DVsxEHjK6Vod0PgaiCVzPjxngUMS9fre3Q724LnU
+   CJvHOVtYyEeIFKaGq1T50QkJIwQ/hOSOejAAN2IU/7KIzCqhIy1dgxtKx
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10470"; a="281737598"
+X-IronPort-AV: E=Sophos;i="5.93,318,1654585200"; 
+   d="scan'208";a="281737598"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2022 06:10:23 -0700
+X-IronPort-AV: E=Sophos;i="5.93,318,1654585200"; 
+   d="scan'208";a="617269024"
+Received: from bhomann-mobl.ger.corp.intel.com (HELO [10.252.61.7]) ([10.252.61.7])
+  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2022 06:10:21 -0700
+Message-ID: <3962348a-33b4-5941-4a0b-cb447a513a41@linux.intel.com>
+Date:   Thu, 15 Sep 2022 15:10:18 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Firefox/91.0 Thunderbird/91.11.0
+Subject: Re: [PATCH] soundwire: qcom: update status from device id 1
+Content-Language: en-US
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        vkoul@kernel.org
+Cc:     yung-chuan.liao@linux.intel.com, sanyog.r.kale@intel.com,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org, quic_srivasam@quicinc.com
+References: <20220915124215.13703-1-srinivas.kandagatla@linaro.org>
+From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <20220915124215.13703-1-srinivas.kandagatla@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add machine driver for sc8280xp SoC.
 
-This intial supports only includes WSA883x Speakers and WCD938x based headset.
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- sound/soc/qcom/Kconfig    |  12 +++
- sound/soc/qcom/Makefile   |   2 +
- sound/soc/qcom/sc8280xp.c | 157 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 171 insertions(+)
- create mode 100644 sound/soc/qcom/sc8280xp.c
+On 9/15/22 14:42, Srinivas Kandagatla wrote:
+> By default autoenumeration is enabled on QCom SoundWire controller
+> which means the core should not be dealing with device 0 w.r.t enumeration.
+> Currently device 0 status is also shared with SoundWire core which confuses
+> the core sometimes and we endup adding 0:0:0:0 slave device.
 
-diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
-index 750653404ba3..1b0252ec4665 100644
---- a/sound/soc/qcom/Kconfig
-+++ b/sound/soc/qcom/Kconfig
-@@ -173,6 +173,18 @@ config SND_SOC_SM8250
- 	  SM8250 SoC-based systems.
- 	  Say Y if you want to use audio device on this SoCs.
- 
-+config SND_SOC_SC8280XP
-+	tristate "SoC Machine driver for SC8280XP boards"
-+	depends on QCOM_APR || COMPILE_TEST
-+	depends on SOUNDWIRE
-+	depends on COMMON_CLK
-+	select SND_SOC_QDSP6
-+	select SND_SOC_QCOM_COMMON
-+	help
-+	  To add support for audio on Qualcomm Technologies Inc.
-+	  SC8280XP SoC-based systems.
-+	  Say Y if you want to use audio device on this SoCs.
-+
- config SND_SOC_SC7180
- 	tristate "SoC Machine driver for SC7180 boards"
- 	depends on I2C && GPIOLIB
-diff --git a/sound/soc/qcom/Makefile b/sound/soc/qcom/Makefile
-index 8b7b876899a8..8b97172cf990 100644
---- a/sound/soc/qcom/Makefile
-+++ b/sound/soc/qcom/Makefile
-@@ -26,6 +26,7 @@ snd-soc-sc7180-objs := sc7180.o
- snd-soc-sc7280-objs := sc7280.o
- snd-soc-sdm845-objs := sdm845.o
- snd-soc-sm8250-objs := sm8250.o
-+snd-soc-sc8280xp-objs := sc8280xp.o
- snd-soc-qcom-common-objs := common.o
- 
- obj-$(CONFIG_SND_SOC_STORM) += snd-soc-storm.o
-@@ -33,6 +34,7 @@ obj-$(CONFIG_SND_SOC_APQ8016_SBC) += snd-soc-apq8016-sbc.o
- obj-$(CONFIG_SND_SOC_MSM8996) += snd-soc-apq8096.o
- obj-$(CONFIG_SND_SOC_SC7180) += snd-soc-sc7180.o
- obj-$(CONFIG_SND_SOC_SC7280) += snd-soc-sc7280.o
-+obj-$(CONFIG_SND_SOC_SC8280XP) += snd-soc-sc8280xp.o
- obj-$(CONFIG_SND_SOC_SDM845) += snd-soc-sdm845.o
- obj-$(CONFIG_SND_SOC_SM8250) += snd-soc-sm8250.o
- obj-$(CONFIG_SND_SOC_QCOM_COMMON) += snd-soc-qcom-common.o
-diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
-new file mode 100644
-index 000000000000..ade44ad7c585
---- /dev/null
-+++ b/sound/soc/qcom/sc8280xp.c
-@@ -0,0 +1,157 @@
-+// SPDX-License-Identifier: GPL-2.0
-+// Copyright (c) 2022, Linaro Limited
-+
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+#include <linux/of_device.h>
-+#include <sound/soc.h>
-+#include <sound/soc-dapm.h>
-+#include <sound/pcm.h>
-+#include <linux/soundwire/sdw.h>
-+#include <sound/jack.h>
-+#include <linux/input-event-codes.h>
-+#include "qdsp6/q6afe.h"
-+#include "common.h"
-+
-+#define DRIVER_NAME		"sc8280xp"
-+
-+struct sc8280xp_snd_data {
-+	bool stream_prepared[AFE_PORT_MAX];
-+	struct snd_soc_card *card;
-+	struct sdw_stream_runtime *sruntime[AFE_PORT_MAX];
-+	struct snd_soc_jack jack;
-+	bool jack_setup;
-+};
-+
-+static int sc8280xp_snd_init(struct snd_soc_pcm_runtime *rtd)
-+{
-+	struct sc8280xp_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
-+
-+	return qcom_snd_wcd_jack_setup(rtd, &data->jack, &data->jack_setup);
-+}
-+
-+static int sc8280xp_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
-+				     struct snd_pcm_hw_params *params)
-+{
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct snd_interval *rate = hw_param_interval(params,
-+					SNDRV_PCM_HW_PARAM_RATE);
-+	struct snd_interval *channels = hw_param_interval(params,
-+					SNDRV_PCM_HW_PARAM_CHANNELS);
-+
-+	rate->min = rate->max = 48000;
-+	channels->min = 2;
-+	channels->max = 2;
-+	switch (cpu_dai->id) {
-+	case TX_CODEC_DMA_TX_0:
-+	case TX_CODEC_DMA_TX_1:
-+	case TX_CODEC_DMA_TX_2:
-+	case TX_CODEC_DMA_TX_3:
-+		channels->min = 1;
-+		break;
-+	default:
-+		break;
-+	}
-+
-+
-+	return 0;
-+}
-+
-+static int sc8280xp_snd_hw_params(struct snd_pcm_substream *substream,
-+				struct snd_pcm_hw_params *params)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct sc8280xp_snd_data *pdata = snd_soc_card_get_drvdata(rtd->card);
-+
-+	return qcom_snd_sdw_hw_params(substream, params, &pdata->sruntime[cpu_dai->id]);
-+}
-+
-+static int sc8280xp_snd_prepare(struct snd_pcm_substream *substream)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct sc8280xp_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
-+	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
-+
-+	return qcom_snd_sdw_prepare(substream, sruntime,
-+				    &data->stream_prepared[cpu_dai->id]);
-+}
-+
-+static int sc8280xp_snd_hw_free(struct snd_pcm_substream *substream)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct sc8280xp_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
-+
-+	return qcom_snd_sdw_hw_free(substream, sruntime,
-+				    &data->stream_prepared[cpu_dai->id]);
-+}
-+
-+static const struct snd_soc_ops sc8280xp_be_ops = {
-+	.hw_params = sc8280xp_snd_hw_params,
-+	.hw_free = sc8280xp_snd_hw_free,
-+	.prepare = sc8280xp_snd_prepare,
-+};
-+
-+static void sc8280xp_add_be_ops(struct snd_soc_card *card)
-+{
-+	struct snd_soc_dai_link *link;
-+	int i;
-+
-+	for_each_card_prelinks(card, i, link) {
-+		if (link->no_pcm == 1) {
-+			link->init = sc8280xp_snd_init;
-+			link->be_hw_params_fixup = sc8280xp_be_hw_params_fixup;
-+			link->ops = &sc8280xp_be_ops;
-+		}
-+	}
-+}
-+
-+static int sc8280xp_platform_probe(struct platform_device *pdev)
-+{
-+	struct snd_soc_card *card;
-+	struct sc8280xp_snd_data *data;
-+	struct device *dev = &pdev->dev;
-+	int ret;
-+
-+	card = devm_kzalloc(dev, sizeof(*card), GFP_KERNEL);
-+	if (!card)
-+		return -ENOMEM;
-+	card->owner = THIS_MODULE;
-+	/* Allocate the private data */
-+	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
-+	if (!data)
-+		return -ENOMEM;
-+
-+	card->dev = dev;
-+	dev_set_drvdata(dev, card);
-+	snd_soc_card_set_drvdata(card, data);
-+	ret = qcom_snd_parse_of(card);
-+	if (ret)
-+		return ret;
-+
-+	card->driver_name = DRIVER_NAME;
-+	sc8280xp_add_be_ops(card);
-+	return devm_snd_soc_register_card(dev, card);
-+}
-+
-+static const struct of_device_id snd_sc8280xp_dt_match[] = {
-+	{.compatible = "qcom,sc8280xp-sndcard",},
-+	{}
-+};
-+
-+MODULE_DEVICE_TABLE(of, snd_sc8280xp_dt_match);
-+
-+static struct platform_driver snd_sc8280xp_driver = {
-+	.probe  = sc8280xp_platform_probe,
-+	.driver = {
-+		.name = "snd-sc8280xp",
-+		.of_match_table = snd_sc8280xp_dt_match,
-+	},
-+};
-+module_platform_driver(snd_sc8280xp_driver);
-+MODULE_AUTHOR("Srinivas Kandagatla <srinivas.kandagatla@linaro.org");
-+MODULE_DESCRIPTION("SC8280XP ASoC Machine Driver");
-+MODULE_LICENSE("GPL v2");
--- 
-2.21.0
+The change looks fine, but the description of the issue is surprising.
 
+Whether autoenumeration is enabled or not is irrelevant, by spec the
+device0 cannot be in ALERT status and throw in-band interrupts to the
+host with this mechanism.
+
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
+>  drivers/soundwire/qcom.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+> index e21a3306bf01..871e4d8b32c7 100644
+> --- a/drivers/soundwire/qcom.c
+> +++ b/drivers/soundwire/qcom.c
+> @@ -428,7 +428,7 @@ static int qcom_swrm_get_alert_slave_dev_num(struct qcom_swrm_ctrl *ctrl)
+>  
+>  	ctrl->reg_read(ctrl, SWRM_MCP_SLV_STATUS, &val);
+>  
+> -	for (dev_num = 0; dev_num <= SDW_MAX_DEVICES; dev_num++) {
+> +	for (dev_num = 1; dev_num <= SDW_MAX_DEVICES; dev_num++) {
+>  		status = (val >> (dev_num * SWRM_MCP_SLV_STATUS_SZ));
+>  
+>  		if ((status & SWRM_MCP_SLV_STATUS_MASK) == SDW_SLAVE_ALERT) {
+> @@ -448,7 +448,7 @@ static void qcom_swrm_get_device_status(struct qcom_swrm_ctrl *ctrl)
+>  	ctrl->reg_read(ctrl, SWRM_MCP_SLV_STATUS, &val);
+>  	ctrl->slave_status = val;
+>  
+> -	for (i = 0; i <= SDW_MAX_DEVICES; i++) {
+> +	for (i = 1; i <= SDW_MAX_DEVICES; i++) {
+>  		u32 s;
+>  
+>  		s = (val >> (i * 2));
