@@ -2,202 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C48E5B9896
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 12:14:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 915D35B9948
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 13:04:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230009AbiIOKOZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Sep 2022 06:14:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38706 "EHLO
+        id S229641AbiIOLEX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Sep 2022 07:04:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229701AbiIOKOY (ORCPT
+        with ESMTP id S229531AbiIOLEW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Sep 2022 06:14:24 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D164183070;
-        Thu, 15 Sep 2022 03:14:22 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C99431692;
-        Thu, 15 Sep 2022 03:14:28 -0700 (PDT)
-Received: from [10.57.48.93] (unknown [10.57.48.93])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DECA23F73B;
-        Thu, 15 Sep 2022 03:14:19 -0700 (PDT)
-Message-ID: <c39b704a-ceae-9db8-7f4f-81d9cfee8495@arm.com>
-Date:   Thu, 15 Sep 2022 11:14:18 +0100
+        Thu, 15 Sep 2022 07:04:22 -0400
+Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C5699927F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 04:04:21 -0700 (PDT)
+Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-349c4310cf7so49650917b3.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 04:04:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=Fjdmt49Ip6IrMmuwN3vP4Pv2wpYe0K89XUz1Xteq1mY=;
+        b=Kb++79upi6ZTFZJV2hwSGbfOJio8ZRLuBoYUkuGjepiU/FlyqLePo7fQ6FO6XQKPuq
+         TwY/2NUsz2viNbON85Vpb2sXvMrUnuRyovsqd7JhCVPlgQwCBDmYVJQSZNLoW8Tt/BLJ
+         959QybdG+5G6VrQs9VUFjjHm5IDWMWp118ByJ23G1U3rzfFVHYQSkIOVMgnXncGnplUP
+         wQUN4MQMezpJTsFXOffMasb9m3LYQrqzuXMwSzArM3TqWH/ldnp3VmzGrH9/LcC6hygR
+         1h6/eTvdz/48wYADMpO3IXE5xcyzld/QNuh6BUH1MVdnjbExQoGlF4iRvwv766fxFrqS
+         dSMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=Fjdmt49Ip6IrMmuwN3vP4Pv2wpYe0K89XUz1Xteq1mY=;
+        b=F4tCqoGsqlkTjN/A+mUPOmKB9kqGWhXsKxiePC3QgC4wYALkl8zJ8CLlhzvvdMEWiV
+         9HLMVeJy8NuqOdW4lb6h3JU9qOYB8cOqFwhRMt0fGFxom1SyKyECH9dGIblggs3IZNBs
+         szF+gbNK3Y4dNmH/Vmpof8F8lHgryIYVTGdBxR+4JDS5nwmzwFOAoGn3tXCiZCv5sBCM
+         G2Rhh+uZlHRC1NhTEfN6U3lFqU/jREAwwKsHm7aQ1wbYNN0K8sAZ7Ufo/5spRahNIt6j
+         Dqv9Sp5XoHJsoIIloMnRyWUXbSsEH+qhS31cQ+UKK0AhbN5pcTbcJGUE4wiAuagHLTiL
+         2Zaw==
+X-Gm-Message-State: ACgBeo3Tu1ufZ8jMdD9/XMFnO8M3cLNzMH9+6S/zIxKMAK8Y4N0Xkltx
+        FZrHpsOB/VVoXtp5yOTKVW3wYUGqnck6xY5tWaSfsw==
+X-Google-Smtp-Source: AA6agR4GL88S9tVhRmjA6i/uTEy7NyuRQAaU9cz/cIZdqHJpBAPT5tAcPdAYvuxOxAY+H8MVrip6/s9i3CauqquYrGE=
+X-Received: by 2002:a81:1988:0:b0:345:11a6:fa56 with SMTP id
+ 130-20020a811988000000b0034511a6fa56mr34928167ywz.138.1663239860269; Thu, 15
+ Sep 2022 04:04:20 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.13.0
-Subject: Re: [PATCH 2/9] coresight-tpda: Add DSB dataset support
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org
-References: <1662626705-13097-1-git-send-email-quic_taozha@quicinc.com>
- <1662626705-13097-3-git-send-email-quic_taozha@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <1662626705-13097-3-git-send-email-quic_taozha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-8.7 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20220915085733.20290-1-luca.weiss@fairphone.com>
+In-Reply-To: <20220915085733.20290-1-luca.weiss@fairphone.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 15 Sep 2022 14:04:09 +0300
+Message-ID: <CAA8EJppkPgNpiyVW+JGzPTzC2wW0Z+qv1DRMWWTYv=p6x0mH7Q@mail.gmail.com>
+Subject: Re: [PATCH v2] mfd: qcom-spmi-pmic: Add more PMIC SUBTYPE IDs
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Tao
+On Thu, 15 Sept 2022 at 11:58, Luca Weiss <luca.weiss@fairphone.com> wrote:
+>
+> Add more IDs that are found in the downstream msm-4.19 kernel under the
+> path include/linux/qpnp/qpnp-revid.h.
+>
+> While we're at it, make sure all hex numbers are uppercase and
+> consistent in this file.
 
-On 08/09/2022 09:44, Tao Zhang wrote:
-> Read the DSB element size from the device tree. Set the register
-> bit that controls the DSB element size of the corresponding port.
-> 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+Please make all hex numbers lowercase. If they are uppercase
+somewhere, it's worth fixing.
+
+Additionally, it would be better to split this patch. One fixes the
+case, another one adds the new IDs. It would help the review a lot.
+
+>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
->   drivers/hwtracing/coresight/coresight-tpda.c | 62 ++++++++++++++++++++++++++++
->   drivers/hwtracing/coresight/coresight-tpda.h |  4 ++
->   2 files changed, 66 insertions(+)
-> 
-> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/hwtracing/coresight/coresight-tpda.c
-> index c8bbc75..76636a1 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpda.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
-> @@ -37,6 +37,15 @@ static void tpda_enable_port(struct tpda_drvdata *drvdata, int port)
->   	u32 val;
->   
->   	val = readl_relaxed(drvdata->base + TPDA_Pn_CR(port));
-> +	/*
-> +	 * Configure aggregator port n DSB data set element size
-> +	 * Set the bit to 0 if the size is 32
-> +	 * Set the bit to 1 if the size is 64
-> +	 */
-> +	if (drvdata->dsb_esize[port] == 32)
-> +		val &= ~TPDA_Pn_CR_DSBSIZE;
-> +	else if (drvdata->dsb_esize[port] == 64)
-> +		val |= TPDA_Pn_CR_DSBSIZE;
->   	/* Enable the port */
->   	val |= TPDA_Pn_CR_ENA;
->   	writel_relaxed(val, drvdata->base + TPDA_Pn_CR(port));
-> @@ -105,6 +114,55 @@ static const struct coresight_ops tpda_cs_ops = {
->   	.link_ops	= &tpda_link_ops,
->   };
->   
-> +static int tpda_parse_dsb(struct tpda_drvdata *drvdata)
-> +{
-> +	int len, port, i;
-> +	const __be32 *prop;
-> +	struct device_node *node = drvdata->dev->of_node;
-> +
-> +	/* Read the size of DSB element */
-> +	prop = of_get_property(node, "qcom,dsb-elem-size", &len);
-> +	if (prop) {
-> +		len /= sizeof(__be32);
-> +		/*
-> +		 * The read set of data is port and size, so the number of data
-> +		 * is a multiple of two. And the number of data will not exceed
-> +		 * two times that of the TPDA inpurts number.
-> +		 */
-> +		if (len < 2 || len >= (2 * TPDA_MAX_INPORTS) || len % 2 != 0) {
-> +			dev_err(drvdata->dev,
-> +				"Dataset DSB width entries are wrong\n");
-> +			return -EINVAL;
-> +		}
-> +
-> +		for (i = 0; i < len; i++) {
+> Changes in v2:
+> * Convert existing lowercase hex numbers to uppercase
+>
+>  include/soc/qcom/qcom-spmi-pmic.h | 28 +++++++++++++++++++++-------
+>  1 file changed, 21 insertions(+), 7 deletions(-)
+>
+> diff --git a/include/soc/qcom/qcom-spmi-pmic.h b/include/soc/qcom/qcom-spmi-pmic.h
+> index 72398ff44719..f1c9f1676fb4 100644
+> --- a/include/soc/qcom/qcom-spmi-pmic.h
+> +++ b/include/soc/qcom/qcom-spmi-pmic.h
+> @@ -18,26 +18,40 @@
+>  #define PMI8962_SUBTYPE                0x07
+>  #define PMD9635_SUBTYPE                0x08
+>  #define PM8994_SUBTYPE         0x09
+> -#define PMI8994_SUBTYPE                0x0a
+> -#define PM8916_SUBTYPE         0x0b
+> -#define PM8004_SUBTYPE         0x0c
+> -#define PM8909_SUBTYPE         0x0d
+> -#define PM8028_SUBTYPE         0x0e
+> -#define PM8901_SUBTYPE         0x0f
+> +#define PMI8994_SUBTYPE                0x0A
+> +#define PM8916_SUBTYPE         0x0B
+> +#define PM8004_SUBTYPE         0x0C
+> +#define PM8909_SUBTYPE         0x0D
+> +#define PM8028_SUBTYPE         0x0E
+> +#define PM8901_SUBTYPE         0x0F
+>  #define PM8950_SUBTYPE         0x10
+>  #define PMI8950_SUBTYPE                0x11
+> +#define PMK8001_SUBTYPE                0x12
+> +#define PMI8996_SUBTYPE                0x13
+>  #define PM8998_SUBTYPE         0x14
+>  #define PMI8998_SUBTYPE                0x15
+> +#define SMB1381_SUBTYPE                0x17
+>  #define PM8005_SUBTYPE         0x18
+>  #define PM660L_SUBTYPE         0x1A
+>  #define PM660_SUBTYPE          0x1B
+> +#define SMB1355_SUBTYPE                0x1C
+>  #define PM8150_SUBTYPE         0x1E
+> -#define PM8150L_SUBTYPE                0x1f
+> +#define PM8150L_SUBTYPE                0x1F
+>  #define PM8150B_SUBTYPE                0x20
+>  #define PMK8002_SUBTYPE                0x21
+> +#define SMB1390_SUBTYPE                0x23
+>  #define PM8009_SUBTYPE         0x24
+> +#define PMI632_SUBTYPE         0x25
+>  #define PM8150C_SUBTYPE                0x26
+> +#define PM6150_SUBTYPE         0x28
+>  #define SMB2351_SUBTYPE                0x29
+> +#define PM8008_SUBTYPE         0x2C
+> +#define PM6125_SUBTYPE         0x2D
+> +#define PM7250B_SUBTYPE                0x2E
+> +#define PMK8350_SUBTYPE                0x2F
+> +#define PMR735B_SUBTYPE                0x34
+> +#define PM6350_SUBTYPE         0x36
+> +#define PM2250_SUBTYPE         0x37
+>
+>  #define PMI8998_FAB_ID_SMIC    0x11
+>  #define PMI8998_FAB_ID_GF      0x30
+> --
+> 2.37.3
+>
 
-Please could we be explicit here that we are dealing with 2 entries
-in an iteration. i.e,
 
-		for (i = 0; i < len; i += 2) {
-> +			port = be32_to_cpu(prop[i++]);
-
-			port = be32_to_cpu(prop[i]);
-
-> +			if (port >= TPDA_MAX_INPORTS) {
-> +				dev_err(drvdata->dev,
-> +					"Wrong port specified for DSB\n");
-> +				return -EINVAL;
-> +			}
-> +			/* Set DSB element size for corresponding port to dsb_esize*/
-> +			drvdata->dsb_esize[port] = be32_to_cpu(prop[i]);
-
-		drvdata->dsb_esize[port] = be32_to_cpu(prop[i + 1]);
-
-> +		}
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int tpda_parse_of_data(struct tpda_drvdata *drvdata)
-> +{
-> +	int ret;
-> +
-> +	ret = tpda_parse_dsb(drvdata);
-> +	if (ret) {
-> +		dev_err(drvdata->dev, "Fail to get DSB data set element size\n");
-> +		return -EINVAL;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->   static int tpda_init_default_data(struct tpda_drvdata *drvdata)
->   {
->   	int atid;
-> @@ -148,6 +206,10 @@ static int tpda_probe(struct amba_device *adev, const struct amba_id *id)
->   
->   	spin_lock_init(&drvdata->spinlock);
->   
-> +	ret = tpda_parse_of_data(drvdata);
-> +	if (ret)
-> +		return ret;
-> +
->   	ret = tpda_init_default_data(drvdata);
->   	if (ret)
->   		return ret;
-> diff --git a/drivers/hwtracing/coresight/coresight-tpda.h b/drivers/hwtracing/coresight/coresight-tpda.h
-> index 4beb332..ecc7869 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpda.h
-> +++ b/drivers/hwtracing/coresight/coresight-tpda.h
-> @@ -10,6 +10,8 @@
->   #define TPDA_Pn_CR(n)		(0x004 + (n * 4))
->   /* Aggregator port enable bit */
->   #define TPDA_Pn_CR_ENA		BIT(0)
-> +/* Aggregator port DSB data set element size bit */
-> +#define TPDA_Pn_CR_DSBSIZE		BIT(8)
->   
->   #define TPDA_MAX_INPORTS	32
->   
-> @@ -23,6 +25,7 @@
->    * @csdev:      component vitals needed by the framework.
->    * @spinlock:   lock for the drvdata value.
->    * @enable:     enable status of the component.
-> + * @dsb_esize   DSB element size
-
-super minor nit: Missing ":", consistent with the other fields.
-
->    */
->   struct tpda_drvdata {
->   	void __iomem		*base;
-> @@ -30,6 +33,7 @@ struct tpda_drvdata {
->   	struct coresight_device	*csdev;
->   	spinlock_t		spinlock;
->   	u8			atid;
-> +	u32			dsb_esize[TPDA_MAX_INPORTS];
->   };
->   
->   #endif  /* _CORESIGHT_CORESIGHT_TPDA_H */
-
-Suzuki
+-- 
+With best wishes
+Dmitry
