@@ -2,74 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 82E135B9FCB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 18:43:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AEA9B5BA02F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Sep 2022 19:01:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229682AbiIOQnl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Sep 2022 12:43:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42572 "EHLO
+        id S229682AbiIORBZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Sep 2022 13:01:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbiIOQnk (ORCPT
+        with ESMTP id S229869AbiIORBX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Sep 2022 12:43:40 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A3ED5757A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 09:43:38 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id h194so13558627iof.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 09:43:38 -0700 (PDT)
+        Thu, 15 Sep 2022 13:01:23 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44E245F107
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 10:01:22 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id f9so30652767lfr.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 10:01:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=ihRDwkA3/+uCxAKrHSmLGee9NmkEXol5SUJ6O91CNsQ=;
-        b=ImI6oxn09GT5UW+MnR4ggV+ED5gD+svfD2kQMzQ4voej/W+eUfC3HFi6VBZwQXwecu
-         voIEManlVi43NC/9tYTL0uTdZ1wEgFcoBx4a8ub3zfgvGaS5xc83X/EvtA6XpvC4raQg
-         Z60mLYu8ZV4ww10k+iDFlynWBwENFebBhSxfM=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=HemRH6FXyEMReEGA4gG5S0D7Mh5v3eIWKFlwYllIjsE=;
+        b=XCoMssTreOlAx9p5XjWOv1J/8edxMx8QtVhXsoxiMvd9eqPs3dst4+MdQUYk5+wRQd
+         LyLC+msHSmKK1ogRc7ev46ISNgHsLgimy3g0Csdf2Y4fJZR8SmaL+oqFGyL4RUxBqD9u
+         3lVwU7hmJksRpujfTXYXtRoO/n9LH5pSm8J3hHzkmlIQrDT+/GZDZw9IRx7nXs0Z9zBV
+         es4TLDsHmsAnX9ARCw0PnjLcdMnFme9bGV2K9MQ/sfANK/Gw12GVsZScJBSkdxYgasue
+         lDl8B/mbtpwYsYbAqnrc0gGBC2JBfAmG/uRawxCDGlDvEE+k/3aAkMwOeS+1ENRaHx3h
+         HsUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=ihRDwkA3/+uCxAKrHSmLGee9NmkEXol5SUJ6O91CNsQ=;
-        b=qMfWzDU9wppHoNfG9Pv+zzJpXVBOPc3ek0cAqKHn7rE/caLcQElvvlMrpzgfm4Bq6x
-         SlGxePu8mjnlO8mjnuC1Sx4aDrDXmHRHnI4o5al+dnX4cL/zXrIiUhVBG2jRr0du8iR2
-         g5ZNWPph22Qy7BwnjVJ85wbmmdwUANRaZEtFrg5zMPb0+6sJz1B3Gwwu1CPKeRuSdCqM
-         JFa86sXE0UjMCuL9ogvs4KtzF9ejXuu75c0GjHuWAUXAfM7DRg8WBSIXwcYbJw5mC2Yl
-         YKVdRA0lNCjPgcx9Gyh1ZXLjTJZ2Wgk6P5cso00fLUBMmsMVchZwW7ykowQFqS0xicPJ
-         tFlw==
-X-Gm-Message-State: ACrzQf1pWCT+O91t3CmZKP7mIB95ekc0Pd22xHVoe1OIUphiwtbII5lX
-        LPpNENSO0Gun1OSeUqHKvcJ97A==
-X-Google-Smtp-Source: AMsMyM4BvQTKE/r4PZSeJj2dgAk4gub8S4eTFG15BDPyb9u9/mTbJ8nnopamaoZaf8gPyzuWM8LMEQ==
-X-Received: by 2002:a05:6638:19cf:b0:358:3dd3:2162 with SMTP id bi15-20020a05663819cf00b003583dd32162mr441054jab.185.1663260218045;
-        Thu, 15 Sep 2022 09:43:38 -0700 (PDT)
-Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
-        by smtp.gmail.com with UTF8SMTPSA id cb6-20020a0566381b0600b00349cee4ef4asm1327397jab.62.2022.09.15.09.43.37
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=HemRH6FXyEMReEGA4gG5S0D7Mh5v3eIWKFlwYllIjsE=;
+        b=BWdJGcD7znRkLG4tBDJrTljkv9dJRtPTYAhCIqRjF+Cr1Rgq2q21hULbQbCDa0YzTw
+         zc5dBBBmrzGkJtaJM7PCT7Ck+J1lk9iJQZcCsMbDEWrA5DGv1acEiu1NcRDfU5GmhP2b
+         ZjNOJpjusivE4QfSLC0PPcO7AVKB9Q0EY6VGbtxRNOSd4Jjvm1iVR+ICGsry8QXgnUGn
+         qhhZhTDNbifV8BCRKFd3V1wGce1fw2wdLhcD7aliuR20vvXQQ9SUwSs6oAeh7m1JPd86
+         0Ufs/POs+cAjZbhQWfTW27ezvZyue2Cu8A0lRgKYHLFBaauBRzOuiCQIqnqGvnZi9oem
+         pz+g==
+X-Gm-Message-State: ACrzQf1DrBAkSt+GernHt0egrhL1A7KVEnDyZ4E/FtwLhEdrQIAxPVyT
+        v69Efr7qD9E2DMHcyjXiWomhrg==
+X-Google-Smtp-Source: AMsMyM6Q97H5vBINpC9jMr0i1EF0iLlDm2HA3qIx173ZB+GQcUADB1sCV6WqA7a4C/dAO0lesptagg==
+X-Received: by 2002:a05:6512:3d8c:b0:49a:4872:858 with SMTP id k12-20020a0565123d8c00b0049a48720858mr263481lfv.145.1663261280500;
+        Thu, 15 Sep 2022 10:01:20 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id a10-20020ac25e6a000000b0047f7722b73csm3055296lfr.142.2022.09.15.10.01.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Sep 2022 09:43:37 -0700 (PDT)
-Date:   Thu, 15 Sep 2022 16:43:36 +0000
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc:     Johan Hovold <johan@kernel.org>, andersson@kernel.org,
-        agross@kernel.org, konrad.dybcio@somainline.org,
-        mturquette@baylibre.com, sboyd@kernel.org, johan+linaro@kernel.org,
-        quic_kriskura@quicinc.com, dianders@chromium.org,
-        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/3] clk: qcom: gcc-sc7280: Update the .pwrsts for usb
- gdsc
-Message-ID: <YyNWOJerkZcqgx5h@google.com>
-References: <20220901101756.28164-1-quic_rjendra@quicinc.com>
- <20220901101756.28164-3-quic_rjendra@quicinc.com>
- <YxDYJ+ONryLROBhL@google.com>
- <YyF+5CQqcLQlXvzV@hovoldconsulting.com>
- <YyJGNR33JbHxWWYD@google.com>
- <4490d181-7bf2-791c-1778-1102e9adbc25@quicinc.com>
- <f58077fd-3d12-4094-7d46-e49f25e16033@quicinc.com>
+        Thu, 15 Sep 2022 10:01:20 -0700 (PDT)
+Message-ID: <b0c7e6c8-a2f4-b5e7-89a2-a3a25b0d9874@linaro.org>
+Date:   Thu, 15 Sep 2022 20:01:19 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <f58077fd-3d12-4094-7d46-e49f25e16033@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.1
+Subject: Re: [PATCH 0/6] clk: qcom: cpu-8996: additional cleanup for the
+ driver
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Yassine Oudjana <yassine.oudjana@gmail.com>
+References: <20220714100351.1834711-1-dmitry.baryshkov@linaro.org>
+ <013f2dd7-c15f-5b0e-c98a-595dd4d5a2c5@linaro.org>
+ <20220914031928.i6x6gumzcvdilgh3@builder.lan>
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220914031928.i6x6gumzcvdilgh3@builder.lan>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,43 +85,65 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 15, 2022 at 06:59:36PM +0530, Rajendra Nayak wrote:
+On 14/09/2022 06:19, Bjorn Andersson wrote:
+> On Fri, Sep 09, 2022 at 01:22:40PM +0300, Dmitry Baryshkov wrote:
+>> On 14/07/2022 13:03, Dmitry Baryshkov wrote:
+>>> This patch series depends on patches 1-5 from [1].
+>>>
+>>> Path 1 is slightly fixed version of patch 6 from the mentioned
+>>> patch series (fixed to use parent_hws where applicable). The rest is
+>>> minor cleanup of the driver.
+>>>
+>>> [1] https://lore.kernel.org/linux-arm-msm/20220621160621.24415-1-y.oudjana@protonmail.com/
+>>>
+>>
+>> Gracious ping. Yassing, Bjorn, Konrad?
+>>
 > 
-> On 9/15/2022 12:55 PM, Rajendra Nayak wrote:
-> > 
-> > 
-> > On 9/15/2022 2:53 AM, Matthias Kaehlcke wrote:
-> > > On Wed, Sep 14, 2022 at 09:12:36AM +0200, Johan Hovold wrote:
-> > > > On Thu, Sep 01, 2022 at 09:04:55AM -0700, Matthias Kaehlcke wrote:
-> > > > > On Thu, Sep 01, 2022 at 03:47:56PM +0530, Rajendra Nayak wrote:
-> > > > > > USB on sc7280 cannot support wakeups from low power states
-> > > > > > if the GDSC is turned OFF. Update the .pwrsts for usb GDSC so it
-> > > > > > only transitions to RET in low power.
-> > > > > > 
-> > > > > > Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> > > > > 
-> > > > > Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-> > > > > Tested-by: Matthias Kaehlcke <mka@chromium.org>
-> > > > 
-> > > > Did you confirm that you actually hit the retention state?
-> > > 
-> > > No, how would I do that?
-> > > 
-> > > > IIUC, this series is equivalent to using ALWAYS_ON unless CX is actually
-> > > > powered off during suspend.
-> > > 
-> > > The count in /sys/kernel/debug/qcom_stats/cxsd increses with each suspend,
-> > > however it also does that with the GDSC configured as ALWAYS_ON and with
-> > > Rajendra's "arm64: dts: qcom: sc7280: Add required-opps for USB" [1], so
-> > 
-> > hmm, that's really not expected. With my above patch and with the GDSC as
-> > ALWAYS_ON there is a cx vote in suspend preventing cxsd so the counter
-> > should not go up.
+> As I haven't heard anything from Yassine or Konrad I went ahead and
+> tried to pick this, unfortunately [1] doesn't apply.
 > 
-> Perhaps you are missing '1b771839: clk: qcom: gdsc: enable optional power domain support'
-> in your tree?
+> Could you please rebase the patches from [1] that you want applied and
+> resubmit that?
 
-Indeed, that patch was missing in our tree, thanks for the pointer!
+I just checked, patches from [1] apply cleanly on your for-next tree. 
+Could you please doublecheck?
 
-With it the CXSD count does not increase when the GDSC is configured as
-ALWAYS_ON.
+
+
+> 
+> Thanks,
+> Bjorn
+> 
+>>>
+>>> Dmitry Baryshkov (5):
+>>>     clk: qcom: cpu-8996: switch to devm_clk_notifier_register
+>>>     clk: qcom: cpu-8996: declare ACD clocks
+>>>     clk: qcom: cpu-8996: move ACD logic to
+>>>       clk_cpu_8996_pmux_determine_rate
+>>>     clk: qcom: cpu-8996: don't store parents in clk_cpu_8996_pmux
+>>>     clk: qcom: cpu-8996: use constant mask for pmux
+>>>
+>>> Yassine Oudjana (1):
+>>>     clk: qcom: msm8996-cpu: Use parent_data/_hws for all clocks
+>>>
+>>>    drivers/clk/qcom/clk-cpu-8996.c | 191 +++++++++++++++++---------------
+>>>    1 file changed, 100 insertions(+), 91 deletions(-)
+>>>
+>>>
+>>> base-commit: ca48adcc40b09d7f26a7754d4d54cfc4bd611f38
+>>> prerequisite-patch-id: ff67ff7bea1aef8e367a2589c46cf2c9ebb48664
+>>> prerequisite-patch-id: 1fdf02d8161689f3e571816d73ec94b115f51c34
+>>> prerequisite-patch-id: 837945fbb40427dac2e95a58b7660a3cf26d7d53
+>>> prerequisite-patch-id: df10945929f6f558c1363a23e2993d748a40236f
+>>> prerequisite-patch-id: a657a27256ef4be0cb932cb0ca7b3e4768e466f9
+>>
+>> -- 
+>> With best wishes
+>> Dmitry
+>>
+
+-- 
+With best wishes
+Dmitry
+
