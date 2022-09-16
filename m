@@ -2,113 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BA6D5BA909
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 11:10:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2A315BA910
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 11:12:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229874AbiIPJKw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Sep 2022 05:10:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33276 "EHLO
+        id S230408AbiIPJMT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Sep 2022 05:12:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230181AbiIPJKu (ORCPT
+        with ESMTP id S230213AbiIPJMT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Sep 2022 05:10:50 -0400
-X-Greylist: delayed 555 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 16 Sep 2022 02:10:49 PDT
-Received: from new3-smtp.messagingengine.com (new3-smtp.messagingengine.com [66.111.4.229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 672535C362;
-        Fri, 16 Sep 2022 02:10:48 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailnew.nyi.internal (Postfix) with ESMTP id 916DE580E9B;
-        Fri, 16 Sep 2022 05:01:32 -0400 (EDT)
-Received: from imap51 ([10.202.2.101])
-  by compute3.internal (MEProxy); Fri, 16 Sep 2022 05:01:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; t=1663318892; x=1663322492; bh=eSy6TVmDPq
-        cwPJ8Iryb7Xwdk6oM2vvcqIdcjswH4P9E=; b=rHo2dTf9SE9S0gj2sOVe8pVO0W
-        Td7NhKdEevcRMSDxrlt5f6VZe80+19QkGriim8Fmm6LnbygI6ZZlbqmXF562LBK/
-        0RlGKgsVwYBRMFQfSYn6mu/yXAv7+PGopEYhS0kdjBDCR6koWscqVFJbqhfJaFD9
-        eTr1x7iI2tcXcAvVVYKlHK3BOfCeurroaxfrSFGsKecX6j6L+kNKbzF4E/9kYNcc
-        EtBzTcyPTiieH3falT3odzwFJflCJRGX+1WkFUE0eMWiaIWYOYssobHpWxbhHzMi
-        IuIDW39V4eJmcivJzq8bZ+ij/N+mVSTk8IWTYIkq1Z+Kz8hPWpy/Pq+VTCXw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm2; t=1663318892; x=1663322492; bh=eSy6TVmDPqcwPJ8Iryb7Xwdk6oM2
-        vvcqIdcjswH4P9E=; b=rYMcLawC1WVkZQ5ZsW2j7sIZ7s2vguyxJM6ld7kKlR1o
-        O3igcFxjFQ9aQ+XQH5sV3A7mw1uTWU6slKTdbBmXIGBs725N/yVP5DMR/vXS4Psp
-        kG8iNsh0q2wqBe6FX83eGCCLZdZxn0jddAgIGuOuxTljuz5XMLbJR65jlGtnf7yD
-        y22IS59O3cvlQVxXJ0s8TDNMhE+TDJBVtZ/aJHVzt/7BI5FkEcqbsfBzn9reOtFz
-        r8/w4irSp0HGH5jban+7wZauToQ3uRRt/WeXKg8Gxz/X32L33nsSrHxT3FVfJdof
-        Tc+VK5S51J43zho/10TtaTLW/fYTnf+51hICEdiEFA==
-X-ME-Sender: <xms:bDskYzJ8ujs6qb8cpws1p2sQdxdIUNBVebt7AGW8awR-x1TPHGMwaA>
-    <xme:bDskY3LpCRzh8rHB-CiHP6350nPWwIqjnZqjbL5rVMLqf_z_LRVU4L_dmpc77rMpL
-    N1bB1bu0us_ErcE71I>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfedvtddguddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
-    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
-    htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
-    teffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
-    hrnhgusegrrhhnuggsrdguvg
-X-ME-Proxy: <xmx:bDskY7spbeCsSuJuDUkb7m3M8dfKgweKqqDMsV4lMlElBnxGZxTY9g>
-    <xmx:bDskY8YyQImQsG7U0ohA7BcYMs6KtM05Ap7DIzCnvrcc30Htx7JtJA>
-    <xmx:bDskY6ZGv9z8vadTzXkJtkoIExr5VRBYMZ6rhHNCBUaMlUbLGOIAxg>
-    <xmx:bDskYwP3dRa-ntBz4APv2sLSWGgP6GwdMsyCVym_q3hR00_zoQxASw>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 274D0B60086; Fri, 16 Sep 2022 05:01:32 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-935-ge4ccd4c47b-fm-20220914.001-ge4ccd4c4
-Mime-Version: 1.0
-Message-Id: <4dcb0e76-b965-42da-b637-751d2f8e1c51@www.fastmail.com>
-In-Reply-To: <20220916001038.11147-1-ansuelsmth@gmail.com>
-References: <20220916001038.11147-1-ansuelsmth@gmail.com>
-Date:   Fri, 16 Sep 2022 11:01:11 +0200
-From:   "Arnd Bergmann" <arnd@arndb.de>
-To:     "Christian Marangi" <ansuelsmth@gmail.com>,
-        "Manivannan Sadhasivam" <mani@kernel.org>,
-        "Miquel Raynal" <miquel.raynal@bootlin.com>,
-        "Richard Weinberger" <richard@nod.at>,
-        "Vignesh Raghavendra" <vigneshr@ti.com>,
-        "Vinod Koul" <vkoul@kernel.org>, "Mark Brown" <broonie@kernel.org>,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     stable@vger.kernel.org
-Subject: Re: [PATCH] mtd: nand: raw: qcom_nandc: handle error pointer from adm
- prep_slave_sg
-Content-Type: text/plain
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+        Fri, 16 Sep 2022 05:12:19 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 418686FA33
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 02:12:16 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id n40-20020a05600c3ba800b003b49aefc35fso6171625wms.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 02:12:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=mlaT4dkUmey+WYaJiYLCVZ+l1HaRfFbeV5h9SKJM/6M=;
+        b=d2qcsHqlhbDrF7hMGXrk69KrkRyLIM0KsG91A88dSqc6m9oNU1AhLqbkfHn8VmenI/
+         faZhxTdqbshYTPV9bEjex0lIx+MEaqaRYWNMjODryyYJghYdTfe+IM44WgcXKC0+Xk3E
+         tHgLeNzdUd8oDDGNNqs6zSfLOBfoJb9Va6Wu2yltaC76HdSpeKeqiU1PxmT087DesfNO
+         YGti+RSQwXKJ1t8reFU09wD/o3J2G7aQa2WkTWfG3TuRUiV26WyvB/CWS/kpYI5PtDD9
+         IrF1hnEVclUlYlEZ28m0i2nD++dPzrUOX4OaWIWt1mHoNweIcgpi3xfaMyo+ylLk7oMC
+         Nptw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=mlaT4dkUmey+WYaJiYLCVZ+l1HaRfFbeV5h9SKJM/6M=;
+        b=gFzntP7WB8bFd4wjkds+KV9VQjxyX9axwXQE8gjBbWgs09npRMipW9LjrcnZpk4O25
+         iLccwetSRVeZPZbxi8LG3RZE1sqdFkFBxL91mqoGHMViokpkkx4bmALOL8FKr7DoBWHY
+         u+CbGjOf71ucS9PQtL+TmYVbSO0ayOW9pWC6u8FK/ADCx3kAC0wWLGbaN7d6Mw/cgrfm
+         ldr/0hQ+1+rojVnGRpnvnaIaxsyhybycuS5urm9ojebOdA3R5g9xN0u5dJlAZcILaTwf
+         2iXqXojcLXjEG7qBCaZKbsW37uiTHQRLCFFpjQZIvaq3EbXVQSDqza8FdR7lZz88WOP1
+         B7Jw==
+X-Gm-Message-State: ACrzQf3WbFOCCC2FpXZm91rJxw2W3yFrPmGUw2M7PrTrkwcC2AxQ9ZUC
+        zt1wajUkCTP9f2cZ5bhEk2L+yA==
+X-Google-Smtp-Source: AMsMyM79yY6pM1sgA9nNRpDt7+rngES5wrlzIG0j+hKlNPLl69x36Kw8WIt0JsZYVmOh4GFlD5sIKQ==
+X-Received: by 2002:a05:600c:3d05:b0:3b4:9a42:10d0 with SMTP id bh5-20020a05600c3d0500b003b49a4210d0mr2682614wmb.135.1663319534795;
+        Fri, 16 Sep 2022 02:12:14 -0700 (PDT)
+Received: from [192.168.86.238] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.googlemail.com with ESMTPSA id e4-20020a05600c4e4400b003a6a3595edasm1580200wmq.27.2022.09.16.02.12.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Sep 2022 02:12:13 -0700 (PDT)
+Message-ID: <bffab27c-6e25-5787-6958-648f9f2e2686@linaro.org>
+Date:   Fri, 16 Sep 2022 10:12:12 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH] soundwire: qcom: update status from device id 1
+Content-Language: en-US
+To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        vkoul@kernel.org
+Cc:     yung-chuan.liao@linux.intel.com, sanyog.r.kale@intel.com,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org, quic_srivasam@quicinc.com
+References: <20220915124215.13703-1-srinivas.kandagatla@linaro.org>
+ <3962348a-33b4-5941-4a0b-cb447a513a41@linux.intel.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <3962348a-33b4-5941-4a0b-cb447a513a41@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 16, 2022, at 2:10 AM, Christian Marangi wrote:
-> ADM dma engine has changed to also provide error pointer instaed of
-> plain NULL pointer on invalid configuration of prep_slave_sg function.
-> Currently this is not handled and an error pointer is detected as a
-> valid dma_desc. This cause kernel panic as the driver doesn't fail
-> with an invalid dma engine configuration.
->
-> Correctly handle this case by checking if dma_desc is NULL or IS_ERR.
 
-Using IS_ERR_OR_NULL() is almost never a correct solution. I think
-in this case the problem is the adm_prep_slave_sg() function
-that returns an invalid error code.
 
-While error pointers are often better than NULL pointers for
-passing information to the caller, a driver can't just change
-the calling conventions on its own. If we want to change
-the dmaengine_prep_slave_sg() API, I would suggest coming
-up with a new name for a replacement interface that uses
-error pointers instead of NULL first, and then changing
-all callers to the new interface.
+On 15/09/2022 14:10, Pierre-Louis Bossart wrote:
+> 
+> 
+> On 9/15/22 14:42, Srinivas Kandagatla wrote:
+>> By default autoenumeration is enabled on QCom SoundWire controller
+>> which means the core should not be dealing with device 0 w.r.t enumeration.
+>> Currently device 0 status is also shared with SoundWire core which confuses
+>> the core sometimes and we endup adding 0:0:0:0 slave device.
+> 
+> The change looks fine, but the description of the issue is surprising.
 
-       Arnd
+Thanks Pierre,
+
+> 
+> Whether autoenumeration is enabled or not is irrelevant, by spec the
+> device0 cannot be in ALERT status and throw in-band interrupts to the
+> host with this mechanism.
+
+This issue is more of around enumeration stage in specific during device 
+status change interrupt from controller. Sharing the device 0 status 
+with core makes it think that there is a device with 0:0:0:0 address and 
+it tries to park device to group 13.
+
+
+--srini
+
+> 
+>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>> ---
+>>   drivers/soundwire/qcom.c | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+>> index e21a3306bf01..871e4d8b32c7 100644
+>> --- a/drivers/soundwire/qcom.c
+>> +++ b/drivers/soundwire/qcom.c
+>> @@ -428,7 +428,7 @@ static int qcom_swrm_get_alert_slave_dev_num(struct qcom_swrm_ctrl *ctrl)
+>>   
+>>   	ctrl->reg_read(ctrl, SWRM_MCP_SLV_STATUS, &val);
+>>   
+>> -	for (dev_num = 0; dev_num <= SDW_MAX_DEVICES; dev_num++) {
+>> +	for (dev_num = 1; dev_num <= SDW_MAX_DEVICES; dev_num++) {
+>>   		status = (val >> (dev_num * SWRM_MCP_SLV_STATUS_SZ));
+>>   
+>>   		if ((status & SWRM_MCP_SLV_STATUS_MASK) == SDW_SLAVE_ALERT) {
+>> @@ -448,7 +448,7 @@ static void qcom_swrm_get_device_status(struct qcom_swrm_ctrl *ctrl)
+>>   	ctrl->reg_read(ctrl, SWRM_MCP_SLV_STATUS, &val);
+>>   	ctrl->slave_status = val;
+>>   
+>> -	for (i = 0; i <= SDW_MAX_DEVICES; i++) {
+>> +	for (i = 1; i <= SDW_MAX_DEVICES; i++) {
+>>   		u32 s;
+>>   
+>>   		s = (val >> (i * 2));
