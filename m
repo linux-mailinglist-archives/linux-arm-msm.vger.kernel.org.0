@@ -2,60 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B9AD5BB371
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 22:23:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4970A5BB37D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 22:27:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230417AbiIPUXB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Sep 2022 16:23:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58766 "EHLO
+        id S229994AbiIPU1M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Sep 2022 16:27:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230460AbiIPUWr (ORCPT
+        with ESMTP id S229629AbiIPU1L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Sep 2022 16:22:47 -0400
-Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C56F6BB03E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 13:22:29 -0700 (PDT)
-Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-11eab59db71so53666749fac.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 13:22:29 -0700 (PDT)
+        Fri, 16 Sep 2022 16:27:11 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21FEBA9C06;
+        Fri, 16 Sep 2022 13:27:10 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id l8so11441924wmi.2;
+        Fri, 16 Sep 2022 13:27:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=v3BrS7Rz7kntccbyOzfd8KjEMV3TmXJaISmlDbTWi/4=;
-        b=JgNDW+QU38DrEfW7FoPqv3j2012h3r5vknZDyH2M6qOB5QKkp7X7IeFL20vhhLSg+V
-         WYGqGj2iummbw8X8zr3e+dCtOeHUydM3wB2U+bsRkydl4SmVBdPgWMyM1q/zBRWwZ2xj
-         O8JIVtDdfd0oTLXpGLpF1fKLfh66nz7V7rv49l5Kp7+UeLIkuEwWTt0S7wrc0P0yphxU
-         yOCcu1+xKA+RL9tDgMhtG4oNY2K3odFVqYgMW7gaMSs8OYGVNuaCpxTQuUhJ/gWA4HI3
-         jmTYqCbcWq8muUJdP4ZfB52xPTGGv540hMGpNwbfzrmaPWMamCdYsZsF+w9/2KC8sFn3
-         DNKA==
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:from:to:cc:subject:date;
+        bh=Y+4u3HprOM4AbiGAF2kHfVJR+XvSaOp0FKOxbaiwzGA=;
+        b=U0XFnk/2Gl57SBl4jdJiQ+H/QcL6nIe/yzY/bnbPwcTBvUvAHbsu4fqW6gUmyLj+Tl
+         9bpuhJuxYIM07CXXHbP5tedUjIVFWgi/CPzgiwggfxOxZDunecCbXKpYeePgH5RHiyIz
+         AX4nkgrVxxa8xnUFFFeOZiJs/r8/0OgUZc7JaRm6aQoAQxKKC9cSs2W29obSfXuOv3Gy
+         guRERo+y1/EYi4GHhLgIiwdXPpUB0hvMO1+inU1/StlDfjZHGZuMaiVfadBhoQmKrrsH
+         qEORa48rGkgWhok24NVsYGacXkrCpD14IuyunFnXyadqckf/upU/s99FeYICqVB0UF75
+         kYBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=v3BrS7Rz7kntccbyOzfd8KjEMV3TmXJaISmlDbTWi/4=;
-        b=PHNhjbAH1/LXfr8QhI2QYVKWnOT1mDjfzaVFJppeS/hg8mXvOdo+iBYfPwkO8kykde
-         Q1KGO/WwtKcJWsrAv2EDKZzBa7Yq49muXF3dLM9ngYWV2JaD1MO3B1VpZXPkm8OMoDAZ
-         X0SNPiqwcE4oxBS6U52U1XsK258Bx+K8lTbakVdJw22qHyAM/AVKJpYIwA2ePCOKzb9x
-         rNM3UGEgiVXzw2MAXLY1Z6UNfMi93J9n+1OLEEWsHBz70cPkxVMwkUsiginqpaGJ5zCc
-         kdIh9MzSMZmso/BQ2QZc7587ZWCvHg07kbHQXRWAYvLoVyIwtubjqbuFvUmB2r3YpYgJ
-         wSXw==
-X-Gm-Message-State: ACrzQf0RI8LwCvGN1uklxO6mhQ3vr2Aj16bhcfORvZu+JpWDpB4eAAL6
-        bY6dr5bAihWiZR4SkX1EiL8UihXhHAENCY7OMQz8WQ==
-X-Google-Smtp-Source: AMsMyM48YcqFU24mts0RzS7kZXVz+phYvgRYnHKHAMvVrdiTKy3XEQdJUtL++HMR4OJA7LkgZuCcjeBdIlkbF8R7pQU=
-X-Received: by 2002:a05:6870:95a4:b0:12a:fc0c:b748 with SMTP id
- k36-20020a05687095a400b0012afc0cb748mr3808019oao.182.1663359748395; Fri, 16
- Sep 2022 13:22:28 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220914142256.28775-1-ansuelsmth@gmail.com> <20220914142256.28775-3-ansuelsmth@gmail.com>
- <20220916191715.GA1079300-robh@kernel.org> <6324d1be.050a0220.9d842.7b47@mx.google.com>
- <CAA8EJprEQOsm4TxGWJYZo04D1PagT3QmhDdYQkEid-KSP-tpTw@mail.gmail.com> <6324d8e1.170a0220.aba35.ba4f@mx.google.com>
-In-Reply-To: <6324d8e1.170a0220.aba35.ba4f@mx.google.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 16 Sep 2022 23:22:17 +0300
-Message-ID: <CAA8EJpowLvkuiYupqS0WEhnMR8q=R1YUUFgdFVCAx1PXyoo1xw@mail.gmail.com>
-Subject: Re: [PATCH v5 2/5] dt-bindings: arm: msm: Convert kpss-acc driver
- Documentation to yaml
-To:     Christian Marangi <ansuelsmth@gmail.com>
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date;
+        bh=Y+4u3HprOM4AbiGAF2kHfVJR+XvSaOp0FKOxbaiwzGA=;
+        b=5y+asDV+fExspJIv3IkVUcGg2JD7dRqs2k5GjwlvLSghN7YBeA637sNkVZKioRd1KK
+         y9HQXSZBn1sKCUb2ojxCKJyNoHi9p2331u7jexwNTunYZMu4aIU0I7TijCSqp6PRuQ+M
+         taTWHhJHwmpVsD0vjm3IRjTny1V3mK4SLXVswI6w5thF2Ol3Km778lwjkHcmiKFhFIfd
+         OXoXOlTwm6IULMF5fEiTdL1tuku1pbNhjjtnMazzvkEIl7iR4QgN4pGqM3HPB7a3GuE3
+         e8Ze9mGAq/dYMSLNPXZw/EhrtMEEAbXAiPUU8MVMsbAal4V2OUQBfk7CtFCeYpdRhDDR
+         KkyA==
+X-Gm-Message-State: ACgBeo37Nx8FPHr5bC4IlKywrGEYoSYMEuyP/T2rIuI2Sye9nXYqOFOP
+        OPPWDLouX+m5lsH27iwk+H4=
+X-Google-Smtp-Source: AA6agR5z7FqX+lUO3WsAP6HHlvQYNX1ISJBgK3AFOWKfdMPsbt44297opFfG46D/zPaq9qiYwOstHQ==
+X-Received: by 2002:a05:600c:1f15:b0:3b4:8600:fd7e with SMTP id bd21-20020a05600c1f1500b003b48600fd7emr11742690wmb.40.1663360028408;
+        Fri, 16 Sep 2022 13:27:08 -0700 (PDT)
+Received: from Ansuel-xps. (93-42-70-134.ip85.fastwebnet.it. [93.42.70.134])
+        by smtp.gmail.com with ESMTPSA id s2-20020adfdb02000000b002253fd19a6asm6984959wri.18.2022.09.16.13.27.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Sep 2022 13:27:07 -0700 (PDT)
+Message-ID: <6324dc1b.df0a0220.97787.083c@mx.google.com>
+X-Google-Original-Message-ID: <YyTcGKNOIA2pggHa@Ansuel-xps.>
+Date:   Fri, 16 Sep 2022 22:27:04 +0200
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -74,64 +71,92 @@ Cc:     Rob Herring <robh@kernel.org>,
         "Martin K. Petersen" <martin.petersen@oracle.com>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v5 2/5] dt-bindings: arm: msm: Convert kpss-acc driver
+ Documentation to yaml
+References: <20220914142256.28775-1-ansuelsmth@gmail.com>
+ <20220914142256.28775-3-ansuelsmth@gmail.com>
+ <20220916191715.GA1079300-robh@kernel.org>
+ <6324d1be.050a0220.9d842.7b47@mx.google.com>
+ <CAA8EJprEQOsm4TxGWJYZo04D1PagT3QmhDdYQkEid-KSP-tpTw@mail.gmail.com>
+ <6324d8e1.170a0220.aba35.ba4f@mx.google.com>
+ <CAA8EJpowLvkuiYupqS0WEhnMR8q=R1YUUFgdFVCAx1PXyoo1xw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpowLvkuiYupqS0WEhnMR8q=R1YUUFgdFVCAx1PXyoo1xw@mail.gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 16 Sept 2022 at 23:13, Christian Marangi <ansuelsmth@gmail.com> wrote:
->
-> On Fri, Sep 16, 2022 at 11:06:35PM +0300, Dmitry Baryshkov wrote:
-> > On Fri, 16 Sept 2022 at 22:43, Christian Marangi <ansuelsmth@gmail.com> wrote:
-> > >
-> > > On Fri, Sep 16, 2022 at 02:17:15PM -0500, Rob Herring wrote:
-> > > > On Wed, Sep 14, 2022 at 04:22:53PM +0200, Christian Marangi wrote:
-> > > > > Convert kpss-acc driver Documentation to yaml.
-> > > > > The original Documentation was wrong all along. Fix it while we are
-> > > > > converting it.
-> > > > > The example was wrong as kpss-acc-v2 should only expose the regs but we
-> > > > > don't have any driver that expose additional clocks. The kpss-acc driver
-> > > > > is only specific to v1. For this exact reason, limit all the additional
-> > > > > bindings (clocks, clock-names, clock-output-names and #clock-cells) to
-> > > > > v1 and also flag that these bindings should NOT be used for v2.
-> > > >
-> > > > Odd that a clock controller has no clocks, but okay.
-> > > >
-> > >
-> > > As said in the commit v2 is only used for regs. v2 it's only used in
-> > > arch/arm/mach-qcom/platsmp.c to setup stuff cpu hotplug and bringup.
-> > >
-> > > Should we split the 2 driver? To me the acc naming seems to be just
-> > > recycled for v2 and it's not really a clk controller.
-> > >
-> > > So keeping v2 in arm/msm/qcom,kpss-acc-v2.yaml and v1 moved to clock?
+On Fri, Sep 16, 2022 at 11:22:17PM +0300, Dmitry Baryshkov wrote:
+> On Fri, 16 Sept 2022 at 23:13, Christian Marangi <ansuelsmth@gmail.com> wrote:
 > >
-> > I suspect that qcom,kpss-acc-v2 is misnamed as the "clock-controller".
-> > According to msm-3.10, these regions are used by the Krait core
-> > regulators.
+> > On Fri, Sep 16, 2022 at 11:06:35PM +0300, Dmitry Baryshkov wrote:
+> > > On Fri, 16 Sept 2022 at 22:43, Christian Marangi <ansuelsmth@gmail.com> wrote:
+> > > >
+> > > > On Fri, Sep 16, 2022 at 02:17:15PM -0500, Rob Herring wrote:
+> > > > > On Wed, Sep 14, 2022 at 04:22:53PM +0200, Christian Marangi wrote:
+> > > > > > Convert kpss-acc driver Documentation to yaml.
+> > > > > > The original Documentation was wrong all along. Fix it while we are
+> > > > > > converting it.
+> > > > > > The example was wrong as kpss-acc-v2 should only expose the regs but we
+> > > > > > don't have any driver that expose additional clocks. The kpss-acc driver
+> > > > > > is only specific to v1. For this exact reason, limit all the additional
+> > > > > > bindings (clocks, clock-names, clock-output-names and #clock-cells) to
+> > > > > > v1 and also flag that these bindings should NOT be used for v2.
+> > > > >
+> > > > > Odd that a clock controller has no clocks, but okay.
+> > > > >
+> > > >
+> > > > As said in the commit v2 is only used for regs. v2 it's only used in
+> > > > arch/arm/mach-qcom/platsmp.c to setup stuff cpu hotplug and bringup.
+> > > >
+> > > > Should we split the 2 driver? To me the acc naming seems to be just
+> > > > recycled for v2 and it's not really a clk controller.
+> > > >
+> > > > So keeping v2 in arm/msm/qcom,kpss-acc-v2.yaml and v1 moved to clock?
+> > >
+> > > I suspect that qcom,kpss-acc-v2 is misnamed as the "clock-controller".
+> > > According to msm-3.10, these regions are used by the Krait core
+> > > regulators.
+> > >
 > >
+> > Well we need to understand how to handle this... change the compatible
+> > it's a nono for sure. In platsmp.c they are used for cpu power control
+> > so could be that they are actually used to regulators. I would honestly
+> > move v1 to clock and leave v2 to arm/msm but I'm not cetain on what name
+> > to assign to the 2 yaml.
+> >
+> > What do you think?
+> 
+> This is fine for me. If somebody gets better understanding of
+> underlying hardware and works on actually using these blocks, he will
+> update the bindings.
+> 
+> My only suggestion would be to rename kpss-acc-v2 nodes to
+> 'power-controller@address' and document them so.
 >
-> Well we need to understand how to handle this... change the compatible
-> it's a nono for sure. In platsmp.c they are used for cpu power control
-> so could be that they are actually used to regulators. I would honestly
-> move v1 to clock and leave v2 to arm/msm but I'm not cetain on what name
-> to assign to the 2 yaml.
->
-> What do you think?
 
-This is fine for me. If somebody gets better understanding of
-underlying hardware and works on actually using these blocks, he will
-update the bindings.
+Ok so something like this?
 
-My only suggestion would be to rename kpss-acc-v2 nodes to
-'power-controller@address' and document them so.
+    power-controller@f9088000 {
+      compatible = "qcom,kpss-acc-v2";
+      reg = <0xf9088000 0x1000>,
+            <0xf9008000 0x1000>;
+    };
+
+(and I will have to fix dtbs warning as they will be unmatched I think.)
+Yaml naming:
+qcom,kpss-acc-v1.yaml
+qcom,kpss-acc-v2.yaml
+Right?
+
 
 -- 
-With best wishes
-Dmitry
+	Ansuel
