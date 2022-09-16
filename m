@@ -2,88 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C78C55BADB0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 14:58:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B9285BADCA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 15:07:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229750AbiIPM6m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Sep 2022 08:58:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46976 "EHLO
+        id S231364AbiIPNHC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Sep 2022 09:07:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230518AbiIPM6k (ORCPT
+        with ESMTP id S231175AbiIPNHA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Sep 2022 08:58:40 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA97E82841
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 05:58:38 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id c11so35904303wrp.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 05:58:38 -0700 (PDT)
+        Fri, 16 Sep 2022 09:07:00 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 725769D8CF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 06:06:58 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id r5-20020a1c4405000000b003b494ffc00bso1153157wma.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 06:06:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=bkVgNaB5w39A++bxNFLwcR/OnSuiCg+ysFlzXQmJY08=;
-        b=ADIeSS9W2NJxpUxaduHdkUbgikHOfnDLWr3KykSIbaai5/l7eI+UFw9XCgL1j0qnD/
-         oDTsrtiV1vlhLV6ORsArIDz1ZcOyVxrXxm4UirJJMG1CbZ9DkBjkX5PCwwoc3fI00As3
-         5jmub4XeBIjMfBpk4uAQGLrFOVDs+qaFOQuC6BevsnqYTl8RaqFtjNomSNtvJbm4K8CA
-         rRARkBiC78kdkqrFAjI0P+QKM6HCEsIW0xnOe3HawYgz/wFNQ4d3Dha9o0fNbdCe6vlh
-         2yghU9GHaI1aOyP2T2QwEFVVpzJ0NQdN3C/0ZR/xfqdHNcKYZ5Sr+FMxCZEqUry1DB5a
-         PlyQ==
+        bh=2e3L0ED1BDpFLdmTFeqIIUKU3RqfHrrBxYTQB/sNCko=;
+        b=WmiEwXzwWnQ7UhY4icQ+KagCVvewZf1BCWbBhzAwP1xnI7f2tTG51N/2zJzL1WOCaR
+         9aiKuOvqAtqtWM2TmvB6sphGRbKpypjiXP2xf0Oguf5qD1YpKuPiehKdu/cx8lnE3gSu
+         4Wm8hfai1x6u8g2wF2fwP63cTurPQ4AA1zOnW9KRXPLYl3lFwmci6Ry3V6aM+6HXqs0H
+         NeNmCgewC1WV22suOCH3lAqR6oPUeqk4VFGIP9LHetVlUc3Dmj5McMfTD94JwuJiEtRW
+         GZMbedYUVdldxNrRt7/dYsxbSVbFiV8iDzn7iKSJ5A6sJilWkEcgUZ+JybSqHWI2oiCe
+         oRHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=bkVgNaB5w39A++bxNFLwcR/OnSuiCg+ysFlzXQmJY08=;
-        b=oKvHJO1mnEuLP2DAWSgu1zMp3WWgUPephLmmITCBHpPHkqAC5yx/fd9YWaZi/uMInc
-         d2VH/JnAYDoBRsU5tZri8YNAVZR08irialUOCmpC/An/jQPREcHsEcn7Ze+qpHUdu5qe
-         7KHFep4jcp17MwSZoNufj6E5d30JcRDQuy4pDT3E4duLn5heMhZ0CUZOJUQ5GC8+4eM5
-         aLp7lwfOccaW4Ioom+ameNrnr3OwchXH6GkA6lNQpKf0E3qJlaywm4qwPV5Z+H02grbz
-         1o4uvY0IsBm+WQWOSv9lA8bCP+WKJksjpxSQs3lk0MLMOr9rTsZ/ltTQtH93M7kLT8lO
-         rhmg==
-X-Gm-Message-State: ACrzQf125bvoAZ22whOlNzb6MeQ2OdMGbE/seKCSiTi3mhPTaJMsPBva
-        QTmYghXwP7YAc+/ZkbJHhw8ZsQ==
-X-Google-Smtp-Source: AMsMyM5Kyt+fmGvMQc7WIFSjluHH+tpxEBrz/ltpfmniS/6+efJwkQ2A2Tv/g8b5jQha05xHlYHKqw==
-X-Received: by 2002:a05:6000:86:b0:228:db07:24bc with SMTP id m6-20020a056000008600b00228db0724bcmr2770788wrx.204.1663333117236;
-        Fri, 16 Sep 2022 05:58:37 -0700 (PDT)
+        bh=2e3L0ED1BDpFLdmTFeqIIUKU3RqfHrrBxYTQB/sNCko=;
+        b=7iEy2qjlQYFL+g47ch4WPr02dHf/kcLF8QxnTR6II/cJyIy6JZ2nnl3vvfvvOjUv0O
+         0icH2E2zUXSq8SV0nvHf4XR6/EmOzBf+5H3kmSfsaq8BNvOB86YqPOcoGkulEFrkt+dS
+         AHyamzcDsmcUymj1osV18co009sVv6c1bFjaY9Z4kCzBQr7+Wm8rI/IbmVIVaw87Ri3p
+         TrNYCD5suUvd67xQFdIc9BedSzYH2HlvDQRKAGvXR4qvMEMA+HgpO008aqLSB8iDRKYC
+         OntuOn3tNfaOgG1GQ6g0Eda0GmZSGjOcUkx9g5earqXcjrzdqciyjC+e1E0fs5snB+0H
+         O4rQ==
+X-Gm-Message-State: ACgBeo3yegPOe1VcSHY3rzg/WFHv71yj1rZuQnKj79MSQBIXS/R6DW4v
+        MPdQQlKUeDCAXuNWPas7AtCIGg==
+X-Google-Smtp-Source: AA6agR5UFLsDdB3qilLfFu+EUOFH0MP3U4bh23DIqC90LAY0sDX0eH8fz77Jqg/mU9Yy/mi+bZrsGQ==
+X-Received: by 2002:a05:600c:2142:b0:3b4:92b6:73ba with SMTP id v2-20020a05600c214200b003b492b673bamr10433278wml.139.1663333616920;
+        Fri, 16 Sep 2022 06:06:56 -0700 (PDT)
 Received: from [192.168.86.238] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.googlemail.com with ESMTPSA id j16-20020a05600c191000b003a8434530bbsm2217835wmq.13.2022.09.16.05.58.36
+        by smtp.googlemail.com with ESMTPSA id y9-20020a05600c20c900b003a541d893desm2063106wmm.38.2022.09.16.06.06.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Sep 2022 05:58:36 -0700 (PDT)
-Message-ID: <a71b5f36-8a81-3aa6-6aee-655878b5d4af@linaro.org>
-Date:   Fri, 16 Sep 2022 13:58:35 +0100
+        Fri, 16 Sep 2022 06:06:56 -0700 (PDT)
+Message-ID: <65f11ed1-f09f-e0a2-91f5-891394160c96@linaro.org>
+Date:   Fri, 16 Sep 2022 14:06:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH v3 08/10] misc: fastrpc: Safekeep mmaps on interrupted
- invoke
+Subject: Re: [PATCH 3/4] slimbus: qcom-ngd-ctrl: Make QMI message rules const
 Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Ekansh Gupta <ekangupt@qti.qualcomm.com>,
-        Bharath Kumar <bkumar@qti.qualcomm.com>,
-        Himateja Reddy <hmreddy@quicinc.com>,
-        Anirudh Raghavendra <araghave@quicinc.com>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org
-References: <20220909133938.3518520-1-abel.vesa@linaro.org>
- <20220909133938.3518520-9-abel.vesa@linaro.org>
+To:     Jeff Johnson <quic_jjohnson@quicinc.com>,
+        Alex Elder <elder@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Kalle Valo <kvalo@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org
+References: <20220912232526.27427-1-quic_jjohnson@quicinc.com>
+ <20220912232526.27427-2-quic_jjohnson@quicinc.com>
+ <20220912232526.27427-3-quic_jjohnson@quicinc.com>
+ <20220912232526.27427-4-quic_jjohnson@quicinc.com>
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20220909133938.3518520-9-abel.vesa@linaro.org>
+In-Reply-To: <20220912232526.27427-4-quic_jjohnson@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -92,85 +89,69 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 09/09/2022 14:39, Abel Vesa wrote:
-> If the userspace daemon is killed in the middle of an invoke (e.g.
-> audiopd listerner invoke), we need to skip the unmapping on device
-> release, otherwise the DSP will crash. So lets safekeep all the maps
-> only if there is in invoke interrupted, by attaching them to the channel
-> context (which is resident until RPMSG driver is removed), and free them
-> on RPMSG driver remove.
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->   drivers/misc/fastrpc.c | 15 +++++++++++++++
->   1 file changed, 15 insertions(+)
-> 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 6b2a552dbdba..bc1e8f003d7a 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -275,6 +275,7 @@ struct fastrpc_channel_ctx {
->   	struct fastrpc_device *secure_fdevice;
->   	struct fastrpc_device *fdevice;
->   	struct fastrpc_buf *remote_heap;
-> +	struct list_head invoke_interrupted_mmaps;
->   	bool secure;
->   	bool unsigned_support;
->   };
-> @@ -1119,6 +1120,8 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
->   				   struct fastrpc_invoke_args *args)
->   {
->   	struct fastrpc_invoke_ctx *ctx = NULL;
-> +	struct fastrpc_buf *buf, *b;
-> +
->   	int err = 0;
->   
->   	if (!fl->sctx)
-> @@ -1182,6 +1185,13 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
->   		fastrpc_context_put(ctx);
->   	}
->   
-> +	if (err == -ERESTARTSYS) {
-> +		list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
-> +			list_del(&buf->node);
-> +			list_add_tail(&buf->node, &fl->cctx->invoke_interrupted_mmaps);
-> +		}
-> +	}
-> +
->   	if (err)
->   		dev_dbg(fl->sctx->dev, "Error: Invoke Failed %d\n", err);
->   
-> @@ -2277,6 +2287,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->   	dev_set_drvdata(&rpdev->dev, data);
->   	dma_set_mask_and_coherent(rdev, DMA_BIT_MASK(32));
->   	INIT_LIST_HEAD(&data->users);
-> +	INIT_LIST_HEAD(&data->invoke_interrupted_mmaps);
->   	spin_lock_init(&data->lock);
->   	idr_init(&data->ctx_idr);
->   	data->domain_id = domain_id;
-> @@ -2301,6 +2312,7 @@ static void fastrpc_notify_users(struct fastrpc_user *user)
->   static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
->   {
->   	struct fastrpc_channel_ctx *cctx = dev_get_drvdata(&rpdev->dev);
-> +	struct fastrpc_buf *buf, *b;
->   	struct fastrpc_user *user;
->   	unsigned long flags;
->   
-> @@ -2315,6 +2327,9 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
->   	if (cctx->secure_fdevice)
->   		misc_deregister(&cctx->secure_fdevice->miscdev);
->   
-> +	list_for_each_entry_safe(buf, b, &cctx->invoke_interrupted_mmaps, node)
-> +		list_del(&buf->node);
-> +
-When would you free these?
-looks like we are leaking even after dsp is down..
-Should we not do fastrpc_buf_free() here?
+On 13/09/2022 00:25, Jeff Johnson wrote:
+> Commit ff6d365898d ("soc: qcom: qmi: use con
 
+SHA ID should be at least 12 chars long.
+
+Same comment for all the patches in the series.
+
+
+st for struct
+> qmi_elem_info") allows QMI message encoding/decoding rules to be
+> const, so do that for qcom-ngd-ctrl.
+> 
+> Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+
+Other than that it LGTM,
+Once fixed:
+
+Acked-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
 
 --srini
 
->   	if (cctx->remote_heap)
->   		fastrpc_buf_free(cctx->remote_heap);
+> ---
+>   drivers/slimbus/qcom-ngd-ctrl.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+> index 0aa8408464ad..931ab6317467 100644
+> --- a/drivers/slimbus/qcom-ngd-ctrl.c
+> +++ b/drivers/slimbus/qcom-ngd-ctrl.c
+> @@ -220,7 +220,7 @@ struct slimbus_power_resp_msg_v01 {
+>   	struct qmi_response_type_v01 resp;
+>   };
 >   
+> -static struct qmi_elem_info slimbus_select_inst_req_msg_v01_ei[] = {
+> +static const struct qmi_elem_info slimbus_select_inst_req_msg_v01_ei[] = {
+>   	{
+>   		.data_type  = QMI_UNSIGNED_4_BYTE,
+>   		.elem_len   = 1,
+> @@ -262,7 +262,7 @@ static struct qmi_elem_info slimbus_select_inst_req_msg_v01_ei[] = {
+>   	},
+>   };
+>   
+> -static struct qmi_elem_info slimbus_select_inst_resp_msg_v01_ei[] = {
+> +static const struct qmi_elem_info slimbus_select_inst_resp_msg_v01_ei[] = {
+>   	{
+>   		.data_type  = QMI_STRUCT,
+>   		.elem_len   = 1,
+> @@ -284,7 +284,7 @@ static struct qmi_elem_info slimbus_select_inst_resp_msg_v01_ei[] = {
+>   	},
+>   };
+>   
+> -static struct qmi_elem_info slimbus_power_req_msg_v01_ei[] = {
+> +static const struct qmi_elem_info slimbus_power_req_msg_v01_ei[] = {
+>   	{
+>   		.data_type  = QMI_UNSIGNED_4_BYTE,
+>   		.elem_len   = 1,
+> @@ -324,7 +324,7 @@ static struct qmi_elem_info slimbus_power_req_msg_v01_ei[] = {
+>   	},
+>   };
+>   
+> -static struct qmi_elem_info slimbus_power_resp_msg_v01_ei[] = {
+> +static const struct qmi_elem_info slimbus_power_resp_msg_v01_ei[] = {
+>   	{
+>   		.data_type  = QMI_STRUCT,
+>   		.elem_len   = 1,
