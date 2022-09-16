@@ -2,114 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C5355BA9E2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 12:03:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D05E15BA9EB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 12:05:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230164AbiIPKCb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Sep 2022 06:02:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52232 "EHLO
+        id S230157AbiIPKFT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Sep 2022 06:05:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229712AbiIPKCa (ORCPT
+        with ESMTP id S229600AbiIPKFS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Sep 2022 06:02:30 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB8BE501B0;
-        Fri, 16 Sep 2022 03:02:29 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id AF2ABB824F9;
-        Fri, 16 Sep 2022 10:02:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A61AC433D6;
-        Fri, 16 Sep 2022 10:02:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663322547;
-        bh=dRPEjw9QsUBzaKuoW8W8ZQwQfff1/Q8c7DTD0nfC71A=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=CtzMwcHuF0Zc4G9d61SsS08dA96Ql8Dvo0Sl2jMyGnOMoFkAlecmOGL3YHj1U9ixR
-         Ce5eqTV3AmHGnRHf5bu2FcF8iit9iybMnOppgZ81JX0c6wRja3EFgxL+IZa2aUelrB
-         ZbgrisVxs8WFBt4Mqr4JGi3q6ID0TFKDMrOCA357c5ySroUMvSSsIrxxN2B3Wgv0jI
-         y31Y9hO4LBA6cun+tuEVtwOG5+bPnEHlMhvc/6c7ECsbeeGBsXBecfVYhivoRzKP8R
-         c6C1UrrswrWQ/hR6tQ42ex0DdHnswED8Rh0r9n3SzjnDL44ECqwpV7nPjD5iwd7cct
-         3pV+7/kLmacoQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oZ8B6-0006Ty-Cf; Fri, 16 Sep 2022 12:02:32 +0200
-Date:   Fri, 16 Sep 2022 12:02:32 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 00/11] phy: qcom-qmp: more fixes and cleanups
-Message-ID: <YyRJuCnuUE+bF7RP@hovoldconsulting.com>
-References: <20220914162545.6289-1-johan+linaro@kernel.org>
- <YyM3o6aSwt0zM0t4@hovoldconsulting.com>
+        Fri, 16 Sep 2022 06:05:18 -0400
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C29484D27A;
+        Fri, 16 Sep 2022 03:05:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1663322715; x=1694858715;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=QJhaJZlzeBsCcRJwzatIAFEHttA8Lak9pZBYRJkQDxI=;
+  b=dPLf2y4ZqS7qjGjPG0Me+htKyc0ic8XCYfeEd9Q5AG9F2JILiaifTk/N
+   lNYmuL4I9DDK6ThusFW0kocSpV6HQ4QrQ4n1YKFZkuJzdv9o3cTdWjTaQ
+   ddu27QZ/+ZYyb8IKkT6ALBTHnNa7I+Hijo9oI218ANI0QZXL5snaX47N2
+   N7EhM37G+rtH1M0vK8+k7QWjMZRGZ0Np9Wn4jbi/uYBS6VxPXesj3iEoa
+   01GAXWS4fThdawplcgH9jRy/YUfwvSBYcDK7WM+Y04ryXnk7QwKH+Hwb6
+   wWfVifyts9hXhWq4mxTkDDKSm99MMO94e5jHTeA4bOXj27lUSUMcyVZfd
+   g==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10471"; a="300320723"
+X-IronPort-AV: E=Sophos;i="5.93,320,1654585200"; 
+   d="scan'208";a="300320723"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2022 03:05:11 -0700
+X-IronPort-AV: E=Sophos;i="5.93,320,1654585200"; 
+   d="scan'208";a="617617827"
+Received: from kchan21-mobl1.ger.corp.intel.com (HELO [10.252.61.56]) ([10.252.61.56])
+  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2022 03:05:08 -0700
+Message-ID: <fe9b9897-ed37-386a-846f-c1f11087ed5c@linux.intel.com>
+Date:   Fri, 16 Sep 2022 12:05:05 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YyM3o6aSwt0zM0t4@hovoldconsulting.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Firefox/91.0 Thunderbird/91.11.0
+Subject: Re: [PATCH] soundwire: qcom: update status from device id 1
+Content-Language: en-US
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        vkoul@kernel.org
+Cc:     alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, sanyog.r.kale@intel.com,
+        yung-chuan.liao@linux.intel.com, quic_srivasam@quicinc.com
+References: <20220915124215.13703-1-srinivas.kandagatla@linaro.org>
+ <3962348a-33b4-5941-4a0b-cb447a513a41@linux.intel.com>
+ <bffab27c-6e25-5787-6958-648f9f2e2686@linaro.org>
+ <2e1b81d2-e20f-db9f-b84e-b3c5ebb312cb@linux.intel.com>
+ <4e42389e-c1c4-fe41-3bc8-03cc9a40ac0b@linaro.org>
+From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <4e42389e-c1c4-fe41-3bc8-03cc9a40ac0b@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-6.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 15, 2022 at 04:33:08PM +0200, Johan Hovold wrote:
-> On Wed, Sep 14, 2022 at 06:25:34PM +0200, Johan Hovold wrote:
-> > Here's the next set of QMP PHY cleanups including some non-critical
-> > fixes of tiny memory leaks on probe deferral (I didn't add a stable tag
-> > for any of them on purpose).
+
+
+On 9/16/22 11:49, Srinivas Kandagatla wrote:
 > 
-> > Johan Hovold (11):
-> >   phy: qcom-qmp-pcie: add pcs_misc sanity check
-> >   phy: qcom-qmp-pcie: fix memleak on probe deferral
-> >   phy: qcom-qmp-pcie-msm8996: fix memleak on probe deferral
-> >   phy: qcom-qmp-combo: fix memleak on probe deferral
-> >   phy: qcom-qmp-ufs: fix memleak on probe deferral
-> >   phy: qcom-qmp-usb: fix memleak on probe deferral
-> >   phy: qcom-qmp-pcie-msm8996: drop unused pcs_misc handling
-> >   phy: qcom-qmp-pcie: drop unused legacy DT workaround
-> >   phy: qcom-qmp-combo: drop unused legacy DT workaround
-> >   phy: qcom-qmp-ufs: drop legacy DT workaround
-> >   phy: qcom-qmp-usb: drop legacy DT workaround
 > 
-> Please hold off with applying this series. I realised that we have a
-> couple devicetrees in mainline with overlapping register regions for
-> which the drivers would fail to bind if we start checking checking for
-> that.
+> On 16/09/2022 10:39, Pierre-Louis Bossart wrote:
+>>
+>>
+>> On 9/16/22 11:12, Srinivas Kandagatla wrote:
+>>>
+>>>
+>>> On 15/09/2022 14:10, Pierre-Louis Bossart wrote:
+>>>>
+>>>>
+>>>> On 9/15/22 14:42, Srinivas Kandagatla wrote:
+>>>>> By default autoenumeration is enabled on QCom SoundWire controller
+>>>>> which means the core should not be dealing with device 0 w.r.t
+>>>>> enumeration.
+>>>>> Currently device 0 status is also shared with SoundWire core which
+>>>>> confuses
+>>>>> the core sometimes and we endup adding 0:0:0:0 slave device.
+>>>>
+>>>> The change looks fine, but the description of the issue is surprising.
+>>>
+>>> Thanks Pierre,
+>>>
+>>>>
+>>>> Whether autoenumeration is enabled or not is irrelevant, by spec the
+>>>> device0 cannot be in ALERT status and throw in-band interrupts to the
+>>>> host with this mechanism.
+>>>
+>>> This issue is more of around enumeration stage in specific during device
+>>> status change interrupt from controller. Sharing the device 0 status
+>>> with core makes it think that there is a device with 0:0:0:0 address and
+>>> it tries to park device to group 13.
+>> Still not clear, sorry, see my comment below.
 > 
-> I'll see to fixing those up and look into how to handle backward
-> compatibility first.
+> 
+>>
+>>>
+>>>
+>>> --srini
+>>>
+>>>>
+>>>>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>>>>> ---
+>>>>>    drivers/soundwire/qcom.c | 4 ++--
+>>>>>    1 file changed, 2 insertions(+), 2 deletions(-)
+>>>>>
+>>>>> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+>>>>> index e21a3306bf01..871e4d8b32c7 100644
+>>>>> --- a/drivers/soundwire/qcom.c
+>>>>> +++ b/drivers/soundwire/qcom.c
+>>>>> @@ -428,7 +428,7 @@ static int
+>>>>> qcom_swrm_get_alert_slave_dev_num(struct qcom_swrm_ctrl *ctrl)
+>>>>>          ctrl->reg_read(ctrl, SWRM_MCP_SLV_STATUS, &val);
+>>>>>    -    for (dev_num = 0; dev_num <= SDW_MAX_DEVICES; dev_num++) {
+>>>>> +    for (dev_num = 1; dev_num <= SDW_MAX_DEVICES; dev_num++) {
+>>>>>            status = (val >> (dev_num * SWRM_MCP_SLV_STATUS_SZ));
+>>>>>              if ((status & SWRM_MCP_SLV_STATUS_MASK) ==
+>>>>> SDW_SLAVE_ALERT) {
+>>
+>> can this really happen?
+>>
+> I have not see this happening, I had to change this line for consistency
+> reasons due to other changes in the patch.
+> 
+> Only case the issue was seen is during enumeration.
+> 
+>> Device0 cannot be in alert status, can it? The only this it can do is
+>> assert PREQ and set the Device0 status to 1 (ATTACHED). I don't get how
+>> a device status could be 2.
+>>
+>> So even if the status is shared somehow,I don't see how this could be
+>> related to parking the device as suggested above. If the condition is
+>> always false then changing the loop counter from 0 to 1 would not have
+>> an effect?
+> 
+> The reason why core tries to park this device is because it sees
+> status[0] as SDW_SLAVE_ATTACHED and start programming the device id,
+> however reading DEVID registers return zeros which does not match to any
+> of the slaves in the list and the core attempts to park this device to
+> Group 13.
 
-So we had four devicetrees (one is new in 6.0) with incorrect serdes
-region sizes that included the adjacent regions. I've sent fixes for
-those now, and I don't think we need to add workarounds for booting
-older malformed dtbs in this case, at least not until someone complains.
+ok, that makes sense, thanks for the explanations.
 
-We do however have two USB PHY bindings that currently rely on
-overlapping regions which would require some more work to be fixed up.
+I would recommend splitting this patch in two then:
 
-Specifically, the USB PHY driver uses two separate PCS regions but the
-binding treats them as one and the driver ends up mapping everything in
-between. This sort of works on all platforms but two where the TX and RX
-regions lie in between.
+1) the change for the handling of the alert status, which is unrelated
+to the auto-enumeration. That removes a test for an always-false condition
 
-The binding and driver should probably be fixed up to define this
-PCS_USB region explicitly, but that work is left for another day.
+2) the change for the device status, that indeed is related to enumeration.
 
-Meanwhile, I've implemented a workaround that fall back to using
-non-exclusive mappings for these platforms. I'll send a v2 with this.
 
-Finally, note that new sc8280xp USB4/USB3/DP binding is also broken,
-but that's really a separate issue and we're working on fixing that up.
-
-Johan
+> 
+> 
+> 
+> 
+> --srini
+> 
+>>
+>>
+>>>>> @@ -448,7 +448,7 @@ static void qcom_swrm_get_device_status(struct
+>>>>> qcom_swrm_ctrl *ctrl)
+>>>>>        ctrl->reg_read(ctrl, SWRM_MCP_SLV_STATUS, &val);
+>>>>>        ctrl->slave_status = val;
+>>>>>    -    for (i = 0; i <= SDW_MAX_DEVICES; i++) {
+>>>>> +    for (i = 1; i <= SDW_MAX_DEVICES; i++) {
+>>>>>            u32 s;
+>>>>>              s = (val >> (i * 2));
