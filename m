@@ -2,74 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 247125BABBD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 12:54:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A0925BACAA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 13:45:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230306AbiIPKyK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Sep 2022 06:54:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50568 "EHLO
+        id S230233AbiIPLpq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Sep 2022 07:45:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230348AbiIPKxx (ORCPT
+        with ESMTP id S229899AbiIPLpo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Sep 2022 06:53:53 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 639CFAFAFB;
-        Fri, 16 Sep 2022 03:37:10 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28G8bVhi028492;
-        Fri, 16 Sep 2022 10:37:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=HyD12T7zjG6PCjjrxNxgo53Etc25WGrL9tn9njuoOYw=;
- b=GEMgNyLEwaB5E2qj1DV3WiF5sB2izY+Jw1YBBkLtsOH1OmY58YJxBrn4Ixnff7HRcVeL
- Ozz9jobx1N+HeFgDkLz6LtsRJJOQInYiqcC4Gg9r6RpIwg1U3iUJXPePrfYqK/irl4Jl
- aNlWty0K7RFzfp0lMAOpTk+jYePycTU0vsqmcbSnMDsfeTl2jBp3rI27S7b+ZeaNqIpk
- OFM8pTvjNljAoJYYm0xuwdQUl7s0BsIxmSlhcHdL/AZcdlHzpfhbjVlqMvkF5dCPhdq5
- PbycOukDtUFdtNLsOdy6xxhEu9lIvcHmR+ks89cLjC2Ne78ZsFFPEw012HdC5QUCb3wl 4Q== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jm9m1ajfc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 16 Sep 2022 10:37:02 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28GAW2x9001112
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 16 Sep 2022 10:32:02 GMT
-Received: from blr-ubuntu-173.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Fri, 16 Sep 2022 03:31:57 -0700
-From:   Rajendra Nayak <quic_rjendra@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@somainline.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <sboyd@kernel.org>,
-        <mka@chromium.org>, <johan+linaro@kernel.org>,
-        <quic_kriskura@quicinc.com>, <dianders@chromium.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-Subject: [Patch v2] arm64: dts: qcom: sc7280: Add required-opps for USB
-Date:   Fri, 16 Sep 2022 16:01:24 +0530
-Message-ID: <20220916103124.30581-1-quic_rjendra@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-MIME-Version: 1.0
+        Fri, 16 Sep 2022 07:45:44 -0400
+Received: from new2-smtp.messagingengine.com (new2-smtp.messagingengine.com [66.111.4.224])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B1364E62B;
+        Fri, 16 Sep 2022 04:45:41 -0700 (PDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailnew.nyi.internal (Postfix) with ESMTP id A086A580A5C;
+        Fri, 16 Sep 2022 07:45:39 -0400 (EDT)
+Received: from imap51 ([10.202.2.101])
+  by compute3.internal (MEProxy); Fri, 16 Sep 2022 07:45:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm1; t=1663328739; x=1663332339; bh=eM0zkrYKkb
+        R1hHKUibwuksFexdGqU5ZZzCGObF1lj10=; b=aRC0gB+jlHnZIwJHvjm4H8il/A
+        gXfQ7KHQTRCm52vJyltXqZYxZYeYdPKbby5RerDJ0Ox/lB+4hs6NIse59JY9WCvP
+        /3peHYH8Uw1dMerZoJABUIbDYK4EJ2ylcydd109ofUXH90ncF6k1EqhZR5hrI3Xd
+        0z5g3jIEGTSKAOjHlCGn00kUg3EQ7M5X3DShg9Q2MKMYjibk3+yeOunpR3LpQY2d
+        rsDSjqt8Ge1AYvivgckhDRTMH/bfOLa/GrfHyhprKTctqfIyN8YkliDRcetqbP63
+        R5lbQ0usBF8lCF+Ow+uKBzvQFYCvoKZyNnq4/KQ/jUtdUoGB8tpOpLtTGGJg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm2; t=1663328739; x=1663332339; bh=eM0zkrYKkbR1hHKUibwuksFexdGq
+        U5ZZzCGObF1lj10=; b=CWVkr1e0IseTqGS4lGkkC4NJjvyK6Hz35gN9o1vvIThM
+        z7cMxLTIQMl3fqFyieZHHtnQ2hhifyzAsts+OBE3MGWRbTJZk4I0K/5g9sj7cQIo
+        iFThSIXeVRmqXP8QAoSP96+OaTzAEVaZ5TGVfAnIztSuMaD5cMvXuDo25Mr7x9ro
+        hlI3iG3UgRgInMh+OnoKJI/C9ShWhvgVtT1WB6ihrVSOUC3bKgdsBUzhzx2Nofan
+        agTudrwcnw3m7dLeD9sthMwwWUo6Qf5xTOvCwpqBJRkhA8zOnQoUVdf+QhUuafLU
+        qpvcnGb/ATs8FNOSmJKfNAAbuPMp9EwbDEqQrgawsw==
+X-ME-Sender: <xms:42EkYy4BoFbsuqGxgexhyDOd8zPHx1pF9aL4VVxi5aH443HTmpnnnA>
+    <xme:42EkY77wjeXNDFm0ZaZrteGP0LrB7X2exmSC2_L2ynSnP6WIQJXLOb4nalNk7wcH6
+    MQz9fLQLFCuE8qTBac>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfedvtddggeeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
+    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
+    htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
+    teffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
+    hrnhgusegrrhhnuggsrdguvg
+X-ME-Proxy: <xmx:42EkYxeNQu5wtCN-yTKSohy42A2Q7ZTnCtzjLODiDkQceW4cT7UfrA>
+    <xmx:42EkY_IoMIWXfhzVi3LUl2Za_sVqfJreBElPWnwKZpHFip4BIzhFGw>
+    <xmx:42EkY2KfptFlhY08pbiyzM12U0JquQRMmDb79jmaO-nhX_dg4jLInA>
+    <xmx:42EkY1_pGspje9SQ6daHcyZbVpK1E6VzQgLzC30aJmUk0EWq5d66Ng>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 183F5B60086; Fri, 16 Sep 2022 07:45:39 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-935-ge4ccd4c47b-fm-20220914.001-ge4ccd4c4
+Mime-Version: 1.0
+Message-Id: <c243fd70-782c-4663-b08d-99f44ae55fc3@www.fastmail.com>
+In-Reply-To: <632455db.df0a0220.9684.aafc@mx.google.com>
+References: <20220916001038.11147-1-ansuelsmth@gmail.com>
+ <4dcb0e76-b965-42da-b637-751d2f8e1c51@www.fastmail.com>
+ <632455db.df0a0220.9684.aafc@mx.google.com>
+Date:   Fri, 16 Sep 2022 13:45:17 +0200
+From:   "Arnd Bergmann" <arnd@arndb.de>
+To:     "Christian Marangi" <ansuelsmth@gmail.com>
+Cc:     "Manivannan Sadhasivam" <mani@kernel.org>,
+        "Miquel Raynal" <miquel.raynal@bootlin.com>,
+        "Richard Weinberger" <richard@nod.at>,
+        "Vignesh Raghavendra" <vigneshr@ti.com>,
+        "Vinod Koul" <vkoul@kernel.org>, "Mark Brown" <broonie@kernel.org>,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH] mtd: nand: raw: qcom_nandc: handle error pointer from adm
+ prep_slave_sg
 Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: N6JHHHjtRD7MeJfYAdVAvCuUdIDfAA1G
-X-Proofpoint-GUID: N6JHHHjtRD7MeJfYAdVAvCuUdIDfAA1G
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-16_05,2022-09-16_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0
- malwarescore=0 adultscore=0 mlxlogscore=999 spamscore=0 mlxscore=0
- phishscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2209160078
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
         SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,71 +90,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-USB has a requirement to put a performance state vote on 'cx'
-while active. Use 'required-opps' to pass this information from
-device tree, and since all the GDSCs in GCC (including USB) are
-sub-domains of cx, we also add cx as a power-domain for GCC.
-Now when any of the consumers of the GDSCs (in this case USB)
-votes on a perforamance state, genpd framework can identify that
-the GDSC itself does not support a performance state and it
-then propogates the vote to the parent, which in this case is cx.
+On Fri, Sep 16, 2022, at 5:11 AM, Christian Marangi wrote:
+> On Fri, Sep 16, 2022 at 11:01:11AM +0200, Arnd Bergmann wrote:
+>
+> Thanks for the review and the clarification!
+> (Also extra point the fixes tag will match the driver)
 
-This change would also mean that any GDSC in GCC thats left enabled
-during low power state (perhaps because its marked with a
-ALWAYS_ON flag) can prevent the system from entering low power
-since that would prevent cx from transitioning to low power.
-Ideally any consumers that would need to have their devices
-(partially) powered to support wakeups should look at making the
-resp. GDSCs transtion to a Retention (PWRSTS_RET) state instead
-of leaving them ALWAYS_ON.
+Regarding the fixes tag, how did you actually get to my patch?
+While it's possible that it caused the regression, it did not
+introduce the ERR_PTR() usage that was already there in
+5c9f8c2dbdbe ("dmaengine: qcom: Add ADM driver").
 
-Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
----
-v2:
-* Updated the required-opps to nom instead of svs
-* Also added required-opps for sec usb device
+Maybe there is another bug that needs to be addressed in this
+driver?
 
-* This patch is a follow up based on the discussion on the previously
-  posted version to support USB performance state voting [1]
-
-* Another patch that this approach depends on is the one to fix the
-  handling of PWRSTS_RET in the GDSC driver [2] so we can have USB
-  GDSC transtion to a RET state instead of marking it ALWAYS_ON
-
-[1] https://lore.kernel.org/linux-usb/YTduDqCO9aUyAsw1@ripper/
-[2] https://lore.kernel.org/all/20220901101756.28164-1-quic_rjendra@quicinc.com/#t
-
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 13d7f267b289..623cb1f78b55 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -828,6 +828,7 @@
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
-+			power-domains = <&rpmhpd SC7280_CX>;
- 		};
- 
- 		ipcc: mailbox@408000 {
-@@ -3181,6 +3182,7 @@
- 					  "dm_hs_phy_irq";
- 
- 			power-domains = <&gcc GCC_USB30_SEC_GDSC>;
-+			required-opps = <&rpmhpd_opp_nom>;
- 
- 			resets = <&gcc GCC_USB30_SEC_BCR>;
- 
-@@ -3367,6 +3369,7 @@
- 					  "ss_phy_irq";
- 
- 			power-domains = <&gcc GCC_USB30_PRIM_GDSC>;
-+			required-opps = <&rpmhpd_opp_nom>;
- 
- 			resets = <&gcc GCC_USB30_PRIM_BCR>;
- 
--- 
-2.17.1
-
+      Arnd
