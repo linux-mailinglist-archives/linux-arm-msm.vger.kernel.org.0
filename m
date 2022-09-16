@@ -2,57 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7569F5BAD7C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 14:33:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E55FE5BAD85
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 14:36:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231176AbiIPMdO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Sep 2022 08:33:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44464 "EHLO
+        id S230461AbiIPMgZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Sep 2022 08:36:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230516AbiIPMdM (ORCPT
+        with ESMTP id S230287AbiIPMgX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Sep 2022 08:33:12 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 249DB69F66;
-        Fri, 16 Sep 2022 05:33:12 -0700 (PDT)
+        Fri, 16 Sep 2022 08:36:23 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12272399C3;
+        Fri, 16 Sep 2022 05:36:22 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B0CA862B5C;
-        Fri, 16 Sep 2022 12:33:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18064C433C1;
-        Fri, 16 Sep 2022 12:33:11 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 242FDB8269B;
+        Fri, 16 Sep 2022 12:36:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6AF7C433D6;
+        Fri, 16 Sep 2022 12:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663331591;
-        bh=AT8VkjZ1VGWdOKuwt9QtngZWlA97OpwjmY1v0iuej4o=;
+        s=k20201202; t=1663331779;
+        bh=gcyMo0TZkaZKxri6WCBWcf5BI/B7za30bb+XGBepbW0=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nyD4CXjudmPaibcIlDJcd8Hcpc1NTq+tu1fZnRZ/5RrxG8gz1dRUoQFKHQCxOsxsa
-         TfwKL0lOnBT5kjkN3RMn8z8vKqwcb4kUZAbhUtaJsr716Og9+QJwevYBG1nXJjwSqY
-         jXE2vHlP0wefv9hdTylm9GnuSJHexz/yV4x7BxLSo4cf4OYkWWEcEHmacEIuOr7hJg
-         6GQYMvlmZwADW3fGCH1qNGKcoXUF7JOwO+mdzbW6G29Rvfl7B7ZuGjeRz00phr25CY
-         Oi0LAvLXyWuf+Yry7/4rHw24emp3wp5j2Yp/wMv7tH4nyjxGK9op+aVJxv4ovCS03T
-         AkZsPisyEW0RA==
+        b=MysHRGETrWkDV49ac6JPmxT6JTxBdoa2ABqp1Gwg2HTlLiEec5um9qtgB1LMtifAs
+         EV6UG4j0ysvdrwVbBc65zUGEkZvGzGZ9ceWa7k6vxU4DYx34FSdc8QfO9mykbBjF/+
+         Af7vAV9JJkENvjHGqjuR4dFrB9VpwA+T2L2VPW2ZcfyWMbAGA31ahIgmK9hGm39rhR
+         zVPP3V0dXo301cuOiiCQjvRwGTmHyL55zXRzc6PIvHGkdsoNKYzWKweMsxMvGlIKwj
+         PZ4QnUFbi9RouCQxjLpr4TUJ5osY/o1TxL/AAGZQkXzPEtL+/IhWIYJ99hVKmBcRLo
+         9e3cdeLVa5hmg==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1oZAWy-00023Z-89; Fri, 16 Sep 2022 14:33:16 +0200
-Date:   Fri, 16 Sep 2022 14:33:16 +0200
+        id 1oZAa0-00025e-QP; Fri, 16 Sep 2022 14:36:24 +0200
+Date:   Fri, 16 Sep 2022 14:36:24 +0200
 From:   Johan Hovold <johan@kernel.org>
 To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc:     "Martin K . Petersen" <martin.petersen@oracle.com>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-usb@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        linux-scsi@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/6] dt-bindings: usb: qcom,dwc3: Add SC8180x binding
-Message-ID: <YyRtDFqSsfPCWWGo@hovoldconsulting.com>
+Subject: Re: [PATCH 2/6] scsi: ufs: dt-bindings: Add SC8180x binding
+Message-ID: <YyRtyHpb5nppajcM@hovoldconsulting.com>
 References: <20220916121204.3880182-1-vkoul@kernel.org>
- <20220916121204.3880182-4-vkoul@kernel.org>
+ <20220916121204.3880182-3-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220916121204.3880182-4-vkoul@kernel.org>
+In-Reply-To: <20220916121204.3880182-3-vkoul@kernel.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -62,28 +64,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 16, 2022 at 05:42:01PM +0530, Vinod Koul wrote:
-> Document the USB dwc3 controller for SC8180x SoC
+On Fri, Sep 16, 2022 at 05:42:00PM +0530, Vinod Koul wrote:
+> Document the UFS HC for SC8180x SoC
 > 
 > Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > ---
->  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 1 +
+>  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 1 +
 >  1 file changed, 1 insertion(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> index fea3e7092ace..f33735f3702d 100644
-> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> @@ -24,6 +24,7 @@ properties:
->            - qcom,qcs404-dwc3
->            - qcom,sc7180-dwc3
->            - qcom,sc7280-dwc3
-> +          - qcom,sc8180x-dwc3
->            - qcom,sc8280xp-dwc3
->            - qcom,sdm660-dwc3
->            - qcom,sdm845-dwc3
+> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> index f2d6298d926c..dd0256357247 100644
+> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> @@ -26,6 +26,7 @@ properties:
+>            - qcom,msm8994-ufshc
+>            - qcom,msm8996-ufshc
+>            - qcom,msm8998-ufshc
+> +          - qcom,sc8180x-ufshc
+>            - qcom,sc8280xp-ufshc
+>            - qcom,sdm845-ufshc
+>            - qcom,sm6350-ufshc
 
-You need to also describe the clocks and interrupts required by this
-platform in the platform-specific sections further down in this file.
+Same here, you need to describe the required clocks in the sections
+below.
 
 Johan
