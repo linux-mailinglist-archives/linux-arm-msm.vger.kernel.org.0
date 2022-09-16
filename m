@@ -2,173 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 69B0A5BAF7C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 16:38:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20CD55BAF89
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 16:43:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230265AbiIPOiz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Sep 2022 10:38:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37910 "EHLO
+        id S231482AbiIPOnl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Sep 2022 10:43:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231328AbiIPOiq (ORCPT
+        with ESMTP id S231616AbiIPOnh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Sep 2022 10:38:46 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6192CB40EF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 07:38:45 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id dv25so49827721ejb.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 07:38:45 -0700 (PDT)
+        Fri, 16 Sep 2022 10:43:37 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17DC15F221;
+        Fri, 16 Sep 2022 07:43:36 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id bj12so49840120ejb.13;
+        Fri, 16 Sep 2022 07:43:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=2hekt6nHmDXb09svRYspIovCwUxYyIVHgZSXoQyIl+k=;
-        b=SFH1piZ1wl+dYjTFfiOzjwm5fI+/WSD0vBB9yBMmjrbolDnWC/6U9TVbGpDPit/0ES
-         UUWUzIMXDJswTFPpUSs2bQz1HKHAlff4k2OO982m7E2ogYAaAlCcz+v6pL6YXHn7JZ09
-         263HOyhB9k8djHzypKXBiHPWGswf9IMrrY0odun/7GVSrmRHrtorYPkfRwkXf79IOyhU
-         rsTJO7Kie/UsasSir2ML+YdjREDVgRnjk1VSA1ZA7xpfUu60Xu2CKXq5NELJHbDCB2To
-         IoR0qoMNN7IOJY031zmLjTFaKb1fNbBHf+e6M0wKl30ktbsDQdlx9EZwtUk9ydlQK7Qu
-         myEA==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=LKoaZ5We1TGLeFod6UTJMH7q09dtJndCh1W2gfaDfzM=;
+        b=FPZdopoGGaFUGRqTDSLf/mbn0u3wwg02p7UxOEwbSG5bvv6s1++oPirhDM2S8KDyD3
+         Be4kaXWPqfFNLq2WkV+3glORMuZGdpg1KhtQloZrB3q+fLSD6ftqJGEgYYjBh/wBd3eE
+         eIuCY02i9QkxVIJ4CbywRVkrJM2CNGcmWwjFWBY9/VggqGJEfPMkOg73aeUsYNqc11Nk
+         BSpoheNWqki6kQX/hPBNjmaOV9wmEYoonf2nu8mYsDV4yu7o3NB1BDKYhzVXyVPip/ve
+         8UoGeR9+5GsN6d3gary881TBLdzmIfsEcLA5ilkgjX6j1j7bK6TaBbXKy6ba9TUBhjZV
+         NCjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=2hekt6nHmDXb09svRYspIovCwUxYyIVHgZSXoQyIl+k=;
-        b=0DcO8tgO281fuS7esFSED5Lxgf1ppeo7VTc/dt+Dd4NUCC0U46gqoTKoBV7nwwfYDP
-         5bKmRS64sqCaf5zAEAaF4JhErPlPs+Dg3FqnmMNL8CiW/nJMyzdOVxFSPc7VjvK7DBIo
-         62ZqUN5Ol7FPAG7E0FAc2bqjraPe4lncnB8Oj0auB5AG5HSem0h02fjMQaTljp0jv/ql
-         L8EaFgxi1z/hUtHNQ+LrwE1BkKsGDmqMq2ODHE3xjVCxnKU8wmhanuQPiISF23775kr8
-         R+VdXsbfeZl5jozXLSesLQwBtsEllXr1slUP6uXZzQ9kDnaIFjje1NoNRzc8s0RHvf9g
-         MxsA==
-X-Gm-Message-State: ACrzQf2wHLBkDWA00skmRaPFJ0j96fCfzikcwJ7Pbv8C62cpeHQQttNl
-        8gmjMaBy3JZZXFvEbWiocaTDyg==
-X-Google-Smtp-Source: AMsMyM520XIqN6p3HKYAlwE92zHeNJJ+Fe5xeWMnuVrGvp0QrtwA4dQnKiX2weHwOi8VZ2B4Q7JoXw==
-X-Received: by 2002:a17:906:7944:b0:73c:838:ac3d with SMTP id l4-20020a170906794400b0073c0838ac3dmr3824004ejo.242.1663339123786;
-        Fri, 16 Sep 2022 07:38:43 -0700 (PDT)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id p21-20020a170906499500b0078082f95e5csm1393062eju.204.2022.09.16.07.38.40
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=LKoaZ5We1TGLeFod6UTJMH7q09dtJndCh1W2gfaDfzM=;
+        b=fuB89yp6QwMSgMXJyaWttiGFhkLJoGPCn0pLCkWp+6RCkufhRcZJiQhxhfvq0CwhRU
+         FKK7HAuIo7TwaQybiNLlSWgZgBmM1MRPQqfXTHzFk1pux0kl6xFEe4zFTphPk8NoUTc6
+         ym+DEc9zWQ/onJ8RmUHGW0j6tGAglAKnZYqAu12m4q6a0VXgxkU9Yi4PJUPoyhnilmEL
+         Rg8MsOEoN/XEBYuu6kVqVKG5Ue6hREkFAnFLGMu0gecrHlt/QoSNQIBDabSyBzLTtNMb
+         yRYMMcviPgvc6oU1hstuDxdDfScPoSq49YBJrAQwyi9gwNTxx1yMAk6LM3oLCG/gmcmp
+         KBDw==
+X-Gm-Message-State: ACrzQf1b2mymPay0SlCyEI9Gk2pMEC/X7w4lBGD+hvLlMay5pLa2nPye
+        WbeX2ELqr1VA2rRT3NwiW4M=
+X-Google-Smtp-Source: AMsMyM7zIcoW0FRIFKPApyLHgN4mHUuTE5bIgYjHNY9NOwwKb46Fr6t/zkSgRGUmnFvAOxGKYq84kA==
+X-Received: by 2002:a17:906:7944:b0:73c:838:ac3d with SMTP id l4-20020a170906794400b0073c0838ac3dmr3838252ejo.242.1663339414462;
+        Fri, 16 Sep 2022 07:43:34 -0700 (PDT)
+Received: from labdl-itc-sw06.tmt.telital.com (static-82-85-31-68.clienti.tiscali.it. [82.85.31.68])
+        by smtp.gmail.com with ESMTPSA id b15-20020aa7cd0f000000b004527eb874ebsm6273792edw.40.2022.09.16.07.43.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Sep 2022 07:38:41 -0700 (PDT)
-Date:   Fri, 16 Sep 2022 17:38:40 +0300
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Ekansh Gupta <ekangupt@qti.qualcomm.com>,
-        Bharath Kumar <bkumar@qti.qualcomm.com>,
-        Himateja Reddy <hmreddy@quicinc.com>,
-        Anirudh Raghavendra <araghave@quicinc.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 08/10] misc: fastrpc: Safekeep mmaps on interrupted
- invoke
-Message-ID: <YySKcI3dwv9b4ri0@linaro.org>
-References: <20220909133938.3518520-1-abel.vesa@linaro.org>
- <20220909133938.3518520-9-abel.vesa@linaro.org>
- <a71b5f36-8a81-3aa6-6aee-655878b5d4af@linaro.org>
+        Fri, 16 Sep 2022 07:43:31 -0700 (PDT)
+From:   Fabio Porcedda <fabio.porcedda@gmail.com>
+To:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, mani@kernel.org, loic.poulain@linaro.org,
+        ryazanov.s.a@gmail.com, davem@davemloft.net, edumazet@google.com,
+        kuba@kernel.org, pabeni@redhat.com
+Cc:     dnlplm@gmail.com
+Subject: [PATCH 0/2] Add a secondary AT port to the Telit FN990
+Date:   Fri, 16 Sep 2022 16:43:27 +0200
+Message-Id: <20220916144329.243368-1-fabio.porcedda@gmail.com>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a71b5f36-8a81-3aa6-6aee-655878b5d4af@linaro.org>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22-09-16 13:58:35, Srinivas Kandagatla wrote:
-> 
-> 
-> On 09/09/2022 14:39, Abel Vesa wrote:
-> > If the userspace daemon is killed in the middle of an invoke (e.g.
-> > audiopd listerner invoke), we need to skip the unmapping on device
-> > release, otherwise the DSP will crash. So lets safekeep all the maps
-> > only if there is in invoke interrupted, by attaching them to the channel
-> > context (which is resident until RPMSG driver is removed), and free them
-> > on RPMSG driver remove.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >   drivers/misc/fastrpc.c | 15 +++++++++++++++
-> >   1 file changed, 15 insertions(+)
-> > 
-> > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> > index 6b2a552dbdba..bc1e8f003d7a 100644
-> > --- a/drivers/misc/fastrpc.c
-> > +++ b/drivers/misc/fastrpc.c
-> > @@ -275,6 +275,7 @@ struct fastrpc_channel_ctx {
-> >   	struct fastrpc_device *secure_fdevice;
-> >   	struct fastrpc_device *fdevice;
-> >   	struct fastrpc_buf *remote_heap;
-> > +	struct list_head invoke_interrupted_mmaps;
-> >   	bool secure;
-> >   	bool unsigned_support;
-> >   };
-> > @@ -1119,6 +1120,8 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
-> >   				   struct fastrpc_invoke_args *args)
-> >   {
-> >   	struct fastrpc_invoke_ctx *ctx = NULL;
-> > +	struct fastrpc_buf *buf, *b;
-> > +
-> >   	int err = 0;
-> >   	if (!fl->sctx)
-> > @@ -1182,6 +1185,13 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
-> >   		fastrpc_context_put(ctx);
-> >   	}
-> > +	if (err == -ERESTARTSYS) {
-> > +		list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
-> > +			list_del(&buf->node);
-> > +			list_add_tail(&buf->node, &fl->cctx->invoke_interrupted_mmaps);
-> > +		}
-> > +	}
-> > +
-> >   	if (err)
-> >   		dev_dbg(fl->sctx->dev, "Error: Invoke Failed %d\n", err);
-> > @@ -2277,6 +2287,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
-> >   	dev_set_drvdata(&rpdev->dev, data);
-> >   	dma_set_mask_and_coherent(rdev, DMA_BIT_MASK(32));
-> >   	INIT_LIST_HEAD(&data->users);
-> > +	INIT_LIST_HEAD(&data->invoke_interrupted_mmaps);
-> >   	spin_lock_init(&data->lock);
-> >   	idr_init(&data->ctx_idr);
-> >   	data->domain_id = domain_id;
-> > @@ -2301,6 +2312,7 @@ static void fastrpc_notify_users(struct fastrpc_user *user)
-> >   static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
-> >   {
-> >   	struct fastrpc_channel_ctx *cctx = dev_get_drvdata(&rpdev->dev);
-> > +	struct fastrpc_buf *buf, *b;
-> >   	struct fastrpc_user *user;
-> >   	unsigned long flags;
-> > @@ -2315,6 +2327,9 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
-> >   	if (cctx->secure_fdevice)
-> >   		misc_deregister(&cctx->secure_fdevice->miscdev);
-> > +	list_for_each_entry_safe(buf, b, &cctx->invoke_interrupted_mmaps, node)
-> > +		list_del(&buf->node);
-> > +
-> When would you free these?
-> looks like we are leaking even after dsp is down..
-> Should we not do fastrpc_buf_free() here?
+In order to add a secondary AT port to the Telit FN990 first add "DUN2"
+to mhi_wwan_ctrl.c, after that add a seconday AT port to the
+Telit FN990 in pci_generic.c
 
-Yes, we should. I forgot to add it.
+Fabio Porcedda (2):
+  net: wwan: mhi_wwan_ctrl: Add DUN2 to have a secondary AT port
+  bus: mhi: host: pci_generic: Add a secondary AT port to Telit FN990
 
-Will send a new version.
+ drivers/bus/mhi/host/pci_generic.c | 2 ++
+ drivers/net/wwan/mhi_wwan_ctrl.c   | 1 +
+ 2 files changed, 3 insertions(+)
 
-Thanks.
+-- 
+2.37.3
 
-> 
-> 
-> 
-> --srini
-> 
-> >   	if (cctx->remote_heap)
-> >   		fastrpc_buf_free(cctx->remote_heap);
