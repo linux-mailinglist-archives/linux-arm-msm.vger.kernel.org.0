@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 044625BADA2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 14:56:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C78C55BADB0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 14:58:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230448AbiIPM4H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Sep 2022 08:56:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45470 "EHLO
+        id S229750AbiIPM6m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Sep 2022 08:58:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229621AbiIPM4G (ORCPT
+        with ESMTP id S230518AbiIPM6k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Sep 2022 08:56:06 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 264F37C777
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 05:56:04 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id l8so10671320wmi.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 05:56:04 -0700 (PDT)
+        Fri, 16 Sep 2022 08:58:40 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA97E82841
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 05:58:38 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id c11so35904303wrp.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 05:58:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=FlgUh5+pDn0PTCFu6MENysdcsTjYuALACeiMk1+3GzM=;
-        b=UMBnXSenihH6P6oCZLrpTzS5LnafMHOZaBY1de7HlfwJ1BMfyP3aCIlF3tncrofGwL
-         aENJI01ZvTyvYNjmCy4OJ+fj1ne14FYUIXFEpI+YAU3ekZwGLnc/s5xMZkPbBCCR1uCt
-         T6zeXiyqKjCK87ByFt/X5ApIvQtwoJtFda2BmKiYjoXb3Gjg7+uXHdkL2GuCPQNtDpLE
-         /NMzxLFpkm/Obsa9gU+re7MQZmxVMbi1ozSni/7MBrb7dPoJ7kV9MuTf/7XItcl5RKPP
-         d3fF/Lba2lhhjAq0F0m+41eqWSXbZHyUn/AXSLlTgqUEjwF76R6+0UyQPyglNvuGQ5I+
-         yW8w==
+        bh=bkVgNaB5w39A++bxNFLwcR/OnSuiCg+ysFlzXQmJY08=;
+        b=ADIeSS9W2NJxpUxaduHdkUbgikHOfnDLWr3KykSIbaai5/l7eI+UFw9XCgL1j0qnD/
+         oDTsrtiV1vlhLV6ORsArIDz1ZcOyVxrXxm4UirJJMG1CbZ9DkBjkX5PCwwoc3fI00As3
+         5jmub4XeBIjMfBpk4uAQGLrFOVDs+qaFOQuC6BevsnqYTl8RaqFtjNomSNtvJbm4K8CA
+         rRARkBiC78kdkqrFAjI0P+QKM6HCEsIW0xnOe3HawYgz/wFNQ4d3Dha9o0fNbdCe6vlh
+         2yghU9GHaI1aOyP2T2QwEFVVpzJ0NQdN3C/0ZR/xfqdHNcKYZ5Sr+FMxCZEqUry1DB5a
+         PlyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=FlgUh5+pDn0PTCFu6MENysdcsTjYuALACeiMk1+3GzM=;
-        b=3Ls6WPUWO7rZAX+m2XFlVm+QslhMq/vM64EuQxNF9eTnZjMt+o5W9keBlTtpHh9e+w
-         9/uh6gK14e672+DdkpCh01webabxs3pWYf6ERSLZqk5wcrxmdgg9I+1tH10GIUfeeW9k
-         +PUmJHTZ0pG+dpW5BlZNqMBfhptOv28UReFu/FahpXKasddSAQAbFYJou9/CE8SoX5HQ
-         QXw5YJjy9EBKID0ZiEG1sn7ygrjeF/5JZhjftscmB+uJNOMcCUsSlJMPTt4ef+4Qd9Wa
-         xxb+/2zbEZnSH08x8WNU24cOSXm5RJ2oO4YAjuzRmE4jx6eyKiCe1aTgJmQefJ+u5u7R
-         PK4Q==
-X-Gm-Message-State: ACrzQf1W+bkZjU4Ma+CEu4zMcTAi9zBrsgkk3FVioNwKA/msfZBbSAk5
-        6viXU2QDomWxGhbGwt6YrjCTlUUmKFty7Q==
-X-Google-Smtp-Source: AMsMyM6S94CyeAVhtUcro6X5ND/HkjA9cvn45gsoLeKfqmfPRi08nogI6dDjR5RpNWhkCQOxxVnB7A==
-X-Received: by 2002:a05:600c:34c2:b0:3b4:7a98:5f5a with SMTP id d2-20020a05600c34c200b003b47a985f5amr3238815wmq.156.1663332962696;
-        Fri, 16 Sep 2022 05:56:02 -0700 (PDT)
+        bh=bkVgNaB5w39A++bxNFLwcR/OnSuiCg+ysFlzXQmJY08=;
+        b=oKvHJO1mnEuLP2DAWSgu1zMp3WWgUPephLmmITCBHpPHkqAC5yx/fd9YWaZi/uMInc
+         d2VH/JnAYDoBRsU5tZri8YNAVZR08irialUOCmpC/An/jQPREcHsEcn7Ze+qpHUdu5qe
+         7KHFep4jcp17MwSZoNufj6E5d30JcRDQuy4pDT3E4duLn5heMhZ0CUZOJUQ5GC8+4eM5
+         aLp7lwfOccaW4Ioom+ameNrnr3OwchXH6GkA6lNQpKf0E3qJlaywm4qwPV5Z+H02grbz
+         1o4uvY0IsBm+WQWOSv9lA8bCP+WKJksjpxSQs3lk0MLMOr9rTsZ/ltTQtH93M7kLT8lO
+         rhmg==
+X-Gm-Message-State: ACrzQf125bvoAZ22whOlNzb6MeQ2OdMGbE/seKCSiTi3mhPTaJMsPBva
+        QTmYghXwP7YAc+/ZkbJHhw8ZsQ==
+X-Google-Smtp-Source: AMsMyM5Kyt+fmGvMQc7WIFSjluHH+tpxEBrz/ltpfmniS/6+efJwkQ2A2Tv/g8b5jQha05xHlYHKqw==
+X-Received: by 2002:a05:6000:86:b0:228:db07:24bc with SMTP id m6-20020a056000008600b00228db0724bcmr2770788wrx.204.1663333117236;
+        Fri, 16 Sep 2022 05:58:37 -0700 (PDT)
 Received: from [192.168.86.238] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.googlemail.com with ESMTPSA id n2-20020a5d67c2000000b0021badf3cb26sm5715968wrw.63.2022.09.16.05.56.01
+        by smtp.googlemail.com with ESMTPSA id j16-20020a05600c191000b003a8434530bbsm2217835wmq.13.2022.09.16.05.58.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Sep 2022 05:56:01 -0700 (PDT)
-Message-ID: <e085312e-79d7-cd43-169c-0e606f67752f@linaro.org>
-Date:   Fri, 16 Sep 2022 13:56:01 +0100
+        Fri, 16 Sep 2022 05:58:36 -0700 (PDT)
+Message-ID: <a71b5f36-8a81-3aa6-6aee-655878b5d4af@linaro.org>
+Date:   Fri, 16 Sep 2022 13:58:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH v3 00/10] misc: fastrpc: Add audiopd support
+Subject: Re: [PATCH v3 08/10] misc: fastrpc: Safekeep mmaps on interrupted
+ invoke
 Content-Language: en-US
 To:     Abel Vesa <abel.vesa@linaro.org>,
         Amol Maheshwari <amahesh@qti.qualcomm.com>,
@@ -74,8 +75,9 @@ Cc:     Arnd Bergmann <arnd@arndb.de>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         devicetree@vger.kernel.org
 References: <20220909133938.3518520-1-abel.vesa@linaro.org>
+ <20220909133938.3518520-9-abel.vesa@linaro.org>
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20220909133938.3518520-1-abel.vesa@linaro.org>
+In-Reply-To: <20220909133938.3518520-9-abel.vesa@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -91,34 +93,84 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 09/09/2022 14:39, Abel Vesa wrote:
-> This patchset adds audiopd support to fastrpc.
+> If the userspace daemon is killed in the middle of an invoke (e.g.
+> audiopd listerner invoke), we need to skip the unmapping on device
+> release, otherwise the DSP will crash. So lets safekeep all the maps
+> only if there is in invoke interrupted, by attaching them to the channel
+> context (which is resident until RPMSG driver is removed), and free them
+> on RPMSG driver remove.
 > 
-> The v2 of this patchset is here:
-> https://lore.kernel.org/all/20220902154900.3404524-1-abel.vesa@linaro.org/
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>   drivers/misc/fastrpc.c | 15 +++++++++++++++
+>   1 file changed, 15 insertions(+)
 > 
-> Abel Vesa (10):
->    misc: fastrpc: Rename audio protection domain to root
->    misc: fastrpc: Add reserved mem support
->    dt-bindings: misc: fastrpc: Document memory-region property
->    misc: fastrpc: Add fastrpc_remote_heap_alloc
->    misc: fastrpc: Use fastrpc_map_put in fastrpc_map_create on fail
->    misc: fastrpc: Rework fastrpc_req_munmap
->    misc: fastrpc: Add support for audiopd
->    misc: fastrpc: Safekeep mmaps on interrupted invoke
->    misc: fastrpc: Add mmap request assigning for static PD pool
->    misc: fastrpc: Add dma_mask to fastrpc_channel_ctx
-> 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index 6b2a552dbdba..bc1e8f003d7a 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -275,6 +275,7 @@ struct fastrpc_channel_ctx {
+>   	struct fastrpc_device *secure_fdevice;
+>   	struct fastrpc_device *fdevice;
+>   	struct fastrpc_buf *remote_heap;
+> +	struct list_head invoke_interrupted_mmaps;
+>   	bool secure;
+>   	bool unsigned_support;
+>   };
+> @@ -1119,6 +1120,8 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
+>   				   struct fastrpc_invoke_args *args)
+>   {
+>   	struct fastrpc_invoke_ctx *ctx = NULL;
+> +	struct fastrpc_buf *buf, *b;
+> +
+>   	int err = 0;
+>   
+>   	if (!fl->sctx)
+> @@ -1182,6 +1185,13 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
+>   		fastrpc_context_put(ctx);
+>   	}
+>   
+> +	if (err == -ERESTARTSYS) {
+> +		list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
+> +			list_del(&buf->node);
+> +			list_add_tail(&buf->node, &fl->cctx->invoke_interrupted_mmaps);
+> +		}
+> +	}
+> +
+>   	if (err)
+>   		dev_dbg(fl->sctx->dev, "Error: Invoke Failed %d\n", err);
+>   
+> @@ -2277,6 +2287,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>   	dev_set_drvdata(&rpdev->dev, data);
+>   	dma_set_mask_and_coherent(rdev, DMA_BIT_MASK(32));
+>   	INIT_LIST_HEAD(&data->users);
+> +	INIT_LIST_HEAD(&data->invoke_interrupted_mmaps);
+>   	spin_lock_init(&data->lock);
+>   	idr_init(&data->ctx_idr);
+>   	data->domain_id = domain_id;
+> @@ -2301,6 +2312,7 @@ static void fastrpc_notify_users(struct fastrpc_user *user)
+>   static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
+>   {
+>   	struct fastrpc_channel_ctx *cctx = dev_get_drvdata(&rpdev->dev);
+> +	struct fastrpc_buf *buf, *b;
+>   	struct fastrpc_user *user;
+>   	unsigned long flags;
+>   
+> @@ -2315,6 +2327,9 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
+>   	if (cctx->secure_fdevice)
+>   		misc_deregister(&cctx->secure_fdevice->miscdev);
+>   
+> +	list_for_each_entry_safe(buf, b, &cctx->invoke_interrupted_mmaps, node)
+> +		list_del(&buf->node);
+> +
+When would you free these?
+looks like we are leaking even after dsp is down..
+Should we not do fastrpc_buf_free() here?
 
-thanks Abel for picking this up...
-
-Tested this series on SM8450 with ECNS.
-
-Tested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
 
 --srini
->   .../bindings/misc/qcom,fastrpc.yaml           |   5 +
->   drivers/misc/fastrpc.c                        | 260 +++++++++++++++---
->   include/uapi/misc/fastrpc.h                   |   7 +
->   3 files changed, 240 insertions(+), 32 deletions(-)
-> 
+
+>   	if (cctx->remote_heap)
+>   		fastrpc_buf_free(cctx->remote_heap);
+>   
