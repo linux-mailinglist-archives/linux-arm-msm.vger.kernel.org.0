@@ -2,83 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C658B5BB383
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 22:32:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D49E35BB39C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 22:41:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230095AbiIPUcE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Sep 2022 16:32:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44754 "EHLO
+        id S229897AbiIPUlU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Sep 2022 16:41:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229652AbiIPUcD (ORCPT
+        with ESMTP id S229824AbiIPUlS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Sep 2022 16:32:03 -0400
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B765AB6D2C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 13:32:01 -0700 (PDT)
-Received: by mail-yb1-xb29.google.com with SMTP id a67so34218314ybb.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 13:32:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=GRh26cFwQmVn7OIiMmR3DjGYjriMibnaOhbeY2+3sjM=;
-        b=BfoyE0LkVmBBKGIHuxpDCE+BCln/CDNhvbxAl7sMmIyBU3SrU4fVaCUh2bS2EgKVGk
-         ADDCoyn9+yimo2xfpSpUlaI6QmCJgYTZP75RwL3E7BBOSU5mnh7DvqJcGPPM85v7ujUL
-         JVRuxaCXp6WnoG2HXf8o26x8KPSrJFQcdsR18WoODlHY/LvOf1TBv+HxbF37FYhy3AsD
-         RudWNISblVl1rlRxGi057rp7nGt443lh9mGJPSnLml5yZw1roMH6XR2Q80PHea7iK4Uk
-         6bvknnPdHU0wKG6YUWaJZ0W84/xK4nknEWyxub1RUCsOM/Cj0IG1DG/Yp9mutqB7RmTx
-         7Qkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=GRh26cFwQmVn7OIiMmR3DjGYjriMibnaOhbeY2+3sjM=;
-        b=ZzjkAp4WIschuIYwlaw9zSp6x/MkHv7WmTV6Pdid6gvFDruO9hk0/DQPMmpYw49YMQ
-         9zVidzwkfM/dlgCXtAtuGqSEv0hRf86VHJSYfsrZrFPH/V73iaNefhjqkUBfF4baxnfJ
-         NaJyZSkaR/FJIa9iKZ/JXvN+49DmUbzh2fPY+Y/6GCy3hMMRz++ncJORRLgr9t+E6+Tp
-         LGcT8cM8xBTMLwhzTlXsC5RsUjBJdEYm99EpKAkwA0Bu+yb7LJLEO/YHdcu0xUWN6TpB
-         GkD5sbzBb7U0k/DZPeszwIiB8wynaJHl1rdmue8Gu3fvN2blOXEdjDBwD6Y84M7LgzpQ
-         Hgng==
-X-Gm-Message-State: ACrzQf1w2xggGjj7uK1WQbc3tBUjjnSqV/85vR2Bd3g8WsVSrF64x2dg
-        ncIKxDsXran81Ln7m23Eaq+LR0Qha1JCqa2kCQ1R3A==
-X-Google-Smtp-Source: AMsMyM47ZFSxFzPSeM9JxQQYj7YoU1ApWVX4CGB1O21SkKvkUUp0w154rWQAB652f3pFKP7WrHw01ot/5jKhwkb1hb8=
-X-Received: by 2002:a5b:2ce:0:b0:67a:6054:9eb0 with SMTP id
- h14-20020a5b02ce000000b0067a60549eb0mr5692895ybp.15.1663360320932; Fri, 16
- Sep 2022 13:32:00 -0700 (PDT)
+        Fri, 16 Sep 2022 16:41:18 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E69D09F8FC;
+        Fri, 16 Sep 2022 13:41:16 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4DBC862D96;
+        Fri, 16 Sep 2022 20:41:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5224C433C1;
+        Fri, 16 Sep 2022 20:41:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663360875;
+        bh=ptWVnG4gpvd+jXZkxFNfdAfX6sFI9UiAN/JiSjTv88U=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=sahSU31jzf3M6f1rVm76CpB6D8d7vCxVdJB4dW3Ab1E5w1UpF2PLOtB077TB5KSGs
+         LaxYGG9xiCeSgCXGM1nQ6eItRJlXg94kxsfJ8n846em7Ng7imGoMVjWdlorZuKbZ6S
+         TXBDhl/J241BJtB4hXYW6Xczq5Gc3hS/yIFFZwQyj7z8TcanXsrMcAwL/kudL02Ri8
+         FnVHB21BXCnTlH8L4F2gMac3RGCnYHvWKkNNrp6RQVnsRVaN0JZgmfjeaV1DnVGKf5
+         7qBMMIYEOu7seNtDsuOcbcnn5G63icz/yhuBdvGS/GLYDb1FcoSMgkoSG4fe5fwb3j
+         pFz/dglK/CP9A==
+Date:   Fri, 16 Sep 2022 15:41:12 -0500
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Alex Elder <elder@ieee.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>, vkoul@kernel.org
+Subject: Re: [PATCH V11 1/7] dt-bindings: Added the yaml bindings for DCC
+Message-ID: <20220916204112.hujz3dwjis23tdk2@builder.lan>
+References: <cover.1663313821.git.quic_schowdhu@quicinc.com>
+ <c6b55a5b44a8add13ea9015542522b2562cf8f60.1663313821.git.quic_schowdhu@quicinc.com>
 MIME-Version: 1.0
-References: <20220914142256.28775-1-ansuelsmth@gmail.com> <20220914142256.28775-3-ansuelsmth@gmail.com>
- <20220916191715.GA1079300-robh@kernel.org> <6324d1be.050a0220.9d842.7b47@mx.google.com>
- <CAA8EJprEQOsm4TxGWJYZo04D1PagT3QmhDdYQkEid-KSP-tpTw@mail.gmail.com>
- <6324d8e1.170a0220.aba35.ba4f@mx.google.com> <CAA8EJpowLvkuiYupqS0WEhnMR8q=R1YUUFgdFVCAx1PXyoo1xw@mail.gmail.com>
- <6324dc1b.df0a0220.97787.083c@mx.google.com>
-In-Reply-To: <6324dc1b.df0a0220.97787.083c@mx.google.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 16 Sep 2022 23:31:49 +0300
-Message-ID: <CAA8EJpo08WoQ_LYOtg5C2BB=Q6GR_cftLjaWHWjYD6BjfDZcsg@mail.gmail.com>
-Subject: Re: [PATCH v5 2/5] dt-bindings: arm: msm: Convert kpss-acc driver
- Documentation to yaml
-To:     Christian Marangi <ansuelsmth@gmail.com>
-Cc:     Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Alexey Dobriyan <adobriyan@gmail.com>,
-        Takashi Iwai <tiwai@suse.de>,
-        Christian Brauner <brauner@kernel.org>,
-        Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-        Marc Herbert <marc.herbert@intel.com>,
-        James Smart <jsmart2021@gmail.com>,
-        Justin Tee <justin.tee@broadcom.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c6b55a5b44a8add13ea9015542522b2562cf8f60.1663313821.git.quic_schowdhu@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,83 +59,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 16 Sept 2022 at 23:27, Christian Marangi <ansuelsmth@gmail.com> wrote:
->
-> On Fri, Sep 16, 2022 at 11:22:17PM +0300, Dmitry Baryshkov wrote:
-> > On Fri, 16 Sept 2022 at 23:13, Christian Marangi <ansuelsmth@gmail.com> wrote:
-> > >
-> > > On Fri, Sep 16, 2022 at 11:06:35PM +0300, Dmitry Baryshkov wrote:
-> > > > On Fri, 16 Sept 2022 at 22:43, Christian Marangi <ansuelsmth@gmail.com> wrote:
-> > > > >
-> > > > > On Fri, Sep 16, 2022 at 02:17:15PM -0500, Rob Herring wrote:
-> > > > > > On Wed, Sep 14, 2022 at 04:22:53PM +0200, Christian Marangi wrote:
-> > > > > > > Convert kpss-acc driver Documentation to yaml.
-> > > > > > > The original Documentation was wrong all along. Fix it while we are
-> > > > > > > converting it.
-> > > > > > > The example was wrong as kpss-acc-v2 should only expose the regs but we
-> > > > > > > don't have any driver that expose additional clocks. The kpss-acc driver
-> > > > > > > is only specific to v1. For this exact reason, limit all the additional
-> > > > > > > bindings (clocks, clock-names, clock-output-names and #clock-cells) to
-> > > > > > > v1 and also flag that these bindings should NOT be used for v2.
-> > > > > >
-> > > > > > Odd that a clock controller has no clocks, but okay.
-> > > > > >
-> > > > >
-> > > > > As said in the commit v2 is only used for regs. v2 it's only used in
-> > > > > arch/arm/mach-qcom/platsmp.c to setup stuff cpu hotplug and bringup.
-> > > > >
-> > > > > Should we split the 2 driver? To me the acc naming seems to be just
-> > > > > recycled for v2 and it's not really a clk controller.
-> > > > >
-> > > > > So keeping v2 in arm/msm/qcom,kpss-acc-v2.yaml and v1 moved to clock?
-> > > >
-> > > > I suspect that qcom,kpss-acc-v2 is misnamed as the "clock-controller".
-> > > > According to msm-3.10, these regions are used by the Krait core
-> > > > regulators.
-> > > >
-> > >
-> > > Well we need to understand how to handle this... change the compatible
-> > > it's a nono for sure. In platsmp.c they are used for cpu power control
-> > > so could be that they are actually used to regulators. I would honestly
-> > > move v1 to clock and leave v2 to arm/msm but I'm not cetain on what name
-> > > to assign to the 2 yaml.
-> > >
-> > > What do you think?
-> >
-> > This is fine for me. If somebody gets better understanding of
-> > underlying hardware and works on actually using these blocks, he will
-> > update the bindings.
-> >
-> > My only suggestion would be to rename kpss-acc-v2 nodes to
-> > 'power-controller@address' and document them so.
-> >
->
-> Ok so something like this?
->
->     power-controller@f9088000 {
->       compatible = "qcom,kpss-acc-v2";
->       reg = <0xf9088000 0x1000>,
->             <0xf9008000 0x1000>;
->     };
->
-> (and I will have to fix dtbs warning as they will be unmatched I think.)
-> Yaml naming:
-> qcom,kpss-acc-v1.yaml
-> qcom,kpss-acc-v2.yaml
-> Right?
+On Fri, Sep 16, 2022 at 02:20:13PM +0530, Souradeep Chowdhury wrote:
+> Documentation for Data Capture and Compare(DCC) device tree bindings
+> in yaml format.
+> 
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
 
-Sounds good to me.
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
-I'd even say clock/qcom,kpss-acc-v1.yaml and
-arm/msm/qcom,kpss-acc-v2.yaml or maybe power/qcom,kpss-acc-v2.yaml
-
->
->
-> --
->         Ansuel
-
-
-
--- 
-With best wishes
-Dmitry
+> ---
+>  .../devicetree/bindings/arm/msm/qcom,dcc.yaml      | 44 ++++++++++++++++++++++
+>  1 file changed, 44 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml b/Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml
+> new file mode 100644
+> index 0000000..8396b0c
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml
+> @@ -0,0 +1,44 @@
+> +# SPDX-License-Identifier: (GPL-2.0-or-later OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/arm/msm/qcom,dcc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Data Capture and Compare
+> +
+> +maintainers:
+> +  - Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> +
+> +description: |
+> +    DCC (Data Capture and Compare) is a DMA engine which is used to save
+> +    configuration data or system memory contents during catastrophic failure
+> +    or SW trigger. DCC is used to capture and store data for debugging purpose
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,sm8150-dcc
+> +          - qcom,sc7280-dcc
+> +          - qcom,sc7180-dcc
+> +          - qcom,sdm845-dcc
+> +      - const: qcom,dcc
+> +
+> +  reg:
+> +    items:
+> +      - description: DCC base register region
+> +      - description: DCC RAM base register region
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    dma@10a2000{
+> +                compatible = "qcom,sm8150-dcc","qcom,dcc";
+> +                reg = <0x010a2000 0x1000>,
+> +                      <0x010ad000 0x2000>;
+> +    };
+> -- 
+> 2.7.4
+> 
