@@ -2,114 +2,213 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE39A5BB06F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 17:41:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA3185BB132
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 18:44:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229844AbiIPPlp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Sep 2022 11:41:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33638 "EHLO
+        id S229761AbiIPQn6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Sep 2022 12:43:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229633AbiIPPlk (ORCPT
+        with ESMTP id S229627AbiIPQn5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Sep 2022 11:41:40 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2182AF0C6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 08:41:30 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id l14so50314519eja.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 08:41:30 -0700 (PDT)
+        Fri, 16 Sep 2022 12:43:57 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73B936EF26
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 09:43:56 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id y17so45689169ejo.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 09:43:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=no7tB6bV0ki3w63AwdNBLJM9I4TS3ao6JAtYcR5QLHI=;
-        b=MkX1LmCiFNkymAw7/cm0E87wHSpBIjlKLh2pS+wk9Dx1VDw/5ZesX+dbkQhSYsvqas
-         DKO7XpcpcdTx5hf1VKi6ZKQjc7bk8rjqMLk9f1j7ksbv93kAt8IoBrMYVo6G/fvAWTtf
-         X7wnjvn0XVp6cO7wswwEv/wQTrqby7mtcFcwHCOtJvU8peajX9CMVPZ+9Ba0gVLRBSWq
-         XroAAGLgUm5F0tcH5ZKO2eOAXrfZO+3U7+xixHgt11WClddvAfNEsusNULrW0fD0v2SL
-         5VNyNtLRA3u7AsyVzVoMMwDs+sZIquTpDeitbCpNRSVwong/GPTVYgnGq9scPtP01Bke
-         E+uA==
+        d=kali.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date;
+        bh=4S8cX88Es8i3MLoJRyzbdun9gW08SUXlcQPWBMTUJws=;
+        b=Dhu8Yd5YFJ7SYZj6LWj8Gs7ewgUud/FLZ+qU+yCXOoRgB4taCZhQQluD5HFHGU2t3Y
+         dLqbKl1IbcFlPqv/1t+a2r5fVtTiQK1bsHD/VfKeHmPHSibWxqgjsaTYUb2nte1hnDnL
+         CkF3SK9NL7ybCPxYMnBZDEvL7CRx8frZCOloc2qrcMyl2TDsePEXZO6nkhmsuPnVMxIL
+         G6mBv3hV3Fxk0gbgGsWHYvTVJWpaC6BFzgKff7vWvp/Hy8R6wmCeJLCW836LST/CKlRJ
+         O9ZGk6ChkC67EAC9lmhAfv95mzwINSQGgFgVnMmd/r+k6sTG9VlGQlzMQeKLqFALzszt
+         9fjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=no7tB6bV0ki3w63AwdNBLJM9I4TS3ao6JAtYcR5QLHI=;
-        b=jUCYjpXLMk8WiGVUARAavhmgL/4EllHdE08bfob4PCpNgDWnk5UbMg4dqYtVrpV5bz
-         5fosOXD3krjzNsp133jo5TRaAW5++L51lOotC8akkYUaCYNaUYbVerLY+vFCahR4/rve
-         1P00qZq18JqCFQioKOQmBBm+DOFsWiG0bG4mApcolawlxQJIqrqRpkpYJcrhp/jIPaLY
-         fM3chXH2kS4LL4SADylh3eVg4De4lgcAlm2GsTjOE1is1pwVEYFwx2TINVs1aAVaGipe
-         PdVUHr/c1YIoMDhAg8swUW2kkCR3kPWD9J4aSELuWiv8dwhCWq0FOMeTYixp0y0uEiUm
-         KyFA==
-X-Gm-Message-State: ACrzQf1yI0QoEi4X1GH06bzPPKpK1EUic8FeG9hJbMy5WbNp0eKGOEVE
-        ASwzRoMAuJ3szMR8ngxqV+MlfQ==
-X-Google-Smtp-Source: AMsMyM4sDY5qZ/oOMrDS/0nBCG8jebVhHBkD1sEZ6NjuBfIhyE3Svh4iUuAcg4sWS4LsvubNN+6g9g==
-X-Received: by 2002:a17:907:2ccb:b0:77b:bdab:674a with SMTP id hg11-20020a1709072ccb00b0077bbdab674amr3998341ejc.241.1663342889922;
-        Fri, 16 Sep 2022 08:41:29 -0700 (PDT)
-Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id e10-20020a1709062c0a00b0073d638a7a89sm10567707ejh.99.2022.09.16.08.41.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Sep 2022 08:41:28 -0700 (PDT)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Ekansh Gupta <ekangupt@qti.qualcomm.com>,
-        Bharath Kumar <bkumar@qti.qualcomm.com>,
-        Himateja Reddy <hmreddy@quicinc.com>,
-        Anirudh Raghavendra <araghave@quicinc.com>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: [PATCH v4 9/9] misc: fastrpc: Add dma_mask to fastrpc_channel_ctx
-Date:   Fri, 16 Sep 2022 18:41:02 +0300
-Message-Id: <20220916154102.1768088-10-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220916154102.1768088-1-abel.vesa@linaro.org>
-References: <20220916154102.1768088-1-abel.vesa@linaro.org>
+        bh=4S8cX88Es8i3MLoJRyzbdun9gW08SUXlcQPWBMTUJws=;
+        b=xV0pSeNBAiX8ZLWq0STRFCm02+H1pqzgHMdpnCQds8EGVZUdtYiRyGp2CAI5yX0ib8
+         Tt2Va7EYVbaazcjGCpg4XSn3nRrpxNSqoUMmFRMsRxrcGRdx2tJuU90Eo/hfzYPk01iF
+         zwJ4Xnn8bVZNnzRjE+x0gNu70W/hXKBGe9MeJqR3/AHHiw5rbR3TgAK1I/l1MrGf3Qdx
+         4iMECVSPJOlRz5Iir3Mcx4az+d0h6ro9+u3k61ztAqZdTHzoV5ZeCnqo0gYNL4XVattn
+         V5fRg0UrBQDaMdhhdWluHwKV0kihq9d+/Ub5xlKtco6xzb4FUD9EA9U2aScwzQnAgWOU
+         0OBw==
+X-Gm-Message-State: ACrzQf3xpkWykSKOgGFz4MSG5Pwnc1BsNJvkgna7xqTXVLtij328Yua+
+        MBorC+LNvjDgzBf82T/+Rai42C7CG5PYj3GWKuzOvQ==
+X-Google-Smtp-Source: AMsMyM5YC0fOX0+qFcisQfW5zkv5GmlFTeL+5x7BQ+4b00bO2O4kl1QmoHdXrpt+RMqp6iXzlVdnoi46lgAeYw+Vkx8=
+X-Received: by 2002:a17:907:2706:b0:77a:4c0e:d37d with SMTP id
+ w6-20020a170907270600b0077a4c0ed37dmr4150793ejk.501.1663346635005; Fri, 16
+ Sep 2022 09:43:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220913085320.8577-1-johan+linaro@kernel.org>
+ <ca6a97c5-1abe-b215-0ff2-443f4ed9a25f@kali.org> <YyFuT9N0f8bg0epk@hovoldconsulting.com>
+In-Reply-To: <YyFuT9N0f8bg0epk@hovoldconsulting.com>
+From:   Steev Klimaszewski <steev@kali.org>
+Date:   Fri, 16 Sep 2022 11:43:43 -0500
+Message-ID: <CAKXuJqh4XeuA2TREPeGp+EGUk4mLWHS7H9qNj+r6MRByj7Qf2w@mail.gmail.com>
+Subject: Re: [PATCH v2 00/10] drm/msm: probe deferral fixes
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-dma_set_mask_and_coherent only updates the mask to which the device
-dma_mask pointer points to. Add a dma_mask to the channel ctx and set
-the device dma_mask to point to that, otherwise the dma_set_mask will
-return an error and the dma_set_coherent_mask will be skipped too.
+Hi Johan,
 
-Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/misc/fastrpc.c | 2 ++
- 1 file changed, 2 insertions(+)
+On Wed, Sep 14, 2022 at 1:01 AM Johan Hovold <johan@kernel.org> wrote:
+>
+> On Tue, Sep 13, 2022 at 03:23:10PM -0500, Steev Klimaszewski wrote:
+> > Hi Johan,
+> >
+> > On 9/13/22 3:53 AM, Johan Hovold wrote:
+> > > The MSM DRM driver is currently broken in multiple ways with respect =
+to
+> > > probe deferral. Not only does the driver currently fail to probe agai=
+n
+> > > after a late deferral, but due to a related use-after-free bug this a=
+lso
+> > > triggers NULL-pointer dereferences.
+>
+> > > In some cases, such has for the DP IRQ, the above situation can also =
+be
+> > > avoided by moving the allocation in question to the platform driver
+> > > probe (d0) or component bind (between d2 and d3). But as doing so is =
+not
+> > > a general fix, this can be done later as a cleanup/optimisation.
+>
+> > I've tested this on both sc8180x (Lenovo Flex 5G) and sdm850 (Lenovo
+> > Yoga C630), and both of them show the same issue:
+>
+> [ Copied the below from IRC instead as the formatting in your mail was
+> off. ]
+>
+> > [    7.449305] platform ae9a000.displayport-controller: Fixing up cycli=
+c dependency with ae01000.mdp
+> > [    7.454344] Unable to handle kernel NULL pointer dereference at virt=
+ual address 0000000000000008
+> > [    7.454406] Mem abort info:
+> > [    7.454423]   ESR =3D 0x0000000096000004
+> > [    7.454446]   EC =3D 0x25: DABT (current EL), IL =3D 32 bits
+> > [    7.454475]   SET =3D 0, FnV =3D 0
+> > [    7.454494]   EA =3D 0, S1PTW =3D 0
+> > [    7.454512]   FSC =3D 0x04: level 0 translation fault
+> > [    7.454539] Data abort info:
+> > [    7.454556]   ISV =3D 0, ISS =3D 0x00000004
+> > [    7.454577]   CM =3D 0, WnR =3D 0
+> > [    7.454595] user pgtable: 4k pages, 48-bit VAs, pgdp=3D0000000101504=
+000
+> > [    7.454629] [0000000000000008] pgd=3D0000000000000000, p4d=3D0000000=
+000000000
+> > [    7.454669] Internal error: Oops: 96000004 [#1] PREEMPT SMP
+> > [    7.454700] Modules linked in: i2c_hid_of i2c_hid leds_qcom_lpg led_=
+class_multicolor rtc_pm8xxx msm mdt_loader gpu_sched drm_dp_aux_bus drm_dis=
+play_helper drm_kms_helper drm phy_qcom_edp llcc_qcom i2c_qcom_geni phy_qco=
+m_qmp_combo phy_qcom_snps_femto_v2 phy_qcom_qmp_ufs phy_qcom_qmp_pcie ufs_q=
+com pwm_bl
+> > [    7.454860] CPU: 2 PID: 76 Comm: kworker/u16:2 Not tainted 5.19.0-rc=
+8-next-20220728 #26
+> > [    7.454902] Hardware name: LENOVO 82AK/LNVNB161216, BIOS EACN43WW(V1=
+.15) 09/13/2021
+> > [    7.454941] Workqueue: events_unbound deferred_probe_work_func
+> > [    7.454982] pstate: 40400005 (nZcv daif +PAN -UAO -TCO -DIT -SSBS BT=
+YPE=3D--)
+> > [    7.455020] pc : dp_display_request_irq+0x50/0xdc [msm]
+> > [    7.455145] lr : dp_display_request_irq+0x2c/0xdc [msm]
+> > [    7.455265] sp : ffff800008c1bb30
+> > [    7.455285] x29: ffff800008c1bb30 x28: 0000000000000000 x27: 0000000=
+000000000
+> > [    7.455327] x26: ffffc9c918420000 x25: ffffc9c9186ec570 x24: 0000000=
+00000003a
+> > [    7.455368] x23: ffffc9c918811d30 x22: ffff2a5806baa998 x21: ffff2a5=
+806ba3410
+> > [    7.455410] x20: ffff2a5806baa880 x19: ffff2a5806baa998 x18: fffffff=
+fffffffff
+> > [    7.455451] x17: 0000000000000038 x16: ffffc9c9164eeb24 x15: fffffff=
+fffffffff
+> > [    7.455492] x14: ffff2a5806bc3004 x13: ffff2a5806bc3000 x12: 0000000=
+000000000
+> > [    7.455533] x11: 0000000000000040 x10: ffffc9c918493080 x9 : ffffc9c=
+918493078
+> > [    7.455574] x8 : ffff2a5800681b88 x7 : 0000000000000000 x6 : ffff2a5=
+806baa880
+> > [    7.455616] x5 : ffffc9c8ca2de000 x4 : 0000000000080004 x3 : 0000000=
+000000000
+> > [    7.455656] x2 : ffffc9c8ca296000 x1 : 00000000000000a8 x0 : 0000000=
+000000000
+> > [    7.455698] Call trace:
+> > [    7.455714]  dp_display_request_irq+0x50/0xdc [msm]
+> > [    7.455834]  dp_display_probe+0xf8/0x4a4 [msm]
+> > [    7.455950]  platform_probe+0x6c/0xc4
+> > [    7.455976]  really_probe+0xbc/0x2d4
+> > [    7.455999]  __driver_probe_device+0x78/0xe0
+> > [    7.456025]  driver_probe_device+0x3c/0x13c
+> > [    7.456051]  __device_attach_driver+0xb8/0x120
+> > [    7.456077]  bus_for_each_drv+0x78/0xd0
+> > [    7.456105]  __device_attach+0x9c/0x1a0
+> > [    7.456129]  device_initial_probe+0x18/0x2c
+> > [    7.456154]  bus_probe_device+0x9c/0xa4
+> > [    7.456178]  deferred_probe_work_func+0x88/0xc0
+> > [    7.456204]  process_one_work+0x1d4/0x330
+> > [    7.456231]  worker_thread+0x70/0x42c
+> > [    7.456255]  kthread+0x10c/0x110
+> > [    7.456278]  ret_from_fork+0x10/0x20
+> > [    7.456306] Code: aa1403e6 f2a00104 f0000225 f0ffffe2 (f9400400)
+> > [    7.456341] ---[ end trace 0000000000000000 ]---
+>
+> > This is from the sc8180x, sdm850 is the same call stack, just with
+> > different addresses.
+> >
+> > I do have
+> > https://lore.kernel.org/all/20220712132258.671263-1-dmitry.baryshkov@li=
+naro.org/
+> > applied here which makes the 10th patch not apply cleanly.
+>
+> Yeah, that is expected. You need to drop Dmitry's series first. Once you
+> verified that this series works, you can add it back if you want but you
+> then need to restore the device pointer used when allocating the irq in
+> dp_display_request_irq():
+>
+> -       rc =3D devm_request_irq(dp_display->drm_dev->dev, dp->irq,
+> +       rc =3D devm_request_irq(&dp->pdev->dev, dp->irq,
+>
+> > It fails actually, but I applied it manually here.
+>
+> Please drop that series and give this one another spin.
+>
+> Johan
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index b45f1285317a..c39eae8b26c7 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -278,6 +278,7 @@ struct fastrpc_channel_ctx {
- 	struct list_head invoke_interrupted_mmaps;
- 	bool secure;
- 	bool unsigned_support;
-+	u64 dma_mask;
- };
- 
- struct fastrpc_device {
-@@ -2305,6 +2306,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 	kref_init(&data->refcount);
- 
- 	dev_set_drvdata(&rpdev->dev, data);
-+	rdev->dma_mask = &data->dma_mask;
- 	dma_set_mask_and_coherent(rdev, DMA_BIT_MASK(32));
- 	INIT_LIST_HEAD(&data->users);
- 	INIT_LIST_HEAD(&data->invoke_interrupted_mmaps);
--- 
-2.34.1
+I thought as much but wasn't sure.  Thanks for the clarification.
+With Dmitriy's patchset backed out, this series does work as expected.
 
+Tested-by: Steev Klimaszewski <steev@kali.org>
