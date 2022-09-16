@@ -2,130 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C8465BAF6D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 16:33:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69B0A5BAF7C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 16:38:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229987AbiIPOdR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Sep 2022 10:33:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59284 "EHLO
+        id S230265AbiIPOiz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Sep 2022 10:38:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229581AbiIPOdP (ORCPT
+        with ESMTP id S231328AbiIPOiq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Sep 2022 10:33:15 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23C4F51406
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 07:33:14 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id a8so35812417lff.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 07:33:14 -0700 (PDT)
+        Fri, 16 Sep 2022 10:38:46 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6192CB40EF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 07:38:45 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id dv25so49827721ejb.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Sep 2022 07:38:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=Lx24Uds/aZyeM8qKYq2BB6CYUmdujTPU+nzMzC+aNWY=;
-        b=we13Ci/14qECjFruSSClhB8FGy/6f76CLE9EzqfC+k470SWDtdmojUDnMlnkJho7Jd
-         uFabc1qkY+m8mdhzMio8a6pMnmdaxSOH+byWWMe6zc0nzUvYqY7gKauvy5kdn2wBE9oh
-         Bqp56TQEhSkE+JuE9P/MakjwP11fougKRphl1okSwP8x2ok9dcxb4C9pTmYII4d06d08
-         OzI8LQLrOpAKL+DuAAX6viBS1fqhahnJO+rAfq6fVLNvo16XqegUh2UCsDH2X/aAqFgd
-         UVb6f7zDfD6fupuwn4LTjkpWSdUU+FSongQq6SMIZU0h++aeYtVRU7/qoGDS4a7UFPnr
-         kA5A==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=2hekt6nHmDXb09svRYspIovCwUxYyIVHgZSXoQyIl+k=;
+        b=SFH1piZ1wl+dYjTFfiOzjwm5fI+/WSD0vBB9yBMmjrbolDnWC/6U9TVbGpDPit/0ES
+         UUWUzIMXDJswTFPpUSs2bQz1HKHAlff4k2OO982m7E2ogYAaAlCcz+v6pL6YXHn7JZ09
+         263HOyhB9k8djHzypKXBiHPWGswf9IMrrY0odun/7GVSrmRHrtorYPkfRwkXf79IOyhU
+         rsTJO7Kie/UsasSir2ML+YdjREDVgRnjk1VSA1ZA7xpfUu60Xu2CKXq5NELJHbDCB2To
+         IoR0qoMNN7IOJY031zmLjTFaKb1fNbBHf+e6M0wKl30ktbsDQdlx9EZwtUk9ydlQK7Qu
+         myEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=Lx24Uds/aZyeM8qKYq2BB6CYUmdujTPU+nzMzC+aNWY=;
-        b=DtjUZSn7jxuaY7X6i0J0CDSCylVHHV93OxGuNAO/sru2LBWFHl0195EjKVOmsXopX2
-         LxKwfmoKMzvuIs9pD7DGTfiGpTaX0jAwPFE9F2gHFC5xYV9YGO4H8eYZyMPKBAgrNjuO
-         gvHFwziF2fQT/JDgr7tvbp/KHRUeo9gnJRxAkJg2Uyt0qOkF/bSBJxzFcMvfbOTK3xfJ
-         qQysIbSkwslaF3hyeOoyjGjkeAEwB+NUqMM8jZEdqG85XKrtS9/g+G6zjeGEBS3bGe4t
-         pgugnIlrjEdye/+Zu+7qX0s8j6IKS9YaGug/S3rMKtTHK5fObVpP6JZ56RQYk0AjxjQm
-         PeEQ==
-X-Gm-Message-State: ACrzQf1w2DkUpma+1WAzAfvD3dpCAG4D3OQr8kMfzkLT7r5JqgBIuBRc
-        9voasIEc0QshzoLFJ6UmRjH/gw==
-X-Google-Smtp-Source: AMsMyM6y8UuySt2lK78RG21ORZ658Pel/HR6IBnTvCVXji1I98kE9vS4FKYKjkh/dV7zgPNLPPfenA==
-X-Received: by 2002:a05:6512:1312:b0:492:e14d:54d4 with SMTP id x18-20020a056512131200b00492e14d54d4mr1696949lfu.469.1663338792487;
-        Fri, 16 Sep 2022 07:33:12 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id j20-20020a056512345400b00493014c3d7csm3490136lfr.309.2022.09.16.07.33.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Sep 2022 07:33:12 -0700 (PDT)
-Message-ID: <13abadfe-65ef-d2d6-6c26-ab1f294d82bd@linaro.org>
-Date:   Fri, 16 Sep 2022 17:33:11 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.1
-Subject: Re: [PATCH 0/7] arm64: dts: qcom: msm8996: fixes for CPU and GPU OPP
- tables
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=2hekt6nHmDXb09svRYspIovCwUxYyIVHgZSXoQyIl+k=;
+        b=0DcO8tgO281fuS7esFSED5Lxgf1ppeo7VTc/dt+Dd4NUCC0U46gqoTKoBV7nwwfYDP
+         5bKmRS64sqCaf5zAEAaF4JhErPlPs+Dg3FqnmMNL8CiW/nJMyzdOVxFSPc7VjvK7DBIo
+         62ZqUN5Ol7FPAG7E0FAc2bqjraPe4lncnB8Oj0auB5AG5HSem0h02fjMQaTljp0jv/ql
+         L8EaFgxi1z/hUtHNQ+LrwE1BkKsGDmqMq2ODHE3xjVCxnKU8wmhanuQPiISF23775kr8
+         R+VdXsbfeZl5jozXLSesLQwBtsEllXr1slUP6uXZzQ9kDnaIFjje1NoNRzc8s0RHvf9g
+         MxsA==
+X-Gm-Message-State: ACrzQf2wHLBkDWA00skmRaPFJ0j96fCfzikcwJ7Pbv8C62cpeHQQttNl
+        8gmjMaBy3JZZXFvEbWiocaTDyg==
+X-Google-Smtp-Source: AMsMyM520XIqN6p3HKYAlwE92zHeNJJ+Fe5xeWMnuVrGvp0QrtwA4dQnKiX2weHwOi8VZ2B4Q7JoXw==
+X-Received: by 2002:a17:906:7944:b0:73c:838:ac3d with SMTP id l4-20020a170906794400b0073c0838ac3dmr3824004ejo.242.1663339123786;
+        Fri, 16 Sep 2022 07:38:43 -0700 (PDT)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id p21-20020a170906499500b0078082f95e5csm1393062eju.204.2022.09.16.07.38.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Sep 2022 07:38:41 -0700 (PDT)
+Date:   Fri, 16 Sep 2022 17:38:40 +0300
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Yassine Oudjana <yassine.oudjana@gmail.com>
-References: <20220724140421.1933004-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220724140421.1933004-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Ekansh Gupta <ekangupt@qti.qualcomm.com>,
+        Bharath Kumar <bkumar@qti.qualcomm.com>,
+        Himateja Reddy <hmreddy@quicinc.com>,
+        Anirudh Raghavendra <araghave@quicinc.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 08/10] misc: fastrpc: Safekeep mmaps on interrupted
+ invoke
+Message-ID: <YySKcI3dwv9b4ri0@linaro.org>
+References: <20220909133938.3518520-1-abel.vesa@linaro.org>
+ <20220909133938.3518520-9-abel.vesa@linaro.org>
+ <a71b5f36-8a81-3aa6-6aee-655878b5d4af@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a71b5f36-8a81-3aa6-6aee-655878b5d4af@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/07/2022 17:04, Dmitry Baryshkov wrote:
-> The commit 90173a954a22 ("arm64: dts: qcom: msm8996: Add CPU opps")
-> added CPU OPP tables to msm8996.dtsi. However it went unnoticed that
-> MSM8996 and MSM8996Pro have significant differences in the supported
-> CPU frequencies. Moreover, differences between various speed bins were
-> also not handled in the DT. Fix all these issues by splitting msm8996pro
-> and fixing different opp-supported-hw.
+On 22-09-16 13:58:35, Srinivas Kandagatla wrote:
 > 
-> Unlike previous attempts by Yassine Oudjana [1] [2], this patchset
-> doesn't require changing the cpufreq driver, keeping compatibility with
-> existing kernels (and thus easing backporting to stable kernels).
-> Yassine's patches were changed to keep compatibility.
 > 
-> While we are at it, also apply fixes to GPU OPP tables to acount for
-> small differences in supported frequencies.
-> 
-> [1] https://lore.kernel.org/linux-arm-msm/20220409035804.9192-1-y.oudjana@protonmail.com/
-> [2] https://lore.kernel.org/linux-arm-msm/20220416025637.83484-1-y.oudjana@protonmail.com/
-> 
-> Dmitry Baryshkov (5):
->    dt-bindings: arm: qcom: separate msm8996pro bindings
->    arm64: dts: qcom: msm8996: fix supported-hw in cpufreq OPP tables
->    arm64: dts: qcom: msm8996: add support for speed bin 3
->    arm64: dts: qcom: msm8996: fix GPU OPP table
->    arm64: dts: qcom: msm8996pro: expand Adreno OPP table
-> 
-> Yassine Oudjana (2):
->    arm64: dts: qcom: msm8996: Add MSM8996 Pro support
->    arm64: dts: qcom: msm8996-xiaomi-scorpio, natrium: Use MSM8996 Pro
-> 
->   .../devicetree/bindings/arm/qcom.yaml         |   5 +
->   arch/arm64/boot/dts/qcom/Makefile             |   4 +-
->   .../boot/dts/qcom/msm8996-xiaomi-common.dtsi  |   3 -
->   .../boot/dts/qcom/msm8996-xiaomi-gemini.dts   |   1 +
->   arch/arm64/boot/dts/qcom/msm8996.dtsi         | 112 ++++---
->   ...rium.dts => msm8996pro-xiaomi-natrium.dts} |   3 +-
->   ...rpio.dts => msm8996pro-xiaomi-scorpio.dts} |   3 +-
->   arch/arm64/boot/dts/qcom/msm8996pro.dtsi      | 291 ++++++++++++++++++
->   8 files changed, 369 insertions(+), 53 deletions(-)
->   rename arch/arm64/boot/dts/qcom/{msm8996-xiaomi-natrium.dts => msm8996pro-xiaomi-natrium.dts} (99%)
->   rename arch/arm64/boot/dts/qcom/{msm8996-xiaomi-scorpio.dts => msm8996pro-xiaomi-scorpio.dts} (99%)
->   create mode 100644 arch/arm64/boot/dts/qcom/msm8996pro.dtsi
+> On 09/09/2022 14:39, Abel Vesa wrote:
+> > If the userspace daemon is killed in the middle of an invoke (e.g.
+> > audiopd listerner invoke), we need to skip the unmapping on device
+> > release, otherwise the DSP will crash. So lets safekeep all the maps
+> > only if there is in invoke interrupted, by attaching them to the channel
+> > context (which is resident until RPMSG driver is removed), and free them
+> > on RPMSG driver remove.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >   drivers/misc/fastrpc.c | 15 +++++++++++++++
+> >   1 file changed, 15 insertions(+)
+> > 
+> > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> > index 6b2a552dbdba..bc1e8f003d7a 100644
+> > --- a/drivers/misc/fastrpc.c
+> > +++ b/drivers/misc/fastrpc.c
+> > @@ -275,6 +275,7 @@ struct fastrpc_channel_ctx {
+> >   	struct fastrpc_device *secure_fdevice;
+> >   	struct fastrpc_device *fdevice;
+> >   	struct fastrpc_buf *remote_heap;
+> > +	struct list_head invoke_interrupted_mmaps;
+> >   	bool secure;
+> >   	bool unsigned_support;
+> >   };
+> > @@ -1119,6 +1120,8 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
+> >   				   struct fastrpc_invoke_args *args)
+> >   {
+> >   	struct fastrpc_invoke_ctx *ctx = NULL;
+> > +	struct fastrpc_buf *buf, *b;
+> > +
+> >   	int err = 0;
+> >   	if (!fl->sctx)
+> > @@ -1182,6 +1185,13 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
+> >   		fastrpc_context_put(ctx);
+> >   	}
+> > +	if (err == -ERESTARTSYS) {
+> > +		list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
+> > +			list_del(&buf->node);
+> > +			list_add_tail(&buf->node, &fl->cctx->invoke_interrupted_mmaps);
+> > +		}
+> > +	}
+> > +
+> >   	if (err)
+> >   		dev_dbg(fl->sctx->dev, "Error: Invoke Failed %d\n", err);
+> > @@ -2277,6 +2287,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+> >   	dev_set_drvdata(&rpdev->dev, data);
+> >   	dma_set_mask_and_coherent(rdev, DMA_BIT_MASK(32));
+> >   	INIT_LIST_HEAD(&data->users);
+> > +	INIT_LIST_HEAD(&data->invoke_interrupted_mmaps);
+> >   	spin_lock_init(&data->lock);
+> >   	idr_init(&data->ctx_idr);
+> >   	data->domain_id = domain_id;
+> > @@ -2301,6 +2312,7 @@ static void fastrpc_notify_users(struct fastrpc_user *user)
+> >   static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
+> >   {
+> >   	struct fastrpc_channel_ctx *cctx = dev_get_drvdata(&rpdev->dev);
+> > +	struct fastrpc_buf *buf, *b;
+> >   	struct fastrpc_user *user;
+> >   	unsigned long flags;
+> > @@ -2315,6 +2327,9 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
+> >   	if (cctx->secure_fdevice)
+> >   		misc_deregister(&cctx->secure_fdevice->miscdev);
+> > +	list_for_each_entry_safe(buf, b, &cctx->invoke_interrupted_mmaps, node)
+> > +		list_del(&buf->node);
+> > +
+> When would you free these?
+> looks like we are leaking even after dsp is down..
+> Should we not do fastrpc_buf_free() here?
 
-Gracious ping. It would be nice to get CPU OPP tables sorted out.
+Yes, we should. I forgot to add it.
 
+Will send a new version.
 
--- 
-With best wishes
-Dmitry
+Thanks.
 
+> 
+> 
+> 
+> --srini
+> 
+> >   	if (cctx->remote_heap)
+> >   		fastrpc_buf_free(cctx->remote_heap);
