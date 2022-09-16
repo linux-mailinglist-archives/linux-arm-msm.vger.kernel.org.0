@@ -2,96 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8D015BA5FD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 06:40:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 688CF5BA6A1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 08:13:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229497AbiIPEke (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Sep 2022 00:40:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37976 "EHLO
+        id S229612AbiIPGNn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Sep 2022 02:13:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229735AbiIPEkd (ORCPT
+        with ESMTP id S229503AbiIPGNm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Sep 2022 00:40:33 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12E4B52804;
-        Thu, 15 Sep 2022 21:40:31 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 9A309B82394;
-        Fri, 16 Sep 2022 04:40:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB67C433C1;
-        Fri, 16 Sep 2022 04:40:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663303229;
-        bh=FxIIBNOiH+QYHDwcMlk7y0PQANGV3n3aMaOGnUbOzp4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=PwRb0rUL/sItWHKfdbaDVmHdVq+yL8xKQTP+kP0STMzgYni6v/8TAh56r6FdC9Yc/
-         wikzt+JjtI00As4SH6jquYn/vAiof5LlmfbJ3lyNhXNBU7UjB079DMQ2iAr7rle9J8
-         z6B8kh8A28c0+DUcVbCIL0aGSfEpb9oJIIO38pv4GeVkNv//bbBmEibQM0gDR1r52k
-         c/48Bvx4L3dkH9S0MzX1/RekZrV605Py3j7R3yt9dWY7jEKBc4iXnfOXdt0msj7jH2
-         NgKeuSbPDABg/81eLHIMANdmJ5nPcixkdBn8kUHJlG4P4zL9cTUZ4umsjeBIyg77Cq
-         4c9z2+tqn6pog==
-Date:   Fri, 16 Sep 2022 10:10:25 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v5 1/2] dt-bindings: spmi: Add qcom,bus-id
-Message-ID: <YyP+OXD5yPWBCkQb@matsya>
-References: <20220914165212.3705892-1-vkoul@kernel.org>
- <20220914165212.3705892-2-vkoul@kernel.org>
- <20220915095103.7qys3ixd6yyngkzs@krzk-bin>
- <20220915115955.GA986622-robh@kernel.org>
+        Fri, 16 Sep 2022 02:13:42 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD19BA1D70
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 23:13:40 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id j16so6893315lfg.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Sep 2022 23:13:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=Awmr0QCErYv1BU5SjkxuA6ZGqWBjWVg8QQSWtKwPoYg=;
+        b=aRT9MQIDp2Ol+EMuIzDcxKJdi3gYg8OGHmur/HnRKAL16NpEU/R6AkWSk+a1i55xHZ
+         RxOWdUrOf8VZjoOr7F6VQiRDlenVkfOxxltvGE42EY2Dwdi9AwNvdi5Jvm+K+Sf6lp9+
+         ikImSeoBmXchacYwK3K10Bp95zhbZvyH5pPDI6IJaCOxCeqKLLPUpu6UPW00Yn2IfctW
+         6wPAK9hsiShNNf8odm8vK5bdM66FMdVLBM+gYu0Xrd8eyu9HrnnC2BGzaHRNuMPGLIze
+         KSphHEM3dh/lUC76+UVY34/88Jtw3tgvJ/loRu9Dp8SICenPRf4yi/CfZ27eGt/1psT2
+         nuZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=Awmr0QCErYv1BU5SjkxuA6ZGqWBjWVg8QQSWtKwPoYg=;
+        b=AWNfc7jsGEBumvh5EE+WsCHAeeDiv8xWSyRa/0Dhd/0jju0lU7Jdlsd7CW36oLOqsF
+         KFtWy8wyWNj1BBKwn3akgWz36DlPZ5C8nzpUyhlKUQf6z6M3tWH6Be6Cp073O5o5NaxI
+         c0ibP0tS9/y0A+XtY/sY//zQbk4tl4spxFiFcLyNcqBCQ3seZzaluBD3cpDqFTEIafm3
+         EaspkuXNfyOl7k16SCsaG0b9I/wcCFHL/JqqtiSHgVcFHP4nyVaTImq7DXR8Phch+lCq
+         hU56Vyw12WL7blUtYIg/PC6qZjSOY39/EPM2P6vZ2XOjx4IbW6kxV+9K0AEMzMmfTsSo
+         Suhw==
+X-Gm-Message-State: ACrzQf17i6/jXawo4IzA6rRwF9EC680INKmiutlB2zrW2OMD1d5dWdOQ
+        M5FDAervAA4ZFddlGg/hI4OhqQ==
+X-Google-Smtp-Source: AMsMyM7hP7AoOeZCHJ5EbCv84R28TazXx46IvZ8z8s92sy6LdzJ1xuES43qio7lXg4M63/CRhYwutA==
+X-Received: by 2002:a05:6512:c1c:b0:499:acb9:5788 with SMTP id z28-20020a0565120c1c00b00499acb95788mr1073565lfu.347.1663308819093;
+        Thu, 15 Sep 2022 23:13:39 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id s9-20020a05651c048900b0026aca137046sm3474693ljc.120.2022.09.15.23.13.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Sep 2022 23:13:38 -0700 (PDT)
+Message-ID: <f2d374cb-49dc-27c7-081e-0f514cb4cdd8@linaro.org>
+Date:   Fri, 16 Sep 2022 09:13:37 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220915115955.GA986622-robh@kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.1
+Subject: Re: [PATCH v3 1/3] clk: asm9260: use new helper for fixed rate clock
+ creation
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-phy@lists.infradead.org, Johan Hovold <johan@kernel.org>
+References: <20220708135450.2845810-1-dmitry.baryshkov@linaro.org>
+ <20220708135450.2845810-2-dmitry.baryshkov@linaro.org>
+ <Yw2fRVsnkHYhcmSy@matsya>
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <Yw2fRVsnkHYhcmSy@matsya>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15-09-22, 06:59, Rob Herring wrote:
-> On Thu, Sep 15, 2022 at 10:51:03AM +0100, Krzysztof Kozlowski wrote:
-> > On Wed, 14 Sep 2022 22:22:11 +0530, Vinod Koul wrote:
-> > > For PMIC arbiter version 7 and beyond we need to define if we are using
-> > > primary or secondary bus, so add a new property of qcom,bus-id
-> > > 
-> > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > > Acked-by: Rob Herring <robh@kernel.org>
-> > > ---
-> > >  .../devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml   | 10 ++++++++++
-> > >  1 file changed, 10 insertions(+)
-> > > 
-> > 
-> > My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> > on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> > 
-> > yamllint warnings/errors:
-> > 
-> > dtschema/dtc warnings/errors:
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/st,stm32-dmamux.example.dtb: dma-router@40020800: dma-masters:0: [4294967295, 4294967295] is too long
-> > 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/st,stm32-dmamux.yaml
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/st,stm32-dmamux.example.dtb: dma-router@40020800: Unevaluated properties are not allowed ('dma-channels', 'dma-masters', 'dma-requests' were unexpected)
-> > 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/st,stm32-dmamux.yaml
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/st,stm32-dmamux.example.dtb: dma-router@40020800: dma-masters:0: [4294967295, 4294967295] is too long
-> > 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/dma-router.yaml
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/renesas,rzn1-dmamux.example.dtb: dma-router@a0: dma-masters:0: [4294967295, 4294967295] is too long
-> > 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/dma-router.yaml
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/renesas,rzn1-dmamux.example.dtb: dma-router@a0: dma-masters:0: [4294967295, 4294967295] is too long
-> > 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/dma/renesas,rzn1-dmamux.yaml
+On 30/08/2022 08:25, Vinod Koul wrote:
+> On 08-07-22, 16:54, Dmitry Baryshkov wrote:
+>> The __clk_hw_register_fixed_rate() is an internal API, which is better
+>> not to be called directly. Add new helper to create fixed rate clocks
+>> using parent clock accuracy.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/clk/clk-asm9260.c    |  6 ++----
+>>   include/linux/clk-provider.h | 14 ++++++++++++++
+>>   2 files changed, 16 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/clk/clk-asm9260.c b/drivers/clk/clk-asm9260.c
+>> index bacebd457e6f..0609b661ff5a 100644
+>> --- a/drivers/clk/clk-asm9260.c
+>> +++ b/drivers/clk/clk-asm9260.c
+>> @@ -276,10 +276,8 @@ static void __init asm9260_acc_init(struct device_node *np)
+>>   
+>>   	/* TODO: Convert to DT parent scheme */
+>>   	ref_clk = of_clk_get_parent_name(np, 0);
+>> -	hw = __clk_hw_register_fixed_rate(NULL, NULL, pll_clk,
+>> -			ref_clk, NULL, NULL, 0, rate, 0,
+>> -			CLK_FIXED_RATE_PARENT_ACCURACY);
+>> -
+>> +	hw = clk_hw_register_fixed_rate_parent_accuracy(NULL, pll_clk, ref_clk,
+>> +							0, rate);
 > 
-> Ignore this. Unrelated.
+> Should this not be described in DT instead, resolve the todo :-)
+> 
 
-Right!
+I wanted to abstain from changing the asm9260 too much, but probably 
+we'd have to do that.
+
+>>   	if (IS_ERR(hw))
+>>   		panic("%pOFn: can't register REFCLK. Check DT!", np);
+>>   
+>> diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
+>> index 72d937c03a3e..659ef5a77246 100644
+>> --- a/include/linux/clk-provider.h
+>> +++ b/include/linux/clk-provider.h
+>> @@ -439,6 +439,20 @@ struct clk *clk_register_fixed_rate(struct device *dev, const char *name,
+>>   	__clk_hw_register_fixed_rate((dev), NULL, (name), NULL, NULL,	      \
+>>   				     (parent_data), NULL, (flags),	      \
+>>   				     (fixed_rate), (fixed_accuracy), 0)
+>> +/**
+>> + * clk_hw_register_fixed_rate_parent_accuracy - register fixed-rate clock with
+>> + * the clock framework
+>> + * @dev: device that is registering this clock
+>> + * @name: name of this clock
+>> + * @parent_name: name of clock's parent
+>> + * @flags: framework-specific flags
+>> + * @fixed_rate: non-adjustable clock rate
+>> + */
+>> +#define clk_hw_register_fixed_rate_parent_accuracy(dev, name, parent_name,    \
+>> +						   flags, fixed_rate)	      \
+>> +	__clk_hw_register_fixed_rate((dev), NULL, (name), (parent_name),      \
+>> +				     NULL, NULL, (flags), (fixed_rate), 0,    \
+>> +				     CLK_FIXED_RATE_PARENT_ACCURACY)
+>>   
+>>   void clk_unregister_fixed_rate(struct clk *clk);
+>>   void clk_hw_unregister_fixed_rate(struct clk_hw *hw);
+>> -- 
+>> 2.35.1
+> 
 
 -- 
-~Vinod
+With best wishes
+Dmitry
+
