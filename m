@@ -2,67 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 309135BA882
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 10:48:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F5AA5BA892
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Sep 2022 10:52:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230269AbiIPIsK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Sep 2022 04:48:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52470 "EHLO
+        id S230454AbiIPIvX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Sep 2022 04:51:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230195AbiIPIsI (ORCPT
+        with ESMTP id S229768AbiIPIvV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Sep 2022 04:48:08 -0400
+        Fri, 16 Sep 2022 04:51:21 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B06194C635;
-        Fri, 16 Sep 2022 01:48:07 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADB21A8322;
+        Fri, 16 Sep 2022 01:51:20 -0700 (PDT)
 Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28G4RQKD008662;
-        Fri, 16 Sep 2022 08:48:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=BU9xiPtQh06aalOlVgaBQjQ1rGmIDxLbjWVT4cZPAMY=;
- b=L+MtZ/hX13mhImTqEGvB+mrWBQoaURx5Fp5hU6ZVaaeAnoEeDSs0iUi8Hk21t3hs3+Ub
- eXmHzUijqVjBeN95d6bw7MDoqK9R4FZBg8iJEwvE1DKPNCWpnx1yHuIPttsu5AyEPwLo
- GAwscZkvRpAnai4O5h4AtczMF03VcNZXhH10uQvYm1gyibYDpA1EDmWMRuC1SvRABvkW
- 3k5GfpDcmCXohPxG7Jz0gxpN8s65TiUuL8LmXBa6nb3M8MA8BGXkre25HsqA1VLkZq8k
- 9Sn0dV+yyAsmtuL/um2CWzR79U17Nfxpl0JeAZoyBYyeCY9AYjvuNj7i9GmiULtvJ8Cv 7w== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jm950tg9m-1
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28G2khaD032252;
+        Fri, 16 Sep 2022 08:51:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=ufBZ4ZV+rEI7Jo3fqQwvX2Th9UPMaNXZvhMHLXsYn40=;
+ b=RxF4RYL/q2iIujq+MmFld6rdQbvPBWqLs9lTD7WMzdi7ZpWpOosc3EALK9N+r77tg2f4
+ hFJZIcPfVAZl89YgIj5LYNqPWpzbARhr9rFRCTzqjzvueg/SCALJxZCk5YKT8YZD/7kr
+ ria/2VP6SqKGpgifYlglkzMwSUnMmJgLok7rswNDfM2yI+Nw26p3ueB1s1JkVDuUruy8
+ m73pwDl1ehiW0o5Zgv7m49Yf2ur2MnKqQCe3Bpw2R6UIDWEnZkIjSiO6zHUwJT28KI6C
+ JpnYm65m2uDQQPf2k6vjllbqc7l6HS1vy6Xm6EsqNLoDXaP3E1jghINsg3nKrHLGBn5+ 1A== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jm950tgf8-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 16 Sep 2022 08:48:06 +0000
-Received: from nasanex01c.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28G8m5Q7007992
+        Fri, 16 Sep 2022 08:51:07 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28G8p67X026278
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 16 Sep 2022 08:48:06 GMT
-Received: from [10.216.40.140] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Fri, 16 Sep
- 2022 01:48:03 -0700
-Message-ID: <1cc9acbd-1576-ab2b-c51f-d2ab70cb1a45@quicinc.com>
-Date:   Fri, 16 Sep 2022 14:17:59 +0530
+        Fri, 16 Sep 2022 08:51:06 GMT
+Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Fri, 16 Sep 2022 01:51:02 -0700
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>
+CC:     <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        "Sai Prakash Ranjan" <quic_saipraka@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>, <vkoul@kernel.org>,
+        "Souradeep Chowdhury" <quic_schowdhu@quicinc.com>
+Subject: [PATCH V11 0/7]soc: qcom: dcc: Add driver support for Data Capture and Compare unit(DCC)
+Date:   Fri, 16 Sep 2022 14:20:12 +0530
+Message-ID: <cover.1663313821.git.quic_schowdhu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH v4] remoteproc: core: do pm relax when in RPROC_OFFLINE
-Content-Language: en-US
-To:     Maria Yu <quic_aiquny@quicinc.com>, <mathieu.poirier@linaro.org>
-CC:     <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_clew@quicinc.com>
-References: <128dc161-8949-1146-bf8b-310aa33c06a8@quicinc.com>
- <1663312351-28476-1-git-send-email-quic_aiquny@quicinc.com>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <1663312351-28476-1-git-send-email-quic_aiquny@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: TOP5r6r3Vmb0d0EgmGfQjUx2GTM31Nv-
-X-Proofpoint-ORIG-GUID: TOP5r6r3Vmb0d0EgmGfQjUx2GTM31Nv-
+X-Proofpoint-GUID: y7nQIarorPaNKVmHCYglc7MpFJ95czaP
+X-Proofpoint-ORIG-GUID: y7nQIarorPaNKVmHCYglc7MpFJ95czaP
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
  definitions=2022-09-16_04,2022-09-14_04,2022-06-22_01
@@ -70,58 +69,153 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscor
  impostorscore=0 malwarescore=0 adultscore=0 mlxscore=0 mlxlogscore=999
  priorityscore=1501 spamscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2209130000
- definitions=main-2209160064
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+ definitions=main-2209160065
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+DCC(Data Capture and Compare) is a DMA engine designed for debugging purposes.
+In case of a system crash or manual software triggers by the user the DCC hardware
+stores the value at the register addresses which can be used for debugging purposes.
+The DCC driver provides the user with debugfs interface to configure the register
+addresses. The options that the DCC hardware provides include reading from registers,
+writing to registers, first reading and then writing to registers and looping
+through the values of the same register.
 
-On 9/16/2022 12:42 PM, Maria Yu wrote:
-> RPROC_OFFLINE state indicate there is no recovery process
-> is in progress and no chance to do the pm_relax.
-> Because when recovering from crash, rproc->lock is held and
-> state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
-> and then unlock rproc->lock.
-> When the state is in RPROC_OFFLINE it means separate request
-> of rproc_stop was done and no need to hold the wakeup source
-> in crash handler to recover any more.
-> 
-> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
-> ---
->   drivers/remoteproc/remoteproc_core.c | 11 +++++++++++
->   1 file changed, 11 insertions(+)
-> 
-> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-> index e5279ed9a8d7..6bc7b8b7d01e 100644
-> --- a/drivers/remoteproc/remoteproc_core.c
-> +++ b/drivers/remoteproc/remoteproc_core.c
-> @@ -1956,6 +1956,17 @@ static void rproc_crash_handler_work(struct work_struct *work)
->   	if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE) {
->   		/* handle only the first crash detected */
->   		mutex_unlock(&rproc->lock);
-> +		/*
-> +		 * RPROC_OFFLINE state indicate there is no recovery process
-> +		 * is in progress and no chance to have pm_relax in place.
-> +		 * Because when recovering from crash, rproc->lock is held and
-> +		 * state is RPROC_CRASHED -> RPROC_OFFLINE -> RPROC_RUNNING,
-> +		 * and then unlock rproc->lock.
-> +		 * RPROC_OFFLINE is only an intermediate state in recovery
-> +		 * process.
-> +		 */
-> +		if (rproc->state == RPROC_OFFLINE)
-> +			pm_relax(rproc->dev.parent);
+In certain cases a register write needs to be executed for accessing the rest of the
+registers, also the user might want to record the changing values of a register with
+time for which he has the option to use the loop feature.
 
+The options mentioned above are exposed to the user by debugfs files once the driver
+is probed. The details and usage of this debugfs files are documented in
+Documentation/ABI/testing/debugfs-driver-dcc.
 
-LGTM.
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+As an example let us consider a couple of debug scenarios where DCC has been proved to be
+effective for debugging purposes:-
 
--Mukesh
->   		return;
->   	}
->   
+i)TimeStamp Related Issue
+
+On SC7180, there was a coresight timestamp issue where it would occasionally be all 0
+instead of proper timestamp values.
+
+Proper timestamp:
+Idx:3373; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x13004d8f5b7aa; CC=0x9e
+
+Zero timestamp:
+Idx:3387; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x0; CC=0xa2
+
+Now this is a non-fatal issue and doesn't need a system reset, but still needs
+to be rootcaused and fixed for those who do care about coresight etm traces.
+Since this is a timestamp issue, we would be looking for any timestamp related
+clocks and such.
+
+We get all the clk register details from IP documentation and configure it
+via DCC config_read debugfs node. Before that we set the current linked list.
+
+/* Program the linked list with the addresses */
+echo R 0x10c004 > /sys/kernel/debug/dcc/../3/config
+echo R 0x10c008 > /sys/kernel/debug/dcc/../3/config
+echo R 0x10c00c > /sys/kernel/debug/dcc/../3/config
+echo R 0x10c010 > /sys/kernel/debug/dcc/../3/config
+..... and so on for other timestamp related clk registers
+
+/* Other way of specifying is in "addr len" pair, in below case it
+specifies to capture 4 words starting 0x10C004 */
+
+echo R 0x10C004 4 > /sys/kernel/debug/dcc/../3/config_read
+
+/* Enable DCC */
+echo 1 > /sys/kernel/debug/dcc/../3/enable
+
+/* Run the timestamp test for working case */
+
+/* Send SW trigger */
+echo 1 > /sys/kernel/debug/dcc/../trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram1.bin
+
+/* Run the timestamp test for non-working case */
+
+/* Send SW trigger */
+echo 1 > /sys/kernel/debug/dcc/../trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram2.bin
+
+Get the parser from [1] and checkout the latest branch.
+
+/* Parse the SRAM bin */
+python dcc_parser.py -s dcc_sram1.bin --v2 -o output/
+python dcc_parser.py -s dcc_sram2.bin --v2 -o output/
+
+Sample parsed output of dcc_sram1.bin:
+
+<hwioDump version="1">
+        <timestamp>03/14/21</timestamp>
+            <generator>Linux DCC Parser</generator>
+                <chip name="None" version="None">
+                <register address="0x0010c004" value="0x80000000" />
+                <register address="0x0010c008" value="0x00000008" />
+                <register address="0x0010c00c" value="0x80004220" />
+                <register address="0x0010c010" value="0x80000000" />
+            </chip>
+    <next_ll_offset>next_ll_offset : 0x1c </next_ll_offset>
+</hwioDump>
+
+ii)NOC register errors
+
+A particular class of registers called NOC which are functional registers was reporting
+errors while logging the values.To trace these errors the DCC has been used effectively.
+The steps followed were similar to the ones mentioned above.
+In addition to NOC registers a few other dependent registers were configured in DCC to
+monitor it's values during a crash. A look at the dependent register values revealed that
+the crash was happening due to a secured access to one of these dependent registers.
+All these debugging activity and finding the root cause was achieved using DCC.
+
+DCC parser is available at the following open source location
+
+https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools/tree/dcc_parser
+
+Changes in V11
+
+*Fixed the checkpatch error in v10 of the patch.
+
+Souradeep Chowdhury (7):
+  dt-bindings: Added the yaml bindings for DCC
+  soc: qcom: dcc:Add driver support for Data Capture and Compare
+    unit(DCC)
+  MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
+    support
+  arm64: dts: qcom: sm8150: Add Data Capture and Compare(DCC) support
+    node
+  arm64: dts: qcom: sc7280: Add Data Capture and Compare(DCC) support
+    node
+  arm64: dts: qcom: sc7180: Add Data Capture and Compare(DCC) support
+    node
+  arm64: dts: qcom: sdm845: Add Data Capture and Compare(DCC) support
+    node
+
+ Documentation/ABI/testing/debugfs-driver-dcc       |   98 ++
+ .../devicetree/bindings/arm/msm/qcom,dcc.yaml      |   44 +
+ MAINTAINERS                                        |    8 +
+ arch/arm64/boot/dts/qcom/sc7180.dtsi               |    6 +
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |    6 +
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               |    6 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               |    6 +
+ drivers/soc/qcom/Kconfig                           |    8 +
+ drivers/soc/qcom/Makefile                          |    1 +
+ drivers/soc/qcom/dcc.c                             | 1341 ++++++++++++++++++++
+ 10 files changed, 1524 insertions(+)
+ create mode 100644 Documentation/ABI/testing/debugfs-driver-dcc
+ create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml
+ create mode 100644 drivers/soc/qcom/dcc.c
+
+--
+2.7.4
+
