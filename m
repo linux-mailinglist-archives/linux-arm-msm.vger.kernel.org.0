@@ -2,74 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 53D675BB976
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Sep 2022 18:39:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4F935BB9A8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Sep 2022 19:03:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229539AbiIQQjF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Sep 2022 12:39:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37344 "EHLO
+        id S229458AbiIQRDc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Sep 2022 13:03:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229550AbiIQQjD (ORCPT
+        with ESMTP id S229593AbiIQRDb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Sep 2022 12:39:03 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AC2D2ED7D
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Sep 2022 09:39:01 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id c7so17868652ljm.12
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Sep 2022 09:39:01 -0700 (PDT)
+        Sat, 17 Sep 2022 13:03:31 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAA682CE07
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Sep 2022 10:03:30 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id f14so39392325lfg.5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Sep 2022 10:03:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=jv8GEPaOzA51HS42MLvcalei0LdzBjeg8X2ynLQXFTo=;
-        b=heonmGT9UlfLGrV2gjcSr8TGX3oHDqHdGhNOLL9xAzFdmqQMLLaaaOOR3Q5FaviTh5
-         9xQtvr17nJFnShfA1FCAQ/VTl0WF4Lgxx+68mnZgfqOaL8CCKch/U3GKVHgdKIwlXkf6
-         cEbbW5GluXUGX6/56iNExCxQKKzWvQF6SAf9pIjC15cPu2yM4KPo1xKNzoiBtAr1TaRb
-         fuDuues6pjvf/bqrhArFzj6C6IrlwZowWKHPEsOvgDxxRurcvTKgQGm0Vtqw2gH05jV3
-         IY6b2LyLW9Fh58UFuBx7jzVZeZ614WPmLsnGQes9dOUDMMI4xVu1lrEp/1CYsBAmvNa2
-         +fPQ==
+        bh=CNlP4WjQ5gD2dVZdm851YFALcjCKHtccpYUpR8J49Z4=;
+        b=DfnUDIDLdqg6CeGSnomPiIyWPl9FGL/z455mP7Ly354UMsEwXqUKDKNMZTgG8qHPNL
+         iYgOdL6YvessQlDBOFRxqA4bb52EMcOfI7IjvDpiKNGcCgell5vLizFbrqkTxA6LAmpN
+         qunDNkWcVGUT239u2rrhYWET0wfCLC6hpQfu40QpY05Jn2N8W5oMsUNDpd172nBVbxQQ
+         sSZBNH6QGp/r4D11puhNqSYCnilEK3vW7hgZdg5B8+snXYHDuq86Oa2l4r+0idQ5uRVt
+         c0HOzShWNXIGDjGn1duIXbU1UpvEFx1ELV3bpMNem8ZLM0VCr/KoCLahPTxP8BA7nqmX
+         mXCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=jv8GEPaOzA51HS42MLvcalei0LdzBjeg8X2ynLQXFTo=;
-        b=0u8cSwVpHlag+Vo1lanCD1cF15RCQdyP8/u6vScoAcLbDlcTH9YH5FwiRpJ7dwmDL5
-         WqeH/zdKI0t09becVUNWTI1GW3bPDVi6wJOq8qwwP3kq8J4Vsh9altij3QqU3aojraEN
-         2FTyGTt1obXHJmdaS1gnC4TMqZHKKbo6Iz1QkO2RN4PzTtG2thnnhm8Ye7Pl5zH1j+Se
-         31q+LIZT/xADowLPInbXrZVqAUtgGvR3a6KW5fZaZdIpaYrvYDR/tAUOtgQslKYazVDu
-         zCF3lJvNMoIyXlJ9P6Y9Jyxa/wa8z9eTNZq02PJFFqPNNhIuz4aYdlXHagNjnBvdhpc6
-         LjYw==
-X-Gm-Message-State: ACrzQf2vmJWFJZnbv6Hnz22Jri/+n2XHFD0lOLREuu28AxmPu00T6JKM
-        XnOuADYzsclCdf3br9eRcqDIDA==
-X-Google-Smtp-Source: AMsMyM7IFRyWB0vbDFXPb7MWxW0iXecCmHjk4Yuy4bpxirZcEDAPPXFBXhO44aAlWeu47VI1U9hSiw==
-X-Received: by 2002:a2e:b16f:0:b0:26a:c77f:9f49 with SMTP id a15-20020a2eb16f000000b0026ac77f9f49mr2978803ljm.112.1663432739465;
-        Sat, 17 Sep 2022 09:38:59 -0700 (PDT)
+        bh=CNlP4WjQ5gD2dVZdm851YFALcjCKHtccpYUpR8J49Z4=;
+        b=znh+131r7Ay4S3pcTFxs3ceSLzFkus4pm6d62bhK0hUq0OLTqfar3dHYEeRvcQqBK0
+         5dBIhJZpJw2ts2UXVXlG+DOD7C1y+EwhT8l9pm+7Tn71uFazN+WcDOWJXMSzdWoXsBWa
+         pvlp79L7xA2PFakce/wPV2M1S7gyQteb7hbXB/lJHoNq4SKyp6IWxcWD9/8NG0QfPtaZ
+         PQ0T8Z+nHvkMHvUhLSwdhB532lB1jb+pTe3vuYP9dfb227CxcSzZp71grCGxNOWq+S3d
+         6lILvjQxsnGiNFLIibF9ZWvmOswoIhwi0sOFkgCjj5VndKq2agIwGWydRe7ehXSOXniV
+         u/DA==
+X-Gm-Message-State: ACrzQf2ENIJY/OiXB+UxrtKK+H/17fcRDS/F7bge666g3UO8UxQH07cT
+        QYFczBseXYsPnXbHDoMClh1uGg==
+X-Google-Smtp-Source: AMsMyM6yCCGGK54OXLJ5OP/agtg//cmMTA3Jc3j8bIg9aGqi9wiv0UUto5VjD5mRdOjt7u8CLVTYig==
+X-Received: by 2002:a05:6512:230f:b0:499:dcd:2fd2 with SMTP id o15-20020a056512230f00b004990dcd2fd2mr3715968lfu.677.1663434209040;
+        Sat, 17 Sep 2022 10:03:29 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id 28-20020ac25f5c000000b004998d9ccb62sm3802898lfz.99.2022.09.17.09.38.58
+        by smtp.gmail.com with ESMTPSA id z1-20020a05651c11c100b0026c3975f488sm951701ljo.26.2022.09.17.10.03.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 17 Sep 2022 09:38:58 -0700 (PDT)
-Message-ID: <31c979ea-88eb-8ac1-7433-607fd8202c1d@linaro.org>
-Date:   Sat, 17 Sep 2022 17:38:58 +0100
+        Sat, 17 Sep 2022 10:03:28 -0700 (PDT)
+Message-ID: <1641e41c-08c7-859b-644a-28d966fb00f3@linaro.org>
+Date:   Sat, 17 Sep 2022 18:03:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
-Subject: Re: [PATCH] dt-bindings: input: qcom,pm8xxx-vib: convert to yaml
+Subject: Re: [PATCH v2 1/7] dt-bindings: msm/dp: Add SDM845 and SC8280XP
+ compatibles
 Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-input@vger.kernel.org, devicetree@vger.kernel.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20220917155705.2284-1-luca@z3ntu.xyz>
+References: <20220916200028.25009-1-quic_bjorande@quicinc.com>
+ <20220916200028.25009-2-quic_bjorande@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220917155705.2284-1-luca@z3ntu.xyz>
+In-Reply-To: <20220916200028.25009-2-quic_bjorande@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,15 +86,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/09/2022 16:57, Luca Weiss wrote:
-> Convert the PM8xxx PMIC Vibrator bindings to dt-schema.
+On 16/09/2022 21:00, Bjorn Andersson wrote:
+> From: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
+> Add compatibles for the DisplayPort and Embedded DisplayPort blocks in
+> Qualcomm SDM845 and SC8280XP platforms.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 
+No need for quicinc SoB (unless you also take ownership).
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\
 
 
 Best regards,
