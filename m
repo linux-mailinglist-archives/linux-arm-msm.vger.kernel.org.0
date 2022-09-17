@@ -2,139 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D4B385BB938
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Sep 2022 17:57:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 946E65BB95D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Sep 2022 18:29:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229519AbiIQP5r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Sep 2022 11:57:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52874 "EHLO
+        id S229568AbiIQQ3W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Sep 2022 12:29:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbiIQP5q (ORCPT
+        with ESMTP id S229492AbiIQQ3U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Sep 2022 11:57:46 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 115F32EF28;
-        Sat, 17 Sep 2022 08:57:46 -0700 (PDT)
-Received: from g550jk.fritz.box (212095005231.public.telering.at [212.95.5.231])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id BB0A3C7077;
-        Sat, 17 Sep 2022 15:57:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1663430234; bh=Q90aA1AKKYZDDkkzaHwQIaLHhrdPXOZzAV5knNGK7Jc=;
-        h=From:To:Cc:Subject:Date;
-        b=mGXAZpTlXg+XhikM1/90ixBebnjRCxoqL866paNid0lTKF4qV08lNm8tcNcET8t2i
-         cnj9fSxxMgguX4mqQN9NWVOHAnt4YlrMLXdlszdD5eJtX9FPhH9BuuRuBgMn3QUCoK
-         FM9eDjxkXhtLAlC60qxHYSBg2ScqulFBeZgT1o/k=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-input@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] dt-bindings: input: qcom,pm8xxx-vib: convert to yaml
-Date:   Sat, 17 Sep 2022 17:57:00 +0200
-Message-Id: <20220917155705.2284-1-luca@z3ntu.xyz>
-X-Mailer: git-send-email 2.37.3
+        Sat, 17 Sep 2022 12:29:20 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F03A2E686
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Sep 2022 09:29:19 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id l9so2682807lji.4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Sep 2022 09:29:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=7tB9EZTG3PEkklzL2kk8X5WIzx34pekk02vFSwaGxV4=;
+        b=wd6ibdnEHUqCrWmvAEMpeCyL/cGqIGhk6hVuA08svRYV/JYMUluTuGLA8QNrVoTn9J
+         TpgwfoFvfeqSnhToQ1bAg7hZ+fMoEDhJIHjKICMEN96TJB85fLVKej6ZJmQ6AYooW8/j
+         S+YT7tI4orbAlGCl+9xGglUZ2OuqbpxjLIIzDXnOdS4RAcfJN9Q1xTvi0Co8OIunCUQb
+         WjBdM41ERWLKOe2iyWxP6I33LNgoa9kAANIIG4AevCVgq7jocc7kfwXeI+Orz86l4g+W
+         N6mQXlLGmCwYaaZQhTx4fCYUSt7pGtGlvB1nZRB9u0wTvTdGr+GCSouAhSIcLqb2AouF
+         f6bQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=7tB9EZTG3PEkklzL2kk8X5WIzx34pekk02vFSwaGxV4=;
+        b=VkIFNUDvwpA9VTq7DnlYGGkl/ha0zxc+Hc1m+ZzmdAHLQ3YuXKxn/Uv74/0pMuh+X9
+         J+yDVuEUqgJwG3huRY6ZzMKEbmq1iOi2U9C9E7YVzGXmmeUSjSQB+fMqJwoZIWuoqxzP
+         csg2PuUxzFHCdTbBjIpkrYZcfH5G9qfAqq3GgKtV6SU0k4EZ14K2lsRrf/OETdDwn6K1
+         rsNWFoxUSNf9J1Z4XqggMaV7XRyJ7RLCZvIkws5ioQa/S2Bh/skia0u7boHehCRCN7wa
+         sShYRB8RLhSssptlNEkRw0uxsR9iwwLLSIGdqsFO3L+KBLkMlG/SSUtNEHk4qohJnz6u
+         5cWQ==
+X-Gm-Message-State: ACrzQf2epK6IRxbjMQoT8Uhew2jijJIEVENycF5dUVX4cX6cuVLZYCZY
+        1fv0p7+qE1iBa1fYiFiwBmxlCGNTar7zbuQc
+X-Google-Smtp-Source: AMsMyM4A+YO8CUScLEMBn5p9Mna/jYFF+iZiZoMR2ircNNLP0g0nQYs/UlMVskMwixTvLFTg9gV/BA==
+X-Received: by 2002:a2e:bc84:0:b0:26c:3bee:575f with SMTP id h4-20020a2ebc84000000b0026c3bee575fmr2166257ljf.389.1663432158251;
+        Sat, 17 Sep 2022 09:29:18 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id s15-20020a056512202f00b0048b003c4bf7sm4170665lfs.169.2022.09.17.09.29.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 17 Sep 2022 09:29:17 -0700 (PDT)
+Message-ID: <4ab42192-1447-a178-4667-507351bbffd1@linaro.org>
+Date:   Sat, 17 Sep 2022 17:29:16 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        FROM_SUSPICIOUS_NTLD_FP,SPF_HELO_NONE,SPF_PASS,T_PDS_OTHER_BAD_TLD,
-        URIBL_BLACK autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: **
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH 1/6] dt-bindings: firmware: document Qualcomm SC8180x SCM
+Content-Language: en-US
+To:     Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220916121204.3880182-1-vkoul@kernel.org>
+ <20220916121204.3880182-2-vkoul@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220916121204.3880182-2-vkoul@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the PM8xxx PMIC Vibrator bindings to dt-schema.
+On 16/09/2022 13:11, Vinod Koul wrote:
+> Document the compatible for Qualcomm SC8180x SCM
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
- .../bindings/input/qcom,pm8xxx-vib.txt        | 23 -----------
- .../bindings/input/qcom,pm8xxx-vib.yaml       | 38 +++++++++++++++++++
- 2 files changed, 38 insertions(+), 23 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.txt
- create mode 100644 Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
 
-diff --git a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.txt b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.txt
-deleted file mode 100644
-index 64bb990075c3..000000000000
---- a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.txt
-+++ /dev/null
-@@ -1,23 +0,0 @@
--Qualcomm PM8xxx PMIC Vibrator
--
--PROPERTIES
--
--- compatible:
--	Usage: required
--	Value type: <string>
--	Definition: must be one of:
--		    "qcom,pm8058-vib"
--		    "qcom,pm8916-vib"
--		    "qcom,pm8921-vib"
--
--- reg:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: address of vibration control register
--
--EXAMPLE
--
--	vibrator@4a {
--		compatible = "qcom,pm8058-vib";
--		reg = <0x4a>;
--	};
-diff --git a/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
-new file mode 100644
-index 000000000000..c8832cd0d7da
---- /dev/null
-+++ b/Documentation/devicetree/bindings/input/qcom,pm8xxx-vib.yaml
-@@ -0,0 +1,38 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/input/qcom,pm8xxx-vib.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm PM8xxx PMIC Vibrator
-+
-+maintainers:
-+  - Bjorn Andersson <andersson@kernel.org>
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,pm8058-vib
-+      - qcom,pm8916-vib
-+      - qcom,pm8921-vib
-+
-+  reg:
-+    maxItems: 1
-+
-+required:
-+  - compatible
-+  - reg
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    pmic {
-+        #address-cells = <1>;
-+        #size-cells = <0>;
-+
-+        vibrator@4a {
-+            compatible = "qcom,pm8058-vib";
-+            reg = <0x4a>;
-+        };
-+    };
--- 
-2.37.3
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
+
+Best regards,
+Krzysztof
