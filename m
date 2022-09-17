@@ -2,197 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A4015BB5D4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Sep 2022 05:12:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 484645BB83C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Sep 2022 14:38:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229812AbiIQDMR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Sep 2022 23:12:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55402 "EHLO
+        id S229436AbiIQMii (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Sep 2022 08:38:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229713AbiIQDMG (ORCPT
+        with ESMTP id S229542AbiIQMih (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Sep 2022 23:12:06 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE453BD138;
-        Fri, 16 Sep 2022 20:11:56 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28H32DEH010261;
-        Sat, 17 Sep 2022 03:11:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=wA3CSxfnFM+7ww/Tf3VjyrpLCkdwP55gYervGsDanu8=;
- b=AF2DvCzpLLyojbcUuqZ8NOtIslISp92YOxpMsaP7GaYO7L5o7XPPe14EunJRptxy6NiW
- HVvXTII9fohtF4D8fWLu9MFISCLlvycZghQv1JWCW8qor6oHe7ILDRCyC7lV1m7RKMhU
- C5wL6jlmqNYsnJSgFHa6SGPiGkC7Qx8PK530rM2I9Bt7ooF59ZdJoTMWOzhqek0Qkm+4
- 5n06d9Oro5lfx9EPpjSUPAoU0lFqyJ51LKLtp2LE902LtG3fObB0jYZkEGhF+gknGuO1
- dzNiy4keNlcqaaWp9r6+DbMUn7czkcknQtVDZvMUvR8S6QnEdt0QbGfO2suM7AmDUqxy Fw== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jm8ymc2d2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 17 Sep 2022 03:11:49 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28H36mWY006868
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 17 Sep 2022 03:06:48 GMT
-Received: from hu-gurus-sd.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Fri, 16 Sep 2022 20:06:48 -0700
-From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-CC:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Guru Das Srinagesh" <quic_gurus@quicinc.com>
-Subject: [PATCH 1/1] soc: qcom: llcc: Move struct llcc_slice_config to header
-Date:   Fri, 16 Sep 2022 20:06:40 -0700
-Message-ID: <1663384000-8097-1-git-send-email-quic_gurus@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Sat, 17 Sep 2022 08:38:37 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D61102CC85
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Sep 2022 05:38:34 -0700 (PDT)
+Received: from [192.168.1.101] (95.49.30.72.neoplus.adsl.tpnet.pl [95.49.30.72])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 85E0F3F654;
+        Sat, 17 Sep 2022 14:38:30 +0200 (CEST)
+Message-ID: <6b32824f-5334-9866-57d0-5fd2b9de9237@somainline.org>
+Date:   Sat, 17 Sep 2022 14:38:29 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 80-vygY7YJxTzCqRHZmAhejYYU7JpalF
-X-Proofpoint-GUID: 80-vygY7YJxTzCqRHZmAhejYYU7JpalF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-16_14,2022-09-16_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=999 impostorscore=0 phishscore=0 suspectscore=0 adultscore=0
- mlxscore=0 spamscore=0 bulkscore=0 priorityscore=1501 malwarescore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2209170014
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [PATCH v2 1/3] clk: qcom: gdsc: Fix the handling of PWRSTS_RET
+ support
+To:     Rajendra Nayak <quic_rjendra@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+        mka@chromium.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        johan+linaro@kernel.org, quic_kriskura@quicinc.com,
+        dianders@chromium.org, linux-clk@vger.kernel.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+References: <20220916102417.24549-1-quic_rjendra@quicinc.com>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20220916102417.24549-1-quic_rjendra@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move struct llcc_slice_config to header so that it can be reused by
-other kernel modules.
 
-Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
----
- drivers/soc/qcom/llcc-qcom.c       | 44 --------------------------------------
- include/linux/soc/qcom/llcc-qcom.h | 44 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 44 insertions(+), 44 deletions(-)
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 38d7296..3e7326f 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -55,50 +55,6 @@
- #define LLCC_VERSION_2_0_0_0          0x02000000
- #define LLCC_VERSION_2_1_0_0          0x02010000
- 
--/**
-- * struct llcc_slice_config - Data associated with the llcc slice
-- * @usecase_id: Unique id for the client's use case
-- * @slice_id: llcc slice id for each client
-- * @max_cap: The maximum capacity of the cache slice provided in KB
-- * @priority: Priority of the client used to select victim line for replacement
-- * @fixed_size: Boolean indicating if the slice has a fixed capacity
-- * @bonus_ways: Bonus ways are additional ways to be used for any slice,
-- *		if client ends up using more than reserved cache ways. Bonus
-- *		ways are allocated only if they are not reserved for some
-- *		other client.
-- * @res_ways: Reserved ways for the cache slice, the reserved ways cannot
-- *		be used by any other client than the one its assigned to.
-- * @cache_mode: Each slice operates as a cache, this controls the mode of the
-- *             slice: normal or TCM(Tightly Coupled Memory)
-- * @probe_target_ways: Determines what ways to probe for access hit. When
-- *                    configured to 1 only bonus and reserved ways are probed.
-- *                    When configured to 0 all ways in llcc are probed.
-- * @dis_cap_alloc: Disable capacity based allocation for a client
-- * @retain_on_pc: If this bit is set and client has maintained active vote
-- *               then the ways assigned to this client are not flushed on power
-- *               collapse.
-- * @activate_on_init: Activate the slice immediately after it is programmed
-- * @write_scid_en: Bit enables write cache support for a given scid.
-- * @write_scid_cacheable_en: Enables write cache cacheable support for a
-- *			     given scid (not supported on v2 or older hardware).
-- */
--struct llcc_slice_config {
--	u32 usecase_id;
--	u32 slice_id;
--	u32 max_cap;
--	u32 priority;
--	bool fixed_size;
--	u32 bonus_ways;
--	u32 res_ways;
--	u32 cache_mode;
--	u32 probe_target_ways;
--	bool dis_cap_alloc;
--	bool retain_on_pc;
--	bool activate_on_init;
--	bool write_scid_en;
--	bool write_scid_cacheable_en;
--};
--
- struct qcom_llcc_config {
- 	const struct llcc_slice_config *sct_data;
- 	int size;
-diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
-index 9ed5384..e84cd87 100644
---- a/include/linux/soc/qcom/llcc-qcom.h
-+++ b/include/linux/soc/qcom/llcc-qcom.h
-@@ -106,6 +106,50 @@ struct llcc_drv_data {
- 	u32 version;
- };
- 
-+/**
-+ * struct llcc_slice_config - Data associated with the llcc slice
-+ * @usecase_id: Unique id for the client's use case
-+ * @slice_id: llcc slice id for each client
-+ * @max_cap: The maximum capacity of the cache slice provided in KB
-+ * @priority: Priority of the client used to select victim line for replacement
-+ * @fixed_size: Boolean indicating if the slice has a fixed capacity
-+ * @bonus_ways: Bonus ways are additional ways to be used for any slice,
-+ *		if client ends up using more than reserved cache ways. Bonus
-+ *		ways are allocated only if they are not reserved for some
-+ *		other client.
-+ * @res_ways: Reserved ways for the cache slice, the reserved ways cannot
-+ *		be used by any other client than the one its assigned to.
-+ * @cache_mode: Each slice operates as a cache, this controls the mode of the
-+ *             slice: normal or TCM(Tightly Coupled Memory)
-+ * @probe_target_ways: Determines what ways to probe for access hit. When
-+ *                    configured to 1 only bonus and reserved ways are probed.
-+ *                    When configured to 0 all ways in llcc are probed.
-+ * @dis_cap_alloc: Disable capacity based allocation for a client
-+ * @retain_on_pc: If this bit is set and client has maintained active vote
-+ *               then the ways assigned to this client are not flushed on power
-+ *               collapse.
-+ * @activate_on_init: Activate the slice immediately after it is programmed
-+ * @write_scid_en: Bit enables write cache support for a given scid.
-+ * @write_scid_cacheable_en: Enables write cache cacheable support for a
-+ *			     given scid (not supported on v2 or older hardware).
-+ */
-+struct llcc_slice_config {
-+	u32 usecase_id;
-+	u32 slice_id;
-+	u32 max_cap;
-+	u32 priority;
-+	bool fixed_size;
-+	u32 bonus_ways;
-+	u32 res_ways;
-+	u32 cache_mode;
-+	u32 probe_target_ways;
-+	bool dis_cap_alloc;
-+	bool retain_on_pc;
-+	bool activate_on_init;
-+	bool write_scid_en;
-+	bool write_scid_cacheable_en;
-+};
-+
- #if IS_ENABLED(CONFIG_QCOM_LLCC)
- /**
-  * llcc_slice_getd - get llcc slice descriptor
--- 
-2.7.4
+On 16.09.2022 12:24, Rajendra Nayak wrote:
+> GDSCs cannot be transitioned into a Retention state in SW.
+> When either the RETAIN_MEM bit, or both the RETAIN_MEM and
+> RETAIN_PERIPH bits are set, and the GDSC is left ON, the HW
+> takes care of retaining the memory/logic for the domain when
+> the parent domain transitions to low power state.
+> The existing logic handling the PWRSTS_RET seems to set the
+> RETAIN_MEM/RETAIN_PERIPH bits but then explicitly turns the
+> GDSC OFF as part of _gdsc_disable(). Fix that by leaving the
+> GDSC in ON state.
+> 
+> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> ---
+> No changes in v2: 
+> 
+> There are a few existing users of PWRSTS_RET and I am not
+> sure if they would be impacted with this change
+> 
+> 1. mdss_gdsc in mmcc-msm8974.c, I am expecting that the
+> gdsc is actually transitioning to OFF and might be left
+> ON as part of this change, atleast till we hit system wide
+> low power state.
+> If we really leak more power because of this
+> change, the right thing to do would be to update .pwrsts for
+> mdss_gdsc to PWRSTS_OFF_ON instead of PWRSTS_RET_ON
+> I dont have a msm8974 hardware, so if anyone who has can report
+> any issues I can take a look further on how to fix it.
+> 
+> 2. gpu_gx_gdsc in gpucc-msm8998.c and
+>    gpu_gx_gdsc in gpucc-sdm660.c
+> Both of these seem to add support for 3 power state
+> OFF, RET and ON, however I dont see any logic in gdsc
+> driver to handle 3 different power states.
+> So I am expecting that these are infact just transitioning
+> between ON and OFF and RET state is never really used.
+> The ideal fix for them would be to just update their resp.
+> .pwrsts to PWRSTS_OFF_ON only.
+> 
+>  drivers/clk/qcom/gdsc.c | 10 ++++++++++
+>  drivers/clk/qcom/gdsc.h |  5 +++++
+>  2 files changed, 15 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+> index d3244006c661..ccf63771e852 100644
+> --- a/drivers/clk/qcom/gdsc.c
+> +++ b/drivers/clk/qcom/gdsc.c
+> @@ -368,6 +368,16 @@ static int _gdsc_disable(struct gdsc *sc)
+>  	if (sc->pwrsts & PWRSTS_OFF)
+>  		gdsc_clear_mem_on(sc);
+>  
+> +	/*
+> +	 * If the GDSC supports only a Retention state, apart from ON,
+> +	 * leave it in ON state.
+> +	 * There is no SW control to transition the GDSC into
+> +	 * Retention state. This happens in HW when the parent
+> +	 * domain goes down to a Low power state
+> +	 */
+> +	if (sc->pwrsts == PWRSTS_RET_ON)
+> +		return 0;
+> +
+>  	ret = gdsc_toggle_logic(sc, GDSC_OFF);
+>  	if (ret)
+>  		return ret;
+> diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
+> index 5de48c9439b2..981a12c8502d 100644
+> --- a/drivers/clk/qcom/gdsc.h
+> +++ b/drivers/clk/qcom/gdsc.h
+> @@ -49,6 +49,11 @@ struct gdsc {
+>  	const u8			pwrsts;
+>  /* Powerdomain allowable state bitfields */
+>  #define PWRSTS_OFF		BIT(0)
+> +/*
+> + * There is no SW control to transition a GDSC into
+> + * PWRSTS_RET. This happens in HW when the parent
+> + * domain goes down to a low power state
+> + */
+>  #define PWRSTS_RET		BIT(1)
+>  #define PWRSTS_ON		BIT(2)
+>  #define PWRSTS_OFF_ON		(PWRSTS_OFF | PWRSTS_ON)
 
+Adding AGDR's new email to CC.
+
+
+Konrad
