@@ -2,87 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C86235BB855
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Sep 2022 15:03:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43EC05BB85D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Sep 2022 15:07:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229626AbiIQNBP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Sep 2022 09:01:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58528 "EHLO
+        id S229586AbiIQNHU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Sep 2022 09:07:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229541AbiIQNBO (ORCPT
+        with ESMTP id S229379AbiIQNHT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Sep 2022 09:01:14 -0400
-Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C94D33432;
-        Sat, 17 Sep 2022 06:01:13 -0700 (PDT)
-Received: by mail-il1-x12b.google.com with SMTP id x13so3253111ilp.3;
-        Sat, 17 Sep 2022 06:01:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=pmOQzOLFS1bvq/UfoCxQwQ27cKIGMTDwAiqU872iItQ=;
-        b=l8ZvtYoKqcPfOGVXOiWdbWyT6f5FFAuy/CSPOsQQkGYBaaI+MUhj+Prahc6u1fvgXX
-         DKhWnP8chAzgOcYkTcJ/blo3y1/8SKuHEqlBHqKIlBGmp/tSOl2YZJ3NvF1w4iHRaBeP
-         2I/aXOEowI5xOxWYRNv6n0K9bcY1rtgOP4AzImCMObmiNraHiCgEbSaBRQfsyXd66epJ
-         L+BgMBQjDvLpJR1AA4iFczhw+tYwKGrg+MMID+7l/l2cUIX11+cv8V8sXyxTAfJpnEzc
-         lMk4P/wQKVg1X0ozaOrBNfHEbeAD02TTraONXR1RxzSkBjOCdXSZTZPol+ADFjffnU28
-         KtqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=pmOQzOLFS1bvq/UfoCxQwQ27cKIGMTDwAiqU872iItQ=;
-        b=4eQeN0rJCcgv6eX6kL+71u3u1xDqKW54hlCWKmoBhCgKDQkkKMQDbIV/wGyGP0QXy7
-         LaSazOQP09V7BLTK1924Vi/qJ+Jtj73vYMqYhmcO0n20JcI7vMSIyabWxCWQVwADKZzc
-         PnueMOMxFlg24EvQlQszniCcGZvdiFh9Qa2xEK2U0ITODAMuEwxcMj3YIbU6VQD0VcB3
-         RmUVRyyRgfiW47S1Fuu62R2gMAmLkm4QN5db6JN6KS/vX/CX7m0a8+zh9X1DPyw8eIop
-         6QH5MPLPhvG4qYjIB/6aSBJvKN0+gNThKDfcCpFFVaHNOigTdWkDKu6FMecQK/V03Vw1
-         Ibag==
-X-Gm-Message-State: ACrzQf3O1zCVvVPt7J3xmLpUNONCO4c0SPS1db4OBK3fWpdJAMxRh8CW
-        y+m1lFSHRyUqzzj16mby4i/C03/1kgycX6qu8hE=
-X-Google-Smtp-Source: AMsMyM4KMzv1esIWasUM+HGwEcBPXoKiZsCzw7O6Gm2Mv2VaL+Ofp+2dke6RuzzQ4s1Pvbai592HzIfHCQuUlwkeHwU=
-X-Received: by 2002:a05:6e02:20c3:b0:2f1:b33c:63e4 with SMTP id
- 3-20020a056e0220c300b002f1b33c63e4mr4377401ilq.144.1663419672315; Sat, 17 Sep
- 2022 06:01:12 -0700 (PDT)
+        Sat, 17 Sep 2022 09:07:19 -0400
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFF892E9CA
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Sep 2022 06:07:16 -0700 (PDT)
+Received: from [192.168.1.101] (95.49.30.72.neoplus.adsl.tpnet.pl [95.49.30.72])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id AF38B3F68E;
+        Sat, 17 Sep 2022 15:07:14 +0200 (CEST)
+Message-ID: <5c701a7f-14cb-a11c-d822-6a89c4ca903c@somainline.org>
+Date:   Sat, 17 Sep 2022 15:07:13 +0200
 MIME-Version: 1.0
-References: <20220916144329.243368-1-fabio.porcedda@gmail.com>
-In-Reply-To: <20220916144329.243368-1-fabio.porcedda@gmail.com>
-From:   Sergey Ryazanov <ryazanov.s.a@gmail.com>
-Date:   Sat, 17 Sep 2022 16:01:05 +0300
-Message-ID: <CAHNKnsSTj1TtONqCcjz3AxPEt5dRsPrT=T6i1kj2AO_=qL+25w@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Add a secondary AT port to the Telit FN990
-To:     Fabio Porcedda <fabio.porcedda@gmail.com>, loic.poulain@linaro.org
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, mani@kernel.org, davem@davemloft.net,
-        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
-        dnlplm@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [RFC PATCH 5/7] arm64: qcom: dts: sagami: correct firmware paths
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220915152630.133528-1-dmitry.baryshkov@linaro.org>
+ <20220915152630.133528-6-dmitry.baryshkov@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20220915152630.133528-6-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Fabio,
 
-On Fri, Sep 16, 2022 at 5:43 PM Fabio Porcedda <fabio.porcedda@gmail.com> wrote:
-> In order to add a secondary AT port to the Telit FN990 first add "DUN2"
-> to mhi_wwan_ctrl.c, after that add a seconday AT port to the
-> Telit FN990 in pci_generic.c
->
-> Fabio Porcedda (2):
->   net: wwan: mhi_wwan_ctrl: Add DUN2 to have a secondary AT port
->   bus: mhi: host: pci_generic: Add a secondary AT port to Telit FN990
 
-The code looks good to me, but it needs to be checked by someone who
-is familiar with MHI.
+On 15.09.2022 17:26, Dmitry Baryshkov wrote:
+> Correct firmware paths for the Sony Xperia Sagami devices to include the
+> SoC name.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+> index b3c9952ac173..e0940cb58681 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+> @@ -77,12 +77,12 @@ ramoops@ffc00000 {
+>  
+>  &adsp {
+>  	status = "okay";
+> -	firmware-name = "qcom/adsp.mbn";
+> +	firmware-name = "qcom/sdm8350/sagami/adsp.mbn";
+sm8350 ;)
 
-Loic, what do you think?
+I think it would be cleaner to follow with what's currently in linux-firmware [1],
+so "qcom/socname/vendor/platform-or-device". Xperias have a single key per SoC, so
+per-platform is fine here. Should be the same for other vendors, but no guarantees.
 
--- 
-Sergey
+In this particular case, I think qcom/sm8350/SOMC/sagami would be appropriate, as
+it seems like SONY is still internally using that name [2] (SOny Mobile Communications)
+(sidenote: they are still using the legacy SEMC / Sony Ericsson Mobile
+Communications in some places if you dig deep enough :D), buuuut they can't seem
+to decide, might as well make it PlayStation at this point haha
+
+
+Konrad
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/qcom/sc8280xp/LENOVO
+[2] https://github.com/sonyxperiadev/kernel-copyleft-dts/blob/64.0.A.2.xxx/devicetree/qcom/waipio-nagara-pdx223_generic.dts#L10
+>  };
+>  
+>  &cdsp {
+>  	status = "okay";
+> -	firmware-name = "qcom/cdsp.mbn";
+> +	firmware-name = "qcom/sdm8350/sagami/cdsp.mbn";
+>  };
+>  
+>  &i2c1 {
+> @@ -175,12 +175,12 @@ &i2c17 {
+>  &ipa {
+>  	status = "okay";
+>  	memory-region = <&pil_ipa_fw_mem>;
+> -	firmware-name = "qcom/ipa_fws.mbn";
+> +	firmware-name = "qcom/sdm8350/sagami/ipa_fws.mbn";
+>  };
+>  
+>  &mpss {
+>  	status = "okay";
+> -	firmware-name = "qcom/modem.mbn";
+> +	firmware-name = "qcom/sdm8350/sagami/modem.mbn";
+>  };
+>  
+>  &pmk8350_rtc {
+> @@ -210,7 +210,7 @@ &qupv3_id_2 {
+>  
+>  &slpi {
+>  	status = "okay";
+> -	firmware-name = "qcom/slpi.mbn";
+> +	firmware-name = "qcom/sdm8350/sagami/slpi.mbn";
+>  };
+>  
+>  &spi14 {
