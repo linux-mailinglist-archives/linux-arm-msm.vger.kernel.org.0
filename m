@@ -2,93 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B0135BB909
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Sep 2022 17:15:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F4A25BB910
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Sep 2022 17:28:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229488AbiIQPPH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Sep 2022 11:15:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44060 "EHLO
+        id S229484AbiIQP2s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Sep 2022 11:28:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229483AbiIQPPF (ORCPT
+        with ESMTP id S229462AbiIQP2s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Sep 2022 11:15:05 -0400
-Received: from mail-4018.proton.ch (mail-4018.proton.ch [185.70.40.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A08081834C;
-        Sat, 17 Sep 2022 08:15:01 -0700 (PDT)
-Date:   Sat, 17 Sep 2022 15:14:53 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1663427699; x=1663686899;
-        bh=eWDqFDIvFR5JQnVuMQrV9w7kM4RnFZzBaWuIrAT3nUE=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID;
-        b=nl42cTmE7w+zwi+S6rx+785dTdB3DQsD6bxAjm9LURItAvxmZNAiOLVASqbEnIW7a
-         QuuYiHyBIsHfeouwBCvDpvyyeOFEGIA/OL2vxBG6qHh9XbnlIMDjn3Wzgd41XdYqR1
-         CQhtz1WeF8Fko8PS4dmm4/+Bh/PJFTX5PKeoqrNA=
-To:     Dylan Van Assche <me@dylanvanassche.be>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
-From:   Caleb Connolly <caleb@connolly.tech>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org
-Subject: Re: [PATCH] sound: soc: codecs: wcd-mbhc-v2: expose ALSA control for jack
-Message-ID: <86ad4891-4544-9e53-5b92-e24758e97f88@connolly.tech>
-In-Reply-To: <20220917144436.7802-1-me@dylanvanassche.be>
-References: <20220917144436.7802-1-me@dylanvanassche.be>
-Feedback-ID: 10753939:user:proton
+        Sat, 17 Sep 2022 11:28:48 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CEDA2ED54;
+        Sat, 17 Sep 2022 08:28:46 -0700 (PDT)
+Received: from g550jk.fritz.box (212095005231.public.telering.at [212.95.5.231])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 7BE77C7098;
+        Sat, 17 Sep 2022 15:28:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1663428523; bh=v4asV90wfFlCyQF8JuVoPDzWUKYRlq+5P7xnjrMbPDc=;
+        h=From:To:Cc:Subject:Date;
+        b=JopfQzyH6z+17y3+lHqHjd8eUQpnV9BDtlC2p5GanmpkB0M6XDR/ef9iTPpFmiEfy
+         k4yO45ZWM8pZEroGdJr3yrG5p2UQ76r+SjydlGQkRdUQ925u3ZsY0N8wcOVYx0/LoV
+         7ihp6oWXejLQU95MNlxKyd8EjcONBK5sRRLPOqPs=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] dt-bindings: arm: qcom: Document huawei,sturgeon device
+Date:   Sat, 17 Sep 2022 17:28:27 +0200
+Message-Id: <20220917152829.23568-1-luca@z3ntu.xyz>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        FROM_SUSPICIOUS_NTLD_FP,SPF_HELO_NONE,SPF_PASS,T_PDS_OTHER_BAD_TLD
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Document the Huawei Watch ("sturgeon") which is a smartwatch based on
+Snapdragon 400 SoC.
 
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-On 17/09/2022 15:44, Dylan Van Assche wrote:
-> Jack detection is currently fully functional via the input
-> interface together with multimedia buttons, but is not exposed
-> as an ALSA control. Therefore, ALSA clients such as PulseAudio
-> do not pick up the jack detection events as they only support
-> one of the possible interface (ALSA control or input interface,
-> but not both). Expose the jack events as an ALSA control and input
-> interface to provide ALSA clients both interfaces.
->
-> Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
-
-Reviewed-by: Caleb Connolly <caleb@connolly.tech>
-> ---
->   sound/soc/codecs/wcd-mbhc-v2.c | 4 ++++
->   1 file changed, 4 insertions(+)
->
-> diff --git a/sound/soc/codecs/wcd-mbhc-v2.c b/sound/soc/codecs/wcd-mbhc-v=
-2.c
-> index 98baef594bf3..e741b522cf10 100644
-> --- a/sound/soc/codecs/wcd-mbhc-v2.c
-> +++ b/sound/soc/codecs/wcd-mbhc-v2.c
-> @@ -724,6 +724,10 @@ static int wcd_mbhc_initialise(struct wcd_mbhc *mbhc=
-)
->
->   =09mutex_lock(&mbhc->lock);
->
-> +=09ret =3D snd_jack_add_new_kctl (mbhc->jack->jack, "Headset Jack", WCD_=
-MBHC_JACK_MASK);
-> +=09if (ret)
-> +=09=09dev_warn(component->dev, "failed creating Headset Jack kctl with e=
-rr: %d\n", ret);
-> +
->   =09/* enable HS detection */
->   =09if (mbhc->mbhc_cb->hph_pull_up_control_v2)
->   =09=09mbhc->mbhc_cb->hph_pull_up_control_v2(component,
-> --
-> 2.37.3
->
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index b6257683a700..67ff967ea3ad 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -114,6 +114,7 @@ properties:
+       - items:
+           - enum:
+               - asus,sparrow
++              - huawei,sturgeon
+               - lg,lenok
+           - const: qcom,apq8026
+ 
+-- 
+2.37.3
 
