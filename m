@@ -2,438 +2,308 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A11B5BB96C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Sep 2022 18:36:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7A575BB96E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Sep 2022 18:36:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229579AbiIQQgU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Sep 2022 12:36:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34662 "EHLO
+        id S229501AbiIQQgu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Sep 2022 12:36:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229626AbiIQQgS (ORCPT
+        with ESMTP id S229708AbiIQQgo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Sep 2022 12:36:18 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBA452CCB6;
-        Sat, 17 Sep 2022 09:36:15 -0700 (PDT)
-Received: from [192.168.1.101] (95.49.30.72.neoplus.adsl.tpnet.pl [95.49.30.72])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 83F793F3BC;
-        Sat, 17 Sep 2022 18:36:12 +0200 (CEST)
-Message-ID: <62b59cd4-39e1-ecb9-2ab2-8a5279566398@somainline.org>
-Date:   Sat, 17 Sep 2022 18:36:11 +0200
+        Sat, 17 Sep 2022 12:36:44 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A9A02FFE7
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Sep 2022 09:36:42 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id j9so6312560ljg.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Sep 2022 09:36:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=/ai+7SsL/h1KwbYitYUtAaE2JHJ2xYhMnUl9VlW5Wl4=;
+        b=R193AffSliQz0TPGQUzIlMu2Ccw6tPKAks6zPn4TVzP0+kakt8Qk+7zPB88k1e9RZc
+         nbLJ7FQQIp2fwTNsE1opqe+hFuBgJg4mD/5y/QERxiCde6bm2Emr6/7f8eOOXMUw4ux2
+         3dKRpUBrdPHyrY1MBDONbtUPZ8oRhGrZYBW2U0ITBxPSD+NCdRpAexinOLE+sEQ7JW/P
+         pqp1b7NCTZfa266w4G3qqdIv6ZVpuKsShLcZ0N5MTtjVcMlFh4ov+48E/eiowDgkVRsq
+         QHtelPKutVswypicGp/17+Cr9FgSuERju++cA8RglypF5isHsEEL0COuiPnqcgtEBdnv
+         VAYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=/ai+7SsL/h1KwbYitYUtAaE2JHJ2xYhMnUl9VlW5Wl4=;
+        b=PSIvsVoGMV/fl+k0MTi4QYM2sIkZRAWLL7rcsxk/56D+D8QJeUq1bUyGRWXTzU3eLj
+         OGslxSPR2/uy/4nbTneLIS/0VJYcW8saZ5ESldAwMeDJwXeWFlLgVYhQ7kiJa2xOOEED
+         ljUnNLPIGqm2KSqG9jWqDElrdlyxA5D8vGqrNYY2+O1KhAgISbZFNkPTHbYeJKpDdR12
+         UAkNjUxEzWJBKnX98SQD0YWIv6o0d64r5SKjsn1kD1PtGJyWVUJmDkzU5DWDq2iKGNOa
+         iRuZr89ATNTfYA+JYGmvu+4dzTLmuzkQjxP031n251JXHrFAN8v7wgrNTv/USSVTsFoH
+         c9IA==
+X-Gm-Message-State: ACrzQf3+t+kQ53miEHhvfyEhWMlgVYIolXPDlySEASeE+CxSJcTCJ9Ve
+        RSiOIxOfTQhN+XnaxVp9J/1Htg==
+X-Google-Smtp-Source: AMsMyM4O9nhkGk4g36ZJAGZfZMuqar3D6fO7Dhcld2L1JJ8BHSxHVSeiQOXk6iSG4KCkeq+7P+rppw==
+X-Received: by 2002:a2e:a385:0:b0:26b:e6b4:6d2d with SMTP id r5-20020a2ea385000000b0026be6b46d2dmr2800392lje.507.1663432600878;
+        Sat, 17 Sep 2022 09:36:40 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id z28-20020a2eb53c000000b0025fe7f33bc4sm4212849ljm.49.2022.09.17.09.36.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 17 Sep 2022 09:36:40 -0700 (PDT)
+Message-ID: <50c18f2e-53d2-21b3-b36e-7a2045b96c11@linaro.org>
+Date:   Sat, 17 Sep 2022 17:36:39 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH 2/2] ARM: dts: qcom: Add support for Huawei Watch
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH 5/6] arm64: dts: qcom: sc8180x: Introduce Primus
 Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        soc@kernel.org, Rob Herring <robh+dt@kernel.org>,
+To:     Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220917152829.23568-1-luca@z3ntu.xyz>
- <20220917152829.23568-2-luca@z3ntu.xyz>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220917152829.23568-2-luca@z3ntu.xyz>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220916121204.3880182-1-vkoul@kernel.org>
+ <20220916121204.3880182-6-vkoul@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220916121204.3880182-6-vkoul@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 17.09.2022 17:28, Luca Weiss wrote:
-> Add support for this smartwatch, based on Snapdragon 400 SoC.
+On 16/09/2022 13:12, Vinod Koul wrote:
+> From: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> Currently supported functionality:
-> * Internal storage
-> * USB
-> * Charger
-> * Power button
-> * Bluetooth
-> * Wifi
+> Introduce support for the SC8180X reference device, aka Primus, with
+> debug UART, regulators, UFS and USB support.
 > 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > ---
->  arch/arm/boot/dts/Makefile                    |   1 +
->  .../boot/dts/qcom-apq8026-huawei-sturgeon.dts | 343 ++++++++++++++++++
->  2 files changed, 344 insertions(+)
->  create mode 100644 arch/arm/boot/dts/qcom-apq8026-huawei-sturgeon.dts
-> 
-> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> index 3bc6bd5c8238..55087f16d718 100644
-> --- a/arch/arm/boot/dts/Makefile
-> +++ b/arch/arm/boot/dts/Makefile
-> @@ -1026,6 +1026,7 @@ dtb-$(CONFIG_ARCH_OXNAS) += \
->  dtb-$(CONFIG_ARCH_QCOM) += \
->  	qcom-apq8016-sbc.dtb \
->  	qcom-apq8026-asus-sparrow.dtb \
-> +	qcom-apq8026-huawei-sturgeon.dtb \
->  	qcom-apq8026-lg-lenok.dtb \
->  	qcom-apq8060-dragonboard.dtb \
->  	qcom-apq8064-cm-qs600.dtb \
-> diff --git a/arch/arm/boot/dts/qcom-apq8026-huawei-sturgeon.dts b/arch/arm/boot/dts/qcom-apq8026-huawei-sturgeon.dts
-> new file mode 100644
-> index 000000000000..e43fcef7144c
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/qcom-apq8026-huawei-sturgeon.dts
-> @@ -0,0 +1,343 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2022, Luca Weiss <luca@z3ntu.xyz>
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "qcom-msm8226.dtsi"
-> +#include "qcom-pm8226.dtsi"
-> +
-> +/delete-node/ &adsp_region;
-> +
-> +/ {
-> +	model = "Huawei Watch";
-> +	compatible = "huawei,sturgeon", "qcom,apq8026";
-> +	chassis-type = "watch";
-> +	qcom,msm-id = <199 0x20000>;
-> +	qcom,board-id = <8 4>;
-> +
-> +	reserved-memory {
-> +		sbl_region: sbl@2f00000 {
-> +			reg = <0x02f00000 0x100000>;
-> +			no-map;
-> +		};
-Please add newlines after each }; here and in pm*-regulators and
-make the status property last on referenced nodes. Otherwise LGTM.
 
-Konrad
-> +		external_image_region: external-image@3100000 {
-> +			reg = <0x3100000 0x200000>;
-> +			no-map;
-> +		};
-> +		peripheral_region: peripheral@3300000 {
-> +			reg = <0x3300000 0x600000>;
-> +			no-map;
-> +		};
-> +		adsp_region: adsp@3900000 {
-> +			reg = <0x3900000 0x1400000>;
-> +			no-map;
-> +		};
-> +		modem_region: modem@4d00000 {
-> +			reg = <0x4d00000 0x1b00000>;
-> +			no-map;
-> +		};
-> +		modem_efs_region: modem-efs@7f00000 {
-> +			reg = <0x7f00000 0x100000>;
-> +			no-map;
-> +		};
-> +	};
+(...)
+
+> +&wifi {
+> +	memory-region = <&wlan_mem>;
 > +
-> +	vreg_wlan: wlan-regulator {
-> +		compatible = "regulator-fixed";
+> +	vdd-0.8-cx-mx-supply = <&vreg_l1e_0p75>;
+> +	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
+> +	vdd-1.3-rfa-supply = <&vreg_l9a_1p3>;
+> +	vdd-3.3-ch0-supply = <&vreg_l11c_3p3>;
+> +	vdd-3.3-ch1-supply = <&vreg_l10c_3p3>;
 > +
-> +		regulator-name = "wl-reg";
-> +		regulator-min-microvolt = <2950000>;
-> +		regulator-max-microvolt = <2950000>;
-> +
-> +		gpio = <&tlmm 110 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&wlan_regulator_default_state>;
-> +	};
-> +};
-> +
-> +&adsp {
 > +	status = "okay";
 > +};
 > +
-> +&blsp1_i2c5 {
-> +	status = "okay";
-> +	clock-frequency = <384000>;
+> +&xo_board_clk {
+> +	clock-frequency = <38400000>;
+> +};
 > +
-> +	touchscreen@20 {
-> +		compatible = "syna,rmi4-i2c";
-> +		reg = <0x20>;
+> +/* PINCTRL */
 > +
-> +		interrupts-extended = <&tlmm 17 IRQ_TYPE_EDGE_FALLING>;
-> +		vdd-supply = <&pm8226_l19>;
-> +		vio-supply = <&pm8226_lvs1>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&touch_default_state>;
-> +
-> +		syna,startup-delay-ms = <160>;
-> +
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		rmi4-f01@1 {
-> +			reg = <0x1>;
-> +			syna,nosleep-mode = <1>;
+> +&pmc8180c_gpios {
+> +	bl_pwm_default_state: bl-pwm-default-state {
+> +		en {
+
+Suffix -pins
+
+> +			pins = "gpio8";
+> +			function = "normal";
 > +		};
 > +
-> +		rmi4-f12@12 {
-> +			reg = <0x12>;
-> +			syna,sensor-type = <1>;
+> +		pwm {
+
+Suffix -pins
+
+> +			pins = "gpio10";
+> +			function = "func1";
 > +		};
 > +	};
-> +};
-> +
-> +&blsp1_uart4 {
-> +	status = "okay";
-> +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&blsp1_uart4_default_state>;
-> +
-> +	bluetooth {
-> +		compatible = "brcm,bcm43430a0-bt";
-> +		max-speed = <3000000>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&bluetooth_default_state>;
-> +
-> +		host-wakeup-gpios = <&tlmm 64 GPIO_ACTIVE_HIGH>;
-> +		device-wakeup-gpios = <&tlmm 63 GPIO_ACTIVE_HIGH>;
-> +		shutdown-gpios = <&tlmm 67 GPIO_ACTIVE_HIGH>;
-> +	};
-> +};
-> +
-> +&rpm_requests {
-> +	pm8226-regulators {
-> +		compatible = "qcom,rpm-pm8226-regulators";
-> +
-> +		pm8226_s3: s3 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1300000>;
-> +		};
-> +		pm8226_s4: s4 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <2200000>;
-> +		};
-> +		pm8226_s5: s5 {
-> +			regulator-min-microvolt = <1150000>;
-> +			regulator-max-microvolt = <1150000>;
-> +		};
-> +
-> +		pm8226_l1: l1 {
-> +			regulator-min-microvolt = <1225000>;
-> +			regulator-max-microvolt = <1225000>;
-> +		};
-> +		pm8226_l2: l2 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +		};
-> +		pm8226_l3: l3 {
-> +			regulator-min-microvolt = <750000>;
-> +			regulator-max-microvolt = <1337500>;
-> +		};
-> +		pm8226_l4: l4 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +		};
-> +		pm8226_l5: l5 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +		};
-> +		pm8226_l6: l6 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +		};
-> +		pm8226_l7: l7 {
-> +			regulator-min-microvolt = <1850000>;
-> +			regulator-max-microvolt = <1850000>;
-> +		};
-> +		pm8226_l8: l8 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +		};
-> +		pm8226_l9: l9 {
-> +			regulator-min-microvolt = <2050000>;
-> +			regulator-max-microvolt = <2050000>;
-> +		};
-> +		pm8226_l10: l10 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +		};
-> +		pm8226_l12: l12 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +		};
-> +		pm8226_l14: l14 {
-> +			regulator-min-microvolt = <2750000>;
-> +			regulator-max-microvolt = <2750000>;
-> +		};
-> +		pm8226_l15: l15 {
-> +			regulator-min-microvolt = <2800000>;
-> +			regulator-max-microvolt = <2800000>;
-> +		};
-> +		pm8226_l16: l16 {
-> +			regulator-min-microvolt = <3000000>;
-> +			regulator-max-microvolt = <3350000>;
-> +		};
-> +		pm8226_l17: l17 {
-> +			regulator-min-microvolt = <2950000>;
-> +			regulator-max-microvolt = <2950000>;
-> +		};
-> +		pm8226_l18: l18 {
-> +			regulator-min-microvolt = <2950000>;
-> +			regulator-max-microvolt = <2950000>;
-> +		};
-> +		pm8226_l19: l19 {
-> +			regulator-min-microvolt = <2850000>;
-> +			regulator-max-microvolt = <2850000>;
-> +		};
-> +		pm8226_l20: l20 {
-> +			regulator-min-microvolt = <3075000>;
-> +			regulator-max-microvolt = <3075000>;
-> +		};
-> +		pm8226_l21: l21 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <2950000>;
-> +		};
-> +		pm8226_l22: l22 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <2950000>;
-> +		};
-> +		pm8226_l23: l23 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <2950000>;
-> +		};
-> +		pm8226_l24: l24 {
-> +			regulator-min-microvolt = <1300000>;
-> +			regulator-max-microvolt = <1350000>;
-> +		};
-> +		pm8226_l25: l25 {
-> +			regulator-min-microvolt = <1775000>;
-> +			regulator-max-microvolt = <2125000>;
-> +		};
-> +		pm8226_l26: l26 {
-> +			regulator-min-microvolt = <1225000>;
-> +			regulator-max-microvolt = <1225000>;
-> +		};
-> +		pm8226_l27: l27 {
-> +			regulator-min-microvolt = <2050000>;
-> +			regulator-max-microvolt = <2050000>;
-> +		};
-> +		pm8226_l28: l28 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <2950000>;
-> +		};
-> +
-> +		pm8226_lvs1: lvs1 {};
-> +	};
-> +};
-> +
-> +&sdhc_1 {
-> +	status = "okay";
-> +
-> +	vmmc-supply = <&pm8226_l17>;
-> +	vqmmc-supply = <&pm8226_l6>;
-> +
-> +	bus-width = <8>;
-> +	non-removable;
-> +};
-> +
-> +&sdhc_3 {
-> +	status = "okay";
-> +
-> +	max-frequency = <100000000>;
-> +	non-removable;
-> +
-> +	vmmc-supply = <&vreg_wlan>;
-> +	vqmmc-supply = <&pm8226_l6>;
-> +
-> +	#address-cells = <1>;
-> +	#size-cells = <0>;
-> +
-> +	wifi@1 {
-> +		compatible = "brcm,bcm43430a0-fmac", "brcm,bcm4329-fmac";
-> +		reg = <1>;
-> +
-> +		interrupts-extended = <&tlmm 66 IRQ_TYPE_EDGE_FALLING>;
-> +		interrupt-names = "host-wake";
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&wlan_hostwake_default_state>;
-> +	};
-> +};
-> +
-> +&smbb {
-> +	qcom,fast-charge-safe-voltage = <4370000>;
-> +	qcom,fast-charge-high-threshold-voltage = <4350000>;
-> +	qcom,minimum-input-voltage = <4350000>;
-> +	qcom,fast-charge-current-limit = <300000>;
-> +	qcom,fast-charge-safe-current = <600000>;
-> +	qcom,auto-recharge-threshold-voltage = <4240000>;
 > +};
 > +
 > +&tlmm {
-> +	blsp1_uart4_default_state: blsp1-uart4-default-state {
-> +		pins = "gpio12", "gpio13", "gpio14", "gpio15";
-> +		function = "blsp_uart4";
-> +		drive-strength = <8>;
+> +	gpio-reserved-ranges = <0 4>, <47 4>, <126 4>;
+> +
+> +	aux_i2c_active_state: aux-i2c-active-state {
+> +		pins = "gpio98", "gpio99";
+> +		function = "qup7";
+> +
 > +		bias-disable;
+> +		drive-strength = <16>;
 > +	};
 > +
-> +	bluetooth_default_state: bluetooth-default-state {
-> +		pins = "gpio63", "gpio64";
+> +	edp_hpd_active: epd-hpd-active-state {
+> +		pins = "gpio10";
+> +		function = "edp_hot";
+> +	};
+> +
+> +	hall_int_active_state: hall-int-active-state {
+> +		pins = "gpio121";
 > +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-pull-down;
-> +	};
 > +
-> +	touch_default_state: touch-default-state {
-> +		irq {
-> +			pins = "gpio17";
-> +			function = "gpio";
-> +			drive-strength = <8>;
-> +			bias-pull-up;
-> +		};
-> +
-> +		reset {
-> +			pins = "gpio16";
-> +			function = "gpio";
-> +			drive-strength = <6>;
-> +			bias-pull-up;
-> +		};
-> +	};
-> +
-> +	wlan_hostwake_default_state: wlan-hostwake-default-state {
-> +		pins = "gpio66";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
 > +		input-enable;
+> +		bias-disable;
 > +	};
 > +
-> +	wlan_regulator_default_state: wlan-regulator-default-state {
-> +		pins = "gpio110";
+> +	kb_int_active_state: kb-int-active-state {
+> +		int-n {
+
+Suffix -pins
+
+> +			pins = "gpio37";
+> +			function = "gpio";
+> +
+> +			bias-pull-up;
+> +			intput-enable;
+> +		};
+> +
+> +		kp-disable {
+
+Suffix -pins
+
+> +			pins = "gpio135";
+> +			function = "gpio";
+> +
+> +			output-high;
+> +		};
+> +	};
+> +
+> +	kb_tp_3v3_en_active_state: kb-tp-3v3-en-active-state {
+> +		pins = "gpio4";
 > +		function = "gpio";
+> +
+> +		bias-disable;
+> +	};
+> +
+> +	pcie2_default_state: pcie2-default-state {
+> +		clkreq {
+
+Suffix -pins
+
+> +			pins = "gpio176";
+> +			function = "pci_e2";
+> +			bias-pull-up;
+> +		};
+> +
+> +		reset-n {
+
+Suffix -pins
+
+> +			pins = "gpio175";
+> +			function = "gpio";
+> +
+> +			drive-strength = <2>;
+> +			output-low;
+> +			bias-pull-down;
+> +		};
+> +
+> +		wake-n {
+
+Suffix -pins
+
+> +			pins = "gpio177";
+> +			function = "gpio";
+> +
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +	};
+> +
+> +	tp_int_active_state: tp-int-active-state {
+> +		tp-int {
+
+Suffix -pins
+
+> +			pins = "gpio24";
+> +			function = "gpio";
+> +
+> +			bias-disable;
+> +			input-enable;
+> +		};
+> +
+> +		tp-close-n {
+
+Suffix -pins
+
+> +			pins = "gpio116";
+> +			function = "gpio";
+> +
+> +			bias-disable;
+> +			input-enable;
+> +		};
+> +	};
+> +
+> +	ts_active_state: ts-active-state {
+> +		int-n {
+
+Suffix -pins
+
+> +			pins = "gpio122";
+> +			function = "gpio";
+> +
+> +			input-enable;
+> +			bias-disable;
+> +		};
+> +
+> +		reset-n {
+
+Suffix -pins
+
+> +			pins = "gpio54";
+> +			function = "gpio";
+> +
+> +			output-high;
+> +		};
+> +	};
+> +
+> +	ts_i2c_active_state: ts-i2c-active-state {
+> +		pins = "gpio114", "gpio115";
+> +		function = "qup1";
+> +
+> +		/* External pull up */
+> +		bias-disable;
 > +		drive-strength = <2>;
-> +		bias-pull-down;
+> +	};
+> +
+> +	uart13_state: uart13-state {
+> +		cts {
+
+Suffix -pins
+
+> +			pins = "gpio43";
+> +			function = "qup13";
+> +			bias-pull-down;
+> +		};
+> +
+> +		rts-tx {
+
+Suffix -pins
+
+> +			pins = "gpio44", "gpio45";
+> +			function = "qup13";
+> +			drive-strength = <2>;
+> +			bias-disable;
+> +		};
+> +
+> +		rx {
+
+Suffix -pins
+
+> +			pins = "gpio46";
+> +			function = "qup13";
+> +			bias-pull-up;
+> +		};
 > +	};
 > +};
-> +
-> +&usb {
-> +	status = "okay";
-> +	extcon = <&smbb>;
-> +	dr_mode = "peripheral";
-> +};
-> +
-> +&usb_hs_phy {
-> +	extcon = <&smbb>;
-> +	v1p8-supply = <&pm8226_l10>;
-> +	v3p3-supply = <&pm8226_l20>;
-> +};
+
+
+Best regards,
+Krzysztof
