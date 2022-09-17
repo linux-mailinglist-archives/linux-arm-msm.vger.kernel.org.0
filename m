@@ -2,307 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C7A575BB96E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Sep 2022 18:36:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 53D675BB976
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Sep 2022 18:39:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229501AbiIQQgu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Sep 2022 12:36:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35358 "EHLO
+        id S229539AbiIQQjF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Sep 2022 12:39:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229708AbiIQQgo (ORCPT
+        with ESMTP id S229550AbiIQQjD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Sep 2022 12:36:44 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A9A02FFE7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Sep 2022 09:36:42 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id j9so6312560ljg.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Sep 2022 09:36:42 -0700 (PDT)
+        Sat, 17 Sep 2022 12:39:03 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AC2D2ED7D
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Sep 2022 09:39:01 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id c7so17868652ljm.12
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Sep 2022 09:39:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=/ai+7SsL/h1KwbYitYUtAaE2JHJ2xYhMnUl9VlW5Wl4=;
-        b=R193AffSliQz0TPGQUzIlMu2Ccw6tPKAks6zPn4TVzP0+kakt8Qk+7zPB88k1e9RZc
-         nbLJ7FQQIp2fwTNsE1opqe+hFuBgJg4mD/5y/QERxiCde6bm2Emr6/7f8eOOXMUw4ux2
-         3dKRpUBrdPHyrY1MBDONbtUPZ8oRhGrZYBW2U0ITBxPSD+NCdRpAexinOLE+sEQ7JW/P
-         pqp1b7NCTZfa266w4G3qqdIv6ZVpuKsShLcZ0N5MTtjVcMlFh4ov+48E/eiowDgkVRsq
-         QHtelPKutVswypicGp/17+Cr9FgSuERju++cA8RglypF5isHsEEL0COuiPnqcgtEBdnv
-         VAYQ==
+        bh=jv8GEPaOzA51HS42MLvcalei0LdzBjeg8X2ynLQXFTo=;
+        b=heonmGT9UlfLGrV2gjcSr8TGX3oHDqHdGhNOLL9xAzFdmqQMLLaaaOOR3Q5FaviTh5
+         9xQtvr17nJFnShfA1FCAQ/VTl0WF4Lgxx+68mnZgfqOaL8CCKch/U3GKVHgdKIwlXkf6
+         cEbbW5GluXUGX6/56iNExCxQKKzWvQF6SAf9pIjC15cPu2yM4KPo1xKNzoiBtAr1TaRb
+         fuDuues6pjvf/bqrhArFzj6C6IrlwZowWKHPEsOvgDxxRurcvTKgQGm0Vtqw2gH05jV3
+         IY6b2LyLW9Fh58UFuBx7jzVZeZ614WPmLsnGQes9dOUDMMI4xVu1lrEp/1CYsBAmvNa2
+         +fPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=/ai+7SsL/h1KwbYitYUtAaE2JHJ2xYhMnUl9VlW5Wl4=;
-        b=PSIvsVoGMV/fl+k0MTi4QYM2sIkZRAWLL7rcsxk/56D+D8QJeUq1bUyGRWXTzU3eLj
-         OGslxSPR2/uy/4nbTneLIS/0VJYcW8saZ5ESldAwMeDJwXeWFlLgVYhQ7kiJa2xOOEED
-         ljUnNLPIGqm2KSqG9jWqDElrdlyxA5D8vGqrNYY2+O1KhAgISbZFNkPTHbYeJKpDdR12
-         UAkNjUxEzWJBKnX98SQD0YWIv6o0d64r5SKjsn1kD1PtGJyWVUJmDkzU5DWDq2iKGNOa
-         iRuZr89ATNTfYA+JYGmvu+4dzTLmuzkQjxP031n251JXHrFAN8v7wgrNTv/USSVTsFoH
-         c9IA==
-X-Gm-Message-State: ACrzQf3+t+kQ53miEHhvfyEhWMlgVYIolXPDlySEASeE+CxSJcTCJ9Ve
-        RSiOIxOfTQhN+XnaxVp9J/1Htg==
-X-Google-Smtp-Source: AMsMyM4O9nhkGk4g36ZJAGZfZMuqar3D6fO7Dhcld2L1JJ8BHSxHVSeiQOXk6iSG4KCkeq+7P+rppw==
-X-Received: by 2002:a2e:a385:0:b0:26b:e6b4:6d2d with SMTP id r5-20020a2ea385000000b0026be6b46d2dmr2800392lje.507.1663432600878;
-        Sat, 17 Sep 2022 09:36:40 -0700 (PDT)
+        bh=jv8GEPaOzA51HS42MLvcalei0LdzBjeg8X2ynLQXFTo=;
+        b=0u8cSwVpHlag+Vo1lanCD1cF15RCQdyP8/u6vScoAcLbDlcTH9YH5FwiRpJ7dwmDL5
+         WqeH/zdKI0t09becVUNWTI1GW3bPDVi6wJOq8qwwP3kq8J4Vsh9altij3QqU3aojraEN
+         2FTyGTt1obXHJmdaS1gnC4TMqZHKKbo6Iz1QkO2RN4PzTtG2thnnhm8Ye7Pl5zH1j+Se
+         31q+LIZT/xADowLPInbXrZVqAUtgGvR3a6KW5fZaZdIpaYrvYDR/tAUOtgQslKYazVDu
+         zCF3lJvNMoIyXlJ9P6Y9Jyxa/wa8z9eTNZq02PJFFqPNNhIuz4aYdlXHagNjnBvdhpc6
+         LjYw==
+X-Gm-Message-State: ACrzQf2vmJWFJZnbv6Hnz22Jri/+n2XHFD0lOLREuu28AxmPu00T6JKM
+        XnOuADYzsclCdf3br9eRcqDIDA==
+X-Google-Smtp-Source: AMsMyM7IFRyWB0vbDFXPb7MWxW0iXecCmHjk4Yuy4bpxirZcEDAPPXFBXhO44aAlWeu47VI1U9hSiw==
+X-Received: by 2002:a2e:b16f:0:b0:26a:c77f:9f49 with SMTP id a15-20020a2eb16f000000b0026ac77f9f49mr2978803ljm.112.1663432739465;
+        Sat, 17 Sep 2022 09:38:59 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id z28-20020a2eb53c000000b0025fe7f33bc4sm4212849ljm.49.2022.09.17.09.36.40
+        by smtp.gmail.com with ESMTPSA id 28-20020ac25f5c000000b004998d9ccb62sm3802898lfz.99.2022.09.17.09.38.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 17 Sep 2022 09:36:40 -0700 (PDT)
-Message-ID: <50c18f2e-53d2-21b3-b36e-7a2045b96c11@linaro.org>
-Date:   Sat, 17 Sep 2022 17:36:39 +0100
+        Sat, 17 Sep 2022 09:38:58 -0700 (PDT)
+Message-ID: <31c979ea-88eb-8ac1-7433-607fd8202c1d@linaro.org>
+Date:   Sat, 17 Sep 2022 17:38:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
-Subject: Re: [PATCH 5/6] arm64: dts: qcom: sc8180x: Introduce Primus
+Subject: Re: [PATCH] dt-bindings: input: qcom,pm8xxx-vib: convert to yaml
 Content-Language: en-US
-To:     Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220916121204.3880182-1-vkoul@kernel.org>
- <20220916121204.3880182-6-vkoul@kernel.org>
+        linux-input@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220917155705.2284-1-luca@z3ntu.xyz>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220916121204.3880182-6-vkoul@kernel.org>
+In-Reply-To: <20220917155705.2284-1-luca@z3ntu.xyz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/09/2022 13:12, Vinod Koul wrote:
-> From: Bjorn Andersson <bjorn.andersson@linaro.org>
+On 17/09/2022 16:57, Luca Weiss wrote:
+> Convert the PM8xxx PMIC Vibrator bindings to dt-schema.
 > 
-> Introduce support for the SC8180X reference device, aka Primus, with
-> debug UART, regulators, UFS and USB support.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 > ---
 
-(...)
 
-> +&wifi {
-> +	memory-region = <&wlan_mem>;
-> +
-> +	vdd-0.8-cx-mx-supply = <&vreg_l1e_0p75>;
-> +	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
-> +	vdd-1.3-rfa-supply = <&vreg_l9a_1p3>;
-> +	vdd-3.3-ch0-supply = <&vreg_l11c_3p3>;
-> +	vdd-3.3-ch1-supply = <&vreg_l10c_3p3>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&xo_board_clk {
-> +	clock-frequency = <38400000>;
-> +};
-> +
-> +/* PINCTRL */
-> +
-> +&pmc8180c_gpios {
-> +	bl_pwm_default_state: bl-pwm-default-state {
-> +		en {
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Suffix -pins
-
-> +			pins = "gpio8";
-> +			function = "normal";
-> +		};
-> +
-> +		pwm {
-
-Suffix -pins
-
-> +			pins = "gpio10";
-> +			function = "func1";
-> +		};
-> +	};
-> +};
-> +
-> +&tlmm {
-> +	gpio-reserved-ranges = <0 4>, <47 4>, <126 4>;
-> +
-> +	aux_i2c_active_state: aux-i2c-active-state {
-> +		pins = "gpio98", "gpio99";
-> +		function = "qup7";
-> +
-> +		bias-disable;
-> +		drive-strength = <16>;
-> +	};
-> +
-> +	edp_hpd_active: epd-hpd-active-state {
-> +		pins = "gpio10";
-> +		function = "edp_hot";
-> +	};
-> +
-> +	hall_int_active_state: hall-int-active-state {
-> +		pins = "gpio121";
-> +		function = "gpio";
-> +
-> +		input-enable;
-> +		bias-disable;
-> +	};
-> +
-> +	kb_int_active_state: kb-int-active-state {
-> +		int-n {
-
-Suffix -pins
-
-> +			pins = "gpio37";
-> +			function = "gpio";
-> +
-> +			bias-pull-up;
-> +			intput-enable;
-> +		};
-> +
-> +		kp-disable {
-
-Suffix -pins
-
-> +			pins = "gpio135";
-> +			function = "gpio";
-> +
-> +			output-high;
-> +		};
-> +	};
-> +
-> +	kb_tp_3v3_en_active_state: kb-tp-3v3-en-active-state {
-> +		pins = "gpio4";
-> +		function = "gpio";
-> +
-> +		bias-disable;
-> +	};
-> +
-> +	pcie2_default_state: pcie2-default-state {
-> +		clkreq {
-
-Suffix -pins
-
-> +			pins = "gpio176";
-> +			function = "pci_e2";
-> +			bias-pull-up;
-> +		};
-> +
-> +		reset-n {
-
-Suffix -pins
-
-> +			pins = "gpio175";
-> +			function = "gpio";
-> +
-> +			drive-strength = <2>;
-> +			output-low;
-> +			bias-pull-down;
-> +		};
-> +
-> +		wake-n {
-
-Suffix -pins
-
-> +			pins = "gpio177";
-> +			function = "gpio";
-> +
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +		};
-> +	};
-> +
-> +	tp_int_active_state: tp-int-active-state {
-> +		tp-int {
-
-Suffix -pins
-
-> +			pins = "gpio24";
-> +			function = "gpio";
-> +
-> +			bias-disable;
-> +			input-enable;
-> +		};
-> +
-> +		tp-close-n {
-
-Suffix -pins
-
-> +			pins = "gpio116";
-> +			function = "gpio";
-> +
-> +			bias-disable;
-> +			input-enable;
-> +		};
-> +	};
-> +
-> +	ts_active_state: ts-active-state {
-> +		int-n {
-
-Suffix -pins
-
-> +			pins = "gpio122";
-> +			function = "gpio";
-> +
-> +			input-enable;
-> +			bias-disable;
-> +		};
-> +
-> +		reset-n {
-
-Suffix -pins
-
-> +			pins = "gpio54";
-> +			function = "gpio";
-> +
-> +			output-high;
-> +		};
-> +	};
-> +
-> +	ts_i2c_active_state: ts-i2c-active-state {
-> +		pins = "gpio114", "gpio115";
-> +		function = "qup1";
-> +
-> +		/* External pull up */
-> +		bias-disable;
-> +		drive-strength = <2>;
-> +	};
-> +
-> +	uart13_state: uart13-state {
-> +		cts {
-
-Suffix -pins
-
-> +			pins = "gpio43";
-> +			function = "qup13";
-> +			bias-pull-down;
-> +		};
-> +
-> +		rts-tx {
-
-Suffix -pins
-
-> +			pins = "gpio44", "gpio45";
-> +			function = "qup13";
-> +			drive-strength = <2>;
-> +			bias-disable;
-> +		};
-> +
-> +		rx {
-
-Suffix -pins
-
-> +			pins = "gpio46";
-> +			function = "qup13";
-> +			bias-pull-up;
-> +		};
-> +	};
-> +};
 
 
 Best regards,
