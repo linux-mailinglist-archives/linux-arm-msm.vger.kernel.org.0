@@ -2,292 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3C005BBA70
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Sep 2022 22:46:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78B4A5BBA93
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Sep 2022 23:09:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229497AbiIQUqe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Sep 2022 16:46:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38726 "EHLO
+        id S229517AbiIQVJc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Sep 2022 17:09:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229539AbiIQUqd (ORCPT
+        with ESMTP id S229458AbiIQVJa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Sep 2022 16:46:33 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C95BF27FD6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Sep 2022 13:46:30 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id h3so21265337lja.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Sep 2022 13:46:30 -0700 (PDT)
+        Sat, 17 Sep 2022 17:09:30 -0400
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B949018F;
+        Sat, 17 Sep 2022 14:09:27 -0700 (PDT)
+Received: by mail-io1-xd30.google.com with SMTP id z191so20127698iof.10;
+        Sat, 17 Sep 2022 14:09:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date;
-        bh=KuXvhF9KldhDK2ZH0oBRmMUJV90s+/AHiLgTmmdgWUQ=;
-        b=EyHfgV0/wR81r4wjhBrSg96m0SNDpoYVE4lR2aG4jebgecvwYyLOEVn1Cy6/Cgkg7M
-         ZLMVZVz128bIjkZ744+UiUoGkpXsh+GrfJj7WbHVHmeaVCR5uwvFWkBinO6BjZDPWyQn
-         /iNPfLwlpvqg3vRXelV3A36EQPL8y9gLl7eaanFukRUMKvm2uBI4ea4XOmCx0nJpZBt4
-         HWfzpEIAUvqKQUqtHUM/edriFafUwUoGmHQE177MxYIlkUr326+awJ9iCvLEgf/uIgEh
-         dMdbM4kN9/TtAbYZQU0lvPV2TIza48r9cKv28VLv3RxuK31VU29bFTD+tPv0kzy49tIV
-         ZUFw==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=BLLRyXQzjk3cHhUtOeo6hoECfEc8gJl/wU/cfBvCwHc=;
+        b=DwP55UR6ZPr2sDVyNTcQTnkQVjAPLmm+DVlLFgxmuY7h5B7qngwo+7r6MN46Pjb68p
+         HepN4ytNAtivg36ZSd1jkMZhexr2Vetrc6N8n1L6XAjHBpsuY1lplm4Zcu+KdAYszuvM
+         xezKdZzvBuuYlZkC/XvJBBicJ5c6s5wNN/d8I2DB9wmd4tQ/dFXxoFJCMt4ASneJY2D4
+         kaBXg8HXOuZdf8JnfNKuz/vawGFWFSIVknG1hbNPg3wwv291NlKggU1pwAdHgOf3F31G
+         IJ+ICJuy4+0S0EUaCZc8hpOYlo+/btHCDSu21WzqSUtYe4opLkHulPe0ymrIx43CFu7N
+         MB7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=KuXvhF9KldhDK2ZH0oBRmMUJV90s+/AHiLgTmmdgWUQ=;
-        b=P3tqcfeaYtQrdpibjINxBsrtp7IDPM7c2keQntWFWCRFOrBB0o9aRuzSnZ85RE1jX6
-         aD9CsLoKU1H1kMdLQCZDbIFASbrK0C+0Asu2+xZzWZEKmZIBfov/vPplzNs9gtyfkFIT
-         dnT8IDzPRbqHY3Y/izmmnwulztPRh3JFey21rJQ+FjWXysMnLIx+lM6U0DGywJ7unuQW
-         UXMooPgo06vwH1OcUgfcOX2pOhs5Y88WS0e9vBCcPFcPOwlPoKfijmNUwWcQLutyTvE8
-         vLMGSGrh3H1rpSXcV7jkcdYjKUspLlbtnuud17imW7jOdNY57dNmK9f4aNDp/Vj4jruH
-         6tTg==
-X-Gm-Message-State: ACrzQf2AgI6Vz7hq+twJ0lGpLUNw41OwDGp5lii0kOhbA4C9yHU4qzUv
-        8DWKEG3wvcKsrNlHStDS+K/+aw==
-X-Google-Smtp-Source: AMsMyM7MO114St+nXQYxfZqj20JfkM6MHWUpKUy5NeFyDAftKvGhetvKelcxFuYxojuXxHTyHF4o+A==
-X-Received: by 2002:a2e:8881:0:b0:255:7790:25e6 with SMTP id k1-20020a2e8881000000b00255779025e6mr3090895lji.525.1663447589100;
-        Sat, 17 Sep 2022 13:46:29 -0700 (PDT)
-Received: from [127.0.0.1] ([188.162.64.169])
-        by smtp.gmail.com with ESMTPSA id p3-20020a05651238c300b00498f36bce07sm4258485lft.214.2022.09.17.13.46.28
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 17 Sep 2022 13:46:28 -0700 (PDT)
-Date:   Sat, 17 Sep 2022 23:46:23 +0300
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Christian Marangi <ansuelsmth@gmail.com>
-CC:     Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=BLLRyXQzjk3cHhUtOeo6hoECfEc8gJl/wU/cfBvCwHc=;
+        b=74u5j/v+VEpnZTn0y5Z/rfQeDhfemG2JHrNwPP6nc06LwA+mYwq8acVFwMB1AtlaXD
+         BphI2+Ah3zznWiAr2dcmloBQjG6bFS5eGvkSKvzSu5rgWrzX9mR+bOFkGui4DoL0ul0s
+         KwZFkcnpj3gvEDLv9XN6wx+kGKukh49CN1TwvgqijPec+KmoQw8r8j+XcrdQ/I8HnoGj
+         H9ykTwVyOAAB6dTLuGyN9nFJegDIUXU2a8oU7DsOduqvwYFCR4gY1IHcm+83ZsB6cEsO
+         QjJ7TGB4Ni7+md5Ztdv/60aDEpJVH7HBXd11GBbPVeHpoMWjBIFBeO14dzgkDKWW0YSy
+         aYLA==
+X-Gm-Message-State: ACrzQf1m2euhUeaYnhzljG+YMLbYIOGQ10XWe83Dnp5zUjwdp79jIrRy
+        a8BPwnAsCHlZ1eE9AY4U/qAjM6oFBQk=
+X-Google-Smtp-Source: AMsMyM4numtaK7EEr4npH8kp/z8f+HW6g6df+oVMgsB4etqRG9b5mq401rABX+RrQSH7a7yJ+XxRqQ==
+X-Received: by 2002:a05:6638:2402:b0:35a:1e83:e43b with SMTP id z2-20020a056638240200b0035a1e83e43bmr5170474jat.146.1663448966946;
+        Sat, 17 Sep 2022 14:09:26 -0700 (PDT)
+Received: from localhost ([2607:fea8:a2e2:2d00::2542])
+        by smtp.gmail.com with UTF8SMTPSA id g131-20020a025b89000000b00359ae384ffbsm3737713jab.19.2022.09.17.14.09.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 17 Sep 2022 14:09:26 -0700 (PDT)
+From:   Richard Acayan <mailingradian@gmail.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Alexey Dobriyan <adobriyan@gmail.com>,
-        Takashi Iwai <tiwai@suse.de>,
-        Christian Brauner <brauner@kernel.org>,
-        Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-        Marc Herbert <marc.herbert@intel.com>,
-        James Smart <jsmart2021@gmail.com>,
-        Justin Tee <justin.tee@broadcom.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v5_2/5=5D_dt-bindings=3A_arm=3A_msm=3A_C?= =?US-ASCII?Q?onvert_kpss-acc_driver_Documentation_to_yaml?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <63262383.df0a0220.27cbb.1c41@mx.google.com>
-References: <20220916191715.GA1079300-robh@kernel.org> <6324d1be.050a0220.9d842.7b47@mx.google.com> <CAA8EJprEQOsm4TxGWJYZo04D1PagT3QmhDdYQkEid-KSP-tpTw@mail.gmail.com> <6324d8e1.170a0220.aba35.ba4f@mx.google.com> <CAA8EJpowLvkuiYupqS0WEhnMR8q=R1YUUFgdFVCAx1PXyoo1xw@mail.gmail.com> <6324dc1b.df0a0220.97787.083c@mx.google.com> <CAA8EJpo08WoQ_LYOtg5C2BB=Q6GR_cftLjaWHWjYD6BjfDZcsg@mail.gmail.com> <6324f087.1c0a0220.7123d.8665@mx.google.com> <CAA8EJprhLUybqmPhFmit6LGaNOxz=-9+8xADXowJuzU5BtjjtA@mail.gmail.com> <632618ac.050a0220.bda86.d7a8@mx.google.com> <63262383.df0a0220.27cbb.1c41@mx.google.com>
-Message-ID: <7F54CF10-F2EF-46C6-B291-9339FE5D10E4@linaro.org>
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Richard Acayan <mailingradian@gmail.com>,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH v2 0/3] SDM670 Pin Control Driver
+Date:   Sat, 17 Sep 2022 17:09:12 -0400
+Message-Id: <20220917210915.194840-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Changes since v1:
+ - add a field in msm_pinctrl_soc_data to accomodate the needs of the
+   driver and device dts
+ - apply changes made to existing tlmm dt documentation
+ - add reserved gpios array
+ - rename device tree compat string to qcom,sdm670-tlmm
+ - remove dependency on ACPI
+ - move MODULE_DEVICE_TABLE macro call up
+ - add missing pins (fixes most of the debugfs problems)
+ - move qup0_pins down
+ - add whitespace between UFS_RESET macro and pins array
+
+This patch series adds the driver for the Qualcomm Snapdragon 670 TLMM
+(Top-Level Mode Multiplexer) and introduces a new field so that SDM670-
+related device trees can reserve their own gpios.
+
+ .../bindings/pinctrl/qcom,sdm670-tlmm.yaml         |  135 ++
+ drivers/pinctrl/qcom/Kconfig                       |    9 +
+ drivers/pinctrl/qcom/Makefile                      |    1 +
+ drivers/pinctrl/qcom/pinctrl-msm.c                 |    3 +-
+ drivers/pinctrl/qcom/pinctrl-msm.h                 |    4 +
+ drivers/pinctrl/qcom/pinctrl-sdm670.c              | 1374 ++++++++++++++++++++
+ 6 files changed, 1525 insertions(+), 1 deletion(-)
 
 
-On 17 September 2022 22:44:00 GMT+03:00, Christian Marangi <ansuelsmth@gma=
-il=2Ecom> wrote:
->On Sat, Sep 17, 2022 at 08:57:44PM +0200, Christian Marangi wrote:
->> On Sat, Sep 17, 2022 at 04:45:21PM +0300, Dmitry Baryshkov wrote:
->> > On Sat, 17 Sept 2022 at 00:54, Christian Marangi <ansuelsmth@gmail=2E=
-com> wrote:
->> > >
->> > > On Fri, Sep 16, 2022 at 11:31:49PM +0300, Dmitry Baryshkov wrote:
->> > > > On Fri, 16 Sept 2022 at 23:27, Christian Marangi <ansuelsmth@gmai=
-l=2Ecom> wrote:
->> > > > >
->> > > > > On Fri, Sep 16, 2022 at 11:22:17PM +0300, Dmitry Baryshkov wrot=
-e:
->> > > > > > On Fri, 16 Sept 2022 at 23:13, Christian Marangi <ansuelsmth@=
-gmail=2Ecom> wrote:
->> > > > > > >
->> > > > > > > On Fri, Sep 16, 2022 at 11:06:35PM +0300, Dmitry Baryshkov =
-wrote:
->> > > > > > > > On Fri, 16 Sept 2022 at 22:43, Christian Marangi <ansuels=
-mth@gmail=2Ecom> wrote:
->> > > > > > > > >
->> > > > > > > > > On Fri, Sep 16, 2022 at 02:17:15PM -0500, Rob Herring w=
-rote:
->> > > > > > > > > > On Wed, Sep 14, 2022 at 04:22:53PM +0200, Christian M=
-arangi wrote:
->> > > > > > > > > > > Convert kpss-acc driver Documentation to yaml=2E
->> > > > > > > > > > > The original Documentation was wrong all along=2E F=
-ix it while we are
->> > > > > > > > > > > converting it=2E
->> > > > > > > > > > > The example was wrong as kpss-acc-v2 should only ex=
-pose the regs but we
->> > > > > > > > > > > don't have any driver that expose additional clocks=
-=2E The kpss-acc driver
->> > > > > > > > > > > is only specific to v1=2E For this exact reason, li=
-mit all the additional
->> > > > > > > > > > > bindings (clocks, clock-names, clock-output-names a=
-nd #clock-cells) to
->> > > > > > > > > > > v1 and also flag that these bindings should NOT be =
-used for v2=2E
->> > > > > > > > > >
->> > > > > > > > > > Odd that a clock controller has no clocks, but okay=
-=2E
->> > > > > > > > > >
->> > > > > > > > >
->> > > > > > > > > As said in the commit v2 is only used for regs=2E v2 it=
-'s only used in
->> > > > > > > > > arch/arm/mach-qcom/platsmp=2Ec to setup stuff cpu hotpl=
-ug and bringup=2E
->> > > > > > > > >
->> > > > > > > > > Should we split the 2 driver? To me the acc naming seem=
-s to be just
->> > > > > > > > > recycled for v2 and it's not really a clk controller=2E
->> > > > > > > > >
->> > > > > > > > > So keeping v2 in arm/msm/qcom,kpss-acc-v2=2Eyaml and v1=
- moved to clock?
->> > > > > > > >
->> > > > > > > > I suspect that qcom,kpss-acc-v2 is misnamed as the "clock=
--controller"=2E
->> > > > > > > > According to msm-3=2E10, these regions are used by the Kr=
-ait core
->> > > > > > > > regulators=2E
->> > > > > > > >
->> > > > > > >
->> > > > > > > Well we need to understand how to handle this=2E=2E=2E chan=
-ge the compatible
->> > > > > > > it's a nono for sure=2E In platsmp=2Ec they are used for cp=
-u power control
->> > > > > > > so could be that they are actually used to regulators=2E I =
-would honestly
->> > > > > > > move v1 to clock and leave v2 to arm/msm but I'm not cetain=
- on what name
->> > > > > > > to assign to the 2 yaml=2E
->> > > > > > >
->> > > > > > > What do you think?
->> > > > > >
->> > > > > > This is fine for me=2E If somebody gets better understanding =
-of
->> > > > > > underlying hardware and works on actually using these blocks,=
- he will
->> > > > > > update the bindings=2E
->> > > > > >
->> > > > > > My only suggestion would be to rename kpss-acc-v2 nodes to
->> > > > > > 'power-controller@address' and document them so=2E
->> > > > > >
->> > > > >
->> > > > > Ok so something like this?
->> > > > >
->> > > > >     power-controller@f9088000 {
->> > > > >       compatible =3D "qcom,kpss-acc-v2";
->> > > > >       reg =3D <0xf9088000 0x1000>,
->> > > > >             <0xf9008000 0x1000>;
->> > > > >     };
->> > > > >
->> > > > > (and I will have to fix dtbs warning as they will be unmatched =
-I think=2E)
->> > > > > Yaml naming:
->> > > > > qcom,kpss-acc-v1=2Eyaml
->> > > > > qcom,kpss-acc-v2=2Eyaml
->> > > > > Right?
->> > > >
->> > > > Sounds good to me=2E
->> > > >
->> > > > I'd even say clock/qcom,kpss-acc-v1=2Eyaml and
->> > > > arm/msm/qcom,kpss-acc-v2=2Eyaml or maybe power/qcom,kpss-acc-v2=
-=2Eyaml
->> > > >
->> > >
->> > > Wonder if the gcc driver should have the same tretement? It's also =
-a
->> > > clock-controller driver that doesn't use clock at all=2E=2E=2E Do y=
-ou have
->> > > some info about it?
->> >=20
->> > As far as I understand, the kpss-gcc is a normal clock controller,
->> > isn't it? It provides clocks to other devices=2E
->> >=20
->>=20
->> Hi again=2E=2E=2E Having acc-v2 as power-controller would require to se=
-t
->> #power-domain-cells =3D <0>;
-
-Why? I don't think so=2E Rob/Krzysztof, please correct me if I'm wrong=2E
-
->>=20
->> Would that be acceptable? Considering it wouldn't expose any PM domain?
->>=20
->> About kpss-gcc we have some device that for some reason doesn't have th=
-e
->> required clocks defined in the dts=2E I checked the related gcc and no =
-PXO
->> defined and no pll8_vote clock defined=2E (the affected dts are all lis=
-ted
->> in the related Documentation)
->>=20
->> No idea how they currently work with the kpss-gcc driver as these
->> parents are missing=2E Guess the driver just fails to probe?
->> So this was the question if you had more info about it=2E=2E=2E since t=
-o me it
->> seems just another gcc v2 that doesn't expose clocks but it's just a
->> power-controller just like acc-v2=2E=20
->>=20
->> --=20
->> 	Ansuel
->
->(Also sorry for the double email)
->I'm checking the regs for apq8084 for example (from the dtsi)
->Are we really sure they are power-controller?
-
-It looks like it's a regularor on steroids=2E See krait-regulator=2Ec and =
-corresponding bindings in msm-3=2E10/3=2E14=2E So I'd use either the regula=
-tor or the power-controller (with significant bias towards controller)
-
->Checking the regs it seems they just changed the location and they
->placed clock-controller and right after the power-controller=2E
->So one can get confused and say that 0xf9=2E=2E=2E can be all related to =
-power
->controller=2E I posted the regs for reference=2E
->
->acc0 0xf9088000 0x1000
->saw0 0xf9089000 0x1000
->
->acc1 0xf9098000 0x1000
->saw1 0xf9099000 0x1000
->
->acc2 0xf90a8000 0x1000
->saw2 0xf90b9000 0x1000
->
->Anyway while at it there seems to be a bit of confusion about the naming
->here=2E=2E=2E We have on ipq8064 and ipq4019 the saw node set as regulato=
-r and
->with the regulator binding but on msm8974 and apq8084 the saw node set
->as power-controller (with the l2 node with the regulator binding)=2E
->
->Think we should chose a name and fix every dts=2E
->So the main question here is=2E=2E=2E
->Should we keep acc as clock-controller or change it to power-controller
->(for v2)?
->
->Should we change saw node to regulator or power-controller?
->
->From what I know acc are used to enable the cpu so it seems sane to keep
->them as clock-controller (even if v2 doesn't export clock)
->Saw node handle power (and in theory even low power state) so it seems
->sane to change them to power-controller=2E
->
->Currently we have no warning for saw node as they are not converted to
->yaml but as soon as someone convert the txt to yaml then we will have
->all sort of inconsistency so better take a decision now instead of
->convert saw to yaml and then change acc node again to fix them for good=
-=2E
-
-
-The saw is definitely a bigger thing than just a regularor (or a set of th=
-em)=2E It is used to control pmics, it handles low-power states, so `power-=
-controller'=2E
-
---=20
-With best wishes
-Dmitry
