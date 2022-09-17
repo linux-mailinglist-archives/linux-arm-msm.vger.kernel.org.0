@@ -1,243 +1,172 @@
 Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from out1.vger.email (unknown [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A492B5BBA29
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Sep 2022 21:44:30 +0200 (CEST)
+Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
+	by mail.lfdr.de (Postfix) with ESMTP id E945C5BBA66
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Sep 2022 22:34:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229561AbiIQToI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Sep 2022 15:44:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39182 "EHLO
+        id S229455AbiIQUeW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Sep 2022 16:34:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbiIQToH (ORCPT
+        with ESMTP id S229588AbiIQUeV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Sep 2022 15:44:07 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C5852BB24;
-        Sat, 17 Sep 2022 12:44:05 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id az24-20020a05600c601800b003a842e4983cso1833268wmb.0;
-        Sat, 17 Sep 2022 12:44:05 -0700 (PDT)
+        Sat, 17 Sep 2022 16:34:21 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD62B2F002
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Sep 2022 13:34:19 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id bn9so29621770ljb.6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Sep 2022 13:34:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date;
-        bh=9MOtt1g/rm8xaea/35yg7P6pO/gnunYbV8isjRoBVdg=;
-        b=e8xu9MRfatjxNk6m/3A+pZqn221lwHNckzcTpWFacpW/cj9zvojW+ULn/yJYpIJmYD
-         sdqEUdqDUaIf7gOXWUfvuzyyoyaor5eYTUxivJZ4taNd4L2DL7vrbkPIm0RdaO/eDXnT
-         rNDfMaFC9uoe7mYu801u/WrRONvaih/K3xE1u7UdIRNB2f/XezkCkDuL4BdDVrADgTcT
-         eqFTw2MwNf411fiuva/KErGnIKRvTuYrnc73JZjPCtvlGfQFGVAVEyiX6IjLFSegXIMp
-         mJRFCJa9ANG3ID63U1cIQjO9RQQsLBZLRXlHRRHRIonAE0qgIUiXHxm584tPCfY1NUbm
-         YlEA==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date;
+        bh=2Y1O5W5ZK28eg1neor+oaEXrSqDR7BOdeg/qxT29wqY=;
+        b=jtIrDJ7Eyvm/ojEtYCR7rZTmenqjMJwE/dO6p0M8Y0WJ1ZyqMVriL67OwAZ6uRpFtE
+         e1RilQzbJhIAO2RcGotuo9ficZJPXHOW87Asz9OEOH3nXxKIGCcl8B/fh8owUoBecvTs
+         HUBEUDUwNmudRspSl3l4yQbn4KceZFMs8phcmQKG9RbAQLDdQAjzZ+t6DkpahoWYknR4
+         DB6fK1px8Mm+9oSGJrnQbcEvSZQSki7FdzNJ6bPZL4qxmhlHt6BNahto7eiPKuPL4FPb
+         6kf/KgdidMru6MPjGpKZM4CjQF9BC1uk0iLnF86zOu/ORBw2lxHEQ1eyaEE6QJF1LF0S
+         IicQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=9MOtt1g/rm8xaea/35yg7P6pO/gnunYbV8isjRoBVdg=;
-        b=gd8U2mHsQyx4FmACixfVJaxnoNNWZRPYdUQZpZiCQj51do37i5ugePjW72O2e1QEwH
-         wlB8bLyo6omSuzWs3+kQErLK77jOsPdASzeHH6gMEMIKh5aP3aX10wmpTUoUL2nPk2rA
-         6bfNbPKpFCQxfsL4r1LjUoxCpKizRuf3JGpLC44shKW8+GzeWBvh7wdfKZ8hEOeHkxhd
-         1xvhXhdf5+fvzbXXfCcmOEdPTdxenZnj6fgw+1OqSJsfH9nvNobeC80BvodXo51bicdV
-         fw/EeZYhLYlqrIVtsu5wybNgp3+QlPOrnu9e1c1z1Z2/1g9nRtmriTPf9gbagXOqYzsR
-         KYtA==
-X-Gm-Message-State: ACrzQf2osQR7ZBbV0LgWyI17lVye3MR/u6T9KoB8yxB1F0lZpCzGIHAX
-        9ga8qPR4cuD3Dy2MFGhheDk=
-X-Google-Smtp-Source: AMsMyM6yF5xqGZYQUON3LyUEhYWCuF4gl3rbiaAjHSdxKZsmF+LTWXIcg40eqORnx77JZRP0tf8njA==
-X-Received: by 2002:a7b:c2a2:0:b0:3a8:4959:a327 with SMTP id c2-20020a7bc2a2000000b003a84959a327mr7329658wmk.50.1663443844289;
-        Sat, 17 Sep 2022 12:44:04 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-134.ip85.fastwebnet.it. [93.42.70.134])
-        by smtp.gmail.com with ESMTPSA id d8-20020adfef88000000b002250c35826dsm8604667wro.104.2022.09.17.12.44.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Sep 2022 12:44:03 -0700 (PDT)
-Message-ID: <63262383.df0a0220.27cbb.1c41@mx.google.com>
-X-Google-Original-Message-ID: <YyYjgPeHn6nvaFcV@Ansuel-xps.>
-Date:   Sat, 17 Sep 2022 21:44:00 +0200
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=2Y1O5W5ZK28eg1neor+oaEXrSqDR7BOdeg/qxT29wqY=;
+        b=TXfXVVyxRT9TnhspNskFc3wU9NO3hl2s7UGSHNWPH+3Yz/nJb/AolvLunTf7uLHeyz
+         6dJgU5j8tHwWkFUG4NEcXUeeIQO8MkaFjeuzy2Z82dRGSs664Lvhj3oqdgx867Jye8aS
+         bAE9Zq3FJKelj1AnRWyjugDUVLMDK9f/wPKPlbLP6LW6xFrpcIOuqkYpodYxRQs3CKqo
+         FpFqwpzkqvjgJEdj9Jlt0Oj7gdU7wsgMPu4tc6yjWhoEySFaMR/vOKNsnDFl7AYs1oCZ
+         CVn8Z2j//edT2lVl18o61/HQEJj2MsI/7Vuuy0gIHyADmD370TKrUYXeXAXXjXtDUtL+
+         5r0g==
+X-Gm-Message-State: ACrzQf3QRKqO4jltU/sHn/vkT3RfFdY0nuVRu5PGF+DKmFIzXCj9B975
+        DnNqeoYJsfaLLQG4C8TpHqL9NQ==
+X-Google-Smtp-Source: AMsMyM7bnnopvuZP6zJTx1BTPUhAP8xR75gy0SpMz4s0r6XB6jt8bxUkXllqVPKyhuIvxYFrnuqctw==
+X-Received: by 2002:a2e:bba2:0:b0:26b:e2d6:fe44 with SMTP id y34-20020a2ebba2000000b0026be2d6fe44mr3061475lje.286.1663446858141;
+        Sat, 17 Sep 2022 13:34:18 -0700 (PDT)
+Received: from [127.0.0.1] ([188.162.64.169])
+        by smtp.gmail.com with ESMTPSA id z27-20020a0565120c1b00b0049a6a9bc0dcsm3836790lfu.134.2022.09.17.13.34.17
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 17 Sep 2022 13:34:17 -0700 (PDT)
+Date:   Sat, 17 Sep 2022 23:33:09 +0300
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Alexey Dobriyan <adobriyan@gmail.com>,
-        Takashi Iwai <tiwai@suse.de>,
-        Christian Brauner <brauner@kernel.org>,
-        Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-        Marc Herbert <marc.herbert@intel.com>,
-        James Smart <jsmart2021@gmail.com>,
-        Justin Tee <justin.tee@broadcom.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v5 2/5] dt-bindings: arm: msm: Convert kpss-acc driver
- Documentation to yaml
-References: <20220916191715.GA1079300-robh@kernel.org>
- <6324d1be.050a0220.9d842.7b47@mx.google.com>
- <CAA8EJprEQOsm4TxGWJYZo04D1PagT3QmhDdYQkEid-KSP-tpTw@mail.gmail.com>
- <6324d8e1.170a0220.aba35.ba4f@mx.google.com>
- <CAA8EJpowLvkuiYupqS0WEhnMR8q=R1YUUFgdFVCAx1PXyoo1xw@mail.gmail.com>
- <6324dc1b.df0a0220.97787.083c@mx.google.com>
- <CAA8EJpo08WoQ_LYOtg5C2BB=Q6GR_cftLjaWHWjYD6BjfDZcsg@mail.gmail.com>
- <6324f087.1c0a0220.7123d.8665@mx.google.com>
- <CAA8EJprhLUybqmPhFmit6LGaNOxz=-9+8xADXowJuzU5BtjjtA@mail.gmail.com>
- <632618ac.050a0220.bda86.d7a8@mx.google.com>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [RFC PATCH 5/7] arm64: qcom: dts: sagami: correct firmware paths
+User-Agent: K-9 Mail for Android
+In-Reply-To: <5c701a7f-14cb-a11c-d822-6a89c4ca903c@somainline.org>
+References: <20220915152630.133528-1-dmitry.baryshkov@linaro.org> <20220915152630.133528-6-dmitry.baryshkov@linaro.org> <5c701a7f-14cb-a11c-d822-6a89c4ca903c@somainline.org>
+Message-ID: <710F2BE9-F2A6-4931-9856-FE81293D1929@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <632618ac.050a0220.bda86.d7a8@mx.google.com>
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Sep 17, 2022 at 08:57:44PM +0200, Christian Marangi wrote:
-> On Sat, Sep 17, 2022 at 04:45:21PM +0300, Dmitry Baryshkov wrote:
-> > On Sat, 17 Sept 2022 at 00:54, Christian Marangi <ansuelsmth@gmail.com> wrote:
-> > >
-> > > On Fri, Sep 16, 2022 at 11:31:49PM +0300, Dmitry Baryshkov wrote:
-> > > > On Fri, 16 Sept 2022 at 23:27, Christian Marangi <ansuelsmth@gmail.com> wrote:
-> > > > >
-> > > > > On Fri, Sep 16, 2022 at 11:22:17PM +0300, Dmitry Baryshkov wrote:
-> > > > > > On Fri, 16 Sept 2022 at 23:13, Christian Marangi <ansuelsmth@gmail.com> wrote:
-> > > > > > >
-> > > > > > > On Fri, Sep 16, 2022 at 11:06:35PM +0300, Dmitry Baryshkov wrote:
-> > > > > > > > On Fri, 16 Sept 2022 at 22:43, Christian Marangi <ansuelsmth@gmail.com> wrote:
-> > > > > > > > >
-> > > > > > > > > On Fri, Sep 16, 2022 at 02:17:15PM -0500, Rob Herring wrote:
-> > > > > > > > > > On Wed, Sep 14, 2022 at 04:22:53PM +0200, Christian Marangi wrote:
-> > > > > > > > > > > Convert kpss-acc driver Documentation to yaml.
-> > > > > > > > > > > The original Documentation was wrong all along. Fix it while we are
-> > > > > > > > > > > converting it.
-> > > > > > > > > > > The example was wrong as kpss-acc-v2 should only expose the regs but we
-> > > > > > > > > > > don't have any driver that expose additional clocks. The kpss-acc driver
-> > > > > > > > > > > is only specific to v1. For this exact reason, limit all the additional
-> > > > > > > > > > > bindings (clocks, clock-names, clock-output-names and #clock-cells) to
-> > > > > > > > > > > v1 and also flag that these bindings should NOT be used for v2.
-> > > > > > > > > >
-> > > > > > > > > > Odd that a clock controller has no clocks, but okay.
-> > > > > > > > > >
-> > > > > > > > >
-> > > > > > > > > As said in the commit v2 is only used for regs. v2 it's only used in
-> > > > > > > > > arch/arm/mach-qcom/platsmp.c to setup stuff cpu hotplug and bringup.
-> > > > > > > > >
-> > > > > > > > > Should we split the 2 driver? To me the acc naming seems to be just
-> > > > > > > > > recycled for v2 and it's not really a clk controller.
-> > > > > > > > >
-> > > > > > > > > So keeping v2 in arm/msm/qcom,kpss-acc-v2.yaml and v1 moved to clock?
-> > > > > > > >
-> > > > > > > > I suspect that qcom,kpss-acc-v2 is misnamed as the "clock-controller".
-> > > > > > > > According to msm-3.10, these regions are used by the Krait core
-> > > > > > > > regulators.
-> > > > > > > >
-> > > > > > >
-> > > > > > > Well we need to understand how to handle this... change the compatible
-> > > > > > > it's a nono for sure. In platsmp.c they are used for cpu power control
-> > > > > > > so could be that they are actually used to regulators. I would honestly
-> > > > > > > move v1 to clock and leave v2 to arm/msm but I'm not cetain on what name
-> > > > > > > to assign to the 2 yaml.
-> > > > > > >
-> > > > > > > What do you think?
-> > > > > >
-> > > > > > This is fine for me. If somebody gets better understanding of
-> > > > > > underlying hardware and works on actually using these blocks, he will
-> > > > > > update the bindings.
-> > > > > >
-> > > > > > My only suggestion would be to rename kpss-acc-v2 nodes to
-> > > > > > 'power-controller@address' and document them so.
-> > > > > >
-> > > > >
-> > > > > Ok so something like this?
-> > > > >
-> > > > >     power-controller@f9088000 {
-> > > > >       compatible = "qcom,kpss-acc-v2";
-> > > > >       reg = <0xf9088000 0x1000>,
-> > > > >             <0xf9008000 0x1000>;
-> > > > >     };
-> > > > >
-> > > > > (and I will have to fix dtbs warning as they will be unmatched I think.)
-> > > > > Yaml naming:
-> > > > > qcom,kpss-acc-v1.yaml
-> > > > > qcom,kpss-acc-v2.yaml
-> > > > > Right?
-> > > >
-> > > > Sounds good to me.
-> > > >
-> > > > I'd even say clock/qcom,kpss-acc-v1.yaml and
-> > > > arm/msm/qcom,kpss-acc-v2.yaml or maybe power/qcom,kpss-acc-v2.yaml
-> > > >
-> > >
-> > > Wonder if the gcc driver should have the same tretement? It's also a
-> > > clock-controller driver that doesn't use clock at all... Do you have
-> > > some info about it?
-> > 
-> > As far as I understand, the kpss-gcc is a normal clock controller,
-> > isn't it? It provides clocks to other devices.
-> > 
-> 
-> Hi again... Having acc-v2 as power-controller would require to set
-> #power-domain-cells = <0>;
-> 
-> Would that be acceptable? Considering it wouldn't expose any PM domain?
-> 
-> About kpss-gcc we have some device that for some reason doesn't have the
-> required clocks defined in the dts. I checked the related gcc and no PXO
-> defined and no pll8_vote clock defined. (the affected dts are all listed
-> in the related Documentation)
-> 
-> No idea how they currently work with the kpss-gcc driver as these
-> parents are missing. Guess the driver just fails to probe?
-> So this was the question if you had more info about it... since to me it
-> seems just another gcc v2 that doesn't expose clocks but it's just a
-> power-controller just like acc-v2. 
-> 
-> -- 
-> 	Ansuel
 
-(Also sorry for the double email)
-I'm checking the regs for apq8084 for example (from the dtsi)
-Are we really sure they are power-controller?
-Checking the regs it seems they just changed the location and they
-placed clock-controller and right after the power-controller.
-So one can get confused and say that 0xf9... can be all related to power
-controller. I posted the regs for reference.
 
-acc0 0xf9088000 0x1000
-saw0 0xf9089000 0x1000
+On 17 September 2022 16:07:13 GMT+03:00, Konrad Dybcio <konrad=2Edybcio@so=
+mainline=2Eorg> wrote:
+>
+>
+>On 15=2E09=2E2022 17:26, Dmitry Baryshkov wrote:
+>> Correct firmware paths for the Sony Xperia Sagami devices to include th=
+e
+>> SoC name=2E
+>>=20
+>> Signed-off-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
+>> ---
+>>  =2E=2E=2E/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami=2Edtsi | 10 ++=
++++-----
+>>  1 file changed, 5 insertions(+), 5 deletions(-)
+>>=20
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami=2Edtsi =
+b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami=2Edtsi
+>> index b3c9952ac173=2E=2Ee0940cb58681 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami=2Edtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami=2Edtsi
+>> @@ -77,12 +77,12 @@ ramoops@ffc00000 {
+>> =20
+>>  &adsp {
+>>  	status =3D "okay";
+>> -	firmware-name =3D "qcom/adsp=2Embn";
+>> +	firmware-name =3D "qcom/sdm8350/sagami/adsp=2Embn";
+>sm8350 ;)
+>
+>I think it would be cleaner to follow with what's currently in linux-firm=
+ware [1],
+>so "qcom/socname/vendor/platform-or-device"=2E Xperias have a single key =
+per SoC, so
+>per-platform is fine here=2E Should be the same for other vendors, but no=
+ guarantees=2E
+>
+>In this particular case, I think qcom/sm8350/SOMC/sagami would be appropr=
+iate, as
+>it seems like SONY is still internally using that name [2] (SOny Mobile C=
+ommunications)
+>(sidenote: they are still using the legacy SEMC / Sony Ericsson Mobile
+>Communications in some places if you dig deep enough :D), buuuut they can=
+'t seem
+>to decide, might as well make it PlayStation at this point haha
 
-acc1 0xf9098000 0x1000
-saw1 0xf9099000 0x1000
+I'd vote for plain Sony=2E Both SOMC and SEMC are non-obvious and too cryp=
+tic=2E
 
-acc2 0xf90a8000 0x1000
-saw2 0xf90b9000 0x1000
+>
+>
+>Konrad
+>
+>[1] https://git=2Ekernel=2Eorg/pub/scm/linux/kernel/git/firmware/linux-fi=
+rmware=2Egit/tree/qcom/sc8280xp/LENOVO
+>[2] https://github=2Ecom/sonyxperiadev/kernel-copyleft-dts/blob/64=2E0=2E=
+A=2E2=2Exxx/devicetree/qcom/waipio-nagara-pdx223_generic=2Edts#L10
+>>  };
+>> =20
+>>  &cdsp {
+>>  	status =3D "okay";
+>> -	firmware-name =3D "qcom/cdsp=2Embn";
+>> +	firmware-name =3D "qcom/sdm8350/sagami/cdsp=2Embn";
+>>  };
+>> =20
+>>  &i2c1 {
+>> @@ -175,12 +175,12 @@ &i2c17 {
+>>  &ipa {
+>>  	status =3D "okay";
+>>  	memory-region =3D <&pil_ipa_fw_mem>;
+>> -	firmware-name =3D "qcom/ipa_fws=2Embn";
+>> +	firmware-name =3D "qcom/sdm8350/sagami/ipa_fws=2Embn";
+>>  };
+>> =20
+>>  &mpss {
+>>  	status =3D "okay";
+>> -	firmware-name =3D "qcom/modem=2Embn";
+>> +	firmware-name =3D "qcom/sdm8350/sagami/modem=2Embn";
+>>  };
+>> =20
+>>  &pmk8350_rtc {
+>> @@ -210,7 +210,7 @@ &qupv3_id_2 {
+>> =20
+>>  &slpi {
+>>  	status =3D "okay";
+>> -	firmware-name =3D "qcom/slpi=2Embn";
+>> +	firmware-name =3D "qcom/sdm8350/sagami/slpi=2Embn";
+>>  };
+>> =20
+>>  &spi14 {
 
-Anyway while at it there seems to be a bit of confusion about the naming
-here... We have on ipq8064 and ipq4019 the saw node set as regulator and
-with the regulator binding but on msm8974 and apq8084 the saw node set
-as power-controller (with the l2 node with the regulator binding).
-
-Think we should chose a name and fix every dts.
-So the main question here is...
-Should we keep acc as clock-controller or change it to power-controller
-(for v2)?
-
-Should we change saw node to regulator or power-controller?
-
-From what I know acc are used to enable the cpu so it seems sane to keep
-them as clock-controller (even if v2 doesn't export clock)
-Saw node handle power (and in theory even low power state) so it seems
-sane to change them to power-controller.
-
-Currently we have no warning for saw node as they are not converted to
-yaml but as soon as someone convert the txt to yaml then we will have
-all sort of inconsistency so better take a decision now instead of
-convert saw to yaml and then change acc node again to fix them for good.
-
--- 
-	Ansuel
+--=20
+With best wishes
+Dmitry
