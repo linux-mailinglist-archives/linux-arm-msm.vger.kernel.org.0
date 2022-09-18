@@ -2,75 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1667D5BBC9A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Sep 2022 10:57:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 458275BBCB4
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Sep 2022 11:15:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229518AbiIRI5b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Sep 2022 04:57:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54290 "EHLO
+        id S229591AbiIRJPW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Sep 2022 05:15:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229495AbiIRI5a (ORCPT
+        with ESMTP id S229542AbiIRJPU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Sep 2022 04:57:30 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B07248DB
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Sep 2022 01:57:27 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id w8so42180791lft.12
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Sep 2022 01:57:27 -0700 (PDT)
+        Sun, 18 Sep 2022 05:15:20 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6785321E1C
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Sep 2022 02:15:19 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id c7so19187576ljm.12
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Sep 2022 02:15:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=46be7+fgoPh3F2vUA+v6CaFGB18NuU1007HMexTsdZc=;
-        b=d/+Iwp31+uK4FmbJRJOghfhKJAdpgGxKWO3MtL8c399NhLzYdlLUpt/h1KqTMD2XXO
-         nx0xd0tHd8Q1Svefzogb1vtuOYbM52sT7AB76G7hs/PMHkSk8hYVhVlq+/WkOlBUfcf+
-         Ur2EsK/4tmnL12/R+gJ7sPOWe7wALzeIn/WcNYLC+0fEF0JSowjLVE6j7k6nL7M1f5XQ
-         2b1/a5ZZjTnXJpqTvOQHfye61LANBfto7eFzLXNpEVrxTdhCMwiBjj9k+8y/frXOrIHB
-         Bip2sGGO31piszPjYzFDGJbRMPb4XgF7TzAKOTsX+i9P2Aku+MdxWJPyQcncE5hrlje7
-         pA1g==
+        bh=YAmWSRe5Gq0WUlezroDaVszGCMPa6MPQZqhM455jkZs=;
+        b=yWULXnlzzU9J9JFAeAFHcF4ohsKBDJNPio3e5WVpj7TeY7ISuhXGsB1YUVhTFR1kL6
+         PA7lrJ+I9T76dxdfG/Qr0jn0xmX5+ELWU4NKDmek9LNGmJI+nEc4g2t3xioT6ZFFA4Xn
+         ephNeXdxFl2Ppd5TXOeWykGJeg1WKXBA0l1aMssxavcPQYnBNxfXVts0WqNRVyCtG+M9
+         lf3CnmJ6f40dabdeO9YEydoIxvZX7hBgVq6GZaJKdJKq6xKLIqu5FoqhDZ+uK/abu5SP
+         1hZVXt1KuZJqH5Sx9IDishvXBFA6U+0HVmqNof7RYbCOmnNLZhJ8acuAySvjyE176M88
+         ULvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=46be7+fgoPh3F2vUA+v6CaFGB18NuU1007HMexTsdZc=;
-        b=hKstqNPGwvlJHUJOYVl0c+wb+vlLXCogYXsEW+Kk3WztN+21QDnb0da/ZdNICuyYLI
-         JSPz5zciMiIiydu19IvXHL3NwcRRKUxLDqAbEhmZQXHoSqIauql6RoMRM66GdW72g1nz
-         qFUmbbCXE7y1ofA/S/9RcLZNnWys4mYvgMoocPIQnMUE6oDWBXg5ZiH5MrlNba983UpI
-         gHl3EW8i+D5sC5VLuSYqEkpdb7D6o7h2pXjzCUE/d+s5Qy+cwiezJrsZDXBDHzQk77z4
-         qsLf2RFlr8aVSL/0UFeEAwCXibHnnJ8dMDqQCCFvT43FV3YxZuupI4qNrQvwjI0Q3VXz
-         FTXg==
-X-Gm-Message-State: ACrzQf0VRiYnTqsiYS3BI/+XOxwSBuXOyI+3bXE7sxSNK5OEEliQ074Q
-        P1rpbl3P2b6yZD3Frk8rt3J6kA==
-X-Google-Smtp-Source: AMsMyM7uxpivTqiWMZ3ywvCFvxTHYSEcnXcqpXgkMFAzjLkrdR/hx3NYZjF4hK2SpZ/F39DwFAKqhQ==
-X-Received: by 2002:a05:6512:304d:b0:498:9d7b:43f with SMTP id b13-20020a056512304d00b004989d7b043fmr4073203lfb.48.1663491445524;
-        Sun, 18 Sep 2022 01:57:25 -0700 (PDT)
+        bh=YAmWSRe5Gq0WUlezroDaVszGCMPa6MPQZqhM455jkZs=;
+        b=VuuedVnBUUga+L2FmaSivHFh9ktrh6usUB090pLHH58wBaYhtjRW0YeSYQMA6qjL1u
+         GuW+OjarCzUcWgS7RE1Px5qOiF89+wd6xD4EKzc95PfPDpMiuOCP/Um3/JstaK1E0h+N
+         KkFrfj5VnYxY/b7Lro645obv9kFJHf6OlnzgHOR3D1T4bAT1yJoB0/tR1SuTu6hWLE1/
+         jelrX89ELw/QaujWdnkJxIGMzQYqUV2EI+Cj+qNCaaqEuMDddXJJEOXYNod6qrlq5xgf
+         fkozVQ5HrPTtj7P1RICeYJE1VOP8U/7oHBbzvGXWXKIPvVTCd8lhSk1tkl+3duv3GJ6Z
+         UYMA==
+X-Gm-Message-State: ACrzQf30JiWcw54cyyM+RylB/d/CXrEXC+7h3FJnuimbJBNihOe0F0HH
+        hxakuVv0YW/UiDL3hBR35KnobQ==
+X-Google-Smtp-Source: AMsMyM5FhRow4sbIo6dhZeJi0VQSwzplmq2oYHdLZ1viQXHQIF0nIoRivXMABx3g4iq92/PvNdreVA==
+X-Received: by 2002:a2e:9ec3:0:b0:261:c893:679c with SMTP id h3-20020a2e9ec3000000b00261c893679cmr3516027ljk.378.1663492517667;
+        Sun, 18 Sep 2022 02:15:17 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id q16-20020a194310000000b004946aef1814sm4570117lfa.137.2022.09.18.01.57.24
+        by smtp.gmail.com with ESMTPSA id v17-20020ac258f1000000b00499b1873d6dsm4486157lfo.269.2022.09.18.02.15.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 18 Sep 2022 01:57:24 -0700 (PDT)
-Message-ID: <83144092-42bf-c6f7-e5d0-3153388ad143@linaro.org>
-Date:   Sun, 18 Sep 2022 09:57:23 +0100
+        Sun, 18 Sep 2022 02:15:17 -0700 (PDT)
+Message-ID: <d8950be7-7b8b-6ad0-5825-c090e0c9b04d@linaro.org>
+Date:   Sun, 18 Sep 2022 10:15:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
-Subject: Re: [PATCH v2 1/3] dt-bindings: pinctrl: qcom: add sdm670 pinctrl
+Subject: Re: [PATCH v5 2/5] ASoC: dt-bindings: qcom: sort compatible strings
 Content-Language: en-US
-To:     Richard Acayan <mailingradian@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20220917210915.194840-1-mailingradian@gmail.com>
- <20220917210915.194840-2-mailingradian@gmail.com>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        broonie@kernel.org
+Cc:     lgirdwood@gmail.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, bgoswami@quicinc.com,
+        perex@perex.cz, tiwai@suse.com, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220916132427.1845-1-srinivas.kandagatla@linaro.org>
+ <20220916132427.1845-3-srinivas.kandagatla@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220917210915.194840-2-mailingradian@gmail.com>
+In-Reply-To: <20220916132427.1845-3-srinivas.kandagatla@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,157 +80,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/09/2022 22:09, Richard Acayan wrote:
-> There is a new driver for the Snapdragon 670 TLMM (Top-Level Mode
-> Multiplexer). Document it.
+On 16/09/2022 14:24, Srinivas Kandagatla wrote:
+> Sort compatible strings for consistency reasons.
 > 
-> Adapted from qcom,sm6350-pinctrl.yaml in the same directory at
-> commit c09acbc499e8 ("dt-bindings: pinctrl: use pinctrl.yaml").
-
-Thank you for your patch. There is something to discuss/improve.
-
-> 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 > ---
->  .../bindings/pinctrl/qcom,sdm670-tlmm.yaml    | 135 ++++++++++++++++++
->  1 file changed, 135 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml
-> new file mode 100644
-> index 000000000000..3b6c381a2148
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml
-> @@ -0,0 +1,135 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pinctrl/qcom,sdm670-tlmm.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. SDM670 TLMM block
-> +
-> +maintainers:
-> +  - Richard Acayan <mailingradian@gmail.com>
-> +
-> +description: |
-> +  This binding describes the Top Level Mode Multiplexer (TLMM) block found
-> +  in the SDM670 platform.
-> +
-> +allOf:
-> +  - $ref: "pinctrl.yaml#"
 
-Drop quotes/
 
-> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sdm670-tlmm
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts: true
-> +  interrupt-controller: true
-> +  '#interrupt-cells': true
-> +  gpio-controller: true
-> +  gpio-reserved-ranges: true
-
-Add constraints (minItems: 1, maxItems: half of GPIOs rounded up, so 75
-I guess)
-
-> +  '#gpio-cells': true
-> +  gpio-ranges: true
-> +  wakeup-parent: true
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +
-> +additionalProperties: false
-> +
-> +patternProperties:
-> +  '-state$':
-> +    oneOf:
-> +      - $ref: "#/$defs/qcom-sdm670-tlmm-state"
-> +      - patternProperties:
-> +          "-pins$":
-> +            $ref: "#/$defs/qcom-sdm670-tlmm-state"
-> +        additionalProperties: false
-> +
-> +$defs:
-> +  qcom-sdm670-tlmm-state:
-> +    type: object
-> +    description:
-> +      Pinctrl node's client devices use subnodes for desired pin configuration.
-> +      Client device subnodes use below standard properties.
-> +
-> +    properties:
-> +      pins:
-> +        description:
-> +          List of gpio pins affected by the properties specified in this
-> +          subnode.
-> +        items:
-> +          oneOf:
-> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-4][0-9])$"
-> +            - enum: [ ufs_reset, sdc1_rclk, sdc1_clk, sdc1_cmd, sdc1_data,
-> +                      sdc2_clk, sdc2_cmd, sdc2_data ]
-> +        minItems: 1
-> +        maxItems: 36
-> +
-> +      function:
-> +        description:
-> +          Specify the alternative function to be configured for the specified
-> +          pins.
-> +
-> +        enum: [ adsp_ext, agera_pll, atest_char, atest_tsens, atest_tsens2, atest_usb1, atest_usb10,
-> +                atest_usb11, atest_usb12, atest_usb13, atest_usb2, atest_usb20, atest_usb21,
-> +                atest_usb22, atest_usb23, cam_mclk, cci_async, cci_i2c, cci_timer0, cci_timer1,
-> +                cci_timer2, cci_timer3, cci_timer4, copy_gp, copy_phase, dbg_out, ddr_bist,
-> +                ddr_pxi0, ddr_pxi1, ddr_pxi2, ddr_pxi3, edp_hot, edp_lcd, gcc_gp1, gcc_gp2, gcc_gp3,
-> +                gp_pdm0, gp_pdm1, gp_pdm2, gpio, gps_tx, jitter_bist, ldo_en, ldo_update,
-> +                lpass_slimbus, m_voc, mdp_vsync, mdp_vsync0, mdp_vsync1, mdp_vsync2, mdp_vsync3,
-> +                mss_lte, nav_pps, pa_indicator, pci_e0, pci_e1, phase_flag, pll_bist, pll_bypassnl,
-> +                pll_reset, pri_mi2s, pri_mi2s_ws, prng_rosc, qdss_cti, qdss, qlink_enable,
-> +                qlink_request, qua_mi2s, qup0, qup1, qup10, qup11, qup12, qup13, qup14, qup15, qup2,
-> +                qup3, qup4, qup5, qup6, qup7, qup8, qup9, qup_l4, qup_l5, qup_l6, sdc4_clk,
-> +                sdc4_cmd, sdc4_data, sd_write, sec_mi2s, ter_mi2s, tgu_ch0, tgu_ch1, tgu_ch2,
-> +                tgu_ch3, tsif1_clk, tsif1_data, tsif1_en, tsif1_error, tsif1_sync, tsif2_clk,
-> +                tsif2_data, tsif2_en, tsif2_error, tsif2_sync, uim1_clk, uim1_data, uim1_present,
-> +                uim1_reset, uim2_clk, uim2_data, uim2_present, uim2_reset, uim_batt, usb_phy, vfr_1,
-> +                vsense_trigger, wlan1_adc0, wlan1_adc1, wlan2_adc0, wlan2_adc1, wsa_clk, wsa_data, ]
-> +
-> +
-> +      bias-disable: true
-> +      bias-pull-down: true
-> +      bias-pull-up: true
-> +      drive-strength: true
-> +      input-enable: true
-> +      output-high: true
-> +      output-low: true
-> +
-> +    required:
-> +      - pins
-> +
-> +    allOf:
-> +      - $ref: "qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state"
-> +      - if:
-> +          properties:
-> +            pins:
-> +              pattern: "^gpio([0-9]|[1-9][0-9]|1[0-4][0-9])$"
-> +        then:
-> +          required:
-> +            - function
-> +
-> +    additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +        pinctrl@3400000 {
-
-Use 4 spaces for example indentation.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
 Best regards,
