@@ -2,269 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B7BFC5BBB01
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Sep 2022 01:59:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ADF335BBC7C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Sep 2022 10:11:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229471AbiIQX7T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Sep 2022 19:59:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52376 "EHLO
+        id S229548AbiIRILr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Sep 2022 04:11:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229457AbiIQX7R (ORCPT
+        with ESMTP id S229517AbiIRILp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Sep 2022 19:59:17 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F3C62A712;
-        Sat, 17 Sep 2022 16:59:16 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id t14so41653148wrx.8;
-        Sat, 17 Sep 2022 16:59:16 -0700 (PDT)
+        Sun, 18 Sep 2022 04:11:45 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E4C11F2DA
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Sep 2022 01:11:35 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id fv3so25004696pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Sep 2022 01:11:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date;
-        bh=xcj3QHZVq7X3o4/R+MjpHzJBysypAsFYDAvh1iyPhso=;
-        b=NvAcuQOv67JAuTun7VqDsmHeJSDveVovdoFB9UA7GoxPq4sRg49IMc5ijZJfcv80Ki
-         L13NhoujjeKE1UEmasCLSY8QQgX3ATckb2sIp20puVrY4DqlGqT1gjKMwN84UPBe2f7+
-         yZkxwMUrK04PQw13RedER79pEfUCfYGXV9Qik/tR/MERf4sk1JP9FYNQWqYA2J9yL01y
-         ozseHjVaDCF1NedbqvgClCN2JmtF2Hb59JuokXBklArFQi+j68mUoGz3BIBcYcYtW7uG
-         h+7m9SRW7MNN93xOVl3GuXiUQBiEiPbt6ELMlidVFmnZ8beKN7C/+nTVXtIWoTVDJHcN
-         665Q==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=cIRY+VRqALb4vEHaHBDDtY15l5f9Vz43K52fRmFtiwU=;
+        b=XbzktqWZbBO3vuz+FO9itbrCAcsxrsZEGIJxnBkuxQwBM5NecKenUNbzxMTDF7CCJa
+         6h+q1l1nihH1IbhCZgdmvKM7CAIqMysiDln3BPCt5Ec85bwAWxXssgKiH+TlVo5N9dGo
+         FFouc0fcuNeRBmXBVGZEe/I5Zdf2BPLSx4scJ7Xr6PdfVasDVj/6WJ7SvxEfadKf6yQx
+         eFDc/c7QX0w4X+H5icD50QFhZQ4RcIDYJ6Bk/vQJk66f5jTekDLG7lCQWReFfeGWjtig
+         f9M2MgOv3jZmq2l8bLdSkm4zl74Jw7qTPRVISG3lger/zuvzOPdli6zOAQb0C2dAhi/U
+         Ck1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=xcj3QHZVq7X3o4/R+MjpHzJBysypAsFYDAvh1iyPhso=;
-        b=4ssTQlb+AeiOEpVTCC5B5MDnbqqCR8jAfaBSLMIxG6ZQJKTPyL65LoNC5V9gt4LWEb
-         UuNK77I7CeMAkhkYxNjm+xAMpHIY3zuRIWjfurl0Wk7WFVcT0c05ZtfUxsVnI+DvwV6n
-         ZSvTD4c2VClBy38gmujrWcE28Txrx39CGCcCEjjIhJZe7wmFOP0vQVD41PQkrgIUC7cd
-         BnXMWfJue3g+3OtHn6cvLMQ3xV37pPUNhuU39XpK4i/brVak98W6gruWOfjfBP0RCAMn
-         lacutGAPK4z4996njvnSmkhqR/bhkK+xEqyuOYlH3S2OKKBQ1dkO1cXvO4w5eAZvCpP0
-         fZ1w==
-X-Gm-Message-State: ACrzQf3yAPLvAnmqlfYTyw9DJuaSBDFFq8vEKvYUKy+eptrCtmLd+gHk
-        HTMQ7V9moNnu3IzRrBpkEZ89SIwfTJU=
-X-Google-Smtp-Source: AMsMyM48rllysIhiO0I2d5kH2MMIQDSzGD2ebCEgXFCtuEI7dZ9sZKpzGxAiCxDqwO4UjPEAymzvIQ==
-X-Received: by 2002:a5d:65c2:0:b0:228:68b7:e7b2 with SMTP id e2-20020a5d65c2000000b0022868b7e7b2mr6615005wrw.440.1663459154655;
-        Sat, 17 Sep 2022 16:59:14 -0700 (PDT)
-Received: from Ansuel-xps. (93-42-70-134.ip85.fastwebnet.it. [93.42.70.134])
-        by smtp.gmail.com with ESMTPSA id v11-20020a05600c444b00b003b49bd61b19sm2455055wmn.15.2022.09.17.16.59.12
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=cIRY+VRqALb4vEHaHBDDtY15l5f9Vz43K52fRmFtiwU=;
+        b=t8P12GdQbQPUOiLPLxJ3qau0XPc68ev12J7P4jT3ebTgs5RRdwvrRqmdgsoe7kY/+D
+         AY947lRZbT9Qcl2c0JIW2tPU+CHNGuCD3QjiS+nSIWXepsS86P9lkuBnExMlE9dX2Ow+
+         cjjnA/8Oo0Jw30kdCpVsUNLNbeKfpAsX+G005CJ++mEQiRR9jsEiG2KyiCFsSSsUSmaq
+         axWSFwWEwKEgTzVxonQqQPHydUv6C4AEOtZGGb4LzjQ2LHjUg+RbsBT1megpzJhcSjgq
+         lQh8UdvmuRfWrWjbFSlX4xR1YejIzPKxpXyXw3vodUHhip9OR1HdQtWg7HQbKqnxIhoL
+         8gmg==
+X-Gm-Message-State: ACrzQf3OcIYbNAjxOkVFacVysPbo5iR7WaHwg6jzl5S2zLMp+X8u3VLP
+        b/CmDS/JbYUycQZmMT8lkxpOimDAstoGTg==
+X-Google-Smtp-Source: AMsMyM5XOWO0tuvHPZ8b2m/5XqlmKf32SySgNDZrfYEsflHmGqkiSGI/l9ZZ5xllTHmfulUj7TeZkQ==
+X-Received: by 2002:a17:90b:4b03:b0:202:a7e1:2c9a with SMTP id lx3-20020a17090b4b0300b00202a7e12c9amr13544715pjb.195.1663488694587;
+        Sun, 18 Sep 2022 01:11:34 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1c61:6535:ca5f:67d1:670d:e188])
+        by smtp.gmail.com with ESMTPSA id n17-20020a170902e55100b001752cb111e0sm18244781plf.69.2022.09.18.01.11.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Sep 2022 16:59:14 -0700 (PDT)
-Message-ID: <63265f52.050a0220.93255.3a4c@mx.google.com>
-X-Google-Original-Message-ID: <YyY04tNY4I1FJhOY@Ansuel-xps.>
-Date:   Sat, 17 Sep 2022 22:58:10 +0200
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Alexey Dobriyan <adobriyan@gmail.com>,
-        Takashi Iwai <tiwai@suse.de>,
-        Christian Brauner <brauner@kernel.org>,
-        Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-        Marc Herbert <marc.herbert@intel.com>,
-        James Smart <jsmart2021@gmail.com>,
-        Justin Tee <justin.tee@broadcom.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v5 2/5] dt-bindings: arm: msm: Convert kpss-acc driver
- Documentation to yaml
-References: <CAA8EJprEQOsm4TxGWJYZo04D1PagT3QmhDdYQkEid-KSP-tpTw@mail.gmail.com>
- <6324d8e1.170a0220.aba35.ba4f@mx.google.com>
- <CAA8EJpowLvkuiYupqS0WEhnMR8q=R1YUUFgdFVCAx1PXyoo1xw@mail.gmail.com>
- <6324dc1b.df0a0220.97787.083c@mx.google.com>
- <CAA8EJpo08WoQ_LYOtg5C2BB=Q6GR_cftLjaWHWjYD6BjfDZcsg@mail.gmail.com>
- <6324f087.1c0a0220.7123d.8665@mx.google.com>
- <CAA8EJprhLUybqmPhFmit6LGaNOxz=-9+8xADXowJuzU5BtjjtA@mail.gmail.com>
- <632618ac.050a0220.bda86.d7a8@mx.google.com>
- <63262383.df0a0220.27cbb.1c41@mx.google.com>
- <7F54CF10-F2EF-46C6-B291-9339FE5D10E4@linaro.org>
+        Sun, 18 Sep 2022 01:11:34 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     devicetree@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, bhupesh.sharma@linaro.org,
+        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
+        vkoul@kernel.org, agross@kernel.org, dmaengine@vger.kernel.org,
+        konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        andersson@kernel.org, krzysztof.kozlowski@linaro.org
+Subject: [PATCH] dt-bindings: dma: Make minor fixes to qcom,bam-dma binding doc
+Date:   Sun, 18 Sep 2022 13:41:19 +0530
+Message-Id: <20220918081119.295364-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7F54CF10-F2EF-46C6-B291-9339FE5D10E4@linaro.org>
-X-Spam-Status: No, score=-0.5 required=5.0 tests=BAYES_00,DATE_IN_PAST_03_06,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Sep 17, 2022 at 11:46:23PM +0300, Dmitry Baryshkov wrote:
-> 
-> 
-> On 17 September 2022 22:44:00 GMT+03:00, Christian Marangi <ansuelsmth@gmail.com> wrote:
-> >On Sat, Sep 17, 2022 at 08:57:44PM +0200, Christian Marangi wrote:
-> >> On Sat, Sep 17, 2022 at 04:45:21PM +0300, Dmitry Baryshkov wrote:
-> >> > On Sat, 17 Sept 2022 at 00:54, Christian Marangi <ansuelsmth@gmail.com> wrote:
-> >> > >
-> >> > > On Fri, Sep 16, 2022 at 11:31:49PM +0300, Dmitry Baryshkov wrote:
-> >> > > > On Fri, 16 Sept 2022 at 23:27, Christian Marangi <ansuelsmth@gmail.com> wrote:
-> >> > > > >
-> >> > > > > On Fri, Sep 16, 2022 at 11:22:17PM +0300, Dmitry Baryshkov wrote:
-> >> > > > > > On Fri, 16 Sept 2022 at 23:13, Christian Marangi <ansuelsmth@gmail.com> wrote:
-> >> > > > > > >
-> >> > > > > > > On Fri, Sep 16, 2022 at 11:06:35PM +0300, Dmitry Baryshkov wrote:
-> >> > > > > > > > On Fri, 16 Sept 2022 at 22:43, Christian Marangi <ansuelsmth@gmail.com> wrote:
-> >> > > > > > > > >
-> >> > > > > > > > > On Fri, Sep 16, 2022 at 02:17:15PM -0500, Rob Herring wrote:
-> >> > > > > > > > > > On Wed, Sep 14, 2022 at 04:22:53PM +0200, Christian Marangi wrote:
-> >> > > > > > > > > > > Convert kpss-acc driver Documentation to yaml.
-> >> > > > > > > > > > > The original Documentation was wrong all along. Fix it while we are
-> >> > > > > > > > > > > converting it.
-> >> > > > > > > > > > > The example was wrong as kpss-acc-v2 should only expose the regs but we
-> >> > > > > > > > > > > don't have any driver that expose additional clocks. The kpss-acc driver
-> >> > > > > > > > > > > is only specific to v1. For this exact reason, limit all the additional
-> >> > > > > > > > > > > bindings (clocks, clock-names, clock-output-names and #clock-cells) to
-> >> > > > > > > > > > > v1 and also flag that these bindings should NOT be used for v2.
-> >> > > > > > > > > >
-> >> > > > > > > > > > Odd that a clock controller has no clocks, but okay.
-> >> > > > > > > > > >
-> >> > > > > > > > >
-> >> > > > > > > > > As said in the commit v2 is only used for regs. v2 it's only used in
-> >> > > > > > > > > arch/arm/mach-qcom/platsmp.c to setup stuff cpu hotplug and bringup.
-> >> > > > > > > > >
-> >> > > > > > > > > Should we split the 2 driver? To me the acc naming seems to be just
-> >> > > > > > > > > recycled for v2 and it's not really a clk controller.
-> >> > > > > > > > >
-> >> > > > > > > > > So keeping v2 in arm/msm/qcom,kpss-acc-v2.yaml and v1 moved to clock?
-> >> > > > > > > >
-> >> > > > > > > > I suspect that qcom,kpss-acc-v2 is misnamed as the "clock-controller".
-> >> > > > > > > > According to msm-3.10, these regions are used by the Krait core
-> >> > > > > > > > regulators.
-> >> > > > > > > >
-> >> > > > > > >
-> >> > > > > > > Well we need to understand how to handle this... change the compatible
-> >> > > > > > > it's a nono for sure. In platsmp.c they are used for cpu power control
-> >> > > > > > > so could be that they are actually used to regulators. I would honestly
-> >> > > > > > > move v1 to clock and leave v2 to arm/msm but I'm not cetain on what name
-> >> > > > > > > to assign to the 2 yaml.
-> >> > > > > > >
-> >> > > > > > > What do you think?
-> >> > > > > >
-> >> > > > > > This is fine for me. If somebody gets better understanding of
-> >> > > > > > underlying hardware and works on actually using these blocks, he will
-> >> > > > > > update the bindings.
-> >> > > > > >
-> >> > > > > > My only suggestion would be to rename kpss-acc-v2 nodes to
-> >> > > > > > 'power-controller@address' and document them so.
-> >> > > > > >
-> >> > > > >
-> >> > > > > Ok so something like this?
-> >> > > > >
-> >> > > > >     power-controller@f9088000 {
-> >> > > > >       compatible = "qcom,kpss-acc-v2";
-> >> > > > >       reg = <0xf9088000 0x1000>,
-> >> > > > >             <0xf9008000 0x1000>;
-> >> > > > >     };
-> >> > > > >
-> >> > > > > (and I will have to fix dtbs warning as they will be unmatched I think.)
-> >> > > > > Yaml naming:
-> >> > > > > qcom,kpss-acc-v1.yaml
-> >> > > > > qcom,kpss-acc-v2.yaml
-> >> > > > > Right?
-> >> > > >
-> >> > > > Sounds good to me.
-> >> > > >
-> >> > > > I'd even say clock/qcom,kpss-acc-v1.yaml and
-> >> > > > arm/msm/qcom,kpss-acc-v2.yaml or maybe power/qcom,kpss-acc-v2.yaml
-> >> > > >
-> >> > >
-> >> > > Wonder if the gcc driver should have the same tretement? It's also a
-> >> > > clock-controller driver that doesn't use clock at all... Do you have
-> >> > > some info about it?
-> >> > 
-> >> > As far as I understand, the kpss-gcc is a normal clock controller,
-> >> > isn't it? It provides clocks to other devices.
-> >> > 
-> >> 
-> >> Hi again... Having acc-v2 as power-controller would require to set
-> >> #power-domain-cells = <0>;
-> 
-> Why? I don't think so. Rob/Krzysztof, please correct me if I'm wrong.
-> 
+As a user recently noted, the qcom,bam-dma binding document
+describes the BAM DMA node incorrectly. Fix the same by making
+it consistent with the node present inside 'qcom-msm8974' dts
+file.
 
-make dtbs_check and dt_binding_check complains about that.
+While at it also make two minor cleanups:
+ - mention Bjorn's new email ID in the document, and
+ - add SDM845 in the comment line for the SoCs on which
+   qcom,bam-v1.7.0 version is supported.
 
-> >> 
-> >> Would that be acceptable? Considering it wouldn't expose any PM domain?
-> >> 
-> >> About kpss-gcc we have some device that for some reason doesn't have the
-> >> required clocks defined in the dts. I checked the related gcc and no PXO
-> >> defined and no pll8_vote clock defined. (the affected dts are all listed
-> >> in the related Documentation)
-> >> 
-> >> No idea how they currently work with the kpss-gcc driver as these
-> >> parents are missing. Guess the driver just fails to probe?
-> >> So this was the question if you had more info about it... since to me it
-> >> seems just another gcc v2 that doesn't expose clocks but it's just a
-> >> power-controller just like acc-v2. 
-> >> 
-> >> -- 
-> >> 	Ansuel
-> >
-> >(Also sorry for the double email)
-> >I'm checking the regs for apq8084 for example (from the dtsi)
-> >Are we really sure they are power-controller?
-> 
-> It looks like it's a regularor on steroids. See krait-regulator.c and corresponding bindings in msm-3.10/3.14. So I'd use either the regulator or the power-controller (with significant bias towards controller)
-> 
+Fixes: 4f46cc1b88b3 ("dt-bindings: dma: Convert Qualcomm BAM DMA binding to json format")
+Cc: konrad.dybcio@somainline.org
+Cc: robh+dt@kernel.org
+Cc: andersson@kernel.org
+Cc: krzysztof.kozlowski@linaro.org
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+ Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Ok so on that platform they are both power-controller(saw and acc)...
-Think we only need to understand about the binding power-domain-cells
-binding...
-
-Will check the driver and binding on msm-3.10
-
-> >Checking the regs it seems they just changed the location and they
-> >placed clock-controller and right after the power-controller.
-> >So one can get confused and say that 0xf9... can be all related to power
-> >controller. I posted the regs for reference.
-> >
-> >acc0 0xf9088000 0x1000
-> >saw0 0xf9089000 0x1000
-> >
-> >acc1 0xf9098000 0x1000
-> >saw1 0xf9099000 0x1000
-> >
-> >acc2 0xf90a8000 0x1000
-> >saw2 0xf90b9000 0x1000
-> >
-> >Anyway while at it there seems to be a bit of confusion about the naming
-> >here... We have on ipq8064 and ipq4019 the saw node set as regulator and
-> >with the regulator binding but on msm8974 and apq8084 the saw node set
-> >as power-controller (with the l2 node with the regulator binding).
-> >
-> >Think we should chose a name and fix every dts.
-> >So the main question here is...
-> >Should we keep acc as clock-controller or change it to power-controller
-> >(for v2)?
-> >
-> >Should we change saw node to regulator or power-controller?
-> >
-> >From what I know acc are used to enable the cpu so it seems sane to keep
-> >them as clock-controller (even if v2 doesn't export clock)
-> >Saw node handle power (and in theory even low power state) so it seems
-> >sane to change them to power-controller.
-> >
-> >Currently we have no warning for saw node as they are not converted to
-> >yaml but as soon as someone convert the txt to yaml then we will have
-> >all sort of inconsistency so better take a decision now instead of
-> >convert saw to yaml and then change acc node again to fix them for good.
-> 
-> 
-> The saw is definitely a bigger thing than just a regularor (or a set of them). It is used to control pmics, it handles low-power states, so `power-controller'.
-> 
-> -- 
-> With best wishes
-> Dmitry
-
+diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+index 9bf3a1b164f1..003098caf709 100644
+--- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
++++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+@@ -8,7 +8,7 @@ title: Qualcomm Technologies Inc BAM DMA controller
+ 
+ maintainers:
+   - Andy Gross <agross@kernel.org>
+-  - Bjorn Andersson <bjorn.andersson@linaro.org>
++  - Bjorn Andersson <andersson@kernel.org>
+ 
+ allOf:
+   - $ref: "dma-controller.yaml#"
+@@ -20,7 +20,7 @@ properties:
+       - qcom,bam-v1.3.0
+         # MSM8974, APQ8074 and APQ8084
+       - qcom,bam-v1.4.0
+-        # MSM8916
++        # MSM8916 and SDM845
+       - qcom,bam-v1.7.0
+ 
+   clocks:
+@@ -90,8 +90,8 @@ examples:
+ 
+     dma-controller@f9944000 {
+         compatible = "qcom,bam-v1.4.0";
+-        reg = <0xf9944000 0x15000>;
+-        interrupts = <GIC_SPI 94 IRQ_TYPE_LEVEL_HIGH>;
++        reg = <0xf9944000 0x19000>;
++        interrupts = <GIC_SPI 239 IRQ_TYPE_LEVEL_HIGH>;
+         clocks = <&gcc GCC_BLSP2_AHB_CLK>;
+         clock-names = "bam_clk";
+         #dma-cells = <1>;
 -- 
-	Ansuel
+2.37.1
+
