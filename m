@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E6B55BD5FF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 23:00:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A0FA5BD60A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 23:01:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229912AbiISVAY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Sep 2022 17:00:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60718 "EHLO
+        id S229522AbiISVBu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Sep 2022 17:01:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229851AbiISVAS (ORCPT
+        with ESMTP id S229762AbiISVBZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Sep 2022 17:00:18 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 050D14BA4A;
-        Mon, 19 Sep 2022 14:00:12 -0700 (PDT)
-Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Mon, 19 Sep 2022 17:01:25 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BC314BD15;
+        Mon, 19 Sep 2022 14:01:23 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id A2A5C3F5CC;
-        Mon, 19 Sep 2022 23:00:10 +0200 (CEST)
-Date:   Mon, 19 Sep 2022 23:00:08 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 0/5] Add Qcom PM6125 PMIC, and use in Sony Xperia
- Seine PDX201
-Message-ID: <20220919210008.5i5e74bl5gxxfbnh@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        by ams.source.kernel.org (Postfix) with ESMTPS id C8380B82079;
+        Mon, 19 Sep 2022 21:01:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A833EC433C1;
+        Mon, 19 Sep 2022 21:01:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663621280;
+        bh=nC6JjfmhqKverqUFYc6+hszN/sAtLAzckdoYygEb4VQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=brINUOq51au/UCj+9LYA4nQ28haVSUsCo1HvTepGy/2i+mVmOzTdhfyMCgYCXxR6I
+         MLEaz2oisQA28QFIcCL0my/PX/km6jiggO3KdsccPKsb9IODbg3hC8oBdP38hu1sqk
+         UYAy40X/6UQ6w32PBLozY1ND/Aq50JhhXmJRPNsN0Bq9ujOLm/CprjVMBeYiYnX8Dn
+         nBjohyucnY1yNWr1Ql8JttG641I8XF9ulHavQZyFBeLbzVReFGHcjXWjzY+Q0oxFra
+         Wi7KjTFWOeDYRk+6N8v1Nst4vOzUJPG7NKhm5TdvqT1U/QqcN8RDmlFbdsongWJAot
+         ZAbBiY6ih6eCQ==
+Date:   Mon, 19 Sep 2022 16:01:17 -0500
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220919204826.215845-1-marijn.suijten@somainline.org>
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 10/15] ARM: dts: qcom: msm8974: split TCSR halt regs
+ out of mutex
+Message-ID: <20220919210117.gcwv4hc7etvzbju2@builder.lan>
+References: <20220909092035.223915-1-krzysztof.kozlowski@linaro.org>
+ <20220909092035.223915-11-krzysztof.kozlowski@linaro.org>
+ <20220913224418.jvvguc66y5le7qjo@builder.lan>
+ <79889adc-9224-c257-3957-3a02ec55f091@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220919204826.215845-1-marijn.suijten@somainline.org>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
+In-Reply-To: <79889adc-9224-c257-3957-3a02ec55f091@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,57 +64,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-09-19 22:48:21, Marijn Suijten wrote:
-> This series adds initial support for the PM6125 PMIC, and its power key
-> handling and thermal monitoring capabilities are configured for Sony's
-> PDX201 (Xperia 10II).
+On Thu, Sep 15, 2022 at 03:49:37PM +0100, Krzysztof Kozlowski wrote:
+> On 13/09/2022 23:44, Bjorn Andersson wrote:
+> > On Fri, Sep 09, 2022 at 11:20:30AM +0200, Krzysztof Kozlowski wrote:
+> > [..]
+> >> diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
+> >> index 90a6d4b7605c..ada232bed2c8 100644
+> >> --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
+> >> +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
+> >> @@ -1189,7 +1189,7 @@ remoteproc_mss: remoteproc@fc880000 {
+> >>  			resets = <&gcc GCC_MSS_RESTART>;
+> >>  			reset-names = "mss_restart";
+> >>  
+> >> -			qcom,halt-regs = <&tcsr_mutex_block 0x1180 0x1200 0x1280>;
+> >> +			qcom,halt-regs = <&tcsr_1 0x180 0x200 0x280>;
+> >>  
+> >>  			qcom,smem-states = <&modem_smp2p_out 0>;
+> >>  			qcom,smem-state-names = "stop";
+> >> @@ -1230,10 +1230,15 @@ smd-edge {
+> >>  
+> >>  		tcsr_mutex_block: syscon@fd484000 {
+> >>  			compatible = "syscon";
+> >> -			reg = <0xfd484000 0x2000>;
+> >> +			reg = <0xfd484000 0x1000>;
+> >>  		};
+> >>  
+> >> -		tcsr: syscon@fd4a0000 {
+> >> +		tcsr_1: syscon@fd485000 {
+> > 
+> > While the accessed registers look general purpose in nature, I would
+> > prefer that we stick with naming it based on the register blocks - and
+> > this is part of what's named "tcsr_mutex".
 > 
-> One patch for pm660 is included to fix a node address mismatch with its
-> reg field.
+> Then everything would be like:
 > 
-> Changes since v2:
-> - Rebased on v6.0-rc6 to drop dependent DT patches;
-> - Dropped iio patch which has already been picked into Jonathan's tree;
-> - Added qcom,pm6125 compatible in new yaml-ified SPMI-PMIC dt-bindings.
+> tcsr_mutex_1: syscon@fd484000
+> tcsr_mutex_2: syscon@fd485000
+> tcsr: syscon@fd4a0000
+> ?
+> 
+> > 
+> > Is it not possible to claim that this region is a
+> > "qcom,msm8974-tcsr-mutex" and a "syscon"?
+> 
+> Hm, yes, that's another approach. We can go this way, but it has one
+> drawback - you could have two different devices (mutex and syscon user)
+> poking to the same registers. The regmap makes it safe from concurrency
+> point of view, but not safe from logic point of view.
+> 
+> Splitting these makes it sure, that no one touches hwlock registers,
+> except the hwlock driver.
+> 
+> Any preference?
+> 
 
-And
+Certainly would be interesting if someone grabs the syscon and pokes at
+the mutex registers, but I do prefer to have the DT match the register
+regions when possible.
 
-    - Renamed `pm6125_gpio: gpios@c000` node to `gpio`;
+So if you're okay with making the whole tcsr mutex a hwlock and syscon
+I prefer that.
 
-of course, as requested by Krzysztof.
 
-- Marijn
+PS. I picked all non-8974 patches from the series, just in case that
+wasn't clear from the ty-letters.
 
+Thanks,
+Bjorn
+
+> > 
+> >> +			compatible = "qcom,tcsr-msm8974", "syscon";
+> >> +			reg = <0xfd485000 0x1000>;
+> >> +		};
+> >> +
+> >> +		tcsr_2: syscon@fd4a0000 {
+> > 
+> > And I would like to keep this as "tcsr".
 > 
-> v2: https://lore.kernel.org/linux-arm-msm/20220805135729.1037079-1-marijn.suijten@somainline.org/T/#u
 > 
-> Changes since v1:
-> - Dropped both pinctrl patches that have already been applied;
-> - Add -us suffix to qcom,hw-settle-time properties on ADC TM5 nodes
->   (this suffix is not present on regular ADC5/VADC nodes);
-> - Add -state suffix to pm6125_gpio pinctrl nodes;
-> - Use PMIC_GPIO_FUNC_NORMAL instead of the string-literal "normal";
-> - Removed #address-cells and #size-cells from empty pmic@1 node;
-> - Removed ADC5_AMUX_THM3 / ADC5_GPIO2_100K_PU channels from the ADC5
->   patch, these are unused on my board and hence untested.
 > 
-> v1: https://lore.kernel.org/phone-devel/20220511220613.1015472-1-marijn.suijten@somainline.org/T/#u
-> 
-> Marijn Suijten (5):
->   dt-bindings: mfd: qcom-spmi-pmic: Add pm6125 compatible
->   arm64: dts: qcom: pm660: Use unique ADC5_VCOIN address in node name
->   arm64: dts: qcom: Add PM6125 PMIC
->   arm64: dts: qcom: sm6125-seine: Include PM6125 and configure PON
->   arm64: dts: qcom: sm6125-seine: Configure additional trinket
->     thermistors
-> 
->  .../bindings/mfd/qcom,spmi-pmic.yaml          |   1 +
->  arch/arm64/boot/dts/qcom/pm6125.dtsi          | 154 +++++++++++++++++
->  arch/arm64/boot/dts/qcom/pm660.dtsi           |   2 +-
->  .../qcom/sm6125-sony-xperia-seine-pdx201.dts  | 162 +++++++++++++++++-
->  4 files changed, 317 insertions(+), 2 deletions(-)
->  create mode 100644 arch/arm64/boot/dts/qcom/pm6125.dtsi
-> 
-> --
-> 2.37.3
-> 
+> Best regards,
+> Krzysztof
