@@ -2,65 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7FCAD5BCCFF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 15:23:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6379A5BCD83
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 15:47:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230409AbiISNXA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Sep 2022 09:23:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51134 "EHLO
+        id S229776AbiISNrE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Sep 2022 09:47:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230417AbiISNW4 (ORCPT
+        with ESMTP id S229610AbiISNrC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Sep 2022 09:22:56 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B06422B60A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 06:22:55 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id l65so28058169pfl.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 06:22:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=rB2efXodZAeYQuXLadLjMv2cW1RkQIyx3Ihg+D/gw2c=;
-        b=ET0WcksjYR3a5lAHYU8+chKDBmAmJUMY/Uu3b21tpvzYK0jUQWxMHtwZHRmkwUvHKB
-         Lw7wMkYLcE8Nti9KSDCttDqOOINaGyZVjXporEHIGgyetB0FX0KMOGFMwWzSKIEk0KR8
-         pjTTy+PrMFDI6zLRdSAfgkC/Sx6UGa5Ie/XTt4rJ8pHSu955+XXaMqjIsjvuZzbD7yoV
-         BISYEg/W7/O+MS9Ize574hxM8RMy8Duwk+l0eQnGdz0S8PB2WVajd7a0jeEmXiB4yfzX
-         Q8k3YdX2qqW4PNRjMRTFwOgzHzinvWa1+8g+TAYNZUlmLYGE5ptFCNf6Xwsf7vIOnWRq
-         Bqfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=rB2efXodZAeYQuXLadLjMv2cW1RkQIyx3Ihg+D/gw2c=;
-        b=Vey4j/AUd26gzSoiAeWI91dLxqccRGcmBsZXExF8odyo3cEvLDhK15VD3pP/8xdQkH
-         R6ob83i5s3igZIa2sgWOsf0i8qJQxig+0/t7q26nf12u6n+FEPQ24362eOPPuar+Zql9
-         JU4irOjCQHBDKo/a2YalsQAz7+RZCTmWUsEq2dV4AfWre0tfd+ipwNPgH1fxLy77JMu8
-         6sa1TAiifyOfsaJUr61VbwU22r6hHxkIz9NkYL1p54hSV9vWYDp/LFiifpudyPOOsuWz
-         gEW24YnMgoL0J2LCUbebH5HAt8XZ8WY57WEqb8Qq5F9jwYKazXduuBpLwLdfS3VskqRG
-         aEIw==
-X-Gm-Message-State: ACrzQf3aSvNvKlAXhc+4DcTVIeELReWQU47sSN4M6EZWm2GcBsbY8YHk
-        tbjFPPs6NLi1AP2YnfcENuxpsfH0llmFT7fn5E3hnw==
-X-Google-Smtp-Source: AMsMyM7qX8JaivH+pU9JLjukCe0RRS9uuMlO5zhLeRj22V7Arc9eQv7VeHLlk1eIIGd7/vgHW1i6xYshGo7yqPUtWKo=
-X-Received: by 2002:a05:6a00:acc:b0:530:e79e:fc27 with SMTP id
- c12-20020a056a000acc00b00530e79efc27mr18886647pfl.61.1663593775199; Mon, 19
- Sep 2022 06:22:55 -0700 (PDT)
+        Mon, 19 Sep 2022 09:47:02 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26ACB2FFD8;
+        Mon, 19 Sep 2022 06:46:43 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5A72E61B2A;
+        Mon, 19 Sep 2022 13:46:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD1BC433D7;
+        Mon, 19 Sep 2022 13:46:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663595201;
+        bh=AeMivRW0JQnrwZYyjaQlcAH3jO881DUdn8V4CSVqYy8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=BBg87/yLwMZ9eT1BeUjhxJ+7dwNsR/5RpM+ZBJJa8SG/75nIEU7j6PxxCQGGA+MCG
+         fEz6jjqm0upeEknbVQVTbNNOFA3P4Fz3oLukyiPJGTLq/oF5z7C2TJlNYZklHW2vy+
+         M3wAK3fuWQUEX8ycFR/BZYXlfQeGgJukXEeTXFbI1GqGvEKgiCuX1qAcCp4cb88BCr
+         u9/v3lrFiAErKNSv5GYp2jo2o6Fdkh0P1QUkG7ezjC4Hr3U+qtfmMTwtOYDCqHlf3R
+         IZQA8vPm0m9Bt2whXm4+0BzRLxGYNJM9CdDVmuPwVXVOXcmwjMR2yTHw4WE1qWnn2N
+         OShXczUrpfuYg==
+Date:   Mon, 19 Sep 2022 15:46:38 +0200
+From:   Frederic Weisbecker <frederic@kernel.org>
+To:     Peter Zijlstra <peterz@infradead.org>
+Cc:     richard.henderson@linaro.org, ink@jurassic.park.msu.ru,
+        mattst88@gmail.com, vgupta@kernel.org, linux@armlinux.org.uk,
+        ulli.kroll@googlemail.com, linus.walleij@linaro.org,
+        shawnguo@kernel.org, Sascha Hauer <s.hauer@pengutronix.de>,
+        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
+        tony@atomide.com, khilman@kernel.org, catalin.marinas@arm.com,
+        will@kernel.org, guoren@kernel.org, bcain@quicinc.com,
+        chenhuacai@kernel.org, kernel@xen0n.name, geert@linux-m68k.org,
+        sammy@sammy.net, monstr@monstr.eu, tsbogend@alpha.franken.de,
+        dinguyen@kernel.org, jonas@southpole.se,
+        stefan.kristiansson@saunalahti.fi, shorne@gmail.com,
+        James.Bottomley@HansenPartnership.com, deller@gmx.de,
+        mpe@ellerman.id.au, npiggin@gmail.com, christophe.leroy@csgroup.eu,
+        paul.walmsley@sifive.com, palmer@dabbelt.com,
+        aou@eecs.berkeley.edu, hca@linux.ibm.com, gor@linux.ibm.com,
+        agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
+        svens@linux.ibm.com, ysato@users.sourceforge.jp, dalias@libc.org,
+        davem@davemloft.net, richard@nod.at,
+        anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net,
+        tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
+        dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
+        acme@kernel.org, mark.rutland@arm.com,
+        alexander.shishkin@linux.intel.com, jolsa@kernel.org,
+        namhyung@kernel.org, jgross@suse.com, srivatsa@csail.mit.edu,
+        amakhalov@vmware.com, pv-drivers@vmware.com,
+        boris.ostrovsky@oracle.com, chris@zankel.net, jcmvbkbc@gmail.com,
+        rafael@kernel.org, lenb@kernel.org, pavel@ucw.cz,
+        gregkh@linuxfoundation.org, mturquette@baylibre.com,
+        sboyd@kernel.org, daniel.lezcano@linaro.org, lpieralisi@kernel.org,
+        sudeep.holla@arm.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
+        anup@brainfault.org, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, jacob.jun.pan@linux.intel.com,
+        atishp@atishpatra.org, Arnd Bergmann <arnd@arndb.de>,
+        yury.norov@gmail.com, andriy.shevchenko@linux.intel.com,
+        linux@rasmusvillemoes.dk, dennis@kernel.org, tj@kernel.org,
+        cl@linux.com, rostedt@goodmis.org, pmladek@suse.com,
+        senozhatsky@chromium.org, john.ogness@linutronix.de,
+        juri.lelli@redhat.com, vincent.guittot@linaro.org,
+        dietmar.eggemann@arm.com, bsegall@google.com, mgorman@suse.de,
+        bristot@redhat.com, vschneid@redhat.com, fweisbec@gmail.com,
+        ryabinin.a.a@gmail.com, glider@google.com, andreyknvl@gmail.com,
+        dvyukov@google.com, vincenzo.frascino@arm.com,
+        Andrew Morton <akpm@linux-foundation.org>, jpoimboe@kernel.org,
+        linux-alpha@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-snps-arc@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-csky@vger.kernel.org, linux-hexagon@vger.kernel.org,
+        linux-ia64@vger.kernel.org, loongarch@lists.linux.dev,
+        linux-m68k@lists.linux-m68k.org, linux-mips@vger.kernel.org,
+        openrisc@lists.librecores.org, linux-parisc@vger.kernel.org,
+        linuxppc-dev@lists.ozlabs.org, linux-riscv@lists.infradead.org,
+        linux-s390@vger.kernel.org, linux-sh@vger.kernel.org,
+        sparclinux@vger.kernel.org, linux-um@lists.infradead.org,
+        linux-perf-users@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-xtensa@linux-xtensa.org, linux-acpi@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-arch@vger.kernel.org, kasan-dev@googlegroups.com
+Subject: Re: [PATCH v2 05/44] cpuidle,riscv: Push RCU-idle into driver
+Message-ID: <20220919134638.GB58444@lothringen>
+References: <20220919095939.761690562@infradead.org>
+ <20220919101520.669962810@infradead.org>
 MIME-Version: 1.0
-References: <20220916144329.243368-1-fabio.porcedda@gmail.com> <20220916144329.243368-3-fabio.porcedda@gmail.com>
-In-Reply-To: <20220916144329.243368-3-fabio.porcedda@gmail.com>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Mon, 19 Sep 2022 15:22:18 +0200
-Message-ID: <CAMZdPi8gGrbkKnDR+WLadF92shJbwH-ksQY+dbpgfZ21iAp9ug@mail.gmail.com>
-Subject: Re: [PATCH 2/2] bus: mhi: host: pci_generic: Add a secondary AT port
- to Telit FN990
-To:     Fabio Porcedda <fabio.porcedda@gmail.com>
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, mani@kernel.org, ryazanov.s.a@gmail.com,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, dnlplm@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220919101520.669962810@infradead.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,31 +111,10 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 16 Sept 2022 at 16:43, Fabio Porcedda <fabio.porcedda@gmail.com> wrote:
->
-> Add a secondary AT port using one of OEM reserved channel.
->
-> Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+On Mon, Sep 19, 2022 at 11:59:44AM +0200, Peter Zijlstra wrote:
+> Doing RCU-idle outside the driver, only to then temporarily enable it
+> again, at least twice, before going idle is daft.
+> 
+> Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 
-Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
-
-> ---
->  drivers/bus/mhi/host/pci_generic.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 51e2b901bae0..caa4ce28cf9e 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -507,6 +507,8 @@ static const struct mhi_channel_config mhi_telit_fn990_channels[] = {
->         MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
->         MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
->         MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
-> +       MHI_CHANNEL_CONFIG_UL(92, "DUN2", 32, 1),
-> +       MHI_CHANNEL_CONFIG_DL(93, "DUN2", 32, 1),
->         MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
->         MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
->  };
-> --
-> 2.37.3
->
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
