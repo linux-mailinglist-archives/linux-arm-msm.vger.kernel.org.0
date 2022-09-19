@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 600E15BD5DC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 22:48:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 647F05BD5DD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 22:48:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229869AbiISUsv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Sep 2022 16:48:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45570 "EHLO
+        id S229895AbiISUsy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Sep 2022 16:48:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229877AbiISUsk (ORCPT
+        with ESMTP id S229874AbiISUsk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 19 Sep 2022 16:48:40 -0400
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B59D4A13E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 13:48:37 -0700 (PDT)
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 680F14B0E9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 13:48:38 -0700 (PDT)
 Received: from localhost.localdomain (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 9EC593F5FA;
-        Mon, 19 Sep 2022 22:48:35 +0200 (CEST)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 687C43F604;
+        Mon, 19 Sep 2022 22:48:36 +0200 (CEST)
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -35,9 +35,9 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 1/5] dt-bindings: mfd: qcom-spmi-pmic: Add pm6125 compatible
-Date:   Mon, 19 Sep 2022 22:48:22 +0200
-Message-Id: <20220919204826.215845-2-marijn.suijten@somainline.org>
+Subject: [PATCH v3 2/5] arm64: dts: qcom: pm660: Use unique ADC5_VCOIN address in node name
+Date:   Mon, 19 Sep 2022 22:48:23 +0200
+Message-Id: <20220919204826.215845-3-marijn.suijten@somainline.org>
 X-Mailer: git-send-email 2.37.3
 In-Reply-To: <20220919204826.215845-1-marijn.suijten@somainline.org>
 References: <20220919204826.215845-1-marijn.suijten@somainline.org>
@@ -52,25 +52,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document support for the pm6125, typically paired with the sm6125 SoC.
+The register address in the node name is shadowing vph_pwr@83, whereas
+the ADC5_VCOIN register resolves to 0x85.  Fix this copy-paste
+discrepancy.
 
+Fixes: 4bf097540506 ("arm64: dts: qcom: pm660: Add VADC and temp alarm nodes")
 Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 ---
- Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/pm660.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-index 65cbc6dee545..a6ee8c7f7738 100644
---- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-+++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-@@ -35,6 +35,7 @@ properties:
-       - enum:
-           - qcom,pm660
-           - qcom,pm660l
-+          - qcom,pm6125
-           - qcom,pm6150
-           - qcom,pm6150l
-           - qcom,pm6350
+diff --git a/arch/arm64/boot/dts/qcom/pm660.dtsi b/arch/arm64/boot/dts/qcom/pm660.dtsi
+index d0eefbb51663..d8c9ece20cd9 100644
+--- a/arch/arm64/boot/dts/qcom/pm660.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm660.dtsi
+@@ -163,7 +163,7 @@ vadc_vph_pwr: vph_pwr@83 {
+ 				qcom,pre-scaling = <1 3>;
+ 			};
+ 
+-			vcoin: vcoin@83 {
++			vcoin: vcoin@85 {
+ 				reg = <ADC5_VCOIN>;
+ 				qcom,decimation = <1024>;
+ 				qcom,pre-scaling = <1 3>;
 -- 
 2.37.3
 
