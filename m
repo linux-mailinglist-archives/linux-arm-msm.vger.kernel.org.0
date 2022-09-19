@@ -2,340 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D62B85BD524
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 21:20:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D926E5BD568
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 21:56:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229612AbiISTUG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Sep 2022 15:20:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49600 "EHLO
+        id S229691AbiIST4a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Sep 2022 15:56:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229621AbiISTUF (ORCPT
+        with ESMTP id S229519AbiIST43 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Sep 2022 15:20:05 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6E0B32D86
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 12:20:03 -0700 (PDT)
-Received: from [192.168.1.101] (95.49.29.188.neoplus.adsl.tpnet.pl [95.49.29.188])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B0DA61F5FA;
-        Mon, 19 Sep 2022 21:19:59 +0200 (CEST)
-Message-ID: <df6b1f7a-3dd4-496b-bb6d-572aa8e08257@somainline.org>
-Date:   Mon, 19 Sep 2022 21:19:58 +0200
+        Mon, 19 Sep 2022 15:56:29 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D78243E54
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 12:56:28 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id y11so724268pjv.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 12:56:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=ssLW3dQ3xc0Fl+071JBbbZVKqOeptuuJZEn+QOUu0sw=;
+        b=GMtOnGTRKPwez2FHpi2qRG9AiD5Q/eDP2JDuzZvopYHeHtNHB8x+Rcx4s+45xQ9Gao
+         3fbXooWo7EMKFZjtN5fv7dFBw+wk/8r891PrgsNF+eUAhkRQl2L90clHgXv68CL8q+hJ
+         f2mIM95BfYJdBJ4x1S5sTlnQoN5YLxdK27JQ7d0D+3ZbtSCl7arP94aBZV/hXOWWE/Xp
+         v5GZoJhZPvVvE4E5goVdbE+mCUi3N0ag4sXSfUu/+t3REwAKNPgpq2Ym1/31JYjrR4Z9
+         v4ww1eYRscdjOTeqORnJLLTNRfk+RrKCcTH+5nawRxku2POFjrQfbr8/qJqCeEvKv9hV
+         1Rlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=ssLW3dQ3xc0Fl+071JBbbZVKqOeptuuJZEn+QOUu0sw=;
+        b=cu9ZX5mHMBjqQlEylIs00JO+OIBwGPNgD1gbZ4hZI6z1sXurTC5jagVuAI/d33saJz
+         CTD7Lz7vDBSv6XO0TyoBOYjWaE58n1MIdaeQw/4lgktprAmTYxGGAy86aUx+FBEaVwMc
+         XsfDuNMlLk7npidZo7BAIEjlj0O2ASjt5rqTO5UWqetoF5KCIiKwJp+xtt/2eFHjBomh
+         cUJvExVgOU8Cz7iAngHA8PpJET600CTf1lD3InhOtIT+06UHQa74h9bgf4dnzKgx0SaJ
+         ZT6PH4BYwKq0Zc38fZV5Sa4b/ka8dn+8zZ/1TsuU5KJsQZtICaJQtal1fqR23ucfXomG
+         XolA==
+X-Gm-Message-State: ACrzQf1WxuIQ3vm63MVP1EtWEhVllKSPr5ee1utPLrUQS0bFNO2Dj4TT
+        edDC1KhKqKGY0oxTAL4ezAmGoA==
+X-Google-Smtp-Source: AMsMyM5mSPg4SLFhzWzJlL9YF63jk64sbMZAil7KlR8SlBrq7wCZ4+L0X+SNvmYKCamsJaLgpum3aA==
+X-Received: by 2002:a17:902:7b90:b0:178:a983:5983 with SMTP id w16-20020a1709027b9000b00178a9835983mr1324050pll.135.1663617387915;
+        Mon, 19 Sep 2022 12:56:27 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1c61:6535:ca5f:67d1:670d:e188])
+        by smtp.gmail.com with ESMTPSA id a14-20020a17090a688e00b002032bda9a5dsm7071454pjd.41.2022.09.19.12.56.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Sep 2022 12:56:27 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, thara.gopinath@gmail.com,
+        robh@kernel.org, krzysztof.kozlowski@linaro.org,
+        andersson@kernel.org, bhupesh.sharma@linaro.org,
+        bhupesh.linux@gmail.com, Jordan Crouse <jorcrous@amazon.com>
+Subject: [PATCH v6 0/4] dt-bindings: qcom-qce: Convert bindings to yaml & related changes 
+Date:   Tue, 20 Sep 2022 01:26:14 +0530
+Message-Id: <20220919195618.926227-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH] arm64: dts: qcom: correct white-space before {
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220919163333.129989-1-krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220919163333.129989-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Changes since v5:
+=================
+- v5 can be seen here: https://lore.kernel.org/lkml/20211110105922.217895-1-bhupesh.sharma@linaro.org/
+- As per Bjorn's suggestion on irc, broke down the patchset into 4
+  separate patchsets, one each for the following areas to allow easier
+  review and handling from the respective maintainer(s):
+	'arm-msm', 'crypto', 'dma' and 'devicetree' 
+  This patchset is directed for the 'devicetree' tree / area.
+- Addressed Rob's, Vladimir's and Bjorn's review comments and Acks received on
+  v5.
+- Added Tested-by from Jordan received on the v5.
+- Dropped '[PATCH v5 09/22] dt-bindings: qcom-qce: Move 'clocks' to optional properties'
+  from this series as per Bjorn's suggestions.
 
+Changes since v4:
+=================
+- v4 for sm8250 can be seen here: https://lore.kernel.org/linux-arm-msm/20211013105541.68045-1-bhupesh.sharma@linaro.org/
+- v1 for sm8150 qce enablement can be seen here: https://lore.kernel.org/linux-arm-msm/20211013165823.88123-1-bhupesh.sharma@linaro.org/
+- Merged the sm8150 and sm8250 enablement patches in the same patchset,
+  as per suggestions from Bjorn.
+- Dropped a couple of patches from v4, as these have been picked by
+  Bjorn already via his tree.
+- Addressed review comments from Vladimir, Thara and Rob.
+- Collect Reviewed-by from Rob and Thara on some of the patches from the
+  v4 patchset.
 
-On 19.09.2022 18:33, Krzysztof Kozlowski wrote:
-> Add missing space or remove redundant one before opening {.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-Very nice!
+Changes since v3:
+=================
+- v3 can be seen here: https://lore.kernel.org/linux-arm-msm/20210519143700.27392-1-bhupesh.sharma@linaro.org/
+- Dropped a couple of patches from v3, on basis of the review comments:
+   ~ [PATCH 13/17] crypto: qce: core: Make clocks optional
+   ~ [PATCH 15/17] crypto: qce: Convert the device found dev_dbg() to dev_info()
+- Addressed review comments from Thara, Rob and Stephan Gerhold.
+- Collect Reviewed-by from Rob and Thara on some of the patches from the
+  v3 patchset.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Changes since v2:
+=================
+- v2 can be seen here: https://lore.kernel.org/dmaengine/20210505213731.538612-1-bhupesh.sharma@linaro.org/
+- Drop a couple of patches from v1, which tried to address the defered
+  probing of qce driver in case bam dma driver is not yet probed.
+  Replace it instead with a single (simpler) patch [PATCH 16/17].
+- Convert bam dma and qce crypto dt-bindings to YAML.
+- Addressed review comments from Thara, Bjorn, Vinod and Rob.
 
-Konrad
+Changes since v1:
+=================
+- v1 can be seen here: https://lore.kernel.org/linux-arm-msm/20210310052503.3618486-1-bhupesh.sharma@linaro.org/ 
+- v1 did not work well as reported earlier by Dmitry, so v2 contains the following
+  changes/fixes:
+  ~ Enable the interconnect path b/w BAM DMA and main memory first
+    before trying to access the BAM DMA registers.
+  ~ Enable the interconnect path b/w qce crytpo and main memory first
+    before trying to access the qce crypto registers.
+  ~ Make sure to document the required and optional properties for both
+    BAM DMA and qce crypto drivers.
+  ~ Add a few debug related print messages in case the qce crypto driver
+    passes or fails to probe.
+  ~ Convert the qce crypto driver probe to a defered one in case the BAM DMA
+    or the interconnect driver(s) (needed on specific Qualcomm parts) are not
+    yet probed.
 
->  arch/arm64/boot/dts/qcom/msm8996.dtsi                 | 2 +-
->  arch/arm64/boot/dts/qcom/msm8998.dtsi                 | 8 ++++----
->  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts              | 4 ++--
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi   | 2 +-
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi | 2 +-
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi          | 8 ++++----
->  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi            | 6 +++---
->  arch/arm64/boot/dts/qcom/sdm845-db845c.dts            | 8 ++++----
->  arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts  | 4 ++--
->  arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts      | 6 +++---
->  10 files changed, 25 insertions(+), 25 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> index 1e6b70582866..6a0420c079f5 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> @@ -1498,7 +1498,7 @@ blsp2_i2c3_sleep: blsp2-i2c3-sleep {
->  				bias-disable;
->  			};
->  
-> -			wcd_intr_default: wcd-intr-default{
-> +			wcd_intr_default: wcd-intr-default {
->  				pins = "gpio54";
->  				function = "gpio";
->  				drive-strength = <2>;
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> index d463a66715ea..7e2a8b168d91 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> @@ -1903,7 +1903,7 @@ etm5: etm@7c40000 {
->  
->  			cpu = <&CPU4>;
->  
-> -			port{
-> +			port {
->  				etm4_out: endpoint {
->  					remote-endpoint = <&apss_funnel_in4>;
->  				};
-> @@ -1920,7 +1920,7 @@ etm6: etm@7d40000 {
->  
->  			cpu = <&CPU5>;
->  
-> -			port{
-> +			port {
->  				etm5_out: endpoint {
->  					remote-endpoint = <&apss_funnel_in5>;
->  				};
-> @@ -1937,7 +1937,7 @@ etm7: etm@7e40000 {
->  
->  			cpu = <&CPU6>;
->  
-> -			port{
-> +			port {
->  				etm6_out: endpoint {
->  					remote-endpoint = <&apss_funnel_in6>;
->  				};
-> @@ -1954,7 +1954,7 @@ etm8: etm@7f40000 {
->  
->  			cpu = <&CPU7>;
->  
-> -			port{
-> +			port {
->  				etm7_out: endpoint {
->  					remote-endpoint = <&apss_funnel_in7>;
->  				};
-> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> index bf8077a1cf9a..3d1bd8e3fc73 100644
-> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> @@ -1007,7 +1007,7 @@ can@0 {
->  };
->  
->  &swr0 {
-> -	left_spkr: wsa8810-left{
-> +	left_spkr: wsa8810-left {
->  		compatible = "sdw10217211000";
->  		reg = <0 3>;
->  		powerdown-gpios = <&tlmm 130 GPIO_ACTIVE_HIGH>;
-> @@ -1016,7 +1016,7 @@ left_spkr: wsa8810-left{
->  		#sound-dai-cells = <0>;
->  	};
->  
-> -	right_spkr: wsa8810-right{
-> +	right_spkr: wsa8810-right {
->  		compatible = "sdw10217211000";
->  		reg = <0 4>;
->  		powerdown-gpios = <&tlmm 130 GPIO_ACTIVE_HIGH>;
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-> index 7ee407f7b6bb..1ce73187a562 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-> @@ -181,7 +181,7 @@ &sound_multimedia0_codec {
->  /* PINCTRL - modifications to sc7180-trogdor.dtsi */
->  
->  &en_pp3300_dx_edp {
-> -	pinmux  {
-> +	pinmux {
->  		pins = "gpio67";
->  	};
->  
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-> index 1bd6c7dcd9e9..7fcff4eddd3a 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-> @@ -189,7 +189,7 @@ pinconf {
->  	};
->  };
->  
-> -&sec_mi2s_active{
-> +&sec_mi2s_active {
->  	pinmux {
->  		pins = "gpio49", "gpio50", "gpio51", "gpio52";
->  		function = "mi2s_1";
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> index b5f534db135a..6ea62ce138ce 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> @@ -1220,7 +1220,7 @@ pinconf {
->  	};
->  
->  	ap_suspend_l_neuter: ap-suspend-l-neuter {
-> -		pinmux  {
-> +		pinmux {
->  			pins = "gpio27";
->  			function = "gpio";
->  		};
-> @@ -1365,7 +1365,7 @@ pinconf {
->  	};
->  
->  	pen_rst_odl: pen-rst-odl {
-> -		pinmux  {
-> +		pinmux {
->  			pins = "gpio18";
->  			function = "gpio";
->  		};
-> @@ -1489,7 +1489,7 @@ pinconf {
->  	};
->  
->  	ts_int_l: ts-int-l {
-> -		pinmux  {
-> +		pinmux {
->  			pins = "gpio9";
->  			function = "gpio";
->  		};
-> @@ -1501,7 +1501,7 @@ pinconf {
->  	};
->  
->  	ts_reset_l: ts-reset-l {
-> -		pinmux  {
-> +		pinmux {
->  			pins = "gpio8";
->  			function = "gpio";
->  		};
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-> index b5eb8f7eca1d..d46a6d2a7912 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-> @@ -1341,7 +1341,7 @@ pinconf {
->  	};
->  
->  	pen_rst_l: pen-rst-l {
-> -		pinmux  {
-> +		pinmux {
->  			pins = "gpio23";
->  			function = "gpio";
->  		};
-> @@ -1408,7 +1408,7 @@ pinconf {
->  	};
->  
->  	ts_int_l: ts-int-l {
-> -		pinmux  {
-> +		pinmux {
->  			pins = "gpio125";
->  			function = "gpio";
->  		};
-> @@ -1420,7 +1420,7 @@ pinconf {
->  	};
->  
->  	ts_reset_l: ts-reset-l {
-> -		pinmux  {
-> +		pinmux {
->  			pins = "gpio118";
->  			function = "gpio";
->  		};
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> index 132417e2d11e..feb1396fadb6 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> @@ -1076,7 +1076,7 @@ &venus {
->  	status = "okay";
->  };
->  
-> -&wcd9340{
-> +&wcd9340 {
->  	pinctrl-0 = <&wcd_intr_default>;
->  	pinctrl-names = "default";
->  	clock-names = "extclk";
-> @@ -1089,7 +1089,7 @@ &wcd9340{
->  	vdd-io-supply = <&vreg_s4a_1p8>;
->  
->  	swm: swm@c85 {
-> -		left_spkr: wsa8810-left{
-> +		left_spkr: wsa8810-left {
->  			compatible = "sdw10217201000";
->  			reg = <0 1>;
->  			powerdown-gpios = <&wcdgpio 1 GPIO_ACTIVE_HIGH>;
-> @@ -1098,7 +1098,7 @@ left_spkr: wsa8810-left{
->  			#sound-dai-cells = <0>;
->  		};
->  
-> -		right_spkr: wsa8810-right{
-> +		right_spkr: wsa8810-right {
->  			compatible = "sdw10217201000";
->  			powerdown-gpios = <&wcdgpio 1 GPIO_ACTIVE_HIGH>;
->  			reg = <0 2>;
-> @@ -1126,7 +1126,7 @@ &qup_spi2_default {
->  	drive-strength = <16>;
->  };
->  
-> -&qup_uart3_default{
-> +&qup_uart3_default {
->  	pinmux {
->  		pins = "gpio41", "gpio42", "gpio43", "gpio44";
->  		function = "qup3";
-> diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> index be59a8ba9c1f..761927535778 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> @@ -783,7 +783,7 @@ &wcd9340{
->  	qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
->  
->  	swm: swm@c85 {
-> -		left_spkr: wsa8810-left{
-> +		left_spkr: wsa8810-left {
->  			compatible = "sdw10217211000";
->  			reg = <0 3>;
->  			powerdown-gpios = <&wcdgpio 1 GPIO_ACTIVE_HIGH>;
-> @@ -792,7 +792,7 @@ left_spkr: wsa8810-left{
->  			#sound-dai-cells = <0>;
->  		};
->  
-> -		right_spkr: wsa8810-right{
-> +		right_spkr: wsa8810-right {
->  			compatible = "sdw10217211000";
->  			powerdown-gpios = <&wcdgpio 2 GPIO_ACTIVE_HIGH>;
->  			reg = <0 4>;
-> diff --git a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
-> index f954fe5cb61a..7e92438034e8 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
-> @@ -574,7 +574,7 @@ pinconf {
->  	};
->  
->  	pen_rst_l: pen-rst-l {
-> -		pinmux  {
-> +		pinmux {
->  			pins = "gpio21";
->  			function = "gpio";
->  		};
-> @@ -715,7 +715,7 @@ &wcd9340{
->  	qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
->  
->  	swm: swm@c85 {
-> -		left_spkr: wsa8810-left{
-> +		left_spkr: wsa8810-left {
->  			compatible = "sdw10217211000";
->  			reg = <0 3>;
->  			powerdown-gpios = <&wcdgpio 1 GPIO_ACTIVE_HIGH>;
-> @@ -724,7 +724,7 @@ left_spkr: wsa8810-left{
->  			#sound-dai-cells = <0>;
->  		};
->  
-> -		right_spkr: wsa8810-right{
-> +		right_spkr: wsa8810-right {
->  			compatible = "sdw10217211000";
->  			powerdown-gpios = <&wcdgpio 2 GPIO_ACTIVE_HIGH>;
->  			reg = <0 4>;
+Qualcomm crypto engine (qce) is available on several Snapdragon SoCs.
+The qce block supports hardware accelerated algorithms for encryption
+and authentication. It also provides support for aes, des, 3des
+encryption algorithms and sha1, sha256, hmac(sha1), hmac(sha256)
+authentication algorithms.
+
+Cc: thara.gopinath@gmail.com
+Cc: robh@kernel.org
+Cc: andersson@kernel.org
+Cc: krzysztof.kozlowski@linaro.org
+Tested-by: Jordan Crouse <jorcrous@amazon.com>
+
+Bhupesh Sharma (4):
+  dt-bindings: qcom-qce: Convert bindings to yaml
+  dt-bindings: qcom-qce: Add 'interconnects' and 'interconnect-names'
+  dt-bindings: qcom-qce: Add 'iommus' to optional properties
+  dt-bindings: qcom-qce: Add new SoC compatible strings in dt-binding
+    doc
+
+ .../devicetree/bindings/crypto/qcom-qce.txt   | 25 -----
+ .../devicetree/bindings/crypto/qcom-qce.yaml  | 93 +++++++++++++++++++
+ 2 files changed, 93 insertions(+), 25 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/crypto/qcom-qce.txt
+ create mode 100644 Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+
+-- 
+2.37.1
+
