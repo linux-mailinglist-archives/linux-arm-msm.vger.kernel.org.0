@@ -2,104 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 810755BD158
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 17:45:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 385AA5BD1BC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 18:02:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229803AbiISPpN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Sep 2022 11:45:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60780 "EHLO
+        id S229870AbiISQCy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Sep 2022 12:02:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229570AbiISPpL (ORCPT
+        with ESMTP id S229935AbiISQCa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Sep 2022 11:45:11 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6649B868;
-        Mon, 19 Sep 2022 08:45:10 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 61CFF61E19;
-        Mon, 19 Sep 2022 15:45:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14B0C433D6;
-        Mon, 19 Sep 2022 15:45:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663602309;
-        bh=cxxsbz/kD42NUOGTrCrQ7/POmnTB4Lz8V/hj+LYf154=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=uDXWuBKL1qeJDKUTH5/vTdRc52mNC1AjYMFh8PAFDdjnX4bERc7i5orlr46m4tAHP
-         MrVKsJaGanEBk+AAgcqYIAcqqkKvMUBm9n3vAqaNa3Ok51CEtDKnVXDoCJQQs66RdT
-         i5ekxSf/s/8IT4wVtfvhHd4qrxKYBeDS0dln6kdtzVV6pExhQh7fbTXa4VtDMnEPlS
-         1BqnGwASMdnaqXpn0UYy98FJcvZLvx3ClSeB3RvRbUfhOhdTaY9DguF2dh1AmAin2B
-         owo3kjp9FqMsvzuJmnXG6/+vXmAYatSNZE9TvxwCKtWoz30RAFbJrLNNbTiWpOM3Cw
-         T+nFCcoMnI/SQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oaIxO-0005fh-B2; Mon, 19 Sep 2022 17:45:14 +0200
-Date:   Mon, 19 Sep 2022 17:45:14 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, mturquette@baylibre.com,
-        sboyd@kernel.org, mka@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, johan+linaro@kernel.org,
-        quic_kriskura@quicinc.com, dianders@chromium.org,
-        linux-clk@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] clk: qcom: gcc-sc7180: Update the .pwrsts for usb
- gdsc
-Message-ID: <YyiOiudZuMDXOvGr@hovoldconsulting.com>
-References: <20220916102417.24549-1-quic_rjendra@quicinc.com>
- <20220916102417.24549-2-quic_rjendra@quicinc.com>
+        Mon, 19 Sep 2022 12:02:30 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACA9B3C8D3;
+        Mon, 19 Sep 2022 09:00:55 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28JD2Zbm008848;
+        Mon, 19 Sep 2022 16:00:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=eKdTyxOiLccVrdw63VF1sE1mujYcuFpBho0TboPJW5c=;
+ b=fKm7hjDG3H7LZ3DXi+Q1DsbhOF4mYx/BuCQ2kh/FvRu/1n9QdxiVTqRz9CuEWe2Qfela
+ zi6FVLAq5S15Va+s82vPYG2pg/oPIEzsrQeBBZhPp9T0VD7FWOxSbhBXH6q4hIDRpp7r
+ CitpYSzNZPenT4rTHzaErvU9LDuW9LaeaqTkDyFGY28UsFgRUEqzj10c/yKZVm9BtszN
+ k/yOo7pXuQSZRAUpZRNt6B+JwVdXGqjsid8UTZGv4Cz4jGrPzdffy/gao6Z24cy901XA
+ RfGFJ4xOw/Rb3VFfo5HLykwtP/HIKCNATotd2lmKVJzQH3CcrAWuixn+hyyMcQQulSaD 0A== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jn6b1w7qn-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 19 Sep 2022 16:00:49 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28JG0mAL027052
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 19 Sep 2022 16:00:48 GMT
+Received: from hu-gokukris-sd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Mon, 19 Sep 2022 09:00:47 -0700
+From:   Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        "Satya Durga Srinivasu Prabhala" <quic_satyap@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        "Guru Das Srinagesh" <quic_gurus@quicinc.com>,
+        Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
+Subject: [PATCH v1 0/3] Handle coprocessor crash
+Date:   Mon, 19 Sep 2022 09:00:37 -0700
+Message-ID: <cover.1662995608.git.quic_gokukris@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220916102417.24549-2-quic_rjendra@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: MjeLGTW-q5V1rioyDz0QRALP64xzrRuE
+X-Proofpoint-ORIG-GUID: MjeLGTW-q5V1rioyDz0QRALP64xzrRuE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-19_05,2022-09-16_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ malwarescore=0 suspectscore=0 impostorscore=0 bulkscore=0 spamscore=0
+ adultscore=0 lowpriorityscore=0 clxscore=1015 mlxlogscore=516 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2209130000
+ definitions=main-2209190107
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 16, 2022 at 03:54:16PM +0530, Rajendra Nayak wrote:
-> The USB controller on sc7180 does not retain the state when
-> the system goes into low power state and the GDSC is
-> turned off. This results in the controller reinitializing and
-> re-enumerating all the connected devices (resulting in additional
-> delay while coming out of suspend)
-> Fix this by updating the .pwrsts for the USB GDSC so it only
-> transitions to retention state in low power.
-> 
-> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-> Tested-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
-> v2:
-> Updated the changelog
-> 
->  drivers/clk/qcom/gcc-sc7180.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
-> index c2ea09945c47..2d3980251e78 100644
-> --- a/drivers/clk/qcom/gcc-sc7180.c
-> +++ b/drivers/clk/qcom/gcc-sc7180.c
-> @@ -2224,7 +2224,7 @@ static struct gdsc usb30_prim_gdsc = {
->  	.pd = {
->  		.name = "usb30_prim_gdsc",
->  	},
-> -	.pwrsts = PWRSTS_OFF_ON,
-> +	.pwrsts = PWRSTS_RET_ON,
->  };
->  
->  static struct gdsc hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc = {
+Make the following changes in case of coprocessor crash:
+1. Send subdevice notifications before panic
+2. Do not report crash if SSR is disabled
+3. Avoid setting smem bit in case of crash
 
-It seems like the above will not work unless you also provide the
-registers offsets that gdsc_force_mem_on() expects.
+Gokul krishna Krishnakumar (3):
+  remoteproc: qcom: q6v5: Send subdevice notifications before panic
+  remoteproc: qcom: q6v5: Do not report crash if SSR is disabled
+  remoteproc: qcom: q6v5: Avoid setting smem bit in case of crash
+    shutdown
 
-Specifically, unless you set cxc_count for the GDSC, the above call is a
-no-op and the retention setting (i.e. the RETAIN_MEM and RETAIN_PERIPH
-bits) will not be updated when registering the GDSC.
+ drivers/remoteproc/qcom_q6v5.c | 43 ++++++++++++++++++++++++++++++++++++++----
+ drivers/remoteproc/qcom_q6v5.h |  2 ++
+ 2 files changed, 41 insertions(+), 4 deletions(-)
 
-Johan
+-- 
+2.7.4
+
