@@ -2,146 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 148CE5BD4CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 20:35:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9B925BD4FB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 21:00:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229885AbiISSfA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Sep 2022 14:35:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34086 "EHLO
+        id S229773AbiISTAr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Sep 2022 15:00:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229872AbiISSer (ORCPT
+        with ESMTP id S229687AbiISTAn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Sep 2022 14:34:47 -0400
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2067.outbound.protection.outlook.com [40.107.93.67])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF56A644D;
-        Mon, 19 Sep 2022 11:34:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=bnH6TawPcsMNUsl1vcHmU6hhEfSAiRSdVxECbSCxg1yXlkoxfHRNYeaGP4ON5nsGdWDW3YpfHgJJX8iQ0r9PL4o4pu0oEPZMNYYDM1u+7odUXriPju0DItc3D4hkZeW57eoAqpez0CQuBMglXA3g1zhAfDZGolhnX/+Q3NBhV3N+BzLzKSlUM+1ITgkhdL357AzCbYdmPl9WGvbndXrRdMHlKHuz4t3sy8BauoRxezht4X9aqAlVOO6OvTVANwOo2h3qHwv2OmZHnzBklXIOugOfX3zvYCHqgusO+vrKS85cotQlmvj2nRmKqV+kHwrARYK7Y/0vaAvqPOvujqtx2w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=EHAixVAfBaOoqe0aI9ixXFTmZSRX27g0ooH2OC9M+B8=;
- b=BgzSMYVm6YzGifKEoqoHLoiwfivgVxYp74SAKejg2YNngVSXaZEsT1nj1fDGKNhtso1MFpnjwx3XJQ9pIJ1oq4hpRZ+NuKz9xhVyk8xXgyIIpFOVhrCDa3YwfR7841JDO3V+3QIdJs5JiLZCh/y9uBaY6smp93vNeS6SpC/TAGIBKoKUFlcbEeHRAWZnAuwAKhqlfDO+eLgUQGGpQEwX30FdfStHcOmz/7Bixpd3MSx9BSKf4oZyyCceFtqPvhg8Gh4SlUB5SjHMu1dZ4SwOp+Ad9vt6q6Af+EGzQyJRl4//YlAo4d7Wul65ggzYLvp9Jvcr0NraYV9N/Lg/6yJ14A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=gmail.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EHAixVAfBaOoqe0aI9ixXFTmZSRX27g0ooH2OC9M+B8=;
- b=ufswIRNrnH8or9ZA4PODbzajMnRM4onc6lP9HSWUThKfB18/tjZmueyGFVRvsPghZafb4CCu6dUfjNB09FoxqaT5dp4lnARd/7XGagSJDerSz1+O0xXHisKD9gFgziCStIMDz9Heomi19mPkgW8geJhEbLlKu3iknf7CToqlJ/qUmjk6YYXB2mJKmIuRnrBkcxl9BNNYtIYBa56mq0UbhOTr3vs80YatyMdeaWIHoGkNRxlu3yH5eIxXEajiAmDiWY4hcsf0vVFoubYNPvier+1EAMUTcRUuHM5m5GdZTTUtcXyaQRaSToMqIsQhZg8BMNlpW4xAHXPoq9mJJhkurw==
-Received: from BN9P223CA0019.NAMP223.PROD.OUTLOOK.COM (2603:10b6:408:10b::24)
- by BY5PR12MB4292.namprd12.prod.outlook.com (2603:10b6:a03:212::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5632.21; Mon, 19 Sep
- 2022 18:34:35 +0000
-Received: from BN8NAM11FT079.eop-nam11.prod.protection.outlook.com
- (2603:10b6:408:10b:cafe::dc) by BN9P223CA0019.outlook.office365.com
- (2603:10b6:408:10b::24) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5632.15 via Frontend
- Transport; Mon, 19 Sep 2022 18:34:34 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- BN8NAM11FT079.mail.protection.outlook.com (10.13.177.61) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5632.12 via Frontend Transport; Mon, 19 Sep 2022 18:34:34 +0000
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Mon, 19 Sep
- 2022 11:34:11 -0700
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail205.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 19 Sep
- 2022 11:34:11 -0700
-Received: from vidyas-desktop.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server id 15.2.986.29 via Frontend
- Transport; Mon, 19 Sep 2022 11:34:06 -0700
-From:   Vidya Sagar <vidyas@nvidia.com>
-To:     <jingoohan1@gmail.com>, <gustavo.pimentel@synopsys.com>,
-        <lpieralisi@kernel.org>, <robh@kernel.org>, <kw@linux.com>,
-        <bhelgaas@google.com>, <mani@kernel.org>,
-        <Sergey.Semin@baikalelectronics.ru>, <dmitry.baryshkov@linaro.org>,
-        <linmq006@gmail.com>, <ffclaire1224@gmail.com>
-CC:     <thierry.reding@gmail.com>, <jonathanh@nvidia.com>,
-        <linux-pci@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kthota@nvidia.com>,
-        <mmaddireddy@nvidia.com>, <vidyas@nvidia.com>, <sagar.tv@gmail.com>
-Subject: [PATCH V4 3/3] PCI: tegra194: Refactor EP initialization completion
-Date:   Tue, 20 Sep 2022 00:03:42 +0530
-Message-ID: <20220919183342.4090-4-vidyas@nvidia.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20220919183342.4090-1-vidyas@nvidia.com>
-References: <20220919183342.4090-1-vidyas@nvidia.com>
-X-NVConfidentiality: public
+        Mon, 19 Sep 2022 15:00:43 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 925D02ED70
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 12:00:41 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id a8so48414932lff.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 12:00:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=PtYAXaw7SqXRsF0uwP9fA2Gkxd8ErzzPCvmWtCq6/A0=;
+        b=acimAWdbWmYxhkcIOBj1+ysSQfFCwBDSq3t4w2xxuXa0GaTxpEkJkIHhvhTzZu8IMW
+         jT+bn5GUuIo2be/l814kDMUyU3lCybsj5Ru+P30JY5YGZU/5JtHBiP5SMIWydExQQFp4
+         wlSIX5BWfhaeCl11h7gQ0P5vBKLpZXfQ/GIA3ogvI59guWrJyQj0IgPJC1uV5sj6qECo
+         TZtNRxfV4TA1Ar7KQMTunlIje/5q9ZdNV7KJ+ilCd6Oj8SuHH3/JJg8V+zMoobR9Bmfz
+         SLelg09s/Q0JksbM84MJfGP0fDQlxNOGaX7ojT/ouQRlF2cD3A7kAgVB+mTBR0eeEi5e
+         cPgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=PtYAXaw7SqXRsF0uwP9fA2Gkxd8ErzzPCvmWtCq6/A0=;
+        b=rBA4BqMJ6gp8q7kmn+BVK9CcRtO7MUPWPhW9ol6XhausqH8fe6CbmOfWiVchNJ77US
+         QsBIVSxkuUMYkKNX/hgKna6INIvGvFKSHZBmdnc1k0pT277jB4ZqV4XdJgDZo/JJloHN
+         AFrS3NU67Sz8i6hBE7yxniYZV92pchzIIx2XkbeBrjoi2DxfagSQihE+Orbw3RaULE9i
+         5pWcn/Nps9WRspFu9QRNZKI6FCjRJo3X/jP56IxtVRhbAvjNgqoI7zfItAKiwIOCoaDb
+         eH2W2M9/U59POv67pAygYF9Memlpu/dClqazqjvcs8nrtaw6ef0durEcMnRXKRw5zIq8
+         dQvg==
+X-Gm-Message-State: ACrzQf2qO16CuZoqRc5J5mkad62MEy87j2my8wVl84b+X8Zq2VpN8G2U
+        PYpp8Hfz4npelEcC5/ucE9rc9w==
+X-Google-Smtp-Source: AMsMyM45wO46AL62Hf9EOzcGg/IvCrqbB4TUCPdNFf7UOY9d41/ZpA33ObxzxN5m/koNyMLpF0mv8g==
+X-Received: by 2002:a05:6512:3408:b0:49a:b195:7ab5 with SMTP id i8-20020a056512340800b0049ab1957ab5mr6392943lfr.92.1663614039395;
+        Mon, 19 Sep 2022 12:00:39 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id u12-20020a05651220cc00b0049a747d6156sm4878907lfr.287.2022.09.19.12.00.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Sep 2022 12:00:38 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH v1 0/6] arm64: qcom: dts: correct firmware paths
+Date:   Mon, 19 Sep 2022 22:00:31 +0300
+Message-Id: <20220919190037.2122284-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN8NAM11FT079:EE_|BY5PR12MB4292:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4f4290fc-cb41-4a94-20de-08da9a6d998e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: lBnlY9l8sHqYH5rlker7zbIFO3qNDR5IzY6zBMnGgqEel9BYBGPVMFE9KZXj9wTkN+05ovDgab3qaBmsGEsuGsgXAxGWcH7FHSe4fR3wcnZN7JEu1EWVqI2n9LB81l2bG6o/DT1TDJKopqUSpHo18/s2EBmrWTOIWDDVQGCDO5qDAL5R2Zib96bZ2B3K0UGdDCYeOj4jmx/IX8mjw1eShrR+EVW4v/QDSggwmGq5GWJquVEotCNrOQGdeYWp+ZCza2d6N+k9BYtNUfmHZFVkikVoi/ose4U1U1ieZ6fUtfYdDs6XViMYXSNJpqUB+Q52hYOgeBEzY9jSA5NTzMZS1S9Z8rSAqTOu9OMzODxyCz+YLzDf4i3UCLmnnaAPwLQDpJ7UGQgQ8eBJuBh1DKic1GYc5x0P71D+qW9KAX7R3ohway1pV4rjGV1Tavd9JYApC/3O3zlgUIDbPuWVOTGBaydphU/s7aybAK5gdaOgrhbakZ39F+zMupKBqLi4XQ4BGZbOsPNKtBMOhLsB3t9y2u8G889kaUjZjAf1EW3BaAy7pMZEYVmgsMD8POmQOqrnAL4mRcFtbb6IrdAwI6YShFPgJu12zyFD02AkJeoTTN6ictstJF1MMeNWgh/wBDlte9pc9/Uqp3vON86ySnlR8uprbDDHSx3bW1QBqVTCkKQDI7hxr2x4g87Mb041eDqVZQwqTaMb2Ig2F/a3ga4W2/yVUsU5UoMydtg1AGZqvvFwNYHzA80V/XEgaOwZ3rjOFh+pWf8JIEqVPFyR1egc1Xsr/fCabSg+k2wSO61O7XM=
-X-Forefront-Antispam-Report: CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230022)(4636009)(376002)(346002)(39860400002)(136003)(396003)(451199015)(40470700004)(46966006)(36840700001)(36860700001)(82740400003)(7416002)(186003)(47076005)(426003)(336012)(41300700001)(8936002)(110136005)(54906003)(6666004)(2906002)(82310400005)(2616005)(4326008)(36756003)(8676002)(1076003)(83380400001)(70586007)(70206006)(7696005)(316002)(5660300002)(478600001)(40460700003)(40480700001)(86362001)(356005)(921005)(7636003)(26005);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Sep 2022 18:34:34.2656
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4f4290fc-cb41-4a94-20de-08da9a6d998e
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN8NAM11FT079.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4292
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Call only dw_pcie_ep_init_notify() which internally takes care of calling
-dw_pcie_ep_init_complete() to notify about the EP initialization
-completion to the DWC EP framework.
+This patchset corrects firmware paths for several Qualcomm-based devices
+to include the SoC name.
 
-Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
----
-V4:
-* New patch in this series
+Changes since RFC:
+ - Fixed firmware paths for Sony devices according to the discussion
+   with Konrad (added Sony, renamed pdx223 to nagara).
+ - Changed ifc6560 to use SoC-generic firmware since the board doesn't
+   seem to be fused to particular PKI.
 
- drivers/pci/controller/dwc/pcie-tegra194.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+Dmitry Baryshkov (6):
+  arm64: qcom: dts: w737: correct firmware paths
+  arm64: qcom: dts: miix-630: correct firmware paths
+  arm64: qcom: dts: ifc6560: correct firmware paths
+  arm64: qcom: dts: sagami: correct firmware paths
+  arm64: qcom: dts: pdx223: correct firmware paths
+  arm64: qcom: dts: nile: correct firmware paths
 
-diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index 1b6b437823d2..2600304522eb 100644
---- a/drivers/pci/controller/dwc/pcie-tegra194.c
-+++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -1885,14 +1885,12 @@ static void pex_ep_event_pex_rst_deassert(struct tegra_pcie_dw *pcie)
- 	val = (upper_32_bits(ep->msi_mem_phys) & MSIX_ADDR_MATCH_HIGH_OFF_MASK);
- 	dw_pcie_writel_dbi(pci, MSIX_ADDR_MATCH_HIGH_OFF, val);
- 
--	ret = dw_pcie_ep_init_complete(ep);
-+	ret = dw_pcie_ep_init_notify(ep);
- 	if (ret) {
- 		dev_err(dev, "Failed to complete initialization: %d\n", ret);
- 		goto fail_init_complete;
- 	}
- 
--	dw_pcie_ep_init_notify(ep);
--
- 	/* Program the private control to allow sending LTR upstream */
- 	if (pcie->of_data->has_ltr_req_fix) {
- 		val = appl_readl(pcie, APPL_LTR_MSG_2);
+ arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts   |  4 ++--
+ arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts    |  2 +-
+ arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi  |  2 +-
+ arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts       | 10 +++++-----
+ .../arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi | 10 +++++-----
+ .../boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dts |  6 +++---
+ 6 files changed, 17 insertions(+), 17 deletions(-)
+
 -- 
-2.17.1
+2.35.1
 
