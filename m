@@ -2,232 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC8905BD273
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 18:49:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11AB25BD3B2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 19:30:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230095AbiISQtj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Sep 2022 12:49:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52978 "EHLO
+        id S230294AbiISRaE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Sep 2022 13:30:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230078AbiISQth (ORCPT
+        with ESMTP id S230487AbiISRaC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Sep 2022 12:49:37 -0400
-Received: from new1-smtp.messagingengine.com (new1-smtp.messagingengine.com [66.111.4.221])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71D4526E5;
-        Mon, 19 Sep 2022 09:49:35 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailnew.nyi.internal (Postfix) with ESMTP id D781258034C;
-        Mon, 19 Sep 2022 12:49:33 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Mon, 19 Sep 2022 12:49:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=svenpeter.dev;
-         h=cc:cc:content-transfer-encoding:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm2; t=1663606173; x=
-        1663613373; bh=WY1oTPCX29Sg6WaZxih3jkcx9HGBoylBzzxcehqaLFs=; b=s
-        N/kdIzh3Su3yvFe3pWf3qYncxV75euZDXXa03QXfcPb7U1LbWAoxcMfNRauq52OK
-        YHvZUZt+A7xnIdeW3Ylhfgdmv+o2X7D7ys9L1RPRMVYH6FNH35kx3TajY+gEp3J+
-        PqNAphtHq8dMtzJW0W7ElB+r68Lcve6WZkTq2seU36l+qsucB6AcNMAMni2nC4Tq
-        uBi/okLiUx0MN7UJP8+8/fKNhFQYuer6Czl7F6hN/lQzYKa6HgF89TcKoB7Zs7ZP
-        RU3sHgUp3B6dkongE+BfMypyvZvsVL1oG6GiLxS1Pxke5gwhUCgyVMv4N2w3dPAW
-        xfGJTZ4Sw34o/IAp7v4ng==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; t=1663606173; x=1663613373; bh=WY1oTPCX29Sg6
-        WaZxih3jkcx9HGBoylBzzxcehqaLFs=; b=OVN3lOGVN4g6PA7oqBhC2Yu/mgZLO
-        6LxgU5irL14lbOOxkBnFzkDiUKQ1Uiluio0JBNwTLJpceaV1rrlCPdWU5M6GqWIe
-        WO78AWa3OP6wnM4ifs2hQrnHUxDTVifl4XHi6mNe5MTLaFnCdCHAY6A04hYVaDZx
-        khnZLwAcCf2sy3Xox/YrlMbqiJQ4mSQ4gB0LLlG90cyAtLiRfDZAcLL8hBXcdx4F
-        5wrimX11nafgcIt5C3XOK60+nb6xQG7RogH+RzpQoSKR9CIm/CtQTG461/jELra2
-        icS8ll6NvBDLIjt2r7ZphY4EJyFgulsAd0zYMim+SfuGdm8d3+F9j8SIw==
-X-ME-Sender: <xms:nJ0oY91OD_29Op6t-9gockrdYmfEHfhBg6lIgaC79EKNxEt5Ub_vVw>
-    <xme:nJ0oY0E-ESKtTKHM7MwDYa8FWcwt2JPgYqNn_5faISbVuSwtozjjwOivJFoAO-tDr
-    dzFAEXwZPd1kZ1S1PI>
-X-ME-Received: <xmr:nJ0oY94_krixzgHNgdaMX7AfVQ2RTKm6ajVQ17_4IL5XDfPWlzqhrUKjaEI-PbAWNRTtQu1TsnHeaKZ8WyM5bxqWOuTlVbN6YJ3uL5QQmF8krsxGklg9hlo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfedvjedguddtkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpefuvhgv
-    nhcurfgvthgvrhcuoehsvhgvnhesshhvvghnphgvthgvrhdruggvvheqnecuggftrfgrth
-    htvghrnhephfeufffgffegtdefhfefueejfefghfelkeetuddvffeigeffuedvjeegudel
-    ieelnecuffhomhgrihhnpeguvghvihgtvghtrhgvvgdrohhrghenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehsvhgvnhesshhvvghnphgvthgv
-    rhdruggvvh
-X-ME-Proxy: <xmx:nJ0oY60RMqVE5E9bD2yQhp6rANSibCoNwTOd8xjrJAzJS-hTBiEmhQ>
-    <xmx:nJ0oYwG58t-lAcbvQ1yv3wKG6_JPCapkwo0L4tkDB8O-JXoez6cAxQ>
-    <xmx:nJ0oY79HYlj6iTKGa6EqtpiUPCDvzpbEZq4xkXtViv-SGpPpbf9dvA>
-    <xmx:nZ0oY4LCMYSI83ICOy0odVQomIom3pg_56Y3Cztpc0Vip-0_i21uug>
-Feedback-ID: i51094778:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 19 Sep 2022 12:49:29 -0400 (EDT)
-From:   Sven Peter <sven@svenpeter.dev>
-To:     Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Sven Peter <sven@svenpeter.dev>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Hector Martin <marcan@marcan.st>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        asahi@lists.linux.dev, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v3 1/7] dt-bindings: net: Add generic Bluetooth controller
-Date:   Mon, 19 Sep 2022 18:48:28 +0200
-Message-Id: <20220919164834.62739-2-sven@svenpeter.dev>
-X-Mailer: git-send-email 2.30.1 (Apple Git-130)
-In-Reply-To: <20220919164834.62739-1-sven@svenpeter.dev>
-References: <20220919164834.62739-1-sven@svenpeter.dev>
+        Mon, 19 Sep 2022 13:30:02 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E437413DC9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 10:29:59 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id i26so48105298lfp.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 10:29:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=qpgJIJElhOXjn7LOSKznlt5pJlFxXPnXLSPfz4rMEuo=;
+        b=oyzK8EBRU+2zWPdRgH9erpf+j2aLOw0qG78VeQjhQixmYyZrgL9XLnMfYfH5DjWDRa
+         h0bcJHbmayn19VCCHCj544ZxnUazLr/dfGyPhslIsm0T01CYuE2ETRSNYLHGIE9Y6BgC
+         oB3NDG1ZDaewjoflU9W/gVDkShoNRU/IsbDN6sJbj1mPRiK7cQTH2IAa55ialwbvWIiS
+         BRmZs2UK8ZpWEhd/xR0PetTbFLHHAiWq4ZRrpAEuduQrf74+tTuTG5NuCIeMGVydfvSB
+         TIl2n594BENEfVBUVzg48xBJoknMvDkPBL3CZINSPSJUUYE13t4JibccLK0LNovbr8Ic
+         xrYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=qpgJIJElhOXjn7LOSKznlt5pJlFxXPnXLSPfz4rMEuo=;
+        b=skXfroLrk1yPU1lkCN82IdqiN8KkVsqEJ7dAkHreM0KCHrdEhe5+NwoNcuE9h8BMoQ
+         IRkXgXDKb2Y55xBB7PfE9ugSLvlIegZavJJ8Tg4KA039k4UWCjZgD5uTog09ED24C1CZ
+         ni6Aiugug+pTWayvxQw4jP+sgUyUz0L+dsniOj+ARC6QG5YH+nLgnX/6bwHTM/0NNLDz
+         BfclvEehjToszW+3Ou2cKTQr1fcZyLwo8ytbvtLH/SFS4U/aYlxmyMgEw6nIP8fTmDPY
+         qKT0pXRcP85C5SFPqpjOxhIkwiNCDV1vCIPUBaUA8QHz6VnlGVqO1X1rZsSNGa+w7HGu
+         dgLA==
+X-Gm-Message-State: ACrzQf2QoV3NdKtf4mZPGYJQqUtxufKcVNVlDS72TMgQax6NHo2KAH9U
+        ogahTmIcZKzrKCJLxKy1ygOz5Q==
+X-Google-Smtp-Source: AMsMyM6buy4eNEC6Rgb65J/xMPsi3p+v09EQ6PWBzxA5uOW9Po2LnjNRrdWX5MTNGfAFkdQFpP/vbg==
+X-Received: by 2002:a19:435c:0:b0:49f:5861:59a3 with SMTP id m28-20020a19435c000000b0049f586159a3mr5538223lfj.295.1663608597790;
+        Mon, 19 Sep 2022 10:29:57 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id a17-20020a2eb551000000b00261a8e56fe4sm4994215ljn.55.2022.09.19.10.29.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Sep 2022 10:29:57 -0700 (PDT)
+Message-ID: <bd6fc826-94b9-f539-a37e-820ab49b9d14@linaro.org>
+Date:   Mon, 19 Sep 2022 20:29:56 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH v6 3/5] phy: core: Add support for phy power down & power
+ up
+Content-Language: en-GB
+To:     Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+Cc:     helgaas@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mka@chromium.org, quic_vbadigan@quicinc.com,
+        quic_hemantk@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_skananth@quicinc.com, quic_ramkri@quicinc.com,
+        manivannan.sadhasivam@linaro.org, swboyd@chromium.org,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        "open list:GENERIC PHY FRAMEWORK" <linux-phy@lists.infradead.org>
+References: <1662713084-8106-1-git-send-email-quic_krichai@quicinc.com>
+ <1662713084-8106-4-git-send-email-quic_krichai@quicinc.com>
+ <CAA8EJppgaAuEDU44ePOt+ZWK0_rNsXHnE3WOEc9F-n=VE=3aVQ@mail.gmail.com>
+ <87138bc9-2fc0-39fb-89c1-d3826e28594e@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <87138bc9-2fc0-39fb-89c1-d3826e28594e@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Bluetooth controllers share the common local-bd-address property.
-Add a generic YAML schema to replace bluetooth.txt for those.
+On 14/09/2022 17:50, Krishna Chaitanya Chundru wrote:
+> 
+> On 9/9/2022 2:34 PM, Dmitry Baryshkov wrote:
+>> On Fri, 9 Sept 2022 at 11:45, Krishna chaitanya chundru
+>> <quic_krichai@quicinc.com> wrote:
+>>> Introducing phy power down/up callbacks for allowing to park the
+>>> link-state in L1ss without holding any PCIe resources during
+>>> system suspend.
+>>>
+>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>>> ---
+>>>   drivers/phy/phy-core.c  | 30 ++++++++++++++++++++++++++++++
+>>>   include/linux/phy/phy.h | 20 ++++++++++++++++++++
+>>>   2 files changed, 50 insertions(+)
+>>>
+>>> diff --git a/drivers/phy/phy-core.c b/drivers/phy/phy-core.c
+>>> index d93ddf1..1b0b757 100644
+>>> --- a/drivers/phy/phy-core.c
+>>> +++ b/drivers/phy/phy-core.c
+>>> @@ -441,6 +441,36 @@ int phy_set_speed(struct phy *phy, int speed)
+>>>   }
+>>>   EXPORT_SYMBOL_GPL(phy_set_speed);
+>>>
+>>> +int phy_power_down(struct phy *phy)
+>>> +{
+>>> +       int ret;
+>>> +
+>>> +       if (!phy || !phy->ops->power_down)
+>>> +               return 0;
+>>> +
+>>> +       mutex_lock(&phy->mutex);
+>>> +       ret = phy->ops->power_down(phy);
+>>> +       mutex_unlock(&phy->mutex);
+>>> +
+>>> +       return ret;
+>>> +}
+>>> +EXPORT_SYMBOL_GPL(phy_power_down);
+>>> +
+>>> +int phy_power_up(struct phy *phy)
+>>> +{
+>>> +       int ret;
+>>> +
+>>> +       if (!phy || !phy->ops->power_up)
+>>> +               return 0;
+>>> +
+>>> +       mutex_lock(&phy->mutex);
+>>> +       ret = phy->ops->power_up(phy);
+>>> +       mutex_unlock(&phy->mutex);
+>>> +
+>>> +       return ret;
+>>> +}
+>> As it can be seen from the phy_power_off(), the PHY can be a shared
+>> resource, with the power_count counting the number of users that
+>> requested the PHY to be powered up. By introducing suc calls you break
+>> directly into this by allowing a single user to power down the PHY, no
+>> matter how many other users have requested the PHY to stay alive.
+> 
+> can we use same power_count in this function also here and restrict the 
+> single user to
+> 
+> power down the PHY same like phy_power_off?.
 
-Signed-off-by: Sven Peter <sven@svenpeter.dev>
----
-changes from v2:
-  - added new bluetooth subdirectory and moved files there
-  - removed minItems from local-bd-address
-  - dropped bjorn.andersson@linaro.org, bgodavar@codeaurora.org and
-    rjliao@codeaurora.org due to bouncing emails from the CC list
+What is the difference between power_off() and power_down()?
 
-changes from v1:
-  - removed blueetooth.txt instead of just replacing it with a
-    deprecation note
-  - replaced references to bluetooth.txt
 
- .../devicetree/bindings/net/bluetooth.txt     |  5 ----
- .../net/bluetooth/bluetooth-controller.yaml   | 29 +++++++++++++++++++
- .../{ => bluetooth}/qualcomm-bluetooth.yaml   |  6 ++--
- .../bindings/soc/qcom/qcom,wcnss.yaml         |  8 ++---
- 4 files changed, 35 insertions(+), 13 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/net/bluetooth.txt
- create mode 100644 Documentation/devicetree/bindings/net/bluetooth/bluetooth-controller.yaml
- rename Documentation/devicetree/bindings/net/{ => bluetooth}/qualcomm-bluetooth.yaml (96%)
-
-diff --git a/Documentation/devicetree/bindings/net/bluetooth.txt b/Documentation/devicetree/bindings/net/bluetooth.txt
-deleted file mode 100644
-index 94797df751b8..000000000000
---- a/Documentation/devicetree/bindings/net/bluetooth.txt
-+++ /dev/null
-@@ -1,5 +0,0 @@
--The following properties are common to the Bluetooth controllers:
--
--- local-bd-address: array of 6 bytes, specifies the BD address that was
--  uniquely assigned to the Bluetooth device, formatted with least significant
--  byte first (little-endian).
-diff --git a/Documentation/devicetree/bindings/net/bluetooth/bluetooth-controller.yaml b/Documentation/devicetree/bindings/net/bluetooth/bluetooth-controller.yaml
-new file mode 100644
-index 000000000000..9309dc40f54f
---- /dev/null
-+++ b/Documentation/devicetree/bindings/net/bluetooth/bluetooth-controller.yaml
-@@ -0,0 +1,29 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/net/bluetooth/bluetooth-controller.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Bluetooth Controller Generic Binding
-+
-+maintainers:
-+  - Marcel Holtmann <marcel@holtmann.org>
-+  - Johan Hedberg <johan.hedberg@gmail.com>
-+  - Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-+
-+properties:
-+  $nodename:
-+    pattern: "^bluetooth(@.*)?$"
-+
-+  local-bd-address:
-+    $ref: /schemas/types.yaml#/definitions/uint8-array
-+    maxItems: 6
-+    description:
-+      Specifies the BD address that was uniquely assigned to the Bluetooth
-+      device. Formatted with least significant byte first (little-endian), e.g.
-+      in order to assign the address 00:11:22:33:44:55 this property must have
-+      the value [55 44 33 22 11 00].
-+
-+additionalProperties: true
-+
-+...
-diff --git a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
-similarity index 96%
-rename from Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
-rename to Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
-index f93c6e7a1b59..a6a6b0e4df7a 100644
---- a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
-+++ b/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
- %YAML 1.2
- ---
--$id: http://devicetree.org/schemas/net/qualcomm-bluetooth.yaml#
-+$id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
- title: Qualcomm Bluetooth Chips
-@@ -79,8 +79,7 @@ properties:
-   firmware-name:
-     description: specify the name of nvm firmware to load
- 
--  local-bd-address:
--    description: see Documentation/devicetree/bindings/net/bluetooth.txt
-+  local-bd-address: true
- 
- 
- required:
-@@ -89,6 +88,7 @@ required:
- additionalProperties: false
- 
- allOf:
-+  - $ref: bluetooth-controller.yaml#
-   - if:
-       properties:
-         compatible:
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml
-index 5320504bb5e0..0e6fd57d658d 100644
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml
-@@ -42,15 +42,13 @@ properties:
-   bluetooth:
-     type: object
-     additionalProperties: false
-+    allOf:
-+      - $ref: /schemas/net/bluetooth/bluetooth-controller.yaml#
-     properties:
-       compatible:
-         const: qcom,wcnss-bt
- 
--      local-bd-address:
--        $ref: /schemas/types.yaml#/definitions/uint8-array
--        maxItems: 6
--        description:
--          See Documentation/devicetree/bindings/net/bluetooth.txt
-+      local-bd-address: true
- 
-     required:
-       - compatible
 -- 
-2.25.1
+With best wishes
+Dmitry
 
