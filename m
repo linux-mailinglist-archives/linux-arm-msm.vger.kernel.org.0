@@ -2,185 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 11A515BCB3F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 13:56:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 101A55BCB43
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 13:56:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230212AbiISL4a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Sep 2022 07:56:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46380 "EHLO
+        id S230229AbiISL4e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Sep 2022 07:56:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230128AbiISLzx (ORCPT
+        with ESMTP id S230145AbiISLz4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Sep 2022 07:55:53 -0400
-Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 333B86358
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 04:54:34 -0700 (PDT)
-Received: by mail-il1-x12c.google.com with SMTP id s11so14638558ilt.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 04:54:34 -0700 (PDT)
+        Mon, 19 Sep 2022 07:55:56 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 535F41163
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 04:54:43 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id i26so46503048lfp.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 04:54:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=brainfault-org.20210112.gappssmtp.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=gUsv6szv6dsUeM9asVJnwaGmSGG17UchvxqwxLA3h8g=;
-        b=6l84clV/ev4Ho0Nth4fVfA2YCUlnkvOSgxbqusFUXjXpfQuFFf0cscM9H6JstjQMUy
-         xw7M8POcVaD8G3v3xGng54KrmjSgvwQL7sqhL179TVnFSdqvL9DEfhAXmZU08DpaVB+z
-         zSiunmo3VbmTof1vxAp/v47yQ2WgOGXeXG6GB3Gf7pE1ScGjC0bqV7TAtd/m+fpfq3CI
-         YOLPMuA/GgjNIfHOrOGhD0cM6H3P5LBBOn3aCDWtNVZfJPWoGE1cWKKtEz9Dpfs/6i2d
-         YxcNqnYUQtbiNuONYqqIai1SFElgvUv464Vcz0iTXK3yncl0+rss3soTmcg3IhW6Gf/K
-         H/3g==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:cc:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=bkOwhrrpc8oNDRuCmeCroBT1LYn4wRBl1NlqNZPhnbs=;
+        b=fWiVCUymJp+oJEz4l+Kbz77BMlrliE/LcR5Ct+Trh9KuDUfs4XnX1vBgJkgjspbK/l
+         JnxJkD03w60UB72e+JCe9PLffiZ+gb6dGBvLIFMKPyjy3qg0kXzB1usQfyicmCvU+lsn
+         Jircj9RYJioFRE2Dpdi5pEwpLkesINNNQpLEPXvkKk1p32uEB4UzeXqqWIbwN32L09Rt
+         FYgkFvVO9rcBsihr/q7g/0ZuGpV4R3KdwpqfIcNwz0s5zYVA1il0eRJXjwvOHn1V8M8D
+         ImpeWz0f1Vk5q3ibw50b/LmlPUK2xjRIeqRahZqhZ+rI0WdaCQPdrUQjGgbifRa2ujes
+         sOuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=gUsv6szv6dsUeM9asVJnwaGmSGG17UchvxqwxLA3h8g=;
-        b=y+8BQSyJH8RWMue4rx9nGnUEL4j292ijI9TXfwtaeOSYPpiBsr4Phg2KwjeSmFoSUy
-         fU9gh9Vp9VxuVbEKUKJuaC4k09+DQ8B6oYPwpS9VjnFPMLAy7cevnTCn2oc/b95MatTR
-         bSgb00vQLfji2T5QRLsJQ/dQF1UI0BxjhqeaaTMklTItKTLtEzZ89vnW8fHBW9olgQkM
-         V2oFpfvpeaPdVbfJ7SRuXY00NKugG8gsOsLf4N4U34Zyp1BuQenk8nrpsILjFt6Uz262
-         /LUI8y4ydwB37CpUddIyiaI9OQGjyGygFf9Hgz6YCOPrtNCPjlP/f3qjjh3yuQMqNg11
-         ktCA==
-X-Gm-Message-State: ACrzQf0l34GwIKUG+3imxRsCucPDebnZ3KIRlikTDdh8E5PMGhYVjOhs
-        urCqtEsv/ju7QV8D9A7mEzLxbLpCZ2pPJnv0O0LbLA==
-X-Google-Smtp-Source: AMsMyM5SaQPoV1xlIMZRfmPqKRzR7kAhfhGoUGwZ5KM3JobcN8dh6yNRCyMvHHbKVsfAJAruxygcE1W13IXNCB18i9o=
-X-Received: by 2002:a92:c04d:0:b0:2f5:1175:c7a3 with SMTP id
- o13-20020a92c04d000000b002f51175c7a3mr5681407ilf.165.1663588472670; Mon, 19
- Sep 2022 04:54:32 -0700 (PDT)
+        h=content-transfer-encoding:in-reply-to:from:cc:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=bkOwhrrpc8oNDRuCmeCroBT1LYn4wRBl1NlqNZPhnbs=;
+        b=i8/tDsUUKMQIhDcC9N4xbQaXu/nBaLGt3FOtMaIMjIPE73Wi5RFFZQIwc9wcz6fo4L
+         q7F8Uep06I33ePin/UV9wD4e0Ohud75ivDg/LdY/o56VGVMm7dnVb8BPg+aKlLyXYel+
+         MCPP4TUSner6soE0eVj1iCwmMS15n5XLhHPL7NnbkezUJ4VMB372hdanwr/TevcZSi2q
+         Dt7Szz+ummYOKuA4BPL47W5u58g1Fifmgizpj1pE8gqR9uPQMoN80SO6DM42OWzWMc+Z
+         0AjY3z688/qnKZkOYpy1NETIqyHoU+R+rcNK63NW7HnGH2D8HQKxba5MNe9L+JN5G02k
+         Izog==
+X-Gm-Message-State: ACrzQf2y1XRBwB1RR8aDBvw/bZa0q2BGsLwaY4kiX0h3ozFCBXHChIv3
+        kWuQtLcMifjGe9LZlDkvLZ/lMw==
+X-Google-Smtp-Source: AMsMyM5MhT3J95QrmGZ+gBmGOKTUMIN+6t28HzIOd9swgQf7w/3rvVotRvY7LkF1iCmxyo0bPAzn6Q==
+X-Received: by 2002:a05:6512:1107:b0:49a:d211:bb3c with SMTP id l7-20020a056512110700b0049ad211bb3cmr5668318lfg.423.1663588481849;
+        Mon, 19 Sep 2022 04:54:41 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id bq25-20020a056512151900b00492eb7205b0sm5152086lfb.210.2022.09.19.04.54.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Sep 2022 04:54:41 -0700 (PDT)
+Message-ID: <e7a54dc0-0f4d-b4d9-ebe3-e6aaf1696ae1@linaro.org>
+Date:   Mon, 19 Sep 2022 13:54:40 +0200
 MIME-Version: 1.0
-References: <20220919095939.761690562@infradead.org> <20220919101520.669962810@infradead.org>
-In-Reply-To: <20220919101520.669962810@infradead.org>
-From:   Anup Patel <anup@brainfault.org>
-Date:   Mon, 19 Sep 2022 17:24:19 +0530
-Message-ID: <CAAhSdy004HaNUNYRD8tcn24LZWdTmOVkF1QN14uLmSw1UXuXqA@mail.gmail.com>
-Subject: Re: [PATCH v2 05/44] cpuidle,riscv: Push RCU-idle into driver
-To:     Peter Zijlstra <peterz@infradead.org>
-Cc:     richard.henderson@linaro.org, ink@jurassic.park.msu.ru,
-        mattst88@gmail.com, vgupta@kernel.org, linux@armlinux.org.uk,
-        ulli.kroll@googlemail.com, linus.walleij@linaro.org,
-        shawnguo@kernel.org, Sascha Hauer <s.hauer@pengutronix.de>,
-        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
-        tony@atomide.com, khilman@kernel.org, catalin.marinas@arm.com,
-        will@kernel.org, guoren@kernel.org, bcain@quicinc.com,
-        chenhuacai@kernel.org, kernel@xen0n.name, geert@linux-m68k.org,
-        sammy@sammy.net, monstr@monstr.eu, tsbogend@alpha.franken.de,
-        dinguyen@kernel.org, jonas@southpole.se,
-        stefan.kristiansson@saunalahti.fi, shorne@gmail.com,
-        James.Bottomley@hansenpartnership.com, deller@gmx.de,
-        mpe@ellerman.id.au, npiggin@gmail.com, christophe.leroy@csgroup.eu,
-        paul.walmsley@sifive.com, palmer@dabbelt.com,
-        aou@eecs.berkeley.edu, hca@linux.ibm.com, gor@linux.ibm.com,
-        agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
-        svens@linux.ibm.com, ysato@users.sourceforge.jp, dalias@libc.org,
-        davem@davemloft.net, richard@nod.at,
-        anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net,
-        tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
-        dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
-        acme@kernel.org, mark.rutland@arm.com,
-        alexander.shishkin@linux.intel.com, jolsa@kernel.org,
-        namhyung@kernel.org, jgross@suse.com, srivatsa@csail.mit.edu,
-        amakhalov@vmware.com, pv-drivers@vmware.com,
-        boris.ostrovsky@oracle.com, chris@zankel.net, jcmvbkbc@gmail.com,
-        rafael@kernel.org, lenb@kernel.org, pavel@ucw.cz,
-        gregkh@linuxfoundation.org, mturquette@baylibre.com,
-        sboyd@kernel.org, daniel.lezcano@linaro.org, lpieralisi@kernel.org,
-        sudeep.holla@arm.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
-        thierry.reding@gmail.com, jonathanh@nvidia.com,
-        jacob.jun.pan@linux.intel.com, atishp@atishpatra.org,
-        Arnd Bergmann <arnd@arndb.de>, yury.norov@gmail.com,
-        andriy.shevchenko@linux.intel.com, linux@rasmusvillemoes.dk,
-        dennis@kernel.org, tj@kernel.org, cl@linux.com,
-        rostedt@goodmis.org, pmladek@suse.com, senozhatsky@chromium.org,
-        john.ogness@linutronix.de, juri.lelli@redhat.com,
-        vincent.guittot@linaro.org, dietmar.eggemann@arm.com,
-        bsegall@google.com, mgorman@suse.de, bristot@redhat.com,
-        vschneid@redhat.com, fweisbec@gmail.com, ryabinin.a.a@gmail.com,
-        glider@google.com, andreyknvl@gmail.com, dvyukov@google.com,
-        vincenzo.frascino@arm.com,
-        Andrew Morton <akpm@linux-foundation.org>, jpoimboe@kernel.org,
-        linux-alpha@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-snps-arc@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-csky@vger.kernel.org, linux-hexagon@vger.kernel.org,
-        linux-ia64@vger.kernel.org, loongarch@lists.linux.dev,
-        linux-m68k@lists.linux-m68k.org, linux-mips@vger.kernel.org,
-        openrisc@lists.librecores.org, linux-parisc@vger.kernel.org,
-        linuxppc-dev@lists.ozlabs.org, linux-riscv@lists.infradead.org,
-        linux-s390@vger.kernel.org, linux-sh@vger.kernel.org,
-        sparclinux@vger.kernel.org, linux-um@lists.infradead.org,
-        linux-perf-users@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-xtensa@linux-xtensa.org, linux-acpi@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-arch@vger.kernel.org, kasan-dev@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH RFT v2 1/4] dt-bindings: soc: qcom: smd-rpm: add PMIC
+ regulators nodes
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <20220901093243.134288-1-krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220901093243.134288-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 19, 2022 at 3:47 PM Peter Zijlstra <peterz@infradead.org> wrote:
->
-> Doing RCU-idle outside the driver, only to then temporarily enable it
-> again, at least twice, before going idle is daft.
->
-> Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+On 01/09/2022 11:32, Krzysztof Kozlowski wrote:
+> The Qualcomm RPM over SMD contains devices for one or two PMIC
+> regulators - already used in several DTS files.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
 
-Looks good to me.
+Hi Bjorn,
 
-For RISC-V cpuidle:
-Reviewed-by: Anup Patel <anup@brainfault.org>
+I guess no more tests/reviews will happen, so how about applying the
+entire set?
 
-Regards,
-Anup
-
-
-> ---
->  drivers/cpuidle/cpuidle-riscv-sbi.c |    9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
->
-> --- a/drivers/cpuidle/cpuidle-riscv-sbi.c
-> +++ b/drivers/cpuidle/cpuidle-riscv-sbi.c
-> @@ -116,12 +116,12 @@ static int __sbi_enter_domain_idle_state
->                 return -1;
->
->         /* Do runtime PM to manage a hierarchical CPU toplogy. */
-> -       ct_irq_enter_irqson();
->         if (s2idle)
->                 dev_pm_genpd_suspend(pd_dev);
->         else
->                 pm_runtime_put_sync_suspend(pd_dev);
-> -       ct_irq_exit_irqson();
-> +
-> +       ct_idle_enter();
->
->         if (sbi_is_domain_state_available())
->                 state = sbi_get_domain_state();
-> @@ -130,12 +130,12 @@ static int __sbi_enter_domain_idle_state
->
->         ret = sbi_suspend(state) ? -1 : idx;
->
-> -       ct_irq_enter_irqson();
-> +       ct_idle_exit();
-> +
->         if (s2idle)
->                 dev_pm_genpd_resume(pd_dev);
->         else
->                 pm_runtime_get_sync(pd_dev);
-> -       ct_irq_exit_irqson();
->
->         cpu_pm_exit();
->
-> @@ -246,6 +246,7 @@ static int sbi_dt_cpu_init_topology(stru
->          * of a shared state for the domain, assumes the domain states are all
->          * deeper states.
->          */
-> +       drv->states[state_count - 1].flags |= CPUIDLE_FLAG_RCU_IDLE;
->         drv->states[state_count - 1].enter = sbi_enter_domain_idle_state;
->         drv->states[state_count - 1].enter_s2idle =
->                                         sbi_enter_s2idle_domain_idle_state;
->
->
+Best regards,
+Krzysztof
