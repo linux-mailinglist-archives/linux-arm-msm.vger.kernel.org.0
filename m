@@ -2,52 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F8605BD5EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 22:56:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E6B55BD5FF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 23:00:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229580AbiISU4i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Sep 2022 16:56:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56184 "EHLO
+        id S229912AbiISVAY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Sep 2022 17:00:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229492AbiISU4h (ORCPT
+        with ESMTP id S229851AbiISVAS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Sep 2022 16:56:37 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6580A4B497;
-        Mon, 19 Sep 2022 13:56:36 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Mon, 19 Sep 2022 17:00:18 -0400
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 050D14BA4A;
+        Mon, 19 Sep 2022 14:00:12 -0700 (PDT)
+Received: from SoMainline.org (94-209-172-39.cable.dynamic.v4.ziggo.nl [94.209.172.39])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 04AA861DDD;
-        Mon, 19 Sep 2022 20:56:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B3EC433C1;
-        Mon, 19 Sep 2022 20:56:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663620995;
-        bh=RMPDWz9rmgHZcfSMIbHo/eTIi42VrNwpeHzpIffLT6U=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZJGUFtV1Q/kgnoUVQ6D8q/385Oa09VWeGQRAfkW8UisZIfZCYzBnAkreJtLX51sWF
-         lo2CdaQ283I1X3rBLL8ocSLBsbG/f4mkSO8PWMrmvqJUgKfh4KbSF6Ro9apXPjKVOM
-         M+/SzKJcgO6v5l9C0KqAEK6ai52jqr2ztUj+J5gqgLW2wZJbQ6Kcllsz2s/qskKsqF
-         SMrGYWWU9WDTY9QcUsQkDfcygtXY5MpWwWBsYgLZvKLndSbs1v8aksLptTHv2Ubq51
-         r1HZjWHDwI+s1QA5AJlZ734xz6n7L3SOFzIjj2cWhXskygKbxY7J9pQRkJk0QayV8H
-         xe/dBnDI/c6Mw==
-Date:   Mon, 19 Sep 2022 15:56:33 -0500
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Guru Das Srinagesh <quic_gurus@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id A2A5C3F5CC;
+        Mon, 19 Sep 2022 23:00:10 +0200 (CEST)
+Date:   Mon, 19 Sep 2022 23:00:08 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 0/5] Add Qcom PM6125 PMIC, and use in Sony Xperia
+ Seine PDX201
+Message-ID: <20220919210008.5i5e74bl5gxxfbnh@SoMainline.org>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/1] soc: qcom: llcc: Move struct llcc_slice_config to
- header
-Message-ID: <20220919205633.qw5ucwjtyt4vjsro@builder.lan>
-References: <1663384000-8097-1-git-send-email-quic_gurus@quicinc.com>
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220919204826.215845-1-marijn.suijten@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1663384000-8097-1-git-send-email-quic_gurus@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <20220919204826.215845-1-marijn.suijten@somainline.org>
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -55,133 +63,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 16, 2022 at 08:06:40PM -0700, Guru Das Srinagesh wrote:
-> Move struct llcc_slice_config to header so that it can be reused by
-> other kernel modules.
+On 2022-09-19 22:48:21, Marijn Suijten wrote:
+> This series adds initial support for the PM6125 PMIC, and its power key
+> handling and thermal monitoring capabilities are configured for Sony's
+> PDX201 (Xperia 10II).
+> 
+> One patch for pm660 is included to fix a node address mismatch with its
+> reg field.
+> 
+> Changes since v2:
+> - Rebased on v6.0-rc6 to drop dependent DT patches;
+> - Dropped iio patch which has already been picked into Jonathan's tree;
+> - Added qcom,pm6125 compatible in new yaml-ified SPMI-PMIC dt-bindings.
 
-Can you please continue this sentence to provide some concrete examples?
-Will we see those other users posted upstream?
+And
 
-Thanks,
-Bjorn
+    - Renamed `pm6125_gpio: gpios@c000` node to `gpio`;
+
+of course, as requested by Krzysztof.
+
+- Marijn
 
 > 
-> Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
-> ---
->  drivers/soc/qcom/llcc-qcom.c       | 44 --------------------------------------
->  include/linux/soc/qcom/llcc-qcom.h | 44 ++++++++++++++++++++++++++++++++++++++
->  2 files changed, 44 insertions(+), 44 deletions(-)
+> v2: https://lore.kernel.org/linux-arm-msm/20220805135729.1037079-1-marijn.suijten@somainline.org/T/#u
 > 
-> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> index 38d7296..3e7326f 100644
-> --- a/drivers/soc/qcom/llcc-qcom.c
-> +++ b/drivers/soc/qcom/llcc-qcom.c
-> @@ -55,50 +55,6 @@
->  #define LLCC_VERSION_2_0_0_0          0x02000000
->  #define LLCC_VERSION_2_1_0_0          0x02010000
->  
-> -/**
-> - * struct llcc_slice_config - Data associated with the llcc slice
-> - * @usecase_id: Unique id for the client's use case
-> - * @slice_id: llcc slice id for each client
-> - * @max_cap: The maximum capacity of the cache slice provided in KB
-> - * @priority: Priority of the client used to select victim line for replacement
-> - * @fixed_size: Boolean indicating if the slice has a fixed capacity
-> - * @bonus_ways: Bonus ways are additional ways to be used for any slice,
-> - *		if client ends up using more than reserved cache ways. Bonus
-> - *		ways are allocated only if they are not reserved for some
-> - *		other client.
-> - * @res_ways: Reserved ways for the cache slice, the reserved ways cannot
-> - *		be used by any other client than the one its assigned to.
-> - * @cache_mode: Each slice operates as a cache, this controls the mode of the
-> - *             slice: normal or TCM(Tightly Coupled Memory)
-> - * @probe_target_ways: Determines what ways to probe for access hit. When
-> - *                    configured to 1 only bonus and reserved ways are probed.
-> - *                    When configured to 0 all ways in llcc are probed.
-> - * @dis_cap_alloc: Disable capacity based allocation for a client
-> - * @retain_on_pc: If this bit is set and client has maintained active vote
-> - *               then the ways assigned to this client are not flushed on power
-> - *               collapse.
-> - * @activate_on_init: Activate the slice immediately after it is programmed
-> - * @write_scid_en: Bit enables write cache support for a given scid.
-> - * @write_scid_cacheable_en: Enables write cache cacheable support for a
-> - *			     given scid (not supported on v2 or older hardware).
-> - */
-> -struct llcc_slice_config {
-> -	u32 usecase_id;
-> -	u32 slice_id;
-> -	u32 max_cap;
-> -	u32 priority;
-> -	bool fixed_size;
-> -	u32 bonus_ways;
-> -	u32 res_ways;
-> -	u32 cache_mode;
-> -	u32 probe_target_ways;
-> -	bool dis_cap_alloc;
-> -	bool retain_on_pc;
-> -	bool activate_on_init;
-> -	bool write_scid_en;
-> -	bool write_scid_cacheable_en;
-> -};
-> -
->  struct qcom_llcc_config {
->  	const struct llcc_slice_config *sct_data;
->  	int size;
-> diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
-> index 9ed5384..e84cd87 100644
-> --- a/include/linux/soc/qcom/llcc-qcom.h
-> +++ b/include/linux/soc/qcom/llcc-qcom.h
-> @@ -106,6 +106,50 @@ struct llcc_drv_data {
->  	u32 version;
->  };
->  
-> +/**
-> + * struct llcc_slice_config - Data associated with the llcc slice
-> + * @usecase_id: Unique id for the client's use case
-> + * @slice_id: llcc slice id for each client
-> + * @max_cap: The maximum capacity of the cache slice provided in KB
-> + * @priority: Priority of the client used to select victim line for replacement
-> + * @fixed_size: Boolean indicating if the slice has a fixed capacity
-> + * @bonus_ways: Bonus ways are additional ways to be used for any slice,
-> + *		if client ends up using more than reserved cache ways. Bonus
-> + *		ways are allocated only if they are not reserved for some
-> + *		other client.
-> + * @res_ways: Reserved ways for the cache slice, the reserved ways cannot
-> + *		be used by any other client than the one its assigned to.
-> + * @cache_mode: Each slice operates as a cache, this controls the mode of the
-> + *             slice: normal or TCM(Tightly Coupled Memory)
-> + * @probe_target_ways: Determines what ways to probe for access hit. When
-> + *                    configured to 1 only bonus and reserved ways are probed.
-> + *                    When configured to 0 all ways in llcc are probed.
-> + * @dis_cap_alloc: Disable capacity based allocation for a client
-> + * @retain_on_pc: If this bit is set and client has maintained active vote
-> + *               then the ways assigned to this client are not flushed on power
-> + *               collapse.
-> + * @activate_on_init: Activate the slice immediately after it is programmed
-> + * @write_scid_en: Bit enables write cache support for a given scid.
-> + * @write_scid_cacheable_en: Enables write cache cacheable support for a
-> + *			     given scid (not supported on v2 or older hardware).
-> + */
-> +struct llcc_slice_config {
-> +	u32 usecase_id;
-> +	u32 slice_id;
-> +	u32 max_cap;
-> +	u32 priority;
-> +	bool fixed_size;
-> +	u32 bonus_ways;
-> +	u32 res_ways;
-> +	u32 cache_mode;
-> +	u32 probe_target_ways;
-> +	bool dis_cap_alloc;
-> +	bool retain_on_pc;
-> +	bool activate_on_init;
-> +	bool write_scid_en;
-> +	bool write_scid_cacheable_en;
-> +};
-> +
->  #if IS_ENABLED(CONFIG_QCOM_LLCC)
->  /**
->   * llcc_slice_getd - get llcc slice descriptor
-> -- 
-> 2.7.4
+> Changes since v1:
+> - Dropped both pinctrl patches that have already been applied;
+> - Add -us suffix to qcom,hw-settle-time properties on ADC TM5 nodes
+>   (this suffix is not present on regular ADC5/VADC nodes);
+> - Add -state suffix to pm6125_gpio pinctrl nodes;
+> - Use PMIC_GPIO_FUNC_NORMAL instead of the string-literal "normal";
+> - Removed #address-cells and #size-cells from empty pmic@1 node;
+> - Removed ADC5_AMUX_THM3 / ADC5_GPIO2_100K_PU channels from the ADC5
+>   patch, these are unused on my board and hence untested.
+> 
+> v1: https://lore.kernel.org/phone-devel/20220511220613.1015472-1-marijn.suijten@somainline.org/T/#u
+> 
+> Marijn Suijten (5):
+>   dt-bindings: mfd: qcom-spmi-pmic: Add pm6125 compatible
+>   arm64: dts: qcom: pm660: Use unique ADC5_VCOIN address in node name
+>   arm64: dts: qcom: Add PM6125 PMIC
+>   arm64: dts: qcom: sm6125-seine: Include PM6125 and configure PON
+>   arm64: dts: qcom: sm6125-seine: Configure additional trinket
+>     thermistors
+> 
+>  .../bindings/mfd/qcom,spmi-pmic.yaml          |   1 +
+>  arch/arm64/boot/dts/qcom/pm6125.dtsi          | 154 +++++++++++++++++
+>  arch/arm64/boot/dts/qcom/pm660.dtsi           |   2 +-
+>  .../qcom/sm6125-sony-xperia-seine-pdx201.dts  | 162 +++++++++++++++++-
+>  4 files changed, 317 insertions(+), 2 deletions(-)
+>  create mode 100644 arch/arm64/boot/dts/qcom/pm6125.dtsi
+> 
+> --
+> 2.37.3
 > 
