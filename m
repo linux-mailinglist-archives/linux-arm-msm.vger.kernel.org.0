@@ -2,69 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 51AAC5BD58E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 22:15:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D78EE5BD597
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 22:17:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229535AbiISUPI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Sep 2022 16:15:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43108 "EHLO
+        id S229577AbiISURw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Sep 2022 16:17:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229496AbiISUPH (ORCPT
+        with ESMTP id S229717AbiISURp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Sep 2022 16:15:07 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFB2D24951
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 13:15:04 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id o70-20020a17090a0a4c00b00202f898fa86so337954pjo.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 13:15:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=5BYRBPM4zgHC3VahcAikqjcoL49FznoCsyxR5lJsfXs=;
-        b=jGUM5iJdCo0C89YZE3pQLBoXd+In0uh5e7oBz3nuDxJWeEUeQED/sc+04OhosoSNn1
-         eqW4JB7ME/K6EuVgW96GN1JTa+G+T2z78in6okYpiYYNHDXbQBXHKNjBX0IDQqzZJagl
-         VJCbFfmrmHb0EJdff5fV9twN/BdOsJt1MXAKAQXlbJ6cdry8d35wVBULPMi2uU498/r6
-         c/LLESssj4qH4qMcEkLU0AAdc4IhZfma7RGSfoQx3t7PVOAsvNO31YcjIO/Aq3xkeBJ1
-         ZHFhSD8WlHlac8jZLZukS/pLlk2s9njSMno3H7vOf29XGr2p8Ys2Sr+JrZY2uIU62ocK
-         H0/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=5BYRBPM4zgHC3VahcAikqjcoL49FznoCsyxR5lJsfXs=;
-        b=zKOMVZkOS8j8PPdTEuDNCe6zDhNkYfjL9IX+iMVniKcKIeXDzHN0src/3Ws+WsxqXb
-         eCD6lZu20WaiCTT+4Gps228TZetEce9zXgTIWf7Y8ZBEVkAfZU9WDOOtCpCP7+2Whx6i
-         8AJ874nW6/7M6iTAl+MHwc+KOi74rfKBCSJ5i7IgQMWWswNMK3uFJe2Gq8sL5Spn7sTE
-         YzlssvJ6N6wRC44lmsiT83lCvIBsmuSXIae1kXy6kXfyEtCjPM9BdYm6VeLyrd0/+/P3
-         54igVSKUkLnDeCeBBe5i2FaIxSX8nI8b0m/wloNxXfBGGWL11P/cnQerfQiRKXlQHq3d
-         oBxA==
-X-Gm-Message-State: ACrzQf0/U7NqxKMmeOlHGCNUYgddESDV+lVyUXXSvgDkoo9Kbo0mMC+a
-        6XVa/l+OT+T7UzDWmC2+OveDmIGTUE6EBA==
-X-Google-Smtp-Source: AMsMyM7x+ReDBhM9VXt6bAhzRSvtmB0maQ+OBP02xCg2iLo1g+0X6Z8rE3ao5xM0BsRhk0EF7xSi4w==
-X-Received: by 2002:a17:90a:fe90:b0:202:a345:b7a6 with SMTP id co16-20020a17090afe9000b00202a345b7a6mr21338567pjb.14.1663618504464;
-        Mon, 19 Sep 2022 13:15:04 -0700 (PDT)
-Received: from p14s (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
-        by smtp.gmail.com with ESMTPSA id b22-20020a630c16000000b0043057fe66c0sm6177279pgl.48.2022.09.19.13.15.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Sep 2022 13:15:03 -0700 (PDT)
-Date:   Mon, 19 Sep 2022 14:15:01 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-Cc:     Deepak Kumar Singh <quic_deesin@quicinc.com>,
-        bjorn.andersson@linaro.org, swboyd@chromium.org,
-        quic_clew@quicinc.com, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH V3 0/3] rpmsg signaling/flowcontrol patches
-Message-ID: <20220919201501.GD759648@p14s>
-References: <1663133102-10671-1-git-send-email-quic_deesin@quicinc.com>
- <74224354-8543-559b-240b-0eda4d68fc52@foss.st.com>
+        Mon, 19 Sep 2022 16:17:45 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E3524333A;
+        Mon, 19 Sep 2022 13:17:44 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 4ABEAB8116D;
+        Mon, 19 Sep 2022 20:17:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7FDCC433D6;
+        Mon, 19 Sep 2022 20:17:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663618662;
+        bh=eLnSfNg94p3dmevcszHxKEUBtga5UOC1oT5V7Ff96ic=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=AnmhoQiqIWssaceXNzxDmMLpVCMK+Wn2cIOPOF542JbKO4urTK9eJf3vQnBnSsJRt
+         JkOjNMaUaIEL6wawwBZD4Mun1WuZj34fcvRZZg4Gv6bWDk2kqU4qPTOJFsh6zHK2+v
+         wbJePqHOOBa0+U5kvmSKqYVHyt65OzP2BUMXefVRtWkOagBc1mFloSZ+EG9aKLRmP8
+         DG6GuUW7T0uKyuMRe/rfRinszwIqwSRcB+WO+5CJOElakfMb2DUJ2WjzB3IMPVbmpM
+         P0HAxbf6OMkTdzD/wnZarPq1Xdube0eB7IQW42DmXgzMCaVInYCQJ3+NoPcF0CSvQh
+         q4DnDFqw5WMMw==
+Date:   Mon, 19 Sep 2022 15:17:38 -0500
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Vincent Knecht <vincent.knecht@mailoo.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, bryan.odonoghue@linaro.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Subject: Re: [PATCH] thermal: qcom: tsens-v0_1: Fix MSM8939 fourth sensor
+ hw_id
+Message-ID: <20220919201738.wkdzizmj5lhq2hk2@builder.lan>
+References: <20220811105014.7194-1-vincent.knecht@mailoo.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <74224354-8543-559b-240b-0eda4d68fc52@foss.st.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <20220811105014.7194-1-vincent.knecht@mailoo.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,42 +64,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 14, 2022 at 09:50:48AM +0200, Arnaud POULIQUEN wrote:
-> Hi Deepak,
+On Thu, Aug 11, 2022 at 12:50:14PM +0200, Vincent Knecht wrote:
+> Reading temperature from this sensor fails with 'Invalid argument'.
 > 
-> On 9/14/22 07:24, Deepak Kumar Singh wrote:
-> > [Changes from V2]:
-> > Trivial review comment fixes.
-> > Avoid TIOCM_DTR etc signals in glink layer, use native signal macros only.
-> > Glink layer to provide only flowcontrol on/off interface, no specific signal passing/receiving to client.
+> Looking at old vendor dts [1], its hw_id should be 3 instead of 4.
+> Change this hw_id accordingly.
 > 
+> [1] https://github.com/msm8916-mainline/android_kernel_qcom_msm8916/blob/master/arch/arm/boot/dts/qcom/msm8939-common.dtsi#L511
 > 
-> Please, could you have a look to my series that implements
-> your proposed interface for the virtio rpmsg [1]?
-> It would be nice that your API takes into account update to
-> support of the rpmsg virtio implementation proposed in [08/10] rpmsg: Add the
-> destination address in rpmsg_set_flow_control[2]
+> Fixes: 332bc8ebab2c ("thermal: qcom: tsens-v0_1: Add support for MSM8939")
+> Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
 
-I agree with Arnaud - I would like to see more convergence on this topic.  I will
-not move forward with this patchset until comments have been provided for [1].
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
+Regards,
+Bjorn
+
+> ---
+> Fixes reading GPU temperature on msm8939 idol3 with current WIP dtsi
+> ---
+>  drivers/thermal/qcom/tsens-v0_1.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> Thanks,
-> Arnaud
+> diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
+> index f136cb350238..327f37202c69 100644
+> --- a/drivers/thermal/qcom/tsens-v0_1.c
+> +++ b/drivers/thermal/qcom/tsens-v0_1.c
+> @@ -604,7 +604,7 @@ static const struct tsens_ops ops_8939 = {
+>  struct tsens_plat_data data_8939 = {
+>  	.num_sensors	= 10,
+>  	.ops		= &ops_8939,
+> -	.hw_ids		= (unsigned int []){ 0, 1, 2, 4, 5, 6, 7, 8, 9, 10 },
+> +	.hw_ids		= (unsigned int []){ 0, 1, 2, 3, 5, 6, 7, 8, 9, 10 },
+>  
+>  	.feat		= &tsens_v0_1_feat,
+>  	.fields	= tsens_v0_1_regfields,
+> -- 
+> 2.37.1
 > 
-> [1] https://lore.kernel.org/lkml/e54bcfcb-8e37-9caa-b330-a7411820b7ce@foss.st.com/T/
-> [2]https://lore.kernel.org/lkml/e54bcfcb-8e37-9caa-b330-a7411820b7ce@foss.st.com/T/#m7340a8e70fb0d8935869c4cef96863abda555c96
 > 
-> > 
-> > Deepak Kumar Singh (3):
-> >   rpmsg: core: Add signal API support
-> >   rpmsg: glink: Add support to handle signals command
-> >   rpmsg: char: Add TIOCMGET/TIOCMSET ioctl support
-> > 
-> >  drivers/rpmsg/qcom_glink_native.c | 63 +++++++++++++++++++++++++++++++++++++++
-> >  drivers/rpmsg/rpmsg_char.c        | 60 ++++++++++++++++++++++++++++++++-----
-> >  drivers/rpmsg/rpmsg_core.c        | 20 +++++++++++++
-> >  drivers/rpmsg/rpmsg_internal.h    |  2 ++
-> >  include/linux/rpmsg.h             | 15 ++++++++++
-> >  5 files changed, 152 insertions(+), 8 deletions(-)
-> > 
+> 
