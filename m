@@ -2,195 +2,563 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F7E45BC1CC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 05:44:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF7015BC248
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 06:39:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229505AbiISDop (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Sep 2022 23:44:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56422 "EHLO
+        id S229579AbiISEjt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Sep 2022 00:39:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbiISDon (ORCPT
+        with ESMTP id S229548AbiISEjs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Sep 2022 23:44:43 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C341495BE
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Sep 2022 20:44:40 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id z2so3425743edi.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Sep 2022 20:44:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=lixom-net.20210112.gappssmtp.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=8wzd/IsQMAz4yliZb1FsJ3OfMRVNZc5tTLnz3lR7QHQ=;
-        b=EuFCJAkszMPKPtxQSyMQ0NoboaeVB7t96eFw9rPXwH9oSHUro5o77bxEeYAtANDzyR
-         I9BMOm4HMiosCb0pcsiSHEAZo2qSCtvZawUq0/zPNIdwAvDvQAPS+8+0uFrWbUJgoTtd
-         ExLo8MeQP7GyQ+rW2rlFvIPPT75kqxCAKPhOGjeDjYZZFhuAOfywggSn5a+jZu6mJGBr
-         cWVHHoToy9UWA6nPxBqZcAZLzmJoxjkbRc1yLhwZYNZgNQEBRnr86m6GI/e/+J8MoRAT
-         suDLw8ILYZpcoPAOh+pvz4Lu/zfiYh6RXQKy+jZAxuRvjXsVxLmt63JqorCueNp9TEEJ
-         9kQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=8wzd/IsQMAz4yliZb1FsJ3OfMRVNZc5tTLnz3lR7QHQ=;
-        b=vTjRnPozJfaT7abeUuBHHwAw46rDgA8ZJQ2vnQiXRojUZJY99hVuVWt7jZqpXFo0g3
-         Tac82p9mnjbyXjzaiSGmlTIFOmeCAhl0L6NuDtjOYtUqtmiyzf/yPo09ttO+Ng6TD51d
-         hkRGYgSfuZothT8koyje6YWQOFAGJHBcDCaXq0UXm4aFthesWYrhAI7wN+mf8FZpWwTy
-         uqw0/FqNKJK56F1FssvkHpNuNwr8Q4+uujlP6XX4gjPcgNhfB0jp2luuZiOMqcRkteiG
-         V1gMgEHKvImM27pQ/5Jev2WQUc251+a074mntPPIAZyOP+jO9Lf2w/RBeSk4RMuaNGmO
-         myEA==
-X-Gm-Message-State: ACrzQf1g21OwsfZQ/BKYQOFFHSGQSyypABTmmlog7WpvQCAImhlI2Hue
-        478dmDPTZJQNeS27gz7t54mjk0aDXEI8JNrYfnWd8A==
-X-Google-Smtp-Source: AMsMyM67X4fHgNHGRzRNZ0AalOVh8oZlYNRkDoycvf7zBAcHx4qOwSpxEraLAwYUCmYCoDnGs0xLR1B5pb/N312tK3I=
-X-Received: by 2002:aa7:cc8a:0:b0:446:7668:2969 with SMTP id
- p10-20020aa7cc8a000000b0044676682969mr13821510edt.206.1663559079248; Sun, 18
- Sep 2022 20:44:39 -0700 (PDT)
+        Mon, 19 Sep 2022 00:39:48 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1623B64C1;
+        Sun, 18 Sep 2022 21:39:44 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28J4UP9k030459;
+        Mon, 19 Sep 2022 04:39:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=GY6cxSLEjAPqtPGChpgCJd9xrcdtkSAmTq6McigOdqc=;
+ b=T/fPpeT5dheBTAfA0/YGOW/jFCjL1B079EEcNP9ua2AuWW6X2yDsMQKKwj7nQIZt7bWk
+ w7jwBQsapmBDhUFRM68iM3xt80Txx/adXIkrjv58mZhI1ST7bef+vTvzDUNEB7/ecKFg
+ Hr2N5/o5jS9g63d93zDK4nOPV0Ra6vf59VMpPwEbqz6Hvm+1ZiHd2CV81iu6n/4MJIZ7
+ Z5JGFSpy7gXE+282ZAyFOQB87KXnScObfYOYODKePl1UPIdEmx/dUtZArdh0DRrL4api
+ fj2YscCtBUI9eVb7FjXEIr6xdV/i7PJnlkjqASsKsrCh9AKeGIhMYpRToS0X9grdy+AN tQ== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jn6by2ymc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 19 Sep 2022 04:39:29 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28J4dSOu015672
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 19 Sep 2022 04:39:28 GMT
+Received: from [10.110.123.14] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Sun, 18 Sep
+ 2022 21:39:23 -0700
+Message-ID: <862e74d9-6390-f0ab-3708-039f987e7a1e@quicinc.com>
+Date:   Mon, 19 Sep 2022 10:09:04 +0530
 MIME-Version: 1.0
-References: <20220701012647.2007122-1-saravanak@google.com> <YwS5J3effuHQJRZ5@kroah.com>
-In-Reply-To: <YwS5J3effuHQJRZ5@kroah.com>
-From:   Olof Johansson <olof@lixom.net>
-Date:   Sun, 18 Sep 2022 20:44:27 -0700
-Message-ID: <CAOesGMivJ5Q-jdeGKw32yhjmNiYctHjpEAnoMMRghYqWD2m2tw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] Fix console probe delay when stdout-path isn't set
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Saravana Kannan <saravanak@google.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-        Paul Mackerras <paulus@samba.org>,
-        Joel Stanley <joel@jms.id.au>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Nicolas Saenz Julienne <nsaenz@kernel.org>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Al Cooper <alcooperx@gmail.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Tobias Klauser <tklauser@distanz.ch>,
-        Russell King <linux@armlinux.org.uk>,
-        Vineet Gupta <vgupta@kernel.org>,
-        Richard Genoud <richard.genoud@gmail.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Alexander Shiyan <shc_work@mail.ru>,
-        Baruch Siach <baruch@tkos.co.il>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Karol Gugala <kgugala@antmicro.com>,
-        Mateusz Holenko <mholenko@antmicro.com>,
-        Gabriel Somlo <gsomlo@gmail.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Taichi Sugaya <sugaya.taichi@socionext.com>,
-        Takao Orito <orito.takao@socionext.com>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Pali Rohar <pali@kernel.org>,
-        Andreas Farber <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang7@gmail.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Hammer Hsieh <hammerh0314@gmail.com>,
-        Peter Korsgaard <jacmet@sunsite.dk>,
-        Timur Tabi <timur@kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Rob Herring <robh@kernel.org>,
-        sascha hauer <sha@pengutronix.de>, peng fan <peng.fan@nxp.com>,
-        kevin hilman <khilman@kernel.org>,
-        ulf hansson <ulf.hansson@linaro.org>,
-        len brown <len.brown@intel.com>, pavel machek <pavel@ucw.cz>,
-        joerg roedel <joro@8bytes.org>, will deacon <will@kernel.org>,
-        andrew lunn <andrew@lunn.ch>,
-        heiner kallweit <hkallweit1@gmail.com>,
-        eric dumazet <edumazet@google.com>,
-        jakub kicinski <kuba@kernel.org>,
-        paolo abeni <pabeni@redhat.com>,
-        linus walleij <linus.walleij@linaro.org>,
-        hideaki yoshifuji <yoshfuji@linux-ipv6.org>,
-        david ahern <dsahern@kernel.org>, kernel-team@android.com,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        iommu@lists.linux-foundation.org, netdev@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-        linux-serial@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-aspeed@lists.ozlabs.org,
-        linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org,
-        linux-snps-arc@lists.infradead.org,
-        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-actions@lists.infradead.org,
-        linux-unisoc@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        sparclinux@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH V11 2/7] soc: qcom: dcc: Add driver support for Data
+ Capture and Compare unit(DCC)
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>
+CC:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        "Alex Elder" <elder@ieee.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>, <vkoul@kernel.org>
+References: <cover.1663313821.git.quic_schowdhu@quicinc.com>
+ <453efd9a436868a125225226dad9cc28965b75c1.1663313821.git.quic_schowdhu@quicinc.com>
+ <20220917001618.au7hlduxntj6i4no@builder.lan>
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+In-Reply-To: <20220917001618.au7hlduxntj6i4no@builder.lan>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: FdnGSan4lP095felKnnSatZGiPC2GqWu
+X-Proofpoint-GUID: FdnGSan4lP095felKnnSatZGiPC2GqWu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-19_03,2022-09-16_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 lowpriorityscore=0 mlxlogscore=999 priorityscore=1501
+ malwarescore=0 mlxscore=0 adultscore=0 spamscore=0 bulkscore=0
+ phishscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2209190030
+X-Spam-Status: No, score=-6.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 23, 2022 at 8:37 AM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
+
+On 9/17/2022 5:46 AM, Bjorn Andersson wrote:
+> On Fri, Sep 16, 2022 at 02:20:14PM +0530, Souradeep Chowdhury wrote:
+>> The DCC is a DMA Engine designed to capture and store data
+>> during system crash or software triggers. The DCC operates
+>> based on user inputs via the debugfs interface. The user gives
+>> addresses as inputs and these addresses are stored in the
+>> dcc sram. In case of a system crash or a manual software
+>> trigger by the user through the debugfs interface,
+>> the dcc captures and stores the values at these addresses.
+>> This patch contains the driver which has all the methods
+>> pertaining to the debugfs interface, auxiliary functions to
+>> support all the four fundamental operations of dcc namely
+>> read, write, read/modify/write and loop. The probe method
+>> here instantiates all the resources necessary for dcc to
+>> operate mainly the dedicated dcc sram where it stores the
+>> values. The DCC driver can be used for debugging purposes
+>> without going for a reboot since it can perform software
+>> triggers as well based on user inputs.
+>>
+>> Also added the documentation for debugfs entries and explained
+>> the functionalities of each debugfs file that has been created
+>> for dcc.
+>>
+>> The following is the justification of using debugfs interface
+>> over the other alternatives like sysfs/ioctls
+>>
+>> i) As can be seen from the debugfs attribute descriptions,
+>> some of the debugfs attribute files here contains multiple
+>> arguments which needs to be accepted from the user. This goes
+>> against the design style of sysfs.
+>>
+>> ii) The user input patterns have been made simple and convenient
+>> in this case with the use of debugfs interface as user doesn't
+>> need to shuffle between different files to execute one instruction
+>> as was the case on using other alternatives.
+>>
+> Thanks for fixing up the checkpatch warnings.
 >
-> On Thu, Jun 30, 2022 at 06:26:38PM -0700, Saravana Kannan wrote:
-> > These patches are on top of driver-core-next.
-> >
-> > Even if stdout-path isn't set in DT, this patch should take console
-> > probe times back to how they were before the deferred_probe_timeout
-> > clean up series[1].
+> I did unfortunately find a few more things as I was looking through this
+> revision.
 >
-> Now dropped from my queue due to lack of a response to other reviewer's
-> questions.
-
-What happened to this patch? I have a 10 second timeout on console
-probe on my SiFive Unmatched, and I don't see this flag being set for
-the serial driver. In fact, I don't see it anywhere in-tree. I can't
-seem to locate another patchset from Saravana around this though, so
-I'm not sure where to look for a missing piece for the sifive serial
-driver.
-
-This is the second boot time regression (this one not fatal, unlike
-the Layerscape PCIe one) from the fw_devlink patchset.
-
-Greg, can you revert the whole set for 6.0, please? It's obviously
-nowhere near tested enough to go in and I expect we'll see a bunch of
--stable fixups due to this if we let it remain in.
-
-This seems to be one of the worst releases I've encountered in recent
-years on my hardware here due to this patchset. :-(
-
-
--Olof
+>> diff --git a/drivers/soc/qcom/dcc.c b/drivers/soc/qcom/dcc.c
+>> new file mode 100644
+>> index 0000000..7e07f1a
+>> --- /dev/null
+>> +++ b/drivers/soc/qcom/dcc.c
+>> @@ -0,0 +1,1341 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copneight (c) 2015-2021, The Linex Fnendation. All rights reserved.
+> Something funny happened to Copneight, Linuex and Fnendation.
+>
+> Should you perhaps also bump the year to 2022?
+Ack
+>
+>> + */
+> [..]
+>> +/**
+>> + * struct dcc_drvdata - configuration information related to a dcc device
+>> + * @base:	      Base Address of the dcc device
+>> + * @dev:	      The device attached to the driver data
+>> + * @mutex:	      Lock to protect access and manipulation of dcc_drvdata
+>> + * @ram_base:         Base address for the SRAM dedicated for the dcc device
+> @ram_size missing
+Ack
+>
+>> + * @ram_offset:       Offset to the SRAM dedicated for dcc device
+>> + * @mem_map_ver:      Memory map version of DCC hardware
+>> + * @ram_cfg:          Used for address limit calculation for dcc
+>> + * @ram_start:        Starting address of DCC SRAM
+>> + * @sram_dev:	      Micellaneous device equivalent of dcc SRAM
+>> + * @cfg_head:	      Points to the head of the linked list of addresses
+>> + * @dbg_dir:          The dcc debugfs directory under which all the debugfs files are placed
+>> + * @nr_link_list:     Total number of linkedlists supported by the DCC configuration
+>> + * @loopoff:          Loop offset bits range for the addresses
+>> + * @enable:           This contains an array of linkedlist enable flags
+>> + */
+>> +struct dcc_drvdata {
+>> +	void __iomem		*base;
+>> +	struct device		*dev;
+>> +	struct mutex		mutex;
+>> +	void __iomem		*ram_base;
+>> +	size_t			ram_size;
+>> +	size_t			ram_offset;
+>> +	int			mem_map_ver;
+>> +	phys_addr_t		ram_cfg;
+>> +	phys_addr_t		ram_start;
+>> +	struct miscdevice	sram_dev;
+>> +	struct list_head	*cfg_head;
+>> +	struct dentry		*dbg_dir;
+>> +	size_t			nr_link_list;
+>> +	u8			loopoff;
+>> +	bool                    *enable;
+>> +};
+> [..]
+>> +static int dcc_read_and_clear(struct dcc_drvdata *drvdata)
+>> +{
+>> +	int i;
+>> +	u32 bus_status;
+>> +	u32 ll_cfg;
+>> +	u32 tmp_ll_cfg;
+>> +
+>> +	for (i = 0; i < drvdata->nr_link_list; i++) {
+>> +		if (!drvdata->enable[i])
+>> +			continue;
+>> +
+>> +		bus_status = dcc_ll_readl(drvdata, i, DCC_LL_BUS_ACCESS_STATUS);
+>> +		if (!bus_status)
+>> +			continue;
+>> +
+>> +		dev_err(drvdata->dev,
+>> +			"Read access error for list %d err: 0x%x.\n", i, bus_status);
+> This can be unwrapped, or it would look more natural if you wrapped it
+> after the string.
+>
+> You should also drop the '.' at the end of the message.
+>
+> If you want to shorten it down a little bit more, you could rename
+> bus_status to status, as there's no ambiguity here.
+Ack
+>
+>> +		ll_cfg = dcc_ll_readl(drvdata, i, DCC_LL_CFG);
+>> +		tmp_ll_cfg = ll_cfg & ~DCC_TRIGGER_MASK;
+>> +		dcc_ll_writel(drvdata, tmp_ll_cfg, i, DCC_LL_CFG);
+>> +		dcc_ll_writel(drvdata, DCC_STATUS_MASK, i,
+>> +			      DCC_LL_BUS_ACCESS_STATUS);
+> This can be unwrapped.
+Ack
+>
+>> +		dcc_ll_writel(drvdata, ll_cfg, i, DCC_LL_CFG);
+>> +		return -ENODATA;
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int dcc_sw_trigger(struct dcc_drvdata *drvdata)
+>> +{
+>> +	void __iomem *addr;
+>> +	int ret;
+>> +	int i;
+>> +	u32 ll_cfg;
+>> +	u32 tmp_ll_cfg;
+>> +	u32 val;
+>> +
+>> +	mutex_lock(&drvdata->mutex);
+>> +
+>> +	for (i = 0; i < drvdata->nr_link_list; i++) {
+>> +		if (!drvdata->enable[i])
+>> +			continue;
+>> +		ll_cfg = dcc_ll_readl(drvdata, i, DCC_LL_CFG);
+>> +		tmp_ll_cfg = ll_cfg & ~DCC_TRIGGER_MASK;
+>> +		dcc_ll_writel(drvdata, tmp_ll_cfg, i, DCC_LL_CFG);
+>> +		dcc_ll_writel(drvdata, 1, i, DCC_LL_SW_TRIGGER);
+>> +		dcc_ll_writel(drvdata, ll_cfg, i, DCC_LL_CFG);
+>> +	}
+>> +
+>> +	addr = drvdata->base + DCC_STATUS(drvdata->mem_map_ver);
+>> +	if (readl_poll_timeout(addr, val, (FIELD_GET(DCC_STATUS_MASK, val) == 0),
+>> +			       1, STATUS_READY_TIMEOUT)) {
+>> +		dev_err(drvdata->dev,
+>> +			"DCC is busy after receiving sw tigger.\n");
+> Unwrapp this please, and drop the '.' at the end.
+Ack
+>
+>> +		ret = -EBUSY;
+>> +		goto out_unlock;
+>> +	}
+>> +
+>> +	ret = dcc_read_and_clear(drvdata);
+>> +
+>> +out_unlock:
+>> +	mutex_unlock(&drvdata->mutex);
+>> +	return ret;
+>> +}
+>> +
+>> +static void _dcc_ll_cfg_reset_link(struct dcc_cfg_attr *cfg)
+>> +{
+>> +	cfg->addr = 0x00;
+>> +	cfg->link = 0;
+>> +	cfg->prev_off = 0;
+>> +	cfg->prev_addr = cfg->addr;
+>> +}
+>> +
+>> +static void _dcc_emit_read_write(struct dcc_drvdata *drvdata,
+>> +				 struct dcc_config_entry *entry,
+>> +				 struct dcc_cfg_attr *cfg)
+>> +{
+>> +	if (cfg->link) {
+>> +		/*
+>> +		 * write new offset = 1 to continue
+>> +		 * processing the list
+>> +		 */
+>> +
+>> +		dcc_sram_write_auto(drvdata, cfg->link, &cfg->sram_offset);
+>> +
+>> +		/* Reset link and prev_off */
+>> +		_dcc_ll_cfg_reset_link(cfg);
+>> +	}
+>> +
+>> +	cfg->addr = DCC_RD_MOD_WR_DESCRIPTOR;
+>> +	dcc_sram_write_auto(drvdata, cfg->addr, &cfg->sram_offset);
+>> +
+>> +	dcc_sram_write_auto(drvdata, entry->mask, &cfg->sram_offset);
+>> +
+>> +	dcc_sram_write_auto(drvdata, entry->write_val, &cfg->sram_offset);
+>> +
+>> +	cfg->addr = 0;
+>> +}
+>> +
+>> +static void _dcc_emit_loop(struct dcc_drvdata *drvdata, struct dcc_config_entry *entry,
+>> +			   struct dcc_cfg_attr *cfg,
+>> +			   struct dcc_cfg_loop_attr *cfg_loop,
+>> +			   u32 *total_len)
+>> +{
+>> +	/* Check if we need to write link of prev entry */
+>> +	if (cfg->link)
+>> +		dcc_sram_write_auto(drvdata, cfg->link, &cfg->sram_offset);
+>> +
+>> +	if (cfg_loop->loop_start) {
+>> +		cfg_loop->loop = (cfg->sram_offset - cfg_loop->loop_off) / 4;
+>> +		cfg_loop->loop |= (cfg_loop->loop_cnt << drvdata->loopoff) &
+>> +		GENMASK(DCC_ADDR_LIMIT, drvdata->loopoff);
+> Odd line wrap. Please indent better.
+Ack
+>
+>> +		cfg_loop->loop |= DCC_LOOP_DESCRIPTOR;
+>> +		*total_len += (*total_len - cfg_loop->loop_len) * cfg_loop->loop_cnt;
+>> +
+>> +		dcc_sram_write_auto(drvdata, cfg_loop->loop, &cfg->sram_offset);
+>> +
+>> +		cfg_loop->loop_start = false;
+>> +		cfg_loop->loop_len = 0;
+>> +		cfg_loop->loop_off = 0;
+>> +	} else {
+>> +		cfg_loop->loop_start = true;
+>> +		cfg_loop->loop_cnt = entry->loop_cnt - 1;
+>> +		cfg_loop->loop_len = *total_len;
+>> +		cfg_loop->loop_off = cfg->sram_offset;
+>> +	}
+>> +
+>> +	/* Reset link and prev_off */
+>> +	_dcc_ll_cfg_reset_link(cfg);
+>> +}
+>> +
+>> +static void _dcc_emit_write(struct dcc_drvdata *drvdata,
+>> +			    struct dcc_config_entry *entry,
+>> +			    struct dcc_cfg_attr *cfg,
+>> +			    u32 *total_len)
+>> +{
+>> +	u32 off;
+>> +
+>> +	if (cfg->link) {
+>> +		/*
+>> +		 * write new offset = 1 to continue
+>> +		 * processing the list
+>> +		 */
+>> +		dcc_sram_write_auto(drvdata, cfg->link, &cfg->sram_offset);
+>> +
+>> +		/* Reset link and prev_off */
+>> +		cfg->addr = 0x00;
+>> +		cfg->prev_off = 0;
+>> +		cfg->prev_addr = cfg->addr;
+>> +	}
+>> +
+>> +	off = entry->offset / 4;
+>> +	/* write new offset-length pair to correct position */
+>> +	cfg->link |= ((off & GENMASK(7, 0)) | BIT(15) | ((entry->len << 8) & GENMASK(14, 8)));
+> Would it be possible to get some defines for these masks and bits?
+> Perhaps use FIELD_PREP() instead of manually mask and shift the values.
+Ack
+>
+>> +	cfg->link |= DCC_LINK_DESCRIPTOR;
+>> +
+>> +	/* Address type */
+>> +	cfg->addr = (entry->base >> 4) & GENMASK(DCC_ADDR_LIMIT, 0);
+>> +	if (entry->apb_bus)
+>> +		cfg->addr |= DCC_ADDR_DESCRIPTOR | DCC_WRITE_IND | DCC_APB_IND;
+>> +	else
+>> +		cfg->addr |= DCC_ADDR_DESCRIPTOR | DCC_WRITE_IND | DCC_AHB_IND;
+>> +	dcc_sram_write_auto(drvdata, cfg->addr, &cfg->sram_offset);
+>> +
+>> +	dcc_sram_write_auto(drvdata, cfg->link, &cfg->sram_offset);
+>> +
+>> +	dcc_sram_write_auto(drvdata, entry->write_val, &cfg->sram_offset);
+>> +
+>> +	cfg->addr = 0x00;
+>> +	cfg->link = 0;
+>> +}
+> [..]
+>> +static ssize_t dcc_config_add_write(struct dcc_drvdata *drvdata, char *buf, int curr_list)
+>> +{
+>> +	int ret, bus;
+>> +	int nval;
+>> +	unsigned int addr, write_val;
+>> +	char apb_bus[4];
+>> +
+>> +	nval = sscanf(buf, "%x %x %s", &addr, &write_val, apb_bus);
+>> +
+>> +	if (nval <= 1 || nval > 3)
+>> +		return -EINVAL;
+>> +
+>> +	if (nval == 3) {
+>> +		if (!strcmp("apb", apb_bus))
+>> +			bus = 1;
+>> +		else if (!strcmp("apb", apb_bus))
+>> +			bus = 0;
+>> +		else
+>> +			return -EINVAL;
+>> +	}
+>> +
+>> +	ret = dcc_add_write(drvdata, addr, write_val, bus, curr_list);
+> return dcc_add_write(); and you can drop the local variable.
+Ack
+>
+>> +
+>> +	return ret;
+>> +}
+>> +
+>> +static ssize_t config_read(struct file *filp, char __user *userbuf,
+>> +			   size_t count, loff_t *ppos)
+>> +{
+>> +	struct dcc_drvdata *drvdata = filp->private_data;
+>> +	struct dcc_config_entry *entry;
+>> +	char local_buf[64], buf[100] = "\0";
+>> +	int len = 0, tot_len = 0, index = 0, curr_list;
+>> +
+>> +	mutex_lock(&drvdata->mutex);
+>> +	curr_list = dcc_filp_curr_list(filp);
+>> +	if (curr_list < 0)
+>> +		return curr_list;
+>> +
+>> +	list_for_each_entry(entry,
+>> +			    &drvdata->cfg_head[curr_list], list) {
+>> +		index++;
+>> +		switch (entry->desc_type) {
+>> +		case DCC_READ_WRITE_TYPE:
+>> +			len = snprintf(local_buf, 64,
+>> +				       "Index: 0x%x, mask: 0x%x, val: 0x%x\n",
+> Wouldn't it be nice if this matches the format used to specify the
+> instructions?
+>
+> I.e. "RW <addr> <value> <mask>"
+Ack
+>
+>> +				       index, entry->mask, entry->write_val);
+>> +			break;
+>> +		case DCC_LOOP_TYPE:
+>> +			len = snprintf(local_buf, 64, "Index: 0x%x, Loop: %d\n",
+>> +				       index, entry->loop_cnt);
+>> +			break;
+>> +		case DCC_WRITE_TYPE:
+>> +			len = snprintf(local_buf, 64,
+>> +				       "Write Index: 0x%x, Base: 0x%x, Offset: 0x%x, len: 0x%x APB: %d\n",
+>> +				       index, entry->base, entry->offset, entry->len,
+>> +				       entry->apb_bus);
+>> +			break;
+>> +		case DCC_READ_TYPE:
+>> +			len = snprintf(local_buf, 64,
+>> +				       "Read Index: 0x%x, Base: 0x%x, Offset: 0x%x, len: 0x%x APB: %d\n",
+> Can't this generate something like:
+>    Read Index: 0x1, Base: 0xaabbccdd, Offset: 0xaa, len: 0xaa APB: 1
+> Afaict that's 65 bytes.
+>
+> If that's the case you will end up with tot_len > strlen(buf). You
+> probably meant to use scnprintf(), which would return 63.
+>
+> But either way, the tail would be chopped of.
+Ack
+>
+>> +				       index, entry->base, entry->offset,
+>> +				       entry->len, entry->apb_bus);
+>> +		}
+>> +		tot_len += len;
+>> +		strlcat(buf, local_buf, sizeof(local_buf));
+> The limit should be the destination buffer, i.e. sizeof(buf).
+>
+> But why is sizeof(buf) only 100? If you have a RMW in there you will fit
+> 1.5 entries in the buffer.
+>
+>
+> I think it would be better to use single_open() and use the seq_file()
+> interface for generating your data. That will handle the buffer
+> management for you, among other things.
+Ack
+>
+>> +	}
+>> +	mutex_unlock(&drvdata->mutex);
+>> +	return simple_read_from_buffer(userbuf, count, ppos, buf, tot_len);
+>> +}
+>> +
+>> +static ssize_t config_write(struct file *filp,
+>> +			    const char __user *user_buf, size_t count,
+>> +			    loff_t *ppos)
+>> +{
+>> +	int ret, curr_list;
+>> +	char *token, buf[50];
+>> +	char *delim = " ";
+>> +	struct dcc_drvdata *drvdata = filp->private_data;
+>> +
+>> +	ret = copy_from_user(buf, user_buf, count);
+> count might be > sizeof(buf).
+Ack
+>
+>> +	if (ret)
+>> +		return -EFAULT;
+>> +
+>> +	curr_list = dcc_filp_curr_list(filp);
+>> +	if (curr_list < 0)
+>> +		return curr_list;
+>> +
+>> +	if (buf[count - 1] == '\n')
+> count can be 0.
+Ack
+>
+>> +		buf[count - 1] = '\0';
+> buf[] might not be \n or NUL-terminated.
+Ack
+>
+>> +
+>> +	token = strsep((char **)&buf, delim);
+>> +
+>> +	if (!strcmp("R", token)) {
+>> +		ret = dcc_config_add_read(drvdata, buf, curr_list);
+>> +	} else if (!strcmp("W", token)) {
+>> +		ret = dcc_config_add_write(drvdata, buf, curr_list);
+>> +	} else if (!strcmp("RW", token)) {
+>> +		ret = dcc_config_add_read_write(drvdata, buf, curr_list);
+>> +	} else if (!strcmp("L", token)) {
+>> +		ret = dcc_config_add_loop(drvdata, buf, curr_list);
+>> +	} else {
+>> +		dev_err(drvdata->dev, "%s is not a correct input\n", token);
+>> +		return -EINVAL;
+>> +	}
+> [..]
+>> +static ssize_t dcc_sram_read(struct file *file, char __user *data,
+>> +			     size_t len, loff_t *ppos)
+>> +{
+>> +	unsigned char *buf;
+>> +	struct dcc_drvdata *drvdata = container_of(file->private_data,
+>> +		struct dcc_drvdata,
+>> +		sram_dev);
+>> +
+>> +	/* EOF check */
+>> +	if (*ppos > drvdata->ram_size)
+>> +		return 0;
+>> +
+>> +	if ((*ppos + len) > drvdata->ram_size)
+>> +		len = (drvdata->ram_size - *ppos);
+> If *ppos == drvdata->ram_size, the EOF check will miss that and len will
+> be 0.
+Ack
+>
+>> +
+>> +	buf = kzalloc(len, GFP_KERNEL);
+>> +	if (!buf)
+>> +		return -ENOMEM;
+>> +
+>> +	memcpy_fromio(buf, drvdata->ram_base + *ppos, len);
+>> +
+>> +	if (copy_to_user(data, buf, len)) {
+>> +		kfree(buf);
+>> +		return -EFAULT;
+>> +	}
+>> +
+>> +	*ppos += len;
+>> +
+>> +	kfree(buf);
+>> +
+>> +	return len;
+>> +}
+>> +
+> Regards,
+> Bjorn
