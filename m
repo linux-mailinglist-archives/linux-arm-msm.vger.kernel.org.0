@@ -2,156 +2,195 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6B365BC0D3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 02:54:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F7E45BC1CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Sep 2022 05:44:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229529AbiISAyX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 18 Sep 2022 20:54:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33840 "EHLO
+        id S229505AbiISDop (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 18 Sep 2022 23:44:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229519AbiISAyW (ORCPT
+        with ESMTP id S229555AbiISDon (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 18 Sep 2022 20:54:22 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14ED412ACC;
-        Sun, 18 Sep 2022 17:54:20 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28J0M14b017491;
-        Mon, 19 Sep 2022 00:54:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=vnV6IMZLKBro/DqI17szjIhnq2iyQsbNqY61XHaGap4=;
- b=ZC9Bf46Zr+kvH+A7098S6gD8CkhwV+h0W/yIoBl+1vRGMv1zOFxa/v73+cxcOqzHXgOs
- IXKocFHu+r5fMsuuvf7l7LSnNyCZk7UqfVnFX7XBCmGiXV/V+jJQTe0XNjSvTbW/ds0s
- ucfciaPe8j2Zzck5nYeI1ka2c2JN/81swo1p6MJh3rcaqLzBCc1XBBg+5PiQa5BUcM6r
- j6By0EiEWKO2i5qUhFeUykjFyjdEPAuRqeByl8sPtKF2qk9AM7dtJ9RnIqW4kmk5fuCJ
- p56dGq93iVY62K9BgFo6bDv/Pn3jVevDHlYciMZQkoSNi04q9DkomAVvC3fTdqavsgMl Mw== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jn6by2h6t-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 19 Sep 2022 00:54:19 +0000
-Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28J0sIEw020496
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 19 Sep 2022 00:54:18 GMT
-Received: from [10.239.133.73] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Sun, 18 Sep
- 2022 17:54:17 -0700
-Message-ID: <b19919ce-83f2-cb8e-7c85-3a24209f9a8c@quicinc.com>
-Date:   Mon, 19 Sep 2022 08:54:14 +0800
+        Sun, 18 Sep 2022 23:44:43 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C341495BE
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Sep 2022 20:44:40 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id z2so3425743edi.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Sep 2022 20:44:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=lixom-net.20210112.gappssmtp.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=8wzd/IsQMAz4yliZb1FsJ3OfMRVNZc5tTLnz3lR7QHQ=;
+        b=EuFCJAkszMPKPtxQSyMQ0NoboaeVB7t96eFw9rPXwH9oSHUro5o77bxEeYAtANDzyR
+         I9BMOm4HMiosCb0pcsiSHEAZo2qSCtvZawUq0/zPNIdwAvDvQAPS+8+0uFrWbUJgoTtd
+         ExLo8MeQP7GyQ+rW2rlFvIPPT75kqxCAKPhOGjeDjYZZFhuAOfywggSn5a+jZu6mJGBr
+         cWVHHoToy9UWA6nPxBqZcAZLzmJoxjkbRc1yLhwZYNZgNQEBRnr86m6GI/e/+J8MoRAT
+         suDLw8ILYZpcoPAOh+pvz4Lu/zfiYh6RXQKy+jZAxuRvjXsVxLmt63JqorCueNp9TEEJ
+         9kQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=8wzd/IsQMAz4yliZb1FsJ3OfMRVNZc5tTLnz3lR7QHQ=;
+        b=vTjRnPozJfaT7abeUuBHHwAw46rDgA8ZJQ2vnQiXRojUZJY99hVuVWt7jZqpXFo0g3
+         Tac82p9mnjbyXjzaiSGmlTIFOmeCAhl0L6NuDtjOYtUqtmiyzf/yPo09ttO+Ng6TD51d
+         hkRGYgSfuZothT8koyje6YWQOFAGJHBcDCaXq0UXm4aFthesWYrhAI7wN+mf8FZpWwTy
+         uqw0/FqNKJK56F1FssvkHpNuNwr8Q4+uujlP6XX4gjPcgNhfB0jp2luuZiOMqcRkteiG
+         V1gMgEHKvImM27pQ/5Jev2WQUc251+a074mntPPIAZyOP+jO9Lf2w/RBeSk4RMuaNGmO
+         myEA==
+X-Gm-Message-State: ACrzQf1g21OwsfZQ/BKYQOFFHSGQSyypABTmmlog7WpvQCAImhlI2Hue
+        478dmDPTZJQNeS27gz7t54mjk0aDXEI8JNrYfnWd8A==
+X-Google-Smtp-Source: AMsMyM67X4fHgNHGRzRNZ0AalOVh8oZlYNRkDoycvf7zBAcHx4qOwSpxEraLAwYUCmYCoDnGs0xLR1B5pb/N312tK3I=
+X-Received: by 2002:aa7:cc8a:0:b0:446:7668:2969 with SMTP id
+ p10-20020aa7cc8a000000b0044676682969mr13821510edt.206.1663559079248; Sun, 18
+ Sep 2022 20:44:39 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Subject: Re: [PATCH v1] remoteproc: core: do pm relax when not first crash
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>
-CC:     <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_clew@quicinc.com>
-References: <1662712413-38233-1-git-send-email-quic_aiquny@quicinc.com>
- <20220909192357.GA319190@p14s>
- <128dc161-8949-1146-bf8b-310aa33c06a8@quicinc.com>
- <CANLsYkx0fEyezax_bk50ORGb7vPY3sBegKJcfAmmu366MrQkYw@mail.gmail.com>
-From:   "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
-In-Reply-To: <CANLsYkx0fEyezax_bk50ORGb7vPY3sBegKJcfAmmu366MrQkYw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: J3x-ThrMqrMSCwJ2nrDwrY3tiiFEJXl6
-X-Proofpoint-GUID: J3x-ThrMqrMSCwJ2nrDwrY3tiiFEJXl6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-18_11,2022-09-16_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- impostorscore=0 lowpriorityscore=0 mlxlogscore=999 priorityscore=1501
- malwarescore=0 mlxscore=0 adultscore=0 spamscore=0 bulkscore=0
- phishscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2209190004
-X-Spam-Status: No, score=-6.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20220701012647.2007122-1-saravanak@google.com> <YwS5J3effuHQJRZ5@kroah.com>
+In-Reply-To: <YwS5J3effuHQJRZ5@kroah.com>
+From:   Olof Johansson <olof@lixom.net>
+Date:   Sun, 18 Sep 2022 20:44:27 -0700
+Message-ID: <CAOesGMivJ5Q-jdeGKw32yhjmNiYctHjpEAnoMMRghYqWD2m2tw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] Fix console probe delay when stdout-path isn't set
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Saravana Kannan <saravanak@google.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Paul Mackerras <paulus@samba.org>,
+        Joel Stanley <joel@jms.id.au>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Al Cooper <alcooperx@gmail.com>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Tobias Klauser <tklauser@distanz.ch>,
+        Russell King <linux@armlinux.org.uk>,
+        Vineet Gupta <vgupta@kernel.org>,
+        Richard Genoud <richard.genoud@gmail.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Alexander Shiyan <shc_work@mail.ru>,
+        Baruch Siach <baruch@tkos.co.il>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Karol Gugala <kgugala@antmicro.com>,
+        Mateusz Holenko <mholenko@antmicro.com>,
+        Gabriel Somlo <gsomlo@gmail.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Taichi Sugaya <sugaya.taichi@socionext.com>,
+        Takao Orito <orito.takao@socionext.com>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Pali Rohar <pali@kernel.org>,
+        Andreas Farber <afaerber@suse.de>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang7@gmail.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Hammer Hsieh <hammerh0314@gmail.com>,
+        Peter Korsgaard <jacmet@sunsite.dk>,
+        Timur Tabi <timur@kernel.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Rob Herring <robh@kernel.org>,
+        sascha hauer <sha@pengutronix.de>, peng fan <peng.fan@nxp.com>,
+        kevin hilman <khilman@kernel.org>,
+        ulf hansson <ulf.hansson@linaro.org>,
+        len brown <len.brown@intel.com>, pavel machek <pavel@ucw.cz>,
+        joerg roedel <joro@8bytes.org>, will deacon <will@kernel.org>,
+        andrew lunn <andrew@lunn.ch>,
+        heiner kallweit <hkallweit1@gmail.com>,
+        eric dumazet <edumazet@google.com>,
+        jakub kicinski <kuba@kernel.org>,
+        paolo abeni <pabeni@redhat.com>,
+        linus walleij <linus.walleij@linaro.org>,
+        hideaki yoshifuji <yoshfuji@linux-ipv6.org>,
+        david ahern <dsahern@kernel.org>, kernel-team@android.com,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        iommu@lists.linux-foundation.org, netdev@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-serial@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-aspeed@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org,
+        linux-snps-arc@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-actions@lists.infradead.org,
+        linux-unisoc@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        sparclinux@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/17/2022 1:05 AM, Mathieu Poirier wrote:
-> On Tue, 13 Sept 2022 at 05:03, Aiqun(Maria) Yu <quic_aiquny@quicinc.com> wrote:
->>
->> Hi Mathieu,
->>
->> pm_awake and pm_relax needed to be used as a pair. There is chance that
->> pm_relax is not being called, and make the device always in cannot
->> suspend state.
->>
->> On 9/10/2022 3:23 AM, Mathieu Poirier wrote:
->>> Hi Maria,
->>>
->>> On Fri, Sep 09, 2022 at 04:33:33PM +0800, Maria Yu wrote:
->>>> Even if it is not first crash, need to relax the pm
->>>> wakelock otherwise the device will stay awake.
->>>>
->>>
->>> The goal is exactly to keep the device awake...
->>>
->>>> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
->>>> ---
->>>>    drivers/remoteproc/remoteproc_core.c | 1 +
->>>>    1 file changed, 1 insertion(+)
->>>>
->>>> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
->>>> index e5279ed9a8d7..30078043e939 100644
->>>> --- a/drivers/remoteproc/remoteproc_core.c
->>>> +++ b/drivers/remoteproc/remoteproc_core.c
->>>> @@ -1956,6 +1956,7 @@ static void rproc_crash_handler_work(struct work_struct *work)
->>>>       if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE) {
->>>>               /* handle only the first crash detected */
->>>>               mutex_unlock(&rproc->lock);
->>>> +            pm_relax(rproc->dev.parent);
->>>
->>> If we are here it means that rproc_crash_handler_work() has already been called
->>> _and_ that a recovery is in process.  When the first crash handler completes
->>> pm_relax() will be called and the device will go to sleep as expected.
->> If the rproc->state cannot be changed to running state, the device will
->> always be awake from this return.
->> Also APROC_OFFLINE state can be given in other path like an shutdown
->> request is issued.
->>
->> While this patch is not considering carefully as well, I think I need to
->> upload a new patchset with an ordered workqueue to make each work have
->> each pm_relax before return.
->> what do you think?
-> 
-> I was travelling this week and as such did not have the time to
-> follow-up with this thread, something I will do next week.
-> 
-Thx for follow up. I have new patchset posted on this thread.
-After reconsideration, extra action can be done only for RPROC_OFFLINE 
-state. Pls check the newest v4 patchset on this thread.
->>
->>>
->>> Thanks,
->>> Mathieu
->>>
->>>>               return;
->>>>       }
->>>>
->>>> --
->>>> 2.7.4
->>>>
->>
->>
->> --
->> Thx and BRs,
->> Aiqun(Maria) Yu
+On Tue, Aug 23, 2022 at 8:37 AM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> On Thu, Jun 30, 2022 at 06:26:38PM -0700, Saravana Kannan wrote:
+> > These patches are on top of driver-core-next.
+> >
+> > Even if stdout-path isn't set in DT, this patch should take console
+> > probe times back to how they were before the deferred_probe_timeout
+> > clean up series[1].
+>
+> Now dropped from my queue due to lack of a response to other reviewer's
+> questions.
+
+What happened to this patch? I have a 10 second timeout on console
+probe on my SiFive Unmatched, and I don't see this flag being set for
+the serial driver. In fact, I don't see it anywhere in-tree. I can't
+seem to locate another patchset from Saravana around this though, so
+I'm not sure where to look for a missing piece for the sifive serial
+driver.
+
+This is the second boot time regression (this one not fatal, unlike
+the Layerscape PCIe one) from the fw_devlink patchset.
+
+Greg, can you revert the whole set for 6.0, please? It's obviously
+nowhere near tested enough to go in and I expect we'll see a bunch of
+-stable fixups due to this if we let it remain in.
+
+This seems to be one of the worst releases I've encountered in recent
+years on my hardware here due to this patchset. :-(
 
 
--- 
-Thx and BRs,
-Aiqun(Maria) Yu
+-Olof
