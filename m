@@ -2,103 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C6305BD7DF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 01:11:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF87B5BD87E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 01:55:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230122AbiISXK7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Sep 2022 19:10:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33468 "EHLO
+        id S229921AbiISXzi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Sep 2022 19:55:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230123AbiISXKn (ORCPT
+        with ESMTP id S229548AbiISXze (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Sep 2022 19:10:43 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3FDD25E8D;
-        Mon, 19 Sep 2022 16:10:32 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id C1369B821D1;
-        Mon, 19 Sep 2022 23:10:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13111C433D6;
-        Mon, 19 Sep 2022 23:10:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663629029;
-        bh=LDsKxnhbQrE/ZqXth8SExE7uHfC+ker6gidpn7m6tdk=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=uSYOA+wPCMHEmFG1c8Twijc7L11gTw+AjncUz9pieSr1usTpz9AzWvHUXRoXKdfQI
-         EihOvbmiHN+gPoYVn+Q9uD4jsBbR+fJT47Hw9PFe+Pm3BZ6eneiirvrwOmv3hVjilK
-         Oz5vn/jUHAang5JQfNunoc9kTepfKDY2Ux7Ri2YgHg347z8ddWvR7/fyzW68wpnpvp
-         nYwnFocZStbzryxP+K82FpKzyAKgF0OL3ngL7H7Y/oH9JDIidSNbTsYJj43qE1Ylis
-         WWfGNHe1ha8mxAWgz1BChMzPeAht6vXLJV4tuICE4meS1o4wRmpuxeaL4AyUMW8LB6
-         oiR1Seigm0jlQ==
-From:   Mark Brown <broonie@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     robh+dt@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, tiwai@suse.com, bgoswami@quicinc.com,
-        perex@perex.cz, linux-arm-msm@vger.kernel.org, lgirdwood@gmail.com,
-        alsa-devel@alsa-project.org, krzysztof.kozlowski+dt@linaro.org
-In-Reply-To: <20220916132427.1845-1-srinivas.kandagatla@linaro.org>
-References: <20220916132427.1845-1-srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH v5 0/5] ASoC: qcom: add support for sc8280xp machine
-Message-Id: <166362902680.3419825.7703076569523626210.b4-ty@kernel.org>
-Date:   Tue, 20 Sep 2022 00:10:26 +0100
+        Mon, 19 Sep 2022 19:55:34 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 376BE4F18D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 16:55:32 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id w28so1459356edi.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 16:55:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=yfATfabNUJHTE7KoWz5tianqb2se6NNt8ssnLCiM3vM=;
+        b=HV77nvu/6m5fXE76OY/pv1J5LagXGgFIHxHVja+vZD5GGHJUZUVtbSeyHyOzP3BI1k
+         q8KZbVHHluXEvWGmq5aB60t1fzHiWETXVO+ymCXT+XNgpK6+dyax8t3CtXb979Vu6wk9
+         rebhZrc/2rOf9d5Q0uY9dSRlcwxvDNuVdAaK8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=yfATfabNUJHTE7KoWz5tianqb2se6NNt8ssnLCiM3vM=;
+        b=hDhqfYlRoabUEHdA8fDaKDae6Eg9BKOkliv85+Eb8a/7wGA6MHPlPTzQwKcPE5iqxa
+         GCWKicLxRO1SaU8huctX1KzWEz/MGUMgjQdhdO/oTB9VS1UnS3dzh4VBWa3v3hcxoMiq
+         E7iOvXsp/vqhZMgdgjDMYhzWYSHc8CAUHQ5Wd3EqIley8Iv3+MW8/Pv9BQePPaaiui00
+         s4R0kAwN0C47E8ziKw0oZMS7YS7R8MNXU4dWCC71vlyslj2CjfkPfg1XgaT8LIVS+WL2
+         Zkwj36B914DlM3jTtkZcb36MfqFNMZMGzFOaOqJtxAFY/IWJVeXeW4OXso8Snr06HCDM
+         DdPg==
+X-Gm-Message-State: ACrzQf1q7L0ZHtD5sUNI4d672xq1HvzH/hnrzrmhnNr5m+BCuNg5v/4x
+        1Xgj0ZIOuiifQqVl5rH/9oNIJQBUshObWxg8
+X-Google-Smtp-Source: AMsMyM56x1hVJt32I/wfkSAP9lvBnE1NvEEkWz2Mr399rizlajssawOYvF2sZN33SSKO3Nmx9D2RLQ==
+X-Received: by 2002:a05:6402:51c7:b0:452:981:872a with SMTP id r7-20020a05640251c700b004520981872amr18026914edd.388.1663631730426;
+        Mon, 19 Sep 2022 16:55:30 -0700 (PDT)
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com. [209.85.221.50])
+        by smtp.gmail.com with ESMTPSA id u16-20020a170906069000b007414152ec4asm16296096ejb.163.2022.09.19.16.55.27
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Sep 2022 16:55:28 -0700 (PDT)
+Received: by mail-wr1-f50.google.com with SMTP id y5so1625043wrh.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 16:55:27 -0700 (PDT)
+X-Received: by 2002:a5d:6c62:0:b0:22a:2f59:cb7d with SMTP id
+ r2-20020a5d6c62000000b0022a2f59cb7dmr12106298wrz.405.1663631727515; Mon, 19
+ Sep 2022 16:55:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.11.0-dev-8af31
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <1662754496-31143-1-git-send-email-quic_sibis@quicinc.com>
+In-Reply-To: <1662754496-31143-1-git-send-email-quic_sibis@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 19 Sep 2022 16:55:15 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XMC28U5eZhqUyr6gcNiFKmHfNLjmVAb0Asx4u0mLXZtw@mail.gmail.com>
+Message-ID: <CAD=FV=XMC28U5eZhqUyr6gcNiFKmHfNLjmVAb0Asx4u0mLXZtw@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: Add Google Herobrine WIFI SKU dts fragment
+To:     Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 16 Sep 2022 14:24:22 +0100, Srinivas Kandagatla wrote:
-> This patchset adds support for SC8280XP SoC machine driver.
-> 
-> First patch moves some of the commonly used code to common from sm8250 machine driver
-> and the follow on code adds minimal support for sc8280xp.
-> 
-> Currently this driver is only tested with SmartSpeakers and Headset
-> on Lenovo Thinkpad X13s.
-> 
-> [...]
+Hi,
 
-Applied to
+On Fri, Sep 9, 2022 at 1:15 PM Sibi Sankar <quic_sibis@quicinc.com> wrote:
+>
+> The Google Herobrine WIFI SKU can save 256M by not having modem/mba/rmtfs
+> memory regions defined. Add the dts fragment and mark all the board files
+> appropriately.
+>
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+>
+> Depends on:
+> Add LTE SKUs for Villager: https://patchwork.kernel.org/project/linux-arm-msm/cover/20220830182923.3720287-1-dianders@chromium.org/
+>
+> Instead of just having remoteproc_mpss node disabled, we go ahead and
+> delete it on wifi only SKUs. This is done to avoid the dtbs_check
+> failures that we would end of getting if we delete the memory-region
+> property present in the node (since it's a required property). I'll
+> send a follow up patch with IPA node enabled only on LTE SKUs as soon
+> as I verify that it doesn't have any affects on suspend/resume.
 
-   broonie/sound.git for-next
+s/affects/effects
 
-Thanks!
 
-[1/5] ASoC: qcom: common: use EXPORT_SYMBOL_GPL instead of EXPORT_SYMBOL
-      commit: a25f4e2cdd5d64408b0fa56115ebebd8cc5cb6c0
-[2/5] ASoC: dt-bindings: qcom: sort compatible strings
-      commit: e4f10cc23cefe16ed69987cb2648f5111e6eacb4
-[3/5] ASoC: dt-bindings: qcom,sm8250: add compatibles for sm8450 and sm8250
-      commit: f19097cc5adfd29bf2aecd8e0137331fab36946b
-[4/5] ASoC: qcom: sm8250: move some code to common
-      commit: 3bd975f3ae0a245e4b851c2b0c97b0a71e5359d6
-[5/5] ASoC: qcom: add machine driver for sc8280xp
-      commit: 295aeea6646ad6cf26c24f5c493ddb60b8f5a0f4
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+> index 344338ad8a01..480cb88f2154 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+> @@ -9,6 +9,7 @@
+>
+>  #include "sc7280-idp.dtsi"
+>  #include "sc7280-idp-ec-h1.dtsi"
+> +#include "sc7280-herobrine-lte-sku.dtsi"
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+This is unrelated to the WiFi only separation, isn't it? This looks
+like it's fixing a bug in commit d42fae738f3a ("arm64: dts: qcom: Add
+LTE SKUs for sc7280-villager family") which removed a fragment from
+"sc7280-chrome-common.dtsi" but then didn't add it back to all the
+previous users. Not sure how I missed that. In any case, feels like
+this should be a separate commit with a Fixes.
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+...also: instead of adding this include to crd-r3 and idp2, though,
+why not just add it to "idp.dtsi"? Right now all things that include
+"idp.dtsi" are LTE SKUs, right?
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+>  / {
+>         model = "Qualcomm Technologies, Inc. sc7280 CRD platform (rev3 - 4)";
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts
+> index ccbe50b6249a..6a2ffaac33bc 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts
+> @@ -8,6 +8,7 @@
+>  /dts-v1/;
+>
+>  #include "sc7280-herobrine.dtsi"
+> +#include "sc7280-herobrine-wifi-sku.dtsi"
 
-Thanks,
-Mark
+I think this is wrong and evoker is a LTE SKU. I'll send out a patch shortly.
+
+
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
+> index f1017809e5da..ee3bca264f67 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dts
+> @@ -5,7 +5,10 @@
+>   * Copyright 2022 Google LLC.
+>   */
+>
+> -#include "sc7280-herobrine-villager-r1.dts"
+> +/dts-v1/;
+> +
+> +#include "sc7280-herobrine-villager.dtsi"
+> +#include "sc7280-herobrine-audio-wcd9385.dtsi"
+
+I don't think this is enough. villager-r1.dts also has some other
+things that you'll end up missing. I think you need to move the
+existing "villager-r1.dts" to be a dtsi file and then include it from
+both the new "villager-r1.dts" and "villager-r1-lte.dts"
