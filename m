@@ -2,121 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D83C5BE3CC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 12:53:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8D7B5BE439
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 13:16:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229982AbiITKxu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 06:53:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56386 "EHLO
+        id S230164AbiITLQC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 07:16:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229704AbiITKxs (ORCPT
+        with ESMTP id S229590AbiITLQB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 06:53:48 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46EE25D0F1;
-        Tue, 20 Sep 2022 03:53:47 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id F40B5B827AF;
-        Tue, 20 Sep 2022 10:53:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB41C433D6;
-        Tue, 20 Sep 2022 10:53:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663671224;
-        bh=1uzaYeWYbymD/f+i/QytZhu6oKO9BM7m7uKIAm7/1aY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=kwUuVl6qzzyQ8/M60E4GBJaDSvCCIGZsWXd6EWoe6ETg4UPGRSPJSpODGC89bVoml
-         D8yMcp2L8SqglVlcwPjBx0kwWsmuhxSt4A6MHMYEdl8sw5Zt0+i8CPGg6TTK40x4my
-         mHRIDutJuMJ3kECm4eorV/KO7XWDkJoFt5Xcko5DBOFQuad34F85DOuPGJQOkcR3nN
-         x3i3rl+wBIvgbXn74nt/EudGishy0lWfyQwIhjZzzOrS/gzl1GIHezRYRweYZnMwZB
-         mX8bZPz/2M6J4eYsqVrIj88f6cgWd9NcoOu5bfu6upfEe+DnQeaKeleng7SJXqBrye
-         EQG2xv/JeiBzw==
-Date:   Tue, 20 Sep 2022 12:53:41 +0200
-From:   Frederic Weisbecker <frederic@kernel.org>
-To:     Peter Zijlstra <peterz@infradead.org>
-Cc:     richard.henderson@linaro.org, ink@jurassic.park.msu.ru,
-        mattst88@gmail.com, vgupta@kernel.org, linux@armlinux.org.uk,
-        ulli.kroll@googlemail.com, linus.walleij@linaro.org,
-        shawnguo@kernel.org, Sascha Hauer <s.hauer@pengutronix.de>,
-        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
-        tony@atomide.com, khilman@kernel.org, catalin.marinas@arm.com,
-        will@kernel.org, guoren@kernel.org, bcain@quicinc.com,
-        chenhuacai@kernel.org, kernel@xen0n.name, geert@linux-m68k.org,
-        sammy@sammy.net, monstr@monstr.eu, tsbogend@alpha.franken.de,
-        dinguyen@kernel.org, jonas@southpole.se,
-        stefan.kristiansson@saunalahti.fi, shorne@gmail.com,
-        James.Bottomley@HansenPartnership.com, deller@gmx.de,
-        mpe@ellerman.id.au, npiggin@gmail.com, christophe.leroy@csgroup.eu,
-        paul.walmsley@sifive.com, palmer@dabbelt.com,
-        aou@eecs.berkeley.edu, hca@linux.ibm.com, gor@linux.ibm.com,
-        agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
-        svens@linux.ibm.com, ysato@users.sourceforge.jp, dalias@libc.org,
-        davem@davemloft.net, richard@nod.at,
-        anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net,
-        tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
-        dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
-        acme@kernel.org, mark.rutland@arm.com,
-        alexander.shishkin@linux.intel.com, jolsa@kernel.org,
-        namhyung@kernel.org, jgross@suse.com, srivatsa@csail.mit.edu,
-        amakhalov@vmware.com, pv-drivers@vmware.com,
-        boris.ostrovsky@oracle.com, chris@zankel.net, jcmvbkbc@gmail.com,
-        rafael@kernel.org, lenb@kernel.org, pavel@ucw.cz,
-        gregkh@linuxfoundation.org, mturquette@baylibre.com,
-        sboyd@kernel.org, daniel.lezcano@linaro.org, lpieralisi@kernel.org,
-        sudeep.holla@arm.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
-        anup@brainfault.org, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, jacob.jun.pan@linux.intel.com,
-        atishp@atishpatra.org, Arnd Bergmann <arnd@arndb.de>,
-        yury.norov@gmail.com, andriy.shevchenko@linux.intel.com,
-        linux@rasmusvillemoes.dk, dennis@kernel.org, tj@kernel.org,
-        cl@linux.com, rostedt@goodmis.org, pmladek@suse.com,
-        senozhatsky@chromium.org, john.ogness@linutronix.de,
-        juri.lelli@redhat.com, vincent.guittot@linaro.org,
-        dietmar.eggemann@arm.com, bsegall@google.com, mgorman@suse.de,
-        bristot@redhat.com, vschneid@redhat.com, fweisbec@gmail.com,
-        ryabinin.a.a@gmail.com, glider@google.com, andreyknvl@gmail.com,
-        dvyukov@google.com, vincenzo.frascino@arm.com,
-        Andrew Morton <akpm@linux-foundation.org>, jpoimboe@kernel.org,
-        linux-alpha@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-snps-arc@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-csky@vger.kernel.org, linux-hexagon@vger.kernel.org,
-        linux-ia64@vger.kernel.org, loongarch@lists.linux.dev,
-        linux-m68k@lists.linux-m68k.org, linux-mips@vger.kernel.org,
-        openrisc@lists.librecores.org, linux-parisc@vger.kernel.org,
-        linuxppc-dev@lists.ozlabs.org, linux-riscv@lists.infradead.org,
-        linux-s390@vger.kernel.org, linux-sh@vger.kernel.org,
-        sparclinux@vger.kernel.org, linux-um@lists.infradead.org,
-        linux-perf-users@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-xtensa@linux-xtensa.org, linux-acpi@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-arch@vger.kernel.org, kasan-dev@googlegroups.com
-Subject: Re: [PATCH v2 11/44] cpuidle,omap4: Push RCU-idle into driver
-Message-ID: <20220920105341.GB72346@lothringen>
-References: <20220919095939.761690562@infradead.org>
- <20220919101521.072508494@infradead.org>
+        Tue, 20 Sep 2022 07:16:01 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0494E6FA0D;
+        Tue, 20 Sep 2022 04:16:00 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28KB0HWW007387;
+        Tue, 20 Sep 2022 11:15:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=PoTT7rLq6kWSImDHRaFEIjlxRKHBE/QY5rFUGCmFcJE=;
+ b=iK6mbhJC6B8azSydtKZrC+pjNnSbANnvEhHSqk+Kt2+FKMnMZwp2s1TZRCKh06y+5WcT
+ G3B6+wiHycTAzMLPa2+1JUVjW85oQ/4jAlyN5X3BPm+vcqvFuQlnVazKbeXAx/mdX5e7
+ zoc+gEe/Gf3kONVdtxL5raLralihPL/HBYsrmEbuYZo3+WYiv0Pe7yPIeO0+0Agx4U+o
+ xJW4ie/0Ups7MuK/NyNo+GI6NJELY2FKMon4pUMtlh8XNgpGRFQ7vRPUdPFOKS7Xaaax
+ Wxvvu5I/wjVLw9m7Mo5lPAda221jQsAiTcup23mq03oingOQop6fQIue5HNSKMmMiL3C sQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jq4r09gu8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 20 Sep 2022 11:15:52 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28KBFoGa008280
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 20 Sep 2022 11:15:51 GMT
+Received: from blr-ubuntu-173.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Tue, 20 Sep 2022 04:15:46 -0700
+From:   Rajendra Nayak <quic_rjendra@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@somainline.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <mka@chromium.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <johan+linaro@kernel.org>, <quic_kriskura@quicinc.com>,
+        <dianders@chromium.org>, <linux-clk@vger.kernel.org>,
+        <angelogioacchino.delregno@collabora.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+Subject: [PATCH v3 1/3] clk: qcom: gdsc: Fix the handling of PWRSTS_RET support
+Date:   Tue, 20 Sep 2022 16:45:15 +0530
+Message-ID: <20220920111517.10407-1-quic_rjendra@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220919101521.072508494@infradead.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: y3Z4wARIr89kpMBMlGB9IJ1aZcXN44b0
+X-Proofpoint-GUID: y3Z4wARIr89kpMBMlGB9IJ1aZcXN44b0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-20_03,2022-09-16_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
+ malwarescore=0 suspectscore=0 spamscore=0 lowpriorityscore=0 clxscore=1011
+ impostorscore=0 mlxscore=0 bulkscore=0 priorityscore=1501 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2209130000
+ definitions=main-2209200068
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 19, 2022 at 11:59:50AM +0200, Peter Zijlstra wrote:
-> Doing RCU-idle outside the driver, only to then temporarily enable it
-> again, some *four* times, before going idle is daft.
-> 
-> Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-> Reviewed-by: Tony Lindgren <tony@atomide.com>
-> Tested-by: Tony Lindgren <tony@atomide.com>
+GDSCs cannot be transitioned into a Retention state in SW.
+When either the RETAIN_MEM bit, or both the RETAIN_MEM and
+RETAIN_PERIPH bits are set, and the GDSC is left ON, the HW
+takes care of retaining the memory/logic for the domain when
+the parent domain transitions to power collapse/power off state.
 
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+On some platforms where the parent domains lowest power state
+itself is Retention, just leaving the GDSC in ON (without any
+RETAIN_MEM/RETAIN_PERIPH bits being set) will also transition
+it to Retention.
+
+The existing logic handling the PWRSTS_RET seems to set the
+RETAIN_MEM/RETAIN_PERIPH bits if the cxcs offsets are specified
+but then explicitly turns the GDSC OFF as part of _gdsc_disable().
+Fix that by leaving the GDSC in ON state.
+
+Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+---
+v3:
+Updated changelog
+
+There are a few existing users of PWRSTS_RET and I am not
+sure if they would be impacted with this change
+
+1. mdss_gdsc in mmcc-msm8974.c, I am expecting that the
+gdsc is actually transitioning to OFF and might be left
+ON as part of this change, atleast till we hit system wide
+low power state.
+If we really leak more power because of this
+change, the right thing to do would be to update .pwrsts for
+mdss_gdsc to PWRSTS_OFF_ON instead of PWRSTS_RET_ON
+I dont have a msm8974 hardware, so if anyone who has can report
+any issues I can take a look further on how to fix it.
+
+2. gpu_gx_gdsc in gpucc-msm8998.c and
+   gpu_gx_gdsc in gpucc-sdm660.c
+Both of these seem to add support for 3 power state
+OFF, RET and ON, however I dont see any logic in gdsc
+driver to handle 3 different power states.
+So I am expecting that these are infact just transitioning
+between ON and OFF and RET state is never really used.
+The ideal fix for them would be to just update their resp.
+.pwrsts to PWRSTS_OFF_ON only.
+
+ drivers/clk/qcom/gdsc.c | 10 ++++++++++
+ drivers/clk/qcom/gdsc.h |  5 +++++
+ 2 files changed, 15 insertions(+)
+
+diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+index d3244006c661..ccf63771e852 100644
+--- a/drivers/clk/qcom/gdsc.c
++++ b/drivers/clk/qcom/gdsc.c
+@@ -368,6 +368,16 @@ static int _gdsc_disable(struct gdsc *sc)
+ 	if (sc->pwrsts & PWRSTS_OFF)
+ 		gdsc_clear_mem_on(sc);
+ 
++	/*
++	 * If the GDSC supports only a Retention state, apart from ON,
++	 * leave it in ON state.
++	 * There is no SW control to transition the GDSC into
++	 * Retention state. This happens in HW when the parent
++	 * domain goes down to a Low power state
++	 */
++	if (sc->pwrsts == PWRSTS_RET_ON)
++		return 0;
++
+ 	ret = gdsc_toggle_logic(sc, GDSC_OFF);
+ 	if (ret)
+ 		return ret;
+diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
+index 5de48c9439b2..981a12c8502d 100644
+--- a/drivers/clk/qcom/gdsc.h
++++ b/drivers/clk/qcom/gdsc.h
+@@ -49,6 +49,11 @@ struct gdsc {
+ 	const u8			pwrsts;
+ /* Powerdomain allowable state bitfields */
+ #define PWRSTS_OFF		BIT(0)
++/*
++ * There is no SW control to transition a GDSC into
++ * PWRSTS_RET. This happens in HW when the parent
++ * domain goes down to a low power state
++ */
+ #define PWRSTS_RET		BIT(1)
+ #define PWRSTS_ON		BIT(2)
+ #define PWRSTS_OFF_ON		(PWRSTS_OFF | PWRSTS_ON)
+-- 
+2.17.1
+
