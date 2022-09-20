@@ -2,77 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDE7C5BE0B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 10:49:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E9E75BE0C6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 10:53:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230103AbiITItL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 04:49:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37594 "EHLO
+        id S229557AbiITIxL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 04:53:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230344AbiITIs5 (ORCPT
+        with ESMTP id S229847AbiITIxK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 04:48:57 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A08D6B65F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 01:48:55 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id f9so2634925lfr.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 01:48:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=Yy1+JpH7mb9yRtgA97CnSueuyqH+DM3LnKPEy7X4nlk=;
-        b=mn4lRXquBRleFQCpshmG+O6cXtSU+FiKstWkPxOrKfbolyI+L/ISz/GRjlbdJPWKR/
-         rJfyySIefp7Fmc/PiPmw6vHAeN/0p08eJ5845XpVm4sO0oAsDhrYkh7TCS95ExEE6KH3
-         LsLOpX9YjUXzF2xL76x6WdimBjgyF3YinZqCXQntjaf/6day/eY+9irQU/KO624hHTJU
-         dd4916cX/M2V24vJbtb9QdgjfOmD87U2T/A/Afo4sCBNAofW+Gtf/qO4O2IkghT7Pl8i
-         k3RfKy8KMGl8iGZkwFCyVKwIPpSnN4OdlliamceNPhRb683i9jxgIXGKVOBqJuvDVaM5
-         8OHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=Yy1+JpH7mb9yRtgA97CnSueuyqH+DM3LnKPEy7X4nlk=;
-        b=yv0xqiv5irOUDhaBOzaR4AAqQGvJ+maMXr689qbfEKr9D+rlemW9GO3UBShr2J3dsT
-         cz0R7YuHaxdTzdwW1fGAlv2Xj9QIhTzkdL36m+UzNonUELXiduVIUHHCHVea7y54I1KG
-         7Whu6IOCBbaegZOd197aCIq6tdBHqiS7dNS9GgmdVko0Ige2bbjM/wNotpMsAsSzHN3Q
-         VJvgbtYSgKSOfPBqZFSdLXG2sXFn0fs7mC69Y6WXWdA7Fw1qJkcj0tzj5Q8tiyAebosI
-         9o1TBDVw69AVSaI3LxqVv8zYoc5f7MFwQaquzDLzb4I4ETWqO8ohcE/vHQNJ+M4H+a9e
-         pZ3Q==
-X-Gm-Message-State: ACrzQf1YrDbtv+Q0Tnrenr1S3/S1Rl1EOFzRBv6Oif6V/pfJLRPiczfY
-        IPnBXcL6tqKGyDwmKNKVgqAfXw==
-X-Google-Smtp-Source: AMsMyM7ooit7RNs5fVCvrRuMdm1AzyqeD++USlCJfUWXymRCFh14TNOz5JQvn7Kn2twkwmzP7p5VOg==
-X-Received: by 2002:a05:6512:3e23:b0:498:fbf1:c480 with SMTP id i35-20020a0565123e2300b00498fbf1c480mr8384702lfv.473.1663663733909;
-        Tue, 20 Sep 2022 01:48:53 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id 2-20020ac24842000000b004948378080csm197492lfy.290.2022.09.20.01.48.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Sep 2022 01:48:53 -0700 (PDT)
-Message-ID: <656aa3ba-01a0-637e-bd5a-4b1556d2fc41@linaro.org>
-Date:   Tue, 20 Sep 2022 10:48:52 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH 1/2] dt-bindings: power: rpmpd: add sdm670 power domains
-Content-Language: en-US
-To:     Richard Acayan <mailingradian@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Tue, 20 Sep 2022 04:53:10 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EE6362AA4;
+        Tue, 20 Sep 2022 01:53:09 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 1DEEFB81C65;
+        Tue, 20 Sep 2022 08:53:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA406C433C1;
+        Tue, 20 Sep 2022 08:53:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663663986;
+        bh=+hOCXBX7pNsUScAiy6Ygg+Obl2q7g6sqoTjVLyRJbTQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=I1S2+C5xu3tMXDm5//ouBzNJzmjYq06Ry/kZrjXRUN8giXKc/sUE5LmlB5BtydVWa
+         f09HrCmK+y8kNw+OTC4D68B/BhjzG9jxGd4hxgISuJXZdIPzZNzmYDQ+nOBQHS0lVh
+         XpJt6jzIGGfusIoq5TC4le5dEdzF6x18GmxZsxJkUju2hO77RTL1OuCAcPnAVGtNmh
+         IA4nioYgkbB4kEwZ+WBmMGTtm8o/1R6+CbEb+4jSnImGixha06K9t09ke2cTe1Ooht
+         EO+NYHh6Mzkuu7c48hrK8q9NawryxWGtrY2Zb5iJdzWBDnuvrGjZgj7taRYCjw5FMi
+         +Qh+jk+dxHFkw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1oaZ09-0002Ge-Ax; Tue, 20 Sep 2022 10:53:09 +0200
+Date:   Tue, 20 Sep 2022 10:53:09 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org
-References: <20220920021927.2489-1-mailingradian@gmail.com>
- <20220920021927.2489-2-mailingradian@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220920021927.2489-2-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: fix UFS PHY serdes size
+Message-ID: <Yyl/daUAcbJmgxDu@hovoldconsulting.com>
+References: <20220915141601.18435-1-johan+linaro@kernel.org>
+ <20220915150907.yxmulr3xq4uwvi7f@builder.lan>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220915150907.yxmulr3xq4uwvi7f@builder.lan>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,15 +62,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/09/2022 04:19, Richard Acayan wrote:
-> Add the RPMh power domain IDs and compatible string for Snapdragon 670 to
-> make SDM670 power domains accessible to the device trees.
+On Thu, Sep 15, 2022 at 10:09:07AM -0500, Bjorn Andersson wrote:
+> On Thu, Sep 15, 2022 at 04:16:01PM +0200, Johan Hovold wrote:
+> > The size of the UFS PHY serdes register region is 0x1c8 and the
+> > corresponding 'reg' property should specifically not include the
+> > adjacent regions that are defined in the child node (e.g. tx and rx).
+> > 
+> > Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
+I can't seem to find this one in either the arm64-for-6.1 or fixes
+branch for 6.0. Did you just forget to push it?
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-
-Best regards,
-Krzysztof
+Johan
