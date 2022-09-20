@@ -2,58 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 022085BDCE1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 08:07:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70BD15BDCF4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 08:14:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229743AbiITGH1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 02:07:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38400 "EHLO
+        id S230209AbiITGOx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 02:14:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230380AbiITGHL (ORCPT
+        with ESMTP id S230189AbiITGOw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 02:07:11 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF5055D117;
-        Mon, 19 Sep 2022 23:06:56 -0700 (PDT)
+        Tue, 20 Sep 2022 02:14:52 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7481F13E95;
+        Mon, 19 Sep 2022 23:14:50 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 37854B824AE;
-        Tue, 20 Sep 2022 06:06:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24E7EC433B5;
-        Tue, 20 Sep 2022 06:06:52 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A692A62389;
+        Tue, 20 Sep 2022 06:14:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D8A0C433D6;
+        Tue, 20 Sep 2022 06:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663654013;
-        bh=BQkXB+/vfTibc1u9AzBS7kbJyHVa3MoNygpirOCMwh8=;
+        s=k20201202; t=1663654489;
+        bh=bOC4ReWblLf0yM+WfwoTzP1oEwc2VdlQSw/5YFxtAH8=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=RLKAitcSJJ3Loce7lwGfQi+XlNqc3Ni8/E2G6Qg5KjZZ17v3XxjAzpUnl+ZsvXrY+
-         +3vqhA1Oy+beEx5MgcYZkrB3iiP1GVLWqkrmiKtJJu1iPdEaUmdhzMmSdVLu7i/UOp
-         6odFoI8NPDqFYlTe7zLCm2DckqdBX0irR12sM83lsb6/zc5IFxv2AlYrdC593nwCca
-         9AOD1lwYHCfs3P4jHwM5eaM5Gqj6mgsfUZVwjQHKoWp7kls3BvJB/+mhrVxmrWiiSr
-         f+6123a61H2NJVTfJha2wR2QTLTV+rgzdA2Z0CkWIBlvFuBSSCQE56uLAMnfy7NFat
-         GojzHG7eAXqCw==
-Date:   Tue, 20 Sep 2022 11:36:49 +0530
+        b=W2kZjW6O/9CZTd0eRgMOTP3VEPgZGCZZc52wAJZSSNh9LnGHPDSjNxM64fDl80UQ4
+         vlX3lBtSx6GrRqlcU/wa1BvEr4fXNciwezYwsLjoakdsJEp7ZCZW7UvwMCJjXe98rr
+         SXQ9kLrN8P++lNBTaeTR2m43xAH5S3dTSZYu2DaiikKWIJZG+up15ZRuziStVMqSY/
+         MXI/PCkZI9QWCAlQUxmlPeVRL5K4Nww5uDBB4Hxi2r0miPuYkIyynYGe0nKCxDXCKF
+         e/YBX/5qD1xHRhJy9/GwIMXylMSWCdGMGL34DY0OPaSEYDC+8nEiDnXPaQwsYD5cbA
+         fl7/OimSY03dA==
+Date:   Tue, 20 Sep 2022 11:44:44 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Iskren Chernev <iskren.chernev@gmail.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Kishon Vijay Abraham I <kishon@ti.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 5/8] dt-bindings: phy: qcom,qmp-ufs: Fix SM6115
- clocks, regs
-Message-ID: <YylYeSuX/99jcllf@matsya>
-References: <20220919180618.1840194-1-iskren.chernev@gmail.com>
- <20220919180618.1840194-6-iskren.chernev@gmail.com>
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] phy: qcom-qmp-combo: fix sc8280xp PCS_USB offset
+Message-ID: <YylaVAVRgDmgqYf6@matsya>
+References: <20220919095700.2228-1-johan+linaro@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220919180618.1840194-6-iskren.chernev@gmail.com>
+In-Reply-To: <20220919095700.2228-1-johan+linaro@kernel.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -63,8 +57,10 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19-09-22, 21:06, Iskren Chernev wrote:
-> The Sm6115 UFS PHY has 2 clocks and 3 regs.
+On 19-09-22, 11:57, Johan Hovold wrote:
+> The PCS_USB register block lives at an offset of 0x300 from the PCS
+> region on SC8280XP so add the missing offset to avoid corrupting
+> unrelated registers on runtime suspend.
 
 Applied, thanks
 
