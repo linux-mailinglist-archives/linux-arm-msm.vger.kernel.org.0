@@ -2,61 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9072F5BE8DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 16:27:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A55A5BE959
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 16:50:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229815AbiITO13 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 10:27:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52834 "EHLO
+        id S230416AbiITOuW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 10:50:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230237AbiITO1W (ORCPT
+        with ESMTP id S229812AbiITOuU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 10:27:22 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8130D6173;
-        Tue, 20 Sep 2022 07:27:21 -0700 (PDT)
+        Tue, 20 Sep 2022 10:50:20 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC8A62E9C6;
+        Tue, 20 Sep 2022 07:50:19 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 3D9B4B82A56;
-        Tue, 20 Sep 2022 14:27:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C104C433C1;
-        Tue, 20 Sep 2022 14:27:12 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id A077DB82A7C;
+        Tue, 20 Sep 2022 14:50:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 66577C433C1;
+        Tue, 20 Sep 2022 14:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663684038;
-        bh=QyVcelDXPwbiuFJMdRmaSbabqTaB24EpzwFhUN+SSRw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Hfq3WsW11el8D2ZZgc97RZtmFmySeyzYZN5wP2M9iwvO1jR4urtZjMr1zvBhwEFmD
-         h80mYPgTqSyApyZCWEJDltb10+pTtXJUgPKwdn8amtdSU3AuynuiELIdo2VyxsEWdJ
-         i4J8adJw+ORVFMjgBN+dubEmUuUXsSxPhs76HxahmlhywDqJTf0B/p3QPJdtu3lzse
-         wy0/IjY0Fkkgy/OmyQC4dXYMAvLqFhzQllSixKXR9yu/JEhBOj/8Qptcaz6snPXknf
-         hRXgZOt58hwj1lWBC2EAy05RlX7C3La7qdver6hf/UxwkHKgg4bVubyPcm2rE5ji6w
-         EqRFDV+WlSolg==
-Date:   Tue, 20 Sep 2022 19:57:06 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Bjorn Helgaas <helgaas@kernel.org>
-Cc:     Johan Hovold <johan@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2] PCI: qcom: Add support for modular builds
-Message-ID: <20220920142706.GC1621196@thinkpad>
-References: <Yyl+PNcbtSwzlgvh@hovoldconsulting.com>
- <20220920133754.GA1102995@bhelgaas>
+        s=k20201202; t=1663685417;
+        bh=t736d8ZuzVTu+fHh6LkwNglQH4chrzEMr+n6SDHaahg=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=piJeSZr1nea3RpUChMRfFn9df42+EliPIFiAGnp1jH1L5tSxC9+U/ctYgFhtgZtJw
+         PIeFoQClIIVXXZa0kXlxV8AkkyJHP+HPXmQJx5N+bbWatHDz1Jx/JdSb2j3jS+kxb9
+         xhrksNv+TvGzsrpCpFM5cDTTdHNj4grBid1DA1JG3kSeXC1Ryv6vURWTW7hppbyQFh
+         eTGnOxVfoJuJL9m2x/hC+4i/i6KIFilCb2sCJP6B4fzsFbhSn/Ez6Z/agPAq83NYu1
+         i+FepB/yjlxXLxnx9Zmd6zsKQ/QD6LSYf4ji3HAyYkLywxlDTm3PYYDXq/bYW+OIqZ
+         FXwq43uAP3ssA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 4ED4EE21EE1;
+        Tue, 20 Sep 2022 14:50:17 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220920133754.GA1102995@bhelgaas>
+Subject: Re: [PATCH net-next 0/6] net: ipa: a mix of cleanups
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <166368541731.14330.5858659115387897586.git-patchwork-notify@kernel.org>
+Date:   Tue, 20 Sep 2022 14:50:17 +0000
+References: <20220910011131.1431934-1-elder@linaro.org>
+In-Reply-To: <20220910011131.1431934-1-elder@linaro.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, mka@chromium.org, evgreen@chromium.org,
+        andersson@kernel.org, quic_cpratapa@quicinc.com,
+        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
+        quic_subashab@quicinc.com, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -66,155 +61,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 20, 2022 at 08:37:54AM -0500, Bjorn Helgaas wrote:
-> On Tue, Sep 20, 2022 at 10:47:56AM +0200, Johan Hovold wrote:
-> > Hi Lorenzo,
-> > 
-> > On Thu, Jul 21, 2022 at 08:47:20AM +0200, Johan Hovold wrote:
-> > > Allow the Qualcomm PCIe controller driver to be built as a module, which
-> > > is useful for multi-platform kernels as well as during development.
-> > > 
-> > > Reviewed-by: Rob Herring <robh@kernel.org>
-> > > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > > ---
-> > > 
-> > > Changes in v2
-> > >  - rebase on next-20220720 (adjust context)
-> > >  - add Rob and Mani's reviewed-by tags
-> > 
-> > Have you had a change to look at this one since you got back from
-> > vacation?
-> > 
-> > I believe this should be uncontroversial as we already have other
-> > modular dwc drivers and there's no mapping of legacy INTx interrupts
-> > involved.
-> 
-> I'm not Lorenzo, but was there a conclusive outcome to the thread at
-> [1]?  The last thing I remember was that a buggy endpoint driver that
-> failed to unmap all its interrupts could cause crashes if the PCIe
-> controller driver was removed.
-> 
-> Making the driver modular is essential so distros can build all the
-> drivers and users can load the one needed by their platform.
-> 
-> Making the driver removable is useful for developers but not for
-> users, so I don't see it as essential.  Developers are in the business
-> of developing and can easily carry a trivial out-of-tree patch to add
-> removability if needed.
-> 
-> If removability is actually safe even if endpoint drivers aren't
-> perfect, then I don't object to it.  But if it's not always safe, I
-> don't think the argument that "other drivers do it" is strong.  I'd
-> rather make all the drivers safe even if that means making them
-> non-removable.
-> 
+Hello:
 
-If the problem is with the endpoint drivers, then those need to be fixed for
-properly disposing the IRQ mappings. I don't see any real issue with the
-remove() handler of this controller driver.
+This series was applied to netdev/net-next.git (master)
+by Jakub Kicinski <kuba@kernel.org>:
 
-Thanks,
-Mani
-
-> [1] https://lore.kernel.org/r/20220721195433.GA1747571@bhelgaas
+On Fri,  9 Sep 2022 20:11:25 -0500 you wrote:
+> This series contains a set of cleanups done in preparation for a
+> more substantitive upcoming series that reworks how IPA registers
+> and their fields are defined.
 > 
-> > >  drivers/pci/controller/dwc/Kconfig     |  2 +-
-> > >  drivers/pci/controller/dwc/pcie-qcom.c | 36 +++++++++++++++++++++++---
-> > >  2 files changed, 34 insertions(+), 4 deletions(-)
-> > > 
-> > > diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
-> > > index 62ce3abf0f19..230f56d1a268 100644
-> > > --- a/drivers/pci/controller/dwc/Kconfig
-> > > +++ b/drivers/pci/controller/dwc/Kconfig
-> > > @@ -168,7 +168,7 @@ config PCI_HISI
-> > >  	  Hip05 and Hip06 SoCs
-> > >  
-> > >  config PCIE_QCOM
-> > > -	bool "Qualcomm PCIe controller"
-> > > +	tristate "Qualcomm PCIe controller"
-> > >  	depends on OF && (ARCH_QCOM || COMPILE_TEST)
-> > >  	depends on PCI_MSI_IRQ_DOMAIN
-> > >  	select PCIE_DW_HOST
-> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > index 5ed164c2afa3..d176c635016b 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > @@ -16,7 +16,7 @@
-> > >  #include <linux/io.h>
-> > >  #include <linux/iopoll.h>
-> > >  #include <linux/kernel.h>
-> > > -#include <linux/init.h>
-> > > +#include <linux/module.h>
-> > >  #include <linux/of_device.h>
-> > >  #include <linux/of_gpio.h>
-> > >  #include <linux/pci.h>
-> > > @@ -1518,6 +1518,15 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
-> > >  	return ret;
-> > >  }
-> > >  
-> > > +static void qcom_pcie_host_deinit(struct qcom_pcie *pcie)
-> > > +{
-> > > +	qcom_ep_reset_assert(pcie);
-> > > +	if (pcie->cfg->ops->post_deinit)
-> > > +		pcie->cfg->ops->post_deinit(pcie);
-> > > +	phy_power_off(pcie->phy);
-> > > +	pcie->cfg->ops->deinit(pcie);
-> > > +}
-> > > +
-> > >  static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
-> > >  	.host_init = qcom_pcie_host_init,
-> > >  };
-> > > @@ -1752,6 +1761,22 @@ static int qcom_pcie_probe(struct platform_device *pdev)
-> > >  	return ret;
-> > >  }
-> > >  
-> > > +static int qcom_pcie_remove(struct platform_device *pdev)
-> > > +{
-> > > +	struct qcom_pcie *pcie = platform_get_drvdata(pdev);
-> > > +	struct device *dev = &pdev->dev;
-> > > +
-> > > +	dw_pcie_host_deinit(&pcie->pci->pp);
-> > > +	qcom_pcie_host_deinit(pcie);
-> > > +
-> > > +	phy_exit(pcie->phy);
-> > > +
-> > > +	pm_runtime_put_sync(dev);
-> > > +	pm_runtime_disable(dev);
-> > > +
-> > > +	return 0;
-> > > +}
-> > > +
-> > >  static const struct of_device_id qcom_pcie_match[] = {
-> > >  	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
-> > >  	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
-> > > @@ -1771,6 +1796,7 @@ static const struct of_device_id qcom_pcie_match[] = {
-> > >  	{ .compatible = "qcom,pcie-ipq6018", .data = &ipq6018_cfg },
-> > >  	{ }
-> > >  };
-> > > +MODULE_DEVICE_TABLE(of, qcom_pcie_match);
-> > >  
-> > >  static void qcom_fixup_class(struct pci_dev *dev)
-> > >  {
-> > > @@ -1786,10 +1812,14 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
-> > >  
-> > >  static struct platform_driver qcom_pcie_driver = {
-> > >  	.probe = qcom_pcie_probe,
-> > > +	.remove = qcom_pcie_remove,
-> > >  	.driver = {
-> > >  		.name = "qcom-pcie",
-> > > -		.suppress_bind_attrs = true,
-> > >  		.of_match_table = qcom_pcie_match,
-> > >  	},
-> > >  };
-> > > -builtin_platform_driver(qcom_pcie_driver);
-> > > +module_platform_driver(qcom_pcie_driver);
-> > > +
-> > > +MODULE_AUTHOR("Stanimir Varbanov <svarbanov@mm-sol.com>");
-> > > +MODULE_DESCRIPTION("Qualcomm PCIe root complex driver");
-> > > +MODULE_LICENSE("GPL");
-> > 
-> > Johan
+> The first eliminates about half of the possible GSI register
+> constant symbols by removing offset definitions that are not
+> currently required.
+> 
+> [...]
 
+Here is the summary with links:
+  - [net-next,1/6] net: ipa: don't define unneeded GSI register offsets
+    https://git.kernel.org/netdev/net-next/c/5ea4285829de
+  - [net-next,2/6] net: ipa: move the definition of gsi_ee_id
+    https://git.kernel.org/netdev/net-next/c/bb788de30a74
+  - [net-next,3/6] net: ipa: move and redefine ipa_version_valid()
+    https://git.kernel.org/netdev/net-next/c/8b3cb084b23e
+  - [net-next,4/6] net: ipa: don't reuse variable names
+    https://git.kernel.org/netdev/net-next/c/9eefd2fb966d
+  - [net-next,5/6] net: ipa: update sequencer definition constraints
+    https://git.kernel.org/netdev/net-next/c/a14d593724c4
+  - [net-next,6/6] net: ipa: fix two symbol names
+    https://git.kernel.org/netdev/net-next/c/dae4af6bf232
+
+You are awesome, thank you!
 -- 
-மணிவண்ணன் சதாசிவம்
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
