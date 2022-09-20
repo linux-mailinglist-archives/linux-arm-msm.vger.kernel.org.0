@@ -2,78 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 28F355BE81E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 16:08:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D576A5BE866
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 16:16:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230408AbiITOIp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 10:08:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41820 "EHLO
+        id S231545AbiITOQj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 10:16:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231545AbiITOIk (ORCPT
+        with ESMTP id S230185AbiITOQT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 10:08:40 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BD6A520B9;
-        Tue, 20 Sep 2022 07:08:40 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DC3D362A38;
-        Tue, 20 Sep 2022 14:08:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D617C433C1;
-        Tue, 20 Sep 2022 14:08:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663682919;
-        bh=hBWGuLHbJhISwXVp5Y2WWvwMfSnoyTJ0CuMkDeoWT44=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Ziq1dFWSBH9MPMpoyS3G6lV8819jF++Hoxe5HsBdvjiFOSJtCGF+XBYT4KyEttGGt
-         n+FlIaeqIN6dPSZrQtU+lZZJXO3KdyWZTRVfqWop3wT47PzcDGb/8AVFtmwldl81oJ
-         DdRQkwX5Lf0F9dvkWKxhYZ0NOJWhNnj0wWgWJRWMzSb74l+50Oj57iETGCodM8qLQA
-         DRS5yZH6jm46RxdU3Sccp+zy57fBbF07j9qB4hKcW0Wk63tvAWnYlykhtrvLn2cpwH
-         Kum8H1oIrUlok9FYm4Cma292fRhIyYEV/LvsKPMCVbMQCkx0XpNJx/7T6Clgq6dg8p
-         pO/dgo0AwI9OQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oadvW-0000Bs-1B; Tue, 20 Sep 2022 16:08:42 +0200
-Date:   Tue, 20 Sep 2022 16:08:42 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 17/17] phy: qcom-qmp-combo: drop redundant DP config flag
-Message-ID: <YynJatNg2Cfa8ix4@hovoldconsulting.com>
-References: <20220920073826.20811-1-johan+linaro@kernel.org>
- <20220920073826.20811-18-johan+linaro@kernel.org>
- <66450c6b-6435-e537-2268-c6fc97d92824@linaro.org>
+        Tue, 20 Sep 2022 10:16:19 -0400
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DED1A32067
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 07:14:02 -0700 (PDT)
+Received: by mail-yb1-xb31.google.com with SMTP id a67so3589499ybb.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 07:14:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date;
+        bh=A5SHHtL7QW2l54muzkKKvK4LNnKVv9lnQOHGxIBuRuE=;
+        b=I0YUoX79VzdB1su5c8YsyhJqRmH5BNT4YqtIql7uMHjv4tNfOgHifd92qluReG4d/X
+         i+jYW3HyitXzOX4IonS8R0ZONlFkR1k7gzgwSfoZiyoaclz0ttvaXwLoZb7ZtxANBu5Y
+         3z526ei+ptSUlr9B43I+BPqd8EpQylJ4cBJQM2NB3es8UnHI+rMDDmASlishpV745ZiR
+         FmF+Tn/kij0Q3tHjPuP7PPUW7rGa0WojF+SdtI5DCR6jLM2zwity5aoAXKaUhJv2tGwk
+         A1NAE6VKh7Q2gKgry+vltVNnOPdcodRj2m1ez7wQy3SuDN63Pt0F5Dl77GROsIrV6LU3
+         c7sQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=A5SHHtL7QW2l54muzkKKvK4LNnKVv9lnQOHGxIBuRuE=;
+        b=2EIK6ZWFr9lg1d01IfRwS7d4AmVRB6VNpEIvnlAtjXEtW6LmOxSVqUKQ252TSAhXhc
+         G2CvxtkiEApjTtU1BrcAPIpAhm6I9jGktsFgLfwqJks1UuLUhQzqRjKo/Iipa01kZFCr
+         6LPFU03v+ko8J95maA+sYvh9GBr9PXQ8QIZ/8o0TB9zhDEXdYqfgCK+10o2D9EPiJuz2
+         cGui2npnAphCRJH67ZTY/IdytZ37S7IL1EakXDswl6rX4qo5KeiC0DOfY4CSVIZGGv5U
+         NJaLsVe/mQYdwx9+N/9dTxMvL2P/hnHb7jZ5bZSvlseoqiqynxIz+8WlocDbdk+nyVx5
+         hhpw==
+X-Gm-Message-State: ACrzQf3tUoHP57gskCbYILIIdMy/4Qq3qHrlLS2yuHQbOVIWXvMZLV+t
+        NWggJmOL4o7RHhJOeFNeD8mnhtBDJsQf9JFaZhF7BQ==
+X-Google-Smtp-Source: AMsMyM5ptp/xJcYbBs/zLcmhTWf9yaT5sYYL81f6HBIkVW4YVsWA9kHYXFc60Kp909nkSHb5MmXRrVuHNeF6LJJFSRY=
+X-Received: by 2002:a25:af52:0:b0:6b3:de78:452a with SMTP id
+ c18-20020a25af52000000b006b3de78452amr10092889ybj.157.1663683242012; Tue, 20
+ Sep 2022 07:14:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <66450c6b-6435-e537-2268-c6fc97d92824@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20220913192757.37727-1-dmitry.osipenko@collabora.com> <20220913192757.37727-16-dmitry.osipenko@collabora.com>
+In-Reply-To: <20220913192757.37727-16-dmitry.osipenko@collabora.com>
+From:   Sumit Semwal <sumit.semwal@linaro.org>
+Date:   Tue, 20 Sep 2022 19:43:49 +0530
+Message-ID: <CAO_48GFtLjR657nO+yh9KwsrWbNmGVsf7srHj19biO+NauYt4w@mail.gmail.com>
+Subject: Re: [PATCH v5 15/21] dma-buf: Move dma_buf_vmap() to dynamic locking specification
+To:     Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc:     David Airlie <airlied@linux.ie>, Gerd Hoffmann <kraxel@redhat.com>,
+        Gurchetan Singh <gurchetansingh@chromium.org>,
+        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Daniel Almeida <daniel.almeida@collabora.com>,
+        Gert Wollny <gert.wollny@collabora.com>,
+        Gustavo Padovan <gustavo.padovan@collabora.com>,
+        Daniel Stone <daniel@fooishbar.org>,
+        Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Rob Clark <robdclark@gmail.com>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        =?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas_os@shipmail.org>,
+        Qiang Yu <yuq825@gmail.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Jason Gunthorpe <jgg@ziepe.ca>,
+        Leon Romanovsky <leon@kernel.org>,
+        Juergen Gross <jgross@suse.com>,
+        Stefano Stabellini <sstabellini@kernel.org>,
+        Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        Ruhl Michael J <michael.j.ruhl@intel.com>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Dmitry Osipenko <digetx@gmail.com>,
+        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
+        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        kernel@collabora.com, virtualization@lists.linux-foundation.org,
+        linux-rdma@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 20, 2022 at 03:52:23PM +0200, Neil Armstrong wrote:
-> On 20/09/2022 09:38, Johan Hovold wrote:
-> > Drop the DP_COM control block flag from the configuration data, which is
-> > set for all combo PHYs and hence no longer needed since the QMP driver
-> > split.
-> > 
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Hi Dmitry,
 
-> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Thanks very much for the series.
 
-Thanks for reviewing, Neil.
+On Wed, 14 Sept 2022 at 00:59, Dmitry Osipenko
+<dmitry.osipenko@collabora.com> wrote:
+>
+> Move dma_buf_vmap/vunmap_unlocked() functions to the dynamic locking
+> specification by asserting that the reservation lock is held.
+Thanks for the patch; just a minor nit - I think you mean dma_buf_vmap
+/ vunmap() here, and not _unlocked?
 
-Johan
+Best,
+Sumit.
+
+
+>
+> Acked-by: Christian K=C3=B6nig <christian.koenig@amd.com>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
+>  drivers/dma-buf/dma-buf.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/drivers/dma-buf/dma-buf.c b/drivers/dma-buf/dma-buf.c
+> index 50db7571dc4b..80fd6ccc88c6 100644
+> --- a/drivers/dma-buf/dma-buf.c
+> +++ b/drivers/dma-buf/dma-buf.c
+> @@ -1450,6 +1450,8 @@ int dma_buf_vmap(struct dma_buf *dmabuf, struct ios=
+ys_map *map)
+>         if (WARN_ON(!dmabuf))
+>                 return -EINVAL;
+>
+> +       dma_resv_assert_held(dmabuf->resv);
+> +
+>         if (!dmabuf->ops->vmap)
+>                 return -EINVAL;
+>
+> @@ -1510,6 +1512,8 @@ void dma_buf_vunmap(struct dma_buf *dmabuf, struct =
+iosys_map *map)
+>         if (WARN_ON(!dmabuf))
+>                 return;
+>
+> +       dma_resv_assert_held(dmabuf->resv);
+> +
+>         BUG_ON(iosys_map_is_null(&dmabuf->vmap_ptr));
+>         BUG_ON(dmabuf->vmapping_counter =3D=3D 0);
+>         BUG_ON(!iosys_map_is_equal(&dmabuf->vmap_ptr, map));
+> --
+> 2.37.3
+>
+
+
+--
+Thanks and regards,
+
+Sumit Semwal (he / him)
+Tech Lead - LCG, Vertical Technologies
+Linaro.org =E2=94=82 Open source software for ARM SoCs
