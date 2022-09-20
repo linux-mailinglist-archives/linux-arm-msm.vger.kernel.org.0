@@ -2,119 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E4115BDE16
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 09:26:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 688AA5BDE25
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 09:28:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230153AbiITH0A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 03:26:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57104 "EHLO
+        id S230184AbiITH2s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 03:28:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230210AbiITHZ5 (ORCPT
+        with ESMTP id S230037AbiITH2q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 03:25:57 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F4764623E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 00:25:55 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id i26so2269694lfp.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 00:25:55 -0700 (PDT)
+        Tue, 20 Sep 2022 03:28:46 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7C3E5D0F3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 00:28:44 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id x27so2420925lfu.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 00:28:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=TMSVmhoNQ+EVx6VuvGV7GoC7OCus+JONwHUFK5MPIiA=;
-        b=PThj4PJ6jYkYYO9TZGLcFdngNjOP/nQjGMvwuQMKbc+bmRqAjWWHuOCGxyKACZ57yy
-         91HPR0Tj+Mfd3Ep6uHTXJwrXdIHVrNfi/EkS3mYq4PeFDkzJOtPrL/lQPfacI96vsLwm
-         AWRYw1Ep78RQaBX/wfXExS/ENl56JVLTNgt7kkSxNTn5Db1J/5pnyfwHVIrT8g+8b10M
-         aNZUAgQ9albYsIjDRvsXnclJXSyYsV6hJr9cdESh/PuU7Bbo+ozsk7Uc9/668jziUlwW
-         mHjAK4NB33WRUTUn4YIi82gK62JS3GEVMzU8yhfwK4MvNBKzbD7yQwaVwbBm7JGXKVrP
-         qhZA==
+        bh=LEa7ivpH2zwvXQJXdB4Tn1ym+X+L1/H3MJkj59kIHEs=;
+        b=q2F6OXaJ/xe0qfhB6YkE7kg7HTC3g7R/1lUquS/H0zAyLLypNM/4x1rc+84XEsuM13
+         vLAK9TLXOSC/tIhpwJ4ZwH17gtQ1k+tcelXxMxZ/HwRS71eohh3AMYFME1LXplaAJqRU
+         C7jpgNCaTmLptbNN8HN4pns95A4mDEu2z36Nxg0Cq5PGALiH4floLRWf7TrYbAOBigVG
+         bM2O60R7B0j2po3ewDrQ76LS8UqiPNeJ7RQB5mwJv4A5YidXTNLnTdneHpYHqZ7aIhvY
+         Y3VWsyorN47ZXa2L5zJagwWzNLyCwQx9TkNVcfFjRAvkOZVxjgNqPXkPA9FhmNhlQCSD
+         H7jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=TMSVmhoNQ+EVx6VuvGV7GoC7OCus+JONwHUFK5MPIiA=;
-        b=7lVcDJ+hBRusxmawP4smRTnffeGEl84EFdtZxG9EpNU01T3TKNDaP2+oDs6JIcwLkK
-         0SX4tvNi7vsDlPFgbu7qeJXgk2ZgpQTRrF163HQcAnxV+swwve3XRBA7VLCjFsjtWjng
-         c+dlrLeJIDjmHCWQUNN1ZzJLpMHCeVG/Ibe7DxnYQulp288R95g2yW4TQcSNB9WQ5lJ7
-         01VlTmLCGVsCiA796/fo1WmoasGXC6MYVWFrj6O6mNjjfKrDQm140bI8np6r+sD3ngGm
-         fb4zzzrHCDTttx+expzoo1VjlFnQ7RtUKyiFRdY9x2pLMbf4+svy0pdsGTCaiEeEyua/
-         ciwA==
-X-Gm-Message-State: ACrzQf2awYuXkE2NwHY8DjeYdweqGSMxk2pbuxuN59t7Sv8vspajFWxm
-        N/l31RwSETZ0Lz7ukeJFxXHKFA==
-X-Google-Smtp-Source: AMsMyM5EHjB+cTmf8WPbUI9j9R50LpVkSqhwQo5FmkPm/75jGLSQhXhUgF3Nxxfh7Ed/mLF+o2/nNw==
-X-Received: by 2002:a05:6512:3608:b0:49a:75c0:5146 with SMTP id f8-20020a056512360800b0049a75c05146mr7958042lfs.398.1663658753671;
-        Tue, 20 Sep 2022 00:25:53 -0700 (PDT)
+        bh=LEa7ivpH2zwvXQJXdB4Tn1ym+X+L1/H3MJkj59kIHEs=;
+        b=o6hvfAEEy+BeAn8oLxXyQcwXew/vaxj4FlEadf+v+B/DOZkQxwWT5Oxx7LafdE2vDo
+         DX69ueSlFQwfYdvkEuFAKZ6Y8xiWrDI9ifGwZ+X9ytqC1m/wBAaXsYUs/S4VB2xRZnzZ
+         AnG2arYbgn58aM0d61VkZ1oMWjSLch4kONsQgRcTs6AtdklPKScTwPirPOdSfvetdltV
+         cktmJffwxkMTnGK4JB2N3aVj+pWL4hVMavVI3o/5VeGWKD9sSV6dwvTJyXtJF0Hr9Pf0
+         VLxNwtkRZqcdLGqCccU1UGu8whOMj29F6mvGJKUWhexiVX9eUZbDjuRIkgzBqGX3R9F/
+         xXIQ==
+X-Gm-Message-State: ACrzQf35HHmQCuHKGEpu7P1EJgIg5d/FBLUzC5c+WJQWL13Rlvr+jdhW
+        mpob8a4WLiBb9iyF9t9hhsCcAA==
+X-Google-Smtp-Source: AMsMyM6BC+/vWwZ8kkOFP7DhJcNDVAlVNmT8NQuqfdZw0mpLVr5cFLYoCJpMuRnEERHFxjROUC+zxA==
+X-Received: by 2002:a05:6512:16a1:b0:48a:87a2:103c with SMTP id bu33-20020a05651216a100b0048a87a2103cmr8342967lfb.554.1663658923276;
+        Tue, 20 Sep 2022 00:28:43 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id x16-20020a056512079000b00497a2815d8dsm169165lfr.195.2022.09.20.00.25.51
+        by smtp.gmail.com with ESMTPSA id o13-20020a05651205cd00b00492aefd73a5sm173407lfo.132.2022.09.20.00.28.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Sep 2022 00:25:52 -0700 (PDT)
-Message-ID: <bb577304-f048-8fd5-fc7a-47a0897ba792@linaro.org>
-Date:   Tue, 20 Sep 2022 09:25:50 +0200
+        Tue, 20 Sep 2022 00:28:42 -0700 (PDT)
+Message-ID: <36bd1c19-8fbd-0903-704d-447117b2007a@linaro.org>
+Date:   Tue, 20 Sep 2022 09:28:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
-Subject: Re: [PATCH v6 1/4 RESEND] ARM: dts: qcom: Use new compatibles for
- crypto nodes
+Subject: Re: [PATCH v6 0/4] dt-bindings: qcom-qce: Convert bindings to yaml &
+ related changes
 Content-Language: en-US
 To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
         linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
 Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
         robh+dt@kernel.org, thara.gopinath@gmail.com,
         devicetree@vger.kernel.org, robh@kernel.org, andersson@kernel.org,
-        bhupesh.linux@gmail.com, catalin.marinas@arm.com, will@kernel.org,
-        arnd@arndb.de, Jordan Crouse <jorcrous@amazon.com>
-References: <20220919221509.1057574-1-bhupesh.sharma@linaro.org>
- <20220919221509.1057574-2-bhupesh.sharma@linaro.org>
+        bhupesh.linux@gmail.com, Jordan Crouse <jorcrous@amazon.com>
+References: <20220919220804.1047292-1-bhupesh.sharma@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220919221509.1057574-2-bhupesh.sharma@linaro.org>
+In-Reply-To: <20220919220804.1047292-1-bhupesh.sharma@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/09/2022 00:15, Bhupesh Sharma wrote:
-> Since we are using soc specific qce crypto IP compatibles
-> in the bindings now, use the same in the device tree files
-> which include the crypto nodes.
-> 
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Rob Herring <robh@kernel.org>
-> Tested-by: Jordan Crouse <jorcrous@amazon.com>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  arch/arm/boot/dts/qcom-ipq4019.dtsi   | 2 +-
->  arch/arm64/boot/dts/qcom/ipq6018.dtsi | 2 +-
->  arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 +-
->  arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
->  arch/arm64/boot/dts/qcom/sdm845.dtsi  | 2 +-
->  5 files changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-> index b23591110bd2..9c40714562d5 100644
-> --- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
-> +++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-> @@ -314,7 +314,7 @@ cryptobam: dma-controller@8e04000 {
->  		};
->  
->  		crypto: crypto@8e3a000 {
-> -			compatible = "qcom,crypto-v5.1";
-> +			compatible = "qcom,ipq4019-qce";
+On 20/09/2022 00:08, Bhupesh Sharma wrote:
 
-There are few issues here:
-1. Compatible is not documented.
-2. Compatible is not supported by old kernel - ABI break.
-3. Everything won't be bisectable...
+(...)
 
-The same in other places.
+
+> 
+> Qualcomm crypto engine (qce) is available on several Snapdragon SoCs.
+> The qce block supports hardware accelerated algorithms for encryption
+> and authentication. It also provides support for aes, des, 3des
+> encryption algorithms and sha1, sha256, hmac(sha1), hmac(sha256)
+> authentication algorithms.
+> 
+> Note that this patchset is dependent on the dt-bindings patchset (see [1]) sent to devicetree list.
+> 
+> [1]. https://lore.kernel.org/linux-arm-msm/20220919195618.926227-1-bhupesh.sharma@linaro.org/
+
+If it is dependent on the bindings only, keep them together. However I
+don't think this is the only dependency. You add here several
+compatibles which are not supported.
 
 Best regards,
 Krzysztof
