@@ -2,107 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1608B5BD88A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 01:59:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DE2D5BD9EA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 04:16:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230040AbiISX66 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Sep 2022 19:58:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57472 "EHLO
+        id S229776AbiITCQp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Sep 2022 22:16:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229938AbiISX6z (ORCPT
+        with ESMTP id S229596AbiITCQo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Sep 2022 19:58:55 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1622D520B7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 16:58:51 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id q15-20020a17090a304f00b002002ac83485so828451pjl.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Sep 2022 16:58:51 -0700 (PDT)
+        Mon, 19 Sep 2022 22:16:44 -0400
+Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93AF036DC1;
+        Mon, 19 Sep 2022 19:16:42 -0700 (PDT)
+Received: by mail-il1-x133.google.com with SMTP id a14so696435ild.0;
+        Mon, 19 Sep 2022 19:16:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date;
-        bh=T0o9I53BL4eTt+QruVMt0xXQX1Pe6dTx+RnBaPGRdAk=;
-        b=L6tkFeZOEexp8njr9vK7m73Q1reO+sl/mm+Y3mePoSArwtrWepqJBmmQQXELCbWFiM
-         KlFFrx3l+AzLipF/2E2mydPrXuRC5gNI7TNXDiiiHjz/CQAxhZ1mrjkv3FSbkRVE6Nw0
-         oWTRRiA7poHLuyCX85Upfw83O1+VbThbEyiSY=
+        bh=uhElhL1iGj7D7c7p5uNqiCIgPSuLaW+aX2botzGI+o8=;
+        b=qSl4iV/SedCK1cwzqsQNrcyK8zslOHREIr/BTbO0Sz+kFmmyTNjHEkBLX5et8IMnot
+         o0oqJGOgLTewou5Wwf92oR3jq2Vjd/9mwEL/UUI7XJpmR81ttjqe3K6qXPNqpf9/co8X
+         Qz+VSYw+Z7vpAkdXgQzmjcQaC/oJWtqx6inQetLYKH+gYFZMsl2srf6ejT+jtd12IsrB
+         hoIuIVEBYaYf6e/s6WDcBIAVi5SSa1okcpxCY0yZULHbpsF6sLbiKEZ5D6OdbjlNKe0i
+         meIGzRRp8WTvo/mEmB++NngoLF3tE9Pu08yQ/fMbuBYvKQ+yfwTtAtwWWAg/ZzdFm1t9
+         jOqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=T0o9I53BL4eTt+QruVMt0xXQX1Pe6dTx+RnBaPGRdAk=;
-        b=nNTBRUrysvxxyTfC5DbpZ+n96ErlII50k4cnlTYkUNtOPiHZpG2dbewEwU52XW9N6s
-         YGGHaBIkhMCkwQzOVGqSPCog2cMZdih071TCqz0l28Muwy5xijLJM0he2iiu1RuzSWYG
-         pvFxPI0Gq+QyGWukQ4b9UaFSIvauSmgTZ9i3zewB5p+DV5UO+EQ/UsY9YogBBqYMwSoH
-         YSxqbdCYgN5PPHdfPZPt0M0X99iIZ0D3Jfh4y0jxPLGZjCfn4yNZwNnpCZ+Jct8USalJ
-         UtroCkMGgEIWO+dXRTn1fhNDTyRK1a6vC6bWwe8KOmltzMAjGT+H2XGaokB8Bd0jYjfP
-         jnDA==
-X-Gm-Message-State: ACrzQf2crBRhRJ8WS3meGWzD8lWtbdgjvsr5Tgtnu4ZGQuzPmhUpfjhN
-        /Qj3nBbxyrHY4o2o5lQYnbsTTw==
-X-Google-Smtp-Source: AMsMyM4qEai83iMeYBxen4Sr8DB1zEdGpivZT5yaEjg+lCUzY9AyIrkkXo7qGNhXkUhw3kvbrRKmkg==
-X-Received: by 2002:a17:90a:d583:b0:202:a064:3a32 with SMTP id v3-20020a17090ad58300b00202a0643a32mr784761pju.75.1663631931333;
-        Mon, 19 Sep 2022 16:58:51 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:1057:2242:e60e:b413])
-        by smtp.gmail.com with ESMTPSA id w16-20020a17090a529000b00203a4f70b90sm11828pjh.45.2022.09.19.16.58.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Sep 2022 16:58:50 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Matthias Kaehlcke <mka@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+        bh=uhElhL1iGj7D7c7p5uNqiCIgPSuLaW+aX2botzGI+o8=;
+        b=mr21tiOUGd6DX2WjzpU9WFXHdXUP7/hJ5DqsZKucGwE/XrI79PD04AshV1qX8hwrW+
+         ro9HoHoj+IAHdJkGTm58FHph68PXlAOUf371ae8xkVi5dAosAjPsnQzUK9PhOfRvrp+G
+         k+r6ZLdMLcwxQGySCVrlOQfbxhCUmi6c7UdHokfV3Y5FszLtYwklpBzu2PRmA+rOE9jO
+         Q5XenALwiansa4Grier7md4VLReenHxdkIPsCTy6mZkK6gW5ZJ/1Jx1zrzlHkcOKHuvM
+         SVcWL8ccUp5d2CkbMqiisEWS5Ib4Sy3BS1kLHYLD8NGMpkL7Qy2roereYMMQUb+JuQYV
+         vIOA==
+X-Gm-Message-State: ACrzQf1NZnKkuRchjYuGjMPGo8Xgrn1FT/FGERiUFwLUfV13STuOhukB
+        oSQo5Yk83SixkHa1MaZB/IlXLu+rnfg=
+X-Google-Smtp-Source: AMsMyM5Srq6rEgrYm95RYIywOZiVe+PuBXT6IJMOcybpBatQjWV+Uni0nYNdj/+0HISlbHEsSzc6iQ==
+X-Received: by 2002:a05:6e02:b4c:b0:2f1:e54d:9870 with SMTP id f12-20020a056e020b4c00b002f1e54d9870mr8544867ilu.214.1663640201733;
+        Mon, 19 Sep 2022 19:16:41 -0700 (PDT)
+Received: from localhost ([2607:fea8:a2e2:2d00::58d4])
+        by smtp.gmail.com with UTF8SMTPSA id j184-20020a0263c1000000b00346a98b0a76sm141422jac.77.2022.09.19.19.16.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Sep 2022 19:16:41 -0700 (PDT)
+From:   Richard Acayan <mailingradian@gmail.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sc7280: All current evoker boards are LTE
-Date:   Mon, 19 Sep 2022 16:58:23 -0700
-Message-Id: <20220919165808.1.Idfb956ebc035c3bd0d682f4697c297c7a975c50d@changeid>
-X-Mailer: git-send-email 2.37.3.968.ga6b4b080e4-goog
+        Richard Acayan <mailingradian@gmail.com>,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH v3 0/3] SDM670 Pin Control Driver
+Date:   Mon, 19 Sep 2022 22:16:33 -0400
+Message-Id: <20220920021636.1634-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-At the time that commit 2abf6b6b9429 ("arm64: dts: qcom: sc7280: Add
-device tree for herobrine evoker") was posted, all herobrine SKUs were
-LTE.
+Changes since v2:
+ - remove quotes from pinctrl.yaml# in dt-bindings
+ - constrain gpio-reserved-ranges to 1-76 items (includes ufs_reset)
+ - indentation in dt-bindings example
+ - cite downstream kernel source
+ - remove MODULE_AUTHOR (most imported pinctrl drivers don't have this)
 
-At the time that commit d42fae738f3a ("arm64: dts: qcom: Add LTE SKUs
-for sc7280-villager family"), the evoker board device tree hadn't yet
-landed.
+Changes since v1:
+ - add a field in msm_pinctrl_soc_data to accomodate the needs of the
+   driver and device dts
+ - apply changes made to existing tlmm dt documentation
+ - add reserved gpios array
+ - rename device tree compat string to qcom,sdm670-tlmm
+ - remove dependency on ACPI
+ - move MODULE_DEVICE_TABLE macro call up
+ - add missing pins (fixes most of the debugfs problems)
+ - move qup0_pins down
+ - add whitespace between UFS_RESET macro and pins array
 
-I belive that the above two facts mean that the evoker boards ought to
-be setup for LTE but currently aren't. Let's fix that.
+This patch series adds the driver for the Qualcomm Snapdragon 670 TLMM
+(Top-Level Mode Multiplexer) and introduces a new field so that SDM670-
+related device trees can reserve their own gpios.
 
-Cc: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
-Cc: Sibi Sankar <quic_sibis@quicinc.com>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+ .../bindings/pinctrl/qcom,sdm670-tlmm.yaml         |  138 ++
+ drivers/pinctrl/qcom/Kconfig                       |    9 +
+ drivers/pinctrl/qcom/Makefile                      |    1 +
+ drivers/pinctrl/qcom/pinctrl-msm.c                 |    3 +-
+ drivers/pinctrl/qcom/pinctrl-msm.h                 |    4 +
+ drivers/pinctrl/qcom/pinctrl-sdm670.c              | 1373 ++++++++++++++++++++
+ 6 files changed, 1527 insertions(+), 1 deletion(-)
 
- arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts
-index ccbe50b6249a..5e5cddb8ec99 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts
-@@ -8,6 +8,7 @@
- /dts-v1/;
- 
- #include "sc7280-herobrine.dtsi"
-+#include "sc7280-herobrine-lte-sku.dtsi"
- 
- / {
- 	model = "Google Evoker";
--- 
-2.37.3.968.ga6b4b080e4-goog
 
