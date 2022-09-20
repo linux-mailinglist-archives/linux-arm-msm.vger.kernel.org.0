@@ -2,72 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D5CF5BDAE2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 05:36:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 756F95BDB04
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 05:58:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229572AbiITDgs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Sep 2022 23:36:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47460 "EHLO
+        id S229612AbiITD61 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Sep 2022 23:58:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229645AbiITDgq (ORCPT
+        with ESMTP id S229496AbiITD60 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Sep 2022 23:36:46 -0400
+        Mon, 19 Sep 2022 23:58:26 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74C8559277;
-        Mon, 19 Sep 2022 20:36:45 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F03CA52DFE;
+        Mon, 19 Sep 2022 20:58:24 -0700 (PDT)
 Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28K2hAKN013206;
-        Tue, 20 Sep 2022 03:36:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=tTOsina8mElQko/pEQDlXPKFk8zcuA3Y+FqIp8KL0S4=;
- b=FDR25KEBRR38+iPvfbESoZEetv1VaoQJifYpyprzaAOLtTLNwH3o1sodtyGg98iypTYY
- ZxrWSHvREHTSd4Cui0q2UIpUSuv0DQCvpaRdZ7IgxbtKtnePcaO1Ky9ofxa5Hv3aujZS
- Og2hgugSDwvG/gbctx2gUzW47AJLSNh+KtMlKuLX9DK/ZoDEhJCPpZTP9+up68Uv47Gh
- 7tVL22QtFlOG216YYIlCgsWXd0Omj333aIgkChZ6g7Jh8BDVzB4wnXhGX2Pc1mAC+AAt
- 6R2jXOYgrrRn/zQlhEQVc6pkrn65FithXI1p1S9aAFyAiGhV2KBUZjoc6L6//w4PVygx wQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jpt21j9jd-1
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28K1on1G029626;
+        Tue, 20 Sep 2022 03:58:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=is9XgsSG9yI4Rlx+9dK1oEnwuCn2rKXs6rVUhlL1Hnw=;
+ b=maBkv6voG6Tb0NO86ZOQ0MS6f5iGjUUs97Ed4riwk9Lf26IkQcmEl/nlDdfflWdxT6Qw
+ h6or8/lWj0hsvHUGNwLg1k4f88lbuDC81pMjPnj6WQY7ZJkifatlp2K5PI76p335/cTd
+ mY/akdlLs1f9K/BAXespuQFkjhDehJIdy/u+XkDgQ/6Ce5y2nWPnOVewTCK4L6PWcAe5
+ dx3LQ6rAVkQyN/8GF33zmB/TwL/cfXfwDQnwyVlD1w9YPTlMX3Z2VSqWSmYlWDjbFamb
+ pE5wl5dyBuOv5xiJOoOfKVaQYkNLgaNve3XXP4O60Tq1avEYiaYV8GzYDXylFTsg6FyF vw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jpt21jax3-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 20 Sep 2022 03:36:37 +0000
+        Tue, 20 Sep 2022 03:58:12 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28K3aaAx027578
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28K3wBrS031397
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 20 Sep 2022 03:36:36 GMT
-Received: from [10.216.12.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 19 Sep
- 2022 20:36:31 -0700
-Message-ID: <e446d0c0-7084-8b5a-132e-977b25913343@quicinc.com>
-Date:   Tue, 20 Sep 2022 09:06:22 +0530
+        Tue, 20 Sep 2022 03:58:11 GMT
+Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Mon, 19 Sep 2022 20:58:07 -0700
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>
+CC:     <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        "Sai Prakash Ranjan" <quic_saipraka@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>, <vkoul@kernel.org>,
+        "Souradeep Chowdhury" <quic_schowdhu@quicinc.com>
+Subject: [PATCH V13 0/7] soc: qcom: dcc: Add driver support for Data Capture and Compare unit(DCC)
+Date:   Tue, 20 Sep 2022 09:26:57 +0530
+Message-ID: <cover.1663642051.git.quic_schowdhu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v2 2/3] clk: qcom: gcc-sc7180: Update the .pwrsts for usb
- gdsc
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@somainline.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <mka@chromium.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <johan+linaro@kernel.org>, <quic_kriskura@quicinc.com>,
-        <dianders@chromium.org>, <linux-clk@vger.kernel.org>
-References: <20220916102417.24549-1-quic_rjendra@quicinc.com>
- <20220916102417.24549-2-quic_rjendra@quicinc.com>
- <YyiOiudZuMDXOvGr@hovoldconsulting.com>
-From:   Rajendra Nayak <quic_rjendra@quicinc.com>
-In-Reply-To: <YyiOiudZuMDXOvGr@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: iIZ_6douO6AMfRNseBHfHSfimrkkIfZr
-X-Proofpoint-GUID: iIZ_6douO6AMfRNseBHfHSfimrkkIfZr
+X-Proofpoint-ORIG-GUID: yCQebtlTSjbdIzv78IZ_0KzoZTmvI3EA
+X-Proofpoint-GUID: yCQebtlTSjbdIzv78IZ_0KzoZTmvI3EA
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
  definitions=2022-09-19_13,2022-09-16_01,2022-06-22_01
@@ -75,67 +69,153 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscor
  spamscore=0 bulkscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0
  malwarescore=0 impostorscore=0 priorityscore=1501 mlxlogscore=999
  phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2209200019
-X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+ engine=8.12.0-2209130000 definitions=main-2209200022
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+DCC(Data Capture and Compare) is a DMA engine designed for debugging purposes.
+In case of a system crash or manual software triggers by the user the DCC hardware
+stores the value at the register addresses which can be used for debugging purposes.
+The DCC driver provides the user with debugfs interface to configure the register
+addresses. The options that the DCC hardware provides include reading from registers,
+writing to registers, first reading and then writing to registers and looping
+through the values of the same register.
 
+In certain cases a register write needs to be executed for accessing the rest of the
+registers, also the user might want to record the changing values of a register with
+time for which he has the option to use the loop feature.
 
-On 9/19/2022 9:15 PM, Johan Hovold wrote:
-> On Fri, Sep 16, 2022 at 03:54:16PM +0530, Rajendra Nayak wrote:
->> The USB controller on sc7180 does not retain the state when
->> the system goes into low power state and the GDSC is
->> turned off. This results in the controller reinitializing and
->> re-enumerating all the connected devices (resulting in additional
->> delay while coming out of suspend)
->> Fix this by updating the .pwrsts for the USB GDSC so it only
->> transitions to retention state in low power.
->>
->> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
->> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
->> Tested-by: Matthias Kaehlcke <mka@chromium.org>
->> ---
->> v2:
->> Updated the changelog
->>
->>   drivers/clk/qcom/gcc-sc7180.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/clk/qcom/gcc-sc7180.c b/drivers/clk/qcom/gcc-sc7180.c
->> index c2ea09945c47..2d3980251e78 100644
->> --- a/drivers/clk/qcom/gcc-sc7180.c
->> +++ b/drivers/clk/qcom/gcc-sc7180.c
->> @@ -2224,7 +2224,7 @@ static struct gdsc usb30_prim_gdsc = {
->>   	.pd = {
->>   		.name = "usb30_prim_gdsc",
->>   	},
->> -	.pwrsts = PWRSTS_OFF_ON,
->> +	.pwrsts = PWRSTS_RET_ON,
->>   };
->>   
->>   static struct gdsc hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc = {
-> 
-> It seems like the above will not work unless you also provide the
-> registers offsets that gdsc_force_mem_on() expects.
+The options mentioned above are exposed to the user by debugfs files once the driver
+is probed. The details and usage of this debugfs files are documented in
+Documentation/ABI/testing/debugfs-driver-dcc.
 
-That's true, but its needed only on platforms that support complete
-CX domain power collapse. sc7280 (and sc7180) does not support
-that and hence we can achieve GDSC RET without any of the RETAIN_MEM/
-RETAIN_PERIPH bits programmed.
-I explained some of that in detail on another related thread a
-while back [1]
+As an example let us consider a couple of debug scenarios where DCC has been proved to be
+effective for debugging purposes:-
 
-[1] https://lore.kernel.org/all/5ff21b1e-3af9-36ef-e13e-fa33f526d0e3@quicinc.com/
+i)TimeStamp Related Issue
 
-> 
-> Specifically, unless you set cxc_count for the GDSC, the above call is a
-> no-op and the retention setting (i.e. the RETAIN_MEM and RETAIN_PERIPH
-> bits) will not be updated when registering the GDSC.
-> 
-> Johan
+On SC7180, there was a coresight timestamp issue where it would occasionally be all 0
+instead of proper timestamp values.
+
+Proper timestamp:
+Idx:3373; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x13004d8f5b7aa; CC=0x9e
+
+Zero timestamp:
+Idx:3387; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x0; CC=0xa2
+
+Now this is a non-fatal issue and doesn't need a system reset, but still needs
+to be rootcaused and fixed for those who do care about coresight etm traces.
+Since this is a timestamp issue, we would be looking for any timestamp related
+clocks and such.
+
+We get all the clk register details from IP documentation and configure it
+via DCC config_read debugfs node. Before that we set the current linked list.
+
+/* Program the linked list with the addresses */
+echo R 0x10c004 > /sys/kernel/debug/dcc/../3/config
+echo R 0x10c008 > /sys/kernel/debug/dcc/../3/config
+echo R 0x10c00c > /sys/kernel/debug/dcc/../3/config
+echo R 0x10c010 > /sys/kernel/debug/dcc/../3/config
+..... and so on for other timestamp related clk registers
+
+/* Other way of specifying is in "addr len" pair, in below case it
+specifies to capture 4 words starting 0x10C004 */
+
+echo R 0x10C004 4 > /sys/kernel/debug/dcc/../3/config_read
+
+/* Enable DCC */
+echo 1 > /sys/kernel/debug/dcc/../3/enable
+
+/* Run the timestamp test for working case */
+
+/* Send SW trigger */
+echo 1 > /sys/kernel/debug/dcc/../trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram1.bin
+
+/* Run the timestamp test for non-working case */
+
+/* Send SW trigger */
+echo 1 > /sys/kernel/debug/dcc/../trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram2.bin
+
+Get the parser from [1] and checkout the latest branch.
+
+/* Parse the SRAM bin */
+python dcc_parser.py -s dcc_sram1.bin --v2 -o output/
+python dcc_parser.py -s dcc_sram2.bin --v2 -o output/
+
+Sample parsed output of dcc_sram1.bin:
+
+<hwioDump version="1">
+        <timestamp>03/14/21</timestamp>
+            <generator>Linux DCC Parser</generator>
+                <chip name="None" version="None">
+                <register address="0x0010c004" value="0x80000000" />
+                <register address="0x0010c008" value="0x00000008" />
+                <register address="0x0010c00c" value="0x80004220" />
+                <register address="0x0010c010" value="0x80000000" />
+            </chip>
+    <next_ll_offset>next_ll_offset : 0x1c </next_ll_offset>
+</hwioDump>
+
+ii)NOC register errors
+
+A particular class of registers called NOC which are functional registers was reporting
+errors while logging the values.To trace these errors the DCC has been used effectively.
+The steps followed were similar to the ones mentioned above.
+In addition to NOC registers a few other dependent registers were configured in DCC to
+monitor it's values during a crash. A look at the dependent register values revealed that
+the crash was happening due to a secured access to one of these dependent registers.
+All these debugging activity and finding the root cause was achieved using DCC.
+
+DCC parser is available at the following open source location
+
+https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools/tree/dcc_parser
+
+Changes in V13
+
+*Fixed the quic issue with v12 of the patch
+
+Souradeep Chowdhury (7):
+  dt-bindings: Added the yaml bindings for DCC
+  soc: qcom: dcc: Add driver support for Data Capture and Compare
+    unit(DCC)
+  MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
+    support
+  arm64: dts: qcom: sm8150: Add Data Capture and Compare(DCC) support
+    node
+  arm64: dts: qcom: sc7280: Add Data Capture and Compare(DCC) support
+    node
+  arm64: dts: qcom: sc7180: Add Data Capture and Compare(DCC) support
+    node
+  arm64: dts: qcom: sdm845: Add Data Capture and Compare(DCC) support
+    node
+
+ Documentation/ABI/testing/debugfs-driver-dcc       |   98 ++
+ .../devicetree/bindings/arm/msm/qcom,dcc.yaml      |   44 +
+ MAINTAINERS                                        |    8 +
+ arch/arm64/boot/dts/qcom/sc7180.dtsi               |    6 +
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |    6 +
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               |    6 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               |    6 +
+ drivers/soc/qcom/Kconfig                           |    8 +
+ drivers/soc/qcom/Makefile                          |    1 +
+ drivers/soc/qcom/dcc.c                             | 1348 ++++++++++++++++++++
+ 10 files changed, 1531 insertions(+)
+ create mode 100644 Documentation/ABI/testing/debugfs-driver-dcc
+ create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml
+ create mode 100644 drivers/soc/qcom/dcc.c
+
+-- 
+2.7.4
+
