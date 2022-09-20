@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3386A5BE794
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 15:51:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A29535BE796
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 15:51:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230517AbiITNvV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 09:51:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43168 "EHLO
+        id S230322AbiITNvi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 09:51:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230487AbiITNvQ (ORCPT
+        with ESMTP id S231226AbiITNvY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 09:51:16 -0400
+        Tue, 20 Sep 2022 09:51:24 -0400
 Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24DE143638
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 06:51:14 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id cc5so4406588wrb.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 06:51:14 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDAA843E56
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 06:51:21 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id cc5so4407262wrb.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 06:51:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:organization:from:references
          :cc:to:content-language:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date;
-        bh=zRdDzhw5a5ynTYghKQQWj3Myrcf9LCWPiu6p7svaVow=;
-        b=EUiRpoNFUN/WpjyuZ1UJ1keXlSOG0zCvvVFA4G2Hmdh0RqkoKkY9ihX6upTCnBnec1
-         lTLkgdr9w2OB1ukhlbVaaP/enGXy4xOGbTvg7lNPH6ZVrPgJ0eWvcB19fZeRKq5S4O51
-         PJzFW/f7bbyOxcHB0/BIXiZh4eaEk8WKID0uPrttgdf53CcfujwHaJWwWm38FK2IwuWJ
-         gTCPEQ89qdrCodpCGn0FlQXaK2asnjTvYJD0LGZwiGfwdHwQSa9k2NZ0NU1LBTjOus38
-         yvOF1fBORCtJPXvaORw67SP36EuxRejXey1S1LYYXgv6pjNwP4Ted6qXIJMA5iU9x+QJ
-         juxg==
+        bh=ie45F/lkLLynh4wGP5XxIIavgNdgbFKnC44CCTp/NRI=;
+        b=lrPNrEQr+xNLISBtmLHGMl4sny3vDZKH6tJ73KRXFF/z+OqE65D6MT2Vt6TNTsRyED
+         IOUlazvaj2Xo7Hs5cw+aMa+Aj/mgfrLqbrW5Uyq9IDtXLL1TCYINRtzSF04dE2ZHmWAO
+         4uzFWz4db3ePQZCkEpEdGsay1RkFqpEmB3TC4V8YvX87thlihx8+4t34+3pYrzoHPHIW
+         9lveiAHp/OvMSw29Ez4F+Lf7L76p4fYUGLPtWQQ652Rx+tGSfX3FDHQT6QwEfs5uwtuq
+         glcxO3xnQbBTgSYywgvYdfmE+JZTunzw3OrX8z+TohdF0uxXlV1WSFvXS8mpy/WTqM7u
+         sKKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:organization:from:references
          :cc:to:content-language:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=zRdDzhw5a5ynTYghKQQWj3Myrcf9LCWPiu6p7svaVow=;
-        b=glljZKbnfekIMwH6pPIXe6vt/JhD3w5/SvfFuGVIDr4AafJPkr0TvOb8mXt6bIuYMy
-         FhIUWo1vJ+oRlB6S7XdfHeu7/KRFtWGrtES55fWcjeTxcp40caFhU+CovQbXqzAeMg5/
-         pwy1uCCwv0RPN1QC6J+WVOlBkoVg2scE+aMm1mXuinRhPJhFoVLHmmMmrf87Ry7yzH/J
-         0hgwv/m8duBPzzK8jo6+379/utf6loE5WQMtLs8MQx6vKFi4JAa2ETC1WIbzk2rjzbLM
-         wsiesXI2UU2M3vhTVxaw+uVDd1w79CUiOeDMgr3f/D1btAgZZ/ggqEbcz8jlahAgMBrC
-         rxVQ==
-X-Gm-Message-State: ACrzQf2iXtfo9rvkC/MfWlkIBA122KX5CjHXtkuqUn/yXW6l1fx0p08q
-        guROp5IbKmEWV70GID/nT/shnA==
-X-Google-Smtp-Source: AMsMyM7n/pavtoyKgl/9/d0NKHH8QpSRBO+kZHsIFiUN9oTH2DfQ2z0y02cbyowDfN+fbyOuNhMrcw==
-X-Received: by 2002:adf:dd8f:0:b0:22a:84ab:4be3 with SMTP id x15-20020adfdd8f000000b0022a84ab4be3mr13901955wrl.40.1663681872593;
-        Tue, 20 Sep 2022 06:51:12 -0700 (PDT)
+        bh=ie45F/lkLLynh4wGP5XxIIavgNdgbFKnC44CCTp/NRI=;
+        b=zok37anN1c+RRmGDJEKL86W47nCFCJf38YBRS6XT48fuTH7+8l/NlI9uJ9K3hw/U4o
+         923TxUxOqM7nhkxwQ3boH7HP05lPx5jawX978VBLYsbUrY4QVm3rrUUSBeGQSu3DqD2O
+         rWg2/PzRCcEMObbnYn7fGtsE9opai2HLnwtqC14HKK6TNy9uv9u7wF27i9q+CneVPmcz
+         L7gthZxqosj5lUpEOZ8aIM2p1NHoGSR6L4YcrzWPhTy/Au0Utpkh/aaCMCJn2bOuaLZF
+         FwncESQaEh6Lmuc8ytd5gGLx87Jh2keLNDaYxv/H/XAZI7XWobE4zJF7GgtjxxJOrsl/
+         rRDQ==
+X-Gm-Message-State: ACrzQf2ZlDn8XUNvf250JGacSpMw2fMLZMGQ1hDC7TKXgpGEo484lK/O
+        +DVkzje7N5EiPpfcYiTfOomXXA==
+X-Google-Smtp-Source: AMsMyM5/im8/35tKr1t1+wFKKnt4WVrkH/e+GlT1tr5K6kmneVuOMtgNWUvOuzQ+4lfcAARt5mV+mw==
+X-Received: by 2002:a05:6000:78b:b0:22a:da96:8ae6 with SMTP id bu11-20020a056000078b00b0022ada968ae6mr13830191wrb.232.1663681881322;
+        Tue, 20 Sep 2022 06:51:21 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:7e10:f0f:43b2:9b5e? ([2a01:e0a:982:cbb0:7e10:f0f:43b2:9b5e])
-        by smtp.gmail.com with ESMTPSA id j18-20020a05600c42d200b003b2878b9e0dsm93697wme.20.2022.09.20.06.51.11
+        by smtp.gmail.com with ESMTPSA id v9-20020a5d4b09000000b0022acb7195aesm74782wrq.33.2022.09.20.06.51.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Sep 2022 06:51:12 -0700 (PDT)
-Message-ID: <1d34c9bf-24c2-84ea-8a85-7cd15e09d6d0@linaro.org>
-Date:   Tue, 20 Sep 2022 15:51:11 +0200
+        Tue, 20 Sep 2022 06:51:20 -0700 (PDT)
+Message-ID: <ffc992a7-fe2e-fff4-1ee0-efd727103f20@linaro.org>
+Date:   Tue, 20 Sep 2022 15:51:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH 04/17] phy: qcom-qmp-usb: drop unused type from config
+Subject: Re: [PATCH 05/17] phy: qcom-qmp-pcie: drop init and exit wrappers
 Content-Language: en-US
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Vinod Koul <vkoul@kernel.org>
@@ -67,10 +67,10 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org
 References: <20220920073826.20811-1-johan+linaro@kernel.org>
- <20220920073826.20811-5-johan+linaro@kernel.org>
+ <20220920073826.20811-6-johan+linaro@kernel.org>
 From:   Neil Armstrong <neil.armstrong@linaro.org>
 Organization: Linaro
-In-Reply-To: <20220920073826.20811-5-johan+linaro@kernel.org>
+In-Reply-To: <20220920073826.20811-6-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,176 +83,76 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 20/09/2022 09:38, Johan Hovold wrote:
-> The configuration PHY type is no longer needed since the QMP driver
-> split so drop it from the configuration and suspend callbacks.
+> Drop the unnecessary PHY init and exit callback wrappers.
 > 
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->   drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 26 -------------------------
->   1 file changed, 26 deletions(-)
+>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 29 ++++--------------------
+>   1 file changed, 4 insertions(+), 25 deletions(-)
 > 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-> index 93994f1a46e2..03481b6f1c35 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-> @@ -1431,8 +1431,6 @@ struct qmp_phy;
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> index d25f9215b86f..525097e3b041 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> @@ -1877,8 +1877,9 @@ static int qmp_pcie_serdes_init(struct qmp_phy *qphy)
+>   	return 0;
+>   }
 >   
->   /* struct qmp_phy_cfg - per-PHY initialization config */
->   struct qmp_phy_cfg {
-> -	/* phy-type - PCIE/UFS/USB */
-> -	unsigned int type;
->   	/* number of lanes provided by phy */
->   	int nlanes;
+> -static int qmp_pcie_com_init(struct qmp_phy *qphy)
+> +static int qmp_pcie_init(struct phy *phy)
+>   {
+> +	struct qmp_phy *qphy = phy_get_drvdata(phy);
+>   	struct qcom_qmp *qmp = qphy->qmp;
+>   	const struct qmp_phy_cfg *cfg = qphy->cfg;
+>   	void __iomem *pcs = qphy->pcs;
+> @@ -1925,8 +1926,9 @@ static int qmp_pcie_com_init(struct qmp_phy *qphy)
+>   	return ret;
+>   }
 >   
-> @@ -1609,7 +1607,6 @@ static const char * const qmp_phy_vreg_l[] = {
->   };
+> -static int qmp_pcie_com_exit(struct qmp_phy *qphy)
+> +static int qmp_pcie_exit(struct phy *phy)
+>   {
+> +	struct qmp_phy *qphy = phy_get_drvdata(phy);
+>   	struct qcom_qmp *qmp = qphy->qmp;
+>   	const struct qmp_phy_cfg *cfg = qphy->cfg;
 >   
->   static const struct qmp_phy_cfg ipq8074_usb3phy_cfg = {
-> -	.type			= PHY_TYPE_USB3,
->   	.nlanes			= 1,
+> @@ -1939,20 +1941,6 @@ static int qmp_pcie_com_exit(struct qmp_phy *qphy)
+>   	return 0;
+>   }
 >   
->   	.serdes_tbl		= ipq8074_usb3_serdes_tbl,
-> @@ -1634,7 +1631,6 @@ static const struct qmp_phy_cfg ipq8074_usb3phy_cfg = {
->   };
->   
->   static const struct qmp_phy_cfg msm8996_usb3phy_cfg = {
-> -	.type			= PHY_TYPE_USB3,
->   	.nlanes			= 1,
->   
->   	.serdes_tbl		= msm8996_usb3_serdes_tbl,
-> @@ -1659,7 +1655,6 @@ static const struct qmp_phy_cfg msm8996_usb3phy_cfg = {
->   };
->   
->   static const struct qmp_phy_cfg qmp_v3_usb3phy_cfg = {
-> -	.type			= PHY_TYPE_USB3,
->   	.nlanes			= 1,
->   
->   	.serdes_tbl		= qmp_v3_usb3_serdes_tbl,
-> @@ -1691,7 +1686,6 @@ static const struct qmp_phy_cfg qmp_v3_usb3phy_cfg = {
->   };
->   
->   static const struct qmp_phy_cfg sc7180_usb3phy_cfg = {
-> -	.type			= PHY_TYPE_USB3,
->   	.nlanes			= 1,
->   
->   	.serdes_tbl		= qmp_v3_usb3_serdes_tbl,
-> @@ -1723,7 +1717,6 @@ static const struct qmp_phy_cfg sc7180_usb3phy_cfg = {
->   };
->   
->   static const struct qmp_phy_cfg sc8280xp_usb3_uniphy_cfg = {
-> -	.type			= PHY_TYPE_USB3,
->   	.nlanes			= 1,
->   
->   	.serdes_tbl		= sc8280xp_usb3_uniphy_serdes_tbl,
-> @@ -1752,7 +1745,6 @@ static const struct qmp_phy_cfg sc8280xp_usb3_uniphy_cfg = {
->   };
->   
->   static const struct qmp_phy_cfg qmp_v3_usb3_uniphy_cfg = {
-> -	.type			= PHY_TYPE_USB3,
->   	.nlanes			= 1,
->   
->   	.serdes_tbl		= qmp_v3_usb3_uniphy_serdes_tbl,
-> @@ -1781,7 +1773,6 @@ static const struct qmp_phy_cfg qmp_v3_usb3_uniphy_cfg = {
->   };
->   
->   static const struct qmp_phy_cfg msm8998_usb3phy_cfg = {
-> -	.type                   = PHY_TYPE_USB3,
->   	.nlanes                 = 1,
->   
->   	.serdes_tbl             = msm8998_usb3_serdes_tbl,
-> @@ -1808,7 +1799,6 @@ static const struct qmp_phy_cfg msm8998_usb3phy_cfg = {
->   };
->   
->   static const struct qmp_phy_cfg sm8150_usb3phy_cfg = {
-> -	.type			= PHY_TYPE_USB3,
->   	.nlanes			= 1,
->   
->   	.serdes_tbl		= sm8150_usb3_serdes_tbl,
-> @@ -1844,7 +1834,6 @@ static const struct qmp_phy_cfg sm8150_usb3phy_cfg = {
->   };
->   
->   static const struct qmp_phy_cfg sm8150_usb3_uniphy_cfg = {
-> -	.type			= PHY_TYPE_USB3,
->   	.nlanes			= 1,
->   
->   	.serdes_tbl		= sm8150_usb3_uniphy_serdes_tbl,
-> @@ -1876,7 +1865,6 @@ static const struct qmp_phy_cfg sm8150_usb3_uniphy_cfg = {
->   };
->   
->   static const struct qmp_phy_cfg sm8250_usb3phy_cfg = {
-> -	.type			= PHY_TYPE_USB3,
->   	.nlanes			= 1,
->   
->   	.serdes_tbl		= sm8150_usb3_serdes_tbl,
-> @@ -1911,7 +1899,6 @@ static const struct qmp_phy_cfg sm8250_usb3phy_cfg = {
->   };
->   
->   static const struct qmp_phy_cfg sm8250_usb3_uniphy_cfg = {
-> -	.type			= PHY_TYPE_USB3,
->   	.nlanes			= 1,
->   
->   	.serdes_tbl		= sm8150_usb3_uniphy_serdes_tbl,
-> @@ -1943,7 +1930,6 @@ static const struct qmp_phy_cfg sm8250_usb3_uniphy_cfg = {
->   };
->   
->   static const struct qmp_phy_cfg sdx55_usb3_uniphy_cfg = {
-> -	.type			= PHY_TYPE_USB3,
->   	.nlanes			= 1,
->   
->   	.serdes_tbl		= sm8150_usb3_uniphy_serdes_tbl,
-> @@ -1975,7 +1961,6 @@ static const struct qmp_phy_cfg sdx55_usb3_uniphy_cfg = {
->   };
->   
->   static const struct qmp_phy_cfg sdx65_usb3_uniphy_cfg = {
-> -	.type			= PHY_TYPE_USB3,
->   	.nlanes			= 1,
->   
->   	.serdes_tbl		= sm8150_usb3_uniphy_serdes_tbl,
-> @@ -2007,7 +1992,6 @@ static const struct qmp_phy_cfg sdx65_usb3_uniphy_cfg = {
->   };
->   
->   static const struct qmp_phy_cfg sm8350_usb3phy_cfg = {
-> -	.type			= PHY_TYPE_USB3,
->   	.nlanes			= 1,
->   
->   	.serdes_tbl		= sm8150_usb3_serdes_tbl,
-> @@ -2042,7 +2026,6 @@ static const struct qmp_phy_cfg sm8350_usb3phy_cfg = {
->   };
->   
->   static const struct qmp_phy_cfg sm8350_usb3_uniphy_cfg = {
-> -	.type			= PHY_TYPE_USB3,
->   	.nlanes			= 1,
->   
->   	.serdes_tbl		= sm8150_usb3_uniphy_serdes_tbl,
-> @@ -2074,7 +2057,6 @@ static const struct qmp_phy_cfg sm8350_usb3_uniphy_cfg = {
->   };
->   
->   static const struct qmp_phy_cfg qcm2290_usb3phy_cfg = {
-> -	.type			= PHY_TYPE_USB3,
->   	.nlanes			= 1,
->   
->   	.serdes_tbl		= qcm2290_usb3_serdes_tbl,
-> @@ -2432,10 +2414,6 @@ static int __maybe_unused qmp_usb_runtime_suspend(struct device *dev)
->   
->   	dev_vdbg(dev, "Suspending QMP phy, mode:%d\n", qphy->mode);
->   
-> -	/* Supported only for USB3 PHY and luckily USB3 is the first phy */
-> -	if (cfg->type != PHY_TYPE_USB3)
-> -		return 0;
+> -static int qmp_pcie_init(struct phy *phy)
+> -{
+> -	struct qmp_phy *qphy = phy_get_drvdata(phy);
+> -	struct qcom_qmp *qmp = qphy->qmp;
+> -	int ret;
+> -	dev_vdbg(qmp->dev, "Initializing QMP phy\n");
 > -
->   	if (!qphy->phy->init_count) {
->   		dev_vdbg(dev, "PHY not initialized, bailing out\n");
->   		return 0;
-> @@ -2458,10 +2436,6 @@ static int __maybe_unused qmp_usb_runtime_resume(struct device *dev)
->   
->   	dev_vdbg(dev, "Resuming QMP phy, mode:%d\n", qphy->mode);
->   
-> -	/* Supported only for USB3 PHY and luckily USB3 is the first phy */
-> -	if (cfg->type != PHY_TYPE_USB3)
-> -		return 0;
+> -	ret = qmp_pcie_com_init(qphy);
+> -	if (ret)
+> -		return ret;
 > -
->   	if (!qphy->phy->init_count) {
->   		dev_vdbg(dev, "PHY not initialized, bailing out\n");
->   		return 0;
+> -	return 0;
+> -}
+> -
+>   static int qmp_pcie_power_on(struct phy *phy)
+>   {
+>   	struct qmp_phy *qphy = phy_get_drvdata(phy);
+> @@ -2060,15 +2048,6 @@ static int qmp_pcie_power_off(struct phy *phy)
+>   	return 0;
+>   }
+>   
+> -static int qmp_pcie_exit(struct phy *phy)
+> -{
+> -	struct qmp_phy *qphy = phy_get_drvdata(phy);
+> -
+> -	qmp_pcie_com_exit(qphy);
+> -
+> -	return 0;
+> -}
+> -
+>   static int qmp_pcie_enable(struct phy *phy)
+>   {
+>   	int ret;
+
 
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
