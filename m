@@ -2,104 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A81C95BDD8D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 08:46:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3781D5BDDD4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 09:09:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229503AbiITGqI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 02:46:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38182 "EHLO
+        id S230212AbiITHJ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 03:09:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229605AbiITGqG (ORCPT
+        with ESMTP id S229582AbiITHJZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 02:46:06 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78DE45B04B;
-        Mon, 19 Sep 2022 23:46:04 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D64EF6230C;
-        Tue, 20 Sep 2022 06:46:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CCC9C433C1;
-        Tue, 20 Sep 2022 06:46:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663656362;
-        bh=IWfJeKWmLuHACzZrveUELh0VlbJlmxI/wfJ2qMqFsas=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=iF9bHGCB+k3DdAqqx6WtJCfbxp13KHbYMMp3nUNGhp12rQwAu50+gMuWPy74YL2vO
-         v2ky4yOA9MYZOvzh5zYqkFOHXSxs4HRaY884iX/wteKBXSuNzXt7ZMEPw8yimvOeSd
-         7uuB5F0Us0fVv/BWryXEbuPSkXQOM8t+AoXkuXZSp2rIsHdUvCgc88lAcC0F5X8mKf
-         wTE509G2RFVuNB3GOadoSNfUaNdQir9Ydl2OcFjh3KbMXDXpjKBQnIL5bFoPKma00h
-         eSCEKC0vKlEVWAPZgnJTnVEfqF7OBR8mYqsW7YwnBd/TshoZCyMBgQ3oKYzXVgKlja
-         m2jsibnfRs02A==
-Date:   Tue, 20 Sep 2022 12:15:56 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     andersson@kernel.org, kishon@ti.com, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] phy: qcom-qmp-pcie: Fix the SM8450 PCS registers
-Message-ID: <YylhpBtz8d2dqJhv@matsya>
-References: <20220910063857.17372-1-manivannan.sadhasivam@linaro.org>
+        Tue, 20 Sep 2022 03:09:25 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 420CA5F212
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 00:09:16 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id p5so1827830ljc.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 00:09:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=Wo8uP5ffgZyZWYK9afaO+p/W/5Kwf864osF/ckvXkRg=;
+        b=grzro9B7+WgfVf2xBiNjkxTYALekfROadRmRfJuBoGy5IpiijPZGNUGpa2HgNc+O52
+         gtc0da8IZopEEne89hAZlYzfr9DGVMejFi1IJejkP23YUHixyjYVebTZDFQo8nQhHwvY
+         U1UnDmZbIGF/4WgyGLcWn/7vwina3T/z4WzHdVWwdL1T8AaIiS3kx8NSnqq8P4nkdVp+
+         KkxzpFx3UUa91XTE0ZHVaevoiZtw3FkGLvHJBr4qv9jK16plWRc0jy+tfyul0TuMMqRa
+         X3jz1lCo0/Hl8QGGXedKkpK7GCjKz5VX1Cfpc4Y0jB3phALjZWKNg/ucfpHL+H6jrVkZ
+         6ctA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=Wo8uP5ffgZyZWYK9afaO+p/W/5Kwf864osF/ckvXkRg=;
+        b=esTDuPlzM6vI3R5MAzeMM1tK6vgy2u8zwDRYHMaP4KU2nDXYMoqfnuF20sHmjkIYhk
+         vKRPcwxBYRqoKirR0mscyDEb7nw9vZ+CYickWgjwgY1mgO0jOkk7XB8RvhusUMnZ2LA7
+         iPxNUL0iYV2RH8J90ZelU9kxL5RcCfsBiWRMUUqlrhAr0lxf1CyGS/eY4KaSFa83l2N/
+         wBugNCC+/Dk3QU/9hZixvNwgcTEz8sPNGki9SPic5SQHMXn4gW8xT1essfOoA5kyGD6j
+         /6kSEYpywD2jxe49+nWxOATM4HkUgnri1AioSOlLZSvEmdDTJCGvptACT2saUvPVjI/M
+         1hqg==
+X-Gm-Message-State: ACrzQf11u6ye5vaPPFTJ6V8/WTrYL29kCBQ+f0yDai4jhHXGimT0G38w
+        E53BoexqFci+mSDWC/mVZMEoew==
+X-Google-Smtp-Source: AMsMyM5k368tciyRffIEz9KEI7TXQB6utOD+AnJuFSrX4KDaWv/fY/Ol3hSX1jO8ZUTskHXRihVDqg==
+X-Received: by 2002:a05:651c:50b:b0:26c:2962:bf1e with SMTP id o11-20020a05651c050b00b0026c2962bf1emr6119083ljp.343.1663657754595;
+        Tue, 20 Sep 2022 00:09:14 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id i189-20020a2e22c6000000b0026c1b85d8b3sm113960lji.34.2022.09.20.00.09.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Sep 2022 00:09:13 -0700 (PDT)
+Message-ID: <6b242b44-b657-c7a6-63ca-465c7031376f@linaro.org>
+Date:   Tue, 20 Sep 2022 09:09:13 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220910063857.17372-1-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v2 1/7] dt-bindings: msm/dp: Add SDM845 and SC8280XP
+ compatibles
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220916200028.25009-1-quic_bjorande@quicinc.com>
+ <20220916200028.25009-2-quic_bjorande@quicinc.com>
+ <1641e41c-08c7-859b-644a-28d966fb00f3@linaro.org>
+ <20220919211832.6b3buqxrnfp6yjjg@builder.lan>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220919211832.6b3buqxrnfp6yjjg@builder.lan>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10-09-22, 12:08, Manivannan Sadhasivam wrote:
-> In the PCS region, registers QPHY_V5_PCS_EQ_CONFIG4 and
-> QPHY_V5_PCS_EQ_CONFIG5 should be used instead of QPHY_V5_PCS_EQ_CONFIG2
-> and QPHY_V5_PCS_EQ_CONFIG3.
+On 19/09/2022 23:18, Bjorn Andersson wrote:
+> On Sat, Sep 17, 2022 at 06:03:27PM +0100, Krzysztof Kozlowski wrote:
+>> On 16/09/2022 21:00, Bjorn Andersson wrote:
+>>> From: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>>
+>>> Add compatibles for the DisplayPort and Embedded DisplayPort blocks in
+>>> Qualcomm SDM845 and SC8280XP platforms.
+>>>
+>>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+>>
+>> No need for quicinc SoB (unless you also take ownership).
+>>
 > 
-> This causes high latency when ASPM is enabled, so fix it!
+> It's my understanding that both needs to be there. Bjorn @ Linaro
+> authored the patch and the author must certify its origin, but as the
+> submitter I must certify its origin.
+
+It's the same person. There are no two Bjorns (unless there are :) ), so
+you certify with old email. SoB chain is coming from people, not email
+addresses.
+
+And it is not only my understanding of SoB chain.
+https://lore.kernel.org/all/YuKcBO5JatwRYQJ3@kroah.com/
+
 > 
-> Fixes: 2c91bf6bf290 ("phy: qcom-qmp: Add SM8450 PCIe1 PHY support")
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c   | 4 ++--
->  drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h | 4 ++--
->  2 files changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> index 4648467d5cac..b508903d77d0 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> @@ -1332,8 +1332,8 @@ static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_rx_tbl[] = {
->  };
->  
->  static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_pcs_tbl[] = {
-> -	QMP_PHY_INIT_CFG(QPHY_V5_PCS_EQ_CONFIG2, 0x16),
-> -	QMP_PHY_INIT_CFG(QPHY_V5_PCS_EQ_CONFIG3, 0x22),
-> +	QMP_PHY_INIT_CFG(QPHY_V5_PCS_EQ_CONFIG4, 0x16),
-> +	QMP_PHY_INIT_CFG(QPHY_V5_PCS_EQ_CONFIG5, 0x22),
->  	QMP_PHY_INIT_CFG(QPHY_V5_PCS_G3S2_PRE_GAIN, 0x2e),
->  	QMP_PHY_INIT_CFG(QPHY_V5_PCS_RX_SIGDET_LVL, 0x99),
->  };
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h
-> index 61a44519f969..cca6455ec98c 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h
-> @@ -11,7 +11,7 @@
->  #define QPHY_V5_PCS_G3S2_PRE_GAIN			0x170
->  #define QPHY_V5_PCS_RX_SIGDET_LVL			0x188
->  #define QPHY_V5_PCS_RATE_SLEW_CNTRL1			0x198
-> -#define QPHY_V5_PCS_EQ_CONFIG2				0x1e0
-> -#define QPHY_V5_PCS_EQ_CONFIG3				0x1e4
-> +#define QPHY_V5_PCS_EQ_CONFIG4				0x2e0
-> +#define QPHY_V5_PCS_EQ_CONFIG5				0x2e4
+> I'm not entirely sure what you mean about taking ownership, 
 
-This conflicts with c0c7769cdae2 ("phy: qcom-qmp: Add SC8280XP USB3 UNI phy")
+I meant you to be the author of the commit.
 
-where QPHY_V5_PCS_EQ_CONFIG5 was added as 0x1e0
+> I am going
+> to pursue getting these patches landed. But it wouldn't be correct for
+> new me to claim I authored them.
 
-Do we have a different v5 for SM8450 and SC8280XP?
+Yeah, that's true.
 
--- 
-~Vinod
+
+Best regards,
+Krzysztof
