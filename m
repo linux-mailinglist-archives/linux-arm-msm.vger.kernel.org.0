@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 467B95BDE68
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 09:39:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4A345BDE7D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 09:40:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230388AbiITHjE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 03:39:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46328 "EHLO
+        id S230409AbiITHjF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 03:39:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230356AbiITHjC (ORCPT
+        with ESMTP id S230358AbiITHjD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 03:39:02 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88CE36053E;
+        Tue, 20 Sep 2022 03:39:03 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D48D260685;
         Tue, 20 Sep 2022 00:39:01 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 21412624A7;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2A2A96246D;
         Tue, 20 Sep 2022 07:39:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ABC4C43165;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F448C4315C;
         Tue, 20 Sep 2022 07:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1663659539;
-        bh=0Lc8Kpbxko/G24eMbvjYM/8Z1j85mnOa7rjHLyFNbHw=;
+        bh=YxKfMvKkJdDaUBit3Bsy0QcfwJMDFuCmqFBtIGUEcL4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Ps1bBBPssDYM4kqZppxa+igLAmL7xvOO0ktvuge35MCSNGCNquIZk4AGDmn1js959
-         oJQGEPERv4vb81/tc+8Y1VBhMQVfUmYy+Tgi523CSs0C+w56DvwyhxV7uXTI7MiXAn
-         C1QFGjhiuhkp0Z7fNfXhWEKu5p5lvuD5diWypv+kNwHV/xY0DvzKrAjTiO9cfAwIht
-         cYBT3UyB79HA5vtsp44jSIT6GKTm7szEMJupvGxnXn+Pp93aa2ohPRg7lGfV7xa4fX
-         xtpbVrLn+3WZrabD8QGElguhq1WaSIjMNtJphJEdQrSjDo/7uuBDTd11k5y7luLcvE
-         hyk5RlhpJSYBw==
+        b=NWWLz7JYQxtbJ0GSKEQY8HLk4zs2VJY0AdpkI0a4jbxMQ7hasef4dWRfL9uyVQglv
+         wXioZ8sLOWhWSAp7EPA6E55nBHNDWFxDfcfKiM8+/SdmN49J8zz1LYlaRDKjHYv93R
+         7iUcJtMTWNpA4qd0u6Ou6I1DA3hKJ6qXDv2JuCPReS4/5ImTQ+9njmSe94OLil58os
+         /aRsLWMijeq9Uui/Bjj9GxH8ILt+cqMJ7UfOZ/EPFZ0tToKvaipV7azuD44KdqhVvk
+         hAWskY+3/iV2abnuxv0BGsR6Dtz/wC+fsyLtvyISpTqt8V52SvNSKzfog1Rnh5Nopd
+         k9cMlHsiO/hYA==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan+linaro@kernel.org>)
-        id 1oaXqQ-0005R0-1f; Tue, 20 Sep 2022 09:39:02 +0200
+        id 1oaXqQ-0005R4-4a; Tue, 20 Sep 2022 09:39:02 +0200
 From:   Johan Hovold <johan+linaro@kernel.org>
 To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -45,9 +45,9 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org,
         Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 09/17] phy: qcom-qmp-pcie: drop unused mode field
-Date:   Tue, 20 Sep 2022 09:38:18 +0200
-Message-Id: <20220920073826.20811-10-johan+linaro@kernel.org>
+Subject: [PATCH 10/17] phy: qcom-qmp-pcie: drop unused config field
+Date:   Tue, 20 Sep 2022 09:38:19 +0200
+Message-Id: <20220920073826.20811-11-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220920073826.20811-1-johan+linaro@kernel.org>
 References: <20220920073826.20811-1-johan+linaro@kernel.org>
@@ -62,33 +62,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Drop the unused mode field from struct qmp_phy.
+Drop the unused mask_com_pcs_ready field from struct qmp_phy_cfg.
 
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index 666109a11329..65825ca41e96 100644
+index 65825ca41e96..d22d2cf2fc18 100644
 --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
 +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -1374,7 +1374,6 @@ struct qmp_phy_cfg {
-  * @pipe_clk: pipe clock
-  * @index: lane index
-  * @qmp: QMP phy to which this lane belongs
-- * @mode: current PHY mode
-  */
- struct qmp_phy {
- 	struct phy *phy;
-@@ -1389,7 +1388,6 @@ struct qmp_phy {
- 	struct clk *pipe_clk;
- 	unsigned int index;
- 	struct qcom_qmp *qmp;
--	enum phy_mode mode;
- };
+@@ -1342,7 +1342,6 @@ struct qmp_phy_cfg {
  
- /**
+ 	unsigned int start_ctrl;
+ 	unsigned int pwrdn_ctrl;
+-	unsigned int mask_com_pcs_ready;
+ 	/* bit offset of PHYSTATUS in QPHY_PCS_STATUS register */
+ 	unsigned int phy_status;
+ 
 -- 
 2.35.1
 
