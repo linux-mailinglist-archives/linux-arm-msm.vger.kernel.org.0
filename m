@@ -2,81 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CD805BE27F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 11:55:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B8125BE2F0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 12:20:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230382AbiITJzs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 05:55:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48176 "EHLO
+        id S229582AbiITKUR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 06:20:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230364AbiITJzp (ORCPT
+        with ESMTP id S230164AbiITKUN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 05:55:45 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81BC16B17E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 02:55:43 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id a8so2811665lff.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 02:55:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=qIu94Mc96fRdbvqjZ/QKEJZBD5CrVsQ06uzWJvJ0OPQ=;
-        b=j7nu7QivLD77JPhYWubjiiRWrgYUBDeuyepsW5I8LTCqgGc4IpaIyPyTySjrAc23EY
-         XXEdTqQI2INBYxyBdNK3fsfLOwW+4w161r+3sLrlu1O32xoGvdwFwUW3/gI4zzvfLqKo
-         zMtW1FOUJfkClYQH5k9XQbaBHVbhdW/dogcdyPpcxcMiyw+6RNH8GtAEd/b71/obHamw
-         fp8d1tWNT8C0A/xaWpbzcouXMWtJ848R/sP4uXSJNvTmYKljxhbqwYOog49tTV1IwqHQ
-         1vkdmUZ/6wXuhUPRWEDKFQqV57JG6n0o9zTkLaUaF8p6CjFrGwV1LK54Y95IQMQbUsmE
-         G/yQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=qIu94Mc96fRdbvqjZ/QKEJZBD5CrVsQ06uzWJvJ0OPQ=;
-        b=p+/wOZ15mjfVhIg+VEtSvJE1wVSYoVGiqIaU6RHg+mUWXHeoiDy7GAKlx1BXuy+q0i
-         n3m6HYP9P0A8OlBweUChUL2UFvIhOjnwtfs/dv2nwMPWVFGc3EsbcDy65K07HOTpqq+i
-         7hS0+0dPm3vZPq68717OsdSpvJXzHNT2PK7q6581P/9UZubtxrXnMDgP+k4uAQpjnp3t
-         IlgE2miNeKg2coi7tfVwxtXpXY6rvVI+vnSl+PQjS8Pu6pcNctGAXz8pFUQeiZrbtO5S
-         avSFIb/US4F2EDrK68krCE83AZ8Q1tIecVnpxMv2H8WR4GNyZ9/iv5eewPtVQRX4YRQC
-         oZ7Q==
-X-Gm-Message-State: ACrzQf0ojkKboLD2zlh1kVLFffbM+f5//TCxTSg15D4ls6yzVfIKHj2R
-        S6WdrR+ICs6diDoB6svghki9rA==
-X-Google-Smtp-Source: AMsMyM5lJTtXCLlzqtDAEVlWPCQEqkZ4d3ebnfRv9U7YuQ6//LeXHNi88Y5DdcKkj2Kksj9xgi6SdA==
-X-Received: by 2002:a05:6512:3b0a:b0:49a:7ce8:c450 with SMTP id f10-20020a0565123b0a00b0049a7ce8c450mr8624445lfv.231.1663667741896;
-        Tue, 20 Sep 2022 02:55:41 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id e6-20020a05651236c600b00499b19f23e8sm225525lfs.279.2022.09.20.02.55.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Sep 2022 02:55:41 -0700 (PDT)
-Message-ID: <47d939e7-a0e1-84ea-e37a-b95ba7e6810b@linaro.org>
-Date:   Tue, 20 Sep 2022 11:55:40 +0200
+        Tue, 20 Sep 2022 06:20:13 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EA984AD7F;
+        Tue, 20 Sep 2022 03:20:10 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28K7xnsW000538;
+        Tue, 20 Sep 2022 10:19:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=nd5K05KlUljLOd4JOAHFBcf48g9JQumc72I+9PCMMas=;
+ b=cXJLS0JuYShfNPhyeG7QcNHtJEW9TfxLvfGKO3AX/Mxognvk1+A+oXWSrNLLHnauhhIH
+ lm25T2mAcGUCq14CoMl114rkvLGfmvQPBLvSDMBlkKCQ9II5jZz+tGkCPVjry0Xo8Z4s
+ Dp5npGN404InTd3cZSnIZf4l4pfzk7LUveVuSJYsIMQ6YuKYP2y51rzsbpnn64+BOQzP
+ xW6sR3a/UlfjJA12kYdzEZ5n2HKB9JNpyy0lBdZzrjBCRbfrN1M+O46tZdh1CoG7SCkA
+ in/cHVZr6d3+yTMZo9iA7JJeW9o8venY7uDfEmbCKVkYv/LAUZ+33/T+JT5bbzIo0BCE kg== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jq73213br-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 20 Sep 2022 10:19:49 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28KAJnUS021616
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 20 Sep 2022 10:19:49 GMT
+Received: from [10.216.36.207] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 20 Sep
+ 2022 03:19:46 -0700
+Message-ID: <afb6d82b-d1fc-4af7-8d1b-f0fdd26836b2@quicinc.com>
+Date:   Tue, 20 Sep 2022 15:49:42 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH v3 4/4] dt-bindings: remoteproc: qcom: wcnss: Add
- compatible for pronto v3
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH] mtd: rawnand: qcom: Implement exec_op()
 Content-Language: en-US
-To:     Sireesh Kodali <sireeshkodali1@gmail.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     andersson@kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20220920030316.1619781-1-sireeshkodali1@gmail.com>
- <20220920030316.1619781-5-sireeshkodali1@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220920030316.1619781-5-sireeshkodali1@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+To:     Manivannan Sadhasivam <mani@kernel.org>,
+        Md Sadre Alam <quic_mdalam@quicinc.com>
+CC:     <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
+        <linux-mtd@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1654273498-31998-1-git-send-email-quic_mdalam@quicinc.com>
+ <20220915134328.GD4550@workstation>
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <20220915134328.GD4550@workstation>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: FXW-PHmY22oWeb8dIxxpc2lu5_2VUmCW
+X-Proofpoint-GUID: FXW-PHmY22oWeb8dIxxpc2lu5_2VUmCW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-20_02,2022-09-16_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ adultscore=0 mlxlogscore=841 spamscore=0 phishscore=0 impostorscore=0
+ lowpriorityscore=0 priorityscore=1501 bulkscore=0 clxscore=1011 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2209130000
+ definitions=main-2209200062
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,15 +81,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/09/2022 05:03, Sireesh Kodali wrote:
-> The pronto v3 remoteproc is similar to pronto v2. It is found on the
-> MSM8953 platform, which is used by SDM450, SDM625, SDM626, APQ8053 and
-> other SoCs. Since the configuration is same on all SoCs, a single
-> compatible is used.
-> 
-> Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
+Hi Mani,
 
-It's a v3. What are the changes?
+On 9/15/2022 7:13 PM, Manivannan Sadhasivam wrote:
+> On Fri, Jun 03, 2022 at 09:54:58PM +0530, Md Sadre Alam wrote:
+>> Implement exec_op() so we can later get rid of the legacy interface
+>> implementation.
+>>
+>> Co-developed-by: Sricharan R <quic_srichara@quicinc.com>
+>> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
+>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> Sadre, Sri, any update on this patch?
 
-Best regards,
-Krzysztof
+Sorry got stuck with few other activities, we are taking this now up again.
+So will post the reworked patches sometime next week.
+
+Regards,
+   Sricharan
+
+
