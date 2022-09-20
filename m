@@ -2,123 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE3C55BE9A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 17:06:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DFF4C5BE9B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 17:10:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230182AbiITPGc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 11:06:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45920 "EHLO
+        id S229598AbiITPKT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 11:10:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229701AbiITPG3 (ORCPT
+        with ESMTP id S229983AbiITPKR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 11:06:29 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C147DE0FD
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 08:06:27 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id s6so4278292lfo.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 08:06:27 -0700 (PDT)
+        Tue, 20 Sep 2022 11:10:17 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 842E917A99
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 08:10:16 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id a2so4309528lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 08:10:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=p4P0NeQ+Hs0UhBCJIe2tPG1fmTf8Df505EFaHwu7878=;
-        b=NDTTn3LJdGo55R3e01AcgjrRXfHlQQm0T3o9ZEjVZ5hJvJd5cgDrOpjtPQ+GT9oBzd
-         domJ+l5Aqw8+AoTPiZg2c9wwWuiVn15QKaE97F69i/knxCLqmswttrvL7UQ8/y9SZ44X
-         DyDXo9cdOnKqW0z2bj0KnZAusB31jfwWS13thxjyHiEb+J22KBg/7ge6fbuL7BMDnOQo
-         uVpPqQtEuojB8oSA068Qasf9FSnnUx6QMzqWOA8IT6OZwwSJ8IA33UTJc58tgJ4KUY0D
-         a2ChbpPFpcu3PlWRQMDtT9u0jC350YcCBVo/8Zcym69E25pKih7UHltEQrMiuYo/68q1
-         Ch6g==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=OViHu+PU5jEpPTNCIuO30uizM2q0/rKRcVFoq6MpQm8=;
+        b=Mgvo7+TX/PagCkx35EfYZnfTM/X0/MHnFq68QQT8p3Jk3ObhJqaUCACvhkdNJJqbVh
+         Ltc2Npmgy1AnwVWCTFGdpLsfdkUT0A4OYyslgLErhbyWsy+p1u+4pHURu0nqrVaNb9OV
+         72Qk2hivZMjiF9ExFGZgfQhhoWNNG+Uc/1Flszgk/oasmkw0F7LHcDuJ9ziQR0hp20Uo
+         A7Zh4rhp6CEwMH3cqlttkbIeojJvXrgqLP5JrpCuBnhOkDh4VeumfKgRI7og1Rg+Q0yV
+         5dK2iUkhugrslmwT9B2zWeU1/HrXcoTfYpxCYwg5Rc9KD/QgzflPFZ6hBiY0ig0hPgAl
+         PhYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=p4P0NeQ+Hs0UhBCJIe2tPG1fmTf8Df505EFaHwu7878=;
-        b=EbmAXHi0oY3C/viPiSdz2suVs5Eu1k/ZYyl8pQjnMz5R2G1WoZWc5F61/dRr3EWMLb
-         hLB6ujKVaKxF5f3D6vUdojicGFE53Qwi9DxR9XfSbDBl/BcxVHvfLu3NcB+Wtn7kjefC
-         BvOfvOq5Bh7G+uAGzJsKKkqbaiU+7nhC97WdeYf+8K78Qs4l/KFhfyuxH0+raur3lYOM
-         NuhbuSy/Jq/rczPDG1ZCvJdkCgYUZJyeZvxBxemeCjEO8/74ObrQ29HDP8CiXCXnWgbH
-         X7EC2xxJ+W1Xhz9fOfiGDIp5fia2AcHVpfnfdr5y5q3gk9kiSnKFB6GgGy2AdxzJFM0v
-         8bpA==
-X-Gm-Message-State: ACrzQf2PEgb3o/HnfMB2nZBqf2eRCa8x86Ngny5+Sk4mCrNHwHGwrAXB
-        fwKE54zQL7i2JcJcpYTqJDUjQA==
-X-Google-Smtp-Source: AMsMyM5ATrQusUgyRLPhm8i+Xxz0V5beQbLVoUmOUwfeMSPV01vAXnRs9x5CHLxEWRXyIl5pvXZzww==
-X-Received: by 2002:a19:7406:0:b0:49d:d448:59c3 with SMTP id v6-20020a197406000000b0049dd44859c3mr7932629lfe.300.1663686385856;
-        Tue, 20 Sep 2022 08:06:25 -0700 (PDT)
-Received: from krzk-bin (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id s9-20020a056512202900b00493014c3d7csm339824lfs.309.2022.09.20.08.06.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Sep 2022 08:06:25 -0700 (PDT)
-Date:   Tue, 20 Sep 2022 17:06:23 +0200
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     quic_plai@quicinc.com, agross@kernel.org,
-        quic_rohkumar@quicinc.com, swboyd@chromium.org, tiwai@suse.com,
-        broonie@kernel.org, bgoswami@quicinc.com, perex@perex.cz,
-        devicetree@vger.kernel.org, srinivas.kandagatla@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org, lgirdwood@gmail.com, andersson@kernel.org,
-        judyhsiao@chromium.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH v7 1/8] dt-bindings: remoteproc: qcom: Add SC7280 ADSP
- support
-Message-ID: <20220920150623.rhpeizf7ufkwqz2i@krzk-bin>
-References: <1663655359-1402-1-git-send-email-quic_srivasam@quicinc.com>
- <1663655359-1402-2-git-send-email-quic_srivasam@quicinc.com>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=OViHu+PU5jEpPTNCIuO30uizM2q0/rKRcVFoq6MpQm8=;
+        b=bYxbNc+ldlDst65RVBd1Pi6hRMw5RlPXJ1FUUwsTB/m9+O2A6HQzHn08sxlZoHYwZl
+         Do42kI7PgLXB7N0bK5OgHFos0LVlxKs7M+Z2aT1G58oBR8P2X8U+nMAsIxYFawFTJqCu
+         nXnrIymNBDE1a7KBOvUhMgghHXicO4xk41w6BrYEr/OjbcPD8TpX+SUwa1ebf7iBo74N
+         0xnqX7jvC7qRyHAVzm1gmPfznzWXV1MEu586Yie4Z5k9CyPKhlRGuNDR/y8z2jJQ+QWo
+         P0hvtPFcc5IkDMD9emNjnrWpM/BMpoHcKaVLDSTyO1mh54YKyuan6wroG/A40HfkEjIf
+         fXQQ==
+X-Gm-Message-State: ACrzQf23w2QpM+0Zm4hSO/gaczGuvYyO0qnrc5PFXGCVBsdhsensoP1W
+        c5aZV5KTJaTCmDDSJR3TVN1JfA==
+X-Google-Smtp-Source: AMsMyM4glAPExuXIHfUSqwdUwYLj2e3fxyvPVe/CF6+S04oyl9aGtnJL4wIddz/70d4jhJ+atFfuTw==
+X-Received: by 2002:a05:6512:10c8:b0:49c:14c5:e081 with SMTP id k8-20020a05651210c800b0049c14c5e081mr8574761lfg.615.1663686614879;
+        Tue, 20 Sep 2022 08:10:14 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id a16-20020ac25e70000000b004974da17c2bsm18620lfr.0.2022.09.20.08.10.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Sep 2022 08:10:14 -0700 (PDT)
+Message-ID: <0a6b443c-33b4-5fc7-5a2f-e55f5387999f@linaro.org>
+Date:   Tue, 20 Sep 2022 17:10:13 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1663655359-1402-2-git-send-email-quic_srivasam@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v7 4/9] dt-bindings: qcom-qce: Add new SoC compatible
+ strings for qcom-qce
+Content-Language: en-US
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-crypto@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, herbert@gondor.apana.org.au,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, thara.gopinath@gmail.com,
+        robh@kernel.org, andersson@kernel.org, bhupesh.linux@gmail.com,
+        davem@davemloft.net, Jordan Crouse <jorcrous@amazon.com>
+References: <20220920114051.1116441-1-bhupesh.sharma@linaro.org>
+ <20220920114051.1116441-5-bhupesh.sharma@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220920114051.1116441-5-bhupesh.sharma@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 20 Sep 2022 11:59:12 +0530, Srinivasa Rao Mandadapu wrote:
-> Add ADSP PIL loading support for SC7280 SoCs.
+On 20/09/2022 13:40, Bhupesh Sharma wrote:
+> Newer Qualcomm chips support newer versions of the qce crypto IP, so add
+> soc specific compatible strings for qcom-qce instead of using crypto
+> IP version specific ones.
 > 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Keep the old strings for backward-compatibility, but mark them as
+> deprecated.
+> 
+> Cc: Bjorn Andersson <andersson@kernel.org>
 > Reviewed-by: Rob Herring <robh@kernel.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Tested-by: Jordan Crouse <jorcrous@amazon.com>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 > ---
-> Changes since V6:
-> 	-- Update glink-edge property.
-> 	-- Add qcom,qmp property.
-> Changes since V5:
-> 	-- Remove qcom,adsp-memory-regions property.
-> Changes since V4:
-> 	-- Update halt registers description in dt bindings.
->  .../bindings/remoteproc/qcom,sc7280-adsp-pil.yaml  | 226 +++++++++++++++++++++
->  1 file changed, 226 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
+>  .../devicetree/bindings/crypto/qcom-qce.yaml         | 12 ++++++++++--
+>  1 file changed, 10 insertions(+), 2 deletions(-)
 > 
+> diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+> index 4e00e7925fed..aa2f676f5382 100644
+> --- a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+> +++ b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+> @@ -15,7 +15,15 @@ description:
+>  
+>  properties:
+>    compatible:
+> -    const: qcom,crypto-v5.1
+> +    enum:
+> +      - qcom,crypto-v5.1 # Deprecated. Kept only for backward compatibility
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+No changes since v6.
 
-yamllint warnings/errors:
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml: properties:glink-edge:properties:qcom,remote-pid:maxItems: False schema does not allow 1
-	hint: Scalar properties should not have array keywords
-	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml: ignoring, error in schema: properties: glink-edge: properties: qcom,remote-pid: maxItems
-Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.example.dtb:0:0: /example-0/remoteproc@3000000: failed to match any schema with compatible: ['qcom,sc7280-adsp-pil']
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
+Best regards,
+Krzysztof
