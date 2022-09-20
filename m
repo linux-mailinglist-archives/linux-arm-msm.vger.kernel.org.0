@@ -2,78 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C385E5BE749
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 15:40:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2501C5BE74F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 15:41:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230196AbiITNkW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 09:40:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55244 "EHLO
+        id S231347AbiITNlD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 09:41:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230352AbiITNkV (ORCPT
+        with ESMTP id S231360AbiITNlC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 09:40:21 -0400
+        Tue, 20 Sep 2022 09:41:02 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 240ABA44C;
-        Tue, 20 Sep 2022 06:40:18 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28K7xowN027936;
-        Tue, 20 Sep 2022 13:40:06 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74F22491C5;
+        Tue, 20 Sep 2022 06:41:01 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28K7xe1h023557;
+        Tue, 20 Sep 2022 13:40:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=b1e3AHVC/0qp/VyT6Kx+8h82x7dGKfCvUhxUV/Y/EOE=;
- b=KDgzzngk6WbDknh/pq/FupkNn2VGr22gzu1UVubtoAW+TZEAscWPklHaSUv57iWL39Sw
- VnxpJSIyBBgH2HnDG0kdKx+cGkT43qmUhDF2DWiLaMnf3hbrzkc0s+Hp5INkvHYzt4fr
- XPUfUKWVfA8W9COhx3hO/eKQPzYf9UcKOG+65gS3EThObvezbQjFT6vFTaSv6saBycvx
- p1ThXULOheVi7XthoeeJWSKU1ijzpGEkP9Qau9vkZCFV8B03gVLW4QJR47dzgavBUlS2
- xX4ocGFNvKc7aOH44pVqaxl8XYQAvTI9O1USYOTv4H7jZ93uvJZP8+fyQbwaT2wPkWzI 2A== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jpx50b3a0-1
+ bh=rJaJEZUW1earkXTvStZSfCgkUX8TXYTBRPSJw6kmJGs=;
+ b=C/5KfRhhHzEqvGEFQ5t0ZVELZK/4c3/yUBdmDfFuW2x1piK+Q313HTLOGGi9afBCAl6l
+ zzv1W1bP3GIYl9toXt1IGi8h29q1xZx2839NGACrYh1zulMXnK41LLdOEsTidwEWVvfG
+ WSA2OdoHa7qarnxP3N/utjXGSzTtdySs4ItM4UvSylTejX0sLhOZphYj6LIZ+Xvu5Z1B
+ duNY1I0YyKHnR25vPINqLM33a+Jim9coN9a52pVBUqgWnhjs7SN2sRADCckutuvJmf4J
+ DUt4aByEcuXNpx/iD5cHVNt4Pf9V131Q+uPhADHzrA2dmo9tmUODRstwivpSKq3PonSV Uw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jpxaek268-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 20 Sep 2022 13:40:06 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28KDe5Y8014533
+        Tue, 20 Sep 2022 13:40:35 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28KDeY5U007552
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 20 Sep 2022 13:40:05 GMT
-Received: from [10.216.12.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+        Tue, 20 Sep 2022 13:40:34 GMT
+Received: from [10.253.75.156] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 20 Sep
- 2022 06:40:00 -0700
-Message-ID: <096205ee-2c8a-facf-87ce-2309c63d2400@quicinc.com>
-Date:   Tue, 20 Sep 2022 19:09:56 +0530
+ 2022 06:40:30 -0700
+Message-ID: <0ab1bfcc-6662-d5f7-61a5-125b6639e467@quicinc.com>
+Date:   Tue, 20 Sep 2022 21:40:28 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v3 1/3] clk: qcom: gdsc: Fix the handling of PWRSTS_RET
- support
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.1.2
+Subject: Re: [PATCH 2/9] coresight-tpda: Add DSB dataset support
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>
+CC:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <bjorn.andersson@linaro.org>
+References: <1662626705-13097-1-git-send-email-quic_taozha@quicinc.com>
+ <1662626705-13097-3-git-send-email-quic_taozha@quicinc.com>
+ <c39b704a-ceae-9db8-7f4f-81d9cfee8495@arm.com>
 Content-Language: en-US
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@somainline.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>, <mka@chromium.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <johan+linaro@kernel.org>, <quic_kriskura@quicinc.com>,
-        <dianders@chromium.org>, <linux-clk@vger.kernel.org>
-References: <20220920111517.10407-1-quic_rjendra@quicinc.com>
- <d813e8a5-9eba-b3f7-2eee-cd721d120a30@collabora.com>
-From:   Rajendra Nayak <quic_rjendra@quicinc.com>
-In-Reply-To: <d813e8a5-9eba-b3f7-2eee-cd721d120a30@collabora.com>
+From:   Tao Zhang <quic_taozha@quicinc.com>
+In-Reply-To: <c39b704a-ceae-9db8-7f4f-81d9cfee8495@arm.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: oXxF8KOKMmDWv1zlFj3L9Hbgv8UgGvK-
-X-Proofpoint-GUID: oXxF8KOKMmDWv1zlFj3L9Hbgv8UgGvK-
+X-Proofpoint-GUID: V3PYIwgc8M-QHhxtjO7DfqMz4HHQi1Yy
+X-Proofpoint-ORIG-GUID: V3PYIwgc8M-QHhxtjO7DfqMz4HHQi1Yy
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-20_05,2022-09-20_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- adultscore=0 mlxlogscore=999 lowpriorityscore=0 spamscore=0
- priorityscore=1501 suspectscore=0 phishscore=0 malwarescore=0 bulkscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ definitions=2022-09-20_04,2022-09-20_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ priorityscore=1501 suspectscore=0 lowpriorityscore=0 mlxlogscore=999
+ adultscore=0 clxscore=1015 malwarescore=0 phishscore=0 impostorscore=0
+ mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2209130000 definitions=main-2209200080
 X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
@@ -84,91 +93,162 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Suzuki,
 
-On 9/20/2022 6:09 PM, AngeloGioacchino Del Regno wrote:
-> Il 20/09/22 13:15, Rajendra Nayak ha scritto:
->> GDSCs cannot be transitioned into a Retention state in SW.
->> When either the RETAIN_MEM bit, or both the RETAIN_MEM and
->> RETAIN_PERIPH bits are set, and the GDSC is left ON, the HW
->> takes care of retaining the memory/logic for the domain when
->> the parent domain transitions to power collapse/power off state.
+
+Thanks a lot for your code review.
+
+I will update the patch with your suggestions in the next release.
+
+On 9/15/2022 6:14 PM, Suzuki K Poulose wrote:
+> Hi Tao
+>
+> On 08/09/2022 09:44, Tao Zhang wrote:
+>> Read the DSB element size from the device tree. Set the register
+>> bit that controls the DSB element size of the corresponding port.
 >>
->> On some platforms where the parent domains lowest power state
->> itself is Retention, just leaving the GDSC in ON (without any
->> RETAIN_MEM/RETAIN_PERIPH bits being set) will also transition
->> it to Retention.
->>
->> The existing logic handling the PWRSTS_RET seems to set the
->> RETAIN_MEM/RETAIN_PERIPH bits if the cxcs offsets are specified
->> but then explicitly turns the GDSC OFF as part of _gdsc_disable().
->> Fix that by leaving the GDSC in ON state.
->>
->> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
->> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
 >> ---
->> v3:
->> Updated changelog
+>>   drivers/hwtracing/coresight/coresight-tpda.c | 62 
+>> ++++++++++++++++++++++++++++
+>>   drivers/hwtracing/coresight/coresight-tpda.h |  4 ++
+>>   2 files changed, 66 insertions(+)
 >>
->> There are a few existing users of PWRSTS_RET and I am not
->> sure if they would be impacted with this change
->>
->> 1. mdss_gdsc in mmcc-msm8974.c, I am expecting that the
->> gdsc is actually transitioning to OFF and might be left
->> ON as part of this change, atleast till we hit system wide
->> low power state.
->> If we really leak more power because of this
->> change, the right thing to do would be to update .pwrsts for
->> mdss_gdsc to PWRSTS_OFF_ON instead of PWRSTS_RET_ON
->> I dont have a msm8974 hardware, so if anyone who has can report
->> any issues I can take a look further on how to fix it.
-> 
-> I think that the safest option is to add a PWRSTS_RET_HW_CTRL flag (or similar),
-> used for the specific cases of SC7180 and SC7280 (and possibly others) where the
-> GDSC is automatically transitioned to a Retention state by HW control, with no
-> required software (kernel driver) intervention.
+>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c 
+>> b/drivers/hwtracing/coresight/coresight-tpda.c
+>> index c8bbc75..76636a1 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tpda.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
+>> @@ -37,6 +37,15 @@ static void tpda_enable_port(struct tpda_drvdata 
+>> *drvdata, int port)
+>>       u32 val;
+>>         val = readl_relaxed(drvdata->base + TPDA_Pn_CR(port));
+>> +    /*
+>> +     * Configure aggregator port n DSB data set element size
+>> +     * Set the bit to 0 if the size is 32
+>> +     * Set the bit to 1 if the size is 64
+>> +     */
+>> +    if (drvdata->dsb_esize[port] == 32)
+>> +        val &= ~TPDA_Pn_CR_DSBSIZE;
+>> +    else if (drvdata->dsb_esize[port] == 64)
+>> +        val |= TPDA_Pn_CR_DSBSIZE;
+>>       /* Enable the port */
+>>       val |= TPDA_Pn_CR_ENA;
+>>       writel_relaxed(val, drvdata->base + TPDA_Pn_CR(port));
+>> @@ -105,6 +114,55 @@ static const struct coresight_ops tpda_cs_ops = {
+>>       .link_ops    = &tpda_link_ops,
+>>   };
+>>   +static int tpda_parse_dsb(struct tpda_drvdata *drvdata)
+>> +{
+>> +    int len, port, i;
+>> +    const __be32 *prop;
+>> +    struct device_node *node = drvdata->dev->of_node;
+>> +
+>> +    /* Read the size of DSB element */
+>> +    prop = of_get_property(node, "qcom,dsb-elem-size", &len);
+>> +    if (prop) {
+>> +        len /= sizeof(__be32);
+>> +        /*
+>> +         * The read set of data is port and size, so the number of data
+>> +         * is a multiple of two. And the number of data will not exceed
+>> +         * two times that of the TPDA inpurts number.
+>> +         */
+>> +        if (len < 2 || len >= (2 * TPDA_MAX_INPORTS) || len % 2 != 0) {
+>> +            dev_err(drvdata->dev,
+>> +                "Dataset DSB width entries are wrong\n");
+>> +            return -EINVAL;
+>> +        }
+>> +
+>> +        for (i = 0; i < len; i++) {
+>
+> Please could we be explicit here that we are dealing with 2 entries
+> in an iteration. i.e,
+>
+>         for (i = 0; i < len; i += 2) {
+>> +            port = be32_to_cpu(prop[i++]);
+>
+>             port = be32_to_cpu(prop[i]);
+>
+>> +            if (port >= TPDA_MAX_INPORTS) {
+>> +                dev_err(drvdata->dev,
+>> +                    "Wrong port specified for DSB\n");
+>> +                return -EINVAL;
+>> +            }
+>> +            /* Set DSB element size for corresponding port to 
+>> dsb_esize*/
+>> +            drvdata->dsb_esize[port] = be32_to_cpu(prop[i]);
+>
+>         drvdata->dsb_esize[port] = be32_to_cpu(prop[i + 1]);
+>
+Sure, I will update this part of the code in the next release.
+>> +        }
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static int tpda_parse_of_data(struct tpda_drvdata *drvdata)
+>> +{
+>> +    int ret;
+>> +
+>> +    ret = tpda_parse_dsb(drvdata);
+>> +    if (ret) {
+>> +        dev_err(drvdata->dev, "Fail to get DSB data set element 
+>> size\n");
+>> +        return -EINVAL;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>>   static int tpda_init_default_data(struct tpda_drvdata *drvdata)
+>>   {
+>>       int atid;
+>> @@ -148,6 +206,10 @@ static int tpda_probe(struct amba_device *adev, 
+>> const struct amba_id *id)
+>>         spin_lock_init(&drvdata->spinlock);
+>>   +    ret = tpda_parse_of_data(drvdata);
+>> +    if (ret)
+>> +        return ret;
+>> +
+>>       ret = tpda_init_default_data(drvdata);
+>>       if (ret)
+>>           return ret;
+>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.h 
+>> b/drivers/hwtracing/coresight/coresight-tpda.h
+>> index 4beb332..ecc7869 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tpda.h
+>> +++ b/drivers/hwtracing/coresight/coresight-tpda.h
+>> @@ -10,6 +10,8 @@
+>>   #define TPDA_Pn_CR(n)        (0x004 + (n * 4))
+>>   /* Aggregator port enable bit */
+>>   #define TPDA_Pn_CR_ENA        BIT(0)
+>> +/* Aggregator port DSB data set element size bit */
+>> +#define TPDA_Pn_CR_DSBSIZE        BIT(8)
+>>     #define TPDA_MAX_INPORTS    32
+>>   @@ -23,6 +25,7 @@
+>>    * @csdev:      component vitals needed by the framework.
+>>    * @spinlock:   lock for the drvdata value.
+>>    * @enable:     enable status of the component.
+>> + * @dsb_esize   DSB element size
+>
+> super minor nit: Missing ":", consistent with the other fields.
+>
+I will update in the next release.
+>>    */
+>>   struct tpda_drvdata {
+>>       void __iomem        *base;
+>> @@ -30,6 +33,7 @@ struct tpda_drvdata {
+>>       struct coresight_device    *csdev;
+>>       spinlock_t        spinlock;
+>>       u8            atid;
+>> +    u32            dsb_esize[TPDA_MAX_INPORTS];
+>>   };
+>>     #endif  /* _CORESIGHT_CORESIGHT_TPDA_H */
+>
+> Suzuki
 
-Having a PWRSTS_RET_HW_CTRL flag would make sense if there was also a
-PWRSTS_RET_SW_CTRL way of achieving Retention state, but FWIK there isn't.
-I am sure that's the way it is on 8974 as well, I just don't have hardware to
-confirm.
+Regards,
 
-> 
->>
->> 2. gpu_gx_gdsc in gpucc-msm8998.c and
->>     gpu_gx_gdsc in gpucc-sdm660.c
->> Both of these seem to add support for 3 power state
->> OFF, RET and ON, however I dont see any logic in gdsc
->> driver to handle 3 different power states.
->> So I am expecting that these are infact just transitioning
->> between ON and OFF and RET state is never really used.
->> The ideal fix for them would be to just update their resp.
->> .pwrsts to PWRSTS_OFF_ON only.
-> 
-> static int gdsc_init(struct gdsc *sc)
-> {
-> 
->      ...
-> 
->      if (on || (sc->pwrsts & PWRSTS_RET))
->          gdsc_force_mem_on(sc);
->      else
->          gdsc_clear_mem_on(sc);
-> 
->      ...
-> }
-> 
-> On MSM8998 and SDM630/636/660, we're reaching that point with a GDSC that is
-> left OFF from the bootloader, but we want (at least for 630/660) memretain
-> without periph-retain: this is required to make the hypervisor happy.
+Tao
 
-Ideally setting the memretain bits while the GDSC is OFF should have no affect
-at all. Is this for the gpu_gx_gdsc on 630/660? Is this needed only at the init
-time (when the bootloader has left it OFF) or is it needed everytime the kernel
-turns it OFF too?
-How did we come up with this trick to keep the hypervisor happy, was it picked
-up from some downstream reference code?
-
-> 
-> Regards,
-> Angelo
-> 
