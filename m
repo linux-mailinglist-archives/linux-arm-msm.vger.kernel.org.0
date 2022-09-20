@@ -2,131 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 664A65BE445
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 13:17:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C03625BE48D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 13:35:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230326AbiITLQy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 07:16:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33040 "EHLO
+        id S229609AbiITLfR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 07:35:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbiITLQx (ORCPT
+        with ESMTP id S229805AbiITLfQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 07:16:53 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 007C27170E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 04:16:51 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id q17so2538549lji.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 04:16:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=3m0zn687CrWQICkOz4B+QmmOgC0jhiX0DZAFZTb8GwE=;
-        b=X9UbCGZsQngixftsgl1qm6yRncthznVeEjGW2Sv5QLSpvL4K7bTWBHV1o/8AHj23sv
-         ZznznF4eCuSC3wLfTWVYZIvhpgBqdac4GQqGGN8Hm7/jtbTv2++alWhUcNKXBEfBXj0g
-         JZGlIomKoYD1gPr7bFhzG9Uqgp/jYZUa08zeheuwx/gaxtckBkIGm40+xOHqsi1tpcdn
-         diyqL3relNgu5PpLvtqQcEmJnIHgbeT43LPudTLUlz2QMB9X4ZA0PRyEUf9HU1A3NxM5
-         pMUew92T184GnVwJvadSdb4qFdQtAkFnEq3r1YtYzgQQ8vflHS5Mo+nw1QZQBfaSRCnS
-         GXUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=3m0zn687CrWQICkOz4B+QmmOgC0jhiX0DZAFZTb8GwE=;
-        b=K2MvhfnMA2veY2iiTKQDCiNDpJxKNCVmdvhl5qfbZqxp5dAE0nyV6NCm0huxN8uazJ
-         6ecL00I9CEi2YgPS0x6kzmV2zqEDySM7NpDATsbenIuPv4e+zkxjujrSRwStyu7SWKAC
-         lQUkf4WGM37a7FeZrSpyQMtyVjeYGnnz2N5Ez7/9bXbiKUU5Npj4FaEHpE+gJ4EWjrBU
-         BmvvWHWsIimJFDlem3hK+ZVpow3SfUnqJEaJS6uCA636lPUMn7GHtdfd+/fvoI0EBZ00
-         pQmt6WySlLJSo0R3FOY/3v9bKMBACmZ0RPguHnK2dxlxQXazjCmqCj6d76iF/5s3JbUf
-         KkgQ==
-X-Gm-Message-State: ACrzQf0UaPH4DeLz9m7P9cLGe92TL+7iF9hFLOycgjom4m8IWCIud8Bt
-        62UPSur27W6p2Foe7wlYp4TUJw==
-X-Google-Smtp-Source: AMsMyM5qNzWF6Nwqo/fPKyOhxXE6zl6oW3wEpFzKUxsAv4uaccqK+vxJxRUl3kDmcQACkD9iHllaPA==
-X-Received: by 2002:a2e:940d:0:b0:261:c5c8:3403 with SMTP id i13-20020a2e940d000000b00261c5c83403mr7213596ljh.86.1663672610229;
-        Tue, 20 Sep 2022 04:16:50 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id w22-20020a2e9596000000b0026ab83298d6sm217873ljh.77.2022.09.20.04.16.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Sep 2022 04:16:49 -0700 (PDT)
-Message-ID: <a8077058-5493-7b57-0530-c7221a03a799@linaro.org>
-Date:   Tue, 20 Sep 2022 13:16:48 +0200
+        Tue, 20 Sep 2022 07:35:16 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42CC56C767;
+        Tue, 20 Sep 2022 04:35:15 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28KB0UgN007454;
+        Tue, 20 Sep 2022 11:35:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=UVA8ODjpc02uKJB2yTn5NLHl70zULHBft4Pt5JY51vQ=;
+ b=Jpj0JbBgIQfq7cn/8UsGQ2GPO4IxwoAjHNo8OUXrULFhSOw4yS8CQE5SAnQ1MSBtdBtA
+ sh7Kh6h7+NbB2Qezgeucb1IVfa8rsvA3HyYF+ZxO+th4JGlJq3S/KVKQ5NAJyXOGMqQO
+ /3JC7BgVgqte53VDywxSGv4dLPfV81sWfH5Twbs2SefjKmOHr7UQIGuz6QodogiG/kpQ
+ MJAZnFMsJCL+90NU+B1aRVEeBOgE1Vn4gF3FrXBfV+RRlqylCroRHtQAsGt5AhQ4vy7O
+ Dk++wzfJPsPgRkBh2YfKtg7dYrpHP17SOoqqekPexfKoJdZWCT2qipOgUFGuXtwqZs4h GA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jq4r09jfw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 20 Sep 2022 11:35:11 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28KBZAEY029646
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 20 Sep 2022 11:35:10 GMT
+Received: from c-skakit-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Tue, 20 Sep 2022 04:35:07 -0700
+From:   Satya Priya <quic_c_skakit@quicinc.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     <mka@chromium.org>, Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_tdas@quicinc.com>, <quic_c_skakit@quicinc.com>,
+        <linux-clk@vger.kernel.org>
+Subject: [PATCH] clk: qcom: lpass: Fix lpass audiocc probe
+Date:   Tue, 20 Sep 2022 17:04:43 +0530
+Message-ID: <1663673683-7018-1-git-send-email-quic_c_skakit@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH v6 1/4 RESEND] ARM: dts: qcom: Use new compatibles for
- crypto nodes
-Content-Language: en-US
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        thara.gopinath@gmail.com, devicetree@vger.kernel.org,
-        robh@kernel.org, andersson@kernel.org, bhupesh.linux@gmail.com,
-        catalin.marinas@arm.com, will@kernel.org, arnd@arndb.de,
-        Jordan Crouse <jorcrous@amazon.com>
-References: <20220919221509.1057574-1-bhupesh.sharma@linaro.org>
- <20220919221509.1057574-2-bhupesh.sharma@linaro.org>
- <bb577304-f048-8fd5-fc7a-47a0897ba792@linaro.org>
- <00dd028f-d636-0cda-40ce-01d5addcbec9@linaro.org>
- <ccc318c0-ee1b-d538-6d2b-bf85a3c9c6fd@linaro.org>
- <CAH=2Ntys+JSurmZn5qN2Kuphi_5q6Ge7cZgd9KMTvAyLnd6JSA@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAH=2Ntys+JSurmZn5qN2Kuphi_5q6Ge7cZgd9KMTvAyLnd6JSA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: aZPesPn8cF2Lb1OukHeqB4HEWdmtT4or
+X-Proofpoint-GUID: aZPesPn8cF2Lb1OukHeqB4HEWdmtT4or
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-20_04,2022-09-16_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=881
+ malwarescore=0 suspectscore=0 spamscore=0 lowpriorityscore=0 clxscore=1015
+ impostorscore=0 mlxscore=0 bulkscore=0 priorityscore=1501 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2209130000
+ definitions=main-2209200069
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/09/2022 12:48, Bhupesh Sharma wrote:
-> On Tue, 20 Sept 2022 at 15:09, Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 20/09/2022 10:57, Bhupesh Sharma wrote:
->>>>>             crypto: crypto@8e3a000 {
->>>>> -                   compatible = "qcom,crypto-v5.1";
->>>>> +                   compatible = "qcom,ipq4019-qce";
->>>>
->>>> There are few issues here:
->>>> 1. Compatible is not documented.
->>>
->>> Its documented here:
->>> https://lore.kernel.org/linux-arm-msm/30756e6f-952f-ccf2-b493-e515ba4f0a64@linaro.org/
->>>
->>> [as mentioned in the dependency section in the cover letter :)]
->>>
->>>> 2. Compatible is not supported by old kernel - ABI break.
->>
->> You cannot fix this with dependencies/ordering.
->>
->>>> 3. Everything won't be bisectable...
->>>
->>> I think its a question of dependencies b/w the patchsets intended for
->>> separate areas. Let me think more on how, I can resolve it in newer
->>> versions.
->>
->> DTS always goes separately so this also cannot be fixed with ordering or
->> dependencies. However if Bjorn is fine with it, it's good.
-> 
-> Sure, I get your point. SInce I haven't sent out the crypto driver and
-> DMA driver subsets yet, let me stop and respin the series with the
-> dt-bindings changes clubbed with the crypto driver patches in a single
-> patchset. I can keep the DMA and dts patchsets separate and send them
-> out separately.
-> 
-> I think that should help maintain the ABI and backward compatibility.
-> Please let me know if you think otherwise.
+Change the qcom_cc_probe_by_index() call to qcom_cc_really_probe()
+to avoid remapping of memory region for index 0, which is already
+being done through qcom_cc_map().
 
-I actually don't know what's in the drivers, so maybe there is no ABI
-break by kernel... but you are changing the compatibles in DTS thus any
-other project using them will be still broken.
+Fixes: 7c6a6641c2 ("clk: qcom: lpass: Add support for resets & external mclk for SC7280")
+Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
+---
+ drivers/clk/qcom/lpassaudiocc-sc7280.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Best regards,
-Krzysztof
+diff --git a/drivers/clk/qcom/lpassaudiocc-sc7280.c b/drivers/clk/qcom/lpassaudiocc-sc7280.c
+index 5d4bc56..063e036 100644
+--- a/drivers/clk/qcom/lpassaudiocc-sc7280.c
++++ b/drivers/clk/qcom/lpassaudiocc-sc7280.c
+@@ -785,7 +785,7 @@ static int lpass_audio_cc_sc7280_probe(struct platform_device *pdev)
+ 	regmap_write(regmap, 0x4, 0x3b);
+ 	regmap_write(regmap, 0x8, 0xff05);
+ 
+-	ret = qcom_cc_probe_by_index(pdev, 0, &lpass_audio_cc_sc7280_desc);
++	ret = qcom_cc_really_probe(pdev, &lpass_audio_cc_sc7280_desc, regmap);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Failed to register LPASS AUDIO CC clocks\n");
+ 		pm_runtime_disable(&pdev->dev);
+-- 
+2.7.4
+
