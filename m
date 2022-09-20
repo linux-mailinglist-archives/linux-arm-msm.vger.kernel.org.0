@@ -2,155 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8617F5BE741
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 15:38:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C385E5BE749
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 15:40:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231226AbiITNiO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 09:38:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50990 "EHLO
+        id S230196AbiITNkW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 09:40:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231209AbiITNiM (ORCPT
+        with ESMTP id S230352AbiITNkV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 09:38:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A36B21408C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 06:38:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1663681088;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=5ptul5F+oi+h41DyVRco1I/MopxWAXfTqNQ2MFX3lkw=;
-        b=aSEFEdqrgeDCK4bMzYmyGj2o482uidpLYcPZmq5Fz2vHlfM4iAGfuMexO9DY/HhlfwyKE/
-        4eBuzT5Ed5rpOsdT95EHjBRoJdvnxgmQ1ZOMUC6wZ/U8IawOFE5Rx9/moNdQ45mYOO7X74
-        V6jX9o3UREW8NQti2/dWy6KsM859d08=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-597-ZBuT30GVMqW6MXHcxCp_wQ-1; Tue, 20 Sep 2022 09:38:07 -0400
-X-MC-Unique: ZBuT30GVMqW6MXHcxCp_wQ-1
-Received: by mail-qt1-f199.google.com with SMTP id fy20-20020a05622a5a1400b0035bef08641dso1821730qtb.18
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 06:38:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=5ptul5F+oi+h41DyVRco1I/MopxWAXfTqNQ2MFX3lkw=;
-        b=tFowbvfWTe6LxNpbiRWlyA4nlPwbsKBFtOxAHtEl/NvSvjLL2bzyPewDNV4OBxwdKS
-         TL132eRa4Y6BAQvKe8X48poG+eEMI69yAE6TuPATv+lQikRJrwlH+8w6zroSKTaDyuCM
-         Fpje349ROUs79/jlh79sbPCKE/VlOVBfQ7TwRoOVWbmzjFYO4LkH/kwBSPQ4PXNUUiit
-         Al1frsaSDZcY4eIqu6eWLyUeavSozoRKNKBz1HNfJewYQ5rG9/HwRGHgEHnG0mjT0tOO
-         4cViYFWFY1HSDNiG1H1ejFO8lrk+umqxbAAlSREwQYamoJMBpaurlYruPz3z/hVKzsP0
-         UXsQ==
-X-Gm-Message-State: ACrzQf3wat0ENcAuOwazuPEaRb8pLbZS+UBLewy/Qr2AADQcz9OaayRY
-        C3ZDlwTIZn401P6X1SLYi6ePaFs0nXWfPJwqyY1xBznFaNDMMsIHiQWTjOLxQolItGZfPb1+mzZ
-        FPPLhoCVlbuEpq9PsLa67l4COgA==
-X-Received: by 2002:ac8:59c8:0:b0:35c:e115:b18d with SMTP id f8-20020ac859c8000000b0035ce115b18dmr11456584qtf.123.1663681085598;
-        Tue, 20 Sep 2022 06:38:05 -0700 (PDT)
-X-Google-Smtp-Source: AMsMyM6E77qWjrb4O7Hq4zvnJnGvSPaIHOB3HS5izLjI11yyG3poqQh+gGyGGwkM2TfWtP/1afoIQg==
-X-Received: by 2002:ac8:59c8:0:b0:35c:e115:b18d with SMTP id f8-20020ac859c8000000b0035ce115b18dmr11456440qtf.123.1663681083862;
-        Tue, 20 Sep 2022 06:38:03 -0700 (PDT)
-Received: from gerbillo.redhat.com (146-241-114-90.dyn.eolo.it. [146.241.114.90])
-        by smtp.gmail.com with ESMTPSA id bj7-20020a05620a190700b006b9c6d590fasm148570qkb.61.2022.09.20.06.38.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Sep 2022 06:38:03 -0700 (PDT)
-Message-ID: <be11181df759bce03b0bc049d30fd925d5229718.camel@redhat.com>
-Subject: Re: [PATCH net-next 3/6] net: ipa: move and redefine
- ipa_version_valid()
-From:   Paolo Abeni <pabeni@redhat.com>
-To:     Alex Elder <elder@linaro.org>, davem@davemloft.net,
-        edumazet@google.com, kuba@kernel.org
-Cc:     mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
-        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-        elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Date:   Tue, 20 Sep 2022 15:37:59 +0200
-In-Reply-To: <b26912a7-0770-4b1f-4cf4-bed81298cbdb@linaro.org>
-References: <20220910011131.1431934-1-elder@linaro.org>
-         <20220910011131.1431934-4-elder@linaro.org>
-         <d98d439ef5ee8a1744481bf1f076fbed918c3cef.camel@redhat.com>
-         <b26912a7-0770-4b1f-4cf4-bed81298cbdb@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.42.4 (3.42.4-2.fc35) 
+        Tue, 20 Sep 2022 09:40:21 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 240ABA44C;
+        Tue, 20 Sep 2022 06:40:18 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28K7xowN027936;
+        Tue, 20 Sep 2022 13:40:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=b1e3AHVC/0qp/VyT6Kx+8h82x7dGKfCvUhxUV/Y/EOE=;
+ b=KDgzzngk6WbDknh/pq/FupkNn2VGr22gzu1UVubtoAW+TZEAscWPklHaSUv57iWL39Sw
+ VnxpJSIyBBgH2HnDG0kdKx+cGkT43qmUhDF2DWiLaMnf3hbrzkc0s+Hp5INkvHYzt4fr
+ XPUfUKWVfA8W9COhx3hO/eKQPzYf9UcKOG+65gS3EThObvezbQjFT6vFTaSv6saBycvx
+ p1ThXULOheVi7XthoeeJWSKU1ijzpGEkP9Qau9vkZCFV8B03gVLW4QJR47dzgavBUlS2
+ xX4ocGFNvKc7aOH44pVqaxl8XYQAvTI9O1USYOTv4H7jZ93uvJZP8+fyQbwaT2wPkWzI 2A== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jpx50b3a0-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 20 Sep 2022 13:40:06 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28KDe5Y8014533
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 20 Sep 2022 13:40:05 GMT
+Received: from [10.216.12.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 20 Sep
+ 2022 06:40:00 -0700
+Message-ID: <096205ee-2c8a-facf-87ce-2309c63d2400@quicinc.com>
+Date:   Tue, 20 Sep 2022 19:09:56 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v3 1/3] clk: qcom: gdsc: Fix the handling of PWRSTS_RET
+ support
+Content-Language: en-US
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@somainline.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>, <mka@chromium.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <johan+linaro@kernel.org>, <quic_kriskura@quicinc.com>,
+        <dianders@chromium.org>, <linux-clk@vger.kernel.org>
+References: <20220920111517.10407-1-quic_rjendra@quicinc.com>
+ <d813e8a5-9eba-b3f7-2eee-cd721d120a30@collabora.com>
+From:   Rajendra Nayak <quic_rjendra@quicinc.com>
+In-Reply-To: <d813e8a5-9eba-b3f7-2eee-cd721d120a30@collabora.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: oXxF8KOKMmDWv1zlFj3L9Hbgv8UgGvK-
+X-Proofpoint-GUID: oXxF8KOKMmDWv1zlFj3L9Hbgv8UgGvK-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-20_05,2022-09-20_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ adultscore=0 mlxlogscore=999 lowpriorityscore=0 spamscore=0
+ priorityscore=1501 suspectscore=0 phishscore=0 malwarescore=0 bulkscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2209200080
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 2022-09-20 at 07:50 -0500, Alex Elder wrote:
-> On 9/20/22 3:29 AM, Paolo Abeni wrote:
-> > On Fri, 2022-09-09 at 20:11 -0500, Alex Elder wrote:
-> > > Move the definition of ipa_version_valid(), making it a static
-> > > inline function defined together with the enumerated type in
-> > > "ipa_version.h".  Define a new count value in the type.
-> > > 
-> > > Rename the function to be ipa_version_supported(), and have it
-> > > return true only if the IPA version supplied is explicitly supported
-> > > by the driver.
-> > 
-> > I'm wondering if the above is going to cause regressions with some IPA
-> > versions suddenly not probed anymore by the module?
-> 
-> That is a really good observation.
-> 
-> The way versions are handled is a little bit inconsistent.  The
-> code is generally written in such a way that *any* version could
-> be used (between a certain minimum and maximum, currently 3.0-4.11).
-> In other words, the *intent* in the code is to make it so that
-> quirks and features that are version-specific are handled the right
-> way, even if we do not (yet) support it.
-> 
-> So for example the inline macro rsrc_grp_encoded() returns the
-> mask to use to specify an endpoint's assigned resource group.
-> IPA v4.7 uses one bit, whereas others use two or three bits.
-> We don't "formally" support IPA v4.7, because I (or someone
-> else) haven't set up a Device Tree file and "IPA config data"
-> to test it on real hardware.  Still, rsrc_grp_encoded() returns
-> the right value for IPA v4.7, even though it won't be needed
-> until IPA v4.7 is tested and declared supported.
-> 
-> The intent is to facilitate adding support for IPA v4.7 (and
-> others).  In principle one could simply try it out and it should
-> work, but in reality it is unlikely to be that easy.
-> 
-> Finally, as mentioned, to support a version (such as 4.7) we
-> need to create "ipa_data-v4.7.c", which defines a bunch of
-> things that are version-specific.  Because those definitions
-> are missing, no IPA v4.7 hardware will be matched by the
-> ipa_match[] table.
-> 
-> So the answer to your question is that currently none of the
-> unsupported versions will successfully probe anyway.
-> 
-> > Additionally there are a few places checking for the now unsupported
-> > version[s], I guess that check could/should be removed? e.g.
-> > ipa_reg_irq_suspend_en_ee_n_offset(),
-> > ipa_reg_irq_suspend_info_ee_n_offset()
-> > ...
-> 
-> I'm a fan of removing unused code like this, but I really would
-> like to actually support these other IPA versions, and I hope
-> the code is close to ready for that.  I would just need to get
-> some hardware to test it with (and it needs to rise to the top
-> of my priority list...).
-> 
-> Does this make sense to you?
 
-Yes, very clear and detailed explaination, thanks!
+On 9/20/2022 6:09 PM, AngeloGioacchino Del Regno wrote:
+> Il 20/09/22 13:15, Rajendra Nayak ha scritto:
+>> GDSCs cannot be transitioned into a Retention state in SW.
+>> When either the RETAIN_MEM bit, or both the RETAIN_MEM and
+>> RETAIN_PERIPH bits are set, and the GDSC is left ON, the HW
+>> takes care of retaining the memory/logic for the domain when
+>> the parent domain transitions to power collapse/power off state.
+>>
+>> On some platforms where the parent domains lowest power state
+>> itself is Retention, just leaving the GDSC in ON (without any
+>> RETAIN_MEM/RETAIN_PERIPH bits being set) will also transition
+>> it to Retention.
+>>
+>> The existing logic handling the PWRSTS_RET seems to set the
+>> RETAIN_MEM/RETAIN_PERIPH bits if the cxcs offsets are specified
+>> but then explicitly turns the GDSC OFF as part of _gdsc_disable().
+>> Fix that by leaving the GDSC in ON state.
+>>
+>> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+>> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+>> ---
+>> v3:
+>> Updated changelog
+>>
+>> There are a few existing users of PWRSTS_RET and I am not
+>> sure if they would be impacted with this change
+>>
+>> 1. mdss_gdsc in mmcc-msm8974.c, I am expecting that the
+>> gdsc is actually transitioning to OFF and might be left
+>> ON as part of this change, atleast till we hit system wide
+>> low power state.
+>> If we really leak more power because of this
+>> change, the right thing to do would be to update .pwrsts for
+>> mdss_gdsc to PWRSTS_OFF_ON instead of PWRSTS_RET_ON
+>> I dont have a msm8974 hardware, so if anyone who has can report
+>> any issues I can take a look further on how to fix it.
+> 
+> I think that the safest option is to add a PWRSTS_RET_HW_CTRL flag (or similar),
+> used for the specific cases of SC7180 and SC7280 (and possibly others) where the
+> GDSC is automatically transitioned to a Retention state by HW control, with no
+> required software (kernel driver) intervention.
 
-I'm ok with the series in the current form.
+Having a PWRSTS_RET_HW_CTRL flag would make sense if there was also a
+PWRSTS_RET_SW_CTRL way of achieving Retention state, but FWIK there isn't.
+I am sure that's the way it is on 8974 as well, I just don't have hardware to
+confirm.
 
-Cheers,
+> 
+>>
+>> 2. gpu_gx_gdsc in gpucc-msm8998.c and
+>>     gpu_gx_gdsc in gpucc-sdm660.c
+>> Both of these seem to add support for 3 power state
+>> OFF, RET and ON, however I dont see any logic in gdsc
+>> driver to handle 3 different power states.
+>> So I am expecting that these are infact just transitioning
+>> between ON and OFF and RET state is never really used.
+>> The ideal fix for them would be to just update their resp.
+>> .pwrsts to PWRSTS_OFF_ON only.
+> 
+> static int gdsc_init(struct gdsc *sc)
+> {
+> 
+>      ...
+> 
+>      if (on || (sc->pwrsts & PWRSTS_RET))
+>          gdsc_force_mem_on(sc);
+>      else
+>          gdsc_clear_mem_on(sc);
+> 
+>      ...
+> }
+> 
+> On MSM8998 and SDM630/636/660, we're reaching that point with a GDSC that is
+> left OFF from the bootloader, but we want (at least for 630/660) memretain
+> without periph-retain: this is required to make the hypervisor happy.
 
-Paolo
+Ideally setting the memretain bits while the GDSC is OFF should have no affect
+at all. Is this for the gpu_gx_gdsc on 630/660? Is this needed only at the init
+time (when the bootloader has left it OFF) or is it needed everytime the kernel
+turns it OFF too?
+How did we come up with this trick to keep the hypervisor happy, was it picked
+up from some downstream reference code?
 
+> 
+> Regards,
+> Angelo
+> 
