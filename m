@@ -2,129 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C0BD85BE71D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 15:30:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 499845BE720
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 15:32:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230307AbiITNag (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 09:30:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42304 "EHLO
+        id S229546AbiITNcM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 09:32:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230294AbiITNae (ORCPT
+        with ESMTP id S229727AbiITNcK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 09:30:34 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76A293AE6F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 06:30:32 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id cc5so4306560wrb.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 06:30:32 -0700 (PDT)
+        Tue, 20 Sep 2022 09:32:10 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A8B352805
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 06:32:06 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id n8so1928544wmr.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 06:32:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:organization:from:references
          :cc:to:content-language:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date;
-        bh=XLxjCK1UrYCEX7pcRlMkQ0jqY8Ny3pjRnQ4MiYRMmGc=;
-        b=NK2Oy+tzNmW0Z0DQa5UKF/e2pj9fFX9OGHvrWk7x696wpkkn2l2T1KbCkWux41Zkco
-         GCKNjtyNmTq+jrWWpZ0+/nRAjHICJ/12WhhToJoctEKsZ8iRXz/SrOte8WIYZ9QV/OuV
-         RA2/XT85gYr0p89WonCHF1uuQoQd0iQFBD0/4Z71HFIx7baxKce+lVlxzF6MaajfTh/T
-         u53scWLTA9g1eAlhOl7Hf7dGqGE3TRTr3XiKLQ6QV5HPhKijceuzphGZZMHNaHpOuccL
-         wm6Q35jLqNE3vsLBOJCvmU0rClqWQMpDwUhmOT2C16rNsykgtZw0qwRehDDJ0mIUHw1b
-         MuGQ==
+        bh=g5jWZ2WFsY/FBmA+o1CluBEPsaJX+nCuG4k+tTP6m98=;
+        b=ahZuUmZPGV5kDEbozZYj/AQZKifnavG29tNgalSvlzR5TcLPGh1dSvBuu0oEwJWkK8
+         eGDqMvolNTe8QT2zuxZLn6S8pQpToMAWOV0m8ATNCMc7S8AGPU1V+Nk9sOBew7VWMUyU
+         uyigES993TtvKSZyAtdJjZeeQgrmza0ncNlYvvp0MfYTlSzYNBY01YZQgI3nWKhxpdx+
+         ERvibhp7HoUL1OgkpSyB15LJyXRTO8O3vtlG9UK9CjReqCffygYnKc+JJ0drJVY3SdCi
+         v7biwIIurbVya/n8QT6NsrszkTIdWIO2jENz5ysO8svMiWV8zedM1M3aENtrta9MV24m
+         hYrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:organization:from:references
          :cc:to:content-language:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=XLxjCK1UrYCEX7pcRlMkQ0jqY8Ny3pjRnQ4MiYRMmGc=;
-        b=NwPZaQU1t7eQocHHCA5XURweNQ71jPOnEMvlPHKg1zFjeBRh7ZvtrvqB58v4J2e6Ak
-         ahufXmo796T86c+jLVYZe9w77yuiqEKP+IP5XeWU/u2J9HDjTbogcYgZP6ozaEgqPqaa
-         zUoqpoaSxvLsQvN5BLNjGj/9+GDcjVSz6DAoEWhrHx6O3rNwu9VGcVcjAH9xDIbBBOBF
-         A2OQq2ta4v8I6n6Xegkc4SNCdivjKGK1BbtwQ/tF8qwKi2IpuaAmZmDBAXuR0AezCMmO
-         IvFmBvz32jILO98bKtNuu5r7PeZEDFUyHbzwg1TvvDwDeyuf9zpqMLTlH/Fx5e1rREK0
-         riiQ==
-X-Gm-Message-State: ACrzQf3MDwUtAGV60WPJFW0QtetLUfi+oT4z389crMyR4Rxv0Urzh7ZK
-        XHL9IIYvCffBuG+z/UfIKD6q8UPY8icaupTpWnI=
-X-Google-Smtp-Source: AMsMyM4rDJ9Ph6SYonLeoLqOVQkjtcIXLs9X97QpO0G9E4099LrQwE+woqtN527kN7WDVD9ZZDoZoA==
-X-Received: by 2002:a05:6000:982:b0:229:79e5:6a96 with SMTP id by2-20020a056000098200b0022979e56a96mr13814135wrb.469.1663680631063;
-        Tue, 20 Sep 2022 06:30:31 -0700 (PDT)
+        bh=g5jWZ2WFsY/FBmA+o1CluBEPsaJX+nCuG4k+tTP6m98=;
+        b=ehimRwVoSYG/TF72NRjWOhSyzjishJwGtvXeHeVJn/Z1Zmvw6zIyYYBFEpXrqT0ZWE
+         XWaDy+fnMXXXtHzQZknxHgsmTHZ7NPHmX9zCM5LcFbtnbKO1hwcs05C5uKlJc2ff10/o
+         q5UNn5bUzADNH0qALMuboQ23FCRnSGyvtRKbzSCxbbL59+oIa0VM5w29WvJo/INWZDJP
+         RHEnIZ1Fv/AmtRpwL1Gql0KCg9x539INOgnsWcCQdZ7CZL4g39SuOgZdazSZJKiIZ1Rq
+         TE6W7oujk1xpCP+gRmjqTv3po6Q6t9j+RC/NPIJWoCNC+Hls9q8iLSVqOVnl5SvttHde
+         /j+Q==
+X-Gm-Message-State: ACrzQf1/P+Nmt/ndIlGx1C+H5nX4HNBPUAjJY4LLkqLwZEa9Nv5PcDbl
+        IDs0NycLQmSsb75VRJcola6T4g==
+X-Google-Smtp-Source: AMsMyM5QtgXayw9Vbt5bQUfay84AiUJaO/gk8txKtCJ6f5cE6M/XeIOV5ivdcHiSum4QLXKloFZ0JA==
+X-Received: by 2002:a05:600c:43d3:b0:3b3:2f1c:f01c with SMTP id f19-20020a05600c43d300b003b32f1cf01cmr2465695wmn.152.1663680724742;
+        Tue, 20 Sep 2022 06:32:04 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:7e10:f0f:43b2:9b5e? ([2a01:e0a:982:cbb0:7e10:f0f:43b2:9b5e])
-        by smtp.gmail.com with ESMTPSA id j26-20020adfa55a000000b0022afddab5dfsm70082wrb.7.2022.09.20.06.30.29
+        by smtp.gmail.com with ESMTPSA id e24-20020adfa458000000b002252ec781f7sm80983wra.8.2022.09.20.06.32.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Sep 2022 06:30:30 -0700 (PDT)
-Message-ID: <5a10b8b7-3881-2f31-5a79-ddef9798184d@linaro.org>
-Date:   Tue, 20 Sep 2022 15:30:28 +0200
+        Tue, 20 Sep 2022 06:32:04 -0700 (PDT)
+Message-ID: <c117c5d5-e864-068b-a1fe-961e2eeba84c@linaro.org>
+Date:   Tue, 20 Sep 2022 15:32:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH] phy: qualcomm: call clk_disable_unprepare in the error
- handling
+Subject: Re: [PATCH -next] slimbus: qcom-ngd: Add error handling in
+ of_qcom_slim_ngd_register
 Content-Language: en-US
-To:     Dongliang Mu <dzm91@hust.edu.cn>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jaehoon Chung <jh80.chung@samsung.com>
-Cc:     Dongliang Mu <mudongliangabcd@gmail.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+To:     Lin Yujun <linyujun809@huawei.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
+        srinivas.kandagatla@linaro.org, gregkh@linuxfoundation.org,
+        vkoul@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
         linux-kernel@vger.kernel.org
-References: <20220914051334.69282-1-dzm91@hust.edu.cn>
+References: <20220914031953.94061-1-linyujun809@huawei.com>
 From:   Neil Armstrong <neil.armstrong@linaro.org>
 Organization: Linaro
-In-Reply-To: <20220914051334.69282-1-dzm91@hust.edu.cn>
+In-Reply-To: <20220914031953.94061-1-linyujun809@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/09/2022 07:13, Dongliang Mu wrote:
-> From: Dongliang Mu <mudongliangabcd@gmail.com>
+On 14/09/2022 05:19, Lin Yujun wrote:
+> No error handling is performed when platform_device_add()
+> return fails. Refer to the error handling of driver_set_override(),
+> add error handling for platform_device_add().
 > 
-> Smatch reports the following error:
-> 
-> drivers/phy/qualcomm/phy-qcom-usb-hsic.c:82 qcom_usb_hsic_phy_power_on()
-> warn: 'uphy->cal_clk' from clk_prepare_enable() not released on lines:
-> 58.
-> drivers/phy/qualcomm/phy-qcom-usb-hsic.c:82 qcom_usb_hsic_phy_power_on()
-> warn: 'uphy->cal_sleep_clk' from clk_prepare_enable() not released on
-> lines: 58.
-> drivers/phy/qualcomm/phy-qcom-usb-hsic.c:82 qcom_usb_hsic_phy_power_on()
-> warn: 'uphy->phy_clk' from clk_prepare_enable() not released on lines:
-> 58.
-> 
-> Fix this by calling proper clk_disable_unprepare calls.
-> 
-> Fixes: 0b56e9a7e835 ("phy: Group vendor specific phy drivers")
-> Signed-off-by: Dongliang Mu <mudongliangabcd@gmail.com>
+> Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
+> Signed-off-by: Lin Yujun <linyujun809@huawei.com>
 > ---
->   drivers/phy/qualcomm/phy-qcom-usb-hsic.c | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
+>   drivers/slimbus/qcom-ngd-ctrl.c | 8 +++++++-
+>   1 file changed, 7 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-usb-hsic.c b/drivers/phy/qualcomm/phy-qcom-usb-hsic.c
-> index 716a77748ed8..20f6dd37c7c1 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-usb-hsic.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-usb-hsic.c
-> @@ -54,8 +54,10 @@ static int qcom_usb_hsic_phy_power_on(struct phy *phy)
+> diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+> index 0aa8408464ad..fb591990ddad 100644
+> --- a/drivers/slimbus/qcom-ngd-ctrl.c
+> +++ b/drivers/slimbus/qcom-ngd-ctrl.c
+> @@ -1470,7 +1470,13 @@ static int of_qcom_slim_ngd_register(struct device *parent,
+>   		ngd->pdev->dev.of_node = node;
+>   		ctrl->ngd = ngd;
 >   
->   	/* Configure pins for HSIC functionality */
->   	pins_default = pinctrl_lookup_state(uphy->pctl, PINCTRL_STATE_DEFAULT);
-> -	if (IS_ERR(pins_default))
-> -		return PTR_ERR(pins_default);
-> +	if (IS_ERR(pins_default)) {
-> +		ret = PTR_ERR(pins_default);
-> +		goto err_ulpi;
-> +	}
+> -		platform_device_add(ngd->pdev);
+> +		ret = platform_device_add(ngd->pdev);
+> +		if (ret) {
+> +			platform_device_put(ngd->pdev);
+> +			kfree(ngd);
+> +			of_node_put(node);
+> +			return ret;
+> +		}
+>   		ngd->base = ctrl->base + ngd->id * data->offset +
+>   					(ngd->id - 1) * data->size;
 >   
->   	ret = pinctrl_select_state(uphy->pctl, pins_default);
->   	if (ret)
 
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
