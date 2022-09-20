@@ -2,113 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 499845BE720
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 15:32:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9FFF25BE73D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 15:38:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229546AbiITNcM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 09:32:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43286 "EHLO
+        id S230477AbiITNiB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 09:38:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229727AbiITNcK (ORCPT
+        with ESMTP id S229760AbiITNh7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 09:32:10 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A8B352805
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 06:32:06 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id n8so1928544wmr.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 06:32:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date;
-        bh=g5jWZ2WFsY/FBmA+o1CluBEPsaJX+nCuG4k+tTP6m98=;
-        b=ahZuUmZPGV5kDEbozZYj/AQZKifnavG29tNgalSvlzR5TcLPGh1dSvBuu0oEwJWkK8
-         eGDqMvolNTe8QT2zuxZLn6S8pQpToMAWOV0m8ATNCMc7S8AGPU1V+Nk9sOBew7VWMUyU
-         uyigES993TtvKSZyAtdJjZeeQgrmza0ncNlYvvp0MfYTlSzYNBY01YZQgI3nWKhxpdx+
-         ERvibhp7HoUL1OgkpSyB15LJyXRTO8O3vtlG9UK9CjReqCffygYnKc+JJ0drJVY3SdCi
-         v7biwIIurbVya/n8QT6NsrszkTIdWIO2jENz5ysO8svMiWV8zedM1M3aENtrta9MV24m
-         hYrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=g5jWZ2WFsY/FBmA+o1CluBEPsaJX+nCuG4k+tTP6m98=;
-        b=ehimRwVoSYG/TF72NRjWOhSyzjishJwGtvXeHeVJn/Z1Zmvw6zIyYYBFEpXrqT0ZWE
-         XWaDy+fnMXXXtHzQZknxHgsmTHZ7NPHmX9zCM5LcFbtnbKO1hwcs05C5uKlJc2ff10/o
-         q5UNn5bUzADNH0qALMuboQ23FCRnSGyvtRKbzSCxbbL59+oIa0VM5w29WvJo/INWZDJP
-         RHEnIZ1Fv/AmtRpwL1Gql0KCg9x539INOgnsWcCQdZ7CZL4g39SuOgZdazSZJKiIZ1Rq
-         TE6W7oujk1xpCP+gRmjqTv3po6Q6t9j+RC/NPIJWoCNC+Hls9q8iLSVqOVnl5SvttHde
-         /j+Q==
-X-Gm-Message-State: ACrzQf1/P+Nmt/ndIlGx1C+H5nX4HNBPUAjJY4LLkqLwZEa9Nv5PcDbl
-        IDs0NycLQmSsb75VRJcola6T4g==
-X-Google-Smtp-Source: AMsMyM5QtgXayw9Vbt5bQUfay84AiUJaO/gk8txKtCJ6f5cE6M/XeIOV5ivdcHiSum4QLXKloFZ0JA==
-X-Received: by 2002:a05:600c:43d3:b0:3b3:2f1c:f01c with SMTP id f19-20020a05600c43d300b003b32f1cf01cmr2465695wmn.152.1663680724742;
-        Tue, 20 Sep 2022 06:32:04 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:7e10:f0f:43b2:9b5e? ([2a01:e0a:982:cbb0:7e10:f0f:43b2:9b5e])
-        by smtp.gmail.com with ESMTPSA id e24-20020adfa458000000b002252ec781f7sm80983wra.8.2022.09.20.06.32.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Sep 2022 06:32:04 -0700 (PDT)
-Message-ID: <c117c5d5-e864-068b-a1fe-961e2eeba84c@linaro.org>
-Date:   Tue, 20 Sep 2022 15:32:03 +0200
+        Tue, 20 Sep 2022 09:37:59 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF4B53AE6C;
+        Tue, 20 Sep 2022 06:37:57 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 55F95629CE;
+        Tue, 20 Sep 2022 13:37:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A746C433D6;
+        Tue, 20 Sep 2022 13:37:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663681076;
+        bh=l6QCkQPQmf5xKZt5wdlN3JoV4O1u6fNCXibO2IpmGGA=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=IsAH0TCEATreJJERC7+UKn3/F8/6zO4Q7JqNRE9u7reQ96PZmFwoziYCKD1Ell5UV
+         y2dTEXhRpRJ9NWoFnr6pwhEfoSqh1ia8keDlYn3Dz4vCqgsJbh+35qRlVbrmAcVFTw
+         tWBdxhxhSHlfxPQ01QBJ2eBGYJtYA25JsRRh2QvwZhiigsp78YifCSiMqSUHc+YAyM
+         Uuasx34seUOUJB0zuFfYi4K1kenSsARHTKmUkRCJpvYo57m3F9Hbf1xiURi7c+wHLu
+         EGQOukURfLMAhZV39JptoFFS4xE11HvewEzjYoz8hpmM5mdc3HdId51kqJxm8ENDas
+         UkIcyhSMU5S1Q==
+Date:   Tue, 20 Sep 2022 08:37:54 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] PCI: qcom: Add support for modular builds
+Message-ID: <20220920133754.GA1102995@bhelgaas>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH -next] slimbus: qcom-ngd: Add error handling in
- of_qcom_slim_ngd_register
-Content-Language: en-US
-To:     Lin Yujun <linyujun809@huawei.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
-        srinivas.kandagatla@linaro.org, gregkh@linuxfoundation.org,
-        vkoul@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org
-References: <20220914031953.94061-1-linyujun809@huawei.com>
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro
-In-Reply-To: <20220914031953.94061-1-linyujun809@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yyl+PNcbtSwzlgvh@hovoldconsulting.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/09/2022 05:19, Lin Yujun wrote:
-> No error handling is performed when platform_device_add()
-> return fails. Refer to the error handling of driver_set_override(),
-> add error handling for platform_device_add().
+On Tue, Sep 20, 2022 at 10:47:56AM +0200, Johan Hovold wrote:
+> Hi Lorenzo,
 > 
-> Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
-> Signed-off-by: Lin Yujun <linyujun809@huawei.com>
-> ---
->   drivers/slimbus/qcom-ngd-ctrl.c | 8 +++++++-
->   1 file changed, 7 insertions(+), 1 deletion(-)
+> On Thu, Jul 21, 2022 at 08:47:20AM +0200, Johan Hovold wrote:
+> > Allow the Qualcomm PCIe controller driver to be built as a module, which
+> > is useful for multi-platform kernels as well as during development.
+> > 
+> > Reviewed-by: Rob Herring <robh@kernel.org>
+> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
+> > 
+> > Changes in v2
+> >  - rebase on next-20220720 (adjust context)
+> >  - add Rob and Mani's reviewed-by tags
 > 
-> diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-> index 0aa8408464ad..fb591990ddad 100644
-> --- a/drivers/slimbus/qcom-ngd-ctrl.c
-> +++ b/drivers/slimbus/qcom-ngd-ctrl.c
-> @@ -1470,7 +1470,13 @@ static int of_qcom_slim_ngd_register(struct device *parent,
->   		ngd->pdev->dev.of_node = node;
->   		ctrl->ngd = ngd;
->   
-> -		platform_device_add(ngd->pdev);
-> +		ret = platform_device_add(ngd->pdev);
-> +		if (ret) {
-> +			platform_device_put(ngd->pdev);
-> +			kfree(ngd);
-> +			of_node_put(node);
-> +			return ret;
-> +		}
->   		ngd->base = ctrl->base + ngd->id * data->offset +
->   					(ngd->id - 1) * data->size;
->   
+> Have you had a change to look at this one since you got back from
+> vacation?
+> 
+> I believe this should be uncontroversial as we already have other
+> modular dwc drivers and there's no mapping of legacy INTx interrupts
+> involved.
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+I'm not Lorenzo, but was there a conclusive outcome to the thread at
+[1]?  The last thing I remember was that a buggy endpoint driver that
+failed to unmap all its interrupts could cause crashes if the PCIe
+controller driver was removed.
+
+Making the driver modular is essential so distros can build all the
+drivers and users can load the one needed by their platform.
+
+Making the driver removable is useful for developers but not for
+users, so I don't see it as essential.  Developers are in the business
+of developing and can easily carry a trivial out-of-tree patch to add
+removability if needed.
+
+If removability is actually safe even if endpoint drivers aren't
+perfect, then I don't object to it.  But if it's not always safe, I
+don't think the argument that "other drivers do it" is strong.  I'd
+rather make all the drivers safe even if that means making them
+non-removable.
+
+[1] https://lore.kernel.org/r/20220721195433.GA1747571@bhelgaas
+
+> >  drivers/pci/controller/dwc/Kconfig     |  2 +-
+> >  drivers/pci/controller/dwc/pcie-qcom.c | 36 +++++++++++++++++++++++---
+> >  2 files changed, 34 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
+> > index 62ce3abf0f19..230f56d1a268 100644
+> > --- a/drivers/pci/controller/dwc/Kconfig
+> > +++ b/drivers/pci/controller/dwc/Kconfig
+> > @@ -168,7 +168,7 @@ config PCI_HISI
+> >  	  Hip05 and Hip06 SoCs
+> >  
+> >  config PCIE_QCOM
+> > -	bool "Qualcomm PCIe controller"
+> > +	tristate "Qualcomm PCIe controller"
+> >  	depends on OF && (ARCH_QCOM || COMPILE_TEST)
+> >  	depends on PCI_MSI_IRQ_DOMAIN
+> >  	select PCIE_DW_HOST
+> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > index 5ed164c2afa3..d176c635016b 100644
+> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > @@ -16,7 +16,7 @@
+> >  #include <linux/io.h>
+> >  #include <linux/iopoll.h>
+> >  #include <linux/kernel.h>
+> > -#include <linux/init.h>
+> > +#include <linux/module.h>
+> >  #include <linux/of_device.h>
+> >  #include <linux/of_gpio.h>
+> >  #include <linux/pci.h>
+> > @@ -1518,6 +1518,15 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
+> >  	return ret;
+> >  }
+> >  
+> > +static void qcom_pcie_host_deinit(struct qcom_pcie *pcie)
+> > +{
+> > +	qcom_ep_reset_assert(pcie);
+> > +	if (pcie->cfg->ops->post_deinit)
+> > +		pcie->cfg->ops->post_deinit(pcie);
+> > +	phy_power_off(pcie->phy);
+> > +	pcie->cfg->ops->deinit(pcie);
+> > +}
+> > +
+> >  static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
+> >  	.host_init = qcom_pcie_host_init,
+> >  };
+> > @@ -1752,6 +1761,22 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+> >  	return ret;
+> >  }
+> >  
+> > +static int qcom_pcie_remove(struct platform_device *pdev)
+> > +{
+> > +	struct qcom_pcie *pcie = platform_get_drvdata(pdev);
+> > +	struct device *dev = &pdev->dev;
+> > +
+> > +	dw_pcie_host_deinit(&pcie->pci->pp);
+> > +	qcom_pcie_host_deinit(pcie);
+> > +
+> > +	phy_exit(pcie->phy);
+> > +
+> > +	pm_runtime_put_sync(dev);
+> > +	pm_runtime_disable(dev);
+> > +
+> > +	return 0;
+> > +}
+> > +
+> >  static const struct of_device_id qcom_pcie_match[] = {
+> >  	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
+> >  	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
+> > @@ -1771,6 +1796,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+> >  	{ .compatible = "qcom,pcie-ipq6018", .data = &ipq6018_cfg },
+> >  	{ }
+> >  };
+> > +MODULE_DEVICE_TABLE(of, qcom_pcie_match);
+> >  
+> >  static void qcom_fixup_class(struct pci_dev *dev)
+> >  {
+> > @@ -1786,10 +1812,14 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
+> >  
+> >  static struct platform_driver qcom_pcie_driver = {
+> >  	.probe = qcom_pcie_probe,
+> > +	.remove = qcom_pcie_remove,
+> >  	.driver = {
+> >  		.name = "qcom-pcie",
+> > -		.suppress_bind_attrs = true,
+> >  		.of_match_table = qcom_pcie_match,
+> >  	},
+> >  };
+> > -builtin_platform_driver(qcom_pcie_driver);
+> > +module_platform_driver(qcom_pcie_driver);
+> > +
+> > +MODULE_AUTHOR("Stanimir Varbanov <svarbanov@mm-sol.com>");
+> > +MODULE_DESCRIPTION("Qualcomm PCIe root complex driver");
+> > +MODULE_LICENSE("GPL");
+> 
+> Johan
