@@ -2,111 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A44F85BDB1A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 05:59:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8165D5BDBFD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 07:05:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229997AbiITD72 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Sep 2022 23:59:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38302 "EHLO
+        id S229718AbiITFFE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 01:05:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229995AbiITD7Q (ORCPT
+        with ESMTP id S229488AbiITFFD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Sep 2022 23:59:16 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71A075A3D5;
-        Mon, 19 Sep 2022 20:58:48 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28K2QDng031558;
-        Tue, 20 Sep 2022 03:58:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=jgWfAwXuuu0RIdbapJx7yHndhKxVFwzMF8fPwOYRIh4=;
- b=V98QEKTGLVs4XWgo0zI+PzcQfyY8V/psh+JiDkV/uOKEV59uWt86RKF+ARn4jgxB7gyj
- cqzH0E2dztGVk+UQ4/cbP8Ym2xWK9LFf5CcisJPg0BQmTqfakCFVSUtl/t/ZTCJaFbPc
- rvYlxxidDhBv0VS0f9l9vAWIZrawmiefw16sAqTtvPgbQO9XlPROdJw7+ogBi35aI6XD
- L9wpsRizgL3Gcn1E6D6y3i/6srtAFfCvds2sgUM/8ZRwR99eS+THatYm49E5t5XV+vvX
- aUon8qRMlS6us760KveLI4sKUjpP9PZiersB4OKvZEV+X3v1hepX2aer1m2zXZt/kwsT YQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jpxaeh1e4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 20 Sep 2022 03:58:43 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28K3wgar018766
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 20 Sep 2022 03:58:42 GMT
-Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Mon, 19 Sep 2022 20:58:38 -0700
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>
-CC:     <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        "Sai Prakash Ranjan" <quic_saipraka@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>, <vkoul@kernel.org>,
-        "Souradeep Chowdhury" <quic_schowdhu@quicinc.com>
-Subject: [PATCH V13 7/7] arm64: dts: qcom: sdm845: Add Data Capture and Compare(DCC) support node
-Date:   Tue, 20 Sep 2022 09:27:04 +0530
-Message-ID: <9f910db668caf9840117977e0231dc9a50432a8f.1663642052.git.quic_schowdhu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1663642051.git.quic_schowdhu@quicinc.com>
-References: <cover.1663642051.git.quic_schowdhu@quicinc.com>
+        Tue, 20 Sep 2022 01:05:03 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A66426ACC;
+        Mon, 19 Sep 2022 22:05:02 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 18A61B82469;
+        Tue, 20 Sep 2022 05:05:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465BCC433C1;
+        Tue, 20 Sep 2022 05:04:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663650299;
+        bh=wnzt8PW3zP9wtrewvt5xUq0/W2ToEB86MUL4a6EzQ74=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=alEivXXaV7UE1FPN9+i6lHMvQP2Y35TWzGnpVSO3WlAf+WoMPOlV08+t10uNZAmA6
+         UQUSQfjdv0x1Mg3ErWUUZP2GXVQZFLoPJpwP30grxbu3FM8mojq6oWoqXWAWPE4JSW
+         Q9DslhB7EwVpjekwVUEeAIMCWwRxxMvVaNxCHLVvVZzVgMaGXvNHyKyv7+Yt4XGO7k
+         4zHGFY1RThlLcALwNrOhntokSCtcqciIE75WEvvUKnnp5kNMWhjCoVhwC9eEJlG4ur
+         30a3agResor32XjxuoTFXacUYEzZRZSDEr9whTllllOID0U1sQWJ+wQthn2KTfl3wj
+         6Md58N9TCp+nQ==
+Date:   Tue, 20 Sep 2022 10:34:55 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     yung-chuan.liao@linux.intel.com,
+        pierre-louis.bossart@linux.intel.com, sanyog.r.kale@intel.com,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org, quic_srivasam@quicinc.com
+Subject: Re: [PATCH v2 1/2] soundwire: qcom: update status from device id 1
+Message-ID: <YylJ90Vu7SUhSNIo@matsya>
+References: <20220916135352.19114-1-srinivas.kandagatla@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: CzLilTSsPHaF1VNbd-NEz24jXlUlpNzZ
-X-Proofpoint-ORIG-GUID: CzLilTSsPHaF1VNbd-NEz24jXlUlpNzZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-19_13,2022-09-16_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 suspectscore=0 lowpriorityscore=0 mlxlogscore=815
- adultscore=0 clxscore=1015 malwarescore=0 phishscore=0 impostorscore=0
- mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2209200022
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220916135352.19114-1-srinivas.kandagatla@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the DCC(Data Capture and Compare) device tree node entry along with
-the address of the register region.
+On 16-09-22, 14:53, Srinivas Kandagatla wrote:
+> By default autoenumeration is enabled on QCom SoundWire controller
+> which means the core should not be dealing with device 0 w.r.t enumeration.
+> 
+> During Enumeration if SoundWire core sees status[0] as SDW_SLAVE_ATTACHED and
+> start programming the device id, however reading DEVID registers return zeros
+> which does not match to any of the slaves in the list and the core attempts
+> to park this device to Group 13.  This results in adding SoundWire device
+> with enumeration address 0:0:0:0
+> 
+> Fix this by not passing device 0 status to SoundWire core.
 
-Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+Applied after fixing typi pointed by Pierre, thanks
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index ff6bda1..ee13b5f 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -1968,6 +1968,12 @@
- 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-+		dma@10a2000 {
-+			compatible = "qcom,sdm845-dcc", "qcom,dcc";
-+			reg = <0x0 0x010a2000 0x0 0x1000>,
-+			      <0x0 0x010ae000 0x0 0x2000>;
-+		};
-+
- 		pcie0: pci@1c00000 {
- 			compatible = "qcom,pcie-sdm845", "snps,dw-pcie";
- 			reg = <0 0x01c00000 0 0x2000>,
+Also, pls check, I got conflict which was resolved
+
 -- 
-2.7.4
-
+~Vinod
