@@ -2,89 +2,219 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C9505BE8C4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 16:24:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9072F5BE8DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 16:27:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231801AbiITOY1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 10:24:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42732 "EHLO
+        id S229815AbiITO13 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 10:27:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231961AbiITOX7 (ORCPT
+        with ESMTP id S230237AbiITO1W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 10:23:59 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8136021835;
-        Tue, 20 Sep 2022 07:23:37 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id e17so4093229edc.5;
-        Tue, 20 Sep 2022 07:23:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date;
-        bh=AdtpZB7U/EABK14zfV/flloJYC93tZl66p8xW/fKflI=;
-        b=WiApm+FyIA3oAhh+un2VztEkfOLo0vOyUENAeEGzdK5Xaq/T2D3fYeUWCVg+vBB14h
-         H+K4WkGh825B1M3cs6cYQ+KbNbkS/E+oMzFpVqdodOgcMMtbMFJR3w1wQ7FPdav6VQs8
-         ryYdKzuDQ+U3KaGmNScrzmHlhMWL18MvcrXzxQ9w3OPN7n12vS5fccOU40vzn9gvZFJD
-         aEoRrB9/3Fh7pFLgyIjudA6G5CGENdr6eZukz2gFbHDcW1grp8kQeuwYgdhkCskSoHfv
-         7mVT7VAgAUGDWKGDOq/4Nzn/B+eVOHhDW03leKjiGylKhrp5bPGVBVGRiNJ2PWYIHRDd
-         ALrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=AdtpZB7U/EABK14zfV/flloJYC93tZl66p8xW/fKflI=;
-        b=CAWf055qUtp0JPWZ3+MVKAD7HPU5s7j0KfhXj9PRsztC3wv/39HCPrJlD6lIOQFJsP
-         6JTWb/HOEEcWeTvzl/YaUMLZQjVbCBP62dcI8C3PuVNK9aZHkCbmxp302k+qkpJQ57+6
-         +QtJObXF7bVRvxm9nb4YQsdnbsKW3wV6BTf1bALxbUa0607QKLJ14H3P66kR294onBWx
-         Cfj6YEi4eF+K1pAn6ZsqpmBLXZFXUrTA4FeVNhJ0VvwBSNbf2oxxzSm7r4fqBakKjsXz
-         rGOVoCJspUPA+nhECInGOVaV5dOt7H6gvz1NqiL2Jnwu4SZMoX80eZps3TwD0Z9XxlGW
-         Lsqw==
-X-Gm-Message-State: ACrzQf38GHXI3VOMIZINo0Y8W+CtXFUgN6jKUWvzMLe2Xjj9ymrkcXkE
-        /aogHUyU7SeeUwEVq7NjflB9k91Y2IG519ZPHfnyc/poJE4=
-X-Google-Smtp-Source: AMsMyM7A0vXmhuLnWz/JvadhLpoO0zXesiteq62wMJys2JjmQ/j4DZd0J7mR2NLFnCp8xixumNbGJKe3LOH37nNGRQQ=
-X-Received: by 2002:aa7:cad5:0:b0:454:88dc:2c22 with SMTP id
- l21-20020aa7cad5000000b0045488dc2c22mr1698575edt.352.1663683816014; Tue, 20
- Sep 2022 07:23:36 -0700 (PDT)
+        Tue, 20 Sep 2022 10:27:22 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8130D6173;
+        Tue, 20 Sep 2022 07:27:21 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3D9B4B82A56;
+        Tue, 20 Sep 2022 14:27:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C104C433C1;
+        Tue, 20 Sep 2022 14:27:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663684038;
+        bh=QyVcelDXPwbiuFJMdRmaSbabqTaB24EpzwFhUN+SSRw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Hfq3WsW11el8D2ZZgc97RZtmFmySeyzYZN5wP2M9iwvO1jR4urtZjMr1zvBhwEFmD
+         h80mYPgTqSyApyZCWEJDltb10+pTtXJUgPKwdn8amtdSU3AuynuiELIdo2VyxsEWdJ
+         i4J8adJw+ORVFMjgBN+dubEmUuUXsSxPhs76HxahmlhywDqJTf0B/p3QPJdtu3lzse
+         wy0/IjY0Fkkgy/OmyQC4dXYMAvLqFhzQllSixKXR9yu/JEhBOj/8Qptcaz6snPXknf
+         hRXgZOt58hwj1lWBC2EAy05RlX7C3La7qdver6hf/UxwkHKgg4bVubyPcm2rE5ji6w
+         EqRFDV+WlSolg==
+Date:   Tue, 20 Sep 2022 19:57:06 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Bjorn Helgaas <helgaas@kernel.org>
+Cc:     Johan Hovold <johan@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] PCI: qcom: Add support for modular builds
+Message-ID: <20220920142706.GC1621196@thinkpad>
+References: <Yyl+PNcbtSwzlgvh@hovoldconsulting.com>
+ <20220920133754.GA1102995@bhelgaas>
 MIME-Version: 1.0
-From:   Daniele Palmas <dnlplm@gmail.com>
-Date:   Tue, 20 Sep 2022 16:23:25 +0200
-Message-ID: <CAGRyCJGWQagceLhnECBcpPfG5jMPZrjbsHrio1BvgpZJhk0pbA@mail.gmail.com>
-Subject: MHI DTR client implementation
-To:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        Network Development <netdev@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-0.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HK_RANDOM_ENVFROM,
-        HK_RANDOM_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220920133754.GA1102995@bhelgaas>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello all,
+On Tue, Sep 20, 2022 at 08:37:54AM -0500, Bjorn Helgaas wrote:
+> On Tue, Sep 20, 2022 at 10:47:56AM +0200, Johan Hovold wrote:
+> > Hi Lorenzo,
+> > 
+> > On Thu, Jul 21, 2022 at 08:47:20AM +0200, Johan Hovold wrote:
+> > > Allow the Qualcomm PCIe controller driver to be built as a module, which
+> > > is useful for multi-platform kernels as well as during development.
+> > > 
+> > > Reviewed-by: Rob Herring <robh@kernel.org>
+> > > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > > ---
+> > > 
+> > > Changes in v2
+> > >  - rebase on next-20220720 (adjust context)
+> > >  - add Rob and Mani's reviewed-by tags
+> > 
+> > Have you had a change to look at this one since you got back from
+> > vacation?
+> > 
+> > I believe this should be uncontroversial as we already have other
+> > modular dwc drivers and there's no mapping of legacy INTx interrupts
+> > involved.
+> 
+> I'm not Lorenzo, but was there a conclusive outcome to the thread at
+> [1]?  The last thing I remember was that a buggy endpoint driver that
+> failed to unmap all its interrupts could cause crashes if the PCIe
+> controller driver was removed.
+> 
+> Making the driver modular is essential so distros can build all the
+> drivers and users can load the one needed by their platform.
+> 
+> Making the driver removable is useful for developers but not for
+> users, so I don't see it as essential.  Developers are in the business
+> of developing and can easily carry a trivial out-of-tree patch to add
+> removability if needed.
+> 
+> If removability is actually safe even if endpoint drivers aren't
+> perfect, then I don't object to it.  But if it's not always safe, I
+> don't think the argument that "other drivers do it" is strong.  I'd
+> rather make all the drivers safe even if that means making them
+> non-removable.
+> 
 
-I'm looking for some guidance related to  a possible MHI client for
-serial ports signals management implementation.
+If the problem is with the endpoint drivers, then those need to be fixed for
+properly disposing the IRQ mappings. I don't see any real issue with the
+remove() handler of this controller driver.
 
-Testing the AT channels with Telit modems I noted that unsolicited
-indications do not show: the root cause for this is DTR not set for
-those ports through MHI channels 18/19, something that with current
-upstream code can't be done due to the missing DTR client driver.
+Thanks,
+Mani
 
-I currently have an hack, based on the very first mhi stack submission
-(see https://lore.kernel.org/lkml/1524795811-21399-2-git-send-email-sdias@codeaurora.org/#Z31drivers:bus:mhi:core:mhi_dtr.c),
-solving my issue, but I would like to understand which would be the
-correct way, so maybe I can contribute some code.
+> [1] https://lore.kernel.org/r/20220721195433.GA1747571@bhelgaas
+> 
+> > >  drivers/pci/controller/dwc/Kconfig     |  2 +-
+> > >  drivers/pci/controller/dwc/pcie-qcom.c | 36 +++++++++++++++++++++++---
+> > >  2 files changed, 34 insertions(+), 4 deletions(-)
+> > > 
+> > > diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
+> > > index 62ce3abf0f19..230f56d1a268 100644
+> > > --- a/drivers/pci/controller/dwc/Kconfig
+> > > +++ b/drivers/pci/controller/dwc/Kconfig
+> > > @@ -168,7 +168,7 @@ config PCI_HISI
+> > >  	  Hip05 and Hip06 SoCs
+> > >  
+> > >  config PCIE_QCOM
+> > > -	bool "Qualcomm PCIe controller"
+> > > +	tristate "Qualcomm PCIe controller"
+> > >  	depends on OF && (ARCH_QCOM || COMPILE_TEST)
+> > >  	depends on PCI_MSI_IRQ_DOMAIN
+> > >  	select PCIE_DW_HOST
+> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > index 5ed164c2afa3..d176c635016b 100644
+> > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > @@ -16,7 +16,7 @@
+> > >  #include <linux/io.h>
+> > >  #include <linux/iopoll.h>
+> > >  #include <linux/kernel.h>
+> > > -#include <linux/init.h>
+> > > +#include <linux/module.h>
+> > >  #include <linux/of_device.h>
+> > >  #include <linux/of_gpio.h>
+> > >  #include <linux/pci.h>
+> > > @@ -1518,6 +1518,15 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
+> > >  	return ret;
+> > >  }
+> > >  
+> > > +static void qcom_pcie_host_deinit(struct qcom_pcie *pcie)
+> > > +{
+> > > +	qcom_ep_reset_assert(pcie);
+> > > +	if (pcie->cfg->ops->post_deinit)
+> > > +		pcie->cfg->ops->post_deinit(pcie);
+> > > +	phy_power_off(pcie->phy);
+> > > +	pcie->cfg->ops->deinit(pcie);
+> > > +}
+> > > +
+> > >  static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
+> > >  	.host_init = qcom_pcie_host_init,
+> > >  };
+> > > @@ -1752,6 +1761,22 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+> > >  	return ret;
+> > >  }
+> > >  
+> > > +static int qcom_pcie_remove(struct platform_device *pdev)
+> > > +{
+> > > +	struct qcom_pcie *pcie = platform_get_drvdata(pdev);
+> > > +	struct device *dev = &pdev->dev;
+> > > +
+> > > +	dw_pcie_host_deinit(&pcie->pci->pp);
+> > > +	qcom_pcie_host_deinit(pcie);
+> > > +
+> > > +	phy_exit(pcie->phy);
+> > > +
+> > > +	pm_runtime_put_sync(dev);
+> > > +	pm_runtime_disable(dev);
+> > > +
+> > > +	return 0;
+> > > +}
+> > > +
+> > >  static const struct of_device_id qcom_pcie_match[] = {
+> > >  	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
+> > >  	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
+> > > @@ -1771,6 +1796,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+> > >  	{ .compatible = "qcom,pcie-ipq6018", .data = &ipq6018_cfg },
+> > >  	{ }
+> > >  };
+> > > +MODULE_DEVICE_TABLE(of, qcom_pcie_match);
+> > >  
+> > >  static void qcom_fixup_class(struct pci_dev *dev)
+> > >  {
+> > > @@ -1786,10 +1812,14 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001, qcom_fixup_class);
+> > >  
+> > >  static struct platform_driver qcom_pcie_driver = {
+> > >  	.probe = qcom_pcie_probe,
+> > > +	.remove = qcom_pcie_remove,
+> > >  	.driver = {
+> > >  		.name = "qcom-pcie",
+> > > -		.suppress_bind_attrs = true,
+> > >  		.of_match_table = qcom_pcie_match,
+> > >  	},
+> > >  };
+> > > -builtin_platform_driver(qcom_pcie_driver);
+> > > +module_platform_driver(qcom_pcie_driver);
+> > > +
+> > > +MODULE_AUTHOR("Stanimir Varbanov <svarbanov@mm-sol.com>");
+> > > +MODULE_DESCRIPTION("Qualcomm PCIe root complex driver");
+> > > +MODULE_LICENSE("GPL");
+> > 
+> > Johan
 
-Should the MHI DTR client be part of the WWAN subsystem? If yes, does
-it make sense to have an associated port exposed as a char device? I
-guess the answer is no, since it should be used just by the AT ports
-created by mhi_wwan_ctrl, but I'm not sure if that's possible.
-
-Or should the DTR management be somehow part of the MHI stack and
-mhi_wwan_ctrl interacts with that through exported functions?
-
-Thanks a lot in advance,
-Daniele
+-- 
+மணிவண்ணன் சதாசிவம்
