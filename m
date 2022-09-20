@@ -2,55 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D4F05BEEBD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 22:50:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 862A65BEF7C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 23:58:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229973AbiITUuV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 16:50:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50202 "EHLO
+        id S230060AbiITV6m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 17:58:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229529AbiITUuT (ORCPT
+        with ESMTP id S229993AbiITV6e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 16:50:19 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 422314D178;
-        Tue, 20 Sep 2022 13:50:19 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C72BC614B5;
-        Tue, 20 Sep 2022 20:50:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 25605C433D7;
-        Tue, 20 Sep 2022 20:50:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663707018;
-        bh=KjOtBowGvvlXkY0CJ/ZXa41LgAc2HijH/N9ZoIAn4Vw=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=OVvBlnI32wtXmw49Ixv3W+jIyVKJlYTch98OR7gtaudqrUJhOt7B7HzLZpIi8KEGf
-         24UizCAQDwboJ31NnOQuZc8G5pjA9L7zQuLa1M2cADVXV9azHbQAUb05sn0ekZCYb9
-         nNVNdGCJIqqhPAIdAH2IYKhc8JXa3q8C70rvhtYZ3eMTIVh+Li4rIICcImFikEnPJZ
-         gDkmBm1Kp3Ft6gLrzyiplZN6QVS19jxGZo8aba5leU/XHTM5o+ewUB1fKokV25Okd6
-         wp6PLNZ2kL4bkJOZev7e5LKwlCDVY5NCa9wSQbTl42NyHABdw/NsUP7nR3V/BoivGd
-         l9UC6uHF43FCA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 057DFE21EE2;
-        Tue, 20 Sep 2022 20:50:18 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Tue, 20 Sep 2022 17:58:34 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 003E66B675;
+        Tue, 20 Sep 2022 14:58:33 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28KL37E9004797;
+        Tue, 20 Sep 2022 21:58:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=VSBeGUDtdisVLROlfXirpoYpORUqwXu1rcQth9DasoM=;
+ b=b0u4IuTS1VbYcIqowZKXN7stF45MFMI/Sq6q/dIQZ8Xmri+odkNausNWf9/4zYedB4lU
+ iMZpMBOJGoRMVzYmxrCb/WjWQiR1iTxgEIhCqlHpUvgfmKxSr2CYk1MwP/jSWQUdoWt8
+ ICLiGNkANemHSlcvsf8c/NX05zbaIXyrvnQWBUFkXFoLVytt0ld/2fsTEjMSStw6TSeA
+ uDYlwIDf9D4sQC3s5byuYtoFMsKw35qXIvwJGK3obdNo+4BbaeGw5RF1Pvmv7MEYWZJt
+ dHNfCPgNZcCyuY2pyL6hzaf0lyIzfEMSS3RoADVLHkuhJaR26VatfDlQ5fdl8aZSlHj4 Hg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jq8fw2b49-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 20 Sep 2022 21:58:15 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28KLwE4j015808
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 20 Sep 2022 21:58:14 GMT
+Received: from [10.110.44.78] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 20 Sep
+ 2022 14:58:11 -0700
+Message-ID: <57eedb21-649b-88a2-b757-06bd05e13fd1@quicinc.com>
+Date:   Tue, 20 Sep 2022 14:58:10 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] MAINTAINERS: Add myself as a reviewer for Qualcomm ETHQOS
- Ethernet driver
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <166370701801.15267.18212299614611715724.git-patchwork-notify@kernel.org>
-Date:   Tue, 20 Sep 2022 20:50:18 +0000
-References: <20220915112804.3950680-1-bhupesh.sharma@linaro.org>
-In-Reply-To: <20220915112804.3950680-1-bhupesh.sharma@linaro.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        vkoul@kernel.org, davem@davemloft.net
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH v7 1/5] PCI: qcom: Add system suspend and resume support
+Content-Language: en-US
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        <helgaas@kernel.org>
+CC:     <linux-pci@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <mka@chromium.org>,
+        <quic_vbadigan@quicinc.com>, <quic_hemantk@quicinc.com>,
+        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <manivannan.sadhasivam@linaro.org>,
+        <swboyd@chromium.org>, <dmitry.baryshkov@linaro.org>,
+        <svarbanov@mm-sol.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@somainline.org>,
+        <lpieralisi@kernel.org>, <robh@kernel.org>, <kw@linux.com>,
+        <bhelgaas@google.com>, <linux-phy@lists.infradead.org>,
+        <vkoul@kernel.org>, <kishon@ti.com>, <mturquette@baylibre.com>,
+        <linux-clk@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <1663669347-29308-1-git-send-email-quic_krichai@quicinc.com>
+ <1663669347-29308-2-git-send-email-quic_krichai@quicinc.com>
+From:   Jeff Johnson <quic_jjohnson@quicinc.com>
+In-Reply-To: <1663669347-29308-2-git-send-email-quic_krichai@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: XadFRIHuUjt_yzIMNHXVNLRNaYLYbSCw
+X-Proofpoint-ORIG-GUID: XadFRIHuUjt_yzIMNHXVNLRNaYLYbSCw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-20_10,2022-09-20_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1011
+ adultscore=0 malwarescore=0 spamscore=0 mlxscore=0 lowpriorityscore=0
+ bulkscore=0 mlxlogscore=999 suspectscore=0 phishscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2209130000
+ definitions=main-2209200133
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -58,28 +91,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
-
-This patch was applied to netdev/net.git (master)
-by Jakub Kicinski <kuba@kernel.org>:
-
-On Thu, 15 Sep 2022 16:58:04 +0530 you wrote:
-> As suggested by Vinod, adding myself as the reviewer
-> for the Qualcomm ETHQOS Ethernet driver.
+On 9/20/2022 3:22 AM, Krishna chaitanya chundru wrote:
+> Add suspend and resume syscore ops.
 > 
-> Recently I have enabled this driver on a few Qualcomm
-> SoCs / boards and hence trying to keep a close eye on
-> it.
+> Few PCIe endpoints like NVMe and WLANs are always expecting the device
+> to be in D0 state and the link to be active (or in l1ss) all the time
+> (including in S3 state).
 > 
-> [...]
+> In qcom platform PCIe resources( clocks, phy etc..) can released
 
-Here is the summary with links:
-  - MAINTAINERS: Add myself as a reviewer for Qualcomm ETHQOS Ethernet driver
-    https://git.kernel.org/netdev/net/c/603ccb3aca71
+can *be* released... ??
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+> when the link is in L1ss to reduce the power consumption. So if the link
+> is in L1ss, release the PCIe resources. And when the system resumes,
+> enable the PCIe resources if they released in the suspend path.
 
+if they *were* released... ??
+
+> 
+> is_suspended flag indicates if the PCIe resources are released or not
+> in the suspend path.
+> 
+> Its observed that access to Ep PCIe space to mask MSI/MSIX is happening
+
+s/Its/It's/
+
+> at the very late stage of suspend path (access by affinity changes while
+> making CPUs offline during suspend, this will happen after devices are
+> suspended (after all phases of suspend ops)). If we turn off clocks in
+
+All those parenthesis, thought I was reading Lisp.
+Can you rewrite in conversational English?
 
