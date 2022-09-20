@@ -2,59 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E9E75BE0C6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 10:53:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C9045BE0D1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 10:55:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229557AbiITIxL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 04:53:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45198 "EHLO
+        id S231330AbiITIy7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 04:54:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229847AbiITIxK (ORCPT
+        with ESMTP id S231347AbiITIyq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 04:53:10 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EE6362AA4;
-        Tue, 20 Sep 2022 01:53:09 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 1DEEFB81C65;
-        Tue, 20 Sep 2022 08:53:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA406C433C1;
-        Tue, 20 Sep 2022 08:53:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663663986;
-        bh=+hOCXBX7pNsUScAiy6Ygg+Obl2q7g6sqoTjVLyRJbTQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=I1S2+C5xu3tMXDm5//ouBzNJzmjYq06Ry/kZrjXRUN8giXKc/sUE5LmlB5BtydVWa
-         f09HrCmK+y8kNw+OTC4D68B/BhjzG9jxGd4hxgISuJXZdIPzZNzmYDQ+nOBQHS0lVh
-         XpJt6jzIGGfusIoq5TC4le5dEdzF6x18GmxZsxJkUju2hO77RTL1OuCAcPnAVGtNmh
-         IA4nioYgkbB4kEwZ+WBmMGTtm8o/1R6+CbEb+4jSnImGixha06K9t09ke2cTe1Ooht
-         EO+NYHh6Mzkuu7c48hrK8q9NawryxWGtrY2Zb5iJdzWBDnuvrGjZgj7taRYCjw5FMi
-         +Qh+jk+dxHFkw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oaZ09-0002Ge-Ax; Tue, 20 Sep 2022 10:53:09 +0200
-Date:   Tue, 20 Sep 2022 10:53:09 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: fix UFS PHY serdes size
-Message-ID: <Yyl/daUAcbJmgxDu@hovoldconsulting.com>
-References: <20220915141601.18435-1-johan+linaro@kernel.org>
- <20220915150907.yxmulr3xq4uwvi7f@builder.lan>
+        Tue, 20 Sep 2022 04:54:46 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E57429C9A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 01:54:40 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id w8so2579474lft.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 01:54:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=/R9hqooZ2WhPjRpl0VQUVEHIhAT+zabNTgearvK0bTY=;
+        b=QZxxvmqBSRxXPI03uhpH6teHa41fSx8Q25y66FPLTN/JTJtgg/dPVbcu14r12s0TGE
+         D3e8WTBxm6B9UviRF+ewiOjn0s/HqmLa1jr8hEffLXiR/ZqIjy4NHGyPzlMlZ6eqR+8U
+         vRpNjd4/22GLDHhu3/aKOdZ4GXgnvkax30g28yJoJjRBznK1GqtSkAERb+B8vG/7Caeu
+         xCBC/kxix+T+GSDahNZTGTEsfMyVTVOaNo6DShICRb3eT4Uy388jVS01k2P15orbHXih
+         9QpEWbu4Tc9BZsQIQD/qR5WQNICzKzdIipdSESjFeqniVRo9019+Mn3Hh871kIRZeSwW
+         GeQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=/R9hqooZ2WhPjRpl0VQUVEHIhAT+zabNTgearvK0bTY=;
+        b=cGNUh4+MBMoXkhcD+S+bdVHjcRixLOJboPPHI/llmk0yZPstksdeCNcDTHguD905L1
+         r/FutTtKgPLKO5/hZ3YENWJ4orOre/65RNkIWcCE7YkX+ZM4yo8v/4BxEzddHmhAZ0pd
+         XJYDiEIf+NYEe8c1V6N/uP2NbK7DOmWQGbVBwyF/zUfLwTHsOSJJbKAIHDN4Qn1fUmAe
+         oOx4uRPrWJHRwCfp3pffszrZD9Uw97riR7WEhjLYf3t+LgUbPcixZdMANyk2CZlt07yJ
+         KRw0eQVPol5ES+DftdjCFUmnTAzEgEX38XDzwnv25m8bsNUN5ecXaDvx6AjTJ06h8Dmv
+         USOg==
+X-Gm-Message-State: ACrzQf3DmMNxEky9AtfZsmrSX0AN2y/iyfDGJh0oFYymLqZvK+0zMsmY
+        EI1EOuhBnyT4HwidTNRUwd0yJA==
+X-Google-Smtp-Source: AMsMyM5pioa34SQt+KAmG2EUQFfy9zDDTHSE8Z9k2mKkZ2Bf0+l/mvjxkzbKEMv0lXSeJrRzOYksJg==
+X-Received: by 2002:a05:6512:3b10:b0:498:fd40:51d2 with SMTP id f16-20020a0565123b1000b00498fd4051d2mr7546367lfv.11.1663664079033;
+        Tue, 20 Sep 2022 01:54:39 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id bu25-20020a056512169900b0048afbe8a6a1sm201785lfb.241.2022.09.20.01.54.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Sep 2022 01:54:38 -0700 (PDT)
+Message-ID: <2ad436c8-8b7a-80ed-9c91-d2293eff70ab@linaro.org>
+Date:   Tue, 20 Sep 2022 10:54:37 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220915150907.yxmulr3xq4uwvi7f@builder.lan>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v6 0/4] dt-bindings: qcom-qce: Convert bindings to yaml &
+ related changes
+Content-Language: en-US
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org, thara.gopinath@gmail.com,
+        devicetree@vger.kernel.org, robh@kernel.org, andersson@kernel.org,
+        bhupesh.linux@gmail.com, Jordan Crouse <jorcrous@amazon.com>
+References: <20220919220804.1047292-1-bhupesh.sharma@linaro.org>
+ <36bd1c19-8fbd-0903-704d-447117b2007a@linaro.org>
+ <dfe1bc9e-2ab9-d2dd-7daa-dddb8d66fd77@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <dfe1bc9e-2ab9-d2dd-7daa-dddb8d66fd77@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -62,18 +80,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 15, 2022 at 10:09:07AM -0500, Bjorn Andersson wrote:
-> On Thu, Sep 15, 2022 at 04:16:01PM +0200, Johan Hovold wrote:
-> > The size of the UFS PHY serdes register region is 0x1c8 and the
-> > corresponding 'reg' property should specifically not include the
-> > adjacent regions that are defined in the child node (e.g. tx and rx).
-> > 
-> > Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+On 20/09/2022 10:48, Bhupesh Sharma wrote:
 > 
-> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+> On 9/20/22 12:58 PM, Krzysztof Kozlowski wrote:
+>> On 20/09/2022 00:08, Bhupesh Sharma wrote:
+>>
+>> (...)
+>>
+>>
+>>>
+>>> Qualcomm crypto engine (qce) is available on several Snapdragon SoCs.
+>>> The qce block supports hardware accelerated algorithms for encryption
+>>> and authentication. It also provides support for aes, des, 3des
+>>> encryption algorithms and sha1, sha256, hmac(sha1), hmac(sha256)
+>>> authentication algorithms.
+>>>
+>>> Note that this patchset is dependent on the dt-bindings patchset (see [1]) sent to devicetree list.
+>>>
+>>> [1]. https://lore.kernel.org/linux-arm-msm/20220919195618.926227-1-bhupesh.sharma@linaro.org/
+>>
+>> If it is dependent on the bindings only, keep them together. However I
+>> don't think this is the only dependency. You add here several
+>> compatibles which are not supported.
+> 
+> 
+> Please go through the cover letter where I mentioned that:
+>    'As per Bjorn's suggestion on irc, broke down the patchset into 4
+>    separate patchsets, one each for the following areas to allow easier
+>    review and handling from the respective maintainer(s):
+>          'arm-msm', 'crypto', 'dma' and 'devicetree'
+>    This patchset is directed for the 'devicetree' tree / area.'
+> 
+> Basically now the patchset which had around 23 patches in v5 will send 
+> out as 4 separate patchsets one each for 'arm-msm', 'crypto', 'dma' and 
+> 'devicetree' trees.
+> 
+> So when all the respective subsets are picked up, all the compatibles 
+> are in place.
 
-I can't seem to find this one in either the arm64-for-6.1 or fixes
-branch for 6.0. Did you just forget to push it?
+and none of reviewers can find them, because you linked only bindings.
+Keeping bindings separate from everything is not good approach. Either
+they should be with DTS or with driver changes. Otherwise how can we
+even look that they are matching DTS?
 
-Johan
+Keeping them separate even makes impression there are no ABI breaks and
+bisectability issues...
+
+
+Best regards,
+Krzysztof
