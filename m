@@ -2,69 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C31FB5BE4CE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 13:42:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A0F285BE4DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 13:44:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231150AbiITLmw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 07:42:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33280 "EHLO
+        id S229813AbiITLoa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 07:44:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230394AbiITLmF (ORCPT
+        with ESMTP id S230432AbiITLoE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 07:42:05 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36F5B74364
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 04:41:51 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id b75so2478124pfb.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 04:41:51 -0700 (PDT)
+        Tue, 20 Sep 2022 07:44:04 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7219471719
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 04:43:52 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id k10so3312636lfm.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 04:43:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=f1jyoMzYrt7oW3ZWE+v01VrggZfcgZodlLjAeFXHMeI=;
-        b=fs7gdTeOnh6ajT0yIBSWXYT4L2N3b4oPI9fdr6NeMuRnaU2VkFM0XPnXpJIdeR8O+e
-         kZu6hYqU/o9vRacABqPnwhkoUpbz0jMgf1ALcVRubrxJj2jsydG8IWxizoMCO+EtXdC2
-         trvFye6XTiVanq/1aBOn/53bG1OHC8bjNkhYsHOc5sQzNTyuoKsCbUz0fFXct3R8e+45
-         0GUjjXp0x4kTuOrIsmBslPQxt3KgCEIPDUUpgEnd4HQ8TP+rPOKplxljq+cdJY2BhhnR
-         umjKU0ViLgSz5GKHAqv+/4HjHg66/OpU9SpwDoeCdTauhrpVXfCh8PNj9X04jBBfiEAV
-         V+EA==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=/0Ndn+NlDdssGkzqLaRqbOpdIWEheyXaXTlI3yhLY30=;
+        b=c6cFS2OdCtcAaac9snrBgj/g9rqNTclDUaVWthxoYVT6YzoHV42Z9Sk+5aYsIWRfAU
+         4kAngnc1/q0Y2dWlSkS0JjJ0ayw7dQ4fOjmbhT/IbAhfnx/jP3RqhcnLoxzSidhBVkA+
+         eTMijuVuTqmrA2yrnxJX8fZOypXGHIqjxXuQIJcZd/A6GAyOVVCNixNr5PglTohNoDXH
+         FTgvn4phqMGQldmfggdUOgR7cPllwj5GUkPDsOqI/1PvdC4SBG2MEJVZigR0GoRMRdWc
+         A6Q2wYFOIi+cl/Yk8cMnApy7As0ucfIITfHDb//g1e79XS8pdHlsUx0o07J14jHn19wc
+         I3qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=f1jyoMzYrt7oW3ZWE+v01VrggZfcgZodlLjAeFXHMeI=;
-        b=plUlJ/sBDoLnufNC7r/U5E3hEuStBJHzAcWt65x8qKgH3z7rO8BCwwCG8wthvr8I+K
-         IkUmdKdbe8SVj/7YI+9CtRC/NRs1kfWigL32PAo+Uhj+/IsF/vVnZTL3DCP3V1WBcjNP
-         mx1rLVCu3uu1XzxMjamQcU2BPxLt77lUcH6KlsSjlT572wV8Weukdnc/K3NvcbOwaN43
-         /1Z5qkKlzVKZgFWnAyO6sqNaM8FG1jT1VYlsT2SQ5oMAvDJz12SxMngCDXa3P/71jik1
-         fkl8jDllYaGxc4ZfP8TdaYjUbwTifjM/iQLGyigp/fIq4hFhj4PjSr3H604KqrECLr7Y
-         nQjA==
-X-Gm-Message-State: ACrzQf27tnQ66N9u7y0tWaVtSMD/jcE/pSG4SkgrsUFzmCBF4qB4yRz0
-        V1UETF0oeoyF4K5vFDz9fMhfOQ==
-X-Google-Smtp-Source: AMsMyM5ZD2aJk5iuQA6y0NmBUSdwRh7Wc1Io0QWIX9d73pd6IVTCE1fZfBRd+zTbW5U4KgT11NenvA==
-X-Received: by 2002:a63:4c50:0:b0:429:983d:22f1 with SMTP id m16-20020a634c50000000b00429983d22f1mr20123611pgl.213.1663674110301;
-        Tue, 20 Sep 2022 04:41:50 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:1c61:6535:ca5f:67d1:670d:e188])
-        by smtp.gmail.com with ESMTPSA id p30-20020a63741e000000b00434e57bfc6csm1348793pgc.56.2022.09.20.04.41.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Sep 2022 04:41:49 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-crypto@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     agross@kernel.org, herbert@gondor.apana.org.au,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, thara.gopinath@gmail.com,
-        robh@kernel.org, krzysztof.kozlowski@linaro.org,
-        andersson@kernel.org, bhupesh.sharma@linaro.org,
-        bhupesh.linux@gmail.com, davem@davemloft.net
-Subject: [PATCH v7 9/9] MAINTAINERS: Add myself as a co-maintainer for Qualcomm Crypto Drivers
-Date:   Tue, 20 Sep 2022 17:10:51 +0530
-Message-Id: <20220920114051.1116441-10-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20220920114051.1116441-1-bhupesh.sharma@linaro.org>
-References: <20220920114051.1116441-1-bhupesh.sharma@linaro.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=/0Ndn+NlDdssGkzqLaRqbOpdIWEheyXaXTlI3yhLY30=;
+        b=Gy6LQoW8tDmfGs6xyypz3VnwPSX2qTJ2WmCkhr0QNGWI6r9sU+kXpxW9qVH2VC5N++
+         zhzcVyP3VMP12brGKoFq3C0LP6FZlZ+BLOb4jMj/NP8wPQNWGvl37eJ4sCWsmqMe/hox
+         Gr1YHBv1I1fu8ghElXDK9R40Eh8YzXGM0nLeb9zmIhMyrgZpxOpuP2uXtLUSM1iMIAT7
+         fzj9AFyVG9+78PysgBq8dGAOWjkRF94yam+XsV7UyTtUagEPFjmKQGDl589yyVLxdWSe
+         CwKhmedXkh+ZrsvjKy4sCEeiNWHBWQ5YB9BMpmC0rTk3V3JvSqLJkU6ljLxY1elJigvd
+         vSvQ==
+X-Gm-Message-State: ACrzQf3oyfWAsO35AA9HvXG8XHw4JHy0sloh9Ru40E6kym618vhYuJFx
+        eGxGLjQeCmQ7heWgDCPROmBCL3ZmooQaaNhd0Oniuw==
+X-Google-Smtp-Source: AMsMyM48be/YU4xcy+Id6lduQHEoJJB939r65gfNY5HefhFYNQzgsT/f/AW/lnjxjRQwxXpis/dgWZjNj02u4AnyjwA=
+X-Received: by 2002:a05:6512:3e10:b0:498:f317:e57e with SMTP id
+ i16-20020a0565123e1000b00498f317e57emr8364693lfv.328.1663674230091; Tue, 20
+ Sep 2022 04:43:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220919221509.1057574-1-bhupesh.sharma@linaro.org>
+ <20220919221509.1057574-2-bhupesh.sharma@linaro.org> <bb577304-f048-8fd5-fc7a-47a0897ba792@linaro.org>
+ <00dd028f-d636-0cda-40ce-01d5addcbec9@linaro.org> <ccc318c0-ee1b-d538-6d2b-bf85a3c9c6fd@linaro.org>
+ <CAH=2Ntys+JSurmZn5qN2Kuphi_5q6Ge7cZgd9KMTvAyLnd6JSA@mail.gmail.com> <a8077058-5493-7b57-0530-c7221a03a799@linaro.org>
+In-Reply-To: <a8077058-5493-7b57-0530-c7221a03a799@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Tue, 20 Sep 2022 17:13:37 +0530
+Message-ID: <CAH=2Ntxhdf2KhGcLLCbwo7vpkH2ofpnGGGJhXNVsqpuDCtqY5Q@mail.gmail.com>
+Subject: Re: [PATCH v6 1/4 RESEND] ARM: dts: qcom: Use new compatibles for
+ crypto nodes
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        thara.gopinath@gmail.com, devicetree@vger.kernel.org,
+        robh@kernel.org, andersson@kernel.org, bhupesh.linux@gmail.com,
+        catalin.marinas@arm.com, will@kernel.org, arnd@arndb.de,
+        Jordan Crouse <jorcrous@amazon.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -75,29 +75,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add myself as a co-maintainer of Qualcomm Crypto drivers.
-As I will be working on enabling crypto block on newer
-Qualcomm SoCs, I will also help review and co-maintain
-the same.
+On Tue, 20 Sept 2022 at 16:46, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 20/09/2022 12:48, Bhupesh Sharma wrote:
+> > On Tue, 20 Sept 2022 at 15:09, Krzysztof Kozlowski
+> > <krzysztof.kozlowski@linaro.org> wrote:
+> >>
+> >> On 20/09/2022 10:57, Bhupesh Sharma wrote:
+> >>>>>             crypto: crypto@8e3a000 {
+> >>>>> -                   compatible = "qcom,crypto-v5.1";
+> >>>>> +                   compatible = "qcom,ipq4019-qce";
+> >>>>
+> >>>> There are few issues here:
+> >>>> 1. Compatible is not documented.
+> >>>
+> >>> Its documented here:
+> >>> https://lore.kernel.org/linux-arm-msm/30756e6f-952f-ccf2-b493-e515ba4f0a64@linaro.org/
+> >>>
+> >>> [as mentioned in the dependency section in the cover letter :)]
+> >>>
+> >>>> 2. Compatible is not supported by old kernel - ABI break.
+> >>
+> >> You cannot fix this with dependencies/ordering.
+> >>
+> >>>> 3. Everything won't be bisectable...
+> >>>
+> >>> I think its a question of dependencies b/w the patchsets intended for
+> >>> separate areas. Let me think more on how, I can resolve it in newer
+> >>> versions.
+> >>
+> >> DTS always goes separately so this also cannot be fixed with ordering or
+> >> dependencies. However if Bjorn is fine with it, it's good.
+> >
+> > Sure, I get your point. SInce I haven't sent out the crypto driver and
+> > DMA driver subsets yet, let me stop and respin the series with the
+> > dt-bindings changes clubbed with the crypto driver patches in a single
+> > patchset. I can keep the DMA and dts patchsets separate and send them
+> > out separately.
+> >
+> > I think that should help maintain the ABI and backward compatibility.
+> > Please let me know if you think otherwise.
+>
+> I actually don't know what's in the drivers, so maybe there is no ABI
+> break by kernel... but you are changing the compatibles in DTS thus any
+> other project using them will be still broken.
 
-Cc: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+I have sent out the crypto and dt-bindings clubbed together as one
+patchset in the v7 version (see [1]).
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index b0556cd21f86..df5724cf608c 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -16945,6 +16945,7 @@ F:	drivers/cpufreq/qcom-cpufreq-nvmem.c
- 
- QUALCOMM CRYPTO DRIVERS
- M:	Thara Gopinath <thara.gopinath@gmail.com>
-+M:	Bhupesh Sharma <bhupesh.sharma@linaro.org>
- L:	linux-crypto@vger.kernel.org
- L:	linux-arm-msm@vger.kernel.org
- S:	Maintained
--- 
-2.37.1
+[1]. https://lore.kernel.org/linux-arm-msm/20220920114051.1116441-1-bhupesh.sharma@linaro.org/
 
+Thanks,
+Bhupesh
