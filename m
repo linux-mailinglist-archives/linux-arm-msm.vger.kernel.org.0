@@ -2,58 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 113CC5BEA04
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 17:21:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F0D475BEA2A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 17:27:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229489AbiITPUk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 11:20:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40270 "EHLO
+        id S231486AbiITP1O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 11:27:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231566AbiITPUT (ORCPT
+        with ESMTP id S231475AbiITP1N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 11:20:19 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75BD5606B0;
-        Tue, 20 Sep 2022 08:20:17 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 3486FB82AA0;
-        Tue, 20 Sep 2022 15:20:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D52E9C433D6;
-        Tue, 20 Sep 2022 15:20:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663687214;
-        bh=fX+wSiZy+n8JLCjfuIS2tthx3hDm7uGH6Lz+t8/r1G0=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=IHnwRa6fUf/CCSuIOqkIC5mB8NiZ8GMaRiQgx1IAIKa+cM19fp7n+d4HnKVIFql/B
-         uUfRSu4itg4ElPvN20fRd06N8Voa2/jDge51n7KjgGKXvsMvd3s4mOYfrsz+QhqFyH
-         ZPlIr2Xi3fO5UBXD3VToKUw6xjn1C0yA0kt0apIWS18jSFO9MgHKd2uqKvb3C3O2K8
-         K8xR5AuW6qLHryW4nOj5Fski6Y4uQqHgrgbyieI+GVIZ9M/qE2LOjtEJ2usPBHL8l0
-         D0jpOegnme8O2F6+ItwaJjcZcTyHwWCVj+1ySEQ/30qenOJT8NPGBQE7XdNFpZ9pQH
-         HVORCI66bScYA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B509AC43141;
-        Tue, 20 Sep 2022 15:20:14 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Tue, 20 Sep 2022 11:27:13 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE12B6610E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 08:27:11 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id h3so3477210lja.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 08:27:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=B9zlBSDLGz45J4rVCp92QGE3K/PsSyKbBmZmy97aTBI=;
+        b=ppjQoYCIqEDoyUQC1g2tJEF9x+OH4j14EIYEA62fIwfNdWb9ZqB1iloakaviH3ZcRa
+         fonKsm+S8/CSernRRlxpY7e/eewkOvD+QYWU/471vhz40GxOUfs585ZV3HOviGc1KREb
+         wAKyV24WXIDZeWDIbL0Vxp4GmMzbA4gENISMMIWGVDpE81XTSVJmp6efXxb3YozARVWT
+         g6TmlBvjdKBjq2lTq26WO0dKUdEPPr9JjbI/9HH7l5jQgZPsmp2Sy1155ToRLPehtmEy
+         xoEUMxxzRWUctxN5K3wzpy0Wd3yLvyTk8SO9DdZ+FizC8UaBeR05tgHWSMG8dxD2GKPk
+         Ma6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=B9zlBSDLGz45J4rVCp92QGE3K/PsSyKbBmZmy97aTBI=;
+        b=jCH5XQoXnxmRM+k6YdRQMT8voOYPdTQF31sc4jdb6N04JgHmyYyzYQKlbagjFtycbN
+         pLGwS1KjGjerzhT9PT9FWHkIkIGLBrrU+MY9hRfRKu4C5rTVI809hk05YRNJF/wNJnJ/
+         v1YXl2qkYUDBbOcX5PSNEGNdIJsrvuE+laN9yMgPbO1Fyw1MvavuuuZRY3HXa1ftSUxt
+         ZakkMCZcfpgxHcbT+5zxsoCeFeD8hcr4a6FRXkJNqUXT8W5DGsFVnPuAh3ZgciOhq/Zz
+         MD+q0bFpBPFuAFNpSzY1W2ohy33xhaZSuujpxX8A3vvnp2VHNtX3sjanyfqKpdT+Les7
+         cByg==
+X-Gm-Message-State: ACrzQf1nElGm9FxUJxUTqH1rbKZDN//vaWyfH6yPk1sNVyNUi2DeRDcD
+        arAd5gNuqswmPSp110PfzYfZpg==
+X-Google-Smtp-Source: AMsMyM5zFH+v5M6zKOBxmCc1ayLTaRdsTIZtdXX6bZsrIPRwr+sIo7L7DUAZzTEsxi92gWtC3zBLXQ==
+X-Received: by 2002:a2e:9b89:0:b0:26a:a203:3b54 with SMTP id z9-20020a2e9b89000000b0026aa2033b54mr7622030lji.478.1663687630221;
+        Tue, 20 Sep 2022 08:27:10 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id p9-20020a2ea4c9000000b00261b4df9ec4sm29516ljm.138.2022.09.20.08.27.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Sep 2022 08:27:09 -0700 (PDT)
+Message-ID: <9f64a14d-8bcf-b015-4f19-1a6eb7501960@linaro.org>
+Date:   Tue, 20 Sep 2022 17:27:08 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net v2] net: ipa: properly limit modem routing table use
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <166368721473.32154.1711335581514313209.git-patchwork-notify@kernel.org>
-Date:   Tue, 20 Sep 2022 15:20:14 +0000
-References: <20220913204602.1803004-1-elder@linaro.org>
-In-Reply-To: <20220913204602.1803004-1-elder@linaro.org>
-To:     Alex Elder <elder@linaro.org>
-Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, mka@chromium.org, evgreen@chromium.org,
-        bjorn.andersson@linaro.org, quic_cpratapa@quicinc.com,
-        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
-        quic_subashab@quicinc.com, elder@kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v4 2/3] arm64: dts: qcom: sa8295p: move common nodes to
+ dtsi
+Content-Language: en-US
+To:     Parikshit Pareek <quic_ppareek@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andrew Halaney <ahalaney@redhat.com>,
+        Shazad Hussain <quic_shazhuss@quicinc.com>
+References: <20220920120802.14321-1-quic_ppareek@quicinc.com>
+ <20220920120802.14321-3-quic_ppareek@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220920120802.14321-3-quic_ppareek@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,32 +82,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
-
-This patch was applied to netdev/net.git (master)
-by Jakub Kicinski <kuba@kernel.org>:
-
-On Tue, 13 Sep 2022 15:46:02 -0500 you wrote:
-> IPA can route packets between IPA-connected entities.  The AP and
-> modem are currently the only such entities supported, and no routing
-> is required to transfer packets between them.
-> 
-> The number of entries in each routing table is fixed, and defined at
-> initialization time.  Some of these entries are designated for use
-> by the modem, and the rest are available for the AP to use.  The AP
-> sends a QMI message to the modem which describes (among other
-> things) information about routing table memory available for the
-> modem to use.
-> 
-> [...]
-
-Here is the summary with links:
-  - [net,v2] net: ipa: properly limit modem routing table use
-    https://git.kernel.org/netdev/net/c/cf412ec33325
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+On 20/09/2022 14:08, Parikshit Pareek wrote:
+> There are many ADP boards with lot of common features. Move common
+> nodes to sa8540p-adp.dtsi file. This will be base for many ADP boards
+> to be introduced in near future.
 
 
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+
+Best regards,
+Krzysztof
