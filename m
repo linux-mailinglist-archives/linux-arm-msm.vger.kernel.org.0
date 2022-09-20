@@ -2,144 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F34995BE3A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 12:44:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E34CA5BE3BA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 12:48:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229655AbiITKny (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 06:43:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39404 "EHLO
+        id S229647AbiITKsY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 06:48:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231287AbiITKnb (ORCPT
+        with ESMTP id S229813AbiITKsX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 06:43:31 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9ACD225C5;
-        Tue, 20 Sep 2022 03:43:29 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0BCF8628F0;
-        Tue, 20 Sep 2022 10:43:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A744C433C1;
-        Tue, 20 Sep 2022 10:43:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663670608;
-        bh=6GsQ3yhKLr/MxdSlXebBHOnZZwkqV+Km5n+FdtLELFs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=B5dAVjAuYVAf/ldcpMwVOIccr93eh+i/PPqe86bcTTpe9rquyYiwNXWsEYN6MEgtC
-         4dkSGP8Y6MjqZepb+9gQ6s3zfFi8AQZlWHaT9YE94OBgT652ETiHQ4+oyg1H9cMKe0
-         W4ejHxERjCdEHRyFhCMtozUTXVDZIa2H0g10CJTUgcjhZqBq48hlTCa71o1rmNMJUn
-         UuRNJ769Ea2tTmdOKpPB1SWcTi7Afm+dzY4ofsUzOPWyR3eaWqkGsJ5+yZC/8xtTFB
-         fdtVAvZE4UfiE+hEXckkBlXeuH+b1N2KqaqSOzsoRx2yLdTrKi9779585hh4U8ohjY
-         b1TN7NMPsPyxQ==
-Date:   Tue, 20 Sep 2022 12:43:25 +0200
-From:   Frederic Weisbecker <frederic@kernel.org>
-To:     Peter Zijlstra <peterz@infradead.org>
-Cc:     richard.henderson@linaro.org, ink@jurassic.park.msu.ru,
-        mattst88@gmail.com, vgupta@kernel.org, linux@armlinux.org.uk,
-        ulli.kroll@googlemail.com, linus.walleij@linaro.org,
-        shawnguo@kernel.org, Sascha Hauer <s.hauer@pengutronix.de>,
-        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
-        tony@atomide.com, khilman@kernel.org, catalin.marinas@arm.com,
-        will@kernel.org, guoren@kernel.org, bcain@quicinc.com,
-        chenhuacai@kernel.org, kernel@xen0n.name, geert@linux-m68k.org,
-        sammy@sammy.net, monstr@monstr.eu, tsbogend@alpha.franken.de,
-        dinguyen@kernel.org, jonas@southpole.se,
-        stefan.kristiansson@saunalahti.fi, shorne@gmail.com,
-        James.Bottomley@hansenpartnership.com, deller@gmx.de,
-        mpe@ellerman.id.au, npiggin@gmail.com, christophe.leroy@csgroup.eu,
-        paul.walmsley@sifive.com, palmer@dabbelt.com,
-        aou@eecs.berkeley.edu, hca@linux.ibm.com, gor@linux.ibm.com,
-        agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
-        svens@linux.ibm.com, ysato@users.sourceforge.jp, dalias@libc.org,
-        davem@davemloft.net, richard@nod.at,
-        anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net,
-        tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
-        dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
-        acme@kernel.org, mark.rutland@arm.com,
-        alexander.shishkin@linux.intel.com, jolsa@kernel.org,
-        namhyung@kernel.org, jgross@suse.com, srivatsa@csail.mit.edu,
-        amakhalov@vmware.com, pv-drivers@vmware.com,
-        boris.ostrovsky@oracle.com, chris@zankel.net, jcmvbkbc@gmail.com,
-        rafael@kernel.org, lenb@kernel.org, pavel@ucw.cz,
-        gregkh@linuxfoundation.org, mturquette@baylibre.com,
-        sboyd@kernel.org, daniel.lezcano@linaro.org, lpieralisi@kernel.org,
-        sudeep.holla@arm.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
-        anup@brainfault.org, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, jacob.jun.pan@linux.intel.com,
-        atishp@atishpatra.org, Arnd Bergmann <arnd@arndb.de>,
-        yury.norov@gmail.com, andriy.shevchenko@linux.intel.com,
-        linux@rasmusvillemoes.dk, dennis@kernel.org, tj@kernel.org,
-        cl@linux.com, rostedt@goodmis.org, pmladek@suse.com,
-        senozhatsky@chromium.org, john.ogness@linutronix.de,
-        juri.lelli@redhat.com, vincent.guittot@linaro.org,
-        dietmar.eggemann@arm.com, bsegall@google.com, mgorman@suse.de,
-        bristot@redhat.com, vschneid@redhat.com, fweisbec@gmail.com,
-        ryabinin.a.a@gmail.com, glider@google.com, andreyknvl@gmail.com,
-        dvyukov@google.com, vincenzo.frascino@arm.com,
-        Andrew Morton <akpm@linux-foundation.org>, jpoimboe@kernel.org,
-        linux-alpha@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-snps-arc@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-csky@vger.kernel.org, linux-hexagon@vger.kernel.org,
-        linux-ia64@vger.kernel.org, loongarch@lists.linux.dev,
-        linux-m68k@lists.linux-m68k.org, linux-mips@vger.kernel.org,
-        openrisc@lists.librecores.org, linux-parisc@vger.kernel.org,
-        linuxppc-dev@lists.ozlabs.org, linux-riscv@lists.infradead.org,
-        linux-s390@vger.kernel.org, linux-sh@vger.kernel.org,
-        sparclinux@vger.kernel.org, linux-um@lists.infradead.org,
-        linux-perf-users@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-xtensa@linux-xtensa.org, linux-acpi@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-arch@vger.kernel.org, kasan-dev@googlegroups.com,
-        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: Re: [PATCH v2 03/44] cpuidle/poll: Ensure IRQ state is invariant
-Message-ID: <20220920104325.GA72346@lothringen>
-References: <20220919095939.761690562@infradead.org>
- <20220919101520.534233547@infradead.org>
- <20220919131927.GA58444@lothringen>
- <YymAXPkZkyFIEjXM@hirez.programming.kicks-ass.net>
+        Tue, 20 Sep 2022 06:48:23 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7E273ED77
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 03:48:21 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id a10so2554661ljq.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 03:48:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=rEGmknlYprbAXEKZt0aDiUeWs1wXNDCingS635ls9Fc=;
+        b=HyqCxNPj5NRGA1a7SPijTw1BTZjf9krt+Mi0HRZjs9kmt3FQY1aAdhBWC9UuffmJ9H
+         45ia3cDWPaAnBpdWUKG4FHblG2GDBKwA7SBc/OKHkI9fPc7ZgzMW0RkgTJD3OxeBC6ak
+         ZjuLM/QAGnBJOD5eKjncckAICt5FPjj62iY8IHZ6tmZCEffiA13mxyc3Sk+ZWiVh7Kjq
+         IugtQpJTs8mC58wTbTFN/v8J+GRVcrqUr2J1V5B9rMQhr2lGryjMnzbI+7pb/9uLLyau
+         0m6/PWWkRvrt6p7DUDvKFpJJCqjAD4XvDWk5Vqm1aYh+uOxhgCnkOEATQU+a5j9TWsIw
+         iWIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=rEGmknlYprbAXEKZt0aDiUeWs1wXNDCingS635ls9Fc=;
+        b=1uLJyGZtc/gg9sqJ49rcB3EvL84iuer9U+6Aw5IW4m2yoIBLbHphYlt6vlqOzTGEMT
+         bp8pb+xE6VI2J6SPtecO7uznfxXnW8FdxNcSt1UhzYIblND8N8U2AawFF+iyMNRyJ7xM
+         uY7AHEwZX3ovxPe7U7GG8VXgWiFpf6KWfS61lkMIY8JpgL+6CQkO5PwISKNPTp8H3WLu
+         XL0yZ1wVWJe5r+IGTUCKy+rsr5AwmgcGuqwSessXXm0v9yw7TTNsW99Hqdx5idcyqf3f
+         KosMnU1wBaoulPNJrt2Pio/yP5fOHFWTpVieDVLWiTU6qKeJTd5URBNE5SH+Z3qKeQso
+         ipaQ==
+X-Gm-Message-State: ACrzQf0JNpNt1+AfuR//6W2JuULQzYFigmK40zZ1QIKSG127a5D53+f4
+        BL1+6JncI140rjKtGfT1HDmhTHfYKqkynnYiePcJVw==
+X-Google-Smtp-Source: AMsMyM6LRzJcHqKA484dpEdut/aXm2HrrwXEfE2I0p+wciPdizqSlOjLEHCiJMmPkNcVNC5h8NjCwvWrM5xWucnrY/o=
+X-Received: by 2002:a05:651c:1a29:b0:26c:2241:8aa0 with SMTP id
+ by41-20020a05651c1a2900b0026c22418aa0mr6562812ljb.96.1663670900075; Tue, 20
+ Sep 2022 03:48:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YymAXPkZkyFIEjXM@hirez.programming.kicks-ass.net>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20220919221509.1057574-1-bhupesh.sharma@linaro.org>
+ <20220919221509.1057574-2-bhupesh.sharma@linaro.org> <bb577304-f048-8fd5-fc7a-47a0897ba792@linaro.org>
+ <00dd028f-d636-0cda-40ce-01d5addcbec9@linaro.org> <ccc318c0-ee1b-d538-6d2b-bf85a3c9c6fd@linaro.org>
+In-Reply-To: <ccc318c0-ee1b-d538-6d2b-bf85a3c9c6fd@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Tue, 20 Sep 2022 16:18:06 +0530
+Message-ID: <CAH=2Ntys+JSurmZn5qN2Kuphi_5q6Ge7cZgd9KMTvAyLnd6JSA@mail.gmail.com>
+Subject: Re: [PATCH v6 1/4 RESEND] ARM: dts: qcom: Use new compatibles for
+ crypto nodes
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        thara.gopinath@gmail.com, devicetree@vger.kernel.org,
+        robh@kernel.org, andersson@kernel.org, bhupesh.linux@gmail.com,
+        catalin.marinas@arm.com, will@kernel.org, arnd@arndb.de,
+        Jordan Crouse <jorcrous@amazon.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 20, 2022 at 10:57:00AM +0200, Peter Zijlstra wrote:
-> On Mon, Sep 19, 2022 at 03:19:27PM +0200, Frederic Weisbecker wrote:
-> > On Mon, Sep 19, 2022 at 11:59:42AM +0200, Peter Zijlstra wrote:
-> > > cpuidle_state::enter() methods should be IRQ invariant
-> > 
-> > Got a bit confused with the invariant thing since the first chunck I
-> > see in this patch is a conversion to an non-traceable local_irq_enable().
-> > 
-> > Maybe just add a short mention about that and why?
-> 
-> Changelog now reads:
-> 
-> ---
-> Subject: cpuidle/poll: Ensure IRQ state is invariant
-> From: Peter Zijlstra <peterz@infradead.org>
-> Date: Tue May 31 15:43:32 CEST 2022
-> 
-> cpuidle_state::enter() methods should be IRQ invariant.
-> 
-> Additionally make sure to use raw_local_irq_*() methods since this
-> cpuidle callback will be called with RCU already disabled.
-> 
-> Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-> Reviewed-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+On Tue, 20 Sept 2022 at 15:09, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 20/09/2022 10:57, Bhupesh Sharma wrote:
+> >>>             crypto: crypto@8e3a000 {
+> >>> -                   compatible = "qcom,crypto-v5.1";
+> >>> +                   compatible = "qcom,ipq4019-qce";
+> >>
+> >> There are few issues here:
+> >> 1. Compatible is not documented.
+> >
+> > Its documented here:
+> > https://lore.kernel.org/linux-arm-msm/30756e6f-952f-ccf2-b493-e515ba4f0a64@linaro.org/
+> >
+> > [as mentioned in the dependency section in the cover letter :)]
+> >
+> >> 2. Compatible is not supported by old kernel - ABI break.
+>
+> You cannot fix this with dependencies/ordering.
+>
+> >> 3. Everything won't be bisectable...
+> >
+> > I think its a question of dependencies b/w the patchsets intended for
+> > separate areas. Let me think more on how, I can resolve it in newer
+> > versions.
+>
+> DTS always goes separately so this also cannot be fixed with ordering or
+> dependencies. However if Bjorn is fine with it, it's good.
 
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Sure, I get your point. SInce I haven't sent out the crypto driver and
+DMA driver subsets yet, let me stop and respin the series with the
+dt-bindings changes clubbed with the crypto driver patches in a single
+patchset. I can keep the DMA and dts patchsets separate and send them
+out separately.
 
-Thanks!
+I think that should help maintain the ABI and backward compatibility.
+Please let me know if you think otherwise.
 
+Thanks,
+Bhupesh
