@@ -2,72 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CBB75BE0BA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 10:49:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDE7C5BE0B9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Sep 2022 10:49:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231485AbiITItF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 04:49:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36762 "EHLO
+        id S230103AbiITItL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 04:49:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231591AbiITIsk (ORCPT
+        with ESMTP id S230344AbiITIs5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 04:48:40 -0400
+        Tue, 20 Sep 2022 04:48:57 -0400
 Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9C8D6BCC7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 01:48:37 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id u18so2595075lfo.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 01:48:37 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A08D6B65F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 01:48:55 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id f9so2634925lfr.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 01:48:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=MyK7g5vOt7OLNZ8qZikUV2n8eSBwV/+RgPlkSyOJlKI=;
-        b=n/UjAlwCSuThsJKKdbs2h4vv8GLHsHMTYgyrAp5/4CeWmEus9mtzwZtUUMTROOzmp5
-         6xtIHEiZMgovisgg2vJFXUMud6mDs+AU8tOCxKCIROBHbqwgB66I0HHRSJY6NI2XzRvq
-         QqIxnmXwTNwU5kBSrc7OzHJQapF8z9fbnBww/IRm5yi1svTM8aX7+LJnBSRlvqZVhXUx
-         OWlvYkOMIEmgl3lPMi/NhX9tYFJs7e7BwHbF++GwsBhcOQmlSF3IKYN5BesDVUYgUIg0
-         AzVxnB8sfEj3z9NEY/f3P7YoGMyfyH45GjMUefEWnZj3krhfNfeLvhD+qZNNvrlhc+tY
-         oKyw==
+        bh=Yy1+JpH7mb9yRtgA97CnSueuyqH+DM3LnKPEy7X4nlk=;
+        b=mn4lRXquBRleFQCpshmG+O6cXtSU+FiKstWkPxOrKfbolyI+L/ISz/GRjlbdJPWKR/
+         rJfyySIefp7Fmc/PiPmw6vHAeN/0p08eJ5845XpVm4sO0oAsDhrYkh7TCS95ExEE6KH3
+         LsLOpX9YjUXzF2xL76x6WdimBjgyF3YinZqCXQntjaf/6day/eY+9irQU/KO624hHTJU
+         dd4916cX/M2V24vJbtb9QdgjfOmD87U2T/A/Afo4sCBNAofW+Gtf/qO4O2IkghT7Pl8i
+         k3RfKy8KMGl8iGZkwFCyVKwIPpSnN4OdlliamceNPhRb683i9jxgIXGKVOBqJuvDVaM5
+         8OHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=MyK7g5vOt7OLNZ8qZikUV2n8eSBwV/+RgPlkSyOJlKI=;
-        b=f1KclNeRNncD2fm4Otgk6ZPOYTmsPqOn+BZBHSOQtssI1dO8JgTXuR+WJbtYaHB+Og
-         +jhTd4i+8sWoZX9h8Zaeb2wNp6EFvT/V0X/Fj1OKzNUwGc94tEgl8Fzj5lruOI8ER9tf
-         MRKKG28pr9R/uH2SoMKnFojMRbUyKaY572kq9CljFl1Xo+PdpgGIET5Ufv/2fQs/DEr0
-         d/gFx4KAiajkREVvRBlwcAQpnRU8vdedR3VmEKfvFpCCf+3L84BIHL5t8zvOlQYgpTco
-         x/GcKVS05ECQwfaalttpinHSji6lAc1DmISZhYqI1LYaYMqx/c1l33pcLFposr00UMvH
-         iCMg==
-X-Gm-Message-State: ACrzQf09spHbzIZVG3i/NZ1+T983nEef9kwiq2Zniv84oCGXdJDbZxx0
-        yKRHog+oC8ujZEcbgxB7hivM1A==
-X-Google-Smtp-Source: AMsMyM4s1Z4R8q7MGFJxL0cNejD2laGiWwLxGTaJpzkdN6zhcqwchYVGsbhrVkzvakZIx9RmE+H7rg==
-X-Received: by 2002:a05:6512:3b22:b0:49a:d302:ae04 with SMTP id f34-20020a0565123b2200b0049ad302ae04mr8223966lfv.72.1663663715822;
-        Tue, 20 Sep 2022 01:48:35 -0700 (PDT)
+        bh=Yy1+JpH7mb9yRtgA97CnSueuyqH+DM3LnKPEy7X4nlk=;
+        b=yv0xqiv5irOUDhaBOzaR4AAqQGvJ+maMXr689qbfEKr9D+rlemW9GO3UBShr2J3dsT
+         cz0R7YuHaxdTzdwW1fGAlv2Xj9QIhTzkdL36m+UzNonUELXiduVIUHHCHVea7y54I1KG
+         7Whu6IOCBbaegZOd197aCIq6tdBHqiS7dNS9GgmdVko0Ige2bbjM/wNotpMsAsSzHN3Q
+         VJvgbtYSgKSOfPBqZFSdLXG2sXFn0fs7mC69Y6WXWdA7Fw1qJkcj0tzj5Q8tiyAebosI
+         9o1TBDVw69AVSaI3LxqVv8zYoc5f7MFwQaquzDLzb4I4ETWqO8ohcE/vHQNJ+M4H+a9e
+         pZ3Q==
+X-Gm-Message-State: ACrzQf1YrDbtv+Q0Tnrenr1S3/S1Rl1EOFzRBv6Oif6V/pfJLRPiczfY
+        IPnBXcL6tqKGyDwmKNKVgqAfXw==
+X-Google-Smtp-Source: AMsMyM7ooit7RNs5fVCvrRuMdm1AzyqeD++USlCJfUWXymRCFh14TNOz5JQvn7Kn2twkwmzP7p5VOg==
+X-Received: by 2002:a05:6512:3e23:b0:498:fbf1:c480 with SMTP id i35-20020a0565123e2300b00498fbf1c480mr8384702lfv.473.1663663733909;
+        Tue, 20 Sep 2022 01:48:53 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id v17-20020a2e9f51000000b0026c3975f488sm157414ljk.26.2022.09.20.01.48.35
+        by smtp.gmail.com with ESMTPSA id 2-20020ac24842000000b004948378080csm197492lfy.290.2022.09.20.01.48.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Sep 2022 01:48:35 -0700 (PDT)
-Message-ID: <1a03bcd4-02af-3b2a-59ac-f8d776c37b43@linaro.org>
-Date:   Tue, 20 Sep 2022 10:48:34 +0200
+        Tue, 20 Sep 2022 01:48:53 -0700 (PDT)
+Message-ID: <656aa3ba-01a0-637e-bd5a-4b1556d2fc41@linaro.org>
+Date:   Tue, 20 Sep 2022 10:48:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
 Subject: Re: [PATCH 1/2] dt-bindings: power: rpmpd: add sdm670 power domains
 Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Richard Acayan <mailingradian@gmail.com>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+To:     Richard Acayan <mailingradian@gmail.com>,
+        linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org
 References: <20220920021927.2489-1-mailingradian@gmail.com>
  <20220920021927.2489-2-mailingradian@gmail.com>
- <20220920081739.eh3qzohw74elqyfm@krzk-bin>
-In-Reply-To: <20220920081739.eh3qzohw74elqyfm@krzk-bin>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220920021927.2489-2-mailingradian@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -79,32 +80,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/09/2022 10:17, Krzysztof Kozlowski wrote:
-> On Mon, 19 Sep 2022 22:19:27 -0400, Richard Acayan wrote:
->> Add the RPMh power domain IDs and compatible string for Snapdragon 670 to
->> make SDM670 power domains accessible to the device trees.
->>
->> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
->> ---
->>  .../devicetree/bindings/power/qcom,rpmpd.yaml          |  1 +
->>  include/dt-bindings/power/qcom-rpmpd.h                 | 10 ++++++++++
->>  2 files changed, 11 insertions(+)
->>
+On 20/09/2022 04:19, Richard Acayan wrote:
+> Add the RPMh power domain IDs and compatible string for Snapdragon 670 to
+> make SDM670 power domains accessible to the device trees.
 > 
-> Running 'make dtbs_check' with the schema in this patch gives the
-> following warnings. Consider if they are expected or the schema is
-> incorrect. These may not be new warnings.
-> 
-> Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-> This will change in the future.
-> 
-> Full log is available here: https://patchwork.ozlabs.org/patch/
-> 
-> 
-> power-controller: 'clock-names', 'clocks' do not match any of the regexes: 'pinctrl-[0-9]+'
-> 	arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dtb
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 
-This might be unrelated to your patch.
+
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 
 Best regards,
 Krzysztof
