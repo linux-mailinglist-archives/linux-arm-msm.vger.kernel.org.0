@@ -2,126 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 25E9B5BF573
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 06:38:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 86ED05BF5A3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 06:56:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231491AbiIUEif (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Sep 2022 00:38:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42736 "EHLO
+        id S229917AbiIUE4R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Sep 2022 00:56:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231158AbiIUEiR (ORCPT
+        with ESMTP id S229624AbiIUE4P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Sep 2022 00:38:17 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF0E77D1E4;
-        Tue, 20 Sep 2022 21:38:15 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id p1-20020a17090a2d8100b0020040a3f75eso4533306pjd.4;
-        Tue, 20 Sep 2022 21:38:15 -0700 (PDT)
+        Wed, 21 Sep 2022 00:56:15 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26B237C1B4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 21:56:14 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id rt12so2758529pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 21:56:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=1ZAgs0EUhexlFlK2MZMbzZ6IVMi8WJy1viUVzYD9emk=;
-        b=B9gRFLcUiPoQdLfXFk+lUJ+OgOkhVQf7e/z8hihQoXI4Y4l3r6KEMurIuznQ1TwjXT
-         oNs8yHJiKyt14M/2LgG+gqEMwJsiWGKHuwVwzHuEJcYxenjIn9SMvYpJ8X0Ot7fwUtLb
-         HeuiqZb3EQbrVFYGTUYs7VfGkz5HxrOHWjQiK9YBpLBhWxrpBYwgCJ2KoCfTBqRRZ8CN
-         YGccEvmEfmjEAZzwLpyi2gCiA3cqEsWZbUr/bEhZm0762h2tK27gp6Bery7Pp3f2PsP4
-         nI5OE3exOijOTTUiows/yqICADZnUrSFGYCeSJYzU62S9PHL2ZKrzmEpnv9Mfwr+Ijv6
-         hO8w==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=uLS0pqX8ABlHPyY6IrFy7TWkhrlEvTMPKR/GQlZ1z0w=;
+        b=hNex4eY8EhXjnt1674fczrOqm70GjFPvOV1SNGPjimcyMKTk2Jh5me9A1MpxXqw39r
+         iJf0sJrHHqz3rzTJF2FltTmteto7EU4nfh7HfjIxFcvLwG7fwnIju+VC/A+F98h+h0cD
+         l/v2jC3fOkRIpIvZn/3DxFbtwM8d6gVOyqVYrRFJ2JlXWjl1vpxg92Dg+SGtWK39Affi
+         eSMBCnqEPlb/VDKmziCuN8m5R41/EhIlES8lhm/qPqIBHGZ81VifTJpnEbEUTHwsd6PR
+         lK1wo0ZqJL2G9RktxofIa1MhsrRxrS0ZZXtmRvAHObgrI8nBfZ36SSYjncl6g7KL58+H
+         PDIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=1ZAgs0EUhexlFlK2MZMbzZ6IVMi8WJy1viUVzYD9emk=;
-        b=7gds61LZ6qZ058pSgHvsDnQa559Ecn00dAS8DYt7RkEN4NB6vYx1lniXs1c7CJAAba
-         Ugctk1+fdjx7v3HYyFMF+xXvr+OOyMJLF1dJKEWXRYJR+GRg8HyaOm0nMXZ526xzQ82I
-         j0kDi6e4uqmVkZE+D30v8u/zmkjnLQOcEsg36A6Xq/dYw7eEQVqyXhDD9yaeh8NtrKiG
-         sWurPr2SYHDOySOFdxBUV/sATQd07L7Q2FNSz4GLbtJL8X+oUJKybhdtRugjgCacSj0A
-         Ij5aDl7Pie+hTqiOPIQeC/OtN1OvKQYRZdBNtVxvtmGHQGrEH2eOx8n1uhgOrxZ0Cp9d
-         Ah4Q==
-X-Gm-Message-State: ACrzQf3R2afBgjjorJIlmtNeE1X9wXhl/MWanz7mKTBkeXYi55EgV97x
-        Mm7W7DBfzpdHdiw+ebs5oR88aVtkW2YGZQ==
-X-Google-Smtp-Source: AMsMyM7gTldbBKgeoo+KYBFYwn+kQJCUC9DtOchu7WIkEY62Vl99e1lguy3POjnJvxtEufrAcXveRQ==
-X-Received: by 2002:a17:902:be01:b0:176:8bc3:b379 with SMTP id r1-20020a170902be0100b001768bc3b379mr3024831pls.109.1663735094713;
-        Tue, 20 Sep 2022 21:38:14 -0700 (PDT)
-Received: from skynet-linux.local ([2406:7400:61:8a0f:392d:db19:673c:627a])
-        by smtp.googlemail.com with ESMTPSA id t185-20020a6378c2000000b0042c0ffa0e62sm821182pgc.47.2022.09.20.21.38.10
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=uLS0pqX8ABlHPyY6IrFy7TWkhrlEvTMPKR/GQlZ1z0w=;
+        b=50n2dR7EpCVxyRJIC5TzXA7yxFIQQLyBrdVuIzrArg9/FBCijOJJ1a9juPIKFVRS68
+         zN62l8wKSZ8PkXDNzU3mrnScd/XTZ9jqDu1opiV4COPi3IXvdav7g+C6Ve2ErcPe6U+R
+         gFt6HEW9sM1sgGUNIVi5M4JpLZzd98qVpmyQ/I5sFPMWBiJt+tXlrx+/5vPhdW+4hM4l
+         x8o4Y7dDescyFJZ9gh90uRyDcF2UzOJCRuszhh3pBWOadz8Yc6xufMtabeWJjNldO0CS
+         LMowzvi7qyznApCAB2EUbXCQ3m4pscCJxJXhkO4SooUXr08/S6yDTLec/28lITcO/wjk
+         Jw6g==
+X-Gm-Message-State: ACrzQf006+QzNnaNC97idDPbxlEY7W0hwREwiJMZCdTi8aP3LnMV9RA2
+        STG61gsp3KBkiPzOTZMzLkMlBA==
+X-Google-Smtp-Source: AMsMyM5nWzgZ2Rl60J9B4u0WHGfzX97RusUs4fUlT2dpP12UcASoz+ZehA35R85RZDRSQO/R+ynJRg==
+X-Received: by 2002:a17:902:b7c6:b0:178:b625:e9f7 with SMTP id v6-20020a170902b7c600b00178b625e9f7mr2959524plz.128.1663736173521;
+        Tue, 20 Sep 2022 21:56:13 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1c61:8e50:8ba8:7ad7:f34c:2f5])
+        by smtp.gmail.com with ESMTPSA id p12-20020a170902e74c00b00176e2fa216csm871829plf.52.2022.09.20.21.56.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Sep 2022 21:38:14 -0700 (PDT)
-From:   Sireesh Kodali <sireeshkodali1@gmail.com>
-To:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, linux-kernel@vger.kernel.org
-Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        Sireesh Kodali <sireeshkodali1@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: [PATCH v4 4/4] dt-bindings: remoteproc: qcom: wcnss: Add compatible for pronto v3
-Date:   Wed, 21 Sep 2022 10:06:48 +0530
-Message-Id: <20220921043648.2152725-5-sireeshkodali1@gmail.com>
-X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20220921043648.2152725-1-sireeshkodali1@gmail.com>
-References: <20220921043648.2152725-1-sireeshkodali1@gmail.com>
+        Tue, 20 Sep 2022 21:56:12 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org, thara.gopinath@gmail.com,
+        devicetree@vger.kernel.org, robh@kernel.org,
+        krzysztof.kozlowski@linaro.org, andersson@kernel.org,
+        bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        catalin.marinas@arm.com, will@kernel.org, arnd@arndb.de,
+        Jordan Crouse <jorcrous@amazon.com>
+Subject: [PATCH v7 0/4] ARM: dts + defconfig: Add support for Qualcomm QCE block on new SoCs and in defconfig
+Date:   Wed, 21 Sep 2022 10:25:58 +0530
+Message-Id: <20220921045602.1462007-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The pronto v3 remoteproc is similar to pronto v2. It is found on the
-MSM8953 platform, which is used by SDM450, SDM625, SDM626, APQ8053 and
-other SoCs. Since the configuration is same on all SoCs, a single
-compatible is used.
+Changes since v6:
+=================
+- v6 can be seen here: https://lore.kernel.org/linux-arm-msm/30756e6f-952f-ccf2-b493-e515ba4f0a64@linaro.org/
+- No code changes since v6.
+- As per Krzysztof's suggestion on v6, clubbed the crypto driver and
+  dt-bindings changes together. Now the overall v5 patchset into 3
+  separate patchsets, one each for the following areas to allow easier
+  review and handling from the maintainer:
+        arm-msm, crypto and dma 
+- This patch targets the arm/arm-msm tree specifically.
+- This patchset is dependent on the crypto + dt-binding patchset, which
+  can be seen here:  https://lore.kernel.org/linux-arm-msm/20220920114051.1116441-1-bhupesh.sharma@linaro.org/
 
-Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
----
- .../bindings/remoteproc/qcom,wcnss-pil.yaml      | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+Changes since v5:
+=================
+- v5 can be seen here: https://lore.kernel.org/lkml/20211110105922.217895-1-bhupesh.sharma@linaro.org/
+- As per Bjorn's suggestion on irc, broke down the patchset into 4
+  separate patchsets, one each for the following areas to allow easier
+  review and handling from the respective maintainer(s):
+        'arm-msm', 'crypto', 'dma' and 'devicetree'
+  This patchset is directed for the 'arm-msm' tree / area.
+- Addressed Rob's, Vladimir's and Bjorn's review comments on v5.
+- Added Tested-by from Jordan received on the v5.
+- Also added a 'defconfig' change where I enabled the QCE block as a module.
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-index 31232c59b22b..639c52284f4f 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-@@ -22,6 +22,7 @@ properties:
-           - enum:
-               - qcom,pronto-v1-pil
-               - qcom,pronto-v2-pil
-+              - qcom,pronto-v3-pil
-           - const: qcom,pronto
-       - const: qcom,riva-pil
- 
-@@ -197,6 +198,21 @@ allOf:
-         - power-domains
-         - power-domain-names
- 
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,pronto-v3-pil
-+    then:
-+      properties:
-+        vddmx-supply: false
-+        vddcx-supply: false
-+
-+      required:
-+        - power-domains
-+        - power-domain-names
-+
- examples:
-   - |
-     #include <dt-bindings/interrupt-controller/arm-gic.h>
+Changes since v4:
+=================
+- v4 for sm8250 can be seen here: https://lore.kernel.org/linux-arm-msm/20211013105541.68045-1-bhupesh.sharma@linaro.org/
+- v1 for sm8150 qce enablement can be seen here: https://lore.kernel.org/linux-arm-msm/20211013165823.88123-1-bhupesh.sharma@linaro.org/
+- Merged the sm8150 and sm8250 enablement patches in the same patchset,
+  as per suggestions from Bjorn.
+- Dropped a couple of patches from v4, as these have been picked by
+  Bjorn already via his tree.
+- Addressed review comments from Vladimir, Thara and Rob.
+- Collect Reviewed-by from Rob and Thara on some of the patches from the
+  v4 patchset.
+
+Changes since v3:
+=================
+- v3 can be seen here: https://lore.kernel.org/linux-arm-msm/20210519143700.27392-1-bhupesh.sharma@linaro.org/
+- Dropped a couple of patches from v3, on basis of the review comments:
+   ~ [PATCH 13/17] crypto: qce: core: Make clocks optional
+   ~ [PATCH 15/17] crypto: qce: Convert the device found dev_dbg() to dev_info()
+- Addressed review comments from Thara, Rob and Stephan Gerhold.
+- Collect Reviewed-by from Rob and Thara on some of the patches from the
+  v3 patchset.
+
+Changes since v2:
+=================
+- v2 can be seen here: https://lore.kernel.org/dmaengine/20210505213731.538612-1-bhupesh.sharma@linaro.org/
+- Drop a couple of patches from v1, which tried to address the defered
+  probing of qce driver in case bam dma driver is not yet probed.
+  Replace it instead with a single (simpler) patch [PATCH 16/17].
+- Convert bam dma and qce crypto dt-bindings to YAML.
+- Addressed review comments from Thara, Bjorn, Vinod and Rob.
+
+Changes since v1:
+=================
+- v1 can be seen here: https://lore.kernel.org/linux-arm-msm/20210310052503.3618486-1-bhupesh.sharma@linaro.org/
+- v1 did not work well as reported earlier by Dmitry, so v2 contains the following
+  changes/fixes:
+  ~ Enable the interconnect path b/w BAM DMA and main memory first
+    before trying to access the BAM DMA registers.
+  ~ Enable the interconnect path b/w qce crytpo and main memory first
+    before trying to access the qce crypto registers.
+  ~ Make sure to document the required and optional properties for both
+    BAM DMA and qce crypto drivers.
+  ~ Add a few debug related print messages in case the qce crypto driver
+    passes or fails to probe.
+  ~ Convert the qce crypto driver probe to a defered one in case the BAM DMA
+    or the interconnect driver(s) (needed on specific Qualcomm parts) are not
+    yet probed.
+
+Qualcomm crypto engine (qce) is available on several Snapdragon SoCs.
+The qce block supports hardware accelerated algorithms for encryption
+and authentication. It also provides support for aes, des, 3des
+encryption algorithms and sha1, sha256, hmac(sha1), hmac(sha256)
+authentication algorithms.
+
+Tested the enabled crypto algorithms with cryptsetup test utilities
+on sm8150-mtp, sa8155p-adp, sm8250-mtp and RB5 boards (see [1]) and
+also with crypto self-tests, including the fuzz tests
+ (CONFIG_CRYPTO_MANAGER_EXTRA_TESTS=y).
+
+[1]. https://linux.die.net/man/8/cryptsetup
+
+Cc: thara.gopinath@gmail.com
+Cc: robh@kernel.org
+Cc: andersson@kernel.org
+Tested-by: Jordan Crouse <jorcrous@amazon.com>
+
+Bhupesh Sharma (4):
+  ARM: dts: qcom: Use new compatibles for crypto nodes
+  arm64: dts: qcom: sm8250: Add dt entries to support crypto engine.
+  arm64: dts: qcom: sm8150: Add dt entries to support crypto engine.
+  arm64: defconfig: Enable Qualcomm QCE crypto
+
+ arch/arm/boot/dts/qcom-ipq4019.dtsi   |  2 +-
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi |  2 +-
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi |  2 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi |  2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi  |  2 +-
+ arch/arm64/boot/dts/qcom/sm8150.dtsi  | 28 +++++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi  | 28 +++++++++++++++++++++++++++
+ arch/arm64/configs/defconfig          |  1 +
+ 8 files changed, 62 insertions(+), 5 deletions(-)
+
 -- 
-2.37.3
+2.37.1
 
