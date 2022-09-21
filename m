@@ -2,128 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C9D55E5501
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 23:15:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A5E05E5586
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 23:52:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229630AbiIUVPC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Sep 2022 17:15:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43718 "EHLO
+        id S230364AbiIUVwQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Sep 2022 17:52:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbiIUVPA (ORCPT
+        with ESMTP id S230484AbiIUVwA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Sep 2022 17:15:00 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21DA56F55D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 14:14:58 -0700 (PDT)
-Received: from [192.168.1.101] (95.49.29.188.neoplus.adsl.tpnet.pl [95.49.29.188])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id B097E3F651;
-        Wed, 21 Sep 2022 23:14:56 +0200 (CEST)
-Message-ID: <5f629a95-8ee4-7cf8-f471-0b50e311d3b7@somainline.org>
-Date:   Wed, 21 Sep 2022 23:14:56 +0200
+        Wed, 21 Sep 2022 17:52:00 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 91597A7203;
+        Wed, 21 Sep 2022 14:51:48 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DE5D51684;
+        Wed, 21 Sep 2022 14:51:53 -0700 (PDT)
+Received: from e126311.manchester.arm.com (unknown [10.57.76.246])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6F35F3F73B;
+        Wed, 21 Sep 2022 14:51:19 -0700 (PDT)
+Date:   Wed, 21 Sep 2022 22:51:10 +0100
+From:   Kajetan Puchalski <kajetan.puchalski@arm.com>
+To:     Peter Zijlstra <peterz@infradead.org>
+Cc:     richard.henderson@linaro.org, ink@jurassic.park.msu.ru,
+        mattst88@gmail.com, vgupta@kernel.org, linux@armlinux.org.uk,
+        ulli.kroll@googlemail.com, linus.walleij@linaro.org,
+        shawnguo@kernel.org, Sascha Hauer <s.hauer@pengutronix.de>,
+        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
+        tony@atomide.com, khilman@kernel.org, catalin.marinas@arm.com,
+        will@kernel.org, guoren@kernel.org, bcain@quicinc.com,
+        chenhuacai@kernel.org, kernel@xen0n.name, geert@linux-m68k.org,
+        sammy@sammy.net, monstr@monstr.eu, tsbogend@alpha.franken.de,
+        dinguyen@kernel.org, jonas@southpole.se,
+        stefan.kristiansson@saunalahti.fi, shorne@gmail.com,
+        James.Bottomley@HansenPartnership.com, deller@gmx.de,
+        mpe@ellerman.id.au, npiggin@gmail.com, christophe.leroy@csgroup.eu,
+        paul.walmsley@sifive.com, palmer@dabbelt.com,
+        aou@eecs.berkeley.edu, hca@linux.ibm.com, gor@linux.ibm.com,
+        agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
+        svens@linux.ibm.com, ysato@users.sourceforge.jp, dalias@libc.org,
+        davem@davemloft.net, richard@nod.at,
+        anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net,
+        tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
+        dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
+        acme@kernel.org, mark.rutland@arm.com,
+        alexander.shishkin@linux.intel.com, jolsa@kernel.org,
+        namhyung@kernel.org, jgross@suse.com, srivatsa@csail.mit.edu,
+        amakhalov@vmware.com, pv-drivers@vmware.com,
+        boris.ostrovsky@oracle.com, chris@zankel.net, jcmvbkbc@gmail.com,
+        rafael@kernel.org, lenb@kernel.org, pavel@ucw.cz,
+        gregkh@linuxfoundation.org, mturquette@baylibre.com,
+        sboyd@kernel.org, daniel.lezcano@linaro.org, lpieralisi@kernel.org,
+        sudeep.holla@arm.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
+        anup@brainfault.org, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, jacob.jun.pan@linux.intel.com,
+        atishp@atishpatra.org, Arnd Bergmann <arnd@arndb.de>,
+        yury.norov@gmail.com, andriy.shevchenko@linux.intel.com,
+        linux@rasmusvillemoes.dk, dennis@kernel.org, tj@kernel.org,
+        cl@linux.com, rostedt@goodmis.org, pmladek@suse.com,
+        senozhatsky@chromium.org, john.ogness@linutronix.de,
+        juri.lelli@redhat.com, vincent.guittot@linaro.org,
+        dietmar.eggemann@arm.com, bsegall@google.com, mgorman@suse.de,
+        bristot@redhat.com, vschneid@redhat.com, fweisbec@gmail.com,
+        ryabinin.a.a@gmail.com, glider@google.com, andreyknvl@gmail.com,
+        dvyukov@google.com, vincenzo.frascino@arm.com,
+        Andrew Morton <akpm@linux-foundation.org>, jpoimboe@kernel.org,
+        linux-alpha@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-snps-arc@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-csky@vger.kernel.org, linux-hexagon@vger.kernel.org,
+        linux-ia64@vger.kernel.org, loongarch@lists.linux.dev,
+        linux-m68k@lists.linux-m68k.org, linux-mips@vger.kernel.org,
+        openrisc@lists.librecores.org, linux-parisc@vger.kernel.org,
+        linuxppc-dev@lists.ozlabs.org, linux-riscv@lists.infradead.org,
+        linux-s390@vger.kernel.org, linux-sh@vger.kernel.org,
+        sparclinux@vger.kernel.org, linux-um@lists.infradead.org,
+        linux-perf-users@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-xtensa@linux-xtensa.org, linux-acpi@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-arch@vger.kernel.org, kasan-dev@googlegroups.com
+Subject: Re: [PATCH v2 07/44] cpuidle,psci: Push RCU-idle into driver
+Message-ID: <YyuHTgRh7t6vYjHw@e126311.manchester.arm.com>
+References: <20220919095939.761690562@infradead.org>
+ <20220919101520.802976773@infradead.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH 2/2] iommu: arm-smmu-qcom: add sdm670 compatible
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Richard Acayan <mailingradian@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org
-References: <20220920223955.151507-1-mailingradian@gmail.com>
- <20220920223955.151507-3-mailingradian@gmail.com>
- <77b7d58f-ba85-86de-8635-6efbb1354a08@linaro.org>
- <5c25dc95-d7a4-0b15-5514-6fe3a48e899c@somainline.org>
- <f98ccf6b-34e7-d15f-63f9-928827b52eb8@somainline.org>
- <30980ac8-1386-d284-8452-fdc5b7da8343@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <30980ac8-1386-d284-8452-fdc5b7da8343@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220919101520.802976773@infradead.org>
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 21.09.2022 21:05, Krzysztof Kozlowski wrote:
-> On 21/09/2022 20:48, Konrad Dybcio wrote:
->>
->>
->> On 21.09.2022 20:47, Konrad Dybcio wrote:
->>>
->>>
->>> On 21.09.2022 09:31, Krzysztof Kozlowski wrote:
->>>> On 21/09/2022 00:39, Richard Acayan wrote:
->>>>> The Snapdragon 670 needs the IOMMU for GENI I2C. Add a compatible string to
->>>>> support it.
->>>>>
->>>>> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
->>>>> ---
->>>>>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
->>>>>  1 file changed, 1 insertion(+)
->>>>>
->>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>> index b2708de25ea3..bf9653b9eb89 100644
->>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>> @@ -431,6 +431,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
->>>>>  	{ .compatible = "qcom,sc8180x-smmu-500" },
->>>>>  	{ .compatible = "qcom,sc8280xp-smmu-500" },
->>>>>  	{ .compatible = "qcom,sdm630-smmu-v2" },
->>>>> +	{ .compatible = "qcom,sdm670-smmu-500" },
->>>>
->>>> Why do we keep adding compatibles to the driver for apparently
->>>> compatible devices?
->>>
->>> Because Linux has not funny run on bare Qualcomm hardware ever since at least msm8x60 times and
->> s/funny/fully
->>
->> unfortunate typo, this is not funny, quite the contrary..
->>
->> Konrad
->>> we are not interacting with real hardware, only with Qualcomm's flawed virtual implementation
->>> of it, that's abstracted to us through various generations of their saddening software stack. This
->>> is also the case for many more standard components, even as far as the GIC on recent boards..
+On Mon, Sep 19, 2022 at 11:59:46AM +0200, Peter Zijlstra wrote:
+> Doing RCU-idle outside the driver, only to then temporarily enable it
+> again, at least twice, before going idle is daft.
 > 
-> Unfortunately I don't get this explanation... you mean some other
-> firmware requires Linux drivers to use specific compatibles instead of
-> one fallback?
-No, perhaps I misunderstood you.
+> Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 
-> 
-> All of these do not have driver data, so they are essentially compatible
-> for Linux driver. Growing this list in the driver seems pointless. What
-> is the benefit of growing driver with same entries, except more patches?
-Compatible lists in smmu-impl files allow matching driver quirks for SMMUs themselves
-and consumer devices (such as MDSS). The situation is more complicated, because some
-qcom SMMUs also require more quirks than others (think 8974 vs 8994 vs 8996/pro&660&8998
-vs 845+ vs adreno smmu in various flavours), so all qcom SMMUs need to use
-`qcom_smmu_impl` and some others need even more quirks on top of that (that generally
-hurt performance or functionality, so we don't want them when they're unnecessary).
-If all generations of qcom SMMU implementation that bear the same name behaved anywhere
-near consistent, there would be no need for keeping this around, instead requiring only
-"qcom,broken-smmu" or something".
+Tried it on Pixel 6 running psci_idle, looks good with no apparent issues.
 
-Konrad
-> 
-> Best regards,
-> Krzysztof
-> 
+Tested-by: Kajetan Puchalski <kajetan.puchalski@arm.com>
