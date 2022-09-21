@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3A225BF5AD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 06:56:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB9605BF5B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 06:56:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231247AbiIUE4h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Sep 2022 00:56:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34074 "EHLO
+        id S231292AbiIUE4r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Sep 2022 00:56:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230110AbiIUE41 (ORCPT
+        with ESMTP id S231178AbiIUE4e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Sep 2022 00:56:27 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55CA57F240
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 21:56:25 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id b21so4494780plz.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 21:56:25 -0700 (PDT)
+        Wed, 21 Sep 2022 00:56:34 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A88777F266
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 21:56:30 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id q3so5224671pjg.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 21:56:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=4dDKd9wp7f2UhxbbfY0ifehyTKrdIYEa/zzMgfdL7kI=;
-        b=UX16cgtf3pZvfRyv3ivQJIEtyrKqB9G8OJl6AoJodHt6DWtPpGIJbmR21B9xv37PfR
-         rNvgAcFBi+aarpVwK1zMHCtEL1JAu36DRamQHetcD2bUHIW1JcdgBci3pvjssTUkT/Zm
-         zrXIheUWRTqgNoVH3J8LgIk+nkeGyMBDigqr9DIeOP4biPlZ0H61U19zp5m7nGLjDwSQ
-         QwOXMbejgTFiseStLZ0DZl9JbXaSUHb0QbJDExqe+lS5z7A+YJqUGzDzEU8KIehOwsUO
-         KsPlAtpWaFsyva1f7UOe0EiMQEnc4hz4QIzQBPd1FrOJr7ABkO2bF4yWzJyZ7XNu53YL
-         jHWg==
+        bh=gbkqn1VUY/QAMhQngTXvc8V80xWIUJrckZqCzPQlfZ4=;
+        b=bvP+kDqgFVNXbgzkYrLGHXxnXM6835axKy+PK5uEdps51aW9+p970/OyMcPNfbVtXN
+         lGlvrZ+U0mjv5tGlgipESmKRLiFBap4b9e+QWIAwB0XsLx6ze71B49pno2I96nAydlRJ
+         q7vd2valccvr2A3xU+Wn7uPhDwaBRWnGrKisJH9eKtilByxpINB/YTJPZN4r7NU0SfAe
+         aBxUQJHNzzshBl2t3JIxlH71/g2sDaYZ9gSMeJKzz6LTAchMT9FQFFpVzXHZ7vm9UMn9
+         pQDk00ez2lvSC0kcGm/sztH3fTE56SMbcMFIA28+E7uAV4x3Ivf3Tgwa5iVFwolzt+XP
+         Ujjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=4dDKd9wp7f2UhxbbfY0ifehyTKrdIYEa/zzMgfdL7kI=;
-        b=c1wFRM0xCrtBu7xEVYXPPh+Ry9seYiq5l0cGljDPbq2S+mkv1FN52upQXKgXud+Eyk
-         eRgemiGv2HxD1m9sl9kk91uTRo4/2XMXyaeymjRN3ViSwZfqmBi42so/WEofR6dj3F9F
-         8lKXcB9IeQRNnwIcG1tSpUKQbYo0S0z7rdRI3GmF5RqchttpmPv2FM7/G6tyVtlIm8GP
-         Qj9DWveLxhoQhYURLrs/vu3JaCboQ9x0AWclG2NpD9OTLp43txXzU9Bdx8G+Ewxxx83x
-         2k5UN8tbRV+M83m7Hdw/xmlkmKZhpbNIbvmFVz0flgoY5ed6snSs3nBwlAqS4ivK90rt
-         nwFA==
-X-Gm-Message-State: ACrzQf2jLxzKAtNhHiBTTSC/k8nyxvubyd28jOos2ZP4w/KxaLq3nuLr
-        4Z/OP1bCPoN8omTtZVslYUDRMg==
-X-Google-Smtp-Source: AMsMyM5FShqSgAybsT1Bhlvt1JwfgF6TuDmFZ+cg+TKPLmadGqSE+hzY8sR+MxcytGIEkNa7M4qABA==
-X-Received: by 2002:a17:903:1246:b0:178:abc9:1a2b with SMTP id u6-20020a170903124600b00178abc91a2bmr2990721plh.74.1663736184614;
-        Tue, 20 Sep 2022 21:56:24 -0700 (PDT)
+        bh=gbkqn1VUY/QAMhQngTXvc8V80xWIUJrckZqCzPQlfZ4=;
+        b=iKKq578HtTPa/TZiHAcKcNY4bJldT0EeaxQRVLIQgFeA4A5tFobVVjs8iE+ey8QU+X
+         aFJdW+p/1MRRoAxRUrnvScz9EEdEpYMhiQpR3A+Qp8ao3R/UOqUQGneF6cChUM06Asty
+         0Vh0dfJF/xrWHSxOYfvqruKyDjQ19wdkSSA2fC1WCsZV/cfDwl0nhGJksmjheq/ZMAbU
+         NUXe8+7zMjY/22xA/WY85bxjlvyUlp2KCp1YYTSv02JvWyEr10xHm6AiF2aq1v11BIfn
+         Ho3jBxsIqLweMlD/muS0qZzpOGEZJ2pRKtRj2fHme369jG35KPOCiKxPCB4iAGD1Ujwl
+         OOTg==
+X-Gm-Message-State: ACrzQf1tQd/IuWk43EJeu+u1eDkqECyTCXGhlME9zQbgLQg1vLXebv75
+        AUy9ySfvIPEajiIm+HQVEfoNSA==
+X-Google-Smtp-Source: AMsMyM6uibYsmbLsti3ubDip02pfOgOdhoJFXnPM4bP6sIwCBOB1OfEhMAM+xysIymIq60zZBiEFFQ==
+X-Received: by 2002:a17:902:c401:b0:178:41d1:ef50 with SMTP id k1-20020a170902c40100b0017841d1ef50mr2974798plk.66.1663736190116;
+        Tue, 20 Sep 2022 21:56:30 -0700 (PDT)
 Received: from localhost.localdomain ([2401:4900:1c61:8e50:8ba8:7ad7:f34c:2f5])
-        by smtp.gmail.com with ESMTPSA id p12-20020a170902e74c00b00176e2fa216csm871829plf.52.2022.09.20.21.56.19
+        by smtp.gmail.com with ESMTPSA id p12-20020a170902e74c00b00176e2fa216csm871829plf.52.2022.09.20.21.56.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Sep 2022 21:56:23 -0700 (PDT)
+        Tue, 20 Sep 2022 21:56:29 -0700 (PDT)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
 Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
@@ -57,9 +57,9 @@ Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
         krzysztof.kozlowski@linaro.org, andersson@kernel.org,
         bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
         catalin.marinas@arm.com, will@kernel.org, arnd@arndb.de
-Subject: [PATCH v7 2/4] arm64: dts: qcom: sm8250: Add dt entries to support crypto engine.
-Date:   Wed, 21 Sep 2022 10:26:00 +0530
-Message-Id: <20220921045602.1462007-3-bhupesh.sharma@linaro.org>
+Subject: [PATCH v7 3/4] arm64: dts: qcom: sm8150: Add dt entries to support crypto engine.
+Date:   Wed, 21 Sep 2022 10:26:01 +0530
+Message-Id: <20220921045602.1462007-4-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20220921045602.1462007-1-bhupesh.sharma@linaro.org>
 References: <20220921045602.1462007-1-bhupesh.sharma@linaro.org>
@@ -76,20 +76,20 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Add crypto engine (CE) and CE BAM related nodes and definitions to
-'sm8250.dtsi'.
+'sm8150.dtsi'.
 
 Cc: Bjorn Andersson <andersson@kernel.org>
 Cc: Rob Herring <robh@kernel.org>
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 28 ++++++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 28 ++++++++++++++++++++++++++++
  1 file changed, 28 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index a5b62cadb129..7b3af34f8486 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2188,6 +2188,34 @@ ufs_mem_phy_lanes: phy@1d87400 {
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index cef8c4f4f0ff..6e21352a158c 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -2041,6 +2041,34 @@ ufs_mem_phy_lanes: phy@1d87400 {
  			};
  		};
  
@@ -100,29 +100,29 @@ index a5b62cadb129..7b3af34f8486 100644
 +			#dma-cells = <1>;
 +			qcom,ee = <0>;
 +			qcom,controlled-remotely;
-+			iommus = <&apps_smmu 0x584 0x0011>,
-+				 <&apps_smmu 0x586 0x0011>,
-+				 <&apps_smmu 0x594 0x0011>,
-+				 <&apps_smmu 0x596 0x0011>;
++			iommus = <&apps_smmu 0x504 0x0011>,
++				 <&apps_smmu 0x506 0x0011>,
++				 <&apps_smmu 0x514 0x0011>,
++				 <&apps_smmu 0x516 0x0011>;
 +			interconnects = <&aggre2_noc MASTER_CRYPTO_CORE_0 &mc_virt SLAVE_EBI_CH0>;
 +			interconnect-names = "memory";
 +		};
 +
 +		crypto: crypto@1dfa000 {
-+			compatible = "qcom,sm8250-qce";
++			compatible = "qcom,sm8150-qce";
 +			reg = <0 0x01dfa000 0 0x6000>;
 +			dmas = <&cryptobam 4>, <&cryptobam 5>;
 +			dma-names = "rx", "tx";
-+			iommus = <&apps_smmu 0x584 0x0011>,
-+				 <&apps_smmu 0x586 0x0011>,
-+				 <&apps_smmu 0x594 0x0011>,
-+				 <&apps_smmu 0x596 0x0011>;
++			iommus = <&apps_smmu 0x504 0x0011>,
++				 <&apps_smmu 0x506 0x0011>,
++				 <&apps_smmu 0x514 0x0011>,
++				 <&apps_smmu 0x516 0x0011>;
 +			interconnects = <&aggre2_noc MASTER_CRYPTO_CORE_0 &mc_virt SLAVE_EBI_CH0>;
 +			interconnect-names = "memory";
 +		};
 +
  		ipa_virt: interconnect@1e00000 {
- 			compatible = "qcom,sm8250-ipa-virt";
+ 			compatible = "qcom,sm8150-ipa-virt";
  			reg = <0 0x01e00000 0 0x1000>;
 -- 
 2.37.1
