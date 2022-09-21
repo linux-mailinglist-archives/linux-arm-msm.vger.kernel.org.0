@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 396A95BF75B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 09:15:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A46825BF76D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 09:16:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229873AbiIUHO7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Sep 2022 03:14:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57276 "EHLO
+        id S230311AbiIUHQH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Sep 2022 03:16:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229913AbiIUHO6 (ORCPT
+        with ESMTP id S230165AbiIUHPr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Sep 2022 03:14:58 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74C9A2CCBA
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 00:14:55 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id r7so8346355wrm.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 00:14:55 -0700 (PDT)
+        Wed, 21 Sep 2022 03:15:47 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C88A7B1DE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 00:15:42 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id bq9so8332234wrb.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 00:15:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:organization:from:references
          :cc:to:content-language:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date;
-        bh=y+SX0O0sFK0RfCFKUk5e5HkLwS7qj6fJY7MYEdssToA=;
-        b=apm7jshLoEYBXPI75Tf8y4MR/NXL0fL9VSSam/7puniDvlDo7d73uthZ5UpxQ9L7ou
-         O+G79+RsG3rF/faM8KWlc48l3lovuOdl6U/AGb2YdD/M42u0zoDWP/e9rPiE07gdtVtc
-         LlSjY+bFoE9KC2mwC518e/fXU2iPFotbk56YbOD6F9D88eshMnrPuhiGTvp2se7ovMS8
-         h6puuTqM5jfA4ptEDbSqGlEc/aYGJ2CQqWvCUPa8IzoEcmNK0pxmZomjvwix7iokEntz
-         LrH+/2cWazCpbEWabBTg/lTsNEKpBseVS8OfQs8TWTcqaJkzS2/+6kMNeKF2664pwjX/
-         /+8g==
+        bh=+2gYSefCpFz7zvMbQh2X85Wn00eX/c1TWwJPLjqJoy0=;
+        b=gwU08wStlOFrKlZQfEJeakYCknAHImXsSTWe7Xisb2aQLxIlPLQL7oUI7KoI3P3cxY
+         BW+JorASkKbERot1olyykBjavzrFfltPOP2gHOnjl1s8VWs5Fq/YDq9XBl6zefWJ88k6
+         poz4W6s6co1xPZ6ffOBg6lOiwDQkXbKFb+zxolNcM3nEfYf1rUjQ6MqlxQ+XM0u9Q+IV
+         rjzDTJAJI29dzOg5zyDYpom/trWz7VkLyG0IDx2AZWY6EszkRXP/QHGeJJWuHhg+aqtO
+         uXC8Gek5ND6xi/ZP5+pr8qTVZUCshi+c0OBGLimXnZa/fZ3THFFFYD3XLgSVDQxdDpl5
+         NZug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:organization:from:references
          :cc:to:content-language:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=y+SX0O0sFK0RfCFKUk5e5HkLwS7qj6fJY7MYEdssToA=;
-        b=hKTeOBtGELa3+r9TibR5uBIqw2Lrs2mkDu9isIpw6MvEx74oAslcm9cUXeVnf2ZuV3
-         N55cAsW511wphelYR1kmfD1SWk+dPqdvk3N2pbVDGHaqvG0eSR/o3Odj179runEgHB+w
-         kT9y7yGMrPts6HHsvgp2Os9hceMOTkq0LZLG9mPexoWOhsbOkTs6mQK1PJsPwpTuh5LD
-         uEUMHsnkWlL7sh495Dm04aVzPTCSLSyXPF2wwVZOzld2Rz9H5Arfu/mB/A3e4oYiwalE
-         zB1cqxXWOvbWwRdunWWkycLYaStR7Lt8HzaiBo7sF+bqYHVaBaaccEdJNVmnldkGonum
-         6iHQ==
-X-Gm-Message-State: ACrzQf34FDqhKJKdVz/KjPfAqMrlKW/PTCE/TGSPW7lcXT+XGV72TASa
-        1HxjCogmtKbjsY194eEMHnDNEQ==
-X-Google-Smtp-Source: AMsMyM6GU8QuI762MoyB+GX6M58iW8kKG3Dx7B0Wfj29BxWQh0BlsUPNqAanDdgJLa5YtJbhk4Jyiw==
-X-Received: by 2002:a5d:550c:0:b0:22b:1942:4bf6 with SMTP id b12-20020a5d550c000000b0022b19424bf6mr3558303wrv.520.1663744493986;
-        Wed, 21 Sep 2022 00:14:53 -0700 (PDT)
+        bh=+2gYSefCpFz7zvMbQh2X85Wn00eX/c1TWwJPLjqJoy0=;
+        b=V0nOIsXlMcbzfFF5uW/JRB8TIapWMBg1fCVjOAvSomWw7JzGcpTlZxDJdUo3aEGFiz
+         N7hoVGQdnQ6J12MzyrD+ORtRN/ELEnPwZuDBekZgJPimUmA60dCWXSQlqrbx7sED74Xp
+         ObQ3VMeAu17q+X43ThPfpcNzElfFUHCh1M2w3Cy1iC5zFzruR/Lq15UVq4FYE7P4sybd
+         fVV8Wi2PgBGM4udeBqSwYxNVJkm+fdUHEcnyHcfWPan+D7tvHUcpgJhW5xw2/Q8fndwo
+         JFf+hrGc5/w3FZ5GKGbcg0Kui/YJcAo5vj/zXEykDIb8VCqbP0DFN83cyDZ7/EZ/4FEF
+         qHHg==
+X-Gm-Message-State: ACrzQf2jqisYI+4XXy6sYeJbg2A2+6UjM0vFOMIttGaQXwmKpZhYKpKP
+        gOO+4jAHFQeUMAsw9XGXU2vw0udOlflrBNkE
+X-Google-Smtp-Source: AMsMyM4l+dv6ILSnOFRB+lqQJkUCQ4UqYtSAyTOTRWjncL+oQlrSqcK9Y5ONbXxQYPLx2Xhs+QnrCA==
+X-Received: by 2002:a05:6000:18a1:b0:22a:f4c2:c9d3 with SMTP id b1-20020a05600018a100b0022af4c2c9d3mr11112021wri.92.1663744540929;
+        Wed, 21 Sep 2022 00:15:40 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:8ce3:ff4e:ae9b:55f3? ([2a01:e0a:982:cbb0:8ce3:ff4e:ae9b:55f3])
-        by smtp.gmail.com with ESMTPSA id o28-20020a05600c511c00b003a845fa1edfsm1473724wms.3.2022.09.21.00.14.52
+        by smtp.gmail.com with ESMTPSA id b4-20020a5d4b84000000b00228a6ce17b4sm1747887wrt.37.2022.09.21.00.15.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Sep 2022 00:14:53 -0700 (PDT)
-Message-ID: <0f1cce61-b2f4-79f0-5432-9a5559e8bf5c@linaro.org>
-Date:   Wed, 21 Sep 2022 09:14:52 +0200
+        Wed, 21 Sep 2022 00:15:40 -0700 (PDT)
+Message-ID: <fcf8368c-7423-a350-c637-86b9adecaca1@linaro.org>
+Date:   Wed, 21 Sep 2022 09:15:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH] arm64: dts: qcom: msm8998-yoshino: Fix up SMD regulators
- formatting
+Subject: Re: [PATCH v2 2/2] soc: qcom: smd-rpm: Add SM6375 compatible
 Content-Language: en-US
 To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
         ~postmarketos/upstreaming@lists.sr.ht
@@ -65,14 +64,12 @@ Cc:     martin.botka@somainline.org,
         marijn.suijten@somainline.org, jamipkettunen@somainline.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220921004741.152765-1-konrad.dybcio@somainline.org>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220921004534.151990-1-konrad.dybcio@somainline.org>
+ <20220921004534.151990-2-konrad.dybcio@somainline.org>
 From:   Neil Armstrong <neil.armstrong@linaro.org>
 Organization: Linaro
-In-Reply-To: <20220921004741.152765-1-konrad.dybcio@somainline.org>
+In-Reply-To: <20220921004534.151990-2-konrad.dybcio@somainline.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,181 +82,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/09/2022 02:47, Konrad Dybcio wrote:
-> Add a new line between each subnode and make the { } consistent.
+On 21/09/2022 02:45, Konrad Dybcio wrote:
+> Add a compatible for the SM6375 SoC.
 > 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 > ---
->   .../dts/qcom/msm8998-sony-xperia-yoshino.dtsi | 33 ++++++++++++++++++-
->   1 file changed, 32 insertions(+), 1 deletion(-)
+> Changes since v1:
+> - changed the compatible to match the style used in the file
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-> index d08639082247..862d859af885 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-> @@ -410,131 +410,162 @@ vreg_s3a_1p35: s3 {
->   			regulator-min-microvolt = <1352000>;
->   			regulator-max-microvolt = <1352000>;
->   		};
-> +
->   		vreg_s4a_1p8: s4 {
->   			regulator-min-microvolt = <1800000>;
->   			regulator-max-microvolt = <1800000>;
->   			regulator-system-load = <100000>;
->   			regulator-allow-set-load;
->   		};
-> +
->   		vreg_s5a_2p04: s5 {
->   			regulator-min-microvolt = <1904000>;
->   			regulator-max-microvolt = <2032000>;
->   		};
-> +
->   		vreg_s7a_1p025: s7 {
->   			regulator-min-microvolt = <900000>;
->   			regulator-max-microvolt = <1028000>;
->   		};
-> +
->   		vreg_l1a_0p875: l1 {
->   			regulator-min-microvolt = <880000>;
->   			regulator-max-microvolt = <880000>;
->   			regulator-system-load = <73400>;
->   			regulator-allow-set-load;
->   		};
-> +
->   		vreg_l2a_1p2: l2 {
->   			regulator-min-microvolt = <1200000>;
->   			regulator-max-microvolt = <1200000>;
->   			regulator-system-load = <12560>;
->   			regulator-allow-set-load;
->   		};
-> +
->   		vreg_l3a_1p0: l3 {
->   			regulator-min-microvolt = <1000000>;
->   			regulator-max-microvolt = <1000000>;
->   		};
-> +
->   		vreg_l5a_0p8: l5 {
->   			regulator-min-microvolt = <800000>;
->   			regulator-max-microvolt = <800000>;
->   		};
-> +
->   		vreg_l6a_1p8: l6 {
->   			regulator-min-microvolt = <1800000>;
->   			regulator-max-microvolt = <1800000>;
->   		};
-> +
->   		vreg_l7a_1p8: l7 {
->   			regulator-min-microvolt = <1800000>;
->   			regulator-max-microvolt = <1800000>;
->   		};
-> +
->   		vreg_l8a_1p2: l8 {
->   			regulator-min-microvolt = <1200000>;
->   			regulator-max-microvolt = <1200000>;
->   		};
-> +
->   		vreg_l9a_1p8: l9 {
->   			regulator-min-microvolt = <1808000>;
->   			regulator-max-microvolt = <2960000>;
->   		};
-> +
->   		vreg_l10a_1p8: l10 {
->   			regulator-min-microvolt = <1808000>;
->   			regulator-max-microvolt = <2960000>;
->   		};
-> +
->   		vreg_l11a_1p0: l11 {
->   			regulator-min-microvolt = <1000000>;
->   			regulator-max-microvolt = <1000000>;
->   		};
-> +
->   		vreg_l12a_1p8: l12 {
->   			regulator-min-microvolt = <1800000>;
->   			regulator-max-microvolt = <1800000>;
->   		};
-> +
->   		vreg_l13a_2p95: l13 {
->   			regulator-min-microvolt = <1808000>;
->   			regulator-max-microvolt = <2960000>;
->   			regulator-allow-set-load;
->   		};
-> +
->   		vreg_l14a_1p85: l14 {
->   			regulator-min-microvolt = <1848000>;
->   			regulator-max-microvolt = <1856000>;
->   			regulator-system-load = <32000>;
->   			regulator-allow-set-load;
->   		};
-> +
->   		vreg_l15a_1p8: l15 {
->   			regulator-min-microvolt = <1800000>;
->   			regulator-max-microvolt = <1800000>;
->   		};
-> +
->   		vreg_l16a_2p7: l16 {
->   			regulator-min-microvolt = <2704000>;
->   			regulator-max-microvolt = <2704000>;
->   		};
-> +
->   		vreg_l17a_1p3: l17 {
->   			regulator-min-microvolt = <1304000>;
->   			regulator-max-microvolt = <1304000>;
->   		};
-> -		vreg_l18a_2p85: l18 {};
-> +
-> +		vreg_l18a_2p85: l18 { };
-> +
->   		vreg_l19a_2p7: l19 {
->   			regulator-min-microvolt = <2696000>;
->   			regulator-max-microvolt = <2704000>;
->   		};
-> +
->   		vreg_l20a_2p95: l20 {
->   			regulator-min-microvolt = <2960000>;
->   			regulator-max-microvolt = <2960000>;
->   			regulator-system-load = <10000>;
->   			regulator-allow-set-load;
->   		};
-> +
->   		vreg_l21a_2p95: l21 {
->   			regulator-min-microvolt = <2960000>;
->   			regulator-max-microvolt = <2960000>;
->   			regulator-system-load = <800000>;
->   			regulator-allow-set-load;
->   		};
-> +
->   		vreg_l22a_2p85: l22 { };
-> +
->   		vreg_l23a_3p3: l23 {
->   			regulator-min-microvolt = <3312000>;
->   			regulator-max-microvolt = <3312000>;
->   		};
-> +
->   		vreg_l24a_3p075: l24 {
->   			regulator-min-microvolt = <3088000>;
->   			regulator-max-microvolt = <3088000>;
->   		};
-> +
->   		vreg_l25a_3p3: l25 {
->   			regulator-min-microvolt = <3104000>;
->   			regulator-max-microvolt = <3312000>;
->   		};
-> +
->   		vreg_l26a_1p2: l26 {
->   			regulator-min-microvolt = <1200000>;
->   			regulator-max-microvolt = <1200000>;
->   			regulator-allow-set-load;
->   		};
-> +
->   		vreg_l28_3p0: l28 {
->   			regulator-min-microvolt = <3000000>;
->   			regulator-max-microvolt = <3000000>;
->   		};
-> +
->   		vreg_lvs1a_1p8: lvs1 { };
-> +
->   		vreg_lvs2a_1p8: lvs2 { };
->   	};
->   
+>   drivers/soc/qcom/smd-rpm.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/soc/qcom/smd-rpm.c b/drivers/soc/qcom/smd-rpm.c
+> index 413f9f4ae9cd..15671a917fb9 100644
+> --- a/drivers/soc/qcom/smd-rpm.c
+> +++ b/drivers/soc/qcom/smd-rpm.c
+> @@ -246,6 +246,7 @@ static const struct of_device_id qcom_smd_rpm_of_match[] = {
+>   	{ .compatible = "qcom,rpm-sdm660" },
+>   	{ .compatible = "qcom,rpm-sm6115" },
+>   	{ .compatible = "qcom,rpm-sm6125" },
+> +	{ .compatible = "qcom,rpm-sm6375" },
+>   	{ .compatible = "qcom,rpm-qcm2290" },
+>   	{ .compatible = "qcom,rpm-qcs404" },
+>   	{}
 
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
