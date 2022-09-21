@@ -2,28 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC9885BFFFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 16:36:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DE5D65C0026
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 16:43:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229727AbiIUOgd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Sep 2022 10:36:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49150 "EHLO
+        id S229804AbiIUOnO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Sep 2022 10:43:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229762AbiIUOga (ORCPT
+        with ESMTP id S229667AbiIUOnI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Sep 2022 10:36:30 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id BD0F28B2F7;
-        Wed, 21 Sep 2022 07:36:28 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C7AA113D5;
-        Wed, 21 Sep 2022 07:36:34 -0700 (PDT)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 118D33F73B;
-        Wed, 21 Sep 2022 07:36:26 -0700 (PDT)
-Date:   Wed, 21 Sep 2022 15:36:24 +0100
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+        Wed, 21 Sep 2022 10:43:08 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68B159676E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 07:43:07 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id j16so9620629lfg.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 07:43:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=WESwEi3j2DFdElRDB8MsQvGJzzzvCA6pcIKirPEViJE=;
+        b=wS7B5p2Ev3eBfNiO3Jnt0IMTOPdVSbT3gA59vvxhavEY8NmzjE0kxLA57OIgrk/9JE
+         9YULYVtSr1OrgEwjjzuGJM/l3nAj4x27iBFPob4nfHDffAAX074cq9KWCdUMwEWKe6eH
+         sorCugqwO/uoShgzdnYNhzbgdzCEJfclPSNTvhaosFvl+4CExVd3atlR+Xf0NvD+jGW4
+         CYF9EqKl3AfumsdQAePEHdlHowG6jhFHLwiUGRGmzLrLig1EDShgT6L7n60cbFud2cBI
+         uJFvkdi0+m7d4E6nJrE6svkAUQVhkp5kIZvbWo3S3tgy6K/BiRmcCW0CuA8WntVhHjba
+         YcEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=WESwEi3j2DFdElRDB8MsQvGJzzzvCA6pcIKirPEViJE=;
+        b=3XQMNqvTVn+GjqweVnSnEltNdtNg/OPhQvLfB+86ktmiiVXR++tvLJinVkAeu83vNe
+         ixEXcnMSgRc0vdqIdYkjk2QBEc3nQjzCu9QPk2KicOCLKsRWsZqrlrlsaejjyisB2Tpw
+         FFgmaRDWyPRWH7F9R3obI7k/h7DY6fTVKlEHGc2vFDnoJXzb5XExYLQG/+R9BSyolaMd
+         Ogn63vUfHwZzdrBhbGcL8KwcREbEafm6lmU5a3vmCdlQKMLfHVFbyJDZxKEP92uHfHYA
+         nBMH6s/UkSGAh6RdAwmfTYcESCQsPKOpfVnOZGSlTKYaEWZLIKlzTt37Of/T7Yjo9M6h
+         lyjw==
+X-Gm-Message-State: ACrzQf1NeqavP2j924t/6eOPxgrEFKJU8ttM6Sh94/k/BY3gMuOR6M1D
+        CxpYT2YbIpEAtLzgdN0q6pHaWQ==
+X-Google-Smtp-Source: AMsMyM6bbWseHItUfMcsCa2d8nN+Vr7tOmYKgbBq6MGow3oXi2YTQ3shZb7hU2ShCmvKwO38JODCYg==
+X-Received: by 2002:a05:6512:15a0:b0:49b:1eba:89d4 with SMTP id bp32-20020a05651215a000b0049b1eba89d4mr9539745lfb.188.1663771384860;
+        Wed, 21 Sep 2022 07:43:04 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id bf31-20020a2eaa1f000000b0026c2e0258bcsm470761ljb.42.2022.09.21.07.43.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 Sep 2022 07:43:03 -0700 (PDT)
+Message-ID: <38ccaa39-0438-2303-6502-63902abbb044@linaro.org>
+Date:   Wed, 21 Sep 2022 17:43:03 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH v2] firmware/psci: Print a warning if PSCI doesn't accept
+ PC mode
+Content-Language: en-GB
+To:     Sudeep Holla <sudeep.holla@arm.com>
 Cc:     Mark Rutland <mark.rutland@arm.com>,
         Ulf Hansson <ulf.hansson@linaro.org>,
         "Rafael J. Wysocki" <rafael@kernel.org>,
@@ -31,92 +66,98 @@ Cc:     Mark Rutland <mark.rutland@arm.com>,
         Lorenzo Pieralisi <lpieralisi@kernel.org>,
         linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2] firmware/psci: Print a warning if PSCI doesn't accept
- PC mode
-Message-ID: <20220921143624.eulpt56r4cn4vcrx@bogus>
 References: <20220804130750.3706897-1-dmitry.baryshkov@linaro.org>
  <Yu0m6yzLr5fhEMtu@FVFF77S0Q05N>
  <eea4d8ec-d6de-5262-b73f-609b2f1bea86@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <eea4d8ec-d6de-5262-b73f-609b2f1bea86@linaro.org>
-X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+ <20220921143624.eulpt56r4cn4vcrx@bogus>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220921143624.eulpt56r4cn4vcrx@bogus>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 19, 2022 at 02:58:57PM +0300, Dmitry Baryshkov wrote:
-> On 05/08/2022 17:19, Mark Rutland wrote:
-> > On Thu, Aug 04, 2022 at 04:07:50PM +0300, Dmitry Baryshkov wrote:
-> > > The function psci_pd_try_set_osi_mode() will print an error if enabling
-> > > OSI mode fails. To ease debugging PSCI issues print corresponding
-> > > message if switching to PC mode fails too.
-> > > 
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > 
-> > Acked-by: Mark Rutland <mark.rutland@arm.com>
-> > 
-> > Mark.
+On 21/09/2022 17:36, Sudeep Holla wrote:
+> On Mon, Sep 19, 2022 at 02:58:57PM +0300, Dmitry Baryshkov wrote:
+>> On 05/08/2022 17:19, Mark Rutland wrote:
+>>> On Thu, Aug 04, 2022 at 04:07:50PM +0300, Dmitry Baryshkov wrote:
+>>>> The function psci_pd_try_set_osi_mode() will print an error if enabling
+>>>> OSI mode fails. To ease debugging PSCI issues print corresponding
+>>>> message if switching to PC mode fails too.
+>>>>
+>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>
+>>> Acked-by: Mark Rutland <mark.rutland@arm.com>
+>>>
+>>> Mark.
+>>
+>> Granted that this patch has been acked by the maintainers of PSCI interface,
+>> how do I proceed? Should I submit it to Russel's patch tracker? Or do PSCI
+>> patches land via some other tree?
+>>
 > 
-> Granted that this patch has been acked by the maintainers of PSCI interface,
-> how do I proceed? Should I submit it to Russel's patch tracker? Or do PSCI
-> patches land via some other tree?
->
+> Not sure if I mentioned it elsewhere or in v1, we generally ask Arm SoC
+> team to pick up patches directly as they are always 1-2 and rarely large
+> set. You need to cc soc@kernel.org for the same.
 
-Not sure if I mentioned it elsewhere or in v1, we generally ask Arm SoC
-team to pick up patches directly as they are always 1-2 and rarely large
-set. You need to cc soc@kernel.org for the same.
+Ack, I'll resend v2 cc'ing soc@
 
-> > 
-> > > ---
-> > > This is a replacement for [1], now moving the warning from
-> > > psci_set_osi_mode() callers to the function iself.
-> > > 
-> > > https://lore.kernel.org/all/20220727182034.983727-1-dmitry.baryshkov@linaro.org/
-> > > 
-> > > ---
-> > >   drivers/cpuidle/cpuidle-psci-domain.c | 4 +---
-> > >   drivers/firmware/psci/psci.c          | 2 ++
-> > >   2 files changed, 3 insertions(+), 3 deletions(-)
-> > > 
-> > > diff --git a/drivers/cpuidle/cpuidle-psci-domain.c b/drivers/cpuidle/cpuidle-psci-domain.c
-> > > index 3db4fca1172b..821984947ed9 100644
-> > > --- a/drivers/cpuidle/cpuidle-psci-domain.c
-> > > +++ b/drivers/cpuidle/cpuidle-psci-domain.c
-> > > @@ -124,10 +124,8 @@ static bool psci_pd_try_set_osi_mode(void)
-> > >   		return false;
-> > >   	ret = psci_set_osi_mode(true);
-> > > -	if (ret) {
-> > > -		pr_warn("failed to enable OSI mode: %d\n", ret);
-> > > +	if (ret)
-> > >   		return false;
-> > > -	}
-> > >   	return true;
-> > >   }
-> > > diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
-> > > index cfb448eabdaa..1628f1edef4a 100644
-> > > --- a/drivers/firmware/psci/psci.c
-> > > +++ b/drivers/firmware/psci/psci.c
-> > > @@ -163,6 +163,8 @@ int psci_set_osi_mode(bool enable)
-> > >   			PSCI_1_0_SUSPEND_MODE_PC;
-> > >   	err = invoke_psci_fn(PSCI_1_0_FN_SET_SUSPEND_MODE, suspend_mode, 0, 0);
-> > > +	if (err < 0)
-> > > +		pr_warn("failed to set %s mode: %d\n", enable ? "OSI" : "PC", err);
-> > >   	return psci_to_linux_errno(err);
-> > >   }
-> > > -- 
-> > > 2.35.1
-> > > 
 > 
-> -- 
-> With best wishes
-> Dmitry
+>>>
+>>>> ---
+>>>> This is a replacement for [1], now moving the warning from
+>>>> psci_set_osi_mode() callers to the function iself.
+>>>>
+>>>> https://lore.kernel.org/all/20220727182034.983727-1-dmitry.baryshkov@linaro.org/
+>>>>
+>>>> ---
+>>>>    drivers/cpuidle/cpuidle-psci-domain.c | 4 +---
+>>>>    drivers/firmware/psci/psci.c          | 2 ++
+>>>>    2 files changed, 3 insertions(+), 3 deletions(-)
+>>>>
+>>>> diff --git a/drivers/cpuidle/cpuidle-psci-domain.c b/drivers/cpuidle/cpuidle-psci-domain.c
+>>>> index 3db4fca1172b..821984947ed9 100644
+>>>> --- a/drivers/cpuidle/cpuidle-psci-domain.c
+>>>> +++ b/drivers/cpuidle/cpuidle-psci-domain.c
+>>>> @@ -124,10 +124,8 @@ static bool psci_pd_try_set_osi_mode(void)
+>>>>    		return false;
+>>>>    	ret = psci_set_osi_mode(true);
+>>>> -	if (ret) {
+>>>> -		pr_warn("failed to enable OSI mode: %d\n", ret);
+>>>> +	if (ret)
+>>>>    		return false;
+>>>> -	}
+>>>>    	return true;
+>>>>    }
+>>>> diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
+>>>> index cfb448eabdaa..1628f1edef4a 100644
+>>>> --- a/drivers/firmware/psci/psci.c
+>>>> +++ b/drivers/firmware/psci/psci.c
+>>>> @@ -163,6 +163,8 @@ int psci_set_osi_mode(bool enable)
+>>>>    			PSCI_1_0_SUSPEND_MODE_PC;
+>>>>    	err = invoke_psci_fn(PSCI_1_0_FN_SET_SUSPEND_MODE, suspend_mode, 0, 0);
+>>>> +	if (err < 0)
+>>>> +		pr_warn("failed to set %s mode: %d\n", enable ? "OSI" : "PC", err);
+>>>>    	return psci_to_linux_errno(err);
+>>>>    }
+>>>> -- 
+>>>> 2.35.1
+>>>>
+>>
+>> -- 
+>> With best wishes
+>> Dmitry
+>>
 > 
 
 -- 
-Regards,
-Sudeep
+With best wishes
+Dmitry
+
