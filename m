@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 689915BF67C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 08:39:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 214675BF698
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 08:48:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229819AbiIUGjd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Sep 2022 02:39:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39076 "EHLO
+        id S230012AbiIUGsS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Sep 2022 02:48:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229554AbiIUGjc (ORCPT
+        with ESMTP id S229787AbiIUGsS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Sep 2022 02:39:32 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08E941B9;
-        Tue, 20 Sep 2022 23:39:29 -0700 (PDT)
+        Wed, 21 Sep 2022 02:48:18 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B45F80F62;
+        Tue, 20 Sep 2022 23:48:17 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 97929622AF;
-        Wed, 21 Sep 2022 06:39:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E3EC433D6;
-        Wed, 21 Sep 2022 06:39:27 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 07D2F6216B;
+        Wed, 21 Sep 2022 06:48:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61A4DC433C1;
+        Wed, 21 Sep 2022 06:48:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663742368;
-        bh=u9IRUQ7jJ5fely4Oj7oSq0iwZF7NJ2Sm7w3sF2MljR0=;
+        s=k20201202; t=1663742896;
+        bh=TvyVP6RlE55q2MwRdD1Tyx/Kp0Yj7xC9kH/TAmfA2Vc=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=uP3/kH6JmHxy/KpmDkWYQsGbkZnMytSup5w5X55Jm13JFxvN3jfhKxejr3r5o9pON
-         rQVDSqQa0exRAgMWL03dkQmqdw6KqdkKGJ1pYnnSBBGRj4lgkOD0jEP0z3XF/x2yvv
-         VNixZRrRRlPos7BVla/wn7CrCImfYZ0Jd8p7yVMSszFbkiPEyD/nlnPv1XdB/yTl9E
-         fv9T8pWlnxviXUDYPpAPb6HMEZPRFvQ8XjKdKe10xiuBhYbSn36Ucf/UzzPkkBl4RM
-         B+QQN7QJxb9LsG/1fJU2zm8VURN78hjcftxSmF7LAiE95WR9IwqcHiSsimpnMCbVQD
-         Btc24p51Fq23Q==
+        b=VwlyA/O05Nj92M8e0nW2ptnU1oYJr+7dMoKfxx537bMl8DnM13RJRa5upM4TAb632
+         QpaPJv0n8+raAoQnRaoPE4NOoWvs5JSPGQ1Y+97xl/WBkfiiE9Se0F0Iad7T6fGOu6
+         2yyj1VqbE3/66dK7QRjVtJS4K39wg+V9ACgobCGTKzKLCIRrR+Qjvl4QgzITe8Smwy
+         Ov3JSSZDxtAm5K5Dj7rpg9xdowCP/Sb4r8/Xn69ogGra2TiPwjEwD7L1QRBr89Tw2o
+         +vPUT3SWagCj/X5sgzA1pFMM8/G6lYmObCaZCOz61A4WH/zUV8izVWHnxStR/6ctT2
+         GO78jX5Wb5soQ==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1oatOK-0003VO-Df; Wed, 21 Sep 2022 08:39:29 +0200
-Date:   Wed, 21 Sep 2022 08:39:28 +0200
+        id 1oatWr-0003a9-MX; Wed, 21 Sep 2022 08:48:17 +0200
+Date:   Wed, 21 Sep 2022 08:48:17 +0200
 From:   Johan Hovold <johan@kernel.org>
 To:     Parikshit Pareek <quic_ppareek@quicinc.com>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -46,13 +46,15 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, Andrew Halaney <ahalaney@redhat.com>,
         Shazad Hussain <quic_shazhuss@quicinc.com>
-Subject: Re: [PATCH v4 0/3] arm64: dts: qcom: add dts for sa8540p-ride board
-Message-ID: <YyqxoGLUkULxtBM7@hovoldconsulting.com>
+Subject: Re: [PATCH v4 2/3] arm64: dts: qcom: sa8295p: move common nodes to
+ dtsi
+Message-ID: <YyqzsZVL05cegWNv@hovoldconsulting.com>
 References: <20220920120802.14321-1-quic_ppareek@quicinc.com>
+ <20220920120802.14321-3-quic_ppareek@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220920120802.14321-1-quic_ppareek@quicinc.com>
+In-Reply-To: <20220920120802.14321-3-quic_ppareek@quicinc.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -62,42 +64,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 20, 2022 at 05:37:59PM +0530, Parikshit Pareek wrote:
-> This series introduces the Qualcom sa8540p-ride automotive development
-> board, also called as Qdrive-3 board.
-> 
-> Changes in v4:
->  - Removed the ufs_card_hc node, as it is not mounted on Qdrive-3 board.
->  - Removed usb_1 related nodes, as usb1 doesn't have any port connected on
->    Qdrive3 board.
+On Tue, Sep 20, 2022 at 05:38:01PM +0530, Parikshit Pareek wrote:
+> There are many ADP boards with lot of common features. Move common
+> nodes to sa8540p-adp.dtsi file. This will be base for many ADP boards
+> to be introduced in near future.
 
-Please include the full change log here (also for earlier versions).
+I already asked you to include a description of those differences here
+in the commit message so that we can make a decision on whether this
+change makes sense or not.
 
-Also, please try to remember to CC people who have commented on earlier
-versions of the series when resending.
+This also needs to be documented for future changes. For example, when
+I'll be adding PCIe support to sa8295p-adp I'd need to know whether this
+should go in a shared dtsi or in the board file.
 
->  - Added Reported-by tag for Shazad(for ufs and usb_1 node removals)
+For reasons like this, I'm still not convinced that this is a good idea.
 
-This is generally not how we use Reported-by tags (even if the kbuild
-robot sometimes gets credit for finding things during review this way).
-
-You can give credit to reviewers by for example putting their name in
-parentheses after the corresponding changelog entry (or just spelling
-out who suggested the change).
-
-> Parikshit Pareek (3):
->   dt-bindings: arm: qcom: Document additional sa8540p device
->   arm64: dts: qcom: sa8295p: move common nodes to dtsi
->   arm64: dts: qcom: introduce sa8540p-ride dts
-> 
->  .../devicetree/bindings/arm/qcom.yaml         |   1 +
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+> Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
+> ---
 >  arch/arm64/boot/dts/qcom/sa8295p-adp.dts      | 392 +-----------------
->  arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts |  15 +
 >  .../{sa8295p-adp.dts => sa8540p-adp.dtsi}     |   0
->  5 files changed, 31 insertions(+), 378 deletions(-)
+>  2 files changed, 14 insertions(+), 378 deletions(-)
 >  rewrite arch/arm64/boot/dts/qcom/sa8295p-adp.dts (96%)
->  create mode 100644 arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts
 >  copy arch/arm64/boot/dts/qcom/{sa8295p-adp.dts => sa8540p-adp.dtsi} (100%)
 
 Johan
