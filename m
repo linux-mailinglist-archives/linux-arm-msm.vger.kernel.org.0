@@ -2,91 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2661A5BF6F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 09:06:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06FC15BF70B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 09:08:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229554AbiIUHGn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Sep 2022 03:06:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44914 "EHLO
+        id S230164AbiIUHII (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Sep 2022 03:08:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229563AbiIUHGm (ORCPT
+        with ESMTP id S229904AbiIUHH4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Sep 2022 03:06:42 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3552F491E3;
-        Wed, 21 Sep 2022 00:06:41 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C43C062F76;
-        Wed, 21 Sep 2022 07:06:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21FCBC433C1;
-        Wed, 21 Sep 2022 07:06:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663744000;
-        bh=Ao2IgbeJQHW+cfXH8akjw/H7pJL26xNuSr60HBNqO8c=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fppbgRKzPp2ynnZBDf+LdLBFj+ss9Qmtf+rxjJta9qvPpS0SNaviDkNxnRlYwqWGj
-         6cgSIi8RcM8c1jtuaezPirKl05URpL7k1kWe27M0WZArS3OIOt7tyyUOANTHmbuDQc
-         MIF/GZ9GBmAHlUFsE3ZTnEhIC18812v9CkBnshmzgdpOD62uovbQfZ5WXoWEgz3nSR
-         MI7KUtLphqUizMAlBa9boFDX+9UwdR7PRisHhko8PuLtBaOgpy3wRTxZEEH/jzngJO
-         qYl2/1Meq0Hp7LAd40BkDrZmRqjoXIElIJWxc0Ko6uqpf2C2bW8Cb1B2vv79oc3L0B
-         +MUs1Mw7u1yxg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oatoh-0003iP-Ia; Wed, 21 Sep 2022 09:06:44 +0200
-Date:   Wed, 21 Sep 2022 09:06:43 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Parikshit Pareek <quic_ppareek@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Wed, 21 Sep 2022 03:07:56 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 680AE82767
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 00:07:55 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id f9so7694454lfr.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 00:07:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=APb0/Hlj8PJfzMK/j/1WprkzmQ0RATqS+JRrEg6OtBI=;
+        b=sOX0bkzdu+sZDtr8Q5SphkdzB1/ROEzLAP17FzCDCvxf8Mv6GI+0wiGyJiPZkveZPx
+         kGgZlAEqiwFlJS4G9tdIXv9fLwfShJZI8QKDNOWEBiuKLUjRhXdMwPNhlSywjXG0+02V
+         zIWJI5L5MfL/o7sOXPQ+PFYJDYqZfnzqCjqpS7l68M20RJbdNMWshDtOfpo/4WJ2cIKA
+         VTdRiP7oHO//AJ902pphqDhUz3Z+rCc2FzkW7oDy1VvDNUY1dW2l24b5A4tsDf7R3hqO
+         gKSEc1w3Q9Ne9Fwkp+QI+bM4mZuPDRg3Qs9SgYXHX0Rc0bBBKTXL6mEtIgvDXaBuRoYj
+         LQMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=APb0/Hlj8PJfzMK/j/1WprkzmQ0RATqS+JRrEg6OtBI=;
+        b=xwq1V5jq5ja+vTKFCH6kGSfBv4KnamuLriKrfEyryZoNdxl1M7jGq+yNg9frxQbEhW
+         IXC/jrUah6mjV7xYSAkyIKCKN+Egj9/H7N1/bzoyEUMNoB4o0qWBWZvMShB1gz0Dp5nv
+         eXLGRuGcDmSmx+3RxRyLyxhtulr4bylEGy/QmxXKxeCs+fI+mRj6mu7EBFnSMi52DTAa
+         i570gmwbT8fnWO4b8vtE/9Fn8AMYpSDNcnHEypFADrzhF5PjTodyyUaKAQMc8WRLGN3Y
+         Pf+1IKIabOgIPYVjsQfHzClUJaBwhsriG4h/TFshrDoiScNPaRuSDoQfTfMHynIA4FFD
+         x+IA==
+X-Gm-Message-State: ACrzQf2rAJVraH4aZN2HcEsJpZE14F1E4tM66r7ODJJw+WBGanHRMCXI
+        66mJ+eRQiesOG55RwTWRwR5Qcw==
+X-Google-Smtp-Source: AMsMyM4gqxAQvcV8ga0K7YyxcBClQ/kW2wmIe0eJRgZ9zQemRycPrYGF8vU2GgeKuVirXwB5Ah7e8w==
+X-Received: by 2002:a19:7619:0:b0:49f:6cd7:45c2 with SMTP id c25-20020a197619000000b0049f6cd745c2mr7191079lff.7.1663744073769;
+        Wed, 21 Sep 2022 00:07:53 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id b15-20020a19644f000000b00499fe9ce5f2sm307613lfj.175.2022.09.21.00.07.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 Sep 2022 00:07:53 -0700 (PDT)
+Message-ID: <95fb2bfb-6eb8-012d-88f8-c739d229ef70@linaro.org>
+Date:   Wed, 21 Sep 2022 09:07:52 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH] dt-bindings: firmware: document Qualcomm SM6375 SCM
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Das Srinagesh <quic_gurus@quicinc.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andrew Halaney <ahalaney@redhat.com>,
-        Shazad Hussain <quic_shazhuss@quicinc.com>
-Subject: Re: [PATCH v4 2/3] arm64: dts: qcom: sa8295p: move common nodes to
- dtsi
-Message-ID: <Yyq4AwAbk3nxNUAl@hovoldconsulting.com>
-References: <20220920120802.14321-1-quic_ppareek@quicinc.com>
- <20220920120802.14321-3-quic_ppareek@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220920120802.14321-3-quic_ppareek@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        linux-kernel@vger.kernel.org
+References: <20220921001020.55307-1-konrad.dybcio@somainline.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220921001020.55307-1-konrad.dybcio@somainline.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[ Resending with Bjorn's address updated. ]
-
-On Tue, Sep 20, 2022 at 05:38:01PM +0530, Parikshit Pareek wrote:
-> There are many ADP boards with lot of common features. Move common
-> nodes to sa8540p-adp.dtsi file. This will be base for many ADP boards
-> to be introduced in near future.
-
-I already asked you to include a description of those differences here
-in the commit message so that we can make a decision on whether this
-change makes sense or not.
-
-This also needs to be documented for future changes. For example, when
-I'll be adding PCIe support to sa8295p-adp I'd need to know whether this
-should go in a shared dtsi or in the board file.
-
-For reasons like this, I'm still not convinced that this is a good idea.
-
-> Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
+On 21/09/2022 02:10, Konrad Dybcio wrote:
+> Document the compatible for Qualcomm SM6375 SCM.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 > ---
->  arch/arm64/boot/dts/qcom/sa8295p-adp.dts      | 392 +-----------------
->  .../{sa8295p-adp.dts => sa8540p-adp.dtsi}     |   0
->  2 files changed, 14 insertions(+), 378 deletions(-)
->  rewrite arch/arm64/boot/dts/qcom/sa8295p-adp.dts (96%)
->  copy arch/arm64/boot/dts/qcom/{sa8295p-adp.dts => sa8540p-adp.dtsi} (100%)
+>  Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 1 +
 
-Johan
+allOf needs to be updated.
+
+
+Best regards,
+Krzysztof
