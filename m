@@ -2,72 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B79475C021A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 17:48:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A8AA15C0250
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 17:51:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230345AbiIUPsO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Sep 2022 11:48:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51126 "EHLO
+        id S230428AbiIUPv3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Sep 2022 11:51:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229794AbiIUPrg (ORCPT
+        with ESMTP id S229630AbiIUPuy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Sep 2022 11:47:36 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 270219A693
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 08:47:13 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id r3-20020a05600c35c300b003b4b5f6c6bdso4030872wmq.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 08:47:13 -0700 (PDT)
+        Wed, 21 Sep 2022 11:50:54 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D40D9E2DC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 08:48:47 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id f9so9940157lfr.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 08:48:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=hB5g2vr6Ss8VPiTPDgJNz2gUIO0z7KdIb9GL1r4XaRg=;
-        b=oAKls05VRfjET6MPWOxP+Z4SLTj4faFVQuRpRXQgfb4utRk/TofVS0rT2r0AXUlZc7
-         Jmtkehx/QpyS5xSLV6TK5wYQfrt8kfpxSPLOLHrD6Om2M7I2VUO5TH1GqGSGVfMO0kJQ
-         oUc75LgeMu6/7iwJbit6NevJ+5wQjvuEfB8zpXbnmW+a8pe034rgqKqyObvC6YYaJq0z
-         1/4u+QFAK0I8RAMxAM2+sPISV+IkVz+BWRHFBLFI29tWd0rpVHM38gAa3UwbUzemKE1g
-         nrlTvdXzRU/krK0geMyY3G9hmr6JJGkZi3rlctuf81csOUMq0Q+wIm+1eIkXMXHoyYE6
-         +adA==
+        bh=dfNfQ/WHHv5bx3D+RgTnUZ4fVKImMkLUwy9dSYsV4ZI=;
+        b=CDmDV9J3qN4i9riPSH+wIb8RFI/McE/mLSFmgYfB/gE5F7kdrl1NmF42wf9DSBeRwd
+         Ct19uqUuy2FLnAbCNp1CNMh4/330+XcctKS0V+I6PI+WFIOsKZvo5lCamy74KsczQFZS
+         3uKuIr/48msm5QHiZgpYrcT5MTXmmsjkYB6oaTVlrafKzHaWJ+uv8QFBGhPIYiRonj9w
+         8A7Rzs09sLCakpZTS6WRyB2bxIgExnCPqs6DkxUIwoEQSAn4C///Mygs7lqMZdHS3J8a
+         ds+no9LudlHEJMErjZyqkQk19Omjo8V4qRakUidEcKo2qvMYJbfnxGwbd4PB/n/eRlFr
+         wpbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=hB5g2vr6Ss8VPiTPDgJNz2gUIO0z7KdIb9GL1r4XaRg=;
-        b=HZx/9XbdnqEGMACRWfGpQzWxVI5vX7I926HsNwqYpUP+lo/szetnRGirhJr1i9V5YW
-         46TTuO+U/LhMfsDZVrKw47+KoCA5aNGkw8o6atN07q8KMsP/Gasa3tXCeXjMf+O7zBjR
-         EFnDiqI6Dv6rpIcqSFw94m/l+sSknWYLQ1n/vjJs2k87ig0PZql87brM8sroo8U+eddz
-         CoDUim9zohhXA0nvjGxaAF5FF97T45+gZZAw6QWN4nCxtYiwLtiIpSLi+KBRVNhtVZbI
-         hLxaaeFcxv67crr6c3IxB7LeAUx4FHLOW+PdmV7zYDJx+wfUtAZ+zMNjnFXhjNLf+1If
-         Zv0w==
-X-Gm-Message-State: ACrzQf2vpjtqfrShVHqhys3Ey9zTTXirzaMqTISm2e1mh1vbeLMcMVpJ
-        lrx0vw2B+cP3fqDUHYVAjGg8lQ==
-X-Google-Smtp-Source: AMsMyM4BpRzlXzpJAJ+oO67Vh1511ZtKDDuRn/12COoHBRa0SK1n43nwoygeQaVIhEsQWUsn/DQkcQ==
-X-Received: by 2002:a05:600c:19d2:b0:3b4:a4cb:2416 with SMTP id u18-20020a05600c19d200b003b4a4cb2416mr6456939wmq.6.1663775231958;
-        Wed, 21 Sep 2022 08:47:11 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id bs11-20020a056000070b00b00226dba960b4sm2896410wrb.3.2022.09.21.08.47.10
+        bh=dfNfQ/WHHv5bx3D+RgTnUZ4fVKImMkLUwy9dSYsV4ZI=;
+        b=j2hZ4Lv2RPjYakrTRRacKAjeP5A3qeiwTCib0ZOA1lmuUJ91f/liIE+kXVsjfuArCW
+         quGnrBuzBvySDghCUxiU88WfVWfzYWjEbR/FZSWsinWtwXAWP4t2wAh5OgetmJjaZZNS
+         wFoy4/1XVHuEFoLSdecXbuaO1xKxyudY3c0PdT+R4CvX/0MjRX4zzCODKh90Tem8iYKr
+         LxNvcE1qSX52rDWorgUWGWOyowYrcWCKu5VSNbr1Gz8kU6M0EkGjyzimspTT9gEtULNb
+         LM9Y6UCz0D/K3lTGfh6kdMXaiAT/DBtasmLhPtIsbUdfnHrnkd0KmBRARbtHye5Z3IPG
+         b/VQ==
+X-Gm-Message-State: ACrzQf1CF+ZlsN7TaeXWeQaLT5lyfLiUXGVKd/Ye+dCeqEs9g82ncVMT
+        hdhFyEMucSLresaOA7XvRVX3Qw==
+X-Google-Smtp-Source: AMsMyM52aQHhQGHg1+wR1Bdadj9kbl+E7s+T7WEcsWzkxcaODyaGUchTnGQ0q6iJgm1jXk7j1PT/UA==
+X-Received: by 2002:a05:6512:3503:b0:496:55d:a186 with SMTP id h3-20020a056512350300b00496055da186mr9957884lfs.340.1663775318470;
+        Wed, 21 Sep 2022 08:48:38 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id be36-20020a05651c172400b0026bca725cd0sm496321ljb.39.2022.09.21.08.48.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Sep 2022 08:47:11 -0700 (PDT)
-Message-ID: <4f5e64c9-c510-cadf-af59-96c99ecb20be@linaro.org>
-Date:   Wed, 21 Sep 2022 16:47:10 +0100
+        Wed, 21 Sep 2022 08:48:37 -0700 (PDT)
+Message-ID: <6ef8b2d9-2ffa-ff18-eb9a-9d7b9f293ced@linaro.org>
+Date:   Wed, 21 Sep 2022 17:48:36 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 1/4] media: camss: sm8250: Virtual channels for CSID
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH] dt-bindings: clocks: qcom,gcc-sc8280xp: Fix typos
 Content-Language: en-US
-To:     quic_mmitkov@quicinc.com, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, robert.foss@linaro.org,
-        akapatra@quicinc.com, jzala@quicinc.com, todor.too@gmail.com
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        konrad.dybcio@somainline.org, mchehab@kernel.org,
-        bryan.odonoghue@linaro.org
-References: <20220921141012.1709-1-quic_mmitkov@quicinc.com>
- <20220921141012.1709-2-quic_mmitkov@quicinc.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20220921141012.1709-2-quic_mmitkov@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Andrew Halaney <ahalaney@redhat.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220921153155.279182-1-ahalaney@redhat.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220921153155.279182-1-ahalaney@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -79,247 +78,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/09/2022 15:10, quic_mmitkov@quicinc.com wrote:
-> From: Milen Mitkov <quic_mmitkov@quicinc.com>
+On 21/09/2022 17:31, Andrew Halaney wrote:
+> pipegmux and SuperSpeed are the proper spelling for those terms.
 > 
-> CSID hardware on SM8250 can demux up to 4 simultaneous streams
-> based on virtual channel (vc) or datatype (dt).
-> The CSID subdevice entity now has 4 source ports that can be
-> enabled/disabled and thus can control which virtual channels
-> are enabled. Datatype demuxing not tested.
-> 
-> The implicit propagation of port formats has been removed
-> (e.g. previously setting sink port format would set the same format
-> to source port), because the source port is now not guaranteed to
-> follow the same  format as the sink port.
-> So port formats have to be set explicitly.
-> 
-> CSID's s_stream is called when any stream is started or stopped.
-> It will call configure_streams() that will rewrite IRQ settings to HW.
-> When multiple streams are running simultaneously there is an issue
-> when writing IRQ settings for one stream while another is still
-> running, thus avoid re-writing settings if they were not changed
-> in link setup, or by fully powering off the CSID hardware.
-> 
-> Signed-off-by: Milen Mitkov <quic_mmitkov@quicinc.com>
-> ---
->   .../platform/qcom/camss/camss-csid-gen2.c     | 55 ++++++++++++-------
->   .../media/platform/qcom/camss/camss-csid.c    | 41 ++++++++------
->   .../media/platform/qcom/camss/camss-csid.h    | 11 +++-
->   3 files changed, 68 insertions(+), 39 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen2.c b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
-> index 2031bde13a93..9f8a3b71394a 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid-gen2.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
-> @@ -334,13 +334,14 @@ static const struct csid_format csid_formats[] = {
->   	},
->   };
->   
-> -static void csid_configure_stream(struct csid_device *csid, u8 enable)
-> +static void __csid_configure_stream(struct csid_device *csid, u8 enable, u8 channel)
->   {
->   	struct csid_testgen_config *tg = &csid->testgen;
->   	u32 val;
->   	u32 phy_sel = 0;
->   	u8 lane_cnt = csid->phy.lane_cnt;
-> -	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_SRC];
-> +	/* Source pads matching RDI channels on hardware. Pad 1 -> RDI0, Pad 2 -> RDI1, etc. */
-> +	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + channel];
->   	const struct csid_format *format = csid_get_fmt_entry(csid->formats, csid->nformats,
->   							      input_format->code);
->   
-> @@ -351,8 +352,8 @@ static void csid_configure_stream(struct csid_device *csid, u8 enable)
->   		phy_sel = csid->phy.csiphy_id;
->   
->   	if (enable) {
-> -		u8 vc = 0; /* Virtual Channel 0 */
-> -		u8 dt_id = vc * 4;
-> +		u8 vc = channel; /* mapping between virtual channel and RDIn index */
-> +		u8 dt_id = vc;
->   
->   		if (tg->enabled) {
->   			/* Config Test Generator */
-> @@ -395,42 +396,42 @@ static void csid_configure_stream(struct csid_device *csid, u8 enable)
->   		val |= format->data_type << RDI_CFG0_DATA_TYPE;
->   		val |= vc << RDI_CFG0_VIRTUAL_CHANNEL;
->   		val |= dt_id << RDI_CFG0_DT_ID;
-> -		writel_relaxed(val, csid->base + CSID_RDI_CFG0(0));
-> +		writel_relaxed(val, csid->base + CSID_RDI_CFG0(channel));
->   
->   		/* CSID_TIMESTAMP_STB_POST_IRQ */
->   		val = 2 << RDI_CFG1_TIMESTAMP_STB_SEL;
-> -		writel_relaxed(val, csid->base + CSID_RDI_CFG1(0));
-> +		writel_relaxed(val, csid->base + CSID_RDI_CFG1(channel));
->   
->   		val = 1;
-> -		writel_relaxed(val, csid->base + CSID_RDI_FRM_DROP_PERIOD(0));
-> +		writel_relaxed(val, csid->base + CSID_RDI_FRM_DROP_PERIOD(channel));
->   
->   		val = 0;
-> -		writel_relaxed(val, csid->base + CSID_RDI_FRM_DROP_PATTERN(0));
-> +		writel_relaxed(val, csid->base + CSID_RDI_FRM_DROP_PATTERN(channel));
->   
->   		val = 1;
-> -		writel_relaxed(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PERIOD(0));
-> +		writel_relaxed(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PERIOD(channel));
->   
->   		val = 0;
-> -		writel_relaxed(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PATTERN(0));
-> +		writel_relaxed(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PATTERN(channel));
->   
->   		val = 1;
-> -		writel_relaxed(val, csid->base + CSID_RDI_RPP_PIX_DROP_PERIOD(0));
-> +		writel_relaxed(val, csid->base + CSID_RDI_RPP_PIX_DROP_PERIOD(channel));
->   
->   		val = 0;
-> -		writel_relaxed(val, csid->base + CSID_RDI_RPP_PIX_DROP_PATTERN(0));
-> +		writel_relaxed(val, csid->base + CSID_RDI_RPP_PIX_DROP_PATTERN(channel));
->   
->   		val = 1;
-> -		writel_relaxed(val, csid->base + CSID_RDI_RPP_LINE_DROP_PERIOD(0));
-> +		writel_relaxed(val, csid->base + CSID_RDI_RPP_LINE_DROP_PERIOD(channel));
->   
->   		val = 0;
-> -		writel_relaxed(val, csid->base + CSID_RDI_RPP_LINE_DROP_PATTERN(0));
-> +		writel_relaxed(val, csid->base + CSID_RDI_RPP_LINE_DROP_PATTERN(channel));
->   
->   		val = 0;
-> -		writel_relaxed(val, csid->base + CSID_RDI_CTRL(0));
-> +		writel_relaxed(val, csid->base + CSID_RDI_CTRL(channel));
->   
-> -		val = readl_relaxed(csid->base + CSID_RDI_CFG0(0));
-> +		val = readl_relaxed(csid->base + CSID_RDI_CFG0(channel));
->   		val |=  1 << RDI_CFG0_ENABLE;
-> -		writel_relaxed(val, csid->base + CSID_RDI_CFG0(0));
-> +		writel_relaxed(val, csid->base + CSID_RDI_CFG0(channel));
->   	}
->   
->   	if (tg->enabled) {
-> @@ -456,7 +457,16 @@ static void csid_configure_stream(struct csid_device *csid, u8 enable)
->   		val = HALT_CMD_RESUME_AT_FRAME_BOUNDARY << RDI_CTRL_HALT_CMD;
->   	else
->   		val = HALT_CMD_HALT_AT_FRAME_BOUNDARY << RDI_CTRL_HALT_CMD;
-> -	writel_relaxed(val, csid->base + CSID_RDI_CTRL(0));
-> +	writel_relaxed(val, csid->base + CSID_RDI_CTRL(channel));
-> +}
-> +
-> +static void csid_configure_stream(struct csid_device *csid, u8 enable)
-> +{
-> +	u8 i;
-> +	/* Loop through all enabled VCs and configure stream for each */
-> +	for (i = 0; i < MSM_CSID_MAX_SRC_STREAMS; i++)
-> +		if (csid->phy.en_vc & (1 << i))
+> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
 
-You should use BIT(n) instead of the shift, same comment for your shifts 
-below.
 
-> +			__csid_configure_stream(csid, enable, i);
->   }
->   
->   static int csid_configure_testgen_pattern(struct csid_device *csid, s32 val)
-> @@ -502,6 +512,7 @@ static irqreturn_t csid_isr(int irq, void *dev)
->   	struct csid_device *csid = dev;
->   	u32 val;
->   	u8 reset_done;
-> +	int i;
->   
->   	val = readl_relaxed(csid->base + CSID_TOP_IRQ_STATUS);
->   	writel_relaxed(val, csid->base + CSID_TOP_IRQ_CLEAR);
-> @@ -510,8 +521,12 @@ static irqreturn_t csid_isr(int irq, void *dev)
->   	val = readl_relaxed(csid->base + CSID_CSI2_RX_IRQ_STATUS);
->   	writel_relaxed(val, csid->base + CSID_CSI2_RX_IRQ_CLEAR);
->   
-> -	val = readl_relaxed(csid->base + CSID_CSI2_RDIN_IRQ_STATUS(0));
-> -	writel_relaxed(val, csid->base + CSID_CSI2_RDIN_IRQ_CLEAR(0));
-> +	/* Read and clear IRQ status for each enabled RDI channel */
-> +	for (i = 0; i < MSM_CSID_MAX_SRC_STREAMS; i++)
-> +		if (csid->phy.en_vc & (1 << i)) {
-> +			val = readl_relaxed(csid->base + CSID_CSI2_RDIN_IRQ_STATUS(i));
-> +			writel_relaxed(val, csid->base + CSID_CSI2_RDIN_IRQ_CLEAR(i));
-> +		}
->   
->   	val = 1 << IRQ_CMD_CLEAR;
->   	writel_relaxed(val, csid->base + CSID_IRQ_CMD);
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-> index 88f188e0f750..2ee425b4277f 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
-> @@ -209,6 +209,8 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
->   		}
->   
->   		csid->ops->hw_version(csid);
-> +
-> +		csid->phy.need_vc_update = true;
->   	} else {
->   		disable_irq(csid->irq);
->   		camss_disable_clocks(csid->nclocks, csid->clock);
-> @@ -249,7 +251,10 @@ static int csid_set_stream(struct v4l2_subdev *sd, int enable)
->   			return -ENOLINK;
->   	}
->   
-> -	csid->ops->configure_stream(csid, enable);
-> +	if (csid->phy.need_vc_update) {
-> +		csid->ops->configure_stream(csid, enable);
-> +		csid->phy.need_vc_update = false;
-> +	}
->   
->   	return 0;
->   }
-> @@ -468,16 +473,6 @@ static int csid_set_format(struct v4l2_subdev *sd,
->   	csid_try_format(csid, sd_state, fmt->pad, &fmt->format, fmt->which);
->   	*format = fmt->format;
->   
-> -	/* Propagate the format from sink to source */
-> -	if (fmt->pad == MSM_CSID_PAD_SINK) {
-> -		format = __csid_get_format(csid, sd_state, MSM_CSID_PAD_SRC,
-> -					   fmt->which);
-> -
-> -		*format = fmt->format;
-> -		csid_try_format(csid, sd_state, MSM_CSID_PAD_SRC, format,
-> -				fmt->which);
-> -	}
-> -
->   	return 0;
->   }
->   
-> @@ -738,7 +733,6 @@ static int csid_link_setup(struct media_entity *entity,
->   		struct csid_device *csid;
->   		struct csiphy_device *csiphy;
->   		struct csiphy_lanes_cfg *lane_cfg;
-> -		struct v4l2_subdev_format format = { 0 };
->   
->   		sd = media_entity_to_v4l2_subdev(entity);
->   		csid = v4l2_get_subdevdata(sd);
-> @@ -761,11 +755,22 @@ static int csid_link_setup(struct media_entity *entity,
->   		lane_cfg = &csiphy->cfg.csi2->lane_cfg;
->   		csid->phy.lane_cnt = lane_cfg->num_data;
->   		csid->phy.lane_assign = csid_get_lane_assign(lane_cfg);
-> +	}
-> +	/* Decide which virtual channels to enable based on which source pads are enabled */
-> +	if (local->flags & MEDIA_PAD_FL_SOURCE) {
-> +		struct v4l2_subdev *sd = media_entity_to_v4l2_subdev(entity);
-> +		struct csid_device *csid = v4l2_get_subdevdata(sd);
-> +		struct device *dev = csid->camss->dev;
-> +
-> +		if (flags & MEDIA_LNK_FL_ENABLED)
-> +			csid->phy.en_vc |= 1 << (local->index - 1);
-> +		else
-> +			csid->phy.en_vc &= ~(1 << (local->index - 1));
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-This is just easier to read and reason about with BIT(n)
+Best regards,
+Krzysztof
 
->   
-> -		/* Reset format on source pad to sink pad format */
-> -		format.pad = MSM_CSID_PAD_SRC;
-> -		format.which = V4L2_SUBDEV_FORMAT_ACTIVE;
-> -		csid_set_format(&csid->subdev, NULL, &format);
-> +		csid->phy.need_vc_update = true;
-> +
-> +		dev_info(dev, "%s: Enabled CSID virtual channels mask 0x%x\n",
-> +			 __func__, csid->phy.en_vc);
-
-Should this be an info() or a dbg() ?
-
----
-bod
