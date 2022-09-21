@@ -2,138 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC2A65BF77E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 09:19:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5CEF5BF799
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 09:25:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230042AbiIUHTa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Sep 2022 03:19:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35340 "EHLO
+        id S229865AbiIUHZH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Sep 2022 03:25:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229910AbiIUHTX (ORCPT
+        with ESMTP id S230149AbiIUHZE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Sep 2022 03:19:23 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 861AE73921
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 00:19:21 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id cc5so8334304wrb.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 00:19:21 -0700 (PDT)
+        Wed, 21 Sep 2022 03:25:04 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 247B843623
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 00:25:03 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id g1-20020a17090a708100b00203c1c66ae3so1326880pjk.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 00:25:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date;
-        bh=E6f+URSdOX05jCBtwcXT8Rm2Ummjdbd9pwKRLdE+3/Q=;
-        b=e6FCHYiWX/YiGw9hnCUu4ucp+blseaG8xhAH+iFbbu8fBpmcHIThynILwHqc3tglLW
-         bL8BzDFNpBk6dO0zUm1dsCGInrNRT8sPLnRWp5mMhOU32kL621xrgnfDHX1s+fo6rqxy
-         Y+U1YzodHWqNQPCRWs1WfG/BZWr3XsRLG1+JoEBmgnRS1oDr+Hn+twtbfojmqRPY1gYE
-         3h9cx7iHymtrjV7mY8z3UwMbq07Dktek0O8pDnTvJ7F/ThNP48b0fTAihyxDA6E0LDmv
-         /xo+yefKGLRtCNXNqs3gRhrov4Kg7KvRrgFWAa0whEEG7tdKecnDNnf9uXZGw48PB8U1
-         xN5A==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=1v5EPGQat5Z+jf2gG8XAit2s3FgVQMVuinEhzqXFGSo=;
+        b=cmH7YSyEUbBgIUgBiCNYZKqsx/QPe1rJJYtGbrSLSvu1pqW4RIlhtkJ+ocl2NUPx8A
+         Lsifq9X5SyOQ75HFeY6XsRayQgR8vXEfPPl0QhAvp2GXhB2vvNGGB5UYvJzCbgn1Qfu2
+         rgp2hDJYGrQ5DKnX37yUZIx3Nopa4ixdfmPMEhpRLdyIvbetxf2XIMJP+JEY96wbuxMW
+         IcZg1ylIANMlzPgS8A8/rQbulCJf3gXejGFY4H8mLTNocMsYSXIEJ9YN0OYUaltCdvPy
+         NTjM9RsBxKhluBkTIt5iXj1GCCVt3P/cmhV6XJZ7nQ32eHO8xRQYDaTVfCmc4/K/rCmR
+         8q2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=E6f+URSdOX05jCBtwcXT8Rm2Ummjdbd9pwKRLdE+3/Q=;
-        b=8G81hCyqCVh5SJF2BHjng+BW97bqHKW0pNHZYHKVEeq4rxnHT+L+zCqypyoFJK0trf
-         ltvYiQ/9rvI/zbKgK+20Y/y5m5K8TmFCKtzOfhGeIQkunsV4PCQBAeb4ED8wQbUUZYyf
-         1vAsY5WAv2MOVoGfhPR+AX9zNxi3RU8FRfcoOS2+iOpo0BM+3Juh48Fgd/R5RQ9vG12h
-         c6i7ZyCr5qPx+ka7ASRTsnxfyobeHzEYjg/kzica4tWOO+TnJoNEZ4+KQRRUQH5lMbMc
-         sFSve+7R3PL9RTqrj1DAar3gp+Zt7ijfHi5Sc+LaCgalpV5m/XYu0gI7LT/ESU8B1fy2
-         qUew==
-X-Gm-Message-State: ACrzQf3wruXCVhveb9skkETVQAPpPaOwxNSfKPGZCfPO811ihEldmEXQ
-        mBqps5kSY65BAPgkX7GB1HjPzg==
-X-Google-Smtp-Source: AMsMyM5hIRfNw0jpDUXcuH3Ju/IpGBuQ5fddogkkUOJUpeUZkCIeoi0sQ98v1nRtIfDZ/iAizXdVWg==
-X-Received: by 2002:a5d:4a48:0:b0:22a:e55d:535d with SMTP id v8-20020a5d4a48000000b0022ae55d535dmr13418791wrs.308.1663744760016;
-        Wed, 21 Sep 2022 00:19:20 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:8ce3:ff4e:ae9b:55f3? ([2a01:e0a:982:cbb0:8ce3:ff4e:ae9b:55f3])
-        by smtp.gmail.com with ESMTPSA id f12-20020a05600c154c00b003b4931eb435sm2044258wmg.26.2022.09.21.00.19.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Sep 2022 00:19:19 -0700 (PDT)
-Message-ID: <e012e586-286d-e553-8c13-97feba66c80c@linaro.org>
-Date:   Wed, 21 Sep 2022 09:19:18 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 2/2] clk: qcom: rpmhcc: add sdm670 clocks
-Content-Language: en-US
-To:     Richard Acayan <mailingradian@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=1v5EPGQat5Z+jf2gG8XAit2s3FgVQMVuinEhzqXFGSo=;
+        b=WgagEJLkjCXrEHuvoLumcUodfE/OM6LtF16IA/1afSOFWM+CPWeHp/rRsAIjG/Cwea
+         99h/XaryGysX+HiLzcoAoK61TPv1QzNULLQsndRU0nIzuS/czwe+qd2PqQDrbiaMT9hz
+         Tm9YOG1ZtVxT9xvJDvsifjHdBob13JBdXULbscRKDl5pb/H2i+jjvfvevLbeygSpZ4Eq
+         yQw1N64YGToMS5bs/9RvYiNjfxwQEb/I96qB9jdllVrVLcjUXJk7WKPWnqlIAH20RpmK
+         oa557dpfxcBjjwE3R/dBuBsfnS11Ik4Un+8MefpacO/NoI8ZqjdRnARHprMkD2sCCM67
+         S09w==
+X-Gm-Message-State: ACrzQf2GvUBMnaqSLa2mELkVjNL9R1VOIOAd2nhi+167p5WXrO3y6zS6
+        RIAzPs/4uvhNCbgqRcyzJAWMGg==
+X-Google-Smtp-Source: AMsMyM7teaAK3gjGJS1o3OsMo9NQFi1LT7D6LKMJ5hZX6cYLXk3NyjpOZLfJxXcs02GwP9IMEOm6uQ==
+X-Received: by 2002:a17:90a:d3c2:b0:202:acc2:1686 with SMTP id d2-20020a17090ad3c200b00202acc21686mr7991353pjw.126.1663745102521;
+        Wed, 21 Sep 2022 00:25:02 -0700 (PDT)
+Received: from localhost ([122.171.20.238])
+        by smtp.gmail.com with ESMTPSA id f9-20020a63f749000000b00434e57bfc6csm1174367pgk.56.2022.09.21.00.25.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Sep 2022 00:25:01 -0700 (PDT)
+Date:   Wed, 21 Sep 2022 12:54:59 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Xuewen Yan <xuewen.yan@unisoc.com>, mani@kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <tdas@codeaurora.org>, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20220920223734.151135-1-mailingradian@gmail.com>
- <20220920223734.151135-3-mailingradian@gmail.com>
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro
-In-Reply-To: <20220920223734.151135-3-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     agross@kernel.org, konrad.dybcio@somainline.org, rafael@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, di.shen@unisoc.com
+Subject: Re: [PATCH] cpufreq: qcom-cpufreq-hw: Add cpufreq qos for LMh
+Message-ID: <20220921072459.tkjxjil6okkcpl2g@vireshk-i7>
+References: <20220915090515.1660-1-xuewen.yan@unisoc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220915090515.1660-1-xuewen.yan@unisoc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/09/2022 00:37, Richard Acayan wrote:
-> The Snapdragon 670 uses the RPMh mailbox for most of the clocks used in
-> SDM845 but omits two. Add clock data for SDM670 so the driver doesn't fail
-> to resolve a clock.
-> 
-> Link: https://android.googlesource.com/kernel/msm/+/443bd8d6e2cf54698234c752e6de97b4b8a528bd%5E%21/#F7
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
->   drivers/clk/qcom/clk-rpmh.c | 21 +++++++++++++++++++++
->   1 file changed, 21 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-> index c07cab6905cb..82d87a0602fe 100644
-> --- a/drivers/clk/qcom/clk-rpmh.c
-> +++ b/drivers/clk/qcom/clk-rpmh.c
-> @@ -382,6 +382,26 @@ static const struct clk_rpmh_desc clk_rpmh_sdm845 = {
->   	.num_clks = ARRAY_SIZE(sdm845_rpmh_clocks),
->   };
->   
-> +static struct clk_hw *sdm670_rpmh_clocks[] = {
-> +	[RPMH_CXO_CLK]		= &sdm845_bi_tcxo.hw,
-> +	[RPMH_CXO_CLK_A]	= &sdm845_bi_tcxo_ao.hw,
-> +	[RPMH_LN_BB_CLK2]	= &sdm845_ln_bb_clk2.hw,
-> +	[RPMH_LN_BB_CLK2_A]	= &sdm845_ln_bb_clk2_ao.hw,
-> +	[RPMH_LN_BB_CLK3]	= &sdm845_ln_bb_clk3.hw,
-> +	[RPMH_LN_BB_CLK3_A]	= &sdm845_ln_bb_clk3_ao.hw,
-> +	[RPMH_RF_CLK1]		= &sdm845_rf_clk1.hw,
-> +	[RPMH_RF_CLK1_A]	= &sdm845_rf_clk1_ao.hw,
-> +	[RPMH_RF_CLK2]		= &sdm845_rf_clk2.hw,
-> +	[RPMH_RF_CLK2_A]	= &sdm845_rf_clk2_ao.hw,
-> +	[RPMH_IPA_CLK]		= &sdm845_ipa.hw,
-> +	[RPMH_CE_CLK]		= &sdm845_ce.hw,
-> +};
-> +
-> +static const struct clk_rpmh_desc clk_rpmh_sdm670 = {
-> +	.clks = sdm670_rpmh_clocks,
-> +	.num_clks = ARRAY_SIZE(sdm670_rpmh_clocks),
-> +};
-> +
->   DEFINE_CLK_RPMH_VRM(sdx55, rf_clk1, rf_clk1_ao, "rfclkd1", 1);
->   DEFINE_CLK_RPMH_VRM(sdx55, rf_clk2, rf_clk2_ao, "rfclkd2", 1);
->   DEFINE_CLK_RPMH_BCM(sdx55, qpic_clk, "QP0");
-> @@ -715,6 +735,7 @@ static const struct of_device_id clk_rpmh_match_table[] = {
->   	{ .compatible = "qcom,sc8180x-rpmh-clk", .data = &clk_rpmh_sc8180x},
->   	{ .compatible = "qcom,sc8280xp-rpmh-clk", .data = &clk_rpmh_sc8280xp},
->   	{ .compatible = "qcom,sdm845-rpmh-clk", .data = &clk_rpmh_sdm845},
-> +	{ .compatible = "qcom,sdm670-rpmh-clk", .data = &clk_rpmh_sdm670},
->   	{ .compatible = "qcom,sdx55-rpmh-clk",  .data = &clk_rpmh_sdx55},
->   	{ .compatible = "qcom,sdx65-rpmh-clk",  .data = &clk_rpmh_sdx65},
->   	{ .compatible = "qcom,sm6350-rpmh-clk", .data = &clk_rpmh_sm6350},
+Can someone familiar with the code please review this ?
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+On 15-09-22, 17:05, Xuewen Yan wrote:
+> Before update thermal pressure, the max cpufreq should be limited.
+> Add QOS control for Lmh throttle cpufreq.
+> 
+> Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
+> ---
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+> 
+> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> index d5ef3c66c762..deb1219435a5 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> @@ -13,6 +13,7 @@
+>  #include <linux/of_address.h>
+>  #include <linux/of_platform.h>
+>  #include <linux/pm_opp.h>
+> +#include <linux/pm_qos.h>
+>  #include <linux/slab.h>
+>  #include <linux/spinlock.h>
+>  #include <linux/units.h>
+> @@ -56,6 +57,8 @@ struct qcom_cpufreq_data {
+>  	struct cpufreq_policy *policy;
+>  
+>  	bool per_core_dcvs;
+> +
+> +	struct freq_qos_request throttle_freq_req;
+>  };
+>  
+>  static unsigned long cpu_hw_rate, xo_rate;
+> @@ -318,6 +321,8 @@ static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
+>  	} else {
+>  		throttled_freq = freq_hz / HZ_PER_KHZ;
+>  
+> +		freq_qos_update_request(&data->throttle_freq_req, throttled_freq);
+> +
+>  		/* Update thermal pressure (the boost frequencies are accepted) */
+>  		arch_update_thermal_pressure(policy->related_cpus, throttled_freq);
+>  
+> @@ -413,6 +418,14 @@ static int qcom_cpufreq_hw_lmh_init(struct cpufreq_policy *policy, int index)
+>  	if (data->throttle_irq < 0)
+>  		return data->throttle_irq;
+>  
+> +	ret = freq_qos_add_request(&policy->constraints,
+> +				   &data->throttle_freq_req, FREQ_QOS_MAX,
+> +				   FREQ_QOS_MAX_DEFAULT_VALUE);
+> +	if (ret < 0) {
+> +		dev_err(&pdev->dev, "Failed to add freq constraint (%d)\n", ret);
+> +		return ret;
+> +	}
+> +
+>  	data->cancel_throttle = false;
+>  	data->policy = policy;
+>  
+> @@ -479,6 +492,7 @@ static void qcom_cpufreq_hw_lmh_exit(struct qcom_cpufreq_data *data)
+>  	if (data->throttle_irq <= 0)
+>  		return;
+>  
+> +	freq_qos_remove_request(&data->throttle_freq_req);
+>  	free_irq(data->throttle_irq, data);
+>  }
+
+-- 
+viresh
