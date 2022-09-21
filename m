@@ -2,127 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 14F845BF74B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 09:13:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC25C5BF753
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 09:14:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229588AbiIUHMy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Sep 2022 03:12:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52996 "EHLO
+        id S229611AbiIUHOI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Sep 2022 03:14:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229736AbiIUHMu (ORCPT
+        with ESMTP id S229721AbiIUHOG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Sep 2022 03:12:50 -0400
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83330165B1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 00:12:48 -0700 (PDT)
-Received: by mail-pg1-x530.google.com with SMTP id 78so5020475pgb.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 00:12:48 -0700 (PDT)
+        Wed, 21 Sep 2022 03:14:06 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF17276966
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 00:14:03 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id n15so1384902wrq.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 00:14:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=nZqkMhL7H0w3lFVKEgrXPAK7vRYev/PZ9pSEQRhmDNg=;
-        b=uApkX5k0fdL7KC7QJLCNSFkYnpqNra4nuBg0V5/Lv2ak78uSIwkClMLqI3QiCrzQC7
-         hIxjWjMMNxDffxnutfWHVp8FmV1S4U8zLcwQTmIooroPrxU+5IkFDPHvSAYetoFeR4Td
-         fQ02xexY7pFX+t7+mC8+i7DIXHxnL43t2ecwgjy7YDR7eK8InEGMhLSstV0Ko5FsUPhW
-         XaAKe9s+ae0iNxtyD7+aExtZEElIHFxZZo1E0rtpcc3FhOspWW/sqdRxhFpVE/s23bas
-         CRKe+/peUm/Wko7UUxP5u5wgbDW9ERXR9/G6cPIqSMmwondkIIlL2U7YSzXuRvCiWKR6
-         +GOQ==
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date;
+        bh=b3R9DZoCrYArCpmU71BmWGHj2dQq4IcyzDjXj86ttQs=;
+        b=wrleY46bAvW9orcPdmhsGXsqIOZo6+mJ/aKl/qobRPfSARZkDXHDIXKaDWEJgSh1BF
+         gjsbQU3f6mA7OZXAGqWtJ2jkHfyYGj9+pFPa5154c+wSrXeDe3h4OiRUwwXK9L0XtTvh
+         GioFbERE3aUbAlm1ElAXoYAPzF77rSiS+RzxHyREkrpFBOqjOLim+QHj7pTnK/oRAs6k
+         gUKdfJb1sbqFydZrZ7uQA3HqhV25QkUBd0yQGVPnrQ1lie7yDKaQwn8RDcxBOkLKuvef
+         CDdYGCTsYbLO/4boTiaWto7J6H06j6+Kasj2nSeNdAQUouPhPcOjjQCOVmAB0oTe8A1P
+         XBWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=nZqkMhL7H0w3lFVKEgrXPAK7vRYev/PZ9pSEQRhmDNg=;
-        b=yZUYfQNmiL8i9+6YKKZY7cDEGPNTxnMCFcPNgFPouam4DzLYj1+wT/6GfE5Hfh2q79
-         dtV8onE227Zicek/Vq5yPh9SzXAxCW6tcp+/PFonjJ5Ac4jhIlJfIovQsz3HERx0cKFH
-         eVfGNqAToVyGNd3yR4uQlqoB1xG4j8KCVxHN+cwfW0VHGSaQpR3fYsVlf48Wx9CXv5H1
-         gesBUkEV7SzsQa6zjfogxnPKVRJtRC/7iQ6cxm9Krw6AXI3IsV6q939XtEjG9GpLZIDr
-         WKFcqpDv/ePRYWDrOZzK9b0BcPE2sr/GFNFiEajLfPr2vVbKOU6Wu4xCtmsMsQb52fKo
-         vwvQ==
-X-Gm-Message-State: ACrzQf0wdYIFomaStG8/RVbp9WKbRTBx6moEfMRpfYSIvedDYCJyPWuS
-        muAT8p3n9E+NWQjMf8bskzwiuw==
-X-Google-Smtp-Source: AMsMyM60EewpH9nGkkPLiSTs/Ao1oQHtT1wpNyBLsBczWGSY8FFJoVwqzxqD6gbeKrXM+Rif6vB1vA==
-X-Received: by 2002:a63:2cd2:0:b0:41c:5901:67d8 with SMTP id s201-20020a632cd2000000b0041c590167d8mr23322684pgs.365.1663744367947;
-        Wed, 21 Sep 2022 00:12:47 -0700 (PDT)
-Received: from ?IPV6:2401:4900:1c61:8e50:8ba8:7ad7:f34c:2f5? ([2401:4900:1c61:8e50:8ba8:7ad7:f34c:2f5])
-        by smtp.gmail.com with ESMTPSA id 13-20020a63134d000000b0042fe1914e26sm1168960pgt.37.2022.09.21.00.12.44
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date;
+        bh=b3R9DZoCrYArCpmU71BmWGHj2dQq4IcyzDjXj86ttQs=;
+        b=R4w5ZoAahbZDHHj3OHZTnskfiC4H77qRsCAz9u74tjvwRPOHxvIMuJHXJK3ef/ka6Z
+         JJp5KNZBlCyiPCJddQMfEldiC6TovQKEDubUNhZrAvhiJlaw6Olm0Ksk4gAU3rmjHWI6
+         E6ZQeLV30nxq+ADeSmCJcpz5gCyW2gKKySWjxxHEH6rErq6Y10pBbbi98MNQTAzX10ab
+         0clrj8xemXuKYk9KA9SpVy8r1RfTTtGtR/oWa7eT7Xy7c+vgJaDcnXY3gfG+xgwzmkMG
+         vICwGUN+M3SlSZZU2SlLG5iCac1jMIRmpneUom/CRPU9xqmjehDbDKXcakOYXoJxt9za
+         Lxtw==
+X-Gm-Message-State: ACrzQf3YwOdXYfCWWGfTyldE8gO39XD+Ajh73h0SlhL02qxOscg2YUzu
+        j63XKDTYIONO+mGVEgdpc74Jpw==
+X-Google-Smtp-Source: AMsMyM7zmNVSeMitft5m1bCKwdxJeXe8VrB5miovFwS9K97uh3EJKfGQh5sjBYY25eWcRqfGh4opKA==
+X-Received: by 2002:a5d:47a4:0:b0:226:e547:b602 with SMTP id 4-20020a5d47a4000000b00226e547b602mr16834338wrb.406.1663744441866;
+        Wed, 21 Sep 2022 00:14:01 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:8ce3:ff4e:ae9b:55f3? ([2a01:e0a:982:cbb0:8ce3:ff4e:ae9b:55f3])
+        by smtp.gmail.com with ESMTPSA id q63-20020a1c4342000000b003b4bd18a23bsm1866139wma.12.2022.09.21.00.14.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Sep 2022 00:12:47 -0700 (PDT)
-Message-ID: <cc120f10-ef65-264e-f251-b63ff0fc81ca@linaro.org>
-Date:   Wed, 21 Sep 2022 12:42:42 +0530
+        Wed, 21 Sep 2022 00:14:01 -0700 (PDT)
+Message-ID: <18097f21-0c19-926a-2242-0aed1fb229b5@linaro.org>
+Date:   Wed, 21 Sep 2022 09:14:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH] arm64: defconfig: Enabled SC8180x configs
+ Thunderbird/91.11.0
+Subject: Re: [PATCH] cpufreq: qcom-cpufreq-hw: Fix uninitialized
+ throttled_freq warning
 Content-Language: en-US
-To:     Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20220916124214.3881948-1-vkoul@kernel.org>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-In-Reply-To: <20220916124214.3881948-1-vkoul@kernel.org>
+To:     Viresh Kumar <viresh.kumar@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     linux-pm@vger.kernel.org,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        "v5 . 18+" <stable@vger.kernel.org>,
+        kernel test robot <lkp@intel.com>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <8342b10a2716ec267ab89ea827f851b78b68470a.1663744088.git.viresh.kumar@linaro.org>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro
+In-Reply-To: <8342b10a2716ec267ab89ea827f851b78b68470a.1663744088.git.viresh.kumar@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,UPPERCASE_50_75 autolearn=ham
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/16/22 6:12 PM, Vinod Koul wrote:
-> Enable sc8180x global clock controller, tlmm, interconnect and edp phy
-> drivers which are required for sc8180x like Lenovo Flex 5G laptop to
-> boot.
+On 21/09/2022 09:10, Viresh Kumar wrote:
+> Commit 6240aaad75e1 was supposed to drop the reference count to the OPP,
+> instead it avoided more stuff if the OPP isn't found. This isn't
+> entirely correct. We already have a frequency value available, we just
+> couldn't align it with an OPP in case of IS_ERR(opp).
 > 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Lets continue with updating thermal pressure, etc, even if we aren't
+> able to find an OPP here.
+> 
+> This fixes warning generated by the 'smatch' tool.
+> 
+> Fixes: 6240aaad75e1 ("cpufreq: qcom-hw: fix the opp entries refcounting")
+> Cc: v5.18+ <stable@vger.kernel.org> # v5.18+
+> Reported-by: kernel test robot <lkp@intel.com>
+> Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+> Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 > ---
->   arch/arm64/configs/defconfig | 4 ++++
->   1 file changed, 4 insertions(+)
+>   drivers/cpufreq/qcom-cpufreq-hw.c | 10 +++++-----
+>   1 file changed, 5 insertions(+), 5 deletions(-)
 > 
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index 0816b7f6926e..e772d01536cf 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -534,6 +534,7 @@ CONFIG_PINCTRL_QDF2XXX=y
->   CONFIG_PINCTRL_QCOM_SPMI_PMIC=y
->   CONFIG_PINCTRL_SC7180=y
->   CONFIG_PINCTRL_SC7280=y
-> +CONFIG_PINCTRL_SC8180X=y
->   CONFIG_PINCTRL_SC8280XP=y
->   CONFIG_PINCTRL_SDM845=y
->   CONFIG_PINCTRL_SM8150=y
-> @@ -1060,6 +1061,7 @@ CONFIG_MSM_GCC_8998=y
->   CONFIG_QCS_GCC_404=y
->   CONFIG_SC_GCC_7180=y
->   CONFIG_SC_GCC_7280=y
-> +CONFIG_SC_GCC_8180X=y
->   CONFIG_SC_GCC_8280XP=y
->   CONFIG_SDM_CAMCC_845=m
->   CONFIG_SDM_GPUCC_845=y
-> @@ -1213,6 +1215,7 @@ CONFIG_PHY_HISTB_COMBPHY=y
->   CONFIG_PHY_HISI_INNO_USB2=y
->   CONFIG_PHY_MVEBU_CP110_COMPHY=y
->   CONFIG_PHY_MTK_TPHY=y
-> +CONFIG_PHY_QCOM_EDP=m
->   CONFIG_PHY_QCOM_PCIE2=m
->   CONFIG_PHY_QCOM_QMP=m
->   CONFIG_PHY_QCOM_QUSB2=m
-> @@ -1275,6 +1278,7 @@ CONFIG_INTERCONNECT_QCOM_OSM_L3=m
->   CONFIG_INTERCONNECT_QCOM_QCS404=m
->   CONFIG_INTERCONNECT_QCOM_SC7180=m
->   CONFIG_INTERCONNECT_QCOM_SC7280=y
-> +CONFIG_INTERCONNECT_QCOM_SC8180X=y
->   CONFIG_INTERCONNECT_QCOM_SC8280XP=y
->   CONFIG_INTERCONNECT_QCOM_SDM845=y
->   CONFIG_INTERCONNECT_QCOM_SM8150=m
+> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> index d5ef3c66c762..bb32659820ce 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> @@ -316,14 +316,14 @@ static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
+>   	if (IS_ERR(opp)) {
+>   		dev_warn(dev, "Can't find the OPP for throttling: %pe!\n", opp);
+>   	} else {
+> -		throttled_freq = freq_hz / HZ_PER_KHZ;
+> -
+> -		/* Update thermal pressure (the boost frequencies are accepted) */
+> -		arch_update_thermal_pressure(policy->related_cpus, throttled_freq);
+> -
+>   		dev_pm_opp_put(opp);
+>   	}
+>   
+> +	throttled_freq = freq_hz / HZ_PER_KHZ;
+> +
+> +	/* Update thermal pressure (the boost frequencies are accepted) */
+> +	arch_update_thermal_pressure(policy->related_cpus, throttled_freq);
+> +
+>   	/*
+>   	 * In the unlikely case policy is unregistered do not enable
+>   	 * polling or h/w interrupt
 
-Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-
-Thanks.
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
