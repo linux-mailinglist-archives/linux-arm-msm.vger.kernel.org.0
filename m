@@ -2,87 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6774A5BF17A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 01:45:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BB1F5BF1C7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 02:10:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230055AbiITXpi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Sep 2022 19:45:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44960 "EHLO
+        id S230487AbiIUAKo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Sep 2022 20:10:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229847AbiITXph (ORCPT
+        with ESMTP id S230323AbiIUAKl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Sep 2022 19:45:37 -0400
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [5.144.164.166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B61AA4D802
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 16:45:36 -0700 (PDT)
-Received: from [192.168.1.101] (95.49.29.188.neoplus.adsl.tpnet.pl [95.49.29.188])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 099F93F642;
-        Wed, 21 Sep 2022 01:45:33 +0200 (CEST)
-Message-ID: <63db6214-18a8-1668-ddaf-8c806324ddb4@somainline.org>
-Date:   Wed, 21 Sep 2022 01:45:33 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH 2/2] iommu: arm-smmu-qcom: add sdm670 compatible
-Content-Language: en-US
-To:     Richard Acayan <mailingradian@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
+        Tue, 20 Sep 2022 20:10:41 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3D814BA6D;
+        Tue, 20 Sep 2022 17:10:26 -0700 (PDT)
+Received: from localhost.localdomain (95.49.29.188.neoplus.adsl.tpnet.pl [95.49.29.188])
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 5248F3F5C8;
+        Wed, 21 Sep 2022 02:10:24 +0200 (CEST)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org
-References: <20220920223955.151507-1-mailingradian@gmail.com>
- <20220920223955.151507-3-mailingradian@gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220920223955.151507-3-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Robert Marko <robimarko@gmail.com>,
+        Das Srinagesh <quic_gurus@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: firmware: document Qualcomm SM6375 SCM
+Date:   Wed, 21 Sep 2022 02:10:19 +0200
+Message-Id: <20220921001020.55307-1-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.37.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Document the compatible for Qualcomm SM6375 SCM.
 
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+---
+ Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-On 21.09.2022 00:39, Richard Acayan wrote:
-> The Snapdragon 670 needs the IOMMU for GENI I2C.
-Way more than that, but sure :D
+diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+index c5b76c9f7ad0..abcb1fae9eb2 100644
+--- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
++++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+@@ -47,6 +47,7 @@ properties:
+           - qcom,scm-sm6115
+           - qcom,scm-sm6125
+           - qcom,scm-sm6350
++          - qcom,scm-sm6375
+           - qcom,scm-sm8150
+           - qcom,scm-sm8250
+           - qcom,scm-sm8350
+-- 
+2.37.3
 
- Add a compatible string to
-> support it.
-> 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-
-Konrad
->  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index b2708de25ea3..bf9653b9eb89 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -431,6 +431,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
->  	{ .compatible = "qcom,sc8180x-smmu-500" },
->  	{ .compatible = "qcom,sc8280xp-smmu-500" },
->  	{ .compatible = "qcom,sdm630-smmu-v2" },
-> +	{ .compatible = "qcom,sdm670-smmu-500" },
->  	{ .compatible = "qcom,sdm845-smmu-500" },
->  	{ .compatible = "qcom,sm6125-smmu-500" },
->  	{ .compatible = "qcom,sm6350-smmu-500" },
