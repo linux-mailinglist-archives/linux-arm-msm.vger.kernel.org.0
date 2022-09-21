@@ -2,110 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A5E05E5586
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 23:52:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 662385E5619
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 00:11:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230364AbiIUVwQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Sep 2022 17:52:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58764 "EHLO
+        id S230515AbiIUWK6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Sep 2022 18:10:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230484AbiIUVwA (ORCPT
+        with ESMTP id S229523AbiIUWK5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Sep 2022 17:52:00 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 91597A7203;
-        Wed, 21 Sep 2022 14:51:48 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DE5D51684;
-        Wed, 21 Sep 2022 14:51:53 -0700 (PDT)
-Received: from e126311.manchester.arm.com (unknown [10.57.76.246])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6F35F3F73B;
-        Wed, 21 Sep 2022 14:51:19 -0700 (PDT)
-Date:   Wed, 21 Sep 2022 22:51:10 +0100
-From:   Kajetan Puchalski <kajetan.puchalski@arm.com>
-To:     Peter Zijlstra <peterz@infradead.org>
-Cc:     richard.henderson@linaro.org, ink@jurassic.park.msu.ru,
-        mattst88@gmail.com, vgupta@kernel.org, linux@armlinux.org.uk,
-        ulli.kroll@googlemail.com, linus.walleij@linaro.org,
-        shawnguo@kernel.org, Sascha Hauer <s.hauer@pengutronix.de>,
-        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
-        tony@atomide.com, khilman@kernel.org, catalin.marinas@arm.com,
-        will@kernel.org, guoren@kernel.org, bcain@quicinc.com,
-        chenhuacai@kernel.org, kernel@xen0n.name, geert@linux-m68k.org,
-        sammy@sammy.net, monstr@monstr.eu, tsbogend@alpha.franken.de,
-        dinguyen@kernel.org, jonas@southpole.se,
-        stefan.kristiansson@saunalahti.fi, shorne@gmail.com,
-        James.Bottomley@HansenPartnership.com, deller@gmx.de,
-        mpe@ellerman.id.au, npiggin@gmail.com, christophe.leroy@csgroup.eu,
-        paul.walmsley@sifive.com, palmer@dabbelt.com,
-        aou@eecs.berkeley.edu, hca@linux.ibm.com, gor@linux.ibm.com,
-        agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
-        svens@linux.ibm.com, ysato@users.sourceforge.jp, dalias@libc.org,
-        davem@davemloft.net, richard@nod.at,
-        anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net,
-        tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
-        dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
-        acme@kernel.org, mark.rutland@arm.com,
-        alexander.shishkin@linux.intel.com, jolsa@kernel.org,
-        namhyung@kernel.org, jgross@suse.com, srivatsa@csail.mit.edu,
-        amakhalov@vmware.com, pv-drivers@vmware.com,
-        boris.ostrovsky@oracle.com, chris@zankel.net, jcmvbkbc@gmail.com,
-        rafael@kernel.org, lenb@kernel.org, pavel@ucw.cz,
-        gregkh@linuxfoundation.org, mturquette@baylibre.com,
-        sboyd@kernel.org, daniel.lezcano@linaro.org, lpieralisi@kernel.org,
-        sudeep.holla@arm.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
-        anup@brainfault.org, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, jacob.jun.pan@linux.intel.com,
-        atishp@atishpatra.org, Arnd Bergmann <arnd@arndb.de>,
-        yury.norov@gmail.com, andriy.shevchenko@linux.intel.com,
-        linux@rasmusvillemoes.dk, dennis@kernel.org, tj@kernel.org,
-        cl@linux.com, rostedt@goodmis.org, pmladek@suse.com,
-        senozhatsky@chromium.org, john.ogness@linutronix.de,
-        juri.lelli@redhat.com, vincent.guittot@linaro.org,
-        dietmar.eggemann@arm.com, bsegall@google.com, mgorman@suse.de,
-        bristot@redhat.com, vschneid@redhat.com, fweisbec@gmail.com,
-        ryabinin.a.a@gmail.com, glider@google.com, andreyknvl@gmail.com,
-        dvyukov@google.com, vincenzo.frascino@arm.com,
-        Andrew Morton <akpm@linux-foundation.org>, jpoimboe@kernel.org,
-        linux-alpha@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-snps-arc@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-csky@vger.kernel.org, linux-hexagon@vger.kernel.org,
-        linux-ia64@vger.kernel.org, loongarch@lists.linux.dev,
-        linux-m68k@lists.linux-m68k.org, linux-mips@vger.kernel.org,
-        openrisc@lists.librecores.org, linux-parisc@vger.kernel.org,
-        linuxppc-dev@lists.ozlabs.org, linux-riscv@lists.infradead.org,
-        linux-s390@vger.kernel.org, linux-sh@vger.kernel.org,
-        sparclinux@vger.kernel.org, linux-um@lists.infradead.org,
-        linux-perf-users@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-xtensa@linux-xtensa.org, linux-acpi@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-arch@vger.kernel.org, kasan-dev@googlegroups.com
-Subject: Re: [PATCH v2 07/44] cpuidle,psci: Push RCU-idle into driver
-Message-ID: <YyuHTgRh7t6vYjHw@e126311.manchester.arm.com>
-References: <20220919095939.761690562@infradead.org>
- <20220919101520.802976773@infradead.org>
+        Wed, 21 Sep 2022 18:10:57 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 281EBA74D5;
+        Wed, 21 Sep 2022 15:10:55 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 4A1BCCE1F99;
+        Wed, 21 Sep 2022 22:10:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC275C433D7;
+        Wed, 21 Sep 2022 22:10:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663798252;
+        bh=+2dcsh6U86YXPRcXsm713bvwRn2unPZV3ef6JCbwu0g=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=HbtASwkEVz8s3MYG70czCb4Q3OKyfSy87gAZmcq2dlNyAK84ieWrqX6NJqVn+Dzh1
+         DPuoaQSgZEsr0WOBgW408vXNK/wc+xIzKj9j+Pdu2vWHns8YJIsQssP84QSahCOf1d
+         KgKTvVhKjX++Nn1N+IpAU47RAyrkkdpT+hHMP5UT6Y0paRILAbEZPZ168gf9NpUkj3
+         LPWdTfFIn1wiUpSjkWvsRE4aDr6eif/nssqs0dKwkva7X2Xg54sQ++iOb3NnN7Py9P
+         16jFywBDSrfcO3aZ30yNcUYB8U6qDGAOInAQy3s7w2DtXliX8TMmRlgF5ikrXGkaCT
+         rT1QBjs0QGtfg==
+Date:   Wed, 21 Sep 2022 17:10:49 -0500
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Sebastian Reichel <sebastian.reichel@collabora.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Lee Jones <lee@kernel.org>, dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH 2/2] power: supply: Add Lenovo Yoga C630 EC driver
+Message-ID: <20220921221049.7gsnalyyh33a2fji@builder.lan>
+References: <20220810030500.2793882-1-bjorn.andersson@linaro.org>
+ <20220810030500.2793882-3-bjorn.andersson@linaro.org>
+ <20220913104545.2u6mcyy3bg4dp6ly@mercury.elektranox.org>
+ <20220915212545.q6vxcnrffwr3buq2@builder.lan>
+ <CAA8EJpoNyc1_eM7mi3D3s4voqLZFHvJtiBd_TOB4dmxcSpwdWg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220919101520.802976773@infradead.org>
-X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <CAA8EJpoNyc1_eM7mi3D3s4voqLZFHvJtiBd_TOB4dmxcSpwdWg@mail.gmail.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 19, 2022 at 11:59:46AM +0200, Peter Zijlstra wrote:
-> Doing RCU-idle outside the driver, only to then temporarily enable it
-> again, at least twice, before going idle is daft.
+On Fri, Sep 16, 2022 at 12:53:42AM +0300, Dmitry Baryshkov wrote:
+> On Fri, 16 Sept 2022 at 00:25, Bjorn Andersson <andersson@kernel.org> wrote:
+> >
+> > On Tue, Sep 13, 2022 at 12:45:45PM +0200, Sebastian Reichel wrote:
+> > > Hi,
+> > >
+> > > [+Cc Lee Jones, DRI devel]
+> > >
+> > > On Tue, Aug 09, 2022 at 10:05:00PM -0500, Bjorn Andersson wrote:
+> > > > The Qualcomm Snapdragon-based Lenovo Yoga C630 has some sort of EC
+> > > > providing AC-adapter and battery status, as well as USB Type-C altmode
+> > > > notifications for Displayport operation.
+> > > >
+> > > > The Yoga C630 ships with Windows, where these operations primarily are
+> > > > implemented in ACPI, but due to various issues with the hardware
+> > > > representation therein it's not possible to run Linux on this
+> > > > information. As such this is a best-effort re-implementation of these
+> > > > operations, based on the register map expressed in ACPI and a fair
+> > > > amount of trial and error.
+> > > >
+> > > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > > ---
+> > > > [...]
+> > > > +   val = yoga_c630_ec_read8(ec, LENOVO_EC_BAT_ATTRIBUTES);
+> > > > +   if (val < 0)
+> > > > +           goto out_unlock;
+> > > > +   ec->unit_ma = val & LENOVO_EC_BAT_ATTR_UNIT_IS_MA;
+> > > > +   if (!ec->unit_ma)
+> > > > +           ec->scale = 1000;
+> > > > +   else
+> > > > +           ec->scale = 1;
+> > >
+> > > Since I'm not sure how much of information was gained by reverse
+> > > engineering: Is this really milliamps vs microamps and not milliamps
+> > > vs milliwatt? SBS batteries usually report either mA or mW.
+> > >
+> >
+> > Unfortunately I don't know the answer to this.
+> >
+> > > > [...]
+> > > > +   case POWER_SUPPLY_PROP_SERIAL_NUMBER:
+> > > > +           val->strval = "05072018";
+> > > > +           break;
+> > >
+> > > why is this hardcoded? :)
+> > >
+> >
+> > I don't know, but as Daniel suggests, it would make sense to just drop
+> > it.
+> >
+> > > > [...]
+> > > > +   device_for_each_child_node(dev, fwnode) {
+> > > > +           ret = fwnode_property_read_u32(fwnode, "reg", &port);
+> > > > +           if (ret < 0)
+> > > > +                   continue;
+> > > > +
+> > > > +           /* Got multiple ports, but altmode is only possible on port 1 */
+> > > > +           if (port != 1)
+> > > > +                   continue;
+> > > > +
+> > > > +           ec->bridge.funcs = &yoga_c630_ec_bridge_funcs;
+> > > > +           ec->bridge.of_node = to_of_node(fwnode);
+> > > > +           ec->bridge.ops = DRM_BRIDGE_OP_HPD;
+> > > > +           ec->bridge.type = DRM_MODE_CONNECTOR_USB;
+> > > > +
+> > > > +           ret = devm_drm_bridge_add(dev, &ec->bridge);
+> > > > +           if (ret) {
+> > > > +                   dev_err(dev, "failed to register drm bridge\n");
+> > > > +                   fwnode_handle_put(fwnode);
+> > > > +                   return ret;
+> > > > +           }
+> > >
+> > > I wonder if DRM people want to see this in drivers/gpu/drm/bridge.
+> > > Maybe it's better to make this a MFD driver?
+> > >
+> >
+> > I did consider it, but it adds a whole bunch of boiler plate code
+> > without a lot of benefit.
+> >
+> > There are a few other cases where I think it would make sense to have
+> > drm bridges outside of drivers/gpu/drm, such as
+> > drivers/usb/typec/altmodes/ and drivers/platform/chrome/...
 > 
-> Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+> What about a solution which might sound simpler than MFD: from your
+> driver's probe() register a platform device which represents a drm
+> bridge. Add drm_bridge driver for it into drivers/gpu/drm/bridges/.
+> 
 
-Tried it on Pixel 6 running psci_idle, looks good with no apparent issues.
+That is indeed simpler
 
-Tested-by: Kajetan Puchalski <kajetan.puchalski@arm.com>
+But then rather than just calling drm_bridge_hpd_notify(status) we need
+a new custom interface for this driver to call the other drive when
+status changes and we waste 840 bytes just to track another struct
+platform_device.
+
+Perhaps that could be made generic, so we'd have "proxy_drm_bridge"
+driver for drivers who implements a HPD drm_bridge but don't want to
+implement that outside drivers/gpu/drm.
+
+But this is just based on the assumption that the "DRM people" require
+drm_bridges to only live in drivers/gpu/drm/. It's all one kernel and
+the API is well defined, so I don't think there's a concrete problem to
+solve.
+
+Regards,
+Bjorn
