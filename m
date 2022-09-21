@@ -2,101 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 82F9A5BFBCC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 11:57:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 87D1C5BFEA3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 15:06:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229761AbiIUJ5H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Sep 2022 05:57:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46652 "EHLO
+        id S229686AbiIUNGQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Sep 2022 09:06:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230127AbiIUJ47 (ORCPT
+        with ESMTP id S229699AbiIUNGP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Sep 2022 05:56:59 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2FF612D25
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 02:56:56 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id a14so6310315ljj.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 02:56:56 -0700 (PDT)
+        Wed, 21 Sep 2022 09:06:15 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F060F883DE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 06:06:13 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id b24so6927583ljk.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 06:06:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=tI61eVwJdBieaBYvkvELSMLHZiZ48YF79Pb/bU0UBX0=;
-        b=uqTjMH8AqyUf6JsW+eF2FBCPegCV7BEdlbTRHJa6AuTbkCDz+ZmJSSDgYe+VCiEqkL
-         /J1dLvu34F230CtcJ6rqem76dUS5TUXzOq6rbdE7urpiG8Y0mtUT02R9Hfkb6BF7Zq8O
-         SyOj75UU2H/z/11wN0FgO6zcDaTe6UvR3ESMCcXiiTW9VdyK7DQp7JMNqU6B6ig7BF86
-         IWgrbo+Zs3OXWqjjV8RDoWC49JKmH0sX46bxqCNe9bsWDRpNyPhkk3Hha26imeooWogC
-         IoG8HOk0lDbMPO02MvOmfOmNJa/AluEF2rd3ZyLSYtaN901BOJ3jj2CMZJwad0f/dAjY
-         5cbg==
+        bh=gAZ4zcbB2orsLPAQ8EJjR8EjPWSXSxUFgQ5EnML0I7I=;
+        b=OJiVAcCSHD7qCGHeeMts6h6iBTjME+np3LrBiZF09r2NsgKvfKDb0UgyATfCdMPZIM
+         fhCz17ALMAKbZszbda79CmL9JlQLDD1iFfBk6Jx9UOMe3ZK1xMsxv3Ror5XAzD1HLzov
+         91tOUuF+HqBxI4NdgjzgJA6UXtMJFj6uhGiqaSvbVmGpnSxLFLjMeR91p41SFUxqayCt
+         QFrJ/x5GRpGEygOzZJBn24KmIvpHVuCd2t0jOwRcbALvNY38OxjdeEBNR3DEtUY6Fw8R
+         78UbNc/tiv1q6sMVQZp+MiaX8xoe8+EwemNx7sstZSMGz8ptpqPTqjWpslzUrzIgEyIn
+         Iquw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=tI61eVwJdBieaBYvkvELSMLHZiZ48YF79Pb/bU0UBX0=;
-        b=m/dIms0k4TkxHEywUJq0HVh7WbH97RlYLqMn3kzh7tH3y+irXlyF448BkHaO0B5iuQ
-         215QHKlg6FzIj8IvK26M2BVqvTVOd+w5hqi44F3nkPNA9zo/c2B8vjT+hwDfi2EGPkA3
-         EA9nbt/pqjSoF2RBCdXCSTxaSBdjLM4IL9HHjfCw2vFQPcWIR4029qlanghQua+Sk6Vb
-         x9Iu3rHnJ1Idi6chVSCKXSdOMybG8ZlnF7gT/ztD5NXvDS3SmwvjTHHl9iRLZgI0faM4
-         uFNGWAfmi1Aeg7QmYkUyVUrQS4Zu8Z8zjQEdgMMDsXug1crTdXZUUHKDxuwOYFoQCds7
-         Q0Pg==
-X-Gm-Message-State: ACrzQf002wToNLl8ianCnuTU5NDV70l1DDUh03KaMXDEe36KjrSQ2dT5
-        QI1pH1mWT3E0kmHuxxz7adNzNw==
-X-Google-Smtp-Source: AMsMyM5ofMX3Eq7d/6O5I3J2DjK9hlvDOTnAWawIVpqssm0rwzE1DLrdD2Dckehn3PQ0nd4RwJN1iw==
-X-Received: by 2002:a2e:84d6:0:b0:26b:dce5:2fe5 with SMTP id q22-20020a2e84d6000000b0026bdce52fe5mr8232573ljh.12.1663754214583;
-        Wed, 21 Sep 2022 02:56:54 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id k1-20020ac257c1000000b004947555dbc2sm364605lfo.100.2022.09.21.02.56.53
+        bh=gAZ4zcbB2orsLPAQ8EJjR8EjPWSXSxUFgQ5EnML0I7I=;
+        b=Ayvv9JcoOL94UCqkBrQ/Kpw7U4cIVGAxK8RLLW2/q2ix49UFtjxjdJ0G58+3mddy7G
+         drlSEyN6MKZrYLwrIMWTbZK/E2WUOWnU9RGmdBnGjHXG/wkjWzUxBMmYvJeO6dH+Tw41
+         m/v8BUx55GVE5DwruAY1G7TMKDRBNo46g2dbAMssbrkguDG0A1op8Fe15YHnB+ur9A2Y
+         GC+3WGsDn2K+MU/BledJ0coiqnW3AQZTxAYyBBT0ceNLWhzZbhiLmOLJK+TSfOGfYrWS
+         93qQ9YrgGdpV5VxrvwNP0tm2BQCd1WfxW8hfTrYc8dXKms5zsLDZTQyPCdgjEkfYfzw/
+         61wg==
+X-Gm-Message-State: ACrzQf3StxfFe6dVNWwnetxNnm8V7GQyK20jbY7erHIVWff3+z3U/1vu
+        vlu8PcPOVLiNYhCZUogFA59ASw==
+X-Google-Smtp-Source: AMsMyM6+sJnzoKk2ra9r0XoN+2znerZ9uj5UFe4DJYjXt9KsiXp045FDLjIa6Ele9KhkbFcAn/wJqA==
+X-Received: by 2002:a2e:a887:0:b0:26a:ba85:8fbe with SMTP id m7-20020a2ea887000000b0026aba858fbemr8367222ljq.14.1663765572108;
+        Wed, 21 Sep 2022 06:06:12 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id s3-20020a056512314300b0048a9e18ae67sm429912lfi.84.2022.09.21.06.06.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Sep 2022 02:56:53 -0700 (PDT)
-Message-ID: <85a6fc15-dc18-4044-a837-f2280a9cdf43@linaro.org>
-Date:   Wed, 21 Sep 2022 11:56:52 +0200
+        Wed, 21 Sep 2022 06:06:11 -0700 (PDT)
+Message-ID: <f6ab7125-4f1a-61fc-cfeb-8988921c35b4@linaro.org>
+Date:   Wed, 21 Sep 2022 16:06:10 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.2
-Subject: Re: [PATCH] Revert "arm64: dts: qcom: msm8996: add missing TCSR
- syscon compatible"
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220921095258.2332568-1-dmitry.baryshkov@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220921095258.2332568-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH] phy: qcom-qmp-pcie: Fix the SM8450 PCS registers
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        vkoul@kernel.org, andersson@kernel.org
+Cc:     kishon@ti.com, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20220910063857.17372-1-manivannan.sadhasivam@linaro.org>
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220910063857.17372-1-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/09/2022 11:52, Dmitry Baryshkov wrote:
-> This reverts commit 8a99e0fc8bd3 ("arm64: dts: qcom: msm8996: add
-> missing TCSR syscon compatible").
+On 10/09/2022 09:38, Manivannan Sadhasivam wrote:
+> In the PCS region, registers QPHY_V5_PCS_EQ_CONFIG4 and
+> QPHY_V5_PCS_EQ_CONFIG5 should be used instead of QPHY_V5_PCS_EQ_CONFIG2
+> and QPHY_V5_PCS_EQ_CONFIG3.
 > 
-> This commit marked the saw3 (syscon@9a10000) node as compatible with
-> qcom,tcsr-msm8996. However the mentioned device is not not a TCSR
-> (system registers, hardware mutex). It is a CPU power
-> controller/regulator, which is currently being handled as a syscon.
+> This causes high latency when ASPM is enabled, so fix it!
+
+I have checked against vendor's tree [1]. The registers in question have 
+offsets 0x01c0f3e0 / 0x01c0f3e4. The sm8450.dtsi uses 0x1c0f200 as the 
+PCS region base for the PCIe PHY1. Thus the correct offsets for the 
+table are 0x1e0/0x1e4.
+
+There might be a mistake in the name of the register, but the address 
+corresponds to the address in the vendor's tree.
+
+[1] 
+https://github.com/MiCode/kernel_devicetree/blob/zeus-s-oss/qcom/waipio-pcie.dtsi#L520
+
 > 
-> Fixes: 8a99e0fc8bd3 ("arm64: dts: qcom: msm8996: add missing TCSR syscon compatible")
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Fixes: 2c91bf6bf290 ("phy: qcom-qmp: Add SM8450 PCIe1 PHY support")
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c   | 4 ++--
+>   drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h | 4 ++--
+>   2 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> index 4648467d5cac..b508903d77d0 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> @@ -1332,8 +1332,8 @@ static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_rx_tbl[] = {
+>   };
+>   
+>   static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_pcs_tbl[] = {
+> -	QMP_PHY_INIT_CFG(QPHY_V5_PCS_EQ_CONFIG2, 0x16),
+> -	QMP_PHY_INIT_CFG(QPHY_V5_PCS_EQ_CONFIG3, 0x22),
+> +	QMP_PHY_INIT_CFG(QPHY_V5_PCS_EQ_CONFIG4, 0x16),
+> +	QMP_PHY_INIT_CFG(QPHY_V5_PCS_EQ_CONFIG5, 0x22),
+>   	QMP_PHY_INIT_CFG(QPHY_V5_PCS_G3S2_PRE_GAIN, 0x2e),
+>   	QMP_PHY_INIT_CFG(QPHY_V5_PCS_RX_SIGDET_LVL, 0x99),
+>   };
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h
+> index 61a44519f969..cca6455ec98c 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5.h
+> @@ -11,7 +11,7 @@
+>   #define QPHY_V5_PCS_G3S2_PRE_GAIN			0x170
+>   #define QPHY_V5_PCS_RX_SIGDET_LVL			0x188
+>   #define QPHY_V5_PCS_RATE_SLEW_CNTRL1			0x198
+> -#define QPHY_V5_PCS_EQ_CONFIG2				0x1e0
+> -#define QPHY_V5_PCS_EQ_CONFIG3				0x1e4
+> +#define QPHY_V5_PCS_EQ_CONFIG4				0x2e0
+> +#define QPHY_V5_PCS_EQ_CONFIG5				0x2e4
+>   
+>   #endif
 
-Thanks!
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
 
