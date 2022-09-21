@@ -2,73 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FEC65BF974
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 10:37:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0E395BF9A8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 10:47:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231460AbiIUIgu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Sep 2022 04:36:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42954 "EHLO
+        id S231437AbiIUIrb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Sep 2022 04:47:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231338AbiIUIgo (ORCPT
+        with ESMTP id S231443AbiIUIrB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Sep 2022 04:36:44 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E48EB83069
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 01:36:30 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id p5so6028813ljc.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 01:36:30 -0700 (PDT)
+        Wed, 21 Sep 2022 04:47:01 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C66489CDD
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 01:46:58 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id i26so7982335lfp.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 01:46:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=339+3mHOy+Q3FCaVFGj+b1oUEup7t5BZOT8tg60/J6w=;
-        b=OhxZFifxim9zPK0LacO5Qma5OLzssTw7hyLTZf55g8Yl576rZWbzHHGZxYl+BV8A1R
-         759NPU+SYX6JiEt8URE1Cwn9ek9ZIcBUPiCfXRXaj2n5IxnEefy1PGyKOjKqnrRJsqDN
-         Ki0oLjXgixi3nHfOSJXVIrBEvXbNkpYC55p0/Ixyhaaq9by2hJxCqiPzyxv1vjIomxTt
-         If15SNPjqOWCDeULCIVbHBBHk7ZUolgENnr8Rwy82TNhqy7kD6R62droTkYX1hn0a+Kw
-         UYQBcqJjdHod3ko8sYs9RuROTnvjt7EKh1nvI2YqInnEYq+u7CWezuYhek0PyCuk8H/I
-         mulg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=9XDmMSkErfJxFmN4ZvQmXQrGhNtHHsv05+YAnAlzpks=;
+        b=PC8yTTvPRBQpgdJ31Yt4NsBPePaj0m09Ho5t1UiVzsRsiwcI48Xxecb0a3C5O6DriO
+         LW4IsbyHiBfAifg6NDFeCswah8f1AlEgYVIf3ocXrYg8wN7gdSt7iRXt46PlnPehLsBP
+         Nf8RzciXCNmfoHUL0UMQA4G0Icg2m57DCnIi48wK9ZkFTjy8P+cw+XPhJFuiNZtfPjF5
+         HoQP+KFkTti1UwEuprNwo/dyhP3WklIR6a6YQB2GjpBUj7V3BzfEqshxdCorLdAB3Mkk
+         5fzA+XnFE3c3fPFj7tKnPcFct+VMlqOh7U6FcoOY6dpzIctojWTp1DY6dpLOnC+UjXDs
+         FWtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=339+3mHOy+Q3FCaVFGj+b1oUEup7t5BZOT8tg60/J6w=;
-        b=nCr4iWhLm4qF9qK8Aa3k4VR0HbKV3+r3bQsPZS3vtNI4S9hPs+knt5qZyFn4j6521R
-         JZJIn1FPfA/rShEWjYkTQffc6FNMEn0q46F3+20jLjiATgRcyBskwjKBpJhuor0bFcQo
-         CcLyNEXAuSc812k5ExepvX6FLxN9Yu5r/oExTXpdqH8ktMnoR90WpGFOQlVsk8+OX4tP
-         N6zVBGFeT/5x8r5I4Mp50vvxNsKWE5apuT/jgtHHkJOQn71AWtH/ehswU+SH8PTRhd+W
-         Bvg87q79lpSm5apopGYiVMc7Akl+zfCm9MLVG8kb1bq8eZYFMzour8yIqcac/UKWieF7
-         iJIw==
-X-Gm-Message-State: ACrzQf1IW4rb/N1VkVAa3K9/tbSbWAtFoz1LTjuY2anvpfLLMEmsAB0G
-        BwdA91XhbE9e32Y6a4mHd67Wbg==
-X-Google-Smtp-Source: AMsMyM6b3yZpg7/i4MzSbXpTSPi/TUvJcWk9R7HkTuNplHg3c5LC8MYqw3z6tEzYJvxHGUzbYlMH0Q==
-X-Received: by 2002:a05:651c:10a:b0:26c:5d7a:74b2 with SMTP id a10-20020a05651c010a00b0026c5d7a74b2mr2256193ljb.193.1663749388364;
-        Wed, 21 Sep 2022 01:36:28 -0700 (PDT)
-Received: from krzk-bin (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id q8-20020a056512210800b00499b726508csm328785lfr.250.2022.09.21.01.36.27
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=9XDmMSkErfJxFmN4ZvQmXQrGhNtHHsv05+YAnAlzpks=;
+        b=FvhdmOocXypkh7Ms2ZS8gxC5PXyrr9agjU2Zpc+J1HnjkmdmE7AR7wvu9NEAGbQVjm
+         rHkI/S+XW7HseR5Ns1cBDXzNXDOqKgrRh6HvzB0fnVfJciP7b5YwJhLME9pJR6x3UTYs
+         U+oXVavASlWMJfkNuulkyaVywoGphB/Aqp0WbJ78kQR601grIWDiNMjBvZk80lLB4oee
+         HGQjZL/blnQqElndlYdw4UQDOGoRDiHqPy5oB0kV1WxjVBjSV/vCm7HJVDJGXCOJmVPd
+         ciJbq7NOky4LITMeOAQm+J7v0JcBoXU+g2FmQmD8CDFDMpohH0HoTR6kkFgTm4LYqj2a
+         oTQg==
+X-Gm-Message-State: ACrzQf17NLiZiEPkTCbzfOydCvI3+u2j0HrrulhuyQHPOxjfbeJ9BGV1
+        1R/Cv/Ire+LcltwugH+cLs+p5g==
+X-Google-Smtp-Source: AMsMyM4RB9R3GoHhkgWd/q4jSX09mjpDoHUp6y2OzcGRbdSNR5ZNtu32JNMZN/EivKSvm50+5Vs+qQ==
+X-Received: by 2002:a05:6512:b17:b0:4a0:13c:9b3f with SMTP id w23-20020a0565120b1700b004a0013c9b3fmr375196lfu.91.1663750016500;
+        Wed, 21 Sep 2022 01:46:56 -0700 (PDT)
+Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id o12-20020a056512052c00b00497a41b3a42sm344715lfc.88.2022.09.21.01.46.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Sep 2022 01:36:27 -0700 (PDT)
-Date:   Wed, 21 Sep 2022 10:36:26 +0200
+        Wed, 21 Sep 2022 01:46:55 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Sireesh Kodali <sireeshkodali1@gmail.com>
-Cc:     devicetree@vger.kernel.org, andersson@kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        krzysztof.kozlowski+dt@linaro.org,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH v4 2/4] dt-bindings: remoteproc: qcom: Convert wcnss
- documentation to YAML
-Message-ID: <20220921083626.i7bqn45lvracp6by@krzk-bin>
-References: <20220921043648.2152725-1-sireeshkodali1@gmail.com>
- <20220921043648.2152725-3-sireeshkodali1@gmail.com>
+        Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] usb: dwc3: qcom: drop unneeded compatibles
+Date:   Wed, 21 Sep 2022 10:46:54 +0200
+Message-Id: <20220921084654.118230-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220921043648.2152725-3-sireeshkodali1@gmail.com>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -79,59 +73,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 21 Sep 2022 10:06:46 +0530, Sireesh Kodali wrote:
-> This is a direct conversion of the existing txt documentation to YAML.
-> It is in preparation for the addition of pronto-v3 to the docs. This
-> patch doesn't document any of the existing subnodes/properties that are
-> not documented in the existing txt file. That is done in a separate
-> patch.
-> 
-> Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
-> ---
->  .../bindings/remoteproc/qcom,wcnss-pil.txt    | 177 ------------
->  .../bindings/remoteproc/qcom,wcnss-pil.yaml   | 267 ++++++++++++++++++
->  2 files changed, 267 insertions(+), 177 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.txt
->  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-> 
+All Qualcomm SoC DWC3 USB devices have a qcom,dwc3 fallback, thus there
+is no need to keep the list of compatibles growing.
 
-Running 'make dtbs_check' with the schema in this patch gives the
-following warnings. Consider if they are expected or the schema is
-incorrect. These may not be new warnings.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ drivers/usb/dwc3/dwc3-qcom.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-This will change in the future.
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index 9a94b1ab8f7a..7c40f3ffc054 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -1007,10 +1007,6 @@ static const struct dev_pm_ops dwc3_qcom_dev_pm_ops = {
+ 
+ static const struct of_device_id dwc3_qcom_of_match[] = {
+ 	{ .compatible = "qcom,dwc3" },
+-	{ .compatible = "qcom,msm8996-dwc3" },
+-	{ .compatible = "qcom,msm8998-dwc3" },
+-	{ .compatible = "qcom,sdm660-dwc3" },
+-	{ .compatible = "qcom,sdm845-dwc3" },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, dwc3_qcom_of_match);
+-- 
+2.34.1
 
-Full log is available here: https://patchwork.ozlabs.org/patch/
-
-
-remoteproc@a21b000: compatible: ['qcom,pronto-v2-pil', 'qcom,pronto'] is too long
-	arch/arm64/boot/dts/qcom/apq8016-sbc.dtb
-	arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dtb
-	arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dtb
-	arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dtb
-	arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dtb
-	arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dtb
-	arch/arm64/boot/dts/qcom/msm8916-mtp.dtb
-	arch/arm64/boot/dts/qcom/msm8916-samsung-a3u-eur.dtb
-	arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dtb
-	arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dtb
-	arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dtb
-	arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dtb
-	arch/arm/boot/dts/qcom-apq8016-sbc.dtb
-	arch/arm/boot/dts/qcom-msm8916-samsung-serranove.dtb
-
-remoteproc@fb21b000: compatible: ['qcom,pronto-v2-pil', 'qcom,pronto'] is too long
-	arch/arm/boot/dts/qcom-apq8074-dragonboard.dtb
-	arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dtb
-	arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dtb
-	arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dtb
-	arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dtb
-	arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine-amami.dtb
-	arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine-honami.dtb
-
-remoteproc@fb21b000: 'power-domain-names' is a required property
-	arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dtb
-
-remoteproc@fb21b000: 'power-domains' is a required property
-	arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dtb
