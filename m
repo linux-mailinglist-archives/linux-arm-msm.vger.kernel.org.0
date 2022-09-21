@@ -2,102 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B1755BFA52
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 11:12:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76A235BFAAA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 11:20:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229572AbiIUJMH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Sep 2022 05:12:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40224 "EHLO
+        id S231473AbiIUJT5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Sep 2022 05:19:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230103AbiIUJMG (ORCPT
+        with ESMTP id S231474AbiIUJTL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Sep 2022 05:12:06 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B105A8C44C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 02:12:04 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id a10so6256872ljq.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 02:12:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=ZjHHQRJGwuqbDb8JIxiASWCllE12kTjIQC60uJoZPaI=;
-        b=YuErZJV2pcu4GLKPVzROsL/ZFPM/2cBi3CO3JcxSL0sLn2a0aoSKkQ49biOU3vQFl4
-         rFuD5jTF7kr/tV/QRX8D7qFA4+NjcdWbKqSzzSyPvg2lSv6TrOUf3HyOY0NbL0s4aWHy
-         2ZmoNFiV9Dv8RFiDbHC6rVPqvP9/ldz9T9uENNTe17wpDE28tSUHmDwCWExEO7+1m0mO
-         ipGEVyO8kYnFhGKEO4gt8A1wYCvy8+23sKy+bq9zQSJuILIqOP1SZx0Ng6Y4pEZGQPfw
-         IqU4IdRvxGTPaDsvwhCU02Pr40YgjsYT6mGUkHsACiHdCUGtJC23f+kBzWr2ZhbmixBh
-         kLWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=ZjHHQRJGwuqbDb8JIxiASWCllE12kTjIQC60uJoZPaI=;
-        b=O0NMISD8eqxTGDOwVeS8J0uytWj2aQ/SDgBz1lgqOaQDi9MIQ+frm4mYmpdHzijF2+
-         avOfIouZTv7o0zZXM6tF6fvc0nMpBhiAgu80dOsWBdp1xT6NDABmDoM0SKc0aqN4Qzi+
-         FT/+g/z5RBDDcS4mUKEzlnGNVxsKi5CVDcOX2IHdl1GjPOafdkhA42o94ySyPM11LNL+
-         IiUkWjYVryWubpWk4jwtcoo32lk4wSKrv33/yXzR8rMCnEhy9Y1o5eXfFJOzM4IGs75I
-         FRL+3Zxq3SFteGhXNkpRkSoVToxtipqfN7aiiga0uWuFfApDQcovO9ZkT4EVoPbR0z/w
-         Tixg==
-X-Gm-Message-State: ACrzQf2SnhXzSZ7NWBOhGeH2LLSkGMIvZXpynug5T40CUhubB3GkeICP
-        hcjjiCBI5u1pllEzXkeutrIUEg==
-X-Google-Smtp-Source: AMsMyM65d5eh3QTDjIdjafQW8dzPMN1JuhFSyd33DcYi8WKHjVw2P4dSaMoRtYcFZO8HGZNMKcwuxQ==
-X-Received: by 2002:a05:651c:1043:b0:26c:565b:2942 with SMTP id x3-20020a05651c104300b0026c565b2942mr3569911ljm.440.1663751523110;
-        Wed, 21 Sep 2022 02:12:03 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id m14-20020ac24ace000000b0049462af8614sm347898lfp.145.2022.09.21.02.12.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Sep 2022 02:12:02 -0700 (PDT)
-Message-ID: <7f8f15bf-806f-a638-f35b-a66d2cb93db7@linaro.org>
-Date:   Wed, 21 Sep 2022 11:12:01 +0200
+        Wed, 21 Sep 2022 05:19:11 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5F5B915C9;
+        Wed, 21 Sep 2022 02:18:31 -0700 (PDT)
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: kholk11)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 132076602003;
+        Wed, 21 Sep 2022 10:18:12 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1663751892;
+        bh=H6Sqt7KTUivS3Jmf3bUZEfhBN7LHFHUTeJKxA8piVAY=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=WUbv+S4fpzF+cwNdPRleHyZF7CzR843vO2Ai2W1FQ4D/4MlyQpOseSfudz8q04CEQ
+         XzZqAzwrmq4lZGeOrYurW2N2Xz02A2Pn9bYvK2hyWHUTGnGXVusZJBFvsav7o4jYYk
+         /SLDFTNHcpKQ8J0dIvyksJl1y9+ej8Di8yiZkKiPUEzkRMODAS2yxX+mHXHaF71GOr
+         UFHQaIjTca9p6YPJY7hzfv9yYdJjQ96Ksn7gEV9pIkXzPkdHX4wuMakiKcC0ZuSp5L
+         ErrJBGOsdoMKbfGHikdmUyoU5bZbc6KFtSI79pUJ36Oj58DJKH6Y56OXO73mP6ZhPD
+         3Oq1ssPzfQQkw==
+Message-ID: <b0982780-7dd3-7c12-6de5-1c04a4359f57@collabora.com>
+Date:   Wed, 21 Sep 2022 11:18:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH v4 2/3] dt-bindings: clock: add SM6375 QCOM global clock
- bindings
+ Thunderbird/102.2.0
+Subject: Re: [PATCH v3 1/3] clk: qcom: gdsc: Fix the handling of PWRSTS_RET
+ support
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220921001303.56151-1-konrad.dybcio@somainline.org>
- <20220921001303.56151-2-konrad.dybcio@somainline.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220921001303.56151-2-konrad.dybcio@somainline.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To:     Rajendra Nayak <quic_rjendra@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        mturquette@baylibre.com, sboyd@kernel.org, mka@chromium.org,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        johan+linaro@kernel.org, quic_kriskura@quicinc.com,
+        dianders@chromium.org, linux-clk@vger.kernel.org
+References: <20220920111517.10407-1-quic_rjendra@quicinc.com>
+ <d813e8a5-9eba-b3f7-2eee-cd721d120a30@collabora.com>
+ <096205ee-2c8a-facf-87ce-2309c63d2400@quicinc.com>
+ <1a845259-fce2-d239-588b-a70ea5b19680@collabora.com>
+ <4aa3c16e-fb5a-980c-feb6-883fcbff077c@quicinc.com>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <4aa3c16e-fb5a-980c-feb6-883fcbff077c@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-5.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/09/2022 02:13, Konrad Dybcio wrote:
-> Add device tree bindings for global clock controller for SM6375 SoCs.
+Il 21/09/22 11:05, Rajendra Nayak ha scritto:
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> ---
-> Changes since v3:
-> - bring back clocks and compatible as required
+> On 9/21/2022 1:21 PM, AngeloGioacchino Del Regno wrote:
+>> Il 20/09/22 15:39, Rajendra Nayak ha scritto:
+>>>
+>>> On 9/20/2022 6:09 PM, AngeloGioacchino Del Regno wrote:
+>>>> Il 20/09/22 13:15, Rajendra Nayak ha scritto:
+>>>>> GDSCs cannot be transitioned into a Retention state in SW.
+>>>>> When either the RETAIN_MEM bit, or both the RETAIN_MEM and
+>>>>> RETAIN_PERIPH bits are set, and the GDSC is left ON, the HW
+>>>>> takes care of retaining the memory/logic for the domain when
+>>>>> the parent domain transitions to power collapse/power off state.
+>>>>>
+>>>>> On some platforms where the parent domains lowest power state
+>>>>> itself is Retention, just leaving the GDSC in ON (without any
+>>>>> RETAIN_MEM/RETAIN_PERIPH bits being set) will also transition
+>>>>> it to Retention.
+>>>>>
+>>>>> The existing logic handling the PWRSTS_RET seems to set the
+>>>>> RETAIN_MEM/RETAIN_PERIPH bits if the cxcs offsets are specified
+>>>>> but then explicitly turns the GDSC OFF as part of _gdsc_disable().
+>>>>> Fix that by leaving the GDSC in ON state.
+>>>>>
+>>>>> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+>>>>> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+>>>>> ---
+>>>>> v3:
+>>>>> Updated changelog
+>>>>>
+>>>>> There are a few existing users of PWRSTS_RET and I am not
+>>>>> sure if they would be impacted with this change
+>>>>>
+>>>>> 1. mdss_gdsc in mmcc-msm8974.c, I am expecting that the
+>>>>> gdsc is actually transitioning to OFF and might be left
+>>>>> ON as part of this change, atleast till we hit system wide
+>>>>> low power state.
+>>>>> If we really leak more power because of this
+>>>>> change, the right thing to do would be to update .pwrsts for
+>>>>> mdss_gdsc to PWRSTS_OFF_ON instead of PWRSTS_RET_ON
+>>>>> I dont have a msm8974 hardware, so if anyone who has can report
+>>>>> any issues I can take a look further on how to fix it.
+>>>>
+>>>> I think that the safest option is to add a PWRSTS_RET_HW_CTRL flag (or similar),
+>>>> used for the specific cases of SC7180 and SC7280 (and possibly others) where the
+>>>> GDSC is automatically transitioned to a Retention state by HW control, with no
+>>>> required software (kernel driver) intervention.
+>>>
+>>> Having a PWRSTS_RET_HW_CTRL flag would make sense if there was also a
+>>> PWRSTS_RET_SW_CTRL way of achieving Retention state, but FWIK there isn't.
+>>> I am sure that's the way it is on 8974 as well, I just don't have hardware to
+>>> confirm.
+>>>
+>>>>
+>>>>>
+>>>>> 2. gpu_gx_gdsc in gpucc-msm8998.c and
+>>>>>     gpu_gx_gdsc in gpucc-sdm660.c
+>>>>> Both of these seem to add support for 3 power state
+>>>>> OFF, RET and ON, however I dont see any logic in gdsc
+>>>>> driver to handle 3 different power states.
+>>>>> So I am expecting that these are infact just transitioning
+>>>>> between ON and OFF and RET state is never really used.
+>>>>> The ideal fix for them would be to just update their resp.
+>>>>> .pwrsts to PWRSTS_OFF_ON only.
+>>>>
+>>>> static int gdsc_init(struct gdsc *sc)
+>>>> {
+>>>>
+>>>>      ...
+>>>>
+>>>>      if (on || (sc->pwrsts & PWRSTS_RET))
+>>>>          gdsc_force_mem_on(sc);
+>>>>      else
+>>>>          gdsc_clear_mem_on(sc);
+>>>>
+>>>>      ...
+>>>> }
+>>>>
+>>>> On MSM8998 and SDM630/636/660, we're reaching that point with a GDSC that is
+>>>> left OFF from the bootloader, but we want (at least for 630/660) memretain
+>>>> without periph-retain: this is required to make the hypervisor happy.
+>>>
+>>> Ideally setting the memretain bits while the GDSC is OFF should have no affect
+>>> at all. Is this for the gpu_gx_gdsc on 630/660? Is this needed only at the init
+>>> time (when the bootloader has left it OFF) or is it needed everytime the kernel
+>>> turns it OFF too?
+>>
+>> Even though I don't remember the flow in a clear way (this entire thing was done
+>> years ago), I'm sure that for PWRSTS_OFF memretain can be cleared, so, the current
+>> flow that we have in gdsc.c does work correctly.
+>>
+>> Ideally, I agree with you that the memretain bits should have no effect at all
+>> while the GDSC is OFF, but that's the situation on these platforms.
+> 
+> Would you be able to test this patch on these platforms to see if we end up
+> with regressions?
 > 
 
+Not in a timely manner.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Konrad, Marijn, Jami, can any of you perform a "fast" test?
 
-Best regards,
-Krzysztof
+Thanks.
+
+>>
+>>> How did we come up with this trick to keep the hypervisor happy, was it picked
+>>> up from some downstream reference code?
+>>
+>> Yes, it was found in various releases of the downstream kernel for 8998/630/660.
+>>
+>>>
+>>>>
+>>>> Regards,
+>>>> Angelo
+>>>>
+>>
 
