@@ -2,76 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E9755C01D6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 17:41:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B79475C021A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 17:48:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231494AbiIUPlB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Sep 2022 11:41:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40740 "EHLO
+        id S230345AbiIUPsO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Sep 2022 11:48:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230515AbiIUPkm (ORCPT
+        with ESMTP id S229794AbiIUPrg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Sep 2022 11:40:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88881F75
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 08:39:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1663774743;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=7+IfXo3QneUTvZNphDXYsfYPPsR08u+bVDwtrNeIpao=;
-        b=ETuq8bGKqbkiMH+XXQKPeUt2oUUbOhSww6uJSoD+kr7lRZ0yzUc9tCfePM2M3vw3alT56q
-        AUTe5wIAxrRYHreUgQC1Bq0xf20LsCx7oiiLKP7rTkr+/3tujwJJNAVQksNDJQbbyqOy+Q
-        5NdQSiweq86iWfTrFo3axic7S9/2AaA=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-101-vTMYLkulNfCzeUY7E-TXiw-1; Wed, 21 Sep 2022 11:33:00 -0400
-X-MC-Unique: vTMYLkulNfCzeUY7E-TXiw-1
-Received: by mail-qv1-f70.google.com with SMTP id q5-20020a056214194500b004a03466c568so4519417qvk.19
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 08:33:00 -0700 (PDT)
+        Wed, 21 Sep 2022 11:47:36 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 270219A693
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 08:47:13 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id r3-20020a05600c35c300b003b4b5f6c6bdso4030872wmq.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 08:47:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=hB5g2vr6Ss8VPiTPDgJNz2gUIO0z7KdIb9GL1r4XaRg=;
+        b=oAKls05VRfjET6MPWOxP+Z4SLTj4faFVQuRpRXQgfb4utRk/TofVS0rT2r0AXUlZc7
+         Jmtkehx/QpyS5xSLV6TK5wYQfrt8kfpxSPLOLHrD6Om2M7I2VUO5TH1GqGSGVfMO0kJQ
+         oUc75LgeMu6/7iwJbit6NevJ+5wQjvuEfB8zpXbnmW+a8pe034rgqKqyObvC6YYaJq0z
+         1/4u+QFAK0I8RAMxAM2+sPISV+IkVz+BWRHFBLFI29tWd0rpVHM38gAa3UwbUzemKE1g
+         nrlTvdXzRU/krK0geMyY3G9hmr6JJGkZi3rlctuf81csOUMq0Q+wIm+1eIkXMXHoyYE6
+         +adA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=7+IfXo3QneUTvZNphDXYsfYPPsR08u+bVDwtrNeIpao=;
-        b=k/fqg3R479k90afUNx2jkr6jYG/N2s0uHqlW6RuvCpujZL7ezVE4HyBQSHUN7MFRIQ
-         bl6P8GO6GFobp1eNPcX9Ul60op0ct1+l/2LugKnBe2+nvxR8av+5jNp/zLE0Gd0kxvDw
-         2uiQH9aHg4dy0JkfGSx2PKzbLziGTyEdEhJH6Jd+Y+dECz1Tkm0Nn9Vq7ALqtdYhmPBn
-         XFJFYwk4QtHJrNKtHk2MMgpiC1+OFz6MT80JCO4fR3m2unaCnP/r11yGlfCDZ69oR+Qz
-         ezy5rMwGjwUkbmiWuNw0tn0vut7QtwF5TMrQReThtXFvpwC5K5jYmIVwOkDvnK4KCzKj
-         kqWw==
-X-Gm-Message-State: ACrzQf2o+0S4r7f/olMkTh7RDJm20z6WTxWmO7Tj6/skE45DyH0ed7Vc
-        UtRIABKwuV6rlCORHEIjClyI5d6F+f0/+Me4vCaPgEMwFAPYmy5QW8Bmw0sZ/PZPAbM6jrohE2W
-        QrEUDqe1SuwsGl1jLgboq/U5D1w==
-X-Received: by 2002:ac8:5895:0:b0:35c:bd1e:aed2 with SMTP id t21-20020ac85895000000b0035cbd1eaed2mr24073983qta.618.1663774380020;
-        Wed, 21 Sep 2022 08:33:00 -0700 (PDT)
-X-Google-Smtp-Source: AMsMyM5x+IR5tky7En11b9XPJIO6r4GWLMl+xjgqJY4mIPE+hIi/vN1wx8EqtfecainIssiPt2yGDw==
-X-Received: by 2002:ac8:5895:0:b0:35c:bd1e:aed2 with SMTP id t21-20020ac85895000000b0035cbd1eaed2mr24073961qta.618.1663774379812;
-        Wed, 21 Sep 2022 08:32:59 -0700 (PDT)
-Received: from halaneylaptop.redhat.com ([2600:1700:1ff0:d0e0::46])
-        by smtp.gmail.com with ESMTPSA id u15-20020a05620a0c4f00b006cf19068261sm2100324qki.116.2022.09.21.08.32.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Sep 2022 08:32:59 -0700 (PDT)
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, mturquette@baylibre.com,
-        sboyd@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH] dt-bindings: clocks: qcom,gcc-sc8280xp: Fix typos
-Date:   Wed, 21 Sep 2022 10:31:56 -0500
-Message-Id: <20220921153155.279182-1-ahalaney@redhat.com>
-X-Mailer: git-send-email 2.37.3
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=hB5g2vr6Ss8VPiTPDgJNz2gUIO0z7KdIb9GL1r4XaRg=;
+        b=HZx/9XbdnqEGMACRWfGpQzWxVI5vX7I926HsNwqYpUP+lo/szetnRGirhJr1i9V5YW
+         46TTuO+U/LhMfsDZVrKw47+KoCA5aNGkw8o6atN07q8KMsP/Gasa3tXCeXjMf+O7zBjR
+         EFnDiqI6Dv6rpIcqSFw94m/l+sSknWYLQ1n/vjJs2k87ig0PZql87brM8sroo8U+eddz
+         CoDUim9zohhXA0nvjGxaAF5FF97T45+gZZAw6QWN4nCxtYiwLtiIpSLi+KBRVNhtVZbI
+         hLxaaeFcxv67crr6c3IxB7LeAUx4FHLOW+PdmV7zYDJx+wfUtAZ+zMNjnFXhjNLf+1If
+         Zv0w==
+X-Gm-Message-State: ACrzQf2vpjtqfrShVHqhys3Ey9zTTXirzaMqTISm2e1mh1vbeLMcMVpJ
+        lrx0vw2B+cP3fqDUHYVAjGg8lQ==
+X-Google-Smtp-Source: AMsMyM4BpRzlXzpJAJ+oO67Vh1511ZtKDDuRn/12COoHBRa0SK1n43nwoygeQaVIhEsQWUsn/DQkcQ==
+X-Received: by 2002:a05:600c:19d2:b0:3b4:a4cb:2416 with SMTP id u18-20020a05600c19d200b003b4a4cb2416mr6456939wmq.6.1663775231958;
+        Wed, 21 Sep 2022 08:47:11 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id bs11-20020a056000070b00b00226dba960b4sm2896410wrb.3.2022.09.21.08.47.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 Sep 2022 08:47:11 -0700 (PDT)
+Message-ID: <4f5e64c9-c510-cadf-af59-96c99ecb20be@linaro.org>
+Date:   Wed, 21 Sep 2022 16:47:10 +0100
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 1/4] media: camss: sm8250: Virtual channels for CSID
+Content-Language: en-US
+To:     quic_mmitkov@quicinc.com, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, robert.foss@linaro.org,
+        akapatra@quicinc.com, jzala@quicinc.com, todor.too@gmail.com
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        konrad.dybcio@somainline.org, mchehab@kernel.org,
+        bryan.odonoghue@linaro.org
+References: <20220921141012.1709-1-quic_mmitkov@quicinc.com>
+ <20220921141012.1709-2-quic_mmitkov@quicinc.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20220921141012.1709-2-quic_mmitkov@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,35 +79,247 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-pipegmux and SuperSpeed are the proper spelling for those terms.
+On 21/09/2022 15:10, quic_mmitkov@quicinc.com wrote:
+> From: Milen Mitkov <quic_mmitkov@quicinc.com>
+> 
+> CSID hardware on SM8250 can demux up to 4 simultaneous streams
+> based on virtual channel (vc) or datatype (dt).
+> The CSID subdevice entity now has 4 source ports that can be
+> enabled/disabled and thus can control which virtual channels
+> are enabled. Datatype demuxing not tested.
+> 
+> The implicit propagation of port formats has been removed
+> (e.g. previously setting sink port format would set the same format
+> to source port), because the source port is now not guaranteed to
+> follow the same  format as the sink port.
+> So port formats have to be set explicitly.
+> 
+> CSID's s_stream is called when any stream is started or stopped.
+> It will call configure_streams() that will rewrite IRQ settings to HW.
+> When multiple streams are running simultaneously there is an issue
+> when writing IRQ settings for one stream while another is still
+> running, thus avoid re-writing settings if they were not changed
+> in link setup, or by fully powering off the CSID hardware.
+> 
+> Signed-off-by: Milen Mitkov <quic_mmitkov@quicinc.com>
+> ---
+>   .../platform/qcom/camss/camss-csid-gen2.c     | 55 ++++++++++++-------
+>   .../media/platform/qcom/camss/camss-csid.c    | 41 ++++++++------
+>   .../media/platform/qcom/camss/camss-csid.h    | 11 +++-
+>   3 files changed, 68 insertions(+), 39 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen2.c b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
+> index 2031bde13a93..9f8a3b71394a 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid-gen2.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
+> @@ -334,13 +334,14 @@ static const struct csid_format csid_formats[] = {
+>   	},
+>   };
+>   
+> -static void csid_configure_stream(struct csid_device *csid, u8 enable)
+> +static void __csid_configure_stream(struct csid_device *csid, u8 enable, u8 channel)
+>   {
+>   	struct csid_testgen_config *tg = &csid->testgen;
+>   	u32 val;
+>   	u32 phy_sel = 0;
+>   	u8 lane_cnt = csid->phy.lane_cnt;
+> -	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_SRC];
+> +	/* Source pads matching RDI channels on hardware. Pad 1 -> RDI0, Pad 2 -> RDI1, etc. */
+> +	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + channel];
+>   	const struct csid_format *format = csid_get_fmt_entry(csid->formats, csid->nformats,
+>   							      input_format->code);
+>   
+> @@ -351,8 +352,8 @@ static void csid_configure_stream(struct csid_device *csid, u8 enable)
+>   		phy_sel = csid->phy.csiphy_id;
+>   
+>   	if (enable) {
+> -		u8 vc = 0; /* Virtual Channel 0 */
+> -		u8 dt_id = vc * 4;
+> +		u8 vc = channel; /* mapping between virtual channel and RDIn index */
+> +		u8 dt_id = vc;
+>   
+>   		if (tg->enabled) {
+>   			/* Config Test Generator */
+> @@ -395,42 +396,42 @@ static void csid_configure_stream(struct csid_device *csid, u8 enable)
+>   		val |= format->data_type << RDI_CFG0_DATA_TYPE;
+>   		val |= vc << RDI_CFG0_VIRTUAL_CHANNEL;
+>   		val |= dt_id << RDI_CFG0_DT_ID;
+> -		writel_relaxed(val, csid->base + CSID_RDI_CFG0(0));
+> +		writel_relaxed(val, csid->base + CSID_RDI_CFG0(channel));
+>   
+>   		/* CSID_TIMESTAMP_STB_POST_IRQ */
+>   		val = 2 << RDI_CFG1_TIMESTAMP_STB_SEL;
+> -		writel_relaxed(val, csid->base + CSID_RDI_CFG1(0));
+> +		writel_relaxed(val, csid->base + CSID_RDI_CFG1(channel));
+>   
+>   		val = 1;
+> -		writel_relaxed(val, csid->base + CSID_RDI_FRM_DROP_PERIOD(0));
+> +		writel_relaxed(val, csid->base + CSID_RDI_FRM_DROP_PERIOD(channel));
+>   
+>   		val = 0;
+> -		writel_relaxed(val, csid->base + CSID_RDI_FRM_DROP_PATTERN(0));
+> +		writel_relaxed(val, csid->base + CSID_RDI_FRM_DROP_PATTERN(channel));
+>   
+>   		val = 1;
+> -		writel_relaxed(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PERIOD(0));
+> +		writel_relaxed(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PERIOD(channel));
+>   
+>   		val = 0;
+> -		writel_relaxed(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PATTERN(0));
+> +		writel_relaxed(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PATTERN(channel));
+>   
+>   		val = 1;
+> -		writel_relaxed(val, csid->base + CSID_RDI_RPP_PIX_DROP_PERIOD(0));
+> +		writel_relaxed(val, csid->base + CSID_RDI_RPP_PIX_DROP_PERIOD(channel));
+>   
+>   		val = 0;
+> -		writel_relaxed(val, csid->base + CSID_RDI_RPP_PIX_DROP_PATTERN(0));
+> +		writel_relaxed(val, csid->base + CSID_RDI_RPP_PIX_DROP_PATTERN(channel));
+>   
+>   		val = 1;
+> -		writel_relaxed(val, csid->base + CSID_RDI_RPP_LINE_DROP_PERIOD(0));
+> +		writel_relaxed(val, csid->base + CSID_RDI_RPP_LINE_DROP_PERIOD(channel));
+>   
+>   		val = 0;
+> -		writel_relaxed(val, csid->base + CSID_RDI_RPP_LINE_DROP_PATTERN(0));
+> +		writel_relaxed(val, csid->base + CSID_RDI_RPP_LINE_DROP_PATTERN(channel));
+>   
+>   		val = 0;
+> -		writel_relaxed(val, csid->base + CSID_RDI_CTRL(0));
+> +		writel_relaxed(val, csid->base + CSID_RDI_CTRL(channel));
+>   
+> -		val = readl_relaxed(csid->base + CSID_RDI_CFG0(0));
+> +		val = readl_relaxed(csid->base + CSID_RDI_CFG0(channel));
+>   		val |=  1 << RDI_CFG0_ENABLE;
+> -		writel_relaxed(val, csid->base + CSID_RDI_CFG0(0));
+> +		writel_relaxed(val, csid->base + CSID_RDI_CFG0(channel));
+>   	}
+>   
+>   	if (tg->enabled) {
+> @@ -456,7 +457,16 @@ static void csid_configure_stream(struct csid_device *csid, u8 enable)
+>   		val = HALT_CMD_RESUME_AT_FRAME_BOUNDARY << RDI_CTRL_HALT_CMD;
+>   	else
+>   		val = HALT_CMD_HALT_AT_FRAME_BOUNDARY << RDI_CTRL_HALT_CMD;
+> -	writel_relaxed(val, csid->base + CSID_RDI_CTRL(0));
+> +	writel_relaxed(val, csid->base + CSID_RDI_CTRL(channel));
+> +}
+> +
+> +static void csid_configure_stream(struct csid_device *csid, u8 enable)
+> +{
+> +	u8 i;
+> +	/* Loop through all enabled VCs and configure stream for each */
+> +	for (i = 0; i < MSM_CSID_MAX_SRC_STREAMS; i++)
+> +		if (csid->phy.en_vc & (1 << i))
 
-Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+You should use BIT(n) instead of the shift, same comment for your shifts 
+below.
+
+> +			__csid_configure_stream(csid, enable, i);
+>   }
+>   
+>   static int csid_configure_testgen_pattern(struct csid_device *csid, s32 val)
+> @@ -502,6 +512,7 @@ static irqreturn_t csid_isr(int irq, void *dev)
+>   	struct csid_device *csid = dev;
+>   	u32 val;
+>   	u8 reset_done;
+> +	int i;
+>   
+>   	val = readl_relaxed(csid->base + CSID_TOP_IRQ_STATUS);
+>   	writel_relaxed(val, csid->base + CSID_TOP_IRQ_CLEAR);
+> @@ -510,8 +521,12 @@ static irqreturn_t csid_isr(int irq, void *dev)
+>   	val = readl_relaxed(csid->base + CSID_CSI2_RX_IRQ_STATUS);
+>   	writel_relaxed(val, csid->base + CSID_CSI2_RX_IRQ_CLEAR);
+>   
+> -	val = readl_relaxed(csid->base + CSID_CSI2_RDIN_IRQ_STATUS(0));
+> -	writel_relaxed(val, csid->base + CSID_CSI2_RDIN_IRQ_CLEAR(0));
+> +	/* Read and clear IRQ status for each enabled RDI channel */
+> +	for (i = 0; i < MSM_CSID_MAX_SRC_STREAMS; i++)
+> +		if (csid->phy.en_vc & (1 << i)) {
+> +			val = readl_relaxed(csid->base + CSID_CSI2_RDIN_IRQ_STATUS(i));
+> +			writel_relaxed(val, csid->base + CSID_CSI2_RDIN_IRQ_CLEAR(i));
+> +		}
+>   
+>   	val = 1 << IRQ_CMD_CLEAR;
+>   	writel_relaxed(val, csid->base + CSID_IRQ_CMD);
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
+> index 88f188e0f750..2ee425b4277f 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
+> @@ -209,6 +209,8 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
+>   		}
+>   
+>   		csid->ops->hw_version(csid);
+> +
+> +		csid->phy.need_vc_update = true;
+>   	} else {
+>   		disable_irq(csid->irq);
+>   		camss_disable_clocks(csid->nclocks, csid->clock);
+> @@ -249,7 +251,10 @@ static int csid_set_stream(struct v4l2_subdev *sd, int enable)
+>   			return -ENOLINK;
+>   	}
+>   
+> -	csid->ops->configure_stream(csid, enable);
+> +	if (csid->phy.need_vc_update) {
+> +		csid->ops->configure_stream(csid, enable);
+> +		csid->phy.need_vc_update = false;
+> +	}
+>   
+>   	return 0;
+>   }
+> @@ -468,16 +473,6 @@ static int csid_set_format(struct v4l2_subdev *sd,
+>   	csid_try_format(csid, sd_state, fmt->pad, &fmt->format, fmt->which);
+>   	*format = fmt->format;
+>   
+> -	/* Propagate the format from sink to source */
+> -	if (fmt->pad == MSM_CSID_PAD_SINK) {
+> -		format = __csid_get_format(csid, sd_state, MSM_CSID_PAD_SRC,
+> -					   fmt->which);
+> -
+> -		*format = fmt->format;
+> -		csid_try_format(csid, sd_state, MSM_CSID_PAD_SRC, format,
+> -				fmt->which);
+> -	}
+> -
+>   	return 0;
+>   }
+>   
+> @@ -738,7 +733,6 @@ static int csid_link_setup(struct media_entity *entity,
+>   		struct csid_device *csid;
+>   		struct csiphy_device *csiphy;
+>   		struct csiphy_lanes_cfg *lane_cfg;
+> -		struct v4l2_subdev_format format = { 0 };
+>   
+>   		sd = media_entity_to_v4l2_subdev(entity);
+>   		csid = v4l2_get_subdevdata(sd);
+> @@ -761,11 +755,22 @@ static int csid_link_setup(struct media_entity *entity,
+>   		lane_cfg = &csiphy->cfg.csi2->lane_cfg;
+>   		csid->phy.lane_cnt = lane_cfg->num_data;
+>   		csid->phy.lane_assign = csid_get_lane_assign(lane_cfg);
+> +	}
+> +	/* Decide which virtual channels to enable based on which source pads are enabled */
+> +	if (local->flags & MEDIA_PAD_FL_SOURCE) {
+> +		struct v4l2_subdev *sd = media_entity_to_v4l2_subdev(entity);
+> +		struct csid_device *csid = v4l2_get_subdevdata(sd);
+> +		struct device *dev = csid->camss->dev;
+> +
+> +		if (flags & MEDIA_LNK_FL_ENABLED)
+> +			csid->phy.en_vc |= 1 << (local->index - 1);
+> +		else
+> +			csid->phy.en_vc &= ~(1 << (local->index - 1));
+
+This is just easier to read and reason about with BIT(n)
+
+>   
+> -		/* Reset format on source pad to sink pad format */
+> -		format.pad = MSM_CSID_PAD_SRC;
+> -		format.which = V4L2_SUBDEV_FORMAT_ACTIVE;
+> -		csid_set_format(&csid->subdev, NULL, &format);
+> +		csid->phy.need_vc_update = true;
+> +
+> +		dev_info(dev, "%s: Enabled CSID virtual channels mask 0x%x\n",
+> +			 __func__, csid->phy.en_vc);
+
+Should this be an info() or a dbg() ?
+
 ---
- .../devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml          | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
-index e33dea86fb9e..b1bf768530a3 100644
---- a/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
-@@ -33,7 +33,7 @@ properties:
-       - description: Primary USB SuperSpeed pipe clock
-       - description: USB4 PHY pipegmux clock source
-       - description: USB4 PHY DP gmux clock source
--      - description: USB4 PHY sys piegmux clock source
-+      - description: USB4 PHY sys pipegmux clock source
-       - description: USB4 PHY PCIe pipe clock
-       - description: USB4 PHY router max pipe clock
-       - description: Primary USB4 RX0 clock
-@@ -46,7 +46,7 @@ properties:
-       - description: Second USB4 PHY router max pipe clock
-       - description: Secondary USB4 RX0 clock
-       - description: Secondary USB4 RX1 clock
--      - description: Multiport USB first SupserSpeed pipe clock
-+      - description: Multiport USB first SuperSpeed pipe clock
-       - description: Multiport USB second SuperSpeed pipe clock
-       - description: PCIe 2a pipe clock
-       - description: PCIe 2b pipe clock
--- 
-2.37.3
-
+bod
