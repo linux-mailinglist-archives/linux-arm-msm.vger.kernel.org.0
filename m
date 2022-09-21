@@ -2,100 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C0E395BF9A8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 10:47:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE2375BF9E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 10:55:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231437AbiIUIrb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Sep 2022 04:47:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58732 "EHLO
+        id S229562AbiIUIzX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Sep 2022 04:55:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231443AbiIUIrB (ORCPT
+        with ESMTP id S229944AbiIUIzK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Sep 2022 04:47:01 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C66489CDD
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 01:46:58 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id i26so7982335lfp.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 01:46:58 -0700 (PDT)
+        Wed, 21 Sep 2022 04:55:10 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9975836DD1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 01:55:08 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id o5so3948507wms.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 01:55:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date;
-        bh=9XDmMSkErfJxFmN4ZvQmXQrGhNtHHsv05+YAnAlzpks=;
-        b=PC8yTTvPRBQpgdJ31Yt4NsBPePaj0m09Ho5t1UiVzsRsiwcI48Xxecb0a3C5O6DriO
-         LW4IsbyHiBfAifg6NDFeCswah8f1AlEgYVIf3ocXrYg8wN7gdSt7iRXt46PlnPehLsBP
-         Nf8RzciXCNmfoHUL0UMQA4G0Icg2m57DCnIi48wK9ZkFTjy8P+cw+XPhJFuiNZtfPjF5
-         HoQP+KFkTti1UwEuprNwo/dyhP3WklIR6a6YQB2GjpBUj7V3BzfEqshxdCorLdAB3Mkk
-         5fzA+XnFE3c3fPFj7tKnPcFct+VMlqOh7U6FcoOY6dpzIctojWTp1DY6dpLOnC+UjXDs
-         FWtg==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=NMm6vbupuNg3e8G1erinu7XgiIOmdNdtykV6wWBx/V8=;
+        b=cs5Dvxfm7fd7aaUwKHNDAnKWcNrqMyWvSpCFhYmNjRwKQjf697cP12ef2JVhzS+nTr
+         rBiEPfFCAvK18V0b4TPU93sWl3nBICTtuO2MuXRVpLAsvrnPMrSMT8utfj6qRBivTxti
+         BXRo7n7yiwy1VFEU65sNSMFb9wbJX0Y01wSWLKT5xxq4/13Ub6Q0C+MSyK+vNliqzKv7
+         7DJIhCBeCbjUg+pZttjuEgYoPhQn5piUM0+uqu6ez9uuEzMnz+dnjzErRDjuyGOk/BYS
+         UkhbQnQFMY8EjTuZOsOAEbzscpTOQfKIqXeSfDZd9sFya7VbVqAP+h8BvB+DFZ+Idka/
+         wnnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=9XDmMSkErfJxFmN4ZvQmXQrGhNtHHsv05+YAnAlzpks=;
-        b=FvhdmOocXypkh7Ms2ZS8gxC5PXyrr9agjU2Zpc+J1HnjkmdmE7AR7wvu9NEAGbQVjm
-         rHkI/S+XW7HseR5Ns1cBDXzNXDOqKgrRh6HvzB0fnVfJciP7b5YwJhLME9pJR6x3UTYs
-         U+oXVavASlWMJfkNuulkyaVywoGphB/Aqp0WbJ78kQR601grIWDiNMjBvZk80lLB4oee
-         HGQjZL/blnQqElndlYdw4UQDOGoRDiHqPy5oB0kV1WxjVBjSV/vCm7HJVDJGXCOJmVPd
-         ciJbq7NOky4LITMeOAQm+J7v0JcBoXU+g2FmQmD8CDFDMpohH0HoTR6kkFgTm4LYqj2a
-         oTQg==
-X-Gm-Message-State: ACrzQf17NLiZiEPkTCbzfOydCvI3+u2j0HrrulhuyQHPOxjfbeJ9BGV1
-        1R/Cv/Ire+LcltwugH+cLs+p5g==
-X-Google-Smtp-Source: AMsMyM4RB9R3GoHhkgWd/q4jSX09mjpDoHUp6y2OzcGRbdSNR5ZNtu32JNMZN/EivKSvm50+5Vs+qQ==
-X-Received: by 2002:a05:6512:b17:b0:4a0:13c:9b3f with SMTP id w23-20020a0565120b1700b004a0013c9b3fmr375196lfu.91.1663750016500;
-        Wed, 21 Sep 2022 01:46:56 -0700 (PDT)
-Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id o12-20020a056512052c00b00497a41b3a42sm344715lfc.88.2022.09.21.01.46.55
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=NMm6vbupuNg3e8G1erinu7XgiIOmdNdtykV6wWBx/V8=;
+        b=BqPa0N41rowwLdBrtqjdnNQVDp0SDk7X6VtfaljYCRHXjJ6dAqOLJ7E4AYCI561dre
+         dX38EjAyjVw/bc++kcCMmkONU1gMvEAinQf+O1iGfZ/xere/2Ns5FqAhBshInDoSv4aZ
+         TbwvXhR0nrNIzvEjwyH+CaYsnkLSeKqM1UKJkFL3Ols2ExLY0Ztu71J+DWdDgRiMBGUs
+         6sCN4EeE/0ngNGer7LFkQchFoiNnAFDWs3fOLHnK/nQrotr1r7jx1SNAgAC4Kvy12+nM
+         Ie/wc7EHTOUv+9lMcYVbgaH7t3TXBSsjHlsd3dApFT1T31feIvhEGvIkOUHUxi1I2yd/
+         TaKw==
+X-Gm-Message-State: ACrzQf3XqSgyxf6CJMPza6HJNz7fA0JTEzIKvq4BmMGVWc9t69otMxGQ
+        qXEuLZ7DvMr4fVADFXDh2+RN9g==
+X-Google-Smtp-Source: AMsMyM5v4ccQB/sVn2S/zJDFsH4keJ/VCqNp428gK8IV32RalM87u6d3xbyo/Rp+qs75y4SGFW5eBA==
+X-Received: by 2002:a1c:202:0:b0:3a8:4197:eec0 with SMTP id 2-20020a1c0202000000b003a84197eec0mr5125375wmc.83.1663750506995;
+        Wed, 21 Sep 2022 01:55:06 -0700 (PDT)
+Received: from myrica (cpc92880-cmbg19-2-0-cust679.5-4.cable.virginm.net. [82.27.106.168])
+        by smtp.gmail.com with ESMTPSA id p14-20020a5d48ce000000b0022afbd02c69sm1949060wrs.56.2022.09.21.01.55.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Sep 2022 01:46:55 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] usb: dwc3: qcom: drop unneeded compatibles
-Date:   Wed, 21 Sep 2022 10:46:54 +0200
-Message-Id: <20220921084654.118230-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Wed, 21 Sep 2022 01:55:06 -0700 (PDT)
+Date:   Wed, 21 Sep 2022 09:55:01 +0100
+From:   Jean-Philippe Brucker <jean-philippe@linaro.org>
+To:     Nicolin Chen <nicolinc@nvidia.com>
+Cc:     joro@8bytes.org, suravee.suthikulpanit@amd.com, will@kernel.org,
+        robin.murphy@arm.com, robdclark@gmail.com, dwmw2@infradead.org,
+        baolu.lu@linux.intel.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, matthias.bgg@gmail.com,
+        orsonzhai@gmail.com, baolin.wang@linux.alibaba.com,
+        zhang.lyra@gmail.com, sricharan@codeaurora.org, jgg@nvidia.com,
+        kevin.tian@intel.com, konrad.dybcio@somainline.org,
+        yong.wu@mediatek.com, thierry.reding@gmail.com, vdumpa@nvidia.com,
+        jonathanh@nvidia.com, tglx@linutronix.de,
+        shameerali.kolothum.thodi@huawei.com,
+        christophe.jaillet@wanadoo.fr, thunder.leizhen@huawei.com,
+        quic_saipraka@quicinc.com, jon@solid-run.com,
+        yangyingliang@huawei.com, iommu@lists.linux.dev,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-tegra@vger.kernel.org,
+        virtualization@lists.linux-foundation.org
+Subject: Re: [PATCH v4 0/6] Define EINVAL as device/domain incompatibility
+Message-ID: <YyrRZXVWWxBhW3ST@myrica>
+References: <cover.1663744983.git.nicolinc@nvidia.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1663744983.git.nicolinc@nvidia.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-All Qualcomm SoC DWC3 USB devices have a qcom,dwc3 fallback, thus there
-is no need to keep the list of compatibles growing.
+On Wed, Sep 21, 2022 at 01:22:31AM -0700, Nicolin Chen wrote:
+> This series is to replace the previous EMEDIUMTYPE patch in a VFIO series:
+> https://lore.kernel.org/kvm/Yxnt9uQTmbqul5lf@8bytes.org/
+> 
+> The purpose is to regulate all existing ->attach_dev callback functions to
+> use EINVAL exclusively for an incompatibility error between a device and a
+> domain. This allows VFIO and IOMMUFD to detect such a soft error, and then
+> try a different domain with the same device.
+[...]
+>  drivers/iommu/amd/iommu.c                   | 12 +----
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 11 +---
+>  drivers/iommu/arm/arm-smmu/arm-smmu.c       |  3 --
+>  drivers/iommu/arm/arm-smmu/qcom_iommu.c     |  7 +--
+>  drivers/iommu/fsl_pamu.c                    |  2 +-
+>  drivers/iommu/fsl_pamu_domain.c             |  4 +-
+>  drivers/iommu/intel/iommu.c                 | 10 ++--
+>  drivers/iommu/intel/pasid.c                 |  6 ++-
+>  drivers/iommu/iommu.c                       | 22 ++++++++
+>  drivers/iommu/ipmmu-vmsa.c                  |  2 -
+>  drivers/iommu/msm_iommu.c                   | 59 +++++++++++----------
+>  drivers/iommu/mtk_iommu.c                   |  4 +-
+>  drivers/iommu/omap-iommu.c                  |  6 +--
+>  drivers/iommu/sprd-iommu.c                  |  4 +-
+>  drivers/iommu/tegra-gart.c                  |  2 +-
+>  drivers/iommu/virtio-iommu.c                |  7 ++-
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/usb/dwc3/dwc3-qcom.c | 4 ----
- 1 file changed, 4 deletions(-)
+For virtio-iommu:
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index 9a94b1ab8f7a..7c40f3ffc054 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -1007,10 +1007,6 @@ static const struct dev_pm_ops dwc3_qcom_dev_pm_ops = {
- 
- static const struct of_device_id dwc3_qcom_of_match[] = {
- 	{ .compatible = "qcom,dwc3" },
--	{ .compatible = "qcom,msm8996-dwc3" },
--	{ .compatible = "qcom,msm8998-dwc3" },
--	{ .compatible = "qcom,sdm660-dwc3" },
--	{ .compatible = "qcom,sdm845-dwc3" },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, dwc3_qcom_of_match);
--- 
-2.34.1
+Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
+>  include/linux/iommu.h                       | 12 +++++
+>  17 files changed, 90 insertions(+), 83 deletions(-)
+> 
+> -- 
+> 2.17.1
+> 
