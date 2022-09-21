@@ -2,60 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 884EC5BF6B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 08:52:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AE0F5BF6BB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Sep 2022 08:52:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230029AbiIUGv5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Sep 2022 02:51:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50656 "EHLO
+        id S229563AbiIUGwe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Sep 2022 02:52:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229814AbiIUGvi (ORCPT
+        with ESMTP id S230270AbiIUGwN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Sep 2022 02:51:38 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C8542A417;
-        Tue, 20 Sep 2022 23:51:37 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id BAE4FB8236B;
-        Wed, 21 Sep 2022 06:51:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45609C433C1;
-        Wed, 21 Sep 2022 06:51:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663743094;
-        bh=uylYBidHXUKvld2mr2PA6RP6gS5s9VAMXhoLewWP3kM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=VgSx/xXd6i1h++aAxUgPHuMIzPZcmtyT4N7R5ep3aFsdYZ62kxKSboqwe6YAckgM8
-         jplr33MT7pVin9s6JhVOJFc3E7HdDKl4cJCwnyRuljNqAtHkMcvfu9GsVpNPGlMVZ1
-         EcFc4gczAIpR2H8NIfoXPbqflrDiylMkjQiI87FxVE5oL4wjfnwZoSVfnLbi/7AAcS
-         lUf9q9L7YAtVSJy30HPNmvYcRtNLxfgyt219LNQPGVwAgO9VwESqxqnTdR8SHk3f43
-         ws1UXTkj98YD9OeTgT3LlJCiSZZZIg0A2lzlNUjvL5xJek2RYAOwV7K1wEG2QLEQsH
-         z4mzTM7kq7T+A==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1oata0-0003c5-8o; Wed, 21 Sep 2022 08:51:32 +0200
-Date:   Wed, 21 Sep 2022 08:51:32 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Parikshit Pareek <quic_ppareek@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andrew Halaney <ahalaney@redhat.com>,
-        Shazad Hussain <quic_shazhuss@quicinc.com>
-Subject: Re: [PATCH v4 3/3] arm64: dts: qcom: introduce sa8540p-ride dts
-Message-ID: <Yyq0dFvCI54QMqAl@hovoldconsulting.com>
-References: <20220920120802.14321-1-quic_ppareek@quicinc.com>
- <20220920120802.14321-4-quic_ppareek@quicinc.com>
+        Wed, 21 Sep 2022 02:52:13 -0400
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC03980F62
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 23:52:11 -0700 (PDT)
+Received: by mail-pl1-x633.google.com with SMTP id d24so4723101pls.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Sep 2022 23:52:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=ZHM4glH/lLw2QOmsfReWSEKEYl56FKNM69zB9VOK1rU=;
+        b=tY2hfE4z9cjAj7K3+No2dsJRHekRr+JRTUJBWX9CNe1oI1llIeIM8yOgIkA7B5QsEl
+         +ILN5d7eOyD0n7k/fatsSdzFxhO+egnECvFe9ToWSNJ/H3mFPR7CbqYjSHGUhaIIvimE
+         /YtLrDmP+5+iha0gAGulvq+PYQM/nSltWsAp2B5wVQ2b4LOTPSYTkBTtZ9yWH9t9vQ5L
+         kwpL6Q+2/KUdA8pOIMmuCEh5HMkx3fk3fCs5LhL7QGvd1mBZuNQmwwcJBzRMifjBblkS
+         jKemUx05YzSgmruN7aYzZn/ytdLGM9fVBlKoaNi9HtghkiKDB8dMrbdLKJdan67PRwNN
+         LcQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=ZHM4glH/lLw2QOmsfReWSEKEYl56FKNM69zB9VOK1rU=;
+        b=ShiPGXnev97eDBmwURyvMHJJ+WnODMpp+zRzQnRKI5rOb6ebNcfBwdQ/eoPHRqYL+5
+         Ou5VFwRXIqJjiQGTuMOoRo8ep+flL0DtOXvvEUsi4QRXsKkT8q6ktpOfKJP8Qr/m4fn3
+         QACcdws9/jd0yXUlHCpUQBnY4cQpzJFieUQM+ObhUgXSEJwy2qHFY8EYjJCO9475+xjr
+         UCkDGSyfceU80Wb8NOA/WDYXg2AaYG/1Fte8ra9IWmKpTiP0VzRB5JiH4SYPD+XEVfUF
+         +sKo/gixEfTPJCeBhDnFyVE4ieJofn/8oeoHGZhdHeHrdN8kxiJv901bELOujEML7F1I
+         jhCw==
+X-Gm-Message-State: ACrzQf3gDUe0o0MrbZRsphyRdLgOE0OgKOn7gKJRJ5Y3AjrtkRAZ8gh8
+        +BOkqe77niEISEVTO1EJ+QXVyA==
+X-Google-Smtp-Source: AMsMyM7xAOLC+XQo96Ct3mZkMVxCdnxUdM0LcQO6uekjtAf2NwpxQvbTE/ou+6FzPD0SKXFoHM5tDQ==
+X-Received: by 2002:a17:90b:3b43:b0:202:d053:d305 with SMTP id ot3-20020a17090b3b4300b00202d053d305mr7971031pjb.229.1663743130454;
+        Tue, 20 Sep 2022 23:52:10 -0700 (PDT)
+Received: from ?IPV6:2401:4900:1c61:8e50:8ba8:7ad7:f34c:2f5? ([2401:4900:1c61:8e50:8ba8:7ad7:f34c:2f5])
+        by smtp.gmail.com with ESMTPSA id z11-20020a170903018b00b0016bf5557690sm1121028plg.4.2022.09.20.23.52.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Sep 2022 23:52:09 -0700 (PDT)
+Message-ID: <94ff2006-0051-19be-5eee-a5f71a07e26b@linaro.org>
+Date:   Wed, 21 Sep 2022 12:22:03 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220920120802.14321-4-quic_ppareek@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v7 6/9] crypto: qce: core: Add new compatibles for qce
+ crypto driver
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-crypto@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, herbert@gondor.apana.org.au,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, thara.gopinath@gmail.com,
+        robh@kernel.org, andersson@kernel.org, bhupesh.linux@gmail.com,
+        davem@davemloft.net, Jordan Crouse <jorcrous@amazon.com>
+References: <20220920114051.1116441-1-bhupesh.sharma@linaro.org>
+ <20220920114051.1116441-7-bhupesh.sharma@linaro.org>
+ <b4016460-f43a-13f8-432e-47c27237e005@linaro.org>
+ <9b111583-519b-95a6-15b5-243e88dc8d39@linaro.org>
+ <37b509ff-4fc2-73f1-b135-c0930075ec29@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+In-Reply-To: <37b509ff-4fc2-73f1-b135-c0930075ec29@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,59 +83,136 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 20, 2022 at 05:38:02PM +0530, Parikshit Pareek wrote:
-> Create new dts file specific for Qdrive board based on sa8540p chipset.
-> Introduce common dtsi file sa8295p-adp.dtsi, to be included for adp and
-> Qdrive board.
+On 9/21/22 11:57 AM, Krzysztof Kozlowski wrote:
+> On 21/09/2022 08:16, Bhupesh Sharma wrote:
+>>
+>>
+>> On 9/20/22 8:42 PM, Krzysztof Kozlowski wrote:
+>>> On 20/09/2022 13:40, Bhupesh Sharma wrote:
+>>>> Since we decided to use soc specific compatibles for describing
+>>>> the qce crypto IP nodes in the device-trees, adapt the driver
+>>>> now to handle the same.
+>>>>
+>>>> Keep the old deprecated compatible strings still in the driver,
+>>>> to ensure backward compatibility.
+>>>>
+>>>> Cc: Bjorn Andersson <andersson@kernel.org>
+>>>> Cc: Rob Herring <robh@kernel.org>
+>>>> Cc: herbert@gondor.apana.org.au
+>>>> Tested-by: Jordan Crouse <jorcrous@amazon.com>
+>>>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>>>> ---
+>>>>    drivers/crypto/qce/core.c | 9 +++++++++
+>>>>    1 file changed, 9 insertions(+)
+>>>>
+>>>> diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
+>>>> index 63be06df5519..99ed540611ab 100644
+>>>> --- a/drivers/crypto/qce/core.c
+>>>> +++ b/drivers/crypto/qce/core.c
+>>>> @@ -291,8 +291,17 @@ static int qce_crypto_remove(struct platform_device *pdev)
+>>>>    }
+>>>>    
+>>>>    static const struct of_device_id qce_crypto_of_match[] = {
+>>>> +	/* Following two entries are deprecated (kept only for backward compatibility) */
+>>>>    	{ .compatible = "qcom,crypto-v5.1", },
+>>>>    	{ .compatible = "qcom,crypto-v5.4", },
+>>>
+>>> This is okay, so there is no ABI break.
+>>
+>> Great. Thanks for the confirmation.
+>>
+>>>> +	/* Add compatible strings as per updated dt-bindings, here: */
+>>>> +	{ .compatible = "qcom,ipq4019-qce", },
+>>>> +	{ .compatible = "qcom,ipq6018-qce", },
+>>>> +	{ .compatible = "qcom,ipq8074-qce", },
+>>>> +	{ .compatible = "qcom,msm8996-qce", },
+>>>> +	{ .compatible = "qcom,sdm845-qce", },
+>>>> +	{ .compatible = "qcom,sm8150-qce", },
+>>>> +	{ .compatible = "qcom,sm8250-qce", },
+>>>
+>>> This is a bit odd... you have 7 devices which are simply compatible or
+>>> even the same. This should be instead one compatible.
+>>>
+>>> I don't really get why do you want to deprecate "qcom,crypto-v5.1".
+>>> Commit msg only says "we decided" but I do not know who is "we" and "why
+>>> we decided like this". If you want to deprecate it, perfectly fine by
+>>> me, but please say in commit msg why you are doing it.
+>>
+>> I understand. This patchset has been in flight for some time and hence I
+>> might have missed sharing some detailed information about the review
+>> comments and rework done along the way (in the cover letter for this
+>> series).
+>>
+>> Coming back to your concern, here is the relevant background:
+>> - Please see:
+>> https://lore.kernel.org/linux-arm-msm/20210316222825.GA3792517@robh.at.kernel.org/
+>>
+>> - Rob shared some comments on the v1 series regarding the soc-specific
+>> compatibles. He mentioned in the above thread that 'you should stick
+>> with SoC specific compatibles as *everyone* else does (including most
+>> QCom bindings).'
+>>
+>> - So, while I had proposed "qcom,crypto-v5.1" (for ipq6018) and
+>> "qcom,crypto-v5.4" (for sdm845, sm8150) etc. as the compatible(s) in the
+>> v1 series, I shifted to using the soc-specific compatibles from the v2
+>> series, onwards.
 > 
-> This is quite similar to sa8295 ADP development board. Main differences
-> are related to connectors, and interface cards, like USB external ports,
-> ethernet-switch, and PCIe switch etc.
+> Then the reason could be - Reviewers preferred SoC-based compatible
+> instead of IP-block-version-based.
 > 
-> Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
-> Reported-by: Shazad Hussain <quic_shazhuss@quicinc.com>
-> ---
+> What is confusing is the difference between that link and here. That
+> link wanted to introduce 4 different compatibles... and here you have
+> even 7 compatibles being the same.
 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts
-> new file mode 100644
-> index 000000000000..bd79866b80e1
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sa8540p-adp-ride.dts
-> @@ -0,0 +1,31 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2022, Linaro Limited
-> + * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "sa8540p-adp.dtsi"
-> +
-> +/ {
-> +	model = "Qualcomm SA8540 ADP";
-> +	compatible = "qcom,sa8540p-adp-ride", "qcom,sa8540p";
-> +};
-> +
-> +&ufs_card_hc {
-> +	status = "disabled";
-> +};
+The link points to v1 version and we are on v7 currently. So there have 
+been other comments and reworks along the way :)
 
-What about the UFS phy, etc?
+All of these have been referred to in the cover letter logs.
 
-This opt-out scheme seems quite fragile.
+Again please refer to Vladimir's comments on v5 version here, where he 
+suggested adding soc compatibles for 'ipq8074' and 'msm8996' as well.
 
-> +&usb_1 {
-> +	status = "disabled";
-> +};
-> +
-> +&usb_1_hsphy {
-> +	status = "disabled";
-> +};
-> +
-> +&usb_1_qmpphy {
-> +	status = "disabled";
-> +};
+- 
+https://lore.kernel.org/lkml/7328ae17-1dc7-eaa1-5993-411b986e5e02@linaro.org/
+- 
+https://lore.kernel.org/lkml/f5b7c89c-3bdd-1e1e-772e-721aa5e95bbf@linaro.org/
+- 
+https://lore.kernel.org/lkml/7328ae17-1dc7-eaa1-5993-411b986e5e02@linaro.org/
 
-Johan
+Also the 7 SoC compatibles do not point to the same crypto IP version. 
+We have two IP versions currently supported upstream, "qcom,crypto-v5.1" 
+and "qcom,crypto-v5.4" (with patches for support for newer versions 
+under work and can be expected to land upstream in near future).
+
+However, if you suggest, we can add some comments in the dt-binding doc
+to reflect which SoC supports which version.
+
+>> - Basically, since we are going to have newer qce IP versions available
+>> in near future, e.g. "qcom,crypto-v5.5" etc, and we will have 2 or more
+>> SoCs also sharing 1 version, these compatibles would grow and become
+>> more confusing. IMO, having a soc-specific compatible in such cases is
+>> probably a much cleaner approach.
+>>
+>> Hope this helps answer some of your concerns and provides some relevant
+>> background information.
+> 
+> Sure, but I still think you should have only one compatible in the
+> driver in such case. You don't have differences between them from the
+> driver point of view, so the devices seem to be compatible.
+> 
+> If not, what are the differences?
+
+There can always be requirements for compatible specific handling done 
+in the driver. See Bjorn's comment here for example: 
+https://lore.kernel.org/lkml/YZKhqJuFlRVeQkCc@builder.lan/ , as an 
+example of 'clk_get' calls conditional based on the compatible instead.
+
+This series is to get some early comments and might need some further 
+rework / rearrangement.
+
+However, I would request Rob to share his views as well on the soc 
+specific compatibles, since it was originally his suggestion. I can 
+rework the patchset accordingly.
+
+Thanks,
+Bhupesh
