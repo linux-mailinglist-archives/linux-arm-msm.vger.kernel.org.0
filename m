@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1E235E6A13
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 19:58:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57B285E6A15
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 19:58:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229787AbiIVR6R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Sep 2022 13:58:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50364 "EHLO
+        id S232196AbiIVR60 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Sep 2022 13:58:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232196AbiIVR6N (ORCPT
+        with ESMTP id S232192AbiIVR6Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Sep 2022 13:58:13 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02C45106510
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 10:58:12 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id a14so11916270ljj.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 10:58:11 -0700 (PDT)
+        Thu, 22 Sep 2022 13:58:25 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6F9D10653B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 10:58:21 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id o2so15931869lfc.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 10:58:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=Z6UDGtQQO72uytLS1mdZYY+ykMsfHmukT+V7PXKhUUU=;
-        b=un5AMZnBGkspxOGTwcdqsEvtTbBaEz3uI0DPqrX+BMvoA3F7wZEHCZDqM2KoU+slCM
-         51FNfhvfhDnvDC4zvRsJcGVkS88YpBsBMDEGuA7P8UGKnY5DKIdfkptH8n9RG8096czb
-         UKEs3qoNijVsu7upNpU5YRrhGzIrgD/Ruzs8QfAPN7n5XHe/esmqkH0ouO7NMmELlL3g
-         +ukcEn3i4irj3sGVd/eTVytl8J2IwRGnSimWv5AvUAdRQp1SEoql11cd2V/gbYqV9FIr
-         5R8k0NCBQQTGX8mRiIpijb/sC3sjisMnJlfysoSCeL2reKz7T2nWY8zzbVXt0+kUvzfV
-         2BNQ==
+        bh=l478WV2PQrEPincbg/O4NBfPJTT4Q+S9mMJy9BBn9a8=;
+        b=Hb3m1qSIZlO0ry2k89IBZPpA4nRFpA2iWKCH0ptaFKAtKTlVBkmUqVKJXpP1uv+iqL
+         Bpq6iY0xoewsqqpOuNQ1dztfX9Yl+RYF8O90kcT08YahUow/vZyM6G/v15qqnQ/q+IBY
+         45oKHp5p824FtfnHleaBBAMopHhquUHf1GzvjLWGdLr6xhDRqeq4x1+W+HLj3dPb80cV
+         ppqTEihAApF2J0Y44kH+C+/WVn/DgWgSe281UAT/6CjabmQwEFw2EaGRfBuOnpCxZMq9
+         7tPypK3EZQv40V7iAT2R9unbAK1YaHNi16SWZvrncLiJT6OC+zPUt7bWal7mZsLeFYl5
+         9SFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=Z6UDGtQQO72uytLS1mdZYY+ykMsfHmukT+V7PXKhUUU=;
-        b=ln0rI70n15rMoGZ4HBSI1V5kvGmu1DRuC5IPFdRmO96NA3EDDKPnqu5YjRZVbXskP/
-         aPwAjiWY+v+rRrPJUcjH8zRgAjQrRFNewnAIKWXo/Y/0v37bqFo7LiU80hNkJgn2+/lX
-         1T3JXpLPbCBE0o8a0B2w/Ld7BbbGL8EKaoalKezSrT3v6+ePu3W2v+m3bMrilXBuPuvD
-         iDdSKDhiWz4yyNLBTtUYE3KZ6tQR1Vgxd23NC2CRH1z3OxFLMZNIj7X4r6sjo5flEM1C
-         yv3V+h3NrafNTtXqR+n2LwCsoP2z9zPVtB0a2SyxhIXpAbP3osefyieLdRagO0c/GoxJ
-         9RGg==
-X-Gm-Message-State: ACrzQf1Uv6TCkM5gNTkJ3dmzpOjfF6JCoDknmKci9xnqunthIsGEg/Hd
-        09suOSWKJ4L3P7+pJ+Mzq9xWeTQKSmcAcA==
-X-Google-Smtp-Source: AMsMyM6UtnpYXbDYK4AyIMwbvzo8vQzvR/vwrEkKLLaPXho/Im5vTne6648dSGqr1Mjfuokw86cntg==
-X-Received: by 2002:a2e:818f:0:b0:26b:e97e:d830 with SMTP id e15-20020a2e818f000000b0026be97ed830mr1506351ljg.420.1663869490310;
-        Thu, 22 Sep 2022 10:58:10 -0700 (PDT)
+        bh=l478WV2PQrEPincbg/O4NBfPJTT4Q+S9mMJy9BBn9a8=;
+        b=MlEZ9eLOk8Odeuxn+tv+KJ3V8Q0dA3K283+cKrKZ/jA5pnEMoZB0gcEfK9U8GWlf6J
+         COcOHHM2LLeJzMFmHo9qPCqCsPZMj8JW+JyMFyOIYICIx+dBS7S4GL+7TeU/vJw9WJR1
+         KuHmBES7el3Vk4H/kwDg6frTH75NuXE+rNAGhgpMixVYiiFCB8ShWZ0ZNvQzbfkJtG0H
+         SC7UxrV45aWHuv6wwdxkXcQEo2tu0Q7iFEfc75PChK5O9z7/jaLxi/Sgi+WHRgTx/92G
+         hmtIYXPegLj2v8vEDxcGMGJeQUsXlPdLgfh411zdn1mfeWb8vybEmsdm7q7LUap8TEa3
+         PT/w==
+X-Gm-Message-State: ACrzQf1LGingRB3IIpnZG4xIsd8D5z2pU9tMctk0273Y8pC7q8sI0Bf2
+        rIgrfMXtVszuO+VzVoRlkXuIOG281jbTNg==
+X-Google-Smtp-Source: AMsMyM5vNqMo+hkzshJzO0Qq1ZzNX6nDvB7bj8jVMr5fO2m3SsASi78YwcnbXvJGoN+FkfvM+77GoQ==
+X-Received: by 2002:a05:6512:13a1:b0:48d:f14:9059 with SMTP id p33-20020a05651213a100b0048d0f149059mr1898038lfa.110.1663869499748;
+        Thu, 22 Sep 2022 10:58:19 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id b25-20020a2ebc19000000b0026c4e922fb2sm1013909ljf.48.2022.09.22.10.58.09
+        by smtp.gmail.com with ESMTPSA id 3-20020ac24823000000b0048cf43c3a85sm1032371lft.238.2022.09.22.10.58.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Sep 2022 10:58:09 -0700 (PDT)
-Message-ID: <cadde13d-0742-039d-6701-ae15460efb4a@linaro.org>
-Date:   Thu, 22 Sep 2022 20:58:09 +0300
+        Thu, 22 Sep 2022 10:58:19 -0700 (PDT)
+Message-ID: <0d802f2a-5bed-28b3-7160-e1fceee34ae6@linaro.org>
+Date:   Thu, 22 Sep 2022 20:58:18 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.2
-Subject: Re: [PATCH 05/17] phy: qcom-qmp-pcie: drop init and exit wrappers
+Subject: Re: [PATCH 06/17] phy: qcom-qmp-usb: drop init and exit wrappers
 Content-Language: en-GB
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Vinod Koul <vkoul@kernel.org>
@@ -66,9 +66,9 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org
 References: <20220920073826.20811-1-johan+linaro@kernel.org>
- <20220920073826.20811-6-johan+linaro@kernel.org>
+ <20220920073826.20811-7-johan+linaro@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220920073826.20811-6-johan+linaro@kernel.org>
+In-Reply-To: <20220920073826.20811-7-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,13 +85,8 @@ On 20/09/2022 10:38, Johan Hovold wrote:
 > 
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 29 ++++--------------------
+>   drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 29 ++++---------------------
 >   1 file changed, 4 insertions(+), 25 deletions(-)
-> 
-
-Initially I thought that it might be possible to unify the 
-com_init/com_exit functions, however it doesn't seem really possible. 
-Let's clean this up.
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
