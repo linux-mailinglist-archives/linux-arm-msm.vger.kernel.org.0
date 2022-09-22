@@ -2,70 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 108D75E5650
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 00:38:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 903195E570D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 02:14:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229522AbiIUWi3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Sep 2022 18:38:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50620 "EHLO
+        id S229893AbiIVAOf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Sep 2022 20:14:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230189AbiIUWi2 (ORCPT
+        with ESMTP id S229815AbiIVAOf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Sep 2022 18:38:28 -0400
-Received: from mail-vs1-xe30.google.com (mail-vs1-xe30.google.com [IPv6:2607:f8b0:4864:20::e30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3D50A2A84
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 15:38:27 -0700 (PDT)
-Received: by mail-vs1-xe30.google.com with SMTP id 129so8366970vsi.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 15:38:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date;
-        bh=FcyQcUXi9xALQQ6Lm7VNXiWYStBjH/LCUTADg6v4m+k=;
-        b=SngjRcaZ/bSuKXs04fuqMfMvv1nHUqSUUMqTISFCqs/YO79T7YuBvzCys2tfdCVr8z
-         ycl6JyhsHWFJjVosaMg/RNZn6IhXV/x+9TX2Hu+CYuP2cAW2RTYx3tk3YouBuHi+xEWY
-         juREyuBfq+Eex5fa+9ZxlcHYIrZ0LDAdB04Smikl4KL90mS95V9gV7TyT+A5kKeVvRIa
-         Sw7j/Y+YuzUfxJBSBpBYf/H2WdGve+EL/WzELpxEfx3wnSa84Xa8lxMLD/x1Hx399DAk
-         BKpZpoDIudeDEiHeyTPJlmmJt9eA4leO8n7Zrm2kCP4L7+S78fPjauFbEBydypjf369M
-         R8Bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=FcyQcUXi9xALQQ6Lm7VNXiWYStBjH/LCUTADg6v4m+k=;
-        b=zYuXFZgfeJQU4I1Np3nXi5AVCgH5jxN9rpt1ZCmum2T/YEayWipbSGtO4vt9k5nWkN
-         wkqRZgt+YdBrw/RuPh009kByHousXOVTQb6Xfpy3SKzVVBcnGCZeU897i1oM7M9TLj5P
-         BAv287+GxebDEzwFRmdoiG/pfxTNzJdA+GTKZIKsoKn9ch70/6GOUFXY6rlnUnrurxbx
-         Mx5ijJByPQCAyG+qHImNsSDpssh2ZhV+5W20KD956GxN2NVBnH6tQNKafctD5rTi4gAN
-         djYevDjsK80BbHYrh1r8pnGqCj63vtggz9ukfKNRixNVMd+10/2mqRPqVQbNAkEFxMJr
-         9/Eg==
-X-Gm-Message-State: ACrzQf2sTVD83qKB6cfQPAK1Xhdyuv4JhpM9ykT8Ddt/E1hEJVpJ8NWT
-        c7SzGzGzIvtQ9dmHOW4EPrKNDWS/VXxFg3eipH0=
-X-Google-Smtp-Source: AMsMyM4PuqiNqg44pvBvXXUilX7HAasxCprjYr1onTqMYCR3FYELqUD9ISqF/r5B8K8yhbSA3OTkgIjpc2zW63ghpE4=
-X-Received: by 2002:a67:a449:0:b0:39a:e60c:858a with SMTP id
- p9-20020a67a449000000b0039ae60c858amr219267vsh.56.1663799907039; Wed, 21 Sep
- 2022 15:38:27 -0700 (PDT)
+        Wed, 21 Sep 2022 20:14:35 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10B436425;
+        Wed, 21 Sep 2022 17:14:33 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A1E9D632DE;
+        Thu, 22 Sep 2022 00:14:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD59C433C1;
+        Thu, 22 Sep 2022 00:14:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1663805672;
+        bh=AqQ9r6jKKEdIP1KLMG+7Lq7QqqeArJ/0yKpA4jI6foM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=GWXzjieCObHHLAI7eAidV1+pSLEjUgOnbjmxVnfaqwrQgaFRxrIwMzD92BBTiDmNp
+         Lvljc+9ApYsP2PVl0HFUD5UKwHJYOn/MkzcRfRU2Xd+G6YIc7L2rraiXnOzfkb77Et
+         aNiyAAY48lW95eG4NnMbgCIe4VlHsZVQiyGXDKHXnAtim5Boc68pbVGMJZgRuStimz
+         HERLh/vDN/9eNZ80FuLF3fUJy2yWACyfYnqtpTMllOV+Fh0Vk/u/98UGJgHO1BRVTV
+         mloqMmODCZrGdOrLJPSXUZJ0CPFJxUGRWlEK/gCCR8LV9XpDqgcwNKOm2Xd89yZh/Q
+         tidsaAe9FepsA==
+Date:   Wed, 21 Sep 2022 19:14:29 -0500
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/7] dt-bindings: msm/dp: Add SDM845 and SC8280XP
+ compatibles
+Message-ID: <20220922001429.zqfap3clprvlo6jo@builder.lan>
+References: <20220916200028.25009-1-quic_bjorande@quicinc.com>
+ <20220916200028.25009-2-quic_bjorande@quicinc.com>
+ <1641e41c-08c7-859b-644a-28d966fb00f3@linaro.org>
+ <20220919211832.6b3buqxrnfp6yjjg@builder.lan>
+ <6b242b44-b657-c7a6-63ca-465c7031376f@linaro.org>
 MIME-Version: 1.0
-Received: by 2002:a67:f6d9:0:0:0:0:0 with HTTP; Wed, 21 Sep 2022 15:38:26
- -0700 (PDT)
-Reply-To: linadavid0089@gmail.com
-From:   Lina David <alassisidemion@gmail.com>
-Date:   Wed, 21 Sep 2022 23:38:26 +0100
-Message-ID: <CAG8=QahW7Z3VKm=ycWRGvEDjFNAddJ0QOykmB_DU9TUh9RRUXg@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=4.8 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
-        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ****
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6b242b44-b657-c7a6-63ca-465c7031376f@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
--- 
-Hello,
-how are you?
+On Tue, Sep 20, 2022 at 09:09:13AM +0200, Krzysztof Kozlowski wrote:
+> On 19/09/2022 23:18, Bjorn Andersson wrote:
+> > On Sat, Sep 17, 2022 at 06:03:27PM +0100, Krzysztof Kozlowski wrote:
+> >> On 16/09/2022 21:00, Bjorn Andersson wrote:
+> >>> From: Bjorn Andersson <bjorn.andersson@linaro.org>
+> >>>
+> >>> Add compatibles for the DisplayPort and Embedded DisplayPort blocks in
+> >>> Qualcomm SDM845 and SC8280XP platforms.
+> >>>
+> >>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> >>> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> >>
+> >> No need for quicinc SoB (unless you also take ownership).
+> >>
+> > 
+> > It's my understanding that both needs to be there. Bjorn @ Linaro
+> > authored the patch and the author must certify its origin, but as the
+> > submitter I must certify its origin.
+> 
+> It's the same person. There are no two Bjorns (unless there are :) ), so
+> you certify with old email. SoB chain is coming from people, not email
+> addresses.
+> 
+
+IANAL, but I don't think it's the same person. I can't use my old
+signature to certify the origin in a contribution today and I can't
+claim authorship of something Linaro did.
+
+> And it is not only my understanding of SoB chain.
+> https://lore.kernel.org/all/YuKcBO5JatwRYQJ3@kroah.com/
+> 
+
+Again, IANAL, but I think the situation is different given AMD and
+Xilinx relationship.
+
+> > 
+> > I'm not entirely sure what you mean about taking ownership, 
+> 
+> I meant you to be the author of the commit.
+> 
+
+As mentioned above, I can't do that.
+
+Regards,
+Bjorn
+
+> > I am going
+> > to pursue getting these patches landed. But it wouldn't be correct for
+> > new me to claim I authored them.
+> 
+> Yeah, that's true.
+> 
+> 
+> Best regards,
+> Krzysztof
