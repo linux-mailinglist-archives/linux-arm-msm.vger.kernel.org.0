@@ -2,189 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B17905E6E68
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 23:28:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82AD15E6F8C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Sep 2022 00:21:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229706AbiIVV2p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Sep 2022 17:28:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52074 "EHLO
+        id S231207AbiIVWVJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Sep 2022 18:21:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231179AbiIVV2b (ORCPT
+        with ESMTP id S229728AbiIVWVH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Sep 2022 17:28:31 -0400
-Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6797111DF1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 14:28:27 -0700 (PDT)
-Received: by mail-il1-x12a.google.com with SMTP id x13so5603159ilp.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 14:28:27 -0700 (PDT)
+        Thu, 22 Sep 2022 18:21:07 -0400
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 698F110CA43
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 15:21:04 -0700 (PDT)
+Received: by mail-il1-x132.google.com with SMTP id a4so3420868ilj.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 15:21:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=cxbQv9D2p8vN8THDF3AKAQRLlVYEVvb4qnk8cFoXNPs=;
-        b=f2cVDIpVYXuoDIP3unMWkQNMOWeE7Xo0nLUDsGCy0Gmx1AWEdw1WZBQlqjd551VySs
-         Zng1uF7z2o1k44Y3k7MnWH0L7/lT14/eFcee9EOBiYb6hsHWb2W/qOOuzgu500OfdWR+
-         SEMxH6v8T+6OOwr7ufc/ftxs4W9xNxCf0brItbND+l5/BkNmwWJN2j/mObiDZFpm31Ge
-         cgF+a00RGIdc7eDtI9JC9mfR/AUHXL4w/KAZSpBwlZ7wePJnP/Z1PO67bdMlGSQidB2h
-         4SCYmdSxMPqils9q3+qY2uSfH5V9uob9QJ2kISuZNuVx2ZNbCQTG67p4hIAmQwBDfe/3
-         PtPw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=2pOEJWOoYFOGpdqE1FgVQVl0AeDp60SOokXdUjzLK5M=;
+        b=YXgZ9ShoeRNkSG2dEDTn9RgAHowJ+8AA2Y7PSvCzOD1Z7vYW8o40422/lQqQBSt6D2
+         6hGmiDFoOC5Qcn31+1Qx19uifYzH4XUeLgRCSqXnim1YmdjJpqM7/9othl9kDanft1Qx
+         RLYZ3qKO/5oJRmEtPqOGZfMCmWrUU8snV4owkD8HOUT8Pnmy6tm3LgTjPOyoM1RLB3CP
+         g8dwLMQOtkpNPg6f3CneIzg/jMcH8LNBVjwAZ1ibsVlX8p2QsTca0QNWM4WP47gErIvo
+         dhnlflsSmlIq3hhZP4t6/uJDRInItOk8wtlXXQp3pqLq+edc1knL5sExcmJHAjWM/neo
+         OW3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=cxbQv9D2p8vN8THDF3AKAQRLlVYEVvb4qnk8cFoXNPs=;
-        b=n3aPZ0Lun83wZCEEalnfWMT91MadK+x4tK50J3A7+QzSrbM2JiGg26scfzLgOEJzn7
-         GCzjgyKr3uQy0FZyGX3j3GEKUZQMd0FLYRpC87APiCglH444NX5DlYgDejs7FjZvJPps
-         JDbXnHNyxhIiO2SE6GoUdJBbH0Zq472lxkAHHw/DG4IJcM/74/8cqtR/DnB/5z09vrvG
-         skQVYmU/OP3+FNVvyG5Y7fA2xRfLXZG+cPolyckzGk7igSGtOZPj0yfIbSGbVJPJq9fs
-         6wAnVOwbGl8f711n/tLe6//K+lNpdkdz3E07Wm9BCULkLgQoDJVZGLTEuhG95c453zaN
-         8K+Q==
-X-Gm-Message-State: ACrzQf1Pk8LfWONDWklFjhF663rmicbH9rFCWP/ThBSIqQ/zIyLTFHdQ
-        mFk5Nf/VWz+zJMjIJPsS8NlUgA==
-X-Google-Smtp-Source: AMsMyM5DHG8MWDXS3rBXWbxOKugTtaSJubwnzQTPKjdSUQBz07SX2LKtCDz+cQhertW7JKH7nsVMHQ==
-X-Received: by 2002:a92:c545:0:b0:2f6:5ca9:8bc5 with SMTP id a5-20020a92c545000000b002f65ca98bc5mr2899934ilj.270.1663882106796;
-        Thu, 22 Sep 2022 14:28:26 -0700 (PDT)
-Received: from [172.22.22.4] ([98.61.227.136])
-        by smtp.googlemail.com with ESMTPSA id i7-20020a056638380700b00349d2d52f6asm2650812jav.37.2022.09.22.14.28.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Sep 2022 14:28:26 -0700 (PDT)
-Message-ID: <00eb82ca-8bf6-c744-d04d-96b97ce06b17@linaro.org>
-Date:   Thu, 22 Sep 2022 16:28:25 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [5.10 PATCH] interconnect: qcom: icc-rpmh: Add BCMs to commit
- list in pre_aggregate
-Content-Language: en-US
-To:     Douglas Anderson <dianders@chromium.org>, stable@vger.kernel.org,
-        gregkh@linuxfoundation.org
-Cc:     swboyd@chromium.org, Mike Tipton <mdtipton@codeaurora.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org
-References: <20220922141725.5.10.1.I791715539cae1355e21827ca738b0b523a4a0f53@changeid>
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=2pOEJWOoYFOGpdqE1FgVQVl0AeDp60SOokXdUjzLK5M=;
+        b=Rpn77ZULfRFAfxy4PXd+g8GosBPNqRVBu9YjEpXguKn1mZzpP8RBpHaadcfESxbNdo
+         Z6gznAXwa3iMDzoF13RuhKBuUp9vK9yVphcD4mt6+V1/p/mf2fswgc2892PgMkc5PpPA
+         oHPO/zC3MZsgFvWPbDTnA3SmPNyE5uzzWAlJSd5NLROhsM5iHh315H72GmWbtipCm0tP
+         Bat9s0Nfow+QPGz9/IvPL4k2b7e4U/IL23KdIwcdC67ZxWn5TwuXgMAOqTg4kSI1IX0R
+         zrXMrY0Mq/CGBE0KadnBuWQXnhlFYMJiwHqoMS0JHIRyAmwYVvU2XwXLu1AUW7XhXFP9
+         VaIg==
+X-Gm-Message-State: ACrzQf2CLAN1MqbslfzfZrW13ZOSZPM7sE4uinPs9ypZlRffXnaPQe7K
+        m3mKEpA4JxOckfAaBTFgru72xg==
+X-Google-Smtp-Source: AMsMyM5v5Hq3MgJjw/7okNUee6lOQl+KRgEDW7iYRH0HU81pnnP2WY6s+G7Xmud6/XmLKjSHSr2i4A==
+X-Received: by 2002:a92:b106:0:b0:2dc:eebb:e6f6 with SMTP id t6-20020a92b106000000b002dceebbe6f6mr2778890ilh.54.1663885263823;
+        Thu, 22 Sep 2022 15:21:03 -0700 (PDT)
+Received: from localhost.localdomain ([98.61.227.136])
+        by smtp.gmail.com with ESMTPSA id g12-20020a92d7cc000000b002f592936fbfsm2483332ilq.41.2022.09.22.15.21.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Sep 2022 15:21:03 -0700 (PDT)
 From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <20220922141725.5.10.1.I791715539cae1355e21827ca738b0b523a4a0f53@changeid>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
+        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+        elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH net-next 0/8] net: ipa: another set of cleanups
+Date:   Thu, 22 Sep 2022 17:20:52 -0500
+Message-Id: <20220922222100.2543621-1-elder@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/22/22 4:18 PM, Douglas Anderson wrote:
-> From: Mike Tipton <mdtipton@codeaurora.org>
-> 
-> commit b95b668eaaa2574e8ee72f143c52075e9955177e upstream.
-> 
-> We're only adding BCMs to the commit list in aggregate(), but there are
-> cases where pre_aggregate() is called without subsequently calling
-> aggregate(). In particular, in icc_sync_state() when a node with initial
-> BW has zero requests. Since BCMs aren't added to the commit list in
-> these cases, we don't actually send the zero BW request to HW. So the
-> resources remain on unnecessarily.
-> 
-> Add BCMs to the commit list in pre_aggregate() instead, which is always
-> called even when there are no requests.
-> 
-> Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
-> [georgi: remove icc_sync_state for platforms with incomplete support]
-> Link: https://lore.kernel.org/r/20211125174751.25317-1-djakov@kernel.org
-> Signed-off-by: Georgi Djakov <djakov@kernel.org>
-> [dianders: dropped sm8350.c which isn't present in 5.10]
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+This series contains another set of cleanups done in preparation for
+an upcoming series that reworks how IPA registers and their fields
+are defined.
 
-Whoops, sorry about that.
+The first replaces the use of u32_replace_bits() with a simple
+logical AND operation in two places.
 
-Acked-by: Alex Elder <elder@linaro.org>
+The second creates a new function to encapsulate some common code,
+and renames another for consistency.  The third restructures two
+other functions that do similar things to make their similarity more
+obvious.
 
-> ---
-> This should have been included in Alex Elder's request for patches
-> picked to 5.10 [1] but it was missed. Let's finally pick it up.
-> 
-> [1] https://lore.kernel.org/r/20220608205415.185248-3-elder@linaro.org
-> 
->   drivers/interconnect/qcom/icc-rpmh.c | 10 +++++-----
->   drivers/interconnect/qcom/sm8150.c   |  1 -
->   drivers/interconnect/qcom/sm8250.c   |  1 -
->   3 files changed, 5 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
-> index f6fae64861ce..27cc5f03611c 100644
-> --- a/drivers/interconnect/qcom/icc-rpmh.c
-> +++ b/drivers/interconnect/qcom/icc-rpmh.c
-> @@ -20,13 +20,18 @@ void qcom_icc_pre_aggregate(struct icc_node *node)
->   {
->   	size_t i;
->   	struct qcom_icc_node *qn;
-> +	struct qcom_icc_provider *qp;
->   
->   	qn = node->data;
-> +	qp = to_qcom_provider(node->provider);
->   
->   	for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
->   		qn->sum_avg[i] = 0;
->   		qn->max_peak[i] = 0;
->   	}
-> +
-> +	for (i = 0; i < qn->num_bcms; i++)
-> +		qcom_icc_bcm_voter_add(qp->voter, qn->bcms[i]);
->   }
->   EXPORT_SYMBOL_GPL(qcom_icc_pre_aggregate);
->   
-> @@ -44,10 +49,8 @@ int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
->   {
->   	size_t i;
->   	struct qcom_icc_node *qn;
-> -	struct qcom_icc_provider *qp;
->   
->   	qn = node->data;
-> -	qp = to_qcom_provider(node->provider);
->   
->   	if (!tag)
->   		tag = QCOM_ICC_TAG_ALWAYS;
-> @@ -67,9 +70,6 @@ int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
->   	*agg_avg += avg_bw;
->   	*agg_peak = max_t(u32, *agg_peak, peak_bw);
->   
-> -	for (i = 0; i < qn->num_bcms; i++)
-> -		qcom_icc_bcm_voter_add(qp->voter, qn->bcms[i]);
-> -
->   	return 0;
->   }
->   EXPORT_SYMBOL_GPL(qcom_icc_aggregate);
-> diff --git a/drivers/interconnect/qcom/sm8150.c b/drivers/interconnect/qcom/sm8150.c
-> index c76b2c7f9b10..b936196c229c 100644
-> --- a/drivers/interconnect/qcom/sm8150.c
-> +++ b/drivers/interconnect/qcom/sm8150.c
-> @@ -627,7 +627,6 @@ static struct platform_driver qnoc_driver = {
->   	.driver = {
->   		.name = "qnoc-sm8150",
->   		.of_match_table = qnoc_of_match,
-> -		.sync_state = icc_sync_state,
->   	},
->   };
->   module_platform_driver(qnoc_driver);
-> diff --git a/drivers/interconnect/qcom/sm8250.c b/drivers/interconnect/qcom/sm8250.c
-> index cc558fec74e3..40820043c8d3 100644
-> --- a/drivers/interconnect/qcom/sm8250.c
-> +++ b/drivers/interconnect/qcom/sm8250.c
-> @@ -643,7 +643,6 @@ static struct platform_driver qnoc_driver = {
->   	.driver = {
->   		.name = "qnoc-sm8250",
->   		.of_match_table = qnoc_of_match,
-> -		.sync_state = icc_sync_state,
->   	},
->   };
->   module_platform_driver(qnoc_driver);
+The fourth defines the flag bits in a register using an enumerated
+type.  And the fifth updates "ipa_reg.h" so the values assigned to
+enumerated type members are aligned consistently.
+
+The last three encapsulate the code that assigns values to a few
+registers into separate functions.
+
+					-Alex
+
+Alex Elder (8):
+  net: ipa: don't use u32p_replace_bits()
+  net: ipa: introduce ipa_qtime_val()
+  net: ipa: rearrange functions for similarity
+  net: ipa: define BCR values using an enum
+  net: ipa: tidy up register enum definitions
+  net: ipa: encapsulate setting the FILT_ROUT_HASH_EN register
+  net: ipa: encapsulate updating the COUNTER_CFG register
+  net: ipa: encapsulate updating three more registers
+
+ drivers/net/ipa/data/ipa_data-v3.1.c   |   2 +-
+ drivers/net/ipa/data/ipa_data-v3.5.1.c |  10 +-
+ drivers/net/ipa/ipa_endpoint.c         | 138 +++++++++++++------------
+ drivers/net/ipa/ipa_main.c             | 135 +++++++++++++++---------
+ drivers/net/ipa/ipa_reg.h              |  68 ++++++------
+ drivers/net/ipa/ipa_table.c            |   4 +-
+ 6 files changed, 200 insertions(+), 157 deletions(-)
+
+-- 
+2.34.1
 
