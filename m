@@ -2,124 +2,228 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 903A35E58A8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 04:38:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E6615E58B4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 04:40:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230186AbiIVCiU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Sep 2022 22:38:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39498 "EHLO
+        id S229554AbiIVCkQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Sep 2022 22:40:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229667AbiIVCiT (ORCPT
+        with ESMTP id S230016AbiIVCkO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Sep 2022 22:38:19 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59F5EAC25B;
-        Wed, 21 Sep 2022 19:38:18 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E881763145;
-        Thu, 22 Sep 2022 02:38:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A36C433D6;
-        Thu, 22 Sep 2022 02:38:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663814297;
-        bh=MOtwl9mtwhtHTWDeXYdNcwvXQVIElYFyIDDemYh6RtQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=twmF+KMsN6Awv35vKFSKmpcxIR9EJ/rmGSpB1v+r1o1Q4xXjCNi8Zdmv44LIDZsTu
-         /qREctSOI92mNJI03HKwsbvummXIha6buUJLJCVbM5J3938Yd6lB2ukaZ71KWYCRT2
-         4XUSqL99aNvOIdWODuqKAdfYgwZZUywPHNEarGPMd3OsSRk8SuA4DiDxofSaTn3cs9
-         AcQTp0jHWmuvV5QDnvvmkPzGl/uoEejgYBrZrO9TnDLPDFvpU4wYcWJV5A3/JEarmI
-         2euJ+VWZLrutaD4s7aim7XbmQaTHZTLtSYz0qBRqbeXRF9kDndnAZ3K0Oc+Ic4P19R
-         RV4t6khNZM3mA==
-Date:   Thu, 22 Sep 2022 08:08:13 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     dmaengine@vger.kernel.org, agross@kernel.org,
-        linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, thara.gopinath@gmail.com,
-        devicetree@vger.kernel.org, andersson@kernel.org,
-        bhupesh.linux@gmail.com, Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v7 1/1] dma: qcom: bam_dma: Add support to initialize
- interconnect path
-Message-ID: <YyvKlWgaPVV3su8f@matsya>
-References: <20220921030649.1436434-1-bhupesh.sharma@linaro.org>
- <20220921030649.1436434-2-bhupesh.sharma@linaro.org>
+        Wed, 21 Sep 2022 22:40:14 -0400
+Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63D0F9AFF8;
+        Wed, 21 Sep 2022 19:40:12 -0700 (PDT)
+Received: by mail-il1-x129.google.com with SMTP id x13so4216307ilp.3;
+        Wed, 21 Sep 2022 19:40:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=YS6Dg5osr6nCJxEVuPdfQt0cZfWWG2Q/unzoo9QoBKs=;
+        b=NvuA8N/8RKjR5vm0qEUfonZC98zcavJV+DuFgNw20rZCSD/VuKU62dLQB6ueutjXIG
+         O67UGfpetZwhGo4lnBM8NmgUwUydXvfhb9RY2vOOFu+WAVaU7bmloXZjVzcSDfNPgfVd
+         lWMi2HtqijFxQY7tVN23VRXoBGNNOj2WIDKwWLsO/9j9yCNyKARG+scxTcmTO/47YO+7
+         VQkhKBKBC6kNbOnmKqEgJvGlgX/aH7UWxS2Agr1ZY2zOBTKtmw+OUNfwBnFMhIni5QMp
+         VMg4cPR24eIe0RFgPCxS7asC8pDR9syuMxRJnj+V5yu1wq2yTJzh58m7FFq+zkqsmgyr
+         z1zQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=YS6Dg5osr6nCJxEVuPdfQt0cZfWWG2Q/unzoo9QoBKs=;
+        b=vo3/1CXt5OD2kkMBZItItjHc0UZuedABzZdUb6bcd2XEI6rt4Xv2XLGWMAzT69TIwm
+         FpsNb7A0dyfIN9ioSjNpn/Hw/avnD8nMwtaLOvtBaffw3xArWvSyQ88Imc1ziwJbQivD
+         UQHnzH/wmDPRoiwyVXwJYElQqjDij4jzObiB0RJw/qOwAIjLwpK5xaFcg6h5yA2WCKMe
+         p6dE0s5CGKKXlvFKgxIMRPQaUzc1PS0y9gXj7hs1kkZ+rb1lY5GVFlsQL12vTYBApTvP
+         lZQ/J61ounbs0HUeLMzsUbdQWuah9uBAWqV8vXyp/XejJ7trwF6Fbw6PwCmiteKpISi9
+         wVhw==
+X-Gm-Message-State: ACrzQf1u8w0Quh+OU3U5oOLpOqxCUphATvufh+f+cT3GkqySPyLhAAVr
+        mwwYCNFoGED149rlOgLOgDo=
+X-Google-Smtp-Source: AMsMyM4T4LztPLLiQ3WiN86RqKrZQ/wMq1uMh/Em6rBkulzQwwvH/ilwkXrjUbkxmiIUWMk4gJ8LEA==
+X-Received: by 2002:a05:6e02:1d18:b0:2f6:65c9:91 with SMTP id i24-20020a056e021d1800b002f665c90091mr609072ila.164.1663814411729;
+        Wed, 21 Sep 2022 19:40:11 -0700 (PDT)
+Received: from localhost ([2607:fea8:a2e2:2d00::61a4])
+        by smtp.gmail.com with UTF8SMTPSA id b27-20020a026f5b000000b00349d4ee2a4asm1689487jae.91.2022.09.21.19.40.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 Sep 2022 19:40:11 -0700 (PDT)
+From:   Richard Acayan <mailingradian@gmail.com>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Richard Acayan <mailingradian@gmail.com>,
+        linux-arm-msm@vger.kernel.org, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/2] iommu: arm-smmu-qcom: add sdm670 compatible
+Date:   Wed, 21 Sep 2022 22:38:34 -0400
+Message-Id: <20220922023833.178076-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.37.3
+In-Reply-To: <5f629a95-8ee4-7cf8-f471-0b50e311d3b7@somainline.org>
+References: <5f629a95-8ee4-7cf8-f471-0b50e311d3b7@somainline.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220921030649.1436434-2-bhupesh.sharma@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21-09-22, 08:36, Bhupesh Sharma wrote:
-> From: Thara Gopinath <thara.gopinath@gmail.com>
-> 
-> BAM dma engine associated with certain hardware blocks could require
-> relevant interconnect pieces be initialized prior to the dma engine
-> initialization. For e.g. crypto bam dma engine on sm8250. Such requirement
-> is passed on to the bam dma driver from dt via the "interconnects"
-> property. Add support in bam_dma driver to check whether the interconnect
-> path is accessible/enabled prior to attempting driver intializations.
-> 
-> If interconnects are not yet setup, defer the BAM DMA driver probe().
-> 
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Rob Herring <robh@kernel.org>
-> Signed-off-by: Thara Gopinath <thara.gopinath@gmail.com>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> [Bhupesh: Make header file inclusion alphabetical and use 'devm_of_icc_get()']
-> ---
->  drivers/dma/qcom/bam_dma.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> index 2ff787df513e..a5b0cf28ffb7 100644
-> --- a/drivers/dma/qcom/bam_dma.c
-> +++ b/drivers/dma/qcom/bam_dma.c
-> @@ -26,6 +26,7 @@
->  #include <linux/kernel.h>
->  #include <linux/io.h>
->  #include <linux/init.h>
-> +#include <linux/interconnect.h>
->  #include <linux/slab.h>
->  #include <linux/module.h>
->  #include <linux/interrupt.h>
-> @@ -394,6 +395,7 @@ struct bam_device {
->  	const struct reg_offset_data *layout;
->  
->  	struct clk *bamclk;
-> +	struct icc_path *mem_path;
->  	int irq;
->  
->  	/* dma start transaction tasklet */
-> @@ -1294,6 +1296,14 @@ static int bam_dma_probe(struct platform_device *pdev)
->  	if (IS_ERR(bdev->bamclk))
->  		return PTR_ERR(bdev->bamclk);
->  
-> +	/* Ensure that interconnects are initialized */
-> +	bdev->mem_path = devm_of_icc_get(bdev->dev, "memory");
-> +	if (IS_ERR(bdev->mem_path)) {
-> +		ret = dev_err_probe(bdev->dev, PTR_ERR(bdev->mem_path),
-> +				    "failed to acquire icc path\n");
-> +		return ret;
-> +	}
+>On 21.09.2022 21:05, Krzysztof Kozlowski wrote:
+>> On 21/09/2022 20:48, Konrad Dybcio wrote:
+>>>
+>>>
+>>> On 21.09.2022 20:47, Konrad Dybcio wrote:
+>>>>
+>>>>
+>>>> On 21.09.2022 09:31, Krzysztof Kozlowski wrote:
+>>>>> On 21/09/2022 00:39, Richard Acayan wrote:
+>>>>>> The Snapdragon 670 needs the IOMMU for GENI I2C. Add a compatible string to
+>>>>>> support it.
+>>>>>>
+>>>>>> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+>>>>>> ---
+>>>>>>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
+>>>>>>  1 file changed, 1 insertion(+)
+>>>>>>
+>>>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>>>> index b2708de25ea3..bf9653b9eb89 100644
+>>>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>>>> @@ -431,6 +431,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
+>>>>>>  	{ .compatible = "qcom,sc8180x-smmu-500" },
+>>>>>>  	{ .compatible = "qcom,sc8280xp-smmu-500" },
+>>>>>>  	{ .compatible = "qcom,sdm630-smmu-v2" },
+>>>>>> +	{ .compatible = "qcom,sdm670-smmu-500" },
+>>>>>
+>>>>> Why do we keep adding compatibles to the driver for apparently
+>>>>> compatible devices?
+>>>>
+>>>> Because Linux has not funny run on bare Qualcomm hardware ever since at least msm8x60 times and
+>>> s/funny/fully
+>>>
+>>> unfortunate typo, this is not funny, quite the contrary..
+>>>
+>>> Konrad
+>>>> we are not interacting with real hardware, only with Qualcomm's flawed virtual implementation
+>>>> of it, that's abstracted to us through various generations of their saddening software stack. This
+>>>> is also the case for many more standard components, even as far as the GIC on recent boards..
+>> 
+>> Unfortunately I don't get this explanation... you mean some other
+>> firmware requires Linux drivers to use specific compatibles instead of
+>> one fallback?
+> No, perhaps I misunderstood you.
+>
+>> 
+>> All of these do not have driver data, so they are essentially compatible
+>> for Linux driver. Growing this list in the driver seems pointless. What
+>> is the benefit of growing driver with same entries, except more patches?
+> Compatible lists in smmu-impl files allow matching driver quirks for SMMUs themselves
+>and consumer devices (such as MDSS). The situation is more complicated, because some
+>qcom SMMUs also require more quirks than others (think 8974 vs 8994 vs 8996/pro&660&8998
+>vs 845+ vs adreno smmu in various flavours), so all qcom SMMUs need to use
+> `qcom_smmu_impl` and some others need even more quirks on top of that (that generally
+>hurt performance or functionality, so we don't want them when they're unnecessary).
+> If all generations of qcom SMMU implementation that bear the same name behaved anywhere
+>near consistent, there would be no need for keeping this around, instead requiring only
+> "qcom,broken-smmu" or something".
 
-So this makes us fail on older DT where icc path may not be present.
-Should this not be an optional thing?
+Hi, just stopping by to share my own thoughts.
 
-> +
->  	ret = clk_prepare_enable(bdev->bamclk);
->  	if (ret) {
->  		dev_err(bdev->dev, "failed to prepare/enable clock\n");
-> -- 
-> 2.37.1
+First, I don't mind if this series doesn't get applied as-is. After seeing
+the eMMC driver in its current state:
 
--- 
-~Vinod
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/mmc/host/sdhci-msm.c?h=v6.0-rc6#n2437
+
+I can understand that the devicetree maintainers don't want to see new SoCs
+touching drivers unnecessarily. Second, I don't see enough quirks to
+justify needing all compatible strings in the driver (2 quirky SoCs
+compared to 16 total not counting adreno iommu):
+
+    $ grep qcom, drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+    	if (of_device_is_compatible(np, "qcom,msm8996-smmu-v2"))
+    	* All targets that use the qcom,adreno-smmu compatible string *should*
+    	{ .compatible = "qcom,adreno" },
+    	{ .compatible = "qcom,mdp4" },
+    	{ .compatible = "qcom,mdss" },
+    	{ .compatible = "qcom,sc7180-mdss" },
+    	{ .compatible = "qcom,sc7180-mss-pil" },
+    	{ .compatible = "qcom,sc7280-mdss" },
+    	{ .compatible = "qcom,sc7280-mss-pil" },
+    	{ .compatible = "qcom,sc8180x-mdss" },
+    	{ .compatible = "qcom,sm8250-mdss" },
+    	{ .compatible = "qcom,sdm845-mdss" },
+    	{ .compatible = "qcom,sdm845-mss-pil" },
+    	if (of_device_is_compatible(np, "qcom,sdm845-smmu-500"))
+    	{ .compatible = "qcom,msm8998-smmu-v2" },
+    	{ .compatible = "qcom,qcm2290-smmu-500" },
+    	{ .compatible = "qcom,sc7180-smmu-500" },
+    	{ .compatible = "qcom,sc7280-smmu-500" },
+    	{ .compatible = "qcom,sc8180x-smmu-500" },
+    	{ .compatible = "qcom,sc8280xp-smmu-500" },
+    	{ .compatible = "qcom,sdm630-smmu-v2" },
+    	{ .compatible = "qcom,sdm670-smmu-500" },
+    	{ .compatible = "qcom,sdm845-smmu-500" },
+    	{ .compatible = "qcom,sm6125-smmu-500" },
+    	{ .compatible = "qcom,sm6350-smmu-500" },
+    	{ .compatible = "qcom,sm6375-smmu-500" },
+    	{ .compatible = "qcom,sm8150-smmu-500" },
+    	{ .compatible = "qcom,sm8250-smmu-500" },
+    	{ .compatible = "qcom,sm8350-smmu-500" },
+    	{ .compatible = "qcom,sm8450-smmu-500" },
+    	if (of_device_is_compatible(np, "qcom,adreno-smmu"))
+
+I don't know if it's better to get myself involved in fixing this, though.
+There is no fallback that encompasses qcom devices but not all arm devices.
+Either way, I'll have to add a new compatible string to the driver.
+
+If something like this is fine for now, I'll format it properly tomorrow:
+
+--- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
++++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+@@ -48,6 +48,13 @@ properties:
+               - qcom,sm8350-smmu-500
+               - qcom,sm8450-smmu-500
+           - const: arm,mmu-500
++
++      - description: Qcom SoCs implementing "qcom,smmu-500"
++        items:
++          - enum:
++              - qcom,sdm670-smmu-500
++          - const: qcom,smmu-500
++
+       - description: Qcom Adreno GPUs implementing "arm,smmu-v2"
+         items:
+           - enum:
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -424,6 +424,7 @@ static struct arm_smmu_device *qcom_smmu_create(struct arm_smmu_device *smmu,
+ }
+ 
+ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
++       { .compatible = "qcom,smmu-500" },
+        { .compatible = "qcom,msm8998-smmu-v2" },
+        { .compatible = "qcom,qcm2290-smmu-500" },
+        { .compatible = "qcom,sc7180-smmu-500" },
+
+>
+> Konrad
+>> 
+>> Best regards,
+>> Krzysztof
+>> 
