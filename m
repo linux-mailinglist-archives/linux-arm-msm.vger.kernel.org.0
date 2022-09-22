@@ -2,184 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C9C6B5E6FA0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Sep 2022 00:21:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95F135E6FE4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Sep 2022 00:46:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231710AbiIVWVg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Sep 2022 18:21:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39066 "EHLO
+        id S230041AbiIVWp6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Sep 2022 18:45:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231571AbiIVWV3 (ORCPT
+        with ESMTP id S229519AbiIVWp5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Sep 2022 18:21:29 -0400
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E232A10F72E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 15:21:14 -0700 (PDT)
-Received: by mail-io1-xd34.google.com with SMTP id h194so8970973iof.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 15:21:14 -0700 (PDT)
+        Thu, 22 Sep 2022 18:45:57 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B32FED5CC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 15:45:56 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id y5so17789558wrh.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 15:45:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=8NQbcO3RxX3i66zbcp0uk7GFHnQ5dOAsJhkZ2O3/nY8=;
-        b=rnQS6/cvRAD9ElWGu7c5+xdFhhhEaPl2HOtLmQIWAmE80cjQmlE8xvf2VIywl0eWGH
-         3r0KTxEr/8Lgrz8h/DeiI0WEZYzzQnfihyXpCXgzUMK0ghe6xylHP8YG+g7jRIzklO84
-         kRo5rSA/C9mcfr0Sbl5dZCikTnUb4lFETe88LLFX9yI1MjEwd2OpVeuw1wuVtHiEP7vZ
-         7HZ48psm0QbchBMTB7J/hqT+wn7RHupQ8WCA83BPk1EXEydqMTC6vzhkesQd2OqGc5kS
-         An9aNx4khHwnLof6Qt0vAg0RtGUlXmcO8woYUqzWKmiUpGGFpVs0Kp3cDRV5knVFtOsp
-         uqcQ==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=ZwaWZ9+q930w2Z+D4l4wEUpicPaHvLHUkCpuJVX1lSs=;
+        b=HR5h0HlIBivkLeQK9Yn0jmiW7Vwb0hf8HYNLDc8yrJ7nOpCwaRA8CyU6ZXgcPnebDF
+         efdvTY/RfguLNjE7JJF/l5xu2JP0LzIY9Tqkacnc9LzSJNzXXTSQnLuol1LDXiWilGNQ
+         dWei7JyYxVz6yield0yL0A4HOdfVZJuFBEYM5e0ZtVOOMMC3EJT08Hlmg3rAgL4JnRl9
+         wHM47BC/jmf96cwqEpclGC1Rn4Va4sZ8p/aIKKDFR70RAkoAf8KPp6OdiGeNnnTkNKqQ
+         v+AlICBwwiLcZoEYkL/xBTW5r5LqoLwcN6+JhZukra4IhXOmFB2ZQPmUmxbtARjnTMbi
+         4TNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=8NQbcO3RxX3i66zbcp0uk7GFHnQ5dOAsJhkZ2O3/nY8=;
-        b=EaYpdCpQ3ZryiEd+b2cPRHGhhMtwNXVM7WRA9AOXBffUVggGEH3MUoGPdyFYR+ct0V
-         2Lx7GZjEkYcC0OOSk3xc5b+pU82AxUovK9e3zFj31dejlCu9GC1sfJ+cnha9hsL9weR9
-         SadUU9A+Rvnios2x8Mj/2B6LMDB9rYYMor/iJo3Yo6irPgHfBtb1keUpJYQO5Tw0Sj8o
-         4ZX1x47kAJnqvEESInT4Gac1OVLPrDK/EZc80hYMiDC20UYihJ2yMEUn82xI6/z+z+t4
-         N3urPjsS92oEEzAEF12vKqQ2j53SUro8tmf3sMiOqFWEKJu7MioIZ2sZoaCs6VYDBcFG
-         NMYQ==
-X-Gm-Message-State: ACrzQf0bREHqsQK09xwvTbZ7JX+8rqNheLaqJtH7Wg66JyfKxFafWCp0
-        ybDpT3cEIf2ILzIfgDCOlIrq6w==
-X-Google-Smtp-Source: AMsMyM5fqKzWRTm7+LT3vDYZIt2jxEYb4IH+OAshM0Jr14dPUohaWszSwwX80LoYbg/I4QyFzOdk1Q==
-X-Received: by 2002:a05:6638:430c:b0:35a:1c37:a343 with SMTP id bt12-20020a056638430c00b0035a1c37a343mr3167198jab.183.1663885274263;
-        Thu, 22 Sep 2022 15:21:14 -0700 (PDT)
-Received: from localhost.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id g12-20020a92d7cc000000b002f592936fbfsm2483332ilq.41.2022.09.22.15.21.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Sep 2022 15:21:13 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
-        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-        elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 8/8] net: ipa: encapsulate updating three more registers
-Date:   Thu, 22 Sep 2022 17:21:00 -0500
-Message-Id: <20220922222100.2543621-9-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220922222100.2543621-1-elder@linaro.org>
-References: <20220922222100.2543621-1-elder@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=ZwaWZ9+q930w2Z+D4l4wEUpicPaHvLHUkCpuJVX1lSs=;
+        b=Szj0xK3QfmJ4iATzkEMSzCf5zZRVyCC1lqctWGwO+w9VXzu1ZT55mICAq8aFWMDm0I
+         aysqzdqhCxIVRUmlNDwdwR/+5o21JYM0XOxxVbkmUlcLoIsgkKhUfRxkvxEc9f4z6Zt0
+         jmSFQMi9kw1DuXgqewHlKI2kE/QuuAUKN655wDPkc9GAm9NMyr1YTE/cGBpk/XQA8pQ7
+         nMt8vAk9B3vjQRUbI/MjxyNFwrvDBrhD+yegQqlMPPV/eUr3N9B3FWM/He5XJJ0N1brt
+         jHnFv4kJl8A0TBG03VBDksX/WEIofWYnNfwCHoYG9b5ZE1kYxPSRHSCN+CdEwAC/kuNn
+         frxQ==
+X-Gm-Message-State: ACrzQf3uobF4JQCZo0J51WQMvsZlUjkFeopqJ/oqaxzaudm2RgJRE0Kh
+        r0xP11HWqyq/CrXm9n+sQEuhnA==
+X-Google-Smtp-Source: AMsMyM4kXt/hkMYvfjLaYhGwOl8u1b9sWYyTmm5pHqLKx0CcOPnC2oVTU3it/YbHEnOxxxGVRFTUOA==
+X-Received: by 2002:adf:fb43:0:b0:22b:64:8414 with SMTP id c3-20020adffb43000000b0022b00648414mr3473116wrs.70.1663886755049;
+        Thu, 22 Sep 2022 15:45:55 -0700 (PDT)
+Received: from [192.168.86.238] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.googlemail.com with ESMTPSA id ay16-20020a5d6f10000000b0022af70874a1sm8062356wrb.36.2022.09.22.15.45.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Sep 2022 15:45:54 -0700 (PDT)
+Message-ID: <437a562e-43e5-1c06-10cd-2af81b4ef8fa@linaro.org>
+Date:   Thu, 22 Sep 2022 23:45:53 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 3/3] misc: fastrpc: Fix use-after-free race condition for
+ maps
+Content-Language: en-US
+To:     Abel Vesa <abel.vesa@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Ekansh Gupta <ekangupt@qti.qualcomm.com>,
+        Vamsi Krishna Gattupalli <quic_vgattupa@quicinc.com>
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Ola Jeppsson <ola@snap.com>
+References: <20220902151423.3351414-1-abel.vesa@linaro.org>
+ <20220902151423.3351414-3-abel.vesa@linaro.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20220902151423.3351414-3-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Create a new function that encapsulates setting the BCR, TX_CFG, and
-CLKON_CFG register values during hardware configuration.
 
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- drivers/net/ipa/ipa_main.c | 79 +++++++++++++++++++++++++-------------
- 1 file changed, 53 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/net/ipa/ipa_main.c b/drivers/net/ipa/ipa_main.c
-index 8bb4b036df2b4..a552d6edb702d 100644
---- a/drivers/net/ipa/ipa_main.c
-+++ b/drivers/net/ipa/ipa_main.c
-@@ -183,6 +183,56 @@ static void ipa_teardown(struct ipa *ipa)
- 	gsi_teardown(&ipa->gsi);
- }
- 
-+static void
-+ipa_hardware_config_bcr(struct ipa *ipa, const struct ipa_data *data)
-+{
-+	u32 val;
-+
-+	/* IPA v4.5+ has no backward compatibility register */
-+	if (ipa->version >= IPA_VERSION_4_5)
-+		return;
-+
-+	val = data->backward_compat;
-+	iowrite32(val, ipa->reg_virt + IPA_REG_BCR_OFFSET);
-+}
-+
-+static void ipa_hardware_config_tx(struct ipa *ipa)
-+{
-+	enum ipa_version version = ipa->version;
-+	u32 val;
-+
-+	if (version <= IPA_VERSION_4_0 || version >= IPA_VERSION_4_5)
-+		return;
-+
-+	/* Disable PA mask to allow HOLB drop */
-+	val = ioread32(ipa->reg_virt + IPA_REG_TX_CFG_OFFSET);
-+
-+	val &= ~PA_MASK_EN_FMASK;
-+
-+	iowrite32(val, ipa->reg_virt + IPA_REG_TX_CFG_OFFSET);
-+}
-+
-+static void ipa_hardware_config_clkon(struct ipa *ipa)
-+{
-+	enum ipa_version version = ipa->version;
-+	u32 val;
-+
-+	if (version < IPA_VERSION_3_1 || version >= IPA_VERSION_4_5)
-+		return;
-+
-+	/* Implement some hardware workarounds */
-+	if (version >= IPA_VERSION_4_0) {
-+		/* Enable open global clocks in the CLKON configuration */
-+		val = GLOBAL_FMASK | GLOBAL_2X_CLK_FMASK;
-+	} else if (version == IPA_VERSION_3_1) {
-+		val = MISC_FMASK;	/* Disable MISC clock gating */
-+	} else {
-+		return;
-+	}
-+
-+	iowrite32(val, ipa->reg_virt + IPA_REG_CLKON_CFG_OFFSET);
-+}
-+
- /* Configure bus access behavior for IPA components */
- static void ipa_hardware_config_comp(struct ipa *ipa)
- {
-@@ -382,32 +432,9 @@ static void ipa_hardware_dcd_deconfig(struct ipa *ipa)
-  */
- static void ipa_hardware_config(struct ipa *ipa, const struct ipa_data *data)
- {
--	enum ipa_version version = ipa->version;
--	u32 val;
--
--	/* IPA v4.5+ has no backward compatibility register */
--	if (version < IPA_VERSION_4_5) {
--		val = data->backward_compat;
--		iowrite32(val, ipa->reg_virt + IPA_REG_BCR_OFFSET);
--	}
--
--	/* Implement some hardware workarounds */
--	if (version >= IPA_VERSION_4_0 && version < IPA_VERSION_4_5) {
--		/* Disable PA mask to allow HOLB drop */
--		val = ioread32(ipa->reg_virt + IPA_REG_TX_CFG_OFFSET);
--		val &= ~PA_MASK_EN_FMASK;
--		iowrite32(val, ipa->reg_virt + IPA_REG_TX_CFG_OFFSET);
--
--		/* Enable open global clocks in the CLKON configuration */
--		val = GLOBAL_FMASK | GLOBAL_2X_CLK_FMASK;
--	} else if (version == IPA_VERSION_3_1) {
--		val = MISC_FMASK;	/* Disable MISC clock gating */
--	} else {
--		val = 0;		/* No CLKON configuration needed */
--	}
--	if (val)
--		iowrite32(val, ipa->reg_virt + IPA_REG_CLKON_CFG_OFFSET);
--
-+	ipa_hardware_config_bcr(ipa, data);
-+	ipa_hardware_config_tx(ipa);
-+	ipa_hardware_config_clkon(ipa);
- 	ipa_hardware_config_comp(ipa);
- 	ipa_hardware_config_qsb(ipa, data);
- 	ipa_hardware_config_timing(ipa);
--- 
-2.34.1
+On 02/09/2022 16:14, Abel Vesa wrote:
+> From: Ola Jeppsson <ola@snap.com>
+> 
+> It is possible that in between calling fastrpc_map_get() until
+> map->fl->lock is taken in fastrpc_free_map(), another thread can call
+> fastrpc_map_lookup() and get a reference to a map that is about to be
+> deleted.
+> 
+yes, there is a margin of window here.
+Also am surprised to see the race for same map fd.
 
+fastrpc_map_get() is always under a lock, have you tried adding locking 
+for fastrpc_map_put().
+
+
+> Rewrite fastrpc_map_get() to only increase the reference count of a map
+> if it's non-zero. Propagate this to callers so they can know if a map is
+> about to be deleted.
+This will work but it would be better to fix the window of race.
+
+--srini
+
+> 
+> Fixes this warning:
+> refcount_t: addition on 0; use-after-free.
+> WARNING: CPU: 5 PID: 10100 at lib/refcount.c:25 refcount_warn_saturate
+> ...
+> Call trace:
+>   refcount_warn_saturate
+>   [fastrpc_map_get inlined]
+>   [fastrpc_map_lookup inlined]
+>   fastrpc_map_create
+>   fastrpc_internal_invoke
+>   fastrpc_device_ioctl
+>   __arm64_sys_ioctl
+>   invoke_syscall
+> 
+> Fixes: c68cfb718c8f9 ("misc: fastrpc: Add support for context Invoke method")
+> Signed-off-by: Ola Jeppsson <ola@snap.com>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>   drivers/misc/fastrpc.c | 8 +++++---
+>   1 file changed, 5 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index 50c17f5da3a8..58654d394d17 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -332,10 +332,12 @@ static void fastrpc_map_put(struct fastrpc_map *map)
+>   		kref_put(&map->refcount, fastrpc_free_map);
+>   }
+>   
+> -static void fastrpc_map_get(struct fastrpc_map *map)
+> +static int fastrpc_map_get(struct fastrpc_map *map)
+>   {
+> -	if (map)
+> -		kref_get(&map->refcount);
+> +	if (!map)
+> +		return -ENOENT;
+> +
+> +	return kref_get_unless_zero(&map->refcount) ? 0 : -ENOENT;
+>   }
+>   
+>   
