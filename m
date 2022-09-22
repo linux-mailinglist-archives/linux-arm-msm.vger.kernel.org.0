@@ -2,76 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8810F5E5DF9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 10:54:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 44D245E5DFD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 10:54:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230422AbiIVIyH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Sep 2022 04:54:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57020 "EHLO
+        id S231137AbiIVIyk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Sep 2022 04:54:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230403AbiIVIyG (ORCPT
+        with ESMTP id S230443AbiIVIyc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Sep 2022 04:54:06 -0400
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2041.outbound.protection.outlook.com [40.107.237.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58D15B4EB2;
-        Thu, 22 Sep 2022 01:54:05 -0700 (PDT)
+        Thu, 22 Sep 2022 04:54:32 -0400
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2044.outbound.protection.outlook.com [40.107.92.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6784D187;
+        Thu, 22 Sep 2022 01:54:28 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=HfKyjr5sG4m9Gv3jznGU5qchcO2hqfpiH6IQiVvXx+2gJjIGV/LaXTJH/2N4gPQX3t2ri+75wZWC4jwHMS8/lwQQ+mcDrcvsillQ/ifyuEr2RujpyoaCwwskakbGQ3N/FBzcw3sgqmjYm+9Bqyhm9RirO0VuTlEYPbYhTPkILzM21myVgZ71ZcrwRzbAq+wUQPeBPQR0T4ODVZPQ//mEx7J5bPZeDBqZF4sD+29GlPU6oAcw/f3v7OOR9wDTd2qlMrlrZyA6Ha99TqKXs0hUloObFqOeyprCO0Rv45GoloEq2993+DSzxAYOgC6gxIBjYnHL3fh1tiCF7iQ+eEushA==
+ b=NFLQkbTiRPPeX23BAb/oqs7wDkvwTBmQxCI5pOrP96nZc5lKXOZll19EyodDYc4p4fRVL5MCs/QFd+f2wNptiQk/IJNmapE2fjwaoHSmehpngW2QrD1x6uIGFB/sxpHDxgygnffJW93jYU+IPnKZqh5Dmhamf3+ogPFOjI3thvrbIFmEWaJHmdspRqXuQAeVJmp8clSBvzbHuJEBxMBvoPaxXxXMtEnfM632oL2dq3n0kXi4SVXElul3bSD+cwgZkrxlXWcYme27sDW7egNK61ZhhX8IBog3Hu7wjh+U1HMhg7m6iWQu4g6p4mx34qUNtdH+9xyUtPTuZSBq1ms7RA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qLwkC/P7zQ6hAE0ocHswVqwiO2oH27WCZXrbECT9knU=;
- b=f+xk4Dgq4AqZJASBMgL58GWwpnqzcmStgQ6OIYNssb3kjZYVQSHkCxM8yNcaxB3peGxdCEp2PzpQTNyToVNpHzGi/gmRCaeTgoKZeymuJ2hSDxUe/S6BiAfkdwQtGvGbGGP+5ajvqq1O9405Pw4svO7PXmsrGxsWZ2IlTbcp6FnTR8K5O5enbecTClJ709nJdmevNRQCRxLMd5jRtCQj9mPho3ZWYpnq/4F4I6cZ++3LZ45VEdjA8hvljRqNUJW3sFD5BKAKuiKXR7v9B+sgNc7NKo/D+cs/0jYKge+xF8gv57UZITtnep7kyTMgyxKnnbQcd8zdakUs1BdcMy2+CQ==
+ bh=aJrjmAc0pwysxVfPiHm1a9gW6M2TTJhqbFF8UbIQWMg=;
+ b=XephvHkKso9Cp+bYh9equEIOSCHOD8tN3lfGRAIgX+GukoM843h7ON+n/c/MYWN4zp19s8sUqsTMly4blAr2CjG/LXI6+N/njRLzwOPagO1DVQczfNvKSyANz2txP40fxsYPsSdYnGHINn6dszHZoOyrDPv4zsJIYotrO3uQ504GWiGKSmC9zLUDtXGv4dCOvPE9TGUgbZYrdA1an11cvGWmsuehclDdwAXXC897wBfcrM/V355dzVuvKXRcQ9V7bBh+PcPVq9QQwxoiIQ+wnEK31Gj44BrPpHCOKzr18+id8lQs7jbLQsiENwfdAdcPA8AMOh7fDuiWwKwb5SSJLw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=kernel.org smtp.mailfrom=nvidia.com;
+ 216.228.117.160) smtp.rcpttodomain=8bytes.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
  dkim=none (message not signed); arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qLwkC/P7zQ6hAE0ocHswVqwiO2oH27WCZXrbECT9knU=;
- b=U+Fnq4rnEq6otGGIX3zzG6Qk11gri+enKOpl945Sz2bsiYz2nAwX2SWS6PKyZT1HELWMhXV5Oc6ktc33BMsGYRIVDorOAtVRH7YS381442Jh+VSx6kYKK/UaD48lBtzlbTLFXx2nKTqRMSX3cqA5Kr4vy17lkazO+efT8iZwshA8+HyhcQErFrAwA+By9XMPHw2W5OO/8sV40D30/DGPRq763bfxtkN5s2eCtg0gKbaOO1/ruBC7gV1/WAk7SC+wnvLYElkeNm11FIjdKUB/VL6FPB0tyJOM1hbg10MjWKBn2SQMRPbBm/9gZZ1IlpYEJcbxGvyMfMnqygFM6khGaA==
-Received: from DS7PR05CA0084.namprd05.prod.outlook.com (2603:10b6:8:57::25) by
- DS0PR12MB6629.namprd12.prod.outlook.com (2603:10b6:8:d3::15) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5612.23; Thu, 22 Sep 2022 08:54:02 +0000
-Received: from DS1PEPF0000B077.namprd05.prod.outlook.com
- (2603:10b6:8:57:cafe::30) by DS7PR05CA0084.outlook.office365.com
- (2603:10b6:8:57::25) with Microsoft SMTP Server (version=TLS1_2,
+ bh=aJrjmAc0pwysxVfPiHm1a9gW6M2TTJhqbFF8UbIQWMg=;
+ b=rzcew0eaYVUoResuXoc3pNHTVlSA9iaQME9JLUDHo0r/vcDykXYeU6xDfg/cvlejl9eWbTutvh80bNPSGqDlUURnoJJDsifmmcU1bwOR3Zvg9W1yi/ErS+tiH8ksqL3L+r3+jTWatK2tNFjPRVmVrumjOcmQCQtLuUZKvXdL7R48yIUL3G3C4oB6bdjTuVryeuL5PwpWJP1NnGgk1uJFHQ1vbb15Optx8mmmoEaUKiGJ/nH+yCFUoMfpS7Kj/xzTi0+iboC1yAbsASYE0vF4E44hoRl19oLb4Z4iF+FkwIZw3AqfTlRI2hlnD9XmgRjowRQNPMd+uBCkH93dpIEHaw==
+Received: from BN1PR13CA0021.namprd13.prod.outlook.com (2603:10b6:408:e2::26)
+ by PH7PR12MB5951.namprd12.prod.outlook.com (2603:10b6:510:1da::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5632.21; Thu, 22 Sep
+ 2022 08:54:25 +0000
+Received: from BN8NAM11FT091.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:408:e2:cafe::49) by BN1PR13CA0021.outlook.office365.com
+ (2603:10b6:408:e2::26) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5676.7 via Frontend
- Transport; Thu, 22 Sep 2022 08:54:02 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ Transport; Thu, 22 Sep 2022 08:54:24 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
  smtp.mailfrom=nvidia.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
 Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- DS1PEPF0000B077.mail.protection.outlook.com (10.167.17.8) with Microsoft SMTP
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ BN8NAM11FT091.mail.protection.outlook.com (10.13.176.134) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5654.11 via Frontend Transport; Thu, 22 Sep 2022 08:54:02 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ 15.20.5654.14 via Frontend Transport; Thu, 22 Sep 2022 08:54:24 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Thu, 22 Sep
- 2022 01:53:47 -0700
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
+ 2022 01:54:14 -0700
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 22 Sep
- 2022 01:53:47 -0700
+ 2022 01:54:13 -0700
 Received: from Asurada-Nvidia.nvidia.com (10.127.8.11) by mail.nvidia.com
- (10.129.68.7) with Microsoft SMTP Server id 15.2.986.29 via Frontend
- Transport; Thu, 22 Sep 2022 01:53:46 -0700
+ (10.129.68.9) with Microsoft SMTP Server id 15.2.986.29 via Frontend
+ Transport; Thu, 22 Sep 2022 01:54:11 -0700
 From:   Nicolin Chen <nicolinc@nvidia.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <konrad.dybcio@somainline.org>, <joro@8bytes.org>,
-        <will@kernel.org>, <robin.murphy@arm.com>,
-        <sricharan@codeaurora.org>
+To:     <joro@8bytes.org>, <suravee.suthikulpanit@amd.com>,
+        <will@kernel.org>, <robin.murphy@arm.com>, <robdclark@gmail.com>,
+        <dwmw2@infradead.org>, <baolu.lu@linux.intel.com>,
+        <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <matthias.bgg@gmail.com>, <orsonzhai@gmail.com>,
+        <baolin.wang@linux.alibaba.com>, <zhang.lyra@gmail.com>,
+        <jean-philippe@linaro.org>, <sricharan@codeaurora.org>
 CC:     <jgg@nvidia.com>, <kevin.tian@intel.com>,
-        <linux-arm-msm@vger.kernel.org>, <iommu@lists.linux.dev>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v5 1/6] iommu/msm: Fix error-out routine in msm_iommu_attach_dev()
-Date:   Thu, 22 Sep 2022 01:53:44 -0700
-Message-ID: <23e009bba72c3e46320c59acefbbdd976111cc8a.1663836372.git.nicolinc@nvidia.com>
+        <quic_jjohnson@quicinc.com>, <konrad.dybcio@somainline.org>,
+        <yong.wu@mediatek.com>, <thierry.reding@gmail.com>,
+        <vdumpa@nvidia.com>, <jonathanh@nvidia.com>, <tglx@linutronix.de>,
+        <shameerali.kolothum.thodi@huawei.com>,
+        <christophe.jaillet@wanadoo.fr>, <thunder.leizhen@huawei.com>,
+        <quic_saipraka@quicinc.com>, <jon@solid-run.com>,
+        <yangyingliang@huawei.com>, <iommu@lists.linux.dev>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-tegra@vger.kernel.org>,
+        <virtualization@lists.linux-foundation.org>
+Subject: [PATCH v5 3/6] iommu: Add return value rules to attach_dev op and APIs
+Date:   Thu, 22 Sep 2022 01:54:08 -0700
+Message-ID: <6da77154f1a49c9c2dc2dc4674b3b91cd19862d0.1663836372.git.nicolinc@nvidia.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <cover.1663836372.git.nicolinc@nvidia.com>
 References: <cover.1663836372.git.nicolinc@nvidia.com>
@@ -79,23 +94,23 @@ MIME-Version: 1.0
 Content-Type: text/plain
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS1PEPF0000B077:EE_|DS0PR12MB6629:EE_
-X-MS-Office365-Filtering-Correlation-Id: f75ce6fe-c8c9-47f3-0d26-08da9c77ff50
+X-MS-TrafficTypeDiagnostic: BN8NAM11FT091:EE_|PH7PR12MB5951:EE_
+X-MS-Office365-Filtering-Correlation-Id: bcb38435-aae7-4daf-8dd6-08da9c780c8f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: EY6cz5HKMfW8EMqcvxy+tYXZTFM4fk1/fIRyeQa34wiN7ZjZ69Q6DCE0m0NzVMqjUa2IEMBGqqjaV4uvSbJzUTfEDspR5RuTSTBJCTcpSu4xkoS7Kl9gKfvDbZtRl064ommOsAaYY7lAeqLOfbKhG90AQpFoqh98ojNGRHEv5EOzQGlW7Iq12/AXsCR+uWkfTbgH1dV6/Pff5z+KAYxKy/MjEbGUbriOSSy65iCgDw2xet8jzsrzclvd3aAb1Y7Swzz4DCmgBJQtrdrk45LkhWGKSZfK8q04hd37uWOi4Jl784Az8F3/hPYrKGF3sEzIChV82tOdzjcUS3PRVf3+dAkFB6WwVv6g3naDZAZ8OfOK1GoUBuBoeDDp3kpBMmbTN+kjO/lj3GsFQ2Wo5zPWx6Nnfa5agUfBsc+c4Cv60bHF9hWo1X7HmvOgSBvsySDc0ivjsOokZDKa7UkPxXD2h2b5HtZn3RrK8bUqDuW7JFLNpBcU93aTjShoNozhBQ71FuW0cqqsABM0ars4h6XBN8MVOmV8jBdVPTmwmmAVBKQAc909c/rPaZWg7gXRhsnOjPL17jqheGg31ipDwgMytIX4gBlB2E2hbmWHDzzyuOsrh0bALeTNJH5ETk0QW4bfu3p6F5NcBuauN/1AXGYrwzZ4h0evXf2/vz9ZApVOCWvCHs6pMA/OOIYS0cZFBQFi2996G1SsIagXAfQTmdyFEqyginOlJxGtP4ZSiaSQaIBc/bD4AA5XzzLWA4h/1SUJFdvmbbsRxFSlToVrGaNHNg==
-X-Forefront-Antispam-Report: CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230022)(4636009)(39860400002)(376002)(136003)(396003)(346002)(451199015)(40470700004)(36840700001)(46966006)(2616005)(5660300002)(336012)(41300700001)(426003)(36756003)(7416002)(83380400001)(2906002)(8936002)(7636003)(7696005)(186003)(82740400003)(40460700003)(47076005)(356005)(36860700001)(40480700001)(316002)(4326008)(110136005)(82310400005)(26005)(70206006)(54906003)(86362001)(70586007)(478600001)(8676002);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: CRgs6ixIXLPu4eFdHduve/reHJ5Gqopv6g10J1fKTcwos9yfMpxcJRoImbccKADoeDDjscpfmzEsC61yYMT7qg7efEBf9lItvoeo+d0C8g622/FBMydGpJuvUORUfEb4YLiqKzJjbc8jPTAiSrH33KTPJfyv3YIikBrfu2HecdDqEI1j05PXtlA8mWymwv6lUfAJfnSo7hY7opZIhl6ZNof84ar44c0qFAXVEiArjAbvidUqRBxRaSULfh49Zo0A2Ag38UY9UYMxbNG5IpuPSWlC1+5LoQGzne5JDG8qnNWJ3oB3fsCAJYHfVTs9gD4uKiXoH9wIopTXEHxOil7leAbzMbT9G0sMApADpmHe3QWQNpYe4mFQ4pv9QVB6bCHkvwnSPGH3uyuRvCRUNxwxH6m4Ne91l3uFd860byNCLprQmPdt4OE4Q29h1TmU4Ym8tjGFdAMb0oqenOSfYWbkzE2fmWAZ9+YYKZLHJnDX6CZJrjj4IsZ5dIz74UfHzJpDC4cfTtMKnRkfUK/91lqugoSyR+pDyeEZRT6uwFfBigLig3VX7i6UwyS5J6NPui3XT5oVfroSTt7FexVsj2EY+VfYLAk0L8l/iTI1UfZ6yS2z6qRN7PYzq7EhbbOpJ/Ljsdjeqqe7ZEbH7sZtMoUTT2TKV0K2w/ygGqW8hnbWa6de9PS+P929BvIZJuxXkligTE1U4+lIPSI8WZ/rNnY8uYGVMs829IV49ayV1jD9ejFVG1MumhOn6Og257UflWz/5rB7cc/qoYHj8E650Lq/Fp7bhaDD+3/NDOgON+8jiOIZypFGChBo/ktqolgqAyV+YtTO33NkZnRm1DcjR6Bbig==
+X-Forefront-Antispam-Report: CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230022)(4636009)(136003)(346002)(39860400002)(396003)(376002)(451199015)(40470700004)(46966006)(36840700001)(8936002)(47076005)(5660300002)(36860700001)(82310400005)(83380400001)(2616005)(7636003)(86362001)(40460700003)(186003)(2906002)(316002)(336012)(54906003)(40480700001)(921005)(356005)(7696005)(26005)(426003)(7416002)(4326008)(8676002)(7406005)(70586007)(70206006)(478600001)(110136005)(6666004)(41300700001)(36756003)(82740400003)(2101003)(83996005);DIR:OUT;SFP:1101;
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Sep 2022 08:54:02.3261
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Sep 2022 08:54:24.5058
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f75ce6fe-c8c9-47f3-0d26-08da9c77ff50
+X-MS-Exchange-CrossTenant-Network-Message-Id: bcb38435-aae7-4daf-8dd6-08da9c780c8f
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS1PEPF0000B077.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN8NAM11FT091.eop-nam11.prod.protection.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB6629
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5951
 X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
         RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE
@@ -106,120 +121,95 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The error-out routine is missing all the reverting pieces for the iop and
-attached-ctx allocations. And clock enable/disable is unbalanced too.
+Cases like VFIO wish to attach a device to an existing domain that was
+not allocated specifically from the device. This raises a condition
+where the IOMMU driver can fail the domain attach because the domain and
+device are incompatible with each other.
 
-Fix it by adding __disable_clocks() and calling msm_iommu_detach_dev() at
-the end of the msm_iommu_attach_dev() if "ret" is non-zero. Also set the
-master->num to 0 in the detach_dev() since attach_dev() would check it.
+This is a soft failure that can be resolved by using a different domain.
 
-Fixes: 109bd48ea2e1 ("iommu/msm: Add DT adaptation")
-Cc: stable@vger.kernel.org
-Cc: Sricharan R <sricharan@codeaurora.org>
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
+Provide a dedicated errno EINVAL from the IOMMU driver during attach that
+the reason why the attach failed is because of domain incompatibility.
+
+VFIO can use this to know that the attach is a soft failure and it should
+continue searching. Otherwise, the attach will be a hard failure and VFIO
+will return the code to userspace.
+
+Update kdocs to add rules of return value to the attach_dev op and APIs.
+
+Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
 Reviewed-by: Kevin Tian <kevin.tian@intel.com>
 Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 ---
- drivers/iommu/msm_iommu.c | 59 +++++++++++++++++++++------------------
- 1 file changed, 32 insertions(+), 27 deletions(-)
+ drivers/iommu/iommu.c | 24 ++++++++++++++++++++++++
+ include/linux/iommu.h | 12 ++++++++++++
+ 2 files changed, 36 insertions(+)
 
-diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
-index 6a24aa804ea3..14df722f0060 100644
---- a/drivers/iommu/msm_iommu.c
-+++ b/drivers/iommu/msm_iommu.c
-@@ -394,6 +394,34 @@ static struct iommu_device *msm_iommu_probe_device(struct device *dev)
- 	return &iommu->iommu;
- }
- 
-+static void msm_iommu_detach_dev(struct iommu_domain *domain,
-+				 struct device *dev)
-+{
-+	struct msm_priv *priv = to_msm_priv(domain);
-+	unsigned long flags;
-+	struct msm_iommu_dev *iommu;
-+	struct msm_iommu_ctx_dev *master;
-+	int ret;
-+
-+	free_io_pgtable_ops(priv->iop);
-+
-+	spin_lock_irqsave(&msm_iommu_lock, flags);
-+	list_for_each_entry(iommu, &priv->list_attached, dom_node) {
-+		ret = __enable_clocks(iommu);
-+		if (ret)
-+			goto fail;
-+
-+		list_for_each_entry(master, &iommu->ctx_list, list) {
-+			msm_iommu_free_ctx(iommu->context_map, master->num);
-+			__reset_context(iommu->base, master->num);
-+			master->num = 0;
-+		}
-+		__disable_clocks(iommu);
-+	}
-+fail:
-+	spin_unlock_irqrestore(&msm_iommu_lock, flags);
-+}
-+
- static int msm_iommu_attach_dev(struct iommu_domain *domain, struct device *dev)
- {
- 	int ret = 0;
-@@ -418,6 +446,7 @@ static int msm_iommu_attach_dev(struct iommu_domain *domain, struct device *dev)
- 			list_for_each_entry(master, &iommu->ctx_list, list) {
- 				if (master->num) {
- 					dev_err(dev, "domain already attached");
-+					__disable_clocks(iommu);
- 					ret = -EEXIST;
- 					goto fail;
- 				}
-@@ -425,6 +454,7 @@ static int msm_iommu_attach_dev(struct iommu_domain *domain, struct device *dev)
- 					msm_iommu_alloc_ctx(iommu->context_map,
- 							    0, iommu->ncb);
- 				if (IS_ERR_VALUE(master->num)) {
-+					__disable_clocks(iommu);
- 					ret = -ENODEV;
- 					goto fail;
- 				}
-@@ -439,37 +469,12 @@ static int msm_iommu_attach_dev(struct iommu_domain *domain, struct device *dev)
- 
- fail:
- 	spin_unlock_irqrestore(&msm_iommu_lock, flags);
-+	if (ret)
-+		msm_iommu_detach_dev(domain, dev);
- 
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index 3a808146b50f..5f7f9605db48 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -1975,6 +1975,18 @@ static int __iommu_attach_device(struct iommu_domain *domain,
  	return ret;
  }
  
--static void msm_iommu_detach_dev(struct iommu_domain *domain,
--				 struct device *dev)
--{
--	struct msm_priv *priv = to_msm_priv(domain);
--	unsigned long flags;
--	struct msm_iommu_dev *iommu;
--	struct msm_iommu_ctx_dev *master;
--	int ret;
--
--	free_io_pgtable_ops(priv->iop);
--
--	spin_lock_irqsave(&msm_iommu_lock, flags);
--	list_for_each_entry(iommu, &priv->list_attached, dom_node) {
--		ret = __enable_clocks(iommu);
--		if (ret)
--			goto fail;
--
--		list_for_each_entry(master, &iommu->ctx_list, list) {
--			msm_iommu_free_ctx(iommu->context_map, master->num);
--			__reset_context(iommu->base, master->num);
--		}
--		__disable_clocks(iommu);
--	}
--fail:
--	spin_unlock_irqrestore(&msm_iommu_lock, flags);
--}
--
- static int msm_iommu_map(struct iommu_domain *domain, unsigned long iova,
- 			 phys_addr_t pa, size_t len, int prot, gfp_t gfp)
++/**
++ * iommu_attach_device - Attach an IOMMU domain to a device
++ * @domain: IOMMU domain to attach
++ * @dev: Device that will be attached
++ *
++ * Returns 0 on success and error code on failure
++ *
++ * Note that EINVAL can be treated as a soft failure, indicating
++ * that certain configuration of the domain is incompatible with
++ * the device. In this case attaching a different domain to the
++ * device may succeed.
++ */
+ int iommu_attach_device(struct iommu_domain *domain, struct device *dev)
  {
+ 	struct iommu_group *group;
+@@ -2101,6 +2113,18 @@ static int __iommu_attach_group(struct iommu_domain *domain,
+ 	return ret;
+ }
+ 
++/**
++ * iommu_attach_group - Attach an IOMMU domain to an IOMMU group
++ * @domain: IOMMU domain to attach
++ * @group: IOMMU group that will be attached
++ *
++ * Returns 0 on success and error code on failure
++ *
++ * Note that EINVAL can be treated as a soft failure, indicating
++ * that certain configuration of the domain is incompatible with
++ * the group. In this case attaching a different domain to the
++ * group may succeed.
++ */
+ int iommu_attach_group(struct iommu_domain *domain, struct iommu_group *group)
+ {
+ 	int ret;
+diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+index ea30f00dc145..13a33b04e867 100644
+--- a/include/linux/iommu.h
++++ b/include/linux/iommu.h
+@@ -266,6 +266,18 @@ struct iommu_ops {
+ /**
+  * struct iommu_domain_ops - domain specific operations
+  * @attach_dev: attach an iommu domain to a device
++ *  Return:
++ * * 0		- success
++ * * EINVAL	- can indicate that device and domain are incompatible due to
++ *		  some previous configuration of the domain, in which case the
++ *		  driver shouldn't log an error, since it is legitimate for a
++ *		  caller to test reuse of existing domains. Otherwise, it may
++ *		  still represent some other fundamental problem
++ * * ENOMEM	- out of memory
++ * * ENOSPC	- non-ENOMEM type of resource allocation failures
++ * * EBUSY	- device is attached to a domain and cannot be changed
++ * * ENODEV	- device specific errors, not able to be attached
++ * * <others>	- treated as ENODEV by the caller. Use is discouraged
+  * @detach_dev: detach an iommu domain from a device
+  * @map: map a physically contiguous memory region to an iommu domain
+  * @map_pages: map a physically contiguous set of pages of the same size to
 -- 
 2.17.1
 
