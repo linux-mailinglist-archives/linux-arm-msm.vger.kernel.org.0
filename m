@@ -2,130 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 755735E6C95
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 22:02:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 865695E6E29
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 23:19:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232692AbiIVUCO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Sep 2022 16:02:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60338 "EHLO
+        id S230517AbiIVVTS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Sep 2022 17:19:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232618AbiIVUBv (ORCPT
+        with ESMTP id S230518AbiIVVTR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Sep 2022 16:01:51 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E3E02F02C;
-        Thu, 22 Sep 2022 13:01:34 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28MJNfii011612;
-        Thu, 22 Sep 2022 20:01:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=1pMaUoTR3YrWZWr8YoQKMxOkKXfqTTJJFPlXZWdqh80=;
- b=Pwax92A9FQ04+cU34eb4mvfB88pF0O8M9sFISJQxW00slRE1uhyV7fU+AyLGAwOcUQYq
- GGPA2dHRsj4iY1PhZL+nVBq0n1wExSfuMa1XbzCV5HvdFdzsFRiRq/8tUzLN5tgWKSU2
- +GISYIvqwfJRZLEH0hLFnjMu/YyymDK/YZzFW1Sq3yCDOEoGqC39xNQu65QUEGwR7lR+
- 943b1btSJZXyoe9GQAEqC8mROcCsIPG7WtPAJCA6KefWlDRbq7FIU8TpzqQIgyZtK3bP
- WcbuTL9QlJ7pqUmOXO5iKCaif4CwXiF6bypryCkzGoAqZobAUfqS8Jxrbb3noPM9FDEZ Og== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jrutp8hqg-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 22 Sep 2022 20:01:21 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28MK1KEX001846
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 22 Sep 2022 20:01:20 GMT
-Received: from [10.110.101.161] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 22 Sep
- 2022 13:01:19 -0700
-Message-ID: <39ee3606-6021-b4a8-12ec-c07b554e3b55@quicinc.com>
-Date:   Thu, 22 Sep 2022 13:01:18 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [Freedreno] [PATCH v2 01/10] drm/msm: fix use-after-free on probe
- deferral
-Content-Language: en-US
-To:     Johan Hovold <johan+linaro@kernel.org>,
+        Thu, 22 Sep 2022 17:19:17 -0400
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D618110B26
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 14:19:15 -0700 (PDT)
+Received: by mail-pg1-x52f.google.com with SMTP id bh13so10434610pgb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 14:19:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=1TPEKw6ZfZxcb8OW9aQyQDFvakhQrH+jPbGOfotODj8=;
+        b=KhuQv1RlE5pzhaW2Ncp6oBIPecXlXGSFNtn6DBktCsSr5GPX9VKESG1uMfTxlILqzu
+         IqDd2Xik6SSw8k6Z46JnVXkRAUpvG1QxwzLaH6lulE2cccjex0siS8xDsk7hhIL/KPLY
+         JcSK/6Uz+LO8yi4QEr6UG3H3jKj0zn+PgtYV0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=1TPEKw6ZfZxcb8OW9aQyQDFvakhQrH+jPbGOfotODj8=;
+        b=JjrZBiGqwn51jNSwCmJxhq5oSP5nS/Fwa+XFFTrCVhf61+otG5koh/0j/IwenuXhfK
+         etNqqdyLS142T8tpyM5tkni7Vlt8K0/10TBVz4L82bzf95YcfLy4swwRTsbnepXVbt+M
+         8A74k2oZ/EZizC7tP52Hywky6Jr4UeDobhh/punekOSQK62cYGV0AsBYN/TToDwUD/op
+         yV/hqFKsVlUEpcj6SRJUWuZ/qCB0b5VfvD9v5jC0nsPRX4A1I1jJ+i0hxe4zNtksFX6L
+         R2E/yR+6MgDRtOPoDdNaL4hW/di6NVEqkmLpJhJKePyNJQxRh9uU88YiNdDq/FeNCo+M
+         07eg==
+X-Gm-Message-State: ACrzQf0cuFC8Qqq2VdgVAWawS30g3DSNWE2N8TKutO/3tD9qQBZolNxb
+        PEcHPprrnsYMyrP6c02afVnFWQ==
+X-Google-Smtp-Source: AMsMyM6FtVEeH1ZubQUxEbxyq00UIUEPr3QFAZezIGRjNY1VCOqbP9csB0lrQZyDQ6RjLgknmW/sDQ==
+X-Received: by 2002:a63:6c01:0:b0:429:ea6e:486d with SMTP id h1-20020a636c01000000b00429ea6e486dmr4643809pgc.247.1663881554644;
+        Thu, 22 Sep 2022 14:19:14 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:5321:6ad9:3932:13d8])
+        by smtp.gmail.com with ESMTPSA id a7-20020a170902710700b00176ae5c0f38sm4549579pll.178.2022.09.22.14.19.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Sep 2022 14:19:14 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     stable@vger.kernel.org, gregkh@linuxfoundation.org
+Cc:     Alex Elder <elder@linaro.org>, swboyd@chromium.org,
+        Mike Tipton <mdtipton@codeaurora.org>,
+        Georgi Djakov <djakov@kernel.org>,
         Douglas Anderson <dianders@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Rob Clark" <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-CC:     <dri-devel@lists.freedesktop.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        <stable@vger.kernel.org>, Sean Paul <sean@poorly.run>,
-        Steev Klimaszewski <steev@kali.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-References: <20220913085320.8577-1-johan+linaro@kernel.org>
- <20220913085320.8577-2-johan+linaro@kernel.org>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <20220913085320.8577-2-johan+linaro@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: FZC-_1HAD1V0zZnWbDTOWLsb_vo_aEFb
-X-Proofpoint-ORIG-GUID: FZC-_1HAD1V0zZnWbDTOWLsb_vo_aEFb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-22_14,2022-09-22_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=999
- lowpriorityscore=0 phishscore=0 spamscore=0 adultscore=0 mlxscore=0
- impostorscore=0 priorityscore=1501 suspectscore=0 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2209220129
-X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: [5.10 PATCH] interconnect: qcom: icc-rpmh: Add BCMs to commit list in pre_aggregate
+Date:   Thu, 22 Sep 2022 14:18:03 -0700
+Message-Id: <20220922141725.5.10.1.I791715539cae1355e21827ca738b0b523a4a0f53@changeid>
+X-Mailer: git-send-email 2.37.3.998.g577e59143f-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Mike Tipton <mdtipton@codeaurora.org>
 
-On 9/13/2022 1:53 AM, Johan Hovold wrote:
-> The bridge counter was never reset when tearing down the DRM device so
-> that stale pointers to deallocated structures would be accessed on the
-> next tear down (e.g. after a second late bind deferral).
->
-> Given enough bridges and a few probe deferrals this could currently also
-> lead to data beyond the bridge array being corrupted.
->
-> Fixes: d28ea556267c ("drm/msm: properly add and remove internal bridges")
-> Fixes: a3376e3ec81c ("drm/msm: convert to drm_bridge")
-> Cc: stable@vger.kernel.org      # 3.12
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/msm_drv.c | 1 +
->   1 file changed, 1 insertion(+)
->
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index 391d86b54ded..d254fe2507ec 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -241,6 +241,7 @@ static int msm_drm_uninit(struct device *dev)
->   
->   	for (i = 0; i < priv->num_bridges; i++)
->   		drm_bridge_remove(priv->bridges[i]);
-> +	priv->num_bridges = 0;
->   
->   	pm_runtime_get_sync(dev);
->   	msm_irq_uninstall(ddev);
+commit b95b668eaaa2574e8ee72f143c52075e9955177e upstream.
+
+We're only adding BCMs to the commit list in aggregate(), but there are
+cases where pre_aggregate() is called without subsequently calling
+aggregate(). In particular, in icc_sync_state() when a node with initial
+BW has zero requests. Since BCMs aren't added to the commit list in
+these cases, we don't actually send the zero BW request to HW. So the
+resources remain on unnecessarily.
+
+Add BCMs to the commit list in pre_aggregate() instead, which is always
+called even when there are no requests.
+
+Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
+[georgi: remove icc_sync_state for platforms with incomplete support]
+Link: https://lore.kernel.org/r/20211125174751.25317-1-djakov@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+[dianders: dropped sm8350.c which isn't present in 5.10]
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+This should have been included in Alex Elder's request for patches
+picked to 5.10 [1] but it was missed. Let's finally pick it up.
+
+[1] https://lore.kernel.org/r/20220608205415.185248-3-elder@linaro.org
+
+ drivers/interconnect/qcom/icc-rpmh.c | 10 +++++-----
+ drivers/interconnect/qcom/sm8150.c   |  1 -
+ drivers/interconnect/qcom/sm8250.c   |  1 -
+ 3 files changed, 5 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+index f6fae64861ce..27cc5f03611c 100644
+--- a/drivers/interconnect/qcom/icc-rpmh.c
++++ b/drivers/interconnect/qcom/icc-rpmh.c
+@@ -20,13 +20,18 @@ void qcom_icc_pre_aggregate(struct icc_node *node)
+ {
+ 	size_t i;
+ 	struct qcom_icc_node *qn;
++	struct qcom_icc_provider *qp;
+ 
+ 	qn = node->data;
++	qp = to_qcom_provider(node->provider);
+ 
+ 	for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
+ 		qn->sum_avg[i] = 0;
+ 		qn->max_peak[i] = 0;
+ 	}
++
++	for (i = 0; i < qn->num_bcms; i++)
++		qcom_icc_bcm_voter_add(qp->voter, qn->bcms[i]);
+ }
+ EXPORT_SYMBOL_GPL(qcom_icc_pre_aggregate);
+ 
+@@ -44,10 +49,8 @@ int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
+ {
+ 	size_t i;
+ 	struct qcom_icc_node *qn;
+-	struct qcom_icc_provider *qp;
+ 
+ 	qn = node->data;
+-	qp = to_qcom_provider(node->provider);
+ 
+ 	if (!tag)
+ 		tag = QCOM_ICC_TAG_ALWAYS;
+@@ -67,9 +70,6 @@ int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
+ 	*agg_avg += avg_bw;
+ 	*agg_peak = max_t(u32, *agg_peak, peak_bw);
+ 
+-	for (i = 0; i < qn->num_bcms; i++)
+-		qcom_icc_bcm_voter_add(qp->voter, qn->bcms[i]);
+-
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(qcom_icc_aggregate);
+diff --git a/drivers/interconnect/qcom/sm8150.c b/drivers/interconnect/qcom/sm8150.c
+index c76b2c7f9b10..b936196c229c 100644
+--- a/drivers/interconnect/qcom/sm8150.c
++++ b/drivers/interconnect/qcom/sm8150.c
+@@ -627,7 +627,6 @@ static struct platform_driver qnoc_driver = {
+ 	.driver = {
+ 		.name = "qnoc-sm8150",
+ 		.of_match_table = qnoc_of_match,
+-		.sync_state = icc_sync_state,
+ 	},
+ };
+ module_platform_driver(qnoc_driver);
+diff --git a/drivers/interconnect/qcom/sm8250.c b/drivers/interconnect/qcom/sm8250.c
+index cc558fec74e3..40820043c8d3 100644
+--- a/drivers/interconnect/qcom/sm8250.c
++++ b/drivers/interconnect/qcom/sm8250.c
+@@ -643,7 +643,6 @@ static struct platform_driver qnoc_driver = {
+ 	.driver = {
+ 		.name = "qnoc-sm8250",
+ 		.of_match_table = qnoc_of_match,
+-		.sync_state = icc_sync_state,
+ 	},
+ };
+ module_platform_driver(qnoc_driver);
+-- 
+2.37.3.998.g577e59143f-goog
+
