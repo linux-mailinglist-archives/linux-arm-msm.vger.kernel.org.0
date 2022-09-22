@@ -2,45 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE2485E6434
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 15:51:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 552145E6419
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 15:48:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231737AbiIVNuw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Sep 2022 09:50:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33856 "EHLO
+        id S231308AbiIVNst (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Sep 2022 09:48:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231482AbiIVNua (ORCPT
+        with ESMTP id S231802AbiIVNsa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Sep 2022 09:50:30 -0400
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EEA1AEDBF;
-        Thu, 22 Sep 2022 06:50:13 -0700 (PDT)
-Received: from dggpemm500021.china.huawei.com (unknown [172.30.72.55])
-        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4MYGlT3l6jzWgq8;
-        Thu, 22 Sep 2022 21:46:13 +0800 (CST)
-Received: from dggpemm500007.china.huawei.com (7.185.36.183) by
- dggpemm500021.china.huawei.com (7.185.36.109) with Microsoft SMTP Server
+        Thu, 22 Sep 2022 09:48:30 -0400
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 575F6DED4A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 06:48:15 -0700 (PDT)
+Received: from dggpemm500022.china.huawei.com (unknown [172.30.72.57])
+        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4MYGj05XQWzlWvP;
+        Thu, 22 Sep 2022 21:44:04 +0800 (CST)
+Received: from dggpemm100009.china.huawei.com (7.185.36.113) by
+ dggpemm500022.china.huawei.com (7.185.36.162) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31; Thu, 22 Sep 2022 21:50:10 +0800
-Received: from huawei.com (10.175.103.91) by dggpemm500007.china.huawei.com
- (7.185.36.183) with Microsoft SMTP Server (version=TLS1_2,
+ 15.1.2375.31; Thu, 22 Sep 2022 21:48:13 +0800
+Received: from huawei.com (10.175.113.32) by dggpemm100009.china.huawei.com
+ (7.185.36.113) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.31; Thu, 22 Sep
- 2022 21:50:10 +0800
-From:   Yang Yingliang <yangyingliang@huawei.com>
-To:     <linux-usb@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@somainline.org>, <heikki.krogerus@linux.intel.com>,
-        <gregkh@linuxfoundation.org>, <yangyingliang@huawei.com>
-Subject: [PATCH -next] usb: typec: qcom-pmic-typec: Switch to use dev_err_probe() helper
-Date:   Thu, 22 Sep 2022 21:57:08 +0800
-Message-ID: <20220922135708.2212249-1-yangyingliang@huawei.com>
+ 2022 21:48:12 +0800
+From:   Liu Shixin <liushixin2@huawei.com>
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>
+CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>,
+        Liu Shixin <liushixin2@huawei.com>
+Subject: [PATCH] drm/msm/dpu: use DEFINE_SHOW_ATTRIBUTE to simplify dpu_regset32
+Date:   Thu, 22 Sep 2022 22:21:47 +0800
+Message-ID: <20220922142147.3246649-1-liushixin2@huawei.com>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.175.103.91]
-X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
- dggpemm500007.china.huawei.com (7.185.36.183)
+X-Originating-IP: [10.175.113.32]
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ dggpemm100009.china.huawei.com (7.185.36.113)
 X-CFilter-Loop: Reflected
 X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -50,32 +54,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In the probe path, dev_err() can be replaced with dev_err_probe()
-which will check if error code is -EPROBE_DEFER and prints the
-error name. It also sets the defer probe reason which can be
-checked later through debugfs. It's more simple in error path.
+Use DEFINE_SHOW_ATTRIBUTE helper macro to simplify the code.
+No functional change.
 
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
 ---
- drivers/usb/typec/qcom-pmic-typec.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 18 +++---------------
+ 1 file changed, 3 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/usb/typec/qcom-pmic-typec.c b/drivers/usb/typec/qcom-pmic-typec.c
-index a0454a80c4a2..432ea62f1bab 100644
---- a/drivers/usb/typec/qcom-pmic-typec.c
-+++ b/drivers/usb/typec/qcom-pmic-typec.c
-@@ -195,9 +195,8 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index 5e6e2626151e..f3660cd14f4f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -194,7 +194,7 @@ struct dpu_debugfs_regset32 {
+ 	struct dpu_kms *dpu_kms;
+ };
  
- 	qcom_usb->role_sw = fwnode_usb_role_switch_get(dev_fwnode(qcom_usb->dev));
- 	if (IS_ERR(qcom_usb->role_sw)) {
--		if (PTR_ERR(qcom_usb->role_sw) != -EPROBE_DEFER)
--			dev_err(dev, "failed to get role switch\n");
--		ret = PTR_ERR(qcom_usb->role_sw);
-+		ret = dev_err_probe(dev, PTR_ERR(qcom_usb->role_sw),
-+				    "failed to get role switch\n");
- 		goto err_typec_port;
- 	}
+-static int _dpu_debugfs_show_regset32(struct seq_file *s, void *data)
++static int dpu_regset32_show(struct seq_file *s, void *data)
+ {
+ 	struct dpu_debugfs_regset32 *regset = s->private;
+ 	struct dpu_kms *dpu_kms = regset->dpu_kms;
+@@ -227,19 +227,7 @@ static int _dpu_debugfs_show_regset32(struct seq_file *s, void *data)
  
+ 	return 0;
+ }
+-
+-static int dpu_debugfs_open_regset32(struct inode *inode,
+-		struct file *file)
+-{
+-	return single_open(file, _dpu_debugfs_show_regset32, inode->i_private);
+-}
+-
+-static const struct file_operations dpu_fops_regset32 = {
+-	.open =		dpu_debugfs_open_regset32,
+-	.read =		seq_read,
+-	.llseek =	seq_lseek,
+-	.release =	single_release,
+-};
++DEFINE_SHOW_ATTRIBUTE(dpu_regset32);
+ 
+ void dpu_debugfs_create_regset32(const char *name, umode_t mode,
+ 		void *parent,
+@@ -259,7 +247,7 @@ void dpu_debugfs_create_regset32(const char *name, umode_t mode,
+ 	regset->blk_len = length;
+ 	regset->dpu_kms = dpu_kms;
+ 
+-	debugfs_create_file(name, mode, parent, regset, &dpu_fops_regset32);
++	debugfs_create_file(name, mode, parent, regset, &dpu_regset32_fops);
+ }
+ 
+ static int dpu_kms_debugfs_init(struct msm_kms *kms, struct drm_minor *minor)
 -- 
 2.25.1
 
