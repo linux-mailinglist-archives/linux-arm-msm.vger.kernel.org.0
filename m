@@ -2,197 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 218E95E5AFC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 07:49:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DC1B5E5B74
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 08:36:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229885AbiIVFtA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Sep 2022 01:49:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42376 "EHLO
+        id S229498AbiIVGgP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Sep 2022 02:36:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229563AbiIVFs7 (ORCPT
+        with ESMTP id S229598AbiIVGgO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Sep 2022 01:48:59 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2026AB40FB;
-        Wed, 21 Sep 2022 22:48:59 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id v186so306676pfv.11;
-        Wed, 21 Sep 2022 22:48:59 -0700 (PDT)
+        Thu, 22 Sep 2022 02:36:14 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C554B603F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 23:36:13 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id o2so13012050lfc.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Sep 2022 23:36:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date;
-        bh=XGFyLted51/RT9xbeKBS8viSPSWXeRp6XswM//QSaRc=;
-        b=IGQTZU0ZI7mEQl/MTnVsVah5Uj55ITzawnylZ6ObJQ+gfEPLAfcIK8QZNGfiCV2/3X
-         xgjTQovvqlNhlzaXKlmVn73q8iRdLmK+Og7UHE2gj/1wb2EHl25tolWmsv2vOBvQ8YEh
-         rt1Id4k+Gv9wg1AEodH4wgXxVvIeK8qUvpXfFu0tMx6/5CNmPqnDZXI5kikDHkTF6qBB
-         MGmZzhTOWRoDsJh99uLXTy9yeHK0I/8hsfpvXIhwM/CZpjAOsXwMClcABkWi6ROxWFVU
-         Rk9FKR9XeTT41Ef1Gf3xOTzSboznutiHmXodrx1QkVKIE60Y44vJcsf3qyBfeSrKQ2E3
-         zpFA==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=/sdjh02mE/SwIBy9BvwTWzCrb2uaUdQhgWPujtLokpI=;
+        b=jDX5A4bzS6ImCNWPXKQIbzs984rLqA8YysFxfSRnRDcn3CzqXbW4jMLq3JC4h6hBh5
+         kKui7pP5Q+YbOpqzjDnCHCvQWbRnHbmNe319BJrUU6pWzZ2EZXClOjUiilupN/o7kkio
+         8hXkRs5c2CnKWvPu395WLgBdFUa+LNUaOPxR5U9IrT/q3E8MJT65eDGQYlU4zGpgJuzb
+         eHHODAlppEs7ve0NuXo4ULr6ao5YTUQG35eqzMxK/TGXb2nnZGVeGM/11NjoW1hMMNdw
+         aSl5BAoCStMkRmz5tLZDlNn/zD6h511AmZNTURFphRtQtP4WwPFWRHAt4p+m35U1yOhy
+         Qn3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date;
-        bh=XGFyLted51/RT9xbeKBS8viSPSWXeRp6XswM//QSaRc=;
-        b=4jjZ/j68RJznXV91NkFGzI3sVcbFX1sHNm/UZ4BIbX0Pqx71FOQkjGZE8a/cEPgXpm
-         VfIgQH0CMZfBMAp1Spfozw5CZwPATVVkoN7VeROn8e0z5RvTiyWAg6GQ5ne2OP79Dxs2
-         PmXzQFXH3UPUjZOnv4B9zcAGdP0wR/o9iHJlQjYOampVIISBbQlYb+GFy2jIi9NICYLc
-         ttuV0/ZkxKYYUk1NaaQ5LeOdJT6tTrFHvCirWgBMcA+DxxOnzIRiPlIW7jEK1od7sZQu
-         N0B4CmdGKnyJfFupapN5nJdwoq/8C79Zabk9ukG+h43xg464CzxKrsO96e/b78Wfec5d
-         bh+A==
-X-Gm-Message-State: ACrzQf03g8/07U1j1H8jE51nnsAgIMbs/QCXfBS7jZV3rYBtqE/54NBF
-        wm2V1c9wtlw8vaXNWn+cXLYJKAvs1yi1Wg==
-X-Google-Smtp-Source: AMsMyM4WAOaEjjQxOqO8ijc7wC0a/CpadcLAG7ZRy2O2HSg+IXmrzYGIB4zINGB+RlNQtXs7D+h71g==
-X-Received: by 2002:a63:5915:0:b0:438:d560:c4d3 with SMTP id n21-20020a635915000000b00438d560c4d3mr1603320pgb.240.1663825738416;
-        Wed, 21 Sep 2022 22:48:58 -0700 (PDT)
-Received: from localhost ([2406:7400:61:8a0f:392d:db19:673c:627a])
-        by smtp.gmail.com with ESMTPSA id h10-20020a170902680a00b001769206a766sm3000029plk.307.2022.09.21.22.48.53
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=/sdjh02mE/SwIBy9BvwTWzCrb2uaUdQhgWPujtLokpI=;
+        b=06w0c2L/zL3r99NP2q3qmldzUJNEUcgv1fYfR2H/8WZKr1i9xL4Fz9PHtHj+3phn9T
+         WeuBwLWs3ceW9P+HGSTLN9shjK1uy5+duL5AGRG9uBS9rDJQCw62oE8lwPG7GTF1ych9
+         44mbPU01QvH2/8nNQmvmMxrM3NCoeaibmsgiIq5pGKKU3DJ/5d9HYid+OqScDFozWCxs
+         H6fAY7iLDKg2BG2paXWZGiFpIXUCZtFOHJEpCt2RdLEq7Qyh3K5Mm3guNw/S/EFSVZFp
+         OpbPzD/sLodsVWJQW3+GVvZu+XPhh/Z/W79h1bHR9E89ajdI4ICOsQZ/QASbcP6CXmxI
+         HpGg==
+X-Gm-Message-State: ACrzQf2wT52tGBYWkSEporLODB9o5OJ7kfYGds/9BZNlBNUKrhYemORZ
+        FHljfKz/06JO6DTfG8MGWKM+Zw==
+X-Google-Smtp-Source: AMsMyM7eMr3Jw/nqeC8AFHLZsJf1omxJggP3TBkTPQDhdmwYiKmFT0oUiIBa+iv5nrnw7FzDDHn44A==
+X-Received: by 2002:a05:6512:150e:b0:492:d9fd:9bdf with SMTP id bq14-20020a056512150e00b00492d9fd9bdfmr619586lfb.583.1663828571965;
+        Wed, 21 Sep 2022 23:36:11 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id o17-20020ac24e91000000b0049964f68457sm773293lfr.262.2022.09.21.23.36.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Sep 2022 22:48:57 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+        Wed, 21 Sep 2022 23:36:10 -0700 (PDT)
+Message-ID: <10415506-306f-6090-feae-b255c810d462@linaro.org>
+Date:   Thu, 22 Sep 2022 08:36:10 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH] dt-bindings: firmware: document Qualcomm SM6375 SCM
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Das Srinagesh <quic_gurus@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220921001020.55307-1-konrad.dybcio@somainline.org>
+ <95fb2bfb-6eb8-012d-88f8-c739d229ef70@linaro.org>
+ <8faecd72-0cfd-18eb-d07a-53b3a23ed05a@somainline.org>
+ <f997cd3d-95c6-972f-032a-7646855371e1@linaro.org>
+ <df1e64e8-93e4-48e9-f49d-d85360ac006f@somainline.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <df1e64e8-93e4-48e9-f49d-d85360ac006f@somainline.org>
 Content-Type: text/plain; charset=UTF-8
-Date:   Thu, 22 Sep 2022 11:18:49 +0530
-Message-Id: <CN2OZW7ML4AC.35WIWKCPJQ512@skynet-linux>
-Cc:     <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
-        "Konrad Dybcio" <konrad.dybcio@somainline.org>,
-        "Mathieu Poirier" <mathieu.poirier@linaro.org>,
-        "Rob Herring" <robh+dt@kernel.org>
-Subject: Re: [PATCH v4 2/4] dt-bindings: remoteproc: qcom: Convert wcnss
- documentation to YAML
-From:   "Sireesh Kodali" <sireeshkodali1@gmail.com>
-To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <linux-kernel@vger.kernel.org>
-X-Mailer: aerc 0.12.0
-References: <20220921043648.2152725-1-sireeshkodali1@gmail.com>
- <20220921043648.2152725-3-sireeshkodali1@gmail.com>
- <c241920b-c94d-83d8-d195-2cf3cc044038@linaro.org>
-In-Reply-To: <c241920b-c94d-83d8-d195-2cf3cc044038@linaro.org>
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu Sep 22, 2022 at 12:46 AM IST, Krzysztof Kozlowski wrote:
-> On 21/09/2022 06:36, Sireesh Kodali wrote:
-> > This is a direct conversion of the existing txt documentation to YAML.
-> > It is in preparation for the addition of pronto-v3 to the docs. This
-> > patch doesn't document any of the existing subnodes/properties that are
-> > not documented in the existing txt file. That is done in a separate
-> > patch.
-> >=20
-> > Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
->
-> Thank you for your patch. There is something to discuss/improve.
-> (...)
-Thank you for the review
->
-> > +
-> > +  memory-region:
-> > +    maxItems: 1
-> > +    description: reserved-memory for the WCNSS core
-> > +
-> > +  smd-edge:
-> > +    $ref: /schemas/remoteproc/qcom,smd-edge.yaml#
-> > +    description:
-> > +      Qualcomm Shared Memory subnode which represents communication ed=
-ge,
-> > +      channels and devices related to the ADSP.
-> > +
-> > +  iris:
-> > +    type: object
-> > +    description:
-> > +      The iris subnode of the WCNSS PIL is used to describe the attach=
-ed RF module
-> > +      and its resource dependencies.
->
-> On this level of indentation (for iris):
-> additionalProperties: false
-Will be added in v5
->
-> > +
-> > +    properties:
-> > +      compatible:
-> > +        enum:
-> > +          - qcom,wcn3620
-> > +          - qcom,wcn3660
-> > +          - qcom,wcn3660b
-> > +          - qcom,wcn3680
-> > +
-> > +      clocks:
-> > +        minItems: 1
-> > +        items:
-> > +          - description: XO clock
-> > +          - description: RF clock
-> > +
-> > +      clock-names:
-> > +        minItems: 1
-> > +        items:
-> > +          - const: xo
-> > +          - const: rf
-> > +
-> > +      vddxo-supply:
-> > +        description:
-> > +          Reference to the regulator to be held on behalf of the booti=
-ng WCNSS
-> > +          core
-> > +
-> > +      vddrfa-supply:
-> > +        description:
-> > +          Reference to the regulator to be held on behalf of the booti=
-ng WCNSS
-> > +          core
-> > +
-> > +      vddpa-supply:
-> > +        description:
-> > +          Reference to the regulator to be held on behalf of the booti=
-ng WCNSS
-> > +          core
-> > +
-> > +      vdddig-supply:
-> > +        description:
-> > +          Reference to the regulator to be held on behalf of the booti=
-ng WCNSS
-> > +          core
-> > +
-> > +    required:
-> > +      - compatible
-> > +      - clocks
-> > +      - clock-names
-> > +      - vddxo-supply
-> > +      - vddrfa-supply
-> > +      - vddpa-supply
-> > +      - vdddig-supply
-> > +
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +  - reg-names
-> > +  - interrupts-extended
->
-> You require only interrupts and interrupts-extended satisfy it, unless
-> this is a result of bug in dtschema?
+On 21/09/2022 23:07, Konrad Dybcio wrote:
+>>>> allOf needs to be updated.
+>>> Does it? I did not define this compatible in the driver, so it does
+>>> not consume any clocks.
+>>
+>> It's about hardware, not driver. Hardware has some clocks. If it does
+>> not, then you need allOf disallowing it. Otherwise what do you expect in
+>> the clock entries?
+> Ok, so if I understand correctly then, all the compatibles that are in
+> the long long list in /properties/compatible/enum: should also be added
+> somewhere in the allOf: tree?
 
-It should be `interrupts`, will be fixed in v5
->
-> > +  - interrupt-names
-> > +  - iris
-> > +  - vddpx-supply
-> > +  - memory-region
-> > +  - smd-edge
-> > +
-> > +additionalProperties: false
->
-> Best regards,
-> Krzysztof
+Yes, because the clocks must be specific/fixed.
+
+Best regards,
+Krzysztof
 
