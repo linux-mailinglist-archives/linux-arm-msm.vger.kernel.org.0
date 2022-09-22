@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D30C25E5BCA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 09:04:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55E865E5BCF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 09:05:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230107AbiIVHEh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Sep 2022 03:04:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47574 "EHLO
+        id S230164AbiIVHFq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Sep 2022 03:05:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229919AbiIVHEf (ORCPT
+        with ESMTP id S229790AbiIVHFp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Sep 2022 03:04:35 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB337BCA1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 00:04:31 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id x27so13240349lfu.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 00:04:31 -0700 (PDT)
+        Thu, 22 Sep 2022 03:05:45 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 650DBB72B5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 00:05:43 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id p5so9786326ljc.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 00:05:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=6AOWL8X+6363yl6dlkzkEYMc1TNcmq2VygjKTCBzm64=;
-        b=bKHOfDZXtMpt20Subxu34+Lu5GEWthnW5vWbQiZd2mWo9MuEdinnZCTL41VaMH+5YA
-         j+BtZuHj0f5UCku2oXQvitvnGdhstHYYf7FYqqlV3wD6KLqi8Lwf2dLw+xybPogs0F65
-         GsEFETmLMZXbLODHYV4TJb1CE7rEfJWP9Yer/P6SGzJ5pGsfzFq7jj39IEN+lz1YIqRu
-         SNSNgDFmS4rtv+nl/90YeII1yFQRFV2hBU+bUWEoyc1JX0zC0KhbALg3RdphN0RA23pv
-         ZI0dzd1PSwXsESE4gN235sETE/HdTh00uW/Uhbvz2PujcXaFucIbGQLo2JT0iNfTrfXM
-         GICQ==
+        bh=Y8T+rgCLvbEN+WeN/wV06ekzw8aNybyo9Cr933g/thc=;
+        b=PRwS4EvB12v+rkGdwNVdlMLqAgVT+QiU52+kqqCtnAX4fThsHK1wiNaT2jYDt8pR7K
+         DsUuvhKEiWW2nTL68D8Mp8gtKcZ8YPRVCXPREfUbLwp+tcccKIUG8XR7yXba/V2tGbU9
+         miVdHY2V1AsbAwXiEQuN9XFYAlZqKS6aj6VmKqh9P1OYNVokSIrG/F2tI/baVgJ7AhaP
+         D9wQUOzAdt6RjkyMHZQfy3mm0+lrsPkpuONisuFht0kQk3izosEkS4cwPYcXMRh4tXZs
+         WBrKAeVM5Rwc0tFvSyLByRuvV5QSEmxq7hNTif2aJ6WLuK/yI0BdvuCwhws3mXmY2PjC
+         9Nzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=6AOWL8X+6363yl6dlkzkEYMc1TNcmq2VygjKTCBzm64=;
-        b=U/CXM5Oh7Zfe0X+I1iKvJhEyoc4kFRswvMziG+8hadxXIrPXQ24VWara7pFNNBkbP3
-         Q7mYjN1cJQHD5PXo7Xr4InC3wpqO+Am6XdX53uMk6Lb5jq6CzBnORzuAIUawbAgppvYZ
-         JMybTYC+PtWhf6yuB9z9htJcs6KO+7RDsKf79SoMbzPbRwzOjJ/oRrnF7fmSgIsvoUTL
-         Tnvh2SRBXktez0w74a3ctbS8MH3cpNke6Js+Etsuv5VOT9q54r8wGPACS9xnp0pofZWF
-         ZivHk5/9MGqkO96wIfN//GAhUOfEAK0tYuhbKg62QV9zTQAfTPLrDsh3CajEtKLMHRcw
-         jLTQ==
-X-Gm-Message-State: ACrzQf3O5Y5k78AD/FpksFUlOwi0E6OybC7M2Oarlbe4SyuegtdIL4mC
-        +kWVEeekDqArMTWMl+LBSqVIvw==
-X-Google-Smtp-Source: AMsMyM7ywOFavyrwCMGphDto/G9dJRxjhNMo43envFpFsgAU1P4TxjX58T9WeF7u2TcHGBNlDv1A5g==
-X-Received: by 2002:a05:6512:2304:b0:49b:24a:f0cf with SMTP id o4-20020a056512230400b0049b024af0cfmr709077lfu.373.1663830269640;
-        Thu, 22 Sep 2022 00:04:29 -0700 (PDT)
+        bh=Y8T+rgCLvbEN+WeN/wV06ekzw8aNybyo9Cr933g/thc=;
+        b=KKWRt2Nvr9qlzZZl8bHe/xm5j5IqVpkefeP0/cmFms2E78X79c0KLjSamnwFeUVV82
+         drZC9UbV1sYKDhdCBNxvO3Iqbe48v7zpSz4V3SCHdpdras52pXBb7NWBXTOv047Oq+lc
+         fUUcpFFxS1ymSUzm+RYhGFs09IHKaq/20zUgPymfh1yemD5gEthQ55/bikrhYcEmUftn
+         bDe214tgvFhUO4ToU24SyGGbgkhsFRU6TYzL7Z1JYYEWC/SylLJmYiWFlczPuyBo88vT
+         CsmOn+3qINN67uXkmegspGXy34ohnwNMvTVPNdFTD+W3WuOYZRX7R1rTKCp7hGcnps2E
+         S35g==
+X-Gm-Message-State: ACrzQf2Z0FYYfLlMf8KyyOpLRnXfRXSG4XdYfeXg/27HbVUnMguAvvUT
+        9JvCROhCQwM6HD0dDAuuBtYHJw==
+X-Google-Smtp-Source: AMsMyM4vAPpJFJDThr0SWQMffyaNAZzsYUD4b943d8K2YixFXmOh73l/deLZmkGyJnJrbcLPijtecw==
+X-Received: by 2002:a05:651c:1546:b0:26c:61c6:d053 with SMTP id y6-20020a05651c154600b0026c61c6d053mr603586ljp.218.1663830341671;
+        Thu, 22 Sep 2022 00:05:41 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id f7-20020a056512360700b004994117b0fdsm782114lfs.281.2022.09.22.00.04.28
+        by smtp.gmail.com with ESMTPSA id r17-20020a2e8e31000000b0026c687f9f7bsm491417ljk.107.2022.09.22.00.05.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Sep 2022 00:04:29 -0700 (PDT)
-Message-ID: <02b60bf8-70ac-eb7b-33d7-1c9b7a6f0a54@linaro.org>
-Date:   Thu, 22 Sep 2022 09:04:28 +0200
+        Thu, 22 Sep 2022 00:05:41 -0700 (PDT)
+Message-ID: <84c599c7-421a-78ed-b33e-ce1a4bd4356e@linaro.org>
+Date:   Thu, 22 Sep 2022 09:05:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.2
@@ -79,7 +79,8 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -94,31 +95,29 @@ On 15/09/2022 15:37, Dmitry Baryshkov wrote:
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-
-(...)
-
-> -  "#interrupt-cells":
-> -    const: 1
-> -
->    iommus:
-> -    items:
-> -      - description: Phandle to apps_smmu node with SID mask for Hard-Fail port0
-> -      - description: Phandle to apps_smmu node with SID mask for Hard-Fail port1
-> -
-> -  ranges: true
-> +    maxItems: 2
+>  .../bindings/display/msm/dpu-msm8998.yaml     | 41 +--------
+>  .../bindings/display/msm/dpu-qcm2290.yaml     | 51 ++----------
+>  .../bindings/display/msm/dpu-sc7180.yaml      | 50 ++---------
+>  .../bindings/display/msm/dpu-sc7280.yaml      | 50 ++---------
+>  .../bindings/display/msm/dpu-sdm845.yaml      | 54 ++----------
+>  .../bindings/display/msm/mdss-common.yaml     | 83 +++++++++++++++++++
+>  6 files changed, 111 insertions(+), 218 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/mdss-common.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-msm8998.yaml b/Documentation/devicetree/bindings/display/msm/dpu-msm8998.yaml
+> index 200eeace1c71..67791dbc3b5d 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dpu-msm8998.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dpu-msm8998.yaml
+> @@ -14,20 +14,13 @@ description: |
+>    sub-blocks like DPU display controller, DSI and DP interfaces etc. Device tree
+>    bindings of MDSS and DPU are mentioned for MSM8998 target.
 >  
->    interconnects:
-> -    items:
-> -      - description: Interconnect path from mdp0 port to the data bus
-> -      - description: Interconnect path from mdp1 port to the data bus
-> +    maxItems: 2
 
-I think this is not equivalent now, because you have in total minItems:1
-and maxItems:2, while in past minItems was 2.
+missing allOf
 
-The same might apply to iommus. clocks look good.
-
+> +$ref: /schemas/display/msm/mdss-common.yaml#
+> +
+>  properties:
 Best regards,
 Krzysztof
 
