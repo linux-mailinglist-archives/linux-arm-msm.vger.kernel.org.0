@@ -2,81 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A8CA5E5AD5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 07:44:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 218E95E5AFC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 07:49:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229731AbiIVFoi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Sep 2022 01:44:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36116 "EHLO
+        id S229885AbiIVFtA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Sep 2022 01:49:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229677AbiIVFog (ORCPT
+        with ESMTP id S229563AbiIVFs7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Sep 2022 01:44:36 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8922D115E;
-        Wed, 21 Sep 2022 22:44:34 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28M4shY1014947;
-        Thu, 22 Sep 2022 05:44:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=we5HxVglRR+sKuc84BskH/MwyDzSBZhVxt78pj1pxq8=;
- b=l9PG4vRfmpFcuXB5/Qa0k1Jc47Sgi3R/2eFIiZkkIlF5KH/D0HObgd/LN/hdIOrWp0CO
- NDiecN5sIA5kEKI6xRp4Ypyg94iRi5nujLjBqo7KVGOPgllzaqyY/OCZlcRFq6U1BKG+
- W4WmY3XQveAyKLqFlsDD2XBC7FeoSbjOGq9VMdaWIkyRNBZ6+zqZJuyAi6Akx3dj3pqQ
- FCzIe+IqgL/99Nltc3hCkoCAO33OaWT/2ujeu4MHY+mcJNYRGCXJ7CANqrx9KGmiNy3U
- NUoh8mKjYesvBzJY2z2XDkx9JDBOAyvqKrWYiBYCc2f3P5ibeAig/1xWa7KTlzAZuJLo hw== 
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jqx5wbvtc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 22 Sep 2022 05:44:29 +0000
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 28M5iQkN025029;
-        Thu, 22 Sep 2022 05:44:26 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3jnqqrmr4x-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 22 Sep 2022 05:44:26 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 28M5iQbo025016;
-        Thu, 22 Sep 2022 05:44:26 GMT
-Received: from kalyant-linux.qualcomm.com (kalyant-linux.qualcomm.com [10.204.66.210])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 28M5iPYD025001;
-        Thu, 22 Sep 2022 05:44:26 +0000
-Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
-        id DF2961718; Wed, 21 Sep 2022 22:44:24 -0700 (PDT)
-From:   Kalyan Thota <quic_kalyant@quicinc.com>
-To:     y@qualcomm.com, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org
-Cc:     Kalyan Thota <quic_kalyant@quicinc.com>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        dianders@chromium.org, swboyd@chromium.org,
-        quic_vpolimer@quicinc.com, dmitry.baryshkov@linaro.org,
-        quic_abhinavk@quicinc.com
-Subject: [Resend v4] drm/msm/disp/dpu1: add support for dspp sub block flush in sc7280
-Date:   Wed, 21 Sep 2022 22:44:23 -0700
-Message-Id: <1663825463-6715-1-git-send-email-quic_kalyant@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <y>
-References: <y>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: fEX7tSJnk8z4SoruHOKQ-OQZWCfgWbKw
-X-Proofpoint-ORIG-GUID: fEX7tSJnk8z4SoruHOKQ-OQZWCfgWbKw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-22_02,2022-09-20_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 adultscore=0
- malwarescore=0 phishscore=0 impostorscore=0 mlxscore=0 lowpriorityscore=0
- priorityscore=1501 bulkscore=0 mlxlogscore=999 suspectscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2209130000
- definitions=main-2209220037
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        Thu, 22 Sep 2022 01:48:59 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2026AB40FB;
+        Wed, 21 Sep 2022 22:48:59 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id v186so306676pfv.11;
+        Wed, 21 Sep 2022 22:48:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date;
+        bh=XGFyLted51/RT9xbeKBS8viSPSWXeRp6XswM//QSaRc=;
+        b=IGQTZU0ZI7mEQl/MTnVsVah5Uj55ITzawnylZ6ObJQ+gfEPLAfcIK8QZNGfiCV2/3X
+         xgjTQovvqlNhlzaXKlmVn73q8iRdLmK+Og7UHE2gj/1wb2EHl25tolWmsv2vOBvQ8YEh
+         rt1Id4k+Gv9wg1AEodH4wgXxVvIeK8qUvpXfFu0tMx6/5CNmPqnDZXI5kikDHkTF6qBB
+         MGmZzhTOWRoDsJh99uLXTy9yeHK0I/8hsfpvXIhwM/CZpjAOsXwMClcABkWi6ROxWFVU
+         Rk9FKR9XeTT41Ef1Gf3xOTzSboznutiHmXodrx1QkVKIE60Y44vJcsf3qyBfeSrKQ2E3
+         zpFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date;
+        bh=XGFyLted51/RT9xbeKBS8viSPSWXeRp6XswM//QSaRc=;
+        b=4jjZ/j68RJznXV91NkFGzI3sVcbFX1sHNm/UZ4BIbX0Pqx71FOQkjGZE8a/cEPgXpm
+         VfIgQH0CMZfBMAp1Spfozw5CZwPATVVkoN7VeROn8e0z5RvTiyWAg6GQ5ne2OP79Dxs2
+         PmXzQFXH3UPUjZOnv4B9zcAGdP0wR/o9iHJlQjYOampVIISBbQlYb+GFy2jIi9NICYLc
+         ttuV0/ZkxKYYUk1NaaQ5LeOdJT6tTrFHvCirWgBMcA+DxxOnzIRiPlIW7jEK1od7sZQu
+         N0B4CmdGKnyJfFupapN5nJdwoq/8C79Zabk9ukG+h43xg464CzxKrsO96e/b78Wfec5d
+         bh+A==
+X-Gm-Message-State: ACrzQf03g8/07U1j1H8jE51nnsAgIMbs/QCXfBS7jZV3rYBtqE/54NBF
+        wm2V1c9wtlw8vaXNWn+cXLYJKAvs1yi1Wg==
+X-Google-Smtp-Source: AMsMyM4WAOaEjjQxOqO8ijc7wC0a/CpadcLAG7ZRy2O2HSg+IXmrzYGIB4zINGB+RlNQtXs7D+h71g==
+X-Received: by 2002:a63:5915:0:b0:438:d560:c4d3 with SMTP id n21-20020a635915000000b00438d560c4d3mr1603320pgb.240.1663825738416;
+        Wed, 21 Sep 2022 22:48:58 -0700 (PDT)
+Received: from localhost ([2406:7400:61:8a0f:392d:db19:673c:627a])
+        by smtp.gmail.com with ESMTPSA id h10-20020a170902680a00b001769206a766sm3000029plk.307.2022.09.21.22.48.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 Sep 2022 22:48:57 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Thu, 22 Sep 2022 11:18:49 +0530
+Message-Id: <CN2OZW7ML4AC.35WIWKCPJQ512@skynet-linux>
+Cc:     <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        "Konrad Dybcio" <konrad.dybcio@somainline.org>,
+        "Mathieu Poirier" <mathieu.poirier@linaro.org>,
+        "Rob Herring" <robh+dt@kernel.org>
+Subject: Re: [PATCH v4 2/4] dt-bindings: remoteproc: qcom: Convert wcnss
+ documentation to YAML
+From:   "Sireesh Kodali" <sireeshkodali1@gmail.com>
+To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        <linux-kernel@vger.kernel.org>
+X-Mailer: aerc 0.12.0
+References: <20220921043648.2152725-1-sireeshkodali1@gmail.com>
+ <20220921043648.2152725-3-sireeshkodali1@gmail.com>
+ <c241920b-c94d-83d8-d195-2cf3cc044038@linaro.org>
+In-Reply-To: <c241920b-c94d-83d8-d195-2cf3cc044038@linaro.org>
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,193 +83,116 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Flush mechanism for DSPP blocks has changed in sc7280 family, it
-allows individual sub blocks to be flushed in coordination with
-master flush control.
+On Thu Sep 22, 2022 at 12:46 AM IST, Krzysztof Kozlowski wrote:
+> On 21/09/2022 06:36, Sireesh Kodali wrote:
+> > This is a direct conversion of the existing txt documentation to YAML.
+> > It is in preparation for the addition of pronto-v3 to the docs. This
+> > patch doesn't document any of the existing subnodes/properties that are
+> > not documented in the existing txt file. That is done in a separate
+> > patch.
+> >=20
+> > Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
+>
+> Thank you for your patch. There is something to discuss/improve.
+> (...)
+Thank you for the review
+>
+> > +
+> > +  memory-region:
+> > +    maxItems: 1
+> > +    description: reserved-memory for the WCNSS core
+> > +
+> > +  smd-edge:
+> > +    $ref: /schemas/remoteproc/qcom,smd-edge.yaml#
+> > +    description:
+> > +      Qualcomm Shared Memory subnode which represents communication ed=
+ge,
+> > +      channels and devices related to the ADSP.
+> > +
+> > +  iris:
+> > +    type: object
+> > +    description:
+> > +      The iris subnode of the WCNSS PIL is used to describe the attach=
+ed RF module
+> > +      and its resource dependencies.
+>
+> On this level of indentation (for iris):
+> additionalProperties: false
+Will be added in v5
+>
+> > +
+> > +    properties:
+> > +      compatible:
+> > +        enum:
+> > +          - qcom,wcn3620
+> > +          - qcom,wcn3660
+> > +          - qcom,wcn3660b
+> > +          - qcom,wcn3680
+> > +
+> > +      clocks:
+> > +        minItems: 1
+> > +        items:
+> > +          - description: XO clock
+> > +          - description: RF clock
+> > +
+> > +      clock-names:
+> > +        minItems: 1
+> > +        items:
+> > +          - const: xo
+> > +          - const: rf
+> > +
+> > +      vddxo-supply:
+> > +        description:
+> > +          Reference to the regulator to be held on behalf of the booti=
+ng WCNSS
+> > +          core
+> > +
+> > +      vddrfa-supply:
+> > +        description:
+> > +          Reference to the regulator to be held on behalf of the booti=
+ng WCNSS
+> > +          core
+> > +
+> > +      vddpa-supply:
+> > +        description:
+> > +          Reference to the regulator to be held on behalf of the booti=
+ng WCNSS
+> > +          core
+> > +
+> > +      vdddig-supply:
+> > +        description:
+> > +          Reference to the regulator to be held on behalf of the booti=
+ng WCNSS
+> > +          core
+> > +
+> > +    required:
+> > +      - compatible
+> > +      - clocks
+> > +      - clock-names
+> > +      - vddxo-supply
+> > +      - vddrfa-supply
+> > +      - vddpa-supply
+> > +      - vdddig-supply
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - reg-names
+> > +  - interrupts-extended
+>
+> You require only interrupts and interrupts-extended satisfy it, unless
+> this is a result of bug in dtschema?
 
-Representation: master_flush && (PCC_flush | IGC_flush .. etc )
-
-This change adds necessary support for the above design.
-
-Changes in v1:
-- Few nits (Doug, Dmitry)
-- Restrict sub-block flush programming to dpu_hw_ctl file (Dmitry)
-
-Changes in v2:
-- Move the address offset to flush macro (Dmitry)
-- Seperate ops for the sub block flush (Dmitry)
-
-Changes in v3:
-- Reuse the DPU_DSPP_xx enum instead of a new one (Dmitry)
-
-Changes in v4:
-- Use shorter version for unsigned int (Stephen)
-
-Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c       |  2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  5 +++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  4 +++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c     | 35 ++++++++++++++++++++++++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h     | 10 ++++++--
- 5 files changed, 50 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 601d687..4170fbe 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -766,7 +766,7 @@ static void _dpu_crtc_setup_cp_blocks(struct drm_crtc *crtc)
- 
- 		/* stage config flush mask */
- 		ctl->ops.update_pending_flush_dspp(ctl,
--			mixer[i].hw_dspp->idx);
-+			mixer[i].hw_dspp->idx, DPU_DSPP_PCC);
- 	}
- }
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 27f029f..0eecb2f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -65,7 +65,10 @@
- 	(PINGPONG_SDM845_MASK | BIT(DPU_PINGPONG_TE2))
- 
- #define CTL_SC7280_MASK \
--	(BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_FETCH_ACTIVE) | BIT(DPU_CTL_VM_CFG))
-+	(BIT(DPU_CTL_ACTIVE_CFG) | \
-+	 BIT(DPU_CTL_FETCH_ACTIVE) | \
-+	 BIT(DPU_CTL_VM_CFG) | \
-+	 BIT(DPU_CTL_DSPP_SUB_BLOCK_FLUSH))
- 
- #define MERGE_3D_SM8150_MASK (0)
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index 38aa38a..8148e91 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -161,10 +161,12 @@ enum {
-  * DSPP sub-blocks
-  * @DPU_DSPP_PCC             Panel color correction block
-  * @DPU_DSPP_GC              Gamma correction block
-+ * @DPU_DSPP_IGC             Inverse Gamma correction block
-  */
- enum {
- 	DPU_DSPP_PCC = 0x1,
- 	DPU_DSPP_GC,
-+	DPU_DSPP_IGC,
- 	DPU_DSPP_MAX
- };
- 
-@@ -191,6 +193,7 @@ enum {
-  * @DPU_CTL_SPLIT_DISPLAY:	CTL supports video mode split display
-  * @DPU_CTL_FETCH_ACTIVE:	Active CTL for fetch HW (SSPPs)
-  * @DPU_CTL_VM_CFG:		CTL config to support multiple VMs
-+ * @DPU_CTL_DSPP_BLOCK_FLUSH: CTL config to support dspp sub-block flush
-  * @DPU_CTL_MAX
-  */
- enum {
-@@ -198,6 +201,7 @@ enum {
- 	DPU_CTL_ACTIVE_CFG,
- 	DPU_CTL_FETCH_ACTIVE,
- 	DPU_CTL_VM_CFG,
-+	DPU_CTL_DSPP_SUB_BLOCK_FLUSH,
- 	DPU_CTL_MAX
- };
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-index a35ecb6..f26f484 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-@@ -33,6 +33,7 @@
- #define   CTL_INTF_FLUSH                0x110
- #define   CTL_INTF_MASTER               0x134
- #define   CTL_FETCH_PIPE_ACTIVE         0x0FC
-+#define   CTL_DSPP_n_FLUSH(n)		((0x13C) + ((n - 1) * 4))
- 
- #define CTL_MIXER_BORDER_OUT            BIT(24)
- #define CTL_FLUSH_MASK_CTL              BIT(17)
-@@ -287,8 +288,9 @@ static void dpu_hw_ctl_update_pending_flush_merge_3d_v1(struct dpu_hw_ctl *ctx,
- }
- 
- static void dpu_hw_ctl_update_pending_flush_dspp(struct dpu_hw_ctl *ctx,
--	enum dpu_dspp dspp)
-+	enum dpu_dspp dspp, u32 dspp_sub_blk)
- {
-+
- 	switch (dspp) {
- 	case DSPP_0:
- 		ctx->pending_flush_mask |= BIT(13);
-@@ -307,6 +309,31 @@ static void dpu_hw_ctl_update_pending_flush_dspp(struct dpu_hw_ctl *ctx,
- 	}
- }
- 
-+static void dpu_hw_ctl_update_pending_flush_dspp_subblocks(
-+	struct dpu_hw_ctl *ctx,	enum dpu_dspp dspp, u32 dspp_sub_blk)
-+{
-+	u32 flushbits = 0, active;
-+
-+	switch (dspp_sub_blk) {
-+	case DPU_DSPP_IGC:
-+		flushbits = BIT(2);
-+		break;
-+	case DPU_DSPP_PCC:
-+		flushbits = BIT(4);
-+		break;
-+	case DPU_DSPP_GC:
-+		flushbits = BIT(5);
-+		break;
-+	default:
-+		return;
-+	}
-+
-+	active = DPU_REG_READ(&ctx->hw, CTL_DSPP_n_FLUSH(dspp));
-+	DPU_REG_WRITE(&ctx->hw, CTL_DSPP_n_FLUSH(dspp), active | flushbits);
-+
-+	ctx->pending_flush_mask |= BIT(29);
-+}
-+
- static u32 dpu_hw_ctl_poll_reset_status(struct dpu_hw_ctl *ctx, u32 timeout_us)
- {
- 	struct dpu_hw_blk_reg_map *c = &ctx->hw;
-@@ -675,7 +702,11 @@ static void _setup_ctl_ops(struct dpu_hw_ctl_ops *ops,
- 	ops->setup_blendstage = dpu_hw_ctl_setup_blendstage;
- 	ops->update_pending_flush_sspp = dpu_hw_ctl_update_pending_flush_sspp;
- 	ops->update_pending_flush_mixer = dpu_hw_ctl_update_pending_flush_mixer;
--	ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp;
-+	if (cap & BIT(DPU_CTL_DSPP_SUB_BLOCK_FLUSH))
-+		ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp_subblocks;
-+	else
-+		ops->update_pending_flush_dspp = dpu_hw_ctl_update_pending_flush_dspp;
-+
- 	if (cap & BIT(DPU_CTL_FETCH_ACTIVE))
- 		ops->set_active_pipes = dpu_hw_ctl_set_fetch_pipe_active;
- };
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-index 96c012e..1743572 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-@@ -149,12 +149,18 @@ struct dpu_hw_ctl_ops {
- 
- 	/**
- 	 * OR in the given flushbits to the cached pending_flush_mask
--	 * No effect on hardware
-+	 *
-+	 * If the hardware supports dspp sub block flush, then sub-block
-+	 * flushes are written to the hardware and main dspp flush will
-+	 * be cached in the pending_flush_mask.
-+	 *
- 	 * @ctx       : ctl path ctx pointer
- 	 * @blk       : DSPP block index
-+	 * @dspp_sub_blk : DSPP sub-block index
- 	 */
- 	void (*update_pending_flush_dspp)(struct dpu_hw_ctl *ctx,
--		enum dpu_dspp blk);
-+		enum dpu_dspp blk,  u32 dspp_sub_blk);
-+
- 	/**
- 	 * Write the value of the pending_flush_mask to hardware
- 	 * @ctx       : ctl path ctx pointer
--- 
-2.7.4
+It should be `interrupts`, will be fixed in v5
+>
+> > +  - interrupt-names
+> > +  - iris
+> > +  - vddpx-supply
+> > +  - memory-region
+> > +  - smd-edge
+> > +
+> > +additionalProperties: false
+>
+> Best regards,
+> Krzysztof
 
