@@ -2,21 +2,21 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8361C5E60B6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 13:15:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA3E05E60B0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 13:15:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231553AbiIVLPe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Sep 2022 07:15:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60252 "EHLO
+        id S231539AbiIVLPV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Sep 2022 07:15:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231558AbiIVLPX (ORCPT
+        with ESMTP id S231377AbiIVLPQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Sep 2022 07:15:23 -0400
-Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBFF76AEBC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 04:14:58 -0700 (PDT)
-Received: from dggpeml500024.china.huawei.com (unknown [172.30.72.55])
-        by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4MYCJ91qHBz14S1F;
+        Thu, 22 Sep 2022 07:15:16 -0400
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B6B47198D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 04:14:59 -0700 (PDT)
+Received: from dggpeml500024.china.huawei.com (unknown [172.30.72.54])
+        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4MYCJ92HgnzlW3C;
         Thu, 22 Sep 2022 19:10:49 +0800 (CST)
 Received: from huawei.com (10.175.112.208) by dggpeml500024.china.huawei.com
  (7.185.36.10) with Microsoft SMTP Server (version=TLS1_2,
@@ -28,9 +28,9 @@ To:     <agross@kernel.org>, <andersson@kernel.org>,
         <vkoul@kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <linux-phy@lists.infradead.org>
 CC:     <yuancan@huawei.com>
-Subject: [PATCH 2/7] phy: qcom-qmp-pcie-msm8996: Use dev_err_probe() to simplify code
-Date:   Thu, 22 Sep 2022 11:12:23 +0000
-Message-ID: <20220922111228.36355-3-yuancan@huawei.com>
+Subject: [PATCH 3/7] phy: qcom-qmp-pcie: Use dev_err_probe() to simplify code
+Date:   Thu, 22 Sep 2022 11:12:24 +0000
+Message-ID: <20220922111228.36355-4-yuancan@huawei.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20220922111228.36355-1-yuancan@huawei.com>
 References: <20220922111228.36355-1-yuancan@huawei.com>
@@ -55,17 +55,17 @@ checked later through debugfs.
 
 Signed-off-by: Yuan Can <yuancan@huawei.com>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c | 9 +++------
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 9 +++------
  1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
-index a4ff15b289cd..8b58ad989397 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
-@@ -973,12 +973,9 @@ static int qcom_qmp_phy_pcie_msm8996_probe(struct platform_device *pdev)
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+index 2923977b205a..6bbfaeb23672 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+@@ -2458,12 +2458,9 @@ static int qmp_pcie_probe(struct platform_device *pdev)
  		return ret;
  
- 	ret = qcom_qmp_phy_pcie_msm8996_vreg_init(dev, cfg);
+ 	ret = qmp_pcie_vreg_init(dev, cfg);
 -	if (ret) {
 -		if (ret != -EPROBE_DEFER)
 -			dev_err(dev, "failed to get regulator supplies: %d\n",
