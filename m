@@ -2,311 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E85C5E6A6B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 20:09:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C14175E6AEC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 20:30:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231866AbiIVSJc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Sep 2022 14:09:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44002 "EHLO
+        id S232113AbiIVSaV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Sep 2022 14:30:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230113AbiIVSJ3 (ORCPT
+        with ESMTP id S233202AbiIVS34 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Sep 2022 14:09:29 -0400
-Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC1C110650D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 11:09:27 -0700 (PDT)
-Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-127ba06d03fso15048162fac.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 11:09:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date;
-        bh=O5nJHg+VQnGV2W4egYTndSwkmO5/IvT/ILfbHE1H9ms=;
-        b=iykt5EE5yprRyhR4T47LS5GElzrW7L0mmUnBKGtJTNOt3jjCE0OtQpsCnjhg1j6rU/
-         cILT9a1911tC/hL+bJ3oxwJBVhBueorNX+R6VJBwmPv4dx9Za+Yz+LxpIjxctiETVtCE
-         FolkViKtdORJoJp5j36iZakL7KmKtyRv/teWOJ9ZT+NfWs60sSkaWAdPlSqI6Zp7aWJK
-         uZZQPiElIzR9OEQ1TOn4rlljAVu2ow+JG1DBWi5GiquZ61UYyr59QDPxv8X7ooCjmK4z
-         kqJKlXLDPJzDrbZy+Y3No4SHPgP3+PcvBHc48zKz+5AhWkusduTG2V0rWfGyGy7pG2r1
-         WuZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=O5nJHg+VQnGV2W4egYTndSwkmO5/IvT/ILfbHE1H9ms=;
-        b=zN/DgxhnrDTCzq44xYBJi1Qo3tFqNCWitiK2trKiy6j9cMhZWXw2yGAhYBdygabuEX
-         t01rSXisQADtfMXEcoFA+ZOoBABl39SM9Zay0aniRWWTxib1PQJKkx6mFIBARZTzRyKD
-         L/rGEYNnXuaF6MaeOdmG5G6ZgEkreMC+dTfxn6YP5MeF22T9ykIrYy4aOsarHq1YJU9d
-         AQKOnwB6pneafttdRP5DV1C8KT1b5E2gA/BA8ZLsuUWIOUUoViMLhVgtcuubhHmkYBfn
-         Gh56TAh552fxVJ0LZjhAAIup0TtMm4q8o1m0xYjYKTtrG2BjSZhvH4FW1EBc7WFtBP7x
-         tBrA==
-X-Gm-Message-State: ACrzQf2e/eFdJfh9lGIAffFa2LRWgZdUrv8SlkAZAs7qtDvHsp0jiGEu
-        s2PRyJRgPZDUcEVNfdOCpJ0h7t6DTxW2AYgIBfg=
-X-Google-Smtp-Source: AMsMyM7KAyhfBRTkZtFo/50Lw38oL4YPv080I++w00yoLpOV9SCxd/5xGufu9uG8RVayv8A/9BVitJ/rkqPBT3edr+w=
-X-Received: by 2002:a05:6871:14e:b0:127:3f08:4599 with SMTP id
- z14-20020a056871014e00b001273f084599mr2800000oab.183.1663870166791; Thu, 22
- Sep 2022 11:09:26 -0700 (PDT)
+        Thu, 22 Sep 2022 14:29:56 -0400
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2045.outbound.protection.outlook.com [40.107.94.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CBF61114C1;
+        Thu, 22 Sep 2022 11:27:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=m0YEntDAhz3bz3tby4ELONej4UYmJyS6bv5zNwiFuChOKtlv+NzRZ/wUpotWqC+Po5BxD62TvhHbNxmYEHERo8TBEuxHuLHjxfHLQqZmjLs3DRbhUe8yBwZoIUHTQzsQnEmG2iBf/ZSkDeFB2m/b33zGZMDs1q1g3ArOVK5QDQJj7MAvgGXNnj2UuUZ6WDVuSP1VyT4ike4DKYWK/VuOu2sYid7mhLyURLxrzOvQ64e9PiggpCleB1yobX2B+HuIFj2NKsdfzNAQBhW5ekrDAhTMWwTgTwqLcBLXtQ7+cL9pE9pof/pM3ZaHikggiKd8X87A53eucVQPMJWGyeYNyg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=S/SN6MeI436hc3x2x4LgJjvZdPynOabv811mJYXlk8E=;
+ b=H4dfEU797l9Y+3xckfvLc2MdCL21bxP+hR88Tjn9DmYjQlwCeu+tTClMVu1GIebLv6ZLQBF39CJ3eWi0JbBNOYdccFEnGx93/k7UfmbKQ8P7b6hiMsVJMzEIWvB7XyynQsZTa5PeGwZd6IpEzNUdmsH23ABjmjrE+W9CMjqvt6V5SkIqCHpsAe2QXYSA+GMps7KFx+tX+TKKJfYlBfgJpI7/xC2ZO376cqKiwuG/5MNopl4rMO9qlcMSg9KQEtaQ3wN6iTAFFc7Tx1yw7jbESVBlEqeL85MASTRAz1lvT7pW/v6T6LE63r2OyJrjr2D9TttemGvlx25t7ACo1Q1bUA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=kernel.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=S/SN6MeI436hc3x2x4LgJjvZdPynOabv811mJYXlk8E=;
+ b=Nm6GNiv0JNfGlYzN+a6TAjyoqpjAorD7BKK+oU69pMW9hswyPIqVTL2zqGH617pzh74UbFecdWdmcDSJ356/FWwn+KuqxFJC2ReJVbrpVuhriIHa7sCBlZXTWYVHfLMAQxNL2aBKqeHmEzJEgs0jjD59AfSICvv8szDdB5IYbJy6CYMQMiaWsXijv85GKgdtFrm4ciCfyCUSbcOnBBo40REWdjWXx7hHf7La1OFeptA2deZvpWwlZaNAGH/QNKW+Lv4fcmewAf9XYNlNEBFTimgw5VFXjsgmYxhh4nPfSLg93kxDepQj4pPlS+N7EhMvbwNETFU92E0h1UUAxESimw==
+Received: from MW4PR03CA0223.namprd03.prod.outlook.com (2603:10b6:303:b9::18)
+ by BL1PR12MB5352.namprd12.prod.outlook.com (2603:10b6:208:314::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5654.19; Thu, 22 Sep
+ 2022 18:26:50 +0000
+Received: from CO1NAM11FT077.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:303:b9:cafe::bf) by MW4PR03CA0223.outlook.office365.com
+ (2603:10b6:303:b9::18) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5654.18 via Frontend
+ Transport; Thu, 22 Sep 2022 18:26:50 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CO1NAM11FT077.mail.protection.outlook.com (10.13.175.55) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5654.14 via Frontend Transport; Thu, 22 Sep 2022 18:26:50 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Thu, 22 Sep
+ 2022 11:26:32 -0700
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ rnnvmail205.nvidia.com (10.129.68.10) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Thu, 22 Sep 2022 11:26:32 -0700
+Received: from drhqmail202.nvidia.com (10.126.190.181) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Thu, 22 Sep 2022 11:26:31 -0700
+Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com
+ (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29 via Frontend
+ Transport; Thu, 22 Sep 2022 11:26:30 -0700
+Date:   Thu, 22 Sep 2022 11:26:29 -0700
+From:   Nicolin Chen <nicolinc@nvidia.com>
+To:     Jason Gunthorpe <jgg@nvidia.com>
+CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <konrad.dybcio@somainline.org>, <joro@8bytes.org>,
+        <will@kernel.org>, <robin.murphy@arm.com>,
+        <sricharan@codeaurora.org>, <kevin.tian@intel.com>,
+        <linux-arm-msm@vger.kernel.org>, <iommu@lists.linux.dev>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v5 1/6] iommu/msm: Fix error-out routine in
+ msm_iommu_attach_dev()
+Message-ID: <Yyyo1RvzviIJLPMb@Asurada-Nvidia>
+References: <cover.1663836372.git.nicolinc@nvidia.com>
+ <23e009bba72c3e46320c59acefbbdd976111cc8a.1663836372.git.nicolinc@nvidia.com>
+ <YyyaCoHC95yyJpOK@nvidia.com>
 MIME-Version: 1.0
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 22 Sep 2022 11:09:20 -0700
-Message-ID: <CAF6AEGsrfrr9v1oR9S4oYfOs9jm=jbKQiwPBTrCRHrjYerJJFA@mail.gmail.com>
-Subject: [pull] drm/msm: drm-msm-next-2022-09-22 for v6.1
-To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <YyyaCoHC95yyJpOK@nvidia.com>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1NAM11FT077:EE_|BL1PR12MB5352:EE_
+X-MS-Office365-Filtering-Correlation-Id: bb2b1d2e-1454-40d7-dab3-08da9cc80425
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 2thHa96HD4O5hCqZxGbYjhH0v3X+S3VeK7ayqEOmk1BnhNQakodjgc6qgsOge19rAIW59u5UpeglFoSaEf1ymy9uTmmKyw/TKfhldJVMclIzmgHul0nwANf1DjzThTiv4xcRp+EwtpjzGsLNCPOy9pCNeKJ677+/vi5ZymaxIIq0CsJ+y81htIXiD8CJu6OJdsy5zp1P3mufEExv9FKrxVA4djA99p3w+VpDoNEjNFpK4Nz8NUytMvfY2HVX65R+/JNL2sEp+ZRmoaaLwNnpobFXsaNp8lFKWK+4WpTcOQtT3xluIFI1isXfoyXuNy4qaHRYO9wc/EdzGG3evvFUfv1Wt299dG037jIljJWsUHM9ZJw3IPgDeYimtZ3LrO73l4a04oUrAnAOKhX2P++ITXoXLKfzBWw+l+XgXrlxhxn+48Pmr+C7ARHQSme8n5i7Lz4inNrhkEbMOMe9rSv59BFrOToji/U9HHFTeN+yCS683kCh3+FD9Q+tMwHelxYcPVc43Uf2hh0FY1ECfHsq3xNl7AxX5Ci2pSgYcTm3Iv7uDjtxuyZymUMCPc27T3Be3whc/Q71Lifej597aibSEBZUXqUfhm8klUpuzJcalNXX/3UfwlRruwzNYJk1isVcp4BvCGizzI9nfIpQ2lqm6gEzuYxLxVQSDY+XxWLTuYyEikjDtqIwAWxqydYjPCB8rSPywcHUZIj+N4nrWMG+rWJRrOh6sCjzcfnQyliOIVnh4x8ZPVgUKJ7VAd/8WmMDIaUq6qN7DlO3/rKCCPxSAg==
+X-Forefront-Antispam-Report: CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230022)(4636009)(346002)(396003)(376002)(136003)(39860400002)(451199015)(40470700004)(46966006)(36840700001)(8936002)(6862004)(7416002)(70206006)(54906003)(5660300002)(86362001)(6636002)(316002)(8676002)(336012)(4326008)(82740400003)(83380400001)(426003)(70586007)(186003)(47076005)(40460700003)(36860700001)(41300700001)(7636003)(356005)(26005)(9686003)(478600001)(33716001)(40480700001)(66899012)(55016003)(82310400005)(2906002);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Sep 2022 18:26:50.1609
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: bb2b1d2e-1454-40d7-dab3-08da9cc80425
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CO1NAM11FT077.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5352
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dave & Daniel,
+On Thu, Sep 22, 2022 at 02:23:22PM -0300, Jason Gunthorpe wrote:
 
-Here is the main drm/msm pull for v6.1, description below and in tag.
+> > +static void msm_iommu_detach_dev(struct iommu_domain *domain,
+> > +				 struct device *dev)
+> > +{
+> > +	struct msm_priv *priv = to_msm_priv(domain);
+> > +	unsigned long flags;
+> > +	struct msm_iommu_dev *iommu;
+> > +	struct msm_iommu_ctx_dev *master;
+> > +	int ret;
+> > +
+> > +	free_io_pgtable_ops(priv->iop);
+> > +
+> > +	spin_lock_irqsave(&msm_iommu_lock, flags);
+> > +	list_for_each_entry(iommu, &priv->list_attached, dom_node) {
+> > +		ret = __enable_clocks(iommu);
+> > +		if (ret)
+> > +			goto fail;
+> > +
+> > +		list_for_each_entry(master, &iommu->ctx_list, list) {
+> > +			msm_iommu_free_ctx(iommu->context_map, master->num);
+> > +			__reset_context(iommu->base, master->num);
+> 
+> This isn't safe if the loop in msm_iommu_attach_dev() exits
+> early. 
+> 
+> Firstly the it leaves master->num set to -ERRNO so clear_bit will
+> corrupt memory
+> 
+> Secondly if the attach loop gets half way through the remaining
+> entries have master->num == 0 and so the clear_bit() will corrupt an
+> otherwise valid entry.
+> 
+> Fixing all of this properly looks like a big deal, I think we should
+> drop this patch from the series.
 
-The following changes since commit 1c23f9e627a7b412978b4e852793c5e3c3efc555:
-
-  Linux 6.0-rc2 (2022-08-21 17:32:54 -0700)
-
-are available in the Git repository at:
-
-  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-next-2022-09-22
-
-for you to fetch changes up to e8b595f7b058c7909e410f3e0736d95e8f909d01:
-
-  drm/msm/hdmi: make hdmi_phy_8996 OF clk provider (2022-09-18 09:38:07 -0700)
-
-----------------------------------------------------------------
-msm-next for v6.1
-
-DPU:
-- simplified VBIF configuration
-- cleaned up CTL interfaces to accept indices rather than flush masks
-
-DSI:
-- removed unused msm_display_dsc_config struct
-- switch regulator calls to new bulk API
-- switched to use PANEL_BRIDGE for directly attached panels
-
-DSI PHY:
-- converted drivers to use parent_hws instead of parent_names
-
-DP:
-- cleaned up pixel_rate handling
-
-HDMI PHY:
-- turned hdmi-phy-8996 into OF clk provider
-
-core:
-- misc dt-bindings fixes
-- choose eDP as primary display if it's available
-- support getting interconnects from either the mdss or the mdp5/dpu
-  device nodes
-
-gpu+gem:
-- Shrinker + LRU re-work:
-  - adds a shared GEM LRU+shrinker helper and moves msm over to that
-  - reduces lock contention between retire and submit by avoiding the
-    need to acquire obj lock in retire path (and instead using resv
-    seeing obj's busyness in the shrinker
-  - fix reclaim vs submit issues
-- GEM fault injection for triggering userspace error paths
-- Map/unmap optimization
-- Improved robustness for a6xx GPU recovery
-
-----------------------------------------------------------------
-Abhinav Kumar (1):
-      drm/msm/dpu: populate wb or intf before reset_intf_cfg
-
-Akhil P Oommen (7):
-      drm/msm: Remove unnecessary pm_runtime_get/put
-      drm/msm: Take single rpm refcount on behalf of all submits
-      drm/msm: Correct pm_runtime votes in recover worker
-      drm/msm: Fix cx collapse issue during recovery
-      drm/msm/a6xx: Ensure CX collapse during gpu recovery
-      drm/msm/a6xx: Improve gpu recovery sequence
-      drm/msm/a6xx: Handle GMU prepare-slumber hfi failure
-
-Bjorn Andersson (1):
-      drm/msm/gpu: Drop qos request if devm_devfreq_add_device() fails
-
-Dmitry Baryshkov (25):
-      drm/msm/dpu: use drm_dsc_config instead of msm_display_dsc_config
-      drm/msm/dsi: use drm_dsc_config instead of msm_display_dsc_config
-      dt-bindings: display/msm/gpu: allow specifying several IOMMU nodes
-      dt-bindings: display/msm/gmu: account for different GMU variants
-      dt-bindings: display/msm/mdp4: require 4 IOMMUs
-      drm/msm: lookup the ICC paths in both mdp5/dpu and mdss devices
-      drm/msm/dpu: index dpu_kms->hw_vbif using vbif_idx
-      drm/msm/dpu: fix error handling around dpu_hw_vbif_init
-      drm/msm/dpu: drop VBIF indices
-      drm/msm/dpu: drop unused memory allocation
-      drm/msm/dpu: drop unused variable from dpu_kms_mdp_snapshot()
-      drm/msm/dpu: rip out master planes support
-      drm/msm/dpu: do not limit the zpos property
-      drm/msm/dpu: inline dpu_plane_get_ctl_flush
-      drm/msm/dpu: get rid of cached flush_mask
-      dt-bindings: msm/dp: mark vdda supplies as deprecated
-      dt-bindings: msm/dp: add missing properties
-      dt-bindings: msm/dp: handle DP vs eDP difference
-      drm/msm/dsi: drop the hpd worker
-      drm/mipi-dsi: pass DSC data through the struct mipi_dsi_device
-      drm/msm/dsi: fetch DSC pps payload from struct mipi_dsi_device
-      drm/panel: drop DSC pps pointer
-      drm/msm/dsi: switch to DRM_PANEL_BRIDGE
-      dt-bindings: phy: qcom, hdmi-phy-qmp: add clock-cells and XO clock
-      drm/msm/hdmi: make hdmi_phy_8996 OF clk provider
-
-Douglas Anderson (6):
-      drm/msm/dsi: Fix number of regulators for msm8996_dsi_cfg
-      drm/msm/dsi: Fix number of regulators for SDM660
-      drm/msm/dsi: Don't set a load before disabling a regulator
-      drm/msm/dsi: Use the new regulator bulk feature to specify the load
-      drm/msm/dsi: Take advantage of devm_regulator_bulk_get_const()
-      drm/msm/dsi: Improve dsi_phy_driver_probe() probe error handling
-
-Jason Wang (1):
-      drm/msm/dpu: Fix comment typo
-
-Javier Martinez Canillas (1):
-      drm/msm: Make .remove and .shutdown HW shutdown consistent
-
-Krzysztof Kozlowski (5):
-      dt-bindings: display/msm: dpu-msm8998: add missing DPU opp-table
-      dt-bindings: display/msm: dpu-qcm2290: add missing DPU opp-table
-      dt-bindings: display/msm: dpu-sc7180: add missing DPU opp-table
-      dt-bindings: display/msm: dpu-sc7280: add missing DPU opp-table
-      dt-bindings: display/msm: dpu-sdm845: add missing DPU opp-table
-
-Kuogee Hsieh (3):
-      drm/msm/dp: make eDP panel as the first connected connector
-      drm/msm/dp: delete DP_RECOVERED_CLOCK_OUT_EN to fix tps4
-      drm/msm/dp: correct 1.62G link rate at dp_catalog_ctrl_config_msa()
-
-Marijn Suijten (8):
-      drm/msm/dsi/phy: Reindent and reflow multiline function calls
-      drm/msm/dsi_phy_28nm_8960: Use stack memory for temporary clock names
-      drm/msm/dsi/phy: Replace hardcoded char-array length with sizeof()
-      drm/msm/dsi_phy_28nm_8960: Replace parent names with clk_hw pointers
-      drm/msm/dsi_phy_28nm: Replace parent names with clk_hw pointers
-      drm/msm/dsi_phy_14nm: Replace parent names with clk_hw pointers
-      drm/msm/dsi_phy_10nm: Replace parent names with clk_hw pointers
-      drm/msm/dsi_phy_7nm: Replace parent names with clk_hw pointers
-
-Nathan Chancellor (1):
-      drm/msm/dsi: Remove use of device_node in dsi_host_parse_dt()
-
-Rob Clark (19):
-      drm/msm: Reorder lock vs submit alloc
-      drm/msm: Small submit cleanup
-      drm/msm: Split out idr_lock
-      drm/msm/gem: Check for active in shrinker path
-      drm/msm/gem: Rename update_inactive
-      drm/msm/gem: Rename to pin/unpin_pages
-      drm/msm/gem: Consolidate pin/unpin paths
-      drm/msm/gem: Remove active refcnt
-      drm/gem: Add LRU/shrinker helper
-      drm/msm/gem: Convert to using drm_gem_lru
-      drm/msm/gem: Unpin buffers earlier
-      drm/msm/gem: Consolidate shrinker trace
-      drm/msm/gem: Evict active GEM objects when necessary
-      drm/msm/gem: Add msm_gem_assert_locked()
-      drm/msm/gem: Convert to lockdep assert
-      drm/msm: Add fault-injection support
-      drm/msm/iommu: optimize map/unmap
-      drm/msm: De-open-code some CP_EVENT_WRITE
-      drm/msm/rd: Fix FIFO-full deadlock
-
-Stephen Boyd (4):
-      drm/msm/dp: Reorganize code to avoid forward declaration
-      drm/msm/dp: Remove pixel_rate from struct dp_ctrl
-      drm/msm/dp: Get rid of dp_ctrl_on_stream_phy_test_report()
-      drm/msm/dp: Silence inconsistent indent warning
-
-sunliming (1):
-      drm/msm/dsi: fix the inconsistent indenting
-
-ye xingchen (1):
-      drm/msm/dsi: Remove the unneeded result variable
-
- .../bindings/display/msm/dp-controller.yaml        |  47 +++-
- .../bindings/display/msm/dpu-msm8998.yaml          |   4 +
- .../bindings/display/msm/dpu-qcm2290.yaml          |   3 +
- .../bindings/display/msm/dpu-sc7180.yaml           |   3 +
- .../bindings/display/msm/dpu-sc7280.yaml           |   3 +
- .../bindings/display/msm/dpu-sdm845.yaml           |   4 +
- .../devicetree/bindings/display/msm/gmu.yaml       | 166 ++++++++++--
- .../devicetree/bindings/display/msm/gpu.yaml       |   3 +-
- .../devicetree/bindings/display/msm/mdp4.yaml      |   2 +-
- .../devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml |  15 +-
- drivers/gpu/drm/drm_gem.c                          | 170 ++++++++++++
- drivers/gpu/drm/msm/adreno/a3xx_gpu.c              |   2 +-
- drivers/gpu/drm/msm/adreno/a4xx_gpu.c              |   2 +-
- drivers/gpu/drm/msm/adreno/a6xx.xml.h              |   4 +
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c              |  83 +++---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c              |  45 +++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           |  50 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h           |   1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  37 +--
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |   2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   9 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  78 +++---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |  35 ++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c         |  74 ++---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h         |   4 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   6 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c        |   3 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h        |   4 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  27 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c          |  94 +------
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h          |  22 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c           |  65 +++--
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c           |   9 +-
- drivers/gpu/drm/msm/dp/dp_catalog.c                |   2 +-
- drivers/gpu/drm/msm/dp/dp_ctrl.c                   | 150 +++++------
- drivers/gpu/drm/msm/dp/dp_ctrl.h                   |   1 -
- drivers/gpu/drm/msm/dp/dp_link.c                   |   5 +-
- drivers/gpu/drm/msm/dsi/dsi.c                      |  37 +--
- drivers/gpu/drm/msm/dsi/dsi.h                      |  31 +--
- drivers/gpu/drm/msm/dsi/dsi_cfg.c                  | 172 ++++++------
- drivers/gpu/drm/msm/dsi/dsi_cfg.h                  |   3 +-
- drivers/gpu/drm/msm/dsi/dsi_host.c                 | 299 ++++++---------------
- drivers/gpu/drm/msm/dsi/dsi_manager.c              | 288 +++-----------------
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              | 162 +++--------
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.h              |   5 +-
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c         | 185 ++++++-------
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c         |  87 +++---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c         |  14 +-
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c         | 145 +++++-----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c    | 102 ++++---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c          | 188 +++++++------
- drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c           |  25 +-
- drivers/gpu/drm/msm/msm_debugfs.c                  |   8 +
- drivers/gpu/drm/msm/msm_drv.c                      |  48 +++-
- drivers/gpu/drm/msm/msm_drv.h                      |  88 ++++--
- drivers/gpu/drm/msm/msm_gem.c                      | 179 +++++-------
- drivers/gpu/drm/msm/msm_gem.h                      | 123 +--------
- drivers/gpu/drm/msm/msm_gem_prime.c                |   4 +-
- drivers/gpu/drm/msm/msm_gem_shrinker.c             | 164 ++++++-----
- drivers/gpu/drm/msm/msm_gem_submit.c               |  78 ++----
- drivers/gpu/drm/msm/msm_gpu.c                      |  24 +-
- drivers/gpu/drm/msm/msm_gpu.h                      |  14 +-
- drivers/gpu/drm/msm/msm_gpu_devfreq.c              |   2 +
- drivers/gpu/drm/msm/msm_gpu_trace.h                |  36 ++-
- drivers/gpu/drm/msm/msm_io_utils.c                 |  22 ++
- drivers/gpu/drm/msm/msm_iommu.c                    | 101 +++++--
- drivers/gpu/drm/msm/msm_rd.c                       |   3 +
- drivers/gpu/drm/msm/msm_ringbuffer.c               |   4 -
- drivers/gpu/drm/msm/msm_submitqueue.c              |   1 +
- include/drm/drm_gem.h                              |  55 ++++
- include/drm/drm_mipi_dsi.h                         |   2 +
- include/drm/drm_panel.h                            |   7 -
- 73 files changed, 1860 insertions(+), 2082 deletions(-)
+OK. Let me resend a version dropping this one. Thanks!
