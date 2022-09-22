@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 012385E610B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 13:30:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4EC45E6113
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 13:30:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230125AbiIVLa2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Sep 2022 07:30:28 -0400
+        id S230282AbiIVLae (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Sep 2022 07:30:34 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230335AbiIVLaY (ORCPT
+        with ESMTP id S231199AbiIVLaa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Sep 2022 07:30:24 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6DF67CB67
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 04:30:22 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id h3so10630607lja.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 04:30:22 -0700 (PDT)
+        Thu, 22 Sep 2022 07:30:30 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5BC9D8E15
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 04:30:27 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id s6so14148225lfo.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 04:30:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=47vvp11+W20l4C4N5v2oL7Eb2wQVc5MT8hndh5rEnUo=;
-        b=fwM+BJ+9XUsoh6Y9ytE96dizU38naJkzLE2buKeHJiv9K2z3DqcZNJgOt+u7Z0DJQG
-         ADhgdhu0pcVuEhaVDGC1sasxzwJ4v6BlFa7W0NidFnVtNF+b0jbgSimUyRsBXs8ajG59
-         mxg57rx+1XV0sveG4u7y33F3yrtIM382HDFCIJlDDHZvMuX6RY+yB9Vw7IVg+1+3eBf9
-         MnPUeGNQVIUthhQPwJfUOG8Lijz+XUv6ieqZT/s5GdtA0IfgBTWrUKoJSAwUbG1wcRjM
-         bgrLudtejV9m0lWJ60jGmXfm99QK9YrOJGWdrs9VL+WucAC4l+it35+YmCONtWknehKs
-         +/PA==
+        bh=583h6KF71HUgEtsvHt8C5CKBAKwnaZE+xGmKl57ijJU=;
+        b=E8GoP/tqY9uLEMc+tulq9xPDQzcwCP/+S+MWgvUhZAnhqeQImOfBvEHy2q1TEonW8o
+         FqPgyAgR+wuOOiVLKTgokDZKt5Vym/eB9MduxCahabbIqlG4+AgITrgrtQ9hD6rAGYPu
+         356/O6rCQt0sdStYuOgcv0pZDC+KtfFnS6gelhcBQ6t4+mJyiagvN3z+rK2gBXAYdukl
+         4+MiOZZLjqOMhJLSXQ2ZHKqe7OA0rfPow/gljAmt7OdZxs+9K2YXKkgBODuAPECTokOS
+         GyQ7cPHFyPLGGgVyJjWhbwFV5Ibd5FnokeLYBJGBDn4wU62xsCVxs5Q1nXxyGKpUjxd5
+         B4Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=47vvp11+W20l4C4N5v2oL7Eb2wQVc5MT8hndh5rEnUo=;
-        b=hhh14O80Vx2OPGAdGXntThAcKglaR/I4uufQqtmqNK5lfXRmAXzca49nP/116VvIbZ
-         mqxldRbjPMgHqiHwhK1m51Hq6xHXeBGIcuywg+UnuLZZ2MATC2B5vy/U9/Fn/AG3rzmI
-         ZajI7/KHJMUmgEDmllCQrUKPzuiO+MD8WTfJS8VirQVaUut4xBtXIHkwhy6BPdCfPeLH
-         /yC54vPLPWjciOsght5Q+Ts1QpW3zdnXsjjJbU+RCJlklf0cJ+66peleorPGwxO4ZetO
-         6seTDWhmoSgjEKzOLB+LEku5MZhRUGAF6VR1C1eUWaKChXbMEqCotat0xoHQ1H6jH53G
-         +lkA==
-X-Gm-Message-State: ACrzQf1Fh49M2Z68NwthE43jSDdKdx1bDUgGYZxj5VW8seWN9yed/NI2
-        NWQEydgyVQTiJKpLZfwregCj0w==
-X-Google-Smtp-Source: AMsMyM47XG+fS8A7DyjTZd0TauZkFtNVv0/q18OyWaGukjimZ/J4f7PRXHMUu8Iv2LnBnMA1lIX8oQ==
-X-Received: by 2002:a05:651c:160a:b0:25a:62a4:9085 with SMTP id f10-20020a05651c160a00b0025a62a49085mr947493ljq.214.1663846220415;
-        Thu, 22 Sep 2022 04:30:20 -0700 (PDT)
+        bh=583h6KF71HUgEtsvHt8C5CKBAKwnaZE+xGmKl57ijJU=;
+        b=WFkeURYl/4hRG39eeHpMEiBpKKTJnelahcDGp69ByCCrlDifnJ5NA8xyY9WoMQ6YPN
+         1Ge8EJfIpA9NmRISFtrpMoQZQyk3uuFGDioO0uj32DAsxdxt9t7kTkNtieqSG+Q6BvPx
+         5VDxFc2m1xwEnpW1D74FLQgeNqENSCreQ4HadrhWoS8kQJURMXUtZ4GqUCaZ2kAhVzAu
+         8LiDnFzflzVaLwCK3juWsbJyrozYBkkalp+kVk06cGkrZ2QGFVTY2d8TWMopFWGJfcLz
+         oDEdRsLsbHtm8nYlyB72Te765iQeza7OFP4m3Qaf56Tl4SzWUtWNo/qjSHxj2zYvYxCP
+         gEHg==
+X-Gm-Message-State: ACrzQf2aXr5EKFeVrN4w2UzvniV+6VQMB1081wmei6C+3uMvwHYyQp73
+        JAXyKJNWwV1slsMefNeSD6KINQ==
+X-Google-Smtp-Source: AMsMyM7/FvoCj8lHHs9X09maj/umN/CcXQani3boBysW4Q3s/DFvafrWo+nlKexuhyzWwblDO14kIQ==
+X-Received: by 2002:a05:6512:150a:b0:49f:1b3d:889f with SMTP id bq10-20020a056512150a00b0049f1b3d889fmr1131655lfb.75.1663846221338;
+        Thu, 22 Sep 2022 04:30:21 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id c4-20020ac25304000000b004996fbfd75esm898527lfh.71.2022.09.22.04.30.19
+        by smtp.gmail.com with ESMTPSA id c4-20020ac25304000000b004996fbfd75esm898527lfh.71.2022.09.22.04.30.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Sep 2022 04:30:19 -0700 (PDT)
+        Thu, 22 Sep 2022 04:30:20 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -58,9 +58,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH 2/5] drm/msm/dsi: add support for DSI 2.6.0
-Date:   Thu, 22 Sep 2022 14:30:13 +0300
-Message-Id: <20220922113016.355188-3-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 3/5] drm/msm/dpu: add support for MDP_TOP blackhole
+Date:   Thu, 22 Sep 2022 14:30:14 +0300
+Message-Id: <20220922113016.355188-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220922113016.355188-1-dmitry.baryshkov@linaro.org>
 References: <20220922113016.355188-1-dmitry.baryshkov@linaro.org>
@@ -75,39 +75,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for DSI 2.6.0 (block used on sm8450).
+On sm8450 a register block was removed from MDP TOP. Accessing it during
+snapshotting results in NoC errors / immediate reboot. Skip accessing
+these registers during snapshot.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_cfg.c | 2 ++
- drivers/gpu/drm/msm/dsi/dsi_cfg.h | 1 +
- 2 files changed, 3 insertions(+)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c        | 11 +++++++++--
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-index 7e97c239ed48..59a4cc95a251 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-@@ -300,6 +300,8 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
- 		&sc7180_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_5_0,
- 		&sc7280_dsi_cfg, &msm_dsi_6g_v2_host_ops},
-+	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_6_0,
-+		&sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+index 38aa38ab1568..4730f8268f2a 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+@@ -92,6 +92,7 @@ enum {
+ 	DPU_MDP_UBWC_1_0,
+ 	DPU_MDP_UBWC_1_5,
+ 	DPU_MDP_AUDIO_SELECT,
++	DPU_MDP_PERIPH_0_REMOVED,
+ 	DPU_MDP_MAX
  };
  
- const struct msm_dsi_cfg_handler *msm_dsi_cfg_get(u32 major, u32 minor)
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-index 8f04e685a74e..95957fab499d 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-@@ -25,6 +25,7 @@
- #define MSM_DSI_6G_VER_MINOR_V2_4_0	0x20040000
- #define MSM_DSI_6G_VER_MINOR_V2_4_1	0x20040001
- #define MSM_DSI_6G_VER_MINOR_V2_5_0	0x20050000
-+#define MSM_DSI_6G_VER_MINOR_V2_6_0	0x20060000
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index 5e6e2626151e..b0bb693c10ac 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -939,8 +939,15 @@ static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_k
+ 		msm_disp_snapshot_add_block(disp_state, cat->wb[i].len,
+ 				dpu_kms->mmio + cat->wb[i].base, "wb_%d", i);
  
- #define MSM_DSI_V2_VER_MINOR_8064	0x0
+-	msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len,
+-			dpu_kms->mmio + cat->mdp[0].base, "top");
++	if (top->caps->features & BIT(DPU_MDP_PERIPH_0_REMOVED)) {
++		msm_disp_snapshot_add_block(disp_state, 0x380,
++				dpu_kms->mmio + cat->mdp[0].base, "top");
++		msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len - 0x3a8,
++				dpu_kms->mmio + cat->mdp[0].base + 0x3a8, "top_2");
++	} else {
++		msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len,
++				dpu_kms->mmio + cat->mdp[0].base, "top");
++	}
  
+ 	pm_runtime_put_sync(&dpu_kms->pdev->dev);
+ }
 -- 
 2.35.1
 
