@@ -2,35 +2,35 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E3DA5E60AE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 13:15:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8361C5E60B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 13:15:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230339AbiIVLPR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Sep 2022 07:15:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59748 "EHLO
+        id S231553AbiIVLPe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Sep 2022 07:15:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231338AbiIVLPP (ORCPT
+        with ESMTP id S231558AbiIVLPX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Sep 2022 07:15:15 -0400
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B7A871BFE
+        Thu, 22 Sep 2022 07:15:23 -0400
+Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBFF76AEBC
         for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 04:14:58 -0700 (PDT)
-Received: from dggpeml500024.china.huawei.com (unknown [172.30.72.57])
-        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4MYCHV2KBQzMn4r;
-        Thu, 22 Sep 2022 19:10:14 +0800 (CST)
+Received: from dggpeml500024.china.huawei.com (unknown [172.30.72.55])
+        by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4MYCJ91qHBz14S1F;
+        Thu, 22 Sep 2022 19:10:49 +0800 (CST)
 Received: from huawei.com (10.175.112.208) by dggpeml500024.china.huawei.com
  (7.185.36.10) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.31; Thu, 22 Sep
- 2022 19:14:56 +0800
+ 2022 19:14:57 +0800
 From:   Yuan Can <yuancan@huawei.com>
 To:     <agross@kernel.org>, <andersson@kernel.org>,
         <konrad.dybcio@somainline.org>, <kishon@ti.com>,
         <vkoul@kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <linux-phy@lists.infradead.org>
 CC:     <yuancan@huawei.com>
-Subject: [PATCH 1/7] phy: qcom-qmp-combo: Use dev_err_probe() to simplify code
-Date:   Thu, 22 Sep 2022 11:12:22 +0000
-Message-ID: <20220922111228.36355-2-yuancan@huawei.com>
+Subject: [PATCH 2/7] phy: qcom-qmp-pcie-msm8996: Use dev_err_probe() to simplify code
+Date:   Thu, 22 Sep 2022 11:12:23 +0000
+Message-ID: <20220922111228.36355-3-yuancan@huawei.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20220922111228.36355-1-yuancan@huawei.com>
 References: <20220922111228.36355-1-yuancan@huawei.com>
@@ -55,36 +55,17 @@ checked later through debugfs.
 
 Signed-off-by: Yuan Can <yuancan@huawei.com>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 21 +++++++--------------
- 1 file changed, 7 insertions(+), 14 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index af608c4dc869..b215aaee588f 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -2789,14 +2789,10 @@ int qcom_qmp_phy_combo_create(struct device *dev, struct device_node *np, int id
- 	 */
- 	qphy->pipe_clk = devm_get_clk_from_child(dev, np, NULL);
- 	if (IS_ERR(qphy->pipe_clk)) {
--		if (cfg->type == PHY_TYPE_USB3) {
--			ret = PTR_ERR(qphy->pipe_clk);
--			if (ret != -EPROBE_DEFER)
--				dev_err(dev,
--					"failed to get lane%d pipe_clk, %d\n",
--					id, ret);
--			return ret;
--		}
-+		if (cfg->type == PHY_TYPE_USB3)
-+			return dev_err_probe(dev, PTR_ERR(qphy->pipe_clk),
-+					     "failed to get lane%d pipe_clk\n",
-+					     id);
- 		qphy->pipe_clk = NULL;
- 	}
- 
-@@ -2913,12 +2909,9 @@ static int qcom_qmp_phy_combo_probe(struct platform_device *pdev)
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
+index a4ff15b289cd..8b58ad989397 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
+@@ -973,12 +973,9 @@ static int qcom_qmp_phy_pcie_msm8996_probe(struct platform_device *pdev)
  		return ret;
  
- 	ret = qcom_qmp_phy_combo_vreg_init(dev, cfg);
+ 	ret = qcom_qmp_phy_pcie_msm8996_vreg_init(dev, cfg);
 -	if (ret) {
 -		if (ret != -EPROBE_DEFER)
 -			dev_err(dev, "failed to get regulator supplies: %d\n",
