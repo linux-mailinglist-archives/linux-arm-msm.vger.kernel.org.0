@@ -2,74 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 071285E5FEE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 12:31:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C54F5E602B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 12:48:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230195AbiIVKbP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Sep 2022 06:31:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55868 "EHLO
+        id S231309AbiIVKsx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Sep 2022 06:48:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229560AbiIVKbO (ORCPT
+        with ESMTP id S230262AbiIVKsl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Sep 2022 06:31:14 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA552AA355
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 03:31:10 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-346cd4c3d7aso93639647b3.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 03:31:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=d1av7JNMJ6QwTEI5A+nW9Rk600pfta4mmcFg/bbQiuo=;
-        b=nBL924xLyfUXAgRFsh04SP05n+QQwtwageFeiNxabLE5C0mEZHnupcMC+OY9wi/HGh
-         tJmRJjWXw1SogxmaaEt4jKRDs10PeSnipsGbgYKzwv18Fa5TBnNej70jo4w6XCtUgXsn
-         o69nEfGQzMUamMyQRLnWpVK+PJF+JaiWvg31oNBzX/t2LUGDZntbfaPlZf1KYlYmOX0+
-         /9Qy1cfykD3Wll8VH5Uq5L+XYwS7agLI3NqOo5ccYKRn0l9pZcv7rqkSLeK6BosZ6lmp
-         icRYT4VdMPFZ5WOQbknmTaj55zhG4zpRZoainwe3kOEmq2uVJ5kwlZ7QWBLlALcvznmK
-         6ITg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=d1av7JNMJ6QwTEI5A+nW9Rk600pfta4mmcFg/bbQiuo=;
-        b=yxbxxPkkdp3SUSyU/gTK0PXzSm6tozRzIaWJxGe3TLmDntpKUIexCit1CaiNU0X26H
-         j95KzSMH8Jfqtk7qx6+GeITlqQgUpiCw8RpFCCj/JeTslVABX2kN0tEmFJMoW+m0au8o
-         d5YFw8928PTvz9KTOmSddtoO5esN9J1jutpSYwCsxQFIEEWUOceE1fG3vjYcPtX9VlGh
-         y0N+VAAxyfzZgQ/0cQuy3uiWzfYqG00op6NUMeNPftRSsxJQ4+sgxmPOBM921uBZrnRQ
-         ocKrWO31mfO27fv0cP+wZXy+vkjcVo5TXuB2dzE7Ve8OeESRReR0p7VXi9TcNalJZaVs
-         DIWw==
-X-Gm-Message-State: ACrzQf2QKEimfOC2QPGKCnctfq0MOrXqTaNuHzTPI1tsWrVx5p6XM9nU
-        lOH6gf9C0lsq5TAb5xeUP0bD9+U0W4hxIuk2Yk78lQ==
-X-Google-Smtp-Source: AMsMyM7/FLhzfPLVrzX6fdQx3rCLzT0b0rSr+zIV+FjyFzomBRy5lMomrZlXpUUAwi4rIUtGZNFSQ7XkNd71WtkEp1o=
-X-Received: by 2002:a81:1e0d:0:b0:33b:fb67:9895 with SMTP id
- e13-20020a811e0d000000b0033bfb679895mr2367129ywe.188.1663842670066; Thu, 22
- Sep 2022 03:31:10 -0700 (PDT)
+        Thu, 22 Sep 2022 06:48:41 -0400
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B65A5CD1E7;
+        Thu, 22 Sep 2022 03:48:39 -0700 (PDT)
+Received: from [192.168.1.101] (95.49.29.188.neoplus.adsl.tpnet.pl [95.49.29.188])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 3295A3F77C;
+        Thu, 22 Sep 2022 12:48:36 +0200 (CEST)
+Message-ID: <22acebd5-b900-9abd-67e6-522c351da342@somainline.org>
+Date:   Thu, 22 Sep 2022 12:48:35 +0200
 MIME-Version: 1.0
-References: <20220915133742.115218-1-dmitry.baryshkov@linaro.org>
- <20220915133742.115218-7-dmitry.baryshkov@linaro.org> <94bc039f-065e-ebfa-e09b-7fdb5f4be89b@linaro.org>
-In-Reply-To: <94bc039f-065e-ebfa-e09b-7fdb5f4be89b@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 22 Sep 2022 13:30:59 +0300
-Message-ID: <CAA8EJppqxMvn+bpHQ-49nBw6esdgRyft4aPj2410bq2tbL=94w@mail.gmail.com>
-Subject: Re: [PATCH v7 06/12] dt-bindings: display/msm: split dpu-sc7180 into
- DPU and MDSS parts
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH 2/2] iommu: arm-smmu-qcom: add sdm670 compatible
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Richard Acayan <mailingradian@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        Bjorn Andersson <andersson@kernel.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org
+References: <5f629a95-8ee4-7cf8-f471-0b50e311d3b7@somainline.org>
+ <20220922023833.178076-1-mailingradian@gmail.com>
+ <be7a2f12-d6bb-8193-2a56-c31e57f11ce6@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <be7a2f12-d6bb-8193-2a56-c31e57f11ce6@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,NICE_REPLY_A,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,213 +58,179 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 22 Sept 2022 at 10:08, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 15/09/2022 15:37, Dmitry Baryshkov wrote:
-> > In order to make the schema more readable, split dpu-sc7180 into the DPU
-> > and MDSS parts, each one describing just a single device binding.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
->
-> Thank you for your patch. There is something to discuss/improve.
->
-> > +---
-> > +$id: http://devicetree.org/schemas/display/msm/qcom,sc7180-dpu.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm Display DPU dt properties for SC7180 target
-> > +
-> > +maintainers:
-> > +  - Krishna Manikandan <quic_mkrishn@quicinc.com>
-> > +
->
-> missing allOf
->
-> > +$ref: /schemas/display/msm/dpu-common.yaml#
-> > +
-> > +properties:
-> > +  compatible:
-> > +    items:
-> > +      - const: qcom,sc7180-dpu
-> > +
-> > +  reg:
-> > +    items:
-> > +      - description: Address offset and size for mdp register set
-> > +      - description: Address offset and size for vbif register set
-> > +
-> > +  reg-names:
-> > +    items:
-> > +      - const: mdp
-> > +      - const: vbif
-> > +
-> > +  clocks:
-> > +    items:
-> > +      - description: Display hf axi clock
-> > +      - description: Display ahb clock
-> > +      - description: Display rotator clock
-> > +      - description: Display lut clock
-> > +      - description: Display core clock
-> > +      - description: Display vsync clock
-> > +
-> > +  clock-names:
-> > +    items:
-> > +      - const: bus
-> > +      - const: iface
-> > +      - const: rot
-> > +      - const: lut
-> > +      - const: core
-> > +      - const: vsync
-> > +
-> > +unevaluatedProperties: false
-> > +
-> > +examples:
-> > +  - |
-> > +    #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
-> > +    #include <dt-bindings/clock/qcom,gcc-sc7180.h>
-> > +    #include <dt-bindings/power/qcom-rpmpd.h>
-> > +
-> > +    display-controller@ae01000 {
-> > +        compatible = "qcom,sc7180-dpu";
-> > +        reg = <0x0ae01000 0x8f000>,
-> > +              <0x0aeb0000 0x2008>;
-> > +
-> > +        reg-names = "mdp", "vbif";
-> > +
-> > +        clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
-> > +                 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> > +                 <&dispcc DISP_CC_MDSS_ROT_CLK>,
-> > +                 <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
-> > +                 <&dispcc DISP_CC_MDSS_MDP_CLK>,
-> > +                 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-> > +        clock-names = "bus", "iface", "rot", "lut", "core",
-> > +                      "vsync";
-> > +
-> > +        interrupt-parent = <&mdss>;
-> > +        interrupts = <0>;
-> > +        power-domains = <&rpmhpd SC7180_CX>;
-> > +        operating-points-v2 = <&mdp_opp_table>;
-> > +
-> > +        ports {
-> > +            #address-cells = <1>;
-> > +            #size-cells = <0>;
-> > +
-> > +            port@0 {
-> > +                reg = <0>;
-> > +                endpoint {
-> > +                    remote-endpoint = <&dsi0_in>;
-> > +                };
-> > +            };
-> > +
-> > +            port@2 {
-> > +                reg = <2>;
-> > +                endpoint {
-> > +                    remote-endpoint = <&dp_in>;
-> > +                };
-> > +            };
-> > +        };
-> > +    };
-> > +...
-> > diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sc7180-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sc7180-mdss.yaml
-> > new file mode 100644
-> > index 000000000000..e507c091b60f
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/display/msm/qcom,sc7180-mdss.yaml
-> > @@ -0,0 +1,84 @@
-> > +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/display/msm/qcom,sc7180-mdss.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm SC7180 Display MDSS
-> > +
-> > +maintainers:
-> > +  - Krishna Manikandan <quic_mkrishn@quicinc.com>
-> > +
-> > +description:
-> > +  Device tree bindings for MSM Mobile Display Subsystem(MDSS) that encapsulates
-> > +  sub-blocks like DPU display controller, DSI and DP interfaces etc. Device tree
-> > +  bindings of MDSS are mentioned for SC7180 target.
-> > +
->
-> missing allOf.
->
-> > +$ref: /schemas/display/msm/mdss-common.yaml#
-> > +
-> > +properties:
-> > +  compatible:
-> > +    items:
-> > +      - const: qcom,sc7180-mdss
-> > +
-> > +  clocks:
-> > +    items:
-> > +      - description: Display AHB clock from gcc
-> > +      - description: Display AHB clock from dispcc
-> > +      - description: Display core clock
-> > +
-> > +  clock-names:
-> > +    items:
-> > +      - const: iface
-> > +      - const: ahb
-> > +      - const: core
-> > +
-> > +  iommus:
-> > +    maxItems: 1
-> > +
-> > +  interconnects:
-> > +    maxItems: 1
-> > +
-> > +  interconnect-names:
-> > +    maxItems: 1
-> > +
-> > +patternProperties:
-> > +  "^display-controller@[0-9a-f]+$":
-> > +    type: object
-> > +    properties:
-> > +      compatible:
-> > +        const: qcom,sc7180-dpu
-> > +
-> > +unevaluatedProperties: false
-> > +
-> > +examples:
-> > +  - |
-> > +    #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
-> > +    #include <dt-bindings/clock/qcom,gcc-sc7180.h>
-> > +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> > +    #include <dt-bindings/interconnect/qcom,sdm845.h>
-> > +    #include <dt-bindings/power/qcom-rpmpd.h>
-> > +
-> > +    display-subsystem@ae00000 {
-> > +        #address-cells = <1>;
-> > +        #size-cells = <1>;
-> > +        compatible = "qcom,sc7180-mdss";
-> > +        reg = <0xae00000 0x1000>;
-> > +        reg-names = "mdss";
-> > +        power-domains = <&dispcc MDSS_GDSC>;
-> > +        clocks = <&gcc GCC_DISP_AHB_CLK>,
-> > +                 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> > +                 <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> > +        clock-names = "iface", "ahb", "core";
-> > +
-> > +        interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
-> > +        interrupt-controller;
-> > +        #interrupt-cells = <1>;
-> > +
-> > +        interconnects = <&mmss_noc MASTER_MDP0 &mc_virt SLAVE_EBI1>;
-> > +        interconnect-names = "mdp0-mem";
-> > +
-> > +        iommus = <&apps_smmu 0x800 0x2>;
-> > +        ranges;
->
-> This should come with full example, so with display-controller child
-> (unless Rob asked not to?)
-
-I'm not sure here. We have an example of a display-controller in a
-separate schema file. Why would you like to duplicate it?
 
 
--- 
-With best wishes
-Dmitry
+On 22.09.2022 08:41, Krzysztof Kozlowski wrote:
+> On 22/09/2022 04:38, Richard Acayan wrote:
+>>> On 21.09.2022 21:05, Krzysztof Kozlowski wrote:
+>>>> On 21/09/2022 20:48, Konrad Dybcio wrote:
+>>>>>
+>>>>>
+>>>>> On 21.09.2022 20:47, Konrad Dybcio wrote:
+>>>>>>
+>>>>>>
+>>>>>> On 21.09.2022 09:31, Krzysztof Kozlowski wrote:
+>>>>>>> On 21/09/2022 00:39, Richard Acayan wrote:
+>>>>>>>> The Snapdragon 670 needs the IOMMU for GENI I2C. Add a compatible string to
+>>>>>>>> support it.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+>>>>>>>> ---
+>>>>>>>>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
+>>>>>>>>  1 file changed, 1 insertion(+)
+>>>>>>>>
+>>>>>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>>>>>> index b2708de25ea3..bf9653b9eb89 100644
+>>>>>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>>>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>>>>>> @@ -431,6 +431,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
+>>>>>>>>  	{ .compatible = "qcom,sc8180x-smmu-500" },
+>>>>>>>>  	{ .compatible = "qcom,sc8280xp-smmu-500" },
+>>>>>>>>  	{ .compatible = "qcom,sdm630-smmu-v2" },
+>>>>>>>> +	{ .compatible = "qcom,sdm670-smmu-500" },
+>>>>>>>
+>>>>>>> Why do we keep adding compatibles to the driver for apparently
+>>>>>>> compatible devices?
+>>>>>>
+>>>>>> Because Linux has not funny run on bare Qualcomm hardware ever since at least msm8x60 times and
+>>>>> s/funny/fully
+>>>>>
+>>>>> unfortunate typo, this is not funny, quite the contrary..
+>>>>>
+>>>>> Konrad
+>>>>>> we are not interacting with real hardware, only with Qualcomm's flawed virtual implementation
+>>>>>> of it, that's abstracted to us through various generations of their saddening software stack. This
+>>>>>> is also the case for many more standard components, even as far as the GIC on recent boards..
+>>>>
+>>>> Unfortunately I don't get this explanation... you mean some other
+>>>> firmware requires Linux drivers to use specific compatibles instead of
+>>>> one fallback?
+>>> No, perhaps I misunderstood you.
+>>>
+>>>>
+>>>> All of these do not have driver data, so they are essentially compatible
+>>>> for Linux driver. Growing this list in the driver seems pointless. What
+>>>> is the benefit of growing driver with same entries, except more patches?
+>>> Compatible lists in smmu-impl files allow matching driver quirks for SMMUs themselves
+>>> and consumer devices (such as MDSS). The situation is more complicated, because some
+>>> qcom SMMUs also require more quirks than others (think 8974 vs 8994 vs 8996/pro&660&8998
+>>> vs 845+ vs adreno smmu in various flavours), so all qcom SMMUs need to use
+>>> `qcom_smmu_impl` and some others need even more quirks on top of that (that generally
+>>> hurt performance or functionality, so we don't want them when they're unnecessary).
+>>> If all generations of qcom SMMU implementation that bear the same name behaved anywhere
+>>> near consistent, there would be no need for keeping this around, instead requiring only
+>>> "qcom,broken-smmu" or something".
+>>
+>> Hi, just stopping by to share my own thoughts.
+>>
+>> First, I don't mind if this series doesn't get applied as-is. After seeing
+>> the eMMC driver in its current state:
+>>
+>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/mmc/host/sdhci-msm.c?h=v6.0-rc6#n2437
+>>
+>> I can understand that the devicetree maintainers don't want to see new SoCs
+>> touching drivers unnecessarily. Second, I don't see enough quirks to
+>> justify needing all compatible strings in the driver (2 quirky SoCs
+>> compared to 16 total not counting adreno iommu):
+>>
+>>     $ grep qcom, drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>     	if (of_device_is_compatible(np, "qcom,msm8996-smmu-v2"))
+>>     	* All targets that use the qcom,adreno-smmu compatible string *should*
+>>     	{ .compatible = "qcom,adreno" },
+>>     	{ .compatible = "qcom,mdp4" },
+>>     	{ .compatible = "qcom,mdss" },
+>>     	{ .compatible = "qcom,sc7180-mdss" },
+>>     	{ .compatible = "qcom,sc7180-mss-pil" },
+>>     	{ .compatible = "qcom,sc7280-mdss" },
+>>     	{ .compatible = "qcom,sc7280-mss-pil" },
+>>     	{ .compatible = "qcom,sc8180x-mdss" },
+>>     	{ .compatible = "qcom,sm8250-mdss" },
+>>     	{ .compatible = "qcom,sdm845-mdss" },
+>>     	{ .compatible = "qcom,sdm845-mss-pil" },
+>>     	if (of_device_is_compatible(np, "qcom,sdm845-smmu-500"))
+>>     	{ .compatible = "qcom,msm8998-smmu-v2" },
+>>     	{ .compatible = "qcom,qcm2290-smmu-500" },
+>>     	{ .compatible = "qcom,sc7180-smmu-500" },
+>>     	{ .compatible = "qcom,sc7280-smmu-500" },
+>>     	{ .compatible = "qcom,sc8180x-smmu-500" },
+>>     	{ .compatible = "qcom,sc8280xp-smmu-500" },
+>>     	{ .compatible = "qcom,sdm630-smmu-v2" },
+>>     	{ .compatible = "qcom,sdm670-smmu-500" },
+>>     	{ .compatible = "qcom,sdm845-smmu-500" },
+>>     	{ .compatible = "qcom,sm6125-smmu-500" },
+>>     	{ .compatible = "qcom,sm6350-smmu-500" },
+>>     	{ .compatible = "qcom,sm6375-smmu-500" },
+>>     	{ .compatible = "qcom,sm8150-smmu-500" },
+>>     	{ .compatible = "qcom,sm8250-smmu-500" },
+>>     	{ .compatible = "qcom,sm8350-smmu-500" },
+>>     	{ .compatible = "qcom,sm8450-smmu-500" },
+>>     	if (of_device_is_compatible(np, "qcom,adreno-smmu"))
+>>
+>> I don't know if it's better to get myself involved in fixing this, though.
+>> There is no fallback that encompasses qcom devices but not all arm devices.
+>> Either way, I'll have to add a new compatible string to the driver.
+>>
+>> If something like this is fine for now, I'll format it properly tomorrow:
+> 
+> Please wait till we reach some conclusion otherwise your work might be
+> wasted.
+> 
+>>
+>> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>> @@ -48,6 +48,13 @@ properties:
+>>                - qcom,sm8350-smmu-500
+>>                - qcom,sm8450-smmu-500
+>>            - const: arm,mmu-500
+>> +
+>> +      - description: Qcom SoCs implementing "qcom,smmu-500"
+>> +        items:
+>> +          - enum:
+>> +              - qcom,sdm670-smmu-500
+>> +          - const: qcom,smmu-500
+>> +
+> 
+> Someone would have to confirm that smmu-500 is a real device
+> spec/version. Otherwise this should be device-specific compatible (e.g.
+> earliest in family).
+In my view it's hard to name it, downstream uses bool properties for enabling/disabling
+certain quirks and on different generations there are different combinations of that.
+Interestingly enough, I vaguely remember that the same quirk names can mean different
+things on different msm-X.Y versions.. Add to that, different msm-X.Y versions can have
+different assumptions on what's the default (aka without taking the bool properties into
+account) behaviour for a given compatible. So I suppose "first in the family" would be
+the best way to go for mainline, though there are still quite a few families:
+
+<earlier ones used qcom_iommu>
+- 8996 with quirks that are already accounted for (or one may also say it works by miracle,
+just like msm8916 - downstream adds more special handling, but looks like the fw is not as
+restrictive)
+
+- 8996pro + 660 + 8998 with serious unmerged ones [1]
+
+- 845 which seems to be aok
+
+- special case of chromebooks where they only have qcom TZ/XPUs and not the hypervisor to
+fight with, so ma-a-aybe (no downstream reference & I don't have the hw to confirm) they
+can get away with less things
+
+- 8[1234]50 which seem to be a mix-and-match of less serious (read: not accounting for them
+may hurt performance but will not make your device sepuku at SMMU probe) minor quirks
+[2][3][4][5] (big warning: these may be overriden somewhere in other device tree fragments,
+the surest option would be to take a compiled dtb and decompile it to be sure about it)
+
+- 4xxx/6xxx series that mostly align with "whatever was there on the flagship soc released
+a year before"
+
+
+Konrad
+
+[1] https://github.com/SoMainline/linux/commits/marijn/v5.19-ninges/drivers/iommu
+[2] https://github.com/TeamWin/android_kernel_samsung_d2q/blob/master/arch/arm64/boot/dts/qcom/msm-arm-smmu-sm8150-v2.dtsi
+[3] https://android.googlesource.com/kernel/msm-extra/devicetree/+/refs/tags/android-11.0.0_r0.56/qcom/msm-arm-smmu-kona.dtsi
+[4] https://github.com/sonyxperiadev/kernel-copyleft-dts/blob/61.0.A.11.xxx/qcom/msm-arm-smmu-lahaina.dtsi
+[5] https://github.com/sonyxperiadev/kernel-copyleft-dts/blob/64.0.A.2.xxx/devicetree/qcom/msm-arm-smmu-waipio.dtsi
+> 
+> Best regards,
+> Krzysztof
+> 
