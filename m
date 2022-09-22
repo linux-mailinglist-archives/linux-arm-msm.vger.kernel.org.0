@@ -2,124 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 903195E570D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 02:14:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7D645E5743
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Sep 2022 02:22:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229893AbiIVAOf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Sep 2022 20:14:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53988 "EHLO
+        id S229563AbiIVAWy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Sep 2022 20:22:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229815AbiIVAOf (ORCPT
+        with ESMTP id S229720AbiIVAWx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Sep 2022 20:14:35 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10B436425;
-        Wed, 21 Sep 2022 17:14:33 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A1E9D632DE;
-        Thu, 22 Sep 2022 00:14:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD59C433C1;
-        Thu, 22 Sep 2022 00:14:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663805672;
-        bh=AqQ9r6jKKEdIP1KLMG+7Lq7QqqeArJ/0yKpA4jI6foM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=GWXzjieCObHHLAI7eAidV1+pSLEjUgOnbjmxVnfaqwrQgaFRxrIwMzD92BBTiDmNp
-         Lvljc+9ApYsP2PVl0HFUD5UKwHJYOn/MkzcRfRU2Xd+G6YIc7L2rraiXnOzfkb77Et
-         aNiyAAY48lW95eG4NnMbgCIe4VlHsZVQiyGXDKHXnAtim5Boc68pbVGMJZgRuStimz
-         HERLh/vDN/9eNZ80FuLF3fUJy2yWACyfYnqtpTMllOV+Fh0Vk/u/98UGJgHO1BRVTV
-         mloqMmODCZrGdOrLJPSXUZJ0CPFJxUGRWlEK/gCCR8LV9XpDqgcwNKOm2Xd89yZh/Q
-         tidsaAe9FepsA==
-Date:   Wed, 21 Sep 2022 19:14:29 -0500
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/7] dt-bindings: msm/dp: Add SDM845 and SC8280XP
- compatibles
-Message-ID: <20220922001429.zqfap3clprvlo6jo@builder.lan>
-References: <20220916200028.25009-1-quic_bjorande@quicinc.com>
- <20220916200028.25009-2-quic_bjorande@quicinc.com>
- <1641e41c-08c7-859b-644a-28d966fb00f3@linaro.org>
- <20220919211832.6b3buqxrnfp6yjjg@builder.lan>
- <6b242b44-b657-c7a6-63ca-465c7031376f@linaro.org>
+        Wed, 21 Sep 2022 20:22:53 -0400
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2A0EA5715;
+        Wed, 21 Sep 2022 17:22:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1663806172; x=1695342172;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=suI+CfiK0vZ0xqyxyfYRHjqOciiRcs1MgqvAcaA1Mcc=;
+  b=HXpwjos7rhOFq+eZJQr6/Nc6fi74yMqtYlDCyWYSzGUmKbKLE71pyEAE
+   6Ms9qO9pyod3NW/GkYNUF+0LUco0fVCsjzkEPhU4EIJ+2i15CcPF5GpxC
+   TF6FsPUdVqVJkAHkNUWsTtZQKfmT3+13oSyaXZtL8PHt25pWlGzvhzeXc
+   yBO/YS4rCq7EFGMbNERRjnk1sPDZf2LnnVW15QpA2ZFuXX/vDAVb6H236
+   FVlVzE1ypjty2yXtoSiEvYPwby1F7tGBDPC+H8nVBm5hi0Hrz9z0RJ9MZ
+   kP1HI/dGUXs3/YMiF3MYFVjV14VFjrPe05cGEsbKtLPbxF7wBU88zH3iy
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10477"; a="280530643"
+X-IronPort-AV: E=Sophos;i="5.93,334,1654585200"; 
+   d="scan'208";a="280530643"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Sep 2022 17:22:52 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.93,334,1654585200"; 
+   d="scan'208";a="761971990"
+Received: from lkp-server01.sh.intel.com (HELO c0a60f19fe7e) ([10.239.97.150])
+  by fmsmga001.fm.intel.com with ESMTP; 21 Sep 2022 17:22:49 -0700
+Received: from kbuild by c0a60f19fe7e with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1ob9zM-00046a-20;
+        Thu, 22 Sep 2022 00:22:48 +0000
+Date:   Thu, 22 Sep 2022 08:21:55 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Trilok Soni <quic_tsoni@quicinc.com>,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
+Subject: Re: [PATCH v1 1/1] remoteproc: qcom: Add sysfs entry to detect
+ device shutdown
+Message-ID: <202209220842.14LbOlkM-lkp@intel.com>
+References: <42d3ab9227ac3d299abcedbbdd68c86e1dd6acce.1663604826.git.quic_gokukris@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6b242b44-b657-c7a6-63ca-465c7031376f@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <42d3ab9227ac3d299abcedbbdd68c86e1dd6acce.1663604826.git.quic_gokukris@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 20, 2022 at 09:09:13AM +0200, Krzysztof Kozlowski wrote:
-> On 19/09/2022 23:18, Bjorn Andersson wrote:
-> > On Sat, Sep 17, 2022 at 06:03:27PM +0100, Krzysztof Kozlowski wrote:
-> >> On 16/09/2022 21:00, Bjorn Andersson wrote:
-> >>> From: Bjorn Andersson <bjorn.andersson@linaro.org>
-> >>>
-> >>> Add compatibles for the DisplayPort and Embedded DisplayPort blocks in
-> >>> Qualcomm SDM845 and SC8280XP platforms.
-> >>>
-> >>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> >>> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> >>
-> >> No need for quicinc SoB (unless you also take ownership).
-> >>
-> > 
-> > It's my understanding that both needs to be there. Bjorn @ Linaro
-> > authored the patch and the author must certify its origin, but as the
-> > submitter I must certify its origin.
-> 
-> It's the same person. There are no two Bjorns (unless there are :) ), so
-> you certify with old email. SoB chain is coming from people, not email
-> addresses.
-> 
+Hi Gokul,
 
-IANAL, but I don't think it's the same person. I can't use my old
-signature to certify the origin in a contribution today and I can't
-claim authorship of something Linaro did.
+Thank you for the patch! Perhaps something to improve:
 
-> And it is not only my understanding of SoB chain.
-> https://lore.kernel.org/all/YuKcBO5JatwRYQJ3@kroah.com/
-> 
+[auto build test WARNING on remoteproc/rproc-next]
+[also build test WARNING on linus/master v6.0-rc6 next-20220921]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-Again, IANAL, but I think the situation is different given AMD and
-Xilinx relationship.
+url:    https://github.com/intel-lab-lkp/linux/commits/Gokul-krishna-Krishnakumar/remoteproc-qcom-Add-sysfs-entry-to-detect-device-shutdown/20220920-004947
+base:   git://git.kernel.org/pub/scm/linux/kernel/git/remoteproc/linux.git rproc-next
+config: arm-defconfig (https://download.01.org/0day-ci/archive/20220922/202209220842.14LbOlkM-lkp@intel.com/config)
+compiler: clang version 16.0.0 (https://github.com/llvm/llvm-project 791a7ae1ba3efd6bca96338e10ffde557ba83920)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install arm cross compiling tool for clang build
+        # apt-get install binutils-arm-linux-gnueabi
+        # https://github.com/intel-lab-lkp/linux/commit/dcf1afc28aee2a1770cdabe1f52d7e90532018c7
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Gokul-krishna-Krishnakumar/remoteproc-qcom-Add-sysfs-entry-to-detect-device-shutdown/20220920-004947
+        git checkout dcf1afc28aee2a1770cdabe1f52d7e90532018c7
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash drivers/remoteproc/
 
-> > 
-> > I'm not entirely sure what you mean about taking ownership, 
-> 
-> I meant you to be the author of the commit.
-> 
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
 
-As mentioned above, I can't do that.
+All warnings (new ones prefixed by >>):
 
-Regards,
-Bjorn
+>> drivers/remoteproc/qcom_common.c:97:27: warning: unused variable 'ssr_timeout_msg' [-Wunused-const-variable]
+   static const char * const ssr_timeout_msg = "srcu notifier chain for %s:%s taking too long";
+                             ^
+   1 warning generated.
 
-> > I am going
-> > to pursue getting these patches landed. But it wouldn't be correct for
-> > new me to claim I authored them.
-> 
-> Yeah, that's true.
-> 
-> 
-> Best regards,
-> Krzysztof
+
+vim +/ssr_timeout_msg +97 drivers/remoteproc/qcom_common.c
+
+    96	
+  > 97	static const char * const ssr_timeout_msg = "srcu notifier chain for %s:%s taking too long";
+    98	
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
