@@ -2,73 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF06D5E73DB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Sep 2022 08:18:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 16DE75E747C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Sep 2022 09:03:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230074AbiIWGSX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Sep 2022 02:18:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33584 "EHLO
+        id S230116AbiIWHDP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Sep 2022 03:03:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230125AbiIWGSV (ORCPT
+        with ESMTP id S229437AbiIWHDO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Sep 2022 02:18:21 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75009124C12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 23:18:19 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id w13so10896381plp.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Sep 2022 23:18:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=quanta-corp-partner-google-com.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=k1Ok2pKp1PJzTuNyx2UWy/icamUoRGaVMBaasc2ZnkA=;
-        b=ROWTJ0drnsPC8a77DJkvBYf7pyqF8Pk3gzs+pbtHsFFvE/nL0A8mrYUYzaNoZrg+it
-         qNbqKd8hOSkKoK1DNVIxzDJxGgvaRe2owSaSUupMyGfwkOIUSb6b3HGtv+LLCHthCjQL
-         SusP8zrHmFFAfmsDJTLz53CzuEmghT5qI0SkIHboaqQ08w03KhLujd0qeesOs0NG6W/x
-         UIAJCrxXtlRtaUCHdVPJYLhKDZW34Qjv7IbjpBt0bcw9ZDcEFCc2x/apCuYBWvxvKqF1
-         KNsb8k4USIoGK0R6UfO7cZvZVuIDyLHc8jAfkuwhJusSaNjZqgYiRSjY2psrKqrdZnbF
-         SNVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=k1Ok2pKp1PJzTuNyx2UWy/icamUoRGaVMBaasc2ZnkA=;
-        b=Qv38Y5Tp+p91z6L/EgUFphyUjleJXnTJUZZv7Fv1+nB1k30qroAjBLkFNAGebFQzdp
-         TyKrCvh6wOhmS3fLzWm90RSfBq56ygiE5a7WkghmLggBLayj0Y74dx+ZhXlr3ZRqROpL
-         ThUjNreXVS8TVMVlY8RCDN1iQ7lIaj4sIxeL37qLcz+zLKEqCRw+Dx4Zjm7C5Ps/A7GV
-         IcXlEN79uIXQPF5XMuqlaDRdwK98wgnozF1DNrM4VTfwLsx5wB2d6q/S9ShD7jIMuGKQ
-         t+TUJbF5Dpc356OJ4y9VUCoN9ZzNANPb/lfcAkRer/tetRCBsZxg+WRNb35p1M5iVKMc
-         jVgw==
-X-Gm-Message-State: ACrzQf2HcucIKPWiwezF49MjiRaGGBbDpObHN66SDMuwBJA8+k9H6i80
-        atmbt6q8qGEXiYRe4DmKbTmCEQlNKhpQXg==
-X-Google-Smtp-Source: AMsMyM4zrECVQG8lTi2qMC8SAzIUhUN+ue0hAX+KzeSnaY4AaWMkG9EDSeKt1n/ALSGBiljeWMrKWg==
-X-Received: by 2002:a17:90a:fe6:b0:203:7c29:6e0d with SMTP id 93-20020a17090a0fe600b002037c296e0dmr7595214pjz.181.1663913898328;
-        Thu, 22 Sep 2022 23:18:18 -0700 (PDT)
-Received: from liang-Predator-PH517-52.. (60-250-232-247.hinet-ip.hinet.net. [60.250.232.247])
-        by smtp.gmail.com with ESMTPSA id c190-20020a624ec7000000b00540f3ac5fb8sm5515248pfb.69.2022.09.22.23.18.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Sep 2022 23:18:17 -0700 (PDT)
-From:   Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     dianders@chromium.org,
-        Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
+        Fri, 23 Sep 2022 03:03:14 -0400
+Received: from EUR03-AM7-obe.outbound.protection.outlook.com (mail-am7eur03on2081.outbound.protection.outlook.com [40.107.105.81])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D957911E96D;
+        Fri, 23 Sep 2022 00:03:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=QBkqw0SUKZ8i4FgGBVLWeO5ctuag3YA7ajVsGUYY2VF+gb//KaDjFY0FAmkFijks1msNc3F886ad7lQo4Jg+tadcrVeaQXMrfplEivhobAGDJgs60GWVQ/j8HDIprxHnbsNV+J+bo2KuQYkj358XyLPeBPUIf4vDW2qXHA2DTWU7RvFHl3hit2Lcz4hfTZkqO74MzZbJcajWmdIlFvi7LfCvftQRPw0tPKMKEAcXDsIng52F5WGvQDUl++1hyG9bswrW8jjE78j0vECxGZ1fLmvGR5IPJVBWMoGaNcbJeOpYbo0a8UBX/Phdm2x6+pLPZyKuWmifBFcb0E2nx232Ig==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1S1NLYXxpfzExsvyi9n3NEkasMNZXd4ezbI66VTCn4k=;
+ b=VO7Pkb37BYp4IRloouUYneZasgfPPDf3VaPGWQVYI0S5UrZYOth2llTseoopFT8f8sclyRjH7ss3MKpz3JsfLLB+Hyu+WOSx79qr0oLTJ0bC3T1C1TtjiK/ESJePoalbb/Mq0DhbDl78+9BJ2rP9rXnLGi9GqJmRaDTBzcYVLMkUuQ8FDWefsjd6pU9Dmjg6qHsWcuwgt6nmLFGqlFAuYL24NnBb/aBnbnJ4WAFEhNzUbyirjSDT8FijGBQ2rm5dWxzek9uymGKYIrmNOckFJib2pUf51jzAQVLpkT6yCRJv88EEm+PXBXlodDR/CsnmMPup7O63E8d//7x8Zx3Zbg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1S1NLYXxpfzExsvyi9n3NEkasMNZXd4ezbI66VTCn4k=;
+ b=Li/h5StfgZvSWpjFzLj+Xg596T2ERvHetUfz+FJM6XMBm4lLVlCc0n7FK/+yetaRqn7Ag1SGcULmCYxPLwcXx3osVsSoH5NptDJ+BMAAAgSRNVe0M5bJTXgyJIdBjSkTclaYtsQfio/SHwIFW7lMqFEoa0tOMYU2i5BfkIJavRE=
+Received: from DU0PR04MB9417.eurprd04.prod.outlook.com (2603:10a6:10:358::11)
+ by DU2PR04MB8903.eurprd04.prod.outlook.com (2603:10a6:10:2e2::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5654.20; Fri, 23 Sep
+ 2022 07:03:10 +0000
+Received: from DU0PR04MB9417.eurprd04.prod.outlook.com
+ ([fe80::1eb:dcf:8fd7:867]) by DU0PR04MB9417.eurprd04.prod.outlook.com
+ ([fe80::1eb:dcf:8fd7:867%5]) with mapi id 15.20.5654.018; Fri, 23 Sep 2022
+ 07:03:10 +0000
+From:   Peng Fan <peng.fan@nxp.com>
+To:     Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 2/2] arm64: dts: qcom: Add LTE SKU for sc7280-evoker family
-Date:   Fri, 23 Sep 2022 14:17:56 +0800
-Message-Id: <20220923141624.v2.2.I1454364ac3d8ecc64677884d6b7d2f3e334e4b4a@changeid>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220923061756.2557403-1-sheng-liang.pan@quanta.corp-partner.google.com>
-References: <20220923061756.2557403-1-sheng-liang.pan@quanta.corp-partner.google.com>
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+CC:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-remoteproc@vger.kernel.org" <linux-remoteproc@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>
+Subject: RE: [PATCH v1 1/3] remoteproc: qcom: q6v5: Send subdevice
+ notifications before panic
+Thread-Topic: [PATCH v1 1/3] remoteproc: qcom: q6v5: Send subdevice
+ notifications before panic
+Thread-Index: AQHYxrysL6wqsBKCTUuN3TjRmRDVQK3sp5UQ
+Date:   Fri, 23 Sep 2022 07:03:10 +0000
+Message-ID: <DU0PR04MB9417F36DDE3B8F933711BA1088519@DU0PR04MB9417.eurprd04.prod.outlook.com>
+References: <cover.1662995608.git.quic_gokukris@quicinc.com>
+ <842a6b6307d26874959d29f2065aad544ff0b86c.1662995608.git.quic_gokukris@quicinc.com>
+In-Reply-To: <842a6b6307d26874959d29f2065aad544ff0b86c.1662995608.git.quic_gokukris@quicinc.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DU0PR04MB9417:EE_|DU2PR04MB8903:EE_
+x-ms-office365-filtering-correlation-id: 3cd6f600-59cd-4f6c-a50e-08da9d31acbb
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: A0rRcgFMvC7Q74n8UPp1C3ZXpg9uxCkTA1pK2SoL3eT/bN5X3o1h/zWhr6Y8gG10E2sDeGnUL4rXFe41XM9UFiuY1gXVWTzBSnGJd/dCyJoSoIyQrIXHcp4gWSUE9h5tniBNl9qzA+rnL/Mh4TfAg9KgtiUzWE1ktFQyXT2sf5KhCL1VOaQOVpcFv/UojkvZ0BIbUedTVq/xRaYwrenVa6K17lAysswZWA41l9+Fm34pWHkqdETG6/dZeRaZ374Qe7VQYhYEZ0vyM4Mlh8amd1M2jJi8YAazgHJwy6+IkuuiuDIWQ82YMRRPo+PlaSBuOcUidMItXICVmMJVQnrAivRoEACWuOx9ikRjn/nahqHKoH9fn3XkzI4Gr21mdqSxDEHElOMaaLdeF5MCXryoRcZ/YwaUPxvQPY3DEA4QXMUaKOiMqSXt83zHiiuMV9zaDmeBzjomOFSr4dGmqul8s/D/538Urww1e7FvnkG3FNeGpqrEhkHFtUnp1phuXraPmrouYIbRZ4raWqDXX8/lYUF0vXbAmyxakjF1IVXKypKbrATTxm9afqcxjzCYNe4qXVjV1A+aLtiiViUb7LE4jK4Uef7SA/qvGQYHiEB3Mx4uwxBTr2e+AZph2C2/4lXR/2te3q7nafnpAEOTGFwS+hyVXCgnLU98WLG6YzmLI3/krG9UpNCJWDR+HAHdHzPXee2LOrAMYfi6nbRsb9nGm4lavEkJV5EBlYp4EHryXR3PfHio6IC5GZ+hZfFgRCF1xoR7r4WEiQDnLoy9L+W0Dg==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU0PR04MB9417.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(39860400002)(376002)(396003)(346002)(366004)(136003)(451199015)(110136005)(478600001)(54906003)(316002)(71200400001)(122000001)(83380400001)(38100700002)(41300700001)(55016003)(7696005)(186003)(33656002)(9686003)(38070700005)(6506007)(26005)(44832011)(2906002)(8676002)(52536014)(15650500001)(8936002)(66556008)(66476007)(7416002)(64756008)(76116006)(66446008)(86362001)(4326008)(5660300002)(66946007);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?hAqU4QqaLOMKQAQcJIXhi9IkApLRAkOzr80g00bLPu9DUwPjtlD1LvkBHWVp?=
+ =?us-ascii?Q?EiGNgU+JAIURbyQ6Y1h3+k2DoGIXEjoc5XdJQmkwyM1qbX1BIdhD4ZyL8hqc?=
+ =?us-ascii?Q?5FIwZmcr8zC6HP97L48AhoNttM/UrY3csq6Dw2wfmq/TnmxHCdA5mH2wKrU0?=
+ =?us-ascii?Q?oB5rmAutvepvdwHVc2GWQ7JLM9TvMEg4KR1jmQDhf3kBEarj8zxqlZOi0iPD?=
+ =?us-ascii?Q?v1y3oJVcnXTcSLdbwZOrTJNHVKCNbebbpTLJKI0vodlGB7kmH+2e+BmCVEf+?=
+ =?us-ascii?Q?ZlrvysXFP09clFXBuIUJLwxklfLa03edPSsHrQpzkRK2+rNk9pv4gs45zUzU?=
+ =?us-ascii?Q?wgFbZIGbz6EfQ7uF9wkd/OkBru0Smy4BV3yLZcbsshaEi5r4Mhag5kbhguOU?=
+ =?us-ascii?Q?tT75+d1lopRtcYkz54uD7yTIspBeSwHknMZN9dUDNd7xO0TWqMngNeXAUDZz?=
+ =?us-ascii?Q?AG7i0OSU1D88O1oIQmlwZEzeiXH6HJerN/oP06Cf+xkkwwOimWB+U8onqilL?=
+ =?us-ascii?Q?VlsToMEDQhxLq4V4ihaYewofU0O7OOjICy49UqEiinisnuxh/rxbKhogYzmV?=
+ =?us-ascii?Q?Noq5FH4b7UD+0vysj22+uUiWpbxONJI2I5XaEgKWbB95kZXoPO7OZb+rutpw?=
+ =?us-ascii?Q?dM1Dsw71dflh5PgXbVRil5ZAFaVSUFjNhjWfVN99wmTfjLU52cnDamjdI61O?=
+ =?us-ascii?Q?obCQ/1dR0B7laLqRO5zXh6dsgeAVVGFFsQzbJPrSagiXgkkHDXX19IfNxe4I?=
+ =?us-ascii?Q?1iANcX6ePxzO/m4AjoGvjuowQ5boJfKPVwEIqGs+OXH/lsFhakAO8s1YJEbP?=
+ =?us-ascii?Q?VeQgDCHEFG9gmapb0DsRD8H2l0U1/F9WNxFNOExgEMU7WNboCI2poDDUY8NP?=
+ =?us-ascii?Q?TfzwuUjrNrRvZCIGHDakAT2AW7bBhs+2bxNNNMjfcokClnFsEvIBX97nrveA?=
+ =?us-ascii?Q?bzwfts2yd7sDNlke7CSahvs52uMfhMUJi497OpU11+mvq4l375QxY1GzaAg5?=
+ =?us-ascii?Q?g4Rm5bViKv7q1WSShoTw+rg82nAxlIaDCXggAA9uxyqK3wkGmPtsLnzolTPR?=
+ =?us-ascii?Q?BJKl2LgM25SGYj6orRpUWJlwK0zgwVv8+ArsroXHxXnWkakiAXUKyOXQaPC/?=
+ =?us-ascii?Q?0fNCGvcMrvxblyyLL9lCNBvFl8PsQqR6DHVNhpLOeUZQFIOsxads6BmGk86k?=
+ =?us-ascii?Q?EuBSnWpolMxBNWIL3x2UwbbkdbGFSLr7faShdbp5VbiU+fWVTUd3QeguUlqK?=
+ =?us-ascii?Q?q9zgJh+f92VdzGAZmgSZcq8GkH50zaSAMqJXZwl95fzrAutwO4UXDyIwszgD?=
+ =?us-ascii?Q?/e+hA9q2oeEhnmGFBP+OYADH+KIPSXqW/g0344VVR/Qab3S0G+0LND7falUg?=
+ =?us-ascii?Q?r22+8yfV8+hb/+4eCIZcVa6xsSk0JTRnDknEv9o/eaUQlJHFSWO2dAOgpeX/?=
+ =?us-ascii?Q?8DrpGbzL9W2KB+7fzfZWMbvcjI9fCY4WNkWhPNf2icphfKL5eTGgKKnzCigv?=
+ =?us-ascii?Q?C0wf/MtrhHKO5m+plGcz6s0dTWbfCt71wbzYVEM90aZhl9b1BgIb+rBcx14o?=
+ =?us-ascii?Q?ucfw3loh3mAVCmHw5hHPk/JJZeme0vqFQg4/mJHG?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DU0PR04MB9417.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3cd6f600-59cd-4f6c-a50e-08da9d31acbb
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Sep 2022 07:03:10.3127
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: w/1u72WTCVyUjqnEpeXZQPVGvD26CzEYIc6ipbeHHsi9WF81QOTHsaokC6JNi0rL92f4b/gpRTS0gvpAgz8Eyw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU2PR04MB8903
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,152 +128,123 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-evoker have wifi/lte sku, add different dts for each sku.
+> Subject: [PATCH v1 1/3] remoteproc: qcom: q6v5: Send subdevice
+> notifications before panic
+>=20
+> Subdevice notifications after a remoteproc has crashed are useful to any
+> clients that might want to preserve data pertaining to the driver after t=
+he
+> remoteproc crashed. Sending subdevice notifications before triggering a
+> kernel panic gives these drivers the time to do collect this information.
+>=20
+> Change-Id: Id6e55fb038b70f54ff5854d2adff72b74b6a9570
 
-Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
----
+Change-Id should be removed.
 
-(no changes since v1)
+> Signed-off-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
+> ---
+>  drivers/remoteproc/qcom_q6v5.c | 31
+> +++++++++++++++++++++++++++++++  drivers/remoteproc/qcom_q6v5.h |
+> 2 ++
+>  2 files changed, 33 insertions(+)
+>=20
+> diff --git a/drivers/remoteproc/qcom_q6v5.c
+> b/drivers/remoteproc/qcom_q6v5.c index 497acfb..89f5384 100644
+> --- a/drivers/remoteproc/qcom_q6v5.c
+> +++ b/drivers/remoteproc/qcom_q6v5.c
+> @@ -15,6 +15,7 @@
+>  #include <linux/soc/qcom/smem.h>
+>  #include <linux/soc/qcom/smem_state.h>
+>  #include <linux/remoteproc.h>
+> +#include <linux/delay.h>
 
- arch/arm64/boot/dts/qcom/Makefile             |  3 ++-
- .../dts/qcom/sc7280-herobrine-evoker-lte.dts  | 14 ++++++++++
- .../boot/dts/qcom/sc7280-herobrine-evoker.dts | 16 ++++++++++++
- ...er-r0.dts => sc7280-herobrine-evoker.dtsi} | 26 +++++--------------
- 4 files changed, 39 insertions(+), 20 deletions(-)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts
- rename arch/arm64/boot/dts/qcom/{sc7280-herobrine-evoker-r0.dts => sc7280-herobrine-evoker.dtsi} (93%)
+Seq the head file order.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index d7669a7cee9f7..76390301a76c0 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -104,7 +104,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-crd.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-evoker-r0.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-evoker.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-evoker-lte.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-herobrine-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r0.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-villager-r1.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dts
-new file mode 100644
-index 0000000000000..3af9224a7492e
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dts
-@@ -0,0 +1,14 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Evoker board device tree source
-+ *
-+ * Copyright 2022 Google LLC.
-+ */
-+
-+#include "sc7280-herobrine-evoker.dts"
-+#include "sc7280-herobrine-lte-sku.dtsi"
-+
-+/ {
-+	model = "Google Evoker with LTE";
-+	compatible = "google,evoker-sku512", "qcom,sc7280";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts
-new file mode 100644
-index 0000000000000..f490b2bb26df8
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts
-@@ -0,0 +1,16 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Evoker board device tree source
-+ *
-+ * Copyright 2022 Google LLC.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sc7280-herobrine-evoker.dtsi"
-+
-+/ {
-+	model = "Google Evoker";
-+	compatible = "google,evoker", "qcom,sc7280";
-+};
-+
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
-similarity index 93%
-rename from arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts
-rename to arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
-index ccbe50b6249ab..561bb1ee77eee 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-r0.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtsi
-@@ -5,15 +5,8 @@
-  * Copyright 2022 Google LLC.
-  */
- 
--/dts-v1/;
--
- #include "sc7280-herobrine.dtsi"
- 
--/ {
--	model = "Google Evoker";
--	compatible = "google,evoker", "qcom,sc7280";
--};
--
- /*
-  * ADDITIONS TO FIXED REGULATORS DEFINED IN PARENT DEVICE TREE FILES
-  *
-@@ -30,16 +23,15 @@ ap_tp_i2c: &i2c0 {
- 	status = "okay";
- 	clock-frequency = <400000>;
- 
--	trackpad: trackpad@2c {
--		compatible = "hid-over-i2c";
--		reg = <0x2c>;
-+	trackpad: trackpad@15 {
-+		compatible = "elan,ekth3000";
-+		reg = <0x15>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&tp_int_odl>;
- 
- 		interrupt-parent = <&tlmm>;
- 		interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
- 
--		hid-descr-addr = <0x20>;
- 		vcc-supply = <&pp3300_z1>;
- 
- 		wakeup-source;
-@@ -50,18 +42,15 @@ ts_i2c: &i2c13 {
- 	status = "okay";
- 	clock-frequency = <400000>;
- 
--	ap_ts: touchscreen@10 {
--		compatible = "elan,ekth6915";
--		reg = <0x10>;
--		pinctrl-names = "default";
--		pinctrl-0 = <&ts_int_conn>, <&ts_rst_conn>;
-+	touchscreen: touchscreen@5d {
-+		compatible = "goodix,gt7375p";
-+		reg = <0x5d>;
- 
- 		interrupt-parent = <&tlmm>;
- 		interrupts = <55 IRQ_TYPE_LEVEL_LOW>;
- 
- 		reset-gpios = <&tlmm 54 GPIO_ACTIVE_LOW>;
--
--		vcc33-supply = <&ts_avdd>;
-+		vdd-supply = <&ts_avdd>;
- 	};
- };
- 
-@@ -90,7 +79,6 @@ &pcie1 {
- 	status = "okay";
- };
- 
--/* For nvme */
- &pcie1_phy {
- 	status = "okay";
- };
--- 
-2.34.1
+>  #include "qcom_common.h"
+>  #include "qcom_q6v5.h"
+>=20
+> @@ -94,6 +95,29 @@ int qcom_q6v5_unprepare(struct qcom_q6v5
+> *q6v5)  }  EXPORT_SYMBOL_GPL(qcom_q6v5_unprepare);
+>=20
+> +static void qcom_q6v5_crash_handler_work(struct work_struct *work) {
+> +	struct qcom_q6v5 *q6v5 =3D container_of(work, struct qcom_q6v5,
+> crash_handler);
+> +	struct rproc *rproc =3D q6v5->rproc;
+> +	struct rproc_subdev *subdev;
+> +
+> +	mutex_lock(&rproc->lock);
+> +
+> +	list_for_each_entry_reverse(subdev, &rproc->subdevs, node) {
+> +		if (subdev->stop)
+> +			subdev->stop(subdev, true);
+> +	}
+> +
+> +	mutex_unlock(&rproc->lock);
+> +
+> +	/*
+> +	 * Temporary workaround until ramdump userspace application
+> calls
+> +	 * sync() and fclose() on attempting the dump.
+> +	 */
+> +	msleep(100);
+
+I have no knowledge on your system setup, but just guess this is
+not reliable.
+
+> +	panic("Panicking, remoteproc %s crashed\n", q6v5->rproc->name); }
+
+It is remotecore crash, why use panic to crash the Linux side?
+
+> +
+>  static irqreturn_t q6v5_wdog_interrupt(int irq, void *data)  {
+>  	struct qcom_q6v5 *q6v5 =3D data;
+> @@ -113,6 +137,9 @@ static irqreturn_t q6v5_wdog_interrupt(int irq, void
+> *data)
+>  		dev_err(q6v5->dev, "watchdog without message\n");
+>=20
+>  	q6v5->running =3D false;
+> +	if (q6v5->rproc->recovery_disabled)
+> +		schedule_work(&q6v5->crash_handler);
+> +
+>  	rproc_report_crash(q6v5->rproc, RPROC_WATCHDOG);
+>=20
+>  	return IRQ_HANDLED;
+> @@ -134,6 +161,9 @@ static irqreturn_t q6v5_fatal_interrupt(int irq, void
+> *data)
+>  		dev_err(q6v5->dev, "fatal error without message\n");
+>=20
+>  	q6v5->running =3D false;
+> +	if (q6v5->rproc->recovery_disabled)
+> +		schedule_work(&q6v5->crash_handler);
+> +
+>  	rproc_report_crash(q6v5->rproc, RPROC_FATAL_ERROR);
+>=20
+>  	return IRQ_HANDLED;
+> @@ -354,6 +384,7 @@ int qcom_q6v5_init(struct qcom_q6v5 *q6v5, struct
+> platform_device *pdev,
+>  	if (IS_ERR(q6v5->path))
+>  		return dev_err_probe(&pdev->dev, PTR_ERR(q6v5->path),
+>  				     "failed to acquire interconnect path\n");
+> +	INIT_WORK(&q6v5->crash_handler,
+> qcom_q6v5_crash_handler_work);
+>=20
+>  	return 0;
+>  }
+> diff --git a/drivers/remoteproc/qcom_q6v5.h
+> b/drivers/remoteproc/qcom_q6v5.h index 5a859c4..b1654be 100644
+> --- a/drivers/remoteproc/qcom_q6v5.h
+> +++ b/drivers/remoteproc/qcom_q6v5.h
+> @@ -29,6 +29,8 @@ struct qcom_q6v5 {
+>  	int handover_irq;
+>  	int stop_irq;
+>=20
+> +	struct work_struct crash_handler;
+> +
+>  	bool handover_issued;
+>=20
+>  	struct completion start_done;
+> --
+> 2.7.4
+Regards,
+Peng.
 
