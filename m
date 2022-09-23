@@ -2,42 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16DE75E747C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Sep 2022 09:03:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 461035E7486
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Sep 2022 09:05:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230116AbiIWHDP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Sep 2022 03:03:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38304 "EHLO
+        id S229606AbiIWHF2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Sep 2022 03:05:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbiIWHDO (ORCPT
+        with ESMTP id S229484AbiIWHF0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Sep 2022 03:03:14 -0400
-Received: from EUR03-AM7-obe.outbound.protection.outlook.com (mail-am7eur03on2081.outbound.protection.outlook.com [40.107.105.81])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D957911E96D;
-        Fri, 23 Sep 2022 00:03:12 -0700 (PDT)
+        Fri, 23 Sep 2022 03:05:26 -0400
+Received: from EUR03-AM7-obe.outbound.protection.outlook.com (mail-am7eur03on2049.outbound.protection.outlook.com [40.107.105.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D946D9E8B7;
+        Fri, 23 Sep 2022 00:05:22 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=QBkqw0SUKZ8i4FgGBVLWeO5ctuag3YA7ajVsGUYY2VF+gb//KaDjFY0FAmkFijks1msNc3F886ad7lQo4Jg+tadcrVeaQXMrfplEivhobAGDJgs60GWVQ/j8HDIprxHnbsNV+J+bo2KuQYkj358XyLPeBPUIf4vDW2qXHA2DTWU7RvFHl3hit2Lcz4hfTZkqO74MzZbJcajWmdIlFvi7LfCvftQRPw0tPKMKEAcXDsIng52F5WGvQDUl++1hyG9bswrW8jjE78j0vECxGZ1fLmvGR5IPJVBWMoGaNcbJeOpYbo0a8UBX/Phdm2x6+pLPZyKuWmifBFcb0E2nx232Ig==
+ b=fxNdyWbyjAVLL2+u87DoobHWsaSUVdIuwKGakYIFvcge13mFEQ0kahzodZcA2/GnxkK2p/ylfz9GLPTSqdSaVLkaEz8D8qmhIDTjg3CaSLo44R8qjdEzJAb1/DAB4prTpXT2X0GIiVNbgKEqDZJ+dWRiMy/NuOK0ejMxO0wdgAphgIYKZzPGLMSxX0yJcvfX77hvBobMXtTDyL2OdPUaUSuEMedd/GWN9qbo8YQO4FMm+eOzpkdlWjcsIkVbVev5Lv+ru6alEkfVssPKZalujsoxKhq304Xo1jxALbtliGMu/L/pGq5Ja+u7kO7nYeaE1HPKpLM2NnMROS8fEhMI1g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1S1NLYXxpfzExsvyi9n3NEkasMNZXd4ezbI66VTCn4k=;
- b=VO7Pkb37BYp4IRloouUYneZasgfPPDf3VaPGWQVYI0S5UrZYOth2llTseoopFT8f8sclyRjH7ss3MKpz3JsfLLB+Hyu+WOSx79qr0oLTJ0bC3T1C1TtjiK/ESJePoalbb/Mq0DhbDl78+9BJ2rP9rXnLGi9GqJmRaDTBzcYVLMkUuQ8FDWefsjd6pU9Dmjg6qHsWcuwgt6nmLFGqlFAuYL24NnBb/aBnbnJ4WAFEhNzUbyirjSDT8FijGBQ2rm5dWxzek9uymGKYIrmNOckFJib2pUf51jzAQVLpkT6yCRJv88EEm+PXBXlodDR/CsnmMPup7O63E8d//7x8Zx3Zbg==
+ bh=sTAnJt/pcwlPm+cImB83ZvyftY2TQmc4r0kASuQyq4E=;
+ b=T+EZ0yf9CMUIZkGeJQRbji1l8LxLsmhhpAi0Z6dL+rjrF4Qd2Ht6lksBo84Q9mj72n1JsGwdeAIllgyyEMKXRIU2rVYvxbqmXn3lAEhAD3l0X2OvOXmEEs+rXvyagkKX8FUmkViXmf1MtCzIk2fp2mPNA9TBb5t22Iu22mA/ENh1eTrxa+U/9TbkYehh0lS8TUMC/5bul3mpyGENbcG1hyfg3Txe1j5v6Me/N1J0ncp+9Vj2K/xkGjfQCLXBfNTjudtBWwbdKMhVw7mwW8A89xFgZlikcTFk0+HQnyUeZv6mOGUkdCMA/O5NEwKMSxxi1uKP8ara0O2gPHCbAnVo7Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
  header.d=nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1S1NLYXxpfzExsvyi9n3NEkasMNZXd4ezbI66VTCn4k=;
- b=Li/h5StfgZvSWpjFzLj+Xg596T2ERvHetUfz+FJM6XMBm4lLVlCc0n7FK/+yetaRqn7Ag1SGcULmCYxPLwcXx3osVsSoH5NptDJ+BMAAAgSRNVe0M5bJTXgyJIdBjSkTclaYtsQfio/SHwIFW7lMqFEoa0tOMYU2i5BfkIJavRE=
+ bh=sTAnJt/pcwlPm+cImB83ZvyftY2TQmc4r0kASuQyq4E=;
+ b=dd3FMw2r9RtNvre8W/ifdAmfuxW3p8voTza/po+5/EGAJZxBouEGifbrpKPKVI9mMxd2zxvVP6QBNrD09SNMVFuHDQQHfTNzY3T5zougILrvrmBnxBJUJH2gMXRh3S+CdulsRL8nSWsHiGb1uDhKfe/i/qlUtKvAngotGpYpfgw=
 Received: from DU0PR04MB9417.eurprd04.prod.outlook.com (2603:10a6:10:358::11)
- by DU2PR04MB8903.eurprd04.prod.outlook.com (2603:10a6:10:2e2::9) with
+ by DU2PR04MB9084.eurprd04.prod.outlook.com (2603:10a6:10:2f3::8) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5654.20; Fri, 23 Sep
- 2022 07:03:10 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5632.16; Fri, 23 Sep
+ 2022 07:05:20 +0000
 Received: from DU0PR04MB9417.eurprd04.prod.outlook.com
  ([fe80::1eb:dcf:8fd7:867]) by DU0PR04MB9417.eurprd04.prod.outlook.com
  ([fe80::1eb:dcf:8fd7:867%5]) with mapi id 15.20.5654.018; Fri, 23 Sep 2022
- 07:03:10 +0000
+ 07:05:20 +0000
 From:   Peng Fan <peng.fan@nxp.com>
 To:     Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>,
         Andy Gross <agross@kernel.org>,
@@ -52,16 +52,16 @@ CC:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
         Rajendra Nayak <quic_rjendra@quicinc.com>,
         Elliot Berman <quic_eberman@quicinc.com>,
         Guru Das Srinagesh <quic_gurus@quicinc.com>
-Subject: RE: [PATCH v1 1/3] remoteproc: qcom: q6v5: Send subdevice
- notifications before panic
-Thread-Topic: [PATCH v1 1/3] remoteproc: qcom: q6v5: Send subdevice
- notifications before panic
-Thread-Index: AQHYxrysL6wqsBKCTUuN3TjRmRDVQK3sp5UQ
-Date:   Fri, 23 Sep 2022 07:03:10 +0000
-Message-ID: <DU0PR04MB9417F36DDE3B8F933711BA1088519@DU0PR04MB9417.eurprd04.prod.outlook.com>
+Subject: RE: [PATCH v1 2/3] remoteproc: qcom: q6v5: Do not report crash if SSR
+ is disabled
+Thread-Topic: [PATCH v1 2/3] remoteproc: qcom: q6v5: Do not report crash if
+ SSR is disabled
+Thread-Index: AQHYxrysWY3viP99vUe/cqDy0C4uGK3sqDFA
+Date:   Fri, 23 Sep 2022 07:05:19 +0000
+Message-ID: <DU0PR04MB9417DA4FD12B3C9A1D6054B988519@DU0PR04MB9417.eurprd04.prod.outlook.com>
 References: <cover.1662995608.git.quic_gokukris@quicinc.com>
- <842a6b6307d26874959d29f2065aad544ff0b86c.1662995608.git.quic_gokukris@quicinc.com>
-In-Reply-To: <842a6b6307d26874959d29f2065aad544ff0b86c.1662995608.git.quic_gokukris@quicinc.com>
+ <1a548f4e7373c12159f8d866dc0e12d224460036.1662995608.git.quic_gokukris@quicinc.com>
+In-Reply-To: <1a548f4e7373c12159f8d866dc0e12d224460036.1662995608.git.quic_gokukris@quicinc.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -69,55 +69,55 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nxp.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DU0PR04MB9417:EE_|DU2PR04MB8903:EE_
-x-ms-office365-filtering-correlation-id: 3cd6f600-59cd-4f6c-a50e-08da9d31acbb
+x-ms-traffictypediagnostic: DU0PR04MB9417:EE_|DU2PR04MB9084:EE_
+x-ms-office365-filtering-correlation-id: 7e07824f-af6b-403a-a5a6-08da9d31fa00
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: A0rRcgFMvC7Q74n8UPp1C3ZXpg9uxCkTA1pK2SoL3eT/bN5X3o1h/zWhr6Y8gG10E2sDeGnUL4rXFe41XM9UFiuY1gXVWTzBSnGJd/dCyJoSoIyQrIXHcp4gWSUE9h5tniBNl9qzA+rnL/Mh4TfAg9KgtiUzWE1ktFQyXT2sf5KhCL1VOaQOVpcFv/UojkvZ0BIbUedTVq/xRaYwrenVa6K17lAysswZWA41l9+Fm34pWHkqdETG6/dZeRaZ374Qe7VQYhYEZ0vyM4Mlh8amd1M2jJi8YAazgHJwy6+IkuuiuDIWQ82YMRRPo+PlaSBuOcUidMItXICVmMJVQnrAivRoEACWuOx9ikRjn/nahqHKoH9fn3XkzI4Gr21mdqSxDEHElOMaaLdeF5MCXryoRcZ/YwaUPxvQPY3DEA4QXMUaKOiMqSXt83zHiiuMV9zaDmeBzjomOFSr4dGmqul8s/D/538Urww1e7FvnkG3FNeGpqrEhkHFtUnp1phuXraPmrouYIbRZ4raWqDXX8/lYUF0vXbAmyxakjF1IVXKypKbrATTxm9afqcxjzCYNe4qXVjV1A+aLtiiViUb7LE4jK4Uef7SA/qvGQYHiEB3Mx4uwxBTr2e+AZph2C2/4lXR/2te3q7nafnpAEOTGFwS+hyVXCgnLU98WLG6YzmLI3/krG9UpNCJWDR+HAHdHzPXee2LOrAMYfi6nbRsb9nGm4lavEkJV5EBlYp4EHryXR3PfHio6IC5GZ+hZfFgRCF1xoR7r4WEiQDnLoy9L+W0Dg==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU0PR04MB9417.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(39860400002)(376002)(396003)(346002)(366004)(136003)(451199015)(110136005)(478600001)(54906003)(316002)(71200400001)(122000001)(83380400001)(38100700002)(41300700001)(55016003)(7696005)(186003)(33656002)(9686003)(38070700005)(6506007)(26005)(44832011)(2906002)(8676002)(52536014)(15650500001)(8936002)(66556008)(66476007)(7416002)(64756008)(76116006)(66446008)(86362001)(4326008)(5660300002)(66946007);DIR:OUT;SFP:1101;
+x-microsoft-antispam-message-info: ibEk6JRoeFV6fxVA/n0pZSY9GXJupiB9eU6MGBAx+g1X4rzclZ0tlL1XI8DkYQPFsd9IKi0r5+hMRmgXwpR0whooRlyjULNuN3tuSy5NK/6XqrLXPxkEImMJh/AJUHWp/AUzJ0YvfUyYl/ez8+THCXENBwuneyLt1dWUsGJAhxudbRTPMvsT3vTrd6YD6bqbiSmamU6zk/BylWg9m+/CSdd7O46bOxiz/kEE24aPNpXdyi1SLjVMKXWTo0BNELs9AULGFYW0eJmvHPstphHXa/psITXOhRj3GN4l0O9f6ToB27tkUFu3ovxQB/gkrXUIdfyEVdIBFfdBhXEtK+Ewa1QpevkbcywN2KREn8RzYB4zWWl8ZWx28mc+/bIGARwUy53LdcMo55UkcrS7roLtds53zN1tHTj/uRIVzb0sfxpgPefuTTHKYiG2w0w3NIiwXKaOWdP1xuJfTQc31mFUEQVfnwB9UFRcVQnHdtft+YI8EWRCyIsGs2Z66nIcJyxH16rffqOsqgYs1w8wJJbT17LaLIE+/+KhmuwQZUnu3vwOQvITeOO+zAHtSnmx3ZxwYIb4Q50Q1cWF5GbC0UEGWEVt6MTUOY57k8X0nVtY7tzmPa8X21xdDIJffbxBJxY3ldfxmHrAznJafys04I9y1I3mpL/MaCZSY6A3xU7X5G7BakQ6s/LzKvpyKmdOxrh53xKCrclTpc0w66Xxyy/B8htvnn9sxP0oagfvHkoZj5AfnYCQ0jEIIy1qWUuAt4787nqGs66jXEEknV7Jp8AcEQ==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU0PR04MB9417.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(396003)(376002)(346002)(136003)(39860400002)(366004)(451199015)(66946007)(8936002)(38100700002)(66476007)(66556008)(122000001)(33656002)(38070700005)(64756008)(7416002)(44832011)(9686003)(5660300002)(83380400001)(71200400001)(186003)(55016003)(6506007)(26005)(110136005)(2906002)(8676002)(54906003)(478600001)(7696005)(41300700001)(4326008)(52536014)(316002)(76116006)(86362001)(66446008);DIR:OUT;SFP:1101;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?hAqU4QqaLOMKQAQcJIXhi9IkApLRAkOzr80g00bLPu9DUwPjtlD1LvkBHWVp?=
- =?us-ascii?Q?EiGNgU+JAIURbyQ6Y1h3+k2DoGIXEjoc5XdJQmkwyM1qbX1BIdhD4ZyL8hqc?=
- =?us-ascii?Q?5FIwZmcr8zC6HP97L48AhoNttM/UrY3csq6Dw2wfmq/TnmxHCdA5mH2wKrU0?=
- =?us-ascii?Q?oB5rmAutvepvdwHVc2GWQ7JLM9TvMEg4KR1jmQDhf3kBEarj8zxqlZOi0iPD?=
- =?us-ascii?Q?v1y3oJVcnXTcSLdbwZOrTJNHVKCNbebbpTLJKI0vodlGB7kmH+2e+BmCVEf+?=
- =?us-ascii?Q?ZlrvysXFP09clFXBuIUJLwxklfLa03edPSsHrQpzkRK2+rNk9pv4gs45zUzU?=
- =?us-ascii?Q?wgFbZIGbz6EfQ7uF9wkd/OkBru0Smy4BV3yLZcbsshaEi5r4Mhag5kbhguOU?=
- =?us-ascii?Q?tT75+d1lopRtcYkz54uD7yTIspBeSwHknMZN9dUDNd7xO0TWqMngNeXAUDZz?=
- =?us-ascii?Q?AG7i0OSU1D88O1oIQmlwZEzeiXH6HJerN/oP06Cf+xkkwwOimWB+U8onqilL?=
- =?us-ascii?Q?VlsToMEDQhxLq4V4ihaYewofU0O7OOjICy49UqEiinisnuxh/rxbKhogYzmV?=
- =?us-ascii?Q?Noq5FH4b7UD+0vysj22+uUiWpbxONJI2I5XaEgKWbB95kZXoPO7OZb+rutpw?=
- =?us-ascii?Q?dM1Dsw71dflh5PgXbVRil5ZAFaVSUFjNhjWfVN99wmTfjLU52cnDamjdI61O?=
- =?us-ascii?Q?obCQ/1dR0B7laLqRO5zXh6dsgeAVVGFFsQzbJPrSagiXgkkHDXX19IfNxe4I?=
- =?us-ascii?Q?1iANcX6ePxzO/m4AjoGvjuowQ5boJfKPVwEIqGs+OXH/lsFhakAO8s1YJEbP?=
- =?us-ascii?Q?VeQgDCHEFG9gmapb0DsRD8H2l0U1/F9WNxFNOExgEMU7WNboCI2poDDUY8NP?=
- =?us-ascii?Q?TfzwuUjrNrRvZCIGHDakAT2AW7bBhs+2bxNNNMjfcokClnFsEvIBX97nrveA?=
- =?us-ascii?Q?bzwfts2yd7sDNlke7CSahvs52uMfhMUJi497OpU11+mvq4l375QxY1GzaAg5?=
- =?us-ascii?Q?g4Rm5bViKv7q1WSShoTw+rg82nAxlIaDCXggAA9uxyqK3wkGmPtsLnzolTPR?=
- =?us-ascii?Q?BJKl2LgM25SGYj6orRpUWJlwK0zgwVv8+ArsroXHxXnWkakiAXUKyOXQaPC/?=
- =?us-ascii?Q?0fNCGvcMrvxblyyLL9lCNBvFl8PsQqR6DHVNhpLOeUZQFIOsxads6BmGk86k?=
- =?us-ascii?Q?EuBSnWpolMxBNWIL3x2UwbbkdbGFSLr7faShdbp5VbiU+fWVTUd3QeguUlqK?=
- =?us-ascii?Q?q9zgJh+f92VdzGAZmgSZcq8GkH50zaSAMqJXZwl95fzrAutwO4UXDyIwszgD?=
- =?us-ascii?Q?/e+hA9q2oeEhnmGFBP+OYADH+KIPSXqW/g0344VVR/Qab3S0G+0LND7falUg?=
- =?us-ascii?Q?r22+8yfV8+hb/+4eCIZcVa6xsSk0JTRnDknEv9o/eaUQlJHFSWO2dAOgpeX/?=
- =?us-ascii?Q?8DrpGbzL9W2KB+7fzfZWMbvcjI9fCY4WNkWhPNf2icphfKL5eTGgKKnzCigv?=
- =?us-ascii?Q?C0wf/MtrhHKO5m+plGcz6s0dTWbfCt71wbzYVEM90aZhl9b1BgIb+rBcx14o?=
- =?us-ascii?Q?ucfw3loh3mAVCmHw5hHPk/JJZeme0vqFQg4/mJHG?=
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?lSB2E6ePIhRH+hF+1Ne1GLhacocJErq1Xk0+61YU4BUXkj2q37lAmftRF7Gn?=
+ =?us-ascii?Q?HptHbJXj0q8g0LbpIxc0MF0JWFuyMtPa6LiqcZyAjFHFUg4fi+nkCUPVdzl8?=
+ =?us-ascii?Q?G6U5A47rY1CzHun36mR03JjIFOJldzNs2jSsJsvOWTd8PI4fg/nlvE/+P38j?=
+ =?us-ascii?Q?OPVzEAjUAUXnntu0nn29ydF5NC1u4UzfZAOV8t7+C5R9bqt9k/M0L+z5qkHJ?=
+ =?us-ascii?Q?nal0FkQddvtRlm8ksQZk3mmYUduAPRR/ph5GOX8JgxY7KcEnhJ55pSguKf8j?=
+ =?us-ascii?Q?JVzgspOHhMtYQ+BMeCzNZr7pKTwot20zu5prtFLgDtxNW0h5/AWUrKbsDp9E?=
+ =?us-ascii?Q?TZi5WNuZXkZOwJQzURFJNQZTw7lEoa/wZP22wlkz+x2diFj3Y4iUu4H6pCJ+?=
+ =?us-ascii?Q?ZlS8ayrexSazVsZ74NVC48CrWqQ8Uf0Wsl0y+SCt55aeeEun6I+KBen5rE1T?=
+ =?us-ascii?Q?iW1rH55Yia5M4/p/8ozHD4B38d62Z1NsC6/2l4L3B98sGHv6f8B3EKXxH7j0?=
+ =?us-ascii?Q?TJgLijhRQQ5Kva4Uy2Cx0a/81cUY2oOPEtvOjfyCc0JkvIIGgWLVDw9/VHDK?=
+ =?us-ascii?Q?Va75EkMhm4N32yLfXlzRct2dzEvQbTrj3Ehg/Ve2h5lI06Hs4AinpeE6qbE2?=
+ =?us-ascii?Q?qSsh6aAtttLw6EKxAjCJ4GYoCP36BXW0t/Q28wQtf89PQoJy7V0iEpx/9F7P?=
+ =?us-ascii?Q?aegW0YRbwz/nLzPOu0nt9YkNmFRUk1njaISHC/4AL36Jwf1hjqT+uncXRrI4?=
+ =?us-ascii?Q?+BSaL38927xjwhR76VXuxOs1v1d7E6tB5sd6TTbLw3J2EPkeswb82P1YGmfd?=
+ =?us-ascii?Q?JViAOV0HnHhzPvalIJnNPreFK1pQ0X4koxj7tlDNrj/88IsNQxuSVAABGCkM?=
+ =?us-ascii?Q?TL1U9XVd7oPfhE315JM7QMWAtfygf62suvz2Sl3v7RmcAJA2W6GJ4R5VkKQb?=
+ =?us-ascii?Q?yugjdnOFRy8j/dmAXqgsxnf8DTnPAj1OIEfaxgQcfNwes0vaL9fz0UFrDRZp?=
+ =?us-ascii?Q?0LR2aM0AmlMQXUWNpqi7xSQ5IGFvMc+3ZIWG2PenbY7yjN34z+VZwn38wSB5?=
+ =?us-ascii?Q?q9Ecf874Xyto0tg1H5VedlpNxX6kQvLM2UegGPjBVObtVPVcn6qrUvB0XJvm?=
+ =?us-ascii?Q?YxZ0LAl0SDtSNupnK/Qp3OzJXsrFmOBV5+I3EeFEUSoGpGezSPdQCweLjbPR?=
+ =?us-ascii?Q?FKqst1JOIl6C4SzaPN2yC9hVwP38+YfInw+SKfrsX6BKkiiqhsRsXiBC5BsA?=
+ =?us-ascii?Q?s4DBiE0aaE+tpk7BdCW9YMaSJaQoq/38Yz6GcGCjR0/1BtAoTKYFUmm8kdsG?=
+ =?us-ascii?Q?Fj1UcYs7YTIMqiZ5R2IkzrIcYiHsa083L5r+PZWKv1kr8XTmSDK41okKPU5D?=
+ =?us-ascii?Q?0nUizHACqpYseXHFDnrylVsNIWuxnsxjvJR6oa1k1NMIPtf+v+3U0+WVFFIL?=
+ =?us-ascii?Q?klJYS50DCkZYnYGW4fwK4SqfbjqnKFY8WHVLQuGW8z/aWpdtP9rPT3EhkcYd?=
+ =?us-ascii?Q?EQQWDCwPZ1Ghy4MQbWzNhpqtCIyiFTEieMgvPtQOUi4yx4c8aNcpID2QfrF0?=
+ =?us-ascii?Q?wFnSEpuhGqh0eCRROq4686rSLeJ6fKae33IwsRbt?=
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: nxp.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: DU0PR04MB9417.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3cd6f600-59cd-4f6c-a50e-08da9d31acbb
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Sep 2022 07:03:10.3127
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7e07824f-af6b-403a-a5a6-08da9d31fa00
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Sep 2022 07:05:19.9182
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: w/1u72WTCVyUjqnEpeXZQPVGvD26CzEYIc6ipbeHHsi9WF81QOTHsaokC6JNi0rL92f4b/gpRTS0gvpAgz8Eyw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU2PR04MB8903
+X-MS-Exchange-CrossTenant-userprincipalname: a2MBaAqzMgSK5EJTTrlTNBCgEGyIsydm6+1FuUZ/tvOnXoPhYrtZJbp3heQ1S5lpVtSkAnbsq6uhKbQyVu8ELA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU2PR04MB9084
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
@@ -128,123 +128,65 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> Subject: [PATCH v1 1/3] remoteproc: qcom: q6v5: Send subdevice
-> notifications before panic
+> Subject: [PATCH v1 2/3] remoteproc: qcom: q6v5: Do not report crash if SS=
+R
+> is disabled
 >=20
-> Subdevice notifications after a remoteproc has crashed are useful to any
-> clients that might want to preserve data pertaining to the driver after t=
-he
-> remoteproc crashed. Sending subdevice notifications before triggering a
-> kernel panic gives these drivers the time to do collect this information.
+> In case recovery is disabled, do not report the rproc crash to the framew=
+ork.
+> If recovery is enabled after we start the crash handler we may end up in =
+a
+> weird state by informing clients of a crash twice, resulting in undefined
+> behaviour.
 >=20
-> Change-Id: Id6e55fb038b70f54ff5854d2adff72b74b6a9570
+> Change-Id: If0d9bf5aa2c6f9e25adcefaca14b2de60fcb1a7a
 
-Change-Id should be removed.
+This should be removed.
 
 > Signed-off-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
 > ---
->  drivers/remoteproc/qcom_q6v5.c | 31
-> +++++++++++++++++++++++++++++++  drivers/remoteproc/qcom_q6v5.h |
-> 2 ++
->  2 files changed, 33 insertions(+)
+>  drivers/remoteproc/qcom_q6v5.c | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
 >=20
 > diff --git a/drivers/remoteproc/qcom_q6v5.c
-> b/drivers/remoteproc/qcom_q6v5.c index 497acfb..89f5384 100644
+> b/drivers/remoteproc/qcom_q6v5.c index 89f5384..1b9e1e1 100644
 > --- a/drivers/remoteproc/qcom_q6v5.c
 > +++ b/drivers/remoteproc/qcom_q6v5.c
-> @@ -15,6 +15,7 @@
->  #include <linux/soc/qcom/smem.h>
->  #include <linux/soc/qcom/smem_state.h>
->  #include <linux/remoteproc.h>
-> +#include <linux/delay.h>
-
-Seq the head file order.
-
->  #include "qcom_common.h"
->  #include "qcom_q6v5.h"
+> @@ -103,6 +103,8 @@ static void qcom_q6v5_crash_handler_work(struct
+> work_struct *work)
 >=20
-> @@ -94,6 +95,29 @@ int qcom_q6v5_unprepare(struct qcom_q6v5
-> *q6v5)  }  EXPORT_SYMBOL_GPL(qcom_q6v5_unprepare);
+>  	mutex_lock(&rproc->lock);
 >=20
-> +static void qcom_q6v5_crash_handler_work(struct work_struct *work) {
-> +	struct qcom_q6v5 *q6v5 =3D container_of(work, struct qcom_q6v5,
-> crash_handler);
-> +	struct rproc *rproc =3D q6v5->rproc;
-> +	struct rproc_subdev *subdev;
+> +	rproc->state =3D RPROC_CRASHED;
 > +
-> +	mutex_lock(&rproc->lock);
-> +
-> +	list_for_each_entry_reverse(subdev, &rproc->subdevs, node) {
-> +		if (subdev->stop)
-> +			subdev->stop(subdev, true);
-> +	}
-> +
-> +	mutex_unlock(&rproc->lock);
-> +
-> +	/*
-> +	 * Temporary workaround until ramdump userspace application
-> calls
-> +	 * sync() and fclose() on attempting the dump.
-> +	 */
-> +	msleep(100);
-
-I have no knowledge on your system setup, but just guess this is
-not reliable.
-
-> +	panic("Panicking, remoteproc %s crashed\n", q6v5->rproc->name); }
-
-It is remotecore crash, why use panic to crash the Linux side?
-
-> +
->  static irqreturn_t q6v5_wdog_interrupt(int irq, void *data)  {
->  	struct qcom_q6v5 *q6v5 =3D data;
-> @@ -113,6 +137,9 @@ static irqreturn_t q6v5_wdog_interrupt(int irq, void
+>  	list_for_each_entry_reverse(subdev, &rproc->subdevs, node) {
+>  		if (subdev->stop)
+>  			subdev->stop(subdev, true);
+> @@ -139,8 +141,8 @@ static irqreturn_t q6v5_wdog_interrupt(int irq, void
 > *data)
->  		dev_err(q6v5->dev, "watchdog without message\n");
->=20
 >  	q6v5->running =3D false;
-> +	if (q6v5->rproc->recovery_disabled)
-> +		schedule_work(&q6v5->crash_handler);
-> +
->  	rproc_report_crash(q6v5->rproc, RPROC_WATCHDOG);
+>  	if (q6v5->rproc->recovery_disabled)
+>  		schedule_work(&q6v5->crash_handler);
+> -
+> -	rproc_report_crash(q6v5->rproc, RPROC_WATCHDOG);
+> +	else
+> +		rproc_report_crash(q6v5->rproc, RPROC_WATCHDOG);
 >=20
 >  	return IRQ_HANDLED;
-> @@ -134,6 +161,9 @@ static irqreturn_t q6v5_fatal_interrupt(int irq, void
-> *data)
->  		dev_err(q6v5->dev, "fatal error without message\n");
->=20
->  	q6v5->running =3D false;
-> +	if (q6v5->rproc->recovery_disabled)
-> +		schedule_work(&q6v5->crash_handler);
-> +
->  	rproc_report_crash(q6v5->rproc, RPROC_FATAL_ERROR);
->=20
->  	return IRQ_HANDLED;
-> @@ -354,6 +384,7 @@ int qcom_q6v5_init(struct qcom_q6v5 *q6v5, struct
-> platform_device *pdev,
->  	if (IS_ERR(q6v5->path))
->  		return dev_err_probe(&pdev->dev, PTR_ERR(q6v5->path),
->  				     "failed to acquire interconnect path\n");
-> +	INIT_WORK(&q6v5->crash_handler,
-> qcom_q6v5_crash_handler_work);
->=20
->  	return 0;
 >  }
-> diff --git a/drivers/remoteproc/qcom_q6v5.h
-> b/drivers/remoteproc/qcom_q6v5.h index 5a859c4..b1654be 100644
-> --- a/drivers/remoteproc/qcom_q6v5.h
-> +++ b/drivers/remoteproc/qcom_q6v5.h
-> @@ -29,6 +29,8 @@ struct qcom_q6v5 {
->  	int handover_irq;
->  	int stop_irq;
+> @@ -163,8 +165,8 @@ static irqreturn_t q6v5_fatal_interrupt(int irq, void
+> *data)
+>  	q6v5->running =3D false;
+>  	if (q6v5->rproc->recovery_disabled)
+>  		schedule_work(&q6v5->crash_handler);
+> -
+> -	rproc_report_crash(q6v5->rproc, RPROC_FATAL_ERROR);
+> +	else
+> +		rproc_report_crash(q6v5->rproc, RPROC_FATAL_ERROR);
 >=20
-> +	struct work_struct crash_handler;
-> +
->  	bool handover_issued;
->=20
->  	struct completion start_done;
+>  	return IRQ_HANDLED;
+>  }
 > --
 > 2.7.4
 Regards,
-Peng.
-
+Peng
