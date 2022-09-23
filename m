@@ -2,80 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D49F65E7D50
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Sep 2022 16:39:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42A495E7DBD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Sep 2022 16:56:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231864AbiIWOj0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Sep 2022 10:39:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56710 "EHLO
+        id S231199AbiIWO4l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Sep 2022 10:56:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231750AbiIWOjY (ORCPT
+        with ESMTP id S231845AbiIWO4h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Sep 2022 10:39:24 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5110014328F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Sep 2022 07:39:22 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id dv25so1072394ejb.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Sep 2022 07:39:22 -0700 (PDT)
+        Fri, 23 Sep 2022 10:56:37 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE47222512
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Sep 2022 07:56:34 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id a41so589993edf.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Sep 2022 07:56:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date;
-        bh=S5eZN2svmhOfsW6VEcUb5Ry7O5bFBRCb5lC2tn/7Tfo=;
-        b=gkzAlIt/hpKoRZEZLqhfZ8OysZ9L7bILUx3sexHwwb/6XDB+pCPacUz+MJjhWKhuR8
-         03WIYD6q3het0x2eUZOaFt4+8DLRxhO61dji69+3Me4MLavSly0qeRo0vqetAht869ok
-         ifG9Ps6irane6AxqQ0QfJg90uACXU5trZG5FNLfEzHAvnDR/7MbC/Fiy3LIbWwjANhiM
-         E2UJl7+e5iXNxOJG9pVXNlrbpNeiZUe/b5JBc4Ah587wHR6LrqOEcMd85sSJX+AHXzVH
-         ylFVisJVdx3w/VxoxI7/ouKWTh3F9lVB7kokwRSC1DxQ36BVKR9k3+145PxEiaip0TUB
-         rnCA==
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=4+lbMVqBe5DEhzCC92dvorqle54/FtFt59bo4nLc+Pw=;
+        b=d3nTrMzvf2hjKN7X81+lQ6pEMXtwyt5wUV6uTqIPZ2SMjn8ftZE8yGDPRP9k/RX50c
+         I2Pe5FqCVYGgkmdBCGJ9SuAbiavdgSYDrtXzsy678IJ9E8rfbr1HR9lUgMmxCiUV5R3v
+         SBZuojYgzGl5QlNJVlD1x3Cajp/+4X08GQJ08=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date;
-        bh=S5eZN2svmhOfsW6VEcUb5Ry7O5bFBRCb5lC2tn/7Tfo=;
-        b=4g9U+WHkSQMxzfYZHoO7QSJB9A40eiwuBwx3sln8gWLrcvfBoWjurXCR6rRZcVpNsE
-         8uu9l6XQakImYunZPLCNniu3loiNH+cumpMGDXOAR79psL0mS2PJBC2uNPdyX71wCgA9
-         skElsa4WEmCDr6/WLhK2vZnUbY4+cZNmCLZZ2h4Z7bjVIZsKbCBcSMnlVhge/KHjsjrQ
-         o9X9L9QPQhaNVx6IrFMi5oDeUWIODGnTx1o8bvshg+HBJJ2t2wE3AKqr6YbyQQFBF6in
-         ptfx5h8rJ61fQKHo7OqvAHdOKzmsC9OqP3e80C3PRgirw+1tkFjc7kfIvNPMjzw/uYza
-         glEA==
-X-Gm-Message-State: ACrzQf35L72H9NCXzweav51NKNoIkd1ZQFTC+BBzHmotSLqqFD+sxz7P
-        VAtbBUfVkAHl/Xa8O/FWDzV/0RKFimvwDvIjd6A=
-X-Google-Smtp-Source: AMsMyM5/0fjixHZUeDGkqTbJZktQlwbIg9e75ri3yi5AJ6I4VwtQ3bwL9pzvfhAltPu40POCkTiVNg==
-X-Received: by 2002:a17:906:8469:b0:781:fc76:fbd7 with SMTP id hx9-20020a170906846900b00781fc76fbd7mr7457238ejc.486.1663943960828;
-        Fri, 23 Sep 2022 07:39:20 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id j2-20020a17090623e200b0078197a9421csm4117653ejg.85.2022.09.23.07.39.19
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=4+lbMVqBe5DEhzCC92dvorqle54/FtFt59bo4nLc+Pw=;
+        b=2HDgObGYx+Chc1Xdx1IJJ5gfP7zG5ShT/8wrMgF8A2k/YuyVgQXGVSS7SPPO5Fv7eV
+         qe1wU/f67w8S8Ur8Bf8WA+tAaqkAUPwEhEW5sz4ZiilknQHUhBkx7+PW2qDlSHNhGzoE
+         gH6D9vAqTrsHJ1ZtXO5rg3cJYDqj6xVPZdjeWAc02abvNLtOxpEKDmRZRB6v/UvnH3t0
+         M4yXjwYYukE2J1cw5KV72tBWQNoPSjDJUDs2/JnKfyJEZw/4ZbUf9+mxuNIiB8XOxVxm
+         ejZbAcfJYEnZAou70hccdnyi4KZNu+1PVM3r92AR9TRINpq1/u8e6PJJQaaoYjjRk9Xw
+         MGWA==
+X-Gm-Message-State: ACrzQf32NonIQahldCiDgbEmhObxR3Is+K7r67B0egKJajhsYU6Vblmk
+        wuUdIn66o4U3/cVOow669v19emcm0nLNeO3o
+X-Google-Smtp-Source: AMsMyM63TJ6fBbaf76jB4bJzCeVsW/Zoykho4oPsuCpfPQCu+JsSHgpTLGhIvFSBfDa+3B0WQv76PA==
+X-Received: by 2002:a05:6402:27d0:b0:451:b381:e0a1 with SMTP id c16-20020a05640227d000b00451b381e0a1mr8618391ede.4.1663944992689;
+        Fri, 23 Sep 2022 07:56:32 -0700 (PDT)
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com. [209.85.128.50])
+        by smtp.gmail.com with ESMTPSA id 17-20020a170906219100b007807e4f6b30sm4201514eju.103.2022.09.23.07.56.31
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Sep 2022 07:39:20 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Fri, 23 Sep 2022 16:39:18 +0200
-Message-Id: <CN3UWLRBLVPF.VV4AX2X9TS34@otso>
-Subject: Re: [PATCH v1 00/15] create power sequencing subsystem
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
-        "Ulf Hansson" <ulf.hansson@linaro.org>,
-        "Marcel Holtmann" <marcel@holtmann.org>,
-        "Johan Hedberg" <johan.hedberg@gmail.com>,
-        "Luiz Augusto von Dentz" <luiz.dentz@gmail.com>,
-        "Kalle Valo" <kvalo@codeaurora.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        "Jakub Kicinski" <kuba@kernel.org>,
-        "Stanimir Varbanov" <svarbanov@mm-sol.com>
-Cc:     <linux-arm-msm@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-bluetooth@vger.kernel.org>,
-        <ath10k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
-        <netdev@vger.kernel.org>
-X-Mailer: aerc 0.12.0
-References: <20211006035407.1147909-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20211006035407.1147909-1-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        Fri, 23 Sep 2022 07:56:31 -0700 (PDT)
+Received: by mail-wm1-f50.google.com with SMTP id n35-20020a05600c502300b003b4924c6868so5359325wmr.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Sep 2022 07:56:31 -0700 (PDT)
+X-Received: by 2002:a05:600c:500d:b0:3b5:234:d7e9 with SMTP id
+ n13-20020a05600c500d00b003b50234d7e9mr6047824wmr.57.1663944990895; Fri, 23
+ Sep 2022 07:56:30 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220923083657.v5.1.I3aa360986c0e7377ea5e96c116f014ff1ab8c968@changeid>
+ <20220923083657.v5.3.Iea2d2918adfff2825b87d428b5732717425c196f@changeid>
+In-Reply-To: <20220923083657.v5.3.Iea2d2918adfff2825b87d428b5732717425c196f@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 23 Sep 2022 07:56:19 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VjeX_9VsZo7OiC0U6iNqn1o_WOsTGWOfhG7B3sp37New@mail.gmail.com>
+Message-ID: <CAD=FV=VjeX_9VsZo7OiC0U6iNqn1o_WOsTGWOfhG7B3sp37New@mail.gmail.com>
+Subject: Re: [PATCH v5 3/3] arm64: dts: qcom: Add sc7180-pazquel360
+To:     Yunlong Jia <ecs.beijing2022@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        Henry Sun <henrysun@google.com>,
+        Yunlong Jia <yunlong.jia@ecs.com.tw>,
+        Bob Moragues <moragues@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,59 +84,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+Bjorn,
 
-On Wed Oct 6, 2021 at 5:53 AM CEST, Dmitry Baryshkov wrote:
-> This is a proposed power sequencer subsystem. This is a
-> generification of the MMC pwrseq code. The subsystem tries to abstract
-> the idea of complex power-up/power-down/reset of the devices.
+On Fri, Sep 23, 2022 at 1:47 AM Yunlong Jia <ecs.beijing2022@gmail.com> wrote:
 >
-> The primary set of devices that promted me to create this patchset is
-> the Qualcomm BT+WiFi family of chips. They reside on serial+platform
-> or serial + SDIO interfaces (older generations) or on serial+PCIe (newer
-> generations).  They require a set of external voltage regulators to be
-> powered on and (some of them) have separate WiFi and Bluetooth enable
-> GPIOs.
+> Create first version device tree for pazquel360
+> pazquel360 is convertible and the pazquel it is based on is clamshell.
+> sku 20 for lte & wifi
+> sku 21 for wifi only
+> sku 22 for lte w/o esim & wifi
 >
-> The major drawback for now is the lack of proper PCIe integration
-> At this moment support for PCIe is hacked up to be able to test the
-> PCIe part of qca6390. Proper PCIe support would require automatically
-> powering up the devices before the scan basing on the proper device
-> structure in the device tree. This two last patches are noted as WIP and
-> are included into the patchset for the purpose of testing WiFi on newer
-> chips (like qca6390/qca6391).
-
-What's the status of this series? With this I have gotten Bluetooth to
-somewhat work on sm7225-fairphone-fp4, which is using WCN3990/WCN3988.
-
-Is there another solution with a different patch series that could make
-it work also?
-
-The latest I could find regarding some new Bluetooth thing is the
-following email from June 2022, but nothing seems to have happened since
-then.
-https://lore.kernel.org/linux-arm-msm/SJ0PR02MB7135746D204F13550E9BAE77F8B2=
-9@SJ0PR02MB7135.namprd02.prod.outlook.com/
-
-Regards
-Luca
-
+> Signed-off-by: Yunlong Jia <ecs.beijing2022@gmail.com>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
 >
-> Changes since RFC v2:
->  - Add documentation for the pwrseq code. Document data structures,
->    macros and exported functions.
->  - Export of_pwrseq_xlate_onecell()
->  - Add separate pwrseq_set_drvdata() function to follow the typical API
->    design
->  - Remove pwrseq_get_optional()/devm_pwrseq_get_optional()
->  - Moved code to handle old mmc-pwrseq binding to the MMC patch
->  - Split of_pwrseq_xlate_onecell() support to a separate patch
+> ---
 >
-> Changes since RFC v1:
->  - Provider pwrseq fallback support
->  - Implement fallback support in pwrseq_qca.
->  - Mmove susclk handling to pwrseq_qca.
->  - Significantly simplify hci_qca.c changes, by dropping all legacy
->    code. Now hci_qca uses only pwrseq calls to power up/down bluetooth
->    parts of the chip.
+> (no changes since v4)
+>
+> Changes in v4:
+>  1. Adjust the 'Signed-off-by'.
+>  2. Add touchscreen setting in dtsi.
+>
+> Changes in v2:
+>  1. Remove the touchscreen setting, as a follow-up patch
+>
+>  arch/arm64/boot/dts/qcom/Makefile             |  2 +
+>  .../qcom/sc7180-trogdor-pazquel360-lte.dts    | 22 ++++++
+>  .../qcom/sc7180-trogdor-pazquel360-wifi.dts   | 17 +++++
+>  .../dts/qcom/sc7180-trogdor-pazquel360.dtsi   | 71 +++++++++++++++++++
+>  4 files changed, 112 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360-lte.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360-wifi.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360.dtsi
 
+If you're planning on a second pull request this cycle, it'd be great
+if patch #1 and #3 from this series could be included. Thanks!
+
+-Doug
