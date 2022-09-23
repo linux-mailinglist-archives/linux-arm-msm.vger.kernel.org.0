@@ -2,127 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EA0F5E858E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 00:07:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 124335E85C6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 00:20:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231535AbiIWWHl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Sep 2022 18:07:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40542 "EHLO
+        id S231981AbiIWWUk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Sep 2022 18:20:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231315AbiIWWHk (ORCPT
+        with ESMTP id S232241AbiIWWUe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Sep 2022 18:07:40 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 645D6147CFB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Sep 2022 15:07:39 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id y3so3398349ejc.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Sep 2022 15:07:39 -0700 (PDT)
+        Fri, 23 Sep 2022 18:20:34 -0400
+Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 730EB1166EA;
+        Fri, 23 Sep 2022 15:20:31 -0700 (PDT)
+Received: by mail-il1-x135.google.com with SMTP id m16so845937ili.9;
+        Fri, 23 Sep 2022 15:20:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=MjCIyVdNYTTKoVP4OLhW9xb+LVRJMI4IX/LyQztjHfk=;
-        b=kHahx/UiGoRabYsHqSdNGerJopUg3qLNerV0gP8BGZNyPpFBTKJKBOOTPuJQY3qpyt
-         KX4UQe6BGRb5PTDAmfRmbbpLtmT2ZEsyv+bYu0wvIulGGlmV5fhB7fXPCkqVhNj+JZaa
-         7kt33yzmC36KDZeTuf3xRpqjuFM2SofHQSTIQ=
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=Wms+EsGAbtafKKLzhloMJhni7qXQ+aJ2BVMhYXfuWbo=;
+        b=Lj74ttX5nlY/XZqeHBv7/0k0wSuDxkLi1EJ9MNtigWE3d/MQ9OqZnTTKoTivYLCHfP
+         6cGnSNZ/t4WRTK5hjM6Skexbj5HHofFktJf5rtQc3L0XHPYMcZ4Af25IGzZXx0mwK2Pa
+         V/Kr+ykk9hJ210mLty/R9boVKJNSFUwfAENQpvfrBmIIoT8Ok97tK1Y4kVcX6dLrbOZq
+         UqG+zEV9xW4/55e6Fksx+IrdMGN39a56KGGXQLP3DFjMo6lhE6W2k8UCF36gxhknQtxA
+         AMWbYYgrnRG3U4kN7SdyGxoP30Z/GLG60gKdhtkBwG15TPPkDfj0lcCCHenno2qjglvR
+         LJ/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=MjCIyVdNYTTKoVP4OLhW9xb+LVRJMI4IX/LyQztjHfk=;
-        b=VGxeBiDx+pTPjLUbJBYxQeDOjDvNeYn+psxOirxpSikzuA0LXvNbMUZe6iSsCfoKhL
-         9s3+j3JfF2gPr6Qx92gJv43xl+nZLheLzyHalurFxGKv0BJqXhMiuH52aEuqJrtaPILx
-         H1V2dP2dxXrky2re7Qylkcnt9XTlhtymEqMZAWJRgpXdXvsG5qOmLLd9tKucftrW3DpW
-         7mZtVO9FTnTY27/d4ejSRnD18PAzEiK2SU7ASCvdsyUYCtxhqIzBVw5tXTz215txgZ36
-         54Hhqb674V1hzzYD2OLvDRrgSbC+SsDY0bBqOymIWVhnApDVvux1Ks45e8m696mJNmCm
-         SotQ==
-X-Gm-Message-State: ACrzQf2ibO+V8fH5EGITdZJeVNlY5oB3oiTrKaB6Yefb1KMbLUmv4DnN
-        PAYX3l3qol1ARVV+Sq3FF+k70+GGkuAg/sB3
-X-Google-Smtp-Source: AMsMyM7vLKKKmbPHehpNAJInL7h45NvghNqOeEYARyIHdT6PXfl7wUI3RNR9ZCVVlydb8f2S2PotiQ==
-X-Received: by 2002:a17:906:9bf5:b0:77e:1ed1:b1b with SMTP id de53-20020a1709069bf500b0077e1ed10b1bmr9104487ejc.540.1663970857730;
-        Fri, 23 Sep 2022 15:07:37 -0700 (PDT)
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com. [209.85.221.42])
-        by smtp.gmail.com with ESMTPSA id m6-20020a509306000000b0044eda621b08sm6342619eda.54.2022.09.23.15.07.36
-        for <linux-arm-msm@vger.kernel.org>
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=Wms+EsGAbtafKKLzhloMJhni7qXQ+aJ2BVMhYXfuWbo=;
+        b=qQCIFlbyzMDtnR7+ZkVadUAeUleIvfEoQOsVCf3Pus8NzhdQ4h3DxDSUa+wa4YDtyj
+         lydww8goARguMgUor3+iK2GqbU2w33WUzC/JpDQTelLa7HgGKBf0YzBmc7tYXlbBZtnV
+         zSq54gnBJDZLSLk4yfU05sAIwr7Rx1NxaHTVj4sh7dcy95ikjSX7KpowPubKMCdNq/C1
+         wxJ0471mdle4hcGZvakNKrtTJUqNZyHMu1aRDXGsq8Mj8rDioRab1me6FAs+AMB8Jkb8
+         8odC0l4N2vk3Ce5G+sPBEX4TIZprCRpCKA4aO6DyjCh52epSrix6xoiJ19jp/OkD/a47
+         bpAQ==
+X-Gm-Message-State: ACrzQf3S3C9Mc0NWcTntQZSh7s1RNtYRaHdxknGQbtEjyjkJubbIU143
+        mHgkel7IXCv6r9WnOp8GaBw=
+X-Google-Smtp-Source: AMsMyM4LyL3Sbzc5S7bG6GhiHIbGtFgleVniGGloNtihwviXUHlm/OO5amsC1PzN0kxf7IYFYqwdcA==
+X-Received: by 2002:a05:6e02:148b:b0:2f6:bb96:7a0e with SMTP id n11-20020a056e02148b00b002f6bb967a0emr3934871ilk.127.1663971631367;
+        Fri, 23 Sep 2022 15:20:31 -0700 (PDT)
+Received: from localhost ([2607:fea8:a2e2:2d00::1eda])
+        by smtp.gmail.com with UTF8SMTPSA id m26-20020a02a15a000000b0035b1b597290sm3182722jah.162.2022.09.23.15.20.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Sep 2022 15:07:36 -0700 (PDT)
-Received: by mail-wr1-f42.google.com with SMTP id n10so1881031wrw.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Sep 2022 15:07:36 -0700 (PDT)
-X-Received: by 2002:a05:6000:168c:b0:226:f4c2:d6db with SMTP id
- y12-20020a056000168c00b00226f4c2d6dbmr6348292wrd.659.1663970856526; Fri, 23
- Sep 2022 15:07:36 -0700 (PDT)
+        Fri, 23 Sep 2022 15:20:30 -0700 (PDT)
+From:   Richard Acayan <mailingradian@gmail.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Richard Acayan <mailingradian@gmail.com>
+Subject: Re: [PATCH v2 1/4] dt-bindings: dma: qcom: gpi: add fallback
+Date:   Fri, 23 Sep 2022 18:20:28 -0400
+Message-Id: <20220923222028.284561-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.37.3
+In-Reply-To: <7b066e11-6e5c-c6d9-c8ed-9feccaec4c0c@linaro.org>
+References: <20220923210934.280034-1-mailingradian@gmail.com> <20220923210934.280034-2-mailingradian@gmail.com> <7b066e11-6e5c-c6d9-c8ed-9feccaec4c0c@linaro.org>
 MIME-Version: 1.0
-References: <20220923140918.2825043-1-judyhsiao@chromium.org>
-In-Reply-To: <20220923140918.2825043-1-judyhsiao@chromium.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 23 Sep 2022 15:07:24 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UABpfLRehYT78mPdzgwVBhV_-uBQnkrtbbDbUH-6o8tg@mail.gmail.com>
-Message-ID: <CAD=FV=UABpfLRehYT78mPdzgwVBhV_-uBQnkrtbbDbUH-6o8tg@mail.gmail.com>
-Subject: Re: [PATCH v5 0/3] Add dtsi for sc7280 boards that using rt5682
-To:     Judy Hsiao <judyhsiao@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Jimmy Cheng-Yi Chiang <cychiang@google.com>,
-        Judy Hsiao <judyhsiao@google.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+> On 23/09/2022 23:09, Richard Acayan wrote:
+> > The drivers are transitioning from matching against lists of specific
+> > compatible strings to matching against smaller lists of more generic
+> > compatible strings. Add a fallback compatible string in the schema to
+> > support this change.
+> 
+> Thanks for the patch. I wished we discussed it a bit more. :)
 
-On Fri, Sep 23, 2022 at 7:09 AM Judy Hsiao <judyhsiao@chromium.org> wrote:
->
-> Put sound node and lpass_cpu node settings for boards that use rt5682
-> codec in the sc7280-herobrine-audio-rt5682.dtsi as there are different
-> choices of headset codec for herobrine projects. Common audio setting
-> for the internal speaker is in sc7280-herobrine.dtsi.
->
-> Change Since V4
-> - Rebase and include sc7280-herobrine-villager-r0.dts change.
->
-> Changes Since V3:
-> - Remove Change-Id in the commit message.
-> - Add dependency in cover letter.
->
-> Changes Since V2:
-> - Fix sc7280-herobrine-audio-rt5682.dtsi syntax.
->
-> Changes Since V1:
-> - Not to include the herobrine-villager-r0.dts changes in this patch
->   series to avoid conflict.
->
-> Judy Hsiao (3):
->   arm64: dts: qcom: sc7280: herobrine: Add pinconf settings for mi2s1
->   arm64: dts: qcom: sc7280: Add sc7280-herobrine-audio-rt5682.dtsi
->   arm64: dts: qcom: sc7280: Include sc7280-herobrine-audio-rt5682.dtsi
->     in herobrine-r1 and villager-r0
->
->  .../qcom/sc7280-herobrine-audio-rt5682.dtsi   | 122 ++++++++++++++++++
->  .../qcom/sc7280-herobrine-herobrine-r1.dts    |   1 +
->  .../dts/qcom/sc7280-herobrine-villager-r0.dts |   1 +
->  .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  30 +++++
->  4 files changed, 154 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
+Ah, sorry for not replying to your original suggestion. I didn't see the
+opportunity for discussion as this new series wasn't that hard to come up
+with.
 
-Please sync the Qualcomm tree upstream. I can tell you didn't since
-you had the wrong email address for Bjorn. Mailmap should have
-converted it to the kernel.org one.
+> qcom,gpi-dma does not look like specific enough to be correct fallback,
+> at least not for all of the devices. I propose either a IP block version
+> (which is tricky without access to documentation) or just one of the SoC
+> IP blocks.
 
-In any case, with the correct address for Bjorn, I'd note that I think
-this patch series is ready to land if you're planning a 2nd pull
-request this cycle.
+Solution 1:
 
--Doug
+Yes, I could use something like qcom,sdm845-gpi-dma. It would be weird to
+see the compatible strings for that, though:
+
+    compatible = "qcom,sdm670-gpi-dma", "qcom,sdm845-gpi-dma";
+
+    // This would need to be valid in dt schema, suggesting solution 2
+    compatible = "qcom,sdm845-gpi-dma";
+    // This just doesn't make sense
+    compatible = "qcom,sdm845-gpi-dma", "qcom,sdm845-gpi-dma";
+
+    compatible = "qcom,sm8150-gpi-dma", "qcom,sdm845-gpi-dma";
+
+    compatible = "qcom,sm8250-gpi-dma", "qcom,sdm845-gpi-dma";
+
+Solution 2:
+
+I could stray from the "soc-specific compat", "fallback compat" and just
+have "qcom,sdm845-gpi-dma" for every SoC.
+
+Solution 3:
+
+I found the original mailing list archive for this driver:
+
+https://lore.kernel.org/linux-arm-msm/20200824084712.2526079-1-vkoul@kernel.org/
+https://lore.kernel.org/linux-arm-msm/20200918062955.2095156-1-vkoul@kernel.org/
+
+It seems like the author originally handled the ee_offset as a dt property
+and removed it. It was removed because it was a Qualcomm-specific property.
+One option would be to bring this back against the author's wishes (or ask
+the author about it, since they are a recipient).
+
+Solution 4:
+
+You mentioned there being an xPU3 block here:
+
+https://lore.kernel.org/linux-arm-msm/e3bfa28a-ecbc-7a57-a996-042650043514@linaro.org/
+
+Maybe it's fine to have qcom,gpi-dma-v3?
