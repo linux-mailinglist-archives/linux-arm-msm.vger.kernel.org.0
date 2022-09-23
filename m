@@ -2,79 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F9D15E84D7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Sep 2022 23:26:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EA0F5E858E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 00:07:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232630AbiIWV0a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Sep 2022 17:26:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50626 "EHLO
+        id S231535AbiIWWHl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Sep 2022 18:07:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232920AbiIWV0S (ORCPT
+        with ESMTP id S231315AbiIWWHk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Sep 2022 17:26:18 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED35713198D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Sep 2022 14:26:15 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 10so2182996lfy.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Sep 2022 14:26:15 -0700 (PDT)
+        Fri, 23 Sep 2022 18:07:40 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 645D6147CFB
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Sep 2022 15:07:39 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id y3so3398349ejc.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Sep 2022 15:07:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=/aQ24Egg9dbeaeZ6X/ZW0Y0MW1uqAO/UMRzdqkbDm8M=;
-        b=cPMsBi7pibMpOKx+mKfGFbF+9bDWsF6ODuWOeC+7aL6PiFUOCls6JRua524swQFmoo
-         ZeYewX/nW1Henr2JgEbNw8+MeJKoFh7TifkSV4/ATtiZAdh25NfkeyX3FLUouX7JzG2T
-         eXROk7YgbSCbX12DASaoEpNvyOrfqfpfeI3N6p4cFLfnKvmE6mOqaakruYmeqhfeH2uc
-         xxAz4IM1OSSY/4qg3mmpsZnMjR/W1ZV5XpQjUU2ShyzmmZ5outwmO0CAzuOjuFeNVPDz
-         CmR9WqINRX1OTEwci94H3ixz6X8qUEsTjSiVdYcdQhXTtr9q4CsudWzZRHRGqbfzrQKN
-         +y/w==
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=MjCIyVdNYTTKoVP4OLhW9xb+LVRJMI4IX/LyQztjHfk=;
+        b=kHahx/UiGoRabYsHqSdNGerJopUg3qLNerV0gP8BGZNyPpFBTKJKBOOTPuJQY3qpyt
+         KX4UQe6BGRb5PTDAmfRmbbpLtmT2ZEsyv+bYu0wvIulGGlmV5fhB7fXPCkqVhNj+JZaa
+         7kt33yzmC36KDZeTuf3xRpqjuFM2SofHQSTIQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=/aQ24Egg9dbeaeZ6X/ZW0Y0MW1uqAO/UMRzdqkbDm8M=;
-        b=T4+UTrePFT+7+mhQ1ncG5Vemq2+5y9RtQDqmCpcqSFqe9iyO54PjcnmBzsUzZ9RuOu
-         PuUcZg6W+sIkhxUwtykBCXfAZvvhr8cQo/5k2t1Rqd1dZohJ3dFqt9m4jcvSTfJm6xrC
-         KM89Q0/c+40ASAbA5CNyn/qDNGjtRzw9u4qj/No5z53kejC2/xkmumBKGQz4RnZfb2D0
-         g/sqUmtBSLd5LMLhyUOQ8kvqfo67uaThhPZFP1Iv4Jsc+PNXjKbEfwQ++pKECNbv44ZH
-         lEA2AejiPwyMcp/1gGnmvGEQJth6kMmriZjZFhJmpOBybo9STi103LCEzXcN9pm71ypG
-         vsDA==
-X-Gm-Message-State: ACrzQf138DQkvQ3RBepHnzVV6S47y8V5dRfp1qs6RwUYE/ksLA6XtdZR
-        HdRCmv0LsBIzk4rJtHOPjjcXuA==
-X-Google-Smtp-Source: AMsMyM6mI34mz/fSmeVZC0rcmW2MHObqb4Ra4GsnD+kOqSbYGFLre2nBu0aZ9Jl9oPKAGq7uRpaRoQ==
-X-Received: by 2002:a05:6512:308f:b0:49a:5a59:aa25 with SMTP id z15-20020a056512308f00b0049a5a59aa25mr3796333lfd.44.1663968374350;
-        Fri, 23 Sep 2022 14:26:14 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id f3-20020a2e3803000000b0026c04fbb08csm1547229lja.45.2022.09.23.14.26.13
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=MjCIyVdNYTTKoVP4OLhW9xb+LVRJMI4IX/LyQztjHfk=;
+        b=VGxeBiDx+pTPjLUbJBYxQeDOjDvNeYn+psxOirxpSikzuA0LXvNbMUZe6iSsCfoKhL
+         9s3+j3JfF2gPr6Qx92gJv43xl+nZLheLzyHalurFxGKv0BJqXhMiuH52aEuqJrtaPILx
+         H1V2dP2dxXrky2re7Qylkcnt9XTlhtymEqMZAWJRgpXdXvsG5qOmLLd9tKucftrW3DpW
+         7mZtVO9FTnTY27/d4ejSRnD18PAzEiK2SU7ASCvdsyUYCtxhqIzBVw5tXTz215txgZ36
+         54Hhqb674V1hzzYD2OLvDRrgSbC+SsDY0bBqOymIWVhnApDVvux1Ks45e8m696mJNmCm
+         SotQ==
+X-Gm-Message-State: ACrzQf2ibO+V8fH5EGITdZJeVNlY5oB3oiTrKaB6Yefb1KMbLUmv4DnN
+        PAYX3l3qol1ARVV+Sq3FF+k70+GGkuAg/sB3
+X-Google-Smtp-Source: AMsMyM7vLKKKmbPHehpNAJInL7h45NvghNqOeEYARyIHdT6PXfl7wUI3RNR9ZCVVlydb8f2S2PotiQ==
+X-Received: by 2002:a17:906:9bf5:b0:77e:1ed1:b1b with SMTP id de53-20020a1709069bf500b0077e1ed10b1bmr9104487ejc.540.1663970857730;
+        Fri, 23 Sep 2022 15:07:37 -0700 (PDT)
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com. [209.85.221.42])
+        by smtp.gmail.com with ESMTPSA id m6-20020a509306000000b0044eda621b08sm6342619eda.54.2022.09.23.15.07.36
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Sep 2022 14:26:13 -0700 (PDT)
-Message-ID: <7b066e11-6e5c-c6d9-c8ed-9feccaec4c0c@linaro.org>
-Date:   Fri, 23 Sep 2022 23:26:12 +0200
+        Fri, 23 Sep 2022 15:07:36 -0700 (PDT)
+Received: by mail-wr1-f42.google.com with SMTP id n10so1881031wrw.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Sep 2022 15:07:36 -0700 (PDT)
+X-Received: by 2002:a05:6000:168c:b0:226:f4c2:d6db with SMTP id
+ y12-20020a056000168c00b00226f4c2d6dbmr6348292wrd.659.1663970856526; Fri, 23
+ Sep 2022 15:07:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH v2 1/4] dt-bindings: dma: qcom: gpi: add fallback
- compatible
-Content-Language: en-US
-To:     Richard Acayan <mailingradian@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220923210934.280034-1-mailingradian@gmail.com>
- <20220923210934.280034-2-mailingradian@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220923210934.280034-2-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <20220923140918.2825043-1-judyhsiao@chromium.org>
+In-Reply-To: <20220923140918.2825043-1-judyhsiao@chromium.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 23 Sep 2022 15:07:24 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UABpfLRehYT78mPdzgwVBhV_-uBQnkrtbbDbUH-6o8tg@mail.gmail.com>
+Message-ID: <CAD=FV=UABpfLRehYT78mPdzgwVBhV_-uBQnkrtbbDbUH-6o8tg@mail.gmail.com>
+Subject: Re: [PATCH v5 0/3] Add dtsi for sc7280 boards that using rt5682
+To:     Judy Hsiao <judyhsiao@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Jimmy Cheng-Yi Chiang <cychiang@google.com>,
+        Judy Hsiao <judyhsiao@google.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,31 +81,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/09/2022 23:09, Richard Acayan wrote:
-> The drivers are transitioning from matching against lists of specific
-> compatible strings to matching against smaller lists of more generic
-> compatible strings. Add a fallback compatible string in the schema to
-> support this change.
+Hi,
 
-Thanks for the patch. I wished we discussed it a bit more. :)
-qcom,gpi-dma does not look like specific enough to be correct fallback,
-at least not for all of the devices. I propose either a IP block version
-(which is tricky without access to documentation) or just one of the SoC
-IP blocks.
+On Fri, Sep 23, 2022 at 7:09 AM Judy Hsiao <judyhsiao@chromium.org> wrote:
+>
+> Put sound node and lpass_cpu node settings for boards that use rt5682
+> codec in the sc7280-herobrine-audio-rt5682.dtsi as there are different
+> choices of headset codec for herobrine projects. Common audio setting
+> for the internal speaker is in sc7280-herobrine.dtsi.
+>
+> Change Since V4
+> - Rebase and include sc7280-herobrine-villager-r0.dts change.
+>
+> Changes Since V3:
+> - Remove Change-Id in the commit message.
+> - Add dependency in cover letter.
+>
+> Changes Since V2:
+> - Fix sc7280-herobrine-audio-rt5682.dtsi syntax.
+>
+> Changes Since V1:
+> - Not to include the herobrine-villager-r0.dts changes in this patch
+>   series to avoid conflict.
+>
+> Judy Hsiao (3):
+>   arm64: dts: qcom: sc7280: herobrine: Add pinconf settings for mi2s1
+>   arm64: dts: qcom: sc7280: Add sc7280-herobrine-audio-rt5682.dtsi
+>   arm64: dts: qcom: sc7280: Include sc7280-herobrine-audio-rt5682.dtsi
+>     in herobrine-r1 and villager-r0
+>
+>  .../qcom/sc7280-herobrine-audio-rt5682.dtsi   | 122 ++++++++++++++++++
+>  .../qcom/sc7280-herobrine-herobrine-r1.dts    |   1 +
+>  .../dts/qcom/sc7280-herobrine-villager-r0.dts |   1 +
+>  .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  30 +++++
+>  4 files changed, 154 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
 
-> 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
->  .../devicetree/bindings/dma/qcom,gpi.yaml       | 17 +++++++++--------
->  1 file changed, 9 insertions(+), 8 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-> index eabf8a76d3a0..25bc1a6de794 100644
-> --- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-> +++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-> @@ -18,14 +18,15 @@ allOf:
+Please sync the Qualcomm tree upstream. I can tell you didn't since
+you had the wrong email address for Bjorn. Mailmap should have
+converted it to the kernel.org one.
 
+In any case, with the correct address for Bjorn, I'd note that I think
+this patch series is ready to land if you're planning a 2nd pull
+request this cycle.
 
-Best regards,
-Krzysztof
-
+-Doug
