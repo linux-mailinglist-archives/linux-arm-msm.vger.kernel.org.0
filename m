@@ -2,114 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F7BF5E712A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Sep 2022 03:09:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6805D5E717E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Sep 2022 03:43:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231714AbiIWBJl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Sep 2022 21:09:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55360 "EHLO
+        id S231285AbiIWBnr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Sep 2022 21:43:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231560AbiIWBJN (ORCPT
+        with ESMTP id S229779AbiIWBnq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Sep 2022 21:09:13 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6C8C1166D4;
-        Thu, 22 Sep 2022 18:09:05 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28N0wxED020043;
-        Fri, 23 Sep 2022 01:08:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=AabAOxUY3w5ehAHkcNB5sRfg/2gh4ddNyHuVC49D5gw=;
- b=UXmJPpro4YdxTzJ+IWXRjJlBJqW7LFlNymbHkn7wTawrDipMhEObt87ciayc87hquZ16
- mEtMLYYjfQZovktjzZmALUqXbXQNBkUC8+vbj27/u6SL3qrv/DSmY5AhcWHMsGkv7I5+
- 5bVGa237qFemrTLWrwxf6Obb2/V8If3jmK5MVtzcwX5AyvczZvgP11hds2F5n//GRg6V
- jvREy9Ug3izMaRvyoeu9b/EbNogUDHjY5O+DzySMtNOzw8NfsX4loxGqWu6PECsxkP9z
- HP8/tueSsPU2kU9ee0U5q2vxSpq5ch4ZGNbsLNj8ncPSuu7jkNQHFCNeMwRyNjgaT5RK 4g== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jr8y1usyh-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Sep 2022 01:08:49 +0000
-Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28N18ml2010754
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 23 Sep 2022 01:08:48 GMT
-Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Thu, 22 Sep 2022 18:08:48 -0700
-From:   Asutosh Das <quic_asutoshd@quicinc.com>
-To:     <mani@kernel.org>, <quic_nguyenb@quicinc.com>,
-        <quic_xiaosenh@quicinc.com>, <quic_cang@quicinc.com>,
-        <quic_nitirawa@quicinc.com>, <quic_rampraka@quicinc.com>,
-        <quic_richardp@quicinc.com>, <stanley.chu@mediatek.com>,
-        <adrian.hunter@intel.com>, <bvanassche@acm.org>,
-        <avri.altman@wdc.com>, <beanhuo@micron.com>,
-        <martin.petersen@oracle.com>
-CC:     <linux-scsi@vger.kernel.org>,
-        Asutosh Das <quic_asutoshd@quicinc.com>,
+        Thu, 22 Sep 2022 21:43:46 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 613B9118B2B;
+        Thu, 22 Sep 2022 18:43:40 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id b23so9260065iof.2;
+        Thu, 22 Sep 2022 18:43:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=kOUa/yf1KJbyu+PEZGAIPrceiPS1gEcuSD5/KPz64pU=;
+        b=WkdD/Pt84336mS1NZIBbZ03+wkOomBPyqYell8beJfH02nS5BDELZ5gIHYs3YiMiIj
+         GV/9CSmzgn5G2SqDv6m4uB1kTARvzcSWXZ7k/av4sDnL0ioXNW6D0HH8SgbMnAPzD2Jz
+         PT5tanv/a7tVo+rw6wWDNbH/Wpo7LdCLvwPmPcaMtcWqEqJnimdPTHONHQAtQgvXDduF
+         jQhjAhjtZF5fySnfQsHiL4oPGLNuKX8Pu98pGWU3YiqovMDXxEEGF8kd4PJNMFuV92eC
+         EVk4yBs3qbkEWrWn/8+eU6GBCyyJL8e9PrzHFnnNVQw//r1wjngkbrL8yqpoGDOL/2Na
+         rwcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=kOUa/yf1KJbyu+PEZGAIPrceiPS1gEcuSD5/KPz64pU=;
+        b=2CLpinphe0VC6Vl56he6tpWLFzSrO24r6oZIAEJKRSX/B+ldJ7hE1kz/u0b4VQqZM+
+         6XnRI8erzVB0lLPrlHEfJtj34c7nIpbiNK45H46fjRXH0E2SK+0RFZoQwqD5/WlJnEwA
+         pKcGELvMUk/5wIH+B6DSpVg3gKDiv5wzq7iwehry7zIE1gKy0kTjgIulgTu/DSkhffEp
+         Vfu1h1XvLW/TLGj3qzKfzpT1kHULiMcV6IzWIIfvSUoKYmDyzkfzL48kxrFaH8K7d5kN
+         ytU2SfuUWaTUKIukLxzrXBDzn0A8cdNbhbHA1kJrPE2PIjUN7UPX84heNDsndOtbnhIq
+         0snA==
+X-Gm-Message-State: ACrzQf1ZlzHcwl0HQm3Yg9cq5Vp/oSQlkFZ7DtuFZ3pU3ze1LCsI1wkJ
+        E8Aeg4E7Hg/fRubnaa449BzNeuCskJo=
+X-Google-Smtp-Source: AMsMyM5qPVY2YGfFK8brfhAaUP65W7dVTpxPmHSFYLOjXvDzMBKhEKBp+xwttZQ0Zl2Z+01LFPO9/g==
+X-Received: by 2002:a05:6602:164b:b0:6a2:83c0:d3f5 with SMTP id y11-20020a056602164b00b006a283c0d3f5mr2904214iow.77.1663897418677;
+        Thu, 22 Sep 2022 18:43:38 -0700 (PDT)
+Received: from localhost ([2607:fea8:a2e2:2d00::1e16])
+        by smtp.gmail.com with UTF8SMTPSA id h4-20020a056e020d4400b002f47787f44asm2652201ilj.13.2022.09.22.18.43.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Sep 2022 18:43:38 -0700 (PDT)
+From:   Richard Acayan <mailingradian@gmail.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-mediatek@lists.infradead.org>
-Subject: [PATCH v1 16/16] ufs: qcom-host: Enable multi circular queue capability
-Date:   Thu, 22 Sep 2022 18:05:23 -0700
-Message-ID: <33868968d028272ecee2c9f45f7efb1c95315a45.1663894792.git.quic_asutoshd@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1663894792.git.quic_asutoshd@quicinc.com>
-References: <cover.1663894792.git.quic_asutoshd@quicinc.com>
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        Richard Acayan <mailingradian@gmail.com>
+Subject: [PATCH 0/2] SDM670 SDHCI support
+Date:   Thu, 22 Sep 2022 21:43:20 -0400
+Message-Id: <20220923014322.33620-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: f7hrhw9abDRQjK_2oQOdC2PRG2x0GAM2
-X-Proofpoint-GUID: f7hrhw9abDRQjK_2oQOdC2PRG2x0GAM2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-22_16,2022-09-22_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- clxscore=1015 bulkscore=0 adultscore=0 spamscore=0 malwarescore=0
- suspectscore=0 phishscore=0 impostorscore=0 mlxlogscore=999
- priorityscore=1501 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2209130000 definitions=main-2209230005
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable MCQ for Qualcomm UFS controllers
+This adds the compatible string for SDHCI on the Qualcomm Snapdragon 670.
+As I noted before, I think it's fine to include something like this
+before the initial device tree because it is trivial.
 
-Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
----
- drivers/ufs/host/ufs-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 1 +
+ drivers/mmc/host/sdhci-msm.c                         | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index df7db01..69d35ee 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -853,6 +853,7 @@ static void ufs_qcom_set_caps(struct ufs_hba *hba)
- 	hba->caps |= UFSHCD_CAP_CRYPTO;
- 	hba->caps |= UFSHCD_CAP_AGGR_POWER_COLLAPSE;
- 	hba->caps |= UFSHCD_CAP_RPM_AUTOSUSPEND;
-+	hba->caps |= UFSHCD_CAP_MCQ_EN;
- 
- 	if (host->hw_ver.major >= 0x2) {
- 		host->caps = UFS_QCOM_CAP_QUNIPRO |
--- 
-2.7.4
 
