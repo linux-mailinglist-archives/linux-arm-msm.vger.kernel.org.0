@@ -2,74 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF1F75E775F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Sep 2022 11:40:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE1A55E786B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Sep 2022 12:32:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231867AbiIWJkt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Sep 2022 05:40:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58486 "EHLO
+        id S230424AbiIWKct (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Sep 2022 06:32:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232019AbiIWJis (ORCPT
+        with ESMTP id S231515AbiIWKcQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Sep 2022 05:38:48 -0400
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8395F1874;
-        Fri, 23 Sep 2022 02:38:09 -0700 (PDT)
-Received: from dggemv711-chm.china.huawei.com (unknown [172.30.72.53])
-        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4MYn695dm8zWgqX;
-        Fri, 23 Sep 2022 17:34:09 +0800 (CST)
-Received: from kwepemm600008.china.huawei.com (7.193.23.88) by
- dggemv711-chm.china.huawei.com (10.1.198.66) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31; Fri, 23 Sep 2022 17:38:08 +0800
-Received: from huawei.com (10.175.100.227) by kwepemm600008.china.huawei.com
- (7.193.23.88) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.31; Fri, 23 Sep
- 2022 17:38:07 +0800
-From:   Shang XiaoJing <shangxiaojing@huawei.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@somainline.org>, <jejb@linux.ibm.com>,
-        <martin.petersen@oracle.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-scsi@vger.kernel.org>
-CC:     <shangxiaojing@huawei.com>
-Subject: [PATCH -next] scsi: ufs: Remove redundant dev_err call
-Date:   Fri, 23 Sep 2022 18:12:17 +0800
-Message-ID: <20220923101217.18345-1-shangxiaojing@huawei.com>
-X-Mailer: git-send-email 2.17.1
+        Fri, 23 Sep 2022 06:32:16 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 672A517889
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Sep 2022 03:31:59 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id c7so14108602ljm.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Sep 2022 03:31:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=JYMmhfkFM4ANd32GEEelSBV88bdLE1Ja446ByYHiaXA=;
+        b=NeRn+B9WRWOsoR9LzOGZJy5GxoiA1NB6ylwd4hE/tqg/RSCDyuM/KHVHuT2kA9FRSK
+         c7V57vIhgWsR8e0J1Jdr+U55ja/VyEJweGVSiL+1p3uxK8TvSRR4uTIzM9IjHxZ4i5ce
+         ToIM2tljUC+ybVzXLHI/fbp56eaQ02XsoXGvWZmzgg9nQYuCH1ehvArcYsRfsbibCvQW
+         rmITz0AAswRXChWK02oxfHFwpBNAU2EC66YRrCzRa9a1ZK59kgOWkYBLdtH87rFLd7c+
+         o6PDI/Hw8gqTJhu4BuPT3UZFTB/6OxwpVs9wbvQ59udQs/pNlJLckxTsDpu41MRWpIZv
+         kv1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=JYMmhfkFM4ANd32GEEelSBV88bdLE1Ja446ByYHiaXA=;
+        b=ENkaOZOYjba1WYgzhLwnwpUNHiqGAqByqYctruA1fZaf0IAldSYkAkB0myKYK6OiBK
+         +LwEv5DbzhFtxATZ5GCFaeHsi0QkC1KvINU3klZXaftooo6shNK32koIJBjyAXeh2A0z
+         MFV8Zev5jh3PkurYZ/nsxZJqdajZZY7YU9IzDfvziHSuNzEnUuxXv8dOg0YHdM5C7OeD
+         b6jP27RcnsWj8zJx1ZhVkAzUrHLd/ihbakI0lwaJruJkqi4PyVm0GgZWA0uNYH9NN4Mu
+         h6vsNDQ4oly5pe/3fmgJgTfIwuKVEWKNA8/Wssb/u0HM58UKisD2ekRJyNqNP2dRgyI0
+         xLbA==
+X-Gm-Message-State: ACrzQf2UtoKkvAUdYoNpWfXZGunUI3Dl9IMrxaJ6jm5S+K6wNP3ph7re
+        Uy57/MYbOnCBJKxys0hPLd1cXg==
+X-Google-Smtp-Source: AMsMyM4cV+jFFO9JIbh1AGxjnaC9WhvCSEcPo5m/X4um5ZzZvU4UL9Tx52cV06TLSinxTNc7/bU5Rg==
+X-Received: by 2002:a05:651c:11cc:b0:26c:14c5:5b8f with SMTP id z12-20020a05651c11cc00b0026c14c55b8fmr2658081ljo.450.1663929117731;
+        Fri, 23 Sep 2022 03:31:57 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id v4-20020a2e9f44000000b0026ac7cd51afsm1316687ljk.57.2022.09.23.03.31.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 23 Sep 2022 03:31:57 -0700 (PDT)
+Message-ID: <cfd55866-0fd1-e819-75bb-31eff15bf984@linaro.org>
+Date:   Fri, 23 Sep 2022 12:31:56 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.175.100.227]
-X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
- kwepemm600008.china.huawei.com (7.193.23.88)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH 08/12] dt-bindings: pinctrl: qcom,sm8250-lpass-lpi: add
+ bias-bus-hold and input-enable
+Content-Language: en-US
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
+References: <20220922195651.345369-1-krzysztof.kozlowski@linaro.org>
+ <20220922195651.345369-9-krzysztof.kozlowski@linaro.org>
+ <20220923093131.5fb5co5i3f4eybcs@krzk-bin>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220923093131.5fb5co5i3f4eybcs@krzk-bin>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,MISSING_HEADERS,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-devm_ioremap_resource() prints error message in itself. Remove the
-dev_err call to avoid redundant error message.
+On 23/09/2022 11:31, Krzysztof Kozlowski wrote:
+> On Thu, 22 Sep 2022 21:56:47 +0200, Krzysztof Kozlowski wrote:
+>> The existing SC7280 LPASS pin controller nodes use bias-bus-hold and
+>> input-enable, so allow them.  Squash also blank lines for readability.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  .../bindings/pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml     | 6 ++----
+>>  1 file changed, 2 insertions(+), 4 deletions(-)
+>>
+> 
+> Running 'make dtbs_check' with the schema in this patch gives the
+> following warnings. Consider if they are expected or the schema is
+> incorrect. These may not be new warnings.
+> 
+> Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+> This will change in the future.
+> 
+> Full log is available here: https://patchwork.ozlabs.org/patch/1681325
+> 
+> 
+> pinctrl@33c0000: 'dmic01-active-pins', 'dmic01-sleep-pins', 'rx_swr-active-pins', 'tx_swr-active-pins', 'tx_swr-sleep-pins', 'wsa-swr-active-pins', 'wsa-swr-sleep-pins' do not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
 
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
----
- drivers/ufs/host/ufs-qcom-ice.c | 1 -
- 1 file changed, 1 deletion(-)
+This is being fixed in next DTS patches. I'll reorganize them if there
+is going to be a resubmit.
 
-diff --git a/drivers/ufs/host/ufs-qcom-ice.c b/drivers/ufs/host/ufs-qcom-ice.c
-index 745e48ec598f..62387ccd5b30 100644
---- a/drivers/ufs/host/ufs-qcom-ice.c
-+++ b/drivers/ufs/host/ufs-qcom-ice.c
-@@ -118,7 +118,6 @@ int ufs_qcom_ice_init(struct ufs_qcom_host *host)
- 	host->ice_mmio = devm_ioremap_resource(dev, res);
- 	if (IS_ERR(host->ice_mmio)) {
- 		err = PTR_ERR(host->ice_mmio);
--		dev_err(dev, "Failed to map ICE registers; err=%d\n", err);
- 		return err;
- 	}
- 
--- 
-2.17.1
+Best regards,
+Krzysztof
 
