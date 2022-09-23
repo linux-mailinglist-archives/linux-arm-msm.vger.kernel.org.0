@@ -2,38 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10F955E829C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Sep 2022 21:43:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 825A35E82AF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Sep 2022 21:50:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231705AbiIWTm6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Sep 2022 15:42:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59154 "EHLO
+        id S229891AbiIWTug (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Sep 2022 15:50:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231205AbiIWTm5 (ORCPT
+        with ESMTP id S229495AbiIWTuf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Sep 2022 15:42:57 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A4AA11D600;
-        Fri, 23 Sep 2022 12:42:56 -0700 (PDT)
+        Fri, 23 Sep 2022 15:50:35 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FEE411E5CE;
+        Fri, 23 Sep 2022 12:50:32 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 188DBB82153;
-        Fri, 23 Sep 2022 19:42:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6DF4C433C1;
-        Fri, 23 Sep 2022 19:42:50 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 695AB6163D;
+        Fri, 23 Sep 2022 19:50:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BBD8C433C1;
+        Fri, 23 Sep 2022 19:50:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1663962173;
-        bh=Y0GK27HriGK1CenoOx7n+sXWQGZIWWq+apTVtRSFstM=;
+        s=k20201202; t=1663962631;
+        bh=RfJloGo0sbd9e1QwXzBADCE3z3aKJNEikzCN2JIketA=;
         h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=qoqngcFkaVYhxKX1ekOizxC/cDw5cxGSSd+E0qRgZQf1sY5iUhTuf/yEzP1Qfsqxu
-         n6BmwAhZUvkZwvOatNtoV3GHbvhDPbQNIPbK0+DLoZzdEGKTN90yMPxB1X8lVfaScP
-         6qPWOiNQACjP17YfWCslLUy8R9ozwStjqTWyZ2PVOfSaeKwby/xzFuDmdm9Ylhr/Sx
-         GvDS882q7IRFhmqaYwnyR0BvkRMo1oLgWfEb3XIeptiwijdjHpFyhKpS45o7XG5DCe
-         SPA/RIBZT+OgK/HEvwk2SIw9uAzxAvXlX2EXhT5RVQO1QyabuHHGnpunZ99Sifujmy
-         yUlRXRuugIiFw==
-Message-ID: <fa33589b-7fe1-7be2-8d80-4c81183126c9@kernel.org>
-Date:   Fri, 23 Sep 2022 21:42:47 +0200
+        b=KO4oDSwG+E7Z1PjhWQDpf2PLjdM/xNJ3eQ8syIQlTPeK72uSrWQ/DE3VB1pNirur2
+         Gzj8lDjDBh2ISy6WL4eHZ8MUG7C2lcXtPLVOwzoWlnGvLcqugUAfrOfkrhSpEWT5tK
+         DwrlKaQhzwlOyQ+Od30AeP0TWkDMp4L/Geb75Kr5OPm06WJ255+/KPL9Ycoq/UkU1B
+         N4Aa68UxBS2oq+vEB5ibeQ/AqLu4+orjyvpoCGDwc7VhWH2EkAp8U1/Gd8cmp6fpLA
+         zWPZf0nuSqK9ZGfisuL4V1hIHZWWxQs3HhJfINCiScLejy1Ip0KHsjn5TR0C5ZS8Lb
+         dvi/RhyZT3Y/w==
+Message-ID: <1e62bea8-601e-fb48-d75b-4d8ed08fae16@kernel.org>
+Date:   Fri, 23 Sep 2022 21:50:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.0
@@ -71,196 +71,9 @@ On 20/09/2022 05:56, Souradeep Chowdhury wrote:
 > based on user inputs via the debugfs interface. The user gives
 > addresses as inputs and these addresses are stored in the
 
-(...)
-
-> +
-> +#define DCC_RD_MOD_WR_ADDR              0xC105E
-> +
-> +/*DCC debugfs directory*/
-> +static struct dentry	*dcc_dbg;
-> +
-> +enum dcc_descriptor_type {
-> +	DCC_READ_TYPE,
-> +	DCC_LOOP_TYPE,
-> +	DCC_READ_WRITE_TYPE,
-> +	DCC_WRITE_TYPE
-> +};
-> +
-> +struct dcc_config_entry {
-> +	u32				base;
-> +	u32				offset;
-> +	u32				len;
-> +	u32				loop_cnt;
-> +	u32				write_val;
-> +	u32				mask;
-> +	bool				apb_bus;
-> +	enum dcc_descriptor_type	desc_type;
-> +	struct list_head		list;
-> +};
-> +
-> +/**
-> + * struct dcc_drvdata - configuration information related to a dcc device
-> + * @base:	      Base Address of the dcc device
-> + * @dev:	      The device attached to the driver data
-> + * @mutex:	      Lock to protect access and manipulation of dcc_drvdata
-> + * @ram_base:         Base address for the SRAM dedicated for the dcc device
-> + * @ram_size:         Total size of the SRAM dedicated for the dcc device
-> + * @ram_offset:       Offset to the SRAM dedicated for dcc device
-> + * @mem_map_ver:      Memory map version of DCC hardware
-> + * @ram_cfg:          Used for address limit calculation for dcc
-> + * @ram_start:        Starting address of DCC SRAM
-> + * @sram_dev:	      Micellaneous device equivalent of dcc SRAM
-> + * @cfg_head:	      Points to the head of the linked list of addresses
-> + * @dbg_dir:          The dcc debugfs directory under which all the debugfs files are placed
-> + * @nr_link_list:     Total number of linkedlists supported by the DCC configuration
-> + * @loopoff:          Loop offset bits range for the addresses
-
-All these entres have messed up spacing.
-
-> + * @enable:           This contains an array of linkedlist enable flags
-
-No, this is not an array of linked lists... It's a pointer to bool. This
-is not way to store linked lists.
-
-
-> +
-> +static int dcc_probe(struct platform_device *pdev)
-> +{
-> +	u32 val;
-> +	int ret = 0, i, size;
-> +	struct device *dev = &pdev->dev;
-> +	struct dcc_drvdata *dcc;
-> +	struct resource *res;
-> +
-> +	dcc = devm_kzalloc(dev, sizeof(*dcc), GFP_KERNEL);
-> +	if (!dcc)
-> +		return -ENOMEM;
-> +
-> +	dcc->dev = &pdev->dev;
-> +	platform_set_drvdata(pdev, dcc);
-> +
-> +	dcc->base = devm_platform_ioremap_resource(pdev, 0);
-> +	if (IS_ERR(dcc->base))
-> +		return PTR_ERR(dcc->base);
-> +
-> +	dcc->ram_base = devm_platform_get_and_ioremap_resource(pdev, 1, &res);
-> +	if (IS_ERR(dcc->ram_base))
-> +		return PTR_ERR(dcc->ram_base);
-> +
-> +	dcc->ram_size = resource_size(res);
-> +
-> +	dcc->ram_offset = (size_t)of_device_get_match_data(&pdev->dev);
-> +
-> +	val = dcc_readl(dcc, DCC_HW_INFO);
-> +
-> +	if (FIELD_GET(DCC_VER_INFO_MASK, val)) {
-> +		dcc->mem_map_ver = 3;
-> +		dcc->nr_link_list = dcc_readl(dcc, DCC_LL_NUM_INFO);
-> +		if (dcc->nr_link_list == 0)
-> +			return	-EINVAL;
-> +	} else if ((val & DCC_VER_MASK2) == DCC_VER_MASK2) {
-> +		dcc->mem_map_ver = 2;
-> +		dcc->nr_link_list = dcc_readl(dcc, DCC_LL_NUM_INFO);
-> +		if (dcc->nr_link_list == 0)
-> +			return	-EINVAL;
-> +	} else {
-> +		dcc->mem_map_ver = 1;
-> +		dcc->nr_link_list = DCC_MAX_LINK_LIST;
-> +	}
-> +
-> +	/* Either set the fixed loop offset or calculate it
-
-Start with /*
-(see coding style)
-
-> +	 * from ram_size.Max consecutive addresses the
-> +	 * dcc can loop is equivalent to the ram size
-> +	 */
-> +	if (val & DCC_LOOP_OFFSET_MASK)
-> +		dcc->loopoff = DCC_FIX_LOOP_OFFSET;
-> +	else
-> +		dcc->loopoff = get_bitmask_order((dcc->ram_size +
-> +				dcc->ram_offset) / 4 - 1);
-> +
-> +	mutex_init(&dcc->mutex);
-> +	/* Allocate space for all entries at once */
-> +	size = sizeof(*dcc->enable) + sizeof(*dcc->cfg_head);
-
-This is quite confusing way of handling lists - some parts of drvdata
-are list, some are not.
-
-> +
-> +	dcc->enable = devm_kcalloc(dev, dcc->nr_link_list, size, GFP_KERNEL);
-> +	if (!dcc->enable)
-> +		return -ENOMEM;
-> +
-> +	dcc->cfg_head = (struct list_head *)(dcc->enable + dcc->nr_link_list);
-
-That's unusual way to iterate over list...
-
-> +
-> +	for (i = 0; i < dcc->nr_link_list; i++)
-> +		INIT_LIST_HEAD(&dcc->cfg_head[i]);
-> +
-> +	ret = dcc_sram_dev_init(dcc);
-> +	if (ret) {
-> +		dev_err(dcc->dev, "DCC: sram node not registered.\n");
-> +		return ret;
-> +	}
-> +
-> +	ret = dcc_create_debug_dir(dcc);
-> +	if (ret) {
-> +		dev_err(dcc->dev, "DCC: debugfs files not created.\n");
-
-debugfs failures are not reasons to fail probe. Also no need to print
-errors.
-
-> +		dcc_sram_dev_exit(dcc);
-> +		return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int dcc_remove(struct platform_device *pdev)
-> +{
-> +	struct dcc_drvdata *drvdata = platform_get_drvdata(pdev);
-> +
-> +	dcc_delete_debug_dir(drvdata);
-> +
-> +	dcc_sram_dev_exit(drvdata);
-> +
-
-No need for blank lines between each calls.
-
-> +	dcc_config_reset(drvdata);
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct of_device_id dcc_match_table[] = {
-> +	{ .compatible = "qcom,sm8150-dcc", .data = (void *)0x5000 },
-> +	{ .compatible = "qcom,sc7280-dcc", .data = (void *)0x12000 },
-> +	{ .compatible = "qcom,sc7180-dcc", .data = (void *)0x6000 },
-> +	{ .compatible = "qcom,sdm845-dcc", .data = (void *)0x6000 },
-> +	{ }
-> +};
-> +MODULE_DEVICE_TABLE(of, dcc_match_table);
-> +
-> +static struct platform_driver dcc_driver = {
-> +	.probe = dcc_probe,
-> +	.remove	= dcc_remove,
-> +	.driver	= {
-> +		.name = "qcom-dcc",
-> +		.of_match_table	= dcc_match_table,
-> +	},
-> +};
-> +
-> +module_platform_driver(dcc_driver);
-> +
-> +MODULE_LICENSE("GPL");
-> +MODULE_DESCRIPTION("Qualcomm Technologies Inc. DCC driver");
-> +
+Please wrap commit message according to Linux coding style / submission
+process:
+https://elixir.bootlin.com/linux/v5.18-rc4/source/Documentation/process/submitting-patches.rst#L586
 
 Best regards,
 Krzysztof
