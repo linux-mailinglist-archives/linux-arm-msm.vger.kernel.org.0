@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 173925E809D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Sep 2022 19:23:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 687655E80A5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Sep 2022 19:25:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230106AbiIWRXf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Sep 2022 13:23:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60940 "EHLO
+        id S231281AbiIWRZq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Sep 2022 13:25:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229666AbiIWRXf (ORCPT
+        with ESMTP id S231253AbiIWRZo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Sep 2022 13:23:35 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9546812756E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Sep 2022 10:23:30 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id w8so1281196lft.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Sep 2022 10:23:30 -0700 (PDT)
+        Fri, 23 Sep 2022 13:25:44 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11B9BE7411
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Sep 2022 10:25:42 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id w8so1289190lft.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Sep 2022 10:25:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=S/eOVwAJObSNguh0+3x3BkIgxOBP5Z+/Ums6rpypzBo=;
-        b=PBQIM2dxcEi/RE2tW/4Gnm0hjzn9IppdA7bDjrg0WbFX8h02maVjZrhVUATLKyGypa
-         m4OyxHt6Bab60HrXwPF0h2HPjfYaCVBkuCJ3sZa6aYPjrqPC75LQdH8SnSbivjigT9jh
-         V5CAI+Ue8FR5Sj3wsumFES+Xv9pFKwSUfdbAmrffKoQLNKDx2TnEVKmmuwR9yCbKopIM
-         pKRdCI3r9sQt7TMF6p43Edx/feIVYmdi0gfVV3pc1P5243jUxOKOLAmgW62E7KL18vfZ
-         cDQZptJ9WZIOvL3P71vK6+L/qbov2BzBwc0TSV+0CMHPNAgNdhyNeIF5vDxXDj1+4B4L
-         GCRg==
+        bh=OrcelPIHikTCgBXX07kdh3ldwNlBjgUvFNgGfB7EFeg=;
+        b=u/1/qxtErYtkN9+zPFiGnQdZwn2081IQed996TOtNe5sxlsZzGsy10AxB2KRGbfhmz
+         7vQfKDndmz60rAunU0+Y4BRbVp0PJlUB7GGlBBec8yK6fdFbvfPp+c3gRlQAa3wk4XYR
+         SsFglBZ7/2cBD6/ME3xZkN43TbL2oyKMS1aO4jUmHcIme0NfeFkfiXY2df8AUIYYMejA
+         5otfhLywGRZHGCJgZOgeAwOm9Hf61HX+zcC644y1aFRwi3HyOtsdvzRn00kFolsHIIT5
+         UUAb3s158TmWLdPOLnW6AxMYlahrK4NZzhiSEBeFfp2IupBLYz5W1XxeFFPNJRTvrg8K
+         zUVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=S/eOVwAJObSNguh0+3x3BkIgxOBP5Z+/Ums6rpypzBo=;
-        b=3zJahY/eIc5vg1Qh7owAghsyXa+f5s9DNAJHUt+zIFEQvqjjHDbWJRZkrQg0wPASFh
-         C7gQoO76MvY7p9r0f2ub8uJvEAe2/zpGjup8BuiASJteaSInlfY6XzwcOdpt2W8oTYFJ
-         dwek90YwkB1hv1SOKJdlAReVkjkB4tzZCwR1MJccI0Sn273NBAw6X355i3DNQUP5n25p
-         OCzSS4dTfNi2d+RmpqoLI0MvaZtNh8SfcqsR+H0MtJJs0yOqs/eiyip0JXI/Cnj2Y6sH
-         dIgpa2zPz24EnaXhAnVqN0DNFwtoC3+s3r9LQIvpmKvn3WnmiQTLDqr5dWCsvrIcfjQA
-         RTKw==
-X-Gm-Message-State: ACrzQf26pIRhRlsF5J+Ygd+dlNQI8EWYraR7iu9VwUqyz3/dyVfNtE6a
-        qsRIOfFMOyjxxvMfxeCTk0hlBg==
-X-Google-Smtp-Source: AMsMyM5YbjqAB30MDGIa7Gr77pd7Aym9gxou0mLRVx8oDoY/HHKSgpGmIpW8HZlPbFNqrlc1nQQOOQ==
-X-Received: by 2002:a05:6512:ac3:b0:498:f076:6281 with SMTP id n3-20020a0565120ac300b00498f0766281mr3556390lfu.68.1663953808782;
-        Fri, 23 Sep 2022 10:23:28 -0700 (PDT)
+        bh=OrcelPIHikTCgBXX07kdh3ldwNlBjgUvFNgGfB7EFeg=;
+        b=IQineWSmIsM70A+9POgAsGDzz0IxCGPrJ4Qtl1SVCpVxAP4JaaP7m2f5Qqg3UcLezA
+         mi1VEfn6qPXVGGZ353e8mJTX+KhFi1tzIBdzzKrB5Vn6pp4/iQUAySDlCJPh3hCpyHXa
+         DcepT1HZ4Vv96JQcXHJ8ORbUOPz2exbVa6tM9z7EUZ2t0gVtLM2rtgjl8xcCDxRoQTIa
+         RM7b6x/neYgHe3huiTMPYV1k8qRpaQDoa4OqdqR3tVmeBOF2mK8DpTq0eLVHm9FHF4uu
+         FKfLJRkVesDIt3RTthCPTS2c4nsTqz2XILSwe6gWMt4I3kebG4HGHFhZYTwvVwovNFy1
+         vGsQ==
+X-Gm-Message-State: ACrzQf17KeCZL6hZhiCD2ImhY8uImMbwTTpPJGUNOHu+lIBt/WYl45hv
+        GHQ5dp1oPZhiNwQ0PZUwGHq3sA==
+X-Google-Smtp-Source: AMsMyM6ZPGbEHKg4/6Ep9HeLzcfVYce6BoygYO/+x80dFQl1w0hIDyL0uSoJRSq4dh2CzzhKH+lirg==
+X-Received: by 2002:a05:6512:10c8:b0:49c:14c5:e081 with SMTP id k8-20020a05651210c800b0049c14c5e081mr3718436lfg.615.1663953940276;
+        Fri, 23 Sep 2022 10:25:40 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id e2-20020a05651236c200b00494791fbd80sm1520577lfs.307.2022.09.23.10.23.27
+        by smtp.gmail.com with ESMTPSA id y1-20020a05651c106100b0026c16e9e45bsm1480801ljm.17.2022.09.23.10.25.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Sep 2022 10:23:28 -0700 (PDT)
-Message-ID: <7d001153-e1f2-7ae6-2821-4b3547ccf034@linaro.org>
-Date:   Fri, 23 Sep 2022 19:23:26 +0200
+        Fri, 23 Sep 2022 10:25:39 -0700 (PDT)
+Message-ID: <da5902dd-1a2d-7669-fb91-c7df5bb1addb@linaro.org>
+Date:   Fri, 23 Sep 2022 19:25:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.0
-Subject: Re: [PATCH v8 1/7] dt-bindings: remoteproc: qcom: Add SC7280 ADSP
- support
+Subject: Re: [PATCH v8 6/7] remoteproc: qcom: Add efuse evb selection control
 Content-Language: en-US
 To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         linux-remoteproc@vger.kernel.org, agross@kernel.org,
@@ -67,14 +66,15 @@ To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         linux-kernel@vger.kernel.org, swboyd@chromium.org,
         judyhsiao@chromium.org, devicetree@vger.kernel.org
 References: <1663938340-24345-1-git-send-email-quic_srivasam@quicinc.com>
- <1663938340-24345-2-git-send-email-quic_srivasam@quicinc.com>
+ <1663938340-24345-7-git-send-email-quic_srivasam@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1663938340-24345-2-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <1663938340-24345-7-git-send-email-quic_srivasam@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -82,212 +82,26 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 23/09/2022 15:05, Srinivasa Rao Mandadapu wrote:
-> Add ADSP PIL loading support for SC7280 SoCs.
+> Add efuse evb selection control and enable it for starting ADSP.
 > 
 > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Reviewed-by: Rob Herring <robh@kernel.org>
 > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
 > ---
-> Changes since V7:
-> 	-- Remove redundant clocks in dt bindings.
-> 	-- Fix dt compilation error in dt bindings.
-> Changes since V6:
-> 	-- Update glink-edge property.
-> 	-- Add qcom,qmp property.
-> Changes since V5:
-> 	-- Remove qcom,adsp-memory-regions property.
-> Changes since V4:
-> 	-- Update halt registers description in dt bindings.
-> 
->  .../bindings/remoteproc/qcom,sc7280-adsp-pil.yaml  | 207 +++++++++++++++++++++
->  1 file changed, 207 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
-> new file mode 100644
-> index 0000000..79ef3c0
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
-> @@ -0,0 +1,207 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/remoteproc/qcom,sc7280-adsp-pil.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm SC7280 ADSP Peripheral Image Loader
-> +
-> +maintainers:
-> +  - Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> +
-> +description:
-> +  This document describes the hardware for a component that loads and boots firmware
-> +  on the Qualcomm Technology Inc. ADSP.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,sc7280-adsp-pil
-> +
-> +  reg:
-> +    minItems: 1
-> +    items:
-> +      - description: qdsp6ss register
-> +      - description: efuse q6ss register
 
-Why second IO address space is optional?
+Thank you for your patch. There is something to discuss/improve.
 
-> +
-> +  interrupts:
-> +    items:
-> +      - description: Watchdog interrupt
-> +      - description: Fatal interrupt
-> +      - description: Ready interrupt
-> +      - description: Handover interrupt
-> +      - description: Stop acknowledge interrupt
-> +      - description: Shutdown acknowledge interrupt
-> +
-> +  interrupt-names:
-> +    items:
-> +      - const: wdog
-> +      - const: fatal
-> +      - const: ready
-> +      - const: handover
-> +      - const: stop-ack
-> +      - const: shutdown-ack
-> +
-> +  clocks:
-> +    items:
-> +      - description: XO clock
-> +      - description: GCC CFG NOC LPASS clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: xo
-> +      - const: gcc_cfg_noc_lpass
-> +
-> +  power-domains:
-> +    items:
-> +      - description: LCX power domain
-> +
-> +  resets:
-> +    items:
-> +      - description: PDC AUDIO SYNC RESET
-> +      - description: CC LPASS restart
-> +
-> +  reset-names:
-> +    items:
-> +      - const: pdc_sync
-> +      - const: cc_lpass
-> +
-> +  memory-region:
-> +    maxItems: 1
-> +    description: Reference to the reserved-memory for the Hexagon core
-> +
-> +  qcom,halt-regs:
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> +    description:
-> +      Phandle reference to a syscon representing TCSR followed by the
-> +      four offsets within syscon for q6, CE, AXI and qv6 halt registers.
-> +    items:
-> +      items:
+> @@ -543,6 +549,17 @@ static int adsp_init_mmio(struct qcom_adsp *adsp,
+>  		return PTR_ERR(adsp->qdsp6ss_base);
+>  	}
+>  
+> +	efuse_region = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+> +	if (!efuse_region) {
+> +		adsp->lpass_efuse = NULL;
+> +		dev_dbg(adsp->dev, "failed to get efuse memory region\n");
+> +	} else {
 
-This has to be strictly defined, IOW, the second items must be already
-an item of previous list. Look at the other mss-pil.
-
-> +        - description: phandle to TCSR MUTEX
-> +        - description: offset to q6 halt registers
-> +        - description: offset to CE halt registers
-> +        - description: offset to AXI halt registers
-> +        - description: offset to qv6 halt registers
-> +
-> +  qcom,smem-states:
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> +    description: States used by the AP to signal the Hexagon core
-> +    items:
-> +      - description: Stop the modem
-> +
-> +  qcom,smem-state-names:
-> +    description: The names of the state bits used for SMP2P output
-> +    const: stop
-> +
-> +  qcom,qmp:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description: Reference to the AOSS side-channel message RAM.
-> +
-> +  glink-edge:
-> +    type: object
-
-Missing ref to glink-edge and unevaluatedProperties:false. Please take a
-look at recent
-Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml
-
-> +    description: |
-> +      Qualcomm G-Link subnode which represents communication edge, channels
-> +      and devices related to the ADSP.
-> +
-> +    properties:
-> +      interrupts:
-> +        items:
-> +          - description: IRQ from ADSP to GLINK
-
-Skip interrupts and mboxes - both are coming from glink-edge.
-
-> +
-> +      mboxes:
-> +        items:
-> +          - description: Mailbox for communication between APPS and ADSP
-> +
-> +      label:
-> +        description: The names of the state bits used for SMP2P output
-
-Skip description
-
-> +        items:
-> +          - const: lpass
-
-No items, just const: lpass
-
-> +
-> +      qcom,remote-pid:
-> +        $ref: /schemas/types.yaml#/definitions/uint32
-> +        description: ID of the shared memory used by GLINK for communication with ADSP
-
-This can be dropped.
-
-> +
-> +      gpr: true
-> +      apr: false
-> +      fastrpc: false
-
-
-BTW, all these three do not make sense without ref to glink-edge. After
-adding ref, these seem reasonable.
-
-> +
-> +    required:
-> +      - interrupts
-> +      - mboxes
-> +      - label
-> +      - qcom,remote-pid
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - interrupt-names
-> +  - clocks
-> +  - clock-names
-> +  - power-domains
-> +  - resets
-> +  - reset-names
-> +  - qcom,halt-regs
-> +  - memory-region
-> +  - qcom,smem-states
-> +  - qcom,smem-state-names
-> +  - qcom,qmp
-> +
-> +additionalProperties: false
+This needs bindings updates in all users.
 
 Best regards,
 Krzysztof
