@@ -2,60 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 616285E88B7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 08:18:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D0695E88C6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 08:38:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233372AbiIXGSa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Sep 2022 02:18:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48482 "EHLO
+        id S229556AbiIXGi0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Sep 2022 02:38:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233206AbiIXGS0 (ORCPT
+        with ESMTP id S229479AbiIXGiY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Sep 2022 02:18:26 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AFABEC577;
-        Fri, 23 Sep 2022 23:18:23 -0700 (PDT)
+        Sat, 24 Sep 2022 02:38:24 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DDB6146602
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Sep 2022 23:38:24 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id A9081B80E10;
-        Sat, 24 Sep 2022 06:18:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83236C433C1;
-        Sat, 24 Sep 2022 06:18:19 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BD8FA60E84
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 06:38:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39AC1C433C1;
+        Sat, 24 Sep 2022 06:38:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664000300;
-        bh=N8A1EAkzo8qHknJSPdQjAbz2LO4T4wabU3U9XHAUm94=;
+        s=k20201202; t=1664001503;
+        bh=T8nmOQrLj2xvmYYRjnPLdaZP1dXgSLOPrMfJSf2fi2s=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YJjfpE/Y1SKb1ltXgBy50w1iWKjSmQR5abyIDKiBPTsDX8m90GheUVBDEcZctHhmO
-         GnNpWCwObfHMx+MpX6VZhrLKgjzKzRM60M8VxYUR7YoV+7bH7EGHLb7hkNlgu4rGff
-         azj+Cx0OsUkhbmpA1ciGYZbH7QDKDroFZ1LWUrGqJkKxOKolHAYYlWSL+bSH8kN27l
-         DafnX1ilRy0g1pxk2+1biSibaNcc1rK3APk0ayPfGI18QDFKyHa4n9FyNkaV0tC69j
-         fWdROvPcH0AiLzvlBvOzMpholuiXqJHnCafaxap3291iu/sduU3JZzKDMc4NLYW4a1
-         Iy4ffvonUeRuQ==
-Date:   Sat, 24 Sep 2022 11:48:15 +0530
+        b=bM5Ao7/0CcYomFx8LBj61ETlTKq/rE0Qxp5aOZNZy/P0vDNmF4lgnb9Uo8UnitVKf
+         QOSveK5GXpxbDFYdnZG7XDR6jEkzFIVHj5Em9N8GYkXEDW+d8UqCIpW5f3jNsge4iM
+         kmMqbbtxxtgB8V/V45QDFcIAScfJv930vSeEVOl9CgmqQ+uT0PKkOZkLXO+vSj0ArJ
+         sXdHP4QPbIwn5U835PXeg9grFdoEgi//ZgOG/4g8rjpTtER4cJCUp4t75r+dkkqu1U
+         Ep9yPg8YH6YyAy7KuJv4y6uDzkTdN/Knugm2VgiYcXsylkmuSoHWjz4ApKFShz2KZe
+         JCq2OE04eLa5A==
+Date:   Sat, 24 Sep 2022 12:08:18 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: Re: [PATCH v3 1/9] phy: define submodes for PCIe PHYs
-Message-ID: <Yy6hJyivbbQ+sI3n@matsya>
-References: <20220909091433.3715981-1-dmitry.baryshkov@linaro.org>
- <20220909091433.3715981-2-dmitry.baryshkov@linaro.org>
+To:     Yuan Can <yuancan@huawei.com>
+Cc:     agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, kishon@ti.com,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH 0/7] Use dev_err_probe() to simplify code
+Message-ID: <Yy6l2lSb8v27P5WB@matsya>
+References: <20220922111228.36355-1-yuancan@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220909091433.3715981-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220922111228.36355-1-yuancan@huawei.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -65,40 +54,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09-09-22, 12:14, Dmitry Baryshkov wrote:
-> Define two submodes to be used for the PCIe PHYs, where required.
+On 22-09-22, 11:12, Yuan Can wrote:
+> This series simplify the error handling in probe function by
+> switching from dev_err() to dev_err_probe().
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  include/linux/phy/phy.h | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/include/linux/phy/phy.h b/include/linux/phy/phy.h
-> index b1413757fcc3..bd60c1a72988 100644
-> --- a/include/linux/phy/phy.h
-> +++ b/include/linux/phy/phy.h
-> @@ -45,6 +45,15 @@ enum phy_mode {
->  	PHY_MODE_DP
->  };
->  
-> +/*
-> + * Submodes for the PHY_MODE_PCIE, allowing the host to select between RC (Root
-> + * Complex) and EP (End Point) PHY modes.
-> + */
-> +enum {
-> +	PHY_SUBMODE_PCIE_RC,
-> +	PHY_SUBMODE_PCIE_EP,
-> +};
+> Yuan Can (7):
+>   phy: qcom-qmp-combo: Use dev_err_probe() to simplify code
+>   phy: qcom-qmp-pcie-msm8996: Use dev_err_probe() to simplify code
+>   phy: qcom-qmp-pcie: Use dev_err_probe() to simplify code
+>   phy: qcom-qmp-ufs: Use dev_err_probe() to simplify code
+>   phy: qcom-qmp-usb: Use dev_err_probe() to simplify code
+>   phy: qcom-qusb2: Use dev_err_probe() to simplify code
+>   phy: qcom-snps: Use dev_err_probe() to simplify code
 
-This can be dropped see include/linux/phy/pcie.h
+phy: qcom-snps: Use dev_err_probe() to simplify code
+phy: qcom-qusb2: Use dev_err_probe() to simplify code
+phy: qcom-qmp-pcie: Use dev_err_probe() to simplify code
 
-
-> +
->  enum phy_media {
->  	PHY_MEDIA_DEFAULT,
->  	PHY_MEDIA_SR,
-> -- 
-> 2.35.1
+Applied these three, rest have conflicts please rebase and resend with
+acks collected
 
 -- 
 ~Vinod
