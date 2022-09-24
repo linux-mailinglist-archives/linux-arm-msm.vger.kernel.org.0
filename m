@@ -2,55 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 23DBA5E8AF2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 11:34:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9C155E8B03
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 11:43:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233624AbiIXJeU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Sep 2022 05:34:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60004 "EHLO
+        id S233435AbiIXJnv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Sep 2022 05:43:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233204AbiIXJeS (ORCPT
+        with ESMTP id S232388AbiIXJnv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Sep 2022 05:34:18 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D546112E429;
-        Sat, 24 Sep 2022 02:34:17 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 70CA3608C3;
-        Sat, 24 Sep 2022 09:34:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 542DBC433C1;
-        Sat, 24 Sep 2022 09:34:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1664012056;
-        bh=3mobUcHXtIiwJ/IgBy0YxctGCTuEvcBls7FCY9NGx94=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=WwI4czSd+PC2k+Gv5uUc0PfQbDuMvfCng+HMUKtnB711hP7bxapr7iMQBnl8KUtev
-         GJPt8x3FUhpAgWK2k2xNMhyhiIVvrMUPYzmGcHPTPKCKYrkKosNqQMAkyx4V0NtKj8
-         pEgW219IWo2sqggtMPPfTq+vFrA9EleWzOkE7FwY=
-Date:   Sat, 24 Sep 2022 11:34:13 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Alex Elder <elder@linaro.org>
-Cc:     Douglas Anderson <dianders@chromium.org>, stable@vger.kernel.org,
-        swboyd@chromium.org, Mike Tipton <mdtipton@codeaurora.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <georgi.djakov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: Re: [5.10 PATCH] interconnect: qcom: icc-rpmh: Add BCMs to commit
- list in pre_aggregate
-Message-ID: <Yy7PFenCa0Sa3B3n@kroah.com>
-References: <20220922141725.5.10.1.I791715539cae1355e21827ca738b0b523a4a0f53@changeid>
- <00eb82ca-8bf6-c744-d04d-96b97ce06b17@linaro.org>
+        Sat, 24 Sep 2022 05:43:51 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C94E1F621
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 02:43:50 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id z25so3761244lfr.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 02:43:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=guecmyRIRRz2AXWadVLwOMYEwJax3FS9elbcAnyJFGs=;
+        b=ShrZcbOcEr4oy3XOUsaUT8tLdzEoQ9DZOHKcv0og1a4hbgpfPg3szGEJ2fns8vGePI
+         5HolOuuvjarT38gF7pYPXn+QEX8XnqCKmmsSCEDj7/vs70OE5mTB7NOFfwOgBBL2+Gfv
+         3HGExhq8OvvGD6XH8PbIXmA9oqQz27O9o4elh7mZ8tg+NjwocsU6U4gIT6JkFMRCVsKs
+         wHyOljBz/3umuyjZDhRxvLRM3Spq4Mqxh4HRZVmTR1kAftv9Vw+AovL4jhps8RQEtc2m
+         ZZu+nXJLI0euvN3zvlv9Gc/gXUq3zGfzyIqKKeexx9mEn8ZnVLQ8vP/V6CSn8p+D0u9H
+         quLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=guecmyRIRRz2AXWadVLwOMYEwJax3FS9elbcAnyJFGs=;
+        b=tQf4HWkl4TAHCzRtt5RbgLxBsf8KrDomXfdT22a2Ogbrg4981D8ywwV9lYedXSxchP
+         3bOsSU5miZvvTZ6D5uKWsyohq8dhZvlD+5wpsC9bCDZ9B0yGqFNcEIy/Qvn9TpXTbx12
+         CYSyMhs1u0A+8I9LRoOWEEDcHvIk29gVtwsS4/mwuLL7/J6EUs80rqE+g5Ic222S7So8
+         EbeqQtmD8bdbzaL8Vu57fOSXpp5ol0oaoHLwbmmF2e05Sf/0XHJEqsWFDlUM8IA1CE/J
+         5DDc8+cUFksoUPoLzxjG887AO97P6g8RV7/2/WmV8U8zOtt0cMiAC/l7lU/T6MAVSvYw
+         ltWQ==
+X-Gm-Message-State: ACrzQf31ABPyAiYHxSVEqiKgbiAnht/goBBq35SeY+UQd9qzJyE/aFTi
+        J9l2RUE+/e32/RIP/gUC8O0PFaE+dyceXQ==
+X-Google-Smtp-Source: AMsMyM5ZmT4tx4z30xIzBpRGlclQSCUra8mRCpWgxqdBdL/38aqlqC5ixrwsatwiyZQzLn/4fj6eFw==
+X-Received: by 2002:a05:6512:2803:b0:49f:979c:cc53 with SMTP id cf3-20020a056512280300b0049f979ccc53mr5037103lfb.76.1664012628627;
+        Sat, 24 Sep 2022 02:43:48 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id x13-20020a056512078d00b00496693860dcsm1833347lfr.232.2022.09.24.02.43.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 24 Sep 2022 02:43:48 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH 0/2] arm: dts: qcom: rename HDMI PHY nodes
+Date:   Sat, 24 Sep 2022 12:43:45 +0300
+Message-Id: <20220924094347.178666-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <00eb82ca-8bf6-c744-d04d-96b97ce06b17@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -58,33 +76,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 22, 2022 at 04:28:25PM -0500, Alex Elder wrote:
-> On 9/22/22 4:18 PM, Douglas Anderson wrote:
-> > From: Mike Tipton <mdtipton@codeaurora.org>
-> > 
-> > commit b95b668eaaa2574e8ee72f143c52075e9955177e upstream.
-> > 
-> > We're only adding BCMs to the commit list in aggregate(), but there are
-> > cases where pre_aggregate() is called without subsequently calling
-> > aggregate(). In particular, in icc_sync_state() when a node with initial
-> > BW has zero requests. Since BCMs aren't added to the commit list in
-> > these cases, we don't actually send the zero BW request to HW. So the
-> > resources remain on unnecessarily.
-> > 
-> > Add BCMs to the commit list in pre_aggregate() instead, which is always
-> > called even when there are no requests.
-> > 
-> > Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
-> > [georgi: remove icc_sync_state for platforms with incomplete support]
-> > Link: https://lore.kernel.org/r/20211125174751.25317-1-djakov@kernel.org
-> > Signed-off-by: Georgi Djakov <djakov@kernel.org>
-> > [dianders: dropped sm8350.c which isn't present in 5.10]
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> 
-> Whoops, sorry about that.
-> 
-> Acked-by: Alex Elder <elder@linaro.org>
+Historically HDMI PHY device tree nodes used the hdmi-phy@ names.
+Replace them with generic phy@ names.
 
-Now queued up, thanks.
+While there is no such requirement in the DT schema, it's worth doing
+that because:
 
-greg k-h
+1) The recent qcom DT files already use just phy@ for most of PHY nodes
+
+2) The recommended list from devicetree specs mentions
+usb-phy/ethernet-phy, but not <anything>-phy, so I'd think that those
+two are mostly for backwards compatibility.
+
+3) I liked the example of sc7280 which switched all MDSS PHYs to just
+phy@ (this includes DSI PHY, eDP PHY and, by extension, the HDMI PHY).
+
+Dmitry Baryshkov (2):
+  ARM: dts: qcom-apq8064: change HDMI PHY node name to generic one
+  arm64: dts: qcom: msm8996: change HDMI PHY node name to generic one
+
+ arch/arm/boot/dts/qcom-apq8064-ifc6410.dts | 2 +-
+ arch/arm/boot/dts/qcom-apq8064.dtsi        | 2 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi      | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+-- 
+2.35.1
+
