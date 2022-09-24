@@ -2,130 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 69C3F5E85F2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 00:41:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C24B65E8692
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 02:11:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231851AbiIWWlN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Sep 2022 18:41:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50620 "EHLO
+        id S231701AbiIXALd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Sep 2022 20:11:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230514AbiIWWlM (ORCPT
+        with ESMTP id S232588AbiIXALN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Sep 2022 18:41:12 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 636CF13C844;
-        Fri, 23 Sep 2022 15:41:11 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id v186so1389417pfv.11;
-        Fri, 23 Sep 2022 15:41:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date;
-        bh=oOI1w1RpGPXrz/NU70+BlU1qHXDFQzQmtw6vEH42xjs=;
-        b=ndQOEMU3yBWN/RaJFUoxcBG8JODdya6truLZHSKj35iTY3iuiFdXa54rNGAcTTNLa1
-         44qzi5WwzLqs/tWUW8d1Civy+XnhhcdSz0+M6JoL8QQegwhcT0AKils5mdwdkWb+HgrI
-         syeSknpoFpJHmpFR8sGzFgLqvQ62EQQtHVOzLFGIh77aY1WPDrflvQ4BIN3dESJbPXyZ
-         YGr4CteT+J+rJPXf0OOS/qWePukr4xrxfZ3WOPxpwDTjDrs7Xt4A4ADI/VKStbZuzagV
-         g3hAI/N9vs1GLaCHaJXHzYDEUrtaS+0wuVaMLqap8AIXxVVrmzG0qMWLtOd0Sc4Y5Jld
-         u40g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=oOI1w1RpGPXrz/NU70+BlU1qHXDFQzQmtw6vEH42xjs=;
-        b=gQeKP3AShgMM3/ZyoPSck+CokGeVv/Jd58b8aACby96T96Aw7Yrc31a5xwdOlXmKMw
-         FL/n19z9pVtOwl1NnSGuNru+D6Nf1KP4PSlhWAoPc4xfHwnm9DM35ALbppuE7sAbpDc2
-         9SAlVtxXdhYfz+eF0PIg1LkK7/EDjQk+7tF3yzXzhISSqofhIsdKoidUlakjPa6D+tcP
-         Owar3W20Qei8bDl1TOzy9xPEFMbqDk9jsKnIY/Msvp9eJZYZB45Fh4SQ0yhX0+Ele3or
-         cfnrrC3GwryWhnNfCDOLhC42pA31NJ6Q+rAdod02EdVFq6Ziim/mAjRIphHFA7/R9JJ/
-         F1Lw==
-X-Gm-Message-State: ACrzQf1VUxfUrKTqnkbx2/NfeR2vNAxi4d4MCl6zlv0bce9Re04KEJe+
-        qTOK9599qRaqMJ5Ulpdk1vE=
-X-Google-Smtp-Source: AMsMyM7iSk/g+tzazFBHrdHLO7817yrGTQYIUzyZk+Y1xplU0QyZaPrFUlaCUkO/MvnMIQubBg6jxA==
-X-Received: by 2002:a63:5144:0:b0:43b:ed4b:224 with SMTP id r4-20020a635144000000b0043bed4b0224mr9610350pgl.594.1663972870693;
-        Fri, 23 Sep 2022 15:41:10 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
-        by smtp.gmail.com with ESMTPSA id e6-20020a170902d38600b00173411a4385sm6506514pld.43.2022.09.23.15.41.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Sep 2022 15:41:09 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/gem: Unpin objects slightly later
-Date:   Fri, 23 Sep 2022 15:40:44 -0700
-Message-Id: <20220923224043.2449152-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.37.2
+        Fri, 23 Sep 2022 20:11:13 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D928832BBF;
+        Fri, 23 Sep 2022 17:09:50 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28NNJkTx032306;
+        Sat, 24 Sep 2022 00:09:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=a7nDO7ohfYGnTWh7ONt+gbaTWPaULiS/JkfZBmleIpc=;
+ b=lYChOzqnjiGhJxskAVQ8Jo1G7s+TkmFNu7ZVWFdL+qqIlBHWujZ12RkNw+m2M3h+nzIn
+ 546efAq+g98DnDPvGNfUuOjOQSrG9jvvXpwkyYxx6eNOiBJkIaYNcoH4stXGOM/LnLt2
+ m0MQ02uDlAm2YiS0yDWDB94HVxYaztwq+2Dq0P9tLUfWVyt1IPVgAQYv0SqCdaBZYHiw
+ 8VYOCGQiUZsiqIx/KEos//6tDbqUWP7RIeF3xROSSUvLT7QwixCbJ4GjgUQ+P7tz1PSm
+ qGniACNCPkENmudBzopIT06U/9odAb41o31uiuhpzUM/0vCTAZZ92P2l7z7Zf8+wNfEi SA== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jrpqnvpyh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 24 Sep 2022 00:09:35 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28O09YZb019390
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 24 Sep 2022 00:09:34 GMT
+Received: from quicinc.com (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Fri, 23 Sep
+ 2022 17:09:33 -0700
+Date:   Fri, 23 Sep 2022 17:09:32 -0700
+From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+CC:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        <martin.botka@somainline.org>,
+        <angelogioacchino.delregno@somainline.org>,
+        <marijn.suijten@somainline.org>, <jamipkettunen@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Robert Marko <robimarko@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] dt-bindings: firmware: document Qualcomm SM6375 SCM
+Message-ID: <20220924000932.GA1450@quicinc.com>
+References: <20220921001020.55307-1-konrad.dybcio@somainline.org>
+ <95fb2bfb-6eb8-012d-88f8-c739d229ef70@linaro.org>
+ <8faecd72-0cfd-18eb-d07a-53b3a23ed05a@somainline.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <8faecd72-0cfd-18eb-d07a-53b3a23ed05a@somainline.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: t7244SlhJEQ1FUYFuitfzHvBzA_Hi1C-
+X-Proofpoint-GUID: t7244SlhJEQ1FUYFuitfzHvBzA_Hi1C-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-23_10,2022-09-22_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 mlxscore=0
+ malwarescore=0 phishscore=0 impostorscore=0 mlxlogscore=927
+ lowpriorityscore=0 bulkscore=0 spamscore=0 priorityscore=1501 adultscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2209230155
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Sep 21 2022 20:43, Konrad Dybcio wrote:
+> Does it? I did not define this compatible in the driver, so it does
+> not consume any clocks.
 
-The introduction of 025d27239a2f exposes a problem with f371bcc0c2ac, in
-that we need to keep the object pinned in the time the submit is queued
-up in the gpu scheduler.  Otherwise the shrinker will see it as a thing
-that can be evicted if we wait for it to be signaled.  But if the
-shrinker path is waiting on it with the obj lock held, the job cannot be
-scheduled, as that also requires briefly grabbing the obj lock, leading
-to deadlock.  (Not to mention, we don't want the shrinker to evict an
-obj queued up in gpu scheduler.)
+The bindings should describe only those compatibles that the driver supports -
+that is, both the driver and its bindings should be in sync.
 
-Fixes: f371bcc0c2ac ("drm/msm/gem: Unpin buffers earlier")
-Fixes: 025d27239a2f ("drm/msm/gem: Evict active GEM objects when necessary")
-Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/19
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_gem_submit.c | 4 ++--
- drivers/gpu/drm/msm/msm_ringbuffer.c | 3 ++-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+Could you please update the driver with this compatible as well? Let's not
+merge this change without that first.
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index 5599d93ec0d2..c670591995e6 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -501,11 +501,11 @@ static int submit_reloc(struct msm_gem_submit *submit, struct msm_gem_object *ob
-  */
- static void submit_cleanup(struct msm_gem_submit *submit, bool error)
- {
--	unsigned cleanup_flags = BO_LOCKED | BO_OBJ_PINNED;
-+	unsigned cleanup_flags = BO_LOCKED;
- 	unsigned i;
- 
- 	if (error)
--		cleanup_flags |= BO_VMA_PINNED;
-+		cleanup_flags |= BO_VMA_PINNED | BO_OBJ_PINNED;
- 
- 	for (i = 0; i < submit->nr_bos; i++) {
- 		struct msm_gem_object *msm_obj = submit->bos[i].obj;
-diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
-index cad4c3525f0b..57a8e9564540 100644
---- a/drivers/gpu/drm/msm/msm_ringbuffer.c
-+++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
-@@ -25,7 +25,8 @@ static struct dma_fence *msm_job_run(struct drm_sched_job *job)
- 
- 		msm_gem_lock(obj);
- 		msm_gem_unpin_vma_fenced(submit->bos[i].vma, fctx);
--		submit->bos[i].flags &= ~BO_VMA_PINNED;
-+		msm_gem_unpin_locked(obj);
-+		submit->bos[i].flags &= ~(BO_VMA_PINNED | BO_OBJ_PINNED);
- 		msm_gem_unlock(obj);
- 	}
- 
--- 
-2.37.2
+Thank you.
 
+Guru Das.
