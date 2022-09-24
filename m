@@ -2,92 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DDBA35E8EA6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 18:56:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAEFC5E8EDF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 19:23:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233870AbiIXQ4E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Sep 2022 12:56:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35210 "EHLO
+        id S229735AbiIXRXb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Sep 2022 13:23:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230248AbiIXQ4E (ORCPT
+        with ESMTP id S230111AbiIXRXa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Sep 2022 12:56:04 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A20EC8284D
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 09:56:02 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 10so4780922lfy.5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 09:56:02 -0700 (PDT)
+        Sat, 24 Sep 2022 13:23:30 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B514E3DBDB
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 10:23:28 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id i26so4791203lfp.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 10:23:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=qCvUzRzeULor4WnIiJD8wT2Pery0VW3IjzzZAt+uUKI=;
-        b=YrT3IgVkLxnd7lidhwQ5ASDEIJwxgK36UxOQkbdeRE7hB0B8wzZBtMF0jfsEL5rnMJ
-         TmhP2cc7k2DOZULm2xKxAQwR6NEaCgCknCft51BBR5i6G0ierThFmNjmt+AUuxyQduMy
-         t0eLTJ1C5ZZKjqwBCcmQjLPxu4HwHkEVQULR8JrXmZHTPgSyZv/yV9O+Ryxu/LElp6h2
-         i42ASsvHNuDzXVQjaMHifVay2O70bcey4kpW8Rsxila4FZUIg/5VsM5ZEeM79Qk1DCbD
-         T2Pq9JeMlZ19HLmQg+O+0Vq5X8cC2RKZqizzdRLL8sdmTKeRCWSRIeA2+Y8iTdNGzhK/
-         mxbA==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=eE/Re1Zix4MLMDESnhyXIaVTrN+pH4fXX+7CdENuln4=;
+        b=NsqKraFXmKU8sAJGtgFwo9uYMPsjN1jFgnCU/afP9s5cajyKX3oQ6suovZ3rHBrUkJ
+         zzff0GTK22+9+g3bMIIflHXq1vPWRNY9v6Kuq9wrdwWH7qWo/5DDpAcMC42Jq2wWSyIV
+         MlNtgoH6pFDHmcNBOK0+AfXEuChuQh+o5ha/Uy3M2QgBVL61OrhUgk/y5md/gnqEktpk
+         6q7EhwC5oYFkUM6xbjnXi43E16IgKDjwACEyMISKKuj7XUXkssWveVeGWRJvNfJg9xv3
+         9wGIXCLrLDU+3t9qwWY2Upvn8pPyo4/NCYaagAG+8WIzUXE60gEH+qnmSUmo3ufd4BpX
+         g+YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=qCvUzRzeULor4WnIiJD8wT2Pery0VW3IjzzZAt+uUKI=;
-        b=fyhOD1jQhXW/T9+DYPNlQdZkieUruHC4EO7IT+gXec/VnVY6wj66KF0fFAUhlkFbhz
-         a3TfmYKU3/YBAQiWieVx0ETTt8RZIbmGqsqNDwjlMOhwVUO4Bd9wkUBfCecco4e7eiFN
-         k9aHVx9/eeoIhtD/2l6t7EofEOye7r+q3Gf4Fh8u3sLg68IzLaAz7w8n68dwPuoGiwbZ
-         9THBtkpEx43HjcJ+TOf+wAbMoVEIRssK+5QGjyAJMN6cLYKXLq/y1RSnaSyt07In8NFo
-         C7H664fxvgXuxM+bs09rkueb+qWeradiM14fNzlANERCKz+CnCx1cfJAjZvpkVuEookH
-         VuAA==
-X-Gm-Message-State: ACrzQf23BOdi1QEtLoBIa2XY81vxFBJDGuR+eWy6zhAwEfPjsuwNqeM3
-        1e3z6Rc15E8gB+7KROAgS6KyUQ==
-X-Google-Smtp-Source: AMsMyM4cBGD1nJDClwlGskZMtBadV77/jXdaK8NpBV5chtC2K4VAqeN5up0Rn8Uz0Cyv6BPxMYK2PA==
-X-Received: by 2002:a05:6512:10d1:b0:49d:7dac:e2e3 with SMTP id k17-20020a05651210d100b0049d7dace2e3mr5464359lfg.224.1664038561051;
-        Sat, 24 Sep 2022 09:56:01 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id bf31-20020a2eaa1f000000b0026c2e0258bcsm1844780ljb.42.2022.09.24.09.56.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 24 Sep 2022 09:56:00 -0700 (PDT)
-Message-ID: <ea2d5008-d250-cc5a-e608-cb35a6ad67b8@linaro.org>
-Date:   Sat, 24 Sep 2022 18:55:59 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH] ARM: dts: qcom: add 'chassis-type' property
-Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220924154422.9896-1-luca@z3ntu.xyz>
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=eE/Re1Zix4MLMDESnhyXIaVTrN+pH4fXX+7CdENuln4=;
+        b=7/qJwiKuEKpeSgJyMYg0W7yRBUAuscXf2IZw1C4IFqCelCtjq7v1Uu1wUOZECgTAni
+         Zp9t7HbLzfq2KRG1Q1Bl2Qi1A95gVTbyf5C6wXiC7UFh8P3oGngeIQ1zh0+NYmPwS5Up
+         JoXcBLbuLZyed8OWXKsoZIwgT309rMx0fd7vzfdoIc3vugn51kOD01r1kCI0inZYso/K
+         JgEVGXcWqRfSWEcs+F4sPOnAjJ7VAAo1Gl0YK+KzkrSeCCYQqSubIe7JdDf80zTYbwy7
+         TjT3VxRsitB/fqFIKGODY54QS4bCoT9PAaIidLpwGZbde1M8GLKd0jiHZWF6asjHHYJi
+         Pleg==
+X-Gm-Message-State: ACrzQf2mRqXV5k2QFFPviPwP8AFRCMlI0C0iEuz1n/aiWmoPe99yN0jX
+        cVLOr288PhNszurxjW6BAplcbA==
+X-Google-Smtp-Source: AMsMyM6L6jT5Wgp0eexIvy2f6PcmVIhOV2LU4f2eXI7kOcoBQHEDmhJrnRh4w+6w8DgwGgaLeqvxJw==
+X-Received: by 2002:a05:6512:312d:b0:497:a3df:a08b with SMTP id p13-20020a056512312d00b00497a3dfa08bmr5209846lfd.462.1664040207079;
+        Sat, 24 Sep 2022 10:23:27 -0700 (PDT)
+Received: from krzk-bin (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id y10-20020a2e544a000000b0026c5dce1f9dsm1770656ljd.106.2022.09.24.10.23.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 24 Sep 2022 10:23:26 -0700 (PDT)
+Date:   Sat, 24 Sep 2022 19:23:24 +0200
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220924154422.9896-1-luca@z3ntu.xyz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        devicetree@vger.kernel.org, David Airlie <airlied@linux.ie>,
+        Sean Paul <sean@poorly.run>, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v8 03/12] dt-bindings: display/msm: add interconnects
+ property to qcom,mdss-smd845
+Message-ID: <20220924172324.qdgz5dnccncadmfz@krzk-bin>
+References: <20220924123611.225520-1-dmitry.baryshkov@linaro.org>
+ <20220924123611.225520-4-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220924123611.225520-4-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/09/2022 17:44, Luca Weiss wrote:
-> Add the chassis-type property to arm32 Qualcomm watches, phones and
-> tablets.
+On Sat, 24 Sep 2022 15:36:02 +0300, Dmitry Baryshkov wrote:
+> Add interconnects required for the SDM845 MDSS device tree node. This
+> change was made in the commit c8c61c09e38b ("arm64: dts: qcom: sdm845:
+> Add interconnects property for display"), but was not reflected in the
+> schema.
 > 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../devicetree/bindings/display/msm/dpu-sdm845.yaml    | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+
+Running 'make dtbs_check' with the schema in this patch gives the
+following warnings. Consider if they are expected or the schema is
+incorrect. These may not be new warnings.
+
+Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+This will change in the future.
+
+Full log is available here: https://patchwork.ozlabs.org/patch/1681884
 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+mdss@ae00000: 'dsi-phy@ae94400', 'dsi-phy@ae96400', 'dsi@ae94000', 'dsi@ae96000' do not match any of the regexes: '^display-controller@[0-9a-f]+$', 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dtb
+	arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dtb
+	arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dtb
+	arch/arm64/boot/dts/qcom/sdm845-db845c.dtb
+	arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dtb
+	arch/arm64/boot/dts/qcom/sdm845-lg-judyp.dtb
+	arch/arm64/boot/dts/qcom/sdm845-mtp.dtb
+	arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dtb
+	arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dtb
+	arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dtb
+	arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akari.dtb
+	arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dtb
+	arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-apollo.dtb
+	arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dtb
+	arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dtb
+	arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dtb
+	arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dtb
