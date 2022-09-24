@@ -2,45 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CCDD05E88EA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 09:05:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E9A65E88F3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 09:09:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229573AbiIXHFl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Sep 2022 03:05:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37800 "EHLO
+        id S233384AbiIXHJZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Sep 2022 03:09:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233294AbiIXHFk (ORCPT
+        with ESMTP id S233204AbiIXHJY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Sep 2022 03:05:40 -0400
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EABC10D0D4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 00:05:35 -0700 (PDT)
-Received: from dggpeml500024.china.huawei.com (unknown [172.30.72.57])
-        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4MZKfp0kVyzHtfr;
-        Sat, 24 Sep 2022 15:00:50 +0800 (CST)
-Received: from huawei.com (10.175.112.208) by dggpeml500024.china.huawei.com
- (7.185.36.10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.31; Sat, 24 Sep
- 2022 15:05:33 +0800
-From:   Yuan Can <yuancan@huawei.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@somainline.org>, <kishon@ti.com>,
-        <vkoul@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>
-CC:     <yuancan@huawei.com>
-Subject: [PATCH RESEND 4/4] phy: qcom-qmp-usb: Use dev_err_probe() to simplify code
-Date:   Sat, 24 Sep 2022 07:03:00 +0000
-Message-ID: <20220924070300.25080-5-yuancan@huawei.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20220924070300.25080-1-yuancan@huawei.com>
-References: <20220924070300.25080-1-yuancan@huawei.com>
+        Sat, 24 Sep 2022 03:09:24 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD329132FC7;
+        Sat, 24 Sep 2022 00:09:23 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 69FF5B80D5A;
+        Sat, 24 Sep 2022 07:09:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 299F7C433D7;
+        Sat, 24 Sep 2022 07:09:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1664003361;
+        bh=AJt4zk93LVa4vecHkex6IL/BxdunkkrtiUumB+OGOmM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=QeXCkrbT8j663DS9Fvd2Jl0nGwXEJLvAQJV2hjUF0rrmABKRVesPRssUN9xfFM4zY
+         cZXY/kzupnh/PmAh8Ip0g08lrCxtvGPzhWHvE8d6bW9B+3fBa6OEie0hK3n3MNjGnW
+         ZqosHgnEl6ZCeeeug9op1kQw2GPnfO7GXRX7rxX7tFAw0dA/fRy9hISYCrjy4aH1lH
+         voiSAIUOljzqxN3dE7nxADZIBWiPAoUAsaZMO+4bqCaK53upojuq8p/omnCQD0gtb3
+         gSvV1oy0UpRqBLzcwWjlHe5Nee7h5JWPaapl3aVR70eU+gg6ZwvOGSMhvemM9CvpUM
+         EC66dv0OMET+A==
+Date:   Sat, 24 Sep 2022 12:39:16 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Richard Acayan <mailingradian@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] SDM670 USB 2.0 support
+Message-ID: <Yy6tHE8VZ2v347Q9@matsya>
+References: <20220922024656.178529-1-mailingradian@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.175.112.208]
-X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
- dggpeml500024.china.huawei.com (7.185.36.10)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220922024656.178529-1-mailingradian@gmail.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -48,39 +62,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In the probe path, dev_err() can be replaced with dev_err_probe()
-which will check if error code is -EPROBE_DEFER and prints the
-error name. It also sets the defer probe reason which can be
-checked later through debugfs.
+On 21-09-22, 22:46, Richard Acayan wrote:
+> Changes since v1:
+>  - drop driver patch (some maintainers might be excluded from v3
+>    recipients because of this)
+>  - add entries in usb clocks and interrupts
+> 
+> This adds compatible strings for USB 2.0 on the Qualcomm Snapdragon 670. I
+> have no way to test USB 3.0 because my SDM670 device doesn't have USB 3.
 
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
----
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+No driver use for this?
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-index 93994f1a46e2..2ff2e798d6e2 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -2817,12 +2817,9 @@ static int qmp_usb_probe(struct platform_device *pdev)
- 		return ret;
- 
- 	ret = qmp_usb_vreg_init(dev, cfg);
--	if (ret) {
--		if (ret != -EPROBE_DEFER)
--			dev_err(dev, "failed to get regulator supplies: %d\n",
--				ret);
--		return ret;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret,
-+				     "failed to get regulator supplies\n");
- 
- 	num = of_get_available_child_count(dev->of_node);
- 	/* do we have a rogue child node ? */
+> 
+>  Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml | 1 +
+>  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml      | 3 +++
+>  2 files changed, 4 insertions(+)
+> 
+
 -- 
-2.17.1
-
+~Vinod
