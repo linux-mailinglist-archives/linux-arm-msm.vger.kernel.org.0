@@ -2,189 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D0E45E8E21
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 17:46:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC0885E8E43
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 18:03:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233437AbiIXPq1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Sep 2022 11:46:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44236 "EHLO
+        id S233846AbiIXQDJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Sep 2022 12:03:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229946AbiIXPq0 (ORCPT
+        with ESMTP id S232545AbiIXQDI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Sep 2022 11:46:26 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A35FB33378;
-        Sat, 24 Sep 2022 08:46:25 -0700 (PDT)
-Received: from g550jk.fritz.box (212095005231.public.telering.at [212.95.5.231])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 85591C5454;
-        Sat, 24 Sep 2022 15:46:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1664034384; bh=2qVah0NTVzbzDmE2/bG0X7crY2tbomDl2Bsriq7bfVM=;
-        h=From:To:Cc:Subject:Date;
-        b=ZCmY2e/dvACM4fMeFCaj/E8z8TMVUQFogGUwlMrcGwz5EOznVbct/ROW5QOe01KTc
-         iGBVBXGp06ZruhwGCOHYMFKBcvCEFZz1peZUjBK2kxNkqr2FnqbnKrjI4D8AiYGQdP
-         pYT4e/walVnXFzEB6r9mf6m8Dv/J1l0qYijhz/Ys=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
+        Sat, 24 Sep 2022 12:03:08 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB30438697
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 09:03:05 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 10so4654666lfy.5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 09:03:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=BucyVOTsY93CmgDyVGjJvCDbPEfzNq863eBEEbR0ty8=;
+        b=P8iGfXM7V6D4PZU/Rq9v2t6Wz7Ww4eUzr8f2CGVtC9TxKUOKUDT0Qn+cOXuqKmmfht
+         n/zW35BOL37tMg2mkRNgSHnoWHB/v6CbmVIsH81Cg9+Qt8yku2hzWapyVUu4qaMphlTo
+         x64l7DrN1M8ceHYp4ObS2L297GC4gsAYl13Efa4otrwxpb+t8LL4jYCoQBcJiXKJKd5y
+         G5z98gu7LMcENPuHjkqEUITbkQpJVKm/T2nnJAPi3qjVQzmobadAxUR/Ib+via5ROYM7
+         gEp8Vb7eoiBi06IEePKCIntawSR7cSTO97DBWesQ4aKyMUziLCwIIXQHO4MNcxDigBIr
+         mFxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=BucyVOTsY93CmgDyVGjJvCDbPEfzNq863eBEEbR0ty8=;
+        b=wnoBT28FfTtyWxMQQqmle7/bNT6yndtvHuq4V9ozViysJFGrIAigBYCxwOF9nYhD0i
+         z/Cgcb13Pat+u+w3r0qSoHhYo0KVztWmjBHq44YhokHrDQX5kAC1E9xFwo13VUT6YtXy
+         txee3jsjkp+2QCrZppRD+wLMv8QCSpvVW4Olm7Wc4cuQCGm57NNf4k9YY2Wgs3r5ugTB
+         +NP0L1FbCpSigT/Kiyn0q1yiLLk1OOX6cOfqNMijieotGsserVvqpLeVpVzFn905o46j
+         4Vi1Zhr6X1bpM2vUCcyM7gHL/B2qCKuqroe1/nexrj6X/Vk5rMv7G0xAJyS0LgOlEfwu
+         rbNw==
+X-Gm-Message-State: ACrzQf1jpSXY5PbxU/fJIHjumq1+TCINB1umOIqQwycsjMCm25yQbh6D
+        4eJo6lJf8kE1Rmvfl0h4t99MDA==
+X-Google-Smtp-Source: AMsMyM5+juhEb5OjwTdEs+P0qVZDQxw0PADVmXoMvEDJQAeFTGQ7aObsoWWWg7512TTP4B/tU9YgMA==
+X-Received: by 2002:a05:6512:3f8b:b0:492:d1ed:5587 with SMTP id x11-20020a0565123f8b00b00492d1ed5587mr5801675lfa.355.1664035384150;
+        Sat, 24 Sep 2022 09:03:04 -0700 (PDT)
+Received: from eriador.lumag.spb.ru ([95.161.222.31])
+        by smtp.gmail.com with ESMTPSA id 9-20020ac25f09000000b00499f9ba6af0sm1928015lfq.207.2022.09.24.09.03.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 24 Sep 2022 09:03:03 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] ARM: dts: qcom: add 'chassis-type' property
-Date:   Sat, 24 Sep 2022 17:44:22 +0200
-Message-Id: <20220924154422.9896-1-luca@z3ntu.xyz>
-X-Mailer: git-send-email 2.37.3
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: [PATCH v4 0/6] PCI: qcom: Support using the same PHY for both RC and EP
+Date:   Sat, 24 Sep 2022 19:02:56 +0300
+Message-Id: <20220924160302.285875-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=1.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        FROM_SUSPICIOUS_NTLD_FP,SPF_HELO_NONE,SPF_PASS,T_PDS_OTHER_BAD_TLD,
-        URIBL_BLACK autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: *
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the chassis-type property to arm32 Qualcomm watches, phones and
-tablets.
+Programming of QMP PCIe PHYs slightly differs between RC and EP modes.
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
- arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts                      | 1 +
- arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts               | 1 +
- arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dts        | 1 +
- arch/arm/boot/dts/qcom-msm8226-samsung-s3ve3g.dts                | 1 +
- arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts         | 1 +
- arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine-amami.dts       | 1 +
- arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine-honami.dts      | 1 +
- arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts              | 1 +
- arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts               | 1 +
- arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts | 1 +
- 10 files changed, 10 insertions(+)
+Currently both qcom and qcom-ep PCIe controllers setup the PHY in the
+default mode, making it impossible to select at runtime whether the PHY
+should be running in RC or in EP modes. Usually this is not an issue,
+since for most devices only the RC mode is used. Some devices (SDX55)
+currently support only the EP mode without supporting the RC mode (at
+this moment).
 
-diff --git a/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts b/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
-index 193569f0ca5f..bda9f6d84510 100644
---- a/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
-+++ b/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
-@@ -13,6 +13,7 @@
- / {
- 	model = "LG G Watch R";
- 	compatible = "lg,lenok", "qcom,apq8026";
-+	chassis-type = "watch";
- 	qcom,board-id = <132 0x0a>;
- 	qcom,msm-id = <199 0x20000>;
- 
-diff --git a/arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts b/arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts
-index fee278e32cb6..94fbc94dc7c8 100644
---- a/arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts
-+++ b/arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts
-@@ -6,6 +6,7 @@
- / {
- 	model = "Asus Nexus7(flo)";
- 	compatible = "asus,nexus7-flo", "qcom,apq8064";
-+	chassis-type = "tablet";
- 
- 	aliases {
- 		serial0 = &gsbi7_serial;
-diff --git a/arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dts b/arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dts
-index c07c5474750d..dcf735c6a842 100644
---- a/arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dts
-+++ b/arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dts
-@@ -8,6 +8,7 @@
- / {
- 	model = "Sony Xperia Z";
- 	compatible = "sony,xperia-yuga", "qcom,apq8064";
-+	chassis-type = "handset";
- 
- 	aliases {
- 		serial0 = &gsbi5_serial;
-diff --git a/arch/arm/boot/dts/qcom-msm8226-samsung-s3ve3g.dts b/arch/arm/boot/dts/qcom-msm8226-samsung-s3ve3g.dts
-index 290e1df631f0..6a082ad4418a 100644
---- a/arch/arm/boot/dts/qcom-msm8226-samsung-s3ve3g.dts
-+++ b/arch/arm/boot/dts/qcom-msm8226-samsung-s3ve3g.dts
-@@ -8,6 +8,7 @@
- / {
- 	model = "Samsung Galaxy S III Neo";
- 	compatible = "samsung,s3ve3g", "qcom,msm8226";
-+	chassis-type = "handset";
- 
- 	aliases {
- 		serial0 = &blsp1_uart3;
-diff --git a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-index 6daceaa87802..fdbcf84f173c 100644
---- a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-@@ -9,6 +9,7 @@
- / {
- 	model = "LGE MSM 8974 HAMMERHEAD";
- 	compatible = "lge,hammerhead", "qcom,msm8974";
-+	chassis-type = "handset";
- 
- 	aliases {
- 		serial0 = &blsp1_uart1;
-diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine-amami.dts b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine-amami.dts
-index 68d5626bf491..9f2ab5c122d0 100644
---- a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine-amami.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine-amami.dts
-@@ -4,6 +4,7 @@
- / {
- 	model = "Sony Xperia Z1 Compact";
- 	compatible = "sony,xperia-amami", "qcom,msm8974";
-+	chassis-type = "handset";
- };
- 
- &smbb {
-diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine-honami.dts b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine-honami.dts
-index ea6a941d8f8c..9028f17e5c4a 100644
---- a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine-honami.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine-honami.dts
-@@ -4,4 +4,5 @@
- / {
- 	model = "Sony Xperia Z1";
- 	compatible = "sony,xperia-honami", "qcom,msm8974";
-+	chassis-type = "handset";
- };
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts b/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-index ff6e0066768b..c4680358aaa3 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-fairphone-fp2.dts
-@@ -9,6 +9,7 @@
- / {
- 	model = "Fairphone 2";
- 	compatible = "fairphone,fp2", "qcom,msm8974";
-+	chassis-type = "handset";
- 
- 	aliases {
- 		mmc0 = &sdhc_1;
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-index 983e10c3d863..08c43bf86b92 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-@@ -8,6 +8,7 @@
- / {
- 	model = "Samsung Galaxy S5";
- 	compatible = "samsung,klte", "qcom,msm8974";
-+	chassis-type = "handset";
- 
- 	aliases {
- 		serial0 = &blsp1_uart1;
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-index 3f45f5c5d37b..85348562e861 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-@@ -9,6 +9,7 @@
- / {
- 	model = "Sony Xperia Z2 Tablet";
- 	compatible = "sony,xperia-castor", "qcom,msm8974";
-+	chassis-type = "tablet";
- 
- 	aliases {
- 		serial0 = &blsp1_uart2;
+Nevertheless some of the Qualcomm platforms (e.g. the aforementioned
+SDX55) would still benefit from being able to switch between RC and EP
+depending on the driver being used. While it is possible to use
+different compat strings for the PHY depending on the mode, it seems
+like an incorrect approach, since the PHY doesn't differ between
+usecases. It's the PCIe controller, who should decide how to configure
+the PHY.
+
+This patch series implements the ability to select between RC and EP
+modes, by allowing the PCIe QMP PHY driver to switch between
+programming tables.
+
+This patchseries depends on the header from the pre-6.1 phy/next. Thus
+after the 6.1 the PCIe patches can be applied independently of the PHY
+part.
+
+Changes since v3:
+- Rebased on top of phy/next to pick in newly defined
+  PHY_MODE_PCIE_RC/EP.
+- Renamed 'main' to 'common' and 'secondary' to 'extra' to reflect the
+  intention of the split (the 'common' tables and the 'extra for the ...
+  mode' tables).
+- Merged the 'pointer' patch into first and second patches to make them
+  more obvious.
+
+Changes since v2:
+- Added PHY_SUBMODE_PCIE_RC/EP defines (Vinod),
+- Changed `primary' table name to `main', added extra comments
+  describing that `secondary' are the additional tables, not required in
+  most of the cases (following the suggestion by Johan to rename
+  `primary' table),
+- Changed secondary tables into the pointers to stop wasting extra
+  memory (Vinod),
+- Split several functions for programming the PHY using these tables.
+
+Changes since v1:
+- Split the if(table) removal to the separate patch
+- Expanded commit messages and comments to provide additional details
+- Fixed build error on pcie-qcom.c
+- Added support for EP mode on sm8450 to demonstrate the usage of this
+  patchset
+
+Changes since RFC:
+- Fixed the compilation of PCIe EP driver,
+- Changed pri/sec names to primary and secondary,
+- Added comments regarding usage of secondary_rc/_ep fields.
+
+Dmitry Baryshkov (6):
+  phy: qcom-qmp-pcie: split register tables into common and extra parts
+  phy: qcom-qmp-pcie: split PHY programming to separate functions
+  phy: qcom-qmp-pcie: support separate tables for EP mode
+  phy: qcom-qmp-pcie: Support SM8450 PCIe1 PHY in EP mode
+  PCI: qcom: Setup PHY to work in RC mode
+  PCI: qcom-ep: Setup PHY to work in EP mode
+
+ drivers/pci/controller/dwc/pcie-qcom-ep.c     |   5 +
+ drivers/pci/controller/dwc/pcie-qcom.c        |   5 +
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 298 +++++++++++++-----
+ .../qualcomm/phy-qcom-qmp-pcs-pcie-v5_20.h    |   1 +
+ 4 files changed, 229 insertions(+), 80 deletions(-)
+
 -- 
-2.37.3
+2.35.1
 
