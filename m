@@ -2,125 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B38135E8E85
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 18:39:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B43F85E8E8A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 18:42:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233733AbiIXQjF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Sep 2022 12:39:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42166 "EHLO
+        id S231235AbiIXQm0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Sep 2022 12:42:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233466AbiIXQjE (ORCPT
+        with ESMTP id S229685AbiIXQmZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Sep 2022 12:39:04 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8398B7D1C1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 09:39:02 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id bu25so2833483lfb.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 09:39:02 -0700 (PDT)
+        Sat, 24 Sep 2022 12:42:25 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBC00804B9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 09:42:23 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id j24so3208113lja.4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 09:42:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=UN7dIy5bKqPGCHAvZ6RCx2KKfneFm8jKTHL6ecufoDA=;
-        b=mVderDBC0HH08MVkJlNWWaMuX9Uy+dZ09IDw5z/QycijWXh4HJdYAakyKlkZVqZltK
-         ib+yGSQXrCRHVF24k8Z8r1/6/BwogwRVz0y3Nn6aNO/suC0R+PpAY/bw2edm1EHOd4EX
-         fDakEc4Mjb9wd4T3ew3OebRtfB96/0TfQUeilsx+P5AF0Re0F6i3vYBR2Tw8EYnjNnNL
-         WDq3Bzzr6oioNdAe2h3GzgIai4NZ8W0Hogj/uj1iM4zIfraw6GrHxANDdXJq6evs1d5k
-         ZIr6dHheJABrNzwiIyUjmzkh1GsbnzBf1M4PTh0wiveN8bZRoLHYS98q2uUgnKksh2iw
-         WiAg==
+        bh=vZUaPTqoVWgsInpTzgT9h+FI6z7QTidVmPkHypoNty0=;
+        b=A8RgYz8uv29b0xVlOtUQ2IblCd/KDGmEfsqSDeAfa6nFOee0ltmKl2bFy0h6dv3TAw
+         xjldYJpBmiTgz1navbtzt+zytXJI83B++6rPu45SB8yC86ymxlslG/ShALMAlEXTp79w
+         6UE9/mj9XeLFI8nOCKFiH6fOtNM6HLUHT+nbrTxSe03KFPNsiU1p8q6VtfCLFtI6qh9S
+         xBp/Kt+lnZN4skUWT9eQOCfrsCdzYPtKMvEeXFJQvmM/uoWTYYwUrzUI+JOPY29bWV/d
+         HiR5UBdZ2+Oqfa+jBqq4sJtNR89BXynAGH/OvS7J9EdROF7K39StNlJ1WU/LMdpXdPYk
+         XJEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=UN7dIy5bKqPGCHAvZ6RCx2KKfneFm8jKTHL6ecufoDA=;
-        b=sCWDAVgeS8/gcwneKu0BBYUloCUwxE2t5ioimWvaV0QGy62maq0fU50JglV1HqktAx
-         lyjdUe8XZoP3+olFtU74hGIbiKWhKPrMYididZfs0zdJhFo+pqb7OxTefYQgOsq4ewYF
-         mjgLC4hnWkNAFFZLCpVDmt019ISqdANRGuNbmim25H9M3SMiSq7kYukcs6z6YtbE9KdX
-         QtKAc5opTf13KNlC16DLnDjcfxO65id2La+EBAePAvEXPK2Iaqx2bNJ7ngcmmicolKUR
-         P6rGPvyFh1147t4T1oVkwzWzUhLIED2K/xTldREFkSCKYH7BoLhW3MS/vUZn8W0qR1QF
-         dsRg==
-X-Gm-Message-State: ACrzQf0lhSxCER4B1znIm7jgRayN80dPZBXaIBFmK3Ic8xFUpqWOgDfv
-        Dk/c+Jxg4VFz6DMjhBGesXIZSg==
-X-Google-Smtp-Source: AMsMyM4LUkwxRtPvLlV/99Vshl39R68/lx1p+A7GnsUxLlQYo5FCnzw6uQgxz4o7vtVVbIQ7nmPieg==
-X-Received: by 2002:a05:6512:308f:b0:49a:5a59:aa25 with SMTP id z15-20020a056512308f00b0049a5a59aa25mr5220074lfd.44.1664037540847;
-        Sat, 24 Sep 2022 09:39:00 -0700 (PDT)
+        bh=vZUaPTqoVWgsInpTzgT9h+FI6z7QTidVmPkHypoNty0=;
+        b=BdPykrmUFRNQNbc38ajEQLWRPH7Xus8/T3O97ErPJZNdM3QrsXKowFjjzQhRCp+BB+
+         BzHeqtUqvdEuo2IWCOjeCHU4fjf0L3KzMl2x39EhbLujRbyjA0V5c9txRYM3KX95IuhX
+         vfNNT7obpHLZQLsU6vqECY1eWQXorSgtsYoLoV/SIiOWX/cUj9xBr8oh/UX0OmPYdI40
+         3VxKdezRqL8Yd+RvJkjIcnZXzTUh4NrOxqXNZ2VUpA0kKn6G61umMC3MQzF/fuEds+CV
+         ytjMiuaqf/Oxihk34uDgnRwS/kxi+P6UFceg9Wat4Q1VkjINHhrcvD9ct7y/oLqXOJlW
+         NEaw==
+X-Gm-Message-State: ACrzQf0kAx2ghcK+pjj5PyYtnBUoEITFvkSTSz6gbGBKN55hvFdJthoz
+        cCg0HBecQywFK+hLOaL1b+/HOw==
+X-Google-Smtp-Source: AMsMyM6kFvAiQOwvriHJrKJbIjO6DZoXbwEVMfShkCFuutnOeek6i5XjwLY302OS3c4iXGCufTxpuQ==
+X-Received: by 2002:a2e:9142:0:b0:26c:3e1a:c866 with SMTP id q2-20020a2e9142000000b0026c3e1ac866mr5105977ljg.433.1664037742356;
+        Sat, 24 Sep 2022 09:42:22 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id j12-20020a056512344c00b00494a1b242dasm1946332lfr.14.2022.09.24.09.38.59
+        by smtp.gmail.com with ESMTPSA id m8-20020a194348000000b0048a8586293asm1945555lfj.48.2022.09.24.09.42.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 24 Sep 2022 09:39:00 -0700 (PDT)
-Message-ID: <9ef673f2-4296-8761-4d7a-dca323ba272e@linaro.org>
-Date:   Sat, 24 Sep 2022 19:38:58 +0300
+        Sat, 24 Sep 2022 09:42:21 -0700 (PDT)
+Message-ID: <839cd883-f587-a642-30a0-9b705fe95144@linaro.org>
+Date:   Sat, 24 Sep 2022 19:42:21 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.2
-Subject: Re: [PATCH] thermal: qcom: tsens-v0_1: Fix MSM8939 fourth sensor
- hw_id
+Subject: Re: [RFC PATCH 06/10] thermal/drivers/tsens: use generic calibration
+ routine for msm8976
 Content-Language: en-GB
-To:     Vincent Knecht <vincent.knecht@mailoo.org>,
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Amit Kucheria <amitk@kernel.org>,
         Thara Gopinath <thara.gopinath@gmail.com>,
         "Rafael J. Wysocki" <rafael@kernel.org>,
         Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     bryan.odonoghue@linaro.org, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org
-References: <20220811105014.7194-1-vincent.knecht@mailoo.org>
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>
+References: <20220910124701.4060321-1-dmitry.baryshkov@linaro.org>
+ <20220910124701.4060321-7-dmitry.baryshkov@linaro.org>
+ <c397e8e7-3126-c1f9-8d0e-4b3181e5c5e0@collabora.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220811105014.7194-1-vincent.knecht@mailoo.org>
+In-Reply-To: <c397e8e7-3126-c1f9-8d0e-4b3181e5c5e0@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/08/2022 13:50, Vincent Knecht wrote:
-> Reading temperature from this sensor fails with 'Invalid argument'.
+On 12/09/2022 11:57, AngeloGioacchino Del Regno wrote:
+> Il 10/09/22 14:46, Dmitry Baryshkov ha scritto:
+>> According to msm-3.10, msm8976 uses the same routine for processing
+>> calibration data as other platforms. Drop the msm8976-specific
+>> compute_intercept_slope_8976() and use compute_intercept_slope().
+>>
+>> Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
+>> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
-> Looking at old vendor dts [1], its hw_id should be 3 instead of 4.
-> Change this hw_id accordingly.
+> As far as I remember, at least some MSM8976 versions don't have the slope
+> fuses populated and/or the values are bad. This is the reason why slopes
+> are hardcoded.
 > 
-> [1] https://github.com/msm8916-mainline/android_kernel_qcom_msm8916/blob/master/arch/arm/boot/dts/qcom/msm8939-common.dtsi#L511
-> 
-> Fixes: 332bc8ebab2c ("thermal: qcom: tsens-v0_1: Add support for MSM8939")
-> Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
+> This commit would break support for MSM8976.
+> Cc'ing Marijn, as he should be able to re-test this.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Daniel, gracious ping for getting this patch into 6.1.
-
-> ---
-> Fixes reading GPU temperature on msm8939 idol3 with current WIP dtsi
-> ---
->   drivers/thermal/qcom/tsens-v0_1.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
-> index f136cb350238..327f37202c69 100644
-> --- a/drivers/thermal/qcom/tsens-v0_1.c
-> +++ b/drivers/thermal/qcom/tsens-v0_1.c
-> @@ -604,7 +604,7 @@ static const struct tsens_ops ops_8939 = {
->   struct tsens_plat_data data_8939 = {
->   	.num_sensors	= 10,
->   	.ops		= &ops_8939,
-> -	.hw_ids		= (unsigned int []){ 0, 1, 2, 4, 5, 6, 7, 8, 9, 10 },
-> +	.hw_ids		= (unsigned int []){ 0, 1, 2, 3, 5, 6, 7, 8, 9, 10 },
->   
->   	.feat		= &tsens_v0_1_feat,
->   	.fields	= tsens_v0_1_regfields,
+Angelo, Marijn, any update on testing this?
 
 -- 
 With best wishes
