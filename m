@@ -2,76 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BBBFE5E8F53
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 20:27:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B9B05E8F6F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 20:59:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229660AbiIXS1Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Sep 2022 14:27:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43126 "EHLO
+        id S229690AbiIXS7C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Sep 2022 14:59:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232550AbiIXS1Y (ORCPT
+        with ESMTP id S230009AbiIXS7B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Sep 2022 14:27:24 -0400
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D5563A4BF
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 11:27:22 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-3321c2a8d4cso30607167b3.5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 11:27:22 -0700 (PDT)
+        Sat, 24 Sep 2022 14:59:01 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BBA64D27F
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 11:58:59 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id b24so3411277ljk.6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 11:58:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=JxrzgfxApmWB8NBqb1wQvRFuNzvTICyUAKynMb46yI8=;
-        b=g94fGvcEckzfyT/KF/vWdxoEhe0MKwlX+DUzNgYXklxi/UtSSVvcgPvXBkFLWZsu4U
-         6GVTx4NdvHsyim/zVyJmRB27Y95Xa772Ej+njy5Dsoy6R6xpPiK7UGR+faCJSreOOrww
-         gV9mz39X1ywE+O2SRGDGvJiHm+8TfoU220MT1dpUFQl0gbPAhLgOciNw7XHpqBSGFNaQ
-         QHOfi7WQdCunK7YmByjVS6rksszxAQDYu0HuqAzRniHVidflSVo0NiyqVp1Jkbbxv6NC
-         yfRZqdkq4pBkgCgU+tBj+2tZU/l4H0/LRMlbgN4bsdCipiFcH8SLwdp88pfCAZI2TOFG
-         kyvg==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=YIW3vTRVXsuTcD11RiZoOeP6j7SOFSgAsNn7hMGMgbY=;
+        b=sSSFPkuXvSYtGG6t6dyEfy9byoHF+HB+rsJ+ZnT5aiRhvxC0DgaO5uOyM4pNnQOuDW
+         Ci52znBsyWrWFNMhRKisYK7h4URCV+IlzJUjWWSDxH2yvSrPILJqcIN7s76XUIaeXyGf
+         srw0yBGp/5w1HfuPVM72eRvMj8vDWeaFllHv3w4mOLsb5zKVkJejqFn26QLg+uA7DMM5
+         L7SRRCM+nU6QE3kyLu4tXKab4hfhyYqTakDihUFO8QSIJnEBII6+wTm4sa664L7467Cm
+         ynIsGAkxa1KTS+9KnyYhU0mNxTYgB+pEx9ccnitPujpXv9BvTY5tACj5X74flsXLx9/g
+         +gHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=JxrzgfxApmWB8NBqb1wQvRFuNzvTICyUAKynMb46yI8=;
-        b=OBkQ42Hnz2sorOd5qS1Gomlg46mouLnRu9je8SKK2mi9RvnqbysNdSzoso/w0yPbSj
-         5lS9OtcAXe1isEeGoiE1aFFyLvUpZWaDUtPQnyJDw2QoaCJqQkEmZ2yd9rW7i6k/hnhW
-         mBysxxM45tPLbLautBv9YQufalNAp+/dOKJXLcOYwN4ZHoGt9bS2U0KPz8rJYWfruDfv
-         9RRpMiGWgy1zxh7sbQ4xH7p9xHqg1MrZImkawea/3OUnYNq8magzehkVML1N6SZAzO0b
-         bMKkPPqQXC+bUCnW2pYGV2i9ETYCSKGrR4mkZvvy5AjnnLTEWgSGFqLzN3l3aKSGGF3u
-         5IMQ==
-X-Gm-Message-State: ACrzQf32808MA8vs60fy9TzaV7E5NIBXC2jI5HAwX1gNGPBMpFJH7bqN
-        quYtzgqlzK7Xg0HSsNg5l1iWv3n82/P/ytYf3kg09w==
-X-Google-Smtp-Source: AMsMyM7v+tXK8lfQAiAaF9Qy6dCtG7stCIz1g+xy7jiiQaS0jaNh05vITohMH5ZizxvRVFIMPYCyl4HOeFlB13ny9ew=
-X-Received: by 2002:a81:c45:0:b0:34d:21de:b794 with SMTP id
- 66-20020a810c45000000b0034d21deb794mr14850122ywm.138.1664044041621; Sat, 24
- Sep 2022 11:27:21 -0700 (PDT)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=YIW3vTRVXsuTcD11RiZoOeP6j7SOFSgAsNn7hMGMgbY=;
+        b=url3Q/m8cmEEGH1E48e4/6fVIanmmrcRWuWbGvz/U5jcXhl75FaoMtVa4FGSxrBjGa
+         dusv6Higt5TRNjstZyFMNaFsmFVyjxOVWnpwKRdfWPkQyGW7WtriPcYU0lqMRcTM6lVb
+         cyBknLXxcP6tSLTRHXgf3zFsrCp9Mc6TZlsjDf7PI8e+KVEuV3W8bktYppUwbEVp2M0x
+         AqVQ4110MVVa8UFi+gLKI/OHtOn+U3SVbphTyg+kRNHjzpBMvYKz/3hi9b7iBosNn2OY
+         wvkQa/NPY9/4w4/Ic1JlvSiUBQYVLZHdK0ysQgly221NFhAj4M60RLDMkHtmjvIMmnri
+         FVYg==
+X-Gm-Message-State: ACrzQf15K75IZT1v8M+BVrSySHg6KH3GsYkcOggigvSYJfWzHSjJY8zN
+        Xkprg+n4mLhqwF9u81TYh+ggmw==
+X-Google-Smtp-Source: AMsMyM5RXdMxotovE2D7bZQJ6DTIQzxiMq2tSkXPLbItuXnX8MnAxMcaV5bzumt9nVjHNKuTXqaiug==
+X-Received: by 2002:a05:651c:499:b0:26c:677a:a531 with SMTP id s25-20020a05651c049900b0026c677aa531mr5209188ljc.319.1664045937527;
+        Sat, 24 Sep 2022 11:58:57 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id j21-20020a05651231d500b004946e72711bsm1965982lfe.76.2022.09.24.11.58.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 24 Sep 2022 11:58:57 -0700 (PDT)
+Message-ID: <93a790fb-20dc-0f31-2eed-09f5b538bea9@linaro.org>
+Date:   Sat, 24 Sep 2022 21:58:56 +0300
 MIME-Version: 1.0
-References: <20220924123611.225520-1-dmitry.baryshkov@linaro.org>
- <20220924123611.225520-2-dmitry.baryshkov@linaro.org> <20220924172339.bebekrawee4ubogv@krzk-bin>
-In-Reply-To: <20220924172339.bebekrawee4ubogv@krzk-bin>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 24 Sep 2022 21:27:10 +0300
-Message-ID: <CAA8EJpqD74ZWvFK-QQ+MUHxssE7HKLS5D+hVe7+A9_H03QgwOg@mail.gmail.com>
-Subject: Re: [PATCH v8 01/12] dt-bindings: display/msm: split qcom,mdss bindings
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        dri-devel@lists.freedesktop.org,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [RFC PATCH 00/10] thermal/drivers/tsens: specify nvmem cells in
+ DT rather than parsing them manually
+Content-Language: en-GB
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Sean Paul <sean@poorly.run>, Rob Herring <robh@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220910124701.4060321-1-dmitry.baryshkov@linaro.org>
+ <YyyaH1ZXF9IvLpwd@gerhold.net>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <YyyaH1ZXF9IvLpwd@gerhold.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -80,77 +88,80 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Sat, 24 Sept 2022 at 20:23, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On Sat, 24 Sep 2022 15:36:00 +0300, Dmitry Baryshkov wrote:
-> > Split Mobile Display SubSystem (MDSS) root node bindings to the separate
-> > yaml file. Changes to the existing (txt) schema:
-> >  - Added optional "vbif_nrt_phys" region used by msm8996
-> >  - Made "bus" and "vsync" clocks optional (they are not used by some
-> >    platforms)
-> >  - Added optional resets property referencing MDSS reset
-> >  - Defined child nodes pointing to corresponding reference schema.
-> >  - Dropped the "lut" clock. It was added to the schema by mistake (it is
-> >    a part of mdp4 schema, not the mdss).
-> >
-> > Reviewed-by: Rob Herring <robh@kernel.org>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  .../devicetree/bindings/display/msm/mdp5.txt  |  30 +-
-> >  .../bindings/display/msm/qcom,mdss.yaml       | 264 ++++++++++++++++++
-> >  2 files changed, 265 insertions(+), 29 deletions(-)
-> >  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml
-> >
->
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
->
-> yamllint warnings/errors:
->
-> dtschema/dtc warnings/errors:
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,mdss.example.dtb: dsi@1a98000: clock-names:0: 'byte' was expected
->         From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,mdss.example.dtb: dsi@1a98000: clock-names:1: 'byte_intf' was expected
->         From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,mdss.example.dtb: dsi@1a98000: clock-names:2: 'pixel' was expected
->         From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,mdss.example.dtb: dsi@1a98000: clock-names:3: 'core' was expected
->         From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,mdss.example.dtb: dsi@1a98000: clock-names:4: 'iface' was expected
->         From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,mdss.example.dtb: dsi@1a98000: clock-names:5: 'bus' was expected
->         From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,mdss.example.dtb: dsi@1a98000: phy-names:0: 'dsi' was expected
->         From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,mdss.example.dtb: dsi@1a98000: 'power-domains' is a required property
->         From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,mdss.example.dtb: dsi@1a98000: 'operating-points-v2' is a required property
->         From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+On 22/09/2022 20:23, Stephan Gerhold wrote:
+> Hi Dmitry,
+> 
+> On Sat, Sep 10, 2022 at 03:46:51PM +0300, Dmitry Baryshkov wrote:
+>> Historically the tsens driver fetches the calibration data as a blob and
+>> then parses the blob on its own. This results in semi-duplicated code
+>> spreading over the platform-specific functions.
+>>
+>> This patch series changes tsens calibration code to use pre-parsed nvmem
+>> cells rather than parsing the blob in the driver. For backwards
+>> compatibility the old code is left in place for msm8916 and qcs404, two
+>> platforms which have in-tree DT files. For msm8974 the original function
+>> is left intact, since it differs significantly (and I can not test the
+>> code on msm8974). For all other affected platforms the old parsing code
+>> has been dropped as a part of this RFC.
+>>
+>> The code was tested on msm8916 and qcs404 only, thus it is being sent as
+>> an RFC.
+>>
+> 
+> Thanks a lot for working on this!
+> 
+> After thinking about this for a while I wonder if we can go even a step
+> further: Can we drop SoC-specific code entirely for 8939 and 9607 and
+> match the generic compatible (qcom,tsens-v0_1)? This would allow most
+> v0.1 plaforms to use generic code like for qcom,tsens-v2.
 
-These are the errors generated by the dsi@ node from the example. The
-DSI schema is handled separately (by Bryan, added to the Cc list). Can
-we have a lifter for this patch? Or I can revert to dropping the dsi@
-part from the example.
+While this idea looks appealing, I think it's a bit against our custom 
+to put hardware details into the driver rather than putting them into 
+the DT. So, I think, the 8939 will have to stay as is, while for the 
+9607 and maybe several other devices it should be possible to create a 
+fallback entry.
 
->
-> doc reference errors (make refcheckdocs):
->
-> See https://patchwork.ozlabs.org/patch/1681881
->
-> This check can fail if there are any dependencies. The base for a patch
-> series is generally the most recent rc1.
->
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
->
-> pip3 install dtschema --upgrade
->
-> Please check and re-submit.
+> 
+> AFAICT with your changes only the following remains SoC-specific:
+> 
+>    - hw_ids (actually only needed for 8939 since 9607 has standard IDs)
 
+As I wrote, I wouldn't put this into DT.
 
+> 
+> While two other things are already handled:
+> 
+>    - num_sensors (the driver supports "#qcom,sensors" in DT already)
+>    - tsens_calibrate_nvmem() shift (AFAICT in downstream msm-tsens.c
+>      everything except 8916 uses shift = 2. 8916 needs special handling
+>      anyway for the backwards compatibility)
+> 
+> Having the generic compatible would allow me to add MSM8909 without any
+> code changes at all (just DT schema addition).
+> 
+> For 8939 we could read the hw_ids from the DT with something like:
+> 
+> 	qcom,sensors = <0 1 2 3 5 6 7 8 9 10>;
+> 
+> And actually there are two revisions of 8939, the older one has one
+> sensor less (msm-3.10: msm8939-common.dtsi vs msm8939-v3.0.dtsi).
+> This could also be easily handled from the DT without any code changes:
+> 
+> 	qcom,sensors = <0 1 2 3 5 6 7 8 9>;
+
+Usually we only care about the latest revision of the chip, earlier 
+revisions typically correspond to engineering samples, never hitting the 
+actual consumer devices.
+
+> 
+> The diff could be something like the following (I did not test it yet).
+> 
+> What do you think?
+I'd like to sort the calibration data for 8976 first. At this moment I'm 
+waiting for the 8976 data to be tested. Also it would be nice to be able 
+to cleanup the 8976 calibration code.
 
 -- 
 With best wishes
 Dmitry
+
