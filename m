@@ -2,63 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FB9E5E8AAC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 11:20:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 099885E8AC6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Sep 2022 11:29:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233469AbiIXJUe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Sep 2022 05:20:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42816 "EHLO
+        id S233631AbiIXJ3R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Sep 2022 05:29:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233488AbiIXJUc (ORCPT
+        with ESMTP id S233600AbiIXJ3O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Sep 2022 05:20:32 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7F9A12C1E5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 02:20:27 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id b6so2402002ljr.10
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 02:20:27 -0700 (PDT)
+        Sat, 24 Sep 2022 05:29:14 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D26513A3B7
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 02:29:12 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id d42so3785397lfv.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Sep 2022 02:29:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=KwKiygJRfTorofnL1eRmybhvU/B8TBgGDBZcE2Kd2qI=;
-        b=rVtcuLxH7HhgdMgin0oYUFOPi4fFSBqECan7mc8HIU8xVY9Q8yofftMMtz1YdSH1fX
-         F8eVq2kMp/1bwCkxb4eTYhMhjuHDw3dMRU26qXt6wkN8XhyuWH1xpFvgEQ2IIR7eZ5qp
-         RYWKXyizjvNVnmJv7fog2Lx+gsaYOm1xZd3Vf9drqOsOCnhIK1xdPLAh3ELwaz2hQT8O
-         YeR8nQ7C2J66R73/6XxDBPpYXcVRzWqvnnCwlfMUMMpegytmM1co6EkZJH6hwcyMtzX1
-         D+G4ezZqiaZWdZ37WlC3rNUlMxTJHR1jWbzQ/9CpEKBhRcfSieOImW5xPJwbfnr0xvL9
-         vBdg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=e0x+n06hV5mMu68CdHdoiGvRmngz5GOt9vNpZJY16Rg=;
+        b=A4Ia+iMkg7q1KZc0e5t3tnHCjWwXPP19hIwQGyKINHOThQuOY04Y9oEupgiP1kjfCx
+         Lddaxj+ftBazMurQtdWEgQaY/PoEn1vO4J4TYD6/feGhpQaT1zkkMPpwxdTNohmLfqcE
+         goCUQYKDO3phBJjEFQgSlvJyPT+f42EQIkNvpaZ8L4ydYQ5jgUSNhmPBCxPAIVdCiVcA
+         U6DknBtakaukK5Vqg/dZUE9eANznmUB2xjoq8WS+H5m3zLu1fWvK9kmo3HOQaD89iY1z
+         1qu0AVoAOcik6buhmWR+YbN4xqTm4mgEZgN7xvgPdxrOm4f4xgmltTR74mzzuEBCWaZg
+         BEhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=KwKiygJRfTorofnL1eRmybhvU/B8TBgGDBZcE2Kd2qI=;
-        b=yfo8QbQ+0Z3Z0ihQLJIPwqXpTkkaaSTBkzrYWHP48FjIurSswijrY+Vg2aLGVZQzJU
-         CmWz3x//4Tx010h7PE5pYMgqxRGVbFBBvrE/uq4AwOLl4A4F2seqPGNJwbx9DW44uszp
-         X5TMBuoAcdALs0JbW4tu/O8EKO0C606gR5IUhnQixPVxJKQjbXfr6ZpOgXRbhNHM58oB
-         Ma/iboRTQaib3cJXmcPInbisXytr5D+Wh1ERix27ZrzcitV40qtG3kca5yApYp2O7zCn
-         w3bVEYRl0UjqbygyxbmY6uHXAQWjJBd3j8WzXa08mqUSPPWb99vA/LpBXTQW0MOqrSRT
-         e3sA==
-X-Gm-Message-State: ACrzQf16iWSHJLqmadovm2Lst7pfaaM0lL3LeSTlRl+XGFN8MXi60Qna
-        JHPIDFS/WCEJeOqhOIjW+SzAOA==
-X-Google-Smtp-Source: AMsMyM4/jReK06gsjawmyIkRqro894CFuOhxayzhoLBmB32YizFJ+oaebPLlgl3+/QZNSY+lTXvwFg==
-X-Received: by 2002:a2e:a785:0:b0:26c:4e8c:5e79 with SMTP id c5-20020a2ea785000000b0026c4e8c5e79mr4502641ljf.396.1664011226089;
-        Sat, 24 Sep 2022 02:20:26 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v18-20020a2ea612000000b0026c4113c150sm1725592ljp.111.2022.09.24.02.20.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 24 Sep 2022 02:20:25 -0700 (PDT)
-Message-ID: <361ad59f-288f-beae-25c7-7acd42c2db94@linaro.org>
-Date:   Sat, 24 Sep 2022 12:20:25 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH 0/9] arm: dts: qcom: rename DSI PHY nodes
-Content-Language: en-GB
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=e0x+n06hV5mMu68CdHdoiGvRmngz5GOt9vNpZJY16Rg=;
+        b=cmxDGgvW1VJN30oX23Hxa4QVZoq19Mfr66iC5NxIMFHaW/zOeDf4BxvMB6HnmQj039
+         0g/d0MY/5r2KfMTRtFSFbSD/F1SJIWIenbANWNJevjm5oOmFukZi5DrlqrYqC0zzPplL
+         eXcFKbhx2Z1R6ULlXmTBgFcxaQONU38uhsG/4zXyJ8tjAP8XY+J+lvFjbK00eL4b5gga
+         u2vbDP317Boxk5bcms8lBYo4xi3NN6lOlxoYBXKGxVysJ39dgO3x4P1wastt7K/Y/CkI
+         arfQv3SBLvuVc3bDhhW1TCIoaJ0oq3nN1drWALY9v2t1gDa1Fxyvj9frJi3PXV2Or1dG
+         otzg==
+X-Gm-Message-State: ACrzQf3B8KbwkcEu90XwwlYJgzqyq94DOtnmVxlAxJCQlaN237VACR1h
+        upSyYcb7F7dTGDnFosK+4Ujy7A==
+X-Google-Smtp-Source: AMsMyM6u2fZyvcRB2sCwnQ38Ns95A5PFsTtukBYF2ddfLMppMdFmN6x0MPy+enNFQEE81mQAGyULkg==
+X-Received: by 2002:a05:6512:c12:b0:49b:755d:fde9 with SMTP id z18-20020a0565120c1200b0049b755dfde9mr4656911lfu.181.1664011750727;
+        Sat, 24 Sep 2022 02:29:10 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id c24-20020a196558000000b0049472efaf7asm1828118lfj.244.2022.09.24.02.29.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 24 Sep 2022 02:29:10 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
@@ -70,51 +61,46 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-References: <20220924090108.166934-1-dmitry.baryshkov@linaro.org>
- <fd91077b-e4ff-0187-8424-0b83b96588ef@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <fd91077b-e4ff-0187-8424-0b83b96588ef@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Subject: [PATCH] arm64: dts: qcom: sc7280: assign DSI clocks
+Date:   Sat, 24 Sep 2022 12:29:09 +0300
+Message-Id: <20220924092909.175418-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/09/2022 12:11, Krzysztof Kozlowski wrote:
-> On 24/09/2022 11:00, Dmitry Baryshkov wrote:
->> Historically DSI PHY device tree nodes used the dsi-phy@ names. Replace
->> them with generic phy@ names.
->>
->> Dmitry Baryshkov (9):
->>    ARM: dts: qcom-apq8064: change DSI PHY node name to generic one
-> 
-> dsi-phy is similar to other generic names (usb-phy, ethernet-phy) [1] so
-> it could stay. Is there particular need for this, like coming from DT
-> schema?
+The driver (and the DT schema) requires us to assign DSI clocks in the
+DT node, so that the clock tree is setup propertly.
 
-No, there is no requirement from the DT schema. However:
-1) The resent qcom DT files already use just phy@ for most of PHY nodes
-2) The recommended list mentions usb-phy/ethernet-phy, but not 
-<anything>-phy, so I'd think that those two are mostly for backwards 
-compatibility.
-3) I liked the example of sc7280 which switched all MDSS PHYs to just 
-phy@ (this includes DSI PHY, eDP PHY and, by extension, the HDMI PHY).
+Fixes: 43137272f0bc ("arm64: dts: qcom: sc7280: Add DSI display nodes")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-> 
-> [1]
-> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
-
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 13d7f267b289..d5c01ee1d2fa 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -3636,6 +3636,10 @@ mdss_dsi: dsi@ae94000 {
+ 					      "iface",
+ 					      "bus";
+ 
++				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>,
++						  <&dispcc DISP_CC_MDSS_PCLK0_CLK_SRC>;
++				assigned-clock-parents = <&mdss_dsi_phy 0>, <&mdss_dsi_phy 1>;
++
+ 				operating-points-v2 = <&dsi_opp_table>;
+ 				power-domains = <&rpmhpd SC7280_CX>;
+ 
 -- 
-With best wishes
-Dmitry
+2.35.1
 
