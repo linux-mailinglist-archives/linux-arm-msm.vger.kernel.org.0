@@ -2,28 +2,28 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6348F5E94ED
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Sep 2022 19:32:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B5F75E9529
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Sep 2022 19:57:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232234AbiIYRcO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Sep 2022 13:32:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52364 "EHLO
+        id S231523AbiIYR5L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Sep 2022 13:57:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229850AbiIYRcN (ORCPT
+        with ESMTP id S230411AbiIYR5K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Sep 2022 13:32:13 -0400
+        Sun, 25 Sep 2022 13:57:10 -0400
 Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91F0FFAC8;
-        Sun, 25 Sep 2022 10:32:12 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6760E27CF1;
+        Sun, 25 Sep 2022 10:57:09 -0700 (PDT)
 Received: from g550jk.. (2a02-8388-6582-fe80-0000-0000-0000-0006.cable.dynamic.v6.surfer.at [IPv6:2a02:8388:6582:fe80::6])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id AAE60C78D0;
-        Sun, 25 Sep 2022 17:32:10 +0000 (UTC)
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 91113C6FA5;
+        Sun, 25 Sep 2022 17:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1664127131; bh=qH3uH7V7qntn4R2nJ29eHBIsTcnW5XeAJphWi60aOzg=;
+        t=1664128597; bh=Kc0NJqkKtqH6tjfWTTCzXyBx6K9bYu22ZzH8VqMyDBw=;
         h=From:To:Cc:Subject:Date;
-        b=aEpaXzRAW1c+JLFw/EeaUXVgBqfwwg5Mu1IsPwRh+pyBZ8Q+WSQx3P38wACozMfAW
-         QX7Frgn3rqEGRN+tpYsUXG4CVEOW5Byv0piN+71d/ZFK/X+sAF0pCRF+VwN4CwAzqc
-         IDU43PEYiU6/DYQlvvhhEcRh9PJOBRDaBJvUCB10=
+        b=e0/cmwa5Y9X0BrY9ODgSr1SGVIV9pVmqZC5/nuzWZOlCIJDBSFnMJmINKVwI7xk7p
+         9cBJ9kvVLYaXMrv2RzPiROKgBa+owaxnnSNGSw/2z4WQ9fw+1O8TkyzPD+6Z5JcBde
+         t5F4Whi3IphBoiiTuV9MLmo3v8K+HKbfxCpjjMd8=
 From:   Luca Weiss <luca@z3ntu.xyz>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
@@ -33,9 +33,9 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] ARM: dts: qcom: msm8974: Remove bogus *-cells from smd-edge
-Date:   Sun, 25 Sep 2022 19:32:03 +0200
-Message-Id: <20220925173203.96117-1-luca@z3ntu.xyz>
+Subject: [PATCH] ARM: dts: qcom: msm8974-sony-*: fix multi-led node name
+Date:   Sun, 25 Sep 2022 19:56:30 +0200
+Message-Id: <20220925175631.103535-1-luca@z3ntu.xyz>
 X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -49,26 +49,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The bindings check complains that #address-cells and #size-cells
-shouldn't be in the smd-edge node. Remove it.
+The name rgb-led is not allowed, multi-led is supposed to be used.
+
+<snip>/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine-amami.dtb: pm8941@1: pwm: 'rgb-led' does not match any of the regexes: '^led@[0-9a-f]$', 'pinctrl-[0-9]+'
+        From schema: <snip>/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
 
 Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 ---
- arch/arm/boot/dts/qcom-msm8974.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi           | 2 +-
+ .../arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-index da247d799492..c2cf6a95d40d 100644
---- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-@@ -1703,8 +1703,6 @@ smd-edge {
- 				qcom,ipc = <&apcs 8 8>;
- 				qcom,smd-edge = <1>;
- 				label = "lpass";
--				#address-cells = <1>;
--				#size-cells = <0>;
- 			};
- 		};
+diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
+index 5a70683d9103..c1d97190ea71 100644
+--- a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
++++ b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-rhine.dtsi
+@@ -178,7 +178,7 @@ &pm8941_lpg {
+ 
+ 	qcom,power-source = <1>;
+ 
+-	rgb-led {
++	multi-led {
+ 		color = <LED_COLOR_ID_RGB>;
+ 		function = LED_FUNCTION_STATUS;
+ 
+diff --git a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
+index 85348562e861..94daa1a3240a 100644
+--- a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
++++ b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
+@@ -295,7 +295,7 @@ &pm8941_lpg {
+ 
+ 	qcom,power-source = <1>;
+ 
+-	rgb-led {
++	multi-led {
+ 		color = <LED_COLOR_ID_RGB>;
+ 		function = LED_FUNCTION_STATUS;
  
 -- 
 2.37.3
