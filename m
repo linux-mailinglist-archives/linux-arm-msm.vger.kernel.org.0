@@ -2,87 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B90525E9142
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Sep 2022 08:27:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3106F5E9184
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Sep 2022 09:47:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229743AbiIYG1J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Sep 2022 02:27:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34026 "EHLO
+        id S229662AbiIYHrD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Sep 2022 03:47:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbiIYG1H (ORCPT
+        with ESMTP id S229539AbiIYHrC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Sep 2022 02:27:07 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00A953E770;
-        Sat, 24 Sep 2022 23:27:06 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id v186so3817348pfv.11;
-        Sat, 24 Sep 2022 23:27:06 -0700 (PDT)
+        Sun, 25 Sep 2022 03:47:02 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFA29371B4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Sep 2022 00:47:01 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id a8so6373158lff.13
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Sep 2022 00:47:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=figvH0TFF8KUninkiSzsZB9ZDnznmKVoOGYr8J4oiTw=;
-        b=EPQ46ZPafKCrXLBqT0pKN5ucNwF6hGnMi3WCJ9R5V1/B0KMsi+RsC6cIOREklJcrKe
-         UCh8pcyhZFFrTVhZMfptRyxFCg6onXVq/yiC0X4nf28LryL9hjyGjY8/nUeOG1fVLvjn
-         5ohmhouNB07lXF7NFUuRSxfSXe/s0BdzNsGf3CCzqAVNJQkj7214v/TKGwRAxpbyevoT
-         T1ZeVRYs6QGo1LCw4knop2UhXVI1boXzHmIuesdH32z1Aln3RlypRKs7pVZIHPF86CKE
-         sOLwl7WHgyyYoUsec4oxMMSS7Sx+xDSRbzOFQUbIvEZg2KkZxS/FYKpy0lTbT7PxLpPI
-         M05A==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=IqTYUttp9fReFBo4Q6fCWj5y3UNld99XW4zScIAoz5g=;
+        b=jtkTBfZ4MxDYpQ+w+N9ZVw60L4P1+O2El3APHzeCD9adF309Z8MbaLxB45Q+Js/vUl
+         yS1IOS1F7uRIZPcmry6p2qTRhqLFCIEsaDh6eoqKTPK3hcDvf/eVklA7ZjwbbYGKRf60
+         6GmwAr6JuYBFWV5MUbMk2yoOP6QZAdzjUk43ym0DoJPN5PfoCpPJBDTk8eRyyIt71K3X
+         w/DLzaMC/XKpGPkKwidtoDUE51k9CzkuPrYI+KTnjP+wvlbwgnRvw/iCWGziU4I87ylq
+         S8UG7TRrLmpeEYATPuPeyECjgMzyrThP6oWuRVT2fNeBaxHIoOP5UzKmd/fcsK/pOnfq
+         JKjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=figvH0TFF8KUninkiSzsZB9ZDnznmKVoOGYr8J4oiTw=;
-        b=1QApttYwJlyFhj4ukFywsQpMC4kwXFfTadqd9SoPpDXq2KUlIthdHBdhQ6a8Bwkbsw
-         dtq1Z+30h/BJpNPLPQktkEqFK9PNwmLbWk4vxkp57Sr3lt3gSNOq125RqiXMTFMJS1dg
-         FTPBTXmFCqNpUHRdGiV38Q+uSLWxv51ZQPwpIim0a38W6Ng1MDJnM44u1HR34S86oXKq
-         xCyW1t9qg+Q/vgufaUX/108VNRnHyxw1uktu8YuWxgPX6iILjwwKW96c+dLl1MhKO68z
-         tf03cEOowRBBBoWE0MArehv7De4BFmPjR6L4l42AZX/kKG/an0klbEnCt9QS62/zZi9b
-         TYww==
-X-Gm-Message-State: ACrzQf28MLkvmjokffZD3I5ArvCh10r7vato+czbtRwTnMoCfIazg1ht
-        LUaw4xSwIINIJrlUGACHUt0=
-X-Google-Smtp-Source: AMsMyM6dR0K6JP5HP/gIn1nFWPsx5ZuJL5pSPAUigvAlQE+1kTa+/BtAxVe3/tIvUkpfa9IfAUbVEQ==
-X-Received: by 2002:a05:6a00:e1b:b0:537:7c74:c405 with SMTP id bq27-20020a056a000e1b00b005377c74c405mr17188516pfb.43.1664087226221;
-        Sat, 24 Sep 2022 23:27:06 -0700 (PDT)
-Received: from google.com ([2620:15c:9d:2:37c:3916:9a45:14cc])
-        by smtp.gmail.com with ESMTPSA id bb11-20020a170902bc8b00b0016c57657977sm8725482plb.41.2022.09.24.23.27.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Sep 2022 23:27:05 -0700 (PDT)
-Date:   Sat, 24 Sep 2022 23:27:02 -0700
-From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=IqTYUttp9fReFBo4Q6fCWj5y3UNld99XW4zScIAoz5g=;
+        b=z/v61XjJi0nv1ZODDxE5VrIvo+Xxjny3h3LZe8r3EObU5G6hig9V2B9c9iymqBsM1/
+         f5zFDbb1E3k5igCZTgPaSq2ttAbLAFUaX2RGp1Y4X7tf1Q+0GgUshKNGlvM8Dw6B4Vt8
+         7am3M6w+ElozjZovdfKS2s8GDLuY+YpaULym/mSkHb3ruJDX3vXKtNg5anXa/Owd/Nez
+         YdBxD7VS17l+3x/QSNR9N2MGnlc+wPUOGq9KJKrsiKxrdF2DG5HKtYfufFH4p0LAVLEl
+         5xL5NZ5cFNAUn9i9hCpGgywvCzugl9TfcLVj96Hq8+hiylFc3ubKNhVzARoNUB0ygAeE
+         qqLw==
+X-Gm-Message-State: ACrzQf2Q+HxZhctCpLEmMAjrBtYUozshGrX23kFk08rhOo57rcit/j9f
+        fmrSJV7cOC0tlUWM0M7WZu/rqg==
+X-Google-Smtp-Source: AMsMyM4T57GirHiC3ezKRkXiCLFXVFvPN1348MhCGX7DSVE0hJA3Y1lQouWYBSor0mRzUs7czw3T+A==
+X-Received: by 2002:a05:6512:3986:b0:49f:480f:c9d5 with SMTP id j6-20020a056512398600b0049f480fc9d5mr6140605lfu.445.1664092020016;
+        Sun, 25 Sep 2022 00:47:00 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id o4-20020a198c04000000b0049f54a976efsm2135038lfd.29.2022.09.25.00.46.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 25 Sep 2022 00:46:59 -0700 (PDT)
+Message-ID: <c83700ef-c653-b155-c3f4-e44f3b80e6ee@linaro.org>
+Date:   Sun, 25 Sep 2022 09:46:58 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH v2 1/2] dt-bindings: display/msm: Add QCM2290 DSI phy
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-input@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: input: qcom,pm8xxx-vib: convert to yaml
-Message-ID: <Yy/0tuXJs+c40akh@google.com>
-References: <20220917155705.2284-1-luca@z3ntu.xyz>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220917155705.2284-1-luca@z3ntu.xyz>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Loic Poulain <loic.poulain@linaro.org>
+References: <20220924085129.161086-1-dmitry.baryshkov@linaro.org>
+ <20220924085129.161086-2-dmitry.baryshkov@linaro.org>
+ <f6ed6e44-ab28-9f13-4193-517eef0edea1@linaro.org>
+ <3a14c5a3-e4f2-a89d-815b-8923d1d189c1@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <3a14c5a3-e4f2-a89d-815b-8923d1d189c1@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Sep 17, 2022 at 05:57:00PM +0200, Luca Weiss wrote:
-> Convert the PM8xxx PMIC Vibrator bindings to dt-schema.
+On 24/09/2022 11:15, Dmitry Baryshkov wrote:
+> On 24/09/2022 12:12, Krzysztof Kozlowski wrote:
+>> On 24/09/2022 10:51, Dmitry Baryshkov wrote:
+>>> From: Loic Poulain <loic.poulain@linaro.org>
+>>>
+>>> QCM2290 platform uses the 14nm DSI PHY driver.
+>>>
+>>> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+>>> [DB: changed compat to follow the agreed scheme]
+>>
+>> Bjorn asked to keep consistency in other case:
+>> https://lore.kernel.org/all/20220829210408.gxbv6szxfwiiwrbv@builder.lan/
 > 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> Ack. Should I use qcom,dsi-phy-14nm-2290 or qcom,dsi-phy-14nm-qcm2290?
 
-Applied, thank you.
+Ugh, no clue, but existing pattern would indicate without qcm.
 
--- 
-Dmitry
+
+Best regards,
+Krzysztof
+
