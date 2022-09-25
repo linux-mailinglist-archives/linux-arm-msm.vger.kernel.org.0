@@ -2,109 +2,430 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B94F5E92B0
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Sep 2022 13:21:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9B8D5E92CA
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Sep 2022 13:43:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231893AbiIYLVc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Sep 2022 07:21:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52158 "EHLO
+        id S229652AbiIYLnm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Sep 2022 07:43:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231883AbiIYLV3 (ORCPT
+        with ESMTP id S229850AbiIYLnc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Sep 2022 07:21:29 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A53CB2B612
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Sep 2022 04:21:28 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id z25so6826815lfr.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Sep 2022 04:21:28 -0700 (PDT)
+        Sun, 25 Sep 2022 07:43:32 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00C2E2657C
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Sep 2022 04:43:29 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id q17so4633184lji.11
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Sep 2022 04:43:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=tmgRMVajfJ/rcrn228aspdr1S7/uuIkhYN/dmuBPsdc=;
-        b=AVE4jDkSvxgPIFRsMAM7jDsIKLl+8gYT8k73hGCY2YjUWEp6C7oan5f5V35FrXG+nS
-         LAvs7PRCrAh50q8+og+0pMJnnurj8yUYY/25pUDtDpxbhZJL9O1WFWm/HuvaGWWKqiGF
-         o7ADIBvVGGf4UxATwQTUf9gf0kEXnz9wL8g3GpMlfi0aCvYA9PeoJPn8R74jzr9+ocmz
-         3+z6X/7KZ9YL3gBV4mZDKsW/wSaOJ3LPvrHwy0kvkbUi/a4WMlnfoNChSIodfRH95j+f
-         zG0GbghmOuLxCRc5+UbEqZTMABmVKmvbRaxgoRwkOKpwNcAm3gr55RIFBip5RC3yUw5K
-         OsmQ==
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:to:from:date:from:to:cc:subject:date;
+        bh=xdUpkjLWneiu1az8qo/Aypa1Ui05jsIcIxb7bsaMP+g=;
+        b=suFkZbD4pRhBqnpo7QzFERWcc4jsxyfpT3Gc8lK0xwS6vIldPB0Tjpno0HNQNiScjL
+         yUczipX0UEFByvyIaW6VxwYP4NFnYTVDHDkOimLsKUdesl+P2edygdjt69f7vu+gelVH
+         MnnSS5FPm+mz9XkAMoYj8a7SFT//9p1uWaYHel228rX3g8IX1Ra1iDdP3KFU8TrI2dvG
+         pje/POpyr9BaPK/1fhZAfsaBNJ29+7nylbN+utM5QnROwWs/1JN3ed1Oi+INqG2gvKXf
+         6coLXaPR/pohmGoORVAm7qKpBb0X4JN89BGU0jMMM5jLRAfp26V0SRlcvmuC5X93x7m6
+         D8og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=tmgRMVajfJ/rcrn228aspdr1S7/uuIkhYN/dmuBPsdc=;
-        b=bTKNwJzdHIbI6WI7hRepVjCnzBxA+lntI43capbBdaNNGJmWDS3XljaCN5mB1N7qSa
-         BEc+1tYcgSM92lggR1uOYTqHlAj+X3gOob+gkldTEuAk0I5aMJPKx31hrBuPjJKtMW5C
-         Zjzn0CNz4I8saXzS9U+NYBCNfY6QTnPyS9fPTKgWSzLMu7imXy2lOsrrEJTa8DIWYbMT
-         C1Rf+mWWIGpj5wAIGVOqzDPIoOnH+Iy/8tzmbaaLSIwvT7sBB33u+/HqcMt/yDrtqARO
-         ugJ1nINuWgYRpJYO4x8acqO0SfwQBrAq056PYNnFeC8C27nVCYKgBZ6ogtxrkbSJeoq9
-         y0lA==
-X-Gm-Message-State: ACrzQf3sjMO7zmVznej1BrTanodXottGYgwpX+13VS4sL4e1/FtXKpng
-        qaUr/XyQf6KGXSON31+gRvgXYA==
-X-Google-Smtp-Source: AMsMyM4kONuHhMPkXDCvEuCUoF5bDQfzA2AoUTOe4vdPSAQEggpBbJIs/cl6wa9yskO0SVgPNxw4+A==
-X-Received: by 2002:a05:6512:3b0b:b0:49a:d44b:428 with SMTP id f11-20020a0565123b0b00b0049ad44b0428mr7173041lfv.0.1664104888207;
-        Sun, 25 Sep 2022 04:21:28 -0700 (PDT)
-Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id c16-20020ac25f70000000b004946748ad4dsm2178053lfc.159.2022.09.25.04.21.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Sep 2022 04:21:27 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:to:from:date:x-gm-message-state:from
+         :to:cc:subject:date;
+        bh=xdUpkjLWneiu1az8qo/Aypa1Ui05jsIcIxb7bsaMP+g=;
+        b=wrMpzeA/9rGB2YZs609nAz5XvOV0c/t6MiRWEXrqdlLsZmQUCPACIl6B7FRt7ABqNV
+         lYntuzvrnrNclfUwjNz/af6iWo88nYIlCI+yHbnBY+dg4oM+fkqsQr7QnDkXWQewevTW
+         rHEnhOLusjrVxv908DanA9J4CUABRmLrZEzAvYuRPPeH7ZvBdPwrbt+3kIcJmzfzinNm
+         AaUfzgQkJxcQdrfkozFqhSw+7Z0DhqChWzhOBJ0iFbLP4Iyh3GYYjvb+6/O3CatiIXCx
+         emhWNP8AN3mXcUrnWDnZBkMnSM0oW90zV9+nChBgqd0LxXAM9eTDrE/L3RD/g/AeeEje
+         phKQ==
+X-Gm-Message-State: ACrzQf24RELF3YSGxc67VUzkYvwHVzLRtQGW6ufaePb86odn5a9A8XDk
+        DZgNm99PlltpMFLKkM+H5+G0FQ==
+X-Google-Smtp-Source: AMsMyM59gBFRFjC9Z1NVafxeKXY3lCwEBML/x/82ul0gly35mS9sN1N4fVVRpaRGsCuEM2FGjhu0fw==
+X-Received: by 2002:a05:651c:179e:b0:26b:dbbb:eb9 with SMTP id bn30-20020a05651c179e00b0026bdbbb0eb9mr5696131ljb.121.1664106208210;
+        Sun, 25 Sep 2022 04:43:28 -0700 (PDT)
+Received: from [127.0.0.1] ([94.25.228.177])
+        by smtp.gmail.com with ESMTPSA id b10-20020a2eb90a000000b00261d619fb16sm2074425ljb.82.2022.09.25.04.43.27
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 25 Sep 2022 04:43:27 -0700 (PDT)
+Date:   Sun, 25 Sep 2022 14:43:13 +0300
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Russell King <linux@armlinux.org.uk>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 2/2] arm64: defconfig: enable rest of Qualcomm ARMv8 SoCs pinctrl drivers
-Date:   Sun, 25 Sep 2022 13:21:23 +0200
-Message-Id: <20220925112123.148897-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220925112123.148897-1-krzysztof.kozlowski@linaro.org>
-References: <20220925112123.148897-1-krzysztof.kozlowski@linaro.org>
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] pinctrl: qcom: restrict drivers per ARM/ARM64
+User-Agent: K-9 Mail for Android
+In-Reply-To: <20220925112103.148836-1-krzysztof.kozlowski@linaro.org>
+References: <20220925112103.148836-1-krzysztof.kozlowski@linaro.org>
+Message-ID: <08E290AD-C842-4BF2-9C57-2CE59A4C5D88@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable rest of Qualcomm ARMv8 SoCs pin controller drivers (MSM8953,
-MSM8976, QCM2290).
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
----
+On 25 September 2022 14:21:03 GMT+03:00, Krzysztof Kozlowski <krzysztof=2E=
+kozlowski@linaro=2Eorg> wrote:
+>There is no point to allow selecting pin-controller drivers for Qualcomm
+>ARMv7 SoCs when building ARM64 kernel, and vice versa=2E  This makes
+>kernel configuration more difficult as many do not remember the Qualcomm
+>SoCs=2E  There won't be a single image for ARMv7 and ARMv8/9 SoCs, so no
+>features/options are lost=2E
+>
+>Signed-off-by: Krzysztof Kozlowski <krzysztof=2Ekozlowski@linaro=2Eorg>
 
-Changes since v1:
-1. Enable MSM8976 (Stephan)
----
- arch/arm64/configs/defconfig | 3 +++
- 1 file changed, 3 insertions(+)
+I haven't checked which restrictions apply to msm8916 at this moment, but =
+it might be worth adding 'depends on ARM || ARM64 || COMPILE_TEST'
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 5a4ba141d15c..1138386952b5 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -529,9 +529,12 @@ CONFIG_PINCTRL_MSM=y
- CONFIG_PINCTRL_IPQ8074=y
- CONFIG_PINCTRL_IPQ6018=y
- CONFIG_PINCTRL_MSM8916=y
-+CONFIG_PINCTRL_MSM8953=y
-+CONFIG_PINCTRL_MSM8976=y
- CONFIG_PINCTRL_MSM8994=y
- CONFIG_PINCTRL_MSM8996=y
- CONFIG_PINCTRL_MSM8998=y
-+CONFIG_PINCTRL_QCM2290=y
- CONFIG_PINCTRL_QCS404=y
- CONFIG_PINCTRL_QDF2XXX=y
- CONFIG_PINCTRL_QCOM_SPMI_PMIC=y
--- 
-2.34.1
+Otherwise lgtm=2E
 
+
+>
+>---
+>
+>Changes since v1:
+>1=2E Restrict MSM8976 to ARM64=2E
+>---
+> drivers/pinctrl/qcom/Kconfig | 39 ++++++++++++++++++++++++++++++++++++
+> 1 file changed, 39 insertions(+)
+>
+>diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
+>index 2961b5eb8e10=2E=2E9dc2d803a586 100644
+>--- a/drivers/pinctrl/qcom/Kconfig
+>+++ b/drivers/pinctrl/qcom/Kconfig
+>@@ -15,6 +15,7 @@ config PINCTRL_MSM
+> config PINCTRL_APQ8064
+> 	tristate "Qualcomm APQ8064 pin controller driver"
+> 	depends on OF
+>+	depends on ARM || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -23,6 +24,7 @@ config PINCTRL_APQ8064
+> config PINCTRL_APQ8084
+> 	tristate "Qualcomm APQ8084 pin controller driver"
+> 	depends on OF
+>+	depends on ARM || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -31,6 +33,7 @@ config PINCTRL_APQ8084
+> config PINCTRL_IPQ4019
+> 	tristate "Qualcomm IPQ4019 pin controller driver"
+> 	depends on OF
+>+	depends on ARM || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -39,6 +42,7 @@ config PINCTRL_IPQ4019
+> config PINCTRL_IPQ8064
+> 	tristate "Qualcomm IPQ8064 pin controller driver"
+> 	depends on OF
+>+	depends on ARM || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -47,6 +51,7 @@ config PINCTRL_IPQ8064
+> config PINCTRL_IPQ8074
+> 	tristate "Qualcomm Technologies, Inc=2E IPQ8074 pin controller driver"
+> 	depends on OF
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for
+>@@ -57,6 +62,7 @@ config PINCTRL_IPQ8074
+> config PINCTRL_IPQ6018
+> 	tristate "Qualcomm Technologies, Inc=2E IPQ6018 pin controller driver"
+> 	depends on OF
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for
+>@@ -67,6 +73,7 @@ config PINCTRL_IPQ6018
+> config PINCTRL_MSM8226
+> 	tristate "Qualcomm 8226 pin controller driver"
+> 	depends on OF
+>+	depends on ARM || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -76,6 +83,7 @@ config PINCTRL_MSM8226
+> config PINCTRL_MSM8660
+> 	tristate "Qualcomm 8660 pin controller driver"
+> 	depends on OF
+>+	depends on ARM || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -84,6 +92,7 @@ config PINCTRL_MSM8660
+> config PINCTRL_MSM8960
+> 	tristate "Qualcomm 8960 pin controller driver"
+> 	depends on OF
+>+	depends on ARM || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -100,6 +109,7 @@ config PINCTRL_MDM9607
+> config PINCTRL_MDM9615
+> 	tristate "Qualcomm 9615 pin controller driver"
+> 	depends on OF
+>+	depends on ARM || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -108,6 +118,7 @@ config PINCTRL_MDM9615
+> config PINCTRL_MSM8X74
+> 	tristate "Qualcomm 8x74 pin controller driver"
+> 	depends on OF
+>+	depends on ARM || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -116,6 +127,7 @@ config PINCTRL_MSM8X74
+> config PINCTRL_MSM8909
+> 	tristate "Qualcomm 8909 pin controller driver"
+> 	depends on OF
+>+	depends on ARM || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -132,6 +144,7 @@ config PINCTRL_MSM8916
+> config PINCTRL_MSM8953
+> 	tristate "Qualcomm 8953 pin controller driver"
+> 	depends on OF
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -142,6 +155,7 @@ config PINCTRL_MSM8953
+> config PINCTRL_MSM8976
+> 	tristate "Qualcomm 8976 pin controller driver"
+> 	depends on OF
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -152,6 +166,7 @@ config PINCTRL_MSM8976
+> config PINCTRL_MSM8994
+> 	tristate "Qualcomm 8994 pin controller driver"
+> 	depends on OF
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -161,6 +176,7 @@ config PINCTRL_MSM8994
+> config PINCTRL_MSM8996
+> 	tristate "Qualcomm MSM8996 pin controller driver"
+> 	depends on OF
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -169,6 +185,7 @@ config PINCTRL_MSM8996
+> config PINCTRL_MSM8998
+> 	tristate "Qualcomm MSM8998 pin controller driver"
+> 	depends on OF
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -177,6 +194,7 @@ config PINCTRL_MSM8998
+> config PINCTRL_QCM2290
+> 	tristate "Qualcomm QCM2290 pin controller driver"
+> 	depends on OF
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -185,6 +203,7 @@ config PINCTRL_QCM2290
+> config PINCTRL_QCS404
+> 	tristate "Qualcomm QCS404 pin controller driver"
+> 	depends on OF
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -232,6 +251,7 @@ config PINCTRL_QCOM_SSBI_PMIC
+> config PINCTRL_SC7180
+> 	tristate "Qualcomm Technologies Inc SC7180 pin controller driver"
+> 	depends on OF
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -241,6 +261,7 @@ config PINCTRL_SC7180
+> config PINCTRL_SC7280
+> 	tristate "Qualcomm Technologies Inc SC7280 pin controller driver"
+> 	depends on OF
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -250,6 +271,7 @@ config PINCTRL_SC7280
+> config PINCTRL_SC7280_LPASS_LPI
+> 	tristate "Qualcomm Technologies Inc SC7280 LPASS LPI pin controller dri=
+ver"
+> 	depends on GPIOLIB
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_LPASS_LPI
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -259,6 +281,7 @@ config PINCTRL_SC7280_LPASS_LPI
+> config PINCTRL_SC8180X
+> 	tristate "Qualcomm Technologies Inc SC8180x pin controller driver"
+> 	depends on (OF || ACPI)
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -268,6 +291,7 @@ config PINCTRL_SC8180X
+> config PINCTRL_SC8280XP
+> 	tristate "Qualcomm Technologies Inc SC8280xp pin controller driver"
+> 	depends on OF
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -277,6 +301,7 @@ config PINCTRL_SC8280XP
+> config PINCTRL_SDM660
+> 	tristate "Qualcomm Technologies Inc SDM660 pin controller driver"
+> 	depends on OF
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -286,6 +311,7 @@ config PINCTRL_SDM660
+> config PINCTRL_SDM845
+> 	tristate "Qualcomm Technologies Inc SDM845 pin controller driver"
+> 	depends on (OF || ACPI)
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -295,6 +321,7 @@ config PINCTRL_SDM845
+> config PINCTRL_SDX55
+> 	tristate "Qualcomm Technologies Inc SDX55 pin controller driver"
+> 	depends on OF
+>+	depends on ARM || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -304,6 +331,7 @@ config PINCTRL_SDX55
+> config PINCTRL_SM6115
+> 	tristate "Qualcomm Technologies Inc SM6115,SM4250 pin controller driver=
+"
+> 	depends on GPIOLIB && OF
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -313,6 +341,7 @@ config PINCTRL_SM6115
+> config PINCTRL_SM6125
+> 	tristate "Qualcomm Technologies Inc SM6125 pin controller driver"
+> 	depends on OF
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -322,6 +351,7 @@ config PINCTRL_SM6125
+> config PINCTRL_SM6350
+> 	tristate "Qualcomm Technologies Inc SM6350 pin controller driver"
+> 	depends on GPIOLIB && OF
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -331,6 +361,7 @@ config PINCTRL_SM6350
+> config PINCTRL_SM6375
+> 	tristate "Qualcomm Technologies Inc SM6375 pin controller driver"
+> 	depends on GPIOLIB && OF
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -340,6 +371,7 @@ config PINCTRL_SM6375
+> config PINCTRL_SDX65
+> 	tristate "Qualcomm Technologies Inc SDX65 pin controller driver"
+> 	depends on GPIOLIB && OF
+>+	depends on ARM || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -349,6 +381,7 @@ config PINCTRL_SDX65
+> config PINCTRL_SM8150
+> 	tristate "Qualcomm Technologies Inc SM8150 pin controller driver"
+> 	depends on OF
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	 This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -358,6 +391,7 @@ config PINCTRL_SM8150
+> config PINCTRL_SM8250
+> 	tristate "Qualcomm Technologies Inc SM8250 pin controller driver"
+> 	depends on OF
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -367,6 +401,7 @@ config PINCTRL_SM8250
+> config PINCTRL_SM8250_LPASS_LPI
+> 	tristate "Qualcomm Technologies Inc SM8250 LPASS LPI pin controller dri=
+ver"
+> 	depends on GPIOLIB
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_LPASS_LPI
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -375,6 +410,7 @@ config PINCTRL_SM8250_LPASS_LPI
+>=20
+> config PINCTRL_SM8350
+> 	tristate "Qualcomm Technologies Inc SM8350 pin controller driver"
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -384,6 +420,7 @@ config PINCTRL_SM8350
+> config PINCTRL_SM8450
+> 	tristate "Qualcomm Technologies Inc SM8450 pin controller driver"
+> 	depends on GPIOLIB && OF
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_MSM
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -393,6 +430,7 @@ config PINCTRL_SM8450
+> config PINCTRL_SM8450_LPASS_LPI
+> 	tristate "Qualcomm Technologies Inc SM8450 LPASS LPI pin controller dri=
+ver"
+> 	depends on GPIOLIB
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_LPASS_LPI
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>@@ -402,6 +440,7 @@ config PINCTRL_SM8450_LPASS_LPI
+> config PINCTRL_SC8280XP_LPASS_LPI
+> 	tristate "Qualcomm Technologies Inc SC8280XP LPASS LPI pin controller d=
+river"
+> 	depends on GPIOLIB
+>+	depends on ARM64 || COMPILE_TEST
+> 	depends on PINCTRL_LPASS_LPI
+> 	help
+> 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+
+--=20
+With best wishes
+Dmitry
