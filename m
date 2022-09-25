@@ -2,131 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D3DAE5E920C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Sep 2022 12:20:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 070EB5E9249
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Sep 2022 13:06:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229592AbiIYKUW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Sep 2022 06:20:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49690 "EHLO
+        id S231169AbiIYLGR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Sep 2022 07:06:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231402AbiIYKUS (ORCPT
+        with ESMTP id S230385AbiIYLGQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Sep 2022 06:20:18 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.82])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 720F420F79;
-        Sun, 25 Sep 2022 03:20:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1664101211;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=IQNfKZqm3beCbQztu5Q6lry74/HfJzFnCR0wVlHyRjc=;
-    b=BSgxrHsBvAiIoA8U7dgwkS9bJAa5bL7Imy9VYH+2zRXNcOgONXguy+3/NXmnXgViJg
-    NHctICnIByXbPwRCwGWPXGqR7QoTug67o2O8/Tua5weD1MX1QInLOvKrhk5Ve6tDSBh3
-    Xm+3UlA4DaCGxX87YJxH3p/ESd7GjzV0SpPRrYtOaf8+AMvv+MTF+L5ehGIZNAlHiC5d
-    KYtT/pz1flso4n5y5aHB/NfF9QtxtwWEl6Kt3b4yQMJvIRsMrNZ42yTAfLeJ50FuGDvl
-    8+wFusjHq2n5frVkaO/Evh448sgo3ojeIAW1HHaz1l1cdgUjVD4kw/QypnIlyV+RbJ73
-    0syA==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLVrK85lg=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 48.1.1 AUTH)
-    with ESMTPSA id dde14cy8PAKA5A6
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Sun, 25 Sep 2022 12:20:10 +0200 (CEST)
-Date:   Sun, 25 Sep 2022 12:20:09 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Sun, 25 Sep 2022 07:06:16 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49A5131DE2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Sep 2022 04:06:15 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id x29so4635792ljq.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Sep 2022 04:06:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=aSKpEll+WjUReck0aTlKSCNK8n90vq02tlc2QaFeH9E=;
+        b=DdPaKq6P73V5IFE1aEmY12xDQlZwE2GJlQN7GJHaoTO4Z5hlVSisVhSpolTYnYVQIR
+         Im/9mDEeowyCYAkOgVgDtPg+mZhyOImj6R/jCG5jXuIWt0rYceRo7V3QWUHAksxSAre5
+         gQ94Q6Na62YagnTGEXIh0/UInT/MkIJ4ZXfGRvQ4aSV2TyXkQTHxW9y5iVvhVx76ibW7
+         BTWeZL+yL2nSkjZZDScvbjVDPPPIPGjS4c8EGudMyaL21/asjkc34DDT6ndI1L+j79gQ
+         rpoi0qlimF9UcpJH0vjxiqFGaSq73bs4Z6u4Nx9SR5/fYyRFARxB9gKgrlq9t/3gClLr
+         LyVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=aSKpEll+WjUReck0aTlKSCNK8n90vq02tlc2QaFeH9E=;
+        b=uGbCPLE3/Wwcah7mjvNB6NNP/kIyVIvuVrcArX+mgPu5R9sqYZMDb28YrOyd8SvYvz
+         14D8clAgenPLmanxBR/BIsEtv7JMZUsrnYXR1ZUEJqLLU8lDuJHuW5AVe6ytCI+5q79Y
+         zxnEfA6tPicfFNUB6KnDQXQaIOFCNV6a9F8LFrDYZ51+nEkd6PGCqnY1L+FEVKnXTMAj
+         Umext3UBNFZ06/zdpoiYjO8U+52AUpCYbz6tBZn+NMLOa4QFhTaE5vF8vgVgSRAtMLAK
+         XYeIsvz7ARlyFgi9UQpTmYXPMy1Jb4c0xv6XuLZYRCXJtqM7UlxOnJHXVKfSbs7+nnw8
+         h7cw==
+X-Gm-Message-State: ACrzQf2/n5XmZXPvZ3hfkdRIs+6sE8kwp8F8eEKLR6xvNcfCJKszEp9o
+        8QbG/cTz/+uxQwoD80HMnTSw0Q==
+X-Google-Smtp-Source: AMsMyM7EU7P+BmogcjTKxRpcWmFWNoy3x0Ta5NB6zUFWXZ81UQg5Qv8LsPBpHi+7qqk/Jq+ix31DZw==
+X-Received: by 2002:a2e:3010:0:b0:261:bc8f:81e9 with SMTP id w16-20020a2e3010000000b00261bc8f81e9mr5591494ljw.61.1664103973515;
+        Sun, 25 Sep 2022 04:06:13 -0700 (PDT)
+Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id u19-20020ac258d3000000b00492dadd8143sm2177265lfo.168.2022.09.25.04.06.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 25 Sep 2022 04:06:13 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [RFC PATCH 00/10] thermal/drivers/tsens: specify nvmem cells in
- DT rather than parsing them manually
-Message-ID: <YzArWZ1+OKvCNM7d@gerhold.net>
-References: <20220910124701.4060321-1-dmitry.baryshkov@linaro.org>
- <YyyaH1ZXF9IvLpwd@gerhold.net>
- <93a790fb-20dc-0f31-2eed-09f5b538bea9@linaro.org>
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 00/15] pinctrl/arm64: qcom: 4th set of Qualcomm TLMM pinctrl schema warnings
+Date:   Sun, 25 Sep 2022 13:05:53 +0200
+Message-Id: <20220925110608.145728-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <93a790fb-20dc-0f31-2eed-09f5b538bea9@linaro.org>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Sep 24, 2022 at 09:58:56PM +0300, Dmitry Baryshkov wrote:
-> On 22/09/2022 20:23, Stephan Gerhold wrote:
-> > On Sat, Sep 10, 2022 at 03:46:51PM +0300, Dmitry Baryshkov wrote:
-> > > Historically the tsens driver fetches the calibration data as a blob and
-> > > then parses the blob on its own. This results in semi-duplicated code
-> > > spreading over the platform-specific functions.
-> > > 
-> > > This patch series changes tsens calibration code to use pre-parsed nvmem
-> > > cells rather than parsing the blob in the driver. For backwards
-> > > compatibility the old code is left in place for msm8916 and qcs404, two
-> > > platforms which have in-tree DT files. For msm8974 the original function
-> > > is left intact, since it differs significantly (and I can not test the
-> > > code on msm8974). For all other affected platforms the old parsing code
-> > > has been dropped as a part of this RFC.
-> > > 
-> > > The code was tested on msm8916 and qcs404 only, thus it is being sent as
-> > > an RFC.
-> > > 
-> > 
-> > Thanks a lot for working on this!
-> > 
-> > After thinking about this for a while I wonder if we can go even a step
-> > further: Can we drop SoC-specific code entirely for 8939 and 9607 and
-> > match the generic compatible (qcom,tsens-v0_1)? This would allow most
-> > v0.1 plaforms to use generic code like for qcom,tsens-v2.
-> 
-> While this idea looks appealing, I think it's a bit against our custom to
-> put hardware details into the driver rather than putting them into the DT.
-> So, I think, the 8939 will have to stay as is, while for the 9607 and maybe
-> several other devices it should be possible to create a fallback entry.
-> 
+Hi,
 
-IMHO the existing tsens-v2 support is a good example that it's sometimes
-better to have some minor hardware details in the DT so the driver does
-not have to be changed for every single platform. Extending from
-specifying the number of sensors in the DT to the exact set of sensors
-is not a very big step.
+Overview
+========
+This is the *fourth* patchset around Qualcomm pinctrl in recent days:
+1. First round of TLMM fixes: merged
+2. LPASS fixes: https://lore.kernel.org/linux-devicetree/20220922195651.345369-1-krzysztof.kozlowski@linaro.org/T/#t
+3. ARMv7 TLMM fixes: https://lore.kernel.org/linux-devicetree/20220924080459.13084-1-krzysztof.kozlowski@linaro.org/T/#t
+4. ARMv8 remaining TLMM fixes: THIS PATCHSET
 
-Also, aren't you also going against the custom here by moving the fuse
-hardware details to the DT? :)
+Dependencies
+============
+1. No dependencies.
+2. dt-bindings are independent of DTS patches.
 
-> [...]
-> > And actually there are two revisions of 8939, the older one has one
-> > sensor less (msm-3.10: msm8939-common.dtsi vs msm8939-v3.0.dtsi).
-> > This could also be easily handled from the DT without any code changes:
-> > 
-> > 	qcom,sensors = <0 1 2 3 5 6 7 8 9>;
-> 
-> Usually we only care about the latest revision of the chip, earlier
-> revisions typically correspond to engineering samples, never hitting the
-> actual consumer devices.
-> 
+Best regards,
+Krzysztof
 
-I'm afraid we might have to care about both revisions here - I recently
-checked a couple of MSM8939 devices in postmarketOS and there are
-definitely two different revisions used in production - they are easily
-identifiable since they have different CPU revisions in the "lscpu"
-output (Cortex-A53 r0p1 vs r0p4).
+Krzysztof Kozlowski (15):
+  arm64: dts: qcom: sm8250: align TLMM pin configuration with DT schema
+  arm64: dts: qcom: sm8250-sony-xperia-edo: fix touchscreen bias-disable
+  arm64: dts: qcom: sc8280xp: align TLMM pin configuration with DT
+    schema
+  arm64: dts: qcom: sc7280: align TLMM pin configuration with DT schema
+    (really)
+  arm64: dts: qcom: sc7280-herobrine: correct number of gpio-line-names
+  arm64: dts: qcom: sc7280-idp-ec-h1: add missing QUP GPIO functions
+  arm64: dts: qcom: msm8953: align TLMM pin configuration with DT schema
+  arm64: dts: qcom: sdm845: align TLMM pin configuration with DT schema
+  arm64: dts: qcom: sm6125-sony-xperia: add missing SD CD GPIO functions
+  arm64: dts: qcom: sm6125: align TLMM pin configuration with DT schema
+  dt-bindings: pinctrl: qcom,sm8250: add gpio-reserved-ranges and
+    gpio-line-names
+  dt-bindings: pinctrl: qcom,sm8250: fix matching pin config
+  dt-bindings: pinctrl: qcom,sm8250: add input-enable
+  dt-bindings: pinctrl: qcom,sc7280: add bias-bus-hold and input-enable
+  dt-bindings: pinctrl: qcom,sc7280: correct number of GPIOs
 
-Thanks,
-Stephan
+ .../bindings/pinctrl/qcom,sc7280-pinctrl.yaml |  12 +-
+ .../bindings/pinctrl/qcom,sm8250-pinctrl.yaml | 153 ++---
+ arch/arm64/boot/dts/qcom/msm8953.dtsi         |  70 +--
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts      |  12 +-
+ arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts    |   8 +-
+ .../boot/dts/qcom/sc7280-herobrine-crd.dts    |   1 +
+ .../dts/qcom/sc7280-herobrine-evoker-r0.dts   |   1 -
+ .../qcom/sc7280-herobrine-herobrine-r1.dts    |   1 -
+ .../dts/qcom/sc7280-herobrine-villager.dtsi   |   1 -
+ .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  44 +-
+ .../arm64/boot/dts/qcom/sc7280-idp-ec-h1.dtsi |  10 +-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi      |  26 +-
+ arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi    |  20 +-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          | 316 +++++-----
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     |  12 +-
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |  12 +-
+ .../arm64/boot/dts/qcom/sdm845-lg-common.dtsi |   2 +-
+ .../qcom/sm6125-sony-xperia-seine-pdx201.dts  |   2 +
+ arch/arm64/boot/dts/qcom/sm6125.dtsi          |   4 +-
+ arch/arm64/boot/dts/qcom/sm8250-mtp.dts       |  38 +-
+ .../boot/dts/qcom/sm8250-sony-xperia-edo.dtsi |  18 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          | 556 +++++++-----------
+ 22 files changed, 594 insertions(+), 725 deletions(-)
+
+-- 
+2.34.1
+
