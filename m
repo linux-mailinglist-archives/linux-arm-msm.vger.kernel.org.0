@@ -2,43 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B7D975E91FA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Sep 2022 12:03:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 763285E9209
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Sep 2022 12:20:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230329AbiIYKDp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Sep 2022 06:03:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37068 "EHLO
+        id S231196AbiIYKUH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Sep 2022 06:20:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230201AbiIYKDo (ORCPT
+        with ESMTP id S230303AbiIYKUE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Sep 2022 06:03:44 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B3C75F76
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Sep 2022 03:03:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1664100208;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=cqWUJwis5pcJ2rj05sPjRGLCpe4fJlAQi3NEmXJ/nxE=;
-    b=Dz6Pc/7weBsnjm+x3mWX3Rj8X7zmzEs/6nw7t2ZnCgs71bqj5kOP8Tnd5iz8TDTh+u
-    2lpjipsS86rxe+TSo0u2yheLWR5T4uvUIOc/P3ol4+U9XzzmE4GMqAF4s7HSrjnPGkD5
-    yKzu64i+gUNSAtimYOhX2iPChYjZ1xoLbFJc+wnTUbGawC3CQ1ylYIysjV4dmfmLDIps
-    osHArtgnrJAx5K9zs7TChaz7HR3Pz+rK/BomizRfj8eIwhSl2hQeWRRMrfzXPmHqI4sI
-    AbbWJHcLGA1yeOTRXaBmN2M4rapl2nvPejeMu3Qe3XQB2A5wenAZ4+W/kcLnNqAgphW7
-    sipA==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLVrK85lg=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 48.1.1 AUTH)
-    with ESMTPSA id dde14cy8PA3S57N
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Sun, 25 Sep 2022 12:03:28 +0200 (CEST)
-Date:   Sun, 25 Sep 2022 12:03:21 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        Sun, 25 Sep 2022 06:20:04 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 539BE1E3E5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Sep 2022 03:20:01 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id a3so6668500lfk.9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Sep 2022 03:20:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=Q1Tiar2NG81eBXy634cm6RIb1sHCUqEEdTntn7Dwa60=;
+        b=E282Z+gc026IzLcax1MjsFldPbPHOCZk8Z3gvxrzOdyQu6aU00YW7W7gm23OEBT+iu
+         E2GHjhNKgtkw1dsuqF6Wm44ezLbwlTucJ1asStpdCPRUzve8DuuZgxdMF4V2rS414RH5
+         mHGzGLjd0r4yG4neK2DPUppYlZiMr3aKwxEFAVB5C9FD9z3xiMZZM2blIkpfHc4wdIiM
+         ZoQzk+f4/VDnfG7I1fhx1mhZiKNb2/Hade2jEtOm2Mf7oPMVBhD2I/7HhS9UtEyoDmp5
+         3XPUK/xOkWkh2jLoMAy5lnHotSxriBo1QvxcHaxL0qnhFwlPfQO06dde9nV/G9XNH516
+         HGKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=Q1Tiar2NG81eBXy634cm6RIb1sHCUqEEdTntn7Dwa60=;
+        b=LIdjXcquJIYnGiy6DRYzG9GLVITAZXNCoHaGxI7MowiErUo6y1Lpee7BDfEpJJi7Ox
+         dfu0mYPGUJ1cmpNAHd4lOjJkwUzEhHmnUvckDa76xCu1jg1cS0ODC+qn39C+8dOVZQnD
+         IuRsYd6uNkW8JD82V1RAj5kda65Sz7P0QBUXmNdJQV62MVmRh8vrIakkrxBtA/p7QgF8
+         HuaiisBl5I4Tc+ktZo7Gca5UVWOPuT++BI0oDbdAqj50IG6K17n7XERkihEvAlxFcYed
+         aFctEi065gSt37bzIFoNPN0kwqllawbosYyv+0EjUOREM1zKP0IIdzSHb5bZYkeL5OL9
+         2zsw==
+X-Gm-Message-State: ACrzQf3uzNdaCTa1LrdzV1cqYE6G5tudDZt0JhFxdx8L/dgR9ScjTGyM
+        GZwnN4eSwrhsmT4jhgJb+8gqbg==
+X-Google-Smtp-Source: AMsMyM5w9xY155pOsigPz8r8UH7WsYRwThsQ4esn6QOijIxVhBQuTA36CU8wVrxoEf9zrhHef+4GVQ==
+X-Received: by 2002:a05:6512:688:b0:498:fe57:b5f with SMTP id t8-20020a056512068800b00498fe570b5fmr6501865lfe.209.1664101199695;
+        Sun, 25 Sep 2022 03:19:59 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id v10-20020a2ea60a000000b0026d92a5f97asm173394ljp.111.2022.09.25.03.19.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 25 Sep 2022 03:19:59 -0700 (PDT)
+Message-ID: <a90d0b34-9ec9-d8cf-9e15-9de157b17728@linaro.org>
+Date:   Sun, 25 Sep 2022 12:19:58 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH 1/2] ARM: qcom_defconfig: enable rest of ARMv7 SoCs
+ pinctrl drivers
+Content-Language: en-US
+To:     Stephan Gerhold <stephan@gerhold.net>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
@@ -46,55 +66,56 @@ Cc:     Andy Gross <agross@kernel.org>,
         Catalin Marinas <catalin.marinas@arm.com>,
         Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] ARM: qcom_defconfig: enable rest of ARMv7 SoCs
- pinctrl drivers
-Message-ID: <YzAnaXDqFrZWq9n/@gerhold.net>
 References: <20220925091920.34891-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220925091920.34891-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+ <YzAnaXDqFrZWq9n/@gerhold.net>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <YzAnaXDqFrZWq9n/@gerhold.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Sep 25, 2022 at 11:19:19AM +0200, Krzysztof Kozlowski wrote:
-> Enable rest of ARMv7 SoCs pin controller drivers.
+On 25/09/2022 12:03, Stephan Gerhold wrote:
+> On Sun, Sep 25, 2022 at 11:19:19AM +0200, Krzysztof Kozlowski wrote:
+>> Enable rest of ARMv7 SoCs pin controller drivers.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  arch/arm/configs/qcom_defconfig | 6 ++++++
+>>  1 file changed, 6 insertions(+)
+>>
+>> diff --git a/arch/arm/configs/qcom_defconfig b/arch/arm/configs/qcom_defconfig
+>> index 7d8b6884fd00..4971de49be36 100644
+>> --- a/arch/arm/configs/qcom_defconfig
+>> +++ b/arch/arm/configs/qcom_defconfig
+>> @@ -131,14 +131,20 @@ CONFIG_PINCTRL_APQ8064=y
+>>  CONFIG_PINCTRL_APQ8084=y
+>>  CONFIG_PINCTRL_IPQ4019=y
+>>  CONFIG_PINCTRL_IPQ8064=y
+>> +CONFIG_PINCTRL_MSM8226=y
+>>  CONFIG_PINCTRL_MSM8660=y
+>>  CONFIG_PINCTRL_MSM8960=y
+>> +CONFIG_PINCTRL_MDM9607=y
+>>  CONFIG_PINCTRL_MDM9615=y
+>>  CONFIG_PINCTRL_MSM8X74=y
+>> +CONFIG_PINCTRL_MSM8909=y
+>> +CONFIG_PINCTRL_MSM8916=y
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  arch/arm/configs/qcom_defconfig | 6 ++++++
->  1 file changed, 6 insertions(+)
+> Thanks for adding MSM8916! (it's used on both ARM32 and ARM64)
 > 
-> diff --git a/arch/arm/configs/qcom_defconfig b/arch/arm/configs/qcom_defconfig
-> index 7d8b6884fd00..4971de49be36 100644
-> --- a/arch/arm/configs/qcom_defconfig
-> +++ b/arch/arm/configs/qcom_defconfig
-> @@ -131,14 +131,20 @@ CONFIG_PINCTRL_APQ8064=y
->  CONFIG_PINCTRL_APQ8084=y
->  CONFIG_PINCTRL_IPQ4019=y
->  CONFIG_PINCTRL_IPQ8064=y
-> +CONFIG_PINCTRL_MSM8226=y
->  CONFIG_PINCTRL_MSM8660=y
->  CONFIG_PINCTRL_MSM8960=y
-> +CONFIG_PINCTRL_MDM9607=y
->  CONFIG_PINCTRL_MDM9615=y
->  CONFIG_PINCTRL_MSM8X74=y
-> +CONFIG_PINCTRL_MSM8909=y
-> +CONFIG_PINCTRL_MSM8916=y
+>> +CONFIG_PINCTRL_MSM8976=y
+> 
+> This one should be added to the ARM64 defconfig, I doubt anyone uses it
+> with ARM32. :)
 
-Thanks for adding MSM8916! (it's used on both ARM32 and ARM64)
+True. I'll send a v2. Thanks!
 
-> +CONFIG_PINCTRL_MSM8976=y
+Best regards,
+Krzysztof
 
-This one should be added to the ARM64 defconfig, I doubt anyone uses it
-with ARM32. :)
-
-Thanks,
-Stephan
