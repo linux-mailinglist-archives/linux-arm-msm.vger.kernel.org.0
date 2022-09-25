@@ -2,178 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 912525E92AD
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Sep 2022 13:21:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FA785E92AF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Sep 2022 13:21:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229683AbiIYLVW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Sep 2022 07:21:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52022 "EHLO
+        id S232021AbiIYLVb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Sep 2022 07:21:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231893AbiIYLVV (ORCPT
+        with ESMTP id S231893AbiIYLV3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Sep 2022 07:21:21 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 742022E9C1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Sep 2022 04:21:18 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id z25so6826504lfr.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Sep 2022 04:21:18 -0700 (PDT)
+        Sun, 25 Sep 2022 07:21:29 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5AFF2E688
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Sep 2022 04:21:28 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id j16so6836368lfg.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Sep 2022 04:21:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date;
-        bh=duVQyVLuGWggGu+8Z6F+GJlfNp5/JJucEkdX/LlC7QM=;
-        b=zy101Vl2fAM9C93MPqWcgwAgfCbKq4SO3IoJw1BgWY7dCpiJy7lK9bW/Q47xO2cC57
-         4Y/25g/946aYKqRXM/bJheQ/1CmSftoWlC0PscJe2jOH2v/NwYZdGGZECOE2gevle1v1
-         Huozl5KJVfOH6DiP9+18jnRUPtKIvmATS/t0russJVc4AsWWLDIXJ+g+IsjEyMpEQ/Tq
-         pDYuyazep16gdyvMoe5cQTEd8sMuztiUQDMylXO540GzCoYDmNezfRjKaBXi59LfqIrE
-         njaEaF+WHyJgpTahV9iFyFxpB5B7L9TH6HSL8rQIVxximN1j4vqmZqhdKmeTfDxmvFMs
-         gDsw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=rUZfqbO7efGjHVd0Lx2uboZ3GbifHtRwoPmKODDcpMs=;
+        b=YwN8OmypiVALfJRmj6vXPiaxCPoJqO5x/xOQqW8mBvKoiuCYhTjMMmehq06iahPL0C
+         tHAb531tODnhQWgygRkdMT5o2pbg4B/70KV4Pr6iCCcGs+b8KNa4hJ8FtWf3Bey7L0c/
+         iKc4hXGR7uxSKjUCIanqjj5T2IptL7h68bvUjX1mVi/mw9uWfhowOQu6gCTY8CuNEJfl
+         RRJTIlCCcm2VWWP+LWX5Ti+BB8n0u8LpJMw3WtEiBfjUgHBHEVafejxtAy1CHcsoiCXr
+         Z/uBbfSS54o0lFDEtPPCnnN93MPCMHsznHHsMB95+TIYfhSXum1Sq5UcJILK45+sg2E5
+         i/Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=duVQyVLuGWggGu+8Z6F+GJlfNp5/JJucEkdX/LlC7QM=;
-        b=fLPpmu6xYcGGTB2uovig0yjelESWbzJO/gFH8nbAtEjJuq0LtZUjcD5RJjWCQEGNbN
-         bSFmLkeHF/AT7eL40H2sgXDDYhxA3pVeAcfficyAC+dzkKBMh6JqOltZBScjZp0/43GH
-         XF7EISlb+4OTAgrp+t1gxa5wlPkG47ELzY++6rYImh3PGHlnWTjYcE7OfBv2D14c7hCS
-         11o9TpYIxeGxorj2mfzBNA+RGAiFTDMhYaPDhvAyXTZAQ/7yHB/408sxlUSt6kEs6Uxu
-         DDCz9m4HCk89JosGZU3gEQsiMptqsipJ+HTNUQIU60yDwQWg/6IpNLe6fHVksN2uFQlq
-         JVEQ==
-X-Gm-Message-State: ACrzQf2JJj5NmnQVt/ig4H4GCgGagLz1TH6z4jW2RGF5xUgN/MVfu1+c
-        iWN9EyrxlUUedJxGM0827m/YPw==
-X-Google-Smtp-Source: AMsMyM5umAEhirxj9xxoewdxEYMdawpTbW9PVpngUd2UxEUhJPNXJQMwDYSM3hK6i2iFf9q2CgAHPA==
-X-Received: by 2002:a05:6512:a8c:b0:49e:359f:5563 with SMTP id m12-20020a0565120a8c00b0049e359f5563mr6478163lfu.563.1664104876758;
-        Sun, 25 Sep 2022 04:21:16 -0700 (PDT)
-Received: from [127.0.0.1] ([94.25.228.177])
-        by smtp.gmail.com with ESMTPSA id 11-20020a05651c128b00b0025fe7f33bc4sm2060371ljc.49.2022.09.25.04.21.15
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 25 Sep 2022 04:21:16 -0700 (PDT)
-Date:   Sun, 25 Sep 2022 14:21:11 +0300
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-CC:     Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=rUZfqbO7efGjHVd0Lx2uboZ3GbifHtRwoPmKODDcpMs=;
+        b=P4cpSpY1JWATAjZAZb6jtpvpTATMg9tZQQBxVP3lZnn0x3lid7FZ8Th6Xr0/5+YSo/
+         WAcWoh5aY6jLbvuquD8sWHe8G1pY5gnPiR6tV93LUhpp0PVy8tdsJxIFPvR010t4/6Xi
+         V4gz1PwzQ+7YrfxGbp3FmfknJmeFICQbSV2emGyjNw2pognBiAtjO2KHSWoEuQQUvTJl
+         9T0UwHOY4O/U7YuAYz3b6C4QwsWnmDnHIP/7CPcg+QetHeAkJmizVYVSpLra8hma3f3u
+         0kps1UoSbxIdW1NdmOYjdiEpKJuVD8N9G1DKjBJi4KtMig8D0R8we2MSYoiTJ+tB+kcj
+         dOlg==
+X-Gm-Message-State: ACrzQf2Ncmpk4/mMikaI67tzpFULYcqbUqf/zZW9d7GnF0xXLy2IlQrv
+        K+GInxqG0rfclLFWaAP4farJjw==
+X-Google-Smtp-Source: AMsMyM5zClLlAE7McyGBYi/AEkOO36jJMcxPqM6/LHC6PX6t9D697ff9Z4ZuAYmS4zKytqBWz9swZw==
+X-Received: by 2002:a05:6512:1047:b0:49d:a875:8d90 with SMTP id c7-20020a056512104700b0049da8758d90mr7087827lfb.630.1664104887191;
+        Sun, 25 Sep 2022 04:21:27 -0700 (PDT)
+Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id c16-20020ac25f70000000b004946748ad4dsm2178053lfc.159.2022.09.25.04.21.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 25 Sep 2022 04:21:26 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BRFC_PATCH_00/10=5D_thermal/drivers/tsens=3A_specify?= =?US-ASCII?Q?_nvmem_cells_in_DT_rather_than_parsing_them_manually?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <YzArWZ1+OKvCNM7d@gerhold.net>
-References: <20220910124701.4060321-1-dmitry.baryshkov@linaro.org> <YyyaH1ZXF9IvLpwd@gerhold.net> <93a790fb-20dc-0f31-2eed-09f5b538bea9@linaro.org> <YzArWZ1+OKvCNM7d@gerhold.net>
-Message-ID: <722E6DEE-BD57-4573-A151-508917961D1B@linaro.org>
+        Russell King <linux@armlinux.org.uk>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 1/2] ARM: qcom_defconfig: enable rest of ARMv7 SoCs pinctrl drivers
+Date:   Sun, 25 Sep 2022 13:21:22 +0200
+Message-Id: <20220925112123.148897-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Enable rest of ARMv7 SoCs pin controller drivers.
 
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-On 25 September 2022 13:20:09 GMT+03:00, Stephan Gerhold <stephan@gerhold=
-=2Enet> wrote:
->On Sat, Sep 24, 2022 at 09:58:56PM +0300, Dmitry Baryshkov wrote:
->> On 22/09/2022 20:23, Stephan Gerhold wrote:
->> > On Sat, Sep 10, 2022 at 03:46:51PM +0300, Dmitry Baryshkov wrote:
->> > > Historically the tsens driver fetches the calibration data as a blo=
-b and
->> > > then parses the blob on its own=2E This results in semi-duplicated =
-code
->> > > spreading over the platform-specific functions=2E
->> > >=20
->> > > This patch series changes tsens calibration code to use pre-parsed =
-nvmem
->> > > cells rather than parsing the blob in the driver=2E For backwards
->> > > compatibility the old code is left in place for msm8916 and qcs404,=
- two
->> > > platforms which have in-tree DT files=2E For msm8974 the original f=
-unction
->> > > is left intact, since it differs significantly (and I can not test =
-the
->> > > code on msm8974)=2E For all other affected platforms the old parsin=
-g code
->> > > has been dropped as a part of this RFC=2E
->> > >=20
->> > > The code was tested on msm8916 and qcs404 only, thus it is being se=
-nt as
->> > > an RFC=2E
->> > >=20
->> >=20
->> > Thanks a lot for working on this!
->> >=20
->> > After thinking about this for a while I wonder if we can go even a st=
-ep
->> > further: Can we drop SoC-specific code entirely for 8939 and 9607 and
->> > match the generic compatible (qcom,tsens-v0_1)? This would allow most
->> > v0=2E1 plaforms to use generic code like for qcom,tsens-v2=2E
->>=20
->> While this idea looks appealing, I think it's a bit against our custom =
-to
->> put hardware details into the driver rather than putting them into the =
-DT=2E
->> So, I think, the 8939 will have to stay as is, while for the 9607 and m=
-aybe
->> several other devices it should be possible to create a fallback entry=
-=2E
->>=20
->
->IMHO the existing tsens-v2 support is a good example that it's sometimes
->better to have some minor hardware details in the DT so the driver does
->not have to be changed for every single platform=2E Extending from
->specifying the number of sensors in the DT to the exact set of sensors
->is not a very big step=2E
+---
 
-Fine, I will take a look=2E
+Changes since v1:
+1. Do not enable MSM8976 (Stephan)
+---
+ arch/arm/configs/qcom_defconfig | 5 +++++
+ 1 file changed, 5 insertions(+)
 
->
->Also, aren't you also going against the custom here by moving the fuse
->hardware details to the DT? :)
+diff --git a/arch/arm/configs/qcom_defconfig b/arch/arm/configs/qcom_defconfig
+index 7d8b6884fd00..b41716c1ec64 100644
+--- a/arch/arm/configs/qcom_defconfig
++++ b/arch/arm/configs/qcom_defconfig
+@@ -131,14 +131,19 @@ CONFIG_PINCTRL_APQ8064=y
+ CONFIG_PINCTRL_APQ8084=y
+ CONFIG_PINCTRL_IPQ4019=y
+ CONFIG_PINCTRL_IPQ8064=y
++CONFIG_PINCTRL_MSM8226=y
+ CONFIG_PINCTRL_MSM8660=y
+ CONFIG_PINCTRL_MSM8960=y
++CONFIG_PINCTRL_MDM9607=y
+ CONFIG_PINCTRL_MDM9615=y
+ CONFIG_PINCTRL_MSM8X74=y
++CONFIG_PINCTRL_MSM8909=y
++CONFIG_PINCTRL_MSM8916=y
+ CONFIG_PINCTRL_QCOM_SPMI_PMIC=y
+ CONFIG_PINCTRL_QCOM_SSBI_PMIC=y
+ CONFIG_GPIOLIB=y
+ CONFIG_PINCTRL_SDX55=y
++CONFIG_PINCTRL_SDX65=y
+ CONFIG_GPIO_SYSFS=y
+ CONFIG_POWER_RESET=y
+ CONFIG_POWER_RESET_MSM=y
+-- 
+2.34.1
 
-Not quite=2E Fuses are completely software thing=2E=20
-
->
->> [=2E=2E=2E]
->> > And actually there are two revisions of 8939, the older one has one
->> > sensor less (msm-3=2E10: msm8939-common=2Edtsi vs msm8939-v3=2E0=2Edt=
-si)=2E
->> > This could also be easily handled from the DT without any code change=
-s:
->> >=20
->> > 	qcom,sensors =3D <0 1 2 3 5 6 7 8 9>;
->>=20
->> Usually we only care about the latest revision of the chip, earlier
->> revisions typically correspond to engineering samples, never hitting th=
-e
->> actual consumer devices=2E
->>=20
->
->I'm afraid we might have to care about both revisions here - I recently
->checked a couple of MSM8939 devices in postmarketOS and there are
->definitely two different revisions used in production - they are easily
->identifiable since they have different CPU revisions in the "lscpu"
->output (Cortex-A53 r0p1 vs r0p4)=2E
-
-Ugh=2E=20
-
->
->Thanks,
->Stephan
-
---=20
-With best wishes
-Dmitry
