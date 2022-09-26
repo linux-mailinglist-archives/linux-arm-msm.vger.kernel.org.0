@@ -2,278 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE8C05EA6CD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 15:04:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBE205EA756
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 15:32:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234499AbiIZNER (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 09:04:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48270 "EHLO
+        id S234809AbiIZNb7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 09:31:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230241AbiIZND6 (ORCPT
+        with ESMTP id S235290AbiIZNbY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Sep 2022 09:03:58 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C56684E50
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 04:35:50 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id h3so7117220lja.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 04:35:50 -0700 (PDT)
+        Mon, 26 Sep 2022 09:31:24 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B5891DCC7B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 04:54:28 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id p5so7095709ljc.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 04:54:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=2ZDbwsohrDOt1C3mx7JqUO/6C3uPA8KxvxzeCT35giQ=;
-        b=W6fvKJb3OqaNYsuGy/e0/ehyYEjI9glZaybx2pT6JCqqWJd8RP0ZNnBvE9yEtFNcHM
-         +Q5dvLdk50XtwKxWUEI5QZWkfouIHCV7W9iKIkRTJwYdtFKYyaqKwmQRng8b+tf+odEE
-         /zBcL/tXPvMN5fNVpvBn1bSnknRbPm380GF6PDj1evcH/z/ytDc75h/NJwmsOFrPlxS3
-         AhfMgN2gS/V5slk5HHvUl+VBj7zfTmrE1NTwidMaolxY29GPjZIVkzTdu5FKFf83yqo8
-         gxEajxeTWalzmUVSBKV4HerzunkzOeAjfuFRYp1sgfB17agsy9X6KWTP3IC8yqschQnB
-         g22A==
+        bh=Mn7BtO0CrR75wwHD6k8uIcJOsYMT6YL8yxp/m4Q8puQ=;
+        b=wO8YP6TNZZoEtju7Dw0zWf3yBLCurwNYxWl6RG55tJ/VjElqS7W2G2asZzd9Qw9gJS
+         2dakReW3g38wAY8RVcZmxnWEYNfvbjZcgMPfRKLsC2u34r05pATjTUED+wAsYgjhmjVi
+         vMd4Sl70xy158KuXfXLih1p5RctuH/O0pmYf86+H0+Pr8U3p2pzS260jQr9K84v6p2RQ
+         0UvKaxORwyfjIEh/7WacVePt7On5+h5hsrroXSVGxDpY3MI1A82Vu9lrc2YHt6mEUaZN
+         Vfp9g1l0uJVJAInurNFDQ9S8KKc6Icgn/g0biNig1aN4yi+Uslblt2TKvExQAkD5/rcC
+         F/YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=2ZDbwsohrDOt1C3mx7JqUO/6C3uPA8KxvxzeCT35giQ=;
-        b=AZw/bHQvNbw/BR5zNvCB+lvDCO1RkS3NfG2uo7U8b/KNV7kD2B/a06pdWt9/ZdIyxw
-         G+xQ01Yzr/hzOT+7arWyaF2nTvIbHiSCWuJT+Ily6PIL3Mgt6sesU02FDZcTXrK2WdEg
-         w5nhgqekh7/fIwxgf/F9rnock3cjiELpcrtfWOiCRLQNr+P+ReSOGxc7kS1PLDlLxhw7
-         GoPir59VsOkmmYiHDpfvR2qD8PmnVGVOf3NmZJkYbNObj0bZgj7dJBv1X2VerxvkT6k6
-         L0cjdrP0QpqKOkTUko//UB+EYzSVB/HoO3y9tDlkgURJx1W6SGsAMxY7JYQ4maEwdlLk
-         2iuA==
-X-Gm-Message-State: ACrzQf2edO5XSor+iz9QrbDsl2VsGGMBkPixVeGp/sOKwiQS/PBSY3w6
-        ssTP13pXAKmGDHMimXenDw4KgA==
-X-Google-Smtp-Source: AMsMyM4MrUgZUXAyzh1ehVVxmrLzTja7PVNTLftG5Mn2EDpfSxA4Xs9Vjwv/dZHlRggIAPqnVPobEA==
-X-Received: by 2002:a2e:8190:0:b0:26b:d94b:75e9 with SMTP id e16-20020a2e8190000000b0026bd94b75e9mr7815046ljg.379.1664192108640;
-        Mon, 26 Sep 2022 04:35:08 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v21-20020a05651203b500b00494747ba5f7sm2502835lfp.272.2022.09.26.04.35.07
+        bh=Mn7BtO0CrR75wwHD6k8uIcJOsYMT6YL8yxp/m4Q8puQ=;
+        b=4OKp8NXWeH9O++qF1etZie1hfVbw7DEjoInMn+kZGSNt/Hi6fd0VT7nJL5z3IovE7l
+         vxFIiqRGnFXcHkbuXn3fM3X2JwLzTQy36lPQOo2fZJ4SGQYP8EnBZbxEoFkMpiJqb/8b
+         vvnaHdg79hcQcSGq6wRTACjGOM1TjhQTm33WsQy0CVXj9ko5k9biB5u0iOaIh7LdMwmf
+         iWz9EhqFBfu8GaHsU3qsghKdpvB8UHaT4D6VIR0qp9hJcPgp9l4xjhybR3IhtShzWo9y
+         SpK7lBxqMk5uFI2VYahW13j4DIhzHgn1lo9oxOp5fW+KMrL7lcu6IxiejEmXWf11w3r3
+         Lsug==
+X-Gm-Message-State: ACrzQf3aSx/42v7Xrj7wW9bIDv0Ye+CLZgty8IZCosG9vtjaUX9q/F9c
+        Zym/ljLSMkQKxaSb5CNdTYyIRgoCIoauQA==
+X-Google-Smtp-Source: AMsMyM7w99Hat5BiH38tnNlm0fceWMlGL7bmPq3hmcHc8k+/5IujyjhiEhQkKzF13BaWnd467/dXLg==
+X-Received: by 2002:ac2:568a:0:b0:49a:1fe:64e2 with SMTP id 10-20020ac2568a000000b0049a01fe64e2mr9240626lfr.156.1664192163103;
+        Mon, 26 Sep 2022 04:36:03 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id bi33-20020a05651c232100b0026beeeafab7sm2353259ljb.94.2022.09.26.04.36.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Sep 2022 04:35:08 -0700 (PDT)
-Message-ID: <5a93a4fc-b6a9-6371-84c1-ff39c60dbb5a@linaro.org>
-Date:   Mon, 26 Sep 2022 14:35:07 +0300
+        Mon, 26 Sep 2022 04:36:02 -0700 (PDT)
+Message-ID: <816c1431-72cb-b73b-79b6-0eae3344eda2@linaro.org>
+Date:   Mon, 26 Sep 2022 13:36:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH v4 1/6] phy: qcom-qmp-pcie: split register tables into
- common and extra parts
-Content-Language: en-GB
-To:     Johan Hovold <johan@kernel.org>
+ Thunderbird/102.3.0
+Subject: Re: [PATCH v5] dt-bindings: qcom: document preferred compatible
+ naming
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org
-References: <20220924160302.285875-1-dmitry.baryshkov@linaro.org>
- <20220924160302.285875-2-dmitry.baryshkov@linaro.org>
- <YzFUcWSHkdSlIbHU@hovoldconsulting.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <YzFUcWSHkdSlIbHU@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>
+References: <20220720073326.19591-1-krzysztof.kozlowski@linaro.org>
+ <7fdcff6a-9db9-a9d0-4013-7d3ff5fd5d8c@linaro.org>
+ <CAA8EJprom=CfxPQke5JjZi0CSSvvB=cw1RxOO8StLThpASG3ew@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAA8EJprom=CfxPQke5JjZi0CSSvvB=cw1RxOO8StLThpASG3ew@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/09/2022 10:27, Johan Hovold wrote:
-> On Sat, Sep 24, 2022 at 07:02:57PM +0300, Dmitry Baryshkov wrote:
->> SM8250 configuration tables are split into two parts: the common one and
->> the PHY-specific tables. Make this split more formal. Rather than having
->> a blind renamed copy of all QMP table fields, add separate struct
->> qmp_phy_cfg_tables and add two instances of this structure to the struct
->> qmp_phy_cfg. Later on this will be used to support different PHY modes
->> (RC vs EP).
+On 26/09/2022 13:16, Dmitry Baryshkov wrote:
 >>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 129 ++++++++++++++---------
->>   1 file changed, 77 insertions(+), 52 deletions(-)
->>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> index 7aff3f9940a5..30806816c8b0 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> @@ -1300,31 +1300,30 @@ static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_pcs_misc_tbl[] = {
->>   	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_G4_PRE_GAIN, 0x2e),
->>   };
->>   
->> -/* struct qmp_phy_cfg - per-PHY initialization config */
->> -struct qmp_phy_cfg {
->> -	int lanes;
->> -
->> -	/* Init sequence for PHY blocks - serdes, tx, rx, pcs */
->> +struct qmp_phy_cfg_tables {
->>   	const struct qmp_phy_init_tbl *serdes_tbl;
->>   	int serdes_tbl_num;
+>> This is waiting for two months. If you do not like it, please respond
+>> with some comments.
 > 
-> So I still think you should drop the now redundant "tbl" suffix and
-> infix.
+> I'd say, this is good, it documents what was agreed before.
 > 
->> -	const struct qmp_phy_init_tbl *serdes_tbl_sec;
->> -	int serdes_tbl_num_sec;
->>   	const struct qmp_phy_init_tbl *tx_tbl;
->>   	int tx_tbl_num;
->> -	const struct qmp_phy_init_tbl *tx_tbl_sec;
->> -	int tx_tbl_num_sec;
->>   	const struct qmp_phy_init_tbl *rx_tbl;
->>   	int rx_tbl_num;
->> -	const struct qmp_phy_init_tbl *rx_tbl_sec;
->> -	int rx_tbl_num_sec;
->>   	const struct qmp_phy_init_tbl *pcs_tbl;
->>   	int pcs_tbl_num;
->> -	const struct qmp_phy_init_tbl *pcs_tbl_sec;
->> -	int pcs_tbl_num_sec;
->>   	const struct qmp_phy_init_tbl *pcs_misc_tbl;
->>   	int pcs_misc_tbl_num;
->> -	const struct qmp_phy_init_tbl *pcs_misc_tbl_sec;
->> -	int pcs_misc_tbl_num_sec;
->> +};
->> +
->> +/* struct qmp_phy_cfg - per-PHY initialization config */
->> +struct qmp_phy_cfg {
->> +	int lanes;
->> +
->> +	/* Main init sequence for PHY blocks - serdes, tx, rx, pcs */
->> +	struct qmp_phy_cfg_tables common;
-> 
-> And this could be "tbls_common".
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-I'd go for common_tables, if you don't mind.
 
-> 
->> +	/*
->> +	 * Additional init sequence for PHY blocks, providing additional
->> +	 * register programming. Unless required it can be left omitted.
->> +	 */
->> +	struct qmp_phy_cfg_tables *extra;
-> 
-> And "tbls_extra".
-> 
-> I guess this table should be const as well.
+Thanks. I will rebase and resend.
 
-Ack
-
-> 
->>   
->>   	/* clock ids to be requested */
->>   	const char * const *clk_list;
->> @@ -1459,6 +1458,7 @@ static const char * const sdm845_pciephy_reset_l[] = {
->>   static const struct qmp_phy_cfg ipq8074_pciephy_cfg = {
->>   	.lanes			= 1,
->>   
->> +	.common = {
->>   	.serdes_tbl		= ipq8074_pcie_serdes_tbl,
->>   	.serdes_tbl_num		= ARRAY_SIZE(ipq8074_pcie_serdes_tbl),
->>   	.tx_tbl			= ipq8074_pcie_tx_tbl,
->> @@ -1467,6 +1467,7 @@ static const struct qmp_phy_cfg ipq8074_pciephy_cfg = {
->>   	.rx_tbl_num		= ARRAY_SIZE(ipq8074_pcie_rx_tbl),
->>   	.pcs_tbl		= ipq8074_pcie_pcs_tbl,
->>   	.pcs_tbl_num		= ARRAY_SIZE(ipq8074_pcie_pcs_tbl),
->> +	},
-> 
-> Shouldn't you indent the members now? The above looks unnecessarily hard
-> to read.
-
-I wanted to keep the indentation to make the patch small enough, but 
-let's indent these lines (while dropping the _tbl from names as you 
-insisted).
-
-> 
->>   	.clk_list		= ipq8074_pciephy_clk_l,
->>   	.num_clks		= ARRAY_SIZE(ipq8074_pciephy_clk_l),
->>   	.reset_list		= ipq8074_pciephy_reset_l,
-> 
->   @@ -1603,24 +1612,28 @@ static const struct qmp_phy_cfg sdm845_qhp_pciephy_cfg = {
->>   static const struct qmp_phy_cfg sm8250_qmp_gen3x1_pciephy_cfg = {
->>   	.lanes			= 1,
->>   
->> +	.common = {
->>   	.serdes_tbl		= sm8250_qmp_pcie_serdes_tbl,
->>   	.serdes_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_serdes_tbl),
->> -	.serdes_tbl_sec		= sm8250_qmp_gen3x1_pcie_serdes_tbl,
->> -	.serdes_tbl_num_sec	= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_serdes_tbl),
->>   	.tx_tbl			= sm8250_qmp_pcie_tx_tbl,
->>   	.tx_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_tx_tbl),
->>   	.rx_tbl			= sm8250_qmp_pcie_rx_tbl,
->>   	.rx_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_rx_tbl),
->> -	.rx_tbl_sec		= sm8250_qmp_gen3x1_pcie_rx_tbl,
->> -	.rx_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_rx_tbl),
->>   	.pcs_tbl		= sm8250_qmp_pcie_pcs_tbl,
->>   	.pcs_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_pcs_tbl),
->> -	.pcs_tbl_sec		= sm8250_qmp_gen3x1_pcie_pcs_tbl,
->> -	.pcs_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_pcs_tbl),
->>   	.pcs_misc_tbl		= sm8250_qmp_pcie_pcs_misc_tbl,
->>   	.pcs_misc_tbl_num	= ARRAY_SIZE(sm8250_qmp_pcie_pcs_misc_tbl),
->> -	.pcs_misc_tbl_sec		= sm8250_qmp_gen3x1_pcie_pcs_misc_tbl,
->> -	.pcs_misc_tbl_num_sec	= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_pcs_misc_tbl),
->> +	},
->> +	.extra = &(struct qmp_phy_cfg_tables) {
-> 
-> const structure?
-
-Ack
-
-> 
->> +	.serdes_tbl		= sm8250_qmp_gen3x1_pcie_serdes_tbl,
->> +	.serdes_tbl_num		= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_serdes_tbl),
->> +	.rx_tbl			= sm8250_qmp_gen3x1_pcie_rx_tbl,
->> +	.rx_tbl_num		= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_rx_tbl),
->> +	.pcs_tbl		= sm8250_qmp_gen3x1_pcie_pcs_tbl,
->> +	.pcs_tbl_num		= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_pcs_tbl),
->> +	.pcs_misc_tbl		= sm8250_qmp_gen3x1_pcie_pcs_misc_tbl,
->> +	.pcs_misc_tbl_num	= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_pcs_misc_tbl),
-> 
-> Indentation.
-> 
->> +	},
->>   	.clk_list		= sdm845_pciephy_clk_l,
->>   	.num_clks		= ARRAY_SIZE(sdm845_pciephy_clk_l),
->>   	.reset_list		= sdm845_pciephy_reset_l,
-> 
->> @@ -1854,11 +1881,9 @@ static int qmp_pcie_serdes_init(struct qmp_phy *qphy)
->>   {
->>   	const struct qmp_phy_cfg *cfg = qphy->cfg;
->>   	void __iomem *serdes = qphy->serdes;
->> -	const struct qmp_phy_init_tbl *serdes_tbl = cfg->serdes_tbl;
->> -	int serdes_tbl_num = cfg->serdes_tbl_num;
->>   
->> -	qmp_pcie_configure(serdes, cfg->regs, serdes_tbl, serdes_tbl_num);
->> -	qmp_pcie_configure(serdes, cfg->regs, cfg->serdes_tbl_sec, cfg->serdes_tbl_num_sec);
->> +	qmp_pcie_configure(serdes, cfg->regs, cfg->common.serdes_tbl, cfg->common.serdes_tbl_num);
->> +	qmp_pcie_configure(serdes, cfg->regs, cfg->extra->serdes_tbl, cfg->extra->serdes_tbl_num);
-> 
-> I already mentioned the NULL-derefs as cfg->extra can be NULL.
-> 
->>   
->>   	return 0;
->>   }
->   
->>   	if (IS_ERR(qphy->pcs_misc)) {
->> -		if (cfg->pcs_misc_tbl || cfg->pcs_misc_tbl_sec)
->> +		if (cfg->common.pcs_misc_tbl || cfg->extra->pcs_misc_tbl)
-> 
-> Here too.
-> 
->>   			return PTR_ERR(qphy->pcs_misc);
->>   	}
-> 
-> Johan
-
--- 
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
 
