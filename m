@@ -2,118 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E24555EAED4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 19:57:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E9DD5EAF11
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 20:05:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231301AbiIZR5f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 13:57:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38064 "EHLO
+        id S231143AbiIZSFW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 14:05:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230492AbiIZR5G (ORCPT
+        with ESMTP id S229657AbiIZSE4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Sep 2022 13:57:06 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 548F54A814
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 10:34:42 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id j24so8282921lja.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 10:34:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=qNP6ThRLpHNI/EUjMpjjuQG55s6ZxCbGqJcYBGEJHG4=;
-        b=D241F1ruvGGAEpCL0UxqPIIzUojP8zxvdNFGSfGxOKiwcjhFKisVC/TsvqXfMYrkXw
-         xQ5+/ItFJ5s0KyyLw9lvJL4VjEAzuZ2/RIAk9bk/djI9tx6xozuwHUUZKAGeLWGzj+YF
-         y2u7fJlZJmIXijPbCwfS5VhUJbtM+wauaZQik3cWcgL0eJVePyF6SUFooTv3tZGO8k+8
-         bAKWilh3BoAi5tOMq5hEiYO01WFl+NmGNt3BQbAO33NBnAavtQUMQmRZ6izfaJKvyKrD
-         du8dn/XHpOo4jUgmSvcne7VL/7Jt2TMP6KnMTeYBS9ZAuYzun7Pb6DGF7q9wZgE3UW1G
-         W0OA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=qNP6ThRLpHNI/EUjMpjjuQG55s6ZxCbGqJcYBGEJHG4=;
-        b=zgzo51wj/KxYtOj2ZLhpLgNEQcvZHZlhcyZf/WtbLcrDnFPzhN30z6o0LKIHbX0cuQ
-         ZgLO0a6ksIeinBIkugy6U+S9g7nscPWj24+CHt32fvI/VgN2rBwhwlA93WWOPswc3o7M
-         UWavUmWO25RwhZqQrd+NIX9EARoQXBscQgsbU7PZ5RErI20sC4bwCCVw9ODt7RN6URsg
-         ZgGRO6EFpK0UMneGm7qqarGIFnFL5q0/SC1eT9aZnpQvuyaC4ZesLgpZeMyrcPskvlfC
-         wqb2+5GIS8nLUvnyzop4J2Dxl6uVtoIqxm8uMlJwAHAKCBiTL3pHJwNROxfR9J4JZLy0
-         TCqw==
-X-Gm-Message-State: ACrzQf3Yp05w9ho9K3H14ax49rWiKJW3DQSaPofAJGRqsRcDizrR+Kco
-        sFNnLqsfRhAj6Uwf68rD3r2umA==
-X-Google-Smtp-Source: AMsMyM7LrmvhClw5NVJoD/nWT17WiMh50/6toM504DFeDEb2bcd+5q1FYQTr/d+5XGmaMXdSm7TEyA==
-X-Received: by 2002:a05:651c:4ca:b0:26c:50be:5df6 with SMTP id e10-20020a05651c04ca00b0026c50be5df6mr7896118lji.177.1664213681585;
-        Mon, 26 Sep 2022 10:34:41 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v8-20020a2ea448000000b0026ad1da0dc3sm2402640ljn.122.2022.09.26.10.34.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Sep 2022 10:34:41 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Mon, 26 Sep 2022 14:04:56 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1171113F3C;
+        Mon, 26 Sep 2022 10:48:57 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28QHUmNQ014464;
+        Mon, 26 Sep 2022 17:48:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=B/zdlc+mkusN2u7dIng+cQ20Um0isFzz6GieYch4ivw=;
+ b=Ju4nz0U1XbRw2s3TEoC9/Yipj/fXTRB/B3/Usg2f3o7QDclNlqomyEOLCK+CI8WTmj6a
+ TGwHXVqSYlfi93vyLCLLGBy2YIKk//QHOV9mr3+vvsSxx8y243Pso5HW0sfyMoUJPENx
+ gkQzd2nlTKhZ14mFDO4pvULDQ9dYxtvO05volSgjR+y7qciCksx0eMqcWJdXf5/rNoD3
+ 74k0KScojhi3Qi5SNgD8MXy0oGWhmz4w0ZLqvqNiHY6fzK8Y4ywBMfHCw4Hvbajs8GqY
+ oJy1tAU4GxxNBiEEY4XHRhyCNBrY9oKjcF4KNatMWktUpcYOy0IbE7bDuWlp9mwYAtXy iA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jss7sc9mq-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 26 Sep 2022 17:48:51 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28QHUVAN028231
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 26 Sep 2022 17:30:31 GMT
+Received: from core-thresher1.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Mon, 26 Sep 2022 10:30:30 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v5 5/5] PCI: qcom-ep: Setup PHY to work in EP mode
-Date:   Mon, 26 Sep 2022 20:34:35 +0300
-Message-Id: <20220926173435.881688-6-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220926173435.881688-1-dmitry.baryshkov@linaro.org>
-References: <20220926173435.881688-1-dmitry.baryshkov@linaro.org>
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+CC:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v2 0/2] clk: qcom: Add SC8280XP GPU clock controller
+Date:   Mon, 26 Sep 2022 10:30:23 -0700
+Message-ID: <20220926173025.4747-1-quic_bjorande@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 5b0ZXNi3itJ393RfUgDLKStTG6AO0RXY
+X-Proofpoint-GUID: 5b0ZXNi3itJ393RfUgDLKStTG6AO0RXY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-26_09,2022-09-22_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
+ spamscore=0 lowpriorityscore=0 suspectscore=0 mlxlogscore=845
+ impostorscore=0 clxscore=1015 mlxscore=0 priorityscore=1501 malwarescore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2209260111
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Call phy_set_mode_ext() to notify the PHY driver that the PHY is being
-used in the EP mode.
+What the subject says.
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/pci/controller/dwc/pcie-qcom-ep.c | 5 +++++
- 1 file changed, 5 insertions(+)
+Bjorn Andersson (2):
+  dt-bindings: clock: Add Qualcomm SC8280XP GPU binding
+  clk: qcom: Add SC8280XP GPU clock controller
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-index ec99116ad05c..8dcfeed24424 100644
---- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-@@ -13,6 +13,7 @@
- #include <linux/delay.h>
- #include <linux/gpio/consumer.h>
- #include <linux/mfd/syscon.h>
-+#include <linux/phy/pcie.h>
- #include <linux/phy/phy.h>
- #include <linux/platform_device.h>
- #include <linux/pm_domain.h>
-@@ -240,6 +241,10 @@ static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
- 	if (ret)
- 		goto err_disable_clk;
- 
-+	ret = phy_set_mode_ext(pcie_ep->phy, PHY_MODE_PCIE, PHY_MODE_PCIE_EP);
-+	if (ret)
-+		goto err_phy_exit;
-+
- 	ret = phy_power_on(pcie_ep->phy);
- 	if (ret)
- 		goto err_phy_exit;
+ .../devicetree/bindings/clock/qcom,gpucc.yaml |   2 +
+ drivers/clk/qcom/Kconfig                      |   8 +
+ drivers/clk/qcom/Makefile                     |   1 +
+ drivers/clk/qcom/gpucc-sc8280xp.c             | 461 ++++++++++++++++++
+ .../dt-bindings/clock/qcom,gpucc-sc8280xp.h   |  35 ++
+ 5 files changed, 507 insertions(+)
+ create mode 100644 drivers/clk/qcom/gpucc-sc8280xp.c
+ create mode 100644 include/dt-bindings/clock/qcom,gpucc-sc8280xp.h
+
 -- 
-2.35.1
+2.17.1
 
