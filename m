@@ -2,163 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 05FCE5EACD3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 18:43:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF2905EACE2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 18:45:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229743AbiIZQnM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 12:43:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46228 "EHLO
+        id S229825AbiIZQpt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 12:45:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229648AbiIZQlz (ORCPT
+        with ESMTP id S229461AbiIZQpU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Sep 2022 12:41:55 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDACB57E0E;
-        Mon, 26 Sep 2022 08:30:49 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28QCTm1b014930;
-        Mon, 26 Sep 2022 15:30:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=kU9b44Kdwow6VsO17G9gwzumrAY2ZBNpSNpGbjF/zH4=;
- b=RI+HrIF2XEwlfwxLOCKPrTTQDQy9mbiKRbYAVZl7KTsQBidVMTQKSR0W5qtWdGTn3YmS
- JctChUnKX8OJS6OkhlJU2eKMjnTnsJxKXYQUolwWg2XK9KSB15Tq5ztAHOAEFEE7445p
- y8raaVlXHAACazORPiIK6qFPQpYY/CLmaPOmxATiYVVPQcoXOkpt0WwI6UumHsklq8zb
- XMQ+hxhs0A+8Vcnp4pXbXUfK25cp7DZhLDMk9WXfpJgWn69P2wFRutR4pL/yYj8VpOVN
- gck8zPw8WOHBAQr9AMc/3FrlC9D79g11Zrm6TpBuW9A26H5/ZMsu0eFcSZTIizja43Pv RQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jua2us08g-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 26 Sep 2022 15:30:26 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28QFUPQ8023317
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 26 Sep 2022 15:30:26 GMT
-Received: from [10.216.15.146] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 26 Sep
- 2022 08:30:16 -0700
-Message-ID: <5d2f7167-818a-a655-9885-b71a3e91733e@quicinc.com>
-Date:   Mon, 26 Sep 2022 21:00:11 +0530
+        Mon, 26 Sep 2022 12:45:20 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E1A99322A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 08:34:03 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id bu25so9571746lfb.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 08:34:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=F5npTjbMuhkZGTbiPdd9I0BH4rth5Gn8Gik7w91MPEQ=;
+        b=COyNBYSScAS0o8DDp+/0tPXmTexBHDJ8u+KWYzRSdPHkoRQmBZUmJXS8LLbSozyY+q
+         NCFkzGM/3t/i5zCm5VLW5RWigE0uzDey/6LVZ7DD2zOqyCpZCVzJtr5CYAD5fJvCljUV
+         KZU1RDSjJ2aZmOnMJqiE6QvMP222ve4kgfy28zHelpSvWzaqO4mk33NMM5HIuyG6Z830
+         yN8qmT5CuxbULXrSdjoiyPJYmtvFZq8+zQqJdYD9+vxevjD+2JWTA7aIHjKLbX4RkSIe
+         RUivF14k9gDk5Ff9QrCG8zoewQg13qrlpoxYzt5tYxV4LsXHy0qwjiuAW9iGZjm91vAX
+         Ni1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=F5npTjbMuhkZGTbiPdd9I0BH4rth5Gn8Gik7w91MPEQ=;
+        b=VhByEqqScDTbcFZTXjZvCO4qN+wDGUtvAyxmycPEdk1ybeiOmx8sKByegcsrPet4wI
+         hZEp61lRR4zVcwJVlUUc4flhbTIeWMsUkriYeyq4uq1yCg5lIwqrDyP6Eq770T8QD8rP
+         RMQQvdBpcWHauAX5urbkpo82dby0ONHhcWmVwrSbTILA3FX8rycQARl1cmQ3uBpNisnM
+         JH7V/63CFQCFqvq9b7UanOJ0eAuk3BbyzydwV9yKTRCw/reSg+62j2Qgu3ZnTn4hgYsc
+         bdLhFvAJnRLlA6c8HlKwUSA6PoIyGfum66AbAXrzHN/RNW4+8MOCZdx4zHzWgZbxrJGy
+         V8yQ==
+X-Gm-Message-State: ACrzQf3N6nXenP4WJnioXhiCyjY3cNsZt2zPlnqXhgRVZfKO5kf20ZpB
+        /SS5VB3PBT8gNjo9UF4s2RHEAw==
+X-Google-Smtp-Source: AMsMyM6tMFemy+xGBNnt6gYp5DB31dPiL5kIfOf1LKc4vRAi/zdjV4hXeir/ybWPBzYvF++N0Z3T9A==
+X-Received: by 2002:a05:6512:3f08:b0:4a1:af5e:5643 with SMTP id y8-20020a0565123f0800b004a1af5e5643mr4484835lfa.86.1664206441267;
+        Mon, 26 Sep 2022 08:34:01 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id f3-20020a056512092300b0049486c66140sm2573546lft.119.2022.09.26.08.32.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 Sep 2022 08:32:57 -0700 (PDT)
+Message-ID: <15611981-19b3-5124-83da-7f9a699ef62f@linaro.org>
+Date:   Mon, 26 Sep 2022 17:32:54 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v7 1/5] PCI: qcom: Add system suspend and resume support
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH] ARM: dts: qcom-pma8084: fix vadc channel node names
 Content-Language: en-US
-To:     Bjorn Helgaas <helgaas@kernel.org>
-CC:     <linux-pci@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <mka@chromium.org>,
-        <quic_vbadigan@quicinc.com>, <quic_hemantk@quicinc.com>,
-        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <manivannan.sadhasivam@linaro.org>,
-        <swboyd@chromium.org>, <dmitry.baryshkov@linaro.org>,
-        <svarbanov@mm-sol.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@somainline.org>,
-        <lpieralisi@kernel.org>, <robh@kernel.org>, <kw@linux.com>,
-        <bhelgaas@google.com>, <linux-phy@lists.infradead.org>,
-        <vkoul@kernel.org>, <kishon@ti.com>, <mturquette@baylibre.com>,
-        <linux-clk@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>, <linux-pm@vger.kernel.org>
-References: <20220923142611.GA1389970@bhelgaas>
-From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20220923142611.GA1389970@bhelgaas>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: MFrFhmIF7fAJ5ZdhzBXjWbyopZnBZq11
-X-Proofpoint-ORIG-GUID: MFrFhmIF7fAJ5ZdhzBXjWbyopZnBZq11
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-26_08,2022-09-22_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=489 clxscore=1015
- malwarescore=0 phishscore=0 priorityscore=1501 suspectscore=0 bulkscore=0
- mlxscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2209130000
- definitions=main-2209260098
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org,
+        neil.armstrong@linaro.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220925202143.123208-1-luca@z3ntu.xyz>
+ <98960452-9f48-7b4d-9aa6-55c0002ad1b4@linaro.org> <2647127.mvXUDI8C0e@g550jk>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <2647127.mvXUDI8C0e@g550jk>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 9/23/2022 7:56 PM, Bjorn Helgaas wrote:
-> On Fri, Sep 23, 2022 at 07:29:31AM +0530, Krishna Chaitanya Chundru wrote:
->> On 9/23/2022 12:12 AM, Bjorn Helgaas wrote:
->>> On Thu, Sep 22, 2022 at 09:09:28PM +0530, Krishna Chaitanya Chundru wrote:
->>>> On 9/21/2022 10:26 PM, Bjorn Helgaas wrote:
->>>>> On Wed, Sep 21, 2022 at 03:23:35PM +0530, Krishna Chaitanya Chundru wrote:
->>>>>> On 9/20/2022 11:46 PM, Bjorn Helgaas wrote:
->>>>>>> On Tue, Sep 20, 2022 at 03:52:23PM +0530, Krishna chaitanya chundru wrote:
->>>>>>>> In qcom platform PCIe resources( clocks, phy etc..) can
->>>>>>>> released when the link is in L1ss to reduce the power
->>>>>>>> consumption. So if the link is in L1ss, release the PCIe
->>>>>>>> resources. And when the system resumes, enable the PCIe
->>>>>>>> resources if they released in the suspend path.
->>>>>>> What's the connection with L1.x?  Links enter L1.x based on
->>>>>>> activity and timing.  That doesn't seem like a reliable
->>>>>>> indicator to turn PHYs off and disable clocks.
->>>>>> This is a Qcom PHY-specific feature (retaining the link state in
->>>>>> L1.x with clocks turned off).  It is possible only with the link
->>>>>> being in l1.x. PHY can't retain the link state in L0 with the
->>>>>> clocks turned off and we need to re-train the link if it's in L2
->>>>>> or L3. So we can support this feature only with L1.x.  That is
->>>>>> the reason we are taking l1.x as the trigger to turn off clocks
->>>>>> (in only suspend path).
->>>>> This doesn't address my question.  L1.x is an ASPM feature, which
->>>>> means hardware may enter or leave L1.x autonomously at any time
->>>>> without software intervention.  Therefore, I don't think reading the
->>>>> current state is a reliable way to decide anything.
->>>> After the link enters the L1.x it will come out only if there is
->>>> some activity on the link.  AS system is suspended and NVMe driver
->>>> is also suspended( queues will  freeze in suspend) who else can
->>>> initiate any data.
->>> I don't think we can assume that nothing will happen to cause exit
->>> from L1.x.  For instance, PCIe Messages for INTx signaling, LTR, OBFF,
->>> PTM, etc., may be sent even though we think the device is idle and
->>> there should be no link activity.
->> I don't think after the link enters into L1.x there will some
->> activity on the link as you mentioned, except for PCIe messages like
->> INTx/MSI/MSIX. These messages also will not come because the client
->> drivers like NVMe will keep their device in the lowest power mode.
+On 26/09/2022 16:57, Luca Weiss wrote:
+> Hi Neil,
+> 
+> On Montag, 26. September 2022 10:27:54 CEST Neil Armstrong wrote:
+>> On 25/09/2022 22:21, Luca Weiss wrote:
+>>> Node names for the channel are supposed to be adc-chan@REG.
+>>>
+>>> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+>>> ---
+>>>
+>>>   arch/arm/boot/dts/qcom-pma8084.dtsi | 17 +++++++++++------
+>>>   1 file changed, 11 insertions(+), 6 deletions(-)
+>>>
+>>> diff --git a/arch/arm/boot/dts/qcom-pma8084.dtsi
+>>> b/arch/arm/boot/dts/qcom-pma8084.dtsi index e77602e9f95c..7ad573c7b4ac
+>>> 100644
+>>> --- a/arch/arm/boot/dts/qcom-pma8084.dtsi
+>>> +++ b/arch/arm/boot/dts/qcom-pma8084.dtsi
+>>> @@ -64,22 +64,27 @@ pma8084_vadc: adc@3100 {
+>>>
+>>>   			#size-cells = <0>;
+>>>   			#io-channel-cells = <1>;
+>>>
+>>> -			die_temp {
+>>> +			adc-chan@8 {
+>>>
+>>>   				reg = <VADC_DIE_TEMP>;
+>>>   			
+>>>   			};
+>>>
+>>> -			ref_625mv {
+>>> +
+>>> +			adc-chan@9 {
+>>>
+>>>   				reg = <VADC_REF_625MV>;
+>>>   			
+>>>   			};
+>>>
+>>> -			ref_1250v {
+>>> +
+>>> +			adc-chan@10 {
+>>>
+>>>   				reg = <VADC_REF_1250MV>;
+>>>   			
+>>>   			};
+>>>
+>>> -			ref_buf_625mv {
+>>> +
+>>> +			adc-chan@12 {
+>>>
+>>>   				reg = <VADC_SPARE1>;
+>>>   			
+>>>   			};
+>>>
+>>> -			ref_gnd {
+>>> +
+>>> +			adc-chan@14 {
+>>>
+>>>   				reg = <VADC_GND_REF>;
+>>>   			
+>>>   			};
+>>>
+>>> -			ref_vdd {
+>>> +
+>>> +			adc-chan@15 {
+>>>
+>>>   				reg = <VADC_VDD_VADC>;
+>>>   			
+>>>   			};
+>>>   		
+>>>   		};
 >>
->> The link will come out of L1.x only when there is config or memory
->> access or some messages to trigger the interrupts from the devices.
->> We are already making sure this access will not be there in S3.  If
->> the link is in L0 or L0s what you said is expected but not in L1.x
-> Forgive me for being skeptical, but we just spent a few months
-> untangling the fact that some switches send PTM request messages even
-> when they're in a non-D0 state.  We expected that devices in D3hot
-> would not send such messages because "why would they?"  But it turns
-> out the spec allows that, and they actually *do*.
->
-> I don't think it's robust interoperable design for a PCI controller
-> driver like qcom to assume anything about PCI devices unless it's
-> required by the spec.
->
-> Bjorn
- From pci spec 4, in sec 5.5
-"Ports that support L1 PM Substates must not require a reference clock 
-while in L1 PM Substates
-other than L1.0".
-If there is no reference clk we can say there is no activity on the link.
-If anything needs to be sent (such as LTR, or some messages ), the link 
-needs to be back in L0 before it
-sends the packet to the link partner.
+>> I don't see where this is required, bindings doesn't mandate this naming:
+>>
+>> patternProperties:
+>>
+>>     "^.*@[0-9a-f]+$":
+> 
+> They don't require the "adc-chan" part (although dt nodes are supposed to have 
+> common names and adc-chan is used for adc for that; and dt node names are not 
+> supposed to have underscores), but this validation error happens without this 
+> commit:
+> 
+> <snip>/arch/arm/boot/dts/qcom-apq8084-ifc6540.dtb: pma8084@0: adc@3100: 
+> 'oneOf' conditional failed, one must be fixed:
+>         '#address-cells', '#size-cells', 'die_temp', 'ref_1250v', 'ref_625mv', 
+> 'ref_buf_625mv', 'ref_gnd', 'ref_vdd' do not match any of the regexes: 
+> 'pinctrl-[0-9]+'
+>         'die_temp', 'ref_1250v', 'ref_625mv', 'ref_buf_625mv', 'ref_gnd', 
+> 'ref_vdd' do not match any of the regexes: '^.*@[0-9a-f]+$', 'pinctrl-[0-9]+'
+>         'qcom,spmi-iadc' was expected
+>         From schema: <snip>/Documentation/devicetree/bindings/mfd/qcom,spmi-
+> pmic.yaml
+> 
+> So while e.g. ref-vdd@15 would also work, adc-chan@15 is more correct.
 
-To exit from L1.x clkreq pin should be asserted.
+The commit msg is not precise here. What the nodes are missing is unit
+address (required by VADC bindings) and replace of underscore (coding
+style). I think bindings do not require the adc-chan and we could apply
+here rule from DT spec that node name should reflect it's
+purpose/function, so die-temp@xxxx could be fine. Other places use
+already adc-chan, so consistency could be an argument. But anyway commit
+msg is not really describing why you are doing this.
 
-In suspend after turning off clocks and phy we can enable to trigger an 
-interrupt whenever the clk req pin asserts.
-In that interrupt handler, we can enable the pcie resources back.
+Best regards,
+Krzysztof
 
-What are your thoughts on this?
