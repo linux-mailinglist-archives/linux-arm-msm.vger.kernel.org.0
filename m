@@ -2,178 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB2305EA083
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 12:39:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A7F005EA1DC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 12:59:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235956AbiIZKjz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 06:39:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55312 "EHLO
+        id S236816AbiIZK7u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 06:59:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236243AbiIZKio (ORCPT
+        with ESMTP id S237024AbiIZK6g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Sep 2022 06:38:44 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F399652454
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 03:22:36 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id k10so10084893lfm.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 03:22:36 -0700 (PDT)
+        Mon, 26 Sep 2022 06:58:36 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D99894F199
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 03:30:14 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id j24so6903524lja.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 03:30:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=zkcOb24Evi1ksE1lwkoQgL5n/a7zuiGn5FgVHGwVjjk=;
-        b=ccclXjfhbZ9g6sNaMs7j8J17AqDo8SuTkaQsosFYpKCZAot5wuamdGIH9ecTb7TAPz
-         z9hu4DV98CZo7qo/B2ZKQRWZS7s5fjrzdMq49PJy91ayuZBF/IXyGwcmsLqPtdCSw46X
-         GlC3Sqm/Sjdi/t3Jgx5wyrWsSQJSkMaPBq+f2L65OyAkr+mHBcaz6hK4Iga0hRAdQKJQ
-         YkqMOogeSQai2WNgcUZmh13NVUpyIh0tQhFFjpYQoOmfv6b0PZ+Cn/1d+G/yvHp0rzww
-         Wep8gfekmgcywOKFOrJtzMBJTsQvZ2q8Y2IuIkn8w+vQ04087NbbnkjybP74gBrGEGmE
-         EeKg==
+        bh=eG0TdrPxhkIbH4nT2ZB1rVox+ssVaYjya+NBPT1aYHc=;
+        b=Eht4h4WK4DP25MBt5Sh5FNwN3HAjo3DHFLnYeVJVp58bpmreQTsOyfjuOnGG9ogpy2
+         4lHTuXwolFrLY1i23R4StEuCSbu4B4UPrKVj2QnBBVin7FlQM67/jxrqlcXOTZNeDm66
+         epVWfGw7SWI3ve2OMaieQHOJ1+nQx9eqAI9yqHr+TWCP/yRq3L1pN2klGLltejLIGfc9
+         F48fhzRQXtDnXxAHiKNB42Q02YhigR3+9Oj0nmoExW65csD1mcm4yQk5Ea33NyvHi8Db
+         0gEbxVkN7zJSpTYYsiTqbbvJq0P4dPwUwa5+6ff9YjmxNHcIQn1nYOk/Qa5cJH67Dapl
+         XKEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=zkcOb24Evi1ksE1lwkoQgL5n/a7zuiGn5FgVHGwVjjk=;
-        b=L48S3rb0xGl97m90hiBM6IBMq30F5X40Q0gPjvp9BticuRKoRZIw+fonhKUgVKajHC
-         yMtuWU5YUE4Rks211gjCWr0F75NQct2E4DBvZKfbWHkEYPcmSZzJqDH7FZs+bXPE4jeN
-         jyMEfAGY2poCso+mqqhpO8wRMQL7RSUW+H/a9mwgKhJstt3r2JAdqsusYZUSdvXxhZsa
-         DpcYTFxEo78iSWEnl9GcmqU5F3BKr/WNaE9TUme0Tlu3XXP7paVobT6IpyRPVqZ/Ig3O
-         rMmXtzETpWf0HV3zrV+QR2uy051A/+FyTvrCbWlX3iWfuqCE0IRuikbp0BglKQMKMwE4
-         GD1w==
-X-Gm-Message-State: ACrzQf2FY1o65JNWS8Zsc05jgUOw5lPZH3mI2WCqH0JLbglzyiO02UOz
-        E46nO9Qf8zdOtwcIedwh7N6PkQ==
-X-Google-Smtp-Source: AMsMyM7LGod3qiCYNpJ7TH3RuskDdwJcAyDevsVmmvUUQSsLPsbj1fJLvCd60O4HF8gDG91s1bw3+Q==
-X-Received: by 2002:a05:6512:685:b0:49f:4929:4c6e with SMTP id t5-20020a056512068500b0049f49294c6emr9222096lfe.642.1664187740702;
-        Mon, 26 Sep 2022 03:22:20 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id x28-20020a056512047c00b00497a32e2576sm2487979lfd.32.2022.09.26.03.22.20
+        bh=eG0TdrPxhkIbH4nT2ZB1rVox+ssVaYjya+NBPT1aYHc=;
+        b=dYq7WGLyKWNd9F/mCN9oJlRWXaBiIb02mJrbJFA0UIZigymQfpi9a4GlqAfIOtDGjH
+         EsLXySM/oZGzSwO+38FsGcQx8r6hIuwMoaRwA/l+K2JjfGcyCuZcKUcOv5y7pr2LZsxx
+         SD0liWmWMlWFFfPAg+Q92kxylvCxFEesCG5+SgEnp8jxMY0dpRhz53QDozYJ7zC4vs8A
+         V5Mcs7VvhlBKtJhjB20/GOCD9sSZsfFusbdvTnSBY79uEBkaHL7aATqAA7iERAeUGc1W
+         GTJJqqx3WCtIwoVheuq0ZfOPyQwTdS3l/pWuK+zCtxFW7hnf/B0/tLscmHkN0iemsmVC
+         UigQ==
+X-Gm-Message-State: ACrzQf1fvJuhSs9ALtECKlFpeHKa7euHbGvUe2RHD8ahBpNdAu+5/qFh
+        nWY7xtDjQQIWQl7KQyRTYD8Peg==
+X-Google-Smtp-Source: AMsMyM51/T6s8y6v+BDWSNH67sFG5OfefILMT5fIWZKtFrxTyMCmSBQ7lyt1WwOBN+BzLnKPXn1xbA==
+X-Received: by 2002:a2e:3905:0:b0:26c:3550:bc14 with SMTP id g5-20020a2e3905000000b0026c3550bc14mr7215915lja.43.1664188153679;
+        Mon, 26 Sep 2022 03:29:13 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id g6-20020a19e046000000b00494a11c5f52sm2489867lfj.256.2022.09.26.03.29.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Sep 2022 03:22:20 -0700 (PDT)
-Message-ID: <9f66ac8e-6d35-3046-e237-936bc10ba86f@linaro.org>
-Date:   Mon, 26 Sep 2022 13:22:19 +0300
+        Mon, 26 Sep 2022 03:29:12 -0700 (PDT)
+Message-ID: <3dda8e86-b92b-488a-5afb-0cb49e7e52ae@linaro.org>
+Date:   Mon, 26 Sep 2022 12:29:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH v4 1/6] phy: qcom-qmp-pcie: split register tables into
- common and extra parts
-Content-Language: en-GB
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+ Thunderbird/102.3.0
+Subject: Re: [PATCH 2/3] ARM: dts: qcom: pm8941: adjust node names to bindings
+Content-Language: en-US
+To:     neil.armstrong@linaro.org, Luca Weiss <luca@z3ntu.xyz>,
+        linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org
-References: <20220924160302.285875-1-dmitry.baryshkov@linaro.org>
- <20220924160302.285875-2-dmitry.baryshkov@linaro.org>
- <YzFHi3IQcBF70uCG@hovoldconsulting.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <YzFHi3IQcBF70uCG@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220925210229.128462-1-luca@z3ntu.xyz>
+ <20220925210229.128462-2-luca@z3ntu.xyz>
+ <ec8cc121-9814-cd52-fb49-c33ab1376f89@linaro.org>
+ <3070538e-fa8d-4506-bbf8-c2770d092eb5@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <3070538e-fa8d-4506-bbf8-c2770d092eb5@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/09/2022 09:32, Johan Hovold wrote:
-> On Sat, Sep 24, 2022 at 07:02:57PM +0300, Dmitry Baryshkov wrote:
->> SM8250 configuration tables are split into two parts: the common one and
->> the PHY-specific tables. Make this split more formal. Rather than having
->> a blind renamed copy of all QMP table fields, add separate struct
->> qmp_phy_cfg_tables and add two instances of this structure to the struct
->> qmp_phy_cfg. Later on this will be used to support different PHY modes
->> (RC vs EP).
+On 26/09/2022 12:04, Neil Armstrong wrote:
+> On 26/09/2022 11:22, Krzysztof Kozlowski wrote:
+>>>   		};
+>>>   
+>>> -		usb_id: misc@900 {
+>>> +		usb_id: extcon@900 {
 >>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 129 ++++++++++++++---------
->>   1 file changed, 77 insertions(+), 52 deletions(-)
->>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> index 7aff3f9940a5..30806816c8b0 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> @@ -1300,31 +1300,30 @@ static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_pcs_misc_tbl[] = {
->>   	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_G4_PRE_GAIN, 0x2e),
->>   };
->>   
->> -/* struct qmp_phy_cfg - per-PHY initialization config */
->> -struct qmp_phy_cfg {
->> -	int lanes;
->> -
->> -	/* Init sequence for PHY blocks - serdes, tx, rx, pcs */
->> +struct qmp_phy_cfg_tables {
->>   	const struct qmp_phy_init_tbl *serdes_tbl;
->>   	int serdes_tbl_num;
->> -	const struct qmp_phy_init_tbl *serdes_tbl_sec;
->> -	int serdes_tbl_num_sec;
->>   	const struct qmp_phy_init_tbl *tx_tbl;
->>   	int tx_tbl_num;
->> -	const struct qmp_phy_init_tbl *tx_tbl_sec;
->> -	int tx_tbl_num_sec;
->>   	const struct qmp_phy_init_tbl *rx_tbl;
->>   	int rx_tbl_num;
->> -	const struct qmp_phy_init_tbl *rx_tbl_sec;
->> -	int rx_tbl_num_sec;
->>   	const struct qmp_phy_init_tbl *pcs_tbl;
->>   	int pcs_tbl_num;
->> -	const struct qmp_phy_init_tbl *pcs_tbl_sec;
->> -	int pcs_tbl_num_sec;
->>   	const struct qmp_phy_init_tbl *pcs_misc_tbl;
->>   	int pcs_misc_tbl_num;
->> -	const struct qmp_phy_init_tbl *pcs_misc_tbl_sec;
->> -	int pcs_misc_tbl_num_sec;
->> +};
->> +
->> +/* struct qmp_phy_cfg - per-PHY initialization config */
->> +struct qmp_phy_cfg {
->> +	int lanes;
->> +
->> +	/* Main init sequence for PHY blocks - serdes, tx, rx, pcs */
->> +	struct qmp_phy_cfg_tables common;
->> +	/*
->> +	 * Additional init sequence for PHY blocks, providing additional
->> +	 * register programming. Unless required it can be left omitted.
->> +	 */
->> +	struct qmp_phy_cfg_tables *extra;
->>   
->>   	/* clock ids to be requested */
->>   	const char * const *clk_list;
+>> Why? extcon is Linux specific name and should not be added to DTS.
+>> Anything requires it?
 > 
->> @@ -1949,31 +1974,31 @@ static int qmp_pcie_power_on(struct phy *phy)
->>   	}
->>   
->>   	/* Tx, Rx, and PCS configurations */
->> -	qmp_pcie_configure_lane(tx, cfg->regs, cfg->tx_tbl, cfg->tx_tbl_num, 1);
->> -	qmp_pcie_configure_lane(tx, cfg->regs, cfg->tx_tbl_sec, cfg->tx_tbl_num_sec, 1);
->> +	qmp_pcie_configure_lane(tx, cfg->regs, cfg->common.tx_tbl, cfg->common.tx_tbl_num, 1);
->> +	qmp_pcie_configure_lane(tx, cfg->regs, cfg->extra->tx_tbl, cfg->extra->tx_tbl_num, 1);
-> 
-> Hmm. How did you test this?
-> 
-> With your later versions of this series, cfg->extra is generally NULL so
-> this would dereference a NULL pointer.
+> It matches the current dt bindings:
 
-I must admit, I tested this only on sm8450. Mea culpa.
+Then instead maybe let's fix it in the bindings and DTS?
 
-> 
-> Johan
-
--- 
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
 
