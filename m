@@ -2,77 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10C6D5EB0C4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 21:03:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1E055EB12E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 21:20:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229757AbiIZTDz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 15:03:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52316 "EHLO
+        id S229528AbiIZTUz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 15:20:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229944AbiIZTDg (ORCPT
+        with ESMTP id S229711AbiIZTUv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Sep 2022 15:03:36 -0400
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE71996FD2;
-        Mon, 26 Sep 2022 12:03:21 -0700 (PDT)
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-1279948d93dso10464856fac.10;
-        Mon, 26 Sep 2022 12:03:21 -0700 (PDT)
+        Mon, 26 Sep 2022 15:20:51 -0400
+Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4EA27A75F;
+        Mon, 26 Sep 2022 12:20:44 -0700 (PDT)
+Received: by mail-oi1-f182.google.com with SMTP id q10so1905571oib.5;
+        Mon, 26 Sep 2022 12:20:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=OxTCM/nz5bhxL8sMmDNe073lxJ0LVSSiBKn/6zH9MH8=;
-        b=EXXZYs171yfwh2EmR97v9s7NZNXivt4wdSezqaD2kOE2AojSau9VeHGe//R8zvWWAR
-         3GIJBFp9pwbQtaCk7sd+wggGsMM9o7ssqGOaUzi66+rnNnwZEO40I+T9GfZ8wN10lXIA
-         +ymm+WdFZLowpRIyjaF0++YMLlkqyq8SLF+Vj4XV1Nt45fn3NBywHbDSMiRQmkNEqX8M
-         45UsJVKidCfQY1N5KLmR2PkZKEllD7uEOu1vyGK0HcUAJhaTdqvehJNiffl54bdbFiAX
-         imRjgw0KXbB2IEVFnaR92b33U4NViwHAY9zDVgVFih74vF2Dc01orzzwlVY0BvEGEqo5
-         pQqQ==
-X-Gm-Message-State: ACrzQf28402hl4GvguPwJ1WQtXvH/X++J2iX0KhZN7LLgmlvTR97iw01
-        IB1yk2QRux+D/9xclPML1yyhZTJmzQ==
-X-Google-Smtp-Source: AMsMyM4o4vE++pKjkstmDL9aCzjGdQmxl98BCceQ/dM4bvvkTUNkDFgTiJOoCcYddLrlFkeklkvfLw==
-X-Received: by 2002:a05:6870:e615:b0:12d:943e:256a with SMTP id q21-20020a056870e61500b0012d943e256amr101761oag.83.1664219001159;
-        Mon, 26 Sep 2022 12:03:21 -0700 (PDT)
+        bh=ADvJyP56wHbSxc129KlmBq1wxQ11OvIcsy3rVQbt0AM=;
+        b=nqjRtNZqxGxiKH8/Xu17bmfWvVB1qS/y7iOcVZmO6A/mbfE3roDELudxzC53BWeDyf
+         6fEOxKyGx17CgPL2wIbCSufIWMvLRViyl0RQqkxAWsAVS20UxNxP+YOrojLrNSFLM444
+         BEWj+zeNBH/sIzx+/egPMqjRQHX9vl4i+6NJAAxK17TxiCoFGg/MGcjG+tooeWfWRYqt
+         7SHZavJ+PebWAEXZZ38c9rE74cQ73HUOKvrr6LJNTGSQk9T2rRPPR+G72X5lL7Hb+/ku
+         L5jJrzB2pyGjR4IhxkzS0JeKUD9+m50ptYP3TywX63fKuEHiOoe0schopIG6yy1WdQkd
+         GjrQ==
+X-Gm-Message-State: ACrzQf2aJKLdRtfBXfZIGX6TVT4c6Ay4XI17uhRb48wTxwd2IQxJit/B
+        Yh+YFb6I8eWZH9sZ+hn8/skoWC7NqA==
+X-Google-Smtp-Source: AMsMyM4ROdDjV6GTDIC7rGrPJZId6RQc+iAMicuKSsRckR/ihD7ZKbUwPWuDfXhBc1jE8xBvdfnQGQ==
+X-Received: by 2002:aca:aa97:0:b0:34d:83f5:4a5 with SMTP id t145-20020acaaa97000000b0034d83f504a5mr144441oie.146.1664220043920;
+        Mon, 26 Sep 2022 12:20:43 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id i2-20020a056870890200b001227148da8csm9356485oao.36.2022.09.26.12.03.20
+        by smtp.gmail.com with ESMTPSA id t9-20020a05683022e900b0061c9f9c54e4sm8144004otc.80.2022.09.26.12.20.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Sep 2022 12:03:20 -0700 (PDT)
-Received: (nullmailer pid 2594505 invoked by uid 1000);
-        Mon, 26 Sep 2022 19:03:20 -0000
-Date:   Mon, 26 Sep 2022 14:03:20 -0500
+        Mon, 26 Sep 2022 12:20:43 -0700 (PDT)
+Received: (nullmailer pid 2629975 invoked by uid 1000);
+        Mon, 26 Sep 2022 19:20:42 -0000
+Date:   Mon, 26 Sep 2022 14:20:42 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+To:     Sven Peter <sven@svenpeter.dev>
+Cc:     linux-kernel@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Subject: Re: [PATCH] dt-bindings: arm: qcom: document Google Cheza
-Message-ID: <20220926190320.GA2593932-robh@kernel.org>
-References: <20220918095430.18068-1-krzysztof.kozlowski@linaro.org>
+        Jakub Kicinski <kuba@kernel.org>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-bluetooth@vger.kernel.org, Hector Martin <marcan@marcan.st>,
+        linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Eric Dumazet <edumazet@google.com>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        netdev@vger.kernel.org, Marcel Holtmann <marcel@holtmann.org>,
+        asahi@lists.linux.dev,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>
+Subject: Re: [PATCH v3 1/7] dt-bindings: net: Add generic Bluetooth controller
+Message-ID: <20220926192042.GA2629908-robh@kernel.org>
+References: <20220919164834.62739-1-sven@svenpeter.dev>
+ <20220919164834.62739-2-sven@svenpeter.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220918095430.18068-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+In-Reply-To: <20220919164834.62739-2-sven@svenpeter.dev>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 18 Sep 2022 10:54:30 +0100, Krzysztof Kozlowski wrote:
-> Document Google Cheza board compatibles recently added.
+On Mon, 19 Sep 2022 18:48:28 +0200, Sven Peter wrote:
+> Bluetooth controllers share the common local-bd-address property.
+> Add a generic YAML schema to replace bluetooth.txt for those.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Sven Peter <sven@svenpeter.dev>
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 3 +++
->  1 file changed, 3 insertions(+)
+> changes from v2:
+>   - added new bluetooth subdirectory and moved files there
+>   - removed minItems from local-bd-address
+>   - dropped bjorn.andersson@linaro.org, bgodavar@codeaurora.org and
+>     rjliao@codeaurora.org due to bouncing emails from the CC list
+> 
+> changes from v1:
+>   - removed blueetooth.txt instead of just replacing it with a
+>     deprecation note
+>   - replaced references to bluetooth.txt
+> 
+>  .../devicetree/bindings/net/bluetooth.txt     |  5 ----
+>  .../net/bluetooth/bluetooth-controller.yaml   | 29 +++++++++++++++++++
+>  .../{ => bluetooth}/qualcomm-bluetooth.yaml   |  6 ++--
+>  .../bindings/soc/qcom/qcom,wcnss.yaml         |  8 ++---
+>  4 files changed, 35 insertions(+), 13 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/net/bluetooth.txt
+>  create mode 100644 Documentation/devicetree/bindings/net/bluetooth/bluetooth-controller.yaml
+>  rename Documentation/devicetree/bindings/net/{ => bluetooth}/qualcomm-bluetooth.yaml (96%)
 > 
 
-Acked-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
