@@ -2,117 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 03F3F5E9BC9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 10:16:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3549F5E9BD0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 10:19:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233055AbiIZIQ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 04:16:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43518 "EHLO
+        id S230168AbiIZITp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 04:19:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233945AbiIZIQt (ORCPT
+        with ESMTP id S233137AbiIZITn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Sep 2022 04:16:49 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EBFC33400
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 01:16:36 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id e18so3919612wmq.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 01:16:36 -0700 (PDT)
+        Mon, 26 Sep 2022 04:19:43 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A8A7A45C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 01:19:41 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id iv17so3925761wmb.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 01:19:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:organization:from:reply-to
-         :references:to:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date;
-        bh=hXgMAhBZ3je78rW+jzSF79si3Ei/05gOqISb2zwsqUg=;
-        b=fC1tPWHmIw2H58iwKgU5IEngD15tz3fcVkYf10e/5tjktnuvvNwgCoZ6rlEyCKDylh
-         sjhb73evCL2V4vbAMhlnG9tg34+xBHalQm288oDVy1azUNWdxEabAuNQMXn/xm1FlcNd
-         ThwVsOPVyNbh6BvcYOuMAy32lcPk1YW6VJh9oss84CrsAix7Ewy6ct8m9TNgyb3PGLr5
-         L7JbtQe7P+tNruGuq7uY57SSgOn/NbFzN8bH7ccmqjmcmSot8G1qmRS7uxEgAESfm0Hv
-         qV+p9y9Ecg7qPNRgKcf9lYgSFAIL9DS5EJkhRfn/r4w4zwnS1E1qpYpIFozYGP5JO6T2
-         kQhQ==
+         :references:cc:to:content-language:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date;
+        bh=jKQIIfv2SW4ou+kZFFsY1IMYg5mAOYRQt6YkKfTElQc=;
+        b=hzu6+mpr5ZSXCUGWDhOrCiA/RBD+DXSpHdsd8IElxDjzrXFdb3sr8oFx8ARIvmEnU8
+         9Yinz7wN9grihuTOp1JZ/qKreV/y5zG20wh6Qkmo8ZLwHJm1RJQkRz00VZ6cVA+uod6S
+         LtRMwurY8TVYUc9KSZUs+NosyBOK/1uf8kYSmx7cN90vCWQ6UoByAwWRw6ZISYyfE0KG
+         t4/AYgL5Bd1KBtAcOn4wylwUPsTlE5yYpUK6vgERQ0D52zyNb7Kx6HtEaGjpmWiT4O+S
+         4skgGauyUl9wAKzx3oCjkfNONXIltgHLrn9T8pzkgAI+cQh2kDaBSHy5nAqW+tMimkCv
+         CKuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:organization:from:reply-to
-         :references:to:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=hXgMAhBZ3je78rW+jzSF79si3Ei/05gOqISb2zwsqUg=;
-        b=c+coLh5niAEjuqDsylCGB3cUQlWtl83EA0nb42iPlfOpZ5xtucWjsfTpmsmXwr25Ka
-         6R8QyOZ9sUKX/tGFazDZt+zmZ/9qTl6HKrgNyvwQPpyjDktzYffnVc0VNjYY77WujcIZ
-         mSC2DmAJ+9QTVcbqsQAzHkWZYtUQUgQv0DBwJO6da2Huw846QfFTuT6JeeKubgzPnfsB
-         DYlC8ucmNK6MlZP7IvNB6lXh1Bh2T1/69pI2rBDeOPm5hlecxn0KNnlmpE1809vJx6la
-         X/yY9ToxCh1r0NshZn5lxef/HEb5F+jg8U23HOelgdmgKHQQ7rveEZyH80U64Dm2asaO
-         uKBA==
-X-Gm-Message-State: ACrzQf0WX/QkNnux2fuGGQwXECCXdY5gpKKcNgLHH9zYDDpqwTtUDx9A
-        rX3xM6KX/yOPzeMZYteEuduLmnDn+KGBC1gO
-X-Google-Smtp-Source: AMsMyM6uzgMtfU4SLhYrmDdl546xzoIrz4OEcHyRsVRlrip6JtqHNWd+qC3oP3wXDx+gjPBTHCRLkQ==
-X-Received: by 2002:a7b:c048:0:b0:3b4:fb26:f0f3 with SMTP id u8-20020a7bc048000000b003b4fb26f0f3mr17434203wmc.115.1664180194884;
-        Mon, 26 Sep 2022 01:16:34 -0700 (PDT)
+         :references:cc:to:content-language:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date;
+        bh=jKQIIfv2SW4ou+kZFFsY1IMYg5mAOYRQt6YkKfTElQc=;
+        b=U98qDLc7zRFQKrXsB0g5uPMpkxekjor6L08Rdmk5U72oVO1msc70Pif3rfvzkSu2ia
+         VwhlsJrqV4rNqrxdXSDtdbsy5t3FEroY2D5B+nJEnbILqKlg0Wol2R/7C9bnuA3DnmVJ
+         x5aucGE25s/5G/s9jqgxD2v748JwTfo2TcBAkVzy0dMQaJPDp/GezwO8AVQaBMV4/+Kt
+         ynYWEpdBKgPswgL2rZHCKeKCMaycoOJVwSDsMFRfmynmpQeB9pzCH2HIfdI50ls4vyXX
+         yXP1gfdv6pqFkUxcLrV1s9LmzqdjZTvnN+2w8zenUo8l12Vy9atPztYZhmlucE5LgpRv
+         jwKg==
+X-Gm-Message-State: ACrzQf256FBhrvUeydsKfgAGDl73yaA82tK9FyHiusY96RY6Xsa44SoK
+        s8CC7L9uPRcydAUn0qeCepnfhfz+5f47DWVG
+X-Google-Smtp-Source: AMsMyM5a2SkwBGXm2LWW0e7JAvd4yKtan0bGn2F204UAj1PUgOIhbzsX8e7mgfY9oj1t+aeGqTbWdw==
+X-Received: by 2002:a7b:c056:0:b0:3b4:e007:2050 with SMTP id u22-20020a7bc056000000b003b4e0072050mr21229837wmc.38.1664180380142;
+        Mon, 26 Sep 2022 01:19:40 -0700 (PDT)
 Received: from [192.168.27.65] (home.beaume.starnux.net. [82.66.176.246])
-        by smtp.gmail.com with ESMTPSA id w21-20020a1cf615000000b003a604a29a34sm10123238wmc.35.2022.09.26.01.16.30
+        by smtp.gmail.com with ESMTPSA id v9-20020a5d4a49000000b0022a3a887ceasm8776476wrs.49.2022.09.26.01.19.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Sep 2022 01:16:34 -0700 (PDT)
-Message-ID: <3ef8bbb0-078d-ff40-88b6-db043b274add@linaro.org>
-Date:   Mon, 26 Sep 2022 10:16:29 +0200
+        Mon, 26 Sep 2022 01:19:39 -0700 (PDT)
+Message-ID: <07e63329-b3b7-736e-1de3-625af5c4541f@linaro.org>
+Date:   Mon, 26 Sep 2022 10:19:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH v2 2/2] arm64: defconfig: enable rest of Qualcomm ARMv8
- SoCs pinctrl drivers
+Subject: Re: [PATCH] ARM: dts: qcom: pmx65: use node name "gpio" for spmi-gpio
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Russell King <linux@armlinux.org.uk>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20220925112123.148897-1-krzysztof.kozlowski@linaro.org>
- <20220925112123.148897-2-krzysztof.kozlowski@linaro.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220925190622.111505-1-luca@z3ntu.xyz>
 Reply-To: neil.armstrong@linaro.org
 From:   Neil Armstrong <neil.armstrong@linaro.org>
 Organization: Linaro Developer Services
-In-Reply-To: <20220925112123.148897-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220925190622.111505-1-luca@z3ntu.xyz>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/09/2022 13:21, Krzysztof Kozlowski wrote:
-> Enable rest of Qualcomm ARMv8 SoCs pin controller drivers (MSM8953,
-> MSM8976, QCM2290).
+On 25/09/2022 21:06, Luca Weiss wrote:
+> All other usages of qcom,spmi-gpio use the gpio@ node name, and this is
+> also validated by the dt binding check. Fix it.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 > ---
+>   arch/arm/boot/dts/qcom-pmx65.dtsi | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> Changes since v1:
-> 1. Enable MSM8976 (Stephan)
-> ---
->   arch/arm64/configs/defconfig | 3 +++
->   1 file changed, 3 insertions(+)
-> 
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index 5a4ba141d15c..1138386952b5 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -529,9 +529,12 @@ CONFIG_PINCTRL_MSM=y
->   CONFIG_PINCTRL_IPQ8074=y
->   CONFIG_PINCTRL_IPQ6018=y
->   CONFIG_PINCTRL_MSM8916=y
-> +CONFIG_PINCTRL_MSM8953=y
-> +CONFIG_PINCTRL_MSM8976=y
->   CONFIG_PINCTRL_MSM8994=y
->   CONFIG_PINCTRL_MSM8996=y
->   CONFIG_PINCTRL_MSM8998=y
-> +CONFIG_PINCTRL_QCM2290=y
->   CONFIG_PINCTRL_QCS404=y
->   CONFIG_PINCTRL_QDF2XXX=y
->   CONFIG_PINCTRL_QCOM_SPMI_PMIC=y
+> diff --git a/arch/arm/boot/dts/qcom-pmx65.dtsi b/arch/arm/boot/dts/qcom-pmx65.dtsi
+> index abf229a8b75a..1c7fdf59c1f5 100644
+> --- a/arch/arm/boot/dts/qcom-pmx65.dtsi
+> +++ b/arch/arm/boot/dts/qcom-pmx65.dtsi
+> @@ -20,7 +20,7 @@ pmx65_temp: temp-alarm@a00 {
+>   			#thermal-sensor-cells = <0>;
+>   		};
+>   
+> -		pmx65_gpios: pinctrl@8800 {
+> +		pmx65_gpios: gpio@8800 {
+>   			compatible = "qcom,pmx65-gpio", "qcom,spmi-gpio";
+>   			reg = <0x8800>;
+>   			gpio-controller;
 
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
