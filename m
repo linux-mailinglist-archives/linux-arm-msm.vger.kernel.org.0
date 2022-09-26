@@ -2,83 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 80ABB5EB277
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 22:42:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BEC465EB30C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 23:24:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231211AbiIZUmW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 16:42:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47876 "EHLO
+        id S229614AbiIZVYW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 17:24:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231200AbiIZUmR (ORCPT
+        with ESMTP id S229547AbiIZVYV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Sep 2022 16:42:17 -0400
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF5DCAB4EC;
-        Mon, 26 Sep 2022 13:42:05 -0700 (PDT)
-Received: by mail-ot1-f48.google.com with SMTP id e24-20020a05683013d800b0065be336b8feso5217499otq.8;
-        Mon, 26 Sep 2022 13:42:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=4n0zzF8za7s/qhUkEAj/8fvq00/7FWulmYmfEXglZkU=;
-        b=DrTyUWwSLjZGM+YbKm2cKwF7uX1YiwETGyrX+Q3KSdpD9dVV7rVn9vxNHwvwc0luRP
-         FBbW79Sg6y8vQgY/SpR5g2YHp8iWA2kZPCcptEy7fWiBjxMJ2bY+yNhjTfU86zMC8vza
-         FY4iAsE9bJbal2k8hLmIpWqjo2QD4oZT5CxEl4SEfAvxWTQHH/kfxCyFJ/N/7fdntSol
-         Q/g2dQu3ogejOsP9c6UgeIsn0pj++TqXdCtx6+V5dDY2d4pRKx761yabmKIl85bSkxGF
-         O7Se3imnXM6ZUJeNws9A7tZvFtfIotOUF3ytctEwk8FY2usfLanO7oxGh9E+X+RzTB9u
-         02sQ==
-X-Gm-Message-State: ACrzQf29WDOoMSd9GPviOW4+GdlA9l+bb2Mr1nw9kTVmflavRjQmhukj
-        eXtrv/noeJpi5ZxhM21unw==
-X-Google-Smtp-Source: AMsMyM7UCa1J9doE98pQ4tKnf1kQISQgMn1NWxPT7w1h9o2BF9PhgS4q1DNLVv1GSX7rFWMl7G+NDA==
-X-Received: by 2002:a05:6830:6b0a:b0:655:f16d:fa4b with SMTP id db10-20020a0568306b0a00b00655f16dfa4bmr11098397otb.164.1664224878723;
-        Mon, 26 Sep 2022 13:41:18 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id r65-20020acaf344000000b0034564365bf2sm7607479oih.17.2022.09.26.13.41.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Sep 2022 13:41:18 -0700 (PDT)
-Received: (nullmailer pid 2773928 invoked by uid 1000);
-        Mon, 26 Sep 2022 20:41:17 -0000
-Date:   Mon, 26 Sep 2022 15:41:17 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH 08/12] dt-bindings: pinctrl: qcom,sm8250-lpass-lpi: add
- bias-bus-hold and input-enable
-Message-ID: <20220926204117.GA2773872-robh@kernel.org>
-References: <20220922195651.345369-1-krzysztof.kozlowski@linaro.org>
- <20220922195651.345369-9-krzysztof.kozlowski@linaro.org>
+        Mon, 26 Sep 2022 17:24:21 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F5AEA1A61;
+        Mon, 26 Sep 2022 14:24:21 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28QKw89X017711;
+        Mon, 26 Sep 2022 21:23:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=bXAKkCAntPpulCJau4s1xvZy9zCHXEPKoWOESym2gbs=;
+ b=EkgDyKW0iDTMKvairHXWjeMpY3HZ9zznJRh/gTdJVsnyZbjbUpXkYVyeSeIGnkhZIpyB
+ /oECWwXFtk99cv3bgvBjC1pxbzmE/xbRDZqUM9jOjnM5hbMacKIbioy56zRnY5SJLT5b
+ cbTvw/mJiiXw0wERdGQlkGXzsfFHob7jbe6iHJ0YL1hJsRrwu48IAMRblz5nqmJ2XOGt
+ GZtBQ7X/mnoWWa9pA9fcJ9spfGCD6yOf8TZehxUsHMt3nGOru+IiNANrS8L2QDHMSMdE
+ cY3vLCgsCFn5Ex4Dl7MCPG7ZreR9h/ehTztLRLUxK2pcEznuuM59NZ8BIEvgT6T9tb4m 7w== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ju9p69uj3-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 26 Sep 2022 21:23:47 +0000
+Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28QLNkCX019848
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 26 Sep 2022 21:23:46 GMT
+Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Mon, 26 Sep 2022 14:23:46 -0700
+Date:   Mon, 26 Sep 2022 14:23:45 -0700
+From:   Asutosh Das <quic_asutoshd@quicinc.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>
+CC:     <quic_nguyenb@quicinc.com>, <quic_xiaosenh@quicinc.com>,
+        <quic_cang@quicinc.com>, <quic_nitirawa@quicinc.com>,
+        <quic_rampraka@quicinc.com>, <quic_richardp@quicinc.com>,
+        <stanley.chu@mediatek.com>, <adrian.hunter@intel.com>,
+        <bvanassche@acm.org>, <avri.altman@wdc.com>, <beanhuo@micron.com>,
+        <martin.petersen@oracle.com>, <linux-scsi@vger.kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Jinyoung Choi <j-young.choi@samsung.com>,
+        Kiwoong Kim <kwmad.kim@samsung.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-mediatek@lists.infradead.org>
+Subject: Re: [PATCH v1 06/16] ufs: core: mcq: Calculate queue depth
+Message-ID: <20220926212345.GB15228@asutoshd-linux1.qualcomm.com>
+References: <cover.1663894792.git.quic_asutoshd@quicinc.com>
+ <e0a5115eac57ee19df10bae2e3411cbbc7943303.1663894792.git.quic_asutoshd@quicinc.com>
+ <20220926152222.GG101994@thinkpad>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20220922195651.345369-9-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20220926152222.GG101994@thinkpad>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: cIhSFhImtXEUo0d7kU2NmWVIH4uikPi1
+X-Proofpoint-GUID: cIhSFhImtXEUo0d7kU2NmWVIH4uikPi1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-26_09,2022-09-22_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 adultscore=0 mlxlogscore=999 clxscore=1015
+ lowpriorityscore=0 spamscore=0 mlxscore=0 impostorscore=0 phishscore=0
+ bulkscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2209260132
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 22 Sep 2022 21:56:47 +0200, Krzysztof Kozlowski wrote:
-> The existing SC7280 LPASS pin controller nodes use bias-bus-hold and
-> input-enable, so allow them.  Squash also blank lines for readability.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../bindings/pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml     | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
-> 
+On Mon, Sep 26 2022 at 08:22 -0700, Manivannan Sadhasivam wrote:
+>On Thu, Sep 22, 2022 at 06:05:13PM -0700, Asutosh Das wrote:
+>> The ufs device defines the supported queuedepth by
+>> bqueuedepth which has a max value of 256.
+>> The HC defines MAC (Max Active Commands) that define
+>> the max number of commands that in flight to the ufs
+>> device.
+>> Calculate and configure the nutrs based on both these
+>> values.
+>>
+>> Co-developed-by: Can Guo <quic_cang@quicinc.com>
+>> Signed-off-by: Can Guo <quic_cang@quicinc.com>
+>> Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
+>> ---
 
-Acked-by: Rob Herring <robh@kernel.org>
+[...]
+
+>>
+>> +/**
+>> + * ufshcd_mcq_decide_queue_depth - decide the queue depth
+>
+>ufshcd_mcq_calc_queue_depth - Calculate MCQ queue depth
+>
+The name ufshcd_mcq_decide_queue_depth was suggested by Bart in his comments.
+I don't have a strong opinion on the name, if you do, plmk and I'd change it.
+
+>> + * @hba - per adapter instance
+
+[...]
+
+>> +static int ufs_qcom_get_hba_mac(struct ufs_hba *hba)
+>> +{
+>> +	/* Default is 32, but Qualcomm HC supports upto 64 */
+>
+>Hmm, then this should come from ufshcd, no?
+>
+I'm not sure I understand this comment, please can you elaborate?
+
+>Thanks,
+>Mani
