@@ -2,65 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 895565E9A78
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 09:33:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7BB65E9A98
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 09:41:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233593AbiIZHdb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 03:33:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56930 "EHLO
+        id S233509AbiIZHl4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 03:41:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234064AbiIZHda (ORCPT
+        with ESMTP id S229903AbiIZHlz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Sep 2022 03:33:30 -0400
+        Mon, 26 Sep 2022 03:41:55 -0400
 Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A8D322530;
-        Mon, 26 Sep 2022 00:33:29 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FEDE25C6B;
+        Mon, 26 Sep 2022 00:41:54 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id E9E37B81901;
-        Mon, 26 Sep 2022 07:33:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A372C433D6;
-        Mon, 26 Sep 2022 07:33:26 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 2F2E4B80943;
+        Mon, 26 Sep 2022 07:41:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BDB3C433C1;
+        Mon, 26 Sep 2022 07:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664177606;
-        bh=GiOWWB7nawly0z2Qm4RUKkrXtT0fWmsQtvVUHw0aqnM=;
+        s=k20201202; t=1664178111;
+        bh=72jn43lvORCqa4NuDs4M2sZqItx2R8kjrMkI6/Q0z3w=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=IbJucAH2EGITulxvElZDPPARZ60G4CnYI5p5Md6xGg9IyaDPpnR+eJ5xZSeRIXD+Y
-         1LQBTISU5KpR0h08c7TMx62bKK6rr2F9OnK4E89wuiia/CSg30xws5lPcDRfhlqLb2
-         xTMvXg/bsH9S4H1sA1kdZfkn0LGCs0xUOmqVWFr9b3i72gX5tJ+5UP6k2P5OpcsbA+
-         e1SLTsm7hYTDGiMNCFVsS2poGFwA+OFuHNyhDxHCOxmIj4l3Tkc06+ORzmGp0AQGuD
-         tQyIiFi964SdnxwipMSC+q0Q0ztZmdg2u9BsGQmIjRujbUaKBXyoZvpfOcq8jEnhUK
-         3pLk8DuYc94hQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1ocicN-0003jO-SH; Mon, 26 Sep 2022 09:33:31 +0200
-Date:   Mon, 26 Sep 2022 09:33:31 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        b=qDkKjxqNcoAJgzVi7YgBsJVjV/mRz/Ff7vR1JF97CEw+n9Xqfhq7ZOuj04hyQWA8t
+         5i8vy2mllndpHeFEpJBKRaeZD4chDBSbM38XmZ4+MkHDe0X4BR5/nyJHVE0TtAGf/c
+         O9kzjD+GWcl2GTTAIWOClhnw9MFj89beiApfDvbfqoOsjuaEKT00tY2XB7DxyolPvs
+         EYZ5ARiYN+7z8RAgiuSwFbVqMzFkqEC1RfKvvwY0Xyv/XfXSmhvULAtdlQm6bw+UVh
+         PR+WOJCDBFgIHmo5M6D1ukV+FXZ3rtPedZJTGtzVkLPCNq+W1YFMNY9ZqE+2T62YJ6
+         4AOKL4JWDDZGQ==
+Date:   Mon, 26 Sep 2022 08:41:40 +0100
+From:   Lee Jones <lee@kernel.org>
+To:     Chanwoo Choi <cwchoi00@gmail.com>
+Cc:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        MyungJoo Ham <myungjoo.ham@samsung.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org
-Subject: Re: [PATCH v4 2/6] phy: qcom-qmp-pcie: split PHY programming to
- separate functions
-Message-ID: <YzFVyxhRidGKPR0p@hovoldconsulting.com>
-References: <20220924160302.285875-1-dmitry.baryshkov@linaro.org>
- <20220924160302.285875-3-dmitry.baryshkov@linaro.org>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] bindings: Update maintainer's email address
+Message-ID: <YzFXtNcHB6o0fHT+@google.com>
+References: <1663979817-1078-1-git-send-email-quic_gurus@quicinc.com>
+ <78859fd2-330f-1687-7fa3-f0831402778c@gmail.com>
+ <430b8a98-d76e-521b-81a2-a302679ecce5@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220924160302.285875-3-dmitry.baryshkov@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <430b8a98-d76e-521b-81a2-a302679ecce5@gmail.com>
 X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -70,63 +64,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Sep 24, 2022 at 07:02:58PM +0300, Dmitry Baryshkov wrote:
-> Split the code using PHY programming tables into separate functions,
-> which take a single struct qmp_phy_cfg_tables instance.
+On Mon, 26 Sep 2022, Chanwoo Choi wrote:
+
+> On 22. 9. 26. 04:03, Chanwoo Choi wrote:
+> > On 22. 9. 24. 09:36, Guru Das Srinagesh wrote:
+> >> Update Guru Das Srinagesh's email address.
+> >>
+> >> Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
+> >> ---
+> >>  Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml | 2 +-
+> >>  Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml         | 2 +-
+> >>  2 files changed, 2 insertions(+), 2 deletions(-)
+> >>
+> >> diff --git a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+> >> index 6a9c96f..480e4fb 100644
+> >> --- a/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+> >> +++ b/Documentation/devicetree/bindings/extcon/qcom,pm8941-misc.yaml
+> >> @@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+> >>  title: Qualcomm Technologies, Inc. PM8941 USB ID Extcon device
+> >>  
+> >>  maintainers:
+> >> -  - Guru Das Srinagesh <gurus@codeaurora.org>
+> >> +  - Guru Das Srinagesh <quic_gurus@quicinc.com>
+> >>  
+> >>  description: |
+> >>    Some Qualcomm PMICs have a "misc" module that can be used to detect when
+> >> diff --git a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+> >> index ec3138c..1f3ac59 100644
+> >> --- a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+> >> +++ b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+> >> @@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+> >>  title: Qualcomm Technologies, Inc. PM8008 PMIC bindings
+> >>  
+> >>  maintainers:
+> >> -  - Guru Das Srinagesh <gurus@codeaurora.org>
+> >> +  - Guru Das Srinagesh <quic_gurus@quicinc.com>
+> >>  
+> >>  description: |
+> >>    Qualcomm Technologies, Inc. PM8008 is a dedicated camera PMIC that integrates
+> > 
+> > 
+> > As Krzysztof comment, I changed the patch title and then applied it. Thanks.
+> > - dt-bindings: Update Guru Das Srinagesh's email address
+> > 
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 80 ++++++++++++++----------
->  1 file changed, 48 insertions(+), 32 deletions(-)
+> I'm sorry for that. It should be also confirmed from MFD maintainer.
+> I withdraw the applying.
 > 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> index 30806816c8b0..6e8c74585670 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> @@ -1877,15 +1877,53 @@ static void qmp_pcie_configure(void __iomem *base,
->  	qmp_pcie_configure_lane(base, regs, tbl, num, 0xff);
->  }
->  
-> -static int qmp_pcie_serdes_init(struct qmp_phy *qphy)
-> +static void qmp_pcie_serdes_init(struct qmp_phy *qphy, const struct qmp_phy_cfg_tables *tables)
->  {
->  	const struct qmp_phy_cfg *cfg = qphy->cfg;
->  	void __iomem *serdes = qphy->serdes;
->  
-> -	qmp_pcie_configure(serdes, cfg->regs, cfg->common.serdes_tbl, cfg->common.serdes_tbl_num);
-> -	qmp_pcie_configure(serdes, cfg->regs, cfg->extra->serdes_tbl, cfg->extra->serdes_tbl_num);
-> +	if (!tables)
-> +		return;
->  
-> -	return 0;
-> +	qmp_pcie_configure(serdes, cfg->regs, tables->serdes_tbl, tables->serdes_tbl_num);
+> Acked-by: Chanwoo Choi <cw00.choi@samsung.com> 
 
-See what I mean about "_tbl" being redundant in "tables->serdes_tbl"?
+It's fine, go ahead.
 
-> +}
+Acked-by: Lee Jones <lee@kernel.org>
 
->  static int qmp_pcie_init(struct phy *phy)
-> @@ -1957,15 +1995,13 @@ static int qmp_pcie_power_on(struct phy *phy)
->  	struct qmp_phy *qphy = phy_get_drvdata(phy);
->  	struct qcom_qmp *qmp = qphy->qmp;
->  	const struct qmp_phy_cfg *cfg = qphy->cfg;
-> -	void __iomem *tx = qphy->tx;
-> -	void __iomem *rx = qphy->rx;
->  	void __iomem *pcs = qphy->pcs;
-> -	void __iomem *pcs_misc = qphy->pcs_misc;
->  	void __iomem *status;
->  	unsigned int mask, val, ready;
->  	int ret;
->  
-> -	qmp_pcie_serdes_init(qphy);
-> +	qmp_pcie_serdes_init(qphy, &cfg->common);
-> +	qmp_pcie_serdes_init(qphy, cfg->extra);
-
-And "common" and "extra" doesn't really say what it is you're passing
-here.
-
->  
->  	ret = clk_prepare_enable(qphy->pipe_clk);
->  	if (ret) {
-
-Johan
+-- 
+Lee Jones [李琼斯]
