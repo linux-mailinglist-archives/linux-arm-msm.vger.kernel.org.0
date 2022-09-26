@@ -2,85 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65C5B5E99D3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 08:48:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0C1F5E9A37
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 09:10:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233557AbiIZGsP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 02:48:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37174 "EHLO
+        id S234096AbiIZHK2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 03:10:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233443AbiIZGsN (ORCPT
+        with ESMTP id S234026AbiIZHKB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Sep 2022 02:48:13 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76B1624BEE
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Sep 2022 23:48:12 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id s6so9290058lfo.7
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Sep 2022 23:48:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=xnB45KVy0Jgmqvqqa4iP23q7Nu/qWxhqmCJpHgjco6w=;
-        b=tvjHBcsJmL2XPud8Uer4bOC9txkaora6eR8nrP5h+Vok2cqX4r5azTbIZDe8tapJ4n
-         8/aWk5uQJw2LMAN5WuRUNdYkwb+u9BWfYbVHjgedq6hZM0ff4cIBnawp4Y6+1bojlGJS
-         84ov4d8ycMORsBMKRzAwuBv2GeAXpbCANhIrbbns6YEx8w7SbCzCP2X1j6yVw3zwTmnL
-         LivK70YNqTbW0ZCdxY16ouQIDhpNdblenFrXTQcvtzNoqXUmEl8CMFCysAWCBwP1Mctb
-         uDEn3uoi7UMjI181R4AWhgzvE9jkuF+7C63B6556EHDmrx5Gtm/PWUJO4eJC1Sm3ivr1
-         uXiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=xnB45KVy0Jgmqvqqa4iP23q7Nu/qWxhqmCJpHgjco6w=;
-        b=2QgSpzNMtjxRmijMRn8pefssz0EovezT2MiPSZuW2t1IgL02FA7n6sTNbmcAJ3Fipu
-         vnlXFP10Hl9Aq8YjJNrxGOTsBzcNZBkNsEnlbG6310fPYIexiXBSnpXe4yoeTBz9t/6T
-         M20ODXc3Ulbeu6fKIZ2aOiDpy2Ym14bmdWBOLabHUYfVa1nU3D0WiU+V92VE4+cMCUeS
-         ygZ3+52tovyk7QB106V4Kg0TYrz9Dh8OfmJeR9rEdMViZmrQpABP0DkfkhUoKi25w1Za
-         uuBJVGrw5xdPgN0Rtx+za+1GBXckEPlNl621EzXiWymsGe90+iZwbcAfBVD4CHxeGqcT
-         hHjw==
-X-Gm-Message-State: ACrzQf2PKXexd0i0AaNIBslQunusGH1GLcJn0Qq1m9sKl7dF5/LL2Z0r
-        YUT8VUOwqKKyHQl+umCbKYo9CQ==
-X-Google-Smtp-Source: AMsMyM5xQLsMt+mT+gwGq0IiKT0zS1FucufeCIblvlZU2Da5RRo5Ahailez9kxVVrHpY5PaOe+tZ0Q==
-X-Received: by 2002:a05:6512:1092:b0:4a1:de5f:1cc9 with SMTP id j18-20020a056512109200b004a1de5f1cc9mr258895lfg.219.1664174890794;
-        Sun, 25 Sep 2022 23:48:10 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id w6-20020a05651234c600b0049f6484694bsm2440444lfr.161.2022.09.25.23.48.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 25 Sep 2022 23:48:10 -0700 (PDT)
-Message-ID: <cdfe6f83-266a-de8b-d518-cc8b7fd45732@linaro.org>
-Date:   Mon, 26 Sep 2022 08:48:09 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH 17/32] dt-bindings: pinctrl: qcom,msm8909-tlmm: do not
- require function on non-GPIOs
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>,
+        Mon, 26 Sep 2022 03:10:01 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 690BD2716E;
+        Mon, 26 Sep 2022 00:09:14 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 59E1860F5D;
+        Mon, 26 Sep 2022 07:09:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F62C433D6;
+        Mon, 26 Sep 2022 07:09:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1664176152;
+        bh=ZFyz9xsgaJJeQ1kuNUppXbSdEwEfhTR8PAQww7gBoFE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=afl5wolvQgakUNRD6b9wDaE0fxMFJlHlLLP9m1EckmAbmq5dhsA/vn6LO/BOkjL4S
+         DPJ7DqhR8zmyVsCr0WBzUq/bBI6xzqbtocN0cy9VLG1jvrZFsuuKTP+pFlLqsrgSZ5
+         kKG7S40CkE62+B7zCN1uEOigV/173ZjYpN8RjviYjn/cyAVpAZZvUhmbBaoO4kQAm3
+         OVGB3iJ9eJcNTcxFFS8OGKseOAP/o1cz0OdRUi8mw5z4AiR0a9l1EIv+YGtLhFOAYs
+         vfxx7Z5v3jjMHiNoQ3s9ReMupn5KmPLkw3T/AeLHJuxjOhjtBM4qUdd0wDkEH8FHzT
+         RMOC+WCdz1SMQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1ociEv-0003Yx-AN; Mon, 26 Sep 2022 09:09:18 +0200
+Date:   Mon, 26 Sep 2022 09:09:17 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sricharan R <sricharan@codeaurora.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        krishna Lanka <quic_vamslank@quicinc.com>,
-        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220924080459.13084-1-krzysztof.kozlowski@linaro.org>
- <20220924080459.13084-18-krzysztof.kozlowski@linaro.org>
- <YzBe5NdhGqR+2bxN@gerhold.net>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <YzBe5NdhGqR+2bxN@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org
+Subject: Re: [PATCH v3 0/9] PCI: qcom: Support using the same PHY for both RC
+ and EP
+Message-ID: <YzFQHa/JUflySPIl@hovoldconsulting.com>
+References: <20220909091433.3715981-1-dmitry.baryshkov@linaro.org>
+ <YyF5SJASdCJWcPaX@hovoldconsulting.com>
+ <Yy6aHB6qc/pHEZi2@matsya>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yy6aHB6qc/pHEZi2@matsya>
+X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,33 +71,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/09/2022 16:00, Stephan Gerhold wrote:
->> +    allOf:
->> +      - $ref: "qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state"
->> +      - if:
->> +          properties:
->> +            pins:
->> +              pattern: "^gpio([0-9]|[1-9][0-9]|10[0-9]|11[0-7])$"
->> +        then:
->> +          required:
->> +            - function
->>  
+On Sat, Sep 24, 2022 at 11:18:12AM +0530, Vinod Koul wrote:
+> On 14-09-22, 08:48, Johan Hovold wrote:
+> > On Fri, Sep 09, 2022 at 12:14:24PM +0300, Dmitry Baryshkov wrote:
 > 
-> Is it possible to place this into qcom,tlmm-common.yaml? If the pattern
-> is only used to make "function" required for GPIOs, then it should not
-> matter if it matches just the prefix ("^gpio") or the exact set of
-> allowed GPIO numbers. The definition of the "pins" property will already
-> take care of validating those.
-
-Hm, very good idea.
-
+> > > Changes since v2:
+> > > - Added PHY_SUBMODE_PCIE_RC/EP defines (Vinod),
+> > > - Changed `primary' table name to `main', added extra comments
+> > >   describing that `secondary' are the additional tables, not required in
+> > >   most of the cases (following the suggestion by Johan to rename
+> > >   `primary' table),
+> > 
+> > This wasn't really what I suggested. "main" is in itself is no more
+> > understandable than "primary".
+> > 
+> > Please take another look at:
+> > 
+> > 	https://lore.kernel.org/all/Yw2+aVbqBfMSUcWq@hovoldconsulting.com/
 > 
-> Or are there some Qcom SoCs where a GPIO without "function" is valid?
+> Am not sure example quoted there was very initutive:
+> "as the tables can be referred to as
+> 
+> 	cfg.tbls2.serdes
+> 
+> instead of
+> 	
+> 	cfg.secondary.serdes_tbl;"
 
-Quick look at drivers says there is no such case. I can try adding it to
-common schema and look for errors.
+The main point was that "secondary" doesn't say anything about what the
+variable is used for (unlike for example "secondary_tbls") and that
+keeping a "_tbl" suffix on every member in a structure that holds only
+tables is redundant.
 
+> I would agree with Johan that primary and secondary are too long, but
+> that tbls2 is not very intuitive either...
 
-Best regards,
-Krzysztof
+That could be
 
+	cfg.tbls_extra.serdes;
+
+too or whatever. The key point was to have a descriptive name of the
+tables-structure variable and dropping "_tbl" from the individual
+members.
+
+Johan
