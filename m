@@ -2,83 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F4F15EB4E5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 00:58:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE5EB5EB4EB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 00:59:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230120AbiIZW6K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 18:58:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54820 "EHLO
+        id S229559AbiIZW7f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 18:59:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230182AbiIZW6H (ORCPT
+        with ESMTP id S230208AbiIZW7d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Sep 2022 18:58:07 -0400
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 234877F262;
-        Mon, 26 Sep 2022 15:58:07 -0700 (PDT)
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-127ba06d03fso11212000fac.3;
-        Mon, 26 Sep 2022 15:58:07 -0700 (PDT)
+        Mon, 26 Sep 2022 18:59:33 -0400
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CADF73BC;
+        Mon, 26 Sep 2022 15:59:30 -0700 (PDT)
+Received: by mail-oi1-f176.google.com with SMTP id o64so10034999oib.12;
+        Mon, 26 Sep 2022 15:59:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=epyIDE9t3WUpMt89cRPv2cckD3O12ExvX3hn7aJqqwU=;
-        b=QljuZnAbuY+/kvTGf6K4BwJTPcR2DksdD7lLYOFbMti/0IQrCWE9nKxH514C+KTnJc
-         O2JNL9OLUT6jfwaVtpOxTJBmI/RpUE/qIg0lyJX188DcHdjxHaEPuIslpImyCnsnhF8v
-         a4AuhXRzL5F+efQPcOthkBxnXzFXRsKBUBbijYr0aYgysJu5VNAG+2nCg6sg3W5Vdftn
-         jcpfKTCLNrmZ54FaeZaryGj94RhhGuxtxywte5xoay7YwcWyZ+fxSKEBmO8bdehrg3wU
-         eHGUU4l035sQ23Np2w/92Y8iA4/cvp13erfhF2OYyv5jFvJu1ubXqnI69XvQl9xQNEO9
-         tswA==
-X-Gm-Message-State: ACrzQf0ric7UTULLBim2uTj9JmR1qjf6XG+7wZ4ULeS+Qy7+b8ByfmlM
-        3QQrmbxkTQIkk7g6erPgV19GmZVrhQ==
-X-Google-Smtp-Source: AMsMyM4Y3XzNfRebEVuyawLZnrgxtX+upc5Kkaue5quLOYpoJkfUPf0wfRF02DeA4T6MtSd44EbMXA==
-X-Received: by 2002:a05:6870:b684:b0:127:aefe:eaee with SMTP id cy4-20020a056870b68400b00127aefeeaeemr599766oab.53.1664233086342;
-        Mon, 26 Sep 2022 15:58:06 -0700 (PDT)
+        bh=G1nYtk8mEOVoyeeft0wUFqBP6nfvgAT1OE7LASp1Y7Q=;
+        b=rjgiGYmeerZmGKQm+vOzhytHt6g3ZjCfDWIdYj83iR8UCzXMApc7ZY9wpWQV1zpBWj
+         O0204MVdEmY0vZ7UJZaTd6WkB3pg6pIVUD5vR/+QTnKwmAGRVzAdGwiK6xbFxu5SDqk/
+         g6Ojl6PZzzHLpIgse2hiumt/8WYUsdkw5QoI66fSBpepHXdvk9RBU7tvOf11OcnzZ8Mg
+         Qse2rUYSizXXjsTJflUh9GkL04Tq2rW/fTOIF1YGQ4+l4B8/F81HUWugSD74R1j/h5r5
+         qShSsJpkZCPcFPCt6dFxYzA+2AhTNHlcWnjfrFWxYGyR7ZsiPSWGSUt/V4Tjec3WKS6X
+         K/cg==
+X-Gm-Message-State: ACrzQf2r0Q7uzaIV2ZZqJ2g2Ip3NmOFl9O9PKMDtk4IbBpqbP0aHFlEy
+        sk90nPYgcaMtbc7v97e1s/hs9p3RTQ==
+X-Google-Smtp-Source: AMsMyM68dzdCvNHTwgkYRyIWg2iK9c9WNyjxUq8oaywqVSlqKg/Wq2ekbLSidqq2dSUL+cXlDXZnLw==
+X-Received: by 2002:aca:1912:0:b0:350:504b:ee13 with SMTP id l18-20020aca1912000000b00350504bee13mr513201oii.256.1664233169638;
+        Mon, 26 Sep 2022 15:59:29 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id x18-20020a056870b41200b0012d6f3d370bsm9829017oap.55.2022.09.26.15.58.05
+        by smtp.gmail.com with ESMTPSA id f47-20020a4a8932000000b0044b491ccf97sm7062458ooi.25.2022.09.26.15.59.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Sep 2022 15:58:05 -0700 (PDT)
-Received: (nullmailer pid 3120697 invoked by uid 1000);
-        Mon, 26 Sep 2022 22:58:05 -0000
-Date:   Mon, 26 Sep 2022 17:58:05 -0500
+        Mon, 26 Sep 2022 15:59:29 -0700 (PDT)
+Received: (nullmailer pid 3123199 invoked by uid 1000);
+        Mon, 26 Sep 2022 22:59:28 -0000
+Date:   Mon, 26 Sep 2022 17:59:28 -0500
 From:   Rob Herring <robh@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>, devicetree@vger.kernel.org,
+Cc:     Bjorn Andersson <andersson@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        alsa-devel@alsa-project.org, Andy Gross <agross@kernel.org>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org,
-        Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 10/11] dt-bindings: slimbus: qcom,slim: convert to DT
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 11/11] dt-bindings: slimbus: qcom,slim-ngd: convert to DT
  schema
-Message-ID: <20220926225805.GA3120664-robh@kernel.org>
+Message-ID: <20220926225928.GA3123152-robh@kernel.org>
 References: <20220923161453.469179-1-krzysztof.kozlowski@linaro.org>
- <20220923161453.469179-11-krzysztof.kozlowski@linaro.org>
+ <20220923161453.469179-12-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220923161453.469179-11-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+In-Reply-To: <20220923161453.469179-12-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 23 Sep 2022 18:14:52 +0200, Krzysztof Kozlowski wrote:
-> Convert the Qualcomm SoC SLIMbus controller bindings to DT Schema.
+On Fri, 23 Sep 2022 18:14:53 +0200, Krzysztof Kozlowski wrote:
+> Convert the Qualcomm SoC SLIMBus Non Generic Device (NGD) controller
+> bindings to DT Schema.
+> 
+> During conversion add iommus already present in DTS and extend the
+> example based on SDM845.
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  .../bindings/slimbus/qcom,slim.yaml           | 86 +++++++++++++++++++
->  .../bindings/slimbus/slim-qcom-ctrl.txt       | 36 --------
->  2 files changed, 86 insertions(+), 36 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/slimbus/qcom,slim.yaml
->  delete mode 100644 Documentation/devicetree/bindings/slimbus/slim-qcom-ctrl.txt
+>  .../bindings/slimbus/qcom,slim-ngd.yaml       | 120 ++++++++++++++++++
+>  .../bindings/slimbus/slim-ngd-qcom-ctrl.txt   |  82 ------------
+>  2 files changed, 120 insertions(+), 82 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/slimbus/qcom,slim-ngd.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/slimbus/slim-ngd-qcom-ctrl.txt
 > 
 
 Reviewed-by: Rob Herring <robh@kernel.org>
