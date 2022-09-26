@@ -2,28 +2,28 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FAAB5EAC20
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 18:12:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF4595EAC23
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 18:13:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236038AbiIZQMh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 12:12:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39154 "EHLO
+        id S236335AbiIZQNH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 12:13:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235790AbiIZQME (ORCPT
+        with ESMTP id S235955AbiIZQMk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Sep 2022 12:12:04 -0400
+        Mon, 26 Sep 2022 12:12:40 -0400
 Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6564F13CD5;
-        Mon, 26 Sep 2022 07:59:45 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE5765A88D;
+        Mon, 26 Sep 2022 08:00:52 -0700 (PDT)
 Received: from g550jk.localnet (2a02-8388-6582-fe80-0000-0000-0000-0006.cable.dynamic.v6.surfer.at [IPv6:2a02:8388:6582:fe80::6])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 9C05EC78D3;
-        Mon, 26 Sep 2022 14:59:43 +0000 (UTC)
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 03FA6C78D3;
+        Mon, 26 Sep 2022 15:00:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1664204384; bh=iKasmECWNjdS3d9t4h+Q6/KVLrA34QuCX3jb9jKydYs=;
+        t=1664204451; bh=St+z+1b3Jkc4uxjTl+6dCyco1+LJaG4Oic8mbEtDHtc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=ZOdnpR0hyI+/zGfN+6cXq2ls5cbZOtPuGbfwRaV1Zj9VWiO2jlDo2MuMZfq9tfBSf
-         yO5gUaP0V4HSDWhsYQ84DTtI+7RbU7NLq4gVdQ/AlParHTi+3+8oFC7dgRbN3uHaLB
-         AvYIGYSb3mm7eeeT9yrjuk8W9u3UpqhWdGPe/e98=
+        b=MgLWyTd3+i7Bb25vBjk7iiBSj1xnx79m0pAODtcpEDqNdU9zVMls6ZGc7iQPUwKzo
+         FOKpvUPm0p7BqC+ggCr+9bqG8EwTS37z26L6BA6xhOq0DmfM1YVlsy2hsuVuDahNCv
+         eg/SMfPFSupULi6pi3pzXvwzrRUlY6rXLXApuhns=
 From:   Luca Weiss <luca@z3ntu.xyz>
 To:     linux-arm-msm@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
@@ -35,11 +35,11 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: mfd: qcom,spmi-pmic: adjust pwm node validation
-Date:   Mon, 26 Sep 2022 16:59:43 +0200
-Message-ID: <5604715.DvuYhMxLoT@g550jk>
-In-Reply-To: <6454e34b-f9b7-257d-4717-4a880998d08f@linaro.org>
-References: <20220925211744.133947-1-luca@z3ntu.xyz> <6454e34b-f9b7-257d-4717-4a880998d08f@linaro.org>
+Subject: Re: [PATCH 2/2] dt-bindings: mfd: qcom,spmi-pmic: support more types
+Date:   Mon, 26 Sep 2022 17:00:50 +0200
+Message-ID: <4769828.31r3eYUQgx@g550jk>
+In-Reply-To: <3cabc45a-526b-0177-e29a-bbe048e97a7f@linaro.org>
+References: <20220925211744.133947-1-luca@z3ntu.xyz> <20220925211744.133947-2-luca@z3ntu.xyz> <3cabc45a-526b-0177-e29a-bbe048e97a7f@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7Bit
 Content-Type: text/plain; charset="us-ascii"
@@ -53,24 +53,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Montag, 26. September 2022 10:49:11 CEST Krzysztof Kozlowski wrote:
+On Montag, 26. September 2022 10:51:45 CEST Krzysztof Kozlowski wrote:
 > On 25/09/2022 23:17, Luca Weiss wrote:
-> > The LPG node doesn't use reg, so adjust the documentation to match that.
-> > 
-> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > ---
-> > 
-> >  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 8 ++++----
 > 
-> Already sent:
+> Thank you for your patch. There is something to discuss/improve.
 > 
-> https://lore.kernel.org/all/20220828132648.3624126-2-bryan.odonoghue@linaro.
-> org/
+> >      additionalProperties: true # FIXME qcom,pm8916-wcd-analog-codec
+> >      binding not converted yet> 
+> > +  "charger@[0-9a-f]+$":
+> > +    type: object
+> > +    oneOf:
+> > +      - $ref: /schemas/power/supply/qcom,pm8941-charger.yaml#
+> > +      - $ref: /schemas/power/supply/qcom,pm8941-coincell.yaml#
+> > +
+> > +  "^dcdc@[0-9a-f]+$":
+> > +    type: object
+> 
+> How about renaming this one to usb-vbus-regulator?
 
-Thanks for spotting! I retract my patch then :)
+Sounds good to me. I was actually hoping somebody would suggest a better name.
 
-Any idea who will merge the other patch then? It's been a month since sending 
-and it hasn't been applied yet / not in linux-next yet.
+Should I wait a bit to see if anybody else has a better suggestion or send a 
+v2 now?
 
 Regards
 Luca
