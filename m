@@ -2,70 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C53D85E9CBF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 11:01:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5CDB35E9CD3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 11:03:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234678AbiIZJBA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 05:01:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56782 "EHLO
+        id S233855AbiIZJD4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 05:03:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234677AbiIZJAb (ORCPT
+        with ESMTP id S234667AbiIZJD0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Sep 2022 05:00:31 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 003F53ED75
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 02:00:25 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id b24so6631532ljk.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 02:00:25 -0700 (PDT)
+        Mon, 26 Sep 2022 05:03:26 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27E603F325
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 02:03:24 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id p5so6613913ljc.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 02:03:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=H/+p8mEjTwGAnb/er9H9+Y9nICJTLPjXS5T+tZ95rMU=;
-        b=yWk5mtILlu3UvcdbLmm79SFegmsJXf79HETgiwCQ49OfGUVYLDRDxJgp6KNj6ZWq6I
-         wl1QKuo2YW6aAu2vuWbTFaNy+rnl0GETB92Xl5HLwDYj2xWQRxbUNa6AYKaFbGlKSOJP
-         fRPtWx2sWdT9uRSvCxOJTa8LXNPAsE+vD+G+5Q/v2fHpZrv6q28Na6Bl59LFNZ4H0/fx
-         jHSimE65fahojWlVaKqh/w6U8OvKwa28aX9dLyhGOgoxHI900egLGVmUgoXGb9ClVUfx
-         hFBPm44nbfoD5datkprKhBq7CPWD/ZoVtFw1D07pD4Ya0nN17+kxo0DaKcyJUFRfhie7
-         2qoQ==
+        bh=tCNC35ApD2VH3qxIiJ+Puwz9/tMlWDVaDICre/1ZzDI=;
+        b=jmPNrXKXqkzMMtNFr/jZyxiQRDnze6dbi4p9GZgMvUrgfQklPl26AqB0IBkioLb+18
+         TeVEmWpsoEB9HlELusyht7lgeSL0Lreft/k7j2cRoGOilmAI3HlE43NgUepo/P8zHBww
+         N0Pm9FmZamdW/CTZMrmaGNx0NgNL29lsTXIsBtqSmIKMYPI3UMVN5e2mZ5Z0LwszUlFd
+         vS/rLUzuguIsKWi5EoOlmVg2g2o3ZLh8EU8UkOvRAl6YU0jK77xOslkVffCx9WvmHqNf
+         pE4Rae1P9RtX97qSbgjLLBs3mPoFM1wOx0z9HLY/nDsqZqpONjVwQTIv1jC31z+lEW2h
+         oNRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=H/+p8mEjTwGAnb/er9H9+Y9nICJTLPjXS5T+tZ95rMU=;
-        b=y6lmiZ/uwSW2DUCUEqZNf6i3nGQVCfivgFnNpXZQFXHv9pSrWeIPyZCnvLuBD0kabI
-         9HYT54VkvbNsUXAYSOpVKqrAVyTyWCYHYTxsms8FNVEDEU6aJwUkwPdB4W5v6jGiTBpr
-         qeE42K0OdupEOHFsEb4nBcRWbZ0F7ngLQW687xNGOEYM3QSjSsgtVQ/GcD0/jLUeDKjg
-         br389aapqX8TBpY7ckqbfOl45iC+wMhu7X/91KdjumTMV/epziBg6YOgZSoipHjJiLNm
-         1dMB/f0AmYlDbQi7+cnCCUbowwylRpVpAI/ThOls2QUeP99DzNS3SyIZcMPlruZvfMPH
-         qK4g==
-X-Gm-Message-State: ACrzQf1A/bvmdMqkEqy0V0StqZlqPvlKWHWjk+JCYN52T4FwrbQ0WBUR
-        C51vwrznIgjy99xzyKAxXSv8ew==
-X-Google-Smtp-Source: AMsMyM4hKXV+6qWzL83RKzUGTSpmbkXzzGWkD9OMFsddwepE9ZoNPCkOgJjaueWAjP7n5XAsGppkGA==
-X-Received: by 2002:a2e:b74f:0:b0:26c:426c:60fc with SMTP id k15-20020a2eb74f000000b0026c426c60fcmr7372576ljo.432.1664182823526;
-        Mon, 26 Sep 2022 02:00:23 -0700 (PDT)
+        bh=tCNC35ApD2VH3qxIiJ+Puwz9/tMlWDVaDICre/1ZzDI=;
+        b=mr4RxKZ3N1LrpXsJBX9bdoNU8D7j+/mOuZo/J7prTL0PslNijSkOhRud+ZuwHMomtJ
+         XKhlR8sC50e9G1lWTKVgt+YeKeY/OdQjrBs0QmLAKcGUemKpJ4lqj+WGpMOERb+EtscP
+         AcQW6QuI6ecF+ql8XuUeax05D+9zwxldAjeKJMyQUQMyvDIBMLrBN8v4CY2J0965VkWO
+         oLg4ccK3/nDbjf+mWJkewIg0taUUh4TuYbyLFeyi5nljTk0RQtC3VlKRuowHTyNGjQio
+         sVm+g/imNp4OTKROxtH2UBY3ZtLMlhHGlo6GE0z03KegPRr8mc7j3TeI+txf9EhPq46n
+         b1Cg==
+X-Gm-Message-State: ACrzQf3pb5zS7RJcl/xCxJUs9qZergGBItZp6G/2YTzseGr5FGADdJ1z
+        Te5oqH4VaMA3fM1yioTbTI948A==
+X-Google-Smtp-Source: AMsMyM4s2SIF33dWWjNYy4UViC5Bxb3CHL2HruNH56QSRaEuAPTizUg2gG7XElF3GVfe/LSTnmxGtw==
+X-Received: by 2002:a2e:9657:0:b0:26c:5b63:83f7 with SMTP id z23-20020a2e9657000000b0026c5b6383f7mr7563095ljh.392.1664183002480;
+        Mon, 26 Sep 2022 02:03:22 -0700 (PDT)
 Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id t12-20020a056512068c00b00498fe38ea0fsm2466878lfe.174.2022.09.26.02.00.22
+        by smtp.gmail.com with ESMTPSA id by40-20020a05651c1a2800b0026c446918acsm2293600ljb.134.2022.09.26.02.03.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Sep 2022 02:00:23 -0700 (PDT)
-Message-ID: <f1057c78-39a2-6b26-f3c9-51cd99450dd2@linaro.org>
-Date:   Mon, 26 Sep 2022 11:00:22 +0200
+        Mon, 26 Sep 2022 02:03:22 -0700 (PDT)
+Message-ID: <bdb3ade1-d375-0767-e221-6fa5ba13877f@linaro.org>
+Date:   Mon, 26 Sep 2022 11:03:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.0
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Add nodes to support WoW on
- WCN6750
+Subject: Re: [PATCH] ARM: dts: qcom: msm8974: Remove bogus *-cells from
+ smd-edge
 Content-Language: en-US
-To:     Manikanta Pubbisetty <quic_mpubbise@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220926045735.719-1-quic_mpubbise@quicinc.com>
+To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220925173203.96117-1-luca@z3ntu.xyz>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220926045735.719-1-quic_mpubbise@quicinc.com>
+In-Reply-To: <20220925173203.96117-1-luca@z3ntu.xyz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -77,60 +80,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/09/2022 06:57, Manikanta Pubbisetty wrote:
-> Add DT nodes to support WoW (Wake on Wireless) feature on WCN6750
-> WiFi hardware on SC7280 SoC.
+On 25/09/2022 19:32, Luca Weiss wrote:
+> The bindings check complains that #address-cells and #size-cells
+> shouldn't be in the smd-edge node. Remove it.
 > 
-> Signed-off-by: Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
-
-Thank you for your patch. There is something to discuss/improve.
-
-
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 > ---
-> Changes from V1:
-> - Rebased on ToT
-> 
->  arch/arm64/boot/dts/qcom/sc7280.dtsi | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 212580316d3e..3f6a3f575339 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -752,6 +752,17 @@ wpss_smp2p_in: slave-kernel {
->  			interrupt-controller;
->  			#interrupt-cells = <2>;
->  		};
-> +
-> +		wlan_smp2p_out: wlan-ap-to-wpss {
+>  arch/arm/boot/dts/qcom-msm8974.dtsi | 2 --
 
-Does not look like you tested the DTS against bindings. Please run `make
-dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
-for instructions).
 
-> +			qcom,entry-name = "wlan";
-> +			#qcom,smem-state-cells = <1>;
-> +		};
-> +
-> +		wlan_smp2p_in: wlan-wpss-to-ap {
-> +			qcom,entry-name = "wlan";
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
->  	};
->  
->  	pmu {
-> @@ -2004,6 +2015,8 @@ wifi: wifi@17a10040 {
->  			qcom,rproc = <&remoteproc_wpss>;
->  			memory-region = <&wlan_fw_mem>, <&wlan_ce_mem>;
->  			status = "disabled";
-
-status is the last.
-
-> +			qcom,smem-states = <&wlan_smp2p_out 0>;
-> +			qcom,smem-state-names = "wlan-smp2p-out";
-
-Are these valid properties for this node? Did you check with bindings?
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
