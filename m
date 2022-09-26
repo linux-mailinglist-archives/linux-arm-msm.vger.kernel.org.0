@@ -2,155 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98C585EAA4D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 17:20:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ACBF45EAB5C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 17:43:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236213AbiIZPUS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 11:20:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43636 "EHLO
+        id S235030AbiIZPnW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 11:43:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236425AbiIZPTN (ORCPT
+        with ESMTP id S229483AbiIZPmF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Sep 2022 11:19:13 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11B6E82D10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 07:06:38 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id n40-20020a05600c3ba800b003b49aefc35fso3777432wms.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 07:06:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=/DpVb9+AKUGgq8A4EZDNel0xrsv5+R31U81PHZWHu7A=;
-        b=WX3OvpQFA+M9INHpNy4Py5kKdxy5cfqEVZL375Jc/6L8OMcOpg9sqElg7DCTxP/x0F
-         /54NRSlGurAKIoKRlRMjNrQJ/vEiT8OxGW27RIc+V6r48AxKSdrsl5a6INwzaQJsgv4G
-         vlUzn89BfKonHFjj39dYQUJOGBE1CVqMSo8bUKkrqjxMNvGgKdJYE9H7cvTeYh3GdCd3
-         7w8vlWxvnBd6igvNHoZ0s9s44dQOejOs5rnTq0+VxUVSmUwsFHXP+Tw4a8cWfGy1LkrH
-         PH7VlEnKVv0qq/E7ufVO7jIUVARcbQ3S4VH36qGW/HW0+IpUOu1uoOCHTk3v3+oLrIR3
-         QL+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=/DpVb9+AKUGgq8A4EZDNel0xrsv5+R31U81PHZWHu7A=;
-        b=SCt0T8k6bUDowS+3Tta7XMUAqFLpgwcv3CNTBG83Ejp+7XvvMjLuGob2v8CLndr8gf
-         uH9Y0gc2cXz1kYuFTzI6Spgx9bYAGNGKT5kV/eWHCXfQHqmTMr0suL8px6tr4KqIPvuc
-         4uCYHm4l3zIckJ2bFKc1scNq+ZsLLULWJXkTmLuxR2iDxyOFxntor0GaVNEG1Ox90LQm
-         b7EiNGN+quUVcWE/pR54ok9xjuiZbHKZIHe/vCq5oUN/dlFEzw4ygupCoqTd6Sp6/Y1p
-         noUsavKHIB1HO28k0+5PfzVTnsk7Wcx37uCZgcFqgFoTk7Tp3i1LTl237fceZSUZXHHy
-         eABA==
-X-Gm-Message-State: ACrzQf0sQ7LBZ3xklrmtyMZhjF3204JKOFYI74oUlDKwapw0pQ7ZjL08
-        SnXmCs2rmjj0qc8Egc1ZMNV+EA==
-X-Google-Smtp-Source: AMsMyM7428UZktkIZgkcsoeeRa7QJH2nQ/49f5LZT+CS/3G/N/SXB0obuvQV6dEoQlM05iLibcLMnA==
-X-Received: by 2002:a05:600c:1f05:b0:3b4:ae0a:b2e5 with SMTP id bd5-20020a05600c1f0500b003b4ae0ab2e5mr15829413wmb.104.1664201196515;
-        Mon, 26 Sep 2022 07:06:36 -0700 (PDT)
-Received: from mai.. (146725694.box.freepro.com. [130.180.211.218])
-        by smtp.gmail.com with ESMTPSA id v3-20020adfebc3000000b0022adf321d22sm14310731wrn.92.2022.09.26.07.06.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Sep 2022 07:06:36 -0700 (PDT)
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-To:     daniel.lezcano@linaro.org, rafael@kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        rui.zhang@intel.com, Amit Kucheria <amitk@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT)
-Subject: [PATCH v5 14/30] thermal/drivers/qcom: Use generic thermal_zone_get_trip() function
-Date:   Mon, 26 Sep 2022 16:05:48 +0200
-Message-Id: <20220926140604.4173723-15-daniel.lezcano@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220926140604.4173723-1-daniel.lezcano@linaro.org>
-References: <20220926140604.4173723-1-daniel.lezcano@linaro.org>
+        Mon, 26 Sep 2022 11:42:05 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 412A170E7E;
+        Mon, 26 Sep 2022 07:25:31 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28QCVUAj008613;
+        Mon, 26 Sep 2022 14:25:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=/Fim5n7fBfkoA5GcNIO995Cj+zgM2K6EGU8Yr6rDkuo=;
+ b=bCisVVi9PQc6QfcY1tIyJ3p3QfwSN9LI/n75JdVPUr0Nd4rjJGQr7JBJr+hNgUcBM4Z7
+ 7rud//TBclEC2lnRXxewBMGL1pO65gQzIdMW5q8h/2wwuJa6isol0xWLbLiBfh7LQIQi
+ T3z9kqBJo2rM7aj0HknMkOcdDHvZhYmAFTUqJR5erJYWqWEW+Qb4XzAxvbPtG+8uT/Nl
+ VjTevXtdZXocj3qi0q0tUq7n0ORz1Cw/UmitvybJykJrBJSe+cwOvI33usPJk3S2K9/q
+ 08ZXuLIErpLLMc1Thwf4qh14nluoNulyAvL4cZwL7yVnhgd3UeGOFxeyC0/q2hjndU7Y Yw== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jua51ruu4-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 26 Sep 2022 14:25:23 +0000
+Received: from nasanex01a.na.qualcomm.com (corens_vlan604_snip.qualcomm.com [10.53.140.1])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28QEPMYB004087
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 26 Sep 2022 14:25:22 GMT
+Received: from mmitkov.eu.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Mon, 26 Sep 2022 07:25:19 -0700
+From:   <quic_mmitkov@quicinc.com>
+To:     <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <robert.foss@linaro.org>, <akapatra@quicinc.com>,
+        <jzala@quicinc.com>, <todor.too@gmail.com>
+CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <konrad.dybcio@somainline.org>, <mchehab@kernel.org>,
+        <bryan.odonoghue@linaro.org>,
+        Milen Mitkov <quic_mmitkov@quicinc.com>
+Subject: [PATCH v2 0/4] media: camss: sm8250: Virtual channels support for SM8250
+Date:   Mon, 26 Sep 2022 17:25:00 +0300
+Message-ID: <20220926142505.1827-1-quic_mmitkov@quicinc.com>
+X-Mailer: git-send-email 2.37.3.windows.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ehnwTfnEP-LgW4CpFRuiJDq6Jzut8Ng8
+X-Proofpoint-GUID: ehnwTfnEP-LgW4CpFRuiJDq6Jzut8Ng8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-26_08,2022-09-22_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ lowpriorityscore=0 mlxlogscore=999 impostorscore=0 suspectscore=0
+ malwarescore=0 clxscore=1015 phishscore=0 adultscore=0 bulkscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2209260091
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The thermal framework gives the possibility to register the trip
-points with the thermal zone. When that is done, no get_trip_* ops are
-needed and they can be removed.
+From: Milen Mitkov <quic_mmitkov@quicinc.com>
 
-Convert ops content logic into generic trip points and register them with the
-thermal zone.
+These patches add support for multiple CSID virtual channels for 
+Qualcomm's SM8250 platform.
 
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Acked-by: Amit Kucheria <amitk@kernel.org>
----
- drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 39 +++++++++------------
- 1 file changed, 17 insertions(+), 22 deletions(-)
+Changed for v2:
+- code syntax improvements
+- The info print for enabled channels was demoted to a dbg print. Can be
+  enabled with dynamic debug, e.g.:
+echo "file drivers/media/platform/qcom/camss/* +p" > /sys/kernel/debug/dynamic_debug/control
 
-diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-index be785ab37e53..127e8c90211c 100644
---- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-+++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-@@ -263,17 +263,17 @@ static int qpnp_tm_update_critical_trip_temp(struct qpnp_tm_chip *chip,
- 	return qpnp_tm_write(chip, QPNP_TM_REG_SHUTDOWN_CTRL1, reg);
- }
- 
--static int qpnp_tm_set_trip_temp(struct thermal_zone_device *tz, int trip, int temp)
-+static int qpnp_tm_set_trip_temp(struct thermal_zone_device *tz, int trip_id, int temp)
- {
- 	struct qpnp_tm_chip *chip = tz->devdata;
--	const struct thermal_trip *trip_points;
-+	struct thermal_trip trip;
- 	int ret;
- 
--	trip_points = of_thermal_get_trip_points(chip->tz_dev);
--	if (!trip_points)
--		return -EINVAL;
-+	ret = thermal_zone_get_trip(chip->tz_dev, trip_id, &trip);
-+	if (ret)
-+		return ret;
- 
--	if (trip_points[trip].type != THERMAL_TRIP_CRITICAL)
-+	if (trip.type != THERMAL_TRIP_CRITICAL)
- 		return 0;
- 
- 	mutex_lock(&chip->lock);
-@@ -299,22 +299,17 @@ static irqreturn_t qpnp_tm_isr(int irq, void *data)
- 
- static int qpnp_tm_get_critical_trip_temp(struct qpnp_tm_chip *chip)
- {
--	int ntrips;
--	const struct thermal_trip *trips;
--	int i;
--
--	ntrips = of_thermal_get_ntrips(chip->tz_dev);
--	if (ntrips <= 0)
--		return THERMAL_TEMP_INVALID;
--
--	trips = of_thermal_get_trip_points(chip->tz_dev);
--	if (!trips)
--		return THERMAL_TEMP_INVALID;
--
--	for (i = 0; i < ntrips; i++) {
--		if (of_thermal_is_trip_valid(chip->tz_dev, i) &&
--		    trips[i].type == THERMAL_TRIP_CRITICAL)
--			return trips[i].temperature;
-+	struct thermal_trip trip;
-+	int i, ret;
-+
-+	for (i = 0; i < thermal_zone_get_num_trips(chip->tz_dev); i++) {
-+
-+		ret = thermal_zone_get_trip(chip->tz_dev, i, &trip);
-+		if (ret)
-+			continue;
-+
-+		if (trip.type == THERMAL_TRIP_CRITICAL)
-+			return trip.temperature;
- 	}
- 
- 	return THERMAL_TEMP_INVALID;
+NOTE: These changes depend on the multistream series that as of yet is
+still not merged officially upstream. The multistream changes
+allow for multiple clients on the same pipeline, which is otherwise not
+possible. For development and testing multistream series v14 was used:
+
+https://patchwork.kernel.org/project/linux-media/patch/20220831141357.1396081-2-tomi.valkeinen@ideasonboard.com/
+
+The CSID hardware on SM8250 can demux the input data stream into
+maximum of 4 multiple streams depending on virtual channel (vc)
+or data type (dt) configuration.
+
+Situations in which this is useful:
+- HDR sensors that produce a 2-frame HDR output, e.g. a light and a dark frame
+  (the setup we used  for testing, with the imx412 sensor),
+  or a 3-frame HDR output - light, medium-lit, dark frame.
+- sensors with additional metadata that is streamed over a different
+  virtual channel/datatype.
+- sensors that stream frames with multiple resolutions in the same pixel
+  data stream
+
+With these changes, the CSID entity has, as it did previously, a single
+sink port (0), and always exposes 4 source ports (1, 2,3, 4). The
+virtual channel configuration is determined by which of the source ports
+are linked to an output VFE line. For example, the link below will
+configure the CSID driver to enable vc 0 and vc 1:
+
+media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
+
+which will be demuxed and propagated into /dev/video0
+and /dev/video1 respectively. With this, the userspace can use
+any normal V4L2 client app to start/stop/queue/dequeue from these
+video nodes. Tested with the yavta app.
+
+Note also that implicit format propagation has been removed, so format
+for the linked source ports has to be set manually, e.g.:
+
+media-ctl -V '"msm_csid0":1[fmt:SRGGB10/3840x2160]'
+media-ctl -V '"msm_csid0":2[fmt:SRGGB10/3840x2160]'
+
+Previously setting the format on the sink port of the CSID entity would
+set the same format on the source port. However, with CSID demuxing there's
+no guarantee that the format on the source ports should be the same,
+in fact it can be different for each source port.
+
+Milen Mitkov (4):
+  media: camss: sm8250: Virtual channels for CSID
+  media: camss: vfe: Reserve VFE lines on stream start and link to CSID
+  media: camss: vfe-480: Multiple outputs support for SM8250
+  media: camss: sm8250: Pipeline starting and stopping for multiple
+    virtual channels
+
+ .../platform/qcom/camss/camss-csid-gen2.c     | 55 +++++++++++------
+ .../media/platform/qcom/camss/camss-csid.c    | 41 +++++++------
+ .../media/platform/qcom/camss/camss-csid.h    | 11 +++-
+ .../media/platform/qcom/camss/camss-vfe-480.c | 61 ++++++++++++-------
+ drivers/media/platform/qcom/camss/camss-vfe.c |  7 +++
+ .../media/platform/qcom/camss/camss-video.c   | 21 ++++++-
+ drivers/media/platform/qcom/camss/camss.c     |  2 +-
+ 7 files changed, 134 insertions(+), 64 deletions(-)
+
 -- 
-2.34.1
+2.37.3
 
