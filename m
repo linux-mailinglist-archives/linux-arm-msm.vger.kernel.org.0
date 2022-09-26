@@ -2,30 +2,30 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7695A5EAC49
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 18:17:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 122E75EAC53
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 18:20:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236514AbiIZQRd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 12:17:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39956 "EHLO
+        id S235113AbiIZQT6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 12:19:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230270AbiIZQQz (ORCPT
+        with ESMTP id S235163AbiIZQT3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Sep 2022 12:16:55 -0400
+        Mon, 26 Sep 2022 12:19:29 -0400
 Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9847956AB;
-        Mon, 26 Sep 2022 08:05:54 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B677F6843;
+        Mon, 26 Sep 2022 08:08:28 -0700 (PDT)
 Received: from g550jk.localnet (2a02-8388-6582-fe80-0000-0000-0000-0006.cable.dynamic.v6.surfer.at [IPv6:2a02:8388:6582:fe80::6])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id B9370C78D3;
-        Mon, 26 Sep 2022 15:05:22 +0000 (UTC)
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 96526C7D7F;
+        Mon, 26 Sep 2022 15:07:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1664204723; bh=C+tqJ4n0S2ecHmWkQN6j74ywMYCFWy0zDJJ0uK+9sWU=;
+        t=1664204876; bh=J45pSAflEnMdguMe8nXNMflm4Xmyc66iCyYkvZ/c4ZY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=lW/hBz8qeRaX5zYRiWHV+puDQ5cZ75Qdqsw9V8u6C1jYkzvbxgIIFPFTHz+WvoVKL
-         6c9HdTUO+bR5cVDAyFVjlW3djw3UJOeUh7Bo5zdJGrXrwdLWLEZRv2pm40QcxSsgHo
-         Uqs7+fkhXPvFjLsosty3KgwGLhKIg8YC+PmL0OdU=
+        b=HaSrQkrli/qTlXB0D2h7RiDh56v2IpKGy8h9XBcSaFJJtpBCl6VrpXvKApi5rcXTW
+         0ba5Qz5G7AzYv2gdvxBeCHb885VoevqLuh86SKZgUx5nv7zqoHSRX8OKP1uGd/FiPU
+         8+IdBmK91hPJnB1BROlcPXKv/g3rCF++GzLCCbQ4=
 From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org,
+To:     neil.armstrong@linaro.org, linux-arm-msm@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
@@ -34,11 +34,11 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] ARM: dts: qcom: pm8941: fix iadc node
-Date:   Mon, 26 Sep 2022 17:05:22 +0200
-Message-ID: <1828122.tdWV9SEqCh@g550jk>
-In-Reply-To: <74ef3de8-5be0-70ec-e34b-717ba93d3d77@linaro.org>
-References: <20220925161821.78030-1-luca@z3ntu.xyz> <20220925161821.78030-2-luca@z3ntu.xyz> <74ef3de8-5be0-70ec-e34b-717ba93d3d77@linaro.org>
+Subject: Re: [PATCH 2/3] ARM: dts: qcom: pm8941: adjust node names to bindings
+Date:   Mon, 26 Sep 2022 17:07:56 +0200
+Message-ID: <13105309.uLZWGnKmhe@g550jk>
+In-Reply-To: <3dda8e86-b92b-488a-5afb-0cb49e7e52ae@linaro.org>
+References: <20220925210229.128462-1-luca@z3ntu.xyz> <3070538e-fa8d-4506-bbf8-c2770d092eb5@linaro.org> <3dda8e86-b92b-488a-5afb-0cb49e7e52ae@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7Bit
 Content-Type: text/plain; charset="us-ascii"
@@ -54,44 +54,22 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi Krzysztof,
 
-On Montag, 26. September 2022 10:54:23 CEST Krzysztof Kozlowski wrote:
-> On 25/09/2022 18:18, Luca Weiss wrote:
-> > The iadc node name is supposed to be just 'adc' and the compatible is
-> > only supposed to be qcom,spmi-iadc according to the bindings.
+On Montag, 26. September 2022 12:29:11 CEST Krzysztof Kozlowski wrote:
+> On 26/09/2022 12:04, Neil Armstrong wrote:
+> > On 26/09/2022 11:22, Krzysztof Kozlowski wrote:
+> >>>   		};
+> >>> 
+> >>> -		usb_id: misc@900 {
+> >>> +		usb_id: extcon@900 {
+> >> 
+> >> Why? extcon is Linux specific name and should not be added to DTS.
+> >> Anything requires it?
 > > 
-> > Adjust the node to match that.
-> > 
-> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > ---
-> > 
-> >  arch/arm/boot/dts/qcom-pm8941.dtsi | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/arch/arm/boot/dts/qcom-pm8941.dtsi
-> > b/arch/arm/boot/dts/qcom-pm8941.dtsi index 3c15eecf2f21..33517cccee01
-> > 100644
-> > --- a/arch/arm/boot/dts/qcom-pm8941.dtsi
-> > +++ b/arch/arm/boot/dts/qcom-pm8941.dtsi
-> > @@ -131,8 +131,8 @@ adc-chan@48 {
-> > 
-> >  			};
-> >  		
-> >  		};
-> > 
-> > -		pm8941_iadc: iadc@3600 {
-> > -			compatible = "qcom,pm8941-iadc", 
-"qcom,spmi-iadc";
-> > +		pm8941_iadc: adc@3600 {
-> > +			compatible = "qcom,spmi-iadc";
-> 
-> I am not sure this is correct. Usually specific compatibles are encouraged.
+> > It matches the current dt bindings:
+> Then instead maybe let's fix it in the bindings and DTS?
 
-I'm happy to change it the other way also.
-
-But the sibling of this compatible, qcom,spmi-vadc also only has that single 
-compatible so it'd align it with that.
-
-Let me know what you think.
+What node name do you propose? I doubt "misc" is a better name as it really 
+doesn't describe anything so I don't really have a suggestion here..
 
 Regards
 Luca
