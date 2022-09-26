@@ -2,108 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EEFE5EB1F7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 22:17:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB0525EB228
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 22:33:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230410AbiIZURs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 16:17:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60462 "EHLO
+        id S229564AbiIZUdo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 16:33:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230444AbiIZURp (ORCPT
+        with ESMTP id S229518AbiIZUdn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Sep 2022 16:17:45 -0400
-Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 370A3A3D01;
-        Mon, 26 Sep 2022 13:17:42 -0700 (PDT)
-Received: by mail-oi1-f178.google.com with SMTP id m130so9643819oif.6;
-        Mon, 26 Sep 2022 13:17:42 -0700 (PDT)
+        Mon, 26 Sep 2022 16:33:43 -0400
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21E36A61C3;
+        Mon, 26 Sep 2022 13:33:42 -0700 (PDT)
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-127dca21a7dso10766423fac.12;
+        Mon, 26 Sep 2022 13:33:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=k0AQrlIxbwy7Ubn2EjodtbFUv1BS5TcuY8f1vFpcfW0=;
-        b=wg4ch64kxy4+euNu3MZQAOj2BG23+Pi6/rhja9pajNlsQ0bMk0K0CMEFkvzb/+0/Jb
-         9WEBQSiN5zp/owZNC2+D4EMx3CjO0+tH8cYz6yCUnH7As+xJvZDH1hEjPR2MAW2D9XGF
-         ZMJnDLk43O43nej32VfrpdojpDgrI6ec+0eq1CHOV5mOPd8QFoa3yz+AZNtcr+WeAX2w
-         AVl1BkgoZTUX4B9UsgSYYyf1gMGkcX3G52trvf7vP3yfIXJxlgsXDZ3F2oZjGA6o3yMG
-         Us96sVYPx9EW7mdZr++mY4FSfGWCzOgVGValihBrQPwM7KhtWWwFi5zKeVKaroYM1AyF
-         nygg==
-X-Gm-Message-State: ACrzQf19su+Ys6XK2CbAHeVxIpNH7N7NCMNSpHyDYrzucImdiqaiAeNK
-        c2nM5y+Z9+POSTZHtshhwD3ALvXG3w==
-X-Google-Smtp-Source: AMsMyM5pA5L+VHMfeMDYk+ZJcAO9IUEAmM1zFB24SDJbCswpwoD8hydbwaxwQ0eIbjpjKu9khowpKw==
-X-Received: by 2002:a05:6808:120e:b0:345:aeaf:c064 with SMTP id a14-20020a056808120e00b00345aeafc064mr248896oil.70.1664223461410;
-        Mon, 26 Sep 2022 13:17:41 -0700 (PDT)
+        bh=GfIBGS2IdI4gzQSLH6IzC9uAsmoYqAP8zfJrjwFCCmc=;
+        b=pMG7E6yjOyfog3wpJAz6HV7ia+fFRJttGzX2ru+AeZGWUqB9hI89D80leAYNOFs8qb
+         Ug0ATdfZHtp1kGuWyaczh2ephF2KNqoQgbmJc+rRlzLLC5JQxT0UY/1b7uobofhFhR7e
+         eZO3HvDd1bdesCdYFeZ0wtzApoABxXUsl40Owwus6kZ4AZpR84cT5mj+pNwHLqvv5x/3
+         aZVAK2ZH3jTk7TaJ6nP0DBYeLLXqBxEsM8lKUMEO4laUVbOBXX9P6U/e7dZr/23iciu1
+         9tlqym1L+EkS7VTwww9LR5lyZA915KwZsHIGNAzWV7zu1SSjar5dzvIPUVj0LY0BuIWe
+         8Jgg==
+X-Gm-Message-State: ACrzQf32m5LJifNAO5pphGMKHc2g8rKZJ1Glf/9vv+vplmGW+QZfIaXj
+        7GnkgEH4SVokt0eb7agrTQ==
+X-Google-Smtp-Source: AMsMyM4heuuVKUh/XvTLz6/suWyuiiJA5u26m4jtlIgfrq6LbeLgcUfQSQHg+TuFlGIXO2vZ5gNlzg==
+X-Received: by 2002:a05:6870:a9a0:b0:12b:45b6:80e1 with SMTP id ep32-20020a056870a9a000b0012b45b680e1mr297124oab.209.1664224421295;
+        Mon, 26 Sep 2022 13:33:41 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id p3-20020a056830318300b00654625c0c4dsm8227545ots.17.2022.09.26.13.17.40
+        by smtp.gmail.com with ESMTPSA id d23-20020a056870961700b0010e73e252b8sm9495211oaq.6.2022.09.26.13.33.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Sep 2022 13:17:41 -0700 (PDT)
-Received: (nullmailer pid 2732492 invoked by uid 1000);
-        Mon, 26 Sep 2022 20:17:40 -0000
-Date:   Mon, 26 Sep 2022 15:17:40 -0500
+        Mon, 26 Sep 2022 13:33:41 -0700 (PDT)
+Received: (nullmailer pid 2759993 invoked by uid 1000);
+        Mon, 26 Sep 2022 20:33:40 -0000
+Date:   Mon, 26 Sep 2022 15:33:40 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     Guru Das Srinagesh <quic_gurus@quicinc.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Andy Gross <agross@kernel.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: firmware: document Qualcomm SM6375 SCM
-Message-ID: <20220926201740.GA2726270-robh@kernel.org>
-References: <20220921001020.55307-1-konrad.dybcio@somainline.org>
- <95fb2bfb-6eb8-012d-88f8-c739d229ef70@linaro.org>
- <8faecd72-0cfd-18eb-d07a-53b3a23ed05a@somainline.org>
- <20220924000932.GA1450@quicinc.com>
- <fcc5bc9f-6b6b-b9ca-45aa-ff2c880a4774@linaro.org>
- <20220926165904.GA17938@quicinc.com>
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 01/12] dt-bindings: pinctrl: qcom,sc8280xp-lpass-lpi: fix
+ gpio pattern
+Message-ID: <20220926203340.GA2752484-robh@kernel.org>
+References: <20220922195651.345369-1-krzysztof.kozlowski@linaro.org>
+ <20220922195651.345369-2-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220926165904.GA17938@quicinc.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+In-Reply-To: <20220922195651.345369-2-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 26, 2022 at 09:59:04AM -0700, Guru Das Srinagesh wrote:
-> On Sep 24 2022 10:17, Krzysztof Kozlowski wrote:
-> > On 24/09/2022 02:09, Guru Das Srinagesh wrote:
-> > > On Sep 21 2022 20:43, Konrad Dybcio wrote:
-> > >> Does it? I did not define this compatible in the driver, so it does
-> > >> not consume any clocks.
-> > > 
-> > > The bindings should describe only those compatibles that the driver supports -
-> > > that is, both the driver and its bindings should be in sync.
-> > 
-> > That's not entirely true. Bindings describe the hardware in the most
-> > complete way we can. Not the driver. Whether driver supports something
-> > or not, is not relevant here, except that we don't want to document
-> > non-existing things or stuff out of tree.
-> 
-> Is this only applicable to compatibles or device tree properties in general?
-> 
-> > > 
-> > > Could you please update the driver with this compatible as well? Let's not
-> > > merge this change without that first.
-> > 
-> > This could be even merged without change in the driver. However it's not
-> > the case here as driver already supports it, so your request is fulfilled.
-> 
-> My concern is that if somebody specifies a compatible/device tree property that
-> the driver doesn't support, their expectations from adding that change will not
-> be met. In addition to having the bindings describe HW in full, I think the
-> driver should also be in sync with it for this reason.
+On Thu, Sep 22, 2022 at 09:56:40PM +0200, Krzysztof Kozlowski wrote:
+> Fix double ']' in GPIO pattern to properly match "pins" property.
+> Otherwise schema for pins state is not applied.
 
-Which driver? From u-boot, *BSD, Linux, TF-A, ...?
+Huh? The schema is applied, but would fail, right?
 
-Rob
+Perhaps the example should have some child nodes to demonstrate this.
+
+> 
+> Fixes: 958bb025f5b3 ("dt-bindings: pinctrl: qcom: Add sc8280xp lpass lpi pinctrl bindings")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../bindings/pinctrl/qcom,sc8280xp-lpass-lpi-pinctrl.yaml       | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-lpass-lpi-pinctrl.yaml
+> index 1f468303bb08..fb3ad6c0d80e 100644
+> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-lpass-lpi-pinctrl.yaml
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-lpass-lpi-pinctrl.yaml
+> @@ -58,7 +58,7 @@ patternProperties:
+>            List of gpio pins affected by the properties specified in this
+>            subnode.
+>          items:
+> -          pattern: "^gpio([0-1]|1[0-8]])$"
+> +          pattern: "^gpio([0-1]|1[0-8])$"
+>  
+>        function:
+>          enum: [ swr_tx_clk, swr_tx_data, swr_rx_clk, swr_rx_data,
+> -- 
+> 2.34.1
+> 
+> 
