@@ -2,136 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BEC465EB30C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 23:24:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD65F5EB42C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 00:09:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229614AbiIZVYW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 17:24:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42108 "EHLO
+        id S229822AbiIZWJr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 18:09:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229547AbiIZVYV (ORCPT
+        with ESMTP id S229526AbiIZWJp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Sep 2022 17:24:21 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F5AEA1A61;
-        Mon, 26 Sep 2022 14:24:21 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28QKw89X017711;
-        Mon, 26 Sep 2022 21:23:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=bXAKkCAntPpulCJau4s1xvZy9zCHXEPKoWOESym2gbs=;
- b=EkgDyKW0iDTMKvairHXWjeMpY3HZ9zznJRh/gTdJVsnyZbjbUpXkYVyeSeIGnkhZIpyB
- /oECWwXFtk99cv3bgvBjC1pxbzmE/xbRDZqUM9jOjnM5hbMacKIbioy56zRnY5SJLT5b
- cbTvw/mJiiXw0wERdGQlkGXzsfFHob7jbe6iHJ0YL1hJsRrwu48IAMRblz5nqmJ2XOGt
- GZtBQ7X/mnoWWa9pA9fcJ9spfGCD6yOf8TZehxUsHMt3nGOru+IiNANrS8L2QDHMSMdE
- cY3vLCgsCFn5Ex4Dl7MCPG7ZreR9h/ehTztLRLUxK2pcEznuuM59NZ8BIEvgT6T9tb4m 7w== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ju9p69uj3-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 26 Sep 2022 21:23:47 +0000
-Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28QLNkCX019848
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 26 Sep 2022 21:23:46 GMT
-Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Mon, 26 Sep 2022 14:23:46 -0700
-Date:   Mon, 26 Sep 2022 14:23:45 -0700
-From:   Asutosh Das <quic_asutoshd@quicinc.com>
-To:     Manivannan Sadhasivam <mani@kernel.org>
-CC:     <quic_nguyenb@quicinc.com>, <quic_xiaosenh@quicinc.com>,
-        <quic_cang@quicinc.com>, <quic_nitirawa@quicinc.com>,
-        <quic_rampraka@quicinc.com>, <quic_richardp@quicinc.com>,
-        <stanley.chu@mediatek.com>, <adrian.hunter@intel.com>,
-        <bvanassche@acm.org>, <avri.altman@wdc.com>, <beanhuo@micron.com>,
-        <martin.petersen@oracle.com>, <linux-scsi@vger.kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Jinyoung Choi <j-young.choi@samsung.com>,
-        Kiwoong Kim <kwmad.kim@samsung.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-mediatek@lists.infradead.org>
-Subject: Re: [PATCH v1 06/16] ufs: core: mcq: Calculate queue depth
-Message-ID: <20220926212345.GB15228@asutoshd-linux1.qualcomm.com>
-References: <cover.1663894792.git.quic_asutoshd@quicinc.com>
- <e0a5115eac57ee19df10bae2e3411cbbc7943303.1663894792.git.quic_asutoshd@quicinc.com>
- <20220926152222.GG101994@thinkpad>
+        Mon, 26 Sep 2022 18:09:45 -0400
+Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A19610E4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 15:09:41 -0700 (PDT)
+Received: by mail-il1-x134.google.com with SMTP id g12so4259843ilj.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 15:09:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=Tcofh2eParKVCFfTU5ufAxTg6uY4Kus0F8zdnWHYYIg=;
+        b=Aq58PwRCaXZfPNg4YaGxYuvcojdnBOGLBwOcBYyieYctSEQw73G6W8n3+r2hG4fK3p
+         suNr5264F1H1TmCYQdDnJCawGbo1OAiSjAAj84ztGBHXzSjgTuX3d4M8glsqQXw0U9tV
+         Fnj+57ZZ7SA0/toa/x99xQ5qQXZc5miVK5SbpM/LL27Y7j7Jkjy2RUoW2+wa7FLESvou
+         jNDN0eS5qeBgd9uZXq5L8/n0wx8kiQBBgiDs3yZWwcdIQIJKNtQ9WH/mb7nT/zNU2twu
+         woMkrBqjBRWbtyJPfPIeSgjVX/oSfRCpVoe6chyy6/0RasHkjJhj5l459+B2zZAI4I++
+         A0XA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=Tcofh2eParKVCFfTU5ufAxTg6uY4Kus0F8zdnWHYYIg=;
+        b=4eqPcQtABbh9wIDGgT1oWfY0Tb202qfnt+b9QPq9j/B2r/bIr/wlmtYniyKZ3AksZv
+         weKdrz4mKiRlW3DmN7ptxPXUdwbHuVr1ZEHEi2oSn7ULNKBzOggKMBBEohTHWTCyAqPL
+         bcLkEygqC88MRKkNxzUWIah7NiG6KnW/GERA2DDbqqfUGAV12NRYPFNh7LwKJHp1M9SJ
+         CF7+3T54MTkEBRPvqRWPgixEBtrU9vixTfbYabRZUj1EgL3HOMS1RlCUCHAt8Xj1zgRU
+         LJV/27O7Tx2omfWLbRyBzky3fsaOB5dM46KK9g13WloNivlIRCN9l94SzZU6yMStA6V4
+         J2jQ==
+X-Gm-Message-State: ACrzQf2YyLqWNh/b0qKDijtbHVdzeQ+7jY7Qq2O14o9qVjCT15xtFl93
+        nRrsLIE0BPeYK/f651hos6Ew4g==
+X-Google-Smtp-Source: AMsMyM4shf+d5xGDO0sWxUlNoCpHt8PoWqtcOLw6wY7RY03lKrA4P6MQG4WLa8qpPekrfJMCMy/h8A==
+X-Received: by 2002:a05:6e02:1a6e:b0:2f5:9aad:1e97 with SMTP id w14-20020a056e021a6e00b002f59aad1e97mr11535884ilv.37.1664230181120;
+        Mon, 26 Sep 2022 15:09:41 -0700 (PDT)
+Received: from localhost.localdomain ([98.61.227.136])
+        by smtp.gmail.com with ESMTPSA id z20-20020a027a54000000b003567503cf92sm7631600jad.82.2022.09.26.15.09.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Sep 2022 15:09:38 -0700 (PDT)
+From:   Alex Elder <elder@linaro.org>
+To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     mka@chromium.org, evgreen@chromium.org, andersson@kernel.org,
+        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+        elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH net-next 00/15] net: ipa: generalized register definitions
+Date:   Mon, 26 Sep 2022 17:09:16 -0500
+Message-Id: <20220926220931.3261749-1-elder@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20220926152222.GG101994@thinkpad>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: cIhSFhImtXEUo0d7kU2NmWVIH4uikPi1
-X-Proofpoint-GUID: cIhSFhImtXEUo0d7kU2NmWVIH4uikPi1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-26_09,2022-09-22_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 adultscore=0 mlxlogscore=999 clxscore=1015
- lowpriorityscore=0 spamscore=0 mlxscore=0 impostorscore=0 phishscore=0
- bulkscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2209260132
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 26 2022 at 08:22 -0700, Manivannan Sadhasivam wrote:
->On Thu, Sep 22, 2022 at 06:05:13PM -0700, Asutosh Das wrote:
->> The ufs device defines the supported queuedepth by
->> bqueuedepth which has a max value of 256.
->> The HC defines MAC (Max Active Commands) that define
->> the max number of commands that in flight to the ufs
->> device.
->> Calculate and configure the nutrs based on both these
->> values.
->>
->> Co-developed-by: Can Guo <quic_cang@quicinc.com>
->> Signed-off-by: Can Guo <quic_cang@quicinc.com>
->> Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
->> ---
+This series is quite a bit bigger than what I normally like to send,
+and I apologize for that.  I would like it to get incorporated in
+its entirety this week if possible, and splitting up the series
+carries a small risk that wouldn't happen.
 
-[...]
+Each IPA register has a defined offset, and in most cases, a set
+of masks that define the width and position of fields within the
+register.  Most registers currently use the same offset for all
+versions of IPA.  Usually fields within registers are also the same
+across many versions.  Offsets and fields like this are defined
+using preprocessor constants.
 
->>
->> +/**
->> + * ufshcd_mcq_decide_queue_depth - decide the queue depth
->
->ufshcd_mcq_calc_queue_depth - Calculate MCQ queue depth
->
-The name ufshcd_mcq_decide_queue_depth was suggested by Bart in his comments.
-I don't have a strong opinion on the name, if you do, plmk and I'd change it.
+When a register has a different offset for different versions of
+IPA, an inline function is used to determine its offset.  And in
+places where a field differs between versions, an inline function is
+used to determine how a value is encoded within the field, depending
+on IPA version.
 
->> + * @hba - per adapter instance
+Starting with IPA version 5.0, the number of IPA endpoints supported
+is greater than 32.  As a consequence, *many* IPA register offsets
+differ considerably from prior versions.  This increase in endpoints
+also requires a lot of field sizes and/or positions to change (such
+as those that contain an endpoint ID).
 
-[...]
+Defining these things with constants is no longer simple, and rather
+than fill the code with one-off functions to define offsets and
+encode field values, this series puts in place a new way of defining
+IPA registers and their fields.  Note that this series creates this
+new scheme, but does not add IPA v5.0+ support.
 
->> +static int ufs_qcom_get_hba_mac(struct ufs_hba *hba)
->> +{
->> +	/* Default is 32, but Qualcomm HC supports upto 64 */
->
->Hmm, then this should come from ufshcd, no?
->
-I'm not sure I understand this comment, please can you elaborate?
+An enumerated type will now define a unique ID for each IPA register.
+Each defined register will have a structure that contains its offset
+and its name (a printable string).  Each version of IPA will have an
+array of these register structures, indexed by register ID.
 
->Thanks,
->Mani
+Some "parameterized" registers are duplicated (this is not new).
+For example, each endpoint has an INIT_HDR register, and the offset
+of a given endpoint's INIT_HDR register is dependent on the endpoint
+number (the parameter).  In such cases, the register's "stride" is
+defined as the distance between two of these registers.
+
+If a register contains fields, each field will have a unique ID
+that's used as an index into an array of field masks defined for the
+register.  The register structure also defines the number of entries
+in this field array.
+
+When a register is to be used in code, its register structure will
+be fetched using function ipa_reg().  Other functions are then used
+to determine the register's offset, or to encode a value into one of
+the register's fields, and so on.
+
+Each version of IPA defines the set of registers that are available,
+including all fields for these registers.  The array of defined
+registers is set up at probe time based on the IPA version, and it
+is associated with the main IPA structure.
+
+					-Alex
+
+Alex Elder (15):
+  net: ipa: introduce IPA register IDs
+  net: ipa: use IPA register IDs to determine offsets
+  net: ipa: add per-version IPA register definition files
+  net: ipa: use ipa_reg[] array for register offsets
+  net: ipa: introduce ipa_reg()
+  net: ipa: introduce ipa_reg field masks
+  net: ipa: define COMP_CFG IPA register fields
+  net: ipa: define CLKON_CFG and ROUTE IPA register fields
+  net: ipa: define some more IPA register fields
+  net: ipa: define more IPA register fields
+  net: ipa: define even more IPA register fields
+  net: ipa: define resource group/type IPA register fields
+  net: ipa: define some IPA endpoint register fields
+  net: ipa: define more IPA endpoint register fields
+  net: ipa: define remaining IPA register fields
+
+ drivers/net/ipa/Makefile             |    2 +
+ drivers/net/ipa/ipa.h                |    2 +
+ drivers/net/ipa/ipa_cmd.c            |    7 +-
+ drivers/net/ipa/ipa_endpoint.c       |  378 ++++++----
+ drivers/net/ipa/ipa_interrupt.c      |   45 +-
+ drivers/net/ipa/ipa_main.c           |  164 +++--
+ drivers/net/ipa/ipa_mem.c            |   16 +-
+ drivers/net/ipa/ipa_reg.c            |   95 +++
+ drivers/net/ipa/ipa_reg.h            | 1011 ++++++++++++--------------
+ drivers/net/ipa/ipa_resource.c       |   63 +-
+ drivers/net/ipa/ipa_table.c          |   27 +-
+ drivers/net/ipa/ipa_uc.c             |    9 +-
+ drivers/net/ipa/reg/ipa_reg-v3.1.c   |  478 ++++++++++++
+ drivers/net/ipa/reg/ipa_reg-v3.5.1.c |  456 ++++++++++++
+ drivers/net/ipa/reg/ipa_reg-v4.11.c  |  512 +++++++++++++
+ drivers/net/ipa/reg/ipa_reg-v4.2.c   |  456 ++++++++++++
+ drivers/net/ipa/reg/ipa_reg-v4.5.c   |  533 ++++++++++++++
+ drivers/net/ipa/reg/ipa_reg-v4.9.c   |  509 +++++++++++++
+ 18 files changed, 3921 insertions(+), 842 deletions(-)
+ create mode 100644 drivers/net/ipa/reg/ipa_reg-v3.1.c
+ create mode 100644 drivers/net/ipa/reg/ipa_reg-v3.5.1.c
+ create mode 100644 drivers/net/ipa/reg/ipa_reg-v4.11.c
+ create mode 100644 drivers/net/ipa/reg/ipa_reg-v4.2.c
+ create mode 100644 drivers/net/ipa/reg/ipa_reg-v4.5.c
+ create mode 100644 drivers/net/ipa/reg/ipa_reg-v4.9.c
+
+-- 
+2.34.1
+
