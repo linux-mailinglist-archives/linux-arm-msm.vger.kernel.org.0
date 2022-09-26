@@ -2,121 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C3B35E99A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 08:37:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A934E5E99B5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Sep 2022 08:41:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233468AbiIZGhy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 02:37:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53546 "EHLO
+        id S233293AbiIZGlB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 02:41:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233480AbiIZGhw (ORCPT
+        with ESMTP id S233412AbiIZGlA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Sep 2022 02:37:52 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 896C99598;
-        Sun, 25 Sep 2022 23:37:51 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E8B5E6176B;
-        Mon, 26 Sep 2022 06:37:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 564C8C433D6;
-        Mon, 26 Sep 2022 06:37:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664174270;
-        bh=Qe9q43PNCvVX/HcS4sbwQ1ON37dLP7rnsPqYAzCOw98=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=gc6nfD/V68hkz9Z3H1WM1nrJAPtEa4F4Wcd5aTgdylEcHco7/aWLKRcBQhs5c5W9N
-         iQ/NooakfuESR2QmqW0vGZFL94DxKWKJuCPdIs6QvA+VCb3tHVeJZaIP+kxDwGVjks
-         d59WZfdFsUEARpauS0l/NtIRvsolv6h21KDgW/QLscS4uCklAop1G+2i2agIOjX5f6
-         SrqZj5m0Gx1+hPUU7jUzPeearWcNzY+1dY0ZVwiIKgeYGViBWG9oMZMtoJCQoO8gjF
-         +TCHQ0c2fZXRInWSVvdVxsn1/6EzOA5fps7WL01kivYq+S1T6ZVhIHmXMYDD26qWkN
-         /oP6WsfqFS6Mw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1ochkZ-0002Ba-M2; Mon, 26 Sep 2022 08:37:55 +0200
-Date:   Mon, 26 Sep 2022 08:37:55 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Mon, 26 Sep 2022 02:41:00 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C87D19C15
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Sep 2022 23:40:56 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id a2so9284743lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Sep 2022 23:40:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=eEvomUPAbiilR0mKyM+WIzCcrPikO0w/LFnRQciIxbU=;
+        b=w60uglZUbrcD3QCNC0WDlhn4fApibMa2aQsWpBwYCibhs1DBWo5EBY/PjL8wxVv26g
+         477bVsR22foGesJpe6cgXjXh3fmpoaFaCgZ1soGWKo3GW7FIWSdYRRLPNEVssFg8HB0O
+         Lx4oaqIjEOJtNMl4DW/U/RVPRI+ZlWAFgkgLa88o3DJROB0BAgtHDHQgxfO7jyUqh20o
+         ciCfTypVKX4vkHxCT+GXFL34RM1AtsrJKCDNvZLPckBvqe7EigRrfkMElWkFCwUoJWzC
+         R4yKjVlIBL64SBieqoLefbjdN3LN3bI//9/y+1cGUojltg70VhenDoplBx1L6UJjur42
+         4IgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=eEvomUPAbiilR0mKyM+WIzCcrPikO0w/LFnRQciIxbU=;
+        b=w8IUOu+/xJfAx2Dn9U58vKPJbCJVEE5ihAFg3r/eq1L3l9uE45cvhsefbx/+d3n5tr
+         PYGLlfRT922HiTd9Z3jYLxx/ufr3yedaJu89aSKXx04LJwfealp26oF3U8+pyjdTYUyr
+         TOVQbn1exHwSQQfsGGr5IEdOuQ0z0/Km/Z4Ug0FrC5a2684jxX7xXDnEfdHuB9tYSw31
+         tis9BTtscZOpPIK6K0vfiKaaIzLXZAb9FbHD46rkmwxOhamWzaOOF5euUW5AsNmpLWQV
+         lvvkxFD2kXeg9B5Ibzg7/VDMP9MjfplPGAdO6T7jP4TiUR8neAKdZEOl1WQTqNorbVpX
+         Sipg==
+X-Gm-Message-State: ACrzQf28QGu0Ip/StRzuqeGKs4EuocWQaELvkZigJ3IUkQnXgEg1HJ4p
+        Q9HT/qmLuwb4bxlAyXA2l2lwHw==
+X-Google-Smtp-Source: AMsMyM4ziGPYUJOsSHyxIGY8wGTAbXEUpXp6IRhzzGaBwqcucwGeDucnhnk4DeXgU7z0ZsmqNB8jAQ==
+X-Received: by 2002:a19:6b05:0:b0:49f:53b9:abb0 with SMTP id d5-20020a196b05000000b0049f53b9abb0mr8630989lfa.166.1664174454735;
+        Sun, 25 Sep 2022 23:40:54 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id a14-20020a195f4e000000b0048ae316caf0sm2440905lfj.18.2022.09.25.23.40.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 25 Sep 2022 23:40:54 -0700 (PDT)
+Message-ID: <7b5b9f3a-129a-b6b5-4348-cca7381c2d1f@linaro.org>
+Date:   Mon, 26 Sep 2022 08:40:53 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Subject: Re: [PATCH 07/11] arm64: dts: qcom: sdm8458: align node names with DT
+ schema
+Content-Language: en-US
+To:     Steev Klimaszewski <steev@kali.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org
-Subject: Re: [PATCH v4 3/6] phy: qcom-qmp-pcie: support separate tables for
- EP mode
-Message-ID: <YzFIw2TUGu/H0fSk@hovoldconsulting.com>
-References: <20220924160302.285875-1-dmitry.baryshkov@linaro.org>
- <20220924160302.285875-4-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220924160302.285875-4-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20220923161453.469179-1-krzysztof.kozlowski@linaro.org>
+ <20220923161453.469179-8-krzysztof.kozlowski@linaro.org>
+ <d3218018-45c4-4777-77a7-91947ad48666@kali.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <d3218018-45c4-4777-77a7-91947ad48666@kali.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Sep 24, 2022 at 07:02:59PM +0300, Dmitry Baryshkov wrote:
-> The PCIe QMP PHY requires different programming sequences when being
-> used for the RC (Root Complex) or for the EP (End Point) modes. Allow
-> selecting the submode and thus selecting a set of PHY programming
-> tables.
+On 25/09/2022 20:58, Steev Klimaszewski wrote:
+>>   				#address-cells = <2>;
+>>   				#size-cells = <0>;
 > 
-> Since the RC and EP modes share common some common init sequence, the
-> common sequence is kept in the main table and the sequence differences
-> are pushed to the extra tables.
+> Subject has a typo - sdm8458 -> sdm845
+
+Indeed.
+
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 67 ++++++++++++++++++++----
->  1 file changed, 58 insertions(+), 9 deletions(-)
+> Tested on Lenovo Yoga C630
 > 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> index 6e8c74585670..1fc23df59454 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> @@ -1320,10 +1320,14 @@ struct qmp_phy_cfg {
->  	/* Main init sequence for PHY blocks - serdes, tx, rx, pcs */
->  	struct qmp_phy_cfg_tables common;
->  	/*
-> -	 * Additional init sequence for PHY blocks, providing additional
-> -	 * register programming. Unless required it can be left omitted.
-> +	 * Additional init sequences for PHY blocks, providing additional
-> +	 * register programming. They are used for providing separate sequences
-> +	 * for the Root Complex and for the End Point usecases.
-> +	 *
-> +	 * If EP mode is not supported, both tables can be left empty.
->  	 */
-> -	struct qmp_phy_cfg_tables *extra;
-> +	struct qmp_phy_cfg_tables *extra_rc; /* for the RC only */
-> +	struct qmp_phy_cfg_tables *extra_ep; /* for the EP only */
-  
-> @@ -2278,7 +2325,9 @@ static int qmp_pcie_create(struct device *dev, struct device_node *np, int id,
->  		qphy->pcs_misc = qphy->pcs + 0x400;
->  
->  	if (IS_ERR(qphy->pcs_misc)) {
-> -		if (cfg->common.pcs_misc_tbl || cfg->extra->pcs_misc_tbl)
-> +		if (cfg->common.pcs_misc_tbl ||
-> +		    cfg->extra_rc->pcs_misc_tbl ||
-> +		    cfg->extra_ep->pcs_misc_tbl)
+> Tested-by: Steev Klimaszewski <steev@kali.org>
 
-More NULL derefs.
+Thanks!
 
->  			return PTR_ERR(qphy->pcs_misc);
->  	}
+Best regards,
+Krzysztof
 
-Johan
