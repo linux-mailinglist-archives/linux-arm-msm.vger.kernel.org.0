@@ -2,57 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 381BD5EBE81
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 11:25:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 642DF5EBEB3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 11:35:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231781AbiI0JZW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Sep 2022 05:25:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37080 "EHLO
+        id S231453AbiI0Jf1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Sep 2022 05:35:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231772AbiI0JY6 (ORCPT
+        with ESMTP id S231381AbiI0JfZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Sep 2022 05:24:58 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B97F3CDCC4;
-        Tue, 27 Sep 2022 02:23:15 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3AE806174F;
-        Tue, 27 Sep 2022 09:23:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F7FC433D7;
-        Tue, 27 Sep 2022 09:23:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664270591;
-        bh=fxyKD3idrxd/Kwm5HJI4SBtsysFFrlTJnWuARd0zvNw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Sey6YFB7+D5kctKLKQvVOBFkabkp4Q5/W2Th/2QtSyYxaxkqzTu9QEyTSl6eVitA2
-         1nOC82tfXPdXwVuXIVJGPEE3rAJsvuFlIfBPYpFv7cwTW+2h8dmMon3+JUrmRZbfkf
-         ZGqh4wUnXwHG1KcwNFelmhwRWdWjux53J6cadvd1BtyHNjeScFmMOfsdc95H+oKBXH
-         B2It17OpaiPixryi3x+EsstDWdeA1GSp6gTMWHs0H54VcJH7PXst6dnF6Dmx3KiUJV
-         BOHgI9q0evNQ9ppNINpOPM7HznK3C7H+RblXN2S2dmllMt0e6HAnIWOGPfXrEQb7+6
-         IAS61smLHdvjA==
-From:   Lorenzo Pieralisi <lpieralisi@kernel.org>
-To:     helgaas@kernel.org,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     Lorenzo Pieralisi <lpieralisi@kernel.org>, mka@chromium.org,
-        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, quic_ramkri@quicinc.com,
-        dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org,
-        quic_skananth@quicinc.com, quic_vbadigan@quicinc.com,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        quic_nitegupt@quicinc.com, quic_hemantk@quicinc.com
-Subject: Re: (subset) [PATCH v4 0/2] PCI: qcom: sc7280: add missing aggre0 and aggre1 clocks
-Date:   Tue, 27 Sep 2022 11:23:03 +0200
-Message-Id: <166427053134.73906.17497859805426997677.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <1662626776-19636-1-git-send-email-quic_krichai@quicinc.com>
-References: <1662626776-19636-1-git-send-email-quic_krichai@quicinc.com>
+        Tue, 27 Sep 2022 05:35:25 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5793396749
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 02:35:24 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id h7so1674278wru.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 02:35:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=nZKlStsukXTiXMspHE/cDk5Om1miIJs0rtHlxN58scw=;
+        b=WgRuPgXbYPwOZJBGBtvGwIF6k9jaqXIuXShKS6mViB/1sb+TXAcASNRdmnfYTxow23
+         e7zuPgopsZ0uDgLx9oIXmLukND7haDWAAEM3msOJ3+Bul4On0e3/hVpVhlIPKv/5tgvC
+         iNgAG5DwHrl/0ZAFXghccez3HPu0zD7LCvoph755d69qQPVIRfo8xFdcDcW6udUA6Avf
+         753Irtor7A5wxmWPdQNEbjASM7ZPl6ojeb7IK4Ts6GcuopmAFGrnnPFSmHUIZRZYJSB7
+         ili1MC/txUR2YX4w0VQnwYqwnSHqOFCkHepxpVBDFcXbArHDttnC95VgS8Egzv1qAHOh
+         imUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=nZKlStsukXTiXMspHE/cDk5Om1miIJs0rtHlxN58scw=;
+        b=WSQf5ji4H22eSB4ZrLvSrgnCMtwRlvM2O8491DZgIBhjTiQWQE87P1/ni+fSnFQxM7
+         XO+8tponLpWwlmjFBYjm+MoVsJhOPeYO6hg79LYTAUCzGWEBobaocfDQKWNVqwRkX/EP
+         RF2hTIh5ihHp1fddVtnX24bA8rMmjghmnxD/fqE4F7kMYoENfCoQGRiTQAm5P998Jk9n
+         krsbimsFbjL+FmcVGgkbrRISaK8jT5NrwnBeCem37ZQvJeboEBUzcGvMb3f33+9OJJDr
+         l0fHRDY+0Pnz+8m0Jh7TWs+jhH2iIJKLIBFbInMArt6UTDdqqG8mVfn6CL57vnKVPhWI
+         zDIA==
+X-Gm-Message-State: ACrzQf22NnQTWX2FshokH+svBcljqHV+AP4LCDderJwoanc3enjNEzTm
+        TdftPYIlvdmMl5clcGodMXMvAw==
+X-Google-Smtp-Source: AMsMyM59DN9FLmFmygbaxvKvQrOnMoCZWLcuZEwpCKhb6PyTPe6TeSvziEJhWS+XJUbDBjtSnEXWfA==
+X-Received: by 2002:a5d:5887:0:b0:22b:1255:42e5 with SMTP id n7-20020a5d5887000000b0022b125542e5mr16623537wrf.114.1664271322835;
+        Tue, 27 Sep 2022 02:35:22 -0700 (PDT)
+Received: from [192.168.10.46] (146725694.box.freepro.com. [130.180.211.218])
+        by smtp.googlemail.com with ESMTPSA id g11-20020a05600c310b00b003b4fe03c881sm14137452wmo.48.2022.09.27.02.35.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Sep 2022 02:35:22 -0700 (PDT)
+Message-ID: <49dacbf3-01e2-3687-f6d6-9346e418e98b@linaro.org>
+Date:   Tue, 27 Sep 2022 11:35:20 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH] thermal: qcom: tsens-v0_1: Fix MSM8939 fourth sensor
+ hw_id
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Vincent Knecht <vincent.knecht@mailoo.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     bryan.odonoghue@linaro.org, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org
+References: <20220811105014.7194-1-vincent.knecht@mailoo.org>
+ <9ef673f2-4296-8761-4d7a-dca323ba272e@linaro.org>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+In-Reply-To: <9ef673f2-4296-8761-4d7a-dca323ba272e@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -60,23 +87,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 8 Sep 2022 14:16:14 +0530, Krishna chaitanya chundru wrote:
-> Add missing aggre0 and aggre1 clocks supports to PCIe node.
+On 24/09/2022 18:38, Dmitry Baryshkov wrote:
+> On 11/08/2022 13:50, Vincent Knecht wrote:
+>> Reading temperature from this sensor fails with 'Invalid argument'.
+>>
+>> Looking at old vendor dts [1], its hw_id should be 3 instead of 4.
+>> Change this hw_id accordingly.
+>>
+>> [1] 
+>> https://github.com/msm8916-mainline/android_kernel_qcom_msm8916/blob/master/arch/arm/boot/dts/qcom/msm8939-common.dtsi#L511 
+>>
+>>
+>> Fixes: 332bc8ebab2c ("thermal: qcom: tsens-v0_1: Add support for 
+>> MSM8939")
+>> Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
 > 
-> Without voting these clocks, PCIe link is going down when system is
-> suspended as these clocks can get turned off as no-one is voting for them.
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
-> Krishna chaitanya chundru (2):
->   arm64: dts: qcom: sc7280: Add missing aggre0, aggre1 clocks
->   dt-bindings: pci: QCOM Add missing sc7280 aggre0, aggre1 clocks
-> 
-> [...]
+> Daniel, gracious ping for getting this patch into 6.1.
 
-Applied to pci/dt - dts changes (patch 1) should go via
-platform tree, thanks!
+Applied for 6.1, thanks
 
-[2/2] dt-bindings: pci: QCOM Add missing sc7280 aggre0, aggre1 clocks
-      https://git.kernel.org/lpieralisi/pci/c/1abbe04a1b55
 
-Thanks,
-Lorenzo
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
