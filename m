@@ -2,137 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC9305EC76F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 17:19:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57A9D5EC778
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 17:20:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229470AbiI0PTK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Sep 2022 11:19:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38236 "EHLO
+        id S231926AbiI0PUV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Sep 2022 11:20:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229870AbiI0PTJ (ORCPT
+        with ESMTP id S231575AbiI0PUL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Sep 2022 11:19:09 -0400
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D352A13F291;
-        Tue, 27 Sep 2022 08:19:07 -0700 (PDT)
-Received: by mail-oi1-f175.google.com with SMTP id n83so12186794oif.11;
-        Tue, 27 Sep 2022 08:19:07 -0700 (PDT)
+        Tue, 27 Sep 2022 11:20:11 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D698B9412F;
+        Tue, 27 Sep 2022 08:20:09 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id a41so13668020edf.4;
+        Tue, 27 Sep 2022 08:20:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=NMtmptc2HDRjrjmmdoUIZuav0SUAivIB9wNOA7ujGnE=;
+        b=gasiRgkVT5Ft/qqBvWsfyzhICytsXf+idmA0WOy/7W5eUIbSPmuAl4JkziR936O9Xv
+         QzcNCioztLnDVsayJUrkXZiyHArS4VKt2wvZaYZiQkCLfvR3neEEYfCBLueq2Wgey6JU
+         4ysmveUnizQty4srdBX5NVrcvbD19/T1IbzNXsRPfo1J8OnUk/sN1yUMpMlyXy8ceIWU
+         v8CshJnv2aXMp5K9gBbLLlF7nrRGHHJjNfNy1JT8gLmWqXXTCRaURBR3Koc0nApzQk6o
+         /nddys1Mh/sFxjjMdJS5bSGgTLEYxavASf9qq9EcIxTnSXM5aJEkScGmenZcs3FobCWc
+         8PFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=wXRxHNgmKmKanl4l8Eg0fqOKtTO4UZYjRiXrYlMvlIs=;
-        b=xyIbYgCruNYKEX/gAM8RE9W5eFDqTT3nybB6POGRubRApqbDt735UjeK095knHfrOO
-         Fsb/N7Eg5GtmpQLBq1+34J0pGWYvuHMNLHjnaSaL8QXVAC03TA6u428998dAICLicrwt
-         wIg0J7zZNoLfSyNVMbN8xSLcKulaY5AUFKKGW3qqNm7W5h7VLxIsdFFDOIDAbrdoimj5
-         60kAqOs/8KEQRzHmvYG7/qUBMdwD+ByQGAdeqklYuMP2p5u1XalKQ+1TNk3uU53oPA9U
-         U7cCLaoBtXlAIcnf8srFGPSrFsy7we7xofyt/L7DsRUv/ey5kIqd2c9qvg2xPDfzUWJZ
-         oRlw==
-X-Gm-Message-State: ACrzQf0iAohErXEPY/q2rlhISueA7f6JckgexZCKMvAgLBlCQ0iccmzK
-        ZIxz0FnnRN/FYb/9WUl0Rd8B6z3GNQ==
-X-Google-Smtp-Source: AMsMyM7Tq6EI9RI+e6p6itE+pIviLGESsSPKqa2eDsEQSeRij6qJxEIF50+Itf26CrjppCHGUK4y9A==
-X-Received: by 2002:a05:6808:282:b0:34f:6d11:7f68 with SMTP id z2-20020a056808028200b0034f6d117f68mr2093203oic.237.1664291947082;
-        Tue, 27 Sep 2022 08:19:07 -0700 (PDT)
-Received: from macbook.herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id w15-20020a056830410f00b0065689e13f52sm787327ott.71.2022.09.27.08.19.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Sep 2022 08:19:06 -0700 (PDT)
-Received: (nullmailer pid 4054434 invoked by uid 1000);
-        Tue, 27 Sep 2022 15:19:05 -0000
-Date:   Tue, 27 Sep 2022 10:19:05 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        dri-devel@lists.freedesktop.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        devicetree@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH v8 01/12] dt-bindings: display/msm: split qcom,mdss
- bindings
-Message-ID: <20220927151905.GA4052559-robh@kernel.org>
-References: <20220924123611.225520-1-dmitry.baryshkov@linaro.org>
- <20220924123611.225520-2-dmitry.baryshkov@linaro.org>
- <20220924172339.bebekrawee4ubogv@krzk-bin>
- <CAA8EJpqD74ZWvFK-QQ+MUHxssE7HKLS5D+hVe7+A9_H03QgwOg@mail.gmail.com>
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=NMtmptc2HDRjrjmmdoUIZuav0SUAivIB9wNOA7ujGnE=;
+        b=vLCXRYktxBig9mJwzibGRwoQCg3ck0TFD8B5vlLABAJEMnfQCHaJ3679+0IbmrpHX1
+         ofwPawlYQjqFbpx+gBZkXLpOO74bpPDAT95RfLAf4uHIw88Neug1BiFmMJnSy02Utgg4
+         Gc8CZ3Cb2j9G8OE9QdNoVuvWajw3f3yZhR/R0xjnrVvOREYESgblGFfERgcxVdaUX/SI
+         7hsbptQlUEuUVqv7EG43CI5aYd5/CkWUgA4dy9CqwpHGccWH37ar5qBy2DX+IIi71qSz
+         pgHeKY7r1xOsTnlXw/fs85OVa9cicuvOr1FxsMkQ9GZli/12jEtgdMP0sP4uAcxKnv/Z
+         T/Lg==
+X-Gm-Message-State: ACrzQf35xEea9PSTZd4f0qEjRqQa6Gb7monsyCPy90/EOUEdI+xLOQ77
+        2aOBzJQl6uWBL8qAjbWKHko=
+X-Google-Smtp-Source: AMsMyM7pGd+rRA66qdBumrBGic6j5vjWO3BN6pPsTagpKSqkaZjGhABZxEVCqQwKusj8x4QMIdB1kA==
+X-Received: by 2002:a05:6402:520c:b0:451:4213:49db with SMTP id s12-20020a056402520c00b00451421349dbmr28321627edd.130.1664292008165;
+        Tue, 27 Sep 2022 08:20:08 -0700 (PDT)
+Received: from [192.168.3.32] (dh207-97-176.xnet.hr. [88.207.97.176])
+        by smtp.gmail.com with ESMTPSA id ne22-20020a1709077b9600b0073d8ad7feeasm931650ejc.213.2022.09.27.08.20.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Sep 2022 08:20:07 -0700 (PDT)
+Message-ID: <6ac05eac-e6f5-b8e5-35dc-25373723f401@gmail.com>
+Date:   Tue, 27 Sep 2022 17:20:05 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpqD74ZWvFK-QQ+MUHxssE7HKLS5D+hVe7+A9_H03QgwOg@mail.gmail.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.1
+Subject: Re: [PATCH v2 01/33] arm64: dts: qcom: ipq6018-cp01-c1: correct
+ blspi1 pins
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        krishna Lanka <quic_vamslank@quicinc.com>,
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220926074415.53100-1-krzysztof.kozlowski@linaro.org>
+ <20220926074415.53100-2-krzysztof.kozlowski@linaro.org>
+ <647d12dd-9bc6-ebe3-7a72-9b9c0d4610dd@gmail.com>
+ <e7697876-f2bc-b0ef-c8bc-6737d8a54551@linaro.org>
+From:   Robert Marko <robimarko@gmail.com>
+In-Reply-To: <e7697876-f2bc-b0ef-c8bc-6737d8a54551@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Sep 24, 2022 at 09:27:10PM +0300, Dmitry Baryshkov wrote:
-> Hi,
-> 
-> On Sat, 24 Sept 2022 at 20:23, Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
-> >
-> > On Sat, 24 Sep 2022 15:36:00 +0300, Dmitry Baryshkov wrote:
-> > > Split Mobile Display SubSystem (MDSS) root node bindings to the separate
-> > > yaml file. Changes to the existing (txt) schema:
-> > >  - Added optional "vbif_nrt_phys" region used by msm8996
-> > >  - Made "bus" and "vsync" clocks optional (they are not used by some
-> > >    platforms)
-> > >  - Added optional resets property referencing MDSS reset
-> > >  - Defined child nodes pointing to corresponding reference schema.
-> > >  - Dropped the "lut" clock. It was added to the schema by mistake (it is
-> > >    a part of mdp4 schema, not the mdss).
-> > >
-> > > Reviewed-by: Rob Herring <robh@kernel.org>
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > ---
-> > >  .../devicetree/bindings/display/msm/mdp5.txt  |  30 +-
-> > >  .../bindings/display/msm/qcom,mdss.yaml       | 264 ++++++++++++++++++
-> > >  2 files changed, 265 insertions(+), 29 deletions(-)
-> > >  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml
-> > >
-> >
-> > My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> > on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> >
-> > yamllint warnings/errors:
-> >
-> > dtschema/dtc warnings/errors:
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,mdss.example.dtb: dsi@1a98000: clock-names:0: 'byte' was expected
-> >         From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,mdss.example.dtb: dsi@1a98000: clock-names:1: 'byte_intf' was expected
-> >         From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,mdss.example.dtb: dsi@1a98000: clock-names:2: 'pixel' was expected
-> >         From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,mdss.example.dtb: dsi@1a98000: clock-names:3: 'core' was expected
-> >         From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,mdss.example.dtb: dsi@1a98000: clock-names:4: 'iface' was expected
-> >         From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,mdss.example.dtb: dsi@1a98000: clock-names:5: 'bus' was expected
-> >         From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,mdss.example.dtb: dsi@1a98000: phy-names:0: 'dsi' was expected
-> >         From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,mdss.example.dtb: dsi@1a98000: 'power-domains' is a required property
-> >         From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,mdss.example.dtb: dsi@1a98000: 'operating-points-v2' is a required property
-> >         From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> 
-> These are the errors generated by the dsi@ node from the example. The
-> DSI schema is handled separately (by Bryan, added to the Cc list). Can
-> we have a lifter for this patch? Or I can revert to dropping the dsi@
-> part from the example.
 
-It's fine as long as I don't see them in linux-next.
+On 27. 09. 2022. 16:33, Krzysztof Kozlowski wrote:
+> On 27/09/2022 16:01, Robert Marko wrote:
+>> On 26. 09. 2022. 09:43, Krzysztof Kozlowski wrote:
+>>> When BLSPI1 (originally SPI0, later renamed in commit f82c48d46852
+>>> ("arm64: dts: qcom: ipq6018: correct QUP peripheral labels")) was added,
+>>> the device node lacked respective pin configuration assignment.   It
+>>> used also blsp0_spi function but that was probably the same mistake as
+>>> naming it SPI0.
+>> Hi,
+>>
+>> Sorry for making it confusing, but "blsp0_spi" is the correct function.
+>> Pinctrl driver and datasheets call functions blsp0-blps5, but usually in DT
+>> we call the nodes blsp1-blsp6.
+>>
+>> It would probably be better for me to rename the nodes to blsp0-5 instead.
+> OK, so instead I will add blsp0_spi to the bindings.
 
-Rob
+Can you add blsp0_uart and blsp0_i2c as well?
+All 6 of the QUP-s have same features.
+
+I am adding MDIO to CP01, so I can add mdc and mdio to bindings
+as they are lacking there as well.
+
+Regards,
+Robert
+
+>
+> Best regards,
+> Krzysztof
+>
