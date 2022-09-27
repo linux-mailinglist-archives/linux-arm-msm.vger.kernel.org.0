@@ -2,101 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B2E695EBEE0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 11:45:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 804E55EBEFA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 11:49:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230234AbiI0Jpo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Sep 2022 05:45:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50922 "EHLO
+        id S231367AbiI0JtI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Sep 2022 05:49:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230158AbiI0Jpn (ORCPT
+        with ESMTP id S231148AbiI0JtI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Sep 2022 05:45:43 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A843511161;
-        Tue, 27 Sep 2022 02:45:37 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 16738B81A9A;
-        Tue, 27 Sep 2022 09:45:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B82C5C433D7;
-        Tue, 27 Sep 2022 09:45:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664271934;
-        bh=WQQflwImlllyVgjzTHWOpEtOO7mSqNuRbHDttqbWQsE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=F6YWgpNnhWNznblv+kd7GZ0nFcyo344bPP5Kp1ud4+9cBEJ7XGh4jbSKqVw7F59lk
-         yXFbL5HGdRSgKyjw/ojfk2ZlTEURh/ukMG1CZqi9+A04YiigCq0YuFEhNKHg//39uF
-         1WCeGLZgF+uPrUamBmU5J8GQC3Mzt5vT2+0aYoERyeI/NGA4rUBNfYDwADUi5yfIIp
-         /4hFM0viZPDw5yB9w690fiy9WLoRIcJ0p9TxbjqX8+VPSKASZZ1v5jjspTYFat5zfh
-         9py9C/GSPF3dnWj3oRpqL4iSiWiWauqV80cK5P3964PX1WGvgCUClkbchoGYGrNHTy
-         hdnBbE7rcACYw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1od79o-0002OK-Tp; Tue, 27 Sep 2022 11:45:40 +0200
-Date:   Tue, 27 Sep 2022 11:45:40 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH v6 1/5] phy: qcom-qmp-pcie: split register tables into
- common and extra parts
-Message-ID: <YzLGRJTQv1/7zPLJ@hovoldconsulting.com>
-References: <20220927092207.161501-1-dmitry.baryshkov@linaro.org>
- <20220927092207.161501-2-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220927092207.161501-2-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Tue, 27 Sep 2022 05:49:08 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BCD8B56DD;
+        Tue, 27 Sep 2022 02:49:07 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28R8BoN6030498;
+        Tue, 27 Sep 2022 09:48:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=lGbwoy7vxXUMWFe+8BzdUik+/vtb24iKIFEldI78o2U=;
+ b=DKZ+8+piITpWLUDs/oBfxX9HOcpb9u4CKx+CtWAckJ/kasAz7iaXwtfcDRShvzH/uVPk
+ qh58+wyflqtZwOPKthjlrXSYKQVqDWFcbixv1jExc+NuHxcMWDniE9HEKlnO59ghdZ5L
+ hIZYLQhDKI6/7LiRb0x6TiiQv7EhxnFi8+DxJSvgvfOt66Xv5e21RPor6ZWATBbg/zad
+ Sk7klx6J9PLsAGryaTxGJII1Q/4mDXiq7yTLkrPS37CPyjpS3RedcZxer74G5uzEl4xq
+ r8w7CtveMfqiFBI+BMT17owQgG5TX1FBBbwIGGRCB2a5NsUBKt+i+zDZL2f0f66mv72a SA== 
+Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3jue00ace2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 27 Sep 2022 09:48:53 +0000
+Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+        by APTAIPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 28R9moTW017037;
+        Tue, 27 Sep 2022 09:48:50 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APTAIPPMTA02.qualcomm.com (PPS) with ESMTP id 3jstyngvm2-1;
+        Tue, 27 Sep 2022 09:48:50 +0000
+Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 28R9mouU017032;
+        Tue, 27 Sep 2022 09:48:50 GMT
+Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
+        by APTAIPPMTA02.qualcomm.com (PPS) with ESMTP id 28R9mngI017030;
+        Tue, 27 Sep 2022 09:48:50 +0000
+Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 4098150)
+        id EFEF733B3; Tue, 27 Sep 2022 17:48:48 +0800 (CST)
+From:   Qiang Yu <quic_qianyu@quicinc.com>
+To:     mani@kernel.org, quic_hemantk@quicinc.com, loic.poulain@linaro.org
+Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
+        mrana@quicinc.com, Qiang Yu <quic_qianyu@quicinc.com>
+Subject: [PATCH] bus: mhi: host: Use mhi_soc_reset() API in place of register write
+Date:   Tue, 27 Sep 2022 17:48:46 +0800
+Message-Id: <1664272126-82706-1-git-send-email-quic_qianyu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: zm5NT6f4x6QRVq8-QPijAiZNYvloS0BV
+X-Proofpoint-ORIG-GUID: zm5NT6f4x6QRVq8-QPijAiZNYvloS0BV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-27_02,2022-09-22_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ lowpriorityscore=0 mlxlogscore=787 suspectscore=0 spamscore=0 bulkscore=0
+ adultscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
+ clxscore=1011 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2209270057
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 27, 2022 at 12:22:02PM +0300, Dmitry Baryshkov wrote:
-> SM8250 configuration tables are split into two parts: the common one and
-> the PHY-specific tables. Make this split more formal. Rather than having
-> a blind renamed copy of all QMP table fields, add separate struct
-> qmp_phy_cfg_tables and add two instances of this structure to the struct
-> qmp_phy_cfg. Later on this will be used to support different PHY modes
-> (RC vs EP).
-> 
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+Currently, a direct register write is used when ramdump collection
+in panic path occurs. Replace that with new mhi_soc_reset() API
+such that a controller defined reset() function is exercised if
+one is present and the regular SOC reset is done if it is not.
 
-> +static void qmp_pcie_pcs_init(struct qmp_phy *qphy, const struct qmp_phy_cfg_tables *tables)
-> +{
-> +	const struct qmp_phy_cfg *cfg = qphy->cfg;
-> +	void __iomem *pcs = qphy->pcs;
-> +	void __iomem *pcs_misc = qphy->pcs_misc;
-> +
-> +	if (!tables)
-> +		return;
-> +
-> +	qmp_pcie_configure(pcs, cfg->regs,
-> +			   tables->pcs, tables->pcs_num);
-> +	qmp_pcie_configure(pcs_misc, cfg->regs,
-> +			   tables->pcs_misc, tables->pcs_misc_num);
+Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+---
+ drivers/bus/mhi/host/boot.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-nit: You missed the above unnecessary line breaks.
+diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
+index 5bed8b51..79a0eec 100644
+--- a/drivers/bus/mhi/host/boot.c
++++ b/drivers/bus/mhi/host/boot.c
+@@ -118,9 +118,7 @@ static int __mhi_download_rddm_in_panic(struct mhi_controller *mhi_cntrl)
+ 			/* Hardware reset so force device to enter RDDM */
+ 			dev_dbg(dev,
+ 				"Did not enter RDDM, do a host req reset\n");
+-			mhi_write_reg(mhi_cntrl, mhi_cntrl->regs,
+-				      MHI_SOC_RESET_REQ_OFFSET,
+-				      MHI_SOC_RESET_REQ);
++			mhi_soc_reset(mhi_cntrl);
+ 			udelay(delayus);
+ 		}
+ 
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-Johan
