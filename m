@@ -2,241 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58DAF5EBFFF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 12:43:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 566015EC132
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 13:26:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231404AbiI0KnJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Sep 2022 06:43:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48050 "EHLO
+        id S232060AbiI0L0N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Sep 2022 07:26:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230207AbiI0KnI (ORCPT
+        with ESMTP id S231394AbiI0LZs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Sep 2022 06:43:08 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A168BFDFA1;
-        Tue, 27 Sep 2022 03:43:06 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28RAK197019512;
-        Tue, 27 Sep 2022 10:42:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=shKyUC3iyr8VzV/Jg6O7VgI+jnUySbJVIawvxw7r18Y=;
- b=F3HL6Q9W0mEBBwMa2jeUfMOZr1UFSUXeBZKyNMIBCJm/GPPkuHjkt556aySDm/9x47NK
- j6iAITnoLM/+QlvFxLw2yzmBW3fEM87yyAUP1NjTgDXNsKV4BVkYkS9I/KYsUY8so1PJ
- l8QPRsJ4lAZ9PH52boLrZT/Q7HgIENX498zz5sKx7dt2Xzuy3qVsjJaWMCrXJhmef6rD
- PtFq8tgoZU5HrML+z/cXnbr4FtvYftprgGmXqRjpUWqeqFAROe5AODSXnKzjr9VwJGZ6
- iPr3Om6xNtliEzD0xvXPlmui2rY59TRxJghba1NncIYrkfzMGh3rUnw9GbkZo0fJH28o gA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3juq77h4sc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 27 Sep 2022 10:42:53 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28RAgqvI028711
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 27 Sep 2022 10:42:52 GMT
-Received: from blr-ubuntu-173.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.29; Tue, 27 Sep 2022 03:42:49 -0700
-From:   Rajendra Nayak <quic_rjendra@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@somainline.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-Subject: [PATCH] arm64: dts: qcom: sc7280: Add required-opps for i2c
-Date:   Tue, 27 Sep 2022 16:12:33 +0530
-Message-ID: <20220927104233.29376-1-quic_rjendra@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+        Tue, 27 Sep 2022 07:25:48 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A62282868
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 04:23:52 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id q35-20020a17090a752600b002038d8a68fbso15306664pjk.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 04:23:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=quanta-corp-partner-google-com.20210112.gappssmtp.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=m0YdEbVv1LeI3PwmPIoOCKMhVlMhsOgBjQ8fI7mPhV4=;
+        b=TTREBqVMlkYiD32nn8S2Eb1c1C1OMrq1scPqsfF+K7fzsKt0BJv68m4oMx/ywmkHIg
+         QLaEvLkCeKIo5g5m+6KHNJks42VuRfCnTiFj9Q0J3CrvEEXozHNUlXpJE3KAo5H83Spm
+         cVw2t2Rm/8HHY+fxA3duEjHFOR2SKai+qknfuiE5aBeEcs6/RlnTap5bzkrFdlqhj65p
+         lgPpyvY9QJMLsWJizMNIM5yMWUNy3eUppfiH0PflfqBpm3JXbcaNjZqLVOnTBx7IogLd
+         E0Zp6Crv9XH8z0yOlE59tcB4c/+xm4kJAnRzfpE25xvDvqe387Vrjyw8p7I5LhNBVBqv
+         tU7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=m0YdEbVv1LeI3PwmPIoOCKMhVlMhsOgBjQ8fI7mPhV4=;
+        b=VMpoL+wEXBavCtk55eeU8Jv7cEc/b5xWuAQnMJJCUSU/PWJyPX4Qc5ET8hG1VrZVPX
+         bZ47cqGHZlri1q9/FoboNB9l314Jj7vOU1VIetX1fguu/t/3B0Kkf7BGDL3CkAIArC8y
+         D9IZOkTLfb2OG4QBFBmy5/6g0y4oS8rYb7YC5N5K28DPlUq9m5KJ1FFXqywE7OALnahY
+         W6dawrqALGTcdKkPiR2yj4lQ7lPIoWJ5WOLewYxvLxvJ9brHCF5S57LDPtH56aQlbBfa
+         dJqyh/D+sICK9A9Y7526JgtXQOBPcpQG4YJkK0zp9IuXbTBKV07GRgKe8wGjSHCSI39Q
+         +JoQ==
+X-Gm-Message-State: ACrzQf38aiUJ94ZQjtnfaP2Pvix2wDmCuoG86zxPYgLI43rpqDUPP5lM
+        fCZq+a4Ke/Y1BlOcHi+8W+XfRw==
+X-Google-Smtp-Source: AMsMyM7PJEtPfemVWzNWUKid1/9dx5IjRQ4Ukjc+gNRLcBATyf28kgSie42dTcoKRzjvjpKfal14cA==
+X-Received: by 2002:a17:90b:3b8e:b0:202:6f3d:539e with SMTP id pc14-20020a17090b3b8e00b002026f3d539emr3914115pjb.205.1664277831234;
+        Tue, 27 Sep 2022 04:23:51 -0700 (PDT)
+Received: from liang-Predator-PH517-52.. (60-250-232-247.hinet-ip.hinet.net. [60.250.232.247])
+        by smtp.gmail.com with ESMTPSA id c13-20020a170902d48d00b001782751833bsm1275931plg.223.2022.09.27.04.23.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Sep 2022 04:23:50 -0700 (PDT)
+From:   Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
+To:     LKML <linux-kernel@vger.kernel.org>
+Cc:     dianders@chromium.org,
+        Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v4 0/2] Add LTE SKU for sc7280-evoker family
+Date:   Tue, 27 Sep 2022 19:23:41 +0800
+Message-Id: <20220927112343.2700216-1-sheng-liang.pan@quanta.corp-partner.google.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: UOG--l7TV3RR3qIiKjj1AnSaf_ztxWOc
-X-Proofpoint-GUID: UOG--l7TV3RR3qIiKjj1AnSaf_ztxWOc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-27_02,2022-09-22_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
- clxscore=1011 lowpriorityscore=0 malwarescore=0 bulkscore=0 suspectscore=0
- mlxscore=0 impostorscore=0 mlxlogscore=905 phishscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2209130000
- definitions=main-2209270063
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-qup-i2c devices on sc7280 are clocked with a fixed clock (19.2 MHz)
-Though qup-i2c does not support DVFS, it still needs to vote for a
-performance state on 'CX' to satisfy the 19.2 Mhz clock frequency
-requirement.
+This patch add common dtsi and WIFI/LTE dts for evoker.
 
-Use 'required-opps' to pass this information from
-device tree, and also add the power-domains property to specify
-the CX power-domain.
+Changes in v4:
+- fix typo in tittle and commit
+- remove change for trackpad and touchscreen
+- remove change for trackpad and touchscreen
 
-Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 32 ++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+Changes in v3:
+- none
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 212580316d3e..c7c14bbc0023 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -967,6 +967,8 @@
- 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7280_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				dmas = <&gpi_dma0 0 0 QCOM_GPI_I2C>,
- 				       <&gpi_dma0 1 0 QCOM_GPI_I2C>;
- 				dma-names = "tx", "rx";
-@@ -1025,6 +1027,8 @@
- 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7280_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				dmas = <&gpi_dma0 0 1 QCOM_GPI_I2C>,
- 				       <&gpi_dma0 1 1 QCOM_GPI_I2C>;
- 				dma-names = "tx", "rx";
-@@ -1083,6 +1087,8 @@
- 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7280_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				dmas = <&gpi_dma0 0 2 QCOM_GPI_I2C>,
- 				       <&gpi_dma0 1 2 QCOM_GPI_I2C>;
- 				dma-names = "tx", "rx";
-@@ -1141,6 +1147,8 @@
- 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7280_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				dmas = <&gpi_dma0 0 3 QCOM_GPI_I2C>,
- 				       <&gpi_dma0 1 3 QCOM_GPI_I2C>;
- 				dma-names = "tx", "rx";
-@@ -1199,6 +1207,8 @@
- 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7280_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				dmas = <&gpi_dma0 0 4 QCOM_GPI_I2C>,
- 				       <&gpi_dma0 1 4 QCOM_GPI_I2C>;
- 				dma-names = "tx", "rx";
-@@ -1257,6 +1267,8 @@
- 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7280_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				dmas = <&gpi_dma0 0 5 QCOM_GPI_I2C>,
- 				       <&gpi_dma0 1 5 QCOM_GPI_I2C>;
- 				dma-names = "tx", "rx";
-@@ -1315,6 +1327,8 @@
- 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7280_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				dmas = <&gpi_dma0 0 6 QCOM_GPI_I2C>,
- 				       <&gpi_dma0 1 6 QCOM_GPI_I2C>;
- 				dma-names = "tx", "rx";
-@@ -1373,6 +1387,8 @@
- 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7280_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				dmas = <&gpi_dma0 0 7 QCOM_GPI_I2C>,
- 				       <&gpi_dma0 1 7 QCOM_GPI_I2C>;
- 				dma-names = "tx", "rx";
-@@ -1466,6 +1482,8 @@
- 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7280_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				dmas = <&gpi_dma1 0 0 QCOM_GPI_I2C>,
- 				       <&gpi_dma1 1 0 QCOM_GPI_I2C>;
- 				dma-names = "tx", "rx";
-@@ -1524,6 +1542,8 @@
- 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7280_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				dmas = <&gpi_dma1 0 1 QCOM_GPI_I2C>,
- 				       <&gpi_dma1 1 1 QCOM_GPI_I2C>;
- 				dma-names = "tx", "rx";
-@@ -1582,6 +1602,8 @@
- 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7280_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				dmas = <&gpi_dma1 0 2 QCOM_GPI_I2C>,
- 				       <&gpi_dma1 1 2 QCOM_GPI_I2C>;
- 				dma-names = "tx", "rx";
-@@ -1640,6 +1662,8 @@
- 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7280_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				dmas = <&gpi_dma1 0 3 QCOM_GPI_I2C>,
- 				       <&gpi_dma1 1 3 QCOM_GPI_I2C>;
- 				dma-names = "tx", "rx";
-@@ -1698,6 +1722,8 @@
- 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7280_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				dmas = <&gpi_dma1 0 4 QCOM_GPI_I2C>,
- 				       <&gpi_dma1 1 4 QCOM_GPI_I2C>;
- 				dma-names = "tx", "rx";
-@@ -1756,6 +1782,8 @@
- 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7280_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				dmas = <&gpi_dma1 0 5 QCOM_GPI_I2C>,
- 				       <&gpi_dma1 1 5 QCOM_GPI_I2C>;
- 				dma-names = "tx", "rx";
-@@ -1814,6 +1842,8 @@
- 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7280_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				dmas = <&gpi_dma1 0 6 QCOM_GPI_I2C>,
- 				       <&gpi_dma1 1 6 QCOM_GPI_I2C>;
- 				dma-names = "tx", "rx";
-@@ -1872,6 +1902,8 @@
- 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7280_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				dmas = <&gpi_dma1 0 7 QCOM_GPI_I2C>,
- 				       <&gpi_dma1 1 7 QCOM_GPI_I2C>;
- 				dma-names = "tx", "rx";
+Changes in v2:
+- none
+
+Sheng-Liang Pan (2):
+  dt-bindings: arm: qcom: Separate LTE/WIFI SKU for sc7280-evoker
+  arm64: dts: qcom: Add LTE SKU for sc7280-evoker family
+
+ Documentation/devicetree/bindings/arm/qcom.yaml   |  5 +++++
+ arch/arm64/boot/dts/qcom/Makefile                 |  3 ++-
+ .../boot/dts/qcom/sc7280-herobrine-evoker-lte.dts | 14 ++++++++++++++
+ .../boot/dts/qcom/sc7280-herobrine-evoker.dts     | 15 +++++++++++++++
+ ...evoker-r0.dts => sc7280-herobrine-evoker.dtsi} |  8 --------
+ 5 files changed, 36 insertions(+), 9 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dts
+ rename arch/arm64/boot/dts/qcom/{sc7280-herobrine-evoker-r0.dts => sc7280-herobrine-evoker.dtsi} (98%)
+
 -- 
-2.17.1
+2.34.1
 
