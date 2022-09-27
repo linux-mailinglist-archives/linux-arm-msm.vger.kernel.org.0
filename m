@@ -2,119 +2,241 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CBC155EBFD3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 12:34:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58DAF5EBFFF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 12:43:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231377AbiI0Kef (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Sep 2022 06:34:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57804 "EHLO
+        id S231404AbiI0KnJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Sep 2022 06:43:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231765AbiI0Keb (ORCPT
+        with ESMTP id S230207AbiI0KnI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Sep 2022 06:34:31 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 902BEE2365;
-        Tue, 27 Sep 2022 03:34:27 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 8CF9FB81AE1;
-        Tue, 27 Sep 2022 10:34:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 124C9C433D6;
-        Tue, 27 Sep 2022 10:34:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664274865;
-        bh=B2GDKcwdgITexSrV6c7//f4qj6nximN7W8IEtr7vxYY=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=qLiNA4NBmNGXiOqsXlliQQqxRMpo8l4h/R2zFVjJwYg1XJMoZT8hrd8a3mfcOANIO
-         lJZ7yx1fqVM7GWZAKYzvk5i21yWGaCfxHYZ976l6hgeeksQkrd9CnMim7ykocovyRn
-         tMLrjDjTWEJG6SotMqknI3bXR1DJBEBktdLeTS1ExEHTKLars8t1ztyrH8qPw1omDu
-         dI2hqhXxSL2K29OSJj4YkOJJ7r4psME++yc85pAlRAMT/K3/j8hAhdHj4XwmcBnVGn
-         LOEr1+CQ1q+DJFPydn+KUp+tm25Vq1zx9+sfBpDI2rVRfnwVTV7u/sZeSL2ipnTYFQ
-         Gr4NMzCZZNUGA==
-From:   Mark Brown <broonie@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     devicetree@vger.kernel.org, lgirdwood@gmail.com, tiwai@suse.com,
-        perex@perex.cz, robh+dt@kernel.org, alsa-devel@alsa-project.org,
-        bgoswami@quicinc.com, krzysztof.kozlowski+dt@linaro.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-In-Reply-To: <20220906170112.1984-1-srinivas.kandagatla@linaro.org>
-References: <20220906170112.1984-1-srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH v2 00/12] ASoC: codecs: qcom add support for SM8450 and SC8280XP
-Message-Id: <166427486278.60697.18427258412799379354.b4-ty@kernel.org>
-Date:   Tue, 27 Sep 2022 11:34:22 +0100
+        Tue, 27 Sep 2022 06:43:08 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A168BFDFA1;
+        Tue, 27 Sep 2022 03:43:06 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28RAK197019512;
+        Tue, 27 Sep 2022 10:42:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=shKyUC3iyr8VzV/Jg6O7VgI+jnUySbJVIawvxw7r18Y=;
+ b=F3HL6Q9W0mEBBwMa2jeUfMOZr1UFSUXeBZKyNMIBCJm/GPPkuHjkt556aySDm/9x47NK
+ j6iAITnoLM/+QlvFxLw2yzmBW3fEM87yyAUP1NjTgDXNsKV4BVkYkS9I/KYsUY8so1PJ
+ l8QPRsJ4lAZ9PH52boLrZT/Q7HgIENX498zz5sKx7dt2Xzuy3qVsjJaWMCrXJhmef6rD
+ PtFq8tgoZU5HrML+z/cXnbr4FtvYftprgGmXqRjpUWqeqFAROe5AODSXnKzjr9VwJGZ6
+ iPr3Om6xNtliEzD0xvXPlmui2rY59TRxJghba1NncIYrkfzMGh3rUnw9GbkZo0fJH28o gA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3juq77h4sc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 27 Sep 2022 10:42:53 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28RAgqvI028711
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 27 Sep 2022 10:42:52 GMT
+Received: from blr-ubuntu-173.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Tue, 27 Sep 2022 03:42:49 -0700
+From:   Rajendra Nayak <quic_rjendra@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@somainline.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+Subject: [PATCH] arm64: dts: qcom: sc7280: Add required-opps for i2c
+Date:   Tue, 27 Sep 2022 16:12:33 +0530
+Message-ID: <20220927104233.29376-1-quic_rjendra@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.10.0-dev-fc921
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: UOG--l7TV3RR3qIiKjj1AnSaf_ztxWOc
+X-Proofpoint-GUID: UOG--l7TV3RR3qIiKjj1AnSaf_ztxWOc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-27_02,2022-09-22_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ clxscore=1011 lowpriorityscore=0 malwarescore=0 bulkscore=0 suspectscore=0
+ mlxscore=0 impostorscore=0 mlxlogscore=905 phishscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2209130000
+ definitions=main-2209270063
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 6 Sep 2022 18:01:00 +0100, Srinivas Kandagatla wrote:
-> This patchset adds support for SM8450 and SC8280XP SoC and also some of
-> the fixes requried to get stable audio on X13s.
-> 
-> Tested SmartSpeakers and Headset on SM8450 MTP and
-> Lenovo Thinkpad X13s.
-> 
-> Changes since v1:
-> - moved va-macro from using of_device_is_compatible to compatible data
-> - added some fixes for qcom codecs.
-> 
-> [...]
+qup-i2c devices on sc7280 are clocked with a fixed clock (19.2 MHz)
+Though qup-i2c does not support DVFS, it still needs to vote for a
+performance state on 'CX' to satisfy the 19.2 Mhz clock frequency
+requirement.
 
-Applied to
+Use 'required-opps' to pass this information from
+device tree, and also add the power-domains property to specify
+the CX power-domain.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 32 ++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-Thanks!
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 212580316d3e..c7c14bbc0023 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -967,6 +967,8 @@
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config",
+ 							"qup-memory";
++				power-domains = <&rpmhpd SC7280_CX>;
++				required-opps = <&rpmhpd_opp_low_svs>;
+ 				dmas = <&gpi_dma0 0 0 QCOM_GPI_I2C>,
+ 				       <&gpi_dma0 1 0 QCOM_GPI_I2C>;
+ 				dma-names = "tx", "rx";
+@@ -1025,6 +1027,8 @@
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config",
+ 							"qup-memory";
++				power-domains = <&rpmhpd SC7280_CX>;
++				required-opps = <&rpmhpd_opp_low_svs>;
+ 				dmas = <&gpi_dma0 0 1 QCOM_GPI_I2C>,
+ 				       <&gpi_dma0 1 1 QCOM_GPI_I2C>;
+ 				dma-names = "tx", "rx";
+@@ -1083,6 +1087,8 @@
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config",
+ 							"qup-memory";
++				power-domains = <&rpmhpd SC7280_CX>;
++				required-opps = <&rpmhpd_opp_low_svs>;
+ 				dmas = <&gpi_dma0 0 2 QCOM_GPI_I2C>,
+ 				       <&gpi_dma0 1 2 QCOM_GPI_I2C>;
+ 				dma-names = "tx", "rx";
+@@ -1141,6 +1147,8 @@
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config",
+ 							"qup-memory";
++				power-domains = <&rpmhpd SC7280_CX>;
++				required-opps = <&rpmhpd_opp_low_svs>;
+ 				dmas = <&gpi_dma0 0 3 QCOM_GPI_I2C>,
+ 				       <&gpi_dma0 1 3 QCOM_GPI_I2C>;
+ 				dma-names = "tx", "rx";
+@@ -1199,6 +1207,8 @@
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config",
+ 							"qup-memory";
++				power-domains = <&rpmhpd SC7280_CX>;
++				required-opps = <&rpmhpd_opp_low_svs>;
+ 				dmas = <&gpi_dma0 0 4 QCOM_GPI_I2C>,
+ 				       <&gpi_dma0 1 4 QCOM_GPI_I2C>;
+ 				dma-names = "tx", "rx";
+@@ -1257,6 +1267,8 @@
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config",
+ 							"qup-memory";
++				power-domains = <&rpmhpd SC7280_CX>;
++				required-opps = <&rpmhpd_opp_low_svs>;
+ 				dmas = <&gpi_dma0 0 5 QCOM_GPI_I2C>,
+ 				       <&gpi_dma0 1 5 QCOM_GPI_I2C>;
+ 				dma-names = "tx", "rx";
+@@ -1315,6 +1327,8 @@
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config",
+ 							"qup-memory";
++				power-domains = <&rpmhpd SC7280_CX>;
++				required-opps = <&rpmhpd_opp_low_svs>;
+ 				dmas = <&gpi_dma0 0 6 QCOM_GPI_I2C>,
+ 				       <&gpi_dma0 1 6 QCOM_GPI_I2C>;
+ 				dma-names = "tx", "rx";
+@@ -1373,6 +1387,8 @@
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config",
+ 							"qup-memory";
++				power-domains = <&rpmhpd SC7280_CX>;
++				required-opps = <&rpmhpd_opp_low_svs>;
+ 				dmas = <&gpi_dma0 0 7 QCOM_GPI_I2C>,
+ 				       <&gpi_dma0 1 7 QCOM_GPI_I2C>;
+ 				dma-names = "tx", "rx";
+@@ -1466,6 +1482,8 @@
+ 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config",
+ 							"qup-memory";
++				power-domains = <&rpmhpd SC7280_CX>;
++				required-opps = <&rpmhpd_opp_low_svs>;
+ 				dmas = <&gpi_dma1 0 0 QCOM_GPI_I2C>,
+ 				       <&gpi_dma1 1 0 QCOM_GPI_I2C>;
+ 				dma-names = "tx", "rx";
+@@ -1524,6 +1542,8 @@
+ 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config",
+ 							"qup-memory";
++				power-domains = <&rpmhpd SC7280_CX>;
++				required-opps = <&rpmhpd_opp_low_svs>;
+ 				dmas = <&gpi_dma1 0 1 QCOM_GPI_I2C>,
+ 				       <&gpi_dma1 1 1 QCOM_GPI_I2C>;
+ 				dma-names = "tx", "rx";
+@@ -1582,6 +1602,8 @@
+ 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config",
+ 							"qup-memory";
++				power-domains = <&rpmhpd SC7280_CX>;
++				required-opps = <&rpmhpd_opp_low_svs>;
+ 				dmas = <&gpi_dma1 0 2 QCOM_GPI_I2C>,
+ 				       <&gpi_dma1 1 2 QCOM_GPI_I2C>;
+ 				dma-names = "tx", "rx";
+@@ -1640,6 +1662,8 @@
+ 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config",
+ 							"qup-memory";
++				power-domains = <&rpmhpd SC7280_CX>;
++				required-opps = <&rpmhpd_opp_low_svs>;
+ 				dmas = <&gpi_dma1 0 3 QCOM_GPI_I2C>,
+ 				       <&gpi_dma1 1 3 QCOM_GPI_I2C>;
+ 				dma-names = "tx", "rx";
+@@ -1698,6 +1722,8 @@
+ 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config",
+ 							"qup-memory";
++				power-domains = <&rpmhpd SC7280_CX>;
++				required-opps = <&rpmhpd_opp_low_svs>;
+ 				dmas = <&gpi_dma1 0 4 QCOM_GPI_I2C>,
+ 				       <&gpi_dma1 1 4 QCOM_GPI_I2C>;
+ 				dma-names = "tx", "rx";
+@@ -1756,6 +1782,8 @@
+ 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config",
+ 							"qup-memory";
++				power-domains = <&rpmhpd SC7280_CX>;
++				required-opps = <&rpmhpd_opp_low_svs>;
+ 				dmas = <&gpi_dma1 0 5 QCOM_GPI_I2C>,
+ 				       <&gpi_dma1 1 5 QCOM_GPI_I2C>;
+ 				dma-names = "tx", "rx";
+@@ -1814,6 +1842,8 @@
+ 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config",
+ 							"qup-memory";
++				power-domains = <&rpmhpd SC7280_CX>;
++				required-opps = <&rpmhpd_opp_low_svs>;
+ 				dmas = <&gpi_dma1 0 6 QCOM_GPI_I2C>,
+ 				       <&gpi_dma1 1 6 QCOM_GPI_I2C>;
+ 				dma-names = "tx", "rx";
+@@ -1872,6 +1902,8 @@
+ 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config",
+ 							"qup-memory";
++				power-domains = <&rpmhpd SC7280_CX>;
++				required-opps = <&rpmhpd_opp_low_svs>;
+ 				dmas = <&gpi_dma1 0 7 QCOM_GPI_I2C>,
+ 				       <&gpi_dma1 1 7 QCOM_GPI_I2C>;
+ 				dma-names = "tx", "rx";
+-- 
+2.17.1
 
-[01/12] ASoC: codecs: wsa-macro: handle swr_reset correctly
-        commit: fdc972d4a754b32cdf05294669ae0d6036242826
-[02/12] ASoC: codecs: rx-macro: handle swr_reset correctly
-        commit: 1a4e73915a7553d7ffb4f365b8a671bb2fa1f7ef
-[03/12] ASoC: codecs: tx-macro: handle swr_reset correctly
-        commit: d83a7201412d32e2ac76f20439470976b2edf699
-[04/12] ASoC: codecs: tx-macro: fix active_decimator array
-        commit: 1c6a7f5250ce81f11a248f9bf88fdbca8b6b0b5d
-[05/12] ASoC: codecs: tx-macro: fix kcontrol put
-        commit: c1057a08af438e0cf5450c1d977a3011198ed2f8
-[06/12] ASoC: codecs: wsa883x: add clock stop support
-        commit: 3e29fb7479760d6d03380125d500b60081ccb5e9
-[07/12] ASoC: qcom: dt-bindings: add sm8450 and sc8280xp compatibles
-        commit: 473d218b56559934ef4720a6fc086c8ad0da9d38
-[08/12] ASoC: codecs: wsa-macro: add support for sm8450 and sc8280xp
-        commit: 8d2be441ebc1078eaa9f2b7aa7c6d3880973851e
-[09/12] ASoC: codecs: tx-macro: add support for sm8450 and sc8280xp
-        commit: 7ca36514752fa5bdf0d237436dc0042aefbf42ad
-[10/12] ASoC: codecs: rx-macro: add support for sm8450 and sc8280xp
-        commit: c0bcaa72fabab1f2900aecc8643f33212c0072cc
-[11/12] ASoC: codecs: va-macro: clear the frame sync counter before enabling
-        commit: c55b7381d7932eb303dbd97691f89c1a9c452956
-[12/12] ASoC: codecs: va-macro: add support for sm8450 and sc8280xp
-        commit: 0f47dd211938d5646f4041407089390bf89b96e8
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
