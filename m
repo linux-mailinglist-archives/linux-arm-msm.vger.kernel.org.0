@@ -2,87 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E941C5EB561
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 01:18:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B82075EB717
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 03:49:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229817AbiIZXST (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 19:18:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36124 "EHLO
+        id S229977AbiI0Bs6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 21:48:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230182AbiIZXSR (ORCPT
+        with ESMTP id S229976AbiI0Bs4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Sep 2022 19:18:17 -0400
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C852A723E;
-        Mon, 26 Sep 2022 16:18:14 -0700 (PDT)
-Received: by mail-oi1-f170.google.com with SMTP id v130so10125765oie.2;
-        Mon, 26 Sep 2022 16:18:14 -0700 (PDT)
+        Mon, 26 Sep 2022 21:48:56 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF62DA7ABA;
+        Mon, 26 Sep 2022 18:48:55 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id p202so6695784iod.6;
+        Mon, 26 Sep 2022 18:48:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=TD9RcFiA5bO7MHMjUJF8fxsi9gGsM0Psc7oBi/obCZE=;
+        b=fI+51GHGFlN2/WCSqCet+tQ1zpZP+bvdmxUoAfq48SkPANU9Q/lxE6fZJ51ehQmx0T
+         1/Ls51RYJhqRp//dpuDf4LBnUIvTOxsIr9cIQaSKIB/9tVM+cZCLTvpVFZD8J/+nlAa/
+         LCl1mOzRvKNc1gJrMEudn5+r+GxMfosFRqmOoGMa4HR8kjssYqJXzRBEr6iq03Byt8aG
+         bjtmjsDjZPxLiLqQOLDsLY6zQpOuMNSEPbA5wFXnwKvF6kuNQQ0CI0fb+jguLSrBwt2U
+         TL9euoY5yxd/kexdqMaGVTUgTqP/z6Ud2UxYfkAKehFkurQP+FFbu2TnnIpxBpG7qi5b
+         tIiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=/VPqA+Ek8QtP5pfgu0YyQnv/XSoVrA0G4H3niIHpRLw=;
-        b=fPOEQI6lVhMfnSAXMPAqIav7phCwWxCC9k820xH18nQemEAgB4Fczkn4zifSps1TJ9
-         mOPTpct19xBWJzE6lxphvWNZLiptaC3Nqa9kTRQW3E1nGHrKi1a4hTP0Tsm1hBu/Klz1
-         ztIzrPHvhDLqolaOBm/S7veZcv7S4NOgpPIO4IzYoQUOWJOxfFZTyB0YM1WpmTg8uQLs
-         fhXW66z0Mu62S5nr0AnqpnxjlfLmKhZA1foFV/z0ZmTAnhkEOCGYHd/z7FEJdjazyVob
-         msLFQtxprJefZ+lDdpnUl/0HUUVpALh84YS34LSnJWSVTa+1QO3uiiPpHtJ9Ztqf058r
-         dqCg==
-X-Gm-Message-State: ACrzQf2n6N2biXiWhnoDkEPSxU8+ry6FUmLH3qtAc0C0ooywBjkeUPUf
-        oIHlkSFB5wWAG+aApKUDP67rAATqgA==
-X-Google-Smtp-Source: AMsMyM7gXM9sEcSlW/jlbRbRX1jbCgTiZp1J8NlO3IV8x9BQR2Y84Aa7gOjkqLc+YV+CpPU5wjUD2g==
-X-Received: by 2002:a05:6808:118e:b0:345:9c3e:121d with SMTP id j14-20020a056808118e00b003459c3e121dmr541410oil.211.1664234293408;
-        Mon, 26 Sep 2022 16:18:13 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id 7-20020a9d0c07000000b00655c6b2655esm8247356otr.68.2022.09.26.16.18.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Sep 2022 16:18:13 -0700 (PDT)
-Received: (nullmailer pid 3156327 invoked by uid 1000);
-        Mon, 26 Sep 2022 23:18:12 -0000
-Date:   Mon, 26 Sep 2022 18:18:12 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        dri-devel@lists.freedesktop.org,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=TD9RcFiA5bO7MHMjUJF8fxsi9gGsM0Psc7oBi/obCZE=;
+        b=w1f5Y2rGBjdaday+YQcd/O95HwpBuWEQmWW62CSycB3+6mcMZGnE2i42tWONWZsE3H
+         b6ECUsG7jUMAr7r7YJOO+o/qF8eMUj7RuRPSpJsH2L/VGFhehM81qwQ+OOoJajr8miUm
+         Ur1Z3Wq/PxND8uPTIgKxatH/qb26drlIyQ3Z9tbhgTCAjW4x/ICnp/Ss8CEfgU48SRUO
+         vqQnKdv8/J/3BqPIr3qx/6B11z+/U3njfklzXqEXfBUDu6D7wP4nN3BEikxlbb0i3Yle
+         AH0PNI98s78HV5p2zpTNA/dE94gZpdewZBPItRaJdX5fk/zvmOqjrbgot5Purk4601Ab
+         x0bA==
+X-Gm-Message-State: ACrzQf3SNNMCl/3SJI0aPqB7+zzqoPP/KhdoMWAk2Zlz45nj0t4VNrSl
+        e1VtjIUo3WwVlUfvepKRIr7PGaElK88=
+X-Google-Smtp-Source: AMsMyM5ny7/7Lj/6v4Z6ZQ4mRnFRv6evCA+GYKLbYoNXVyRwGLIl6ikwI32gSTjeX766pedu+pkNjA==
+X-Received: by 2002:a02:880b:0:b0:35a:e4be:c408 with SMTP id r11-20020a02880b000000b0035ae4bec408mr13101307jai.113.1664243334877;
+        Mon, 26 Sep 2022 18:48:54 -0700 (PDT)
+Received: from localhost ([2607:fea8:a2e2:2d00::ac99])
+        by smtp.gmail.com with UTF8SMTPSA id i1-20020a056e020ec100b002eacd14e68esm143749ilk.71.2022.09.26.18.48.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 Sep 2022 18:48:54 -0700 (PDT)
+From:   Richard Acayan <mailingradian@gmail.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Andy Gross <agross@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        devicetree@vger.kernel.org, David Airlie <airlied@linux.ie>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>
-Subject: Re: [PATCH v3 1/2] dt-bindings: display/msm: Add QCM2290 DSI phy
-Message-ID: <20220926231812.GA3156261-robh@kernel.org>
-References: <20220924121900.222711-1-dmitry.baryshkov@linaro.org>
- <20220924121900.222711-2-dmitry.baryshkov@linaro.org>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        Richard Acayan <mailingradian@gmail.com>
+Subject: [PATCH v3 0/4] SDM670 GPI DMA support
+Date:   Mon, 26 Sep 2022 21:48:42 -0400
+Message-Id: <20220927014846.32892-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220924121900.222711-2-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 24 Sep 2022 15:18:59 +0300, Dmitry Baryshkov wrote:
-> From: Loic Poulain <loic.poulain@linaro.org>
-> 
-> QCM2290 platform uses the 14nm DSI PHY driver.
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
+Changes since v2:
+ - change fallback to sdm845 compat string (and keep compat string in
+   driver)
+ - fallback now only affects two SoCs + SDM670
 
-Acked-by: Rob Herring <robh@kernel.org>
+Changes since v1:
+ - add fallback compatible
+
+This patch series adds the compatible string for GPI DMA, needed for the
+GENI interface, on Snapdragon 670.
+
+Richard Acayan (4):
+  dt-bindings: dma: qcom: gpi: add fallback compatible
+  dt-bindings: dma: qcom: gpi: add compatible for sdm670
+  arm64: dts: qcom: add gpi-dma fallback compatible
+  dmaengine: qcom: gpi: drop redundant of_device_id entries
+
+ .../devicetree/bindings/dma/qcom,gpi.yaml     | 22 ++++++++++++-------
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |  6 ++---
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  6 ++---
+ drivers/dma/qcom/gpi.c                        |  2 --
+ 4 files changed, 20 insertions(+), 16 deletions(-)
+
+-- 
+2.37.3
+
