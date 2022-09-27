@@ -2,49 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 12D675EB8AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 05:24:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 650D85EB8B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 05:24:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230264AbiI0DYh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 23:24:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52920 "EHLO
+        id S231231AbiI0DYq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 23:24:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230413AbiI0DX4 (ORCPT
+        with ESMTP id S230477AbiI0DX4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 26 Sep 2022 23:23:56 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BE0746225;
-        Mon, 26 Sep 2022 20:23:11 -0700 (PDT)
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39D621C102;
+        Mon, 26 Sep 2022 20:23:13 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2534061595;
-        Tue, 27 Sep 2022 03:23:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5273C4347C;
-        Tue, 27 Sep 2022 03:23:08 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id E45A7B81910;
+        Tue, 27 Sep 2022 03:23:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B95AAC433C1;
+        Tue, 27 Sep 2022 03:23:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664248989;
-        bh=7Jou6n5y0mKpBXvA3sndzVkCRVrnapOjPsW5ZL+vmmQ=;
+        s=k20201202; t=1664248990;
+        bh=19/9uNWInCFs/3J0s0YjTK/DMo8Sz7zXI9f66mQgI6Q=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=pGONiHh8/FgmUxq/70cvzR2OxKfuAdCCkdcW3quM8HyvQSguG7rSFZvX5puor+oFy
-         3VNjuX4Lso1I2VWecEIx92FAd8mnKfO+iU8mTQqIZBqCUQfL0AXhOGBt1+4bz+oebB
-         Lbebkz7kyjva7h/zJIdFoA66IW9wF48t3iPoYidWC8yBBquAixqp6iy7NFBfW8ycr0
-         LpgSIERpnJW2osiYHK65fLVT97OBMYwKeYXmWhuAeg/iqHX8/wco6k40Gj//t6V5wW
-         iGogEzejflt9zKUWD1ARV/yUBtd/Xr3zejaPu9ws0ROim//wkQ4aEAswEcco7icDB8
-         t06Exybmb3c0A==
+        b=f+qMzAL0AiokDrLzQo8UkShub526g98cuOFm/n1dxKTfrsv1mxlJVfodMQ3zwf/Gu
+         3buxi8F/BzjQivg6XcX/+4wnqAkZrq38gwU8KbMDZ5hIHSgAtlIfVex1SJZzz17WOe
+         hvrXHpFuOcDe0Tg0o5DrSGBKf8jw4bcQLZHvWjdfdZHonJO2ZAn0XSn5zQeaCR3YVl
+         lRBAZc6VPhddKGIiX3yDtogh4rfc24ihl8J7L7ZjiB34W6oXqG6rqgAWyVxPu1DAPK
+         uVwR5vvb70xCfyF3kBx1jwMeNzeeuEZQ5E9QD0u8XMGDEMI+SQooJ/i/xVrTEPEBh7
+         6iPtDbx4vLB0w==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     konrad.dybcio@somainline.org, robh+dt@kernel.org,
-        mturquette@baylibre.com, dmitry.baryshkov@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, quic_tdas@quicinc.com,
-        agross@kernel.org, sboyd@kernel.org
-Cc:     linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 0/4] clk: qcom: add SM8450 Display clock controller support
-Date:   Mon, 26 Sep 2022 22:23:00 -0500
-Message-Id: <166424897976.1766486.7928034838653422228.b4-ty@kernel.org>
+To:     sboyd@kernel.org, Bjorn Andersson <andersson@kernel.org>,
+        iskren.chernev@gmail.com
+Cc:     konrad.dybcio@somainline.org,
+        ~postmarketos/upstreaming@lists.sr.ht, a_skl39@protonmail.com,
+        linux-clk@vger.kernel.org, mturquette@baylibre.com,
+        phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, agross@kernel.org
+Subject: Re: [PATCH 0/3] Merge non-standard qcom clk PLL offsets
+Date:   Mon, 26 Sep 2022 22:23:01 -0500
+Message-Id: <166424897977.1766486.8297085520259468743.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20220908222850.3552050-1-dmitry.baryshkov@linaro.org>
-References: <20220908222850.3552050-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220830075620.974009-1-iskren.chernev@gmail.com>
+References: <20220830075620.974009-1-iskren.chernev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -57,32 +58,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 9 Sep 2022 01:28:46 +0300, Dmitry Baryshkov wrote:
-> Add support for the Display clock controller found on SM8450 platform.
+On Tue, 30 Aug 2022 10:56:17 +0300, Iskren Chernev wrote:
+> Both the qcm2290 and sm6115 gcc drivers need a non-standard Alpha PLL register
+> map for DEFAULT and BRAMMO types.
 > 
-> Changes since v2:
->  - bindings: added missing gcc-sm8450.h include
-> 
-> Changes since v1:
->  - Rebased on top of 6.0-rc
->  - Dropped clk-names in favour of using parent indices (Bjorn)
->  - Added GCC_DISP_AHB_CLK to dispcc node (Bjorn)
->  - Changed bindings licence to dual GPL+BSD (Bjorn)
->  - Removed zero clocks in dt bindings
->  - Fixed syntax issues
+> The initial gcc-sm6115 was lacking the DEFAULT override, so fix that first,
+> then merge the two overrides by using newly created DEFAULT_EVO and BRAMMO_EVO
+> types.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/4] dt-bindings: clock: qcom: add bindings for dispcc on SM8450
-      commit: a7edd291636ac0bddf6c5a5aef6a94c2a9794830
-[2/4] clk: qcom: alpha-pll: add support for power off mode for lucid evo PLL
-      commit: 9d062edd561f594b71130c4846c9032bfec8d97f
-[3/4] clk: qcom: Add support for Display Clock Controller on SM8450
-      commit: 16fb89f92ec4412ac49ddca64944d5f72e063f69
-[4/4] arm64: dts: qcom: sm8450: add display clock controller
-      (no commit info)
+[1/3] clk: qcom: gcc-sm6115: Override default Alpha PLL regs
+      commit: 068a0605ef5a6b430e7278c169bfcd25b680b28f
+[2/3] clk: qcom: gcc-sm6115: Move alpha pll bramo overrides
+      commit: 65f1fa35aa70b9e5abfd184ce3078c9aa93a1cb4
+[3/3] clk: qcom: Merge alt alpha plls for qcm2260, sm6115
+      commit: 9e48f0519bae644d91c85d0a99ea5887688e4bd5
 
 Best regards,
 -- 
