@@ -2,113 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC96A5EC506
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 15:54:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 355E75EC51F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 15:57:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231958AbiI0Nyy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Sep 2022 09:54:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51302 "EHLO
+        id S232866AbiI0N5q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Sep 2022 09:57:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231848AbiI0Nyw (ORCPT
+        with ESMTP id S232841AbiI0N5d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Sep 2022 09:54:52 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D6CA5A157
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 06:54:50 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id s6so15814681lfo.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 06:54:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=y7eWZ9SMX+EFPIirIXesPJAAeZkrfswB+4GkN1RJhPk=;
-        b=n6tWZz5VI7Pp2Uu/mWB6mY2Hmq9R+OEFGzYZLL8g6VRzhMi8Si/lddGc6qn5PfUFC8
-         LcXriFA52bMkEZla1z2A4T+Z8GmSJqavnjlxQOIZqBjKe5mYDKJPx6VsaU0Bm2IVCabi
-         j1BahHdJB68ZQCzXRy9r9cPEk352miCC8Qg9az8OYjfLgOLxUKBb2KO0+sdeUO/0brrz
-         yhc/O1ojI/Z47Ty8C1v64n94RfrufbpdLXn0HlLO17pWxewUnD+XUMLqvj0l9aeTZpXM
-         HD62Qs3ggexgJ07C7fSZmgZWsENC1i+zmJUvtQd4xlyiAagpYhcT77yEutAYlSj98CNL
-         ULjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=y7eWZ9SMX+EFPIirIXesPJAAeZkrfswB+4GkN1RJhPk=;
-        b=Kq8aINIA8/bV4f6Ew3jxkMsaICLV/2Utp298b1qtaMT7rKipzCKsiIOZWfa1k6qYXn
-         Ig5wcfrxahroBRlp4UgdUK7SASj1xXP2r8JjjP2UpsjaoW6KEOwz7bnnXYlCZvQ6bvPl
-         nzP/24p4qRb5X4WfFqML3auIze1hvv4ezGRS3TQvaPhj59KXy1RPWQhxLyQw3nHLQsHn
-         fwqnuWlHokoH4hxJpUnV6jsSXg08SwyXzCfj20j3pxqBlDs1BL08cgqtN/K/1SIVUnv2
-         Tg9femHFxsldkBCIY3AWGMpYVbXu1XA4SCNMhzCRnNIX68TGfflJSRXBBi1UUIr727ZW
-         L2Jg==
-X-Gm-Message-State: ACrzQf0b8is12LxamedJS9pAjswgkc0E9mV65s3vER9p5irgHZ2kV/67
-        MTZUz3r3g2+pa3YyXjlKt0HhMg==
-X-Google-Smtp-Source: AMsMyM7RVdxF0oAtsZ2jK1fXCW+7kyhsovqXnP8hVaTceEAnHfBBNXoO/Z6cZWpWPH5Ndc4q5eb3kQ==
-X-Received: by 2002:ac2:5dd0:0:b0:49f:bbc5:a77a with SMTP id x16-20020ac25dd0000000b0049fbbc5a77amr10661528lfq.179.1664286888990;
-        Tue, 27 Sep 2022 06:54:48 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id v9-20020a056512348900b0049465afdd38sm171569lfr.108.2022.09.27.06.54.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Sep 2022 06:54:48 -0700 (PDT)
-Message-ID: <4d2c1aa9-dfc4-dc5f-cb13-50ed940939fa@linaro.org>
-Date:   Tue, 27 Sep 2022 15:54:47 +0200
+        Tue, 27 Sep 2022 09:57:33 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E35A5148A3D;
+        Tue, 27 Sep 2022 06:57:24 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28RCx1tF005993;
+        Tue, 27 Sep 2022 13:57:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=EbZ8P2QHGBsmzMMNq1xlcxkbkA3vcqR6YFkf1gXCvDM=;
+ b=nS4C+3G46aI4QoWIk7IE+CAKpnhiZpoVxXuL8rgue1DF6pfyKdeOR3b2JpBXcT+MQZJv
+ HqojdKoXv5kal8mN678oVms0RnNR6zg8hsn9cSAp0iADrwg8ghIZ9Xig5+Pg5DC194TV
+ 7O4Fh0EiWWVJw8rv1orjtf8NST2Xt5Oo6kk1wOraz3SongUt310VHtno2x1yqnE5Y+et
+ WZTJswe0Vt5wonhzru9jGbcW4+uuBCfq82+Rl5Mx0NJ3YWGS4XfjY3ESBPuiGhyUJ643
+ ifjEe704c8VF3p4l9NYE8tQfTWOUrs7IitZV3uKEkRXolWLnwWCOFNugzGfJZ3cQ1Tnm IQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3juq77hj6t-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 27 Sep 2022 13:57:13 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28RDvC6C016596
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 27 Sep 2022 13:57:12 GMT
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.29; Tue, 27 Sep 2022 06:57:06 -0700
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <linux-remoteproc@vger.kernel.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>, <devicetree@vger.kernel.org>,
+        <krzysztof.kozlowski@linaro.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v9 0/7] Update ADSP pil loader for SC7280 platform
+Date:   Tue, 27 Sep 2022 19:26:36 +0530
+Message-ID: <1664287003-31450-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH 11/15] dt-bindings: pinctrl: qcom,sm8250: add
- gpio-reserved-ranges and gpio-line-names
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220925110608.145728-1-krzysztof.kozlowski@linaro.org>
- <20220925110608.145728-12-krzysztof.kozlowski@linaro.org>
- <149af8eb-cfa9-c2f1-1aa6-6057df3aa03d@somainline.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <149af8eb-cfa9-c2f1-1aa6-6057df3aa03d@somainline.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: HxtwUNqyf24YfnkRW-KdN_WXU3JYPZcl
+X-Proofpoint-GUID: HxtwUNqyf24YfnkRW-KdN_WXU3JYPZcl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-27_05,2022-09-27_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ clxscore=1015 lowpriorityscore=0 malwarescore=0 bulkscore=0 suspectscore=0
+ mlxscore=0 impostorscore=0 mlxlogscore=999 phishscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2209130000
+ definitions=main-2209270085
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/09/2022 14:41, Konrad Dybcio wrote:
-> 
-> 
-> On 25.09.2022 13:06, Krzysztof Kozlowski wrote:
->> Document common GPIO properties (gpio-reserved-ranges and
->> gpio-line-names), already used on qrb5165-rb5 board.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>  .../devicetree/bindings/pinctrl/qcom,sm8250-pinctrl.yaml   | 7 +++++++
->>  1 file changed, 7 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8250-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8250-pinctrl.yaml
->> index c44d02d28bc9..d7d8e5d3b659 100644
->> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sm8250-pinctrl.yaml
->> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8250-pinctrl.yaml
->> @@ -49,6 +49,13 @@ properties:
->>    gpio-ranges:
->>      maxItems: 1
->>  
->> +  gpio-reserved-ranges:
->> +    minItems: 1
-> Not sure about this.. However, this will apply to 99.9% of boards, so:
+Update ADSP pil loader driver for SC7280 platforms.
+Changes since V8:
+	-- Add glink-edge reference in dt-bindings.
+	-- Remove redundant glinke-edge properties in dt-bindings.
+	-- Make all reg propertioes as mandatory in dt-bindings.
+	-- Add iommus property in dt-bindings.
+Changes since V7:
+	-- Drop out of reset time out patch.
+	-- Remove redundant clocks in dt bindings.
+	-- Fix dt compilation error in dt bindings.
+Changes since V6:
+	-- Update dt-bindings with glink-edge
+	-- Add qcom,qmp property.
+	-- Update parse firmware callback.
+	-- Update commit message.
+	-- Update smmu map and unmap function names.
+	-- Revert adsp_ops const change.
+	-- Move iommu check to within smmu map/unmap functions.
+Changes since V5:
+	-- Remove adsp_rproc_unmap_smmu, adsp_of_unmap_smmu, adsp_of_map_smmu and 
+	   adsp_rproc_map_smmu functions.
+	-- Remove find_loaded_rsc_table call back initialization.
+	-- Rename adsp_sandbox_needed to has_iommu.
+	-- Update parse_fw callback in rproc ops.
+	-- Remove qcom,adsp-memory-regions property in dt-bindings.
+	-- Change adsp binary extension name.
+Changes since V4:
+	-- Update halt registers description in dt bindings.
+	-- Update Memory sandboxing with proper APIs for resource
+	   allocation and free.
+Changes since V3:
+	-- Rename is_adsp_sb_needed to adsp_sandbox_needed.
+	-- Update sc7280 compatible name entry in sorted order.
+	-- Add smmu unmapping in error case and in adsp stop.
+	-- Revert converting sdm845 dt bindings to generic and 
+	   create new dt bindings for sc7280.
+Changes since V2:
+	-- Generated patch with -M flag.
+	-- Add Clock property in dt bindings.
+	-- Add qcom,adsp-memory-regions property.
+	-- Add is_adsp_sb_needed flag instead of is_wpss.
+	-- Initialize is_adsp_sb_needed flag.
+	-- Remove empty proxy pds array.
+	-- Replace platform_bus_type with adsp->dev->bus.
+	-- Use API of_parse_phandle_with_args() instead of 
+	    of_parse_phandle_with_fixed_args().
+	-- Replace adsp->is_wpss with adsp->is_adsp.
+	-- Update error handling in adsp_start().
+Changes since V1:
+	-- Change reg property maxItems to minItems and update description.
+	-- Fix typo errors.
 
-We need some minimum number.
+Srinivasa Rao Mandadapu (7):
+  dt-bindings: remoteproc: qcom: Add SC7280 ADSP support
+  remoteproc: qcom: Add flag in adsp private data structure
+  remoteproc: qcom: Add compatible name for SC7280 ADSP
+  remoteproc: qcom: Update rproc parse firmware callback
+  remoteproc: qcom: Replace hard coded values with macros
+  remoteproc: qcom: Add efuse evb selection control
+  remoteproc: qcom: Add support for memory sandbox
 
-Best regards,
-Krzysztof
+ .../bindings/remoteproc/qcom,sc7280-adsp-pil.yaml  | 194 +++++++++++++++++++++
+ drivers/remoteproc/qcom_q6v5_adsp.c                | 124 ++++++++++++-
+ 2 files changed, 314 insertions(+), 4 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
+
+-- 
+2.7.4
 
