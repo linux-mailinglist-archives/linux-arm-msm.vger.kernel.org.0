@@ -2,65 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FF675ECE11
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 22:13:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 49C785ECE30
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 22:16:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232050AbiI0UNe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Sep 2022 16:13:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60908 "EHLO
+        id S232982AbiI0UPz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Sep 2022 16:15:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232929AbiI0UNP (ORCPT
+        with ESMTP id S232575AbiI0UPB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Sep 2022 16:13:15 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E86C41ED236;
-        Tue, 27 Sep 2022 13:12:23 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id a41so14670044edf.4;
-        Tue, 27 Sep 2022 13:12:23 -0700 (PDT)
+        Tue, 27 Sep 2022 16:15:01 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04A371EC9A3;
+        Tue, 27 Sep 2022 13:14:21 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id 13so23034980ejn.3;
+        Tue, 27 Sep 2022 13:14:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=8pSjB+gJohvS5unlBusQ5X7FD9nY+Kc3aHB8SHm0lc4=;
-        b=V6IyQApKrHwEnRiPh8ZfEmMdlOzzFZe+WqBG6IfHy30xgJSByiS0mhqIQrO4L69zHW
-         ZrlJs2n+vTkLiQBEFEvfYvK9tpdaFmEXYU+/WVTczn67+qY6WfrzIP/cU4sdRaOUtKX0
-         3lX8sVOuwQOLVyC4g/yud+2K9uZTgwYgtjz3njjIO8umgu0hN3aqZN2HMm59npWnMGO4
-         ZnGMd+JFlBCJW4KB8QF/s/RasWZbSjRnLDWbaF+4ybIajEIOXVlkc4Z/2S7lbhT61uEq
-         y3wVaS/Ay1KHgBiYYD9VQ5zDx1zxijwZ4jebuzJlWUPY/2WECH7RpllKr0bIycvUx+UV
-         dV9w==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=BXhbejjCnCNn67i9Vw4bz+4tmw44N/wKgcDC4hccsTQ=;
+        b=YSaWOe/sKIGwrhMZuwMsv9vZAe7kXyEerYerGX4v+aduPVgxqp1+T8x/GpgkzB+yx3
+         tc2zTqfmaMxXgd9s5qpADzfAY5O3HR9lTR6rOLR4/f5ubXd2EqR/C+ApZfz2pUcXj4i+
+         A0FceUh12IoFQe8HaZ5CIT7zc+4hhCA/2n/keVxZnN0BHsrzA9RpBuYXRY8/f8xG+SMP
+         kE5JcYwtZK+oS5VmkgIyu/ToRzv/489CbMNfGV5UZaywFHCHw+SrHbp8iu4/nr6r72yH
+         XL7U3TLh6AICe2/YV3JyQmiGY88udXPEoEXJ7vq2ePw4NP09RMuV77jtnmu5MTvZvr5B
+         8I+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=8pSjB+gJohvS5unlBusQ5X7FD9nY+Kc3aHB8SHm0lc4=;
-        b=SGqaj69WedHRW6Be7AjjhUs55v4k58Fp6GGu53/Cr6LabekfGv5zVZCY46BQLHSIxg
-         rWPDHZhSkVaC28nZ61XjeI58IHie910zcwmSO1XIA6hrj+i8C4GD82DaIBpeQDCZz/NC
-         /Mf6Db6W7cRiZtFZeUuaFRcJm74+L5u9kebKaebTD31ChznBAOfmeliT5RBfmoBbNriK
-         aPNNtYG5aLQ7/aFaTL29HQvtvqxZsGnaqdScbaz4W3L8Ypt5yKwh61Ll+HGlPwKAUWeY
-         AP/Yl9MSmAfqme6Y9vwVLu+yLXZqzzT6MjBMXv3pnD1gJdLfdQ6AptrKXnlluncw3xvR
-         mYmQ==
-X-Gm-Message-State: ACrzQf2h9kxl/VXL68enR8NwWcWU/+0N0HJvQGANzXnKa9N99j/Jqtba
-        eV4SAvoJc9p8IvKpaOLH1GE=
-X-Google-Smtp-Source: AMsMyM41T3Qq7C/k7coJhotULEWD9XIfdLvFgcvBGe2okVecVjdNY7B892RoEHjUV1oXGDSf/Cy0Ng==
-X-Received: by 2002:a05:6402:5188:b0:452:5395:a271 with SMTP id q8-20020a056402518800b004525395a271mr29585135edd.383.1664309542538;
-        Tue, 27 Sep 2022 13:12:22 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=BXhbejjCnCNn67i9Vw4bz+4tmw44N/wKgcDC4hccsTQ=;
+        b=EncJ1Yg1owlOum8quk4XhCFrGAzVZ0cCA5iVzcI56jqplT/gk3j5xvzNQ945MKYaeg
+         FXW40kz1yAg2zv6dc/ydj0LFMtj/y2NlMwhkwcwX/giL9zVC5vRGR7bJYLRjWUHB6LnD
+         wI/UiLJoMP2e5VRQ/PP/fMOQuq3xTSbiUzvJIZLDQ8D3pujc603un4lzZumdzsiv+6y9
+         eXZspM9i/CviyVTF6HZt9RjPvnnjE2OwD2vXH7/pZo/YICTGBAiJiKR+/HLeMgpMu7q4
+         yyG26Yji06REZVdwsUgxYrM2YNOgymuSyq6dnt1dEgT3umQkxDbLB4jFaGAgxMcnyD9m
+         63JA==
+X-Gm-Message-State: ACrzQf2SJVjMmitVsWdza7VjdWeVeFZN+8kIwWPCNc37FeHzPpzgjSek
+        yw2OCKg5F9g3+9kb9S7exAtgJQndLP7ouw==
+X-Google-Smtp-Source: AMsMyM6TRlzn5JUio3cdwN4uil8j7uBxKFtzncUhY7HY0xDwY9TmfAE8vLYtqe4xQ31aOkHvPjdM9w==
+X-Received: by 2002:a17:906:5a4c:b0:76f:3e98:b453 with SMTP id my12-20020a1709065a4c00b0076f3e98b453mr24360443ejc.509.1664309657696;
+        Tue, 27 Sep 2022 13:14:17 -0700 (PDT)
 Received: from fedora.. (dh207-96-59.xnet.hr. [88.207.96.59])
-        by smtp.googlemail.com with ESMTPSA id t7-20020a170906a10700b0074136cac2e7sm1267548ejy.81.2022.09.27.13.12.21
+        by smtp.googlemail.com with ESMTPSA id i27-20020a170906115b00b0076f0a723f6bsm1250610eja.58.2022.09.27.13.14.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Sep 2022 13:12:22 -0700 (PDT)
+        Tue, 27 Sep 2022 13:14:17 -0700 (PDT)
 From:   Robert Marko <robimarko@gmail.com>
 To:     agross@kernel.org, andersson@kernel.org,
         konrad.dybcio@somainline.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH 2/2] arm64: dts: qcom: ipq6018: move ARMv8 timer out of SoC node
-Date:   Tue, 27 Sep 2022 22:12:18 +0200
-Message-Id: <20220927201218.1264506-2-robimarko@gmail.com>
+Subject: [PATCH 1/2] arm64: dts: qcom: cp01-c1: remove bootargs-append
+Date:   Tue, 27 Sep 2022 22:14:14 +0200
+Message-Id: <20220927201415.1265191-1-robimarko@gmail.com>
 X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20220927201218.1264506-1-robimarko@gmail.com>
-References: <20220927201218.1264506-1-robimarko@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -73,51 +70,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The ARM timer is usually considered not part of SoC node, just like
-other ARM designed blocks (PMU, PSCI).  This fixes dtbs_check warning:
-
-arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dtb: soc: timer: {'compatible': ['arm,armv8-timer'], 'interrupts': [[1, 2, 3848], [1, 3, 3848], [1, 4, 3848], [1, 1, 3848]]} should not be valid under {'type': 'object'}
-	From schema: dtschema/schemas/simple-bus.yaml
+bootargs-append is a leftover from the vendor SDK, and does not exist
+in the mainline kernel at all, so remove it.
 
 Signed-off-by: Robert Marko <robimarko@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/ipq6018.dtsi | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index 57978a8ab498..428e99e127c3 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -511,14 +511,6 @@ a53pll: clock@b116000 {
- 			clock-names = "xo";
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+index ff4c46645104..eaaaaa72234f 100644
+--- a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
++++ b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+@@ -20,7 +20,6 @@ aliases {
  
--		timer {
--			compatible = "arm,armv8-timer";
--			interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
--				     <GIC_PPI 3 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
--				     <GIC_PPI 4 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
--				     <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
--		};
--
- 		timer@b120000 {
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-@@ -770,6 +762,14 @@ dwc_0: usb@8a00000 {
- 		};
+ 	chosen {
+ 		stdout-path = "serial0:115200n8";
+-		bootargs-append = " swiotlb=1";
  	};
+ };
  
-+	timer {
-+		compatible = "arm,armv8-timer";
-+		interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
-+			     <GIC_PPI 3 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
-+			     <GIC_PPI 4 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
-+			     <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
-+	};
-+
- 	wcss: wcss-smp2p {
- 		compatible = "qcom,smp2p";
- 		qcom,smem = <435>, <428>;
 -- 
 2.37.3
 
