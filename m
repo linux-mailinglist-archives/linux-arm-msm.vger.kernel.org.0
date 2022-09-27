@@ -2,50 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 076FA5EC3DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 15:12:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3647A5EC3FD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 15:16:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232040AbiI0NMJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Sep 2022 09:12:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54760 "EHLO
+        id S232569AbiI0NQF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Sep 2022 09:16:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232454AbiI0NMC (ORCPT
+        with ESMTP id S232521AbiI0NP7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Sep 2022 09:12:02 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27CA2186988
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 06:11:44 -0700 (PDT)
+        Tue, 27 Sep 2022 09:15:59 -0400
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [5.144.164.166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96E8013FBA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 06:15:56 -0700 (PDT)
 Received: from [192.168.1.101] (95.49.29.188.neoplus.adsl.tpnet.pl [95.49.29.188])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id C9DEE3F33A;
-        Tue, 27 Sep 2022 15:11:41 +0200 (CEST)
-Message-ID: <6d64de60-90af-5452-642e-8a6247629022@somainline.org>
-Date:   Tue, 27 Sep 2022 15:11:41 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 852DD3F412;
+        Tue, 27 Sep 2022 15:15:54 +0200 (CEST)
+Message-ID: <27570e5e-f322-5985-4156-2ceb54dc4d6e@somainline.org>
+Date:   Tue, 27 Sep 2022 15:15:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.0
-Subject: Re: [PATCH v2 06/33] ARM: dts: qcom: msm8974: align TLMM pin
- configuration with DT schema
+Subject: Re: [PATCH v2 2/3] clk: qcom: gcc-ipq806x: use parent_data for the
+ last remaining entry
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        krishna Lanka <quic_vamslank@quicinc.com>,
-        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220926074415.53100-1-krzysztof.kozlowski@linaro.org>
- <20220926074415.53100-7-krzysztof.kozlowski@linaro.org>
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>
+References: <20220927113826.246241-1-dmitry.baryshkov@linaro.org>
+ <20220927113826.246241-3-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20220926074415.53100-7-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220927113826.246241-3-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
@@ -59,112 +57,31 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 26.09.2022 09:43, Krzysztof Kozlowski wrote:
-> DT schema expects TLMM pin configuration nodes to be named with
-> '-state' suffix and their optional children with '-pins' suffix.
+On 27.09.2022 13:38, Dmitry Baryshkov wrote:
+> Use parent_data for the last remaining entry (pll4). This clock is
+> provided by the lcc device.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Fixes: cb02866f9a74 ("clk: qcom: gcc-ipq806x: convert parent_names to parent_data")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 
 Konrad
->  .../qcom-msm8974-lge-nexus5-hammerhead.dts    | 30 +++++++++----------
->  1 file changed, 15 insertions(+), 15 deletions(-)
+>  drivers/clk/qcom/gcc-ipq806x.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-> index 6daceaa87802..8138f37233aa 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-> +++ b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-> @@ -573,43 +573,43 @@ bcrmf@1 {
->  };
->  
->  &tlmm {
-> -	sdc1_on: sdc1-on {
-> -		clk {
-> +	sdc1_on: sdc1-on-state {
-> +		clk-pins {
->  			pins = "sdc1_clk";
->  			drive-strength = <16>;
->  			bias-disable;
->  		};
->  
-> -		cmd-data {
-> +		cmd-data-pins {
->  			pins = "sdc1_cmd", "sdc1_data";
->  			drive-strength = <10>;
->  			bias-pull-up;
->  		};
->  	};
->  
-> -	sdc2_on: sdc2-on {
-> -		clk {
-> +	sdc2_on: sdc2-on-state {
-> +		clk-pins {
->  			pins = "sdc2_clk";
->  			drive-strength = <6>;
->  			bias-disable;
->  		};
->  
-> -		cmd-data {
-> +		cmd-data-pins {
->  			pins = "sdc2_cmd", "sdc2_data";
->  			drive-strength = <6>;
->  			bias-pull-up;
->  		};
->  	};
->  
-> -	mpu6515_pin: mpu6515 {
-> +	mpu6515_pin: mpu6515-state {
->  		pins = "gpio73";
->  		function = "gpio";
->  		bias-disable;
->  		input-enable;
->  	};
->  
-> -	touch_pin: touch {
-> -		int {
-> +	touch_pin: touch-state {
-> +		int-pins {
->  			pins = "gpio5";
->  			function = "gpio";
->  
-> @@ -618,7 +618,7 @@ int {
->  			input-enable;
->  		};
->  
-> -		reset {
-> +		reset-pins {
->  			pins = "gpio8";
->  			function = "gpio";
->  
-> @@ -627,25 +627,25 @@ reset {
->  		};
->  	};
->  
-> -	panel_pin: panel {
-> +	panel_pin: panel-state {
->  		pins = "gpio12";
->  		function = "mdp_vsync";
->  		drive-strength = <2>;
->  		bias-disable;
->  	};
->  
-> -	bt_pin: bt {
-> -		hostwake {
-> +	bt_pin: bt-state {
-> +		hostwake-pins {
->  			pins = "gpio42";
->  			function = "gpio";
->  		};
->  
-> -		devwake {
-> +		devwake-pins {
->  			pins = "gpio62";
->  			function = "gpio";
->  		};
->  
-> -		shutdown {
-> +		shutdown-pins {
->  			pins = "gpio41";
->  			function = "gpio";
->  		};
+> diff --git a/drivers/clk/qcom/gcc-ipq806x.c b/drivers/clk/qcom/gcc-ipq806x.c
+> index 718de17a1e60..6447f3e81b55 100644
+> --- a/drivers/clk/qcom/gcc-ipq806x.c
+> +++ b/drivers/clk/qcom/gcc-ipq806x.c
+> @@ -79,7 +79,9 @@ static struct clk_regmap pll4_vote = {
+>  	.enable_mask = BIT(4),
+>  	.hw.init = &(struct clk_init_data){
+>  		.name = "pll4_vote",
+> -		.parent_names = (const char *[]){ "pll4" },
+> +		.parent_data = &(const struct clk_parent_data){
+> +			.fw_name = "pll4", .name = "pll4",
+> +		},
+>  		.num_parents = 1,
+>  		.ops = &clk_pll_vote_ops,
+>  	},
