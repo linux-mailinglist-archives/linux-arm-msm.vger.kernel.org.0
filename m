@@ -2,57 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5498A5ECA6F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 19:06:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B16665ECACA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 19:26:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232822AbiI0RF5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Sep 2022 13:05:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59306 "EHLO
+        id S232139AbiI0R0f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Sep 2022 13:26:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232521AbiI0RFf (ORCPT
+        with ESMTP id S232072AbiI0R0e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Sep 2022 13:05:35 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8FAC5C351;
-        Tue, 27 Sep 2022 10:05:20 -0700 (PDT)
+        Tue, 27 Sep 2022 13:26:34 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DE42B0898;
+        Tue, 27 Sep 2022 10:26:32 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3608F6171E;
-        Tue, 27 Sep 2022 17:05:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A005CC433D7;
-        Tue, 27 Sep 2022 17:05:18 +0000 (UTC)
+        by sin.source.kernel.org (Postfix) with ESMTPS id E2451CE13B1;
+        Tue, 27 Sep 2022 17:26:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1964AC433C1;
+        Tue, 27 Sep 2022 17:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664298319;
-        bh=RezG0e8yTfUZ/cPhgrgq/ESV4VhaQWW7GClmeDE1snI=;
+        s=k20201202; t=1664299589;
+        bh=7qW4NoYfDpzCVbAcPMno7UyKuLi2bhHCAlraw+xf0DU=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZI/Pv9MSA2zEekt9RdVg4J95Uf6OsqYR7yTF1CPjvRu2YLyXF1gHyrIK+HG147ejQ
-         zzjOo9FYjOCIIUQbllxILWHSViAlY6bd9fO+5d0ImLb6QMZYkoSwrzJQeuJlNTOF4H
-         NT//fRz7tKz4vCZPpxplO/ldzuvgMXgjGSMqYSgEIm3R8SpViwo1MKBIe68Rd620mx
-         NJLTdVvsduhEKYXx2wO/bF6T10G8yPTtxd2fm7RqnjsF74rVktYcnDZLGxjJ7fzVeO
-         5yBmvU+jUZFt2WPIOUivKZUfg1jioWDElwUTRDT3P7w4EqSNDNig9G38YZtdEK/etQ
-         rmDN8KIP2ypJQ==
-Date:   Tue, 27 Sep 2022 12:05:16 -0500
+        b=Ah9kXG5WXTnm4IQfxw0kTiNqLFGQtpPXAwE/8mRaytERIGpRPJA7plDtS0pKtRKQK
+         6FVQKT9fsZgjjiGIxz3V7bRd3ogBSVIQKHZRArlodpWDmnspRE/E6cmuLdCh2OVruj
+         9gfSy0wfh45qDbDNyPpKRzpGoKF/PT4N6NotqFYw/kLfhdjSSMLWDdL5kHj77ALdAq
+         m86sTM6PztdqZtdNnqPccZn/Ftgv3KucRwPi4i6Vaf54J7HY6BGorcUF6zelf3BAs7
+         VUFM7Xoq7LprWEIjmaHp2wg6mBJjkfy6XAupj2HDUZDSTH8XgERJZoeOcKualjUDva
+         2exQjN63qeGCw==
+Date:   Tue, 27 Sep 2022 12:26:26 -0500
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>, agross@kernel.org,
-        konrad.dybcio@somainline.org, mturquette@baylibre.com,
-        sboyd@kernel.org, mka@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, johan+linaro@kernel.org,
-        quic_kriskura@quicinc.com, dianders@chromium.org,
-        linux-clk@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] clk: qcom: gdsc: Fix the handling of PWRSTS_RET
- support
-Message-ID: <20220927170516.zrkzn3xl7oedzi4l@builder.lan>
-References: <20220920111517.10407-1-quic_rjendra@quicinc.com>
- <d813e8a5-9eba-b3f7-2eee-cd721d120a30@collabora.com>
- <20220927030203.tz4j5vuhvrnhti6i@builder.lan>
- <657820a2-f945-ac6a-8a99-47ee511181d8@collabora.com>
+To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        krzysztof.kozlowski@linaro.org, Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 3/5] clk: qcom: gdsc: Add a reset op to poll gdsc
+ collapse
+Message-ID: <20220927172626.cwxpmrqkb7zsuolx@builder.lan>
+References: <1660853919-987-1-git-send-email-quic_akhilpo@quicinc.com>
+ <20220819014758.v3.3.I162c4be55f230cd439f0643f1624527bdc8a9831@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <657820a2-f945-ac6a-8a99-47ee511181d8@collabora.com>
+In-Reply-To: <20220819014758.v3.3.I162c4be55f230cd439f0643f1624527bdc8a9831@changeid>
 X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -62,121 +65,136 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 27, 2022 at 01:57:59PM +0200, AngeloGioacchino Del Regno wrote:
-> Il 27/09/22 05:02, Bjorn Andersson ha scritto:
-> > On Tue, Sep 20, 2022 at 02:39:21PM +0200, AngeloGioacchino Del Regno wrote:
-> > > Il 20/09/22 13:15, Rajendra Nayak ha scritto:
-> > > > GDSCs cannot be transitioned into a Retention state in SW.
-> > > > When either the RETAIN_MEM bit, or both the RETAIN_MEM and
-> > > > RETAIN_PERIPH bits are set, and the GDSC is left ON, the HW
-> > > > takes care of retaining the memory/logic for the domain when
-> > > > the parent domain transitions to power collapse/power off state.
-> > > > 
-> > > > On some platforms where the parent domains lowest power state
-> > > > itself is Retention, just leaving the GDSC in ON (without any
-> > > > RETAIN_MEM/RETAIN_PERIPH bits being set) will also transition
-> > > > it to Retention.
-> > > > 
-> > > > The existing logic handling the PWRSTS_RET seems to set the
-> > > > RETAIN_MEM/RETAIN_PERIPH bits if the cxcs offsets are specified
-> > > > but then explicitly turns the GDSC OFF as part of _gdsc_disable().
-> > > > Fix that by leaving the GDSC in ON state.
-> > > > 
-> > > > Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> > > > Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> > > > ---
-> > > > v3:
-> > > > Updated changelog
-> > > > 
-> > > > There are a few existing users of PWRSTS_RET and I am not
-> > > > sure if they would be impacted with this change
-> > > > 
-> > > > 1. mdss_gdsc in mmcc-msm8974.c, I am expecting that the
-> > > > gdsc is actually transitioning to OFF and might be left
-> > > > ON as part of this change, atleast till we hit system wide
-> > > > low power state.
-> > > > If we really leak more power because of this
-> > > > change, the right thing to do would be to update .pwrsts for
-> > > > mdss_gdsc to PWRSTS_OFF_ON instead of PWRSTS_RET_ON
-> > > > I dont have a msm8974 hardware, so if anyone who has can report
-> > > > any issues I can take a look further on how to fix it.
-> > > 
-> > > I think that the safest option is to add a PWRSTS_RET_HW_CTRL flag (or similar),
-> > > used for the specific cases of SC7180 and SC7280 (and possibly others) where the
-> > > GDSC is automatically transitioned to a Retention state by HW control, with no
-> > > required software (kernel driver) intervention.
-> > > 
-> > > > 
-> > > > 2. gpu_gx_gdsc in gpucc-msm8998.c and
-> > > >      gpu_gx_gdsc in gpucc-sdm660.c
-> > > > Both of these seem to add support for 3 power state
-> > > > OFF, RET and ON, however I dont see any logic in gdsc
-> > > > driver to handle 3 different power states.
-> > > > So I am expecting that these are infact just transitioning
-> > > > between ON and OFF and RET state is never really used.
-> > > > The ideal fix for them would be to just update their resp.
-> > > > .pwrsts to PWRSTS_OFF_ON only.
-> > > 
-> > > static int gdsc_init(struct gdsc *sc)
-> > > {
-> > > 
-> > > 	...
-> > > 
-> > > 	if (on || (sc->pwrsts & PWRSTS_RET))
-> > > 		gdsc_force_mem_on(sc);
-> > > 	else
-> > > 		gdsc_clear_mem_on(sc);
-> > > 
-> > > 	...
-> > > }
-> > > 
-> > > On MSM8998 and SDM630/636/660, we're reaching that point with a GDSC that is
-> > > left OFF from the bootloader, but we want (at least for 630/660) memretain
-> > > without periph-retain: this is required to make the hypervisor happy.
-> > > 
-> > 
-> > Forgive me Angelo, but can you please help me understand your concern
-> > here?
-> > 
-> > Are yous saying that the valid states for 8998/660 are PWRSTS_OFF_ON,
-> > but you also want gdsc_force_mem_on() - with NO_RET_PERIPH?
-> > 
-> > 
-> > It seems to me that as Rajendra's patch is written, the gpu_gx_gdsc
-> > won't be affected, because pwrsts != PWRSTS_RET. So this is a question
-> > about the validity of fixing the pwrsts in gpucc-msm8998, rather than
-> > about this patch in itself?
-> > 
+On Fri, Aug 19, 2022 at 01:48:37AM +0530, Akhil P Oommen wrote:
+> Add a reset op compatible function to poll for gdsc collapse.
 > 
-> Hello Bjorn,
+> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> ---
 > 
-> my replies were related to this part of the commit description:
+> (no changes since v2)
 > 
-> >>> The ideal fix for them would be to just update their resp.
-> >>> .pwrsts to PWRSTS_OFF_ON only.
+> Changes in v2:
+> - Minor update to function prototype
 > 
-> By updating MSM8998 and SDM660's gpu_gx_gdsc to remove PWRSTS_RET, the gdsc_init()
-> flow will change, as in the aforementioned branch, `on` will be false, hence,
-> we will clear RETAIN_MEM during the gpu_gx_gdsc initialization, producing side
-> effects.
-> I agree on the fact that PWRSTS_RET was *not* handled correctly before this commit
-> and this alone will not produce any side effects on MSM8998, nor SDM660.
+>  drivers/clk/qcom/gdsc.c | 23 +++++++++++++++++++----
+>  drivers/clk/qcom/gdsc.h |  7 +++++++
+>  2 files changed, 26 insertions(+), 4 deletions(-)
 > 
-> So yes, this is a discussion about the validity of fixing the pwrsts in
-> gpucc-msm8998 and in gpucc-sdm660.c.
-> 
+> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+> index 44520ef..2d0f1d1 100644
+> --- a/drivers/clk/qcom/gdsc.c
+> +++ b/drivers/clk/qcom/gdsc.c
+> @@ -17,6 +17,7 @@
+>  #include <linux/reset-controller.h>
+>  #include <linux/slab.h>
+>  #include "gdsc.h"
+> +#include "reset.h"
+>  
+>  #define PWR_ON_MASK		BIT(31)
+>  #define EN_REST_WAIT_MASK	GENMASK_ULL(23, 20)
+> @@ -116,7 +117,8 @@ static int gdsc_hwctrl(struct gdsc *sc, bool en)
+>  	return regmap_update_bits(sc->regmap, sc->gdscr, HW_CONTROL_MASK, val);
+>  }
+>  
+> -static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status)
+> +static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status,
+> +		s64 timeout_us, unsigned int interval_ms)
+>  {
+>  	ktime_t start;
+>  
+> @@ -124,7 +126,9 @@ static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status)
+>  	do {
+>  		if (gdsc_check_status(sc, status))
+>  			return 0;
+> -	} while (ktime_us_delta(ktime_get(), start) < TIMEOUT_US);
+> +		if (interval_ms)
+> +			msleep(interval_ms);
 
-Okay, now I understand the context, I will move ahead and merge these
-patches then.
+You effectively msleep(5) here, for which you shouldn't use msleep() -
+or more likely, this only happens in exceptional circumstances, so a
+longer interval_ms seems reasonable.
 
+> +	} while (ktime_us_delta(ktime_get(), start) < timeout_us);
+>  
+>  	if (gdsc_check_status(sc, status))
+>  		return 0;
+> @@ -172,7 +176,7 @@ static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status)
+>  		udelay(1);
+>  	}
+>  
+> -	ret = gdsc_poll_status(sc, status);
+> +	ret = gdsc_poll_status(sc, status, TIMEOUT_US, 0);
+>  	WARN(ret, "%s status stuck at 'o%s'", sc->pd.name, status ? "ff" : "n");
+>  
+>  	if (!ret && status == GDSC_OFF && sc->rsupply) {
+> @@ -343,7 +347,7 @@ static int _gdsc_disable(struct gdsc *sc)
+>  		 */
+>  		udelay(1);
+>  
+> -		ret = gdsc_poll_status(sc, GDSC_ON);
+> +		ret = gdsc_poll_status(sc, GDSC_ON, TIMEOUT_US, 0);
+>  		if (ret)
+>  			return ret;
+>  	}
+> @@ -565,3 +569,14 @@ int gdsc_gx_do_nothing_enable(struct generic_pm_domain *domain)
+>  	return 0;
+>  }
+>  EXPORT_SYMBOL_GPL(gdsc_gx_do_nothing_enable);
+> +
+> +int gdsc_wait_for_collapse(void *priv)
+> +{
+> +	struct gdsc *sc = priv;
+> +	int ret;
+> +
+> +	ret = gdsc_poll_status(sc, GDSC_OFF, 500000, 5);
 
-And for 8998/660 you're saying that the GDSC is found to be OFF at boot
-and in runtime you're going to bounce it between on and off in software,
-but you need RETAIN_MEM set?
+So I presume the GPU driver will put() the GDSC and then issue a reset,
+which will wait up to 5 seconds for the GDSC to be turned off.
 
-If that's the case this GDSC can be in all 3 states. But as you can
-find in the discussions that lead up to this discussion, we don't have a
-way to represent this to the clients (today).
+So essentially, this logic is needed because we don't wait for VOTABLE
+GDSCs to be turned off? And we have no way to do the put-with-wait for
+this specific case.
 
-Regards,
+I would like the commit message to capture this reasoning.
+
+Thanks,
 Bjorn
+
+> +	WARN(ret, "%s status stuck at 'on'", sc->pd.name);
+> +	return ret;
+> +}
+> +EXPORT_SYMBOL_GPL(gdsc_wait_for_collapse);
+> diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
+> index ad313d7..d484bdb 100644
+> --- a/drivers/clk/qcom/gdsc.h
+> +++ b/drivers/clk/qcom/gdsc.h
+> @@ -12,6 +12,7 @@
+>  struct regmap;
+>  struct regulator;
+>  struct reset_controller_dev;
+> +struct qcom_reset_map;
+>  
+>  /**
+>   * struct gdsc - Globally Distributed Switch Controller
+> @@ -79,6 +80,7 @@ int gdsc_register(struct gdsc_desc *desc, struct reset_controller_dev *,
+>  		  struct regmap *);
+>  void gdsc_unregister(struct gdsc_desc *desc);
+>  int gdsc_gx_do_nothing_enable(struct generic_pm_domain *domain);
+> +int gdsc_wait_for_collapse(void *priv);
+>  #else
+>  static inline int gdsc_register(struct gdsc_desc *desc,
+>  				struct reset_controller_dev *rcdev,
+> @@ -88,5 +90,10 @@ static inline int gdsc_register(struct gdsc_desc *desc,
+>  }
+>  
+>  static inline void gdsc_unregister(struct gdsc_desc *desc) {};
+> +
+> +static int gdsc_wait_for_collapse(void *priv)
+> +{
+> +	return  -ENOSYS;
+> +}
+>  #endif /* CONFIG_QCOM_GDSC */
+>  #endif /* __QCOM_GDSC_H__ */
+> -- 
+> 2.7.4
+> 
