@@ -2,163 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C42A5ECCBD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 21:18:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3B805ECD2B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 21:51:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231286AbiI0TSC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Sep 2022 15:18:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55564 "EHLO
+        id S231790AbiI0Tvx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Sep 2022 15:51:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230443AbiI0TR6 (ORCPT
+        with ESMTP id S232014AbiI0Tvw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Sep 2022 15:17:58 -0400
-Received: from phobos.denx.de (phobos.denx.de [85.214.62.61])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F06ADDCE91;
-        Tue, 27 Sep 2022 12:17:55 -0700 (PDT)
-Received: from tr.lan (ip-86-49-12-201.bb.vodafone.cz [86.49.12.201])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: marex@denx.de)
-        by phobos.denx.de (Postfix) with ESMTPSA id B115D84DEC;
-        Tue, 27 Sep 2022 21:17:53 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de;
-        s=phobos-20191101; t=1664306274;
-        bh=4vMbhbwGpwD7+mJZLz+7XjKP9e1tqSkXhVPOjHx2Sz4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=j7ZRNuoZLlUNjoIFBN7WWfSH/Zo/cc8jARg3LruUCzVPq7iz0trQU07+gO70WdcF6
-         YhuIRX+fIklcxgLxgqiCtOGUxiyWmDHwJ7isCo896nZHW/bezTTj3Bm4O8gdFmM2ci
-         dZcOXws74LAi7xoM0OLH2sj2wLgieSwmBxHABpYlh0f++DOLkRYyJZvi9Urk2KqrjZ
-         +s529+BxIXvKGCocd3DeXdPRPmQYuFFjCjpI7Hd9vO6ssrAP8Sz20gg0xO2Ri/YUFP
-         pWL7ZaHwI6dKl6rpEXtAi8X39thlSBe6t26KZuPbDzPjwT0Cxk9D69W9F/vOValSjE
-         Lmk0+GxAdF9CA==
-From:   Marek Vasut <marex@denx.de>
-To:     linux-arm-kernel@lists.infradead.org
-Cc:     Marek Vasut <marex@denx.de>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Tue, 27 Sep 2022 15:51:52 -0400
+Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C6B696FD0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 12:51:50 -0700 (PDT)
+Received: by mail-il1-x12f.google.com with SMTP id r5so4206211ilm.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 12:51:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ieee.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=vatT0SjX3NY2U9704T3rmB4+zptS7Iq13IphnWVOULo=;
+        b=VDBr1DEpZakwgEBBffkB2Y7gaS4rfctKIIdPUO++q9iH+NEtFX7MmB6fK5J86NDeF1
+         7s1VoKhiY90lMbhzlP+ktqEW/m3/HwKHi/LVE6KGxbjN39tfbPur203L83F1BlIzOkZk
+         gsgquWsyhMlQXu1ycSBaMjtfAnI+/8HuXhSL8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=vatT0SjX3NY2U9704T3rmB4+zptS7Iq13IphnWVOULo=;
+        b=1/ZB2PN4QCNyvZ8+cx0Zc0dK+IEcX6Toe9NBOXx+yjfZBhlBkZM7UNmdy/r/FHwqEP
+         2R6z9C5mb2rTs5O941gVrvtSkdlVpphWq1RaSYNwmNVfNXYWLYHkGhm3tBvhKyIuMAKA
+         QPJh5PK2qcf9mcRl/JwYvlFt5wIO6n4bOWL3JERyr62720ZsEpGeUGX+qcEKuhGESgNN
+         hu5TrOYbkmRhK4B2G6iYM3IBwsgOswJtGIIYJREPLwNykPChQm2Wo6fW7g5dKjOzdpCd
+         F6LCjPw8Kfw3W/m+70mRdCx10vOiEM/gcU7QiPe7d0vpoRsnEIME+iWutKuW7//g7btk
+         S7rw==
+X-Gm-Message-State: ACrzQf0j+NXQ4Zo7datWMr6TFKaPI2YyyxRTIRtMIr9ZV7g4bICzZoYQ
+        5gnXT6ZSOtT9lknr1LoT5dl+FQ==
+X-Google-Smtp-Source: AMsMyM6og55zbZYLITEuu8TP1VjxOGbk3Q3j7F9cNOMC0TXH6IDFkvCm1KHZdAwgObFe52V3uqJwuA==
+X-Received: by 2002:a92:cdae:0:b0:2f5:8aea:654d with SMTP id g14-20020a92cdae000000b002f58aea654dmr13676601ild.135.1664308309819;
+        Tue, 27 Sep 2022 12:51:49 -0700 (PDT)
+Received: from [172.22.22.26] ([98.61.227.136])
+        by smtp.googlemail.com with ESMTPSA id x13-20020a0566380cad00b0035b2f0ebf65sm928031jad.76.2022.09.27.12.51.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Sep 2022 12:51:49 -0700 (PDT)
+Message-ID: <353ae92d-57a2-5ca3-c3dc-c68b6a8f80ab@ieee.org>
+Date:   Tue, 27 Sep 2022 14:51:48 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH V13 1/7] dt-bindings: Added the yaml bindings for DCC
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Yann Gautier <yann.gautier@foss.st.com>,
-        devicetree@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com
-Subject: [PATCH 3/3] ARM: dts: stm32: Drop MMCI interrupt-names
-Date:   Tue, 27 Sep 2022 21:17:36 +0200
-Message-Id: <20220927191736.299702-3-marex@denx.de>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220927191736.299702-1-marex@denx.de>
-References: <20220927191736.299702-1-marex@denx.de>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: clamav-milter 0.103.6 at phobos.denx.de
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>, vkoul@kernel.org
+References: <cover.1663642051.git.quic_schowdhu@quicinc.com>
+ <c6b55a5b44a8add13ea9015542522b2562cf8f60.1663642052.git.quic_schowdhu@quicinc.com>
+ <f09fabec-f5a3-df21-f776-956732d60359@kernel.org>
+From:   Alex Elder <elder@ieee.org>
+In-Reply-To: <f09fabec-f5a3-df21-f776-956732d60359@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The pl18x MMCI driver does not use the interrupt-names property,
-the binding document has been updated to recommend this property
-be unused, remove it.
+On 9/23/22 2:27 PM, Krzysztof Kozlowski wrote:
+> On 20/09/2022 05:56, Souradeep Chowdhury wrote:
+>> Documentation for Data Capture and Compare(DCC) device tree bindings
+>> in yaml format.
+>>
+>> Reviewed-by: Rob Herring <robh@kernel.org>
+>> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>				
 
-Signed-off-by: Marek Vasut <marex@denx.de>
----
-Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: Yann Gautier <yann.gautier@foss.st.com>
-Cc: devicetree@vger.kernel.org
-Cc: linux-mmc@vger.kernel.org
-Cc: linux-arm-msm@vger.kernel.org
-Cc: linux-stm32@st-md-mailman.stormreply.com
-To: linux-arm-kernel@lists.infradead.org
----
- arch/arm/boot/dts/stm32h743.dtsi  | 2 --
- arch/arm/boot/dts/stm32mp131.dtsi | 2 --
- arch/arm/boot/dts/stm32mp151.dtsi | 3 ---
- 3 files changed, 7 deletions(-)
+Souradeep, I will review v14 (of the code anyway--patch 3) when you send it.
 
-diff --git a/arch/arm/boot/dts/stm32h743.dtsi b/arch/arm/boot/dts/stm32h743.dtsi
-index 2059593da21dc..28e3deb20e1e1 100644
---- a/arch/arm/boot/dts/stm32h743.dtsi
-+++ b/arch/arm/boot/dts/stm32h743.dtsi
-@@ -375,7 +375,6 @@ sdmmc1: mmc@52007000 {
- 			arm,primecell-periphid = <0x10153180>;
- 			reg = <0x52007000 0x1000>;
- 			interrupts = <49>;
--			interrupt-names = "cmd_irq";
- 			clocks = <&rcc SDMMC1_CK>;
- 			clock-names = "apb_pclk";
- 			resets = <&rcc STM32H7_AHB3_RESET(SDMMC1)>;
-@@ -389,7 +388,6 @@ sdmmc2: mmc@48022400 {
- 			arm,primecell-periphid = <0x10153180>;
- 			reg = <0x48022400 0x400>;
- 			interrupts = <124>;
--			interrupt-names = "cmd_irq";
- 			clocks = <&rcc SDMMC2_CK>;
- 			clock-names = "apb_pclk";
- 			resets = <&rcc STM32H7_AHB2_RESET(SDMMC2)>;
-diff --git a/arch/arm/boot/dts/stm32mp131.dtsi b/arch/arm/boot/dts/stm32mp131.dtsi
-index 47dc07abe4e37..4c9e095ed2a8a 100644
---- a/arch/arm/boot/dts/stm32mp131.dtsi
-+++ b/arch/arm/boot/dts/stm32mp131.dtsi
-@@ -356,7 +356,6 @@ sdmmc1: mmc@58005000 {
- 			arm,primecell-periphid = <0x20253180>;
- 			reg = <0x58005000 0x1000>, <0x58006000 0x1000>;
- 			interrupts = <GIC_SPI 50 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "cmd_irq";
- 			clocks = <&rcc SDMMC1_K>;
- 			clock-names = "apb_pclk";
- 			resets = <&rcc SDMMC1_R>;
-@@ -371,7 +370,6 @@ sdmmc2: mmc@58007000 {
- 			arm,primecell-periphid = <0x20253180>;
- 			reg = <0x58007000 0x1000>, <0x58008000 0x1000>;
- 			interrupts = <GIC_SPI 108 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "cmd_irq";
- 			clocks = <&rcc SDMMC2_K>;
- 			clock-names = "apb_pclk";
- 			resets = <&rcc SDMMC2_R>;
-diff --git a/arch/arm/boot/dts/stm32mp151.dtsi b/arch/arm/boot/dts/stm32mp151.dtsi
-index e02b3f5d44cba..5491b6c4dec20 100644
---- a/arch/arm/boot/dts/stm32mp151.dtsi
-+++ b/arch/arm/boot/dts/stm32mp151.dtsi
-@@ -1118,7 +1118,6 @@ sdmmc3: mmc@48004000 {
- 			arm,primecell-periphid = <0x00253180>;
- 			reg = <0x48004000 0x400>;
- 			interrupts = <GIC_SPI 137 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "cmd_irq";
- 			clocks = <&rcc SDMMC3_K>;
- 			clock-names = "apb_pclk";
- 			resets = <&rcc SDMMC3_R>;
-@@ -1439,7 +1438,6 @@ sdmmc1: mmc@58005000 {
- 			arm,primecell-periphid = <0x00253180>;
- 			reg = <0x58005000 0x1000>;
- 			interrupts = <GIC_SPI 49 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "cmd_irq";
- 			clocks = <&rcc SDMMC1_K>;
- 			clock-names = "apb_pclk";
- 			resets = <&rcc SDMMC1_R>;
-@@ -1454,7 +1452,6 @@ sdmmc2: mmc@58007000 {
- 			arm,primecell-periphid = <0x00253180>;
- 			reg = <0x58007000 0x1000>;
- 			interrupts = <GIC_SPI 124 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "cmd_irq";
- 			clocks = <&rcc SDMMC2_K>;
- 			clock-names = "apb_pclk";
- 			resets = <&rcc SDMMC2_R>;
--- 
-2.35.1
+					-Alex
+	
+>> ---
+>>   .../devicetree/bindings/arm/msm/qcom,dcc.yaml      | 44 ++++++++++++++++++++++
+>>   1 file changed, 44 insertions(+)
+> 
+> Rebase your tree on some current Linux kernel (and use
+> scripts/get_maintainers.pl).
+> 
+> Best regards,
+> Krzysztof
+> 
 
