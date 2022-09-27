@@ -2,59 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB1F45EB869
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 05:13:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58EAB5EB8A6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 05:24:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231406AbiI0DNJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 23:13:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49468 "EHLO
+        id S231392AbiI0DYe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 23:24:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230469AbiI0DMK (ORCPT
+        with ESMTP id S230248AbiI0DXx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Sep 2022 23:12:10 -0400
+        Mon, 26 Sep 2022 23:23:53 -0400
 Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D4E421E1E;
-        Mon, 26 Sep 2022 20:09:52 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9440EE02B;
+        Mon, 26 Sep 2022 20:23:08 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 9495CB80DAB;
-        Tue, 27 Sep 2022 03:09:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641CFC433C1;
-        Tue, 27 Sep 2022 03:09:48 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 50D24B80D9D;
+        Tue, 27 Sep 2022 03:23:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B3AC433C1;
+        Tue, 27 Sep 2022 03:23:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664248189;
-        bh=5alXme/iG0Q2Mzk003ElCEPHonmuGvo4KYhWd730jdo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=jr+IfCGayJhZN8Z1h6NUhmMgQmfHRkh5g+DrWrQlpiCCbIH8QIA7JEA47F/W6H+1O
-         FbeQ2/0FFmYP521UZkMjia47O2zA5fWd+rD8vrgGl+GH9lffjFj5HOITfhrlv5KWEn
-         vvKbpVev42H8RmuGATB2JOmSIoB+deFWHSkrx20wuIcYawRVDksgusCN996VNA2nPa
-         pNAVnMWvW8/UFgurZkolLIEL9XG7vVhH4g3jUJhhATh87QuX7qEITo00cNyHq4PeMW
-         kIVsTDj5/sCdmb0aBRy0qPSdEauJuUl10zuGh7MNVEhiqIPXb6dzOzEabo+9xqdOZs
-         J8QJ4m8P1iwvw==
-Date:   Mon, 26 Sep 2022 22:09:46 -0500
+        s=k20201202; t=1664248986;
+        bh=+WAqlaESI/TBL/hp0OKeXlB44156QT7krk6MvuFccXY=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=P8GXRK8/k1qvBCOfPnC3z4J/Q9OcuTlsKtkkeOLrM/pCqGZewEiC5/qWO/2dXZUXS
+         SlzIHNqTe/IpoyDeBhQBryTr7Jbsii75iA62BihoTUuMNXVUAG/gHsp2NMHTabZanb
+         4Nf73/rVt3x3iH/DeAiruVuqSdhhZqYQne+E7wlT+iNzoJNiRrVwk02UcE4S8qfU+m
+         25kutHFfkXofvgmGpsy4+iDWkRsTr6iXETs0vCHZkrNmPEeLMw9Drg+zTbAVqY6/vW
+         RUO9UYiTBK61AZQ/+iiLKDqAIIrmSb7vn+t4GPHwUGyP04jNKz8iD1JgZuCaADOhm2
+         59QE4T7I1DRew==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Adam Skladowski <a39.skl@gmail.com>, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] dt-bindings: clock: add QCOM SM6115 display clock
- bindings
-Message-ID: <20220927030946.5acxedwvut6ifdmx@builder.lan>
+To:     a39.skl@gmail.com
+Cc:     konrad.dybcio@somainline.org, robh+dt@kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, linux-clk@vger.kernel.org,
+        mturquette@baylibre.com, krzysztof.kozlowski+dt@linaro.org,
+        phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sboyd@kernel.org, linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 0/2] Add DISPCC driver for SM6115
+Date:   Mon, 26 Sep 2022 22:22:57 -0500
+Message-Id: <166424897976.1766486.17695490545987558939.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.37.1
+In-Reply-To: <20220911164635.182973-1-a39.skl@gmail.com>
 References: <20220911164635.182973-1-a39.skl@gmail.com>
- <20220911164635.182973-2-a39.skl@gmail.com>
- <20220913152620.GA3762864-robh@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220913152620.GA3762864-robh@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -64,54 +58,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 13, 2022 at 10:26:20AM -0500, Rob Herring wrote:
-> On Sun, Sep 11, 2022 at 06:46:18PM +0200, Adam Skladowski wrote:
-> > Add device tree bindings for display clock controller for
-> > Qualcomm Technology Inc's SM6115 SoC.
-> > 
-> > Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
-> > ---
-> >  .../bindings/clock/qcom,sm6115-dispcc.yaml    | 70 +++++++++++++++++++
-> >  .../dt-bindings/clock/qcom,sm6115-dispcc.h    | 36 ++++++++++
-> >  2 files changed, 106 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm6115-dispcc.yaml
-> >  create mode 100644 include/dt-bindings/clock/qcom,sm6115-dispcc.h
-> > 
-> > diff --git a/Documentation/devicetree/bindings/clock/qcom,sm6115-dispcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm6115-dispcc.yaml
-> > new file mode 100644
-> > index 000000000000..a6bf363b5015
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/clock/qcom,sm6115-dispcc.yaml
-> > @@ -0,0 +1,70 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/clock/qcom,sm6115-dispcc.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm Display Clock Controller Binding for SM6115
+On Sun, 11 Sep 2022 18:46:17 +0200, Adam Skladowski wrote:
+> This patch series introduce support for SM6115 display clock controller,
+> this driver is based on QCM2290 one.
 > 
-> s/Binding //
+> Changes since v1
+> ================
+> 1. Changed bindings file names to Vendor,SoC-IP format.
+> 2. Changed include in dispcc-sm6115 to reflect name change of bindings.
 > 
-> > +
-> > +maintainers:
-> > +  - Bjorn Andersson <andersson@kernel.org>
-> > +
-> > +description: |
-> 
-> Don't need '|' when no formatting to preserve.
-> 
+> [...]
 
-This follows the other dispcc bindings, where I think the intention is
-to keep the formatting over "See also". In contrast to the other dispcc
-bindings the "See also" has a ':' at the end in this proposal...
+Applied, thanks!
 
-> With those fixes,
-> 
-> Reviewed-by: Rob Herring <robh@kernel.org>
+[1/2] dt-bindings: clock: add QCOM SM6115 display clock bindings
+      commit: 38557c6fc0771be5791e16837342db581daa6379
+[2/2] clk: qcom: Add display clock controller driver for SM6115
+      commit: 9b518788631cf7bc2b10d3967fd2343d1c88d65c
 
-I took the liberty of fixing up the description to align with the others
-and applied this, with your R-b.
-
-Regards,
-Bjorn
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
