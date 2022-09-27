@@ -2,73 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA6465ECFA4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 23:55:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECCA55ED0C0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 01:08:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231428AbiI0Vzh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Sep 2022 17:55:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56544 "EHLO
+        id S231773AbiI0XIq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Sep 2022 19:08:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231986AbiI0Vzg (ORCPT
+        with ESMTP id S230131AbiI0XIp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Sep 2022 17:55:36 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B9DE923E6;
-        Tue, 27 Sep 2022 14:55:31 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id l12so12378935ljg.9;
-        Tue, 27 Sep 2022 14:55:31 -0700 (PDT)
+        Tue, 27 Sep 2022 19:08:45 -0400
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89DF710CA47;
+        Tue, 27 Sep 2022 16:08:44 -0700 (PDT)
+Received: by mail-io1-xd29.google.com with SMTP id 138so8924990iou.9;
+        Tue, 27 Sep 2022 16:08:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=fX8vXmb3nLnVt1B17kjgCPqgJ57wIFhg/9plrIVXuzc=;
-        b=AgTcDk3a5wWUJUAf6IJXXNChw+uOYs5jr2bBAqS4Lq4AoAK42cQCkbImp/7dBGLtWY
-         YU7NA3TstqLk/HN87Wrb/OkeU6jc2DuXWd84BLtHIV2e+bWksy6HyadJu19tvexmnokv
-         hizXNpMsQWqidKCeh8UPOOUsYGHhsi/Hu1A30UDnDEoVinu0f9pYQyIdyxAygLraoJXr
-         6zfH2NA+OAUWivdZq/qyJlyGvBHVK11hbfMK6eVP/91IqisqwJP66mCko6tyXzySmCR7
-         YFrlX/xXLRgBLcyIqXW13QeCI1Wd2Vji15mUIMsyxMUKAnar3KTQKvwrDjAWFV7wvHfM
-         pBcw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=KTyDoPOK1pleRSvYG1/2nWqf1JHfv2oKd5erAV4l2LU=;
+        b=CLwsQ6ndm+yxCDrRM9fzkOdZZJwsaXY0WpCXXoauIBBJpm4qy9SdGvYCpbIxRJkCsL
+         AZoywFF7Wvg5eNWr/XeQrTduzUQ+ctU+6hsSA9OP/lgbnmMr9NTTqEkeQ9WK3JE/Ss/A
+         JO3hQ2fmo69cjvwCLl8vPFlXQxaO4639dUeBOy75f/y/XQ/hPN46OE9FjINnfo+oACv0
+         3/GwCBGZT76hBVgJm6tPO0R6GKQddq/1LCcBrzzEatBRFHDBAF2jk5KZqPimJC4y0V52
+         gJ8esSWboEk0kV/2WGu72fp9A/Wm7gnhkL4WGEDwOqraVc9h7xj4oWdL0Tikjb42YFXy
+         x/Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=fX8vXmb3nLnVt1B17kjgCPqgJ57wIFhg/9plrIVXuzc=;
-        b=LqymIk9ZroiRnjkaqSrDAulykJxLNDiZUAT6MwYIAQWW5jU5d9EjavuxpFJqVSe2Aq
-         TZzEZu1JA8xmBO3JeI/eI8wIvGdPXqPCLJLpGJYoPCp/U04sapnDj6f+f6iuQCOP6i3k
-         /nP3j+DNkCZjJSm6KxbZ1Bivj1OHdzymgZLcuC4L9+zF6hlM4YtnrQktCdh8uWmeYKgX
-         R30PpZ5gA1o+AjevvpRIXPRfpLep6OtWaXqx70b+vGEjuyvhXdnoD8sVCqqXROFHbBDF
-         Nsg8wnjA2GlYS9Z3o3gNcudz6ZA2sPQ/l9KYl3XhreY3wUxwBYfr85AP4Duepfw0bMmX
-         +WFQ==
-X-Gm-Message-State: ACrzQf1ktbJm9UujWyAxZcXm5jcmfF8R6wKWwZnvRfjgMJt6FcfD9Mz7
-        Yj2KEktLsvtcY4KoRzQDawwYKJmRCNr5JQ==
-X-Google-Smtp-Source: AMsMyM7NhKm114d4OpQqc+X02fdMdBoASFAlWylIyqLez7vNCciuBMQfFnM92y7puIVbdxR63e/iVg==
-X-Received: by 2002:a2e:b0d7:0:b0:26b:e586:86e9 with SMTP id g23-20020a2eb0d7000000b0026be58686e9mr10163073ljl.229.1664315398511;
-        Tue, 27 Sep 2022 14:49:58 -0700 (PDT)
-Received: from i-vetokaappi.home.lan (dsl-hkibng42-5673c7-93.dhcp.inet.fi. [86.115.199.93])
-        by smtp.gmail.com with ESMTPSA id u25-20020a2e2e19000000b0025fe7f33bc4sm279901lju.49.2022.09.27.14.49.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Sep 2022 14:49:58 -0700 (PDT)
-From:   =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=KTyDoPOK1pleRSvYG1/2nWqf1JHfv2oKd5erAV4l2LU=;
+        b=zmLAM/rPI8dxDCht/HkNpAdPPDviydoF/NgDLVVBqCd6zTgpdUd0ALC/PHTp00Oln7
+         6b6bIozFmhBQtSnwX0oeU+PQz2YmmcVr9B27UYMHUDy1BgYMXYqfKxlawFiGt51BZx5R
+         J7MMqxAA7+LQUS2PU0a/UCGVkjLc3kq5FpARRmrWtiOAzpaiCbGmOZhzt4iE11zgbXIV
+         O4oX/kg8lN6L9uNjaVsRMN5jJWEtHr8OZBL1moJfHLfHFWEuBEiwr1XyI5zzNuDh24xP
+         Na9s2SY3imCnEX79hmUbTdA7u+gNLZFW15stHnChlSp2t/f6zbKAH+yfbAG/NVeJ7++S
+         fAxQ==
+X-Gm-Message-State: ACrzQf3lxvRtsqrG1UiSeawTAIZoOAwUYzQ20osaDlt+TvB5WUFYBGMh
+        lCec0+AUpRZvirZDdsBw8ajXNsa0U1g=
+X-Google-Smtp-Source: AMsMyM7XifCsm2Z8N0r9eaBFfIjpSe9OpH4ZcuiqXDsJGO6rG2tAdwrL8INPk/m/nP+rnBvbVVoZaw==
+X-Received: by 2002:a6b:e205:0:b0:6a1:122:e3b7 with SMTP id z5-20020a6be205000000b006a10122e3b7mr12278395ioc.161.1664320123623;
+        Tue, 27 Sep 2022 16:08:43 -0700 (PDT)
+Received: from localhost ([2607:fea8:a2e2:2d00::ac99])
+        by smtp.gmail.com with UTF8SMTPSA id p10-20020a92d28a000000b002e9818bc2dfsm172592ilp.8.2022.09.27.16.08.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Sep 2022 16:08:42 -0700 (PDT)
+From:   Richard Acayan <mailingradian@gmail.com>
 To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        soc@kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v6 3/3] ARM: dts: qcom: Add support for Samsung Galaxy Tab 4 10.1 (SM-T530)
-Date:   Wed, 28 Sep 2022 00:49:39 +0300
-Message-Id: <20220927214940.244480-4-matti.lehtimaki@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220927214940.244480-1-matti.lehtimaki@gmail.com>
-References: <20220927214940.244480-1-matti.lehtimaki@gmail.com>
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Richard Acayan <mailingradian@gmail.com>,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH v5 0/3] SDM670 Pin Control Driver
+Date:   Tue, 27 Sep 2022 19:08:30 -0400
+Message-Id: <20220927230833.125749-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
@@ -80,513 +75,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a device tree for the Samsung Galaxy Tab 4 10.1 (SM-T530) wifi tablet
-based on the apq8026 platform.
+Changes since v4:
+ - accumulate review tag
+ - use --cover-letter
+ - this is effectively a resend
 
-Currently supported are accelerometer sensor, hall sensor,
-internal storage, physical buttons (power & volume), screen
-(based on simple-framebuffer set up by the bootloader), sdcard,
-touchscreen and USB.
+Changes since v3:
+ - constrain gpio-reserved-ranges to 1-75 items
+ - proper indentation in dt-bindings example (actually tagged this time
+   instead of an outdated commit)
+ - remove unnecessary commit reference
+ - rename complement_fw_reserved_gpios -> complement_fw_gpio_ranges
 
-Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
----
-Changes in v6:
-  - Set status as last property in nodes
-  - Pad register addresses to 8 hex digits
+Changes since v2:
+ - remove quotes from pinctrl.yaml# in dt-bindings
+ - constrain gpio-reserved-ranges to 1-76 items (includes ufs_reset)
+ - indentation in dt-bindings example
+ - cite downstream kernel source
+ - remove MODULE_AUTHOR (most imported pinctrl drivers don't have this)
 
-Changes in v5:
-  - Rename pm8226-regulators node to fix issue reported by make dtbs_check
+Changes since v1:
+ - add a field in msm_pinctrl_soc_data to accomodate the needs of the
+   driver and device dts
+ - apply changes made to existing tlmm dt documentation
+ - add reserved gpios array
+ - rename device tree compat string to qcom,sdm670-tlmm
+ - remove dependency on ACPI
+ - move MODULE_DEVICE_TABLE macro call up
+ - add missing pins (fixes most of the debugfs problems)
+ - move qup0_pins down
+ - add whitespace between UFS_RESET macro and pins array
 
-Changes in v4:
-  - Move delete-node to memory-region
-  - Move usb-switch node to blsp_i2c4
+This patch series adds the driver for the Qualcomm Snapdragon 670 TLMM
+(Top-Level Mode Multiplexer) and introduces a new field so that SDM670-
+related device trees can reserve their own gpios.
 
-Changes in v3:
-  - Fix sdhc_2 bus width
-  - Reorder includes
+Richard Acayan (3):
+  dt-bindings: pinctrl: qcom: add sdm670 pinctrl
+  pinctrl: qcom: add support for complementary reserved gpios
+  pinctrl: qcom: add sdm670 pinctrl
 
-Changes in v2:
-  - Change codename to matisse-wifi
-  - Remove msm-id, not needed when lk2nd is used
-  - Remove unused labels from reserved memory regions
-  - Rename muic node
----
- arch/arm/boot/dts/Makefile                    |   1 +
- .../dts/qcom-apq8026-samsung-matisse-wifi.dts | 453 ++++++++++++++++++
- 2 files changed, 454 insertions(+)
- create mode 100644 arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
+ .../bindings/pinctrl/qcom,sdm670-tlmm.yaml    |  138 ++
+ drivers/pinctrl/qcom/Kconfig                  |    9 +
+ drivers/pinctrl/qcom/Makefile                 |    1 +
+ drivers/pinctrl/qcom/pinctrl-msm.c            |    5 +-
+ drivers/pinctrl/qcom/pinctrl-msm.h            |    4 +
+ drivers/pinctrl/qcom/pinctrl-sdm670.c         | 1373 +++++++++++++++++
+ 6 files changed, 1528 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-sdm670.c
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 05d8aef6e5d2..69f6bbcf90c6 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -1027,6 +1027,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
- 	qcom-apq8016-sbc.dtb \
- 	qcom-apq8026-asus-sparrow.dtb \
- 	qcom-apq8026-lg-lenok.dtb \
-+	qcom-apq8026-samsung-matisse-wifi.dtb \
- 	qcom-apq8060-dragonboard.dtb \
- 	qcom-apq8064-cm-qs600.dtb \
- 	qcom-apq8064-ifc6410.dtb \
-diff --git a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-new file mode 100644
-index 000000000000..1c52337af560
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-@@ -0,0 +1,453 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2022, Matti Lehtimäki <matti.lehtimaki@gmail.com>
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/input/input.h>
-+#include "qcom-msm8226.dtsi"
-+#include "qcom-pm8226.dtsi"
-+
-+/ {
-+	model = "Samsung Galaxy Tab 4 10.1";
-+	compatible = "samsung,matisse-wifi", "qcom,apq8026";
-+	chassis-type = "tablet";
-+
-+	aliases {
-+		mmc0 = &sdhc_1; /* SDC1 eMMC slot */
-+		mmc1 = &sdhc_2; /* SDC2 SD card slot */
-+		display0 = &framebuffer0;
-+	};
-+
-+	chosen {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		ranges;
-+
-+		stdout-path = "display0";
-+
-+		framebuffer0: framebuffer@3200000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0x03200000 0x800000>;
-+			width = <1280>;
-+			height = <800>;
-+			stride = <(1280 * 3)>;
-+			format = "r8g8b8";
-+		};
-+	};
-+
-+	gpio-hall-sensor {
-+		compatible = "gpio-keys";
-+
-+		event-hall-sensor {
-+			label = "Hall Effect Sensor";
-+			gpios = <&tlmm 110 GPIO_ACTIVE_HIGH>;
-+			interrupts = <&tlmm 110 IRQ_TYPE_EDGE_FALLING>;
-+			linux,input-type = <EV_SW>;
-+			linux,code = <SW_LID>;
-+			debounce-interval = <15>;
-+			wakeup-source;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		autorepeat;
-+
-+		key-home {
-+			label = "Home";
-+			gpios = <&tlmm 108 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_HOMEPAGE>;
-+			debounce-interval = <15>;
-+		};
-+
-+		key-volume-down {
-+			label = "Volume Down";
-+			gpios = <&tlmm 107 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEDOWN>;
-+			debounce-interval = <15>;
-+		};
-+
-+		key-volume-up {
-+			label = "Volume Up";
-+			gpios = <&tlmm 106 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			debounce-interval = <15>;
-+		};
-+	};
-+
-+	reg_tsp_1p8v: regulator-tsp-1p8v {
-+		compatible = "regulator-fixed";
-+		regulator-name = "tsp_1p8v";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		gpio = <&tlmm 31 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&tsp_en_default_state>;
-+	};
-+
-+	reg_tsp_3p3v: regulator-tsp-3p3v {
-+		compatible = "regulator-fixed";
-+		regulator-name = "tsp_3p3v";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 73 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&tsp_en1_default_state>;
-+	};
-+
-+	reserved-memory {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		ranges;
-+
-+		framebuffer@3200000 {
-+			reg = <0x03200000 0x800000>;
-+			no-map;
-+		};
-+
-+		mpss@8400000 {
-+			reg = <0x08400000 0x1f00000>;
-+			no-map;
-+		};
-+
-+		mba@a300000 {
-+			reg = <0x0a300000 0x100000>;
-+			no-map;
-+		};
-+
-+		reserved@cb00000 {
-+			reg = <0x0cb00000 0x700000>;
-+			no-map;
-+		};
-+
-+		wcnss@d200000 {
-+			reg = <0x0d200000 0x700000>;
-+			no-map;
-+		};
-+
-+		adsp@d900000 {
-+			reg = <0x0d900000 0x1800000>;
-+			no-map;
-+		};
-+
-+		venus@f100000 {
-+			reg = <0x0f100000 0x500000>;
-+			no-map;
-+		};
-+
-+		/delete-node/ smem@3000000;
-+		smem_region: smem@fa00000 {
-+			reg = <0x0fa00000 0x100000>;
-+			no-map;
-+		};
-+
-+		reserved@fb00000 {
-+			reg = <0x0fb00000 0x260000>;
-+			no-map;
-+		};
-+
-+		rfsa@fd60000 {
-+			reg = <0x0fd60000 0x20000>;
-+			no-map;
-+		};
-+
-+		rmtfs@fd80000 {
-+			compatible = "qcom,rmtfs-mem";
-+			reg = <0x0fd80000 0x180000>;
-+			no-map;
-+
-+			qcom,client-id = <1>;
-+		};
-+	};
-+};
-+
-+&blsp1_i2c2 {
-+	status = "okay";
-+
-+	accelerometer@1d {
-+		compatible = "st,lis2hh12";
-+		reg = <0x1d>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <54 IRQ_TYPE_LEVEL_HIGH>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&accel_int_default_state>;
-+
-+		st,drdy-int-pin = <1>;
-+
-+		vdd-supply = <&pm8226_l19>;
-+		vddio-supply = <&pm8226_lvs1>;
-+	};
-+};
-+
-+&blsp1_i2c4 {
-+	status = "okay";
-+
-+	muic: usb-switch@25 {
-+		compatible = "siliconmitus,sm5502-muic";
-+		reg = <0x25>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <67 IRQ_TYPE_EDGE_FALLING>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&muic_int_default_state>;
-+	};
-+};
-+
-+&blsp1_i2c5 {
-+	status = "okay";
-+
-+	touchscreen@4a {
-+		compatible = "atmel,maxtouch";
-+		reg = <0x4a>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <17 IRQ_TYPE_LEVEL_LOW>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&tsp_int_rst_default_state>;
-+
-+		reset-gpios = <&pm8226_gpios 6 GPIO_ACTIVE_LOW>;
-+
-+		vdd-supply = <&reg_tsp_1p8v>;
-+		vdda-supply = <&reg_tsp_3p3v>;
-+	};
-+};
-+
-+&rpm_requests {
-+	regulators {
-+		compatible = "qcom,rpm-pm8226-regulators";
-+
-+		pm8226_s3: s3 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1300000>;
-+		};
-+
-+		pm8226_s4: s4 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8226_s5: s5 {
-+			regulator-min-microvolt = <1150000>;
-+			regulator-max-microvolt = <1150000>;
-+		};
-+
-+		pm8226_l1: l1 {
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+
-+		pm8226_l2: l2 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8226_l3: l3 {
-+			regulator-min-microvolt = <750000>;
-+			regulator-max-microvolt = <1337500>;
-+			regulator-always-on;
-+		};
-+
-+		pm8226_l4: l4 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8226_l5: l5 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8226_l6: l6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-always-on;
-+		};
-+
-+		pm8226_l7: l7 {
-+			regulator-min-microvolt = <1850000>;
-+			regulator-max-microvolt = <1850000>;
-+		};
-+
-+		pm8226_l8: l8 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-always-on;
-+		};
-+
-+		pm8226_l9: l9 {
-+			regulator-min-microvolt = <2050000>;
-+			regulator-max-microvolt = <2050000>;
-+		};
-+
-+		pm8226_l10: l10 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8226_l12: l12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8226_l14: l14 {
-+			regulator-min-microvolt = <2750000>;
-+			regulator-max-microvolt = <2750000>;
-+		};
-+
-+		pm8226_l15: l15 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+
-+		pm8226_l16: l16 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3350000>;
-+		};
-+
-+		pm8226_l17: l17 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+
-+			regulator-system-load = <200000>;
-+			regulator-allow-set-load;
-+			regulator-always-on;
-+		};
-+
-+		pm8226_l18: l18 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8226_l19: l19 {
-+			regulator-min-microvolt = <2850000>;
-+			regulator-max-microvolt = <3000000>;
-+		};
-+
-+		pm8226_l20: l20 {
-+			regulator-min-microvolt = <3075000>;
-+			regulator-max-microvolt = <3075000>;
-+		};
-+
-+		pm8226_l21: l21 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8226_l22: l22 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3000000>;
-+		};
-+
-+		pm8226_l23: l23 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+
-+		pm8226_l24: l24 {
-+			regulator-min-microvolt = <1300000>;
-+			regulator-max-microvolt = <1350000>;
-+		};
-+
-+		pm8226_l25: l25 {
-+			regulator-min-microvolt = <1775000>;
-+			regulator-max-microvolt = <2125000>;
-+		};
-+
-+		pm8226_l26: l26 {
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1300000>;
-+		};
-+
-+		pm8226_l27: l27 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8226_l28: l28 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8226_lvs1: lvs1 {};
-+	};
-+};
-+
-+&sdhc_1 {
-+	vmmc-supply = <&pm8226_l17>;
-+	vqmmc-supply = <&pm8226_l6>;
-+
-+	bus-width = <8>;
-+	non-removable;
-+
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	vmmc-supply = <&pm8226_l18>;
-+	vqmmc-supply = <&pm8226_l21>;
-+
-+	bus-width = <4>;
-+	cd-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
-+
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	accel_int_default_state: accel-int-default-state {
-+		pins = "gpio54";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	muic_int_default_state: muic-int-default-state {
-+		pins = "gpio67";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	tsp_en_default_state: tsp-en-default-state {
-+		pins = "gpio31";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	tsp_en1_default_state: tsp-en1-default-state {
-+		pins = "gpio73";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	tsp_int_rst_default_state: tsp-int-rst-default-state {
-+		pins = "gpio17";
-+		function = "gpio";
-+		drive-strength = <10>;
-+		bias-pull-up;
-+	};
-+};
-+
-+&usb {
-+	extcon = <&muic>, <&muic>;
-+	status = "okay";
-+};
-+
-+&usb_hs_phy {
-+	extcon = <&muic>;
-+	v1p8-supply = <&pm8226_l10>;
-+	v3p3-supply = <&pm8226_l20>;
-+};
 -- 
-2.34.1
+2.37.3
 
