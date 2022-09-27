@@ -2,84 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 642DF5EBEB3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 11:35:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37FCD5EBEC7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 11:37:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231453AbiI0Jf1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Sep 2022 05:35:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33526 "EHLO
+        id S230170AbiI0Jhj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Sep 2022 05:37:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231381AbiI0JfZ (ORCPT
+        with ESMTP id S229779AbiI0Jhi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Sep 2022 05:35:25 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5793396749
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 02:35:24 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id h7so1674278wru.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 02:35:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=nZKlStsukXTiXMspHE/cDk5Om1miIJs0rtHlxN58scw=;
-        b=WgRuPgXbYPwOZJBGBtvGwIF6k9jaqXIuXShKS6mViB/1sb+TXAcASNRdmnfYTxow23
-         e7zuPgopsZ0uDgLx9oIXmLukND7haDWAAEM3msOJ3+Bul4On0e3/hVpVhlIPKv/5tgvC
-         iNgAG5DwHrl/0ZAFXghccez3HPu0zD7LCvoph755d69qQPVIRfo8xFdcDcW6udUA6Avf
-         753Irtor7A5wxmWPdQNEbjASM7ZPl6ojeb7IK4Ts6GcuopmAFGrnnPFSmHUIZRZYJSB7
-         ili1MC/txUR2YX4w0VQnwYqwnSHqOFCkHepxpVBDFcXbArHDttnC95VgS8Egzv1qAHOh
-         imUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=nZKlStsukXTiXMspHE/cDk5Om1miIJs0rtHlxN58scw=;
-        b=WSQf5ji4H22eSB4ZrLvSrgnCMtwRlvM2O8491DZgIBhjTiQWQE87P1/ni+fSnFQxM7
-         XO+8tponLpWwlmjFBYjm+MoVsJhOPeYO6hg79LYTAUCzGWEBobaocfDQKWNVqwRkX/EP
-         RF2hTIh5ihHp1fddVtnX24bA8rMmjghmnxD/fqE4F7kMYoENfCoQGRiTQAm5P998Jk9n
-         krsbimsFbjL+FmcVGgkbrRISaK8jT5NrwnBeCem37ZQvJeboEBUzcGvMb3f33+9OJJDr
-         l0fHRDY+0Pnz+8m0Jh7TWs+jhH2iIJKLIBFbInMArt6UTDdqqG8mVfn6CL57vnKVPhWI
-         zDIA==
-X-Gm-Message-State: ACrzQf22NnQTWX2FshokH+svBcljqHV+AP4LCDderJwoanc3enjNEzTm
-        TdftPYIlvdmMl5clcGodMXMvAw==
-X-Google-Smtp-Source: AMsMyM59DN9FLmFmygbaxvKvQrOnMoCZWLcuZEwpCKhb6PyTPe6TeSvziEJhWS+XJUbDBjtSnEXWfA==
-X-Received: by 2002:a5d:5887:0:b0:22b:1255:42e5 with SMTP id n7-20020a5d5887000000b0022b125542e5mr16623537wrf.114.1664271322835;
-        Tue, 27 Sep 2022 02:35:22 -0700 (PDT)
-Received: from [192.168.10.46] (146725694.box.freepro.com. [130.180.211.218])
-        by smtp.googlemail.com with ESMTPSA id g11-20020a05600c310b00b003b4fe03c881sm14137452wmo.48.2022.09.27.02.35.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Sep 2022 02:35:22 -0700 (PDT)
-Message-ID: <49dacbf3-01e2-3687-f6d6-9346e418e98b@linaro.org>
-Date:   Tue, 27 Sep 2022 11:35:20 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH] thermal: qcom: tsens-v0_1: Fix MSM8939 fourth sensor
- hw_id
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vincent Knecht <vincent.knecht@mailoo.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Tue, 27 Sep 2022 05:37:38 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EC6989803;
+        Tue, 27 Sep 2022 02:37:37 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BF4156177E;
+        Tue, 27 Sep 2022 09:37:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACB39C433B5;
+        Tue, 27 Sep 2022 09:37:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1664271456;
+        bh=p2vBPOpbBwRX23lt8ghHeq7yQEMpQ7ksH9q0XvT2WhU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=tNEnoyA+g0pLKai+7ZujdIJf3xVouN3Mp1bHE+uNmWiU9sJKvkqVcvh7N4PpAEdba
+         rkeVDQKVeD4PHjdwuZu1UDvR0Z6IIb4AHHmLsjltBRINtxEaDwYy5flXiZoQLgRSKf
+         0xD3K9SL9abiuV2dMD1nDMiU+IGez8TaLgfgV/PopIfyFB3kwDIxUZPky5BgUeET/W
+         +mIFMSFkkA4SSo+x5N3p6ikCMz2wCKwz9pAIm+AdTrPCzJ8V64vFLtIzBSWq2zxgoK
+         CKPijR1hsQu2KTyz7oY9gmhsSqLGbtrEc3MGOSzY9CS0OEh+CoXtcqJP6fd+02ZP3M
+         fwP0CtGIi5nKw==
+Date:   Tue, 27 Sep 2022 11:37:28 +0200
+From:   Lorenzo Pieralisi <lpieralisi@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     bryan.odonoghue@linaro.org, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org
-References: <20220811105014.7194-1-vincent.knecht@mailoo.org>
- <9ef673f2-4296-8761-4d7a-dca323ba272e@linaro.org>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <9ef673f2-4296-8761-4d7a-dca323ba272e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Rob Herring <robh+dt@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: Re: [PATCH v6 5/5] PCI: qcom-ep: Setup PHY to work in EP mode
+Message-ID: <YzLEWOFV9Iy3KSVL@lpieralisi>
+References: <20220927092207.161501-1-dmitry.baryshkov@linaro.org>
+ <20220927092207.161501-6-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220927092207.161501-6-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,31 +68,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/09/2022 18:38, Dmitry Baryshkov wrote:
-> On 11/08/2022 13:50, Vincent Knecht wrote:
->> Reading temperature from this sensor fails with 'Invalid argument'.
->>
->> Looking at old vendor dts [1], its hw_id should be 3 instead of 4.
->> Change this hw_id accordingly.
->>
->> [1] 
->> https://github.com/msm8916-mainline/android_kernel_qcom_msm8916/blob/master/arch/arm/boot/dts/qcom/msm8939-common.dtsi#L511 
->>
->>
->> Fixes: 332bc8ebab2c ("thermal: qcom: tsens-v0_1: Add support for 
->> MSM8939")
->> Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
+On Tue, Sep 27, 2022 at 12:22:06PM +0300, Dmitry Baryshkov wrote:
+> Call phy_set_mode_ext() to notify the PHY driver that the PHY is being
+> used in the EP mode.
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Reviewed-by: Jingoo Han <jingoohan1@gmail.com>
+> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+
+Acked-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> index ec99116ad05c..8dcfeed24424 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> @@ -13,6 +13,7 @@
+>  #include <linux/delay.h>
+>  #include <linux/gpio/consumer.h>
+>  #include <linux/mfd/syscon.h>
+> +#include <linux/phy/pcie.h>
+>  #include <linux/phy/phy.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/pm_domain.h>
+> @@ -240,6 +241,10 @@ static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
+>  	if (ret)
+>  		goto err_disable_clk;
+>  
+> +	ret = phy_set_mode_ext(pcie_ep->phy, PHY_MODE_PCIE, PHY_MODE_PCIE_EP);
+> +	if (ret)
+> +		goto err_phy_exit;
+> +
+>  	ret = phy_power_on(pcie_ep->phy);
+>  	if (ret)
+>  		goto err_phy_exit;
+> -- 
+> 2.35.1
 > 
-> Daniel, gracious ping for getting this patch into 6.1.
-
-Applied for 6.1, thanks
-
-
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
