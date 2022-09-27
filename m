@@ -2,113 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F01D5EBAAC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 08:31:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81F5D5EBAFA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 08:53:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230176AbiI0Gb0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Sep 2022 02:31:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56016 "EHLO
+        id S229538AbiI0GxA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Sep 2022 02:53:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229834AbiI0GbS (ORCPT
+        with ESMTP id S229459AbiI0Gw7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Sep 2022 02:31:18 -0400
-Received: from muru.com (muru.com [72.249.23.125])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 3B430979F9;
-        Mon, 26 Sep 2022 23:31:14 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by muru.com (Postfix) with ESMTPS id 5E7B081BD;
-        Tue, 27 Sep 2022 06:22:54 +0000 (UTC)
-Date:   Tue, 27 Sep 2022 09:31:11 +0300
-From:   Tony Lindgren <tony@atomide.com>
-To:     Peter Zijlstra <peterz@infradead.org>
-Cc:     richard.henderson@linaro.org, ink@jurassic.park.msu.ru,
-        mattst88@gmail.com, vgupta@kernel.org, linux@armlinux.org.uk,
-        ulli.kroll@googlemail.com, linus.walleij@linaro.org,
-        shawnguo@kernel.org, Sascha Hauer <s.hauer@pengutronix.de>,
-        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
-        khilman@kernel.org, catalin.marinas@arm.com, will@kernel.org,
-        guoren@kernel.org, bcain@quicinc.com, chenhuacai@kernel.org,
-        kernel@xen0n.name, geert@linux-m68k.org, sammy@sammy.net,
-        monstr@monstr.eu, tsbogend@alpha.franken.de, dinguyen@kernel.org,
-        jonas@southpole.se, stefan.kristiansson@saunalahti.fi,
-        shorne@gmail.com, James.Bottomley@hansenpartnership.com,
-        deller@gmx.de, mpe@ellerman.id.au, npiggin@gmail.com,
-        christophe.leroy@csgroup.eu, paul.walmsley@sifive.com,
-        palmer@dabbelt.com, aou@eecs.berkeley.edu, hca@linux.ibm.com,
-        gor@linux.ibm.com, agordeev@linux.ibm.com,
-        borntraeger@linux.ibm.com, svens@linux.ibm.com,
-        ysato@users.sourceforge.jp, dalias@libc.org, davem@davemloft.net,
-        richard@nod.at, anton.ivanov@cambridgegreys.com,
-        johannes@sipsolutions.net, tglx@linutronix.de, mingo@redhat.com,
-        bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org,
-        hpa@zytor.com, acme@kernel.org, mark.rutland@arm.com,
-        alexander.shishkin@linux.intel.com, jolsa@kernel.org,
-        namhyung@kernel.org, jgross@suse.com, srivatsa@csail.mit.edu,
-        amakhalov@vmware.com, pv-drivers@vmware.com,
-        boris.ostrovsky@oracle.com, chris@zankel.net, jcmvbkbc@gmail.com,
-        rafael@kernel.org, lenb@kernel.org, pavel@ucw.cz,
-        gregkh@linuxfoundation.org, mturquette@baylibre.com,
-        sboyd@kernel.org, daniel.lezcano@linaro.org, lpieralisi@kernel.org,
-        sudeep.holla@arm.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
-        anup@brainfault.org, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, jacob.jun.pan@linux.intel.com,
-        atishp@atishpatra.org, Arnd Bergmann <arnd@arndb.de>,
-        yury.norov@gmail.com, andriy.shevchenko@linux.intel.com,
-        linux@rasmusvillemoes.dk, dennis@kernel.org, tj@kernel.org,
-        cl@linux.com, rostedt@goodmis.org, pmladek@suse.com,
-        senozhatsky@chromium.org, john.ogness@linutronix.de,
-        juri.lelli@redhat.com, vincent.guittot@linaro.org,
-        dietmar.eggemann@arm.com, bsegall@google.com, mgorman@suse.de,
-        bristot@redhat.com, vschneid@redhat.com, fweisbec@gmail.com,
-        ryabinin.a.a@gmail.com, glider@google.com, andreyknvl@gmail.com,
-        dvyukov@google.com, vincenzo.frascino@arm.com,
-        Andrew Morton <akpm@linux-foundation.org>, jpoimboe@kernel.org,
-        linux-alpha@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-snps-arc@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-csky@vger.kernel.org, linux-hexagon@vger.kernel.org,
-        linux-ia64@vger.kernel.org, loongarch@lists.linux.dev,
-        linux-m68k@lists.linux-m68k.org, linux-mips@vger.kernel.org,
-        openrisc@lists.librecores.org, linux-parisc@vger.kernel.org,
-        linuxppc-dev@lists.ozlabs.org, linux-riscv@lists.infradead.org,
-        linux-s390@vger.kernel.org, linux-sh@vger.kernel.org,
-        sparclinux@vger.kernel.org, linux-um@lists.infradead.org,
-        linux-perf-users@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-xtensa@linux-xtensa.org, linux-acpi@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-arch@vger.kernel.org, kasan-dev@googlegroups.com
-Subject: Re: [PATCH v2 00/44] cpuidle,rcu: Clean up the mess
-Message-ID: <YzKYrx8Kd9SBYcUg@atomide.com>
-References: <20220919095939.761690562@infradead.org>
+        Tue, 27 Sep 2022 02:52:59 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CC919C220
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Sep 2022 23:52:59 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id B33F5B819CC
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 06:52:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BCEBC433C1;
+        Tue, 27 Sep 2022 06:52:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1664261576;
+        bh=mU9f9LoidskksX7PDIWPHuh8+QezhzFTM0/tR8Icdkk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=qxBglPoVVeXt1IoW1KKQdwz0b0EcST7l27JJVnYPVGz4mhbyb2e4Zzeb8H69IlDxc
+         rKS4ekkNMmrCwKCCs0caRmeWyP+Ym46KPtpjZhVyVPKbXPK1+FzxChJw1nkLeiQDfz
+         gka7guPUPKRXGKalPYjlqmqXidA/LWimXSa7pu7bOCb1phWjOsEpoPMyarQirGAuMk
+         RIXBDZ9ShVTVDmII1GL8hJk7B0Z6RwtsbhPNc6bz0lj4xT1Vg6Y1PclkM2WkBTWPlN
+         YO40uefqy5NjE2yiJescyK+oZLmZG6AQA2gZgZ95zOQxoXVZae9r3ogBA3fkCyv5jD
+         LECr4eO+pdGxQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1od4Sj-0006aV-Gu; Tue, 27 Sep 2022 08:53:02 +0200
+Date:   Tue, 27 Sep 2022 08:53:01 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH] phy: qcom-qmp-pcie: fix resource mapping for SDM845 QHP
+ PHY
+Message-ID: <YzKdzTfZXYz2mF4p@hovoldconsulting.com>
+References: <20220926172514.880776-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220919095939.761690562@infradead.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20220926172514.880776-1-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Mon, Sep 26, 2022 at 08:25:14PM +0300, Dmitry Baryshkov wrote:
+> On SDM845 one of PCIe PHYs (the QHP one) has the same region for TX and
+> RX registers. Since the commit 4be26f695ffa ("phy: qcom-qmp-pcie: fix
+> memleak on probe deferral") added checking that resources are not
+> allocated beforehand, this PHY can not be probed anymore. Fix this by
+> skipping the map of ->rx resource on the QHP PHY and assign it manually.
 
-* Peter Zijlstra <peterz@infradead.org> [220919 10:08]:
-> Hi All!
-> 
-> At long last, a respin of the cpuidle vs rcu cleanup patches.
-> 
-> v1: https://lkml.kernel.org/r/20220608142723.103523089@infradead.org
-> 
-> These here patches clean up the mess that is cpuidle vs rcuidle.
+Bah. Yet another QMP hack (the QHP support, not just this fix).
 
-I just gave these a quick test and things still work for me. The old
-omap3 off mode during idle still works. No more need to play the
-whack the mole game with RCU-idle :) I did not test on x86, or on other
-ARMs, but considering the test pretty much covered the all the
-affected RCU-idle related paths, where suitable, feel free to add:
+The binding should be fixed as this device does indeed not have separate
+TX and RX register blocks. Note that the rx table for this device is
+empty too so that repeated "TX" region is just a place holder.
 
-Tested-by: Tony Lindgren <tony@atomide.com>
+> Fixes: 4be26f695ffa ("phy: qcom-qmp-pcie: fix memleak on probe deferral")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> index 7aff3f9940a5..5be5348fbb26 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> @@ -2210,7 +2210,10 @@ static int qmp_pcie_create(struct device *dev, struct device_node *np, int id,
+>  	if (IS_ERR(qphy->tx))
+>  		return PTR_ERR(qphy->tx);
+>  
+> -	qphy->rx = devm_of_iomap(dev, np, 1, NULL);
+> +	if (of_device_is_compatible(dev->of_node, "qcom,sdm845-qhp-pcie-phy"))
+> +		qphy->rx = qphy->tx;
+> +	else
+> +		qphy->rx = devm_of_iomap(dev, np, 1, NULL);
+>  	if (IS_ERR(qphy->rx))
+>  		return PTR_ERR(qphy->rx);
+
+But I guess this will do for now:
+
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+
+Johan
