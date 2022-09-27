@@ -2,55 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C0F735EB850
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 05:09:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB1F45EB869
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 05:13:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229492AbiI0DJZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Sep 2022 23:09:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42908 "EHLO
+        id S231406AbiI0DNJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Sep 2022 23:13:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229631AbiI0DIK (ORCPT
+        with ESMTP id S230469AbiI0DMK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Sep 2022 23:08:10 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D598F121E67;
-        Mon, 26 Sep 2022 20:02:39 -0700 (PDT)
+        Mon, 26 Sep 2022 23:12:10 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D4E421E1E;
+        Mon, 26 Sep 2022 20:09:52 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id ABEB4B81902;
-        Tue, 27 Sep 2022 03:02:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89285C433D6;
-        Tue, 27 Sep 2022 03:02:05 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 9495CB80DAB;
+        Tue, 27 Sep 2022 03:09:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641CFC433C1;
+        Tue, 27 Sep 2022 03:09:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664247726;
-        bh=12SAPBJkhVO+TvRMsmsiDoZ4q4sir/E7/wJ9rUlr0ho=;
+        s=k20201202; t=1664248189;
+        bh=5alXme/iG0Q2Mzk003ElCEPHonmuGvo4KYhWd730jdo=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=i7k6T3OnOQB+abomPP3mQZatR9kgDcL1DuJzShMbFagU122mMbNG4BaUqx99zorYA
-         7qd78rNYpBFg8N4r8yD9iqdiB4G/dvfZueo41QevMXuvTh6+wD2eb6RHwh9VGfEYC/
-         scIDf+FUL4SUGEr4EvOVfpfGRZSZ6m0fkfAoObgvvO+0cT5W2T2YC573pxhrIE/xQG
-         BRbPT5+sNVlxax8bEJ1pYzKUc2nZSqvvAGUOHBUuKqqbmtVmkYAag3Rag+ECqOAibC
-         b/AXZxr4ZBAyAIe7b6bjUYvE3hg0nuoWZLTaMG5/uuMWdXJLvCgZuraDTJe9UOwBtf
-         LZrno2LAG2fQg==
-Date:   Mon, 26 Sep 2022 22:02:03 -0500
+        b=jr+IfCGayJhZN8Z1h6NUhmMgQmfHRkh5g+DrWrQlpiCCbIH8QIA7JEA47F/W6H+1O
+         FbeQ2/0FFmYP521UZkMjia47O2zA5fWd+rD8vrgGl+GH9lffjFj5HOITfhrlv5KWEn
+         vvKbpVev42H8RmuGATB2JOmSIoB+deFWHSkrx20wuIcYawRVDksgusCN996VNA2nPa
+         pNAVnMWvW8/UFgurZkolLIEL9XG7vVhH4g3jUJhhATh87QuX7qEITo00cNyHq4PeMW
+         kIVsTDj5/sCdmb0aBRy0qPSdEauJuUl10zuGh7MNVEhiqIPXb6dzOzEabo+9xqdOZs
+         J8QJ4m8P1iwvw==
+Date:   Mon, 26 Sep 2022 22:09:46 -0500
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>, agross@kernel.org,
-        konrad.dybcio@somainline.org, mturquette@baylibre.com,
-        sboyd@kernel.org, mka@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, johan+linaro@kernel.org,
-        quic_kriskura@quicinc.com, dianders@chromium.org,
-        linux-clk@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] clk: qcom: gdsc: Fix the handling of PWRSTS_RET
- support
-Message-ID: <20220927030203.tz4j5vuhvrnhti6i@builder.lan>
-References: <20220920111517.10407-1-quic_rjendra@quicinc.com>
- <d813e8a5-9eba-b3f7-2eee-cd721d120a30@collabora.com>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Adam Skladowski <a39.skl@gmail.com>, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 1/2] dt-bindings: clock: add QCOM SM6115 display clock
+ bindings
+Message-ID: <20220927030946.5acxedwvut6ifdmx@builder.lan>
+References: <20220911164635.182973-1-a39.skl@gmail.com>
+ <20220911164635.182973-2-a39.skl@gmail.com>
+ <20220913152620.GA3762864-robh@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d813e8a5-9eba-b3f7-2eee-cd721d120a30@collabora.com>
+In-Reply-To: <20220913152620.GA3762864-robh@kernel.org>
 X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -60,88 +64,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 20, 2022 at 02:39:21PM +0200, AngeloGioacchino Del Regno wrote:
-> Il 20/09/22 13:15, Rajendra Nayak ha scritto:
-> > GDSCs cannot be transitioned into a Retention state in SW.
-> > When either the RETAIN_MEM bit, or both the RETAIN_MEM and
-> > RETAIN_PERIPH bits are set, and the GDSC is left ON, the HW
-> > takes care of retaining the memory/logic for the domain when
-> > the parent domain transitions to power collapse/power off state.
+On Tue, Sep 13, 2022 at 10:26:20AM -0500, Rob Herring wrote:
+> On Sun, Sep 11, 2022 at 06:46:18PM +0200, Adam Skladowski wrote:
+> > Add device tree bindings for display clock controller for
+> > Qualcomm Technology Inc's SM6115 SoC.
 > > 
-> > On some platforms where the parent domains lowest power state
-> > itself is Retention, just leaving the GDSC in ON (without any
-> > RETAIN_MEM/RETAIN_PERIPH bits being set) will also transition
-> > it to Retention.
-> > 
-> > The existing logic handling the PWRSTS_RET seems to set the
-> > RETAIN_MEM/RETAIN_PERIPH bits if the cxcs offsets are specified
-> > but then explicitly turns the GDSC OFF as part of _gdsc_disable().
-> > Fix that by leaving the GDSC in ON state.
-> > 
-> > Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> > Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> > Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
 > > ---
-> > v3:
-> > Updated changelog
+> >  .../bindings/clock/qcom,sm6115-dispcc.yaml    | 70 +++++++++++++++++++
+> >  .../dt-bindings/clock/qcom,sm6115-dispcc.h    | 36 ++++++++++
+> >  2 files changed, 106 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm6115-dispcc.yaml
+> >  create mode 100644 include/dt-bindings/clock/qcom,sm6115-dispcc.h
 > > 
-> > There are a few existing users of PWRSTS_RET and I am not
-> > sure if they would be impacted with this change
-> > 
-> > 1. mdss_gdsc in mmcc-msm8974.c, I am expecting that the
-> > gdsc is actually transitioning to OFF and might be left
-> > ON as part of this change, atleast till we hit system wide
-> > low power state.
-> > If we really leak more power because of this
-> > change, the right thing to do would be to update .pwrsts for
-> > mdss_gdsc to PWRSTS_OFF_ON instead of PWRSTS_RET_ON
-> > I dont have a msm8974 hardware, so if anyone who has can report
-> > any issues I can take a look further on how to fix it.
+> > diff --git a/Documentation/devicetree/bindings/clock/qcom,sm6115-dispcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm6115-dispcc.yaml
+> > new file mode 100644
+> > index 000000000000..a6bf363b5015
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/clock/qcom,sm6115-dispcc.yaml
+> > @@ -0,0 +1,70 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/clock/qcom,sm6115-dispcc.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm Display Clock Controller Binding for SM6115
 > 
-> I think that the safest option is to add a PWRSTS_RET_HW_CTRL flag (or similar),
-> used for the specific cases of SC7180 and SC7280 (and possibly others) where the
-> GDSC is automatically transitioned to a Retention state by HW control, with no
-> required software (kernel driver) intervention.
+> s/Binding //
 > 
-> > 
-> > 2. gpu_gx_gdsc in gpucc-msm8998.c and
-> >     gpu_gx_gdsc in gpucc-sdm660.c
-> > Both of these seem to add support for 3 power state
-> > OFF, RET and ON, however I dont see any logic in gdsc
-> > driver to handle 3 different power states.
-> > So I am expecting that these are infact just transitioning
-> > between ON and OFF and RET state is never really used.
-> > The ideal fix for them would be to just update their resp.
-> > .pwrsts to PWRSTS_OFF_ON only.
+> > +
+> > +maintainers:
+> > +  - Bjorn Andersson <andersson@kernel.org>
+> > +
+> > +description: |
 > 
-> static int gdsc_init(struct gdsc *sc)
-> {
-> 
-> 	...
-> 
-> 	if (on || (sc->pwrsts & PWRSTS_RET))
-> 		gdsc_force_mem_on(sc);
-> 	else
-> 		gdsc_clear_mem_on(sc);
-> 
-> 	...
-> }
-> 
-> On MSM8998 and SDM630/636/660, we're reaching that point with a GDSC that is
-> left OFF from the bootloader, but we want (at least for 630/660) memretain
-> without periph-retain: this is required to make the hypervisor happy.
+> Don't need '|' when no formatting to preserve.
 > 
 
-Forgive me Angelo, but can you please help me understand your concern
-here?
+This follows the other dispcc bindings, where I think the intention is
+to keep the formatting over "See also". In contrast to the other dispcc
+bindings the "See also" has a ':' at the end in this proposal...
 
-Are yous saying that the valid states for 8998/660 are PWRSTS_OFF_ON,
-but you also want gdsc_force_mem_on() - with NO_RET_PERIPH?
+> With those fixes,
+> 
+> Reviewed-by: Rob Herring <robh@kernel.org>
 
-
-It seems to me that as Rajendra's patch is written, the gpu_gx_gdsc
-won't be affected, because pwrsts != PWRSTS_RET. So this is a question
-about the validity of fixing the pwrsts in gpucc-msm8998, rather than
-about this patch in itself?
+I took the liberty of fixing up the description to align with the others
+and applied this, with your R-b.
 
 Regards,
 Bjorn
