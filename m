@@ -2,92 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B4635EC51D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 15:57:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2C075EC558
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 16:02:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232806AbiI0N5p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Sep 2022 09:57:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56402 "EHLO
+        id S232268AbiI0OCW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Sep 2022 10:02:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232833AbiI0N5d (ORCPT
+        with ESMTP id S232943AbiI0OB5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Sep 2022 09:57:33 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E392714C041;
-        Tue, 27 Sep 2022 06:57:24 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28RDMXAp029438;
-        Tue, 27 Sep 2022 13:57:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=YTNldlmgui/QlWqHWQNcU+pyYSg6pkhk49atqSSD1lo=;
- b=n88goIsASEoRHD/uNnyhOJK0er60k3Q3SM0dLftfFd5GznXw9GkPgWsLSbGJ8VxYbtQG
- +u1VnOgEkVi+6MwkVRqnTAM03oY/PtDKPHLD+I7tHubgC/T02ojO52ZIBLceJntVK/o9
- VMjfopVECbilW6cphEAvl9Qnj+gQHtB3VWbMSL6/DQeglEfT14+HgssSooz8hinjXYIj
- n5L6qIXklUkUb4BkYk8wuyioyfiSlk7SykxAPJw4nWtMy2Mo/V28VHAr2jxOGxrq++Y3
- SU/9tClWIX3Eaqujx17shVSnZFv6hFe0oCA0Zqv25GamWDzpkBUj6sZ8W7KVJwGXWZrP Mg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3juw260t9q-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 27 Sep 2022 13:57:14 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 28RDvDjc032324
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 27 Sep 2022 13:57:13 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 27 Sep
- 2022 06:57:12 -0700
-Message-ID: <6e5a8bb0-f659-fd6c-a45c-4bcfa537fc5b@quicinc.com>
-Date:   Tue, 27 Sep 2022 07:57:11 -0600
+        Tue, 27 Sep 2022 10:01:57 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91474167069;
+        Tue, 27 Sep 2022 07:01:09 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id r7so15188711wrm.2;
+        Tue, 27 Sep 2022 07:01:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=Zl3CYBbxDXgqBxtjh5C7beBUpnsxheMilBJE58SXbWk=;
+        b=D1dcNej7lgw4hQyNwIM6GOULn2x7zin4v0Mk6AZSu7JxMsuPwlvyvDrvQ4P/obvnR+
+         zC8knFVdz6tm8dpaKkPBYHf7HGxWI0HRBbZlBc54ujLvb8XEsNMXRnUILXtrrDExm7uk
+         SvrvVcmfS+Qi7BFofVpa/kgnTYtEMvII8y710Jx0LCUkPnJxk5ZoNyxxTNqyhlpLvS2i
+         2D8FbKtxWkaeS9x7rIyMQJV8aigr05iw8/zk/RkbNr04Ty064FRfav96aOMN1bna2oT+
+         SMTfxUPHBa43PXAJivxOCCSsyA8N2PTPHaYqHUOqyC82qI2VpSjcNX77PNF1S5CgGddL
+         iepQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=Zl3CYBbxDXgqBxtjh5C7beBUpnsxheMilBJE58SXbWk=;
+        b=H25hS6HA/uHxlUy9qsSb2vXCXi/E8fOEOo7z52ZAwxvikmcV2SnN05o/9/3y9y8/G/
+         Ov0uHcTo6uHJiE92B/66EdabnkghnRkrPeDv7b0wkI0W4ZeFLxkYHS3QKysNYFXa+prg
+         Mb2doxf6jaoJWHed+ZnMkOpAWqwqxZWWg+ifnuCM/Ao/e+z+7t6jP0ISy2qrQkbRuHhE
+         MP8PMp6Bx/SZqdSgHhuqzFFCxHNRNnFXWAB3YwguWwq57AyDr2VCt/9ZSgEWBd5LI7Xh
+         s5/T33VuDj8AIU6jkP6QMqxRItq1cI3cu14jCoFHpLjhpWD5tum/FPKN2xX0oVQDSv2E
+         boOA==
+X-Gm-Message-State: ACrzQf2mc6//lgLPyxB7LSRW/Zh4JmTSN9mm+P8quS0/lmC4XITUqkvv
+        ms385c1EK0194JPkCUriGCM=
+X-Google-Smtp-Source: AMsMyM6mplNHrXN0mTK3Yjnt6CSBZnyux/jhGU9KmvIIs5qL9RxB/QzaleQKaV3sNBoNRnXZyQoFTA==
+X-Received: by 2002:a05:6000:912:b0:229:9bc1:27ed with SMTP id bz18-20020a056000091200b002299bc127edmr16508539wrb.546.1664287267615;
+        Tue, 27 Sep 2022 07:01:07 -0700 (PDT)
+Received: from [192.168.3.32] (dh207-97-176.xnet.hr. [88.207.97.176])
+        by smtp.gmail.com with ESMTPSA id o2-20020adfeac2000000b00228c375d81bsm1944246wrn.2.2022.09.27.07.01.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Sep 2022 07:01:07 -0700 (PDT)
+Message-ID: <647d12dd-9bc6-ebe3-7a72-9b9c0d4610dd@gmail.com>
+Date:   Tue, 27 Sep 2022 16:01:05 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH] bus: mhi: host: Use mhi_soc_reset() API in place of
- register write
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.1
+Subject: Re: [PATCH v2 01/33] arm64: dts: qcom: ipq6018-cp01-c1: correct
+ blspi1 pins
 Content-Language: en-US
-To:     Qiang Yu <quic_qianyu@quicinc.com>, <mani@kernel.org>,
-        <quic_hemantk@quicinc.com>, <loic.poulain@linaro.org>
-CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
-        <mrana@quicinc.com>
-References: <1664272126-82706-1-git-send-email-quic_qianyu@quicinc.com>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <1664272126-82706-1-git-send-email-quic_qianyu@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        krishna Lanka <quic_vamslank@quicinc.com>,
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220926074415.53100-1-krzysztof.kozlowski@linaro.org>
+ <20220926074415.53100-2-krzysztof.kozlowski@linaro.org>
+From:   Robert Marko <robimarko@gmail.com>
+In-Reply-To: <20220926074415.53100-2-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: H38ixZaWndpGTN84bCpkPFmmbsYnYMk9
-X-Proofpoint-ORIG-GUID: H38ixZaWndpGTN84bCpkPFmmbsYnYMk9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-27_05,2022-09-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- priorityscore=1501 mlxlogscore=894 mlxscore=0 spamscore=0 impostorscore=0
- phishscore=0 clxscore=1011 lowpriorityscore=0 malwarescore=0
- suspectscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2209270085
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/27/2022 3:48 AM, Qiang Yu wrote:
-> Currently, a direct register write is used when ramdump collection
-> in panic path occurs. Replace that with new mhi_soc_reset() API
-> such that a controller defined reset() function is exercised if
-> one is present and the regular SOC reset is done if it is not.
-> 
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-> ---
 
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+On 26. 09. 2022. 09:43, Krzysztof Kozlowski wrote:
+> When BLSPI1 (originally SPI0, later renamed in commit f82c48d46852
+> ("arm64: dts: qcom: ipq6018: correct QUP peripheral labels")) was added,
+> the device node lacked respective pin configuration assignment.   It
+> used also blsp0_spi function but that was probably the same mistake as
+> naming it SPI0.
+
+Hi,
+
+Sorry for making it confusing, but "blsp0_spi" is the correct function.
+Pinctrl driver and datasheets call functions blsp0-blps5, but usually in DT
+we call the nodes blsp1-blsp6.
+
+It would probably be better for me to rename the nodes to blsp0-5 instead.
+
+Regards,
+Robert
+
+>
+> Fixes: 5bf635621245 ("arm64: dts: ipq6018: Add a few device nodes")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+> index 1ba2eca33c7b..afc2dc79767d 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+> +++ b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+> @@ -37,6 +37,8 @@ &blsp1_i2c3 {
+>   
+>   &blsp1_spi1 {
+>   	cs-select = <0>;
+> +	pinctrl-0 = <&spi_0_pins>;
+> +	pinctrl-names = "default";
+>   	status = "okay";
+>   
+>   	flash@0 {
+> @@ -57,7 +59,7 @@ i2c_1_pins: i2c-1-pins {
+>   
+>   	spi_0_pins: spi-0-pins {
+>   		pins = "gpio38", "gpio39", "gpio40", "gpio41";
+> -		function = "blsp0_spi";
+> +		function = "blsp1_spi";
+>   		drive-strength = <8>;
+>   		bias-pull-down;
+>   	};
