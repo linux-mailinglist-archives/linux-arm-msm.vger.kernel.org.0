@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A37B35EC1A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 13:38:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 065085EC19C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 13:38:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231890AbiI0Lip (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S230397AbiI0Lip (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 27 Sep 2022 07:38:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42870 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232125AbiI0Lih (ORCPT
+        with ESMTP id S232131AbiI0Lih (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 27 Sep 2022 07:38:37 -0400
 Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BB4214F818
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 04:38:31 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id z25so15302094lfr.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 04:38:31 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F91214F828
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 04:38:32 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id a3so15238830lfk.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 04:38:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=Gr5CEgDVOE5rYe54LqDlFWEZZi0bLxgPcprD1LhFhqg=;
-        b=oO3qAwWRsfRO8Tq9lg2LEI4+frhgojlVy8Ke4i7Wwsp2Xr1bgANp/uarnxob+oHLrO
-         zBt2etJ0Q9esEW2LS//IGuZpKzJ4HxDC/43JZltOX5M/SBaGWPiBtscgWUGD5WStjSPa
-         ZGoyzaL6s6c1SsUNvAIrEGKXfgI8tOYT/UNgOq9MDNDzIt4GVHIk//LK2D/GikNpg13p
-         iVjiOtI78umfgYq91U2kxRs9OxzNFohJPKhRnJC+SvwbJrdgB+Z7idJ+O9PqVhgiWxht
-         ZZ+xE3kOaDAQh3ujEJoZeW3VCvPqdDDDiRvcdUtlciJK5gLkQ2TSqQa+D6jQxG+b5t4F
-         p7pA==
+        bh=8UKJY8RyS4lQdg21YinKMfTR+7LOBGKmECIZxWxaq8o=;
+        b=h02PDj7bsZWURO5IIye96OQXZvYWPPWMA2hxzXRZERaKTCsrXY4tDKYsdO14yh63L6
+         wfTPQs8YH/a1kRreeyo4azd1g1inkYlBQq58zl2W655Vl2D+ZHtSPPlOfi/dFxj0c4Hc
+         N/dvR1SShXpWnpcltxXrhP030PJIgmFkaMvthvN+wgfwf6VjukszO+Op3n8zNgVzdtAT
+         0T19EhFY+5lQDaHlzW2PJSxSkykjEkKu+bx1S3LJgobfNuU3VAR8VesthNkIOZ/rjHu7
+         rGm1ea1XyMbbqedZEvN1EGZfiCZ9ExqWt59o/c3j2ga84mhhrrX+wsFc+tVXSGm4UIWG
+         lzSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=Gr5CEgDVOE5rYe54LqDlFWEZZi0bLxgPcprD1LhFhqg=;
-        b=um5ggFNfn0b7CXsRk7XHXebfLHjoEhRifbQoBF8t8U0JJHybXU5MpW6jVSkzu0w+CE
-         68iNyWKgVPl+DmN0THvS+mDQRQgxBP3qRVqz7lOE2mv1UtROvfTnGqZYOpVskKKb09wb
-         0dcdiZHgTw1Y2+geuxFuRWQO7CVRz9jxTeL4KqDv2vNxwCU2vdV+LVxBvn0vNfO/Pzf3
-         ehMw0ywvNaiWdCqzipVeCb6/TnDmpPsi6gTpJYDkKW4LfVHyrTtuznXz3Ke2k9GIMzhx
-         m0xDfTkAeRCcchPHOo3x+t2VTpNDtbu0OPw1I1c4tOMulkzKwdhs8ExMhnUofaJ5pU8j
-         PTpw==
-X-Gm-Message-State: ACrzQf3b16s0vnsePFpIBt2xk/7XsuHVQqkHyuoNW6t4ekbm2SVdDI4b
-        ti5Dgua+lPaWwz0s6mozIvv5Jg==
-X-Google-Smtp-Source: AMsMyM5IqnHIXXTzsqi0PpNYabfJQJD8Z7/CNouCVgSwtAjqsgkihlSd+urh6QohEIkvpck1nV5shg==
-X-Received: by 2002:a05:6512:3d07:b0:498:f201:5679 with SMTP id d7-20020a0565123d0700b00498f2015679mr12134111lfv.161.1664278709573;
-        Tue, 27 Sep 2022 04:38:29 -0700 (PDT)
+        bh=8UKJY8RyS4lQdg21YinKMfTR+7LOBGKmECIZxWxaq8o=;
+        b=5StbN/SgmeVEyycxWkPNWeZ/+WG7PpTSBumFkahTQX3uR82yJWeEW67edNXWZfpcrn
+         dgqiTcGHZBYPil2BQd0yc2LLwjuygTtaJul6Ue/CyVNsGqSRxSu6Lwy/5beMauVscjUr
+         MNUiabh0+U87jx4rNBrbbPCpBKulgAm7D0+X/cDxIk1w2eYuvY7G2y1HDK473z+qUfw9
+         uG4QuM+YWrdD6VAXZnSfPKz0Ca3kYsjmP9424r09zC+utDVUkzZOVfydAPTEq9xPDfgT
+         1YlFq8tqjm2OdhZ9zBjMve5IcWMAVPlz/QzhrFWjZA/h7yUi2FpKI05dO3TW7nKYdDvf
+         +tnw==
+X-Gm-Message-State: ACrzQf2OjyxG6PXxg/lXeHHXSP5jHYcypMYhBgZTjmTB3evIS/BjfBa3
+        7FtV1MvdBW1qo14yxJ9hKGzjdQ==
+X-Google-Smtp-Source: AMsMyM79cjLI+aMRih7aOtZOjF5MIuUswYUSkAxq8R07lkKW7PC1hu3pWHNRyEVueygPIV7bTuHxsA==
+X-Received: by 2002:a05:6512:c1:b0:497:acd3:10cf with SMTP id c1-20020a05651200c100b00497acd310cfmr11355141lfp.484.1664278710503;
+        Tue, 27 Sep 2022 04:38:30 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id t12-20020a056512208c00b00492dfcc0e58sm142165lfr.53.2022.09.27.04.38.28
+        by smtp.gmail.com with ESMTPSA id t12-20020a056512208c00b00492dfcc0e58sm142165lfr.53.2022.09.27.04.38.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 27 Sep 2022 04:38:29 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -61,9 +61,9 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org,
         Christian Marangi <ansuelsmth@gmail.com>
-Subject: [PATCH v2 2/3] clk: qcom: gcc-ipq806x: use parent_data for the last remaining entry
-Date:   Tue, 27 Sep 2022 14:38:25 +0300
-Message-Id: <20220927113826.246241-3-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 3/3] ARM: dts: qcom-ipq8064: use pll4 clock for the gcc device
+Date:   Tue, 27 Sep 2022 14:38:26 +0300
+Message-Id: <20220927113826.246241-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220927113826.246241-1-dmitry.baryshkov@linaro.org>
 References: <20220927113826.246241-1-dmitry.baryshkov@linaro.org>
@@ -79,30 +79,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use parent_data for the last remaining entry (pll4). This clock is
-provided by the lcc device.
+Add a link to LCC's PLL4 clock to the GCC device node following the
+bindings (and driver needs).
 
-Fixes: cb02866f9a74 ("clk: qcom: gcc-ipq806x: convert parent_names to parent_data")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/clk/qcom/gcc-ipq806x.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/qcom-ipq8064.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-ipq806x.c b/drivers/clk/qcom/gcc-ipq806x.c
-index 718de17a1e60..6447f3e81b55 100644
---- a/drivers/clk/qcom/gcc-ipq806x.c
-+++ b/drivers/clk/qcom/gcc-ipq806x.c
-@@ -79,7 +79,9 @@ static struct clk_regmap pll4_vote = {
- 	.enable_mask = BIT(4),
- 	.hw.init = &(struct clk_init_data){
- 		.name = "pll4_vote",
--		.parent_names = (const char *[]){ "pll4" },
-+		.parent_data = &(const struct clk_parent_data){
-+			.fw_name = "pll4", .name = "pll4",
-+		},
- 		.num_parents = 1,
- 		.ops = &clk_pll_vote_ops,
- 	},
+diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+index 90c08b51680a..a79f8b5fe12d 100644
+--- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
++++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+@@ -513,8 +513,8 @@ mux {
+ 
+ 		gcc: clock-controller@900000 {
+ 			compatible = "qcom,gcc-ipq8064", "syscon";
+-			clocks = <&pxo_board>, <&cxo_board>;
+-			clock-names = "pxo", "cxo";
++			clocks = <&pxo_board>, <&cxo_board>, <&lcc PLL4>;
++			clock-names = "pxo", "cxo", "pll4";
+ 			reg = <0x00900000 0x4000>;
+ 			#clock-cells = <1>;
+ 			#reset-cells = <1>;
 -- 
 2.35.1
 
