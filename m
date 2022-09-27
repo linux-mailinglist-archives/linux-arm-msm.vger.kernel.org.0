@@ -2,62 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B16665ECACA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 19:26:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 665905ECAEC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 19:37:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232139AbiI0R0f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Sep 2022 13:26:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54356 "EHLO
+        id S231516AbiI0RhQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Sep 2022 13:37:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232072AbiI0R0e (ORCPT
+        with ESMTP id S230107AbiI0RhO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Sep 2022 13:26:34 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DE42B0898;
-        Tue, 27 Sep 2022 10:26:32 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id E2451CE13B1;
-        Tue, 27 Sep 2022 17:26:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1964AC433C1;
-        Tue, 27 Sep 2022 17:26:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1664299589;
-        bh=7qW4NoYfDpzCVbAcPMno7UyKuLi2bhHCAlraw+xf0DU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Ah9kXG5WXTnm4IQfxw0kTiNqLFGQtpPXAwE/8mRaytERIGpRPJA7plDtS0pKtRKQK
-         6FVQKT9fsZgjjiGIxz3V7bRd3ogBSVIQKHZRArlodpWDmnspRE/E6cmuLdCh2OVruj
-         9gfSy0wfh45qDbDNyPpKRzpGoKF/PT4N6NotqFYw/kLfhdjSSMLWDdL5kHj77ALdAq
-         m86sTM6PztdqZtdNnqPccZn/Ftgv3KucRwPi4i6Vaf54J7HY6BGorcUF6zelf3BAs7
-         VUFM7Xoq7LprWEIjmaHp2wg6mBJjkfy6XAupj2HDUZDSTH8XgERJZoeOcKualjUDva
-         2exQjN63qeGCw==
-Date:   Tue, 27 Sep 2022 12:26:26 -0500
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        krzysztof.kozlowski@linaro.org, Andy Gross <agross@kernel.org>,
+        Tue, 27 Sep 2022 13:37:14 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64B0B1D2D23
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 10:37:13 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id a10so11795932ljq.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 10:37:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=LdvvpBBJKqwlPh85SPg32lzmnREPbi1MuzmpiN6FRrQ=;
+        b=T8zpqiFdBNC2jAYQyUHHIQUDWtISUVmzewjUVMOJmLaXTJl4ePLuZyw3CVmtMyP3Di
+         Xuy4OfNO2OkjS1I3nguauwx41bId4skuoD5jLz0a+1Nn9zurZbhSOGLu0mZi0H79+pDR
+         xW33E2PdPcFxJTetuDy/5zv23kfHTJpXUbSYYR+/PuicmTxjJ4OsqWth12o1eS6Cpw4q
+         Igk5DtsjnoajKXNdgbArFyFA6GUTZPazLt++S85gVO+KGoRJI4JsoLeDqwnJ9kU9LGyC
+         57skjd3UBn77ryZDovGFtLoMezN9h+A6WhAhRFz1zTH5MH7L7WpoQDMeF1s2d+2OHHcS
+         nHYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=LdvvpBBJKqwlPh85SPg32lzmnREPbi1MuzmpiN6FRrQ=;
+        b=6GmLnaZdt1sPljE+i+UzEOwWtueHerp4XbVkY+H6vc+Au0DTzeOPjCDgEql04KREFO
+         tgRCxovthdiy0h1wMGSp4YNhgZvO5brkXpaYScx3/bDe1xal0VvtX3e1FC1ixau269ZT
+         aGi3fEwxm2Y/UJtvqy//qVk2++cuxGeZdIgo9t2byF967JsrFSjds6dnlgpXDbShStzF
+         GBbxeUHui+0eUbxv5KaNKC5Q8rcYpCVs8PV2n22EL2YOUyGZOQsVL93A5FmgCs7qzAuV
+         AuqRlg0X+GISB9sV+REZE6D83FLW0iFLJdUN3c42Vtjqxw4un+o6whohdl1OyjwkKyeN
+         OjTQ==
+X-Gm-Message-State: ACrzQf0NUTZDkoLvrX0KVvmn2S2x8IYb++StCEXU+u4IinQr8h2TKkVQ
+        3g0X8zWmMznaEFM0fGVXJIng4w==
+X-Google-Smtp-Source: AMsMyM60bmempmzbjQqL2NOHahtUnKRSkAFoWY56r42QApl+XN6ZUtHEQzNY1ach936mXEFZ+p/h6g==
+X-Received: by 2002:a2e:a544:0:b0:26c:6abb:866d with SMTP id e4-20020a2ea544000000b0026c6abb866dmr10281044ljn.9.1664300231651;
+        Tue, 27 Sep 2022 10:37:11 -0700 (PDT)
+Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id q12-20020ac246ec000000b00498f570aef2sm218879lfo.209.2022.09.27.10.37.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Sep 2022 10:37:09 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 3/5] clk: qcom: gdsc: Add a reset op to poll gdsc
- collapse
-Message-ID: <20220927172626.cwxpmrqkb7zsuolx@builder.lan>
-References: <1660853919-987-1-git-send-email-quic_akhilpo@quicinc.com>
- <20220819014758.v3.3.I162c4be55f230cd439f0643f1624527bdc8a9831@changeid>
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        krishna Lanka <quic_vamslank@quicinc.com>,
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 00/34] pinctrl/arm64: qcom: continued - fix Qualcomm TLMM pinctrl schema warnings
+Date:   Tue, 27 Sep 2022 19:36:28 +0200
+Message-Id: <20220927173702.5200-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220819014758.v3.3.I162c4be55f230cd439f0643f1624527bdc8a9831@changeid>
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -65,136 +78,101 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 19, 2022 at 01:48:37AM +0530, Akhil P Oommen wrote:
-> Add a reset op compatible function to poll for gdsc collapse.
-> 
-> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> ---
-> 
-> (no changes since v2)
-> 
-> Changes in v2:
-> - Minor update to function prototype
-> 
->  drivers/clk/qcom/gdsc.c | 23 +++++++++++++++++++----
->  drivers/clk/qcom/gdsc.h |  7 +++++++
->  2 files changed, 26 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> index 44520ef..2d0f1d1 100644
-> --- a/drivers/clk/qcom/gdsc.c
-> +++ b/drivers/clk/qcom/gdsc.c
-> @@ -17,6 +17,7 @@
->  #include <linux/reset-controller.h>
->  #include <linux/slab.h>
->  #include "gdsc.h"
-> +#include "reset.h"
->  
->  #define PWR_ON_MASK		BIT(31)
->  #define EN_REST_WAIT_MASK	GENMASK_ULL(23, 20)
-> @@ -116,7 +117,8 @@ static int gdsc_hwctrl(struct gdsc *sc, bool en)
->  	return regmap_update_bits(sc->regmap, sc->gdscr, HW_CONTROL_MASK, val);
->  }
->  
-> -static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status)
-> +static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status,
-> +		s64 timeout_us, unsigned int interval_ms)
->  {
->  	ktime_t start;
->  
-> @@ -124,7 +126,9 @@ static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status)
->  	do {
->  		if (gdsc_check_status(sc, status))
->  			return 0;
-> -	} while (ktime_us_delta(ktime_get(), start) < TIMEOUT_US);
-> +		if (interval_ms)
-> +			msleep(interval_ms);
+Hi,
 
-You effectively msleep(5) here, for which you shouldn't use msleep() -
-or more likely, this only happens in exceptional circumstances, so a
-longer interval_ms seems reasonable.
+Changes since v2
+================
+1. ipq6018-cp01-c1: do not switch to blsp1 (Robert).
+2. pinctrl: qcom,ipq6018: correct BLSP6->BLSP0 functions: new patch.
+3. Drop quotes from $ref when not needed (Rob).
+4. Add Rb tags. Few patches from v1 got review from Rob, but I changed them in
+   v2 significantly, so I did not keep these Rb tags.
 
-> +	} while (ktime_us_delta(ktime_get(), start) < timeout_us);
->  
->  	if (gdsc_check_status(sc, status))
->  		return 0;
-> @@ -172,7 +176,7 @@ static int gdsc_toggle_logic(struct gdsc *sc, enum gdsc_status status)
->  		udelay(1);
->  	}
->  
-> -	ret = gdsc_poll_status(sc, status);
-> +	ret = gdsc_poll_status(sc, status, TIMEOUT_US, 0);
->  	WARN(ret, "%s status stuck at 'o%s'", sc->pd.name, status ? "ff" : "n");
->  
->  	if (!ret && status == GDSC_OFF && sc->rsupply) {
-> @@ -343,7 +347,7 @@ static int _gdsc_disable(struct gdsc *sc)
->  		 */
->  		udelay(1);
->  
-> -		ret = gdsc_poll_status(sc, GDSC_ON);
-> +		ret = gdsc_poll_status(sc, GDSC_ON, TIMEOUT_US, 0);
->  		if (ret)
->  			return ret;
->  	}
-> @@ -565,3 +569,14 @@ int gdsc_gx_do_nothing_enable(struct generic_pm_domain *domain)
->  	return 0;
->  }
->  EXPORT_SYMBOL_GPL(gdsc_gx_do_nothing_enable);
-> +
-> +int gdsc_wait_for_collapse(void *priv)
-> +{
-> +	struct gdsc *sc = priv;
-> +	int ret;
-> +
-> +	ret = gdsc_poll_status(sc, GDSC_OFF, 500000, 5);
+Changes since v1
+================
+v1: https://lore.kernel.org/linux-devicetree/20220924080459.13084-1-krzysztof.kozlowski@linaro.org/T/#t
+1. As Stephan suggested, move check for function on non-GPIO pins to common
+   TLMM schema.  This affects few commits in the set named:
+   "use common TLMM schema"
+   "do not require function on non-GPIOs"
 
-So I presume the GPU driver will put() the GDSC and then issue a reset,
-which will wait up to 5 seconds for the GDSC to be turned off.
+Overview
+========
+This is the third, independent patchset around Qualcomm pinctrl in recent days:
+1. First round of TLMM fixes: merged
+2. LPASS fixes:
+   https://lore.kernel.org/linux-devicetree/20220927153429.55365-1-krzysztof.kozlowski@linaro.org/T/#t
+3. ARMv7 TLMM fixes: *THIS PATCHSET*
+4. ARMv8 remaining TLMM fixes: v1 send:
+   https://lore.kernel.org/linux-devicetree/20220925110608.145728-1-krzysztof.kozlowski@linaro.org/T/#t
 
-So essentially, this logic is needed because we don't wait for VOTABLE
-GDSCs to be turned off? And we have no way to do the put-with-wait for
-this specific case.
+Dependencies
+============
+1. No dependencies.
+2. dt-bindings are independent of DTS patches.
 
-I would like the commit message to capture this reasoning.
+Best regards,
+Krzysztof
 
-Thanks,
-Bjorn
+Krzysztof Kozlowski (34):
+  arm64: dts: qcom: ipq6018-cp01-c1: use BLSPI1 pins
+  arm64: dts: qcom: ipq6018: align TLMM pin configuration with DT schema
+  ARM: dts: qcom: sdx55: add gpio-ranges to TLMM pinctrl
+  ARM: dts: qcom: sdx55: align TLMM pin configuration with DT schema
+  ARM: dts: qcom: msm8226: align TLMM pin configuration with DT schema
+  ARM: dts: qcom: msm8974: align TLMM pin configuration with DT schema
+  dt-bindings: pinctrl: qcom,tlmm-common: add common check for function
+  dt-bindings: pinctrl: qcom,ipq6018: add qpic_pad function
+  dt-bindings: pinctrl: qcom,ipq6018: correct BLSP6->BLSP0 functions
+  dt-bindings: pinctrl: qcom,ipq6018: increase number of pins in pinmux
+  dt-bindings: pinctrl: qcom,ipq6018: fix matching pin config
+  dt-bindings: pinctrl: qcom,ipq6018: use common TLMM schema
+  dt-bindings: pinctrl: qcom,ipq6018: fix indentation in example
+  dt-bindings: pinctrl: qcom,msm8226: fix matching pin config
+  dt-bindings: pinctrl: qcom,msm8226: use common TLMM schema
+  dt-bindings: pinctrl: qcom,msm8226: add functions and input-enable
+  dt-bindings: pinctrl: qcom,msm8226: fix indentation in example
+  dt-bindings: pinctrl: qcom,msm8909-tlmm: fix matching pin config
+  dt-bindings: pinctrl: qcom,msm8909-tlmm: do not require function on
+    non-GPIOs
+  dt-bindings: pinctrl: qcom,msm8909-tlmm: fix indentation in example
+  dt-bindings: pinctrl: qcom,msm8953: fix matching pin config
+  dt-bindings: pinctrl: qcom,msm8953: use common TLMM schema
+  dt-bindings: pinctrl: qcom,msm8953: fix indentation in example
+  dt-bindings: pinctrl: qcom,mdm9607: do not require function on
+    non-GPIOs
+  dt-bindings: pinctrl: qcom,mdm9607: fix indentation in example
+  dt-bindings: pinctrl: qcom,qcm2290: fix matching pin config
+  dt-bindings: pinctrl: qcom,qcm2290: use common TLMM schema
+  dt-bindings: pinctrl: qcom,sdx55: fix matching pin config
+  dt-bindings: pinctrl: qcom,sdx55: use common TLMM schema
+  dt-bindings: pinctrl: qcom,sdx55: fix indentation in example
+  dt-bindings: pinctrl: qcom,sdx65: fix matching pin config
+  dt-bindings: pinctrl: qcom,sdx65: use common TLMM schema
+  dt-bindings: pinctrl: qcom,sc7280: fix matching pin config
+  dt-bindings: pinctrl: qcom,sc8280xp: fix indentation in example
+    (remaining piece)
 
-> +	WARN(ret, "%s status stuck at 'on'", sc->pd.name);
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(gdsc_wait_for_collapse);
-> diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
-> index ad313d7..d484bdb 100644
-> --- a/drivers/clk/qcom/gdsc.h
-> +++ b/drivers/clk/qcom/gdsc.h
-> @@ -12,6 +12,7 @@
->  struct regmap;
->  struct regulator;
->  struct reset_controller_dev;
-> +struct qcom_reset_map;
->  
->  /**
->   * struct gdsc - Globally Distributed Switch Controller
-> @@ -79,6 +80,7 @@ int gdsc_register(struct gdsc_desc *desc, struct reset_controller_dev *,
->  		  struct regmap *);
->  void gdsc_unregister(struct gdsc_desc *desc);
->  int gdsc_gx_do_nothing_enable(struct generic_pm_domain *domain);
-> +int gdsc_wait_for_collapse(void *priv);
->  #else
->  static inline int gdsc_register(struct gdsc_desc *desc,
->  				struct reset_controller_dev *rcdev,
-> @@ -88,5 +90,10 @@ static inline int gdsc_register(struct gdsc_desc *desc,
->  }
->  
->  static inline void gdsc_unregister(struct gdsc_desc *desc) {};
-> +
-> +static int gdsc_wait_for_collapse(void *priv)
-> +{
-> +	return  -ENOSYS;
-> +}
->  #endif /* CONFIG_QCOM_GDSC */
->  #endif /* __QCOM_GDSC_H__ */
-> -- 
-> 2.7.4
-> 
+ .../pinctrl/qcom,ipq6018-pinctrl.yaml         | 66 ++++++++++---------
+ .../pinctrl/qcom,mdm9607-pinctrl.yaml         | 23 ++++---
+ .../pinctrl/qcom,msm8226-pinctrl.yaml         | 63 ++++++++++--------
+ .../bindings/pinctrl/qcom,msm8909-tlmm.yaml   | 64 +++++++++---------
+ .../pinctrl/qcom,msm8953-pinctrl.yaml         | 51 +++++++-------
+ .../pinctrl/qcom,qcm2290-pinctrl.yaml         | 11 ++--
+ .../bindings/pinctrl/qcom,sc7280-pinctrl.yaml | 14 +++-
+ .../pinctrl/qcom,sc8280xp-pinctrl.yaml        |  4 +-
+ .../bindings/pinctrl/qcom,sdx55-pinctrl.yaml  | 51 +++++++-------
+ .../bindings/pinctrl/qcom,sdx65-pinctrl.yaml  | 12 ++--
+ .../bindings/pinctrl/qcom,tlmm-common.yaml    | 20 ++++--
+ arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts   |  6 +-
+ arch/arm/boot/dts/qcom-msm8226.dtsi           | 24 +++----
+ .../qcom-msm8974-lge-nexus5-hammerhead.dts    | 30 ++++-----
+ .../boot/dts/qcom-sdx55-telit-fn980-tlb.dts   | 45 +++++--------
+ arch/arm/boot/dts/qcom-sdx55.dtsi             |  1 +
+ arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts  |  6 +-
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi         |  4 +-
+ 18 files changed, 266 insertions(+), 229 deletions(-)
+
+-- 
+2.34.1
+
