@@ -2,129 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F1185EBDFA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 11:03:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40BE85EBE1A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Sep 2022 11:15:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231496AbiI0JDM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Sep 2022 05:03:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51526 "EHLO
+        id S231473AbiI0JPy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Sep 2022 05:15:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231434AbiI0JDF (ORCPT
+        with ESMTP id S231447AbiI0JPx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Sep 2022 05:03:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB259AA3F7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 02:02:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1664269374;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=xy/vZrVEyKAC936wld9SdePzf0CNuc4X8kChnAdBCQk=;
-        b=eMnlEZEV5iaKWvOmFmHf/KKYP1Oh5OgyN0dtYBD+n5r4ykYtBBfXQT2Mv1Uf41zZKBDhJB
-        sJKKaB+PqmB+udxnLHM7v3VOX5BG49KNlwz7q8pngcpux5YtQEY0iZMRTod0ywIjGU1sJf
-        VXmb2XU9uf1LZ/h3KQVJ8D18mJn49Zk=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-319-muoSzFFYM0qqQoSaYbzfWg-1; Tue, 27 Sep 2022 05:02:52 -0400
-X-MC-Unique: muoSzFFYM0qqQoSaYbzfWg-1
-Received: by mail-wr1-f70.google.com with SMTP id j16-20020adfa550000000b0022cbdfcea2dso375290wrb.19
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 02:02:52 -0700 (PDT)
+        Tue, 27 Sep 2022 05:15:53 -0400
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C9168C030
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 02:15:52 -0700 (PDT)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-351cee25568so12419537b3.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Sep 2022 02:15:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=O/q5FovWG8zdekeO1QxfHZC6Z0cfY4f81aN83ssI774=;
+        b=MDkdqOjCmkTkQsz2f2sl2M/5t1vRP0xmHX0mGMBZbUR/vdi/lMl7sCufBQHuFq1SwH
+         p40LjYuKocB2Anf9W4YwYPVWALkEM4GFgua92OrrY8sK0PjNcsLA7wBiZv3LXCgL8SZk
+         QA0TcIdOs4r/MdqKf2OwM4+p9NTnYy3H9In5JclN4bHpc0KCX6Z0q01aAhTLPrrMxQc9
+         UFmk1C6hMZ9i33brGAlbhxoWOBcw40OZ+TZPfibksO11T+FDoMUaWRkol2UMikc1CZP0
+         qUK592Qx0id31yT+h81dX3vYp34o3FEyx7NPj/nAek5HFv4L5R66QoPFUg8HH7G85z3H
+         Ab3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=xy/vZrVEyKAC936wld9SdePzf0CNuc4X8kChnAdBCQk=;
-        b=G3NRJ3WQpohIaSEsppvBBVTw6C8xBL3ueb2KWSOA1cCIYtGmdmN5M+7x5uafszFqmQ
-         LpfCkNnWMomTx7wgy3GCFdug5S7YV+TwDL42RlnKrNSGID7RpcHWHulaSj17rwtP1dHu
-         pPSS10auMR977SQuARZTjPTSfN49pz5O4djguo6HqPyF5D4CJzSjjuUqdbwV3KZLFw2x
-         VInepfL1LNFpj61q7FD6LnJTvRzlQBre2o43Iq+gllyrek/817g8FiQhtjX4pFfGIK6m
-         2FuUP+LBoqrzdSE0n31ITuQu9VYX9csR6q+3/4VHh94JKcii7Qd/OP4py/9rQ6hTNX/j
-         Cefw==
-X-Gm-Message-State: ACrzQf2vK3CJrpfYA1NH5R98a5JoxTSa4d4VN7LIVg0I+1tpsX3aCIyO
-        R8j+n0ZoQM6B0dja/3qV0+TBBW2iRG6I1ZdlhDj/6Fct4jDOU/w1KIrXmqjAFsncVeVHkzoYx3S
-        rim8sssmmQpjIxUg8I3vNtU2Rmg==
-X-Received: by 2002:adf:dd8f:0:b0:22a:84ab:4be3 with SMTP id x15-20020adfdd8f000000b0022a84ab4be3mr15951093wrl.40.1664269371780;
-        Tue, 27 Sep 2022 02:02:51 -0700 (PDT)
-X-Google-Smtp-Source: AMsMyM6QQ+AHuQOmKI/6F1QjWVeqDfj9EhoRpgYUwRQU9fWumUC0o5Tf3aS3su5R3i29q/HGgpvQ8w==
-X-Received: by 2002:adf:dd8f:0:b0:22a:84ab:4be3 with SMTP id x15-20020adfdd8f000000b0022a84ab4be3mr15951066wrl.40.1664269371478;
-        Tue, 27 Sep 2022 02:02:51 -0700 (PDT)
-Received: from [192.168.1.130] (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
-        by smtp.gmail.com with ESMTPSA id r2-20020a05600c284200b003b2878b9e0dsm1116996wmb.20.2022.09.27.02.02.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Sep 2022 02:02:50 -0700 (PDT)
-Message-ID: <2a3b6824-7a76-308c-c7a7-cc7c6001dfcb@redhat.com>
-Date:   Tue, 27 Sep 2022 11:02:49 +0200
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=O/q5FovWG8zdekeO1QxfHZC6Z0cfY4f81aN83ssI774=;
+        b=WHbe3b6vWwb1VRqB3oFjE7gFB7zBsRO+qo/MAOfO0czNOXLi3A2FKZu8yyGb9QXHmG
+         d/0fBGyTpxN40aVOfLSEMKLsd508PGxuc/zj3lg9u6W5tu7R4tGHSJ0E+V18iHYeRqUu
+         adPN6BVm1n6/Y7NeOk8YcUxLKeHCFl3prb0ewlVgWhCb1c5Kd2+I1WPEndh8YYsBIQ9g
+         X5oKMt7rXAZN8P5SEA7zQwCVdEKEF1arwKAlozty+Ie7hDn899/xFt5ElqxAbhzJC2DS
+         J5bpZ1QAEiJhzY1Ni/qbzQV1AvaF1mW4GUA3FPQNVszZPH1lg7yuGy+7eptq+qCggkbN
+         rWJw==
+X-Gm-Message-State: ACrzQf0NlKIMBckdBugCJYZBGaKFHQUGslaBF7SIKmxzGQJMh7yEWHl+
+        V09cGMqWj+k6ftoomxcU3PJFwMEbVsiawVmIdf3BKA==
+X-Google-Smtp-Source: AMsMyM7SCb8ur4Q2xNYBcfZ4Vxp5JbVRg7g8b8AUPos4EFghOIHtwp5IxX7rxWxejanl9tVB9OM29LnhBfQryFFzbz0=
+X-Received: by 2002:a0d:d68a:0:b0:350:a7f0:7b69 with SMTP id
+ y132-20020a0dd68a000000b00350a7f07b69mr12855402ywd.132.1664270151366; Tue, 27
+ Sep 2022 02:15:51 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Subject: Re: [v2] drm/msm: add null checks for drm device to avoid crash
- during probe defer
-Content-Language: en-US
-To:     Vinod Polimera <vpolimer@qti.qualcomm.com>,
-        "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
-        "Vinod Polimera (QUIC)" <quic_vpolimer@quicinc.com>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>
-Cc:     "dianders@chromium.org" <dianders@chromium.org>,
-        "vpolimer@quicinc.com" <vpolimer@quicinc.com>,
-        Abhinav Kumar <abhinavk@quicinc.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "swboyd@chromium.org" <swboyd@chromium.org>,
-        "kalyant@quicinc.com" <kalyant@quicinc.com>
-References: <1654249343-24959-1-git-send-email-quic_vpolimer@quicinc.com>
- <29ae886c-b2b2-2387-87cb-e4a885080418@linaro.org>
- <f70f9f1b-c835-7baf-974d-87f2bf6e4e53@linaro.org>
- <BN0PR02MB8173E3E88164E52AEF5AB1A1E4559@BN0PR02MB8173.namprd02.prod.outlook.com>
-From:   Javier Martinez Canillas <javierm@redhat.com>
-In-Reply-To: <BN0PR02MB8173E3E88164E52AEF5AB1A1E4559@BN0PR02MB8173.namprd02.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+References: <20220926173435.881688-1-dmitry.baryshkov@linaro.org> <YzK6c2g0bgwyvZ+O@lpieralisi>
+In-Reply-To: <YzK6c2g0bgwyvZ+O@lpieralisi>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 27 Sep 2022 12:15:40 +0300
+Message-ID: <CAA8EJppuyZ0KFk+M3Jw3_JEmsjhfv3tmDd-N3r98A838+xcAQA@mail.gmail.com>
+Subject: Re: [PATCH v5 0/5] PCI: qcom: Support using the same PHY for both RC
+ and EP
+To:     Lorenzo Pieralisi <lpieralisi@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Vinod and Dmitry,
+On Tue, 27 Sept 2022 at 11:55, Lorenzo Pieralisi <lpieralisi@kernel.org> wrote:
+>
+> On Mon, Sep 26, 2022 at 08:34:30PM +0300, Dmitry Baryshkov wrote:
+> > Programming of QMP PCIe PHYs slightly differs between RC and EP modes.
+> >
+> > Currently both qcom and qcom-ep PCIe controllers setup the PHY in the
+> > default mode, making it impossible to select at runtime whether the PHY
+> > should be running in RC or in EP modes. Usually this is not an issue,
+> > since for most devices only the RC mode is used. Some devices (SDX55)
+> > currently support only the EP mode without supporting the RC mode (at
+> > this moment).
+> >
+> > Nevertheless some of the Qualcomm platforms (e.g. the aforementioned
+> > SDX55) would still benefit from being able to switch between RC and EP
+> > depending on the driver being used. While it is possible to use
+> > different compat strings for the PHY depending on the mode, it seems
+> > like an incorrect approach, since the PHY doesn't differ between
+> > usecases. It's the PCIe controller, who should decide how to configure
+> > the PHY.
+> >
+> > This patch series implements the ability to select between RC and EP
+> > modes, by allowing the PCIe QMP PHY driver to switch between
+> > programming tables.
+> >
+> > This patchseries depends on the header from the pre-6.1 phy/next. Thus
+> > after the 6.1 the PCIe patches can be applied independently of the PHY
+> > part.
+>
+> I assume then it is better for me to ACK the PCI patches so
+> that they can be pulled into the PHY tree, right ?
 
-On 9/27/22 09:31, Vinod Polimera wrote:
->> -----Original Message-----
->> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Sent: Friday, August 26, 2022 2:11 PM
->> To: Vinod Polimera (QUIC) <quic_vpolimer@quicinc.com>; dri-
->> devel@lists.freedesktop.org; linux-arm-msm@vger.kernel.org;
->> freedreno@lists.freedesktop.org; devicetree@vger.kernel.org
->> Cc: linux-kernel@vger.kernel.org; robdclark@gmail.com;
->> dianders@chromium.org; vpolimer@quicinc.com; swboyd@chromium.org;
->> kalyant@quicinc.com
->> Subject: Re: [v2] drm/msm: add null checks for drm device to avoid crash
->> during probe defer
->>
+This way can work too.
 
-[...]
+>
+> Lorenzo
+>
+> > Changes since v4:
+> > - Fixed the possible oops in probe (Johan)
+> > - Renamed the tables struct and individual table fields (Johan)
+> > - Squashed the 'separate funtions' patch to lower the possible
+> >   confusion.
+> >
+> > Changes since v3:
+> > - Rebased on top of phy/next to pick in newly defined
+> >   PHY_MODE_PCIE_RC/EP.
+> > - Renamed 'main' to 'common' and 'secondary' to 'extra' to reflect the
+> >   intention of the split (the 'common' tables and the 'extra for the ...
+> >   mode' tables).
+> > - Merged the 'pointer' patch into first and second patches to make them
+> >   more obvious.
+> >
+> > Changes since v2:
+> > - Added PHY_SUBMODE_PCIE_RC/EP defines (Vinod),
+> > - Changed `primary' table name to `main', added extra comments
+> >   describing that `secondary' are the additional tables, not required in
+> >   most of the cases (following the suggestion by Johan to rename
+> >   `primary' table),
+> > - Changed secondary tables into the pointers to stop wasting extra
+> >   memory (Vinod),
+> > - Split several functions for programming the PHY using these tables.
+> >
+> > Changes since v1:
+> > - Split the if(table) removal to the separate patch
+> > - Expanded commit messages and comments to provide additional details
+> > - Fixed build error on pcie-qcom.c
+> > - Added support for EP mode on sm8450 to demonstrate the usage of this
+> >   patchset
+> >
+> > Changes since RFC:
+> > - Fixed the compilation of PCIe EP driver,
+> > - Changed pri/sec names to primary and secondary,
+> > - Added comments regarding usage of secondary_rc/_ep fields.
+> >
+> > Dmitry Baryshkov (5):
+> >   phy: qcom-qmp-pcie: split register tables into common and extra parts
+> >   phy: qcom-qmp-pcie: support separate tables for EP mode
+> >   phy: qcom-qmp-pcie: Support SM8450 PCIe1 PHY in EP mode
+> >   PCI: qcom: Setup PHY to work in RC mode
+> >   PCI: qcom-ep: Setup PHY to work in EP mode
+> >
+> >  drivers/pci/controller/dwc/pcie-qcom-ep.c     |   5 +
+> >  drivers/pci/controller/dwc/pcie-qcom.c        |   5 +
+> >  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 523 +++++++++++-------
+> >  .../qualcomm/phy-qcom-qmp-pcs-pcie-v5_20.h    |   1 +
+> >  4 files changed, 335 insertions(+), 199 deletions(-)
+> >
+> > --
+> > 2.35.1
+> >
 
->> Vinod, do we still want to pursue this fix? If so, could you please
->> update it according to the comment.
->>
 
-I don't think this patch is needed anymore, since AFAICT the issue has
-been fixed by commit 0a58d2ae572a ("drm/msm: Make .remove and .shutdown
-HW shutdown consistent") which is already in the drm/drm-next branch.
 
 -- 
-Best regards,
-
-Javier Martinez Canillas
-Core Platforms
-Red Hat
-
+With best wishes
+Dmitry
