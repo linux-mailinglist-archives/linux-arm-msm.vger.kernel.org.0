@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A96B65EE12F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 18:03:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7B9A5EE132
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Sep 2022 18:04:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234536AbiI1QDr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Sep 2022 12:03:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39082 "EHLO
+        id S234289AbiI1QE0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Sep 2022 12:04:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234296AbiI1QDc (ORCPT
+        with ESMTP id S234320AbiI1QEY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Sep 2022 12:03:32 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC043DF6B5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 09:03:30 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id o20-20020a05600c4fd400b003b4a516c479so1269961wmq.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 09:03:30 -0700 (PDT)
+        Wed, 28 Sep 2022 12:04:24 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57CAEE1091
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 09:04:23 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id t4so8810858wmj.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Sep 2022 09:04:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:organization:from:reply-to
          :references:cc:to:content-language:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date;
-        bh=U/WlCXHpaS4EJuvdxGL7cBryc3HObdjRZAT31F4Yxs0=;
-        b=zICZlPKn7tyOLOAOVwHKy7j8FYkPZKNM3Dp3EpmClXBSgdVE1Oahn5XuBI9B+CUy37
-         f4WAv0KNxk1J9ZWoIkXvEmY2bVTcgwQ8qu+asVFfurA0Y+hhIY7J1MbBTsbJgg8I/8yh
-         CrCZnWMuWNiiyQZNNO18tACTqKxLrSB/XalIeQTRZPyUCoYngL34rq01P4Yxn3TuxKuw
-         HL6nS+RXFQVgohIBy/G1XKXLHcP39X+KKz9m+12GZsatndOamQifkcK1xkAP3zAVuIj/
-         3Wl6yEHqzgVRjRgoJx30KZkdxsoR4uvyJ9vdzmD89NgLtCQvtECOu0lPlHkB0e3ShY+r
-         ozPw==
+        bh=jOsTRd2EGmvuWFFBgTAM5J+8IORBIqNu02CFYL1/QhU=;
+        b=v0TvX6YVV2oxrMyqkgUbiWYvHKF0YPUGRkJ2bA542N393ROnUqUkeVXPXYcOXN9Q5d
+         Ih2KClNyGxsOooOLpsoar0Hd/tAxCxh1emLvrBTQPy1OVpaxD4mCBRUjV0YwBL1H8qwj
+         ER131Zs02oFhe5tvDScL7Bs9Cp4toZCmgccOEq0piqSotTr6/nhdUmD87E5cIoQI1h3T
+         GB72yZh2hG0N2542jtepsDcJW0Myy/rfTjMQrImP0Kmk0+OlnPZarLk6sU5HJ3E2o+Zd
+         9mXADR1H3D926VZm6mkN2MhvI2vdnmOigHjATsjTNqh0Kxr5M0EYIP8hbAp74SxvKKb6
+         oPBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:organization:from:reply-to
          :references:cc:to:content-language:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=U/WlCXHpaS4EJuvdxGL7cBryc3HObdjRZAT31F4Yxs0=;
-        b=ZfnWVXkTtd5nSKGHxwsdBO48SRX/YoYFNwxSg26g1Kevg1ive8g/WjlIPZjvzPD6TB
-         kibCS1cKq4jWu7rgYrsTsgwbXAehmOFyxMFhrYBSoJTSTSGLVJFsFncGqLTdsdknBWKx
-         S+Q/Q4wsRJC9lFe2HjvLaq8ZvU8DuRL+vv5LQ0qgUMFR50GRfFMrGXufqgGKdmRvZOxR
-         7kmx6GbambFenHibur6TvJOn14VbJPn8Cjh83dAeCBCfntAPnXy+HEa3ezdRIX853C1I
-         CekMfoY8h9fhzzlOdriNrpGI1QyCpGkIgdtF0XdoqIHSFPQEJsYWqILXXNlBCil8UzHI
-         GatA==
-X-Gm-Message-State: ACrzQf1cvQFKvY8DdpkTWsGdXbyuLkI5oXlWlAdpHQnAV+zHLyubEKx/
-        xf3OjjtiweArYuS6ddjAij6RYg==
-X-Google-Smtp-Source: AMsMyM6x9fCiPlAIsTrXnoVNYhb7/GEEGqBZYfkmXGta8ToHyMPsSfKUrtdi4383MYE4IJkQKbGoSg==
-X-Received: by 2002:a05:600c:3d0c:b0:3b4:c481:c63b with SMTP id bh12-20020a05600c3d0c00b003b4c481c63bmr7084859wmb.147.1664381009499;
-        Wed, 28 Sep 2022 09:03:29 -0700 (PDT)
+        bh=jOsTRd2EGmvuWFFBgTAM5J+8IORBIqNu02CFYL1/QhU=;
+        b=wXrtcWaxm8IaeUIPwDjeA0bMwDBxcpkoEFdAvdHO6EfOIVVWjEOHmnVG6elYEdYPxD
+         1TfS8mSgIGIFr7VkHhjvEecyZBWRse2OWq9jqKAHLbKwfmdIskoicxn9ePJykJYNSY1V
+         YosRWEoFL2l5myaJOSIz6ie44xqxj7GOaJ7k0iEIjibcYnf67oQecfVXr9wRj1GqahfF
+         NLYOg6XOrzOfP7fBWE6vmEbwBldrbxh6+6bmYfyidJb+3XdM3nM6rjbzpVOkoyAU/bEH
+         puSTO5tTBD+rxbmVKtMYvsd583jLmDzlcvH1mCAosY9154pgCRj0YkaUc3Z+9PTqIOjB
+         R05Q==
+X-Gm-Message-State: ACrzQf2eGEO0Y55YYIM3cATJKBz/C1zkwre1uL6wmchH5eF+O2wZMDMk
+        9GTTIsodFGgxzI3Mue/ER1YmOA==
+X-Google-Smtp-Source: AMsMyM6XQU0NnnQU3dpJA72oWAbDU14QkBvfmbQ7fZQHWskZ5b1vNFSYwmdhtQKNW7UN/B9vZCq6hg==
+X-Received: by 2002:a1c:f002:0:b0:3b4:dda4:b58f with SMTP id a2-20020a1cf002000000b003b4dda4b58fmr7245404wmb.184.1664381058249;
+        Wed, 28 Sep 2022 09:04:18 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:11d4:7c71:accf:6521? ([2a01:e0a:982:cbb0:11d4:7c71:accf:6521])
-        by smtp.gmail.com with ESMTPSA id j8-20020a5d6188000000b0022cc3e67fc5sm3380637wru.65.2022.09.28.09.03.28
+        by smtp.gmail.com with ESMTPSA id n16-20020adffe10000000b0022b014fb0b7sm4443398wrr.110.2022.09.28.09.04.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Sep 2022 09:03:29 -0700 (PDT)
-Message-ID: <8982bb98-cbfe-3628-a646-a978ae0f09ed@linaro.org>
-Date:   Wed, 28 Sep 2022 18:03:28 +0200
+        Wed, 28 Sep 2022 09:04:17 -0700 (PDT)
+Message-ID: <05603546-79df-c27d-7c39-57d6e5789cd6@linaro.org>
+Date:   Wed, 28 Sep 2022 18:04:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH 03/13] phy: qcom-qmp-pcie: drop unused common-block
- registers
+Subject: Re: [PATCH 02/13] phy: qcom-qmp-combo: drop unused UFS reset
 Content-Language: en-US
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Vinod Koul <vkoul@kernel.org>
@@ -68,11 +67,11 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org
 References: <20220928152822.30687-1-johan+linaro@kernel.org>
- <20220928152822.30687-4-johan+linaro@kernel.org>
+ <20220928152822.30687-3-johan+linaro@kernel.org>
 Reply-To: neil.armstrong@linaro.org
 From:   Neil Armstrong <neil.armstrong@linaro.org>
 Organization: Linaro Developer Services
-In-Reply-To: <20220928152822.30687-4-johan+linaro@kernel.org>
+In-Reply-To: <20220928152822.30687-3-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -86,15 +85,16 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 28/09/2022 17:28, Johan Hovold wrote:
-> Drop the common-block register defines that are unused since the QMP
-> driver split.
+> Drop the unused UFS reset code which isn't used since the QMP driver
+> split.
 > 
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 9 ---------
+>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 9 ---------
 >   1 file changed, 9 deletions(-)
 > 
 
 <snip>
+
 
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
